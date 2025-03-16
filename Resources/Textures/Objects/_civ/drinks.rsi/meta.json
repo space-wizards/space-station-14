@@ -1,0 +1,642 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "shake-blue"
+        },
+        {
+            "name": "shake-empty"
+        },
+        {
+            "name": "shake-meat"
+        },
+        {
+            "name": "shake-white"
+        },
+        {
+            "name": "shake-robo"
+        },
+        {
+            "name": "shaker"
+        },
+        {
+            "name": "shotglass"
+        },
+        {
+            "name": "beer"
+        },
+        {
+            "name": "beer_empty"
+        },
+        {
+            "name": "alebottle"
+        },
+        {
+            "name": "alebottle_empty"
+        },
+        {
+            "name": "rumbottle"
+        },
+        {
+            "name": "rumbottle_empty"
+        },
+        {
+            "name": "whiskeybottle"
+        },
+        {
+            "name": "whiskeybottle_empty"
+        },
+        {
+            "name": "vodkabottle"
+        },
+        {
+            "name": "bluegoose"
+        },
+        {
+            "name": "bluegoose_empty"
+        },
+        {
+            "name": "expensivewine"
+        },
+        {
+            "name": "expensivewine_empty"
+        },
+        {
+            "name": "vodkabottle_empty"
+        },
+        {
+            "name": "ginbottle"
+        },
+        {
+            "name": "ginbottle_empty"
+        },
+        {
+            "name": "cognacbottle"
+        },
+        {
+            "name": "cognacbottle_empty"
+        },
+        {
+            "name": "goldschlagerbottle"
+        },
+        {
+            "name": "goldschlagerbottle_empty"
+        },
+        {
+            "name": "patronbottle"
+        },
+        {
+            "name": "patronbottle_empty"
+        },
+        {
+            "name": "vermouthbottle"
+        },
+        {
+            "name": "vermouthbottle_empty"
+        },
+        {
+            "name": "kahluabottle"
+        },
+        {
+            "name": "kahluabottle_empty"
+        },
+        {
+            "name": "tequillabottle"
+        },
+        {
+            "name": "tequillabottle_empty"
+        },
+        {
+            "name": "winebottle"
+        },
+        {
+            "name": "winebottle_empty"
+        },
+        {
+            "name": "absinthebottle_empty"
+        },
+        {
+            "name": "jar"
+        },
+        {
+            "name": "coffee"
+        },
+        {
+            "name": "hot_coco"
+        },
+        {
+            "name": "water_cup"
+        },
+        {
+            "name": "water_cup_e"
+        },
+        {
+            "name": "flask_old"
+        },
+        {
+            "name": "flask"
+        },
+        {
+            "name": "golden_cup"
+        },
+        {
+            "name": "bottleofnothing"
+        },
+        {
+            "name": "holyflask"
+        },
+        {
+            "name": "broken"
+        },
+        {
+            "name": "broken_bottle"
+        },
+        {
+            "name": "absinthebottle"
+        },
+        {
+            "name": "detflask"
+        },
+        {
+            "name": "barflask"
+        },
+        {
+            "name": "bigteacup"
+        },
+        {
+            "name": "teacup"
+        },
+        {
+            "name": "(mdr)grapejuice"
+        },
+        {
+            "name": "hot_coffee"
+        },
+        {
+            "name": "mug"
+        },
+        {
+            "name": "r_mug"
+        },
+        {
+            "name": "brit_mug"
+        },
+        {
+            "name": "teapot"
+        },
+        {
+            "name": "rag"
+        },
+        {
+            "name": "rag_lit",
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "rag_small"
+        },
+        {
+            "name": "rag_small_lit",
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "glass-highball"
+        },
+        {
+            "name": "glass-shot"
+        },
+        {
+            "name": "glass-lowball"
+        },
+        {
+            "name": "glass-cocktail"
+        },
+        {
+            "name": "glass-wine"
+        },
+        {
+            "name": "glass-flute"
+        },
+        {
+            "name": "fluid-highball"
+        },
+        {
+            "name": "fluid-shot"
+        },
+        {
+            "name": "fluid-lowball"
+        },
+        {
+            "name": "fluid-cocktail"
+        },
+        {
+            "name": "fluid-wine"
+        },
+        {
+            "name": "fluid-flute"
+        },
+        {
+            "name": "highball-umbrella1"
+        },
+        {
+            "name": "shot-umbrella1"
+        },
+        {
+            "name": "lowball-umbrella1"
+        },
+        {
+            "name": "cocktail-umbrella1"
+        },
+        {
+            "name": "wine-umbrella1"
+        },
+        {
+            "name": "flute-umbrella1"
+        },
+        {
+            "name": "highball-umbrella2"
+        },
+        {
+            "name": "shot-umbrella2"
+        },
+        {
+            "name": "lowball-umbrella2"
+        },
+        {
+            "name": "cocktail-umbrella2"
+        },
+        {
+            "name": "wine-umbrella2"
+        },
+        {
+            "name": "flute-umbrella2"
+        },
+        {
+            "name": "highball-umbrella3"
+        },
+        {
+            "name": "shot-umbrella3"
+        },
+        {
+            "name": "lowball-umbrella3"
+        },
+        {
+            "name": "cocktail-umbrella3"
+        },
+        {
+            "name": "wine-umbrella3"
+        },
+        {
+            "name": "flute-umbrella3"
+        },
+        {
+            "name": "highball-umbrella4"
+        },
+        {
+            "name": "shot-umbrella4"
+        },
+        {
+            "name": "lowball-umbrella4"
+        },
+        {
+            "name": "cocktail-umbrella4"
+        },
+        {
+            "name": "wine-umbrella4"
+        },
+        {
+            "name": "flute-umbrella4"
+        },
+        {
+            "name": "highball-umbrella5"
+        },
+        {
+            "name": "shot-umbrella5"
+        },
+        {
+            "name": "lowball-umbrella5"
+        },
+        {
+            "name": "cocktail-umbrella5"
+        },
+        {
+            "name": "wine-umbrella5"
+        },
+        {
+            "name": "flute-umbrella5"
+        },
+        {
+            "name": "highball-umbrella6"
+        },
+        {
+            "name": "shot-umbrella6"
+        },
+        {
+            "name": "lowball-umbrella6"
+        },
+        {
+            "name": "cocktail-umbrella6"
+        },
+        {
+            "name": "wine-umbrella6"
+        },
+        {
+            "name": "flute-umbrella6"
+        },
+        {
+            "name": "highball-olive"
+        },
+        {
+            "name": "shot-olive"
+        },
+        {
+            "name": "lowball-olive"
+        },
+        {
+            "name": "cocktail-olive"
+        },
+        {
+            "name": "wine-olive"
+        },
+        {
+            "name": "flute-olive"
+        },
+        {
+            "name": "highball-cherry"
+        },
+        {
+            "name": "shot-cherry"
+        },
+        {
+            "name": "lowball-cherry"
+        },
+        {
+            "name": "cocktail-cherry"
+        },
+        {
+            "name": "wine-cherry"
+        },
+        {
+            "name": "flute-cherry"
+        },
+        {
+            "name": "highball-celery"
+        },
+        {
+            "name": "shot-celery"
+        },
+        {
+            "name": "lowball-celery"
+        },
+        {
+            "name": "cocktail-celery"
+        },
+        {
+            "name": "wine-celery"
+        },
+        {
+            "name": "flute-celery"
+        },
+        {
+            "name": "highball-lemon"
+        },
+        {
+            "name": "shot-lemon"
+        },
+        {
+            "name": "lowball-lemon"
+        },
+        {
+            "name": "cocktail-lemon"
+        },
+        {
+            "name": "wine-lemon"
+        },
+        {
+            "name": "flute-lemon"
+        },
+        {
+            "name": "highball-lime"
+        },
+        {
+            "name": "shot-lime"
+        },
+        {
+            "name": "lowball-lime"
+        },
+        {
+            "name": "cocktail-lime"
+        },
+        {
+            "name": "wine-lime"
+        },
+        {
+            "name": "flute-lime"
+        },
+        {
+            "name": "highball-orange"
+        },
+        {
+            "name": "shot-orange"
+        },
+        {
+            "name": "lowball-orange"
+        },
+        {
+            "name": "cocktail-orange"
+        },
+        {
+            "name": "wine-orange"
+        },
+        {
+            "name": "flute-orange"
+        },
+        {
+            "name": "highball-salted"
+        },
+        {
+            "name": "shot-salted"
+        },
+        {
+            "name": "lowball-salted"
+        },
+        {
+            "name": "cocktail-salted"
+        },
+        {
+            "name": "wine-salted"
+        },
+        {
+            "name": "flute-salted"
+        },
+        {
+            "name": "canteen_soviet"
+        },
+        {
+            "name": "canteen_german"
+        },
+        {
+            "name": "oldstyle_beer"
+        },
+        {
+            "name": "oldstyle_rum"
+        },
+        {
+            "name": "oldstyle_rum_empty"
+        },
+        {
+            "name": "oldstyle_beer_empty"
+        },
+        {
+            "name": "wood_cup2"
+        },
+        {
+            "name": "fluid-mug"
+        },
+        {
+            "name": "fluid-pot"
+        },
+        {
+            "name": "tribalpot"
+        },
+        {
+            "name": "tribalpot_empty"
+        },
+        {
+            "name": "wood_cup"
+        },
+        {
+            "name": "tankard"
+        },
+        {
+            "name": "oldstyle_beer1"
+        },
+        {
+            "name": "oldstyle_beer_empty1"
+        },
+        {
+            "name": "amphora"
+        },
+        {
+            "name": "fluid-amphora"
+        },
+        {
+            "name": "fluid-claywinecup"
+        },
+        {
+            "name": "fluid-claybowl"
+        },
+        {
+            "name": "fluid-claycup"
+        },
+        {
+            "name": "fluid-claypitcher"
+        },
+        {
+            "name": "sake_closed"
+        },
+        {
+            "name": "sake"
+        },
+        {
+            "name": "sake_empty"
+        },
+        {
+            "name": "canteen_jap"
+        },
+        {
+            "name": "canteen_us"
+        },
+        {
+            "name": "beermug"
+        },
+        {
+            "name": "beermug_fancy"
+        },
+        {
+            "name": "bud"
+        },
+        {
+            "name": "bud_empty"
+        },
+        {
+            "name": "monster"
+        },
+        {
+            "name": "monster_empty"
+        },
+        {
+            "name": "mead"
+        },
+        {
+            "name": "mead_open"
+        },
+        {
+            "name": "wine"
+        },
+        {
+            "name": "wine_open"
+        },
+        {
+            "name": "health_vigor"
+        },
+        {
+            "name": "health_minor"
+        },
+        {
+            "name": "health_potion"
+        },
+        {
+            "name": "health_plentiful"
+        },
+        {
+            "name": "stamina_minor"
+        },
+        {
+            "name": "stamina_vigor"
+        },
+        {
+            "name": "stamina_plentiful"
+        },
+        {
+            "name": "jar0"
+        },
+        {
+            "name": "jar1"
+        },
+        {
+            "name": "jar2"
+        },
+        {
+            "name": "jar3"
+        },
+        {
+            "name": "jar4"
+        },
+        {
+            "name": "jar5"
+        },
+        {
+            "name": "jarF"
+        },
+        {
+            "name": "jarG"
+        },
+        {
+            "name": "milk"
+        }
+    ]
+}

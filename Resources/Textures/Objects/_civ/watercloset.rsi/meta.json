@@ -1,0 +1,186 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "urinal",
+      "directions": 4
+    },
+    {
+      "name": "toilet00",
+      "directions": 4
+    },
+    {
+      "name": "toilet10",
+      "directions": 4
+    },
+    {
+      "name": "toilet01",
+      "directions": 4
+    },
+    {
+      "name": "toilet11",
+      "directions": 4
+    },
+    {
+      "name": "shower",
+      "directions": 4
+    },
+    {
+      "name": "water",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "mist"
+    },
+    {
+      "name": "rubberducky"
+    },
+    {
+      "name": "sink",
+      "directions": 4
+    },
+    {
+      "name": "sink_alt",
+      "directions": 4
+    },
+    {
+      "name": "puddle"
+    },
+    {
+      "name": "puddle-splash",
+      "delays": [
+        [
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "mirror"
+    },
+    {
+      "name": "mirror_broke"
+    },
+    {
+      "name": "well0"
+    },
+    {
+      "name": "well1"
+    },
+    {
+      "name": "puddle_dry"
+    },
+    {
+      "name": "well_dry"
+    },
+    {
+      "name": "oil_spring1"
+    },
+    {
+      "name": "oil_spring0"
+    },
+    {
+      "name": "pit_latrine1"
+    },
+    {
+      "name": "pit_latrine2"
+    },
+    {
+      "name": "pit_latrine3"
+    },
+    {
+      "name": "outhouse_closed"
+    },
+    {
+      "name": "outhouse_open"
+    },
+    {
+      "name": "outhouse_male_closed"
+    },
+    {
+      "name": "outhouse_male_open"
+    },
+    {
+      "name": "outhouse_female_closed"
+    },
+    {
+      "name": "outhouse_female_open"
+    },
+    {
+      "name": "sandstone_well0"
+    },
+    {
+      "name": "sandstone_well1"
+    },
+    {
+      "name": "sandstone_well_dry"
+    },
+    {
+      "name": "obsidian_mirror"
+    },
+    {
+      "name": "obsidian_mirror_broke"
+    },
+    {
+      "name": "pump_s"
+    },
+    {
+      "name": "pump_b_animated",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "pump_b"
+    },
+    {
+      "name": "pump_b_filled"
+    },
+    {
+      "name": "marble_well0"
+    },
+    {
+      "name": "marble_well1"
+    },
+    {
+      "name": "marble_well_dry"
+    }
+  ]
+}

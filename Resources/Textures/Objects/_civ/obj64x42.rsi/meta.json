@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "size": {
+    "x": 64,
+    "y": 42
+  },
+  "states": [
+    {
+      "name": "car1"
+    },
+    {
+      "name": "car2"
+    },
+    {
+      "name": "car3"
+    }
+  ]
+}

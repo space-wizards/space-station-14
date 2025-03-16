@@ -90,6 +90,7 @@
           Log:
             min: 2
             max: 8
+  - type: TreeBranches
 
 - type: entity
   parent: BaseTree

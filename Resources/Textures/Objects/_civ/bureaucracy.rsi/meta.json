@@ -1,0 +1,364 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "folder"
+    },
+    {
+      "name": "folder_red"
+    },
+    {
+      "name": "folder_blue"
+    },
+    {
+      "name": "folder_yellow"
+    },
+    {
+      "name": "folder_white"
+    },
+    {
+      "name": "folder_black"
+    },
+    {
+      "name": "folder_sred"
+    },
+    {
+      "name": "folder_sblue"
+    },
+    {
+      "name": "folder_paper"
+    },
+    {
+      "name": "clipboard"
+    },
+    {
+      "name": "clipboard_over"
+    },
+    {
+      "name": "clipboard_pen"
+    },
+    {
+      "name": "paper_bin0"
+    },
+    {
+      "name": "paper_bin1"
+    },
+    {
+      "name": "paper"
+    },
+    {
+      "name": "paper_words"
+    },
+    {
+      "name": "paper_plane"
+    },
+    {
+      "name": "paper_stamp-qm"
+    },
+    {
+      "name": "paper_stamp-cap"
+    },
+    {
+      "name": "paper_stamp-hop"
+    },
+    {
+      "name": "paper_stamp-ce"
+    },
+    {
+      "name": "paper_stamp-hos"
+    },
+    {
+      "name": "paper_stamp-rd"
+    },
+    {
+      "name": "paper_stamp-clown"
+    },
+    {
+      "name": "paper_stamp-cmo"
+    },
+    {
+      "name": "paper_stamp-deny"
+    },
+    {
+      "name": "paper_stamp-cent"
+    },
+    {
+      "name": "paper_stamp-intaff"
+    },
+    {
+      "name": "filingcabinet"
+    },
+    {
+      "name": "filingcabinet-open",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "chestdrawer"
+    },
+    {
+      "name": "chestdrawer-open",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "tallcabinet"
+    },
+    {
+      "name": "tallcabinet-open",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "newspaper"
+    },
+    {
+      "name": "scrap"
+    },
+    {
+      "name": "scrap_bloodied"
+    },
+    {
+      "name": "stamp-intaff"
+    },
+    {
+      "name": "paper_bin2"
+    },
+    {
+      "name": "paper_stack"
+    },
+    {
+      "name": "paper_stack_words"
+    },
+    {
+      "name": "paper_stamp-circle"
+    },
+    {
+      "name": "paper_stamp-dots"
+    },
+    {
+      "name": "paper_stamp-x"
+    },
+    {
+      "name": "paper_taped"
+    },
+    {
+      "name": "paper_words_taped"
+    },
+    {
+      "name": "scrap_taped"
+    },
+    {
+      "name": "scrap_bloodied_taped"
+    },
+    {
+      "name": "paper_stack_taped"
+    },
+    {
+      "name": "paper_stack_words_taped"
+    },
+    {
+      "name": "stamp-rn"
+    },
+    {
+      "name": "stamp-fr"
+    },
+    {
+      "name": "stamp-es"
+    },
+    {
+      "name": "stamp-nl"
+    },
+    {
+      "name": "stamp-pt"
+    },
+    {
+      "name": "paper_stamp-rn"
+    },
+    {
+      "name": "paper_stamp-pt"
+    },
+    {
+      "name": "paper_stamp-fr"
+    },
+    {
+      "name": "paper_stamp-es"
+    },
+    {
+      "name": "paper_stamp-nl"
+    },
+    {
+      "name": "stamp_blank"
+    },
+    {
+      "name": "stamp-hos"
+    },
+    {
+      "name": "stamp-hop"
+    },
+    {
+      "name": "stamp-cap"
+    },
+    {
+      "name": "stamp-qm"
+    },
+    {
+      "name": "stamp-deny"
+    },
+    {
+      "name": "stamp-ce"
+    },
+    {
+      "name": "stamp-rd"
+    },
+    {
+      "name": "stamp-clown"
+    },
+    {
+      "name": "stamp-cmo"
+    },
+    {
+      "name": "stamp-cent"
+    },
+    {
+      "name": "ink"
+    },
+    {
+      "name": "pen"
+    },
+    {
+      "name": "scrollpaper0"
+    },
+    {
+      "name": "scrollpaper1"
+    },
+    {
+      "name": "scrollpaper1_scrapX"
+    },
+    {
+      "name": "scrollpaper0_scrap"
+    },
+    {
+      "name": "scrollpaper1X"
+    },
+    {
+      "name": "scrollpaper1_scrap"
+    },
+    {
+      "name": "scrollpaper0_scrapX"
+    },
+    {
+      "name": "scrollpaper0X"
+    },
+    {
+      "name": "passport"
+    },
+    {
+      "name": "visa1"
+    },
+    {
+      "name": "visa0"
+    },
+    {
+      "name": "pencil"
+    },
+    {
+      "name": "pennew"
+    },
+    {
+      "name": "fancypen"
+    },
+    {
+      "name": "photo"
+    },
+    {
+      "name": "album"
+    },
+    {
+      "name": "disk_red"
+    },
+    {
+      "name": "disk_blue"
+    },
+    {
+      "name": "disk_yellow"
+    },
+    {
+      "name": "disk_green"
+    },
+    {
+      "name": "disk_black"
+    },
+    {
+      "name": "deliverypackage"
+    },
+    {
+      "name": "police_record"
+    },
+    {
+      "name": "police_warrant"
+    },
+    {
+      "name": "disk_uos0"
+    },
+    {
+      "name": "disk_uos94"
+    },
+    {
+      "name": "Colonial_Paper"
+    },
+    {
+      "name": "Colonial_Paper_Empty"
+    },
+    {
+      "name": "Decree"
+    },
+    {
+      "name": "Decree_empty"
+    },
+    {
+      "name": "Decree_Overlay_1"
+    },
+    {
+      "name": "Decree_Overlay_2"
+    },
+    {
+      "name": "Colonial_Poster_1"
+    },
+    {
+      "name": "Colonial_Poster_2"
+    },
+    {
+      "name": "tape"
+    },
+    {
+      "name": "taperoll"
+    },
+    {
+      "name": "drivers_license"
+    }
+  ]
+}

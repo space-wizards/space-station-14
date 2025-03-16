@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "static_engine"
+    },
+    {
+      "name": "static_engine_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "hotbulb_static"
+    },
+    {
+      "name": "hotbulb_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

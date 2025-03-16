@@ -1,0 +1,198 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "condiment_label1"
+    },
+    {
+      "name": "condiment_label2"
+    },
+    {
+      "name": "condiment"
+    },
+    {
+      "name": "fluid-condiment"
+    },
+    {
+      "name": "cola_label1"
+    },
+    {
+      "name": "cola_label2"
+    },
+    {
+      "name": "cola"
+    },
+    {
+      "name": "fluid-cola"
+    },
+    {
+      "name": "fastfoodcup"
+    },
+    {
+      "name": "fastfoodcup_label1"
+    },
+    {
+      "name": "fastfoodcup_label2"
+    },
+    {
+      "name": "carton_label2"
+    },
+    {
+      "name": "carton_label1"
+    },
+    {
+      "name": "gallonjug_label2"
+    },
+    {
+      "name": "gallonjug_label1"
+    },
+    {
+      "name": "tincan_lid"
+    },
+    {
+      "name": "tincan_can"
+    },
+    {
+      "name": "tincan_stripes"
+    },
+    {
+      "name": "tincan_fruit"
+    },
+    {
+      "name": "tincan_cross"
+    },
+    {
+      "name": "tincan_e"
+    },
+    {
+      "name": "tincan_f"
+    },
+    {
+      "name": "tincan_t"
+    },
+    {
+      "name": "tincan_a"
+    },
+    {
+      "name": "tincan_w"
+    },
+    {
+      "name": "tincan_p"
+    },
+    {
+      "name": "tincan_m"
+    },
+    {
+      "name": "tincan_0"
+    },
+    {
+      "name": "tincan_1"
+    },
+    {
+      "name": "tincan_2"
+    },
+    {
+      "name": "tincan_3"
+    },
+    {
+      "name": "tincan_4"
+    },
+    {
+      "name": "tincan_5"
+    },
+    {
+      "name": "tincan_crown"
+    },
+    {
+      "name": "tincan_dot"
+    },
+    {
+      "name": "tincan_pattern1"
+    },
+    {
+      "name": "tincan_face"
+    },
+    {
+      "name": "tincan_smile"
+    },
+    {
+      "name": "tincan_pattern2"
+    },
+    {
+      "name": "tincan_frown"
+    },
+    {
+      "name": "tincan_moon"
+    },
+    {
+      "name": "tincan_sun"
+    },
+    {
+      "name": "tallcan"
+    },
+    {
+      "name": "tallcan_label2"
+    },
+    {
+      "name": "tallcan_label1"
+    },
+    {
+      "name": "sodacan"
+    },
+    {
+      "name": "sodacan_label1"
+    },
+    {
+      "name": "sodacan_label2"
+    },
+    {
+      "name": "foodbox_label2"
+    },
+    {
+      "name": "foodbox_label1"
+    },
+    {
+      "name": "foodbox"
+    },
+    {
+      "name": "fancybeer_label1"
+    },
+    {
+      "name": "fancybeer_label2"
+    },
+    {
+      "name": "fancybeer"
+    },
+    {
+      "name": "fluid-fancybeer"
+    },
+    {
+      "name": "normalbeer"
+    },
+    {
+      "name": "normalbeer_label1"
+    },
+    {
+      "name": "normalbeer_label2"
+    },
+    {
+      "name": "fluid-normalbeer"
+    },
+    {
+      "name": "chippack_label1"
+    },
+    {
+      "name": "chippack_label2"
+    },
+    {
+      "name": "chippack"
+    },
+    {
+      "name": "chippack_ov"
+    }
+  ]
+}

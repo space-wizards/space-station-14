@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "w_cart_c"
+    },
+    {
+      "name": "w_cart_o"
+    },
+    {
+      "name": "s_cart_c"
+    },
+    {
+      "name": "s_cart_o"
+    },
+    {
+      "name": "c_cart_c"
+    },
+    {
+      "name": "c_cart_o"
+    },
+    {
+      "name": "b_cart_c"
+    },
+    {
+      "name": "b_cart_o"
+    },
+    {
+      "name": "st_cart_c"
+    },
+    {
+      "name": "st_cart_o"
+    }
+  ]
+}

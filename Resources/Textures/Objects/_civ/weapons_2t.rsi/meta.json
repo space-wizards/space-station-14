@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "size": {
+    "x": 64,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "sarissa",
+      "directions": 4
+    }
+  ]
+}

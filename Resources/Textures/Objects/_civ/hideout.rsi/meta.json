@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pine_closed"
+    },
+    {
+      "name": "pine_open"
+    },
+    {
+      "name": "autumn_closed"
+    },
+    {
+      "name": "autumn_open"
+    },
+    {
+      "name": "beach_closed"
+    },
+    {
+      "name": "beach_open"
+    }
+  ]
+}

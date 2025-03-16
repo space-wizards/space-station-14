@@ -1,0 +1,192 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "Junk_1"
+    },
+    {
+      "name": "Junk_2"
+    },
+    {
+      "name": "Junk_3"
+    },
+    {
+      "name": "Junk_4"
+    },
+    {
+      "name": "Junk_5"
+    },
+    {
+      "name": "Junk_6"
+    },
+    {
+      "name": "Junk_7"
+    },
+    {
+      "name": "Junk_8"
+    },
+    {
+      "name": "Junk_9"
+    },
+    {
+      "name": "Junk_10"
+    },
+    {
+      "name": "Junk_11"
+    },
+    {
+      "name": "Junk_12"
+    },
+    {
+      "name": "Junk_13"
+    },
+    {
+      "name": "Junk_14"
+    },
+    {
+      "name": "radiator",
+      "directions": 4
+    },
+    {
+      "name": "bathtub"
+    },
+    {
+      "name": "coatrack"
+    },
+    {
+      "name": "jerseybarrier1X",
+      "directions": 4
+    },
+    {
+      "name": "jerseybarrier2X",
+      "directions": 4
+    },
+    {
+      "name": "jerseybarrier1",
+      "directions": 4
+    },
+    {
+      "name": "jerseybarrier2",
+      "directions": 4
+    },
+    {
+      "name": "mailbox"
+    },
+    {
+      "name": "promosign"
+    },
+    {
+      "name": "shelf1"
+    },
+    {
+      "name": "shelf2"
+    },
+    {
+      "name": "shelf3"
+    },
+    {
+      "name": "buysign"
+    },
+    {
+      "name": "hescobastion"
+    },
+    {
+      "name": "shelf0-old"
+    },
+    {
+      "name": "shelf0"
+    },
+    {
+      "name": "palette"
+    },
+    {
+      "name": "palette_alt"
+    },
+    {
+      "name": "sofa_forward_left"
+    },
+    {
+      "name": "sofa_forward_right"
+    },
+    {
+      "name": "sofa_bottom_left"
+    },
+    {
+      "name": "sofa_bottom_right"
+    },
+    {
+      "name": "sofa_back_corner_right"
+    },
+    {
+      "name": "sofa_back_corner_left"
+    },
+    {
+      "name": "sofa_back_left"
+    },
+    {
+      "name": "sofa_back_right"
+    },
+    {
+      "name": "sofa_forward_corner_left"
+    },
+    {
+      "name": "sofa_forward_corner_right"
+    },
+    {
+      "name": "sofa_forward"
+    },
+    {
+      "name": "sofa_backward"
+    },
+    {
+      "name": "sofa_left"
+    },
+    {
+      "name": "sofa_right"
+    },
+    {
+      "name": "sofa_top_left"
+    },
+    {
+      "name": "sofa_top_right"
+    },
+    {
+      "name": "custsofaend_left",
+      "directions": 4
+    },
+    {
+      "name": "custsofaend_right",
+      "directions": 4
+    },
+    {
+      "name": "custsofa_middle",
+      "directions": 4
+    },
+    {
+      "name": "custsofacorner",
+      "directions": 4
+    },
+    {
+      "name": "barrel1"
+    },
+    {
+      "name": "barrel2"
+    },
+    {
+      "name": "barrel3"
+    },
+    {
+      "name": "barrel4"
+    },
+    {
+      "name": "barrel5"
+    }
+  ]
+}

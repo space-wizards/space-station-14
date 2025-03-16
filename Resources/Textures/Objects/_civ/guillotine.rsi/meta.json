@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "guillotine_raised"
+    },
+    {
+      "name": "guillotine_drop",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "guillotine"
+    },
+    {
+      "name": "guillotine_raise",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "guillotine_bloody_overlay"
+    },
+    {
+      "name": "guillotine_bloodier_overlay"
+    },
+    {
+      "name": "guillotine_bloodiest_overlay"
+    }
+  ]
+}

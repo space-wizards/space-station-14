@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "railing1",
+      "directions": 4
+    },
+    {
+      "name": "railing0",
+      "directions": 4
+    },
+    {
+      "name": "corneroverlay",
+      "directions": 4
+    },
+    {
+      "name": "frontoverlay_l",
+      "directions": 4
+    },
+    {
+      "name": "frontoverlay_r",
+      "directions": 4
+    },
+    {
+      "name": "mcorneroverlay",
+      "directions": 4
+    },
+    {
+      "name": "sandstone",
+      "directions": 4
+    },
+    {
+      "name": "stone",
+      "directions": 4
+    },
+    {
+      "name": "brick",
+      "directions": 4
+    },
+    {
+      "name": "brickhalf",
+      "directions": 4
+    }
+  ]
+}

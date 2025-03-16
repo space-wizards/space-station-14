@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "size": {
+    "x": 96,
+    "y": 96
+  },
+  "states": [
+    {
+      "name": "circle",
+      "directions": 4
+    },
+    {
+      "name": "casino",
+      "delays": [
+        [
+          0.5,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.5,
+          0.3,
+          0.9,
+          0.3,
+          0.9
+        ]
+      ]
+    },
+    {
+      "name": "waterpump"
+    },
+    {
+      "name": "crane",
+      "directions": 4
+    },
+    {
+      "name": "container1"
+    },
+    {
+      "name": "container2"
+    },
+    {
+      "name": "container3"
+    },
+    {
+      "name": "container4"
+    },
+    {
+      "name": "container5"
+    },
+    {
+      "name": "excavator",
+      "directions": 4
+    },
+    {
+      "name": "fueltank"
+    }
+  ]
+}

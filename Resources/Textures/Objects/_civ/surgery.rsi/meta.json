@@ -1,0 +1,244 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "innards"
+    },
+    {
+      "name": "roro core"
+    },
+    {
+      "name": "heart-off"
+    },
+    {
+      "name": "heart-on",
+      "delays": [
+        [
+          0.6,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "eyes"
+    },
+    {
+      "name": "brain"
+    },
+    {
+      "name": "brain-alt"
+    },
+    {
+      "name": "brain-x"
+    },
+    {
+      "name": "brain-x-d"
+    },
+    {
+      "name": "heart-x"
+    },
+    {
+      "name": "liver"
+    },
+    {
+      "name": "liver-x"
+    },
+    {
+      "name": "kidneys"
+    },
+    {
+      "name": "kidneys-x"
+    },
+    {
+      "name": "stomach"
+    },
+    {
+      "name": "stomach-x"
+    },
+    {
+      "name": "lungs"
+    },
+    {
+      "name": "lungs-x"
+    },
+    {
+      "name": "appendix"
+    },
+    {
+      "name": "appendixinflamed"
+    },
+    {
+      "name": "blacktumor"
+    },
+    {
+      "name": "r_arm",
+      "directions": 4
+    },
+    {
+      "name": "l_arm",
+      "directions": 4
+    },
+    {
+      "name": "head",
+      "directions": 4
+    },
+    {
+      "name": "r_leg",
+      "directions": 4
+    },
+    {
+      "name": "l_leg",
+      "directions": 4
+    },
+    {
+      "name": "chest",
+      "directions": 4
+    },
+    {
+      "name": "medical_bottle1"
+    },
+    {
+      "name": "medical_bottle2"
+    },
+    {
+      "name": "operating_table"
+    },
+    {
+      "name": "beakerlarge100"
+    },
+    {
+      "name": "iv_drip"
+    },
+    {
+      "name": "iv_drip_unhooked"
+    },
+    {
+      "name": "reagent100"
+    },
+    {
+      "name": "reagent80"
+    },
+    {
+      "name": "reagent75"
+    },
+    {
+      "name": "reagent50"
+    },
+    {
+      "name": "reagent25"
+    },
+    {
+      "name": "reagent10"
+    },
+    {
+      "name": "reagent0"
+    },
+    {
+      "name": "bp_full"
+    },
+    {
+      "name": "bp_half"
+    },
+    {
+      "name": "bp_empty"
+    },
+    {
+      "name": "pill_pack"
+    },
+    {
+      "name": "pill_pack6"
+    },
+    {
+      "name": "pill_pack5"
+    },
+    {
+      "name": "pill_pack4"
+    },
+    {
+      "name": "pill_pack3"
+    },
+    {
+      "name": "pill_pack2"
+    },
+    {
+      "name": "pill_pack1"
+    },
+    {
+      "name": "pill_pack0"
+    },
+    {
+      "name": "scalpel"
+    },
+    {
+      "name": "saw"
+    },
+    {
+      "name": "saw2"
+    },
+    {
+      "name": "saw3"
+    },
+    {
+      "name": "retractor"
+    },
+    {
+      "name": "hemostat"
+    },
+    {
+      "name": "bone setter"
+    },
+    {
+      "name": "cautery"
+    },
+    {
+      "name": "drill"
+    },
+    {
+      "name": "bronze_scalpel"
+    },
+    {
+      "name": "bronze_bonesaw"
+    },
+    {
+      "name": "bronze_retractor"
+    },
+    {
+      "name": "bronze_hemostat"
+    },
+    {
+      "name": "bronze_bonesetter"
+    },
+    {
+      "name": "bronze_cautery"
+    },
+    {
+      "name": "trauma_kit"
+    },
+    {
+      "name": "burn_kit"
+    },
+    {
+      "name": "leatherbandage"
+    },
+    {
+      "name": "bint"
+    },
+    {
+      "name": "gauze"
+    },
+    {
+      "name": "sulfa"
+    },
+    {
+      "name": "healing_herbs"
+    },
+    {
+      "name": "revival"
+    }
+  ]
+}

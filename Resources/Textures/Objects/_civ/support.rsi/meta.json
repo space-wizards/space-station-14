@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "supplybook"
+    },
+    {
+      "name": "supplybook2"
+    },
+    {
+      "name": "bear"
+    },
+    {
+      "name": "mouse"
+    },
+    {
+      "name": "wolf"
+    },
+    {
+      "name": "goose"
+    },
+    {
+      "name": "turkey"
+    },
+    {
+      "name": "monkey"
+    },
+    {
+      "name": "cross"
+    }
+  ]
+}

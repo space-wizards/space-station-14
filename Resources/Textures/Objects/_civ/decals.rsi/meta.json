@@ -1,0 +1,1005 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "",
+      "delays": [
+        [
+          0.120000005,
+          0.120000005,
+          0.120000005,
+          0.120000005
+        ]
+      ]
+    },
+    {
+      "name": "securearea"
+    },
+    {
+      "name": "goldenplaque"
+    },
+    {
+      "name": "atmosplaque"
+    },
+    {
+      "name": "kiddieplaque"
+    },
+    {
+      "name": "medal"
+    },
+    {
+      "name": "redcross"
+    },
+    {
+      "name": "greencross"
+    },
+    {
+      "name": "medical_flag"
+    },
+    {
+      "name": "medical_flag_crescent"
+    },
+    {
+      "name": "medical_flag_crystal"
+    },
+    {
+      "name": "clock"
+    },
+    {
+      "name": "n1"
+    },
+    {
+      "name": "n2"
+    },
+    {
+      "name": "n3"
+    },
+    {
+      "name": "n4"
+    },
+    {
+      "name": "n5"
+    },
+    {
+      "name": "n6"
+    },
+    {
+      "name": "customsign"
+    },
+    {
+      "name": "customsign2"
+    },
+    {
+      "name": "woodsign"
+    },
+    {
+      "name": "woodsign2"
+    },
+    {
+      "name": "CUSTOM FLAGS"
+    },
+    {
+      "name": "red_banner"
+    },
+    {
+      "name": "green_banner"
+    },
+    {
+      "name": "red_banner2"
+    },
+    {
+      "name": "blue_banner"
+    },
+    {
+      "name": "blue_banner2"
+    },
+    {
+      "name": "templar_banner1"
+    },
+    {
+      "name": "templar_banner2"
+    },
+    {
+      "name": "jihad1"
+    },
+    {
+      "name": "jihad2"
+    },
+    {
+      "name": "jihad3"
+    },
+    {
+      "name": "jihad4"
+    },
+    {
+      "name": "f_black"
+    },
+    {
+      "name": "fl_black"
+    },
+    {
+      "name": "f1_black"
+    },
+    {
+      "name": "fr_black"
+    },
+    {
+      "name": "f2_black"
+    },
+    {
+      "name": "f3_black"
+    },
+    {
+      "name": "f_red"
+    },
+    {
+      "name": "fl_red"
+    },
+    {
+      "name": "fr_red"
+    },
+    {
+      "name": "f1_red"
+    },
+    {
+      "name": "f2_red"
+    },
+    {
+      "name": "f3_red"
+    },
+    {
+      "name": "f_green"
+    },
+    {
+      "name": "fl_green"
+    },
+    {
+      "name": "fr_green"
+    },
+    {
+      "name": "f1_green"
+    },
+    {
+      "name": "f2_green"
+    },
+    {
+      "name": "f3_green"
+    },
+    {
+      "name": "e_moon0"
+    },
+    {
+      "name": "e_cross0"
+    },
+    {
+      "name": "e_star0"
+    },
+    {
+      "name": "e_moon1"
+    },
+    {
+      "name": "e_cross1"
+    },
+    {
+      "name": "e_star1"
+    },
+    {
+      "name": "e_moon2"
+    },
+    {
+      "name": "e_cross2"
+    },
+    {
+      "name": "e_star2"
+    },
+    {
+      "name": "f_blue"
+    },
+    {
+      "name": "fl_blue"
+    },
+    {
+      "name": "fr_blue"
+    },
+    {
+      "name": "f1_blue"
+    },
+    {
+      "name": "f2_blue"
+    },
+    {
+      "name": "f3_blue"
+    },
+    {
+      "name": "f_white"
+    },
+    {
+      "name": "fl_white"
+    },
+    {
+      "name": "fr_white"
+    },
+    {
+      "name": "f1_white"
+    },
+    {
+      "name": "f2_white"
+    },
+    {
+      "name": "f3_white"
+    },
+    {
+      "name": "f_yellow"
+    },
+    {
+      "name": "fl_yellow"
+    },
+    {
+      "name": "fr_yellow"
+    },
+    {
+      "name": "f1_yellow"
+    },
+    {
+      "name": "f2_yellow"
+    },
+    {
+      "name": "f3_yellow"
+    },
+    {
+      "name": "flagmaker"
+    },
+    {
+      "name": "e_circle0"
+    },
+    {
+      "name": "e_sun0"
+    },
+    {
+      "name": "e_sun1"
+    },
+    {
+      "name": "e_bigcross0"
+    },
+    {
+      "name": "e_bigcross1"
+    },
+    {
+      "name": "e_bigcross2"
+    },
+    {
+      "name": "e_bigcross3"
+    },
+    {
+      "name": "e_bigcross4"
+    },
+    {
+      "name": "e_saltire0"
+    },
+    {
+      "name": "e_saltire1"
+    },
+    {
+      "name": "e_saltire2"
+    },
+    {
+      "name": "e_saltire3"
+    },
+    {
+      "name": "e_saltire4"
+    },
+    {
+      "name": "e_peace0"
+    },
+    {
+      "name": "e_peace1"
+    },
+    {
+      "name": "e_skull0"
+    },
+    {
+      "name": "PAINTINGS \u0026 SIGNS"
+    },
+    {
+      "name": "painting1"
+    },
+    {
+      "name": "painting2"
+    },
+    {
+      "name": "painting3"
+    },
+    {
+      "name": "painting4"
+    },
+    {
+      "name": "painting5"
+    },
+    {
+      "name": "painting6"
+    },
+    {
+      "name": "painting7"
+    },
+    {
+      "name": "cone2",
+      "directions": 4
+    },
+    {
+      "name": "painting8"
+    },
+    {
+      "name": "painting9"
+    },
+    {
+      "name": "painting10"
+    },
+    {
+      "name": "painting11"
+    },
+    {
+      "name": "painting12"
+    },
+    {
+      "name": "painting13"
+    },
+    {
+      "name": "hitler"
+    },
+    {
+      "name": "stalin"
+    },
+    {
+      "name": "lenin"
+    },
+    {
+      "name": "hirohito"
+    },
+    {
+      "name": "kinggeorgev"
+    },
+    {
+      "name": "orthodox1"
+    },
+    {
+      "name": "orthodox2"
+    },
+    {
+      "name": "orthodox3"
+    },
+    {
+      "name": "khalif_ali1"
+    },
+    {
+      "name": "khalif_ali2"
+    },
+    {
+      "name": "exit",
+      "directions": 4
+    },
+    {
+      "name": "direction",
+      "directions": 4
+    },
+    {
+      "name": "zebracrossing",
+      "directions": 4
+    },
+    {
+      "name": "yeld"
+    },
+    {
+      "name": "stop"
+    },
+    {
+      "name": "donotenter"
+    },
+    {
+      "name": "parking"
+    },
+    {
+      "name": "cafesign"
+    },
+    {
+      "name": "gasolinesign"
+    },
+    {
+      "name": "humansign"
+    },
+    {
+      "name": "waysign"
+    },
+    {
+      "name": "zebra",
+      "directions": 4
+    },
+    {
+      "name": "centralline",
+      "directions": 4
+    },
+    {
+      "name": "sideline",
+      "directions": 4
+    },
+    {
+      "name": "cone",
+      "directions": 4
+    },
+    {
+      "name": "cone1",
+      "directions": 4
+    },
+    {
+      "name": "radiation"
+    },
+    {
+      "name": "radiation_l"
+    },
+    {
+      "name": "bailypost"
+    },
+    {
+      "name": "bailypost2"
+    },
+    {
+      "name": "armory1"
+    },
+    {
+      "name": "barsign"
+    },
+    {
+      "name": "reich"
+    },
+    {
+      "name": "signpost_pole"
+    },
+    {
+      "name": "signpost_east"
+    },
+    {
+      "name": "signpost_south"
+    },
+    {
+      "name": "signpost_north"
+    },
+    {
+      "name": "signpost_west"
+    },
+    {
+      "name": "map_board"
+    },
+    {
+      "name": "areamap"
+    },
+    {
+      "name": "portable_areamap"
+    },
+    {
+      "name": "red_logo"
+    },
+    {
+      "name": "green_logo"
+    },
+    {
+      "name": "yellow_logo"
+    },
+    {
+      "name": "blue_logo"
+    },
+    {
+      "name": "Colonial_Sign"
+    },
+    {
+      "name": "farming"
+    },
+    {
+      "name": "wing1"
+    },
+    {
+      "name": "wing2"
+    },
+    {
+      "name": "wing3"
+    },
+    {
+      "name": "solitary"
+    },
+    {
+      "name": "COUNTRY FLAGS"
+    },
+    {
+      "name": "flag_un"
+    },
+    {
+      "name": "flag_france"
+    },
+    {
+      "name": "flag_uk"
+    },
+    {
+      "name": "flag_italy"
+    },
+    {
+      "name": "flag_ireland"
+    },
+    {
+      "name": "flag_denmark"
+    },
+    {
+      "name": "flag_germany"
+    },
+    {
+      "name": "flag_germany_republic"
+    },
+    {
+      "name": "flag_germany_east"
+    },
+    {
+      "name": "flag_nazi"
+    },
+    {
+      "name": "flag_usa"
+    },
+    {
+      "name": "flag_union"
+    },
+    {
+      "name": "flag_confederate"
+    },
+    {
+      "name": "flag_texas"
+    },
+    {
+      "name": "flag_1stcav"
+    },
+    {
+      "name": "flag_gadsen"
+    },
+    {
+      "name": "flag_australia"
+    },
+    {
+      "name": "flag_netherlands_old"
+    },
+    {
+      "name": "flag_netherlands"
+    },
+    {
+      "name": "flag_canada"
+    },
+    {
+      "name": "flag_sov"
+    },
+    {
+      "name": "flag_russia"
+    },
+    {
+      "name": "flag_russia_empire"
+    },
+    {
+      "name": "flag_rsfsr"
+    },
+    {
+      "name": "flag_russia_andreev"
+    },
+    {
+      "name": "flag_doncossack"
+    },
+    {
+      "name": "flag_terekcossack"
+    },
+    {
+      "name": "flag_makhno"
+    },
+    {
+      "name": "flag_russia_kornilov"
+    },
+    {
+      "name": "flag_sovfleet"
+    },
+    {
+      "name": "flag_vdv"
+    },
+    {
+      "name": "flag_sovair"
+    },
+    {
+      "name": "flag_sovborder"
+    },
+    {
+      "name": "flag_japan_empire"
+    },
+    {
+      "name": "flag_japan"
+    },
+    {
+      "name": "flag_vietnam"
+    },
+    {
+      "name": "flag_vietcong"
+    },
+    {
+      "name": "flag_fp_war"
+    },
+    {
+      "name": "flag_fp"
+    },
+    {
+      "name": "flag_china"
+    },
+    {
+      "name": "flag_chinacommie"
+    },
+    {
+      "name": "flag_mongolia"
+    },
+    {
+      "name": "flag_mongolia_communist"
+    },
+    {
+      "name": "pirate"
+    },
+    {
+      "name": "flag_chechen"
+    },
+    {
+      "name": "flag_bosnia"
+    },
+    {
+      "name": "flag_kosovo"
+    },
+    {
+      "name": "flag_albania"
+    },
+    {
+      "name": "flag_serbia"
+    },
+    {
+      "name": "flag_gns"
+    },
+    {
+      "name": "flag_ssg"
+    },
+    {
+      "name": "flag_romania"
+    },
+    {
+      "name": "flag_moldova"
+    },
+    {
+      "name": "flag_romania_soc"
+    },
+    {
+      "name": "flag_transnistria"
+    },
+    {
+      "name": "flag_czech"
+    },
+    {
+      "name": "flag_hungary"
+    },
+    {
+      "name": "flag_hungary_sov"
+    },
+    {
+      "name": "flag_hungary_kingdom"
+    },
+    {
+      "name": "flag_finland"
+    },
+    {
+      "name": "flag_poland"
+    },
+    {
+      "name": "flag_polandR"
+    },
+    {
+      "name": "flag_ukraine"
+    },
+    {
+      "name": "flag_vsu"
+    },
+    {
+      "name": "flag_ukraine_dnr"
+    },
+    {
+      "name": "flag_ukraine_lnr"
+    },
+    {
+      "name": "flag_ukraine_azov"
+    },
+    {
+      "name": "flag_ukraine_rightsector"
+    },
+    {
+      "name": "flag_ukraine_upa"
+    },
+    {
+      "name": "flag_chetnik"
+    },
+    {
+      "name": "flag_yugo"
+    },
+    {
+      "name": "flag_yugopart"
+    },
+    {
+      "name": "flag_cuba"
+    },
+    {
+      "name": "flag_colombia"
+    },
+    {
+      "name": "flag_colombia_farc"
+    },
+    {
+      "name": "flag_mexico"
+    },
+    {
+      "name": "flag_brazil"
+    },
+    {
+      "name": "flag_brazil_empire"
+    },
+    {
+      "name": "flag_paraguay"
+    },
+    {
+      "name": "flag_argentina"
+    },
+    {
+      "name": "flag_venezuela"
+    },
+    {
+      "name": "flag_bolivia"
+    },
+    {
+      "name": "flag_chile"
+    },
+    {
+      "name": "flag_peru"
+    },
+    {
+      "name": "flag_israel"
+    },
+    {
+      "name": "flag_hezbollah"
+    },
+    {
+      "name": "flag_taliban"
+    },
+    {
+      "name": "flag_isis"
+    },
+    {
+      "name": "flag_dra"
+    },
+    {
+      "name": "flag_iran"
+    },
+    {
+      "name": "flag_iraq"
+    },
+    {
+      "name": "flag_syria"
+    },
+    {
+      "name": "flag_syria_fsa"
+    },
+    {
+      "name": "flag_kurdistan"
+    },
+    {
+      "name": "flag_turkey"
+    },
+    {
+      "name": "flag_georgia"
+    },
+    {
+      "name": "flag_georgia_old"
+    },
+    {
+      "name": "flag_armenia"
+    },
+    {
+      "name": "flag_azerbaijan"
+    },
+    {
+      "name": "flag_india"
+    },
+    {
+      "name": "flag_pakistan"
+    },
+    {
+      "name": "flag_nigeria"
+    },
+    {
+      "name": "flag_ethiopia"
+    },
+    {
+      "name": "flag_warpact"
+    },
+    {
+      "name": "flag_warpact2"
+    },
+    {
+      "name": "flag_nato"
+    },
+    {
+      "name": "flag_redmenia"
+    },
+    {
+      "name": "flag_blugoslavia"
+    },
+    {
+      "name": "flag_greenistan"
+    },
+    {
+      "name": "flag_yellandia"
+    },
+    {
+      "name": "flag_arstotzka"
+    },
+    {
+      "name": "graffiti1"
+    },
+    {
+      "name": "graffiti2"
+    },
+    {
+      "name": "graffiti3"
+    },
+    {
+      "name": "barber",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "minefield"
+    },
+    {
+      "name": "mckellens"
+    },
+    {
+      "name": "mcd"
+    },
+    {
+      "name": "tfc"
+    },
+    {
+      "name": "weedshop",
+      "delays": [
+        [
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4
+        ]
+      ]
+    },
+    {
+      "name": "sheriff"
+    },
+    {
+      "name": "bank"
+    },
+    {
+      "name": "nosmoking"
+    },
+    {
+      "name": "nosmoking2"
+    },
+    {
+      "name": "restroom"
+    },
+    {
+      "name": "restroom_male"
+    },
+    {
+      "name": "restroom_female"
+    },
+    {
+      "name": "justice"
+    },
+    {
+      "name": "anatomy"
+    },
+    {
+      "name": "periodic"
+    },
+    {
+      "name": "open",
+      "delays": [
+        [
+          0.6,
+          0.6
+        ]
+      ]
+    },
+    {
+      "name": "gunshop",
+      "delays": [
+        [
+          0.3,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "deer_trophy"
+    },
+    {
+      "name": "gas",
+      "delays": [
+        [
+          0.3,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "flag_rebelalliance"
+    },
+    {
+      "name": "flag_galacticempire"
+    },
+    {
+      "name": "flag_cis"
+    },
+    {
+      "name": "flag_pysker"
+    },
+    {
+      "name": "unite"
+    },
+    {
+      "name": "repair"
+    },
+    {
+      "name": "care"
+    },
+    {
+      "name": "graffiti_grove"
+    },
+    {
+      "name": "graffiti_ballas"
+    },
+    {
+      "name": "xray_on"
+    },
+    {
+      "name": "xray_off"
+    },
+    {
+      "name": "sale"
+    },
+    {
+      "name": "wall_tv_l"
+    },
+    {
+      "name": "wall_tv_r"
+    }
+  ]
+}

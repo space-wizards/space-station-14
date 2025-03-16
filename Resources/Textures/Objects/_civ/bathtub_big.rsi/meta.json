@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "full_bathtub_overlay_2_2_b",
+      "delays": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "w_bathtub_b"
+    },
+    {
+      "name": "st_bathtub_b"
+    },
+    {
+      "name": "b_bathtub_b"
+    },
+    {
+      "name": "c_bathtub_b"
+    },
+    {
+      "name": "s_bathtub_b"
+    }
+  ]
+}

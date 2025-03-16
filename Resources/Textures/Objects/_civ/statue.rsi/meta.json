@@ -1,0 +1,248 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "",
+      "delays": [
+        [
+          0.120000005,
+          0.120000005,
+          0.120000005,
+          0.120000005
+        ]
+      ]
+    },
+    {
+      "name": "corgi"
+    },
+    {
+      "name": "human_female"
+    },
+    {
+      "name": "human_male",
+      "directions": 4
+    },
+    {
+      "name": "monkey"
+    },
+    {
+      "name": "human_male_base"
+    },
+    {
+      "name": "cl_king"
+    },
+    {
+      "name": "cl_medieval"
+    },
+    {
+      "name": "cl_toga"
+    },
+    {
+      "name": "cl_tunic"
+    },
+    {
+      "name": "cl_colonial"
+    },
+    {
+      "name": "cl_modern civilian"
+    },
+    {
+      "name": "cl_modern military"
+    },
+    {
+      "name": "obj_assault rifle"
+    },
+    {
+      "name": "obj_rifle"
+    },
+    {
+      "name": "obj_pistol"
+    },
+    {
+      "name": "obj_flag"
+    },
+    {
+      "name": "obj_spear"
+    },
+    {
+      "name": "obj_shield2"
+    },
+    {
+      "name": "obj_shield3"
+    },
+    {
+      "name": "obj_shield1"
+    },
+    {
+      "name": "obj_sword"
+    },
+    {
+      "name": "king_statue"
+    },
+    {
+      "name": "moai1_bottom"
+    },
+    {
+      "name": "moai2_bottom"
+    },
+    {
+      "name": "olmec_head"
+    },
+    {
+      "name": "moai2_top"
+    },
+    {
+      "name": "moai1_top"
+    },
+    {
+      "name": "templar_statue"
+    },
+    {
+      "name": "knight_statue"
+    },
+    {
+      "name": "aztec_statue"
+    },
+    {
+      "name": "fire_hydrant_steel"
+    },
+    {
+      "name": "fire_hydrant_red"
+    },
+    {
+      "name": "cl_templar"
+    },
+    {
+      "name": "cl_knight"
+    },
+    {
+      "name": "tikistatue2"
+    },
+    {
+      "name": "tikistatue1"
+    },
+    {
+      "name": "obelisk_bottom"
+    },
+    {
+      "name": "obelisk_top"
+    },
+    {
+      "name": "monumental_pillar_bottom"
+    },
+    {
+      "name": "monumental_pillar_top"
+    },
+    {
+      "name": "megalith_bottom"
+    },
+    {
+      "name": "megalith_top"
+    },
+    {
+      "name": "crucero_bottom"
+    },
+    {
+      "name": "crucero_top"
+    },
+    {
+      "name": "venus_bottom",
+      "directions": 4
+    },
+    {
+      "name": "venus_top",
+      "directions": 4
+    },
+    {
+      "name": "communist_santa_bottom"
+    },
+    {
+      "name": "communist_santa_top"
+    },
+    {
+      "name": "cthulu_bottom"
+    },
+    {
+      "name": "cthulu_top"
+    },
+    {
+      "name": "moloch_bottom"
+    },
+    {
+      "name": "moloch_top"
+    },
+    {
+      "name": "outsider_bottom"
+    },
+    {
+      "name": "outsider_top"
+    },
+    {
+      "name": "quangshi_bottom"
+    },
+    {
+      "name": "quangshi_top"
+    },
+    {
+      "name": "angel"
+    },
+    {
+      "name": "gargoyle"
+    },
+    {
+      "name": "saint_bottom"
+    },
+    {
+      "name": "saint_top"
+    },
+    {
+      "name": "sauron_bottom"
+    },
+    {
+      "name": "sauron_top"
+    },
+    {
+      "name": "reverse_sauron_top"
+    },
+    {
+      "name": "reverse_sauron_bottom"
+    },
+    {
+      "name": "great_ape_top"
+    },
+    {
+      "name": "great_ape_bottom"
+    },
+    {
+      "name": "wip_wolf_sw"
+    },
+    {
+      "name": "wip_wolf_se"
+    },
+    {
+      "name": "wip_wolf_nw"
+    },
+    {
+      "name": "wip_wolf_ne"
+    },
+    {
+      "name": "hoodedfigure_c"
+    },
+    {
+      "name": "hoodedfigure_l"
+    },
+    {
+      "name": "hoodedfigure_r"
+    },
+    {
+      "name": "runestone"
+    },
+    {
+      "name": "runestone_2"
+    }
+  ]
+}

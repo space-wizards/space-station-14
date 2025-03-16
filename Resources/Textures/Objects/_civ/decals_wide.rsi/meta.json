@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "size": {
+    "x": 64,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "stalingrad"
+    },
+    {
+      "name": "kandahar"
+    },
+    {
+      "name": "grestin"
+    },
+    {
+      "name": "carpet"
+    },
+    {
+      "name": "carpet2"
+    },
+    {
+      "name": "carpet3"
+    },
+    {
+      "name": "carpet4"
+    },
+    {
+      "name": "japsign"
+    },
+    {
+      "name": "japsign2"
+    },
+    {
+      "name": "japsign3"
+    },
+    {
+      "name": "japsign4"
+    },
+    {
+      "name": "japsign5"
+    },
+    {
+      "name": "japsign6"
+    },
+    {
+      "name": "court"
+    },
+    {
+      "name": "roulette"
+    },
+    {
+      "name": "roulette_spin",
+      "delays": [
+        [
+          0.01,
+          0.01,
+          0.01
+        ]
+      ]
+    },
+    {
+      "name": "townhall"
+    },
+    {
+      "name": "mugshot"
+    }
+  ]
+}

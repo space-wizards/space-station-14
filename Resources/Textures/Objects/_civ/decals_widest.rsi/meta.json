@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "size": {
+    "x": 128,
+    "y": 128
+  },
+  "states": [
+    {
+      "name": "circle",
+      "directions": 4
+    },
+    {
+      "name": "radome"
+    },
+    {
+      "name": "watts_tower"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "crayonred"
+    },
+    {
+      "name": "crayonorange"
+    },
+    {
+      "name": "crayonyellow"
+    },
+    {
+      "name": "crayongreen"
+    },
+    {
+      "name": "crayonblue"
+    },
+    {
+      "name": "crayonpurple"
+    },
+    {
+      "name": "crayonrainbow"
+    },
+    {
+      "name": "crayonmime"
+    },
+    {
+      "name": "crayonbox"
+    },
+    {
+      "name": "red"
+    },
+    {
+      "name": "orange"
+    },
+    {
+      "name": "yellow"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "blue"
+    },
+    {
+      "name": "purple"
+    }
+  ]
+}

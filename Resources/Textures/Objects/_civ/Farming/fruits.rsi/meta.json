@@ -1,0 +1,444 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "banana-grow1"
+    },
+    {
+      "name": "banana-grow2"
+    },
+    {
+      "name": "banana-grow3"
+    },
+    {
+      "name": "banana-grow4"
+    },
+    {
+      "name": "banana-grow5"
+    },
+    {
+      "name": "banana-grow6"
+    },
+    {
+      "name": "banana-harvest"
+    },
+    {
+      "name": "banana-dead"
+    },
+    {
+      "name": "apple-grow1"
+    },
+    {
+      "name": "apple-grow2"
+    },
+    {
+      "name": "apple-grow3"
+    },
+    {
+      "name": "apple-grow4"
+    },
+    {
+      "name": "apple-grow5"
+    },
+    {
+      "name": "apple-grow6"
+    },
+    {
+      "name": "apple-harvest"
+    },
+    {
+      "name": "apple-dead"
+    },
+    {
+      "name": "goldapple-harvest",
+      "delays": [
+        [
+          1.5,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "olives-grow1"
+    },
+    {
+      "name": "olives-grow2"
+    },
+    {
+      "name": "olives-grow3"
+    },
+    {
+      "name": "olives-grow4"
+    },
+    {
+      "name": "olives-grow5"
+    },
+    {
+      "name": "olives-grow6"
+    },
+    {
+      "name": "olives-harvest"
+    },
+    {
+      "name": "olives-dead"
+    },
+    {
+      "name": "watermelon-grow1"
+    },
+    {
+      "name": "watermelon-grow2"
+    },
+    {
+      "name": "watermelon-grow3"
+    },
+    {
+      "name": "watermelon-grow4"
+    },
+    {
+      "name": "watermelon-grow5"
+    },
+    {
+      "name": "watermelon-grow6"
+    },
+    {
+      "name": "watermelon-harvest"
+    },
+    {
+      "name": "watermelon-dead"
+    },
+    {
+      "name": "cherry-grow1"
+    },
+    {
+      "name": "cherry-grow2"
+    },
+    {
+      "name": "cherry-grow3"
+    },
+    {
+      "name": "cherry-grow4"
+    },
+    {
+      "name": "cherry-grow5"
+    },
+    {
+      "name": "cherry-harvest"
+    },
+    {
+      "name": "bluecherry-harvest"
+    },
+    {
+      "name": "cherry_bomb-harvest"
+    },
+    {
+      "name": "cherry-dead"
+    },
+    {
+      "name": "lemon-grow1"
+    },
+    {
+      "name": "lemon-grow2"
+    },
+    {
+      "name": "lemon-grow3"
+    },
+    {
+      "name": "lemon-grow4"
+    },
+    {
+      "name": "lemon-grow5"
+    },
+    {
+      "name": "lemon-grow6"
+    },
+    {
+      "name": "lemon-harvest"
+    },
+    {
+      "name": "lemon-dead"
+    },
+    {
+      "name": "lime-grow1"
+    },
+    {
+      "name": "lime-grow2"
+    },
+    {
+      "name": "lime-grow3"
+    },
+    {
+      "name": "lime-grow4"
+    },
+    {
+      "name": "lime-grow5"
+    },
+    {
+      "name": "lime-grow6"
+    },
+    {
+      "name": "lime-harvest"
+    },
+    {
+      "name": "lime-dead"
+    },
+    {
+      "name": "orange-grow1"
+    },
+    {
+      "name": "orange-grow2"
+    },
+    {
+      "name": "orange-grow3"
+    },
+    {
+      "name": "orange-grow4"
+    },
+    {
+      "name": "orange-grow5"
+    },
+    {
+      "name": "orange-grow6"
+    },
+    {
+      "name": "orange-harvest"
+    },
+    {
+      "name": "orange-dead"
+    },
+    {
+      "name": "pumpkin-grow1"
+    },
+    {
+      "name": "pumpkin-grow2"
+    },
+    {
+      "name": "pumpkin-grow3"
+    },
+    {
+      "name": "pumpkin-grow4"
+    },
+    {
+      "name": "pumpkin-grow5"
+    },
+    {
+      "name": "pumpkin-grow6"
+    },
+    {
+      "name": "pumpkin-harvest"
+    },
+    {
+      "name": "pumpkin-dead"
+    },
+    {
+      "name": "grapes-grow1"
+    },
+    {
+      "name": "grapes-grow2"
+    },
+    {
+      "name": "grapes-grow3"
+    },
+    {
+      "name": "grapes-grow4"
+    },
+    {
+      "name": "grapes-grow5"
+    },
+    {
+      "name": "grapes-grow6"
+    },
+    {
+      "name": "grapes-harvest"
+    },
+    {
+      "name": "grapes-dead"
+    },
+    {
+      "name": "greengrape-harvest"
+    },
+    {
+      "name": "cherry-grow6"
+    },
+    {
+      "name": "apricot-grow1"
+    },
+    {
+      "name": "apricot-grow2"
+    },
+    {
+      "name": "apricot-grow3"
+    },
+    {
+      "name": "apricot-grow4"
+    },
+    {
+      "name": "apricot-grow5"
+    },
+    {
+      "name": "apricot-grow6"
+    },
+    {
+      "name": "apricot-harvest"
+    },
+    {
+      "name": "apricot-dead"
+    },
+    {
+      "name": "coconut-grow1"
+    },
+    {
+      "name": "coconut-grow2"
+    },
+    {
+      "name": "coconut-grow3"
+    },
+    {
+      "name": "coconut-grow4"
+    },
+    {
+      "name": "coconut-grow5"
+    },
+    {
+      "name": "coconut-grow6"
+    },
+    {
+      "name": "coconut-harvest"
+    },
+    {
+      "name": "coconut-dead"
+    },
+    {
+      "name": "coconut-harvest-prop"
+    },
+    {
+      "name": "redpepper-grow1"
+    },
+    {
+      "name": "redpepper-grow2"
+    },
+    {
+      "name": "redpepper-grow3"
+    },
+    {
+      "name": "redpepper-grow4"
+    },
+    {
+      "name": "redpepper-grow5"
+    },
+    {
+      "name": "redpepper-grow6"
+    },
+    {
+      "name": "redpepper-harvest"
+    },
+    {
+      "name": "redpepper-dead"
+    },
+    {
+      "name": "sapodilla-grow1"
+    },
+    {
+      "name": "sapodilla-grow2"
+    },
+    {
+      "name": "sapodilla-grow3"
+    },
+    {
+      "name": "sapodilla-grow4"
+    },
+    {
+      "name": "sapodilla-grow5"
+    },
+    {
+      "name": "sapodilla-grow6"
+    },
+    {
+      "name": "sapodilla-harvest"
+    },
+    {
+      "name": "sapodilla-dead"
+    },
+    {
+      "name": "zucchini-grow1"
+    },
+    {
+      "name": "zucchini-grow2"
+    },
+    {
+      "name": "zucchini-grow3"
+    },
+    {
+      "name": "zucchini-grow4"
+    },
+    {
+      "name": "zucchini-grow5"
+    },
+    {
+      "name": "zucchini-grow6"
+    },
+    {
+      "name": "zucchini-harvest"
+    },
+    {
+      "name": "zucchini-dead"
+    },
+    {
+      "name": "sapote-grow1"
+    },
+    {
+      "name": "sapote-grow2"
+    },
+    {
+      "name": "sapote-grow3"
+    },
+    {
+      "name": "sapote-grow4"
+    },
+    {
+      "name": "sapote-grow5"
+    },
+    {
+      "name": "sapote-grow6"
+    },
+    {
+      "name": "sapote-harvest"
+    },
+    {
+      "name": "sapote-dead"
+    },
+    {
+      "name": "cocoa-grow1"
+    },
+    {
+      "name": "cocoa-grow2"
+    },
+    {
+      "name": "cocoa-grow3"
+    },
+    {
+      "name": "cocoa-grow4"
+    },
+    {
+      "name": "cocoa-grow5"
+    },
+    {
+      "name": "cocoa-grow6"
+    },
+    {
+      "name": "cocoa-harvest"
+    },
+    {
+      "name": "cocoa-dead"
+    }
+  ]
+}

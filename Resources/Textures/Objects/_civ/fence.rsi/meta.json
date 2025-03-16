@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "11",
+      "directions": 4
+    },
+    {
+      "name": "22",
+      "directions": 4
+    },
+    {
+      "name": "33",
+      "directions": 4
+    },
+    {
+      "name": "1",
+      "directions": 4
+    },
+    {
+      "name": "2",
+      "directions": 4
+    },
+    {
+      "name": "3",
+      "directions": 4
+    },
+    {
+      "name": "iron_fence",
+      "directions": 4
+    },
+    {
+      "name": "chainlinkfence",
+      "directions": 4
+    },
+    {
+      "name": "chainlinkfence_corner",
+      "directions": 4
+    },
+    {
+      "name": "p1",
+      "directions": 4
+    },
+    {
+      "name": "p2",
+      "directions": 4
+    },
+    {
+      "name": "p3",
+      "directions": 4
+    },
+    {
+      "name": "white_fence",
+      "directions": 4
+    },
+    {
+      "name": "goalpost",
+      "directions": 8
+    },
+    {
+      "name": "goalpost_i"
+    },
+    {
+      "name": "goalpostX",
+      "directions": 8
+    },
+    {
+      "name": "metal_fence1",
+      "directions": 4
+    },
+    {
+      "name": "metal_fence_corner1",
+      "directions": 4
+    },
+    {
+      "name": "metal_fence2",
+      "directions": 4
+    },
+    {
+      "name": "metal_fence_corner2",
+      "directions": 4
+    },
+    {
+      "name": "metal_fence3",
+      "directions": 4
+    },
+    {
+      "name": "metal_fence_corner3",
+      "directions": 4
+    },
+    {
+      "name": "metal_fence4",
+      "directions": 4
+    },
+    {
+      "name": "metal_fence_corner4",
+      "directions": 4
+    },
+    {
+      "name": "metal_fence5",
+      "directions": 4
+    },
+    {
+      "name": "metal_fence_corner5",
+      "directions": 4
+    }
+  ]
+}

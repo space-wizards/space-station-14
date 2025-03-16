@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "single_brick_alt"
+    },
+    {
+      "name": "brick_stack_alt2"
+    },
+    {
+      "name": "brick_stack_alt3"
+    },
+    {
+      "name": "brick_stack_alt4"
+    },
+    {
+      "name": "brick_stack_alt5"
+    },
+    {
+      "name": "brick_stack_alt6"
+    },
+    {
+      "name": "single_brick_torn_alt"
+    },
+    {
+      "name": "single_brick"
+    },
+    {
+      "name": "brick_stack2"
+    },
+    {
+      "name": "brick_stack3"
+    },
+    {
+      "name": "brick_stack4"
+    },
+    {
+      "name": "brick_stack5"
+    },
+    {
+      "name": "brick_stack6"
+    },
+    {
+      "name": "single_brick_torn"
+    },
+    {
+      "name": "cocaine_pile"
+    },
+    {
+      "name": "cocaine_line"
+    }
+  ]
+}

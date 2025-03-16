@@ -1,0 +1,178 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cross1"
+    },
+    {
+      "name": "cross2"
+    },
+    {
+      "name": "gravestone"
+    },
+    {
+      "name": "grave0",
+      "directions": 4
+    },
+    {
+      "name": "grave1",
+      "directions": 4
+    },
+    {
+      "name": "grave2",
+      "directions": 4
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "grave_overlay"
+    },
+    {
+      "name": "bear"
+    },
+    {
+      "name": "mouse"
+    },
+    {
+      "name": "wolf"
+    },
+    {
+      "name": "goose"
+    },
+    {
+      "name": "turkey"
+    },
+    {
+      "name": "monkey"
+    },
+    {
+      "name": "grave_filled"
+    },
+    {
+      "name": "stone_altar"
+    },
+    {
+      "name": "blood_altar"
+    },
+    {
+      "name": "marble_altar"
+    },
+    {
+      "name": "well of destruction",
+      "delays": [
+        [
+          0.4,
+          0.4,
+          0.4
+        ]
+      ]
+    },
+    {
+      "name": "iron_altar"
+    },
+    {
+      "name": "wood_altar"
+    },
+    {
+      "name": "thin_banner"
+    },
+    {
+      "name": "thick_banner"
+    },
+    {
+      "name": "thin_banner_1"
+    },
+    {
+      "name": "thick_banner_1"
+    },
+    {
+      "name": "thin_banner_2"
+    },
+    {
+      "name": "thick_banner_2"
+    },
+    {
+      "name": "holybook_Moon"
+    },
+    {
+      "name": "holybook_Cross"
+    },
+    {
+      "name": "holybook_Star"
+    },
+    {
+      "name": "holybook_Sun"
+    },
+    {
+      "name": "holybook_Hammer"
+    },
+    {
+      "name": "holybook_Tree"
+    },
+    {
+      "name": "holybook_Skull"
+    },
+    {
+      "name": "holybook_Scales"
+    },
+    {
+      "name": "wall_banner"
+    },
+    {
+      "name": "wall_banner_1"
+    },
+    {
+      "name": "wall_banner_2"
+    },
+    {
+      "name": "banner_Scales"
+    },
+    {
+      "name": "banner_Moon"
+    },
+    {
+      "name": "banner_Cross"
+    },
+    {
+      "name": "banner_Star"
+    },
+    {
+      "name": "banner_Sun"
+    },
+    {
+      "name": "banner_Skull"
+    },
+    {
+      "name": "banner_Hammer"
+    },
+    {
+      "name": "banner_Tree"
+    },
+    {
+      "name": "sandstone_altar"
+    },
+    {
+      "name": "sandstone_snake"
+    },
+    {
+      "name": "sandstone_alligator"
+    },
+    {
+      "name": "sandstone_ram"
+    },
+    {
+      "name": "sandstone_eue"
+    },
+    {
+      "name": "bamboo_altar"
+    },
+    {
+      "name": "obsidian_altar"
+    }
+  ]
+}

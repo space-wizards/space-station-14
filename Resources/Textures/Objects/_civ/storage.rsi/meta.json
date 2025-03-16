@@ -1,0 +1,456 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "",
+      "delays": [
+        [
+          0.120000005,
+          0.120000005,
+          0.120000005,
+          0.120000005
+        ]
+      ]
+    },
+    {
+      "name": "box"
+    },
+    {
+      "name": "lighttube"
+    },
+    {
+      "name": "giftbag0"
+    },
+    {
+      "name": "giftbag1"
+    },
+    {
+      "name": "giftbag2"
+    },
+    {
+      "name": "lockbox\u002Bl"
+    },
+    {
+      "name": "lockbox"
+    },
+    {
+      "name": "lockbox\u002Bb"
+    },
+    {
+      "name": "crate"
+    },
+    {
+      "name": "crateopen"
+    },
+    {
+      "name": "securecrate"
+    },
+    {
+      "name": "securecrateopen"
+    },
+    {
+      "name": "mil_crate_closed"
+    },
+    {
+      "name": "mil_crate_opened"
+    },
+    {
+      "name": "mil_crate_opened-old"
+    },
+    {
+      "name": "mil_crate_closed-old"
+    },
+    {
+      "name": "wood_crate1"
+    },
+    {
+      "name": "wood_crate_opened1"
+    },
+    {
+      "name": "wood_crate_opened"
+    },
+    {
+      "name": "wood_crate"
+    },
+    {
+      "name": "wood_chest_opened"
+    },
+    {
+      "name": "wood_chest"
+    },
+    {
+      "name": "treasure_chest"
+    },
+    {
+      "name": "treasure_chest_opened"
+    },
+    {
+      "name": "largebinsopen"
+    },
+    {
+      "name": "largebinopen"
+    },
+    {
+      "name": "densecrate"
+    },
+    {
+      "name": "densecrate_open"
+    },
+    {
+      "name": "mulecrate"
+    },
+    {
+      "name": "lisacrate"
+    },
+    {
+      "name": "largemetal"
+    },
+    {
+      "name": "largemetalopen"
+    },
+    {
+      "name": "largermetal_open"
+    },
+    {
+      "name": "largermetal"
+    },
+    {
+      "name": "trashcart"
+    },
+    {
+      "name": "trashcartopen"
+    },
+    {
+      "name": "trashcartweld"
+    },
+    {
+      "name": "miningcar"
+    },
+    {
+      "name": "miningcaropen"
+    },
+    {
+      "name": "bible"
+    },
+    {
+      "name": "koran"
+    },
+    {
+      "name": "scrapbook"
+    },
+    {
+      "name": "creeper"
+    },
+    {
+      "name": "white"
+    },
+    {
+      "name": "holylight"
+    },
+    {
+      "name": "athiest"
+    },
+    {
+      "name": "tome"
+    },
+    {
+      "name": "donk_kit"
+    },
+    {
+      "name": "kingyellow"
+    },
+    {
+      "name": "ithaqua"
+    },
+    {
+      "name": "scientology",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "melted"
+    },
+    {
+      "name": "necronomicon"
+    },
+    {
+      "name": "talmud"
+    },
+    {
+      "name": "orthodoxbible"
+    },
+    {
+      "name": "medbriefcase"
+    },
+    {
+      "name": "combat_aid_bag_nato"
+    },
+    {
+      "name": "advfirstaid2"
+    },
+    {
+      "name": "bezerk2"
+    },
+    {
+      "name": "firefirstaid2"
+    },
+    {
+      "name": "firstaid2"
+    },
+    {
+      "name": "o22"
+    },
+    {
+      "name": "antitoxin2"
+    },
+    {
+      "name": "surgerykit"
+    },
+    {
+      "name": "medical_bag"
+    },
+    {
+      "name": "medical_satchel"
+    },
+    {
+      "name": "backpack_old"
+    },
+    {
+      "name": "briefcase"
+    },
+    {
+      "name": "backpack"
+    },
+    {
+      "name": "backpack1"
+    },
+    {
+      "name": "scavpack"
+    },
+    {
+      "name": "seed_collector"
+    },
+    {
+      "name": "ore_collector"
+    },
+    {
+      "name": "waterskin"
+    },
+    {
+      "name": "quiver"
+    },
+    {
+      "name": "coinpouch1"
+    },
+    {
+      "name": "coinpouch2"
+    },
+    {
+      "name": "coinpouch_tes13"
+    },
+    {
+      "name": "wallet"
+    },
+    {
+      "name": "gator_wallet"
+    },
+    {
+      "name": "lizard_wallet"
+    },
+    {
+      "name": "jappack"
+    },
+    {
+      "name": "jappack1"
+    },
+    {
+      "name": "jappack2"
+    },
+    {
+      "name": "jappack3"
+    },
+    {
+      "name": "jappack4"
+    },
+    {
+      "name": "jappack5"
+    },
+    {
+      "name": "germanpack"
+    },
+    {
+      "name": "germanpack1"
+    },
+    {
+      "name": "uspack"
+    },
+    {
+      "name": "uspack1"
+    },
+    {
+      "name": "us_buttpack"
+    },
+    {
+      "name": "sovpack"
+    },
+    {
+      "name": "duffel"
+    },
+    {
+      "name": "rucksack"
+    },
+    {
+      "name": "heavyrucksack"
+    },
+    {
+      "name": "civback"
+    },
+    {
+      "name": "satchel"
+    },
+    {
+      "name": "satchel_black"
+    },
+    {
+      "name": "lizard_satchel"
+    },
+    {
+      "name": "gator_satchel"
+    },
+    {
+      "name": "policesatchel"
+    },
+    {
+      "name": "replicant_backpack"
+    },
+    {
+      "name": "toolbox_red"
+    },
+    {
+      "name": "toolbox_yellow"
+    },
+    {
+      "name": "toolbox_blue"
+    },
+    {
+      "name": "toolbox_crystal"
+    },
+    {
+      "name": "bet_box_red"
+    },
+    {
+      "name": "bet_box_green"
+    },
+    {
+      "name": "bet_box_blue"
+    },
+    {
+      "name": "bet_box"
+    },
+    {
+      "name": "produce_basket"
+    },
+    {
+      "name": "mailbag"
+    },
+    {
+      "name": "moneybag"
+    },
+    {
+      "name": "dumpster"
+    },
+    {
+      "name": "dumpsteropen_full"
+    },
+    {
+      "name": "dumpsteropen_halffull"
+    },
+    {
+      "name": "dumpsteropen"
+    },
+    {
+      "name": "gerkit"
+    },
+    {
+      "name": "shaving_kit"
+    },
+    {
+      "name": "shaving_kit_germ"
+    },
+    {
+      "name": "gerkit_open"
+    },
+    {
+      "name": "fruit_crate"
+    },
+    {
+      "name": "ammo_crate"
+    },
+    {
+      "name": "ammo_can"
+    },
+    {
+      "name": "footlocker"
+    },
+    {
+      "name": "footlockeropen"
+    },
+    {
+      "name": "sluncho"
+    },
+    {
+      "name": "slunch"
+    },
+    {
+      "name": "urn_open"
+    },
+    {
+      "name": "urn"
+    },
+    {
+      "name": "urn2_open"
+    },
+    {
+      "name": "urn2"
+    },
+    {
+      "name": "evidence"
+    },
+    {
+      "name": "evidenceobj"
+    },
+    {
+      "name": "solution_trays"
+    },
+    {
+      "name": "parachute0"
+    },
+    {
+      "name": "parachute1"
+    }
+  ]
+}

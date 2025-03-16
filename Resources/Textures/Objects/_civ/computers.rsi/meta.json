@@ -1,0 +1,277 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "1980_computer_off",
+      "directions": 4
+    },
+    {
+      "name": "1980_computer_on",
+      "directions": 4,
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "internal_speaker"
+    },
+    {
+      "name": "internal_keyboard"
+    },
+    {
+      "name": "tape"
+    },
+    {
+      "name": "blacktape"
+    },
+    {
+      "name": "tape_label"
+    },
+    {
+      "name": "5.25_inch_floppy"
+    },
+    {
+      "name": "5.25_inch_floppy_label"
+    },
+    {
+      "name": "crt_monitor"
+    },
+    {
+      "name": "card_video"
+    },
+    {
+      "name": "card_ram"
+    },
+    {
+      "name": "card_small"
+    },
+    {
+      "name": "floppy_drive"
+    },
+    {
+      "name": "special_chip_c"
+    },
+    {
+      "name": "special_chip_b"
+    },
+    {
+      "name": "special_chip_a"
+    },
+    {
+      "name": "generic_chip"
+    },
+    {
+      "name": "cpu_chip"
+    },
+    {
+      "name": "yellow_card_tall"
+    },
+    {
+      "name": "yellow_card"
+    },
+    {
+      "name": "chip_small"
+    },
+    {
+      "name": "info_panel"
+    },
+    {
+      "name": "terminal"
+    },
+    {
+      "name": "terminal_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "research",
+      "directions": 4
+    },
+    {
+      "name": "research_on",
+      "directions": 4,
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "lab",
+      "directions": 4
+    },
+    {
+      "name": "lab_on",
+      "directions": 4
+    },
+    {
+      "name": "lunar"
+    },
+    {
+      "name": "lunar_on",
+      "delays": [
+        [
+          0.1,
+          1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          1,
+          0.1,
+          1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          1,
+          0.1,
+          1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "laptop_close"
+    },
+    {
+      "name": "laptop"
+    },
+    {
+      "name": "military"
+    },
+    {
+      "name": "enclave"
+    },
+    {
+      "name": "enclave_on",
+      "delays": [
+        [
+          3,
+          0.2,
+          0.1,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "uos"
+    },
+    {
+      "name": "uos2"
+    },
+    {
+      "name": "uos94"
+    },
+    {
+      "name": "sheet-electronics"
+    },
+    {
+      "name": "cpu_chip_blue"
+    },
+    {
+      "name": "card_red"
+    }
+  ]
+}

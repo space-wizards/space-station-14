@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "size": {
+    "x": 96,
+    "y": 96
+  },
+  "states": [
+    {
+      "name": "cable_h"
+    },
+    {
+      "name": "cable_v"
+    }
+  ]
+}

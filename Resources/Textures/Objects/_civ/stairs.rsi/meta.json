@@ -1,0 +1,142 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ramptop",
+      "directions": 4
+    },
+    {
+      "name": "rampup",
+      "directions": 4
+    },
+    {
+      "name": "rampdark",
+      "directions": 4
+    },
+    {
+      "name": "rampbottom",
+      "directions": 4
+    },
+    {
+      "name": "ladder00"
+    },
+    {
+      "name": "ladder10"
+    },
+    {
+      "name": "ladder01"
+    },
+    {
+      "name": "ladder11"
+    },
+    {
+      "name": "ladderdown"
+    },
+    {
+      "name": "ladderup"
+    },
+    {
+      "name": "manhole"
+    },
+    {
+      "name": "manhole-open"
+    },
+    {
+      "name": "manhole-closing",
+      "delays": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "manhole-opening",
+      "delays": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "wood_stairs",
+      "directions": 8
+    },
+    {
+      "name": "wood_stairs2",
+      "directions": 8
+    },
+    {
+      "name": "wood2_stairs",
+      "directions": 8
+    },
+    {
+      "name": "wood2_stairs2",
+      "directions": 8
+    },
+    {
+      "name": "hole_top"
+    },
+    {
+      "name": "hole_bottom"
+    },
+    {
+      "name": "siege_ladder"
+    },
+    {
+      "name": "siege_ladder_dep",
+      "directions": 4
+    },
+    {
+      "name": "pine_closed"
+    },
+    {
+      "name": "pine_open"
+    },
+    {
+      "name": "autumn_closed"
+    },
+    {
+      "name": "autumn_open"
+    },
+    {
+      "name": "beach_closed"
+    },
+    {
+      "name": "beach_open"
+    },
+    {
+      "name": "sandstone_stairs",
+      "directions": 4
+    },
+    {
+      "name": "metal_ladder_dep",
+      "directions": 4
+    },
+    {
+      "name": "metal_ladder",
+      "directions": 4
+    },
+    {
+      "name": "ladderdown_wood"
+    },
+    {
+      "name": "ladderup_wood"
+    }
+  ]
+}

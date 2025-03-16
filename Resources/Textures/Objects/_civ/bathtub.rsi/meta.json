@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bathtub2",
+      "directions": 4
+    },
+    {
+      "name": "w_bathtub"
+    },
+    {
+      "name": "s_bathtub"
+    },
+    {
+      "name": "c_bathtub"
+    },
+    {
+      "name": "bathtub1",
+      "directions": 4
+    },
+    {
+      "name": "human_bathing_overlay",
+      "directions": 4
+    },
+    {
+      "name": "full_bathtub_overlay",
+      "directions": 4
+    },
+    {
+      "name": "mist"
+    },
+    {
+      "name": "st_bathtub"
+    },
+    {
+      "name": "full_bathtub_overlay_2_2"
+    },
+    {
+      "name": "full_bathtub_overlay_2"
+    },
+    {
+      "name": "b_bathtub"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cave_den-ice"
+    },
+    {
+      "name": "cave_den-ice2"
+    },
+    {
+      "name": "cave_den-foliage"
+    },
+    {
+      "name": "cave_den-foliage2"
+    },
+    {
+      "name": "cave_den-bamboo"
+    },
+    {
+      "name": "cave_den-bamboo2"
+    },
+    {
+      "name": "cave_den-tree"
+    },
+    {
+      "name": "cave_den-tree2"
+    },
+    {
+      "name": "cave_den-blocked"
+    },
+    {
+      "name": "cave_den-blocked2"
+    },
+    {
+      "name": "cave_den"
+    },
+    {
+      "name": "cave_den2"
+    }
+  ]
+}

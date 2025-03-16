@@ -1,0 +1,517 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "",
+      "delays": [
+        [
+          0.120000005,
+          0.120000005,
+          0.120000005,
+          0.120000005
+        ]
+      ]
+    },
+    {
+      "name": "off"
+    },
+    {
+      "name": "on",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "barrelx"
+    },
+    {
+      "name": "radio",
+      "directions": 4
+    },
+    {
+      "name": "TV_b"
+    },
+    {
+      "name": "TV_wn",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "TV"
+    },
+    {
+      "name": "tire"
+    },
+    {
+      "name": "tire2"
+    },
+    {
+      "name": "tire3"
+    },
+    {
+      "name": "tire2a"
+    },
+    {
+      "name": "tire3a"
+    },
+    {
+      "name": "concrete2"
+    },
+    {
+      "name": "concrete1"
+    },
+    {
+      "name": "concrete"
+    },
+    {
+      "name": "concrete_vertical"
+    },
+    {
+      "name": "concrete_horizontal"
+    },
+    {
+      "name": "oilpump1X"
+    },
+    {
+      "name": "oilpump2X"
+    },
+    {
+      "name": "oilpump3X"
+    },
+    {
+      "name": "oilpump4X"
+    },
+    {
+      "name": "oilpump1"
+    },
+    {
+      "name": "oilpump2"
+    },
+    {
+      "name": "oilpump3"
+    },
+    {
+      "name": "oilpump4"
+    },
+    {
+      "name": "oilpump1mask"
+    },
+    {
+      "name": "oilpump2mask"
+    },
+    {
+      "name": "oilpump3mask"
+    },
+    {
+      "name": "oilpump4mask"
+    },
+    {
+      "name": "barrel"
+    },
+    {
+      "name": "lid_barrel"
+    },
+    {
+      "name": "barrel-85"
+    },
+    {
+      "name": "barrel85"
+    },
+    {
+      "name": "stove"
+    },
+    {
+      "name": "gasstove"
+    },
+    {
+      "name": "bakelizer"
+    },
+    {
+      "name": "bakelizer_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "shopping_cart",
+      "directions": 4
+    },
+    {
+      "name": "cash_register",
+      "directions": 4
+    },
+    {
+      "name": "cash_register_opened",
+      "directions": 4
+    },
+    {
+      "name": "washing_machine_1"
+    },
+    {
+      "name": "washing_machine_2"
+    },
+    {
+      "name": "washing_machine_3"
+    },
+    {
+      "name": "washing_machine_4"
+    },
+    {
+      "name": "washing_machine_5",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "conveyor",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "obj34"
+    },
+    {
+      "name": "a9"
+    },
+    {
+      "name": "a10"
+    },
+    {
+      "name": "a11"
+    },
+    {
+      "name": "smes2"
+    },
+    {
+      "name": "gramophone"
+    },
+    {
+      "name": "grandfather_clock"
+    },
+    {
+      "name": "grandfather_clock_a",
+      "delays": [
+        [
+          0.4,
+          0.2,
+          0.4,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "airfilter2",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "airfilter0"
+    },
+    {
+      "name": "airfilter1",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "airfilter_canister"
+    },
+    {
+      "name": "airfilter_canister1"
+    },
+    {
+      "name": "airfilter_canister2"
+    },
+    {
+      "name": "microscope1"
+    },
+    {
+      "name": "synth2",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "autoclaveb"
+    },
+    {
+      "name": "phonebooth_interior"
+    },
+    {
+      "name": "boothdoor_closed"
+    },
+    {
+      "name": "boothdoor_opening",
+      "delays": [
+        [
+          0.2,
+          0.3,
+          0.2,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "boothdoor_closing",
+      "delays": [
+        [
+          0.2,
+          0.3,
+          0.2,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "boothdoor_open"
+    },
+    {
+      "name": "loader0"
+    },
+    {
+      "name": "loader1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "unloader0"
+    },
+    {
+      "name": "unloader1",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "stacker0X"
+    },
+    {
+      "name": "stacker1",
+      "delays": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "stacker0"
+    },
+    {
+      "name": "stacker1X",
+      "delays": [
+        [
+          10,
+          10,
+          10,
+          10,
+          10,
+          1,
+          1,
+          1,
+          1,
+          10
+        ]
+      ]
+    },
+    {
+      "name": "katana_stand"
+    },
+    {
+      "name": "katana_stand1"
+    },
+    {
+      "name": "uranium_refinery"
+    },
+    {
+      "name": "uranium_refinery_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "metal_detector"
+    },
+    {
+      "name": "metal_detector1",
+      "delays": [
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "metal_detector2",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "fan"
+    },
+    {
+      "name": "fan_working",
+      "delays": [
+        [
+          0.07,
+          0.07,
+          0.07
+        ]
+      ]
+    },
+    {
+      "name": "medical_divider_half",
+      "directions": 4
+    },
+    {
+      "name": "medical_divider_full",
+      "directions": 4
+    }
+  ]
+}

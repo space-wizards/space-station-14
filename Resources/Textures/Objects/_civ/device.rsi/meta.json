@@ -1,0 +1,423 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "sunflower"
+    },
+    {
+      "name": "telescope0"
+    },
+    {
+      "name": "telescope1"
+    },
+    {
+      "name": "binoculars"
+    },
+    {
+      "name": "kar_scope"
+    },
+    {
+      "name": "mosin_scope"
+    },
+    {
+      "name": "carcano_scope"
+    },
+    {
+      "name": "geiger_off"
+    },
+    {
+      "name": "geiger_on_1"
+    },
+    {
+      "name": "geiger_on_2",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "geiger_on_3",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "geiger_on_4",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "geiger_on_5",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "periscope"
+    },
+    {
+      "name": "cellphone"
+    },
+    {
+      "name": "pocketwatch"
+    },
+    {
+      "name": "camera_coldwar"
+    },
+    {
+      "name": "photox"
+    },
+    {
+      "name": "camera_ww2"
+    },
+    {
+      "name": "camera_early"
+    },
+    {
+      "name": "photo"
+    },
+    {
+      "name": "camera_modern"
+    },
+    {
+      "name": "film"
+    },
+    {
+      "name": "video_camera",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "telegraph"
+    },
+    {
+      "name": "telegraph_active",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "radio_mic1"
+    },
+    {
+      "name": "radio_mic2"
+    },
+    {
+      "name": "radio_mic3"
+    },
+    {
+      "name": "recorder"
+    },
+    {
+      "name": "recorder_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "machine"
+    },
+    {
+      "name": "machine_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "radio_vintage"
+    },
+    {
+      "name": "radio",
+      "directions": 4
+    },
+    {
+      "name": "tankradio",
+      "directions": 4
+    },
+    {
+      "name": "radio_transmitter"
+    },
+    {
+      "name": "telephone"
+    },
+    {
+      "name": "telephone_blue"
+    },
+    {
+      "name": "teleprinter0"
+    },
+    {
+      "name": "teleprinter1"
+    },
+    {
+      "name": "modern_intercom",
+      "directions": 4
+    },
+    {
+      "name": "police_intercom",
+      "directions": 4
+    },
+    {
+      "name": "portable_radio2"
+    },
+    {
+      "name": "portable_radio3"
+    },
+    {
+      "name": "portable_radio"
+    },
+    {
+      "name": "radio_headset"
+    },
+    {
+      "name": "portable_radio4"
+    },
+    {
+      "name": "loudspeaker",
+      "directions": 4
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "mic"
+    },
+    {
+      "name": "micstand_empty",
+      "directions": 4
+    },
+    {
+      "name": "micstand",
+      "directions": 4
+    },
+    {
+      "name": "wall_loudspeaker"
+    },
+    {
+      "name": "intercom-p"
+    },
+    {
+      "name": "intercom"
+    },
+    {
+      "name": "radio_off"
+    },
+    {
+      "name": "celly"
+    },
+    {
+      "name": "walkietalkie"
+    },
+    {
+      "name": "walkietalkie_off"
+    },
+    {
+      "name": "tracking",
+      "delays": [
+        [
+          0.4,
+          0.4,
+          0.4,
+          0.4
+        ]
+      ]
+    },
+    {
+      "name": "camerasetup"
+    },
+    {
+      "name": "camera",
+      "directions": 8,
+      "delays": [
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ],
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ],
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ],
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ],
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ],
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ],
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ],
+        [
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ]
+      ]
+    },
+    {
+      "name": "camera1",
+      "directions": 8
+    },
+    {
+      "name": "camerax",
+      "directions": 8
+    },
+    {
+      "name": "cameraemp",
+      "directions": 8,
+      "delays": [
+        [
+          0.1,
+          0.02,
+          0.08
+        ],
+        [
+          0.1,
+          0.02,
+          0.08
+        ],
+        [
+          0.1,
+          0.02,
+          0.08
+        ],
+        [
+          0.1,
+          0.02,
+          0.08
+        ],
+        [
+          0.1,
+          0.02,
+          0.08
+        ],
+        [
+          0.1,
+          0.02,
+          0.08
+        ],
+        [
+          0.1,
+          0.02,
+          0.08
+        ],
+        [
+          0.1,
+          0.02,
+          0.08
+        ]
+      ]
+    },
+    {
+      "name": "portable_radio5",
+      "delays": [
+        [
+          0.1,
+          0.25,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "comlink"
+    }
+  ]
+}

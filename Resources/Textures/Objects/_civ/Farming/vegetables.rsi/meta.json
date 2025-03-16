@@ -1,0 +1,273 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "tomato-grow1"
+    },
+    {
+      "name": "tomato-grow2"
+    },
+    {
+      "name": "tomato-grow3"
+    },
+    {
+      "name": "tomato-grow4"
+    },
+    {
+      "name": "tomato-grow5"
+    },
+    {
+      "name": "tomato-grow6"
+    },
+    {
+      "name": "tomato-harvest"
+    },
+    {
+      "name": "tomato-dead"
+    },
+    {
+      "name": "carrot-grow1"
+    },
+    {
+      "name": "carrot-grow2"
+    },
+    {
+      "name": "carrot-grow3"
+    },
+    {
+      "name": "carrot-grow4"
+    },
+    {
+      "name": "carrot-grow5"
+    },
+    {
+      "name": "carrot-grow6"
+    },
+    {
+      "name": "carrot-harvest"
+    },
+    {
+      "name": "carrot-dead"
+    },
+    {
+      "name": "corn-grow1"
+    },
+    {
+      "name": "corn-grow2"
+    },
+    {
+      "name": "corn-grow3"
+    },
+    {
+      "name": "corn-grow4"
+    },
+    {
+      "name": "corn-grow5"
+    },
+    {
+      "name": "corn-grow6"
+    },
+    {
+      "name": "corn-harvest"
+    },
+    {
+      "name": "corn-dead"
+    },
+    {
+      "name": "snapcorn-harvest"
+    },
+    {
+      "name": "cabbage-grow1"
+    },
+    {
+      "name": "cabbage-grow2"
+    },
+    {
+      "name": "cabbage-grow3"
+    },
+    {
+      "name": "cabbage-grow4"
+    },
+    {
+      "name": "cabbage-grow5"
+    },
+    {
+      "name": "cabbage-grow6"
+    },
+    {
+      "name": "cabbage-harvest"
+    },
+    {
+      "name": "cabbage-dead"
+    },
+    {
+      "name": "potato-grow1"
+    },
+    {
+      "name": "potato-grow2"
+    },
+    {
+      "name": "potato-grow3"
+    },
+    {
+      "name": "potato-grow4"
+    },
+    {
+      "name": "potato-grow5"
+    },
+    {
+      "name": "potato-grow6"
+    },
+    {
+      "name": "potato-harvest"
+    },
+    {
+      "name": "potato-dead"
+    },
+    {
+      "name": "sweetpotato-grow1"
+    },
+    {
+      "name": "sweetpotato-grow2"
+    },
+    {
+      "name": "sweetpotato-grow3"
+    },
+    {
+      "name": "sweetpotato-grow4"
+    },
+    {
+      "name": "sweetpotato-grow5"
+    },
+    {
+      "name": "sweetpotato-grow6"
+    },
+    {
+      "name": "sweetpotato-harvest"
+    },
+    {
+      "name": "sweetpotato-dead"
+    },
+    {
+      "name": "beans-grow1"
+    },
+    {
+      "name": "beans-grow2"
+    },
+    {
+      "name": "beans-grow3"
+    },
+    {
+      "name": "beans-grow4"
+    },
+    {
+      "name": "beans-grow5"
+    },
+    {
+      "name": "beans-grow6"
+    },
+    {
+      "name": "beans-harvest"
+    },
+    {
+      "name": "beans-dead"
+    },
+    {
+      "name": "parsnip-grow1"
+    },
+    {
+      "name": "parsnip-grow2"
+    },
+    {
+      "name": "parsnip-grow3"
+    },
+    {
+      "name": "parsnip-grow4"
+    },
+    {
+      "name": "parsnip-grow5"
+    },
+    {
+      "name": "parsnip-grow6"
+    },
+    {
+      "name": "parsnip-harvest"
+    },
+    {
+      "name": "celery-grow1"
+    },
+    {
+      "name": "celery-grow2"
+    },
+    {
+      "name": "celery-grow3"
+    },
+    {
+      "name": "celery-grow4"
+    },
+    {
+      "name": "celery-grow5"
+    },
+    {
+      "name": "celery-harvest"
+    },
+    {
+      "name": "celery-dead"
+    },
+    {
+      "name": "celery-grow6"
+    },
+    {
+      "name": "redbeet-grow1"
+    },
+    {
+      "name": "redbeet-grow2"
+    },
+    {
+      "name": "redbeet-grow3"
+    },
+    {
+      "name": "redbeet-grow4"
+    },
+    {
+      "name": "redbeet-grow5"
+    },
+    {
+      "name": "redbeet-grow6"
+    },
+    {
+      "name": "redbeet-harvest"
+    },
+    {
+      "name": "whitebeet-grow1"
+    },
+    {
+      "name": "whitebeet-grow2"
+    },
+    {
+      "name": "whitebeet-grow3"
+    },
+    {
+      "name": "whitebeet-grow4"
+    },
+    {
+      "name": "whitebeet-grow5"
+    },
+    {
+      "name": "whitebeet-grow6"
+    },
+    {
+      "name": "whitebeet-harvest"
+    },
+    {
+      "name": "redbeet-dead"
+    },
+    {
+      "name": "whitebeet-dead"
+    }
+  ]
+}
