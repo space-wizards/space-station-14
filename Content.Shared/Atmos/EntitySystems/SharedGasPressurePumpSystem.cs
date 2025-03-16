@@ -13,7 +13,7 @@ namespace Content.Shared.Atmos.EntitySystems;
 public abstract class SharedGasPressurePumpSystem : EntitySystem
 {
     [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private   readonly SharedPowerReceiverSystem _receiver = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UserInterfaceSystem = default!;
 
@@ -64,7 +64,7 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
             return;
 
         var pumpOn = ent.Comp1.Enabled && _receiver.IsPowered(ent.Owner);
-        Appearance.SetData(ent, PumpVisuals.Enabled, pumpOn, ent.Comp2);
+        _appearance.SetData(ent, PumpVisuals.Enabled, pumpOn, ent.Comp2);
     }
 
     private void OnToggleStatusMessage(Entity<GasPressurePumpComponent> ent, ref GasPressurePumpToggleStatusMessage args)
@@ -97,11 +97,7 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
         UserInterfaceSystem.CloseUi(ent.Owner, GasPressurePumpUiKey.Key);
     }
 
-    private void UpdateUi(Entity<GasPressurePumpComponent> ent)
+    protected virtual void UpdateUi(Entity<GasPressurePumpComponent> ent)
     {
-        if (UserInterfaceSystem.TryGetOpenUi(ent.Owner, GasPressurePumpUiKey.Key, out var bui))
-        {
-            bui.Update();
-        }
     }
 }
