@@ -1,12 +1,12 @@
 using Content.Server.DoAfter;
 using Content.Shared.TreeBranch;
-using Content.Shared.Interaction;
 using Content.Shared.DoAfter;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Shared.Popups;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Verbs;
 
 namespace Content.Server.TreeBranch;
 
@@ -21,9 +21,9 @@ public sealed partial class TreeBranchesSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<TreeBranchesComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<TreeBranchesComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TreeBranchesComponent, CollectBranchDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<TreeBranchesComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
     }
 
     private void OnMapInit(EntityUid uid, TreeBranchesComponent component, MapInitEvent args)
@@ -50,27 +50,36 @@ public sealed partial class TreeBranchesSystem : EntitySystem
         }
     }
 
-    private void OnInteractHand(EntityUid uid, TreeBranchesComponent component, InteractHandEvent args)
-    {
-        if (args.Handled || component.CurrentBranches <= 0)
-        {
-            _popup.PopupEntity("There are no branches left to collect.", uid, args.User);
-            return;
-        }
+private void OnGetVerbs(EntityUid uid, TreeBranchesComponent component, ref GetVerbsEvent<AlternativeVerb> args)
+{
+    if (!args.CanAccess || !args.CanInteract || component.CurrentBranches <= 0)
+        return;
 
+    var user = args.User;
+
+    var verb = new AlternativeVerb
+    {
+        Text = Loc.GetString("collect-branch-verb"),
+        Act = () => StartCollectingBranch(uid, component, user)
+    };
+    args.Verbs.Add(verb);
+}
+
+
+    private void StartCollectingBranch(EntityUid treeUid, TreeBranchesComponent component, EntityUid user)
+    {
         var doAfterArgs = new DoAfterArgs(EntityManager,
-            args.User,
+            user,
             component.CollectionTime,
             new CollectBranchDoAfterEvent(),
-            uid)
+            treeUid)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
-            NeedHand = true,
+            NeedHand = true
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
-        args.Handled = true;
     }
 
     private void OnDoAfter(EntityUid uid, TreeBranchesComponent component, ref CollectBranchDoAfterEvent args)
