@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: Syndicate/paranormal contraband is now divided into 4 tiers, with different
-      levels of sentencing outlined by space law.
-    type: Tweak
-  - message: The metashield page in the guidebook looks less shit.
-    type: Tweak
-  id: 820
-  time: '2024-12-30T05:14:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1145
 - author: Darkmajia
   changes:
   - message: Double thief is no longer possible during lowpop.
@@ -4107,3 +4097,12 @@
   id: 1319
   time: '2025-03-15T23:50:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1881
+- author: SixValentine
+  changes:
+  - message: Luna in rotation!
+    type: Add
+  - message: Luna changes (check PR for details)
+    type: Tweak
+  id: 1320
+  time: '2025-03-16T00:02:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1887
