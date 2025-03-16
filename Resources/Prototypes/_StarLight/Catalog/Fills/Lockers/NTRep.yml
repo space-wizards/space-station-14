@@ -16,6 +16,6 @@
       - id: ClothingHeadsetAltCommand
       - id: WeaponDisabler
       - id: LuxuryPen
-      - id: BoxFolderClipboardFull
+      - id: BoxFolderClipboardFilled
       - id: PrinterDocFlatpack
       - id: FaxMachineFlatpack

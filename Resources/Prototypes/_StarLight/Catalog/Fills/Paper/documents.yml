@@ -411,8 +411,8 @@
       content: doc-text-printer-product-order
 
 - type: entity
-  id: BoxFolderClipboardFull
-  suffix: Fully Filled
+  id: BoxFolderClipboardFilled
+  suffix: Filled
   parent: BoxFolderClipboard
   components:
   - type: StorageFill
