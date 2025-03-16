@@ -32,7 +32,7 @@ public sealed partial class FlintRockSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, FlintRockComponent component, MapInitEvent args)
     {
-        component.CurrentFlints = Random.Next(1, component.MaxFlints + 1);
+        component.CurrentFlints = Random.Next(0, component.MaxFlints + 1);
     }
 
     public override void Update(float frameTime)
