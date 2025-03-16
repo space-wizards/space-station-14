@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Flora;
+namespace Content.Shared.Crafting;
 
 [RegisterComponent]
 public sealed partial class SharpenableComponent : Component

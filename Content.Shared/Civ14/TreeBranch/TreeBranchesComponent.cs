@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Flora;
+namespace Content.Shared.TreeBranch;
 
 [RegisterComponent]
 public sealed partial class TreeBranchesComponent : Component

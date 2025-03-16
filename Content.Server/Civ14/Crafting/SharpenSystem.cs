@@ -1,12 +1,12 @@
 using Content.Server.DoAfter;
-using Content.Shared.Flora;
+using Content.Shared.Crafting;
 using Content.Shared.Interaction;
 using Content.Shared.DoAfter;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Content.Server.Kitchen.Components;
 
-namespace Content.Server.Flora;
+namespace Content.Server.Crafting;
 
 public sealed partial class SharpenSystem : EntitySystem
 {

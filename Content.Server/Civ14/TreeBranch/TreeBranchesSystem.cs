@@ -1,5 +1,5 @@
 using Content.Server.DoAfter;
-using Content.Shared.Flora;
+using Content.Shared.TreeBranch;
 using Content.Shared.Interaction;
 using Content.Shared.DoAfter;
 using Robust.Server.GameObjects;
@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 using Content.Shared.Popups;
 using Content.Shared.Hands.EntitySystems;
 
-namespace Content.Server.Flora;
+namespace Content.Server.TreeBranch;
 
 public sealed partial class TreeBranchesSystem : EntitySystem
 {
