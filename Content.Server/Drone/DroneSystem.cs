@@ -12,10 +12,7 @@ using Content.Shared.Emoting;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Item;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -30,12 +27,6 @@ using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Robust.Shared.Timing;
 using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
-using Robust.Shared.Player;
-using Robust.Shared.Random;
-using Content.Server.Traits.Assorted;
-using Content.Shared.Item.ItemToggle.Components;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Content.Server.Drone
 {

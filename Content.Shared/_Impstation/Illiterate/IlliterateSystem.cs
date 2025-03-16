@@ -1,8 +1,9 @@
 using Content.Shared.Paper;
 using Content.Shared.UserInterface;
-using Content.Shared._Impstation.Illiterate;
 using Content.Shared.Popups;
 using Robust.Shared.Network;
+
+namespace Content.Shared._Impstation.Illiterate;
 
 public sealed class IlliterateSystem : EntitySystem
 {

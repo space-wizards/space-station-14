@@ -1,5 +1,4 @@
 using Content.Shared.Whitelist;
-using Robust.Shared.Serialization;
 using Content.Shared.Alert;
 using Robust.Shared.Prototypes;
 
@@ -26,7 +25,7 @@ namespace Content.Server.Drone.Components
         public EntityWhitelist? Blacklist;
 
         [DataField]
-        public ProtoId<AlertPrototype> BatteryAlert = "BorgBattery";
+        public ProtoId<AlertPrototype> BatteryAlert = "DroneBattery";
 
         [DataField]
         public ProtoId<AlertPrototype> NoBatteryAlert = "BorgBatteryNone";
