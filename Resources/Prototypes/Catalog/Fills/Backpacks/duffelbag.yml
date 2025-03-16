@@ -33,8 +33,8 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledShotgun
-  name: Hydra bundle
-  description: "Lean and mean: Contains the popular Hydra shotgun, a .50 stun slug drum and 3 .50 buckshot drums." #, and a pair of Thermal Imaging Goggles. #imp edit
+  name: Hydra bundle #imp
+  description: "Lean and mean: Contains the popular Hydra shotgun and 4 .50 buckshot drums." #, and a pair of Thermal Imaging Goggles. #imp edit
   components:
   - type: StorageFill
     contents:
@@ -84,7 +84,7 @@
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledLMG
-  name: L6 Nidhogg SAW bundle
+  name: L6 Nidhogg SAW bundle #imp
   description: "More dakka: The iconic L6 Nidhogg light machine gun, bundled with 2 box magazines." #imp
   components:
   - type: StorageFill
@@ -96,7 +96,7 @@
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   name: China Lake bundle #imp, remove hyphen
-  description: "An old China Lake grenade launcher bundled with 11 grenades of various destructive capability." #imp, gammar
+  description: "An old China Lake grenade launcher bundled with 11 grenades of various destructive capability." #imp, grammar
   components:
   - type: StorageFill
     contents:

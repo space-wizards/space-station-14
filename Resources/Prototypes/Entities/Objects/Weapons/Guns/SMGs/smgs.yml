@@ -57,6 +57,25 @@
       gun_chamber: !type:ContainerSlot
   - type: StaticPrice
     price: 500
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    range: 0.8
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 6
+    damage:
+      types:
+        Blunt: 5
+#imp edit end
 
 - type: entity
   name: Atreides
@@ -122,12 +141,27 @@
     steps: 6
     zeroVisible: true
   - type: Appearance
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    attackRate: 0.6
+  - type: StaminaDamageOnHit
+    damage: 10 #slight stagger, but still like 10 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 10
+    damage:
+      types:
+        Blunt: 8
+#imp edit end
 
 - type: entity
   name: Drozd
   parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
   id: WeaponSubMachineGunDrozd
-  description: A standard burst-fire two-handed submachine gun. Uses .35 auto ammo. #imp
+  description: A standard burst-fire two-handed submachine gun. Boasts an impressive fire rate at the cost of accuracy. Uses .35 auto ammo. #imp
   components:
     - type: Sprite
       sprite: _Impstation/Objects/Weapons/Guns/SMGs/drozd.rsi #imp
@@ -181,12 +215,27 @@
       steps: 1
       zeroVisible: true
     - type: Appearance
+#imp edit begin; weapon melee
+    - type: MeleeWeapon
+      attackRate: 0.6
+    - type: StaminaDamageOnHit
+      damage: 10 #slight stagger, but still like 10 hits to stun completely
+    - type: MeleeRequiresWield
+    - type: MeleeThrowOnHit
+      distance: 0.8
+      speed: 5
+    - type: DamageOtherOnHit #for throwing
+      staminaCost: 10
+      damage:
+        types:
+          Blunt: 8
+#imp edit end
 
 - type: entity
   name: WT550
   parent: [ BaseWeaponSubMachineGun, BaseSecurityContraband ]
   id: WeaponSubMachineGunWt550
-  description: An excellent top-loaded, compact Personal Defense Weapon, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo. #imp
+  description: An excellent top-loaded, compact Personal Defense Weapon, produced by Nanotrasen's Small Arms Division. Uses .35 auto ammo. #imp
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/SMGs/wt550.rsi #imp

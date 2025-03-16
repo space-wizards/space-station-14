@@ -1,7 +1,7 @@
 - type: entity
   id: SpeedLoaderLightRifle
-  name: "speed loader (.20 rifle)" #imp
-  description: A 5-round .20 rifle speed loader.
+  name: "stripper clip (.30 rifle)" #imp
+  description: A 5-round .30 rifle stripper clip. #imp
   parent: [ BaseItem, BaseSecurityContraband ]
   components:
   - type: Tag
@@ -12,9 +12,9 @@
     mayTransfer: true
     whitelist:
       tags:
-        - CartridgeRifle #imp
-    capacity: 5
-    proto: CartridgeRifle #imp
+        - CartridgeLightRifle
+    capacity: 5 #imp
+    proto: CartridgeLightRifle
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Ammunition/SpeedLoaders/LightRifle/light_rifle_speed_loader.rsi #imp
     layers:
