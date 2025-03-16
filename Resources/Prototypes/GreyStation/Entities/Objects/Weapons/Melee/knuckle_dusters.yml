@@ -25,7 +25,7 @@
         Blunt: 1
     soundHit:
       collection: KnuckleDuster
-    params:
+      params:
         volume: 5
     animation: WeaponArcFist
   - type: Wieldable
@@ -33,6 +33,20 @@
       path: /Audio/GreyStation/Misc/drawknife.ogg
       params:
         volume: -6
+  - type: ClothingPreventsWielding
+    slots:
+      gloves:
+        components:
+        - FingerprintMask
+      outerClothing:
+        components:
+        - PressureProtection
+  - type: MeleeRequiresWield # cant use them in 1 hand only
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 14
+  - type: NoHeavyAttacks # no
   - type: LeechOnHit
     leech:
       groups:
