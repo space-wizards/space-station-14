@@ -1,9 +1,0 @@
-- type: entity
-  id: CrateSupermatterFlatpack
-  parent: CrateEngineeringSecure
-  name: supermatter flatpack crate
-  description: A crate containing a single supermatter flatpack. used to replace or get a Supermatter when it is missing.
-  components:
-    - type: StorageFill
-      contents:
-        - id: SupermatterFlatpack

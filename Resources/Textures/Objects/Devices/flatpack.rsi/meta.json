@@ -45,6 +45,12 @@
         },
         {
             "name": "fax-machine"
+        },
+		{
+            "name": "large"
+        },
+        {
+            "name": "microwave"
         }
     ]
 }
