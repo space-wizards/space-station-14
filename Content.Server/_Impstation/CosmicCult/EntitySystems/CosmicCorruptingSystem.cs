@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -76,8 +77,10 @@ public sealed class CosmicCorruptingSystem : EntitySystem
                     comp.CorruptionRadius++;
                     comp.CorruptionChance -= comp.CorruptionReduction;
                 }
+
                 if (comp.CorruptionRadius >= comp.CorruptionMaxRadius)
                     comp.CorruptionGrowth = false;
+
                 if (comp.CorruptionRadius >= comp.CorruptionMaxRadius && comp.AutoDisable)
                     comp.Enabled = false;
             }
@@ -108,10 +111,8 @@ public sealed class CosmicCorruptingSystem : EntitySystem
                 //replace & variantise the tile
                 _tile.ReplaceTile(tileRef, convertTile);
                 _tile.PickVariant(convertTile);
-                if (uid.Comp.UseVFX)
-                    Spawn(uid.Comp.TileConvertVFX, _turfs.GetTileCenter(tileRef));
 
-                //then add its new neighbours as targets
+                //then add the new neighbours as targets as long as they're not already corrupted
                 foreach (var neighbourPos in _neighbourPositions)
                 {
                     var neighbourRef = _map.GetTileRef((gridUid, mapGrid), tileRef.GridIndices + neighbourPos);
@@ -121,23 +122,25 @@ public sealed class CosmicCorruptingSystem : EntitySystem
                     uid.Comp.CorruptableTiles.Add(neighbourRef.GridIndices);
                 }
 
-                uid.Comp.CorruptableTiles.Remove(pos);
-            }
-        }
-
-        var entityHash = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, radius);
-        foreach (var entity in entityHash)
-        {
-            if (TryComp<TagComponent>(entity, out var tag))
-            {
-                var tags = tag.Tags;
-                if (tags.Contains("Wall") && Prototype(entity) != null && Prototype(entity)!.ID != uid.Comp.ConversionWall && _rand.Prob(uid.Comp.CorruptionChance))
+                //corrupt anything that can be corrupted
+                foreach (var convertedEnt in _map.GetAnchoredEntities((gridUid, mapGrid), pos).ToList())
                 {
-                    Spawn(uid.Comp.ConversionWall, Transform(entity).Coordinates);
-                    if (uid.Comp.UseVFX)
-                        Spawn(uid.Comp.TileConvertVFX, Transform(entity).Coordinates);
-                    QueueDel(entity);
+                    if (!TryComp<TagComponent>(convertedEnt, out var tagComp))
+                        continue;
+
+                    var tags = tagComp.Tags; //I hate tags
+                    if (!tags.Contains("Wall") || Prototype(convertedEnt) == null || Prototype(convertedEnt)!.ID == uid.Comp.ConversionWall)
+                        continue;
+
+                    Spawn(uid.Comp.ConversionWall, Transform(convertedEnt).Coordinates);
+                    QueueDel(convertedEnt);
                 }
+
+                //spawn the vfx if we should
+                if (uid.Comp.UseVFX)
+                    Spawn(uid.Comp.TileConvertVFX, _turfs.GetTileCenter(tileRef));
+
+                uid.Comp.CorruptableTiles.Remove(pos);
             }
         }
     }
