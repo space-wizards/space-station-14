@@ -40,7 +40,7 @@ public partial class DoorSystem
         {
             // stop any scheduled auto-closing
             if (door.State == DoorState.Open)
-                DoorSystem.SetNextStateChange(uid, null);
+                SetNextStateChange(uid, null);
         }
         else
         {
