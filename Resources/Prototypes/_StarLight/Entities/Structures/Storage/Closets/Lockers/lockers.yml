@@ -33,7 +33,6 @@
   - type: Appearance
   - type: Sprite
     sprite: _Starlight/Structures/Storage/closet.rsi
-    noRot: true
   - type: EntityStorageVisuals
     stateBaseClosed: bssecure
     stateDoorOpen: bssecure_open
