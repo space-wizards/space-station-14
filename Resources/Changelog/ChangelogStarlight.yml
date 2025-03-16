@@ -4110,4 +4110,41 @@ Entries:
   id: 569
   time: '2025-03-16T08:26:58.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/401
+- author: Happyrobot33
+  changes:
+  - message: Added Blue Shield Officer HUD.
+    type: Add
+  id: 570
+  time: '2025-03-16T08:28:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/400
+- author: Happyrobot33
+  changes:
+  - message: Added Brigmedic HUD.
+    type: Add
+  id: 571
+  time: '2025-03-16T08:28:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/400
+- author: Happyrobot33
+  changes:
+  - message: Added Skills HUD.
+    type: Add
+  id: 572
+  time: '2025-03-16T08:28:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/400
+- author: Happyrobot33
+  changes:
+  - message: Added the ability to select your eyewear loadout as a Blue Shield Officer,
+      NT Rep, Any security role, and Captain
+    type: Add
+  id: 573
+  time: '2025-03-16T08:28:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/400
+- author: Happyrobot33
+  changes:
+  - message: Captain no longer starts with sunglasses, they now start with Administration
+      HUD or Administration Glasses
+    type: Remove
+  id: 574
+  time: '2025-03-16T08:28:21.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/400
 
