@@ -10,12 +10,12 @@ namespace Content.Shared.Cargo.Prototypes
     {
         /// <inheritdoc />
         [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<CargoProductPrototype>))]
-        public string[]? Parents { get; }
+        public string[]? Parents { get; private set; }
 
         /// <inheritdoc />
         [NeverPushInheritance]
         [AbstractDataField]
-        public bool Abstract { get; }
+        public bool Abstract { get; private set; }
 
         [DataField("name")] private string _name = string.Empty;
 

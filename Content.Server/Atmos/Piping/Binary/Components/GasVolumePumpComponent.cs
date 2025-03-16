@@ -1,4 +1,5 @@
 using Content.Shared.Atmos;
+using Content.Shared.Guidebook;
 
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
@@ -38,6 +39,7 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         public float LowerThreshold { get; set; } = 0.01f;
 
         [DataField("higherThreshold")]
+        [GuidebookData]
         public float HigherThreshold { get; set; } = DefaultHigherThreshold;
         public static readonly float DefaultHigherThreshold = 2 * Atmospherics.MaxOutputPressure;
 

@@ -75,6 +75,22 @@
     prototype: AsteroidRockSilver
 
 - type: entity
+  id: WallSpawnAsteroidGoldCrab
+  parent: WallSpawnAsteroid
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SpawnOnDespawn
+    prototype: AsteroidRockGoldCrab
+
+- type: entity
+  id: WallSpawnAsteroidGold
+  parent: WallSpawnAsteroid
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SpawnOnDespawn
+    prototype: AsteroidRockGold
+
+- type: entity
   id: WallSpawnAsteroidIronCrab
   parent: WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
@@ -89,3 +105,19 @@
   components:
   - type: SpawnOnDespawn
     prototype: AsteroidRockTin
+
+- type: entity
+  id: WallSpawnAsteroidCoalCrab
+  parent: WallSpawnAsteroid
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SpawnOnDespawn
+    prototype: AsteroidRockCoalCrab
+
+- type: entity
+  id: WallSpawnAsteroidCoal
+  parent: WallSpawnAsteroid
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SpawnOnDespawn
+    prototype: AsteroidRockCoal
