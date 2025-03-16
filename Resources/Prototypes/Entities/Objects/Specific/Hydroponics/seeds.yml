@@ -292,6 +292,14 @@
       sprite: Objects/Specific/Hydroponics/tomatokiller.rsi
 
 - type: entity
+  parent: KillerTomatoSeeds
+  name: packet of killer juicy tomato seeds
+  id: KillerJuicyTomatoSeeds
+  components:
+    - type: Seed
+      seedId: killerJuicyTomato
+
+- type: entity
   parent: SeedBase
   name: packet of eggplant seeds
   id: EggplantSeeds
