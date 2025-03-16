@@ -8,12 +8,3 @@
   supervisors: job-supervisors-everyone
   access:
     - Maintenance
-
-- type: startingGear
-  id: PassengerGear
-  equipment:
-    id: PassengerPDA
-    ears: ClothingHeadsetGrey
-  #storage:
-  #back:
-  #- Stuff
