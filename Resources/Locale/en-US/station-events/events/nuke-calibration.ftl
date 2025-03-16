@@ -5,3 +5,4 @@ station-event-nuke-calibration-disarm-fail-announcement = Attention! We are unab
 station-event-nuke-calibration-disarm-success-announcement = Station nuke calibration procedure has concluded; the nuke has been disarmed. Thank you for your patience.
 
 station-event-nuke-calibration-arm-popup = The timing mechanism on the nuke suddenly flashes red!
+station-event-nuke-calibration-arm-and-disk-ejected-popup = The timing mechanism on the nuke suddenly flashes red, and the disk ejects out of the nuke!

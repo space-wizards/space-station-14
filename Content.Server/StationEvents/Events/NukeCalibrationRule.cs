@@ -3,23 +3,23 @@ using Content.Server.Nuke;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Station.Components;
 using Content.Shared.Nuke;
-using Robust.Shared.Utility;
-using Timer = Robust.Shared.Timing.Timer;
-using Content.Shared.Construction.Components;
 using Content.Server.Chat.Systems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Content.Server.Popups;
 using Content.Shared.Popups;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.StationEvents.Events
 {
     public sealed class NukeCalibrationRule : StationEventSystem<NukeCalibrationRuleComponent>
     {
-        [Dependency] private readonly NukeSystem _nuke = default!;
-        [Dependency] private readonly ChatSystem _chat = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly NukeSystem _nukeSystem = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
+        [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly SharedMapSystem _map = default!;
 
         protected override void Started(EntityUid uid, NukeCalibrationRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
         {
@@ -37,17 +37,26 @@ namespace Content.Server.StationEvents.Events
                 if (CompOrNull<StationMemberComponent>(nukeTransform.GridUid)?.Station != affectedStation)
                     continue;
 
-                if (!nukeTransform.Anchored)
-                    continue;
-
                 if (nukeComponent.Status == NukeStatus.ARMED)
                     continue;
 
-                _nuke.SetRemainingTime(nuke, component.NukeTimer);
-                _nuke.ArmBomb(nuke, nukeComponent);
+                // If it isn't anchored, then try to anchor it. If we can't anchor it, just continue.
+                if (!nukeTransform.Anchored)
+                    if (!_transform.AnchorEntity(nuke, nukeTransform))
+                        continue;
+
+                _nukeSystem.SetRemainingTime(nuke, component.NukeTimer);
+                _nukeSystem.ArmBomb(nuke, nukeComponent);
                 component.AffectedNuke = nuke;
                 component.AffectedNukeComponent = nukeComponent;
-                _popups.PopupEntity(Loc.GetString("station-event-nuke-calibration-arm-popup"), nuke, PopupType.LargeCaution);
+
+                if (!nukeComponent.DiskSlot.HasItem)
+                    _popups.PopupEntity(Loc.GetString("station-event-nuke-calibration-arm-popup"), nuke, PopupType.LargeCaution);
+                else
+                {
+                    _transform.SetCoordinates(nukeComponent.DiskSlot.ContainerSlot!.ContainedEntity!.Value, nukeTransform.Coordinates);
+                    _popups.PopupEntity(Loc.GetString("station-event-nuke-calibration-arm-and-disk-ejected-popup"), nuke, PopupType.LargeCaution);
+                }
 
                 break;
             }
@@ -64,13 +73,13 @@ namespace Content.Server.StationEvents.Events
             if (RobustRandom.NextFloat() <= component.AutoDisarmChance)
             {
                 // 220
-                _nuke.SetRemainingTime(component.AffectedNuke, component.AffectedNukeComponent.Timer);
+                _nukeSystem.SetRemainingTime(component.AffectedNuke, component.AffectedNukeComponent.Timer);
                 if (component.AffectedNukeComponent.Status != NukeStatus.ARMED)
                     return;
 
-                _nuke.DisarmBomb(component.AffectedNuke, component.AffectedNukeComponent);
-                _chat.DispatchGlobalAnnouncement(Loc.GetString("station-event-nuke-calibration-disarm-success-announcement"), playSound: false, colorOverride: Color.Green);
-                _audio.PlayGlobal(component.AutoDisarmSuccessSound, Filter.Broadcast(), true);
+                _nukeSystem.DisarmBomb(component.AffectedNuke, component.AffectedNukeComponent);
+                _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("station-event-nuke-calibration-disarm-success-announcement"), playSound: false, colorOverride: Color.Green);
+                _audioSystem.PlayGlobal(component.AutoDisarmSuccessSound, Filter.Broadcast(), true);
 
                 return;
             }
@@ -79,9 +88,9 @@ namespace Content.Server.StationEvents.Events
                 return;
 
             // Ooops.....
-            _nuke.SetDiskBypassEnabled(component.AffectedNuke, true, true, component.AffectedNukeComponent);
-            _chat.DispatchGlobalAnnouncement(Loc.GetString("station-event-nuke-calibration-disarm-fail-announcement"), playSound: false, colorOverride: Color.Crimson);
-            _audio.PlayGlobal(component.AutoDisarmFailedSound, Filter.Broadcast(), true);
+            _nukeSystem.SetDiskBypassEnabled(component.AffectedNuke, true, true, component.AffectedNukeComponent);
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("station-event-nuke-calibration-disarm-fail-announcement"), playSound: false, colorOverride: Color.Crimson);
+            _audioSystem.PlayGlobal(component.AutoDisarmFailedSound, Filter.Broadcast(), true);
         }
 
         protected override void ActiveTick(EntityUid uid, NukeCalibrationRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -102,7 +111,7 @@ namespace Content.Server.StationEvents.Events
                 return;
 
             component.FirstAnnouncementMade = true;
-            _chat.DispatchGlobalAnnouncement(Loc.GetString("station-event-nuke-calibration-midway-announcement"), colorOverride: Color.Yellow);
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("station-event-nuke-calibration-midway-announcement"), colorOverride: Color.Yellow);
         }
     }
 }
