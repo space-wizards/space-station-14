@@ -15,11 +15,11 @@
   recipes:
   - MiniGyroscopeMachineCircuitboard
   # below were removed from upstream circuit imprinter. i dont actually think theyre accessible... cloning when...
-  - CloningConsoleComputerCircuitboard
-  - CloningPodMachineCircuitboard
-  - DiagnoserMachineCircuitboard
-  - MedicalScannerMachineCircuitboard
-  - VaccinatorMachineCircuitboard
+  #- CloningConsoleComputerCircuitboard
+  #- CloningPodMachineCircuitboard
+  #- DiagnoserMachineCircuitboard
+  #- MedicalScannerMachineCircuitboard
+  #- VaccinatorMachineCircuitboard # I'd love to leave these enabled but you're gonna have to make a research tier for it first :(
 
 # Emagged
 
