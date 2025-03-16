@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: ruddygreat
-  changes:
-  - message: Invisibility is now fully invisible! an outline can be seen by the invisible
-      entity, anything inside the entity & ghosts.
-    type: Tweak
-  id: 827
-  time: '2024-12-30T22:56:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1150
-- author: kipdotnet
-  changes:
-  - message: Apids, a Beefolk ghostrole that cargo can order in to help botany and
-      medical.
-    type: Add
-  id: 828
-  time: '2024-12-30T22:57:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1147
 - author: suyo and dark
   changes:
   - message: new sound for goliath attacks to better match the damage type they do
@@ -4099,3 +4083,18 @@
   id: 1326
   time: '2025-03-16T03:29:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1979
+- author: mqole
+  changes:
+  - message: You can now tell whether a manual valve is on or off without prying up
+      the floorboards.
+    type: Tweak
+  id: 1327
+  time: '2025-03-16T03:32:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1978
+- author: mqole
+  changes:
+  - message: Revolutionaries will no longer see red (in chat, that is).
+    type: Fix
+  id: 1328
+  time: '2025-03-16T03:31:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1975
