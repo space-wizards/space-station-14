@@ -88,6 +88,10 @@ public sealed class CloningSystem : EntitySystem
         if (settings.CopyEquipment != null)
             CopyEquipment(original, clone.Value, settings.CopyEquipment.Value, settings.Whitelist, settings.Blacklist);
 
+        // Copy storage on the mob itself as well.
+        // This is needed for slime storage.
+        CopyStorage(original, clone.Value, settings.Whitelist, settings.Blacklist);
+
         var originalName = Name(original);
         if (TryComp<NameModifierComponent>(original, out var nameModComp)) // if the originals name was modified, use the unmodified name
             originalName = nameModComp.BaseName;
@@ -107,26 +111,26 @@ public sealed class CloningSystem : EntitySystem
     ///     Copies the equipment the original has to the clone.
     ///     This uses the original prototype of the items, so any changes to components that are done after spawning are lost!
     /// </summary>
-    public void CopyEquipment(EntityUid original, EntityUid clone, SlotFlags slotFlags, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
+    public void CopyEquipment(Entity<InventoryComponent?> original, Entity<InventoryComponent?> clone, SlotFlags slotFlags, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
     {
-        if (!TryComp<InventoryComponent>(original, out var originalInventory) || !TryComp<InventoryComponent>(clone, out var cloneInventory))
+        if (!Resolve(original, ref original.Comp) || !Resolve(clone, ref clone.Comp))
             return;
 
         var coords = Transform(clone).Coordinates;
 
         // Iterate over all inventory slots
-        var slotEnumerator = _inventory.GetSlotEnumerator((original, originalInventory), slotFlags);
+        var slotEnumerator = _inventory.GetSlotEnumerator(original, slotFlags);
         while (slotEnumerator.NextItem(out var item, out var slot))
         {
             var cloneItem = CopyItem(item, coords, whitelist, blacklist);
 
-            if (cloneItem != null && !_inventory.TryEquip(clone, cloneItem.Value, slot.Name, silent: true, inventory: cloneInventory))
+            if (cloneItem != null && !_inventory.TryEquip(clone, cloneItem.Value, slot.Name, silent: true, inventory: clone.Comp))
                 Del(cloneItem); // delete it again if the clone cannot equip it
         }
     }
 
     /// <summary>
-    ///     Copies an item and its storage recursively.
+    ///     Copies an item and its storage recursively, placing all items at the same position in grid storage.
     ///     This uses the original prototype of the items, so any changes to components that are done after spawning are lost!
     /// </summary>
     /// <remarks>
@@ -167,5 +171,29 @@ public sealed class CloningSystem : EntitySystem
         }
 
         return spawned;
+    }
+
+    /// <summary>
+    ///     Copies an item's storage recursively to another storage.
+    ///     The storage grids should have the same shape or it will drop on the floor.
+    ///     Basically the same as CopyItem, but we don't copy the outermost container.
+    /// </summary>
+    public void CopyStorage(Entity<StorageComponent?> original, Entity<StorageComponent?> target, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
+    {
+        if (!Resolve(original, ref original.Comp, false) || !Resolve(target, ref target.Comp, false))
+            return;
+
+        var coords = Transform(target).Coordinates;
+
+        // delete all items in the target storage
+        _container.CleanContainer(target.Comp.Container);
+
+        // recursively replace them
+        foreach ((var itemUid, var itemLocation) in original.Comp.StoredItems)
+        {
+            var copy = CopyItem(itemUid, coords, whitelist, blacklist);
+            if (copy != null)
+                _storage.InsertAt(target, copy.Value, itemLocation, out _, playSound: false);
+        }
     }
 }
