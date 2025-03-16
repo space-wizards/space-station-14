@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: reesque
-  changes:
-  - message: pie not dropping tin on thrown
-    type: Fix
-  id: 7571
-  time: '2024-11-01T01:43:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33013
 - author: SlamBamActionman
   changes:
   - message: Votekicks can now be initiated during the pregame lobby.
@@ -3889,3 +3882,12 @@
   id: 8070
   time: '2025-03-16T22:02:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35838
+- author: Errant
+  changes:
+  - message: Some ghostrole antagonists were incorrectly not marked as such in the
+      round end playerlist. Now all antagonists are sorted to the top and have red
+      names.
+    type: Fix
+  id: 8071
+  time: '2025-03-16T22:11:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35832
