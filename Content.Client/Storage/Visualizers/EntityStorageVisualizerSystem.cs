@@ -23,12 +23,12 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
         if (comp.StateBaseClosed == null)
             return;
 
-        comp.StateBaseOpen ??= comp.StateBaseClosed;
+        comp.StateBaseOpen ??= comp.StateBaseClosed ?? comp.StateDoorClosed;
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
         sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBaseClosed);
-        sprite.LayerSetState(StorageVisualLayers.Door, comp.StateDoorClosed);
+        sprite.LayerSetState(StorageVisualLayers.Door, comp.StateDoorClosed ?? comp.StateBaseClosed);
     }
 
     protected override void OnAppearanceChange(EntityUid uid, EntityStorageVisualsComponent comp, ref AppearanceChangeEvent args)
