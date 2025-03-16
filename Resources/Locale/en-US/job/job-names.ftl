@@ -34,6 +34,7 @@ job-name-chaplain = Chaplain
 job-name-botanist = Botanist
 job-name-bartender = Bartender
 job-name-passenger = Passenger
+job-name-nomad = Nomad
 job-name-salvagespec = Salvage Specialist
 job-name-station-ai = Station AI
 job-name-qm = Quartermaster

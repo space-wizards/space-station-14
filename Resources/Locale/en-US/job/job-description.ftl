@@ -34,6 +34,7 @@ job-description-librarian = Manage the library, give out knowledge to any who se
 job-description-mime = Entertain the crew without speaking or writing, and engage with light rivalry with the clown.
 job-description-musician = Entertain the crew with your unique musical talent, and acquire new instruments to mess around with.
 job-description-passenger = Enjoy your stay aboard the station with no obligations!
+job-description-nomad = You are a recently arrived nomad. Craft your story!
 job-description-psychologist = Provide emotional support to traumatized crew. Currently available on Box, Marathon and Oasis.
 job-description-qm = Manage the supplies of the station & the cargo department, keep the salvage specialists working, make sure all orders are fulfilled, and keep the money flowing.
 job-description-rd = Manage the science department, unlocking technologies, acquiring & researching artifacts, and performing experiments.

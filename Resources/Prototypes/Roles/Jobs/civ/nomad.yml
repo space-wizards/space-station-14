@@ -1,0 +1,19 @@
+- type: job
+  id: Nomad
+  name: job-name-nomad
+  description: job-description-nomad
+  playTimeTracker: JobNomad
+  startingGear: PassengerGear
+  icon: "JobIconPassenger"
+  supervisors: job-supervisors-everyone
+  access:
+    - Maintenance
+
+- type: startingGear
+  id: PassengerGear
+  equipment:
+    id: PassengerPDA
+    ears: ClothingHeadsetGrey
+  #storage:
+  #back:
+  #- Stuff
