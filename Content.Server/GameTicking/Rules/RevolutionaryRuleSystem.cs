@@ -28,7 +28,6 @@ using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Cuffs.Components;
-using Content.Shared._Impstation.LeaderHighlight; // imp special
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -168,11 +167,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         if (mind?.Session != null)
             _antag.SendBriefing(mind.Session, Loc.GetString("rev-role-greeting"), Color.Red, revComp.RevStartSound);
-
-        // imp special. this grants LeaderHighlightComponent to the mind of the newly-created Rev and assigns their HeadRev as their leader
-        LeaderHighlightComponent leaderHighlight = EnsureComp<LeaderHighlightComponent>(mindId);
-        if (ev.User != null)
-            leaderHighlight.Leader = _mind.GetMind(ev.User.Value);
     }
 
     //TODO: Enemies of the revolution

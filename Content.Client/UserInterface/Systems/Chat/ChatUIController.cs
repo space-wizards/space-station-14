@@ -16,7 +16,6 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
-using Content.Client._Impstation.LeaderHighlight; // imp
 using Content.Shared.CollectiveMind;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -26,8 +25,6 @@ using Content.Shared.Decals;
 using Content.Shared.Input;
 using Content.Shared.Radio;
 using Content.Shared.Roles.RoleCodeword;
-using Content.Shared.Whitelist; // imp. actually not sure this is used
-using Content.Shared._Impstation.LeaderHighlight; // imp
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -76,8 +73,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     [UISystemDependency] private readonly MindSystem? _mindSystem = default!;
     [UISystemDependency] private readonly RoleCodewordSystem? _roleCodewordSystem = default!;
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
-    [UISystemDependency] private readonly LeaderHighlightSystem? _leaderHighlightSystem = default!; // imp
-    [UISystemDependency] private readonly EntityWhitelistSystem _whitelist = default!; // imp
 
     [ValidatePrototypeId<ColorPalettePrototype>]
     private const string ChatNamePalette = "ChatNames";
@@ -982,18 +977,6 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
                 {
                     foreach (string codeword in codewordData.Codewords)
                         msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, codeword, "color", codewordData.Color.ToHex());
-                }
-            }
-        }
-
-        // imp special. Color *all* text sent by your leader. Currently only works for Revolutionaries.
-        if (_player.LocalUser != null && _mindSystem != null && _leaderHighlightSystem != null)
-        {
-            if (_mindSystem.TryGetMind(_player.LocalUser.Value, out var mindId) && _ent.TryGetComponent(mindId, out LeaderHighlightComponent? leaderHighlight))
-            {
-                if (_mindSystem.GetMind(_ent.GetEntity(msg.SenderEntity)) == leaderHighlight.Leader)
-                {
-                    msg.MessageColorOverride = leaderHighlight.HighlightColor;
                 }
             }
         }
