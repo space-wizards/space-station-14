@@ -985,8 +985,8 @@
   id: HeadofSecurityEyewear
   name: loadout-group-head-of-security-eyewear
   loadouts:
-  - HeadofSecurityGlasses
-  - HeadofSecurityHud
+  - SecurityGlasses
+  - SecurityHud
 
 - type: loadoutGroup
   id: WardenHead
