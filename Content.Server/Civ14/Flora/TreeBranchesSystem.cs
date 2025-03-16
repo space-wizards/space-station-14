@@ -51,6 +51,12 @@ public sealed partial class TreeBranchesSystem : EntitySystem
         if (args.Handled)
             return;
 
+        if (component.CurrentBranches <= 0)
+        {
+            // No branches left
+            return;
+        }
+
         // Decreases the number of branches
         component.CurrentBranches--;
 
