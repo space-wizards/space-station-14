@@ -51,7 +51,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
 
     public string? IndexToColorKey(int index)
     {
-        return (string?) ColorList[index].Metadata;
+        return (string?)ColorList[index].Metadata;
     }
 
     private void OnItemSelected(BaseButton.ButtonEventArgs args, ListData data)
@@ -67,7 +67,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
         {
             _currentEntries = entries;
 
-            foreach (var category in entries.Keys)
+            foreach (var category in entries.Keys.OrderBy(x => x))
             {
                 var box = new BoxContainer() { Orientation = BoxContainer.LayoutOrientation.Vertical };
                 var label = new Label() { Text = Loc.GetString("spray-painter-selected-style") };
