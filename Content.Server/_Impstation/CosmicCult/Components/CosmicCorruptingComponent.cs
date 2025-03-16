@@ -19,6 +19,9 @@ public sealed partial class CosmicCorruptingComponent : Component
     [DataField]
     public HashSet<Vector2i> CorruptableTiles = [];
 
+    [DataField]
+    public bool Mobile = false;
+
     /// <summary>
     /// How many times has this corruption source ticked?
     /// </summary>

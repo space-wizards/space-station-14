@@ -90,11 +90,27 @@ public sealed class CosmicCorruptingSystem : EntitySystem
 
     private void ConvertTiles(Entity<CosmicCorruptingComponent> uid)
     {
-        var tgtPos = Transform(uid);
-        if (tgtPos.GridUid is not { } gridUid || !TryComp(gridUid, out MapGridComponent? mapGrid))
+        var xform = Transform(uid);
+        if (xform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var mapGrid))
             return;
 
         var convertTile = (ContentTileDefinition)_tileDefinition[uid.Comp.ConversionTile];
+
+        if (uid.Comp.Mobile) //if this is a mobile corruptor, reset the list of corruptable tiles every attempt. not a super clean solution because I didn't account for the astral nova in the first rewrite but it works fine.
+        {
+            uid.Comp.CorruptableTiles.Clear();
+            var tile = _map.GetTileRef((gridUid, mapGrid), xform.Coordinates);
+
+            //add every neighbouring tile to the corruptable list
+            foreach (var neighbourPos in _neighbourPositions)
+            {
+                var neighbourRef = _map.GetTileRef((gridUid, mapGrid), tile.GridIndices + neighbourPos);
+                if (neighbourRef.Tile.TypeId == convertTile.TileId)
+                    continue; //ignore already converted tiles
+
+                uid.Comp.CorruptableTiles.Add(neighbourRef.GridIndices);
+            }
+        }
 
         //go over every corruptible tile
         foreach (var pos in new HashSet<Vector2i>(uid.Comp.CorruptableTiles)) //we love avoiding ConcurrentModificationExceptions
