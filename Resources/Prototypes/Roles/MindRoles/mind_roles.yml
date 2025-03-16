@@ -89,7 +89,7 @@
     antagPrototype: GenericTeamAntagonist
 
 # This should be used (or inherited) for team antags that are summoned or converted in large quantities, and are "secondary" to other antags
-# So they can be sorted later on the round end list
+# TODO: sort weight
 - type: entity
   parent: MindRoleGhostRoleTeamAntagonist
   id: MindRoleGhostRoleTeamAntagonistFlock
