@@ -111,6 +111,13 @@ namespace Content.Server.Body.Components
         [DataField]
         public SoundSpecifier BloodHealedSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
+        /// <summary>
+        /// The minimum amount damage reduction needed to play the healing sound/popup.
+        /// This prevents tiny amounts of heat damage from spamming the sound, e.g. spacing.
+        /// </summary>
+        [DataField]
+        public float BloodHealedSoundThreshold = -0.1f;
+
         // TODO probably damage bleed thresholds.
 
         /// <summary>
@@ -150,22 +157,22 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     Internal solution for blood storage
         /// </summary>
-        [DataField]
-        public Entity<SolutionComponent>? BloodSolution = null;
+        [ViewVariables]
+        public Entity<SolutionComponent>? BloodSolution;
 
         /// <summary>
         ///     Internal solution for reagent storage
         /// </summary>
-        [DataField]
-        public Entity<SolutionComponent>? ChemicalSolution = null;
+        [ViewVariables]
+        public Entity<SolutionComponent>? ChemicalSolution;
 
         /// <summary>
         ///     Temporary blood solution.
         ///     When blood is lost, it goes to this solution, and when this
         ///     solution hits a certain cap, the blood is actually spilled as a puddle.
         /// </summary>
-        [DataField]
-        public Entity<SolutionComponent>? TemporarySolution = null;
+        [ViewVariables]
+        public Entity<SolutionComponent>? TemporarySolution;
 
         /// <summary>
         /// Variable that stores the amount of status time added by having a low blood level.

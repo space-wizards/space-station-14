@@ -19,7 +19,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         var xform = Transform(uid);
 
         if (TryComp<MapGridComponent>(xform.GridUid, out var grid)
-            && HasFloorCover(grid, grid.TileIndicesFor(xform.Coordinates)))
+            && HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates)))
         {
             args.Cancel();
         }

@@ -95,6 +95,7 @@
     radius: 1.5
     color: orange
     netsync: false
+  - type: ItemTogglePointLight
   - type: Appearance
   - type: RequiresEyeProtection
   - type: PhysicalComposition
@@ -170,6 +171,8 @@
       reagents:
       - ReagentId: WeldingFuel
         Quantity: 1
+  - type: RequiresEyeProtection
+    statusEffectTime: 5 # less harmful; sunglasses can block it
 
 - type: entity
   name: emergency welding tool

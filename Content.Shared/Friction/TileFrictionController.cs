@@ -22,6 +22,7 @@ namespace Content.Shared.Friction
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedMapSystem _map = default!;
 
         private EntityQuery<TileFrictionModifierComponent> _frictionQuery;
         private EntityQuery<TransformComponent> _xformQuery;
@@ -185,7 +186,7 @@ namespace Content.Shared.Friction
                     : DefaultFriction;
             }
 
-            var tile = grid.GetTileRef(xform.Coordinates);
+            var tile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
 
             // If it's a map but on an empty tile then just assume it has gravity.
             if (tile.Tile.IsEmpty &&

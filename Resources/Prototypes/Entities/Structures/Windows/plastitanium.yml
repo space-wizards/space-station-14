@@ -98,8 +98,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageVisuals
-    thresholds: [4, 8, 12]
-    damageDivisor: 28
+    thresholds: [5, 10, 20]
+    damageDivisor: 20
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
@@ -121,6 +121,9 @@
     drawdepth: WallTops
     sprite: Structures/Windows/plastitanium_window_diagonal.rsi
     state: state0
+  - type: Tag
+    tags:
+    - Diagonal
   - type: Icon
     sprite: Structures/Windows/plastitanium_window_diagonal.rsi
     state: state0
@@ -185,8 +188,8 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageVisuals
-    thresholds: [4, 8, 12]
-    damageDivisor: 28
+    thresholds: [5, 10, 20]
+    damageDivisor: 20
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks_diagonal.rsi

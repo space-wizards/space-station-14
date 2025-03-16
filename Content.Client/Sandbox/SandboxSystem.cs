@@ -110,7 +110,7 @@ namespace Content.Client.Sandbox
             }
 
             // Try copy tile.
-            
+
             if (!_map.TryFindGridAt(_transform.ToMapCoordinates(coords), out var gridUid, out var grid) || !_mapSystem.TryGetTileRef(gridUid, grid, coords, out var tileRef))
                 return false;
 
@@ -156,11 +156,6 @@ namespace Content.Client.Sandbox
         public void ShowBb()
         {
             _consoleHost.ExecuteCommand("physics shapes");
-        }
-
-        public void MachineLinking()
-        {
-            _consoleHost.ExecuteCommand("signallink");
         }
     }
 }

@@ -52,8 +52,8 @@
     supplyRampTolerance: 5000
     supplyRampRate: 1000
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
@@ -108,6 +108,10 @@
     requirePower: true
     highVoltageNode: input
     mediumVoltageNode: output
+  - type: GuideHelp
+    guides:
+    - VoltageNetworks
+    - Power
 
 # Compact Wall Substation Base
 - type: entity
@@ -183,8 +187,8 @@
     supplyRampTolerance: 5000
     supplyRampRate: 1000
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
@@ -214,6 +218,10 @@
     totalIntensity: 100
   - type: StationInfiniteBatteryTarget
   - type: WallMount
+  - type: GuideHelp
+    guides:
+    - VoltageNetworks
+    - Power
 
 # Substations in use
 

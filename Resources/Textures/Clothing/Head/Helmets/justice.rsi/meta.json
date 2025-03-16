@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Base sprite by DieselMohawk for use in SS14, combined with justice2 from tgstation at b8c63da48c8445fcec96491970b9316d0f8684b8",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+	{
+      "name": "icon-light",
+	  "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+	  ]
+    },
+    {
+      "name": "off-equipped-HELMET",
+      "directions": 4
+    },
+	{
+      "name": "on-equipped-HELMET",
+      "directions": 4,
+	  "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+	  ]
+    },
+    {
+      "name": "off-equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

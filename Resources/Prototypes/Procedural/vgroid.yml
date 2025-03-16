@@ -18,6 +18,11 @@
       proto: VGRoidSmaller
     - !type:PrototypeDunGen
       proto: VGRoidSmallPaths
+    - !type:EntityTableDunGen
+      minCount: 7
+      maxCount: 12
+      table:
+        id: VGRoidInteriorRoomMarker
     # Fill
     - !type:PrototypeDunGen
       proto: VGRoidFill
@@ -175,7 +180,7 @@
     minCount: 8
     maxCount: 15
     groups:
-    - id: MobGoliath
+    - id: SalvageSpawnerMobMiningAsteroid
       amount: 1
 
 #- type: dungeonConfig
@@ -202,10 +207,10 @@
   # Mobs
   # If you want exterior dungeon mobs add them under the prototype.
   - !type:MobsDunGen
-    minCount: 20
-    maxCount: 30
+    minCount: 25
+    maxCount: 35
     groups:
-    - id: MobGoliath
+    - id: SalvageSpawnerMobMiningAsteroid
       amount: 1
 
 #- type: dungeonConfig
@@ -219,3 +224,5 @@
       Fill: IronRock
   layers:
   - !type:FillGridDunGen
+    allowedTiles:
+    - FloorAsteroidSand

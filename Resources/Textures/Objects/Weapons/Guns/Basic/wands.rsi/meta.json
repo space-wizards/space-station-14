@@ -63,6 +63,20 @@
     {
       "name": "wand-inhand-right",
 	  "directions": 4
+    },
+    {
+      "name": "locker"
+    },
+    {
+      "name": "locker-effect"
+    },
+    {
+      "name": "locker-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "locker-inhand-left",
+      "directions": 4
     }
   ]
 }

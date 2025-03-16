@@ -17,6 +17,7 @@ namespace Content.Shared.SubFloor
     {
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] protected readonly SharedMapSystem Map = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
 
         public override void Initialize()
@@ -92,7 +93,7 @@ namespace Content.Shared.SubFloor
             if (args.NewTile.Tile.IsEmpty)
                 return; // Anything that was here will be unanchored anyways.
 
-            UpdateTile(Comp<MapGridComponent>(args.NewTile.GridUid), args.NewTile.GridIndices);
+            UpdateTile(args.NewTile.GridUid, Comp<MapGridComponent>(args.NewTile.GridUid), args.NewTile.GridIndices);
         }
 
         /// <summary>
@@ -104,25 +105,25 @@ namespace Content.Shared.SubFloor
                 return;
 
             if (xform.Anchored && TryComp<MapGridComponent>(xform.GridUid, out var grid))
-                component.IsUnderCover = HasFloorCover(grid, grid.TileIndicesFor(xform.Coordinates));
+                component.IsUnderCover = HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates));
             else
                 component.IsUnderCover = false;
 
             UpdateAppearance(uid, component);
         }
 
-        public bool HasFloorCover(MapGridComponent grid, Vector2i position)
+        public bool HasFloorCover(EntityUid gridUid, MapGridComponent grid, Vector2i position)
         {
             // TODO Redo this function. Currently wires on an asteroid are always "below the floor"
-            var tileDef = (ContentTileDefinition) _tileDefinitionManager[grid.GetTileRef(position).Tile.TypeId];
+            var tileDef = (ContentTileDefinition) _tileDefinitionManager[Map.GetTileRef(gridUid, grid, position).Tile.TypeId];
             return !tileDef.IsSubFloor;
         }
 
-        private void UpdateTile(MapGridComponent grid, Vector2i position)
+        private void UpdateTile(EntityUid gridUid, MapGridComponent grid, Vector2i position)
         {
-            var covered = HasFloorCover(grid, position);
+            var covered = HasFloorCover(gridUid, grid, position);
 
-            foreach (var uid in grid.GetAnchoredEntities(position))
+            foreach (var uid in Map.GetAnchoredEntities(gridUid, grid, position))
             {
                 if (!TryComp(uid, out SubFloorHideComponent? hideComp))
                     continue;
