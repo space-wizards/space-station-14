@@ -20,73 +20,81 @@ public sealed partial class CosmicCorruptingComponent : Component
     public HashSet<Vector2i> CorruptableTiles = [];
 
     /// <summary>
-    /// The starting radius of the effect.
+    /// How many times has this corruption source ticked?
     /// </summary>
-    [DataField] public float CorruptionRadius = 2;
+    [DataField]
+    public int CorruptionTicks = 0;
 
     /// <summary>
-    /// The maximum radius the corruption effect can grow to.
+    /// The maximum amount of ticks this source can do.
     /// </summary>
-    [DataField] public float CorruptionMaxRadius = 50;
+    [DataField]
+    public int CorruptionMaxTicks = 50;
 
     /// <summary>
     /// The chance that a tile and/or wall is replaced.
     /// </summary>
-    [DataField] public float CorruptionChance = 0.51f;
+    [DataField]
+    public float CorruptionChance = 0.51f;
 
     /// <summary>
     /// The reduction applied to corruption chance every tick.
     /// </summary>
-    [DataField] public float CorruptionReduction = 0f;
-
-    /// <summary>
-    /// Enables or disables the growth of the corruption radius.
-    /// </summary>
-    [DataField] public bool CorruptionGrowth = false;
+    [DataField]
+    public float CorruptionReduction = 0f;
 
     /// <summary>
     /// Wether or not the CosmicCorruptingSystem should be running on this entity.
     /// </summary>
-    [DataField] public bool Enabled = true;
+    [DataField]
+    public bool Enabled = true;
 
     /// <summary>
     /// Wether or not the CosmicCorruptingSystem should spawn VFX when converting tiles and walls.
     /// </summary>
-    [DataField] public bool UseVFX = true;
+    [DataField]
+    public bool UseVFX = true;
 
     /// <summary>
     /// Wether or not the CosmicCorruptingSystem should ignore this component when it reaches max growth. Saves performance.
     /// </summary>
-    [DataField] public bool AutoDisable = true;
-
-    /// <summary>
-    /// Wether or not the item should have a chance to disintegrate walls. Used for the Monument.
-    /// </summary>
-    [DataField] public bool Disintegrate = false;
+    [DataField]
+    public bool AutoDisable = true;
 
     /// <summary>
     /// How much time between tile corruptions.
     /// </summary>
-    [DataField, AutoNetworkedField] public TimeSpan CorruptionSpeed = TimeSpan.FromSeconds(6);
+    [DataField, AutoNetworkedField]
+    public TimeSpan CorruptionSpeed = TimeSpan.FromSeconds(6);
 
     /// <summary>
     /// The tile we spawn when replacing a normal tile.
     /// </summary>
-    [DataField] public ProtoId<ContentTileDefinition> ConversionTile = "FloorCosmicCorruption";
+    [DataField]
+    public ProtoId<ContentTileDefinition> ConversionTile = "FloorCosmicCorruption";
 
     /// <summary>
     /// The wall we spawn when replacing a normal wall.
     /// </summary>
-    [DataField] public EntProtoId ConversionWall = "WallCosmicCult";
+    [DataField]
+    public EntProtoId ConversionWall = "WallCosmicCult";
+
+    /// <summary>
+    /// the door we spawn when replacing a secret door
+    /// </summary>
+    [DataField]
+    public EntProtoId ConversionDoor = "DoorCosmicCult";
 
     /// <summary>
     /// The VFX entity we spawn when corruption occurs.
     /// </summary>
-    [DataField] public EntProtoId TileConvertVFX = "CosmicFloorSpawnVFX";
+    [DataField]
+    public EntProtoId TileConvertVFX = "CosmicFloorSpawnVFX";
 
     /// <summary>
     /// The VFX entity we spawn when walls get deleted.
     /// </summary>
-    [DataField] public EntProtoId TileDisintegrateVFX = "CosmicGenericVFX";
+    [DataField]
+    public EntProtoId TileDisintegrateVFX = "CosmicGenericVFX";
 
 }

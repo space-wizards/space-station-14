@@ -8,6 +8,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Content.Shared.Tag;
 using Content.Server._Impstation.CosmicCult.Components;
+using Content.Server.Shuttles.Components;
+using Content.Shared.Doors.Components;
 
 namespace Content.Server._Impstation.CosmicCult.EntitySystems;
 public sealed class CosmicCorruptingSystem : EntitySystem
@@ -32,7 +34,9 @@ public sealed class CosmicCorruptingSystem : EntitySystem
         new Vector2i(1, -1),
     ];
 
-
+    /// <remarks>
+    /// this system is a mostly generic way of replacing tiles around an entity. the only hardcoded behaviour is secret walls -> malign doors, but that shouldn't be too hard to fix if this is needed for smth else later.
+    /// </remarks>
     public override void Initialize()
     {
         SubscribeLocalEvent<CosmicCorruptingComponent, MapInitEvent>(OnMapInit);
@@ -71,29 +75,25 @@ public sealed class CosmicCorruptingSystem : EntitySystem
             if (comp.Enabled && _timing.CurTime >= comp.CorruptionTimer)
             {
                 comp.CorruptionTimer = _timing.CurTime + comp.CorruptionSpeed;
-                ConvertTilesInRange((uid, comp));
-                if (comp.CorruptionGrowth && comp.CorruptionRadius <= comp.CorruptionMaxRadius)
+                ConvertTiles((uid, comp));
+                if (comp.CorruptionTicks <= comp.CorruptionMaxTicks)
                 {
-                    comp.CorruptionRadius++;
+                    comp.CorruptionTicks++;
                     comp.CorruptionChance -= comp.CorruptionReduction;
                 }
 
-                if (comp.CorruptionRadius >= comp.CorruptionMaxRadius)
-                    comp.CorruptionGrowth = false;
-
-                if (comp.CorruptionRadius >= comp.CorruptionMaxRadius && comp.AutoDisable)
-                    comp.Enabled = false;
+                if (comp.CorruptionTicks >= comp.CorruptionMaxTicks && comp.AutoDisable)
+                    comp.Enabled = false; //maybe just remComp this? atm nothing re-enables a corruptor so that should be safe to do?
             }
         }
     }
 
-    private void ConvertTilesInRange(Entity<CosmicCorruptingComponent> uid)
+    private void ConvertTiles(Entity<CosmicCorruptingComponent> uid)
     {
         var tgtPos = Transform(uid);
         if (tgtPos.GridUid is not { } gridUid || !TryComp(gridUid, out MapGridComponent? mapGrid))
             return;
 
-        var radius = uid.Comp.CorruptionRadius;
         var convertTile = (ContentTileDefinition)_tileDefinition[uid.Comp.ConversionTile];
 
         //go over every corruptible tile
@@ -129,11 +129,22 @@ public sealed class CosmicCorruptingSystem : EntitySystem
                         continue;
 
                     var tags = tagComp.Tags; //I hate tags
-                    if (!tags.Contains("Wall") || Prototype(convertedEnt) == null || Prototype(convertedEnt)!.ID == uid.Comp.ConversionWall)
-                        continue;
-
-                    Spawn(uid.Comp.ConversionWall, Transform(convertedEnt).Coordinates);
-                    QueueDel(convertedEnt);
+                    var proto = Prototype(convertedEnt);
+                    if (tags.Contains("Wall") && proto != null && (proto.ID != uid.Comp.ConversionWall || proto.ID != uid.Comp.ConversionDoor)) //if we hit something that isn't already converted & can be, convert it
+                    {
+                        //the secret door check (if has "wall" tag && a doorComponent) is a little hacky & heuristic.
+                        //ideally there'd be a <protoID, protoID> hashmap for this & we wouldn't be checking tags or anything, but that's a lot of manual data entry that I can foist onto future me, she's a sucker for that kinda thing - ruddygreat
+                        //also not using a ternary here because this is nicer to read in my imo
+                        if (TryComp<DoorComponent>(convertedEnt, out _))
+                        {
+                            Spawn(uid.Comp.ConversionDoor, Transform(convertedEnt).Coordinates);
+                        }
+                        else
+                        {
+                            Spawn(uid.Comp.ConversionWall, Transform(convertedEnt).Coordinates);
+                        }
+                        QueueDel(convertedEnt);
+                    }
                 }
 
                 //spawn the vfx if we should
