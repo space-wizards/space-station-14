@@ -29,6 +29,18 @@ namespace Content.IntegrationTests.Tests.GameRules;
 [TestFixture]
 public sealed class NukeOpsTest
 {
+    private const string NukeOpsGamePreset = "TestNukeops";
+
+    [TestPrototypes]
+    private const string Prototypes = $@"
+- type: gamePreset
+  id: {NukeOpsGamePreset}
+  name: nukeops-title
+  showInVote: false
+  rules:
+  - Nukeops
+";
+
     /// <summary>
     /// Check that a nuke ops game mode can start without issue. I.e., that the nuke station and such all get loaded.
     /// </summary>
@@ -90,7 +102,7 @@ public sealed class NukeOpsTest
         // Ready up and start nukeops
         ticker.ToggleReadyAll(true);
         Assert.That(ticker.PlayerGameStatuses.Values.All(x => x == PlayerGameStatus.ReadyToPlay));
-        await pair.WaitCommand("forcepreset Nukeops");
+        await pair.WaitCommand($"forcepreset {NukeOpsGamePreset}");
         await pair.RunTicksSync(10);
 
         // Game should have started
