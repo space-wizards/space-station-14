@@ -9,6 +9,7 @@
   - CyborgEndoskeleton
 
 - type: latheRecipePack
+  parent: BorgModulesStaticImp # imp
   id: BorgModulesStatic
   recipes:
   - BorgModuleCable
@@ -34,6 +35,7 @@
   - ProximitySensor
 
 - type: latheRecipePack
+  parent: BorgModulesImp # imp
   id: BorgModules
   recipes:
   - BorgModuleAdvancedCleaning
@@ -45,7 +47,6 @@
   - BorgModuleHarvesting
   - BorgModuleDefibrillator
   - BorgModuleAdvancedTreatment
-  - BorgModuleMining #imp
 
 - type: latheRecipePack
   id: MechParts

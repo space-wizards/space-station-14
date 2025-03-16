@@ -1,0 +1,7 @@
+﻿## Static
+
+- type: latheRecipePack
+  id: SecurityEquipmentStaticDeltaV
+  recipes:
+  - ClothingOuterArmorPlateCarrier # plate carrier body armour
+  - ClothingOuterArmorDuraVest # stabproof vest body armour

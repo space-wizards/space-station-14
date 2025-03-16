@@ -1,29 +1,53 @@
 # Static
 
 - type: latheRecipePack
-  id: ImpClothesStatic
+  id: ClothingCargoImp
   recipes:
-  - ClothingBeltPaperwork # DeltaV
-  - ClothingHeadHatBeretCaptain
   - ClothingHeadHatCouriersoft
-  - ClothingHeadHoodMysta # DeltaV
-  - ClothingOuterClerkVest # DeltaV
-  - ClothingUniformJumpskirtCJFormal # DeltaV
   - ClothingUniformJumpskirtCourier
   - ClothingUniformJumpskirtSalvageSpecialist
-  - ClothingUniformJumpskirtSalvageSpecialistDV # DeltaV
-  - ClothingUniformJumpsuitChiefJusticeFormal # DeltaV
-  - ClothingUniformJumpsuitChiefJusticeWhite # DeltaV
-  - ClothingUniformJumpsuitClerk # DeltaV
   - ClothingUniformJumpsuitCourier
-  - ClothingUniformJumpsuitProsecutor # DeltaV
-  - ClothingUniformJumpsuitSalvageSpecialistDV # DeltaV
 
-  # Winter outfits
-  - ClothingNeckCWPArctic # DeltaV
-  - ClothingNeckCWPSec # DeltaV
-  - ClothingOuterStasecSweater # DeltaV
+- type: latheRecipePack
+  id: ClothingCommandImp
+  recipes:
+  - ClothingHeadHatBeretCaptain
+
+- type: latheRecipePack
+  id: ClothingServiceImp
+  recipes:
+  - ClothingUniformJumpsuitHD
+  - ClothingUniformJumpskirtHD
+  - ClothingUniformJumpsuitHDTurtle
+  - ClothingUniformJumpskirtHDTurtle
+  - ClothingUniformJumpsuitHospitalityDirectorJanitor
+  - ClothingUniformJumpskirtHospitalityDirectorJanitor
+  - ClothingUniformJumpsuitHospitalityDirectorBartender
+  - ClothingUniformJumpskirtHospitalityDirectorBartender
+  - ClothingUniformJumpsuitHospitalityDirectorBotany
+  - ClothingHeadHatHDsoft
+  - ClothingHeadBandHD
+  - ClothingHeadHatBeretHD
+
+- type: latheRecipePack
+  id: WinterCoatsImp
+  recipes:
+  - ClothingOuterWinterBrigmedic
   - ClothingOuterWinterCourier
+
+- type: latheRecipePack
+  id: PrideFlags
+  recipes:
+  - ClothingNeckCloakAce
+  - ClothingNeckCloakAro
+  - ClothingNeckCloakBear
+  - ClothingNeckCloakBi
+  - ClothingNeckCloakEnby
+  - ClothingNeckCloakGay
+  - ClothingNeckCloakIntersex
+  - ClothingNeckCloakLesbian
+  - ClothingNeckCloakPan
+  - ClothingNeckCloakTrans
 
 # Dynamic
 
@@ -36,12 +60,4 @@
 - type: latheRecipePack
   id: ImpClothesEmagged
   recipes:
-  - ClothingHeadHatSurgcapCybersun # DeltaV
   - ClothingNeckCloakStraight
-  - ClothingOuterCybersunOvercoat # DeltaV
-  - ClothingOuterCoatCybersunWindbreaker # DeltaV
-  - ClothingUniformCybersunAttorney # DeltaV
-  - ClothingUniformCybersunCasual # DeltaV
-  - ClothingUniformCybersunHazard # DeltaV
-  - ClothingUniformCybersunRND # DeltaV
-  - UniformScrubsColorCybersun # DeltaV

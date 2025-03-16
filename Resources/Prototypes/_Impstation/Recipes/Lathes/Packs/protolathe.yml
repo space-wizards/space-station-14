@@ -4,10 +4,9 @@
   id: ImpProtoStatic
   recipes:
   - SGDRecipe
-  - DeskBell
-  - UvLightTube
-  - TapeRecorder # DV
-  - CassetteTape # DV
+  - Dropper
+  - Igniter
+  - Implanter
 
 # Dynamic
 
@@ -17,9 +16,7 @@
   - BaseChemistryEmptyVial
   - Drone
   - CleanerGrenade
-  - PlantAnalyzer #NF
   - FishingRod
-  - SignallerDeadMans # DeltaV
 
 # Emagged
 

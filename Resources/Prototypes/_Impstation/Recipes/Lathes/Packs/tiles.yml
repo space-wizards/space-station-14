@@ -1,0 +1,6 @@
+﻿# Static
+
+- type: latheRecipePack
+  id: FloorTilesStaticImp
+  recipes:
+  - FloorTileItemTechmaintDark

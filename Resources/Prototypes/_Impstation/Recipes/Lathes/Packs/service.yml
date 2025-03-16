@@ -1,32 +1,24 @@
 # Static
 
 - type: latheRecipePack
-  id: LightPack
+  id: ImpLightPack
   recipes:
-    - FlashlightLantern
-    - LightReplacer
-    - LightTube
-    - LedLightTube
-    - SodiumLightTube
-    - ExteriorLightTube
     - UvLightTube
-    - LightBulb
-    - LedLightBulb
-    - DimLightBulb
+    - LightReplacer
+
+- type: latheRecipePack
+  id: ImpServiceStatic
+  recipes:
+    - Mousetrap
+    - TrashBag
+    - DeskBell
 
 - type: latheRecipePack
   id: CleanPack
   recipes:
-    - Bucket
-    - SprayBottle
     - Plunger
-    - MopItem
     - MopBucket
-    - Holoprojector
-    - TrashBag
-    - Mousetrap
-    - WetFloorSign
-    - SoapNT #imp recipe
+    - SoapNT
 
 - type: latheRecipePack
   id: BotanyPack
@@ -38,60 +30,40 @@
     - HydroponicsToolSpade
     - HydroponicsToolClippers
     - Shovel
-    - PlantBag #imp recipe
+    - PlantBag
 
 - type: latheRecipePack
   id: BarPack
   recipes:
-    - DrinkMug
-    - DrinkMugMetal
-    - DrinkGlass
-    - DrinkShotGlass
-    - DrinkGlassCoupeShaped
-    - CustomDrinkJug
-    - DrinkShaker #imp recipe
-    - DrinkJigger #imp recipe
-    - DrinkFlaskBar #imp recipe
-    - DrinkVacuumFlask #imp recipe
-    - DrinkTeapotEmpty # imp recipe
-    - DrinkTeacupEmpty #imp recipe
-    - DrinkWaterBottleEmpty #imp recipe
-    - Pitcher #imp recipe
-    - BarSpoon #imp recipe
-    - DrinkDisposableCup #imp recipe
+    - DrinkShaker
+    - DrinkJigger
+    - DrinkFlaskBar
+    - DrinkVacuumFlask
+    - DrinkTeapotEmpty
+    - DrinkTeacupEmpty
+    - DrinkWaterBottleEmpty
+    - Pitcher
+    - BarSpoon
+    - DrinkDisposableCup
 
 - type: latheRecipePack
   id: KitchenPack
   recipes:
     - KitchenKnife
-    - FoodPlate
-    - FoodPlateSmall
-    - FoodPlatePlastic
-    - FoodPlateSmallPlastic
-    - FoodBowlBig
-    - FoodPlateTin
-    - FoodPlateMuffinTin
-    - FoodKebabSkewer
-    - RollingPin #imp recipe
-    - Fork #imp recipe
-    - Spoon #imp recipe
-    - ForkPlastic #imp recipe
-    - SpoonPlastic #imp recipe
-    - PairedChopsticks #imp recipe
+    - RollingPin
+    - Fork
+    - Spoon
+    - ForkPlastic
+    - SpoonPlastic
+    - PairedChopsticks
 
 - type: latheRecipePack
   id: ServiceMiscPack
   recipes:
-    - Beaker
-    - LargeBeaker
     - Dropper
-    - Syringe
-    - DeskBell
     - ClothingHeadHatCone
     - SprayPainter
-    - HandLabeler
-    - TapeRecorder
-    - CassetteTape
+    - FlashlightLantern
 
 # Dynamic
 
@@ -102,22 +74,12 @@
     - AdvMopItem
     - WeaponSprayNozzle
     - ClothingBackpackWaterTank
-    - CleanerGrenade #imp recipe
+    - CleanerGrenade
 
 - type: latheRecipePack
   id: ServiceMiscPackDynamic
   recipes:
-    - PlantAnalyzer #NF recipe
-    - FishingRod #imp recipe
-
-- type: latheRecipePack
-  id: TilePackDynamic
-  recipes:
-    - FauxTileAstroGrass
-    - FauxTileMowedAstroGrass
-    - FauxTileJungleAstroGrass
-    - FauxTileAstroIce
-    - FauxTileAstroSnow
+    - FishingRod
 
 # Emagged
 

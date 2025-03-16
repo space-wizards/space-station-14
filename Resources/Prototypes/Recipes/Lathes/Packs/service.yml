@@ -1,6 +1,7 @@
 ## Static
 
 - type: latheRecipePack
+  parent: ImpServiceStatic # imp
   id: ServiceStatic
   recipes:
   - Bucket
