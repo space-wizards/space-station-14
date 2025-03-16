@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Client.Lobby;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Construction.Prototypes;
@@ -10,7 +11,6 @@ using Robust.Client.Placement;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.Utility;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
@@ -30,6 +30,7 @@ namespace Content.Client.Construction.UI
         [Dependency] private readonly IPlacementManager _placementManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
 
         private readonly IConstructionMenuView _constructionView;
         private readonly EntityWhitelistSystem _whitelistSystem;
@@ -113,7 +114,7 @@ namespace Content.Client.Construction.UI
 
             _constructionView.RecipeFavorited += (_, _) => OnViewFavoriteRecipe();
 
-            PopulateCategories();
+            SetFavorites(_preferencesManager.Preferences?.ConstructionFavorites ?? []);
             OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
         }
 
@@ -449,7 +450,7 @@ namespace Content.Client.Construction.UI
 
         private void OnViewFavoriteRecipe()
         {
-            if (_selected is not ConstructionPrototype recipe)
+            if (_selected is not ConstructionPrototype)
                 return;
 
             if (!_favoritedRecipes.Remove(_selected))
@@ -463,7 +464,33 @@ namespace Content.Client.Construction.UI
                     OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
             }
 
+            var newFavorites = new List<string>(_favoritedRecipes.Count);
+            foreach (var recipe in _favoritedRecipes)
+                newFavorites.Add(recipe.ID);
+
+            _preferencesManager.UpdateConstructionFavorites(newFavorites);
             PopulateInfo(_selected);
+            PopulateCategories(_selectedCategory);
+        }
+
+        public void SetFavorites(IReadOnlyList<string> favorites)
+        {
+            _favoritedRecipes.Clear();
+
+            foreach (var id in favorites)
+            {
+                if (_prototypeManager.TryIndex(id, out ConstructionPrototype? recipe))
+                    _favoritedRecipes.Add(recipe);
+            }
+
+            if (_selectedCategory == _favoriteCatName)
+            {
+                if (_favoritedRecipes.Count > 0)
+                    OnViewPopulateRecipes(_constructionView, (string.Empty, _favoriteCatName));
+                else
+                    OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
+            }
+
             PopulateCategories(_selectedCategory);
         }
 
