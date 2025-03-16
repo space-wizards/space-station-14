@@ -30,10 +30,12 @@
   parent: LockerBaseSecure
   name: BlueShield officer's locker
   components:
-    - type: Appearance
-    - type: EntityStorageVisuals
-      stateBaseClosed: bssecure
-      stateDoorOpen: bssecure_open
-      stateDoorClosed: bssecure_door
-    - type: AccessReader
-      access: [["BlueShield"]]
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Structures/Storage/closet.rsi
+  - type: EntityStorageVisuals
+    stateBaseClosed: bssecure
+    stateDoorOpen: bssecure_open
+    stateDoorClosed: bssecure_door
+  - type: AccessReader
+    access: [ [ "BlueShield" ] ]
