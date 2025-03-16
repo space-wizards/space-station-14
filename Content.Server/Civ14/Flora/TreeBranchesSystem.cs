@@ -80,7 +80,7 @@ public sealed partial class TreeBranchesSystem : EntitySystem
 
         component.CurrentBranches--;
         var spawnPos = Transform(uid).MapPosition;
-        var branch = Spawn("BranchItem", spawnPos);
+        var branch = Spawn("LeafedStick", spawnPos);
         _hands.TryPickupAnyHand(args.Args.User, branch);
         _popup.PopupEntity("You successfully collect a branch.", uid, args.Args.User);
         args.Handled = true;

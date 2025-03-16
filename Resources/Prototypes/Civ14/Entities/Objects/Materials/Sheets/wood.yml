@@ -1,18 +1,15 @@
 - type: entity
-  name: Branch
+  name: branch
   parent: BaseItem
-  id: BranchItem
-  description: A broken plate. Useless.
+  id: LeafedStick
+  description: A branch from a tree, it has some leaves on it.
   suffix: Single
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/plates.rsi
-    state: plate-trash
+    netsync: false
+    sprite: Objects/_civ/old_weapons.rsi
+    state: leaved_stick
   - type: Item
     shape:
     - 0,0,1,0
     storedOffset: 0,-6
-  - type: Tag
-    tags:
-    - Trash
-  - type: SpaceGarbage
