@@ -7,6 +7,7 @@ using Robust.Shared.Timing;
 using Content.Shared.Popups;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Verbs;
+using Content.Shared.Examine;
 
 namespace Content.Server.TreeBranch;
 
@@ -24,6 +25,7 @@ public sealed partial class TreeBranchesSystem : EntitySystem
         SubscribeLocalEvent<TreeBranchesComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TreeBranchesComponent, CollectBranchDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<TreeBranchesComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<TreeBranchesComponent, ExaminedEvent>(OnExamined);
     }
 
     private void OnMapInit(EntityUid uid, TreeBranchesComponent component, MapInitEvent args)
@@ -94,4 +96,20 @@ private void OnGetVerbs(EntityUid uid, TreeBranchesComponent component, ref GetV
         _popup.PopupEntity("You successfully collect a branch.", uid, args.Args.User);
         args.Handled = true;
     }
+
+    private void OnExamined(EntityUid uid, TreeBranchesComponent component, ExaminedEvent args)
+    {
+        if (!args.IsInDetailsRange)
+            return;
+
+        var branchCount = component.CurrentBranches;
+        if (branchCount > 0)
+        {
+            var message = branchCount == 1
+                ? "There is 1 branch you could make use of."
+                : $"There are {branchCount} branches you could make use of.";
+            args.PushMarkup(message);
+        }
+    }
+
 }
