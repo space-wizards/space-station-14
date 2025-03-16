@@ -90,6 +90,7 @@
   - type: StorageFill
     contents:
       - id: ClothingEyesGlassesBrigmedic
+      - id: ClothingEyesHudBrigmedic
       - id: WeaponDisabler
       - id: TrackingImplanter
         amount: 2

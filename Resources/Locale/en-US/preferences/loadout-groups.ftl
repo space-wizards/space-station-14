@@ -169,6 +169,7 @@ loadout-group-brigmedic-jumpsuit = Brigmedic jumpsuit
 loadout-group-brigmedic-backpack = Brigmedic backpack
 loadout-group-brigmedic-belt = Brigmedic belt
 loadout-group-brigmedic-outerclothing = Brigmedic outer clothing
+loadout-group-brigmedic-eyewear = Brigmedic eyewear
 
 loadout-group-detective-head = Detective head
 loadout-group-detective-neck = Detective neck

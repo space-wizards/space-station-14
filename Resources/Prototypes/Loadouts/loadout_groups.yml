@@ -1052,6 +1052,13 @@
   - CorpsmanCoat #Starlight
 
 - type: loadoutGroup
+  id: BrigmedicEyewear
+  name: loadout-group-brigmedic-eyewear
+  loadouts:
+  - BrigmedicGlasses
+  - BrigmedicHud
+
+- type: loadoutGroup
   id: BrigmedicBelt
   name: loadout-group-brigmedic-belt
   loadouts:
