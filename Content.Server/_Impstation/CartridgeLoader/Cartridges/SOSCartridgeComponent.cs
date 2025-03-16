@@ -1,5 +1,3 @@
-using Content.Shared.CartridgeLoader.Cartridges;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Radio;
 using Robust.Shared.Prototypes;
 
@@ -8,9 +6,11 @@ namespace Content.Server.CartridgeLoader.Cartridges;
 [RegisterComponent]
 public sealed partial class SOSCartridgeComponent : Component
 {
-    [DataField]
     //Path to the id container
     public const string PDAIdContainer = "PDA-id";
+
+    //Timeout between calls
+    public const float TimeOut = 30;
 
     [DataField]
     //Name to use if no id is found
@@ -29,10 +29,6 @@ public sealed partial class SOSCartridgeComponent : Component
     [DataField]
     //Channel to notify
     public ProtoId<RadioChannelPrototype> HelpChannel = "Security";
-
-    [DataField]
-    //Timeout between calls
-    public const float TimeOut = 30;
 
     [DataField]
     //Countdown until next call is allowed

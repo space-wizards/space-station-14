@@ -14,7 +14,7 @@ public sealed partial class CosmicGlyphTransmuteWeaponComponent : Component
     ///     A pool of weapons that we pick from when transmuting.
     /// </summary>
     [DataField]
-    public HashSet<ProtoId<EntityPrototype>> TransmuteWeapon =
+    public HashSet<EntProtoId> TransmuteWeapon =
     [
         "SwordCosmicCult",
         "SpearCosmicCult",
