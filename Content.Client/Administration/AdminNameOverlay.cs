@@ -131,7 +131,7 @@ internal sealed class AdminNameOverlay : Overlay
                 var color = playerInfo.RoleProto.Color;
 
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, color);
-                // currentOffset += lineoffset;
+                currentOffset += lineoffset;
             }
         }
     }
