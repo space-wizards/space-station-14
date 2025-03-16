@@ -124,9 +124,9 @@
           Quantity: 15
 
 - type: entity
-  save: false # PropulsionComponent has a chance of being modified on spawn. This would fail UninitializedSaveTest
   id: PuddleMucin
   parent: PuddleTemporary
+  save: false # PropulsionComponent has a chance of being modified on spawn. This would fail UninitializedSaveTest
   suffix: Mucin
   components:
   - type: SolutionContainerManager
