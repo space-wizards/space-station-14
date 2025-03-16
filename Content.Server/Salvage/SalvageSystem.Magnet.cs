@@ -19,12 +19,14 @@ public sealed partial class SalvageSystem
     private const string MagnetChannel = "Supply";
 
     private EntityQuery<SalvageMobRestrictionsComponent> _salvMobQuery;
+    private EntityQuery<MobStateComponent> _mobStateQuery;
 
     private List<(Entity<TransformComponent> Entity, EntityUid MapUid, Vector2 LocalPosition)> _detachEnts = new();
 
     private void InitializeMagnet()
     {
         _salvMobQuery = GetEntityQuery<SalvageMobRestrictionsComponent>();
+        _mobStateQuery = GetEntityQuery<MobStateComponent>();
 
         SubscribeLocalEvent<SalvageMagnetDataComponent, MapInitEvent>(OnMagnetDataMapInit);
 
@@ -147,7 +149,6 @@ public sealed partial class SalvageSystem
             var mobQuery = AllEntityQuery<MobStateComponent, TransformComponent>();
             _detachEnts.Clear();
 
-            var mobStateQuery = GetEntityQuery<MobStateComponent>();
             while (mobQuery.MoveNext(out var mobUid, out _, out var xform))
             {
                 if (xform.GridUid == null || !data.Comp.ActiveEntities.Contains(xform.GridUid.Value) || xform.MapUid == null)
@@ -161,7 +162,7 @@ public sealed partial class SalvageSystem
                     do
                     {
                         uid = _transform.GetParentUid(uid);
-                        if (mobStateQuery.HasComp(uid))
+                        if (_mobStateQuery.HasComp(uid))
                             return true;
                     }
                     while (uid != xform.GridUid && uid != EntityUid.Invalid);
