@@ -60,7 +60,7 @@ public sealed class SpriteFadeSystem : EntitySystem
             var mapPos = _transform.GetMapCoordinates(_playerManager.LocalEntity!.Value, xform: playerXform);
 
             // Also want to handle large entities even if they may not be clickable.
-            foreach (var ent in state.GetClickableEntities(mapPos))
+            foreach (var ent in state.GetClickableEntities(mapPos, excludeFaded: false))
             {
                 if (ent == player ||
                     !_fadeQuery.HasComponent(ent) ||

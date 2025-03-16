@@ -113,18 +113,18 @@ namespace Content.Client.Gameplay
             return first.IsValid() ? first : null;
         }
 
-        public IEnumerable<EntityUid> GetClickableEntities(EntityCoordinates coordinates)
+        public IEnumerable<EntityUid> GetClickableEntities(EntityCoordinates coordinates, bool excludeFaded = true)
         {
             var transformSystem = _entitySystemManager.GetEntitySystem<SharedTransformSystem>();
-            return GetClickableEntities(transformSystem.ToMapCoordinates(coordinates));
+            return GetClickableEntities(transformSystem.ToMapCoordinates(coordinates), excludeFaded);
         }
 
-        public IEnumerable<EntityUid> GetClickableEntities(MapCoordinates coordinates)
+        public IEnumerable<EntityUid> GetClickableEntities(MapCoordinates coordinates, bool excludeFaded = true)
         {
-            return GetClickableEntities(coordinates, _eyeManager.CurrentEye);
+            return GetClickableEntities(coordinates, _eyeManager.CurrentEye, excludeFaded);
         }
 
-        public IEnumerable<EntityUid> GetClickableEntities(MapCoordinates coordinates, IEye? eye)
+        public IEnumerable<EntityUid> GetClickableEntities(MapCoordinates coordinates, IEye? eye, bool excludeFaded = true)
         {
             /*
              * TODO:
@@ -147,7 +147,7 @@ namespace Content.Client.Gameplay
             foreach (var entity in entities)
             {
                 if (clickQuery.TryGetComponent(entity.Uid, out var component) &&
-                    clickables.CheckClick((entity.Uid, component, entity.Component, entity.Transform), coordinates.Position, eye,  out var drawDepthClicked, out var renderOrder, out var bottom))
+                    clickables.CheckClick((entity.Uid, component, entity.Component, entity.Transform), coordinates.Position, eye, excludeFaded, out var drawDepthClicked, out var renderOrder, out var bottom))
                 {
                     foundEntities.Add((entity.Uid, drawDepthClicked, renderOrder, bottom));
                 }
