@@ -2,7 +2,6 @@ using Content.Server.Body.Components;
 using Content.Server.Medical.Components;
 using Content.Server.PowerCell;
 using Content.Shared.Temperature.Components;
-using Content.Server.Temperature.Components;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;

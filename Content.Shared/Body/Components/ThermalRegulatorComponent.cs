@@ -4,14 +4,14 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Body.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SharedThermalRegulatorSystem))]
 public sealed partial class ThermalRegulatorComponent : Component
 {
     /// <summary>
     /// The next time that the body will regulate its heat.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextUpdate;
 
     /// <summary>

@@ -11,17 +11,11 @@ public sealed class ThermalRegulatorSystem : SharedThermalRegulatorSystem
         base.Initialize();
 
         SubscribeLocalEvent<ThermalRegulatorComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<ThermalRegulatorComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
     private void OnMapInit(Entity<ThermalRegulatorComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
-    }
-
-    private void OnUnpaused(Entity<ThermalRegulatorComponent> ent, ref EntityUnpausedEvent args)
-    {
-        ent.Comp.NextUpdate += args.PausedTime;
     }
 
     public override void Update(float frameTime)
@@ -49,7 +43,7 @@ public sealed class ThermalRegulatorSystem : SharedThermalRegulatorSystem
 
         // implicit heat regulation
         var tempDiff = Math.Abs(ent.Comp2.CurrentTemperature - ent.Comp1.NormalBodyTemperature);
-        var heatCapacity = _tempSys.GetHeatCapacity(ent, ent);
+        var heatCapacity = _tempSys.GetHeatCapacity((ent, ent, null));
         var targetHeat = tempDiff * heatCapacity;
         if (ent.Comp2.CurrentTemperature > ent.Comp1.NormalBodyTemperature)
         {

@@ -1,6 +1,5 @@
 using Content.Shared.Temperature.Components;
 using Content.Shared.Examine;
-using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
@@ -45,7 +44,7 @@ public abstract class SharedEntityHeaterSystem : EntitySystem
         setting %= SettingCount;
         var nextSetting = (EntityHeaterSetting) setting;
 
-        args.Verbs.Add(new AlternativeVerb()
+        args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString("entity-heater-switch-setting", ("setting", nextSetting)),
             Act = () =>
@@ -66,16 +65,12 @@ public abstract class SharedEntityHeaterSystem : EntitySystem
 
     protected float SettingPower(EntityHeaterSetting setting, float max)
     {
-        switch (setting)
+        return setting switch
         {
-            case EntityHeaterSetting.Low:
-                return max / 3f;
-            case EntityHeaterSetting.Medium:
-                return max * 2f / 3f;
-            case EntityHeaterSetting.High:
-                return max;
-            default:
-                return 0f;
-        }
+            EntityHeaterSetting.Low => max / 3f,
+            EntityHeaterSetting.Medium => max * 2f / 3f,
+            EntityHeaterSetting.High => max,
+            _ => 0f
+        };
     }
 }
