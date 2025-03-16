@@ -1,0 +1,241 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "apparel_soviet_old"
+        },
+        {
+            "name": "apparel_german_old"
+        },
+        {
+            "name": "gvendor_sov2"
+        },
+        {
+            "name": "gvendor_ger2"
+        },
+        {
+            "name": "gvendor_ammo"
+        },
+        {
+            "name": "gvendor_sov1"
+        },
+        {
+            "name": "gvendor_ger1"
+        },
+        {
+            "name": "gvendor"
+        },
+        {
+            "name": "equipment_russia"
+        },
+        {
+            "name": "equipment_japan"
+        },
+        {
+            "name": "apparel_russia"
+        },
+        {
+            "name": "apparel_german"
+        },
+        {
+            "name": "apparel_japan"
+        },
+        {
+            "name": "apparel_usa"
+        },
+        {
+            "name": "equipment_usa"
+        },
+        {
+            "name": "apparel_rifles"
+        },
+        {
+            "name": "apparel_pirates"
+        },
+        {
+            "name": "apparel_british"
+        },
+        {
+            "name": "rack_base"
+        },
+        {
+            "name": "rack_base_wood"
+        },
+        {
+            "name": "modern_german"
+        },
+        {
+            "name": "modern_british"
+        },
+        {
+            "name": "apparel_german2"
+        },
+        {
+            "name": "apparel_france"
+        },
+        {
+            "name": "modern_france"
+        },
+        {
+            "name": "apparel_sof"
+        },
+        {
+            "name": "weapons_sof"
+        },
+        {
+            "name": "ammo_crates"
+        },
+        {
+            "name": "apparel_japan_ww2"
+        },
+        {
+            "name": "nutrimat"
+        },
+        {
+            "name": "coffee",
+            "directions": 4,
+            "delays": [
+                [
+                    0.6,
+                    0.6,
+                    0.6,
+                    0.6,
+                    0.6
+                ],
+                [
+                    0.6,
+                    0.6,
+                    0.6,
+                    0.6,
+                    0.6
+                ],
+                [
+                    0.6,
+                    0.6,
+                    0.6,
+                    0.6,
+                    0.6
+                ],
+                [
+                    0.6,
+                    0.6,
+                    0.6,
+                    0.6,
+                    0.6
+                ]
+            ]
+        },
+        {
+            "name": "cigs",
+            "directions": 4
+        },
+        {
+            "name": "games",
+            "directions": 4
+        },
+        {
+            "name": "snack",
+            "directions": 4,
+            "delays": [
+                [
+                    0.8,
+                    0.8,
+                    0.8
+                ],
+                [
+                    0.8,
+                    0.8,
+                    0.8
+                ],
+                [
+                    0.8,
+                    0.8,
+                    0.8
+                ],
+                [
+                    0.8,
+                    0.8,
+                    0.8
+                ]
+            ]
+        },
+        {
+            "name": "custom1"
+        },
+        {
+            "name": "custom1_base"
+        },
+        {
+            "name": "custom1_overlay"
+        },
+        {
+            "name": "custom2"
+        },
+        {
+            "name": "custom2_base"
+        },
+        {
+            "name": "custom2_overlay_secondary"
+        },
+        {
+            "name": "custom2_overlay_primary"
+        },
+        {
+            "name": "market_stall"
+        },
+        {
+            "name": "market_stall_overlay_primary"
+        },
+        {
+            "name": "market_stall_overlay_secondary"
+        },
+        {
+            "name": "supply_stall"
+        },
+        {
+            "name": "supply_stall_overlay_primary"
+        },
+        {
+            "name": "supply_stall_overlay_secondary"
+        },
+        {
+            "name": "apparel_confed"
+        },
+        {
+            "name": "apparel_china"
+        },
+        {
+            "name": "CurrencyCounter",
+            "directions": 4
+        },
+        {
+            "name": "blaster_munitions",
+            "delays": [
+                [
+                    0.1,
+                    0.25,
+                    0.1,
+                    0.25
+                ]
+            ]
+        },
+        {
+            "name": "gonk",
+            "directions": 4
+        },
+        {
+            "name": "sovietsoda",
+            "directions": 4
+        },
+        {
+            "name": "grenade_crate"
+        },
+        {
+            "name": "grenade_crate_alt"
+        }
+    ]
+}

@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cleaner"
+    },
+    {
+      "name": "waffles"
+    },
+    {
+      "name": "plate"
+    },
+    {
+      "name": "snack_bowl"
+    },
+    {
+      "name": "tray"
+    },
+    {
+      "name": "trashbag0"
+    },
+    {
+      "name": "trashbag1"
+    },
+    {
+      "name": "trashbag2"
+    },
+    {
+      "name": "trashbag3"
+    },
+    {
+      "name": "lid_bucket"
+    },
+    {
+      "name": "mop"
+    },
+    {
+      "name": "bucket"
+    },
+    {
+      "name": "lid_han_gou"
+    },
+    {
+      "name": "han_gou_open"
+    }
+  ]
+}

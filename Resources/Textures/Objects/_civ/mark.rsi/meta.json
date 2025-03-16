@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "b1"
+    },
+    {
+      "name": "b2"
+    },
+    {
+      "name": "b3"
+    },
+    {
+      "name": "b4"
+    },
+    {
+      "name": "X"
+    },
+    {
+      "name": "up"
+    },
+    {
+      "name": "dn"
+    },
+    {
+      "name": "lf"
+    },
+    {
+      "name": "rt"
+    },
+    {
+      "name": "blank"
+    },
+    {
+      "name": "fup"
+    },
+    {
+      "name": "fdn"
+    },
+    {
+      "name": "flf"
+    },
+    {
+      "name": "frt"
+    },
+    {
+      "name": "yup"
+    },
+    {
+      "name": "ydn"
+    },
+    {
+      "name": "ylf"
+    },
+    {
+      "name": "yrt"
+    },
+    {
+      "name": "rup"
+    },
+    {
+      "name": "rdn"
+    },
+    {
+      "name": "rlf"
+    },
+    {
+      "name": "rrt"
+    },
+    {
+      "name": "1"
+    },
+    {
+      "name": "2"
+    },
+    {
+      "name": "3"
+    },
+    {
+      "name": "4"
+    },
+    {
+      "name": "5"
+    },
+    {
+      "name": "6"
+    },
+    {
+      "name": "7"
+    },
+    {
+      "name": "8"
+    },
+    {
+      "name": "9"
+    },
+    {
+      "name": "0"
+    },
+    {
+      "name": "-"
+    },
+    {
+      "name": "."
+    },
+    {
+      "name": "_"
+    },
+    {
+      "name": "C"
+    },
+    {
+      "name": "x3"
+    },
+    {
+      "name": "x4"
+    },
+    {
+      "name": "blocker"
+    },
+    {
+      "name": "dice"
+    },
+    {
+      "name": "ak_old"
+    },
+    {
+      "name": "ak_modern"
+    },
+    {
+      "name": "magazine"
+    },
+    {
+      "name": "medical"
+    },
+    {
+      "name": "bandage"
+    },
+    {
+      "name": "drug"
+    },
+    {
+      "name": "mine"
+    },
+    {
+      "name": "barricade"
+    },
+    {
+      "name": "tree"
+    }
+  ]
+}

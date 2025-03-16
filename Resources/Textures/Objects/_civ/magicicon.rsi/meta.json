@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "0"
+    },
+    {
+      "name": "flame"
+    },
+    {
+      "name": "firebolt"
+    },
+    {
+      "name": "flamelance"
+    },
+    {
+      "name": "fireball"
+    },
+    {
+      "name": "firestorm"
+    },
+    {
+      "name": "freezingtouch"
+    },
+    {
+      "name": "frostbolt"
+    },
+    {
+      "name": "icespear"
+    },
+    {
+      "name": "gust"
+    },
+    {
+      "name": "blizzard"
+    },
+    {
+      "name": "chainlightning"
+    },
+    {
+      "name": "shockingorb"
+    },
+    {
+      "name": "summon"
+    },
+    {
+      "name": "telekinesis"
+    },
+    {
+      "name": "cleanse"
+    }
+  ]
+}

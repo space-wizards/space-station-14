@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "large"
+    },
+    {
+      "name": "medium"
+    },
+    {
+      "name": "small"
+    },
+    {
+      "name": "shrapnellarge"
+    },
+    {
+      "name": "shrapnelmedium"
+    },
+    {
+      "name": "shrapnelsmall"
+    },
+    {
+      "name": "shardlarge"
+    },
+    {
+      "name": "shardmedium"
+    },
+    {
+      "name": "shardsmall"
+    },
+    {
+      "name": "splinterslarge"
+    },
+    {
+      "name": "splintersmedium"
+    },
+    {
+      "name": "splinterssmall"
+    },
+    {
+      "name": "piecelarge"
+    },
+    {
+      "name": "piecemedium"
+    },
+    {
+      "name": "piecesmall"
+    }
+  ]
+}

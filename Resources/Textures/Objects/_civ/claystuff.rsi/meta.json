@@ -1,0 +1,268 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "",
+      "delays": [
+        [
+          0.120000005,
+          0.120000005,
+          0.120000005,
+          0.120000005
+        ]
+      ]
+    },
+    {
+      "name": "claylump"
+    },
+    {
+      "name": "clayshards"
+    },
+    {
+      "name": "clayvase"
+    },
+    {
+      "name": "clayroofing"
+    },
+    {
+      "name": "claywinecup"
+    },
+    {
+      "name": "claypot1"
+    },
+    {
+      "name": "claypot2"
+    },
+    {
+      "name": "claybricks"
+    },
+    {
+      "name": "claybowl"
+    },
+    {
+      "name": "clayjug1"
+    },
+    {
+      "name": "claycup"
+    },
+    {
+      "name": "smallclaypot1"
+    },
+    {
+      "name": "bigclaypot1"
+    },
+    {
+      "name": "clayjug2"
+    },
+    {
+      "name": "bigclaypot2"
+    },
+    {
+      "name": "smallclaypot2"
+    },
+    {
+      "name": "verysmallclaypot"
+    },
+    {
+      "name": "claypot3"
+    },
+    {
+      "name": "claypitcher"
+    },
+    {
+      "name": "unfired_clayvase"
+    },
+    {
+      "name": "unfired_clayroofing"
+    },
+    {
+      "name": "unfired_winecup"
+    },
+    {
+      "name": "unfired_claypot1"
+    },
+    {
+      "name": "unfired_claypot2"
+    },
+    {
+      "name": "unfired_claybricks"
+    },
+    {
+      "name": "unfired_claybowl"
+    },
+    {
+      "name": "unfired_clayjug1"
+    },
+    {
+      "name": "unfired_claycup"
+    },
+    {
+      "name": "unfired_smallclaypot1"
+    },
+    {
+      "name": "unfired_bigclaypot1"
+    },
+    {
+      "name": "unfired_clayjug2"
+    },
+    {
+      "name": "unfired_bigclaypot2"
+    },
+    {
+      "name": "unfired_smallclaypot2"
+    },
+    {
+      "name": "unfired_verysmallclaypot"
+    },
+    {
+      "name": "unfired_claypot3"
+    },
+    {
+      "name": "unfired_claypitcher"
+    },
+    {
+      "name": "unfired_advclaybricks"
+    },
+    {
+      "name": "advclaybricks"
+    },
+    {
+      "name": "brickwall_inc1"
+    },
+    {
+      "name": "brickwall_inc2"
+    },
+    {
+      "name": "brickwall"
+    },
+    {
+      "name": "unfired_cementbricks"
+    },
+    {
+      "name": "cementbricks"
+    },
+    {
+      "name": "cementwall_inc1"
+    },
+    {
+      "name": "sumerian-wall_inc1",
+      "directions": 4
+    },
+    {
+      "name": "sumerian-wall_inc2",
+      "directions": 4
+    },
+    {
+      "name": "sumerian-wall",
+      "directions": 4
+    },
+    {
+      "name": "sumerian-door",
+      "directions": 4
+    },
+    {
+      "name": "sumerian_windownew_frame",
+      "directions": 4
+    },
+    {
+      "name": "sumerian-corner1",
+      "directions": 4
+    },
+    {
+      "name": "sumerian-corner2",
+      "directions": 4
+    },
+    {
+      "name": "claybrickwall_inc1",
+      "directions": 4
+    },
+    {
+      "name": "claybrickwall_inc2",
+      "directions": 4
+    },
+    {
+      "name": "claybrickwall",
+      "directions": 4
+    },
+    {
+      "name": "clay_block_alt"
+    },
+    {
+      "name": "clay_doorway"
+    },
+    {
+      "name": "clay_windownew_frame",
+      "directions": 4
+    },
+    {
+      "name": "dirt_clay_vertical"
+    },
+    {
+      "name": "dirt_clay_horizontal"
+    },
+    {
+      "name": "red_earth_wall",
+      "directions": 4
+    },
+    {
+      "name": "red_earthwindownew_frame",
+      "directions": 4
+    },
+    {
+      "name": "red_earth_pillared",
+      "directions": 4
+    },
+    {
+      "name": "red_earth_doorway",
+      "directions": 4
+    },
+    {
+      "name": "red_earth_smooth",
+      "directions": 4
+    },
+    {
+      "name": "red_earth_smooth_b",
+      "directions": 4
+    },
+    {
+      "name": "stucco"
+    },
+    {
+      "name": "roman_stucco"
+    },
+    {
+      "name": "greek_stucco"
+    },
+    {
+      "name": "unfired_largeclaypitcher"
+    },
+    {
+      "name": "largeclaypitcher"
+    },
+    {
+      "name": "unfinished pitcher"
+    },
+    {
+      "name": "pitcher_silver"
+    },
+    {
+      "name": "pitcher_gold"
+    },
+    {
+      "name": "pitcher_diamond"
+    },
+    {
+      "name": "cookingpot"
+    },
+    {
+      "name": "unfired_cookingpot"
+    },
+    {
+      "name": "lid_cookingpot"
+    }
+  ]
+}

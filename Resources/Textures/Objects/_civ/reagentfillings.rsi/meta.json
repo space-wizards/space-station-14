@@ -1,0 +1,321 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "beaker-10"
+    },
+    {
+      "name": "beaker10"
+    },
+    {
+      "name": "beaker25"
+    },
+    {
+      "name": "beaker50"
+    },
+    {
+      "name": "beaker75"
+    },
+    {
+      "name": "beaker80"
+    },
+    {
+      "name": "beaker100"
+    },
+    {
+      "name": "beakerlarge-10"
+    },
+    {
+      "name": "beakerlarge10"
+    },
+    {
+      "name": "beakerlarge25"
+    },
+    {
+      "name": "beakerlarge50"
+    },
+    {
+      "name": "beakerlarge75"
+    },
+    {
+      "name": "beakerlarge80"
+    },
+    {
+      "name": "beakerlarge100"
+    },
+    {
+      "name": "syringe5"
+    },
+    {
+      "name": "syringe10"
+    },
+    {
+      "name": "syringe15"
+    },
+    {
+      "name": "vial-10"
+    },
+    {
+      "name": "vial10"
+    },
+    {
+      "name": "vial25"
+    },
+    {
+      "name": "vial50"
+    },
+    {
+      "name": "vial75"
+    },
+    {
+      "name": "vial80"
+    },
+    {
+      "name": "vial100"
+    },
+    {
+      "name": "bottle-1--10"
+    },
+    {
+      "name": "bottle-1-10"
+    },
+    {
+      "name": "bottle-1-25"
+    },
+    {
+      "name": "bottle-1-50"
+    },
+    {
+      "name": "bottle-1-75"
+    },
+    {
+      "name": "bottle-1-80"
+    },
+    {
+      "name": "bottle-1-100"
+    },
+    {
+      "name": "bottle-2--10"
+    },
+    {
+      "name": "bottle-2-10"
+    },
+    {
+      "name": "bottle-2-25"
+    },
+    {
+      "name": "bottle-2-50"
+    },
+    {
+      "name": "bottle-2-75"
+    },
+    {
+      "name": "bottle-2-80"
+    },
+    {
+      "name": "bottle-2-100"
+    },
+    {
+      "name": "bottle-3--10"
+    },
+    {
+      "name": "bottle-3-10"
+    },
+    {
+      "name": "bottle-3-25"
+    },
+    {
+      "name": "bottle-3-50"
+    },
+    {
+      "name": "bottle-3-75"
+    },
+    {
+      "name": "bottle-3-80"
+    },
+    {
+      "name": "bottle-3-100"
+    },
+    {
+      "name": "bottle-4--10"
+    },
+    {
+      "name": "bottle-4-10"
+    },
+    {
+      "name": "bottle-4-25"
+    },
+    {
+      "name": "bottle-4-50"
+    },
+    {
+      "name": "bottle-4-75"
+    },
+    {
+      "name": "bottle-4-80"
+    },
+    {
+      "name": "bottle-4-100"
+    },
+    {
+      "name": "beermug_overlay"
+    },
+    {
+      "name": "beermug-40"
+    },
+    {
+      "name": "beermug-30"
+    },
+    {
+      "name": "beermug-20"
+    },
+    {
+      "name": "beermug-10"
+    },
+    {
+      "name": "beermug--10"
+    },
+    {
+      "name": "beermug_fancy-50"
+    },
+    {
+      "name": "beermug_fancy-40"
+    },
+    {
+      "name": "beermug_fancy-30"
+    },
+    {
+      "name": "beermug_fancy-20"
+    },
+    {
+      "name": "beermug_fancy-10"
+    },
+    {
+      "name": "beermug_fancy--10"
+    },
+    {
+      "name": "beermug_fancy_overlay"
+    },
+    {
+      "name": "bucket-70"
+    },
+    {
+      "name": "bucket75"
+    },
+    {
+      "name": "bucket85"
+    },
+    {
+      "name": "bucket100"
+    },
+    {
+      "name": "han_gou_open-50"
+    },
+    {
+      "name": "han_gou_open50"
+    },
+    {
+      "name": "han_gou_open60"
+    },
+    {
+      "name": "han_gou_open70"
+    },
+    {
+      "name": "han_gou_open80"
+    },
+    {
+      "name": "han_gou_open90"
+    },
+    {
+      "name": "han_gou_open100"
+    },
+    {
+      "name": "small_pot-50"
+    },
+    {
+      "name": "small_pot50"
+    },
+    {
+      "name": "small_pot60"
+    },
+    {
+      "name": "small_pot70"
+    },
+    {
+      "name": "small_pot80"
+    },
+    {
+      "name": "small_pot90"
+    },
+    {
+      "name": "small_pot100"
+    },
+    {
+      "name": "copperpot1-50"
+    },
+    {
+      "name": "copperpot150"
+    },
+    {
+      "name": "copperpot160"
+    },
+    {
+      "name": "copperpot170"
+    },
+    {
+      "name": "copperpot180"
+    },
+    {
+      "name": "copperpot190"
+    },
+    {
+      "name": "copperpot1100"
+    },
+    {
+      "name": "copperpot2-50"
+    },
+    {
+      "name": "copperpot250"
+    },
+    {
+      "name": "copperpot260"
+    },
+    {
+      "name": "copperpot270"
+    },
+    {
+      "name": "copperpot280"
+    },
+    {
+      "name": "copperpot290"
+    },
+    {
+      "name": "copperpot2100"
+    },
+    {
+      "name": "cookingpot-50"
+    },
+    {
+      "name": "cookingpot50"
+    },
+    {
+      "name": "cookingpot60"
+    },
+    {
+      "name": "cookingpot70"
+    },
+    {
+      "name": "cookingpot80"
+    },
+    {
+      "name": "cookingpot90"
+    },
+    {
+      "name": "cookingpot100"
+    }
+  ]
+}

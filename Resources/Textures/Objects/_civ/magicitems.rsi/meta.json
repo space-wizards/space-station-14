@@ -1,0 +1,198 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "magic_crystal"
+    },
+    {
+      "name": "amethyst"
+    },
+    {
+      "name": "sapphire"
+    },
+    {
+      "name": "emerald"
+    },
+    {
+      "name": "ruby"
+    },
+    {
+      "name": "quartz"
+    },
+    {
+      "name": "topaz"
+    },
+    {
+      "name": "potion_empty"
+    },
+    {
+      "name": "potion_red"
+    },
+    {
+      "name": "potion_blue"
+    },
+    {
+      "name": "potion_orange"
+    },
+    {
+      "name": "potion_magenta"
+    },
+    {
+      "name": "potion_green"
+    },
+    {
+      "name": "potion_yellow"
+    },
+    {
+      "name": "potion_black"
+    },
+    {
+      "name": "potion_white"
+    },
+    {
+      "name": "potion_gray"
+    },
+    {
+      "name": "pedestal_empty"
+    },
+    {
+      "name": "pedestal_empty_old"
+    },
+    {
+      "name": "pedestal_orb_magic",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "orb_magic"
+    },
+    {
+      "name": "pedestal_orb_lightning",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "orb_lightning"
+    },
+    {
+      "name": "pedestal_orb_fire",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "orb_fire"
+    },
+    {
+      "name": "pedestal_orb_acid",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "orb_acid"
+    },
+    {
+      "name": "pedestal_orb_void",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "orb_void"
+    },
+    {
+      "name": "pedestal_orb_ice",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "orb_ice"
+    },
+    {
+      "name": "scroll_blank"
+    },
+    {
+      "name": "scroll_magic_missile"
+    },
+    {
+      "name": "scroll_ice_burst"
+    },
+    {
+      "name": "scroll_sealed"
+    }
+  ]
+}

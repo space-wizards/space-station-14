@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "banner_a"
+    },
+    {
+      "name": "banner_b"
+    },
+    {
+      "name": "e_moon"
+    },
+    {
+      "name": "e_cross"
+    },
+    {
+      "name": "e_star"
+    },
+    {
+      "name": "e_sun"
+    },
+    {
+      "name": "e_big_cross"
+    },
+    {
+      "name": "e_saltire"
+    },
+    {
+      "name": "flag"
+    },
+    {
+      "name": "banner_a_1"
+    },
+    {
+      "name": "banner_a_2"
+    },
+    {
+      "name": "banner_b_1"
+    },
+    {
+      "name": "banner_b_2"
+    },
+    {
+      "name": "b_moon"
+    },
+    {
+      "name": "b_cross"
+    },
+    {
+      "name": "b_star"
+    },
+    {
+      "name": "b_sun"
+    },
+    {
+      "name": "b_big_cross"
+    },
+    {
+      "name": "b_saltire"
+    },
+    {
+      "name": "poster_rolled"
+    },
+    {
+      "name": "poster_base"
+    },
+    {
+      "name": "poster_base_o1"
+    },
+    {
+      "name": "poster_base_o2"
+    },
+    {
+      "name": "poster_ripped"
+    },
+    {
+      "name": "prop_work"
+    },
+    {
+      "name": "prop_work_base"
+    },
+    {
+      "name": "prop_work_c1"
+    },
+    {
+      "name": "prop_work_c2"
+    },
+    {
+      "name": "prop_mil1"
+    },
+    {
+      "name": "prop_mil1_base"
+    },
+    {
+      "name": "prop_mil1_c1"
+    },
+    {
+      "name": "prop_mil1_c2"
+    },
+    {
+      "name": "prop_mil2"
+    },
+    {
+      "name": "prop_mil2_base"
+    },
+    {
+      "name": "prop_mil2_c1"
+    },
+    {
+      "name": "prop_mil2_c2"
+    },
+    {
+      "name": "prop_lead"
+    },
+    {
+      "name": "prop_lead_base"
+    },
+    {
+      "name": "prop_lead_c1"
+    },
+    {
+      "name": "prop_lead_c2"
+    },
+    {
+      "name": "e_skull"
+    },
+    {
+      "name": "b_skull"
+    },
+    {
+      "name": "e_seashell"
+    },
+    {
+      "name": "b_seashell"
+    }
+  ]
+}

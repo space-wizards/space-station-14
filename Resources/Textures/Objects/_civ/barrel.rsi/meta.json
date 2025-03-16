@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "barrel_rust"
+    },
+    {
+      "name": "barrel_wood2"
+    },
+    {
+      "name": "barrel_rust_lit",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "barrel_wood1"
+    },
+    {
+      "name": "barrel_wood_open1"
+    },
+    {
+      "name": "barrel_wood_drinks1"
+    },
+    {
+      "name": "barrel_wood_gunpowder1"
+    },
+    {
+      "name": "beer_barrel"
+    },
+    {
+      "name": "jerrycan"
+    },
+    {
+      "name": "lid_jerrycan"
+    },
+    {
+      "name": "peppertank"
+    },
+    {
+      "name": "welding_tank"
+    },
+    {
+      "name": "barrel_wood_gunpowder"
+    },
+    {
+      "name": "lid_barrel_wood_gunpowder"
+    },
+    {
+      "name": "barrel_wood"
+    },
+    {
+      "name": "lid_barrel_wood"
+    },
+    {
+      "name": "barrel_wood0"
+    },
+    {
+      "name": "barrel_wood90"
+    },
+    {
+      "name": "barrel_wood93"
+    },
+    {
+      "name": "barrel_wood97"
+    },
+    {
+      "name": "barrel_wood100"
+    },
+    {
+      "name": "water_fountain0"
+    },
+    {
+      "name": "dispenser_water1"
+    }
+  ]
+}

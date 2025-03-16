@@ -1,0 +1,147 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "start"
+        },
+        {
+            "name": "stop"
+        },
+        {
+            "name": "police"
+        },
+        {
+            "name": "police_door_0"
+        },
+        {
+            "name": "police_door_1"
+        },
+        {
+            "name": "police_dir_0",
+            "directions": 4
+        },
+        {
+            "name": "police_v_0",
+            "directions": 4
+        },
+        {
+            "name": "police_h_0",
+            "directions": 4
+        },
+        {
+            "name": "police_dir_1",
+            "directions": 4
+        },
+        {
+            "name": "police_v_1",
+            "directions": 4
+        },
+        {
+            "name": "police_h_1",
+            "directions": 4
+        },
+        {
+            "name": "engineering"
+        },
+        {
+            "name": "engineering_door_0"
+        },
+        {
+            "name": "engineering_door_1"
+        },
+        {
+            "name": "engineering_dir_0",
+            "directions": 4
+        },
+        {
+            "name": "engineering_v_0",
+            "directions": 4
+        },
+        {
+            "name": "engineering_h_0",
+            "directions": 4
+        },
+        {
+            "name": "engineering_dir_1",
+            "directions": 4
+        },
+        {
+            "name": "engineering_v_1",
+            "directions": 4
+        },
+        {
+            "name": "engineering_h_1",
+            "directions": 4
+        },
+        {
+            "name": "atmos"
+        },
+        {
+            "name": "atmos_door_0"
+        },
+        {
+            "name": "atmos_door_1"
+        },
+        {
+            "name": "atmos_dir_0",
+            "directions": 4
+        },
+        {
+            "name": "atmos_v_0",
+            "directions": 4
+        },
+        {
+            "name": "atmos_h_0",
+            "directions": 4
+        },
+        {
+            "name": "atmos_dir_1",
+            "directions": 4
+        },
+        {
+            "name": "atmos_v_1",
+            "directions": 4
+        },
+        {
+            "name": "atmos_h_1",
+            "directions": 4
+        },
+        {
+            "name": "tape"
+        },
+        {
+            "name": "tape_door_0"
+        },
+        {
+            "name": "tape_door_1"
+        },
+        {
+            "name": "tape_dir_0",
+            "directions": 4
+        },
+        {
+            "name": "tape_v_0",
+            "directions": 4
+        },
+        {
+            "name": "tape_h_0",
+            "directions": 4
+        },
+        {
+            "name": "tape_dir_1",
+            "directions": 4
+        },
+        {
+            "name": "tape_v_1",
+            "directions": 4
+        },
+        {
+            "name": "tape_h_1",
+            "directions": 4
+        }
+    ]
+}

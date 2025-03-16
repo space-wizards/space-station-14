@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "billboard"
+    },
+    {
+      "name": "ad1"
+    },
+    {
+      "name": "ad2"
+    },
+    {
+      "name": "ad3"
+    },
+    {
+      "name": "ad4"
+    },
+    {
+      "name": "ad5"
+    },
+    {
+      "name": "ad6"
+    },
+    {
+      "name": "ad7"
+    },
+    {
+      "name": "ad8"
+    },
+    {
+      "name": "ad9"
+    },
+    {
+      "name": "ad10"
+    },
+    {
+      "name": "ad11"
+    },
+    {
+      "name": "ad12"
+    },
+    {
+      "name": "ad13"
+    },
+    {
+      "name": "ad14"
+    }
+  ]
+}

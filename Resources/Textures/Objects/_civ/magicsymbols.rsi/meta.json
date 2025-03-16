@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "rune1"
+    },
+    {
+      "name": "rune2"
+    },
+    {
+      "name": "rune3"
+    },
+    {
+      "name": "rune4"
+    },
+    {
+      "name": "rune5"
+    },
+    {
+      "name": "rune6"
+    },
+    {
+      "name": "rune1s"
+    },
+    {
+      "name": "rune2s"
+    },
+    {
+      "name": "rune3s"
+    },
+    {
+      "name": "rune4s"
+    },
+    {
+      "name": "rune5s"
+    },
+    {
+      "name": "rune6s"
+    }
+  ]
+}

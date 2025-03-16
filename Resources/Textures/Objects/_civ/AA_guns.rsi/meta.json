@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "size": {
+    "x": 96,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "type96",
+      "directions": 4
+    }
+  ]
+}

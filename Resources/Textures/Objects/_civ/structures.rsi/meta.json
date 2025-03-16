@@ -1,0 +1,1656 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "_____"
+    },
+    {
+      "name": "grille"
+    },
+    {
+      "name": "grille-b"
+    },
+    {
+      "name": "unwall",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "wood_barricade"
+    },
+    {
+      "name": "barricade"
+    },
+    {
+      "name": "table_horizontal",
+      "directions": 4
+    },
+    {
+      "name": "table_vertical",
+      "directions": 4
+    },
+    {
+      "name": "ladder00"
+    },
+    {
+      "name": "ladder10"
+    },
+    {
+      "name": "ladder01"
+    },
+    {
+      "name": "ladder11"
+    },
+    {
+      "name": "ladderbottom"
+    },
+    {
+      "name": "laddertop"
+    },
+    {
+      "name": "ladder_bottom"
+    },
+    {
+      "name": "ladder_top"
+    },
+    {
+      "name": "safe"
+    },
+    {
+      "name": "safe-open"
+    },
+    {
+      "name": "floorsafe"
+    },
+    {
+      "name": "floorsafe-open"
+    },
+    {
+      "name": "linenbin-full"
+    },
+    {
+      "name": "linenbin-half"
+    },
+    {
+      "name": "linenbin-empty"
+    },
+    {
+      "name": "pokertable"
+    },
+    {
+      "name": "pokertable_dir",
+      "directions": 8
+    },
+    {
+      "name": "pokertable_1tilethick",
+      "directions": 8
+    },
+    {
+      "name": "pokertable_1tileendtable",
+      "directions": 4
+    },
+    {
+      "name": "pokertable_middle"
+    },
+    {
+      "name": "pokertable_dir2",
+      "directions": 4
+    },
+    {
+      "name": "pokertable_dir3",
+      "directions": 8
+    },
+    {
+      "name": "glass_table_dir",
+      "directions": 8
+    },
+    {
+      "name": "glass_table"
+    },
+    {
+      "name": "glass_table_1tilethick",
+      "directions": 8
+    },
+    {
+      "name": "glass_table_1tileendtable",
+      "directions": 4
+    },
+    {
+      "name": "glass_table_middle"
+    },
+    {
+      "name": "glass_table_dir2",
+      "directions": 4
+    },
+    {
+      "name": "glass_table_dir3",
+      "directions": 8
+    },
+    {
+      "name": "table_frame"
+    },
+    {
+      "name": "wood_frame"
+    },
+    {
+      "name": "damage25"
+    },
+    {
+      "name": "damage50"
+    },
+    {
+      "name": "damage75"
+    },
+    {
+      "name": "wooddrawersclosed",
+      "directions": 4
+    },
+    {
+      "name": "wooddrawersopen",
+      "directions": 4
+    },
+    {
+      "name": "woodtable"
+    },
+    {
+      "name": "woodtable_dir",
+      "directions": 8
+    },
+    {
+      "name": "woodtable_1tilethick",
+      "directions": 8
+    },
+    {
+      "name": "woodtable_1tileendtable",
+      "directions": 4
+    },
+    {
+      "name": "woodtable_middle"
+    },
+    {
+      "name": "woodtable_dir2",
+      "directions": 4
+    },
+    {
+      "name": "woodtable_dir3",
+      "directions": 8
+    },
+    {
+      "name": "reinftable"
+    },
+    {
+      "name": "reinftable_dir",
+      "directions": 8
+    },
+    {
+      "name": "reinftable_1tilethick",
+      "directions": 8
+    },
+    {
+      "name": "reinftable_1tileendtable",
+      "directions": 4
+    },
+    {
+      "name": "reinftable_middle"
+    },
+    {
+      "name": "reinftable_dir2",
+      "directions": 4
+    },
+    {
+      "name": "reinftable_dir3",
+      "directions": 8
+    },
+    {
+      "name": "metaldrawersclosed",
+      "directions": 4
+    },
+    {
+      "name": "metaldrawersopen",
+      "directions": 4
+    },
+    {
+      "name": "wood_table"
+    },
+    {
+      "name": "wood_table_dir",
+      "directions": 8
+    },
+    {
+      "name": "wood_table_1tilethick",
+      "directions": 8
+    },
+    {
+      "name": "wood_table_1tileendtable",
+      "directions": 4
+    },
+    {
+      "name": "wood_table_middle"
+    },
+    {
+      "name": "wood_table_dir2",
+      "directions": 4
+    },
+    {
+      "name": "wood_table_dir3",
+      "directions": 8
+    },
+    {
+      "name": "board"
+    },
+    {
+      "name": "board-1"
+    },
+    {
+      "name": "board-2"
+    },
+    {
+      "name": "board-3"
+    },
+    {
+      "name": "ladderdown"
+    },
+    {
+      "name": "ladderup"
+    },
+    {
+      "name": "hatchdown"
+    },
+    {
+      "name": "hatchdown-open",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "hatchdown-close",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "red-ladderlight"
+    },
+    {
+      "name": "green-ladderlight"
+    },
+    {
+      "name": "ramptop",
+      "directions": 4
+    },
+    {
+      "name": "rampbottom",
+      "directions": 4
+    },
+    {
+      "name": "ramptopold",
+      "directions": 4
+    },
+    {
+      "name": "rampbottomold",
+      "directions": 4
+    },
+    {
+      "name": "open"
+    },
+    {
+      "name": "down",
+      "directions": 4
+    },
+    {
+      "name": "down-f",
+      "directions": 4
+    },
+    {
+      "name": "up",
+      "directions": 4
+    },
+    {
+      "name": "up-f",
+      "directions": 4
+    },
+    {
+      "name": "down-supply",
+      "directions": 4
+    },
+    {
+      "name": "down-f-supply",
+      "directions": 4
+    },
+    {
+      "name": "up-supply",
+      "directions": 4
+    },
+    {
+      "name": "up-f-supply",
+      "directions": 4
+    },
+    {
+      "name": "down-scrubbers",
+      "directions": 4
+    },
+    {
+      "name": "down-f-scrubbers",
+      "directions": 4
+    },
+    {
+      "name": "up-scrubbers",
+      "directions": 4
+    },
+    {
+      "name": "up-f-scrubbers",
+      "directions": 4
+    },
+    {
+      "name": "fence0-8"
+    },
+    {
+      "name": "fence4-8"
+    },
+    {
+      "name": "fence0-4"
+    },
+    {
+      "name": "fence1-2"
+    },
+    {
+      "name": "dirt_wall",
+      "directions": 4
+    },
+    {
+      "name": "barricade sareas"
+    },
+    {
+      "name": "barbwire - sareas",
+      "directions": 4
+    },
+    {
+      "name": "fence4-8-b"
+    },
+    {
+      "name": "wood_fence4-8"
+    },
+    {
+      "name": "wood_fence_2"
+    },
+    {
+      "name": "wood_fence_3"
+    },
+    {
+      "name": "wood_fence_4"
+    },
+    {
+      "name": "wood_fence0-8"
+    },
+    {
+      "name": "wood_fence0-4"
+    },
+    {
+      "name": "wood_fence_7"
+    },
+    {
+      "name": "wood_fence_8"
+    },
+    {
+      "name": "wood_fence1-2"
+    },
+    {
+      "name": "wood_fence_10"
+    },
+    {
+      "name": "wood_fence_11"
+    },
+    {
+      "name": "wood_fence_12"
+    },
+    {
+      "name": "fence4"
+    },
+    {
+      "name": "fence5"
+    },
+    {
+      "name": "fence6"
+    },
+    {
+      "name": "stol_middle"
+    },
+    {
+      "name": "stol_dir",
+      "directions": 8
+    },
+    {
+      "name": "stol_dir2",
+      "directions": 4
+    },
+    {
+      "name": "stol"
+    },
+    {
+      "name": "stol_1tilethick",
+      "directions": 8
+    },
+    {
+      "name": "stol_1tileendtable",
+      "directions": 4
+    },
+    {
+      "name": "stol_dir3",
+      "directions": 8
+    },
+    {
+      "name": "chair_stalker",
+      "directions": 4
+    },
+    {
+      "name": "wood_fencetest"
+    },
+    {
+      "name": "wood_fence4-8-b"
+    },
+    {
+      "name": "tomestone-S"
+    },
+    {
+      "name": "tomestone-C"
+    },
+    {
+      "name": "siren"
+    },
+    {
+      "name": "rock_barricade",
+      "directions": 4
+    },
+    {
+      "name": "sandbag_66%",
+      "directions": 4
+    },
+    {
+      "name": "sandbag_33%",
+      "directions": 4
+    },
+    {
+      "name": "dirt_wall_66%",
+      "directions": 4
+    },
+    {
+      "name": "dirt_wall_33%",
+      "directions": 4
+    },
+    {
+      "name": "woodbarricade_vertical"
+    },
+    {
+      "name": "woodbarricade_horizontal"
+    },
+    {
+      "name": "woodbarricade_vertical1"
+    },
+    {
+      "name": "woodbarricade_horizontal1"
+    },
+    {
+      "name": "wall_clock",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "oldfence",
+      "directions": 4
+    },
+    {
+      "name": "potted_plant",
+      "directions": 8
+    },
+    {
+      "name": "impaledskull"
+    },
+    {
+      "name": "supplybook"
+    },
+    {
+      "name": "supplybook2"
+    },
+    {
+      "name": "nboard00",
+      "directions": 4
+    },
+    {
+      "name": "nboard01",
+      "directions": 4
+    },
+    {
+      "name": "nboard02",
+      "directions": 4
+    },
+    {
+      "name": "nboard03",
+      "directions": 4
+    },
+    {
+      "name": "nboard04",
+      "directions": 4
+    },
+    {
+      "name": "nboard05",
+      "directions": 4
+    },
+    {
+      "name": "well0"
+    },
+    {
+      "name": "palisade",
+      "directions": 4
+    },
+    {
+      "name": "well1"
+    },
+    {
+      "name": "table"
+    },
+    {
+      "name": "table_dir",
+      "directions": 8
+    },
+    {
+      "name": "table_1tileendtable",
+      "directions": 4
+    },
+    {
+      "name": "table_middle"
+    },
+    {
+      "name": "table_dir2",
+      "directions": 4
+    },
+    {
+      "name": "table_dir3",
+      "directions": 8
+    },
+    {
+      "name": "table_1tilethick",
+      "directions": 8
+    },
+    {
+      "name": "flour_mill"
+    },
+    {
+      "name": "distillery"
+    },
+    {
+      "name": "loom"
+    },
+    {
+      "name": "loom1"
+    },
+    {
+      "name": "flour_mill1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "gate_control"
+    },
+    {
+      "name": "brazier1",
+      "delays": [
+        [
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125
+        ]
+      ]
+    },
+    {
+      "name": "brazier0"
+    },
+    {
+      "name": "s_brazier1",
+      "delays": [
+        [
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125
+        ]
+      ]
+    },
+    {
+      "name": "s_brazier0"
+    },
+    {
+      "name": "tent_o"
+    },
+    {
+      "name": "tent_w"
+    },
+    {
+      "name": "tent_e"
+    },
+    {
+      "name": "tent_n"
+    },
+    {
+      "name": "tent_s"
+    },
+    {
+      "name": "tent_c"
+    },
+    {
+      "name": "tent_nw"
+    },
+    {
+      "name": "tent_sw"
+    },
+    {
+      "name": "tent_ew"
+    },
+    {
+      "name": "tent_es"
+    },
+    {
+      "name": "tent_en"
+    },
+    {
+      "name": "tent_ns"
+    },
+    {
+      "name": "tent_nws"
+    },
+    {
+      "name": "tent_swe"
+    },
+    {
+      "name": "tent_esn"
+    },
+    {
+      "name": "tent_enw"
+    },
+    {
+      "name": "wood_pole1"
+    },
+    {
+      "name": "wood_pole2"
+    },
+    {
+      "name": "wood_pole_good"
+    },
+    {
+      "name": "snow_wall",
+      "directions": 4
+    },
+    {
+      "name": "snow_wall_66%",
+      "directions": 4
+    },
+    {
+      "name": "snow_wall_33%",
+      "directions": 4
+    },
+    {
+      "name": "support_h"
+    },
+    {
+      "name": "support_v"
+    },
+    {
+      "name": "good_desk"
+    },
+    {
+      "name": "researchdesk"
+    },
+    {
+      "name": "altar_of_chad"
+    },
+    {
+      "name": "printingpress1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "printingpress0"
+    },
+    {
+      "name": "oilwell"
+    },
+    {
+      "name": "nboard_oil",
+      "directions": 4
+    },
+    {
+      "name": "distillery1",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "support_st1"
+    },
+    {
+      "name": "support_st2"
+    },
+    {
+      "name": "sandbag",
+      "directions": 4
+    },
+    {
+      "name": "concrete",
+      "directions": 4
+    },
+    {
+      "name": "cement_wall"
+    },
+    {
+      "name": "barbwireX",
+      "directions": 4
+    },
+    {
+      "name": "barbwire",
+      "directions": 4
+    },
+    {
+      "name": "antitank"
+    },
+    {
+      "name": "gunbench1"
+    },
+    {
+      "name": "bars"
+    },
+    {
+      "name": "bars_bank"
+    },
+    {
+      "name": "jailbars"
+    },
+    {
+      "name": "shellrack0"
+    },
+    {
+      "name": "shellrack1"
+    },
+    {
+      "name": "shellrack2"
+    },
+    {
+      "name": "shellrack3"
+    },
+    {
+      "name": "shellrack4"
+    },
+    {
+      "name": "shellrack5"
+    },
+    {
+      "name": "shellrack6"
+    },
+    {
+      "name": "shellrack7"
+    },
+    {
+      "name": "shellrack8"
+    },
+    {
+      "name": "shellrack9"
+    },
+    {
+      "name": "shellrack10"
+    },
+    {
+      "name": "shellrack11"
+    },
+    {
+      "name": "shellrack12"
+    },
+    {
+      "name": "shellrack13"
+    },
+    {
+      "name": "shellrack14"
+    },
+    {
+      "name": "shellrack15"
+    },
+    {
+      "name": "shellrack16"
+    },
+    {
+      "name": "sandstone_barricade",
+      "directions": 4
+    },
+    {
+      "name": "sandstone_brazier1",
+      "delays": [
+        [
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125
+        ]
+      ]
+    },
+    {
+      "name": "sandstone_brazier0"
+    },
+    {
+      "name": "wall_frame"
+    },
+    {
+      "name": "drying_rack_full"
+    },
+    {
+      "name": "drying_rack_full_modular"
+    },
+    {
+      "name": "drying_rack_empty"
+    },
+    {
+      "name": "grindstone"
+    },
+    {
+      "name": "grindstone_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "workbench"
+    },
+    {
+      "name": "slate"
+    },
+    {
+      "name": "vault"
+    },
+    {
+      "name": "column_ionic"
+    },
+    {
+      "name": "pink_column"
+    },
+    {
+      "name": "globe"
+    },
+    {
+      "name": "pillory"
+    },
+    {
+      "name": "pillory_handoverlay"
+    },
+    {
+      "name": "column_solomonic1"
+    },
+    {
+      "name": "column_solomonic2"
+    },
+    {
+      "name": "pillory_lower0"
+    },
+    {
+      "name": "pillory_lower1"
+    },
+    {
+      "name": "pilloryX"
+    },
+    {
+      "name": "pillory_lowerX"
+    },
+    {
+      "name": "nordic_pillar"
+    },
+    {
+      "name": "aztec_pillar"
+    },
+    {
+      "name": "blast_control",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "concrete_pillar"
+    },
+    {
+      "name": "mill_large"
+    },
+    {
+      "name": "mill_large1",
+      "delays": [
+        [
+          0.05,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.15,
+          0.2,
+          0.2,
+          0.2,
+          0.15,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.05
+        ]
+      ]
+    },
+    {
+      "name": "mill_large_base"
+    },
+    {
+      "name": "bonfire"
+    },
+    {
+      "name": "bonfire_warm"
+    },
+    {
+      "name": "bonfire_on_fire",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bonfire_on_fire_intense",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bonfire_rod"
+    },
+    {
+      "name": "bonfire_grill"
+    },
+    {
+      "name": "new_loom"
+    },
+    {
+      "name": "ringed_campfire"
+    },
+    {
+      "name": "ringed_campfire_on",
+      "delays": [
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      ]
+    },
+    {
+      "name": "ringed_campfire_o",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "ringed_campfire0"
+    },
+    {
+      "name": "souls",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "ringed_campfire_overlay_backup",
+      "delays": [
+        [
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002
+        ]
+      ]
+    },
+    {
+      "name": "ringed_campfire_overlay",
+      "delays": [
+        [
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002,
+          0.060000002
+        ]
+      ]
+    },
+    {
+      "name": "drumfire"
+    },
+    {
+      "name": "drumfire-lit",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          1,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "potbelly"
+    },
+    {
+      "name": "potbelly-lit",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "compostbin"
+    },
+    {
+      "name": "water_trough"
+    },
+    {
+      "name": "retting_trough_empty"
+    },
+    {
+      "name": "retting_trough_full"
+    },
+    {
+      "name": "retting_trough"
+    },
+    {
+      "name": "post_execution"
+    },
+    {
+      "name": "post_execution_rope"
+    },
+    {
+      "name": "bamboo_support"
+    },
+    {
+      "name": "wall_frame_bamboo"
+    },
+    {
+      "name": "bamboo_mine_support"
+    },
+    {
+      "name": "obsidian_column_solomonic1"
+    },
+    {
+      "name": "sandstone_column_solomonic1"
+    },
+    {
+      "name": "obsidian_column_solomonic2"
+    },
+    {
+      "name": "sandstone_column_solomonic2"
+    },
+    {
+      "name": "obsidian_column_ionic"
+    },
+    {
+      "name": "sandstone_column_ionic"
+    },
+    {
+      "name": "obsidian_aztec_pillar"
+    },
+    {
+      "name": "sandstone_aztec_pillar"
+    },
+    {
+      "name": "egyptian_pillar"
+    },
+    {
+      "name": "obsidian_support_st1"
+    },
+    {
+      "name": "sandstone_support_st1"
+    },
+    {
+      "name": "obsidian_support_st2"
+    },
+    {
+      "name": "sandstone_support_st2"
+    },
+    {
+      "name": "obsidian_brazier1",
+      "delays": [
+        [
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125
+        ]
+      ]
+    },
+    {
+      "name": "obsidian_brazier0"
+    },
+    {
+      "name": "gong"
+    },
+    {
+      "name": "bell_stand"
+    },
+    {
+      "name": "bell_stand_ringing",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "kevlar_trough"
+    },
+    {
+      "name": "kevlar_trough_full"
+    },
+    {
+      "name": "kevlar_trough_empty"
+    },
+    {
+      "name": "armorbench2"
+    },
+    {
+      "name": "armorbench1"
+    },
+    {
+      "name": "armorbench"
+    },
+    {
+      "name": "specialist_armor_bench"
+    },
+    {
+      "name": "specialist_armor_bench1"
+    },
+    {
+      "name": "specialist_armor_bench2"
+    },
+    {
+      "name": "marble_support_st1"
+    },
+    {
+      "name": "marble_support_st2"
+    },
+    {
+      "name": "marble_aztec_pillar"
+    },
+    {
+      "name": "stone_column_ionic"
+    },
+    {
+      "name": "stone_column_solomonic1"
+    },
+    {
+      "name": "stone_column_solomonic2"
+    },
+    {
+      "name": "marble_brazier1",
+      "delays": [
+        [
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125,
+          0.125
+        ]
+      ]
+    },
+    {
+      "name": "marble_brazier0"
+    },
+    {
+      "name": "pokertable-flipped",
+      "directions": 4
+    },
+    {
+      "name": "glass_table-flipped",
+      "directions": 4
+    },
+    {
+      "name": "woodtable-flipped",
+      "directions": 4
+    },
+    {
+      "name": "wood_table-flipped",
+      "directions": 4
+    },
+    {
+      "name": "table-flipped",
+      "directions": 4
+    },
+    {
+      "name": "debris1"
+    },
+    {
+      "name": "debris2"
+    },
+    {
+      "name": "torch_stand",
+      "directions": 4
+    },
+    {
+      "name": "torch_stand1",
+      "directions": 4
+    },
+    {
+      "name": "torch_stand1_on",
+      "directions": 4,
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ],
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "torch_stand_lantern",
+      "directions": 4
+    },
+    {
+      "name": "torch_stand_lantern_on",
+      "directions": 4
+    },
+    {
+      "name": "camonet"
+    },
+    {
+      "name": "debris3"
+    },
+    {
+      "name": "debris4"
+    },
+    {
+      "name": "slotmachine",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "slotmachine_screen"
+    },
+    {
+      "name": "slotmachine_working",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "slotmachine0",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "shelfwood"
+    },
+    {
+      "name": "storeshelf"
+    },
+    {
+      "name": "nightstand"
+    },
+    {
+      "name": "construction1",
+      "directions": 4
+    },
+    {
+      "name": "construction2",
+      "directions": 4,
+      "delays": [
+        [
+          0.6,
+          0.2
+        ],
+        [
+          0.6,
+          0.2
+        ],
+        [
+          0.6,
+          0.2
+        ],
+        [
+          0.6,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "construction_corner",
+      "directions": 4
+    },
+    {
+      "name": "keyboard"
+    },
+    {
+      "name": "djtable"
+    },
+    {
+      "name": "crowd_barrier",
+      "directions": 4
+    },
+    {
+      "name": "propstall1"
+    },
+    {
+      "name": "propstall2"
+    },
+    {
+      "name": "propstall3"
+    },
+    {
+      "name": "propstall4"
+    }
+  ]
+}

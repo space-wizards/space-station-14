@@ -1,0 +1,310 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "match_lit",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "match_unlit"
+    },
+    {
+      "name": "match_burnt"
+    },
+    {
+      "name": "matchbox"
+    },
+    {
+      "name": "matchbox_almostfull"
+    },
+    {
+      "name": "matchbox_e"
+    },
+    {
+      "name": "matchbox_almostempty"
+    },
+    {
+      "name": "cig paper"
+    },
+    {
+      "name": "cigarcase"
+    },
+    {
+      "name": "cigarcase0"
+    },
+    {
+      "name": "cigarcase1"
+    },
+    {
+      "name": "cigarcase2"
+    },
+    {
+      "name": "cigarcase3"
+    },
+    {
+      "name": "cigarcase4"
+    },
+    {
+      "name": "cigarcase5"
+    },
+    {
+      "name": "cigarcase6"
+    },
+    {
+      "name": "cigarcase7"
+    },
+    {
+      "name": "cigpacket"
+    },
+    {
+      "name": "cigpacket1"
+    },
+    {
+      "name": "cigpacket2"
+    },
+    {
+      "name": "cigpacket3"
+    },
+    {
+      "name": "cigpacket4"
+    },
+    {
+      "name": "cigpacket5"
+    },
+    {
+      "name": "cigpacket6"
+    },
+    {
+      "name": "cigpacket0"
+    },
+    {
+      "name": "cigpacket0_o"
+    },
+    {
+      "name": "cigpacket_o1"
+    },
+    {
+      "name": "luckystrike"
+    },
+    {
+      "name": "luckystrike0"
+    },
+    {
+      "name": "luckystrike1"
+    },
+    {
+      "name": "luckystrike2"
+    },
+    {
+      "name": "luckystrike3"
+    },
+    {
+      "name": "luckystrike4"
+    },
+    {
+      "name": "luckystrike5"
+    },
+    {
+      "name": "luckystrike6"
+    },
+    {
+      "name": "marlboro"
+    },
+    {
+      "name": "marlboro0"
+    },
+    {
+      "name": "marlboro1"
+    },
+    {
+      "name": "marlboro2"
+    },
+    {
+      "name": "marlboro3"
+    },
+    {
+      "name": "marlboro4"
+    },
+    {
+      "name": "marlboro5"
+    },
+    {
+      "name": "marlboro6"
+    },
+    {
+      "name": "LSpacket"
+    },
+    {
+      "name": "LSpacket0"
+    },
+    {
+      "name": "LSpacket1"
+    },
+    {
+      "name": "LSpacket2"
+    },
+    {
+      "name": "LSpacket3"
+    },
+    {
+      "name": "LSpacket4"
+    },
+    {
+      "name": "LSpacket5"
+    },
+    {
+      "name": "LSpacket6"
+    },
+    {
+      "name": "TMpacket"
+    },
+    {
+      "name": "TMpacket0"
+    },
+    {
+      "name": "TMpacket1"
+    },
+    {
+      "name": "TMpacket2"
+    },
+    {
+      "name": "TMpacket3"
+    },
+    {
+      "name": "TMpacket4"
+    },
+    {
+      "name": "TMpacket5"
+    },
+    {
+      "name": "TMpacket6"
+    },
+    {
+      "name": "atika"
+    },
+    {
+      "name": "atika1"
+    },
+    {
+      "name": "atika2"
+    },
+    {
+      "name": "atika3"
+    },
+    {
+      "name": "atika4"
+    },
+    {
+      "name": "atika5"
+    },
+    {
+      "name": "atika6"
+    },
+    {
+      "name": "pachka_papiros"
+    },
+    {
+      "name": "pachka_papiros0"
+    },
+    {
+      "name": "pachka_papiros1"
+    },
+    {
+      "name": "pachka_papiros2"
+    },
+    {
+      "name": "pachka_papiros3"
+    },
+    {
+      "name": "pachka_papiros4"
+    },
+    {
+      "name": "pachka_papiros5"
+    },
+    {
+      "name": "pachka_papiros6"
+    },
+    {
+      "name": "prima"
+    },
+    {
+      "name": "prima0"
+    },
+    {
+      "name": "prima1"
+    },
+    {
+      "name": "prima2"
+    },
+    {
+      "name": "prima3"
+    },
+    {
+      "name": "prima4"
+    },
+    {
+      "name": "prima5"
+    },
+    {
+      "name": "prima6"
+    },
+    {
+      "name": "medalcase"
+    },
+    {
+      "name": "medalcase0"
+    },
+    {
+      "name": "medalcase1"
+    },
+    {
+      "name": "medalcase2"
+    },
+    {
+      "name": "medalcase3"
+    },
+    {
+      "name": "medalcase4"
+    },
+    {
+      "name": "medalcase5"
+    },
+    {
+      "name": "medalcase6"
+    },
+    {
+      "name": "medalcase7"
+    },
+    {
+      "name": "medalcase8"
+    },
+    {
+      "name": "medalcase9"
+    },
+    {
+      "name": "medalcase10"
+    },
+    {
+      "name": "medalcase11"
+    },
+    {
+      "name": "medalcase12"
+    },
+    {
+      "name": "medalcase13"
+    },
+    {
+      "name": "medalcase14"
+    }
+  ]
+}

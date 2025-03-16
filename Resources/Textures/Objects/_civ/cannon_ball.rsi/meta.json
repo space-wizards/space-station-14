@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cannon_ball"
+    },
+    {
+      "name": "catapult"
+    },
+    {
+      "name": "shell"
+    },
+    {
+      "name": "casing"
+    },
+    {
+      "name": "casing_wired"
+    },
+    {
+      "name": "casing_advanced"
+    },
+    {
+      "name": "shell_nuclear"
+    },
+    {
+      "name": "shell_nuclear_boosted"
+    },
+    {
+      "name": "shell_phosgene"
+    },
+    {
+      "name": "shell_chlorine"
+    },
+    {
+      "name": "shell_mustard"
+    },
+    {
+      "name": "shell_xb"
+    },
+    {
+      "name": "shell_wp"
+    },
+    {
+      "name": "shell_tank_casing"
+    },
+    {
+      "name": "shellAP"
+    },
+    {
+      "name": "shellHE"
+    },
+    {
+      "name": "shellAPCR"
+    },
+    {
+      "name": "mortar-old",
+      "directions": 4
+    },
+    {
+      "name": "mortar",
+      "directions": 4
+    },
+    {
+      "name": "shell_mortar"
+    },
+    {
+      "name": "shell_mortar_frag"
+    },
+    {
+      "name": "shell_mortar_incendiary"
+    },
+    {
+      "name": "shell_mortar_smoke"
+    },
+    {
+      "name": "type89",
+      "directions": 4
+    },
+    {
+      "name": "shell_mortar_89"
+    },
+    {
+      "name": "chainshot"
+    },
+    {
+      "name": "grapeshot"
+    },
+    {
+      "name": "navalshell"
+    },
+    {
+      "name": "pointy_tip"
+    }
+  ]
+}

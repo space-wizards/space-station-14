@@ -1,0 +1,588 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "coca-grow1"
+    },
+    {
+      "name": "coca-grow2"
+    },
+    {
+      "name": "coca-grow3"
+    },
+    {
+      "name": "coca-grow4"
+    },
+    {
+      "name": "coca-grow5"
+    },
+    {
+      "name": "coca-grow6"
+    },
+    {
+      "name": "coca-harvest"
+    },
+    {
+      "name": "coca-dead"
+    },
+    {
+      "name": "sugarcane-grow1"
+    },
+    {
+      "name": "sugarcane-grow2"
+    },
+    {
+      "name": "sugarcane-grow3"
+    },
+    {
+      "name": "sugarcane-grow4"
+    },
+    {
+      "name": "sugarcane-grow5"
+    },
+    {
+      "name": "sugarcane-grow6"
+    },
+    {
+      "name": "sugarcane-harvest"
+    },
+    {
+      "name": "sugarcane-dead"
+    },
+    {
+      "name": "tobacco-grow1"
+    },
+    {
+      "name": "tobacco-grow2"
+    },
+    {
+      "name": "tobacco-grow3"
+    },
+    {
+      "name": "tobacco-grow4"
+    },
+    {
+      "name": "tobacco-grow5"
+    },
+    {
+      "name": "tobacco-grow6"
+    },
+    {
+      "name": "tobacco-harvest"
+    },
+    {
+      "name": "tobacco-dead"
+    },
+    {
+      "name": "peyote-grow1"
+    },
+    {
+      "name": "peyote-grow2"
+    },
+    {
+      "name": "peyote-grow3"
+    },
+    {
+      "name": "peyote-grow4"
+    },
+    {
+      "name": "peyote-grow5"
+    },
+    {
+      "name": "peyote-grow6"
+    },
+    {
+      "name": "peyote-harvest"
+    },
+    {
+      "name": "peyote-dead"
+    },
+    {
+      "name": "cotton-grow1"
+    },
+    {
+      "name": "cotton-grow2"
+    },
+    {
+      "name": "cotton-grow3"
+    },
+    {
+      "name": "cotton-grow4"
+    },
+    {
+      "name": "cotton-grow5"
+    },
+    {
+      "name": "cotton-grow6"
+    },
+    {
+      "name": "cotton-harvest"
+    },
+    {
+      "name": "cotton-dead"
+    },
+    {
+      "name": "mushroom-grow1"
+    },
+    {
+      "name": "mushroom-grow2"
+    },
+    {
+      "name": "mushroom-grow3"
+    },
+    {
+      "name": "mushroom-grow4"
+    },
+    {
+      "name": "mushroom-grow5"
+    },
+    {
+      "name": "mushroom-grow6"
+    },
+    {
+      "name": "mushroom-harvest"
+    },
+    {
+      "name": "mushroom-dead"
+    },
+    {
+      "name": "mushroompsy-grow1"
+    },
+    {
+      "name": "mushroompsy-grow2"
+    },
+    {
+      "name": "mushroompsy-grow3"
+    },
+    {
+      "name": "mushroompsy-grow4"
+    },
+    {
+      "name": "mushroompsy-grow5"
+    },
+    {
+      "name": "mushroompsy-grow6"
+    },
+    {
+      "name": "mushroompsy-harvest"
+    },
+    {
+      "name": "mushroompsy-dead"
+    },
+    {
+      "name": "tree-grow1"
+    },
+    {
+      "name": "tree-grow2"
+    },
+    {
+      "name": "tree-grow3"
+    },
+    {
+      "name": "tree-grow4"
+    },
+    {
+      "name": "tree-grow5"
+    },
+    {
+      "name": "tree-grow6"
+    },
+    {
+      "name": "tree-harvest"
+    },
+    {
+      "name": "tree-dead"
+    },
+    {
+      "name": "rice-grow1"
+    },
+    {
+      "name": "rice-grow2"
+    },
+    {
+      "name": "rice-grow3"
+    },
+    {
+      "name": "rice-grow4"
+    },
+    {
+      "name": "rice-grow5"
+    },
+    {
+      "name": "rice-grow6"
+    },
+    {
+      "name": "rice-harvest"
+    },
+    {
+      "name": "rice-dead"
+    },
+    {
+      "name": "coffee-grow1"
+    },
+    {
+      "name": "coffee-grow2"
+    },
+    {
+      "name": "coffee-grow3"
+    },
+    {
+      "name": "coffee-grow4"
+    },
+    {
+      "name": "coffee-grow5"
+    },
+    {
+      "name": "coffee-grow6"
+    },
+    {
+      "name": "coffee-harvest"
+    },
+    {
+      "name": "coffee-dead"
+    },
+    {
+      "name": "tea-grow1"
+    },
+    {
+      "name": "tea-grow2"
+    },
+    {
+      "name": "tea-grow3"
+    },
+    {
+      "name": "tea-grow4"
+    },
+    {
+      "name": "tea-grow5"
+    },
+    {
+      "name": "tea-grow6"
+    },
+    {
+      "name": "tea-harvest"
+    },
+    {
+      "name": "tea-dead"
+    },
+    {
+      "name": "shroom-grow1"
+    },
+    {
+      "name": "shroom-grow2"
+    },
+    {
+      "name": "shroom-grow3"
+    },
+    {
+      "name": "shroom-grow4"
+    },
+    {
+      "name": "shroom-grow5"
+    },
+    {
+      "name": "shroom-grow6"
+    },
+    {
+      "name": "shroom-harvest"
+    },
+    {
+      "name": "shroom-dead"
+    },
+    {
+      "name": "hemp-grow1"
+    },
+    {
+      "name": "hemp-grow2"
+    },
+    {
+      "name": "hemp-grow3"
+    },
+    {
+      "name": "hemp-grow4"
+    },
+    {
+      "name": "hemp-grow5"
+    },
+    {
+      "name": "hemp-grow6"
+    },
+    {
+      "name": "hemp-harvest"
+    },
+    {
+      "name": "hemp-dead"
+    },
+    {
+      "name": "wheat-grow1"
+    },
+    {
+      "name": "wheat-grow2"
+    },
+    {
+      "name": "wheat-grow3"
+    },
+    {
+      "name": "wheat-grow4"
+    },
+    {
+      "name": "wheat-grow5"
+    },
+    {
+      "name": "wheat-grow6"
+    },
+    {
+      "name": "wheat-harvest"
+    },
+    {
+      "name": "wheat-dead"
+    },
+    {
+      "name": "wheat-harvest-prop"
+    },
+    {
+      "name": "poppy-grow1"
+    },
+    {
+      "name": "poppy-grow2"
+    },
+    {
+      "name": "poppy-grow3"
+    },
+    {
+      "name": "poppy-grow4"
+    },
+    {
+      "name": "poppy-grow5"
+    },
+    {
+      "name": "poppy-grow6"
+    },
+    {
+      "name": "poppy-harvest"
+    },
+    {
+      "name": "poppy-dead"
+    },
+    {
+      "name": "poppy"
+    },
+    {
+      "name": "barley-grow1"
+    },
+    {
+      "name": "barley-grow2"
+    },
+    {
+      "name": "barley-grow3"
+    },
+    {
+      "name": "barley-grow4"
+    },
+    {
+      "name": "barley-grow5"
+    },
+    {
+      "name": "barley-grow6"
+    },
+    {
+      "name": "barley-harvest"
+    },
+    {
+      "name": "barley-dead"
+    },
+    {
+      "name": "oat-grow1"
+    },
+    {
+      "name": "oat-grow2"
+    },
+    {
+      "name": "oat-grow3"
+    },
+    {
+      "name": "oat-grow4"
+    },
+    {
+      "name": "oat-grow5"
+    },
+    {
+      "name": "oat-grow6"
+    },
+    {
+      "name": "oat-harvest"
+    },
+    {
+      "name": "oat-dead"
+    },
+    {
+      "name": "agave-grow1"
+    },
+    {
+      "name": "agave-grow2"
+    },
+    {
+      "name": "agave-grow3"
+    },
+    {
+      "name": "agave-grow4"
+    },
+    {
+      "name": "agave-grow5"
+    },
+    {
+      "name": "agave-grow6"
+    },
+    {
+      "name": "agave-harvest"
+    },
+    {
+      "name": "agave-dead"
+    },
+    {
+      "name": "bamboo-grow1"
+    },
+    {
+      "name": "bamboo-grow2"
+    },
+    {
+      "name": "bamboo-grow3"
+    },
+    {
+      "name": "bamboo-grow4"
+    },
+    {
+      "name": "bamboo-grow5"
+    },
+    {
+      "name": "bamboo-grow6"
+    },
+    {
+      "name": "bamboo-harvest"
+    },
+    {
+      "name": "bamboo-dead"
+    },
+    {
+      "name": "flax-grow1"
+    },
+    {
+      "name": "flax-grow2"
+    },
+    {
+      "name": "flax-grow3"
+    },
+    {
+      "name": "flax-grow4"
+    },
+    {
+      "name": "flax-grow5"
+    },
+    {
+      "name": "flax-grow6"
+    },
+    {
+      "name": "flax-harvest"
+    },
+    {
+      "name": "flax-dead"
+    },
+    {
+      "name": "parsley-grow1"
+    },
+    {
+      "name": "parsley-grow2"
+    },
+    {
+      "name": "parsley-grow3"
+    },
+    {
+      "name": "parsley-grow4"
+    },
+    {
+      "name": "parsley-grow5"
+    },
+    {
+      "name": "parsley-grow6"
+    },
+    {
+      "name": "parsley-harvest"
+    },
+    {
+      "name": "parsley-dead"
+    },
+    {
+      "name": "juniper-grow1"
+    },
+    {
+      "name": "juniper-grow2"
+    },
+    {
+      "name": "juniper-grow3"
+    },
+    {
+      "name": "juniper-grow4"
+    },
+    {
+      "name": "juniper-grow5"
+    },
+    {
+      "name": "juniper-harvest"
+    },
+    {
+      "name": "juniper-grow6"
+    },
+    {
+      "name": "juniper-dead"
+    },
+    {
+      "name": "liquorice-grow1"
+    },
+    {
+      "name": "liquorice-grow2"
+    },
+    {
+      "name": "liquorice-grow3"
+    },
+    {
+      "name": "liquorice-grow4"
+    },
+    {
+      "name": "liquorice-grow5"
+    },
+    {
+      "name": "liquorice-harvest"
+    },
+    {
+      "name": "liquorice-dead"
+    },
+    {
+      "name": "herbs-grow1"
+    },
+    {
+      "name": "herbs-grow2"
+    },
+    {
+      "name": "herbs-grow3"
+    },
+    {
+      "name": "herbs-grow4"
+    },
+    {
+      "name": "herbs-grow5"
+    },
+    {
+      "name": "herbs-harvest"
+    },
+    {
+      "name": "herbs-dead"
+    },
+    {
+      "name": "herbs-grow6"
+    }
+  ]
+}

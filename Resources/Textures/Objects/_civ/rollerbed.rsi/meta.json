@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "down"
+    },
+    {
+      "name": "up"
+    },
+    {
+      "name": "human"
+    },
+    {
+      "name": "folded"
+    }
+  ]
+}

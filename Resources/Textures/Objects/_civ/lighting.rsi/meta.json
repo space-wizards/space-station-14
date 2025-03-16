@@ -1,0 +1,251 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "lanternO"
+        },
+        {
+            "name": "lantern-onO"
+        },
+        {
+            "name": "street_light1"
+        },
+        {
+            "name": "street_light0"
+        },
+        {
+            "name": "street_light-empty"
+        },
+        {
+            "name": "street_light-burned"
+        },
+        {
+            "name": "street_light-broken"
+        },
+        {
+            "name": "lantern-on_a"
+        },
+        {
+            "name": "lantern_a"
+        },
+        {
+            "name": "lantern-on"
+        },
+        {
+            "name": "lantern"
+        },
+        {
+            "name": "lantern-on_pole"
+        },
+        {
+            "name": "lantern_pole"
+        },
+        {
+            "name": "lamppost_small"
+        },
+        {
+            "name": "lamppost_small_on"
+        },
+        {
+            "name": "tube_on",
+            "directions": 4
+        },
+        {
+            "name": "tube",
+            "directions": 4
+        },
+        {
+            "name": "bulb_on",
+            "directions": 4
+        },
+        {
+            "name": "bulb",
+            "directions": 4
+        },
+        {
+            "name": "flashlight_off"
+        },
+        {
+            "name": "flashlight_on"
+        },
+        {
+            "name": "tube_empty",
+            "directions": 4
+        },
+        {
+            "name": "tube_burned",
+            "directions": 4
+        },
+        {
+            "name": "tube_broken",
+            "directions": 4
+        },
+        {
+            "name": "bulb_broken",
+            "directions": 4
+        },
+        {
+            "name": "bulb_empty",
+            "directions": 4
+        },
+        {
+            "name": "bulb_burned",
+            "directions": 4
+        },
+        {
+            "name": "ltube"
+        },
+        {
+            "name": "lbulb"
+        },
+        {
+            "name": "ltube_broken"
+        },
+        {
+            "name": "lbulb_broken"
+        },
+        {
+            "name": "lamppost_small_broken"
+        },
+        {
+            "name": "lamppost_small_empty"
+        },
+        {
+            "name": "oldlamp"
+        },
+        {
+            "name": "oldlamp-on"
+        },
+        {
+            "name": "littlelamp"
+        },
+        {
+            "name": "littlelamp-on"
+        },
+        {
+            "name": "tikitorch"
+        },
+        {
+            "name": "tikitorch-on",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "modernlight_off"
+        },
+        {
+            "name": "modernlight_on"
+        },
+        {
+            "name": "militarylight_off"
+        },
+        {
+            "name": "militarylight_on"
+        },
+        {
+            "name": "militarylight_on_red"
+        },
+        {
+            "name": "militarylight_on_green"
+        },
+        {
+            "name": "militarylightalt_off"
+        },
+        {
+            "name": "militarylightalt_on"
+        },
+        {
+            "name": "militarylightalt_on_red"
+        },
+        {
+            "name": "militarylightalt_on_green"
+        },
+        {
+            "name": "flashlightjap_off"
+        },
+        {
+            "name": "flashlightjap_on"
+        },
+        {
+            "name": "floodlight"
+        },
+        {
+            "name": "floodlight_on"
+        },
+        {
+            "name": "space_lights"
+        },
+        {
+            "name": "lampdesk"
+        },
+        {
+            "name": "lampdesk_on"
+        },
+        {
+            "name": "copperlamp"
+        },
+        {
+            "name": "copperlamp-on",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "etsy-on",
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "etsy"
+        },
+        {
+            "name": "flare_flame",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "flare"
+        },
+        {
+            "name": "flare-on"
+        },
+        {
+            "name": "flare-empty"
+        },
+        {
+            "name": "flareW"
+        },
+        {
+            "name": "flareW-on"
+        },
+        {
+            "name": "flareW-empty"
+        }
+    ]
+}

@@ -1,0 +1,434 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "",
+      "delays": [
+        [
+          0.120000005,
+          0.120000005,
+          0.120000005,
+          0.120000005
+        ]
+      ]
+    },
+    {
+      "name": "casing"
+    },
+    {
+      "name": "grenade_old"
+    },
+    {
+      "name": "grenade_old_active",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bomb"
+    },
+    {
+      "name": "bomb_active",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "dynamite0"
+    },
+    {
+      "name": "dynamite1"
+    },
+    {
+      "name": "dynamite2"
+    },
+    {
+      "name": "dynamite3",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "mine"
+    },
+    {
+      "name": "mine_armed"
+    },
+    {
+      "name": "boobytrap_armed"
+    },
+    {
+      "name": "boobytrap_armedX"
+    },
+    {
+      "name": "stgnade"
+    },
+    {
+      "name": "stgnade_active"
+    },
+    {
+      "name": "smoke_grenade"
+    },
+    {
+      "name": "smoke_grenade_active"
+    },
+    {
+      "name": "mk2"
+    },
+    {
+      "name": "mk2_active"
+    },
+    {
+      "name": "f1"
+    },
+    {
+      "name": "f1_active"
+    },
+    {
+      "name": "mills"
+    },
+    {
+      "name": "mills_active"
+    },
+    {
+      "name": "m26"
+    },
+    {
+      "name": "m26_active"
+    },
+    {
+      "name": "m26_explosive"
+    },
+    {
+      "name": "m26_explosive_active"
+    },
+    {
+      "name": "m67_active"
+    },
+    {
+      "name": "m67"
+    },
+    {
+      "name": "flashbang"
+    },
+    {
+      "name": "flashbang_active"
+    },
+    {
+      "name": "incendiary"
+    },
+    {
+      "name": "incendiary_active"
+    },
+    {
+      "name": "rgd5"
+    },
+    {
+      "name": "rgd5_active"
+    },
+    {
+      "name": "rgd33"
+    },
+    {
+      "name": "rgd33_active"
+    },
+    {
+      "name": "russian_charge"
+    },
+    {
+      "name": "russian_charge_placed"
+    },
+    {
+      "name": "type97"
+    },
+    {
+      "name": "type97_active",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "type91"
+    },
+    {
+      "name": "type91_active",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "stgbundle"
+    },
+    {
+      "name": "stgbundle_active"
+    },
+    {
+      "name": "rpg40"
+    },
+    {
+      "name": "rpg40_active"
+    },
+    {
+      "name": "kamikaze_vest",
+      "directions": 4
+    },
+    {
+      "name": "g40mm_gas",
+      "directions": 4
+    },
+    {
+      "name": "type99"
+    },
+    {
+      "name": "type99_active",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "sting"
+    },
+    {
+      "name": "sting_active"
+    },
+    {
+      "name": "m18smoke-old"
+    },
+    {
+      "name": "m18smoke_active-old"
+    },
+    {
+      "name": "m18smoke_purple-old"
+    },
+    {
+      "name": "m18smoke_purple_active-old"
+    },
+    {
+      "name": "m18smoke_red"
+    },
+    {
+      "name": "m18smoke_red_active"
+    },
+    {
+      "name": "t68"
+    },
+    {
+      "name": "t68_active",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "detonator_active",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "detonator"
+    },
+    {
+      "name": "emp"
+    },
+    {
+      "name": "emp_active",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "sflashbang"
+    },
+    {
+      "name": "sflashbang_active",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bacta"
+    },
+    {
+      "name": "bacta_active",
+      "delays": [
+        [
+          0.15,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "kamikaze"
+    },
+    {
+      "name": "plastic-explosive0"
+    },
+    {
+      "name": "plastic-explosive1"
+    },
+    {
+      "name": "plastic-explosive2",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "kamikaze_active"
+    },
+    {
+      "name": "suicide_vest",
+      "directions": 4
+    },
+    {
+      "name": "g40mm",
+      "directions": 4
+    },
+    {
+      "name": "panzerfaust_missile",
+      "directions": 4
+    },
+    {
+      "name": "missile",
+      "directions": 4
+    },
+    {
+      "name": "atgm_missile",
+      "directions": 4
+    },
+    {
+      "name": "rdg2"
+    },
+    {
+      "name": "rdg2_active"
+    },
+    {
+      "name": "m18smoke"
+    },
+    {
+      "name": "m18smoke_active"
+    },
+    {
+      "name": "m18smoke_purple"
+    },
+    {
+      "name": "m18smoke_purple_active"
+    },
+    {
+      "name": "rdg2_yellow"
+    },
+    {
+      "name": "rdg2_yellow_active"
+    }
+  ]
+}

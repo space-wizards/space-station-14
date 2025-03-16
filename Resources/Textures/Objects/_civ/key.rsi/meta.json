@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "key"
+    },
+    {
+      "name": "treasure_key"
+    },
+    {
+      "name": "keychain_1"
+    },
+    {
+      "name": "keychain_2"
+    },
+    {
+      "name": "keychain_3"
+    },
+    {
+      "name": "keychain_many"
+    },
+    {
+      "name": "keychain_0"
+    },
+    {
+      "name": "modern"
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "secure0"
+        },
+        {
+            "name": "secureb",
+            "delays": [
+                [
+                    1.5,
+                    1.5
+                ]
+            ]
+        },
+        {
+            "name": "securespark",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "securecrateemag"
+        },
+        {
+            "name": "securecratesparks",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "securecrater"
+        },
+        {
+            "name": "securecrateg"
+        },
+        {
+            "name": "largebino"
+        },
+        {
+            "name": "largebing"
+        },
+        {
+            "name": "largebinr"
+        },
+        {
+            "name": "largebinemag"
+        },
+        {
+            "name": "largebinsparks",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "miningcar"
+        },
+        {
+            "name": "w_cart_c"
+        },
+        {
+            "name": "miningcaropen"
+        },
+        {
+            "name": "largebins"
+        },
+        {
+            "name": "largebin"
+        },
+        {
+            "name": "largebinopenfs"
+        },
+        {
+            "name": "largebinopenf"
+        },
+        {
+            "name": "largebinopenb"
+        },
+        {
+            "name": "animate_largebins",
+            "delays": [
+                [
+                    0.1,
+                    1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "largebinsopen"
+        },
+        {
+            "name": "largebinopen"
+        },
+        {
+            "name": "manifest"
+        },
+        {
+            "name": "crate"
+        },
+        {
+            "name": "crateopen"
+        },
+        {
+            "name": "woodencrate"
+        },
+        {
+            "name": "woodencrateopen"
+        },
+        {
+            "name": "cart"
+        },
+        {
+            "name": "cartopen"
+        },
+        {
+            "name": "militarycart"
+        },
+        {
+            "name": "militarycartopen"
+        },
+        {
+            "name": "trashcart"
+        },
+        {
+            "name": "trashcartopen"
+        },
+        {
+            "name": "trashcartweld"
+        },
+        {
+            "name": "densecrate"
+        },
+        {
+            "name": "mulecrate"
+        },
+        {
+            "name": "lisacrate"
+        },
+        {
+            "name": "w_cart_o"
+        }
+    ]
+}

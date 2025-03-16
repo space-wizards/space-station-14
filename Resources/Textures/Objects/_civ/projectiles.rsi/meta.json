@@ -1,0 +1,258 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "spark",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bullet_old",
+      "directions": 4
+    },
+    {
+      "name": "arrow",
+      "directions": 4
+    },
+    {
+      "name": "bee",
+      "directions": 4
+    },
+    {
+      "name": "fireball",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bolter",
+      "directions": 4
+    },
+    {
+      "name": "SpearFlight",
+      "directions": 4
+    },
+    {
+      "name": "dart",
+      "directions": 4
+    },
+    {
+      "name": "bullet",
+      "directions": 4,
+      "delays": [
+        [
+          0.05,
+          0.05
+        ],
+        [
+          0.05,
+          0.05
+        ],
+        [
+          0.05,
+          0.05
+        ],
+        [
+          0.05,
+          0.05
+        ]
+      ]
+    },
+    {
+      "name": "gibshot",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "stone",
+      "directions": 4
+    },
+    {
+      "name": "shell",
+      "directions": 4
+    },
+    {
+      "name": "arrow_flint",
+      "directions": 4
+    },
+    {
+      "name": "arrow_stone",
+      "directions": 4
+    },
+    {
+      "name": "arrow_sandstone",
+      "directions": 4
+    },
+    {
+      "name": "arrow_copper",
+      "directions": 4
+    },
+    {
+      "name": "arrow_iron",
+      "directions": 4
+    },
+    {
+      "name": "arrow_bronze",
+      "directions": 4
+    },
+    {
+      "name": "arrow_steel",
+      "directions": 4
+    },
+    {
+      "name": "arrow_vial",
+      "directions": 4
+    },
+    {
+      "name": "arrow_modern",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "arrow_god",
+      "directions": 4
+    },
+    {
+      "name": "bolt",
+      "directions": 4
+    },
+    {
+      "name": "bolt_flint",
+      "directions": 4
+    },
+    {
+      "name": "bolt_stone",
+      "directions": 4
+    },
+    {
+      "name": "bolt_sandstone",
+      "directions": 4
+    },
+    {
+      "name": "bolt_iron",
+      "directions": 4
+    },
+    {
+      "name": "bolt_bronze",
+      "directions": 4
+    },
+    {
+      "name": "bolt_copper",
+      "directions": 4
+    },
+    {
+      "name": "bolt_steel",
+      "directions": 4
+    },
+    {
+      "name": "bolt_modern",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bolt_vial",
+      "directions": 4
+    },
+    {
+      "name": "buckshot"
+    },
+    {
+      "name": "chainshot",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "bluebolt",
+      "directions": 4
+    },
+    {
+      "name": "redbolt",
+      "directions": 4
+    },
+    {
+      "name": "greenbolt",
+      "directions": 4
+    },
+    {
+      "name": "flare"
+    }
+  ]
+}

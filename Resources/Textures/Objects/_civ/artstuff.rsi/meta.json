@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "easel"
+    },
+    {
+      "name": "23x23"
+    },
+    {
+      "name": "23x19"
+    },
+    {
+      "name": "19x19"
+    },
+    {
+      "name": "11x11"
+    },
+    {
+      "name": "23x23wip"
+    },
+    {
+      "name": "23x19wip"
+    },
+    {
+      "name": "19x19wip"
+    },
+    {
+      "name": "11x11wip"
+    },
+    {
+      "name": "23x23frame"
+    },
+    {
+      "name": "23x19frame"
+    },
+    {
+      "name": "19x19frame"
+    },
+    {
+      "name": "11x11frame"
+    }
+  ]
+}

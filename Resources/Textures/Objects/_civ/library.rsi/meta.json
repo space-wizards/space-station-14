@@ -1,0 +1,195 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "book"
+    },
+    {
+      "name": "book1"
+    },
+    {
+      "name": "bookmed"
+    },
+    {
+      "name": "book2"
+    },
+    {
+      "name": "book3"
+    },
+    {
+      "name": "book4"
+    },
+    {
+      "name": "book5"
+    },
+    {
+      "name": "book6"
+    },
+    {
+      "name": "book7"
+    },
+    {
+      "name": "cooked_book"
+    },
+    {
+      "name": "bookMedical"
+    },
+    {
+      "name": "chefbook"
+    },
+    {
+      "name": "barbook"
+    },
+    {
+      "name": "bookSpaceLaw"
+    },
+    {
+      "name": "excavation"
+    },
+    {
+      "name": "book_bs"
+    },
+    {
+      "name": "book_qm"
+    },
+    {
+      "name": "book-0"
+    },
+    {
+      "name": "book-1"
+    },
+    {
+      "name": "book-2"
+    },
+    {
+      "name": "book-3"
+    },
+    {
+      "name": "book-4"
+    },
+    {
+      "name": "book-5"
+    },
+    {
+      "name": "books-0"
+    },
+    {
+      "name": "books-1"
+    },
+    {
+      "name": "books-2"
+    },
+    {
+      "name": "books-3"
+    },
+    {
+      "name": "books-4"
+    },
+    {
+      "name": "books-5"
+    },
+    {
+      "name": "research_rock0"
+    },
+    {
+      "name": "research_rock1"
+    },
+    {
+      "name": "scroll0"
+    },
+    {
+      "name": "scroll1"
+    },
+    {
+      "name": "research0"
+    },
+    {
+      "name": "research1"
+    },
+    {
+      "name": "holybook"
+    },
+    {
+      "name": "holybook_o1"
+    },
+    {
+      "name": "holybook_Scales"
+    },
+    {
+      "name": "holybook_Moon"
+    },
+    {
+      "name": "holybook_Cross"
+    },
+    {
+      "name": "holybook_Star"
+    },
+    {
+      "name": "holybook_Sun"
+    },
+    {
+      "name": "holybook_Skull"
+    },
+    {
+      "name": "holybook_Hammer"
+    },
+    {
+      "name": "holybook_Tree"
+    },
+    {
+      "name": "scrolls0"
+    },
+    {
+      "name": "scrolls1"
+    },
+    {
+      "name": "scrolls2"
+    },
+    {
+      "name": "scrolls3"
+    },
+    {
+      "name": "scrolls4"
+    },
+    {
+      "name": "scrolls5"
+    },
+    {
+      "name": "scrolls6"
+    },
+    {
+      "name": "scrolls7"
+    },
+    {
+      "name": "scrolls"
+    },
+    {
+      "name": "scroll0X"
+    },
+    {
+      "name": "scroll1X"
+    },
+    {
+      "name": "poster_rolled"
+    },
+    {
+      "name": "poster_base"
+    },
+    {
+      "name": "poster_base_o1"
+    },
+    {
+      "name": "poster_base_o2"
+    },
+    {
+      "name": "poster_ripped"
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "1"
+    },
+    {
+      "name": "0"
+    },
+    {
+      "name": "50"
+    },
+    {
+      "name": "i0"
+    },
+    {
+      "name": "i5"
+    },
+    {
+      "name": "i10"
+    },
+    {
+      "name": "i15"
+    },
+    {
+      "name": "i50"
+    },
+    {
+      "name": "d0"
+    },
+    {
+      "name": "d5"
+    },
+    {
+      "name": "d10"
+    },
+    {
+      "name": "d15"
+    },
+    {
+      "name": "d50"
+    },
+    {
+      "name": "b0"
+    },
+    {
+      "name": "b5"
+    },
+    {
+      "name": "b10"
+    },
+    {
+      "name": "b15"
+    },
+    {
+      "name": "15"
+    },
+    {
+      "name": "5"
+    },
+    {
+      "name": "10"
+    },
+    {
+      "name": "draw"
+    },
+    {
+      "name": "inject"
+    },
+    {
+      "name": "broken"
+    },
+    {
+      "name": "single_use"
+    },
+    {
+      "name": "single_use_empty"
+    },
+    {
+      "name": "single_use1"
+    },
+    {
+      "name": "single_use1_empty"
+    },
+    {
+      "name": "single_use2"
+    },
+    {
+      "name": "single_use2_empty"
+    },
+    {
+      "name": "single_use3"
+    },
+    {
+      "name": "single_use3_empty"
+    },
+    {
+      "name": "single_use0"
+    },
+    {
+      "name": "single_use0_empty"
+    }
+  ]
+}

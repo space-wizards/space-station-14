@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "size": {
+    "x": 300,
+    "y": 210
+  },
+  "states": [
+    {
+      "name": "brokenhind"
+    },
+    {
+      "name": "brokenhind_tail",
+      "directions": 4
+    }
+  ]
+}

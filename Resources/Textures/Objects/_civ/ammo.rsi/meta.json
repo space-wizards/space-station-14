@@ -1,0 +1,1297 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "",
+      "delays": [
+        [
+          0.120000005,
+          0.120000005,
+          0.120000005,
+          0.120000005
+        ]
+      ]
+    },
+    {
+      "name": "MagSpear"
+    },
+    {
+      "name": "spear"
+    },
+    {
+      "name": "riflecasing_empty"
+    },
+    {
+      "name": "pistolcasing_empty"
+    },
+    {
+      "name": "ironbullet"
+    },
+    {
+      "name": "riflecasing_full"
+    },
+    {
+      "name": "pistolcasing_full"
+    },
+    {
+      "name": "rock"
+    },
+    {
+      "name": "stoneball"
+    },
+    {
+      "name": "musketball_gunpowder"
+    },
+    {
+      "name": "musketball_pistol_gunpowder"
+    },
+    {
+      "name": "blunderbuss_gunpowder"
+    },
+    {
+      "name": "gunpowder"
+    },
+    {
+      "name": "musketball"
+    },
+    {
+      "name": "musketball_pistol"
+    },
+    {
+      "name": "blunderbuss"
+    },
+    {
+      "name": "gunpowder_PAPERS"
+    },
+    {
+      "name": "kclip-5"
+    },
+    {
+      "name": "kclip-4"
+    },
+    {
+      "name": "kclip-3"
+    },
+    {
+      "name": "kclip-2"
+    },
+    {
+      "name": "kclip-1"
+    },
+    {
+      "name": "kclip-0"
+    },
+    {
+      "name": "kclip"
+    },
+    {
+      "name": "g-clip-8"
+    },
+    {
+      "name": "g-clip-7"
+    },
+    {
+      "name": "g-clip-6"
+    },
+    {
+      "name": "g-clip-5"
+    },
+    {
+      "name": "g-clip-4"
+    },
+    {
+      "name": "g-clip-3"
+    },
+    {
+      "name": "g-clip-2"
+    },
+    {
+      "name": "g-clip-1"
+    },
+    {
+      "name": "g-clip-0"
+    },
+    {
+      "name": "g-clip"
+    },
+    {
+      "name": "clip-5"
+    },
+    {
+      "name": "clip-3"
+    },
+    {
+      "name": "clip-4"
+    },
+    {
+      "name": "clip-2"
+    },
+    {
+      "name": "clip-1"
+    },
+    {
+      "name": "clip-0"
+    },
+    {
+      "name": "clip"
+    },
+    {
+      "name": "pistol-bullet"
+    },
+    {
+      "name": "pistol-casing"
+    },
+    {
+      "name": "rifle-bullet"
+    },
+    {
+      "name": "rifle-casing"
+    },
+    {
+      "name": "big-bullet"
+    },
+    {
+      "name": "big-casing"
+    },
+    {
+      "name": "huge-bullet"
+    },
+    {
+      "name": "huge-casing"
+    },
+    {
+      "name": "pouch"
+    },
+    {
+      "name": "pouch-20"
+    },
+    {
+      "name": "pouch-17"
+    },
+    {
+      "name": "pouch-14"
+    },
+    {
+      "name": "pouch-12"
+    },
+    {
+      "name": "pouch-7"
+    },
+    {
+      "name": "pouch-6"
+    },
+    {
+      "name": "pouch-0"
+    },
+    {
+      "name": "oldbox"
+    },
+    {
+      "name": "oldbox-47"
+    },
+    {
+      "name": "oldbox-32"
+    },
+    {
+      "name": "oldbox-13"
+    },
+    {
+      "name": "oldbox-0"
+    },
+    {
+      "name": "mhbox"
+    },
+    {
+      "name": "mhbox-50"
+    },
+    {
+      "name": "mhbox-25"
+    },
+    {
+      "name": "mhbox-10"
+    },
+    {
+      "name": "mhbox-0"
+    },
+    {
+      "name": "pouch_closed"
+    },
+    {
+      "name": "pouch_full"
+    },
+    {
+      "name": "pouch_75"
+    },
+    {
+      "name": "pouch_50"
+    },
+    {
+      "name": "pouch_25"
+    },
+    {
+      "name": "pouch_0"
+    },
+    {
+      "name": "pouch_empty"
+    },
+    {
+      "name": "arisaka_ammo"
+    },
+    {
+      "name": "ammo"
+    },
+    {
+      "name": "ammo-45"
+    },
+    {
+      "name": "ammo-30"
+    },
+    {
+      "name": "ammo-8"
+    },
+    {
+      "name": "ammo-0"
+    },
+    {
+      "name": "mosin_ammo"
+    },
+    {
+      "name": "mosin_ammo-45"
+    },
+    {
+      "name": "mosin_ammo-30"
+    },
+    {
+      "name": "mosin_ammo-8"
+    },
+    {
+      "name": "mosin_ammo-0"
+    },
+    {
+      "name": "9mm-60"
+    },
+    {
+      "name": "9mm-0"
+    },
+    {
+      "name": "9mm"
+    },
+    {
+      "name": "wood_ammobox"
+    },
+    {
+      "name": "wood_ammobox_open"
+    },
+    {
+      "name": "wood_ammobox-0"
+    },
+    {
+      "name": "wood_ammobox-999"
+    },
+    {
+      "name": "wood_ammobox-700"
+    },
+    {
+      "name": "wood_ammobox-400"
+    },
+    {
+      "name": "wood_ammobox-100"
+    },
+    {
+      "name": "wood_ammobox_alt"
+    },
+    {
+      "name": "mauser-10"
+    },
+    {
+      "name": "mauser-9"
+    },
+    {
+      "name": "mauser-8"
+    },
+    {
+      "name": "mauser-7"
+    },
+    {
+      "name": "mauser-6"
+    },
+    {
+      "name": "mauser-5"
+    },
+    {
+      "name": "mauser-4"
+    },
+    {
+      "name": "mauser-3"
+    },
+    {
+      "name": "mauser-2"
+    },
+    {
+      "name": "mauser-1"
+    },
+    {
+      "name": "mauser-0"
+    },
+    {
+      "name": "mauser"
+    },
+    {
+      "name": "borchardtmag"
+    },
+    {
+      "name": "borchardtmag-0"
+    },
+    {
+      "name": "m545"
+    },
+    {
+      "name": "m545m"
+    },
+    {
+      "name": "m545g"
+    },
+    {
+      "name": "556x45-30_old"
+    },
+    {
+      "name": "556x45-0_old"
+    },
+    {
+      "name": "545x39-90"
+    },
+    {
+      "name": "545x39-0"
+    },
+    {
+      "name": "556x45"
+    },
+    {
+      "name": "556x45-60"
+    },
+    {
+      "name": "556x45-35"
+    },
+    {
+      "name": "556x45-20"
+    },
+    {
+      "name": "556x45-0"
+    },
+    {
+      "name": "556x45ap-90"
+    },
+    {
+      "name": "556x45ap-0"
+    },
+    {
+      "name": "762x51"
+    },
+    {
+      "name": "762x51-60"
+    },
+    {
+      "name": "762x51-35"
+    },
+    {
+      "name": "762x51-20"
+    },
+    {
+      "name": "762x51-0"
+    },
+    {
+      "name": "145x114"
+    },
+    {
+      "name": "145x114-20"
+    },
+    {
+      "name": "145x114-12"
+    },
+    {
+      "name": "145x114-6"
+    },
+    {
+      "name": "145x114-0"
+    },
+    {
+      "name": "145x114AP"
+    },
+    {
+      "name": "145x114AP-20"
+    },
+    {
+      "name": "145x114AP-12"
+    },
+    {
+      "name": "145x114AP-6"
+    },
+    {
+      "name": "145x114AP-0"
+    },
+    {
+      "name": "madsen"
+    },
+    {
+      "name": "madsen-0"
+    },
+    {
+      "name": "stg"
+    },
+    {
+      "name": "stg-0"
+    },
+    {
+      "name": "ppsh"
+    },
+    {
+      "name": "ppsh-0"
+    },
+    {
+      "name": "mp40"
+    },
+    {
+      "name": "mp40-0"
+    },
+    {
+      "name": "lugermag"
+    },
+    {
+      "name": "lugermag-0"
+    },
+    {
+      "name": "pps"
+    },
+    {
+      "name": "pps-0"
+    },
+    {
+      "name": "svt"
+    },
+    {
+      "name": "svt-0"
+    },
+    {
+      "name": "g43"
+    },
+    {
+      "name": "g43-0"
+    },
+    {
+      "name": "ak47"
+    },
+    {
+      "name": "ak47-0"
+    },
+    {
+      "name": "sksm"
+    },
+    {
+      "name": "sksm-0"
+    },
+    {
+      "name": "ak74"
+    },
+    {
+      "name": "ak74-0"
+    },
+    {
+      "name": "m16"
+    },
+    {
+      "name": "m16-0"
+    },
+    {
+      "name": "m14"
+    },
+    {
+      "name": "m14-0"
+    },
+    {
+      "name": "m1911"
+    },
+    {
+      "name": "m1911-0"
+    },
+    {
+      "name": "greasegun"
+    },
+    {
+      "name": "greasegun-0"
+    },
+    {
+      "name": "sten2"
+    },
+    {
+      "name": "sten2-0"
+    },
+    {
+      "name": "b762x51"
+    },
+    {
+      "name": "b762x51-200"
+    },
+    {
+      "name": "b762x51-150"
+    },
+    {
+      "name": "b762x51-100"
+    },
+    {
+      "name": "b762x51-50"
+    },
+    {
+      "name": "b762x51-0"
+    },
+    {
+      "name": "b762-90"
+    },
+    {
+      "name": "b762-80"
+    },
+    {
+      "name": "b762-60"
+    },
+    {
+      "name": "b762-40"
+    },
+    {
+      "name": "b762-20"
+    },
+    {
+      "name": "b762-0"
+    },
+    {
+      "name": "b762"
+    },
+    {
+      "name": "b762x54-80"
+    },
+    {
+      "name": "b762x54-60"
+    },
+    {
+      "name": "b762x54-40"
+    },
+    {
+      "name": "b762x54-20"
+    },
+    {
+      "name": "b762x54-0"
+    },
+    {
+      "name": "b762x54"
+    },
+    {
+      "name": "maximbelt"
+    },
+    {
+      "name": "maximbelt-200"
+    },
+    {
+      "name": "maximbelt-125"
+    },
+    {
+      "name": "maximbelt-50"
+    },
+    {
+      "name": "maximbelt-0"
+    },
+    {
+      "name": "5.56x45s"
+    },
+    {
+      "name": "5.56x45s-0"
+    },
+    {
+      "name": "hk"
+    },
+    {
+      "name": "hk-0"
+    },
+    {
+      "name": "scarh"
+    },
+    {
+      "name": "scarh-0"
+    },
+    {
+      "name": "type99"
+    },
+    {
+      "name": "type99-0"
+    },
+    {
+      "name": "type99redtape"
+    },
+    {
+      "name": "type99redtape-0"
+    },
+    {
+      "name": "dpdisk"
+    },
+    {
+      "name": "mg34"
+    },
+    {
+      "name": "mg34-0"
+    },
+    {
+      "name": "waltherp"
+    },
+    {
+      "name": "waltherp-4"
+    },
+    {
+      "name": "waltherp-0"
+    },
+    {
+      "name": "thompson"
+    },
+    {
+      "name": "thompson-0"
+    },
+    {
+      "name": "bar"
+    },
+    {
+      "name": "bar-0"
+    },
+    {
+      "name": "makeshiftak"
+    },
+    {
+      "name": "makeshiftak-0"
+    },
+    {
+      "name": "38"
+    },
+    {
+      "name": "38-6"
+    },
+    {
+      "name": "38-5"
+    },
+    {
+      "name": "38-4"
+    },
+    {
+      "name": "38-3"
+    },
+    {
+      "name": "38-2"
+    },
+    {
+      "name": "38-1"
+    },
+    {
+      "name": "38-0"
+    },
+    {
+      "name": "p90"
+    },
+    {
+      "name": "p90-0"
+    },
+    {
+      "name": "glock17"
+    },
+    {
+      "name": "glock17-0"
+    },
+    {
+      "name": "m9beretta"
+    },
+    {
+      "name": "m9beretta-0"
+    },
+    {
+      "name": "tommydrum"
+    },
+    {
+      "name": "tommydrum-0"
+    },
+    {
+      "name": "bergmann_ammo"
+    },
+    {
+      "name": "bergmann_ammo-0"
+    },
+    {
+      "name": "bx7"
+    },
+    {
+      "name": "bx7-0"
+    },
+    {
+      "name": "p220"
+    },
+    {
+      "name": "p220-4"
+    },
+    {
+      "name": "p220-1"
+    },
+    {
+      "name": "p220-0"
+    },
+    {
+      "name": "type100"
+    },
+    {
+      "name": "type100-0"
+    },
+    {
+      "name": "ak74m"
+    },
+    {
+      "name": "ak74m-0"
+    },
+    {
+      "name": "mp5"
+    },
+    {
+      "name": "mp5-0"
+    },
+    {
+      "name": "deagle"
+    },
+    {
+      "name": "deagle-6"
+    },
+    {
+      "name": "deagle-5"
+    },
+    {
+      "name": "deagle-4"
+    },
+    {
+      "name": "deagle-2"
+    },
+    {
+      "name": "deagle-0"
+    },
+    {
+      "name": "fal"
+    },
+    {
+      "name": "fal-0"
+    },
+    {
+      "name": "tec9"
+    },
+    {
+      "name": "tec9-0"
+    },
+    {
+      "name": "browning_hp"
+    },
+    {
+      "name": "browning_hp-0"
+    },
+    {
+      "name": "sti2011"
+    },
+    {
+      "name": "sti2011-0"
+    },
+    {
+      "name": "uzi"
+    },
+    {
+      "name": "uzi-0"
+    },
+    {
+      "name": "mac10"
+    },
+    {
+      "name": "mac10-0"
+    },
+    {
+      "name": "skorpion"
+    },
+    {
+      "name": "skorpion-0"
+    },
+    {
+      "name": "rpk74mag"
+    },
+    {
+      "name": "rpk74mag-0"
+    },
+    {
+      "name": "rpk74"
+    },
+    {
+      "name": "rpk74-0"
+    },
+    {
+      "name": "rpd"
+    },
+    {
+      "name": "rpd-0"
+    },
+    {
+      "name": "qblz1",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "qblz1-0"
+    },
+    {
+      "name": "dcb2",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "dcb2-0"
+    },
+    {
+      "name": "lasgun"
+    },
+    {
+      "name": "laspistol"
+    },
+    {
+      "name": "tibanna"
+    },
+    {
+      "name": "tibanna_pistol"
+    },
+    {
+      "name": "tibanna_turret"
+    },
+    {
+      "name": "power_pack-400"
+    },
+    {
+      "name": "power_pack-300"
+    },
+    {
+      "name": "power_pack-200"
+    },
+    {
+      "name": "power_pack-100"
+    },
+    {
+      "name": "power_pack-0"
+    },
+    {
+      "name": "power_pack"
+    },
+    {
+      "name": "tibanna_rebel"
+    },
+    {
+      "name": "tibanna_e11"
+    },
+    {
+      "name": "tibanna_DH17"
+    },
+    {
+      "name": "tibanna_westar"
+    },
+    {
+      "name": "shellbox"
+    },
+    {
+      "name": "shellbox-13"
+    },
+    {
+      "name": "shellbox-8"
+    },
+    {
+      "name": "shellbox-4"
+    },
+    {
+      "name": "shellbox-0"
+    },
+    {
+      "name": "buckshotbox"
+    },
+    {
+      "name": "buckshotbox-13"
+    },
+    {
+      "name": "buckshotbox-8"
+    },
+    {
+      "name": "buckshotbox-4"
+    },
+    {
+      "name": "buckshotbox-0"
+    },
+    {
+      "name": "flareshellbox"
+    },
+    {
+      "name": "flareshellbox-13"
+    },
+    {
+      "name": "flareshellbox-8"
+    },
+    {
+      "name": "flareshellbox-4"
+    },
+    {
+      "name": "flareshellbox-0"
+    },
+    {
+      "name": "phosphorusbox"
+    },
+    {
+      "name": "phosphorusbox-13"
+    },
+    {
+      "name": "phosphorusbox-8"
+    },
+    {
+      "name": "phosphorusbox-4"
+    },
+    {
+      "name": "phosphorusbox-0"
+    },
+    {
+      "name": "slugbox"
+    },
+    {
+      "name": "slugbox-13"
+    },
+    {
+      "name": "slugbox-8"
+    },
+    {
+      "name": "slugbox-4"
+    },
+    {
+      "name": "slugbox-0"
+    },
+    {
+      "name": "csshotbox"
+    },
+    {
+      "name": "csshotbox-13"
+    },
+    {
+      "name": "csshotbox-8"
+    },
+    {
+      "name": "csshotbox-4"
+    },
+    {
+      "name": "csshotbox-0"
+    },
+    {
+      "name": "ocshotbox"
+    },
+    {
+      "name": "ocshotbox-13"
+    },
+    {
+      "name": "ocshotbox-8"
+    },
+    {
+      "name": "ocshotbox-4"
+    },
+    {
+      "name": "ocshotbox-0"
+    },
+    {
+      "name": "beanbagbox"
+    },
+    {
+      "name": "beanbagbox-13"
+    },
+    {
+      "name": "beanbagbox-8"
+    },
+    {
+      "name": "beanbagbox-4"
+    },
+    {
+      "name": "beanbagbox-0"
+    },
+    {
+      "name": "rubberslugbox"
+    },
+    {
+      "name": "rubberslugbox-13"
+    },
+    {
+      "name": "rubberslugbox-8"
+    },
+    {
+      "name": "rubberslugbox-4"
+    },
+    {
+      "name": "rubberslugbox-0"
+    },
+    {
+      "name": "rubbershotbox"
+    },
+    {
+      "name": "rubbershotbox-13"
+    },
+    {
+      "name": "rubbershotbox-8"
+    },
+    {
+      "name": "rubbershotbox-4"
+    },
+    {
+      "name": "rubbershotbox-0"
+    },
+    {
+      "name": "glassshotbox"
+    },
+    {
+      "name": "glassshotbox-13"
+    },
+    {
+      "name": "glassshotbox-8"
+    },
+    {
+      "name": "glassshotbox-4"
+    },
+    {
+      "name": "glassshotbox-0"
+    },
+    {
+      "name": "flechettebox"
+    },
+    {
+      "name": "flechettebox-13"
+    },
+    {
+      "name": "flechettebox-8"
+    },
+    {
+      "name": "flechettebox-4"
+    },
+    {
+      "name": "flechettebox-0"
+    },
+    {
+      "name": "00-shell"
+    },
+    {
+      "name": "00-spent"
+    },
+    {
+      "name": "00-spent-alt"
+    },
+    {
+      "name": "shell-shell"
+    },
+    {
+      "name": "shell-casing"
+    },
+    {
+      "name": "buckshot-shell"
+    },
+    {
+      "name": "buckshot-spent"
+    },
+    {
+      "name": "flare-shell"
+    },
+    {
+      "name": "flare-spent"
+    },
+    {
+      "name": "dragonbreath-shell"
+    },
+    {
+      "name": "dragons-breath-spent"
+    },
+    {
+      "name": "slug-shell"
+    },
+    {
+      "name": "slug-spent"
+    },
+    {
+      "name": "cs-shell"
+    },
+    {
+      "name": "cs-spent"
+    },
+    {
+      "name": "oc-shell"
+    },
+    {
+      "name": "oc-spent"
+    },
+    {
+      "name": "beanbag-shell"
+    },
+    {
+      "name": "beanbag-spent"
+    },
+    {
+      "name": "rubbershot-shell"
+    },
+    {
+      "name": "rubbershot-spent"
+    },
+    {
+      "name": "rubberslug-shell"
+    },
+    {
+      "name": "rubberslug-spent"
+    },
+    {
+      "name": "glass-shell"
+    },
+    {
+      "name": "glass-spent"
+    },
+    {
+      "name": "flechette-shell"
+    },
+    {
+      "name": "flechette-spent"
+    },
+    {
+      "name": "flaregun-shell"
+    },
+    {
+      "name": "flaregun-spent"
+    },
+    {
+      "name": "darts"
+    },
+    {
+      "name": "darts-5"
+    },
+    {
+      "name": "darts-4"
+    },
+    {
+      "name": "darts-3"
+    },
+    {
+      "name": "darts-2"
+    },
+    {
+      "name": "darts-1"
+    },
+    {
+      "name": "darts-0"
+    },
+    {
+      "name": "dartmag"
+    },
+    {
+      "name": "dartmag-0"
+    },
+    {
+      "name": "dart"
+    },
+    {
+      "name": "bdart"
+    },
+    {
+      "name": "atgmAP"
+    },
+    {
+      "name": "atgmAPCR"
+    },
+    {
+      "name": "atgmHE"
+    },
+    {
+      "name": "rocketshell"
+    },
+    {
+      "name": "m6a1"
+    },
+    {
+      "name": "pg7v"
+    },
+    {
+      "name": "og7v"
+    },
+    {
+      "name": "nuclear"
+    },
+    {
+      "name": "rocketcasing_booster"
+    },
+    {
+      "name": "rocketcasing_warhead"
+    },
+    {
+      "name": "rocket_casing_empty"
+    },
+    {
+      "name": "flarepouch-0"
+    },
+    {
+      "name": "flarepouch"
+    },
+    {
+      "name": "flarepouch-1"
+    },
+    {
+      "name": "flarepouch-2"
+    },
+    {
+      "name": "flarepouch-3"
+    },
+    {
+      "name": "flarepouch-4"
+    },
+    {
+      "name": "flarepouch-5"
+    },
+    {
+      "name": "flarepouch-6"
+    },
+    {
+      "name": "flarepouchW"
+    },
+    {
+      "name": "flarepouchW-1"
+    },
+    {
+      "name": "flarepouchW-2"
+    },
+    {
+      "name": "flarepouchW-3"
+    },
+    {
+      "name": "flarepouchW-4"
+    },
+    {
+      "name": "flarepouchW-5"
+    },
+    {
+      "name": "flarepouchW-6"
+    },
+    {
+      "name": "pocketscoutpouchthick"
+    },
+    {
+      "name": "combatpouchmodernized"
+    },
+    {
+      "name": "combatpouchmodernizedthick"
+    }
+  ]
+}

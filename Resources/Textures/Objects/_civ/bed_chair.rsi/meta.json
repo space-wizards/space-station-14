@@ -1,0 +1,178 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "stool_base"
+    },
+    {
+      "name": "stool_padding"
+    },
+    {
+      "name": "stool_preview"
+    },
+    {
+      "name": "stool_padded_preview"
+    },
+    {
+      "name": "chair_padding",
+      "directions": 4
+    },
+    {
+      "name": "chair_armrest",
+      "directions": 4
+    },
+    {
+      "name": "bed"
+    },
+    {
+      "name": "bed_padding"
+    },
+    {
+      "name": "blank"
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "psychbed"
+    },
+    {
+      "name": "psychbed_padding"
+    },
+    {
+      "name": "wooden_chair_old",
+      "directions": 4
+    },
+    {
+      "name": "wooden_chair_wings",
+      "directions": 4
+    },
+    {
+      "name": "wooden_chair_red",
+      "directions": 4
+    },
+    {
+      "name": "wooden_chair",
+      "directions": 4
+    },
+    {
+      "name": "wooden_chair_alt",
+      "directions": 4
+    },
+    {
+      "name": "chair",
+      "directions": 4
+    },
+    {
+      "name": "stool_wood"
+    },
+    {
+      "name": "officechair_white",
+      "directions": 4
+    },
+    {
+      "name": "officechair_dark",
+      "directions": 4
+    },
+    {
+      "name": "bleacher_r",
+      "directions": 4
+    },
+    {
+      "name": "bleacher_l",
+      "directions": 4
+    },
+    {
+      "name": "bleacher",
+      "directions": 4
+    },
+    {
+      "name": "steelchair",
+      "directions": 4
+    },
+    {
+      "name": "wheelchair",
+      "directions": 4
+    },
+    {
+      "name": "wheelchair_overlay",
+      "directions": 4
+    },
+    {
+      "name": "hammock"
+    },
+    {
+      "name": "hammockf",
+      "delays": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "name": "hammockf_static"
+    },
+    {
+      "name": "hammockf1"
+    },
+    {
+      "name": "rope"
+    },
+    {
+      "name": "barberchair",
+      "directions": 4
+    },
+    {
+      "name": "barstool_blue"
+    },
+    {
+      "name": "barstool_green"
+    },
+    {
+      "name": "barstool_yellow"
+    },
+    {
+      "name": "barstool_brown"
+    },
+    {
+      "name": "barstool_black"
+    },
+    {
+      "name": "barstool_white"
+    },
+    {
+      "name": "barstool_grey"
+    },
+    {
+      "name": "barstool_red"
+    },
+    {
+      "name": "fancysofa_r",
+      "directions": 4
+    },
+    {
+      "name": "fancysofa_l",
+      "directions": 4
+    },
+    {
+      "name": "fieldbed"
+    },
+    {
+      "name": "diner_booth_right",
+      "directions": 4
+    },
+    {
+      "name": "diner_booth_left",
+      "directions": 4
+    }
+  ]
+}

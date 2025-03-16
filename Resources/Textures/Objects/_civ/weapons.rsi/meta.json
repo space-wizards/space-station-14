@@ -1,0 +1,766 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "",
+            "delays": [
+                [
+                    0.120000005,
+                    0.120000005,
+                    0.120000005,
+                    0.120000005
+                ]
+            ]
+        },
+        {
+            "name": "baton"
+        },
+        {
+            "name": "axe0"
+        },
+        {
+            "name": "axe1",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "hoe"
+        },
+        {
+            "name": "offhand"
+        },
+        {
+            "name": "fireaxe0"
+        },
+        {
+            "name": "fireaxe1"
+        },
+        {
+            "name": "cane"
+        },
+        {
+            "name": "claymore_old"
+        },
+        {
+            "name": "hatchet"
+        },
+        {
+            "name": "scythe0"
+        },
+        {
+            "name": "trifork"
+        },
+        {
+            "name": "sickle"
+        },
+        {
+            "name": "buckler"
+        },
+        {
+            "name": "sledgehammer"
+        },
+        {
+            "name": "chain"
+        },
+        {
+            "name": "harpoon"
+        },
+        {
+            "name": "crossbow"
+        },
+        {
+            "name": "crossbow-nocked"
+        },
+        {
+            "name": "crossbow-drawn"
+        },
+        {
+            "name": "metal-rod"
+        },
+        {
+            "name": "boltX"
+        },
+        {
+            "name": "metal-rod-superheated"
+        },
+        {
+            "name": "crossbowframe0"
+        },
+        {
+            "name": "crossbowframe1"
+        },
+        {
+            "name": "crossbowframe2"
+        },
+        {
+            "name": "crossbowframe3"
+        },
+        {
+            "name": "crossbowframe4"
+        },
+        {
+            "name": "crossbowframe5"
+        },
+        {
+            "name": "spearglass0"
+        },
+        {
+            "name": "spearglass1"
+        },
+        {
+            "name": "star"
+        },
+        {
+            "name": "woodbat"
+        },
+        {
+            "name": "metalbat"
+        },
+        {
+            "name": "tacknife"
+        },
+        {
+            "name": "combat_axe"
+        },
+        {
+            "name": "smallsword2"
+        },
+        {
+            "name": "sabre"
+        },
+        {
+            "name": "cutlass"
+        },
+        {
+            "name": "crude"
+        },
+        {
+            "name": "maul"
+        },
+        {
+            "name": "spear"
+        },
+        {
+            "name": "big_club"
+        },
+        {
+            "name": "spearX"
+        },
+        {
+            "name": "handle"
+        },
+        {
+            "name": "stick"
+        },
+        {
+            "name": "hammer"
+        },
+        {
+            "name": "ironshield"
+        },
+        {
+            "name": "ironshield2"
+        },
+        {
+            "name": "ironshield3"
+        },
+        {
+            "name": "ironshield4"
+        },
+        {
+            "name": "vangar"
+        },
+        {
+            "name": "old_rapier"
+        },
+        {
+            "name": "steel_shield"
+        },
+        {
+            "name": "iron_shield"
+        },
+        {
+            "name": "bronze_shield"
+        },
+        {
+            "name": "roman_shield"
+        },
+        {
+            "name": "pilum"
+        },
+        {
+            "name": "gladius"
+        },
+        {
+            "name": "xiphos"
+        },
+        {
+            "name": "dory"
+        },
+        {
+            "name": "athenian_shield"
+        },
+        {
+            "name": "sarissa"
+        },
+        {
+            "name": "roman_buckler"
+        },
+        {
+            "name": "spartan_shield"
+        },
+        {
+            "name": "old_roman_standard"
+        },
+        {
+            "name": "pegasus_shield"
+        },
+        {
+            "name": "owl_shield"
+        },
+        {
+            "name": "ironshield5"
+        },
+        {
+            "name": "ironshield6"
+        },
+        {
+            "name": "semioval_shield"
+        },
+        {
+            "name": "blue_buckler"
+        },
+        {
+            "name": "red_buckler"
+        },
+        {
+            "name": "halberd"
+        },
+        {
+            "name": "pike"
+        },
+        {
+            "name": "battleaxe"
+        },
+        {
+            "name": "rake"
+        },
+        {
+            "name": "semioval_shield_blue"
+        },
+        {
+            "name": "semioval_shield_templar"
+        },
+        {
+            "name": "semioval_shield_templar2"
+        },
+        {
+            "name": "arabic_shield"
+        },
+        {
+            "name": "umar_sword"
+        },
+        {
+            "name": "quarterstaff"
+        },
+        {
+            "name": "woodcane"
+        },
+        {
+            "name": "goldsceptre"
+        },
+        {
+            "name": "naginata"
+        },
+        {
+            "name": "bowie_knife"
+        },
+        {
+            "name": "garrote_w"
+        },
+        {
+            "name": "garrote"
+        },
+        {
+            "name": "arabsword1"
+        },
+        {
+            "name": "arabsword2"
+        },
+        {
+            "name": "spadroon_old"
+        },
+        {
+            "name": "spadroon"
+        },
+        {
+            "name": "longsword"
+        },
+        {
+            "name": "katana"
+        },
+        {
+            "name": "machete"
+        },
+        {
+            "name": "smallsword"
+        },
+        {
+            "name": "broadsword"
+        },
+        {
+            "name": "armingsword"
+        },
+        {
+            "name": "shashka"
+        },
+        {
+            "name": "wakazashi"
+        },
+        {
+            "name": "tanto"
+        },
+        {
+            "name": "urukhaiscimitar"
+        },
+        {
+            "name": "urukhaiscimitarb"
+        },
+        {
+            "name": "throwing_knife"
+        },
+        {
+            "name": "kunai_white"
+        },
+        {
+            "name": "throwing_axe"
+        },
+        {
+            "name": "tomahawk"
+        },
+        {
+            "name": "rapier"
+        },
+        {
+            "name": "stone_sledgehammer"
+        },
+        {
+            "name": "lead_sledgehammer"
+        },
+        {
+            "name": "bronze_sledgehammer"
+        },
+        {
+            "name": "iron_sledgehammer"
+        },
+        {
+            "name": "steel_sledgehammer"
+        },
+        {
+            "name": "uranium_sledgehammer"
+        },
+        {
+            "name": "arrow_old"
+        },
+        {
+            "name": "arrow"
+        },
+        {
+            "name": "arrowp"
+        },
+        {
+            "name": "arrowf",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "arrow_flint"
+        },
+        {
+            "name": "arrow_stone"
+        },
+        {
+            "name": "arrow_sandstone"
+        },
+        {
+            "name": "arrow_copper"
+        },
+        {
+            "name": "arrow_iron"
+        },
+        {
+            "name": "arrow_bronze"
+        },
+        {
+            "name": "arrow_steel"
+        },
+        {
+            "name": "arrow_modern"
+        },
+        {
+            "name": "arrow_vial"
+        },
+        {
+            "name": "arrow_god"
+        },
+        {
+            "name": "arrow_crescent_iron"
+        },
+        {
+            "name": "bolt"
+        },
+        {
+            "name": "boltp"
+        },
+        {
+            "name": "bolt_flint"
+        },
+        {
+            "name": "bolt_stone_old"
+        },
+        {
+            "name": "bolt_copper_old"
+        },
+        {
+            "name": "bolt_iron"
+        },
+        {
+            "name": "bolt_bronze"
+        },
+        {
+            "name": "bolt_steel"
+        },
+        {
+            "name": "boltf",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "bolt_vial"
+        },
+        {
+            "name": "bolt_copper"
+        },
+        {
+            "name": "bolt_stone"
+        },
+        {
+            "name": "bolt_sandstone"
+        },
+        {
+            "name": "bolt_modern"
+        },
+        {
+            "name": "steelshank"
+        },
+        {
+            "name": "ironshank"
+        },
+        {
+            "name": "glassshank"
+        },
+        {
+            "name": "spearshank"
+        },
+        {
+            "name": "trenchknife"
+        },
+        {
+            "name": "pipe"
+        },
+        {
+            "name": "0,2"
+        },
+        {
+            "name": "fancycane"
+        },
+        {
+            "name": "gongmallet"
+        },
+        {
+            "name": "breadknife"
+        },
+        {
+            "name": "scepter"
+        },
+        {
+            "name": "militaryknife"
+        },
+        {
+            "name": "drumknife"
+        },
+        {
+            "name": "macuahuitl"
+        },
+        {
+            "name": "chimalli"
+        },
+        {
+            "name": "knifeholster"
+        },
+        {
+            "name": "tacticalknifeholster"
+        },
+        {
+            "name": "karambit_WIP"
+        },
+        {
+            "name": "scythe"
+        },
+        {
+            "name": "bat1"
+        },
+        {
+            "name": "cultknife"
+        },
+        {
+            "name": "throwingknife1"
+        },
+        {
+            "name": "survivalknife"
+        },
+        {
+            "name": "tacticalknife"
+        },
+        {
+            "name": "fancyknife"
+        },
+        {
+            "name": "fancysword"
+        },
+        {
+            "name": "meatknife"
+        },
+        {
+            "name": "fishknife"
+        },
+        {
+            "name": "machete1"
+        },
+        {
+            "name": "blackknife"
+        },
+        {
+            "name": "nightbaton"
+        },
+        {
+            "name": "nightbaton_folded"
+        },
+        {
+            "name": "zweihander"
+        },
+        {
+            "name": "shagger"
+        },
+        {
+            "name": "stone_hammer"
+        },
+        {
+            "name": "mersksword"
+        },
+        {
+            "name": "smolknife"
+        },
+        {
+            "name": "salamon"
+        },
+        {
+            "name": "wood_sword"
+        },
+        {
+            "name": "scutum_wip"
+        },
+        {
+            "name": "scutum"
+        },
+        {
+            "name": "roman_standard"
+        },
+        {
+            "name": "standard_pole_wip"
+        },
+        {
+            "name": "egyptian_shield"
+        },
+        {
+            "name": "egyptian_standard"
+        },
+        {
+            "name": "greek_standard"
+        },
+        {
+            "name": "blue_roman_shield"
+        },
+        {
+            "name": "prae_roman_shield"
+        },
+        {
+            "name": "bust"
+        },
+        {
+            "name": "hippocratic"
+        },
+        {
+            "name": "marx"
+        },
+        {
+            "name": "trowel"
+        },
+        {
+            "name": "orc_shield"
+        },
+        {
+            "name": "bokken_sword"
+        },
+        {
+            "name": "lungemine"
+        },
+        {
+            "name": "kukri"
+        },
+        {
+            "name": "bolo"
+        },
+        {
+            "name": "kanabo"
+        },
+        {
+            "name": "mace"
+        },
+        {
+            "name": "longquan"
+        },
+        {
+            "name": "nguni_shield"
+        },
+        {
+            "name": "assagai"
+        },
+        {
+            "name": "khopesh"
+        },
+        {
+            "name": "gaelic_short"
+        },
+        {
+            "name": "scimitar"
+        },
+        {
+            "name": "type89"
+        },
+        {
+            "name": "mortar"
+        },
+        {
+            "name": "atgm"
+        },
+        {
+            "name": "kombaton"
+        },
+        {
+            "name": "woodshank"
+        },
+        {
+            "name": "pepperspray"
+        },
+        {
+            "name": "telebaton_0"
+        },
+        {
+            "name": "telebaton_1"
+        },
+        {
+            "name": "metal_riot"
+        },
+        {
+            "name": "imperial"
+        },
+        {
+            "name": "twohanded"
+        },
+        {
+            "name": "steel_mace"
+        },
+        {
+            "name": "buckler2"
+        },
+        {
+            "name": "iron_shield_tes13"
+        },
+        {
+            "name": "stormcloak"
+        },
+        {
+            "name": "whiterun"
+        },
+        {
+            "name": "battleaxe_tes13"
+        },
+        {
+            "name": "waraxe_tes13"
+        },
+        {
+            "name": "blades"
+        },
+        {
+            "name": "imperial_kite"
+        },
+        {
+            "name": "longclaw"
+        },
+        {
+            "name": "blackjack"
+        },
+        {
+            "name": "switchblade_open"
+        },
+        {
+            "name": "switchblade"
+        },
+        {
+            "name": "knuckle_duster"
+        },
+        {
+            "name": "plasmaquan",
+            "delays": [
+                [
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "dagger"
+        },
+        {
+            "name": "viking_sword"
+        },
+        {
+            "name": "claymore"
+        }
+    ]
+}

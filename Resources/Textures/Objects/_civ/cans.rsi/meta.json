@@ -1,0 +1,199 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "conserva_old"
+    },
+    {
+      "name": "conserva_open_old"
+    },
+    {
+      "name": "conserva_empty_old"
+    },
+    {
+      "name": "canner"
+    },
+    {
+      "name": "canner_active",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "stewcan"
+    },
+    {
+      "name": "stewcan_open"
+    },
+    {
+      "name": "stew_empty"
+    },
+    {
+      "name": "pearlbarleystew"
+    },
+    {
+      "name": "pearlbarleystew_open"
+    },
+    {
+      "name": "pearlbarleystew_empty"
+    },
+    {
+      "name": "condensedmilk"
+    },
+    {
+      "name": "condensedmilk_open"
+    },
+    {
+      "name": "condensedmilk_empty"
+    },
+    {
+      "name": "stewbuckwheat"
+    },
+    {
+      "name": "stewbuckwheat_open"
+    },
+    {
+      "name": "stewbuckwheat_empty"
+    },
+    {
+      "name": "buckwheat"
+    },
+    {
+      "name": "buckwheat_open"
+    },
+    {
+      "name": "buckwheat_empty"
+    },
+    {
+      "name": "wpstew1_closed"
+    },
+    {
+      "name": "wpstew1"
+    },
+    {
+      "name": "wpstew1_trash"
+    },
+    {
+      "name": "wpstew2_closed"
+    },
+    {
+      "name": "wpstew2"
+    },
+    {
+      "name": "wpstew2_trash"
+    },
+    {
+      "name": "galets"
+    },
+    {
+      "name": "galets_open"
+    },
+    {
+      "name": "wut_closed"
+    },
+    {
+      "name": "wut"
+    },
+    {
+      "name": "soup"
+    },
+    {
+      "name": "soup_f"
+    },
+    {
+      "name": "soup_e"
+    },
+    {
+      "name": "beans"
+    },
+    {
+      "name": "beans_f"
+    },
+    {
+      "name": "beans_e"
+    },
+    {
+      "name": "fish"
+    },
+    {
+      "name": "fish_f"
+    },
+    {
+      "name": "fish_e"
+    },
+    {
+      "name": "ham"
+    },
+    {
+      "name": "ham_f"
+    },
+    {
+      "name": "ham_e"
+    },
+    {
+      "name": "opener"
+    },
+    {
+      "name": "wut_trash"
+    },
+    {
+      "name": "large_can_open"
+    },
+    {
+      "name": "large_can_empty"
+    },
+    {
+      "name": "large_can"
+    },
+    {
+      "name": "can"
+    },
+    {
+      "name": "can_open"
+    },
+    {
+      "name": "can_empty"
+    },
+    {
+      "name": "small_can"
+    },
+    {
+      "name": "small_can_open"
+    },
+    {
+      "name": "small_can_empty"
+    },
+    {
+      "name": "large_can_o1"
+    },
+    {
+      "name": "large_can_o2"
+    },
+    {
+      "name": "small_can_o1"
+    },
+    {
+      "name": "small_can_o2"
+    },
+    {
+      "name": "can_o1"
+    },
+    {
+      "name": "can_o2"
+    }
+  ]
+}

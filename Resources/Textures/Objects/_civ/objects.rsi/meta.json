@@ -1,0 +1,215 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "shards"
+    },
+    {
+      "name": "ash"
+    },
+    {
+      "name": "rack"
+    },
+    {
+      "name": "pews",
+      "directions": 8
+    },
+    {
+      "name": "immrod",
+      "directions": 4
+    },
+    {
+      "name": "target_stake"
+    },
+    {
+      "name": "target_s"
+    },
+    {
+      "name": "target_h"
+    },
+    {
+      "name": "w_overlay",
+      "directions": 4
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": "monkey"
+    },
+    {
+      "name": "blank"
+    },
+    {
+      "name": "ashtray"
+    },
+    {
+      "name": "ashtray_full"
+    },
+    {
+      "name": "ashtray_half"
+    },
+    {
+      "name": "ashtray_broken"
+    },
+    {
+      "name": "flour_mill"
+    },
+    {
+      "name": "distillery"
+    },
+    {
+      "name": "net_overlay_atmpt"
+    },
+    {
+      "name": "target_dummy_target",
+      "directions": 4
+    },
+    {
+      "name": "target_dummy"
+    },
+    {
+      "name": "target_dummy_armor"
+    },
+    {
+      "name": "martial_dummy"
+    },
+    {
+      "name": "martial_dummy_spin",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "target_dummy_wreckage"
+    },
+    {
+      "name": "dummy_armor"
+    },
+    {
+      "name": "fancytable"
+    },
+    {
+      "name": "pbag"
+    },
+    {
+      "name": "pbag_hit",
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05
+        ]
+      ]
+    },
+    {
+      "name": "pbag_down",
+      "directions": 4
+    },
+    {
+      "name": "signpost"
+    },
+    {
+      "name": "weightlifter"
+    },
+    {
+      "name": "weightlifter_1",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0.2,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "weightlifter_2",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          1,
+          1.5,
+          0.2,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "weightlifter_3",
+      "delays": [
+        [
+          0.5,
+          1,
+          1.5,
+          1.5,
+          0.2,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "handrail",
+      "directions": 4
+    },
+    {
+      "name": "grapple_overlay",
+      "directions": 4
+    },
+    {
+      "name": "grapplehook"
+    },
+    {
+      "name": "grapplehook_deployed",
+      "directions": 4
+    },
+    {
+      "name": "grapplehook_line",
+      "directions": 4
+    },
+    {
+      "name": "grapplehook_line_bridge",
+      "directions": 4
+    },
+    {
+      "name": "grapplehook_line_bridge1",
+      "directions": 4
+    },
+    {
+      "name": "grapplehook_line_bridge2",
+      "directions": 4
+    },
+    {
+      "name": "grapple_bridge_overlay",
+      "directions": 4
+    },
+    {
+      "name": "grapplehook_bridge_deployed",
+      "directions": 4
+    }
+  ]
+}

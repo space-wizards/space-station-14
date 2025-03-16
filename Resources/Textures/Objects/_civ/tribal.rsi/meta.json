@@ -1,0 +1,51 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "tribalmask1"
+        },
+        {
+            "name": "tribalhorn"
+        },
+        {
+            "name": "tribalmask2"
+        },
+        {
+            "name": "tribalpot"
+        },
+        {
+            "name": "tribalmortar"
+        },
+        {
+            "name": "tribalpestle"
+        },
+        {
+            "name": "tribalpot_sap"
+        },
+        {
+            "name": "tribalhorn2"
+        },
+        {
+            "name": "remains1"
+        },
+        {
+            "name": "remains2"
+        },
+        {
+            "name": "remains3"
+        },
+        {
+            "name": "remains4"
+        },
+        {
+            "name": "remains5"
+        },
+        {
+            "name": "remains6"
+        }
+    ]
+}

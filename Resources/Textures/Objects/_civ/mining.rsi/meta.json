@@ -1,0 +1,244 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "ore_glass"
+    },
+    {
+      "name": "ore_coal"
+    },
+    {
+      "name": "ore_charcoal"
+    },
+    {
+      "name": "ore_iron"
+    },
+    {
+      "name": "ore_copper"
+    },
+    {
+      "name": "ore_tin"
+    },
+    {
+      "name": "ore_lead"
+    },
+    {
+      "name": "ore_silver"
+    },
+    {
+      "name": "ore_diamond"
+    },
+    {
+      "name": "ore_gold"
+    },
+    {
+      "name": "ore_saltpeter"
+    },
+    {
+      "name": "ore_sulphur"
+    },
+    {
+      "name": "ore_titanium"
+    },
+    {
+      "name": "pharosium"
+    },
+    {
+      "name": "ore_uranium"
+    },
+    {
+      "name": "ore_mercury"
+    },
+    {
+      "name": "ore_hydrogen"
+    },
+    {
+      "name": "ore_obsidian"
+    },
+    {
+      "name": "ore_platinum"
+    },
+    {
+      "name": "slag"
+    },
+    {
+      "name": "ore_crimsonite"
+    },
+    {
+      "name": "ore_galdonium"
+    },
+    {
+      "name": "ore_indigon"
+    },
+    {
+      "name": "ore_verdine"
+    },
+    {
+      "name": "ore_pig_iron"
+    },
+    {
+      "name": "ore_sponge_iron"
+    },
+    {
+      "name": "UNUSED SPRITES"
+    },
+    {
+      "name": "mauxite"
+    },
+    {
+      "name": "yellowcake"
+    },
+    {
+      "name": "rock1"
+    },
+    {
+      "name": "rock2"
+    },
+    {
+      "name": "rock3"
+    },
+    {
+      "name": "ore2"
+    },
+    {
+      "name": "boulder1"
+    },
+    {
+      "name": "boulder2"
+    },
+    {
+      "name": "boulder3"
+    },
+    {
+      "name": "boulder4"
+    },
+    {
+      "name": "redflag_open",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "yellowflag_open",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "greenflag_open",
+      "delays": [
+        [
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    },
+    {
+      "name": "redflag"
+    },
+    {
+      "name": "yellowflag"
+    },
+    {
+      "name": "greenflag"
+    },
+    {
+      "name": "rock_uranium"
+    },
+    {
+      "name": "rock_iron"
+    },
+    {
+      "name": "rock_gold"
+    },
+    {
+      "name": "rock_diamond",
+      "delays": [
+        [
+          6,
+          0.1,
+          0.1,
+          0.1,
+          6,
+          0.1,
+          0.1,
+          0.1,
+          6,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "rock_silver"
+    },
+    {
+      "name": "rock_phoron"
+    },
+    {
+      "name": "rock_platinum"
+    },
+    {
+      "name": "rock_coal"
+    },
+    {
+      "name": "mineral_common"
+    },
+    {
+      "name": "mineral_uncommon"
+    },
+    {
+      "name": "mineral_rare"
+    },
+    {
+      "name": "fossil_leaf1"
+    },
+    {
+      "name": "fossil_shell1"
+    },
+    {
+      "name": "fossil_shell2"
+    },
+    {
+      "name": "fossil_leaf2"
+    },
+    {
+      "name": "fossil_leaf3"
+    },
+    {
+      "name": "fossil_bone1"
+    },
+    {
+      "name": "fossil_skull1"
+    },
+    {
+      "name": "fossil_shell3"
+    },
+    {
+      "name": "fossil_skulll2"
+    },
+    {
+      "name": "fossil_skull3"
+    }
+  ]
+}

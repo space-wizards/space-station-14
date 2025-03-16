@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "collection mailbox open"
+    },
+    {
+      "name": "collection mailbox overlay open"
+    },
+    {
+      "name": "collection mailbox overlay closed"
+    },
+    {
+      "name": "collection mailbox closed"
+    },
+    {
+      "name": "wall_mailbox_open"
+    },
+    {
+      "name": "wall_mailbox_closed"
+    },
+    {
+      "name": "wall_mailbox_open_custom"
+    },
+    {
+      "name": "wall_mailbox_closed_custom"
+    },
+    {
+      "name": "redmailbox"
+    },
+    {
+      "name": "wood_mailbox_closed"
+    },
+    {
+      "name": "wood_mailbox_open"
+    },
+    {
+      "name": "letter_stamped_r"
+    },
+    {
+      "name": "letter_stamped_b"
+    },
+    {
+      "name": "letter_stamped_g"
+    },
+    {
+      "name": "letter_stamped_bl"
+    },
+    {
+      "name": "letter_stamped_p"
+    },
+    {
+      "name": "letter_stamped_w"
+    },
+    {
+      "name": "letter_written"
+    },
+    {
+      "name": "letter_opened"
+    },
+    {
+      "name": "letter_tied"
+    },
+    {
+      "name": "letter_knifedempty_front"
+    },
+    {
+      "name": "letter_knifedempty"
+    },
+    {
+      "name": "envelope_closed"
+    },
+    {
+      "name": "envelope_knifed"
+    },
+    {
+      "name": "envelope_empty"
+    },
+    {
+      "name": "envelope_letter"
+    },
+    {
+      "name": "envelope_letter_photo"
+    },
+    {
+      "name": "envelope_photo"
+    },
+    {
+      "name": "wax_seal_red"
+    },
+    {
+      "name": "wax_seal_black"
+    },
+    {
+      "name": "wax_seal_blue"
+    },
+    {
+      "name": "wax_seal_green"
+    },
+    {
+      "name": "wax_seal_pink"
+    },
+    {
+      "name": "wax_seal_white"
+    }
+  ]
+}

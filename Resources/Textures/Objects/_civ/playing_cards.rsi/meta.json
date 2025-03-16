@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "deck"
+    },
+    {
+      "name": "card_back"
+    },
+    {
+      "name": "joker"
+    },
+    {
+      "name": "black_col"
+    },
+    {
+      "name": "red_col"
+    },
+    {
+      "name": "red_num"
+    },
+    {
+      "name": "black_num"
+    },
+    {
+      "name": "empty"
+    },
+    {
+      "name": "deck_tarot"
+    },
+    {
+      "name": "tarot_pentacles"
+    },
+    {
+      "name": "tarot_swords"
+    },
+    {
+      "name": "tarot_cups"
+    },
+    {
+      "name": "tarot_wands"
+    },
+    {
+      "name": "tarot_major"
+    },
+    {
+      "name": "card_back_tarot"
+    }
+  ]
+}

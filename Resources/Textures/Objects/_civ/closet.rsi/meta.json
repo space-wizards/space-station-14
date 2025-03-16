@@ -1,0 +1,955 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "closed"
+        },
+        {
+            "name": "open"
+        },
+        {
+            "name": "welded"
+        },
+        {
+            "name": "blue"
+        },
+        {
+            "name": "mixed"
+        },
+        {
+            "name": "grey"
+        },
+        {
+            "name": "green"
+        },
+        {
+            "name": "orange"
+        },
+        {
+            "name": "pink"
+        },
+        {
+            "name": "red"
+        },
+        {
+            "name": "white"
+        },
+        {
+            "name": "yellow"
+        },
+        {
+            "name": "black"
+        },
+        {
+            "name": "bio"
+        },
+        {
+            "name": "bioopen"
+        },
+        {
+            "name": "bio_general"
+        },
+        {
+            "name": "bio_generalopen"
+        },
+        {
+            "name": "bio_virology"
+        },
+        {
+            "name": "bio_virologyopen"
+        },
+        {
+            "name": "bio_security"
+        },
+        {
+            "name": "bio_securityopen"
+        },
+        {
+            "name": "bio_janitor"
+        },
+        {
+            "name": "bio_janitoropen"
+        },
+        {
+            "name": "bio_scientist"
+        },
+        {
+            "name": "bio_scientistopen"
+        },
+        {
+            "name": "syndicate"
+        },
+        {
+            "name": "syndicateopen"
+        },
+        {
+            "name": "syndicate1"
+        },
+        {
+            "name": "syndicate1open"
+        },
+        {
+            "name": "emergency"
+        },
+        {
+            "name": "emergencyopen"
+        },
+        {
+            "name": "secure"
+        },
+        {
+            "name": "secure1"
+        },
+        {
+            "name": "secureopen"
+        },
+        {
+            "name": "secureoff"
+        },
+        {
+            "name": "securebroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "securebrokenopen"
+        },
+        {
+            "name": "medical"
+        },
+        {
+            "name": "medical1"
+        },
+        {
+            "name": "medicalopen"
+        },
+        {
+            "name": "medicalbroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "medicaloff"
+        },
+        {
+            "name": "coffin_open"
+        },
+        {
+            "name": "coffin"
+        },
+        {
+            "name": "coffin_blank"
+        },
+        {
+            "name": "fridge1"
+        },
+        {
+            "name": "fridgeopen"
+        },
+        {
+            "name": "fridge"
+        },
+        {
+            "name": "fridgebroken"
+        },
+        {
+            "name": "firecloset"
+        },
+        {
+            "name": "fireclosetopen"
+        },
+        {
+            "name": "toolcloset"
+        },
+        {
+            "name": "radsuitcloset"
+        },
+        {
+            "name": "toolclosetopen"
+        },
+        {
+            "name": "mining"
+        },
+        {
+            "name": "miningopen"
+        },
+        {
+            "name": "miningsec"
+        },
+        {
+            "name": "miningsec1"
+        },
+        {
+            "name": "miningsecopen"
+        },
+        {
+            "name": "miningsecoff"
+        },
+        {
+            "name": "miningsecbroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "miningsecbrokenopen"
+        },
+        {
+            "name": "bombsuit"
+        },
+        {
+            "name": "bombsuitopen"
+        },
+        {
+            "name": "bombsuitsecopen"
+        },
+        {
+            "name": "bombsuitsec"
+        },
+        {
+            "name": "extinguisher_full"
+        },
+        {
+            "name": "extinguisher_mini"
+        },
+        {
+            "name": "extinguisher_closed"
+        },
+        {
+            "name": "extinguisher_empty"
+        },
+        {
+            "name": "hydrant"
+        },
+        {
+            "name": "hydrant_open"
+        },
+        {
+            "name": "medical_wall"
+        },
+        {
+            "name": "medical_wall_open"
+        },
+        {
+            "name": "medical_wall_locked"
+        },
+        {
+            "name": "medical_wall_unlocked"
+        },
+        {
+            "name": "medical_wall_off"
+        },
+        {
+            "name": "medical_wall_spark",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    2,
+                    0.1,
+                    0.1,
+                    0.1,
+                    6
+                ]
+            ]
+        },
+        {
+            "name": "fireaxe1100opening",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "fireaxe1000"
+        },
+        {
+            "name": "fireaxe1100"
+        },
+        {
+            "name": "fireaxe0000"
+        },
+        {
+            "name": "fireaxe1000closing",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "fireaxe0100opening",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "fireaxe0000closing",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "fireaxe1010"
+        },
+        {
+            "name": "fireaxe1020"
+        },
+        {
+            "name": "fireaxe1030"
+        },
+        {
+            "name": "fireaxe1141"
+        },
+        {
+            "name": "fireaxe0010"
+        },
+        {
+            "name": "fireaxe0020"
+        },
+        {
+            "name": "fireaxe0030"
+        },
+        {
+            "name": "fireaxe0141"
+        },
+        {
+            "name": "fireaxe0100"
+        },
+        {
+            "name": "acloset"
+        },
+        {
+            "name": "aclosetopen"
+        },
+        {
+            "name": "cabinet_closed"
+        },
+        {
+            "name": "cabinet_open"
+        },
+        {
+            "name": "cabinetglass_closed"
+        },
+        {
+            "name": "cabinetglass_open"
+        },
+        {
+            "name": "cabinetdetective_locked"
+        },
+        {
+            "name": "cabinetdetective_broken"
+        },
+        {
+            "name": "secureeng"
+        },
+        {
+            "name": "secureeng1"
+        },
+        {
+            "name": "secureengoff"
+        },
+        {
+            "name": "secureengopen"
+        },
+        {
+            "name": "secureengbroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "secureengbrokenopen"
+        },
+        {
+            "name": "securece"
+        },
+        {
+            "name": "securece1"
+        },
+        {
+            "name": "secureceoff"
+        },
+        {
+            "name": "secureceopen"
+        },
+        {
+            "name": "securecebroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "securecebrokenopen"
+        },
+        {
+            "name": "secureengelec"
+        },
+        {
+            "name": "secureengelec1"
+        },
+        {
+            "name": "secureengelecoff"
+        },
+        {
+            "name": "secureengelecbroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "secureengweld"
+        },
+        {
+            "name": "secureengweld1"
+        },
+        {
+            "name": "secureengweldoff"
+        },
+        {
+            "name": "secureengweldbroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "securemed"
+        },
+        {
+            "name": "securemed1"
+        },
+        {
+            "name": "securemedopen"
+        },
+        {
+            "name": "securemedoff"
+        },
+        {
+            "name": "securemedbroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "securemedbrokenopen"
+        },
+        {
+            "name": "secureres"
+        },
+        {
+            "name": "secureres1"
+        },
+        {
+            "name": "secureresopen"
+        },
+        {
+            "name": "secureresoff"
+        },
+        {
+            "name": "secureresbroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "secureresbrokenopen"
+        },
+        {
+            "name": "securecargo"
+        },
+        {
+            "name": "securecargo1"
+        },
+        {
+            "name": "securecargoopen"
+        },
+        {
+            "name": "securecargooff"
+        },
+        {
+            "name": "securecargobroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "securecargobrokenopen"
+        },
+        {
+            "name": "secureqm"
+        },
+        {
+            "name": "secureqm1"
+        },
+        {
+            "name": "secureqmopen"
+        },
+        {
+            "name": "secureqmoff"
+        },
+        {
+            "name": "secureqmbroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "sec"
+        },
+        {
+            "name": "sec1"
+        },
+        {
+            "name": "secopen"
+        },
+        {
+            "name": "secoff"
+        },
+        {
+            "name": "secbroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "secbrokenopen"
+        },
+        {
+            "name": "wardensecure"
+        },
+        {
+            "name": "wardensecure1"
+        },
+        {
+            "name": "wardensecureopen"
+        },
+        {
+            "name": "wardensecureoff"
+        },
+        {
+            "name": "wardensecurebroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "wardensecurebrokenopen"
+        },
+        {
+            "name": "fireaxe1110opening",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "fireaxe1010closing",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "fireaxe1120opening",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "fireaxe1020closing",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "fireaxe1130opening",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "fireaxe1030closing",
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "fireaxe1110"
+        },
+        {
+            "name": "fireaxe1120"
+        },
+        {
+            "name": "fireaxe1130"
+        },
+        {
+            "name": "capsecure"
+        },
+        {
+            "name": "capsecure1"
+        },
+        {
+            "name": "capsecureopen"
+        },
+        {
+            "name": "capsecureoff"
+        },
+        {
+            "name": "capsecurebroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "capsecurebrokenopen"
+        },
+        {
+            "name": "hopsecure"
+        },
+        {
+            "name": "hopsecure1"
+        },
+        {
+            "name": "hopsecureopen"
+        },
+        {
+            "name": "hopsecureoff"
+        },
+        {
+            "name": "hopsecurebroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "hopsecurebrokenopen"
+        },
+        {
+            "name": "hossecure"
+        },
+        {
+            "name": "hossecure1"
+        },
+        {
+            "name": "hossecureopen"
+        },
+        {
+            "name": "hossecureoff"
+        },
+        {
+            "name": "hossecurebroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "hossecurebrokenopen"
+        },
+        {
+            "name": "cmosecure"
+        },
+        {
+            "name": "cmosecure1"
+        },
+        {
+            "name": "cmosecureopen"
+        },
+        {
+            "name": "cmosecureoff"
+        },
+        {
+            "name": "cmosecurebroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "cmosecurebrokenopen"
+        },
+        {
+            "name": "rdsecure"
+        },
+        {
+            "name": "rdsecure1"
+        },
+        {
+            "name": "rdsecureopen"
+        },
+        {
+            "name": "rdsecureoff"
+        },
+        {
+            "name": "rdsecurebroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "rdsecurebrokenopen"
+        },
+        {
+            "name": "hydrosecure"
+        },
+        {
+            "name": "hydrosecure1"
+        },
+        {
+            "name": "hydrosecureopen"
+        },
+        {
+            "name": "hydrosecureoff"
+        },
+        {
+            "name": "hydrosecurebroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "hydrosecurebrokenopen"
+        },
+        {
+            "name": "secureatm"
+        },
+        {
+            "name": "secureatmopen"
+        },
+        {
+            "name": "secureatmbrokenopen"
+        },
+        {
+            "name": "secureatm1"
+        },
+        {
+            "name": "secureatmoff"
+        },
+        {
+            "name": "secureatmbroken",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "cabinet_closed_ceiling"
+        },
+        {
+            "name": "cabinet_open_ceiling"
+        },
+        {
+            "name": "iron_wall"
+        },
+        {
+            "name": "iron_wall_open"
+        },
+        {
+            "name": "bronze_sarcophagus_closed"
+        },
+        {
+            "name": "sarcophagus_open"
+        },
+        {
+            "name": "gold_sarcophagus_closed"
+        },
+        {
+            "name": "sealed_coffin"
+        },
+        {
+            "name": "sealed_coffin_open"
+        },
+        {
+            "name": "drawer"
+        },
+        {
+            "name": "icecream_cooler1"
+        },
+        {
+            "name": "icecream_cooler"
+        },
+        {
+            "name": "icecream_cooler_open"
+        }
+    ]
+}

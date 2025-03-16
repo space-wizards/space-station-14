@@ -1,0 +1,892 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "",
+      "delays": [
+        [
+          0.120000005,
+          0.120000005,
+          0.120000005,
+          0.120000005
+        ]
+      ]
+    },
+    {
+      "name": "gift"
+    },
+    {
+      "name": "gift1"
+    },
+    {
+      "name": "gift2"
+    },
+    {
+      "name": "gift3"
+    },
+    {
+      "name": "wrap_paper"
+    },
+    {
+      "name": "c_tube"
+    },
+    {
+      "name": "broken_beer"
+    },
+    {
+      "name": "handcuff"
+    },
+    {
+      "name": "cuff_white"
+    },
+    {
+      "name": "beartrap0"
+    },
+    {
+      "name": "beartrap1"
+    },
+    {
+      "name": "sheet"
+    },
+    {
+      "name": "sheetblue"
+    },
+    {
+      "name": "sheetorange"
+    },
+    {
+      "name": "sheetred"
+    },
+    {
+      "name": "sheetpurple"
+    },
+    {
+      "name": "sheetgreen"
+    },
+    {
+      "name": "sheetyellow"
+    },
+    {
+      "name": "sheetbrown"
+    },
+    {
+      "name": "sheetcaptain"
+    },
+    {
+      "name": "sheethop"
+    },
+    {
+      "name": "sheetce"
+    },
+    {
+      "name": "sheethos"
+    },
+    {
+      "name": "sheetmedical"
+    },
+    {
+      "name": "sheetrd"
+    },
+    {
+      "name": "sheetmime"
+    },
+    {
+      "name": "earmuffs"
+    },
+    {
+      "name": "banana_peel"
+    },
+    {
+      "name": "zippo"
+    },
+    {
+      "name": "zippoon",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "rods"
+    },
+    {
+      "name": "tile"
+    },
+    {
+      "name": "fr_tile"
+    },
+    {
+      "name": "tile_grass"
+    },
+    {
+      "name": "tile-carpet"
+    },
+    {
+      "name": "tile-wood"
+    },
+    {
+      "name": "glass_wire"
+    },
+    {
+      "name": "tile_e"
+    },
+    {
+      "name": "rack_parts"
+    },
+    {
+      "name": "table_parts"
+    },
+    {
+      "name": "wood_tableparts"
+    },
+    {
+      "name": "gamble_tableparts"
+    },
+    {
+      "name": "reinf_tableparts"
+    },
+    {
+      "name": "lipstick"
+    },
+    {
+      "name": "lipstick_red"
+    },
+    {
+      "name": "lipstick_purple"
+    },
+    {
+      "name": "lipstick_jade"
+    },
+    {
+      "name": "lipstick_black"
+    },
+    {
+      "name": "coin"
+    },
+    {
+      "name": "coin_string_overlay"
+    },
+    {
+      "name": "paint_empty"
+    },
+    {
+      "name": "paint_red"
+    },
+    {
+      "name": "paint_green"
+    },
+    {
+      "name": "paint_neutral"
+    },
+    {
+      "name": "paint_yellow"
+    },
+    {
+      "name": "paint_black"
+    },
+    {
+      "name": "paint_white"
+    },
+    {
+      "name": "paint_blue"
+    },
+    {
+      "name": "paint_violet"
+    },
+    {
+      "name": "shovel"
+    },
+    {
+      "name": "spade"
+    },
+    {
+      "name": "spadem"
+    },
+    {
+      "name": "spickaxe"
+    },
+    {
+      "name": "cutters-y"
+    },
+    {
+      "name": "wrench"
+    },
+    {
+      "name": "screwdriver"
+    },
+    {
+      "name": "red_crowbar"
+    },
+    {
+      "name": "crowbar"
+    },
+    {
+      "name": "soap_lard_4"
+    },
+    {
+      "name": "soap_lard_3"
+    },
+    {
+      "name": "soap_lard_2"
+    },
+    {
+      "name": "soap_lard_1"
+    },
+    {
+      "name": "soap"
+    },
+    {
+      "name": "soapnt"
+    },
+    {
+      "name": "soapdeluxe"
+    },
+    {
+      "name": "towel"
+    },
+    {
+      "name": "album"
+    },
+    {
+      "name": "splint"
+    },
+    {
+      "name": "purplecomb"
+    },
+    {
+      "name": "combitool"
+    },
+    {
+      "name": "jar"
+    },
+    {
+      "name": "dirt_pile"
+    },
+    {
+      "name": "empty_sandbag"
+    },
+    {
+      "name": "lopata"
+    },
+    {
+      "name": "sandbag_new"
+    },
+    {
+      "name": "boltcutters"
+    },
+    {
+      "name": "prybar"
+    },
+    {
+      "name": "dollar_2"
+    },
+    {
+      "name": "50dollar_2"
+    },
+    {
+      "name": "50dollar"
+    },
+    {
+      "name": "20dollar_2"
+    },
+    {
+      "name": "20dollar"
+    },
+    {
+      "name": "5dollar_2"
+    },
+    {
+      "name": "5dollar"
+    },
+    {
+      "name": "dollar"
+    },
+    {
+      "name": "sov_flag",
+      "delays": [
+        [
+          0.2,
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "german_shovel"
+    },
+    {
+      "name": "trench_shovel"
+    },
+    {
+      "name": "trench_shovel_folded"
+    },
+    {
+      "name": "etool"
+    },
+    {
+      "name": "etool_folded"
+    },
+    {
+      "name": "axe"
+    },
+    {
+      "name": "saw"
+    },
+    {
+      "name": "white_flag",
+      "delays": [
+        [
+          0.2,
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "punji1"
+    },
+    {
+      "name": "punji1_sand"
+    },
+    {
+      "name": "punji2"
+    },
+    {
+      "name": "punji0"
+    },
+    {
+      "name": "punji2_sand"
+    },
+    {
+      "name": "ropecuffs"
+    },
+    {
+      "name": "gem2"
+    },
+    {
+      "name": "pearls1"
+    },
+    {
+      "name": "pearls2"
+    },
+    {
+      "name": "gem1"
+    },
+    {
+      "name": "goldsmall"
+    },
+    {
+      "name": "goldsmall1"
+    },
+    {
+      "name": "goldstuff1"
+    },
+    {
+      "name": "goldnugget"
+    },
+    {
+      "name": "goldbar"
+    },
+    {
+      "name": "goldstuff2"
+    },
+    {
+      "name": "goldstuff3"
+    },
+    {
+      "name": "goldcoin_pile"
+    },
+    {
+      "name": "dollarc"
+    },
+    {
+      "name": "dobloon"
+    },
+    {
+      "name": "real"
+    },
+    {
+      "name": "escudo"
+    },
+    {
+      "name": "silvercoin_pile"
+    },
+    {
+      "name": "pickaxe"
+    },
+    {
+      "name": "s_pickaxe"
+    },
+    {
+      "name": "jackhammer"
+    },
+    {
+      "name": "iplough"
+    },
+    {
+      "name": "plough"
+    },
+    {
+      "name": "hammer"
+    },
+    {
+      "name": "thongs"
+    },
+    {
+      "name": "tea_leaves_dried"
+    },
+    {
+      "name": "coffee_roasted"
+    },
+    {
+      "name": "fishing"
+    },
+    {
+      "name": "bedroll_r"
+    },
+    {
+      "name": "bedroll_o"
+    },
+    {
+      "name": "bedroll_o1"
+    },
+    {
+      "name": "bedroll_w"
+    },
+    {
+      "name": "tent_r"
+    },
+    {
+      "name": "leash"
+    },
+    {
+      "name": "snow_pile"
+    },
+    {
+      "name": "snowball_pile"
+    },
+    {
+      "name": "snowball"
+    },
+    {
+      "name": "snowball_hit",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "olivebranch"
+    },
+    {
+      "name": "coppercoin_pile"
+    },
+    {
+      "name": "swatter"
+    },
+    {
+      "name": "shears"
+    },
+    {
+      "name": "dropspindle_full"
+    },
+    {
+      "name": "dropspindle"
+    },
+    {
+      "name": "multiple_wool_yarn"
+    },
+    {
+      "name": "wool_yarn"
+    },
+    {
+      "name": "coppershears"
+    },
+    {
+      "name": "dyebucket"
+    },
+    {
+      "name": "dyebucket_mask"
+    },
+    {
+      "name": "mummywrappings"
+    },
+    {
+      "name": "fishing_net"
+    },
+    {
+      "name": "Unloaded_Sling_RH",
+      "directions": 4
+    },
+    {
+      "name": "Unloaded_Sling_LH",
+      "directions": 4
+    },
+    {
+      "name": "Loaded_Sling_RH",
+      "directions": 4
+    },
+    {
+      "name": "Loaded_Sling_LH",
+      "directions": 4
+    },
+    {
+      "name": "razorblade"
+    },
+    {
+      "name": "whip"
+    },
+    {
+      "name": "whistle"
+    },
+    {
+      "name": "lighter-g"
+    },
+    {
+      "name": "lighter-gon"
+    },
+    {
+      "name": "lighter-r"
+    },
+    {
+      "name": "lighter-ron"
+    },
+    {
+      "name": "lighter-y"
+    },
+    {
+      "name": "lighter-yon"
+    },
+    {
+      "name": "lighter-c"
+    },
+    {
+      "name": "lighter-con"
+    },
+    {
+      "name": "leaves1"
+    },
+    {
+      "name": "leaves2"
+    },
+    {
+      "name": "leaves3"
+    },
+    {
+      "name": "fossil_1"
+    },
+    {
+      "name": "fossil_2"
+    },
+    {
+      "name": "fossil_3"
+    },
+    {
+      "name": "fossil_4"
+    },
+    {
+      "name": "fossil_5"
+    },
+    {
+      "name": "fossil_6"
+    },
+    {
+      "name": "fossil_7"
+    },
+    {
+      "name": "fossil_8"
+    },
+    {
+      "name": "fossil_9"
+    },
+    {
+      "name": "fossil_10"
+    },
+    {
+      "name": "sandbag_new_empty"
+    },
+    {
+      "name": "fire_extinguisher"
+    },
+    {
+      "name": "ww2_welder_off"
+    },
+    {
+      "name": "ww2_welder_on"
+    },
+    {
+      "name": "chisel"
+    },
+    {
+      "name": "chisel_metal"
+    },
+    {
+      "name": "hammer_modern"
+    },
+    {
+      "name": "fishing_modern"
+    },
+    {
+      "name": "swatter_modern"
+    },
+    {
+      "name": "stone_arrowhead"
+    },
+    {
+      "name": "sandstone_arrowhead"
+    },
+    {
+      "name": "copper_arrowhead"
+    },
+    {
+      "name": "iron_arrowhead"
+    },
+    {
+      "name": "bronze_arrowhead"
+    },
+    {
+      "name": "steel_arrowhead"
+    },
+    {
+      "name": "vial_arrowhead"
+    },
+    {
+      "name": "gods_arrowhead"
+    },
+    {
+      "name": "ruble_alt"
+    },
+    {
+      "name": "ruble"
+    },
+    {
+      "name": "iron_bolthead"
+    },
+    {
+      "name": "bronze_bolthead"
+    },
+    {
+      "name": "steel_bolthead"
+    },
+    {
+      "name": "claybricks"
+    },
+    {
+      "name": "advclaybricks"
+    },
+    {
+      "name": "oldcuff"
+    },
+    {
+      "name": "palm_leaves"
+    },
+    {
+      "name": "bitcoin"
+    },
+    {
+      "name": "strips"
+    },
+    {
+      "name": "globe"
+    },
+    {
+      "name": "bullet"
+    },
+    {
+      "name": "bulleton",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "blueprints"
+    },
+    {
+      "name": "handbell"
+    },
+    {
+      "name": "type89"
+    },
+    {
+      "name": "yen"
+    },
+    {
+      "name": "yen_2"
+    },
+    {
+      "name": "yen_3"
+    },
+    {
+      "name": "yen_4"
+    },
+    {
+      "name": "yen_5"
+    },
+    {
+      "name": "yen_6"
+    },
+    {
+      "name": "yen_7"
+    },
+    {
+      "name": "yen_10"
+    },
+    {
+      "name": "yen_50"
+    },
+    {
+      "name": "yen_100"
+    },
+    {
+      "name": "yen_200"
+    },
+    {
+      "name": "yen_100\u002B"
+    },
+    {
+      "name": "yen_200\u002B"
+    },
+    {
+      "name": "yen_500"
+    },
+    {
+      "name": "yen_500\u002B"
+    },
+    {
+      "name": "fernleaf1"
+    },
+    {
+      "name": "fernleaf2"
+    },
+    {
+      "name": "german_fire_extinguisher"
+    },
+    {
+      "name": "table_map",
+      "directions": 4
+    },
+    {
+      "name": "sextant_tool"
+    },
+    {
+      "name": "septim"
+    },
+    {
+      "name": "septim_2"
+    },
+    {
+      "name": "septim_3"
+    },
+    {
+      "name": "septim_4"
+    },
+    {
+      "name": "septim_5"
+    },
+    {
+      "name": "septim_6"
+    },
+    {
+      "name": "septim_7"
+    },
+    {
+      "name": "septim_10"
+    },
+    {
+      "name": "septim_50"
+    },
+    {
+      "name": "septim_100"
+    },
+    {
+      "name": "septim_200"
+    },
+    {
+      "name": "septim_100\u002B"
+    },
+    {
+      "name": "septim_200\u002B"
+    },
+    {
+      "name": "septim_500"
+    },
+    {
+      "name": "septim_500\u002B"
+    },
+    {
+      "name": "lockpick"
+    },
+    {
+      "name": "puttees"
+    },
+    {
+      "name": "havelock"
+    },
+    {
+      "name": "hookah1"
+    },
+    {
+      "name": "hookah2"
+    },
+    {
+      "name": "hookah3"
+    },
+    {
+      "name": "chip_red"
+    },
+    {
+      "name": "chip_black"
+    },
+    {
+      "name": "gavelblock"
+    },
+    {
+      "name": "gavelhammer"
+    },
+    {
+      "name": "death_whistle"
+    },
+    {
+      "name": "bong"
+    },
+    {
+      "name": "metalfile"
+    },
+    {
+      "name": "compass"
+    },
+    {
+      "name": "compass_modern"
+    },
+    {
+      "name": "compass_map"
+    },
+    {
+      "name": "compass_map_modern"
+    }
+  ]
+}

@@ -1,0 +1,507 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "",
+      "delays": [
+        [
+          0.120000005,
+          0.120000005,
+          0.120000005,
+          0.120000005
+        ]
+      ]
+    },
+    {
+      "name": "spike"
+    },
+    {
+      "name": "spikebloody"
+    },
+    {
+      "name": "rolling_pin"
+    },
+    {
+      "name": "spoon"
+    },
+    {
+      "name": "fork"
+    },
+    {
+      "name": "knife"
+    },
+    {
+      "name": "cleaver"
+    },
+    {
+      "name": "butch"
+    },
+    {
+      "name": "loadedfood"
+    },
+    {
+      "name": "hook_knife"
+    },
+    {
+      "name": "potbelly_stove"
+    },
+    {
+      "name": "potbelly_stove_act",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "oven"
+    },
+    {
+      "name": "oven_off"
+    },
+    {
+      "name": "oven_on",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "oven_bake",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "chalice"
+    },
+    {
+      "name": "chalice_full"
+    },
+    {
+      "name": "boneknife"
+    },
+    {
+      "name": "boneknife2"
+    },
+    {
+      "name": "boneknife3"
+    },
+    {
+      "name": "plate"
+    },
+    {
+      "name": "snack_bowl"
+    },
+    {
+      "name": "wood_bowl"
+    },
+    {
+      "name": "tray"
+    },
+    {
+      "name": "tray_dirty"
+    },
+    {
+      "name": "fireplace"
+    },
+    {
+      "name": "fireplace_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "fireplace2",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "fireplace3",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "empty_pot"
+    },
+    {
+      "name": "water_pot"
+    },
+    {
+      "name": "stew_pot"
+    },
+    {
+      "name": "boiling_pot",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "oil_pot0",
+      "directions": 4
+    },
+    {
+      "name": "oil_pot1",
+      "directions": 4
+    },
+    {
+      "name": "oil_pot2",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "oil_pot3",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "circumcision"
+    },
+    {
+      "name": "woodstove_on",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "woodstove"
+    },
+    {
+      "name": "tanto"
+    },
+    {
+      "name": "gerkit_lid"
+    },
+    {
+      "name": "grill"
+    },
+    {
+      "name": "grill_closed"
+    },
+    {
+      "name": "grill_closed_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "grill_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "grill_1hdog"
+    },
+    {
+      "name": "grill_2hdog"
+    },
+    {
+      "name": "grill_3hdog"
+    },
+    {
+      "name": "grill_4hdog"
+    },
+    {
+      "name": "grill_1chicken"
+    },
+    {
+      "name": "grill_2chicken"
+    },
+    {
+      "name": "grill_3chicken"
+    },
+    {
+      "name": "grill_4chicken"
+    },
+    {
+      "name": "grill_1steak"
+    },
+    {
+      "name": "grill_2steak"
+    },
+    {
+      "name": "grill_3steak"
+    },
+    {
+      "name": "grill_4steak"
+    },
+    {
+      "name": "grill_1fish"
+    },
+    {
+      "name": "grill_2fish"
+    },
+    {
+      "name": "grill_3fish"
+    },
+    {
+      "name": "grill_4fish"
+    },
+    {
+      "name": "grill_happy_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "grill_happy_closed"
+    },
+    {
+      "name": "stove"
+    },
+    {
+      "name": "stove_on",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "gasstove"
+    },
+    {
+      "name": "gasstove_on",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "chopsticks"
+    },
+    {
+      "name": "spatula"
+    },
+    {
+      "name": "small_pot"
+    },
+    {
+      "name": "lid_small_pot"
+    },
+    {
+      "name": "copperpot1"
+    },
+    {
+      "name": "lid_copperpot1"
+    },
+    {
+      "name": "copperpot2"
+    },
+    {
+      "name": "lid_copperpot2"
+    },
+    {
+      "name": "lid_han_gou"
+    },
+    {
+      "name": "han_gou_open"
+    },
+    {
+      "name": "fryer"
+    },
+    {
+      "name": "fryer_on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "microwave"
+    },
+    {
+      "name": "microwave_on",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

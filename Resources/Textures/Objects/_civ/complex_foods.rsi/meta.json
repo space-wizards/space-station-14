@@ -1,0 +1,271 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bloody_ham"
+    },
+    {
+      "name": "no_blood_ham"
+    },
+    {
+      "name": "salted_ham"
+    },
+    {
+      "name": "dried_ham"
+    },
+    {
+      "name": "labeled_ham"
+    },
+    {
+      "name": "cooking_hammer"
+    },
+    {
+      "name": "salting_container"
+    },
+    {
+      "name": "salting_container_ham_1"
+    },
+    {
+      "name": "salting_container_ham_2"
+    },
+    {
+      "name": "salting_container_ham_3"
+    },
+    {
+      "name": "salting_container_processing"
+    },
+    {
+      "name": "drying_rack"
+    },
+    {
+      "name": "drying_rack_ham_1"
+    },
+    {
+      "name": "drying_rack_ham_2"
+    },
+    {
+      "name": "drying_rack_ham_3"
+    },
+    {
+      "name": "labeling_table"
+    },
+    {
+      "name": "labeling_table_1_ham"
+    },
+    {
+      "name": "ham_in_support"
+    },
+    {
+      "name": "ham_support"
+    },
+    {
+      "name": "ham_ready_to_eat"
+    },
+    {
+      "name": "salting_container_cod_1"
+    },
+    {
+      "name": "salting_container_cod_2"
+    },
+    {
+      "name": "salting_container_cod_3"
+    },
+    {
+      "name": "drying_rack_salami_1"
+    },
+    {
+      "name": "drying_rack_salami_2"
+    },
+    {
+      "name": "drying_rack_salami_3"
+    },
+    {
+      "name": "drying_rack_salami_4"
+    },
+    {
+      "name": "drying_rack_salami_5"
+    },
+    {
+      "name": "salting_container_sausage_1"
+    },
+    {
+      "name": "salting_container_sausage_2"
+    },
+    {
+      "name": "salting_container_sausage_3"
+    },
+    {
+      "name": "salting_container_sausage_4"
+    },
+    {
+      "name": "salting_container_sausage_5"
+    },
+    {
+      "name": "sausage_casing"
+    },
+    {
+      "name": "meat_grinder_new"
+    },
+    {
+      "name": "meat_grinder_new_full"
+    },
+    {
+      "name": "meat_grinder_new_grinding",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "meat_grinder_dirty"
+    },
+    {
+      "name": "meat_grinder_dirty_full"
+    },
+    {
+      "name": "meat_grinder_dirty_grinding",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "cutting_board_fish"
+    },
+    {
+      "name": "cutting_board_cutlet"
+    },
+    {
+      "name": "cutting_board_steak"
+    },
+    {
+      "name": "cutting_board_mince"
+    },
+    {
+      "name": "cutting_board_meatball"
+    },
+    {
+      "name": "cutting_board_patty"
+    },
+    {
+      "name": "cutting_board"
+    },
+    {
+      "name": "cutting_board_dirty"
+    },
+    {
+      "name": "patty_rotten"
+    },
+    {
+      "name": "patty_raw"
+    },
+    {
+      "name": "patty_cooked"
+    },
+    {
+      "name": "meatball_rotten"
+    },
+    {
+      "name": "meatball_raw"
+    },
+    {
+      "name": "meatball_cooked"
+    },
+    {
+      "name": "salami_slice"
+    },
+    {
+      "name": "salami"
+    },
+    {
+      "name": "minced_meat"
+    },
+    {
+      "name": "minced_meat_rotten"
+    },
+    {
+      "name": "cow_stomach"
+    },
+    {
+      "name": "cow_stomach_rotten"
+    },
+    {
+      "name": "tripe"
+    },
+    {
+      "name": "tripe_rotten"
+    },
+    {
+      "name": "sausage"
+    },
+    {
+      "name": "sausage_rotten"
+    },
+    {
+      "name": "sausage_salted"
+    },
+    {
+      "name": "pig_stomach"
+    },
+    {
+      "name": "pig_stomach_rotten"
+    },
+    {
+      "name": "pemmican"
+    },
+    {
+      "name": "minced_driedmeat"
+    },
+    {
+      "name": "cutting_board_driedmeat"
+    },
+    {
+      "name": "bratwurst"
+    },
+    {
+      "name": "bratwurst_rotten"
+    },
+    {
+      "name": "schnitzel-breaded-rotten"
+    },
+    {
+      "name": "schnitzel-cooked"
+    },
+    {
+      "name": "schnitzel-parsley"
+    },
+    {
+      "name": "schnitzel-plated"
+    },
+    {
+      "name": "schnitzelparsley-plated"
+    },
+    {
+      "name": "schnitzel-breaded"
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "OPTICS"
+    },
+    {
+      "name": "acog"
+    },
+    {
+      "name": "acog_ongun"
+    },
+    {
+      "name": "elcan"
+    },
+    {
+      "name": "elcan_ongun"
+    },
+    {
+      "name": "holographic"
+    },
+    {
+      "name": "holographic_ongun"
+    },
+    {
+      "name": "reddot"
+    },
+    {
+      "name": "reddot_ongun"
+    },
+    {
+      "name": "pso1"
+    },
+    {
+      "name": "pso1_ongun"
+    },
+    {
+      "name": "UNDERBARREL"
+    },
+    {
+      "name": "laser"
+    },
+    {
+      "name": "laser_ongun"
+    },
+    {
+      "name": "foregrip"
+    },
+    {
+      "name": "foregrip_ongun"
+    },
+    {
+      "name": "foregrip_alt"
+    },
+    {
+      "name": "foregrip_alt_ongun"
+    },
+    {
+      "name": "SUPPERSSORS"
+    },
+    {
+      "name": "silencer"
+    },
+    {
+      "name": "silencer_ongun"
+    },
+    {
+      "name": "ww2_pistol_suppressor"
+    },
+    {
+      "name": "ww2_pistol_suppressor_ongun"
+    },
+    {
+      "name": "ww2_revolver_suppressor"
+    },
+    {
+      "name": "ww2_revolver_suppressor_ongun"
+    },
+    {
+      "name": "ww2_rifle_suppressor"
+    },
+    {
+      "name": "ww2_rifle_suppressor_ongun"
+    },
+    {
+      "name": "ww2_smg_suppressor"
+    },
+    {
+      "name": "ww2_smg_suppressor_ongun"
+    },
+    {
+      "name": "modern_pistol_suppressor"
+    },
+    {
+      "name": "modern_pistol_suppressor_ongun"
+    },
+    {
+      "name": "modern_rifle_suppressor"
+    },
+    {
+      "name": "modern_rifle_suppressor_ongun"
+    },
+    {
+      "name": "modern_smg_suppressor"
+    },
+    {
+      "name": "modern_smg_suppressor_ongun"
+    },
+    {
+      "name": "modern_carbine_suppressor"
+    },
+    {
+      "name": "modern_carbine_suppressor_ongun"
+    },
+    {
+      "name": "modern_shotgun_suppressor"
+    },
+    {
+      "name": "modern_shotgun_suppressor_ongun"
+    },
+    {
+      "name": "plastic_bottle_suppressor"
+    },
+    {
+      "name": "plastic_bottle_suppressor_ongun"
+    },
+    {
+      "name": "oil_filter_suppressor"
+    },
+    {
+      "name": "oil_filter_suppressor_ongun"
+    },
+    {
+      "name": "MISC"
+    },
+    {
+      "name": "bayonet"
+    },
+    {
+      "name": "bayonet_ongun"
+    },
+    {
+      "name": "jap_flag"
+    },
+    {
+      "name": "jap_flag_ongun",
+      "delays": [
+        [
+          0.7,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      ]
+    }
+  ]
+}

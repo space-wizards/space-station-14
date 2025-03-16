@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "cannon",
+      "directions": 4
+    },
+    {
+      "name": "modern_cannon",
+      "directions": 4
+    },
+    {
+      "name": "feldkanone18X",
+      "directions": 4
+    },
+    {
+      "name": "feldkanone18",
+      "directions": 4
+    },
+    {
+      "name": "modern_ship",
+      "directions": 4
+    },
+    {
+      "name": "m29_davy_crockett_empty",
+      "directions": 4
+    },
+    {
+      "name": "m29_davy_crockett_loaded",
+      "directions": 4
+    },
+    {
+      "name": "feldkanone18_assembled",
+      "directions": 4
+    }
+  ]
+}

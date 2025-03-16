@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "streetlight0"
+    },
+    {
+      "name": "streetlight1"
+    },
+    {
+      "name": "streetlight-empty"
+    },
+    {
+      "name": "streetlight-burned"
+    },
+    {
+      "name": "streetlight-broken"
+    },
+    {
+      "name": "lamppost1"
+    },
+    {
+      "name": "lamppost1_out"
+    },
+    {
+      "name": "lamppost2"
+    },
+    {
+      "name": "lamppost2_out"
+    },
+    {
+      "name": "streetlight",
+      "directions": 4
+    },
+    {
+      "name": "streetlight_on",
+      "directions": 4
+    },
+    {
+      "name": "streetlight_empty",
+      "directions": 4
+    },
+    {
+      "name": "streetlight_broken",
+      "directions": 4
+    }
+  ]
+}
