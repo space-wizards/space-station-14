@@ -237,6 +237,11 @@
   bodyPart: Chest
   markingCategory: Chest
   speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: false
   forcedColoring: false
   followSkinColor: false
   sprites:
