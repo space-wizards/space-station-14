@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Changes Boxes main engine to the Supermatter Engine
-    type: Tweak
-  - message: Radiation provided by the supermatter engine has been increased
-    type: Tweak
-  id: 823
-  time: '2024-12-30T05:18:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1152
 - author: widgetbeck
   changes:
   - message: Gave drones the ability to zoom their camera
@@ -4108,3 +4099,13 @@
   id: 1322
   time: '2025-03-16T00:54:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1952
+- author: hivehum
+  changes:
+  - message: Pride flag cloaks are back in the uniform printer! As are the Hospitality
+      Director's outfits.
+    type: Add
+  - message: All the new wood tiles can be printed from a tile cutter.
+    type: Add
+  id: 1323
+  time: '2025-03-16T01:00:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1976
