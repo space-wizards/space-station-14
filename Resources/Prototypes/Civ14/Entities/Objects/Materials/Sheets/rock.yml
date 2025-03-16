@@ -12,3 +12,23 @@
     shape:
     - 0,0,1,0
     storedOffset: 0,-6
+  - type: Knapping
+    hitsRequired: 5
+    resultPrototype: SharpenedFlint
+    allowRockKnapping: true
+    hitTime: 2.0
+
+- type: entity
+  name: sharpened flint
+  parent: BaseItem
+  id: SharpenedFlint
+  description: A sharpened piece of flint, ready for use.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/_civ/old_weapons.rsi
+    state: sharpened_flint
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-6

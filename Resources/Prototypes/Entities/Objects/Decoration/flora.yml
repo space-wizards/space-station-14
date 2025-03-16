@@ -163,6 +163,7 @@
   - type: FlintRock
     maxFlints: 2
     regenerationTime: 1.0
+  - type: KnappingAnchored
 
 - type: entity
   name: stalagmite
