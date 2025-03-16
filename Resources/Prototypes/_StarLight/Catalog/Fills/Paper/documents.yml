@@ -409,3 +409,13 @@
   components:
     - type: Paper
       content: doc-text-printer-product-order
+
+- type: entity
+  id: BoxFolderClipboardFull
+  suffix: Fully Filled
+  parent: BoxFolderClipboard
+  components:
+  - type: StorageFill
+    contents:
+      - id: Paper
+        amount: 24

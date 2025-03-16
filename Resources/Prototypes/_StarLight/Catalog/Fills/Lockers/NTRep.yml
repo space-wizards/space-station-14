@@ -1,0 +1,21 @@
+- type: entity
+  id: LockerRepresentativeFilled
+  suffix: Filled
+  parent: LockerRepresentative
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingEyesHudSkills
+      - id: ClothingEyesSunGlassesHudSkill
+      - id: ClothingHeadHatCapNtrep
+      - id: ClothingUniformJumpsuitNtrepFormal
+      - id: ClothingUniformJumpskirtNtrep
+      - id: ClothingUniformJumpsuitNtrep
+      - id: ClothingOuterCoatNtrep
+      - id: ClothingShoesBootsLaceup
+      - id: ClothingHeadsetAltCommand
+      - id: WeaponDisabler
+      - id: LuxuryPen
+      - id: BoxFolderClipboardFull
+      - id: PrinterDocFlatpack
+      - id: FaxMachineFlatpack
