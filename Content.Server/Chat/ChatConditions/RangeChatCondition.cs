@@ -1,11 +1,10 @@
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
-using Robust.Shared.Player;
 
 namespace Content.Server.Chat.ChatConditions;
 
 [DataDefinition]
-public sealed partial class RangeChatCondition : ChatCondition
+public sealed partial class RangeChatCondition : EntityChatConditionBase
 {
     /// <summary>
     /// The minimum range to meet this condition; inclusive.
@@ -21,9 +20,9 @@ public sealed partial class RangeChatCondition : ChatCondition
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
+    protected override bool Check(EntityUid subjectEntity, ChatMessageContext chatContext)
     {
-        if (!channelParameters.TryGet<EntityUid>(DefaultChannelParameters.SenderEntity, out var senderEntity))
+        if (!chatContext.TryGet<EntityUid>(DefaultChannelParameters.SenderEntity, out var senderEntity))
             return false;
 
         IoCManager.InjectDependencies(this);
@@ -42,10 +41,5 @@ public sealed partial class RangeChatCondition : ChatCondition
         return sourceTransform.Coordinates.TryDistance(_entityManager, transform.Coordinates, out var distance)
                && distance < MaximumRange
                && distance >= MinimumRange;
-    }
-
-    protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
-    {
-        return false;
     }
 }

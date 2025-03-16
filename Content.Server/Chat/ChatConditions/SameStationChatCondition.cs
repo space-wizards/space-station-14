@@ -13,14 +13,14 @@ public sealed partial class SameStationChatCondition : ChatCondition
     [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
 
-    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
+    protected override bool Check(EntityUid subjectEntity, ChatMessageContext chatContext)
     {
         return false;
     }
 
-    protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
+    protected override bool Check(ICommonSession subjectSession, ChatMessageContext chatContext)
     {
-        if (!channelParameters.TryGet<EntityUid>(DefaultChannelParameters.SenderEntity, out var senderEntity))
+        if (!chatContext.TryGet<EntityUid>(DefaultChannelParameters.SenderEntity, out var senderEntity))
             return false;
 
         IoCManager.InjectDependencies(this);

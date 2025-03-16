@@ -1,6 +1,5 @@
-﻿using Content.Shared.Chat;
+using Content.Shared.Chat;
 using Content.Shared.Mobs.Systems;
-using Robust.Shared.Player;
 
 namespace Content.Server.Chat.ChatConditions;
 
@@ -8,11 +7,11 @@ namespace Content.Server.Chat.ChatConditions;
 /// Checks if the consumer is alive and above crit; does not check for consciousness e.g. sleeping.
 /// </summary>
 [DataDefinition]
-public sealed partial class IsAboveCritChatCondition : ChatCondition
+public sealed partial class IsAboveCritChatCondition : EntityChatConditionBase
 {
     [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
 
-    protected override bool Check(EntityUid subjectEntity, ChatMessageContext channelParameters)
+    protected override bool Check(EntityUid subjectEntity, ChatMessageContext chatContext)
     {
         IoCManager.InjectDependencies(this);
 
@@ -21,11 +20,6 @@ public sealed partial class IsAboveCritChatCondition : ChatCondition
             return !mobStateSystem.IsIncapacitated(subjectEntity);
         }
 
-        return false;
-    }
-
-    protected override bool Check(ICommonSession subjectSession, ChatMessageContext channelParameters)
-    {
         return false;
     }
 }
