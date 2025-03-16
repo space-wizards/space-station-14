@@ -982,13 +982,6 @@
   - HeadofSecurityWinterCoat
 
 - type: loadoutGroup
-  id: HeadofSecurityEyewear
-  name: loadout-group-head-of-security-eyewear
-  loadouts:
-  - SecurityGlasses
-  - SecurityHud
-
-- type: loadoutGroup
   id: WardenHead
   name: loadout-group-warden-head
   minLimit: 0

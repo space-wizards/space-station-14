@@ -148,7 +148,6 @@ loadout-group-head-of-security-head = Head of Security head
 loadout-group-head-of-security-jumpsuit = Head of Security jumpsuit
 loadout-group-head-of-security-neck = Head of Security neck
 loadout-group-head-of-security-outerclothing = Head of Security outer clothing
-loadout-group-head-of-security-eyewear = Head of Security eyewear
 
 loadout-group-warden-head = Warden head
 loadout-group-warden-jumpsuit = Warden jumpsuit
