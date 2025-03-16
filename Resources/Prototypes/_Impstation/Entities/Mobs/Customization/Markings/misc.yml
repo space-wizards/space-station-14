@@ -239,6 +239,11 @@
   speciesRestriction: [ Thaven ]
   forcedColoring: false
   followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/animatedmarkings.rsi
     state: thavenspinechill
