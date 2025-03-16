@@ -183,6 +183,11 @@
   bodyPart: Tail
   markingCategory: Overlay
   speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: false
   sprites:
   - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
     state: taileel3
