@@ -46,6 +46,7 @@ public sealed class CosmicCorruptingSystem : EntitySystem
     //when the entity spawns, convert the tile under it & add all neighbouring tiles to the corruptable list
     private void OnMapInit(Entity<CosmicCorruptingComponent> ent, ref MapInitEvent args)
     {
+        /*
         var xform = Transform(ent);
         if (xform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var mapGrid))
             return;
@@ -64,6 +65,7 @@ public sealed class CosmicCorruptingSystem : EntitySystem
 
             ent.Comp.CorruptableTiles.Add(neighbourRef.GridIndices);
         }
+        */
     }
 
     public override void Update(float frameTime)
@@ -97,7 +99,9 @@ public sealed class CosmicCorruptingSystem : EntitySystem
 
         var convertTile = (ContentTileDefinition)_tileDefinition[uid.Comp.ConversionTile];
 
-        if (uid.Comp.Mobile) //if this is a mobile corruptor, reset the list of corruptable tiles every attempt. not a super clean solution because I didn't account for the astral nova in the first rewrite but it works fine.
+        //if this is a mobile corruptor, reset the list of corruptable tiles every attempt. also used to populate the list of corruptable tiles if it's empty.
+        //not a super clean solution for the mobile thing but it works well enough for the current uses
+        if (uid.Comp.Mobile || uid.Comp.CorruptableTiles.Count == 0)
         {
             uid.Comp.CorruptableTiles.Clear();
             var tile = _map.GetTileRef((gridUid, mapGrid), xform.Coordinates);
