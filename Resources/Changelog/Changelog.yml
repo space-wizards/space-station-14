@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: The maximum amount of programs that can be installed on a PDA has been
-      increased from 5 to 8
-    type: Tweak
-  - message: The Detective and Head of Security now get the logprobe program pre-installed
-      on their PDA.
-    type: Tweak
-  id: 7568
-  time: '2024-10-31T14:53:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32601
 - author: Psychpsyo
   changes:
   - message: Carp plushies can now be placed in mop buckets, along with other rehydratable
@@ -3895,3 +3884,10 @@
   id: 8067
   time: '2025-03-15T16:43:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35326
+- author: VerinSenpai
+  changes:
+  - message: Holopads now collide with walls instead of phasing through them.
+    type: Fix
+  id: 8068
+  time: '2025-03-16T00:41:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34300
