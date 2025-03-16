@@ -23,4 +23,7 @@ public sealed partial class SprayPainterComponent : Component
 
     [DataField, AutoNetworkedField]
     public Dictionary<string, int> Indexes = new();
+
+    [DataField, AutoNetworkedField]
+    public int SelectedTab;
 }

@@ -17,6 +17,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
     private readonly SpriteSystem _spriteSystem;
 
     public Action<string, int>? OnSpritePicked;
+    public Action<int>? OnTabChanged;
 
     private ItemList ColorList = default!;
     public Action<ItemList.ItemListSelectedEventArgs>? OnColorPicked;
@@ -35,6 +36,7 @@ public sealed partial class SprayPainterWindow : DefaultWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         _spriteSystem = _sysMan.GetEntitySystem<SpriteSystem>();
+        Tabs.OnTabChanged += (index) => OnTabChanged?.Invoke(index);
     }
 
     private static string GetColorLocString(string? colorKey)
@@ -60,14 +62,14 @@ public sealed partial class SprayPainterWindow : DefaultWindow
             OnSpritePicked?.Invoke(listData.Category, button.Index);
     }
 
-    public void Populate(Dictionary<string, List<SprayPainterEntry>> entries, Dictionary<string, int> selectedStyles, string? selectedColorKey, Dictionary<string, Color> palette)
+    public void Populate(Dictionary<string, List<SprayPainterEntry>> entries, Dictionary<string, int> selectedStyles, string? selectedColorKey, Dictionary<string, Color> palette, int tabIndex)
     {
         // Only clear if the entries change. Otherwise the list would "jump" after selecting an item
         if (!_currentEntries.Equals(entries))
         {
             _currentEntries = entries;
 
-            foreach (var category in entries.Keys.OrderBy(x => x))
+            foreach (var (category, indexCategory) in entries.Keys.OrderBy(x => x).Select((x, i) => (x, i)))
             {
                 var box = new BoxContainer() { Orientation = BoxContainer.LayoutOrientation.Vertical };
                 var label = new Label() { Text = Loc.GetString("spray-painter-selected-style") };
@@ -85,6 +87,11 @@ public sealed partial class SprayPainterWindow : DefaultWindow
                 box.AddChild(label);
                 box.AddChild(spriteList);
                 Tabs.AddChild(box);
+
+                if (indexCategory == tabIndex)
+                {
+                    Tabs.CurrentTab = indexCategory;
+                }
 
                 var tabLocalization = Loc.GetString("spray-painter-tabs-" + category.ToLower());
                 TabContainer.SetTabTitle(box, tabLocalization);

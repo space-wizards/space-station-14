@@ -12,6 +12,12 @@ public enum SprayPainterUiKey
 }
 
 [Serializable, NetSerializable]
+public sealed class SprayPainterTabChangedMessage(int index) : BoundUserInterfaceMessage
+{
+    public readonly int Index = index;
+}
+
+[Serializable, NetSerializable]
 public sealed class SprayPainterSpritePickedMessage : BoundUserInterfaceMessage
 {
     public readonly string Category;

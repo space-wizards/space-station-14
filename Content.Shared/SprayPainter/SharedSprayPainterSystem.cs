@@ -38,6 +38,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         {
             subs.Event<SprayPainterSpritePickedMessage>(OnSpritePicked);
             subs.Event<SprayPainterColorPickedMessage>(OnColorPicked);
+            subs.Event<SprayPainterTabChangedMessage>(OnTabChanged);
         });
 
         SubscribeLocalEvent<PaintableComponent, InteractUsingEvent>(OnPaintableInteract);
@@ -90,6 +91,12 @@ public abstract class SharedSprayPainterSystem : EntitySystem
     }
 
     #region UI messages
+
+    private void OnTabChanged(EntityUid uid, SprayPainterComponent component, SprayPainterTabChangedMessage args)
+    {
+        component.SelectedTab = args.Index;
+        Dirty(uid, component);
+    }
 
     private void OnColorPicked(Entity<SprayPainterComponent> ent, ref SprayPainterColorPickedMessage args)
     {
