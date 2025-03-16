@@ -1,0 +1,4 @@
+﻿- type: latheRecipePack
+  id: ScienceExplosivesImp
+  recipes:
+  - Signaller # idk why this shit got removed everywhere

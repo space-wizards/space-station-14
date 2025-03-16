@@ -18,3 +18,11 @@ accent-words-possum-4 = Grrrah.
 
 # Bros
 accent-words-bros = UNGH
+
+# Kodepiia
+accent-words-kodepiia-1 = Whrrr...
+accent-words-kodepiia-2 = Bwrzz.
+accent-words-kodepiia-3 = Ghrr.
+accent-words-kodepiia-4 = Crhcrh!
+accent-words-kodepiia-5 = Hrrrss.
+accent-words-kodepiia-6 = Brrh?

@@ -8,7 +8,7 @@
     - type: InteractionOutline
     - type: Eye
     - type: WirelessNetworkConnection
-      range: 1000 #should be pretty much map-wide
+      range: 10000 #effectively unlimited
     - type: SurveillanceCameraMicrophone
       blacklist:
         components:

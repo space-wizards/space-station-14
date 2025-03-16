@@ -1,0 +1,118 @@
+# ALL SPRITES PLACEHOLDER FOR NOW
+- type: entity
+  id: PartKodepiia
+  parent: [BaseItem, BasePart]
+  name: "kodepiia body part"
+  abstract: true
+  components:
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: TorsoKodepiia
+  name: "kodepiia torso"
+  parent: [PartKodepiia, BaseTorso]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "torso"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: Blood
+        Quantity: 20
+
+- type: entity
+  id: HeadKodepiia
+  name: "kodepiia head"
+  parent: [PartKodepiia, BaseHead]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "head"
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: Blood
+        Quantity: 10
+
+- type: entity
+  id: LeftArmKodepiia
+  name: "left kodepiia arm"
+  parent: [PartKodepiia, BaseLeftArm]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "l_arm"
+
+- type: entity
+  id: RightArmKodepiia
+  name: "right kodepiia arm"
+  parent: [PartKodepiia, BaseRightArm]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "r_arm"
+
+- type: entity
+  id: LeftHandKodepiia
+  name: "left kodepiia hand"
+  parent: [PartKodepiia, BaseLeftHand]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "l_hand"
+
+- type: entity
+  id: RightHandKodepiia
+  name: "right kodepiia hand"
+  parent: [PartKodepiia, BaseRightHand]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "r_hand"
+
+- type: entity
+  id: LeftLegKodepiia
+  name: "left kodepiia leg"
+  parent: [PartKodepiia, BaseLeftLeg]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "l_leg"
+
+- type: entity
+  id: RightLegKodepiia
+  name: "right kodepiia leg"
+  parent: [PartKodepiia, BaseRightLeg]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "r_leg"
+
+- type: entity
+  id: LeftFootKodepiia
+  name: "left kodepiia foot"
+  parent: [PartKodepiia, BaseLeftFoot]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "l_foot"
+
+- type: entity
+  id: RightFootKodepiia
+  name: "right kodepiia foot"
+  parent: [PartKodepiia, BaseRightFoot]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    state: "r_foot"

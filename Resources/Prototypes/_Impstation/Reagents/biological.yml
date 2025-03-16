@@ -58,6 +58,27 @@
         amount: -1
 
 - type: reagent
+  parent: Blood
+  id: BloodKodepiia
+  flavor: kodepiia
+  color: "#4f0000"
+
+- type: reaction
+  id: KodepiiaBloodBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    BloodKodepiia:
+      amount: 5
+  products:
+    Ice: 11
+    Copper: 0.5
+    TableSalt: 2
+    Ammonia: 3
+    Fat: 4
+ 
+- type: reagent
   id: SynthFlesh
   name: reagent-name-synthflesh
   group: Biological

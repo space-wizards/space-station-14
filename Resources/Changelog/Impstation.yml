@@ -1,130 +1,4 @@
 ﻿Entries:
-- author: ATDoop
-  changes:
-  - message: 3 new lollipops for the chef to make (meat, cloth, and fruit), and one
-      super secret one!
-    type: Add
-  id: 817
-  time: '2024-12-28T15:48:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1141
-- author: Darkmajia
-  changes:
-  - message: Heretic can no longer be rolled.
-    type: Remove
-  id: 818
-  time: '2024-12-28T21:52:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1149
-- author: Honeyed_Lemons_, Darkmajia
-  changes:
-  - message: adds The Supermatter for dummies, a guide for setting up the supermatter
-      engine
-    type: Add
-  id: 819
-  time: '2024-12-29T11:46:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1144
-- author: mqole
-  changes:
-  - message: Syndicate/paranormal contraband is now divided into 4 tiers, with different
-      levels of sentencing outlined by space law.
-    type: Tweak
-  - message: The metashield page in the guidebook looks less shit.
-    type: Tweak
-  id: 820
-  time: '2024-12-30T05:14:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1145
-- author: Darkmajia
-  changes:
-  - message: Double thief is no longer possible during lowpop.
-    type: Remove
-  id: 821
-  time: '2024-12-30T05:14:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1148
-- author: AftrLite
-  changes:
-  - message: Radiation collectors now have new sprites!
-    type: Add
-  - message: Steel storage crates now have ridged lids!
-    type: Tweak
-  id: 822
-  time: '2024-12-30T05:16:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1151
-- author: honeyed-lemons
-  changes:
-  - message: Changes Boxes main engine to the Supermatter Engine
-    type: Tweak
-  - message: Radiation provided by the supermatter engine has been increased
-    type: Tweak
-  id: 823
-  time: '2024-12-30T05:18:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1152
-- author: widgetbeck
-  changes:
-  - message: Gave drones the ability to zoom their camera
-    type: Add
-  id: 824
-  time: '2024-12-30T05:18:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1161
-- author: honeyed-lemons
-  changes:
-  - message: Some minor and major changes to Box, smoother supermattering
-    type: Fix
-  id: 825
-  time: '2024-12-30T11:27:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1165
-- author: Darkmajia
-  changes:
-  - message: A few items can now be used as melee weapons.
-    type: Add
-  - message: Pacifists can now throw most dangerous items, but still cannot cause
-      harm with them.
-    type: Add
-  - message: 'Ported the Throwing Update from Einstein Engines, which includes:'
-    type: Add
-  - message: Many items can now be thrown to deal damage.
-    type: Add
-  - message: Examining an item will show a lot of information about its throwing potential.
-    type: Add
-  - message: Items that deal throwing damage now cost stamina to throw.
-    type: Tweak
-  - message: The default time to remove an embedded item has been increased from 3
-      seconds to 5 seconds.
-    type: Tweak
-  - message: The time to pry up a floor tile has been reduced from 1 second to 0.5
-      seconds. Throwing tiles deals more damage.
-    type: Tweak
-  id: 826
-  time: '2024-12-30T22:46:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1157
-- author: ruddygreat
-  changes:
-  - message: Invisibility is now fully invisible! an outline can be seen by the invisible
-      entity, anything inside the entity & ghosts.
-    type: Tweak
-  id: 827
-  time: '2024-12-30T22:56:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1150
-- author: kipdotnet
-  changes:
-  - message: Apids, a Beefolk ghostrole that cargo can order in to help botany and
-      medical.
-    type: Add
-  id: 828
-  time: '2024-12-30T22:57:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1147
-- author: suyo and dark
-  changes:
-  - message: new sound for goliath attacks to better match the damage type they do
-    type: Add
-  - message: added a toggleable magnetic pickup for the ore box and ore bag
-    type: Add
-  - message: ore boxes have been refitted to hold more ore, including ore bags and
-      artifact fragments. you can dump them out easier now too!
-    type: Tweak
-  - message: industrial ore waba-beepi efficiency increased from 1.5x to 2x
-    type: Tweak
-  id: 829
-  time: '2024-12-30T23:09:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1160
 - author: neonannihilator
   changes:
   - message: You can now pick up and wear diona nymphs!
@@ -4099,3 +3973,122 @@
   id: 1316
   time: '2025-03-15T08:21:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1962
+- author: Sha-Seng
+  changes:
+  - message: Fever Dream recipe changed due to upstream changing eggs
+    type: Tweak
+  id: 1317
+  time: '2025-03-15T23:02:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1966
+- author: jtfg-dev
+  changes:
+  - message: Fixed a snail random last-name that was lower-case. ( [issue](https://github.com/impstation/imp-station-14/issues/1628)
+      )
+    type: Fix
+  - message: Fixed Russian (Basic) being unreadable. ( [issue](https://github.com/impstation/imp-station-14/issues/1368)
+      )
+    type: Fix
+  - message: Made it so the NoContractions accent works properly.
+    type: Fix
+  - message: Fixed some typos and inconsistencies in the traits screen. There should
+      be 'much less' now.
+    type: Tweak
+  id: 1318
+  time: '2025-03-15T23:01:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1971
+- author: mqole, hivehum, crocodilecarousel, credey
+  changes:
+  - message: Some new freaks of nature can now be found in the vents. Please be careful
+      not to scare them.
+    type: Add
+  id: 1319
+  time: '2025-03-15T23:50:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1881
+- author: SixValentine
+  changes:
+  - message: Luna in rotation!
+    type: Add
+  - message: Luna changes (check PR for details)
+    type: Tweak
+  id: 1320
+  time: '2025-03-16T00:02:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1887
+- author: honeyed-lemons
+  changes:
+  - message: Fixed your masculine body urists getting decapitated.. sorry...
+    type: Fix
+  id: 1321
+  time: '2025-03-16T00:35:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1970
+- author: honeyed-lemons
+  changes:
+  - message: Revamped Xeno Chapel, and revamped Box's shuttle bay.
+    type: Tweak
+  - message: Xeno atmos -> engi disposal chute should no longer receive trash.
+    type: Fix
+  - message: Xeno Hospitality Director room no longer spaces round start.
+    type: Fix
+  id: 1322
+  time: '2025-03-16T00:54:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1952
+- author: hivehum
+  changes:
+  - message: Pride flag cloaks are back in the uniform printer! As are the Hospitality
+      Director's outfits.
+    type: Add
+  - message: All the new wood tiles can be printed from a tile cutter.
+    type: Add
+  id: 1323
+  time: '2025-03-16T01:00:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1976
+- author: AvianMaiden
+  changes:
+  - message: "Guns are just really big metal things to hit people with if you think\
+      \ about it. They don't hurt much\u2014nothing more than a punch\u2014but you\
+      \ can just hit people for fun and for free!"
+    type: Add
+  - message: Tweaked Mosin things.
+    type: Tweak
+  id: 1324
+  time: '2025-03-16T01:05:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1956
+- author: crocodilecarousel, hivehum
+  changes:
+  - message: The Hospitality Director has adopted a pet penguin. Say hello to Oswald
+      when you get the chance!
+    type: Add
+  id: 1325
+  time: '2025-03-16T01:35:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1969
+- author: kipdotnet
+  changes:
+  - message: banana has a new atmos area!
+    type: Tweak
+  - message: The handheld quantum camera should now have effectively unlimited range.
+    type: Tweak
+  id: 1326
+  time: '2025-03-16T03:29:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1979
+- author: mqole
+  changes:
+  - message: You can now tell whether a manual valve is on or off without prying up
+      the floorboards.
+    type: Tweak
+  id: 1327
+  time: '2025-03-16T03:32:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1978
+- author: mqole
+  changes:
+  - message: Revolutionaries will no longer see red (in chat, that is).
+    type: Fix
+  id: 1328
+  time: '2025-03-16T03:31:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1975
+- author: mqole
+  changes:
+  - message: Your guidebook's description for holy water has been updated to be non-denominational
+      and anti-entropic.
+    type: Tweak
+  id: 1329
+  time: '2025-03-16T03:34:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1980

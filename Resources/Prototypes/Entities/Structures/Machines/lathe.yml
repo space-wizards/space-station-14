@@ -131,11 +131,13 @@
     - PowerCellsStatic
     - ElectronicsStatic
     - ImpAutoStatic # Imp
+    - ReportingStatic # DeltaV
     dynamicPacks:
     - ImpAutoDynamic # Imp
   - type: EmagLatheRecipes
     emagStaticPacks:
     - SecurityAmmoStatic
+    - ImpAutoEmagged # imp
   - type: BlueprintReceiver
     whitelist:
       tags:
@@ -196,6 +198,7 @@
     - ChemistryStatic
     - SurgeryStatic
     - ImpProtoStatic # Imp
+    - ReportingStatic # DeltaV
     dynamicPacks:
     - AdvancedTools
     - ScienceEquipment
@@ -212,6 +215,7 @@
     - Equipment
     - FauxTiles
     - ImpProtoDynamic # Imp
+    - NFService # Frontier
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - SecurityAmmo
@@ -271,6 +275,7 @@
     - CameraBoards
     - MechBoards
     - ShuttleBoards
+    - ImpCircuitDynamic # imp
   - type: EmagLatheRecipes
     emagDynamicPacks:
     - SecurityBoards
@@ -402,7 +407,6 @@
     - SecurityPracticeStatic
     - SecurityAmmoStatic
     - SecurityWeaponsStatic
-    - ImpSecStatic # Imp
     dynamicPacks:
     - SecurityEquipment
     - SecurityBoards
@@ -410,7 +414,6 @@
     - SecurityAmmo
     - SecurityWeapons
     - SecurityDisablers
-    - ImpSecDynamic # Imp
   - type: MaterialStorage
     whitelist:
       tags:
@@ -446,7 +449,6 @@
       unlitRunningState: unlit-building
       staticPacks:
       - SecurityAmmoStatic
-      - ImpAmmoStatic # Imp
     - type: MaterialStorage
       whitelist:
         tags:
@@ -528,7 +530,9 @@
     - Scarves
     - Carpets
     - Bedsheets
-    - ImpClothesStatic # Imp
+    - PrideFlags # imp
+    - BeltsDeltaV # DeltaV
+    - ClothingJustice # DeltaV
   - type: EmagLatheRecipes
     emagStaticPacks:
     - ClothingCentComm

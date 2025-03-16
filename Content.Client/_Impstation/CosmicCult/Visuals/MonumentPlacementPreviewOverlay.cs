@@ -116,7 +116,7 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
         }
 
         //have the outline's alpha slightly "breathe"
-        var outlineAlphaModulate = 0.65f + (0.35f * (float) Math.Sin(_timing.CurTime.TotalSeconds));
+        var outlineAlphaModulate = 0.75f + (0.25f * (float) Math.Sin(_timing.CurTime.TotalSeconds));
 
         //stuff to make the monument preview stick in place once the ability is confirmed
         Color color;
@@ -144,7 +144,7 @@ public sealed class MonumentPlacementPreviewOverlay : Overlay
 
         //some fancy schmancy things for the inside of the monument
         worldHandle.UseShader(_starsShader);
-        worldHandle.DrawTexture(_spriteSystem.Frame0(starTex), _lastPos.Position - new Vector2(1.5f, 0.5f), color.WithAlpha(alpha)); //don't inherit the alpha mult on the inside bit
+        worldHandle.DrawTexture(_spriteSystem.Frame0(starTex), _lastPos.Position - new Vector2(1.5f, 0.5f), color);
         worldHandle.UseShader(null);
     }
 }

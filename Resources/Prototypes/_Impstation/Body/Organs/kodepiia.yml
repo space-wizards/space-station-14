@@ -1,0 +1,152 @@
+- type: entity
+  id: BaseKodepiiaOrganUnGibbable
+  parent: BaseHumanOrganUnGibbable
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Impstation/Mobs/Species/Kodepiia/organs.rsi
+
+- type: entity
+  id: BaseKodepiiaOrgan
+  parent: BaseKodepiiaOrganUnGibbable
+  abstract: true
+  components:
+  - type: Gibbable
+
+- type: entity
+  id: OrganKodepiiaBrain
+  parent: BaseKodepiiaOrganUnGibbable
+  name: bille áu sac
+  description: "Allegedly still functioning."
+  components:
+  - type: Sprite
+    state: billeausac
+  - type: Organ
+  - type: Input
+    context: "ghost"
+  - type: Brain
+  - type: InputMover
+  - type: Examiner
+  - type: BlockMovement
+  - type: BadFood
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Brain
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - people
+  - type: FoodSequenceElement
+    entries:
+      Burger: Brain
+      Taco: Brain
+
+- type: entity
+  id: OrganKodepiiaEyes
+  parent: BaseKodepiiaOrgan
+  name: opticullis
+  description: "The scavenger's kaleidoscope."
+  components:
+  - type: Sprite
+    layers:
+      - state: opticullis
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Eyes
+
+- type: entity
+  id: OrganKodepiiaSkin
+  parent: BaseKodepiiaOrgan
+  name: slough
+  description: "Something that used to be skin."
+  components:
+  - type: Sprite
+    state: slough
+
+- type: entity
+  id: OrganKodepiiaLungs
+  parent: [ BaseKodepiiaOrgan, BaseHandheldInstrument ]
+  name: fine coil
+  description: "Like lungs, but stretchier...?"
+  components:
+  - type: Sprite
+    state: finecoil
+  - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Human ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      Lung:
+        maxVol: 100.0
+        canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Instrument
+    program: 109
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Lungs
+    - WoodwindInstrument
+
+- type: entity
+  id: OrganKodepiiaStomach
+  parent: BaseKodepiiaOrgan
+  name: primary gullet
+  description: "Leaky."
+  components:
+  - type: Sprite
+    state: primarygullet
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Stomach
+  # The stomach metabolizes stuff like foods and drinks.
+  # TODO: Have it work off of the ent's solution container, and move this
+  # to intestines instead.
+  - type: Metabolizer
+    # mm yummy
+    maxReagents: 3
+    metabolizerTypes: [Human]
+    groups:
+    - id: Food
+    - id: Drink
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Stomach

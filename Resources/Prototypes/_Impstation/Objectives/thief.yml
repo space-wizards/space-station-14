@@ -34,6 +34,18 @@
   - type: Objective
     difficulty: 1.5
 
+- type: entity
+  parent: BaseThiefStealAnimalObjective
+  id: OswaldStealObjective
+  components:
+  - type: NotJobRequirement
+    job: HospitalityDirector
+  - type: StealCondition
+    verifyMapExistence: true # why tf is this false for stealanimalobjective anyway
+    stealGroup: AnimalOswald
+  - type: Objective
+    difficulty: 1 # shes literally nice
+
 # critical infrastructure
 
 - type: entity
@@ -119,7 +131,7 @@
     stealGroup: SecPillCanister
   - type: Objective
     difficulty: 1
-    
+
 - type: entity
   parent: BaseThiefStealObjective
   id: ShiningSpringStealObjective

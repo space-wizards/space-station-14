@@ -1,0 +1,6 @@
+﻿## Dynamic
+
+- type: latheRecipePack
+  id: EquipmentDeltaV
+  recipes:
+  - SignallerDeadMans

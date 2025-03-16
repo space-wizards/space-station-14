@@ -67,6 +67,25 @@
   - type: Appearance
   - type: StaticPrice
     price: 500
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    range: 0.8
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 6
+    damage:
+      types:
+        Blunt: 5
+#imp edit end
 
 - type: entity
   name: Viper
@@ -189,7 +208,7 @@
   name: Mk 58
   parent: [BaseWeaponPistol, BaseSecurityContraband]
   id: WeaponPistolMk58
-  description: A cheap, ubiquitous sidearm produced by a NanoTrasen subsidiary. It does its job without any hassle. Uses .35 auto ammo. #imp
+  description: A cheap, ubiquitous sidearm produced by a Nanotrasen subsidiary. It does its job without any hassle. Uses .35 auto ammo. #imp
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk58.rsi #imp

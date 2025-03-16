@@ -162,6 +162,7 @@
     FinFinStealObjective: 1
     PolyStealObjective: 1
     PetSuppyStealObjective: 1
+    OswaldStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupEscape

@@ -1,4 +1,28 @@
-﻿# Security Sweater
+﻿# Jumpsuits - Security
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitSecBlue
+  result: ClothingUniformJumpsuitSecBlue
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitSecGrey
+  result: ClothingUniformJumpsuitSecGrey
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtHoSGrey
+  result: ClothingUniformJumpskirtHoSGrey
+
+# Jumpskirts - Security
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpskirtSecGrey
+  result: ClothingUniformJumpskirtSecGrey
+
+# Security Sweater
 - type: latheRecipe
   parent: BaseCoatRecipe
   id: ClothingOuterStasecSweater
@@ -67,6 +91,7 @@
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtProsecutor
   result: ClothingUniformJumpskirtProsecutor
+
 # Salvage Specialist
 - type: latheRecipe
   parent: BaseJumpsuitRecipe
@@ -77,6 +102,18 @@
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitSalvageSpecialistDV
   result: ClothingUniformJumpsuitSalvageSpecialistDV
+
+# Administrative Assistant
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitAdminAssistant
+  result: ClothingUniformJumpsuitAdminAssistant
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtAdminAssistant
+  result: ClothingUniformJumpskirtAdminAssistant
 
 # Command Hats
 
@@ -129,6 +166,23 @@
   parent: BaseHatRecipe
   id: ClothingHeadHatSurgcapCybersun
   result: ClothingHeadHatSurgcapCybersun
+
+- type: latheRecipe
+  parent: BaseHatRecipe
+  id: ClothingMaskInterdyneChemistry
+  result: ClothingMaskInterdyneChemistry
+
+# Formal Outfits
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitChemShirt
+  result: ClothingUniformJumpsuitChemShirt
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitScientistFormal
+  result: ClothingUniformJumpsuitScientistFormal
 
 # Utility
 

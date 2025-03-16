@@ -1,0 +1,13 @@
+﻿# Static
+
+- type: latheRecipePack
+  id: BorgModulesStaticImp
+  recipes:
+  - BorgModuleArtistic
+
+# Dynamic
+
+- type: latheRecipePack
+  id: BorgModulesImp
+  recipes:
+  - BorgModuleMining

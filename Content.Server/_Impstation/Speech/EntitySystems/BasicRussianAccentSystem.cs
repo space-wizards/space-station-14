@@ -15,7 +15,7 @@ public sealed class BasicRussianAccentSystem : EntitySystem
     {
         var accentedMessage = new StringBuilder(_replacement.ApplyReplacements(message, "basicrussian"));
 
-        for (var i = 0; i < accentedMessage.Length; i++)
+        /*for (var i = 0; i < accentedMessage.Length; i++)
         {
             var c = accentedMessage[i];
 
@@ -37,7 +37,7 @@ public sealed class BasicRussianAccentSystem : EntitySystem
                 'w' => 'ш',
                 _ => accentedMessage[i]
             };
-        }
+        }*/ //imp change, die
 
         return accentedMessage.ToString();
     }

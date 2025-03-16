@@ -8,6 +8,9 @@
   - ClothingUniformJumpsuitLoungewear
 
 - type: latheRecipePack
+  parent:
+  - ClothingCargoDeltaV # DeltaV
+  - ClothingCargoImp # imp
   id: ClothingCargo
   recipes:
   - ClothingUniformJumpsuitCargo
@@ -23,6 +26,9 @@
 
 - type: latheRecipePack
   id: ClothingCommand
+  parent:
+  - ClothingCommandDeltaV # DeltaV
+  - ClothingCommandImp # imp
   recipes:
   # Captain
   - ClothingHeadHatCapcap
@@ -50,6 +56,8 @@
   - ClothingUniformJumpskirtSeniorEngineer
 
 - type: latheRecipePack
+  parent:
+  - ClothingMedicalDeltaV # DeltaV
   id: ClothingMedical
   recipes:
   - ClothingUniformJumpsuitChemistry
@@ -69,6 +77,8 @@
   - ClothingHeadHatParamedicsoft
 
 - type: latheRecipePack
+  parent:
+  - ClothingEpistemics # DeltaV
   id: ClothingScience
   recipes:
   - ClothingHeadHatBeretRND
@@ -80,6 +90,8 @@
   - ClothingUniformJumpskirtSeniorResearcher
 
 - type: latheRecipePack
+  parent:
+  - ClothingSecurityDeltaV # DeltaV
   id: ClothingSecurity
   recipes:
   - ClothingUniformJumpsuitDetective
@@ -112,6 +124,7 @@
   - ClothingUniformJumpskirtWarden
 
 - type: latheRecipePack
+  parent: ClothingServiceImp # imp
   id: ClothingService
   recipes:
   - ClothingUniformJumpsuitBartender
@@ -133,6 +146,9 @@
   - ClothingUniformJumpsuitMusician
 
 - type: latheRecipePack
+  parent:
+  - WinterCoatsDeltaV # DeltaV
+  - WinterCoatsImp # imp
   id: WinterCoats
   recipes:
   - ClothingOuterWinterCap
@@ -208,6 +224,8 @@
   - ClothingUniformJumpsuitCentcomOfficial
 
 - type: latheRecipePack
+  parent:
+  - ClothingSyndieDeltaV # DeltaV
   id: ClothingSyndie
   recipes:
   - ClothingHeadHatSyndieMAA
