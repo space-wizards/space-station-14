@@ -19,6 +19,10 @@ public sealed partial class CosmicCorruptingComponent : Component
     [DataField]
     public HashSet<Vector2i> CorruptableTiles = [];
 
+    /// <summary>
+    /// If this corruption source can move. if true, only corrupt the immediate area around it.
+    /// Slightly hacky but works for our purposes.
+    /// </summary>
     [DataField]
     public bool Mobile = false;
 
