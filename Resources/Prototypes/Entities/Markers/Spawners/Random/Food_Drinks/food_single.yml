@@ -13,6 +13,8 @@
         state: plain
   - type: RandomSpawner
     prototypes:
+      - FoodBagel
+      - FoodBagelPoppy
       - FoodBurgerJelly
       - FoodBurgerCarp
       - FoodBurgerTofu
@@ -30,9 +32,6 @@
       - FoodBurgerChicken
       - FoodBurgerDuck
       - FoodBurgerCheese
-      - FoodMeatHawaiianKebab
-      - FoodMeatKebab
-      - FoodMeatFiestaKebab
       - FoodNoodlesBoiled
       - FoodNoodles
       - FoodNoodlesCopy
@@ -49,11 +48,7 @@
       - FoodBakedDumplings
       - FoodBakedChevreChaud
       - FoodBakedNugget
-      - FoodTacoBeef
-      - FoodTacoChicken
-      - FoodTacoFish
-      - FoodTacoBeefSupreme
-      - FoodTacoChickenSupreme
+      - FoodTacoShell
     chance: 0.8
     offset: 0.0
     #rare
@@ -70,11 +65,6 @@
       - FoodBurgerSpell
       - FoodBurgerSuper
       - FoodBurgerCrazy
-      - FoodMeatHumanKebab
-      - FoodMeatLizardtailKebab
-      - FoodMeatRatKebab
-      - FoodMeatRatdoubleKebab
-      - FoodMeatSnakeKebab
       - FoodPizzaArnoldSlice
-      - FoodTacoRat
+      - FoodPizzaUraniumSlice
     rareChance: 0.05

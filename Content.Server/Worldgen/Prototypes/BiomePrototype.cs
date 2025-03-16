@@ -14,12 +14,12 @@ public sealed partial class BiomePrototype : IPrototype, IInheritingPrototype
 {
     /// <inheritdoc />
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<EntityPrototype>))]
-    public string[]? Parents { get; }
+    public string[]? Parents { get; private set; }
 
     /// <inheritdoc />
     [NeverPushInheritance]
     [AbstractDataField]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 
     /// <inheritdoc />
     [IdDataField]
@@ -42,7 +42,7 @@ public sealed partial class BiomePrototype : IPrototype, IInheritingPrototype
     /// </summary>
     [DataField("chunkComponents")]
     [AlwaysPushInheritance]
-    public ComponentRegistry ChunkComponents { get; } = new();
+    public ComponentRegistry ChunkComponents = new();
 
     //TODO: Get someone to make this a method on componentregistry that does it Correctly.
     /// <summary>
@@ -54,7 +54,6 @@ public sealed partial class BiomePrototype : IPrototype, IInheritingPrototype
         foreach (var data in ChunkComponents.Values)
         {
             var comp = (Component) serialization.CreateCopy(data.Component, notNullableOverride: true);
-            comp.Owner = target; // look im sorry ok this .owner has to live until engine api exists
             entityManager.AddComponent(target, comp);
         }
     }

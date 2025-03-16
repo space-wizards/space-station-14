@@ -1,4 +1,4 @@
-﻿generator-clogged = {THE($generator)} shuts off abruptly!
+﻿generator-clogged = {CAPITALIZE(THE($generator))} shuts off abruptly!
 
 portable-generator-verb-start = Start generator
 portable-generator-verb-start-msg-unreliable = Start the generator. This may take a few tries.

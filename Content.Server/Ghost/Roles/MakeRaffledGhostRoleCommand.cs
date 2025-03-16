@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Raffles;
@@ -77,13 +77,13 @@ namespace Content.Server.Ghost.Roles
 
             if (isProto)
             {
-                if (!_protoManager.TryIndex<GhostRoleRaffleSettingsPrototype>(args[4], out var proto))
+                if (!_protoManager.TryIndex<GhostRoleRaffleSettingsPrototype>(args[3], out var proto))
                 {
                     var validProtos = string.Join(", ",
                         _protoManager.EnumeratePrototypes<GhostRoleRaffleSettingsPrototype>().Select(p => p.ID)
                     );
 
-                    shell.WriteLine($"{args[4]} is not a valid raffle settings prototype. Valid options: {validProtos}");
+                    shell.WriteLine($"{args[3]} is not a valid raffle settings prototype. Valid options: {validProtos}");
                     return;
                 }
 

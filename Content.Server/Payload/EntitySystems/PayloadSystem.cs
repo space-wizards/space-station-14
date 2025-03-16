@@ -1,11 +1,11 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Payload.Components;
 using Content.Shared.Tag;
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
@@ -17,7 +17,7 @@ namespace Content.Server.Payload.EntitySystems;
 public sealed class PayloadSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
@@ -156,8 +156,8 @@ public sealed class PayloadSystem : EntitySystem
             return;
         }
 
-        var solStringA = SolutionContainerSystem.ToPrettyString(solutionA);
-        var solStringB = SolutionContainerSystem.ToPrettyString(solutionB);
+        var solStringA = SharedSolutionContainerSystem.ToPrettyString(solutionA);
+        var solStringB = SharedSolutionContainerSystem.ToPrettyString(solutionB);
 
         _adminLogger.Add(LogType.ChemicalReaction,
             $"Chemical bomb payload {ToPrettyString(entity.Owner):payload} at {_transform.GetMapCoordinates(entity.Owner):location} is combining two solutions: {solStringA:solutionA} and {solStringB:solutionB}");

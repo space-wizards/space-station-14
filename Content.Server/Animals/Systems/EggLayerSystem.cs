@@ -7,15 +7,15 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Storage;
 using Robust.Server.Audio;
-using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Animals.Systems;
 
 /// <summary>
-///     Gives ability to produce eggs, produces endless if the 
-///     owner has no HungerComponent
+///     Gives the ability to lay eggs/other things;
+///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
 public sealed class EggLayerSystem : EntitySystem
 {
@@ -23,6 +23,7 @@ public sealed class EggLayerSystem : EntitySystem
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly HungerSystem _hunger = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
@@ -37,7 +38,6 @@ public sealed class EggLayerSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
         var query = EntityQueryEnumerator<EggLayerComponent>();
         while (query.MoveNext(out var uid, out var eggLayer))
         {
@@ -45,13 +45,17 @@ public sealed class EggLayerSystem : EntitySystem
             if (HasComp<ActorComponent>(uid))
                 continue;
 
-            eggLayer.AccumulatedFrametime += frameTime;
-
-            if (eggLayer.AccumulatedFrametime < eggLayer.CurrentEggLayCooldown)
+            if (_timing.CurTime < eggLayer.NextGrowth)
                 continue;
 
-            eggLayer.AccumulatedFrametime -= eggLayer.CurrentEggLayCooldown;
-            eggLayer.CurrentEggLayCooldown = _random.NextFloat(eggLayer.EggLayCooldownMin, eggLayer.EggLayCooldownMax);
+            // Randomize next growth time for more organic egglaying.
+            eggLayer.NextGrowth += TimeSpan.FromSeconds(_random.NextFloat(eggLayer.EggLayCooldownMin, eggLayer.EggLayCooldownMax));
+
+            if (_mobState.IsDead(uid))
+                continue;
+
+            // Hungerlevel check/modification is done in TryLayEgg()
+            // so it's used for player controlled chickens as well.
 
             TryLayEgg(uid, eggLayer);
         }
@@ -60,11 +64,12 @@ public sealed class EggLayerSystem : EntitySystem
     private void OnMapInit(EntityUid uid, EggLayerComponent component, MapInitEvent args)
     {
         _actions.AddAction(uid, ref component.Action, component.EggLayAction);
-        component.CurrentEggLayCooldown = _random.NextFloat(component.EggLayCooldownMin, component.EggLayCooldownMax);
+        component.NextGrowth = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(component.EggLayCooldownMin, component.EggLayCooldownMax));
     }
 
     private void OnEggLayAction(EntityUid uid, EggLayerComponent egglayer, EggLayInstantActionEvent args)
     {
+        // Cooldown is handeled by ActionAnimalLayEgg in types.yml.
         args.Handled = TryLayEgg(uid, egglayer);
     }
 
@@ -76,10 +81,10 @@ public sealed class EggLayerSystem : EntitySystem
         if (_mobState.IsDead(uid))
             return false;
 
-        // Allow infinitely laying eggs if they can't get hungry
+        // Allow infinitely laying eggs if they can't get hungry.
         if (TryComp<HungerComponent>(uid, out var hunger))
         {
-            if (hunger.CurrentHunger < egglayer.HungerUsage)
+            if (_hunger.GetHunger(hunger) < egglayer.HungerUsage)
             {
                 _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-too-hungry"), uid, uid);
                 return false;

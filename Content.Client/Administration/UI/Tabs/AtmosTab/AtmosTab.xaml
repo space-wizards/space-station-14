@@ -6,10 +6,10 @@
     Margin="4"
     MinSize="50 50">
     <GridContainer Columns="4">
-        <cc:UICommandButton Text="{Loc Add Atmos}" Command="addatmos" WindowType="{x:Type at:AddAtmosWindow}" />
-        <cc:UICommandButton Text="{Loc Add Gas}" Command="addgas" WindowType="{x:Type at:AddGasWindow}" />
-        <cc:UICommandButton Text="{Loc Fill Gas}" Command="fillgas" WindowType="{x:Type at:FillGasWindow}" />
-        <cc:UICommandButton Text="{Loc Set Temperature}" Command="settemp"
+        <cc:UICommandButton Text="{Loc admin-ui-atmos-add}" Command="addatmos" WindowType="{x:Type at:AddAtmosWindow}" />
+        <cc:UICommandButton Text="{Loc admin-ui-atmos-add-gas}" Command="addgas" WindowType="{x:Type at:AddGasWindow}" />
+        <cc:UICommandButton Text="{Loc admin-ui-atmos-fill-gas}" Command="fillgas" WindowType="{x:Type at:FillGasWindow}" />
+        <cc:UICommandButton Text="{Loc admin-ui-atmos-set-temperature}" Command="settemp"
                              WindowType="{x:Type at:SetTemperatureWindow}" />
     </GridContainer>
 </Control>

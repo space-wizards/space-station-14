@@ -13,4 +13,6 @@ admin-verbs-erase-description = Removes the player from the round and crew manif
     Their items are dropped on the ground.
     Players are shown a popup indicating them to play as if they never existed.
 toolshed-verb-mark = Mark
-toolshed-verb-mark-description = Places this entity into the $marked variable, a list of entities, replacing it's prior value.
+toolshed-verb-mark-description = Places this entity into the $marked variable, a list of entities, replacing its prior value.
+
+export-entity-verb-get-data-text = Export sprite

@@ -25,6 +25,8 @@
           color: "#FFFFFF"
           visible: false
           shader: unshaded
+        - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+          state: torch_nocloth
     - type: Icon
       sprite: Objects/Misc/torch.rsi
       state: icon

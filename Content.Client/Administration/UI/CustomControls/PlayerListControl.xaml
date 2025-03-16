@@ -5,7 +5,7 @@
     <LineEdit Name="FilterLineEdit"
               MinSize="100 0"
               HorizontalExpand="True"
-              PlaceHolder="{Loc Filter}"/>
+              PlaceHolder="{Loc player-list-filter}"/>
     <PanelContainer Name="BackgroundPanel"
                     VerticalExpand="True"
                     HorizontalExpand="True">

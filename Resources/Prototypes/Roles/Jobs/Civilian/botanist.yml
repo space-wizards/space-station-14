@@ -13,6 +13,10 @@
   extendedAccess:
   - Kitchen
   - Bar
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: FourTwenty
+    prototype: CannabisSeeds
 
 - type: startingGear
   id: BotanistGear
@@ -21,6 +25,6 @@
     id: BotanistPDA
     ears: ClothingHeadsetService
     belt: ClothingBeltPlantFilled
-  storage:
-    back:
-    - BoxSurvival
+  #storage:
+    #back:
+    #- Stuff

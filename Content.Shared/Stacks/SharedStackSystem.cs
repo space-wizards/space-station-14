@@ -223,6 +223,9 @@ namespace Content.Shared.Stacks
             foreach (var otherStack in intersecting)
             {
                 var otherEnt = otherStack.Owner;
+                // if you merge a ton of stacks together, you will end up deleting a few by accident.
+                if (TerminatingOrDeleted(otherEnt) || EntityManager.IsQueuedForDeletion(otherEnt))
+                    continue;
 
                 if (!TryMergeStacks(uid, otherEnt, out _, stack, otherStack))
                     continue;
@@ -254,7 +257,7 @@ namespace Content.Shared.Stacks
         public int GetMaxCount(string entityId)
         {
             var entProto = _prototype.Index<EntityPrototype>(entityId);
-            entProto.TryGetComponent<StackComponent>(out var stackComp);
+            entProto.TryGetComponent<StackComponent>(out var stackComp, EntityManager.ComponentFactory);
             return GetMaxCount(stackComp);
         }
 

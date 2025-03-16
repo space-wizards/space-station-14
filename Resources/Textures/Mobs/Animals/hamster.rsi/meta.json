@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Created by brainfood# 7460, hamster-0 resprite by RamZ (discord)",
+  "copyright": "Created by brainfood# 7460, hamster-0 resprite by RamZ (discord), inhands resprited by Vermidia.",
   "size": {
     "x": 32,
     "y": 32
@@ -59,11 +59,11 @@
       "name": "splat-0"
     },
     {
-      "name": "0-inhand-left",
+      "name": "inhand-left",
       "directions": 4
     },
     {
-      "name": "0-inhand-right",
+      "name": "inhand-right",
       "directions": 4
     }
   ]

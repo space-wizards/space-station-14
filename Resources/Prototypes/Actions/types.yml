@@ -37,14 +37,15 @@
   description: Turn the light on and off.
   components:
   - type: InstantAction
+    useDelay: 1
     icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
     iconOn: { sprite: Objects/Tools/flashlight.rsi, state: flashlight-on }
     event: !type:ToggleActionEvent
 
 - type: entity
   id: ActionOpenStorageImplant
-  name: Open Storage Implant
-  description: Opens the storage implant embedded under your skin
+  name: Toggle Storage Implant
+  description: Opens or closes the storage implant embedded under your skin
   components:
   - type: InstantAction
     itemIconStyle: BigAction
@@ -53,6 +54,7 @@
       sprite: Clothing/Back/Backpacks/backpack.rsi
       state: icon
     event: !type:OpenStorageImplantEvent
+    useDelay: 1
 
 - type: entity
   parent: BaseSuicideAction
@@ -151,6 +153,8 @@
   name: Scramble DNA
   description:  Randomly changes your name and appearance.
   components:
+  - type: ConfirmableAction
+    popup: dna-scrambler-action-popup
   - type: InstantAction
     charges: 1
     itemIconStyle: BigAction
@@ -159,20 +163,6 @@
       sprite: Clothing/OuterClothing/Hardsuits/lingspacesuit.rsi
       state: icon
     event: !type:UseDnaScramblerImplantEvent
-
-- type: entity
-  id: ActionMorphGeras
-  name: Morph into Geras
-  description:  Morphs you into a Geras - a miniature version of you which allows you to move fast, at the cost of your inventory.
-  components:
-  - type: InstantAction
-    itemIconStyle: BigAction
-    useDelay: 10 # prevent spam
-    priority: -20
-    icon:
-      sprite: Mobs/Aliens/slimes.rsi
-      state: blue_adult_slime
-    event: !type:MorphIntoGeras
 
 - type: entity
   id: ActionToggleSuitPiece
@@ -292,6 +282,8 @@
     checkCanInteract: false
     checkConsciousness: false
     event: !type:WakeActionEvent
+    startDelay: true
+    useDelay: 2
 
 - type: entity
   id: ActionActivateHonkImplant
@@ -329,8 +321,8 @@
 
 - type: entity
   id: ActionToggleWagging
-  name: action-name-toggle-wagging
-  description: action-description-toggle-wagging
+  name: Wagging Tail
+  description: Start or stop wagging your tail.
   components:
     - type: InstantAction
       icon: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
@@ -338,3 +330,28 @@
       itemIconStyle: NoItem
       useDelay: 1 # emote spam
       event: !type:ToggleActionEvent
+
+- type: entity
+  id: FakeMindShieldToggleAction
+  name: '[color=green]Toggle Fake Mindshield[/color]'
+  description: Turn the Fake Mindshield implant's transmission on/off
+  components:
+  - type: InstantAction
+    icon: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon }
+    iconOn: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
+    itemIconStyle: NoItem
+    useDelay: 1
+    event: !type:FakeMindShieldToggleEvent
+
+- type: entity
+  id: ActionToggleParamedicSiren
+  name: Toggle Paramedic Siren
+  description: Toggles the paramedic siren on and off.
+  components:
+  - type: InstantAction 
+    icon:
+      sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+      state: icon-siren
+    useDelay: 1
+    itemIconStyle: BigAction
+    event: !type:ToggleActionEvent

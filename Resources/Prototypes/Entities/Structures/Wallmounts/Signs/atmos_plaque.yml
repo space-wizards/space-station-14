@@ -14,6 +14,7 @@
         layer:
         - MidImpassable
   - type: Sprite
+    drawdepth: WallMountedItems
     layers:
       - state: atmosplaque
         map: ["plaque"]

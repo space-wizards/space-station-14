@@ -169,7 +169,7 @@ public sealed partial class MindTests
     {
         var netManager = pair.Client.ResolveDependency<IClientNetManager>();
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
-        Assert.That(!playerMan.Sessions.Any());
+        Assert.That(playerMan.Sessions, Is.Empty);
 
         await Task.WhenAll(pair.Client.WaitIdleAsync(), pair.Client.WaitIdleAsync());
         pair.Client.SetConnectTarget(pair.Server);

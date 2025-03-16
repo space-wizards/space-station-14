@@ -63,12 +63,6 @@ public sealed partial class ZombieComponent : Component
     public string ZombieRoleId = "Zombie";
 
     /// <summary>
-    /// The EntityName of the humanoid to restore in case of cloning
-    /// </summary>
-    [DataField("beforeZombifiedEntityName"), ViewVariables(VVAccess.ReadOnly)]
-    public string BeforeZombifiedEntityName = string.Empty;
-
-    /// <summary>
     /// The CustomBaseLayers of the humanoid to restore in case of cloning
     /// </summary>
     [DataField("beforeZombifiedCustomBaseLayers")]
@@ -95,7 +89,7 @@ public sealed partial class ZombieComponent : Component
     public TimeSpan NextTick;
 
     [DataField("zombieStatusIcon")]
-    public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "ZombieFaction";
+    public ProtoId<FactionIconPrototype> StatusIcon { get; set; } = "ZombieFaction";
 
     /// <summary>
     /// Healing each second

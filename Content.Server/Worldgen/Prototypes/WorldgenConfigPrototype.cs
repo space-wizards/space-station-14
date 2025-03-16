@@ -30,7 +30,6 @@ public sealed partial class WorldgenConfigPrototype : IPrototype
         foreach (var data in Components.Values)
         {
             var comp = (Component) serialization.CreateCopy(data.Component, notNullableOverride: true);
-            comp.Owner = target; // look im sorry ok this .owner has to live until engine api exists
             entityManager.AddComponent(target, comp);
         }
     }

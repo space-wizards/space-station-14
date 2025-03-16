@@ -1,11 +1,11 @@
 using System.Linq;
-using System.Numerics;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
-using Content.Shared.Fax;
+using Content.Shared.CCVar;
 using Content.Shared.Station;
+using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -30,7 +30,6 @@ public sealed class StationSystem : EntitySystem
 {
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -38,10 +37,19 @@ public sealed class StationSystem : EntitySystem
 
     private ISawmill _sawmill = default!;
 
+    private EntityQuery<MapGridComponent> _gridQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
+
+    private ValueList<MapId> _mapIds = new();
+    private ValueList<(Box2Rotated Bounds, MapId MapId)> _gridBounds = new();
+
     /// <inheritdoc/>
     public override void Initialize()
     {
         _sawmill = _logManager.GetSawmill("station");
+
+        _gridQuery = GetEntityQuery<MapGridComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
         SubscribeLocalEvent<PostGameMapLoad>(OnPostGameMapLoad);
@@ -212,45 +220,72 @@ public sealed class StationSystem : EntitySystem
     /// </summary>
     public Filter GetInStation(StationDataComponent dataComponent, float range = 32f)
     {
-        // Could also use circles if you wanted.
-        var bounds = new ValueList<Box2>(dataComponent.Grids.Count);
         var filter = Filter.Empty();
-        var mapIds = new ValueList<MapId>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
+        _mapIds.Clear();
 
+        // First collect all valid map IDs where station grids exist
         foreach (var gridUid in dataComponent.Grids)
         {
-            if (!TryComp(gridUid, out MapGridComponent? grid) ||
-                !xformQuery.TryGetComponent(gridUid, out var xform))
+            if (!_xformQuery.TryGetComponent(gridUid, out var xform))
                 continue;
 
             var mapId = xform.MapID;
-            var position = _transform.GetWorldPosition(xform, xformQuery);
-            var bound = grid.LocalAABB.Enlarged(range).Translated(position);
+            if (!_mapIds.Contains(mapId))
+                _mapIds.Add(mapId);
+        }
 
-            bounds.Add(bound);
-            if (!mapIds.Contains(mapId))
+        // Cache the rotated bounds for each grid
+        _gridBounds.Clear();
+
+        foreach (var gridUid in dataComponent.Grids)
+        {
+            if (!_gridQuery.TryComp(gridUid, out var grid) ||
+                !_xformQuery.TryGetComponent(gridUid, out var gridXform))
             {
-                mapIds.Add(xform.MapID);
+                continue;
             }
+
+            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(gridXform);
+            var localBounds = grid.LocalAABB.Enlarged(range);
+
+            // Create a rotated box using the grid's transform
+            var rotatedBounds = new Box2Rotated(
+                localBounds,
+                worldRot,
+                worldPos);
+
+            _gridBounds.Add((rotatedBounds, gridXform.MapID));
         }
 
         foreach (var session in Filter.GetAllPlayers(_player))
         {
             var entity = session.AttachedEntity;
-            if (entity == null || !xformQuery.TryGetComponent(entity, out var xform))
+            if (entity == null || !_xformQuery.TryGetComponent(entity, out var xform))
                 continue;
 
             var mapId = xform.MapID;
 
-            if (!mapIds.Contains(mapId))
+            if (!_mapIds.Contains(mapId))
                 continue;
 
-            var position = _transform.GetWorldPosition(xform, xformQuery);
-
-            foreach (var bound in bounds)
+            // Check if the player is directly on any station grid
+            var gridUid = xform.GridUid;
+            if (gridUid != null && dataComponent.Grids.Contains(gridUid.Value))
             {
-                if (!bound.Contains(position))
+                filter.AddPlayer(session);
+                continue;
+            }
+
+            // If not directly on a grid, check against cached rotated bounds
+            var position = _transform.GetWorldPosition(xform);
+
+            foreach (var (bounds, boundsMapId) in _gridBounds)
+            {
+                // Skip bounds on different maps
+                if (boundsMapId != mapId)
+                    continue;
+
+                if (!bounds.Contains(position))
                     continue;
 
                 filter.AddPlayer(session);
@@ -282,50 +317,10 @@ public sealed class StationSystem : EntitySystem
         var data = Comp<StationDataComponent>(station);
         name ??= MetaData(station).EntityName;
 
-        var entry = gridIds ?? Array.Empty<EntityUid>();
-
-        foreach (var grid in entry)
+        foreach (var grid in gridIds ?? Array.Empty<EntityUid>())
         {
             AddGridToStation(station, grid, null, data, name);
         }
-
-        if (TryComp<StationRandomTransformComponent>(station, out var random))
-        {
-            Angle? rotation = null;
-            Vector2? offset = null;
-
-            if (random.MaxStationOffset != null)
-                offset = _random.NextVector2(-random.MaxStationOffset.Value, random.MaxStationOffset.Value);
-
-            if (random.EnableStationRotation)
-                rotation = _random.NextAngle();
-
-            foreach (var grid in entry)
-            {
-                //planetary maps give an error when trying to change from position or rotation.
-                //This is still the case, but it will be irrelevant after the https://github.com/space-wizards/space-station-14/pull/26510
-                if (rotation != null && offset != null)
-                {
-                    var pos = _transform.GetWorldPosition(grid);
-                    _transform.SetWorldPositionRotation(grid, pos + offset.Value, rotation.Value);
-                    continue;
-                }
-                if (rotation != null)
-                {
-                    _transform.SetWorldRotation(grid, rotation.Value);
-                    continue;
-                }
-                if (offset != null)
-                {
-                    var pos = _transform.GetWorldPosition(grid);
-                    _transform.SetWorldPosition(grid, pos + offset.Value);
-                    continue;
-                }
-            }
-        }
-
-        if (LifeStage(station) < EntityLifeStage.MapInitialized)
-            throw new Exception($"Station must be man-initialized");
 
         var ev = new StationPostInitEvent((station, data));
         RaiseLocalEvent(station, ref ev, true);

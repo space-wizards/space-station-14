@@ -25,6 +25,7 @@
   - Salvage
   - Quartermaster
   - Maintenance
+  - External
   - Command
   - Brig
   - Cryogenics
@@ -44,5 +45,4 @@
     pocket1: AppraisalTool
   storage:
     back:
-    - BoxSurvival
     - Flash

@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Containers;
 using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
@@ -17,6 +18,7 @@ using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Explosion;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
@@ -24,7 +26,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
-using Content.Shared.Throwing;
+using Content.Shared.Power;
 using Content.Shared.Verbs;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
@@ -34,7 +36,6 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Disposal.Unit.EntitySystems;
@@ -55,6 +56,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override void Initialize()
     {
@@ -76,12 +78,15 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         SubscribeLocalEvent<DisposalUnitComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
         SubscribeLocalEvent<DisposalUnitComponent, DragDropTargetEvent>(OnDragDropOn);
         SubscribeLocalEvent<DisposalUnitComponent, DestructionEventArgs>(OnDestruction);
+        SubscribeLocalEvent<DisposalUnitComponent, BeforeExplodeEvent>(OnExploded);
 
         SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<InteractionVerb>>(AddInsertVerb);
         SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<AlternativeVerb>>(AddDisposalAltVerbs);
         SubscribeLocalEvent<DisposalUnitComponent, GetVerbsEvent<Verb>>(AddClimbInsideVerb);
 
         SubscribeLocalEvent<DisposalUnitComponent, DisposalDoAfterEvent>(OnDoAfter);
+
+        SubscribeLocalEvent<DisposalUnitComponent, BeforeThrowInsertEvent>(OnThrowInsert);
 
         SubscribeLocalEvent<DisposalUnitComponent, SharedDisposalUnitComponent.UiButtonPressedMessage>(OnUiButtonPressed);
     }
@@ -191,6 +196,12 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         AfterInsert(uid, component, args.Args.Target.Value, args.Args.User, doInsert: true);
 
         args.Handled = true;
+    }
+
+    private void OnThrowInsert(Entity<DisposalUnitComponent> ent, ref BeforeThrowInsertEvent args)
+    {
+        if (!CanInsert(ent, ent, args.ThrownEntity))
+            args.Cancelled = true;
     }
 
     public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)
@@ -318,9 +329,10 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             return;
         }
 
-        if (component.Engaged && !TryFlush(uid, component))
+        if (component.Engaged)
         {
-            QueueAutomaticEngage(uid, component);
+            // Run ManualEngage to recalculate a new flush time
+            ManualEngage(uid, component);
         }
     }
 
@@ -329,12 +341,13 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         var currentTime = GameTiming.CurTime;
 
+        if (!_actionBlockerSystem.CanMove(args.Entity))
+            return;
+
         if (!TryComp(args.Entity, out HandsComponent? hands) ||
             hands.Count == 0 ||
             currentTime < component.LastExitAttempt + ExitAttemptDelay)
-        {
             return;
-        }
 
         component.LastExitAttempt = currentTime;
         Remove(uid, component, args.Entity);
@@ -473,7 +486,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         var delay = insertingSelf ? unit.EntryDelay : unit.DraggedEntryDelay;
 
         if (userId != null && !insertingSelf)
-            _popupSystem.PopupEntity(Loc.GetString("disposal-unit-being-inserted", ("user", Identity.Entity((EntityUid) userId, EntityManager))), toInsertId, toInsertId, PopupType.Large);
+            _popupSystem.PopupEntity(Loc.GetString("disposal-unit-being-inserted", ("user", Identity.Entity((EntityUid)userId, EntityManager))), toInsertId, toInsertId, PopupType.Large);
 
         if (delay <= 0 || userId == null)
         {
@@ -487,7 +500,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         {
             BreakOnDamage = true,
             BreakOnMove = true,
-            NeedHand = false
+            NeedHand = false,
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
@@ -519,7 +532,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             return false;
 
         var coords = xform.Coordinates;
-        var entry = grid.GetLocal(coords)
+        var entry = _map.GetLocal(xform.GridUid.Value, grid, coords)
             .FirstOrDefault(HasComp<DisposalEntryComponent>);
 
         if (entry == default || component is not DisposalUnitComponent sDisposals)
@@ -778,6 +791,12 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         Joints.RecursiveClearJoints(inserted);
         UpdateVisualState(uid, component);
     }
+
+    private void OnExploded(Entity<DisposalUnitComponent> ent, ref BeforeExplodeEvent args)
+    {
+        args.Contents.AddRange(ent.Comp.Container.ContainedEntities);
+    }
+
 }
 
 /// <summary>

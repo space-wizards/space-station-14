@@ -11,6 +11,7 @@ using Content.Shared.Throwing;
 
 namespace Content.Shared.Administration;
 
+// TODO deduplicate with BlockMovementComponent
 public abstract class SharedAdminFrozenSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
@@ -23,7 +24,7 @@ public abstract class SharedAdminFrozenSystem : EntitySystem
         SubscribeLocalEvent<AdminFrozenComponent, UseAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, PickupAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, ThrowAttemptEvent>(OnAttempt);
-        SubscribeLocalEvent<AdminFrozenComponent, InteractionAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<AdminFrozenComponent, InteractionAttemptEvent>(OnInteractAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<AdminFrozenComponent, ComponentShutdown>(UpdateCanMove);
         SubscribeLocalEvent<AdminFrozenComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
@@ -32,6 +33,11 @@ public abstract class SharedAdminFrozenSystem : EntitySystem
         SubscribeLocalEvent<AdminFrozenComponent, ChangeDirectionAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, EmoteAttemptEvent>(OnEmoteAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+    }
+
+    private void OnInteractAttempt(Entity<AdminFrozenComponent> ent, ref InteractionAttemptEvent args)
+    {
+        args.Cancelled = true;
     }
 
     private void OnSpeakAttempt(EntityUid uid, AdminFrozenComponent component, SpeakAttemptEvent args)

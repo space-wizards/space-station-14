@@ -15,12 +15,16 @@
   - Maintenance
   extendedAccess:
   - Chemistry
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: DoctorDay
+    prototype: WehMedipen
 
 - type: startingGear
   id: DoctorGear
   equipment:
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
-  storage:
-    back:
-    - BoxSurvivalMedical
+  #storage:
+    #back:
+    #- Stuff

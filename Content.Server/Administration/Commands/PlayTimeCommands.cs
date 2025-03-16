@@ -93,7 +93,7 @@ public sealed class PlayTimeAddRoleCommand : IConsoleCommand
         }
 
         _playTimeTracking.AddTimeToTracker(player, role, TimeSpan.FromMinutes(minutes));
-        var time = _playTimeTracking.GetOverallPlaytime(player);
+        var time = _playTimeTracking.GetPlayTimeForTracker(player, role);
         shell.WriteLine(Loc.GetString("cmd-playtime_addrole-succeed",
             ("username", userName),
             ("role", role),

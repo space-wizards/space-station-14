@@ -346,13 +346,6 @@ entities:
     - type: Transform
       pos: 0.5,5.5
       parent: 1
-- proto: BloodTomatoSeeds
-  entities:
-  - uid: 51
-    components:
-    - type: Transform
-      pos: 4.5964127,8.285444
-      parent: 1
 - proto: BookshelfFilled
   entities:
   - uid: 62
@@ -538,13 +531,6 @@ entities:
     - type: Transform
       pos: 0.5,1.5
       parent: 1
-- proto: CrateFunATV
-  entities:
-  - uid: 77
-    components:
-    - type: Transform
-      pos: 6.5,4.5
-      parent: 1
 - proto: CrateStoneGrave
   entities:
   - uid: 34
@@ -629,6 +615,13 @@ entities:
     components:
     - type: Transform
       pos: 6.5,5.5
+      parent: 1
+- proto: KillerTomatoSeeds
+  entities:
+  - uid: 51
+    components:
+    - type: Transform
+      pos: 4.6947265,8.268279
       parent: 1
 - proto: Lamp
   entities:

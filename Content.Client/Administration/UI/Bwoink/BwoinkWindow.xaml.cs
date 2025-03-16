@@ -18,19 +18,20 @@ namespace Content.Client.Administration.UI.Bwoink
             {
                 if (sel is null)
                 {
-                    Title = Loc.GetString("bwoink-none-selected");
+                    Title = Loc.GetString("bwoink-title-none-selected");
                     return;
                 }
 
-                Title = $"{sel.CharacterName} / {sel.Username}";
+                Title = $"{sel.CharacterName} / {sel.Username} | {Loc.GetString("generic-playtime-title")}: ";
 
-                if (sel.OverallPlaytime != null)
-                {
-                    Title += $" | {Loc.GetString("generic-playtime-title")}: {sel.PlaytimeString}";
-                }
+                Title += sel.OverallPlaytime != null ? sel.PlaytimeString : Loc.GetString("generic-unknown-title");
             };
 
-            OnOpen += () => Bwoink.PopulateList();
+            OnOpen += () =>
+            {
+                Bwoink.ChannelSelector.StopFiltering();
+                Bwoink.PopulateList();
+            };
         }
     }
 }

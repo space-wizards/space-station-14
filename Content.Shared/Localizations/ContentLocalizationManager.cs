@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Robust.Shared.Utility;
@@ -36,6 +36,7 @@ namespace Content.Shared.Localizations
             _loc.AddFunction(culture, "LOC", FormatLoc);
             _loc.AddFunction(culture, "NATURALFIXED", FormatNaturalFixed);
             _loc.AddFunction(culture, "NATURALPERCENT", FormatNaturalPercent);
+            _loc.AddFunction(culture, "PLAYTIME", FormatPlaytime);
 
 
             /*
@@ -120,11 +121,36 @@ namespace Content.Shared.Localizations
         }
 
         /// <summary>
+        /// Formats a list as per english grammar rules, but uses or instead of and.
+        /// </summary>
+        public static string FormatListToOr(List<string> list)
+        {
+            return list.Count switch
+            {
+                <= 0 => string.Empty,
+                1 => list[0],
+                2 => $"{list[0]} or {list[1]}",
+                _ => $"{string.Join(" or ", list)}"
+            };
+        }
+
+        /// <summary>
         /// Formats a direction struct as a human-readable string.
         /// </summary>
         public static string FormatDirection(Direction dir)
         {
             return Loc.GetString($"zzzz-fmt-direction-{dir.ToString()}");
+        }
+
+        /// <summary>
+        /// Formats playtime as hours and minutes.
+        /// </summary>
+        public static string FormatPlaytime(TimeSpan time)
+        {
+            time = TimeSpan.FromMinutes(Math.Ceiling(time.TotalMinutes));
+            var hours = (int)time.TotalHours;
+            var minutes = time.Minutes;
+            return Loc.GetString($"zzzz-fmt-playtime", ("hours", hours), ("minutes", minutes));
         }
 
         private static ILocValue FormatLoc(LocArgs args)
@@ -214,6 +240,16 @@ namespace Content.Shared.Localizations
             );
 
             return new LocValueString(res);
+        }
+
+        private static ILocValue FormatPlaytime(LocArgs args)
+        {
+            var time = TimeSpan.Zero;
+            if (args.Args is { Count: > 0 } && args.Args[0].Value is TimeSpan timeArg)
+            {
+                time = timeArg;
+            }
+            return new LocValueString(FormatPlaytime(time));
         }
     }
 }

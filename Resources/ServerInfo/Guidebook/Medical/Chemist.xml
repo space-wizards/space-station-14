@@ -1,31 +1,33 @@
 <Document>
 # Chemist
-Now you've done it, you picked the one job where -math- is mandatory. Grab your beaker, pull up a chair, and get cracking, it's time to cook up some chems.
+Now you've done it. You picked the one job where -math- is mandatory. Grab your beaker, pull up a chair, and get cracking, it's time to cook up some chems.
 
-While chemists primarily make medications, there's a very wide variety of chemicals that can be made, all of which are showcased in the Chemicals section of the Guidebook.
+While chemists primarily make medications, there's a very wide variety of chemicals that can be made, all of which are showcased in the Chemicals entry of the Guidebook.
+
+[textlink="Click here to see a complete list of chemicals." link="Chemicals"]
 
 ## Equipment:
 
-<Box>
-<GuideEntityEmbed Entity="ChemDispenser"/>
-<GuideEntityEmbed Entity="ChemBag"/>
-<GuideEntityEmbed Entity="KitchenReagentGrinder"/>
-<GuideEntityEmbed Entity="ChemMaster"/>
-</Box>
-<Box>
-<GuideEntityEmbed Entity="LargeBeaker"/>
-<GuideEntityEmbed Entity="ChemistryEmptyBottle01"/>
-<GuideEntityEmbed Entity="HandLabeler"/>
-<GuideEntityEmbed Entity="Syringe"/>
-<GuideEntityEmbed Entity="PillCanister"/>
-</Box>
+  <Box>
+    <GuideEntityEmbed Entity="ChemDispenser"/>
+    <GuideEntityEmbed Entity="ChemBag"/>
+    <GuideEntityEmbed Entity="KitchenReagentGrinder"/>
+    <GuideEntityEmbed Entity="ChemMaster"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="LargeBeaker"/>
+    <GuideEntityEmbed Entity="ChemistryEmptyBottle01"/>
+    <GuideEntityEmbed Entity="HandLabeler"/>
+    <GuideEntityEmbed Entity="Syringe"/>
+    <GuideEntityEmbed Entity="PillCanister"/>
+  </Box>
 
 ## The Basics:
 Chemistry is fairly straightforward once you know what to expect. Here's a simple, step-by-step process on how to begin.
 
 - Grab a beaker, Pill Canister, and if desired, some Bottles.
 - Place the beaker in the Chemical Dispenser, and Pill Canister (or bottle) in the Chem Master.
-- Open the Chemical Dispenser UI, and make your mix. Recipies are in other sections of the guidebook.
+- Open the Chemical Dispenser UI, and make your mix. Recipes are in other sections of the guidebook.
 - Alt-click the dispenser to remove your beaker, and place it in the Chem Master.
 - Open the Chem Master UI. On the Input tab, move your mix into the buffer.
 - Move to the Output tab, customise your pill, and press the Create button.
@@ -40,11 +42,10 @@ You can also use the hand labeler to organize individual bottles or bags without
 
 Speaking of experimentation, there are a few more toy you can use when it comes to chemistry. This job requires a lot of trial and error, but it was worth mentioning that these things exist! It's up to you to figure out what to make with them.
 
-<Box>
-<GuideEntityEmbed Entity="ModularGrenade"/>
-<GuideEntityEmbed Entity="CableApcStack"/>
-<GuideEntityEmbed Entity="ChemicalPayload"/>
-<GuideEntityEmbed Entity="TimerTrigger"/>
-</Box>
-
+  <Box>
+    <GuideEntityEmbed Entity="ModularGrenade"/>
+    <GuideEntityEmbed Entity="CableApcStack"/>
+    <GuideEntityEmbed Entity="ChemicalPayload"/>
+    <GuideEntityEmbed Entity="TimerTrigger"/>
+  </Box>
 </Document>

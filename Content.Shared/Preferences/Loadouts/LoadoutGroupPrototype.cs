@@ -9,7 +9,7 @@ namespace Content.Shared.Preferences.Loadouts;
 public sealed partial class LoadoutGroupPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = string.Empty;
+    public string ID { get; private set; } = string.Empty;
 
     /// <summary>
     /// User-friendly name for the group.
@@ -28,6 +28,12 @@ public sealed partial class LoadoutGroupPrototype : IPrototype
     /// </summary>
     [DataField]
     public int MaxLimit = 1;
+
+    /// <summary>
+    /// Hides the loadout group from the player.
+    /// </summary>
+    [DataField]
+    public bool Hidden;
 
     [DataField(required: true)]
     public List<ProtoId<LoadoutPrototype>> Loadouts = new();

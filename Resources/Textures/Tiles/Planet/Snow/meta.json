@@ -9,31 +9,31 @@
       "name": "snow"
     },
     {
-      "name": "snow_double_edge_south",
+      "name": "snow_double_edge_south"
     },
     {
-      "name": "snow_double_edge_east",
+      "name": "snow_double_edge_east"
     },
     {
-      "name": "snow_double_edge_north",
+      "name": "snow_double_edge_north"
     },
     {
-      "name": "snow_double_edge_west",
+      "name": "snow_double_edge_west"
     },
     {
       "name": "snow_dug"
     },
     {
-      "name": "snow_dug_double_edge_south",
+      "name": "snow_dug_double_edge_south"
     },
     {
-      "name": "snow_dug_double_edge_east",
+      "name": "snow_dug_double_edge_east"
     },
     {
-      "name": "snow_dug_double_edge_north",
+      "name": "snow_dug_double_edge_north"
     },
     {
-      "name": "snow_dug_double_edge_west",
+      "name": "snow_dug_double_edge_west"
     },
     {
       "name": "plating"

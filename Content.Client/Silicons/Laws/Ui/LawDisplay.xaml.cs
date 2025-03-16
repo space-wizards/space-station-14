@@ -9,6 +9,8 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Silicons.Laws.Ui;
 
@@ -17,7 +19,12 @@ public sealed partial class LawDisplay : Control
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
+
+    private static readonly TimeSpan PressCooldown = TimeSpan.FromSeconds(3);
+
+    private readonly Dictionary<Button, TimeSpan> _nextAllowedPress = new();
 
     public LawDisplay(EntityUid uid, SiliconLaw law, HashSet<string>? radioChannels)
     {
@@ -27,6 +34,8 @@ public sealed partial class LawDisplay : Control
         var identifier = law.LawIdentifierOverride ?? $"{law.Order}";
         var lawIdentifier = Loc.GetString("laws-ui-law-header", ("id", identifier));
         var lawDescription = Loc.GetString(law.LawString);
+        var lawIdentifierPlaintext = FormattedMessage.RemoveMarkupPermissive(lawIdentifier);
+        var lawDescriptionPlaintext = FormattedMessage.RemoveMarkupPermissive(lawDescription);
 
         LawNumberLabel.SetMarkup(lawIdentifier);
         LawLabel.SetMessage(lawDescription);
@@ -44,9 +53,12 @@ public sealed partial class LawDisplay : Control
             MinWidth = 75,
         };
 
+        _nextAllowedPress[localButton] = TimeSpan.Zero;
+
         localButton.OnPressed += _ =>
         {
-            _chatManager.SendMessage($"{lawIdentifier}: {lawDescription}", ChatSelectChannel.Local);
+            _chatManager.SendMessage($"{lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Local);
+            _nextAllowedPress[localButton] = _timing.CurTime + PressCooldown;
         };
 
         LawAnnouncementButtons.AddChild(localButton);
@@ -68,18 +80,32 @@ public sealed partial class LawDisplay : Control
                 MinWidth = 75,
             };
 
+            _nextAllowedPress[radioChannelButton] = TimeSpan.Zero;
+
             radioChannelButton.OnPressed += _ =>
             {
                 switch (radioChannel)
                 {
                     case SharedChatSystem.CommonChannel:
-                        _chatManager.SendMessage($"{SharedChatSystem.RadioCommonPrefix} {lawIdentifier}: {lawDescription}", ChatSelectChannel.Radio); break;
+                        _chatManager.SendMessage($"{SharedChatSystem.RadioCommonPrefix} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Radio); break;
                     default:
-                        _chatManager.SendMessage($"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode} {lawIdentifier}: {lawDescription}", ChatSelectChannel.Radio); break;
+                        _chatManager.SendMessage($"{SharedChatSystem.RadioChannelPrefix}{radioChannelProto.KeyCode} {lawIdentifierPlaintext}: {lawDescriptionPlaintext}", ChatSelectChannel.Radio); break;
                 }
+                _nextAllowedPress[radioChannelButton] = _timing.CurTime + PressCooldown;
             };
 
             LawAnnouncementButtons.AddChild(radioChannelButton);
+        }
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
+
+        var curTime = _timing.CurTime;
+        foreach (var (button, nextPress) in _nextAllowedPress)
+        {
+            button.Disabled = curTime < nextPress;
         }
     }
 }

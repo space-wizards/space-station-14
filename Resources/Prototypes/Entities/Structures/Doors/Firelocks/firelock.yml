@@ -17,12 +17,15 @@
     - type: DeviceNetworkRequiresPower
     - type: InteractionOutline
     - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
+      damageContainer: StructuralInorganic
+      damageModifierSet: StructuralMetallicStrong
     - type: RCDDeconstructable
       cost: 4
       delay: 6
       fx: EffectRCDDeconstruct6
+    - type: Tag
+      tags:
+      - ForceFixRotations # Allow fixrotations to target these
     - type: Destructible
       thresholds:
       - trigger:
@@ -109,11 +112,24 @@
       access: [ [ "Engineering" ] ]
     - type: PryUnpowered
       pryModifier: 0.5
+    - type: PointLight
+      energy: 0.5
+      radius: 1.75
+      color: Red
+      enabled: false
+      castShadows: false
+    - type: NavMapDoor
+    - type: GuideHelp
+      guides:
+      - FireAndGasControl
+      - Fires
+      - Spacing
 
 - type: entity
   id: Firelock
   parent: BaseFirelock
   components:
+  - type: StationAiWhitelist
   - type: ContainerContainer
     containers:
       board: !type:Container
@@ -131,6 +147,7 @@
   parent: Firelock
   name: glass firelock
   components:
+    - type: StationAiWhitelist
     - type: Sprite
       sprite: Structures/Doors/Airlocks/Glass/firelock.rsi
     - type: Occluder
@@ -156,6 +173,7 @@
   parent: Firelock
   name: firelock
   components:
+    - type: StationAiWhitelist
     - type: Sprite
       sprite: Structures/Doors/edge_door_hazard.rsi
       snapCardinals: false
@@ -177,6 +195,9 @@
           - GlassAirlockLayer
     - type: Occluder
       enabled: false
+    - type: Tag
+      tags:
+      - ForceNoFixRotations # Prevent fixrotations from targeting these, since the base Firelock is targeted
     - type: Door
       occludes: false
     - type: Physics

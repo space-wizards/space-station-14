@@ -1,4 +1,5 @@
 using Content.Shared.Access;
+using Content.Shared.Guidebook;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
@@ -19,6 +20,9 @@ namespace Content.Shared.Roles
         [DataField("playTimeTracker", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
         public string PlayTimeTracker { get; private set; } = string.Empty;
 
+        /// <summary>
+        ///     Who is the supervisor for this job.
+        /// </summary>
         [DataField("supervisors")]
         public string Supervisors { get; private set; } = "nobody";
 
@@ -40,17 +44,35 @@ namespace Content.Shared.Roles
         [ViewVariables(VVAccess.ReadOnly)]
         public string? LocalizedDescription => Description is null ? null : Loc.GetString(Description);
 
-        [DataField("requirements")]
+        /// <summary>
+        ///     Requirements for the job.
+        /// </summary>
+        [DataField, Access(typeof(SharedRoleSystem), Other = AccessPermissions.None)]
         public HashSet<JobRequirement>? Requirements;
 
+        /// <summary>
+        ///     When true - the station will have anouncement about arrival of this player.
+        /// </summary>
         [DataField("joinNotifyCrew")]
         public bool JoinNotifyCrew { get; private set; } = false;
 
+        /// <summary>
+        ///     When true - the player will recieve a message about importancy of their job.
+        /// </summary>
         [DataField("requireAdminNotify")]
         public bool RequireAdminNotify { get; private set; } = false;
 
+        /// <summary>
+        ///     Should this job appear in preferences menu?
+        /// </summary>
         [DataField("setPreference")]
         public bool SetPreference { get; private set; } = true;
+
+        /// <summary>
+        ///     Should the selected traits be applied for this job?
+        /// </summary>
+        [DataField]
+        public bool ApplyTraits { get; private set; } = true;
 
         /// <summary>
         ///     Whether this job should show in the ID Card Console.
@@ -63,8 +85,8 @@ namespace Content.Shared.Roles
         public bool CanBeAntag { get; private set; } = true;
 
         /// <summary>
-        ///     Whether this job is a head.
-        ///     The job system will try to pick heads before other jobs on the same priority level.
+        ///     The "weight" or importance of this job. If this number is large, the job system will assign this job
+        ///     before assigning other jobs.
         /// </summary>
         [DataField("weight")]
         public int Weight { get; private set; }
@@ -86,8 +108,8 @@ namespace Content.Shared.Roles
         [DataField("antagAdvantage")]
         public int AntagAdvantage = 0;
 
-        [DataField("startingGear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>))]
-        public string? StartingGear { get; private set; }
+        [DataField]
+        public ProtoId<StartingGearPrototype>? StartingGear { get; private set; }
 
         /// <summary>
         /// Use this to spawn in as a non-humanoid (borg, test subject, etc.)
@@ -97,8 +119,15 @@ namespace Content.Shared.Roles
         [DataField("jobEntity", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? JobEntity = null;
 
+        /// <summary>
+        /// Entity to use as a preview in the lobby/character editor.
+        /// Same restrictions as <see cref="JobEntity"/> apply.
+        /// </summary>
         [DataField]
-        public ProtoId<StatusIconPrototype> Icon { get; private set; } = "JobIconUnknown";
+        public EntProtoId? JobPreviewEntity = null;
+
+        [DataField]
+        public ProtoId<JobIconPrototype> Icon { get; private set; } = "JobIconUnknown";
 
         [DataField("special", serverOnly: true)]
         public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();
@@ -117,6 +146,13 @@ namespace Content.Shared.Roles
 
         [DataField]
         public bool Whitelisted;
+
+        /// <summary>
+        /// Optional list of guides associated with this role. If the guides are opened, the first entry in this list
+        /// will be used to select the currently selected guidebook.
+        /// </summary>
+        [DataField]
+        public List<ProtoId<GuideEntryPrototype>>? Guides;
     }
 
     /// <summary>

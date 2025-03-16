@@ -1,4 +1,5 @@
-﻿using Content.Shared.DoAfter;
+﻿using Content.Shared.Alert;
+using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Internals;
@@ -7,3 +8,5 @@ namespace Content.Shared.Internals;
 public sealed partial class InternalsDoAfterEvent : SimpleDoAfterEvent
 {
 }
+
+public sealed partial class ToggleInternalsAlertEvent : BaseAlertEvent;

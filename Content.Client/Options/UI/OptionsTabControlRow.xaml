@@ -1,0 +1,18 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+    <controls:StripeBack HasBottomEdge="False">
+        <BoxContainer Orientation="Horizontal" Align="End" Margin="2">
+            <Button Name="DefaultButton"
+                    Text="{Loc 'ui-options-default'}"
+                    TextAlign="Center"
+                    Margin="8 0" />
+
+            <Button Name="ResetButton"
+                    Text="{Loc 'ui-options-reset-all'}"
+                    StyleClasses="Caution" />
+            <Button Name="ApplyButton"
+                    Text="{Loc 'ui-options-apply'}"
+                    StyleClasses="OpenLeft" />
+        </BoxContainer>
+    </controls:StripeBack>
+</Control>

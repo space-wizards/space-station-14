@@ -70,16 +70,9 @@ public abstract partial class SharedToolSystem
         tool.Qualities = current.Behavior;
 
         // TODO: Replace this with a better solution later
-        if (TryComp<PryingComponent>(uid, out var pcomp))
+        if (TryComp<PryingComponent>(uid, out var pryComp))
         {
-            if (current.Behavior.Contains("Prying"))
-            {
-                pcomp.Enabled = true;
-            }
-            else
-            {
-                pcomp.Enabled = false;
-            }
+            pryComp.Enabled = current.Behavior.Contains("Prying");
         }
 
         if (playSound && current.ChangeSound != null)

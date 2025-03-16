@@ -192,6 +192,11 @@ public sealed partial class StaminaSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, EntityUid target)
     {
+        // you can't inflict stamina damage on things with no stamina component
+        // this prevents stun batons from using up charges when throwing it at lockers or lights
+        if (!HasComp<StaminaComponent>(target))
+            return;
+
         var ev = new StaminaDamageOnHitAttemptEvent();
         RaiseLocalEvent(uid, ref ev);
         if (ev.Cancelled)

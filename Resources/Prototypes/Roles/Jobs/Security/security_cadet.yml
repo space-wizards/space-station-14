@@ -28,7 +28,7 @@
 - type: startingGear
   id: SecurityCadetGear
   equipment:
-    shoes: ClothingShoesBootsCombatFilled
+    shoes: ClothingShoesBootsJackFilled
     outerClothing: ClothingOuterArmorBasic
     id: SecurityCadetPDA
     ears: ClothingHeadsetSecurity
@@ -37,6 +37,5 @@
     pocket2: BookSecurity
   storage:
     back:
-    - BoxSurvivalSecurity
     - Flash
     - MagazinePistol

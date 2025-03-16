@@ -52,7 +52,6 @@ namespace Content.IntegrationTests.Tests
             var serverEntManager = server.ResolveDependency<IEntityManager>();
             var eyeManager = client.ResolveDependency<IEyeManager>();
             var spriteQuery = clientEntManager.GetEntityQuery<SpriteComponent>();
-            var xformQuery = clientEntManager.GetEntityQuery<TransformComponent>();
             var eye = client.ResolveDependency<IEyeManager>().CurrentEye;
 
             var testMap = await pair.CreateTestMap();
@@ -80,9 +79,8 @@ namespace Content.IntegrationTests.Tests
                 eyeManager.CurrentEye.Rotation = 0;
 
                 var pos = clientEntManager.System<SharedTransformSystem>().GetWorldPosition(clientEnt);
-                var clickable = clientEntManager.GetComponent<ClickableComponent>(clientEnt);
 
-                hit = clickable.CheckClick(sprite, xformQuery.GetComponent(clientEnt), xformQuery, new Vector2(clickPosX, clickPosY) + pos, eye, out _, out _, out _);
+                hit = clientEntManager.System<ClickableSystem>().CheckClick((clientEnt, null, sprite, null), new Vector2(clickPosX, clickPosY) + pos, eye, out _, out _, out _);
             });
 
             await server.WaitPost(() =>

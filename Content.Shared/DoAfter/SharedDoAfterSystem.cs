@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
-using Content.Shared.Mobs;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -29,7 +28,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<DoAfterComponent, DamageChangedEvent>(OnDamage);
         SubscribeLocalEvent<DoAfterComponent, EntityUnpausedEvent>(OnUnpaused);
-        SubscribeLocalEvent<DoAfterComponent, MobStateChangedEvent>(OnStateChanged);
         SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
         SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
     }
@@ -43,18 +41,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
                 doAfter.CancelledTime = doAfter.CancelledTime.Value + args.PausedTime;
         }
 
-        Dirty(uid, component);
-    }
-
-    private void OnStateChanged(EntityUid uid, DoAfterComponent component, MobStateChangedEvent args)
-    {
-        if (args.NewMobState != MobState.Dead || args.NewMobState != MobState.Critical)
-            return;
-
-        foreach (var doAfter in component.DoAfters.Values)
-        {
-            InternalCancel(doAfter, component);
-        }
         Dirty(uid, component);
     }
 
@@ -227,7 +213,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
         // For this we need to stay on the same hand slot and need the same item in that hand slot
         // (or if there is no item there we need to keep it free).
-        if (args.NeedHand && args.BreakOnHandChange)
+        if (args.NeedHand && (args.BreakOnHandChange || args.BreakOnDropItem))
         {
             if (!TryComp(args.User, out HandsComponent? handsComponent))
                 return false;
@@ -310,7 +296,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         if ((conditions & DuplicateConditions.SameEvent) != 0
-            && args.Event.GetType() != otherArgs.Event.GetType())
+            && !args.Event.IsDuplicate(otherArgs.Event))
         {
             return false;
         }
@@ -392,6 +378,19 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         // This would also mean the post-DoAfter checks haven't run yet. But whatever, I can't be bothered tracking and
         // networking whether a do-after has raised its events or not.
         return DoAfterStatus.Finished;
+    }
+
+    public bool IsRunning(DoAfterId? id, DoAfterComponent? comp = null)
+    {
+        if (id == null)
+            return false;
+
+        return GetStatus(id.Value.Uid, id.Value.Index, comp) == DoAfterStatus.Running;
+    }
+
+    public bool IsRunning(EntityUid entity, ushort id, DoAfterComponent? comp = null)
+    {
+        return GetStatus(entity, id, comp) == DoAfterStatus.Running;
     }
     #endregion
 }

@@ -26,7 +26,6 @@
         loop: true
         volume: -10
         maxDistance: 5
-
   - type: Sprite
     sprite: Objects/Misc/flare.rsi
     layers:

@@ -23,7 +23,7 @@ public sealed partial class ResearchSystem
 
         Dirty(primaryUid, primaryDb);
 
-        var ev = new TechnologyDatabaseModifiedEvent();
+        var ev = new TechnologyDatabaseSynchronizedEvent();
         RaiseLocalEvent(primaryUid, ref ev);
     }
 
@@ -125,25 +125,6 @@ public sealed partial class ResearchSystem
                 continue;
             component.UnlockedRecipes.Add(unlock);
         }
-        Dirty(uid, component);
-
-        var ev = new TechnologyDatabaseModifiedEvent();
-        RaiseLocalEvent(uid, ref ev);
-    }
-
-    /// <summary>
-    /// Adds a lathe recipe to the specified technology database
-    /// without checking if it can be unlocked.
-    /// </summary>
-    public void AddLatheRecipe(EntityUid uid, string recipe, TechnologyDatabaseComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return;
-
-        if (component.UnlockedRecipes.Contains(recipe))
-            return;
-
-        component.UnlockedRecipes.Add(recipe);
         Dirty(uid, component);
 
         var ev = new TechnologyDatabaseModifiedEvent();
