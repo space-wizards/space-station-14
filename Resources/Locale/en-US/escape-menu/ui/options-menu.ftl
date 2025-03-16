@@ -338,3 +338,6 @@ ui-options-censor-nudity = Censor character nudity
 ## Admin menu
 
 ui-options-enable-classic-overlay = Revert antag overlay to classic mode
+
+## Civ 14
+ui-options-hud-theme-civ = Civ

@@ -1,0 +1,4 @@
+- type: hudTheme
+  id: 3
+  name: ui-options-hud-theme-civ
+  path: Civ
