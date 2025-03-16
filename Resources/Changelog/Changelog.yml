@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Psychpsyo
-  changes:
-  - message: Carp plushies can now be placed in mop buckets, along with other rehydratable
-      things like monkey cubes.
-    type: Add
-  id: 7569
-  time: '2024-10-31T18:46:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33079
 - author: Bhijn and Myr
   changes:
   - message: Tail thumping has been downmixed to mono to fix the sound lacking any
@@ -3891,3 +3883,11 @@
   id: 8068
   time: '2025-03-16T00:41:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34300
+- author: Tayrtahn
+  changes:
+  - message: Cyborgs no longer have their brains removed if the salvage site they
+      are on despawns.
+    type: Fix
+  id: 8069
+  time: '2025-03-16T18:15:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35855
