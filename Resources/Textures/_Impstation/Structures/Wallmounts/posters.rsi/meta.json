@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Medical Posters by SixValentine",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "poster54_legit"
+        },
+        {
+            "name": "poster55_legit"
+        },
+        {
+            "name": "poster64_contraband"
+        },
+        {
+            "name": "poster65_contraband"
+        }
+    ]
+}
