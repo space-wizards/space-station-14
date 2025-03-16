@@ -1,0 +1,14 @@
+- type: entity
+  name: flint
+  parent: BaseItem
+  id: Flint
+  description: A small piece of flint, useful for crafting.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/_civ/old_weapons.rsi
+    state: flint
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-6

@@ -160,6 +160,9 @@
         rocksolid01: ""
         rocksolid02: ""
         rocksolid03: ""
+  - type: FlintRock
+    maxFlints: 2
+    regenerationTime: 1.0
 
 - type: entity
   name: stalagmite
