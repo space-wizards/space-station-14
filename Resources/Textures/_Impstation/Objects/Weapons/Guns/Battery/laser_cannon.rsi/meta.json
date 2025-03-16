@@ -14,6 +14,9 @@
             "name": "base"
         },
         {
+            "name": "mag-unshaded-0"
+        },
+        {
             "name": "mag-unshaded-1"
         },
         {
@@ -22,11 +25,8 @@
         {
             "name": "mag-unshaded-3"
         },
-        {
-            "name": "mag-unshaded-4"
-        },
 		{
-            "name": "mag-unshaded-5"
+            "name": "mag-unshaded-4"
         },
         {
             "name": "inhand-left",

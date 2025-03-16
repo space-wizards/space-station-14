@@ -1,6 +1,6 @@
 - type: entity
   name: Daito
-  parent: [BaseWeaponRifle, BaseRestrictedContraband]
+  parent: [BaseWeaponRifle, BaseSecurityContraband]
   id: WeaponRifleDaito
   description: A military precision rifle for the efficient combatant. Uses .30 rifle ammo.
   components:

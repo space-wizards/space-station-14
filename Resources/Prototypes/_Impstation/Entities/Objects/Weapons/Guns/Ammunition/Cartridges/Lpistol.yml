@@ -2,7 +2,7 @@
   id: BaseCartridgeLPistol
   name: cartridge (.22 auto)
   description: A pistol cartridge that is smaller than most. Incredibly cheap and somewhat underpowered.
-  parent: [ BaseCartridge, BaseRestrictedContraband ]
+  parent: [ BaseCartridge, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag

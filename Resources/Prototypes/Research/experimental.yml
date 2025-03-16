@@ -13,7 +13,7 @@
   - ProximitySensor
   - Drone
   - ExosuitFabricatorMachineCircuitboard
-
+  - Signaller # Imp - Having to do this on the fork seems wrong? Remove if it pops up somewhere else
 
 - type: technology
   id: BasicAnomalousResearch

@@ -62483,13 +62483,6 @@ entities:
     - type: Transform
       pos: -8.5,45.5
       parent: 31
-- proto: SuitStorageCourier
-  entities:
-  - uid: 9335
-    components:
-    - type: Transform
-      pos: 12.5,10.5
-      parent: 31
 - proto: SuitStorageEngi
   entities:
   - uid: 257

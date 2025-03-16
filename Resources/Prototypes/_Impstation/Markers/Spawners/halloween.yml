@@ -168,19 +168,6 @@
       - MobHivelord
 
 - type: entity
-  name: Nice Carp Spawner
-  id: SpawnMobNiceCarp
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: green
-      - state: ai
-  - type: ConditionalSpawner
-    prototypes:
-      - NiceMobCarp
-
-- type: entity
   name: Lava Watcher Spawner
   id: SpawnMobLavaWatcher
   parent: MarkerBase

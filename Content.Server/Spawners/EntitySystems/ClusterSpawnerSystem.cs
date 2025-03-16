@@ -23,14 +23,13 @@ namespace Content.Server.Spawners.EntitySystems
         }
 
         private void TrySpawn(EntityUid uid, ClusterSpawnerComponent component){
+            if (!_robustRandom.Prob(component.Chance) || component.Prototypes.Count == 0)
+                return;
 
-        if (!_robustRandom.Prob(component.Chance))
-            return;
+            var number = _robustRandom.Next(component.MinimumEntitiesSpawned, component.MaximumEntitiesSpawned);
+            var coordinates = Transform(uid).Coordinates;
 
-        var number = _robustRandom.Next(component.MinimumEntitiesSpawned, component.MaximumEntitiesSpawned);
-        var coordinates = Transform(uid).Coordinates;
-
-        for (var i = 0; i < number; i++)
+            for (var i = 0; i < number; i++)
 	        {
 	            var entity = _robustRandom.Pick(component.Prototypes);
 	            SpawnAtPosition(entity, coordinates);

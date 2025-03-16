@@ -31,6 +31,7 @@
 
 - type: entity
   parent: BaseItem
+  abstract: true
   id: CardHandBase
   categories: [ HideSpawnMenu ]
   name: hand of cards
@@ -64,6 +65,9 @@
     - 0,0,1,0
   - type: CardDeck
   - type: CardStack
+  - type: ContainerContainer
+    containers:
+      cardstack-container: !type:Container
 
 
 # Black

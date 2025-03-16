@@ -789,16 +789,16 @@
       tags:
       - RegenerativeMesh
 
-- type: cargoBounty
-  id: BountyJugs
-  reward: 4000
-  description: bounty-description-jugs
-  entries:
-  - name: bounty-item-jugs
-    amount: 5
-    whitelist:
-      tags:
-      - Jug
+#- type: cargoBounty # Imp - Bounty has multiple bounty arbitrages. It's not worth repricing several cargo items when its also possible to just cut this out
+#  id: BountyJugs
+#  reward: 4000
+#  description: bounty-description-jugs
+#  entries:
+#  - name: bounty-item-jugs
+#    amount: 5
+#    whitelist:
+#      tags:
+#      - Jug
 
 - type: cargoBounty
   id: BountyCrushers

@@ -1,0 +1,27 @@
+﻿- type: borgType
+  id: cargo
+
+  # Description
+  dummyPrototype: BorgChassisCargo
+
+  # Functional
+  extraModuleCount: 3
+  moduleWhitelist:
+    tags:
+    - BorgModuleGeneric
+    - BorgModuleCargo
+
+  defaultModules:
+  - BorgModuleAppraisal # Idk man, I didn't want to let them start with nothing lol
+
+  radioChannels:
+  - Supply
+  - Science
+
+  # Visual
+  inventoryTemplateId: borgTall
+  spriteBodyState: cargo
+  spriteBodyMovementState: cargo
+  spriteHasMindState: cargo_e
+  spriteNoMindState: cargo_e_r
+  spriteToggleLightState: cargo_l

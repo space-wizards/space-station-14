@@ -29,6 +29,8 @@
   - type: Prayable
     bibleUserOnly: true
   - type: RevealRevenantOnCollide
+  - type: CollisionWake
+    enabled: false # Causes test fails otherwise
   - type: ReactionMixer
     mixMessage: "bible-mixing-success"
     reactionTypes:
@@ -51,11 +53,11 @@
     secretStashName: secret-stash-book
     blacklist:
       components:
-      - SecretStash 
-      - NukeDisk 
+      - SecretStash
+      - NukeDisk
       tags:
-      - QuantumSpinInverter 
-      - FakeNukeDisk 
+      - QuantumSpinInverter
+      - FakeNukeDisk
   - type: ToolOpenable
     openToolQualityNeeded: Slicing
     closeToolQualityNeeded: null # can't exactly un-cut a book

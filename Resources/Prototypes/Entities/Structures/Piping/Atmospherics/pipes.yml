@@ -62,7 +62,7 @@
     canCollide: false
     bodyType: static
   - type: StaticPrice
-    price: 22
+    price: 30
   - type: ContainerContainer
     containers:
       VentCrawTube: !type:Container

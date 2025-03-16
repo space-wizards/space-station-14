@@ -11,3 +11,6 @@
         whitelist:
           tags:
           - Lens
+  - type: ContainerContainer
+    containers:
+      lens_slot: !type:ContainerSlot {}

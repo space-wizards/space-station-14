@@ -137,7 +137,7 @@
     - type: BallisticAmmoProvider
       proto: ShellShotgunUranium
     - type: MagazineVisuals
-      magState: mag-alt-1 #imp
+      magState: mag-alt #imp
       steps: 5
       zeroVisible: false
     - type: Sprite

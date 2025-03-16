@@ -50088,13 +50088,6 @@ entities:
     - type: Transform
       pos: 4.5,-16.5
       parent: 2
-- proto: SuitStorageCourier
-  entities:
-  - uid: 388
-    components:
-    - type: Transform
-      pos: 17.5,-39.5
-      parent: 2
 - proto: SuitStorageEngi
   entities:
   - uid: 1279

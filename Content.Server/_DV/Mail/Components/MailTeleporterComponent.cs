@@ -48,5 +48,5 @@ public sealed partial class MailTeleporterComponent : Component
     public TimeSpan MinInterval = TimeSpan.FromMinutes(3);
     [DataField]
     public TimeSpan AverageInterval = TimeSpan.FromMinutes(5);
-    public TimeSpan NextDelivery = TimeSpan.Zero;
+    public TimeSpan NextDelivery = TimeSpan.FromMinutes(2); // Imp - Don't start at 0 or tests will fail because yes
 }

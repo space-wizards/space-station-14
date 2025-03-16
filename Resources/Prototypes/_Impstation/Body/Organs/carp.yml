@@ -15,6 +15,9 @@
         reagents:
         - ReagentId: CarpoToxin
           Quantity: 2
+      Lung:
+        canReact: False
+        maxVol: 100
   - type: Extractable
     juiceSolution:
       reagents:

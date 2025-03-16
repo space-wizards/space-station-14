@@ -231,7 +231,7 @@
 
 - type: entity
   name: N1984
-  parent: [BaseWeaponPistol, BaseRestrictedContraband]
+  parent: [BaseWeaponPistol, BaseCentcommContraband]
   id: WeaponPistolN1984
   description: The sidearm of any self-respecting officer, often favored by ERT security forces. Uses .45 magnum ammo. #imp
   components:

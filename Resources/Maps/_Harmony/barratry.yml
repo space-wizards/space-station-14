@@ -58696,8 +58696,6 @@ entities:
       pos: -39.5,44.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 17759
   - uid: 9792
@@ -58707,8 +58705,6 @@ entities:
       pos: -39.5,45.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 17759
   - uid: 9793
@@ -89346,15 +89342,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -45.947662,1.0382209
       parent: 1
-  - uid: 14713
-    components:
-    - type: Transform
-      parent: 5509
-    - type: Paper
-      content: Due to budget concerns, only one courier hardsuit is available for usage on Pioneer Station. Please share the suit with your fellow courier respectfully.
-    - type: Physics
-      canCollide: False
-    - type: InsideEntityStorage
   - uid: 15191
     components:
     - type: Transform
@@ -102702,38 +102689,6 @@ entities:
         - 0
         - 0
         - 0
-- proto: SuitStorageCourier
-  entities:
-  - uid: 5509
-    components:
-    - type: Transform
-      pos: -43.5,0.5
-      parent: 1
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 1.7459903
-        - 6.568249
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-    - type: ContainerContainer
-      containers:
-        entity_storage: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 14713
 - proto: SuitStorageEVA
   entities:
   - uid: 3454

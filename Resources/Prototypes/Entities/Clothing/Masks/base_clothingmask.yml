@@ -13,7 +13,7 @@
     tags:
     - Mask
   - type: StaticPrice
-    price: 25
+    price: 28 # Imp - Increase sell price to stop arbitrage test fails
 
 - type: entity
   abstract: true

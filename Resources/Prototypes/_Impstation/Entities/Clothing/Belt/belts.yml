@@ -92,6 +92,7 @@
       - TrayScanner
       - GasAnalyzer
       - HandLabeler
+      - Insulated
   - type: ItemMapper
     mapLayers:
       drill:

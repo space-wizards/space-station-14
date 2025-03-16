@@ -1,6 +1,6 @@
 - type: entity
   id: CrateArmoryMachinePistol
-  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   name: machine pistols crate
   description: For when you need a compact automatic weapon. Contains two Mk 93 pistols with extra ammunition. Requires Armory access to open.
   components:
@@ -13,7 +13,7 @@
 
 - type: entity
   id: CrateArmoryBurstPistol
-  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   name: hyper burst pistols crate
   description: For making the most out of small calibers. Contains two Mk 92HB pistols with extra ammunition. Requires Armory access to open.
   components:
@@ -26,7 +26,7 @@
 
 - type: entity
   id: CrateArmoryDMR
-  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   name: marksman rifle crate
   description: For when you need a precise and efficient weapon. Contains two Daito DMRs with extra ammunition. Requires Armory access to open.
   components:
