@@ -65,15 +65,15 @@ namespace Content.Client.IoC
             collection.Register<TitleWindowManager>();
             collection.RegisterInstance<ContentMarkupTagFactory>(
                 new ContentMarkupTagFactory(
-                    new Dictionary<string, Func<MarkupNode, ContentMarkupTagProcessorBase>>
+                    new Dictionary<string, ContentMarkupTagProcessorProvider>
                     {
-                        [SpeechVerbContentTagProcessor.SupportedNodeName] = node => new SpeechVerbContentTagProcessor(),
-                        [ColorValueContentTagProcessor.SupportedNodeName] = node => new ColorValueContentTagProcessor(),
-                        [EntityNameHeaderContentTagProcessor.SupportedNodeName] = node => new EntityNameHeaderContentTagProcessor(node),
-                        [SessionNameHeaderContentTagProcessor.SupportedNodeName] = node => new SessionNameHeaderContentTagProcessor(node),
-                        [CodewordsContentTagProcessor.SupportedNodeName] = node => new CodewordsContentTagProcessor(),
-                        [PlayAudioContentTagProcessor.SupportedNodeName] = node => new PlayAudioContentTagProcessor(),
-                        [AccentContentTagProcessor.SupportedNodeName] = node => new AccentContentTagProcessor(node),
+                        [SpeechVerbContentTagProcessor.SupportedNodeName] = SpeechVerbContentTagProcessor.TryCreate,
+                        [ColorValueContentTagProcessor.SupportedNodeName] = ColorValueContentTagProcessor.TryCreate,
+                        [EntityNameHeaderContentTagProcessor.SupportedNodeName] = EntityNameHeaderContentTagProcessor.TryCreate,
+                        [SessionNameHeaderContentTagProcessor.SupportedNodeName] = SessionNameHeaderContentTagProcessor.TryCreate,
+                        [CodewordsContentTagProcessor.SupportedNodeName] = CodewordsContentTagProcessor.TryCreate,
+                        [PlayAudioContentTagProcessor.SupportedNodeName] = PlayAudioContentTagProcessor.TryCreate,
+                        [AccentContentTagProcessor.SupportedNodeName] = AccentContentTagProcessor.TryCreate,
 
                     }.ToFrozenDictionary()
                 )

@@ -9,27 +9,27 @@ public abstract class ContentMarkupTagProcessorBase
     /// </summary>
     public abstract string Name { get; }
 
-    public bool Process(MarkupNode node, int seed, bool isTopLevelProcessor, out IReadOnlyList<MarkupNode> markupNodes)
+    public bool Process(MarkupNode node, bool isTopLevelProcessor, out IReadOnlyList<MarkupNode> markupNodes)
     {
         if (node.Name == null)
         {
-            markupNodes = ProcessTextNode(node, seed);
+            markupNodes = ProcessTextNode(node);
             return true;
         }
 
         if (node.Name == Name && node.Closing && isTopLevelProcessor)
         {
-            markupNodes = ProcessCloser(node, seed);
+            markupNodes = ProcessCloser(node);
             return false;
         }
 
         if (node.Name == Name && !node.Closing && isTopLevelProcessor)
         {
-            markupNodes = ProcessOpeningTag(node, seed);
+            markupNodes = ProcessOpeningTag(node);
             return true;
         }
 
-        markupNodes = ProcessMarkupNode(node, seed);
+        markupNodes = ProcessMarkupNode(node);
 
         return true;
     }
@@ -38,7 +38,7 @@ public abstract class ContentMarkupTagProcessorBase
     /// Processes another markup node with this content tag.
     /// Note: Any non-text node in the return list MUST include a closing node as well!
     /// </summary>
-    public virtual IReadOnlyList<MarkupNode> ProcessMarkupNode(MarkupNode node, int randomSeed)
+    public virtual IReadOnlyList<MarkupNode> ProcessMarkupNode(MarkupNode node)
     {
         return [];
     }
@@ -47,7 +47,7 @@ public abstract class ContentMarkupTagProcessorBase
     /// Processes a text node with this content tag.
     /// Note: Any non-text node in the return list MUST include a closing node as well!
     /// </summary>
-    public virtual IReadOnlyList<MarkupNode> ProcessTextNode(MarkupNode node, int randomSeed)
+    public virtual IReadOnlyList<MarkupNode> ProcessTextNode(MarkupNode node)
     {
         return [];
     }
@@ -56,7 +56,7 @@ public abstract class ContentMarkupTagProcessorBase
     /// Returns a list of nodes replacing the opening markup node for this tag.
     /// Note: If you include a non-text node in the return list that is not closed, you MUST include a closing tag in CloserProcessing.
     /// </summary>
-    public virtual IReadOnlyList<MarkupNode> ProcessOpeningTag(MarkupNode node, int randomSeed)
+    public virtual IReadOnlyList<MarkupNode> ProcessOpeningTag(MarkupNode node)
     {
         return [];
     }
@@ -65,7 +65,7 @@ public abstract class ContentMarkupTagProcessorBase
     /// Returns a list of nodes replacing the closing markup node for this tag.
     /// Note: Any non-text node in the return list MUST include a closing node as well!
     /// </summary>
-    public virtual IReadOnlyList<MarkupNode> ProcessCloser(MarkupNode node, int randomSeed)
+    public virtual IReadOnlyList<MarkupNode> ProcessCloser(MarkupNode node)
     {
         return [];
     }

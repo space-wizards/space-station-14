@@ -828,14 +828,18 @@ public sealed class ChatUIController : UIController
         if (!_prototypeManager.TryIndex(msg.CommunicationChannel, out var proto))
             return;
 
-        var context = new ChatMessageContext(proto.ChannelParameters);
+        var context = new ChatMessageContext(proto.ChannelParameters)
+        {
+            [ChatMessageContextParameters.MessageId] = (unchecked((int) msg.MessageId)),
+            [ChatMessageContextParameters.CommunicationChannel] = msg.CommunicationChannel,
+        };
         foreach (var modifier in proto.ClientModifiers)
         {
             msg.Message = modifier.ProcessChatModifier(msg.Message, context);
         }
 
         // Process any remaining clientside content markups.
-        var postProcessedNodes = _contentMarkupTagManager.ProcessMessage(msg.Message, unchecked((int)msg.MessageId));
+        var postProcessedNodes = _contentMarkupTagManager.ProcessMessage(msg.Message, context);
         msg.Message = FormattedMessage.FromNodes(postProcessedNodes);
 
         // Create a bubble, should the communication channel expect one.
@@ -926,4 +930,10 @@ public sealed class ChatUIController : UIController
 
         public Queue<SpeechBubbleData> MessageQueue { get; } = new();
     }
+}
+
+public enum ChatMessageContextParameters
+{
+    MessageId,
+    CommunicationChannel
 }

@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Chat;
 using Content.Shared.Chat.ContentMarkupTags;
 using Robust.Client.Audio;
 using Robust.Shared.Audio;
@@ -14,7 +16,7 @@ public sealed class PlayAudioContentTagProcessor : ContentMarkupTagProcessorBase
 
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    public override IReadOnlyList<MarkupNode> ProcessOpeningTag(MarkupNode node, int randomSeed)
+    public override IReadOnlyList<MarkupNode> ProcessOpeningTag(MarkupNode node)
     {
         IoCManager.InjectDependencies(this);
 
@@ -30,5 +32,15 @@ public sealed class PlayAudioContentTagProcessor : ContentMarkupTagProcessorBase
         }
 
         return [];
+    }
+
+    public static bool TryCreate(
+        MarkupNode node,
+        ChatMessageContext context,
+        [NotNullWhen(true)] out ContentMarkupTagProcessorBase? processor
+    )
+    {
+        processor = new PlayAudioContentTagProcessor();
+        return true;
     }
 }

@@ -1,8 +1,10 @@
+using Content.Shared.Chat;
 using Content.Shared.Chat.ContentMarkupTags;
 using Content.Shared.Mind;
 using Content.Shared.Roles.RoleCodeword;
 using Robust.Client.Player;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Client.Chat.MarkupTags;
 
@@ -17,7 +19,7 @@ public sealed class CodewordsContentTagProcessor : ContentMarkupTagProcessorBase
 
     public override string Name => SupportedNodeName;
 
-    public override IReadOnlyList<MarkupNode> ProcessTextNode(MarkupNode node, int randomSeed)
+    public override IReadOnlyList<MarkupNode> ProcessTextNode(MarkupNode node)
     {
         IoCManager.InjectDependencies(this);
 
@@ -39,5 +41,15 @@ public sealed class CodewordsContentTagProcessor : ContentMarkupTagProcessorBase
         }
 
         return new List<MarkupNode> { node } ;
+    }
+
+    public static bool TryCreate(
+        MarkupNode node,
+        ChatMessageContext context,
+        [NotNullWhen(true)] out ContentMarkupTagProcessorBase? processor
+    )
+    {
+        processor = new CodewordsContentTagProcessor();
+        return true;
     }
 }

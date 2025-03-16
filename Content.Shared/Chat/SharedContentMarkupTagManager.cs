@@ -9,25 +9,24 @@ public sealed class SharedContentMarkupTagManager(ContentMarkupTagFactory factor
     /// Processes the message and applies the ContentMarkupTags.
     /// </summary>
     /// <param name="nodes">The input message.</param>
-    /// <param name="msgMessageId"></param>
+    /// <param name="context">Context in which message is being processed.</param>
     /// <returns>Message that is a result of application of all MarkupTags.</returns>
     public IReadOnlyCollection<MarkupNode> ProcessMessage(
         IReadOnlyCollection<MarkupNode> nodes,
-        int msgMessageId
+        ChatMessageContext context
     )
     {
         var result = new List<MarkupNode>();
-        var randomSeed = msgMessageId;
 
         var activeProcessors = new List<ContentMarkupTagProcessorBase>();
         foreach (var node in nodes)
         {
-            if (factory.TryGetProcessor(node, out var processor))
+            if (factory.TryGetProcessor(node, context, out var processor))
             {
                 activeProcessors.Add(processor);
             }
 
-            var processedIntoResult = ExecuteProcessors(activeProcessors, node, randomSeed, result);
+            var processedIntoResult = ExecuteProcessors(activeProcessors, node, result);
 
             if (!processedIntoResult)
                 result.Add(node);
@@ -39,7 +38,6 @@ public sealed class SharedContentMarkupTagManager(ContentMarkupTagFactory factor
     private static bool ExecuteProcessors(
         List<ContentMarkupTagProcessorBase> activeProcessors,
         MarkupNode node,
-        int randomSeed,
         List<MarkupNode> result
     )
     {
@@ -52,7 +50,7 @@ public sealed class SharedContentMarkupTagManager(ContentMarkupTagFactory factor
         {
             var currentProcessor = activeProcessors[processorIndex];
                 
-            if (!currentProcessor.Process(node, randomSeed, isTopLevelProcessor, out var processedNodes) && !processedClosing)
+            if (!currentProcessor.Process(node, isTopLevelProcessor, out var processedNodes) && !processedClosing)
             {
                 // if top level processor is saying it was closed (returns false) then we remove it and mark closing as handled
                 activeProcessors.Remove(currentProcessor);
