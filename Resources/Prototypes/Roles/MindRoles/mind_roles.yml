@@ -143,6 +143,17 @@
     exclusiveAntag: true
   - type: NinjaRole
 
+# Paradox Clone
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleParadoxClone
+  name: Paradox Clone Role
+  components:
+  - type: MindRole
+    antagPrototype: ParadoxClone
+    roleType: SoloAntagonist
+  - type: ParadoxCloneRole
+
 # Nukies
 - type: entity
   parent: BaseMindRoleAntag
@@ -196,6 +207,17 @@
   - type: MindRole
     antagPrototype: Rev
 
+# Survivors (Wizard)
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleSurvivor
+  name: Survivor Role
+  components:
+  - type: MindRole
+    antagPrototype: Survivor
+    roleType: FreeAgent
+  - type: SurvivorRole
+
 # Thief
 - type: entity
   parent: BaseMindRoleAntag
@@ -238,6 +260,19 @@
   components:
     - type: MindRole
       roleType: TeamAntagonist
+
+# Wizards
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleWizard
+  name: Wizard Role
+  #  description: these are all commented out
+  components:
+  - type: MindRole
+    antagPrototype: Wizard
+    exclusiveAntag: true
+    roleType: SoloAntagonist
+  - type: WizardRole
 
 # Zombie Squad
 - type: entity

@@ -20,7 +20,7 @@ public sealed partial class WireLayoutPrototype : IPrototype, IInheritingPrototy
     public string[]? Parents { get; private set; }
 
     [AbstractDataField]
-    public bool Abstract { get; }
+    public bool Abstract { get; private set; }
 
     /// <summary>
     ///     How many wires in this layout will do
