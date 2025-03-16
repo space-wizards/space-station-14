@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Some minor and major changes to Box, smoother supermattering
-    type: Fix
-  id: 825
-  time: '2024-12-30T11:27:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1165
 - author: Darkmajia
   changes:
   - message: A few items can now be used as melee weapons.
@@ -4113,3 +4106,11 @@
   id: 1324
   time: '2025-03-16T01:05:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1956
+- author: crocodilecarousel, hivehum
+  changes:
+  - message: The Hospitality Director has adopted a pet penguin. Say hello to Oswald
+      when you get the chance!
+    type: Add
+  id: 1325
+  time: '2025-03-16T01:35:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1969
