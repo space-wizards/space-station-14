@@ -4103,4 +4103,11 @@ Entries:
   id: 568
   time: '2025-03-15T08:34:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/398
+- author: Happyrobot33
+  changes:
+  - message: Fixed bugs/exploits with resomi and cyclorite flash immunity system
+    type: Fix
+  id: 569
+  time: '2025-03-16T08:26:58.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/401
 
