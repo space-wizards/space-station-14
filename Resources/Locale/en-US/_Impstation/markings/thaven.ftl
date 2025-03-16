@@ -37,7 +37,8 @@ marking-ThavenEyesSharkminnow = Sharkminnow Eyes
 marking-ThavenEyesSharkminnowGlowing-eyessharkminnow = Glowing Sharkminnow Eyes
 marking-ThavenEyesSharkminnowGlowing = Glowing Sharkminnow Eyes
 
-marking-ThavenTailEel-taileel1 = Eel Tail (Underlay)
+marking-ThavenTailEel-taileel1 = Tail
+marking-ThavenTailEel-taileel2 = Fin
 marking-ThavenTailEel = Eel Tail (Underlay)
 
 marking-ThavenTailEelOverlay-taileel3 = Eel Tail (Overlay)

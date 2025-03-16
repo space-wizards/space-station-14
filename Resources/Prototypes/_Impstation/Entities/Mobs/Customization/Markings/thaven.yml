@@ -175,6 +175,8 @@
   sprites:
   - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
     state: taileel1
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: taileel2
 
 - type: marking
   id: ThavenTailEelOverlay
@@ -183,7 +185,7 @@
   speciesRestriction: [ Thaven ]
   sprites:
   - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
-    state: taileel2
+    state: taileel3
   shader: unshaded
 
 - type: marking

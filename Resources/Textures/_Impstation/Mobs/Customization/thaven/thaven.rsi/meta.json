@@ -61,6 +61,10 @@
     },
     {
       "name": "taileel2",
+      "directions": 4
+    },
+    {
+      "name": "taileel3",
       "directions": 4,
         "delays": [
           [
