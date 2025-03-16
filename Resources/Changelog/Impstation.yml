@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Radiation collectors now have new sprites!
-    type: Add
-  - message: Steel storage crates now have ridged lids!
-    type: Tweak
-  id: 822
-  time: '2024-12-30T05:16:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1151
 - author: honeyed-lemons
   changes:
   - message: Changes Boxes main engine to the Supermatter Engine
@@ -4106,3 +4097,14 @@
   id: 1321
   time: '2025-03-16T00:35:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1970
+- author: honeyed-lemons
+  changes:
+  - message: Revamped Xeno Chapel, and revamped Box's shuttle bay.
+    type: Tweak
+  - message: Xeno atmos -> engi disposal chute should no longer receive trash.
+    type: Fix
+  - message: Xeno Hospitality Director room no longer spaces round start.
+    type: Fix
+  id: 1322
+  time: '2025-03-16T00:54:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1952
