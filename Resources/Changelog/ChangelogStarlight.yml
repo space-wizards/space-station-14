@@ -4169,4 +4169,11 @@ Entries:
   id: 577
   time: '2025-03-16T10:16:48.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/393
+- author: Killer Tamashi
+  changes:
+  - message: Buffed dominator/hybrid's capacity to match the new 20-shot disabler
+    type: Tweak
+  id: 578
+  time: '2025-03-16T10:18:41.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/399
 
