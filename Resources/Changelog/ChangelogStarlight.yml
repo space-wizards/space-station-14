@@ -4183,4 +4183,18 @@ Entries:
   id: 579
   time: '2025-03-16T15:28:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/388
+- author: Happyrobot33
+  changes:
+  - message: Added filled variant for the NT locker. It has not been mapped yet.
+    type: Add
+  id: 580
+  time: '2025-03-16T20:58:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/402
+- author: Happyrobot33
+  changes:
+  - message: Fixed sprite rendering for BlueShield Officer locker
+    type: Fix
+  id: 581
+  time: '2025-03-16T20:58:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/402
 
