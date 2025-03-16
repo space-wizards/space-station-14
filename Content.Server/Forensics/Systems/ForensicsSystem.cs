@@ -1,4 +1,5 @@
 using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Forensics.Components;
@@ -32,8 +33,9 @@ namespace Content.Server.Forensics
         public override void Initialize()
         {
             SubscribeLocalEvent<FingerprintComponent, ContactInteractionEvent>(OnInteract);
-            SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit);
-            SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit);
+            SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit, after: new[] { typeof(BloodstreamSystem) });
+            // The solution entities are spawned on MapInit as well, so we have to wait for that to be able to set the DNA in the bloodstream correctly without ResolveSolution failing
+            SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit, after: new[] { typeof(BloodstreamSystem) });
 
             SubscribeLocalEvent<ForensicsComponent, BeingGibbedEvent>(OnBeingGibbed);
             SubscribeLocalEvent<ForensicsComponent, MeleeHitEvent>(OnMeleeHit);
@@ -65,18 +67,19 @@ namespace Content.Server.Forensics
 
         private void OnFingerprintInit(Entity<FingerprintComponent> ent, ref MapInitEvent args)
         {
-            ent.Comp.Fingerprint = GenerateFingerprint();
-            Dirty(ent);
+            if (ent.Comp.Fingerprint == null)
+                RandomizeFingerprint((ent.Owner, ent.Comp));
         }
 
-        private void OnDNAInit(EntityUid uid, DnaComponent component, MapInitEvent args)
+        private void OnDNAInit(Entity<DnaComponent> ent, ref MapInitEvent args)
         {
-            if (component.DNA == String.Empty)
+            if (ent.Comp.DNA == null)
+                RandomizeDNA((ent.Owner, ent.Comp));
+            else
             {
-                component.DNA = GenerateDNA();
-
-                var ev = new GenerateDnaEvent { Owner = uid, DNA = component.DNA };
-                RaiseLocalEvent(uid, ref ev);
+                // If set manually (for example by cloning) we also need to inform the bloodstream of the correct DNA string so it can be updated
+                var ev = new GenerateDnaEvent { Owner = ent.Owner, DNA = ent.Comp.DNA };
+                RaiseLocalEvent(ent.Owner, ref ev);
             }
         }
 
@@ -84,7 +87,7 @@ namespace Content.Server.Forensics
         {
             string dna = Loc.GetString("forensics-dna-unknown");
 
-            if (TryComp(uid, out DnaComponent? dnaComp))
+            if (TryComp(uid, out DnaComponent? dnaComp) && dnaComp.DNA != null)
                 dna = dnaComp.DNA;
 
             foreach (EntityUid part in args.GibbedParts)
@@ -103,7 +106,7 @@ namespace Content.Server.Forensics
             {
                 foreach (EntityUid hitEntity in args.HitEntities)
                 {
-                    if (TryComp<DnaComponent>(hitEntity, out var hitEntityComp))
+                    if (TryComp<DnaComponent>(hitEntity, out var hitEntityComp) && hitEntityComp.DNA != null)
                         component.DNAs.Add(hitEntityComp.DNA);
                 }
             }
@@ -301,12 +304,44 @@ namespace Content.Server.Forensics
 
         private void OnTransferDnaEvent(EntityUid uid, DnaComponent component, ref TransferDnaEvent args)
         {
+            if (component.DNA == null)
+                return;
+
             var recipientComp = EnsureComp<ForensicsComponent>(args.Recipient);
             recipientComp.DNAs.Add(component.DNA);
             recipientComp.CanDnaBeCleaned = args.CanDnaBeCleaned;
         }
 
         #region Public API
+
+        /// <summary>
+        /// Give the entity a new, random DNA string and call an event to notify other systems like the bloodstream that it has been changed.
+        /// Does nothing if it does not have the DnaComponent.
+        /// </summary>
+        public void RandomizeDNA(Entity<DnaComponent?> ent)
+        {
+            if (!Resolve(ent, ref ent.Comp, false))
+                return;
+
+            ent.Comp.DNA = GenerateDNA();
+            Dirty(ent);
+
+            var ev = new GenerateDnaEvent { Owner = ent.Owner, DNA = ent.Comp.DNA };
+            RaiseLocalEvent(ent.Owner, ref ev);
+        }
+
+        /// <summary>
+        /// Give the entity a new, random fingerprint string.
+        /// Does nothing if it does not have the FingerprintComponent.
+        /// </summary>
+        public void RandomizeFingerprint(Entity<FingerprintComponent?> ent)
+        {
+            if (!Resolve(ent, ref ent.Comp, false))
+                return;
+
+            ent.Comp.Fingerprint = GenerateFingerprint();
+            Dirty(ent);
+        }
 
         /// <summary>
         /// Transfer DNA from one entity onto the forensics of another
@@ -316,7 +351,7 @@ namespace Content.Server.Forensics
         /// <param name="canDnaBeCleaned">If this DNA be cleaned off of the recipient. e.g. cleaning a knife vs cleaning a puddle of blood</param>
         public void TransferDna(EntityUid recipient, EntityUid donor, bool canDnaBeCleaned = true)
         {
-            if (TryComp<DnaComponent>(donor, out var donorComp))
+            if (TryComp<DnaComponent>(donor, out var donorComp) && donorComp.DNA != null)
             {
                 EnsureComp<ForensicsComponent>(recipient, out var recipientComp);
                 recipientComp.DNAs.Add(donorComp.DNA);
