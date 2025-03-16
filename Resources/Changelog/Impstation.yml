@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Gave drones the ability to zoom their camera
-    type: Add
-  id: 824
-  time: '2024-12-30T05:18:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1161
 - author: honeyed-lemons
   changes:
   - message: Some minor and major changes to Box, smoother supermattering
@@ -4109,3 +4102,14 @@
   id: 1323
   time: '2025-03-16T01:00:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1976
+- author: AvianMaiden
+  changes:
+  - message: "Guns are just really big metal things to hit people with if you think\
+      \ about it. They don't hurt much\u2014nothing more than a punch\u2014but you\
+      \ can just hit people for fun and for free!"
+    type: Add
+  - message: Tweaked Mosin things.
+    type: Tweak
+  id: 1324
+  time: '2025-03-16T01:05:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1956
