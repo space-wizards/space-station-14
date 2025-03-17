@@ -1,0 +1,177 @@
+{
+  "version": 1,
+  "license": "AGPL-3.0",
+  "copyright": "Taken from Civ13 at https://github.com/Civ13/Civ13/blob/49518c99d8edf8725c7b1568692b328b90fd9595/icons/effects/pooeffect.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "poop1"
+    },
+    {
+      "name": "poop2"
+    },
+    {
+      "name": "poop3"
+    },
+    {
+      "name": "poop4"
+    },
+    {
+      "name": "poop5"
+    },
+    {
+      "name": "poop6"
+    },
+    {
+      "name": "poop7"
+    },
+    {
+      "name": "floor1"
+    },
+    {
+      "name": "floor2"
+    },
+    {
+      "name": "floor3"
+    },
+    {
+      "name": "floor4"
+    },
+    {
+      "name": "floor5"
+    },
+    {
+      "name": "floor6"
+    },
+    {
+      "name": "floor7"
+    },
+    {
+      "name": "floor8"
+    },
+    {
+      "name": "pee1"
+    },
+    {
+      "name": "pee2"
+    },
+    {
+      "name": "pee3"
+    },
+    {
+      "name": "eggsplat"
+    },
+    {
+      "name": "itempoo"
+    },
+    {
+      "name": "helmetpoo",
+      "directions": 4
+    },
+    {
+      "name": "helmetpoo2"
+    },
+    {
+      "name": "maskpoo",
+      "directions": 4
+    },
+    {
+      "name": "maskpoo2"
+    },
+    {
+      "name": "uniformpoo",
+      "directions": 4
+    },
+    {
+      "name": "uniformpoo2"
+    },
+    {
+      "name": "armorpoo",
+      "directions": 4
+    },
+    {
+      "name": "armorpoo2"
+    },
+    {
+      "name": "suitpoo",
+      "directions": 4
+    },
+    {
+      "name": "suitpoo2"
+    },
+    {
+      "name": "coatpoo",
+      "directions": 4
+    },
+    {
+      "name": "coatpoo2"
+    },
+    {
+      "name": "poohands",
+      "directions": 4
+    },
+    {
+      "name": "poohands2"
+    },
+    {
+      "name": "shoepoo",
+      "directions": 4
+    },
+    {
+      "name": "shoepoo2"
+    },
+    {
+      "name": "vomit1"
+    },
+    {
+      "name": "vomit2"
+    },
+    {
+      "name": "vomit3"
+    },
+    {
+      "name": "steps1",
+      "directions": 4
+    },
+    {
+      "name": "steps2",
+      "directions": 4
+    },
+    {
+      "name": "drip1"
+    },
+    {
+      "name": "drip2"
+    },
+    {
+      "name": "drip3"
+    },
+    {
+      "name": "drip4"
+    },
+    {
+      "name": "drip5"
+    },
+    {
+      "name": "animalpoo1"
+    },
+    {
+      "name": "animalpoo2"
+    },
+    {
+      "name": "animalpoo3"
+    },
+    {
+      "name": "dry_dung"
+    },
+    {
+      "name": "fertilizer"
+    }
+  ]
+}

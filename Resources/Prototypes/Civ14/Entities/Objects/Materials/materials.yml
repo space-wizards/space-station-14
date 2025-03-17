@@ -1,0 +1,38 @@
+- type: entity
+  parent: MaterialBase
+  id: BasePoo
+  abstract: true
+  name: poo
+  components:
+    - type: Sprite
+      sprite: Objects/_civ/pooeffect.rsi
+    - type: Appearance
+    - type: Item
+      sprite: Objects/_civ/pooeffect.rsi
+      size: Tiny
+      heldPrefix: poo
+    - type: Extractable
+      grindableSolutionName: nutriment
+    - type: SolutionContainerManager
+      solutions:
+        wood:
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 100
+
+- type: entity
+  parent: MaterialBase
+  id: AnimalPoo
+  name: poo
+  components:
+    - type: Sprite
+      sprite: Objects/_civ/pooeffect.rsi
+      layers:
+        - state: animalpoo1
+          map: ["random"]
+    - type: RandomSprite
+      available:
+        - random:
+            animalpoo1: ""
+            animalpoo2: ""
+            animalpoo3: ""
