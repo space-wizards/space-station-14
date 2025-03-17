@@ -31,7 +31,7 @@
     ActivatedSubjuzine: 5
 
 - type: reaction
-  id: Subjuzine-Activation-Radium #imp, so thaven can use it
+  id: Subjuzine-Activation-ShimmeringBlood #imp, so thaven can use it
   preserveDNA: true
   reactants:
     Subjuzine:
