@@ -1,0 +1,76 @@
+- type: construction
+  name: bone shovel
+  id: BoneShovel
+  graph: BoneShovel
+  startNode: start
+  targetNode: boneshovel
+  category: construction-category-tools
+  description: A crude bone shovel.
+  icon: { sprite: Objects/_civ/StoneAge/bone_shovel.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: bone pickaxe
+  id: BonePickaxe
+  graph: BonePickaxe
+  startNode: start
+  targetNode: bonepickaxe
+  category: construction-category-tools
+  description: A crude bone pickaxe.
+  icon: { sprite: Objects/_civ/StoneAge/bone_pickaxe.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: bone axe
+  id: BoneAxe
+  graph: BoneAxe
+  startNode: start
+  targetNode: boneaxe
+  category: construction-category-tools
+  description: A crude bone axe.
+  icon: { sprite: Objects/_civ/StoneAge/bone_axe.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: bone knife
+  id: BoneKnife
+  graph: BoneKnife
+  startNode: start
+  targetNode: boneknife
+  category: construction-category-tools
+  description: A crude bone knife.
+  icon: { sprite: Objects/_civ/StoneAge/bone_knife.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: flint axe
+  id: FlintAxe
+  graph: FlintAxe
+  startNode: start
+  targetNode: flintaxe
+  category: construction-category-tools
+  description: A crude flint axe.
+  icon: { sprite: Objects/_civ/StoneAge/flint_axe.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: plough
+  id: Plough
+  graph: Plough
+  startNode: start
+  targetNode: plough
+  category: construction-category-tools
+  description: A simple wood plough.
+  icon: { sprite: Objects/_civ/items.rsi, state: plough }
+  objectType: Item
+
+- type: construction
+  name: wood hammer
+  id: WoodHammer
+  graph: WoodHammer
+  startNode: start
+  targetNode: woodhammer
+  category: construction-category-tools
+  description: A simple wood hammer.
+  icon: { sprite: Objects/_civ/StoneAge/wood_hammer.rsi, state: icon }
+  objectType: Item

@@ -1,0 +1,129 @@
+- type: constructionGraph
+  id: BoneShovel
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: boneshovel
+          steps:
+            - material: Bones
+              amount: 4
+              doAfter: 4
+            - material: WoodPlank
+              amount: 4
+              doAfter: 4
+    - node: boneshovel
+      entity: BoneShovel
+
+- type: constructionGraph
+  id: BonePickaxe
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bonepickaxe
+          steps:
+            - material: Bones
+              amount: 4
+              doAfter: 4
+            - material: WoodPlank
+              amount: 4
+              doAfter: 4
+    - node: bonepickaxe
+      entity: BonePickaxe
+
+- type: constructionGraph
+  id: BoneAxe
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: boneaxe
+          steps:
+            - material: Bones
+              amount: 5
+              doAfter: 5
+            - material: WoodPlank
+              amount: 4
+              doAfter: 4
+    - node: boneaxe
+      entity: BoneAxe
+
+- type: constructionGraph
+  id: BoneKnife
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: boneknife
+          steps:
+            - material: Bones
+              amount: 2
+              doAfter: 5
+            - material: WoodPlank
+              amount: 1
+              doAfter: 2
+    - node: boneknife
+      entity: BoneKnife
+
+- type: constructionGraph
+  id: Plough
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: plough
+          steps:
+            - material: WoodPlank
+              amount: 4
+              doAfter: 6
+    - node: plough
+      entity: Plough
+
+- type: constructionGraph
+  id: FlintAxe
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: flintaxe
+          steps:
+            - tag: SharpenedFlint
+              name: a sharpened flint
+              icon:
+                sprite: Objects/_civ/old_weapons.rsi
+                state: sharpened_flint
+              doAfter: 5
+            - tag: SharpenedStick
+              name: a sharpened stick
+              icon:
+                sprite: Objects/_civ/old_weapons.rsi
+                state: sharpened_stick
+              doAfter: 4
+    - node: flintaxe
+      entity: FlintAxe
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SharpenedFlint
+            - !type:SpawnPrototype
+              prototype: SharpenedStick
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2
+
+- type: constructionGraph
+  id: WoodHammer
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: woodhammer
+          steps:
+            - material: WoodPlank
+              amount: 4
+              doAfter: 6
+    - node: woodhammer
+      entity: WoodHammer

@@ -1133,6 +1133,12 @@
   id: SecwayKeys
 
 - type: Tag
+  id: SharpenedStick
+
+- type: Tag
+  id: SharpenedFlint
+
+- type: Tag
   id: Sheet
 
 - type: Tag
@@ -1395,5 +1401,4 @@
 
 - type: Tag
   id: WriteIgnoreStamps
-
 # ALPHABETICAL
