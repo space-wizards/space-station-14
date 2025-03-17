@@ -83,6 +83,8 @@ public sealed class DeviceLinkingTest
 
                         // Send a signal to the port
                         deviceLinkSys.InvokePort(sourceEnt, "Output", null, sourceComp);
+
+                        Assert.That(server.EntMan.Deleted(sinkEnt), Is.False, $"{protoId} was deleted after triggering port {port.Id}");
                     }
                 }
             });
