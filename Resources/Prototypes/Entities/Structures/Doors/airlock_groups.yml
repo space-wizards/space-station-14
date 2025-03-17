@@ -1,5 +1,6 @@
 - type: paintableGroupCategory
   id: Airlocks
+  cost: 3
 
 - type: paintableGroup
   category: Airlocks

@@ -32,3 +32,27 @@
       mix: '#947507'
   - type: StaticPrice
     price: 40
+  - type: LimitedCharges
+    maxCharges: 10
+    charges: 10
+
+- type: entity
+  name: compressed dye
+  parent: BaseItem
+  id: SprayPainterAmmo
+  description: A cartridge of dye compacted by bluespace technology. Used in spray painter.
+  components:
+  - type: SprayPainterAmmo
+    charges: 10
+  - type: Sprite
+    sprite: Objects/Tools/rcd.rsi
+    state: ammo
+  - type: Item
+    sprite: Objects/Tools/rcd.rsi
+    heldPrefix: ammo
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 10
+      Plastic: 10
+  - type: StaticPrice
+    price: 30

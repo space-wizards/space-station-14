@@ -68,11 +68,15 @@ public sealed partial class SprayPainterDoAfterEvent : DoAfterEvent
     [DataField]
     public PaintableVisuals Visuals;
 
-    public SprayPainterDoAfterEvent(string prototype, string category, PaintableVisuals visuals)
+    [DataField]
+    public int Cost;
+
+    public SprayPainterDoAfterEvent(string prototype, string category, PaintableVisuals visuals, int cost)
     {
         Prototype = prototype;
         Category = category;
         Visuals = visuals;
+        Cost = cost;
     }
 
     public override DoAfterEvent Clone() => this;

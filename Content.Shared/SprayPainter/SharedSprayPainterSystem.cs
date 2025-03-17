@@ -1,4 +1,6 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -23,6 +25,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] protected readonly SharedChargesSystem Charges = default!;
 
     public Dictionary<ProtoId<PaintableGroupCategoryPrototype>, PaintableTargets> Targets { get; private set; } = new();
 
@@ -72,6 +75,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         Appearance.SetData(target, args.Visuals, args.Prototype);
         Audio.PlayPredicted(ent.Comp.SpraySound, ent, args.Args.User);
+        Charges.UseCharges(ent, args.Cost);
 
         if (args.Visuals is PaintableVisuals.Canister)
         {
@@ -128,15 +132,23 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!TryComp<SprayPainterComponent>(args.Used, out var painter))
+        if (!TryComp<SprayPainterComponent>(args.Used, out var painter) ||
+            !TryComp<LimitedChargesComponent>(args.Used, out var charges))
             return;
 
         var group = Proto.Index(ent.Comp.Group);
+        var category = Proto.Index(group.Category);
 
-        if (!Targets.ContainsKey(group.Category))
+        if (charges.Charges <= 0 || charges.Charges < category.Cost)
+        {
+            var msg = Loc.GetString("spray-painter-interact-no-charges");
+            _popup.PopupClient(msg, args.User, args.User);
+            return;
+        }
+
+        if (!Targets.TryGetValue(group.Category, out var target))
             return;
 
-        var target = Targets[group.Category];
         var selected = painter.Indexes.GetValueOrDefault(group.Category, 0);
         var style = target.Styles[selected];
 
@@ -151,7 +163,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         var doAfterEventArgs = new DoAfterArgs(EntityManager,
             args.User,
             time,
-            new SprayPainterDoAfterEvent(proto, group.Category, target.Visuals),
+            new SprayPainterDoAfterEvent(proto, group.Category, target.Visuals, category.Cost),
             args.Used,
             target: ent,
             used: args.Used)

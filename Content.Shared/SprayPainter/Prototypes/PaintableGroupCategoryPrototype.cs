@@ -7,4 +7,7 @@ public sealed partial class PaintableGroupCategoryPrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;
+
+    [DataField]
+    public int Cost { get; private set; } = 1;
 }

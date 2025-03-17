@@ -1,6 +1,8 @@
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Destructible;
+using Content.Server.Popups;
+using Content.Shared.Charges.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -17,6 +19,7 @@ namespace Content.Server.SprayPainter;
 public sealed class SprayPainterSystem : SharedSprayPainterSystem
 {
     [Dependency] private readonly AtmosPipeColorSystem _pipeColor = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -46,8 +49,6 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 
         Del(dummy);
 
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Args.User):user} painted {ToPrettyString(args.Args.Target.Value):target}");
-
         args.Handled = true;
     }
 
@@ -63,7 +64,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             return;
 
         Audio.PlayPvs(ent.Comp.SpraySound, ent);
-
+        Charges.UseCharge(ent);
         _pipeColor.SetColor(target, color, args.Color);
 
         args.Handled = true;
@@ -74,8 +75,17 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (args.Handled)
             return;
 
-        if (!TryComp<SprayPainterComponent>(args.Used, out var painter) || painter.PickedColor is not { } colorName)
+        if (!TryComp<SprayPainterComponent>(args.Used, out var painter) ||
+            !TryComp<LimitedChargesComponent>(args.Used, out var charges) ||
+            painter.PickedColor is not { } colorName)
             return;
+
+        if (charges.Charges <= 0 || charges.Charges < 1)
+        {
+            var msg = Loc.GetString("spray-painter-interact-no-charges");
+            _popup.PopupClient(msg, args.User, args.User);
+            return;
+        }
 
         if (!painter.ColorPalette.TryGetValue(colorName, out var color))
             return;

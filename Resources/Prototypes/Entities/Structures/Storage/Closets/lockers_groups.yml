@@ -1,5 +1,6 @@
 - type: paintableGroupCategory
   id: Lockers
+  cost: 2
 
 - type: paintableGroup
   category: Lockers
