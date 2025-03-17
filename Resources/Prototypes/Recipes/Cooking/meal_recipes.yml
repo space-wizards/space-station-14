@@ -385,15 +385,6 @@
     FoodBreadBun: 1
     MobMothroach: 1
 
-- type: microwaveMealRecipe
-  id: RecipeFinfinBurger
-  name: finfin burger recipe
-  result: FoodBurgerFinfin
-  time: 10
-  solids:
-    FoodBreadBun: 1
-    FoodMeatFinfin: 1
-
 #Breads & Sandwiches
 
 - type: microwaveMealRecipe
@@ -716,16 +707,6 @@
     FoodChiliPepper: 2
     FoodTomato: 2
     SheetUranium1: 2
-
-- type: microwaveMealRecipe
-  id: RecipeTeoeanPizza
-  name: Teoean pizza recipe
-  result: FoodPizzaLemo
-  time: 30
-  solids:
-    FoodDoughFlat: 1
-    FoodMeatFinfinCutlet: 3
-    FoodLemoSlice: 5
 
 - type: microwaveMealRecipe
   id: RecipeCottonPizza
@@ -1139,16 +1120,6 @@
     FoodPlateTin: 1
 
 - type: microwaveMealRecipe
-  id: RecipeLemoPie
-  name: lemo pie recipe
-  result: FoodPieLemo
-  time: 15
-  solids:
-    FoodDoughPie: 1
-    FoodLemo: 3
-    FoodPlateTin: 1
-
-- type: microwaveMealRecipe
   id: RecipeBaklava
   name: baklava recipe
   result: FoodPieBaklava
@@ -1329,16 +1300,6 @@
     TableSalt: 1
   solids:
     FoodMeatFish: 2
-
-- type: microwaveMealRecipe
-  id: RecipeFinfinSashimi
-  name: finfin sashimi recipe
-  result: FoodMealFinfinSashimi
-  time: 15
-  reagents:
-    TableSalt: 1
-  solids:
-    FoodMeatFinfin: 2
 
 - type: microwaveMealRecipe
   id: RecipeMisoColaSoup
@@ -1538,17 +1499,6 @@
     Sugar: 5
   solids:
     FoodButterSlice: 1
-
-- type: microwaveMealRecipe
-  id: RecipeMuffinLemo
-  name: lemuffin recipe
-  result: FoodBakedMuffinLemo
-  time: 5
-  reagents:
-    Flour: 5
-    Sugar: 5
-  solids:
-    FoodLemo: 3
 
 - type: microwaveMealRecipe
   id: RecipeChocolateChipPancake
@@ -1851,15 +1801,6 @@
   group: Savory
   solids:
     FoodDonkpocketCarp: 1
-
-- type: microwaveMealRecipe
-  id: RecipeDonkpocketCloth
-  name: warm cloth-pocket recipe
-  result: FoodDonkpocketClothWarm
-  time: 5
-  solids:
-    FoodDonkpocketCloth: 1
-
 
 - type: microwaveMealRecipe
   id: RecipeHotChili
@@ -2239,28 +2180,6 @@
   solids:
     FoodCannabisButter: 2
     FoodSnackChocolateBar: 2
-
-- type: microwaveMealRecipe
-  id: RecipeRainbowCannabisButter
-  name: cannabis butter recipe
-  result: FoodRainbowCannabisButter
-  time: 15
-  solids:
-    FoodButter: 1
-    LeavesCannabisRainbow: 6
-
-- type: microwaveMealRecipe
-  id: RecipeForeverWeedBrownies
-  name: cannabis brownie recipe
-  result: FoodBakedForeverWeedBrownieBatch
-  time: 25
-  reagents:
-    Flour: 15
-    Sugar: 30
-  solids:
-    FoodRainbowCannabisButter: 2
-    FoodSnackChocolateBar: 2
-    FoodEgg: 3
 
 - type: microwaveMealRecipe
   id: RecipeCornInButter

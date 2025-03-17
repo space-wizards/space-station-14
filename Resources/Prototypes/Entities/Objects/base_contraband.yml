@@ -39,6 +39,8 @@
     severity: Restricted
     allowedDepartments: [  ]
     allowedJobs: [  ]
+    implicitlyAllowedDepartments: [ CentralCommand ] #imp edit
+    implicitlyAllowedJobs: [ Captain, HeadOfPersonnel ] #imp edit
 
 # one department restricted contraband
 - type: entity
@@ -48,6 +50,9 @@
   components:
   - type: Contraband
     allowedDepartments: [ CentralCommand ]
+    implicitlyAllowedDepartments: [ ] #imp edit
+    implicitlyAllowedJobs: [ ] #imp edit
+
 
 - type: entity
   id: BaseCommandContraband
@@ -171,6 +176,7 @@
   - type: Contraband
     allowedDepartments: [ Security ]
     allowedJobs: [ Bartender ]
+    implicitlyAllowedJobs: [ Captain, HeadOfPersonnel, HospitalityDirector ] #imp edit
 
 - type: entity
   id: BaseSecurityLawyerContraband
@@ -180,6 +186,7 @@
   - type: Contraband
     allowedDepartments: [ Security ]
     allowedJobs: [ Lawyer ]
+    implicitlyAllowedJobs: [ Captain, HeadOfPersonnel, HospitalityDirector ] #imp edit
 
 - type: entity
   id: BaseJanitorContraband
@@ -188,6 +195,7 @@
   components:
   - type: Contraband
     allowedJobs: [ Janitor ]
+    implicitlyAllowedJobs: [ Captain, HeadOfPersonnel, HospitalityDirector ] #imp edit
 
 - type: entity
   id: BaseBrigmedicContraband
@@ -196,6 +204,7 @@
   components:
   - type: Contraband
     allowedJobs: [ Brigmedic ]
+    implicitlyAllowedJobs: [ Captain, HeadOfPersonnel, HeadOfSecurity ] #imp edit
 
 # for ~objective items
 - type: entity

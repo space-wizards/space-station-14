@@ -33,4 +33,20 @@ public sealed partial class ContrabandComponent : Component
     [DataField]
     [AutoNetworkedField]
     public HashSet<ProtoId<JobPrototype>> AllowedJobs = new();
+
+    /// <summary>
+    ///     Imp addition. Departments allowed through this will not appear in the examine text.
+    ///     Useful for allowing departments like CentComm to be allowed without it needing to be explicilty stated.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public HashSet<ProtoId<DepartmentPrototype>> ImplicitlyAllowedDepartments = new();
+
+    /// <summary>
+    ///     Imp addition. Jobs allowed through this will not appear in the examine text.
+    ///     Useful for allowing jobs like captain or other heads of staff to be allowed without it needing to be explicilty stated.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public HashSet<ProtoId<JobPrototype>> ImplicitlyAllowedJobs = new();
 }

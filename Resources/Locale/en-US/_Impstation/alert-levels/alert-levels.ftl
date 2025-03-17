@@ -31,5 +31,5 @@ alert-level-puce-announcement = A food recall has been initiated, and your stati
 alert-level-puce-instructions = Don't eat the burgers in the cafeteria...
 
 alert-level-octarine = Octarine
-alert-level-octarine-announcement = A cataclysmic bluespace event threatens to envelop realspace. Crewmembers are advised to shelter in their departments and listen to heads of staff for more information. Failure to adhere will be met with lethal force.
-alert-level-octarine-instructions = EMBRACE THE END.
+alert-level-octarine-announcement = A cataclysmic bluespace event threatens to envelop realspace. Security has been authorized to use lethal weapons. Crewmembers are advised to listen to heads of staff for more information. Failure to adhere will be met with lethal force.
+alert-level-octarine-instructions = THE END IS THE END IS THE END IS

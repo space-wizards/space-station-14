@@ -80,3 +80,37 @@
     - type: Sprite
       sprite: _Impstation/Objects/Consumable/Food/crazy.rsi
       state: crazy_yellow
+
+# Why
+
+- type: entity
+  name: finfin sandwich
+  parent: FoodBurgerBase
+  id: FoodBurgerFinfin
+  description: Why
+  components:
+  - type: FlavorProfile
+    flavors:
+    - bun
+    - finfin
+    - chicken
+    - duck
+    - fishy
+  - type: Sprite
+    state: chicken
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: Mayo
+          Quantity: 3
+  - type: Tag
+    tags:
+    - Meat

@@ -11,3 +11,5 @@ guide-entry-impgoblinstowaway = Goblin Stowaways
 guide-entry-impgoblinknight = Sir Gollylad
 guide-entry-impluggage = The Luggage
 guide-entry-impapids = Apids
+
+guide-entry-cooking-techniques = Cooking Techniques

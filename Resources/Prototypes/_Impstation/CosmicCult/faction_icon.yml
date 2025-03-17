@@ -6,6 +6,7 @@
     components:
       - ShowAntagIcons
       - CosmicCult
+      - RogueAscended
   icon:
     sprite: /Textures/_Impstation/CosmicCult/Icons/antag_icons.rsi
     state: CosmicCult
@@ -18,6 +19,7 @@
     components:
       - ShowAntagIcons
       - CosmicCult
+      - RogueAscended
   icon:
     sprite: /Textures/_Impstation/CosmicCult/Icons/antag_icons.rsi
     state: CosmicCultLead

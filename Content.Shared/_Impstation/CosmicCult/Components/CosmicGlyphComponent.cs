@@ -9,7 +9,7 @@ public sealed partial class CosmicGlyphComponent : Component
 {
     [DataField] public string GlyphName = "base";
     [DataField] public int RequiredCultists = 1;
-    [DataField] public float ActivationRange = 1f;
+    [DataField] public float ActivationRange = 1.55f;
 
     /// <summary>
     ///     Damage dealt on glyph activation.

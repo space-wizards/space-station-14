@@ -39,6 +39,8 @@ public sealed class ContrabandSystem : EntitySystem
         contraband.Severity = other.Severity;
         contraband.AllowedDepartments = other.AllowedDepartments;
         contraband.AllowedJobs = other.AllowedJobs;
+        contraband.ImplicitlyAllowedDepartments = other.ImplicitlyAllowedDepartments; // imp edit
+        contraband.ImplicitlyAllowedJobs = other.ImplicitlyAllowedJobs; // imp edit
         Dirty(uid, contraband);
     }
 
@@ -84,10 +86,13 @@ public sealed class ContrabandSystem : EntitySystem
             }
         }
 
+        var implicitJobs = component.ImplicitlyAllowedJobs.Select(p => _proto.Index(p).LocalizedName).ToArray(); // imp edit
         String carryingMessage;
         // either its fully restricted, you have no departments, or your departments dont intersect with the restricted departments
         if (departments.Intersect(component.AllowedDepartments).Any()
-            || jobs.Contains(jobId))
+            || departments.Intersect(component.ImplicitlyAllowedDepartments).Any() //imp edit
+            || jobs.Contains(jobId)
+            || implicitJobs.Contains(jobId)) //imp edit
         {
             carryingMessage = Loc.GetString("contraband-examine-text-in-the-clear");
         }

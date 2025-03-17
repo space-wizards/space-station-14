@@ -10,3 +10,75 @@
     tags:
     - Fruit
     - Muffin
+
+- type: entity
+  name: forever weed brownies
+  parent: FoodBakedBase
+  id: FoodBakedForeverWeedBrownieBatch
+  description: A pan of VERY "special" brownies.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - sweet
+    - magical
+    - chocolate
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/brownie.rsi
+    state: brownie-batch
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 228
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30
+        - ReagentId: Theobromine
+          Quantity: 18
+        - ReagentId: THC
+          Quantity: 30
+        - ReagentId: ForeverWeed
+          Quantity: 15
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+  - type: RgbLightController
+    cycleRate: 0.6
+  - type: SliceableFood
+    count: 6
+    slice: FoodBakedForeverWeedBrownie
+
+- type: entity
+  name: forever weed brownie
+  parent: FoodBakedBase
+  id: FoodBakedForeverWeedBrownie
+  description: A VERY "special" brownie.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - sweet
+    - magical
+    - chocolate
+  - type: Sprite
+    sprite: Objects/Consumable/Food/snacks.rsi
+    state: mre-brownie-open
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 38
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Theobromine
+          Quantity: 3
+        - ReagentId: THC
+          Quantity: 5
+        - ReagentId: ForeverWeed
+          Quantity: 2.5
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+  - type: RgbLightController
+    cycleRate: 0.6
+  - type: Tag
+    tags:
+    - Slice

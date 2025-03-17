@@ -5,6 +5,7 @@
   components:
   - type: Contraband
     allowedJobs: [ Lawyer ]
+    implicitlyAllowedJobs: [ Captain, HeadOfPersonnel, HospitalityDirector ]
 
 # For non-sanctioned decapoid tech
 - type: entity
@@ -13,8 +14,6 @@
   components:
   - type: Contraband
     severity: DecapoidEmpire
-    # no dept is authorized to have
-    allowedDepartments: [  ]
 
 # tier 1 contraband: syndicate pajamas, flags, duffels, etc
 - type: entity
@@ -23,8 +22,6 @@
   components:
   - type: Contraband
     severity: Tier1Contraband
-    # no dept is authorized to have
-    allowedDepartments: [  ]
 
 # tier 2 contraband: espionage/sabotage items a la emag, cham projector, cybersun pen, etc
 - type: entity
@@ -33,8 +30,6 @@
   components:
   - type: Contraband
     severity: Tier2Contraband
-    # no dept is authorized to have
-    allowedDepartments: [  ]
 
 # tier 3 contraband: military-level equipment a la blood-red hardsuit, china lake, etc
 - type: entity
@@ -43,8 +38,6 @@
   components:
   - type: Contraband
     severity: Tier3Contraband
-    # no dept is authorized to have
-    allowedDepartments: [  ]
 
 # tier X contraband: paranormal/extraordinary equipment, a la heretic blade, changeling armblade, etc
 - type: entity
@@ -53,5 +46,3 @@
   components:
   - type: Contraband
     severity: TierXContraband
-    # no dept is authorized to have
-    allowedDepartments: [  ]

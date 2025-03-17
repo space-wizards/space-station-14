@@ -173,26 +173,22 @@ public sealed partial class CosmicCultSystem : EntitySystem
                 comp.CurrentState = FinaleState.ActiveFinale;
                 comp.FinaleTimer = _timing.CurTime + comp.FinaleRemainingTime;
                 comp.SelectedSong = comp.FinaleMusic;
-                _sound.StopStationEventMusic(uid, StationEventMusicType.CosmicCult);
-                _sound.DispatchStationEventMusic(uid, comp.SelectedSong, StationEventMusicType.CosmicCult);
-                _appearance.SetData(uid, MonumentVisuals.FinaleReached, 3);
 
+                _sound.StopStationEventMusic(uid, StationEventMusicType.CosmicCult);
+                _appearance.SetData(uid, MonumentVisuals.FinaleReached, 3);
+                _announcer.SendAnnouncementMessage(_announcer.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-finale-warning"), null, Color.FromHex("#cae8e8"));
+
+                Timer.Spawn(TimeSpan.FromSeconds(1),
+                    () =>
+                    {
+                        _sound.DispatchStationEventMusic(uid, comp.SelectedSong, StationEventMusicType.CosmicCult);
+                    });
             }
             else if (comp.CurrentState == FinaleState.ActiveFinale && _timing.CurTime >= comp.FinaleTimer) // trigger wincondition on time runout
             {
                 _sound.StopStationEventMusic(uid, StationEventMusicType.CosmicCult);
                 Spawn("MobCosmicGodSpawn", Transform(uid).Coordinates);
                 comp.CurrentState = FinaleState.Victory;
-            }
-
-            if (_timing.CurTime >= comp.CultistsCheckTimer && comp.CurrentState == FinaleState.ActiveBuffer) // speed up the buffer for each nearby cultist
-            {
-                comp.CultistsCheckTimer = _timing.CurTime + comp.CheckWait;
-                var cultistsPresent = CultistCount = _cosmicGlyphs.GatherCultists(uid, 5).Count; //Let's use the cultist collecting hashset from Cosmic Glyphs. beacuase
-                CultistCount = int.Clamp(cultistsPresent, 0, 10);
-                _popup.PopupCoordinates(Loc.GetString("cosmiccult-finale-cultist-count", ("COUNT", CultistCount)), Transform(uid).Coordinates);
-                var modifyTime = TimeSpan.FromSeconds(360 * 7 / (360 - 40 * CultistCount) - 5);
-                comp.BufferTimer -= modifyTime;
             }
         }
     }

@@ -1,4 +1,6 @@
 using Content.Shared.Whitelist;
+using Content.Shared.Alert;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Drone.Components
 {
@@ -21,5 +23,13 @@ namespace Content.Server.Drone.Components
 
         [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
         public EntityWhitelist? Blacklist;
+
+        [DataField]
+        public ProtoId<AlertPrototype> BatteryAlert = "DroneBattery";
+
+        [DataField]
+        public ProtoId<AlertPrototype> NoBatteryAlert = "BorgBatteryNone";
+
+        public short LastChargePercent;
     }
 }

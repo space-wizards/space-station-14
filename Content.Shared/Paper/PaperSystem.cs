@@ -9,6 +9,7 @@ using Content.Shared.Tag;
 using Robust.Shared.Player;
 using Robust.Shared.Audio.Systems;
 using static Content.Shared.Paper.PaperComponent;
+using Content.Shared._Impstation.Illiterate;
 
 namespace Content.Shared.Paper;
 
@@ -114,7 +115,7 @@ public sealed class PaperSystem : EntitySystem
                     return;
                 }
 
-                var ev = new PaperWriteAttemptEvent(entity.Owner);
+                var ev = TryComp<IlliterateComponent>(args.User, out var illiterate) ? new PaperWriteAttemptEvent(entity.Owner, illiterate.FailMsg, true) : new PaperWriteAttemptEvent(entity.Owner);
                 RaiseLocalEvent(args.User, ref ev);
                 if (ev.Cancelled)
                 {

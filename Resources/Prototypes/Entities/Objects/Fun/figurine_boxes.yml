@@ -103,8 +103,8 @@
       - id: ToyFigurineCourier #<imp>
         orGroup: SpacemenFig
       - id: ToyFigurineBrigmedic
-        orGroup: SpacemenFig 
-      - id: ToyFigurineCyborgDefault 
+        orGroup: SpacemenFig
+      - id: ToyFigurineCyborgDefault
         orGroup: SpacemenFig
       - id: ToyFigurineCyborgEngineering
         orGroup: SpacemenFig
@@ -180,22 +180,25 @@
         orGroup: SpacemenFig
       - id: ToyFigurineERTSecurity
         prob: 0.50
-        orGroup: SpacemenFig 
+        orGroup: SpacemenFig
       - id: ToyFigurineNukieAgent
         prob: 0.50
-        orGroup: SpacemenFig 
+        orGroup: SpacemenFig
       - id: ToyFigurineNukieJuggernaut
         prob: 0.50
         orGroup: SpacemenFig
       - id: ToyFigurineCyborgAssault
         prob: 0.50
-        orGroup: SpacemenFig 
+        orGroup: SpacemenFig
       - id: ToyFigurineCyborgCorpsman
         prob: 0.50
         orGroup: SpacemenFig
       - id: ToyFigurineCyborgSaboteur
         prob: 0.50
-        orGroup: SpacemenFig 
+        orGroup: SpacemenFig
       - id: ToyFigurineCosmicCultist
-        prob: 0.20 
+        prob: 0.20
+        orGroup: SpacemenFig #</imp>
+      - id: ToyFigurineCrewLing
+        prob: 0.10
         orGroup: SpacemenFig #</imp>

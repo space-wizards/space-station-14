@@ -314,7 +314,7 @@
      - state: station_ai_unshaded
        shader: unshaded
   - type: SpeakOnTrigger
-    pack: FigurinesStationAI 
+    pack: FigurinesStationAI
 
 - type: entity
   parent: BaseFigurine
@@ -330,3 +330,28 @@
        shader: unshaded
   - type: SpeakOnTrigger
     pack: FigurinesCosmicCultist
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineNukiePareidolia
+  suffix: Do Not Map Keb Toy
+  name: pareidolia-10
+  description: A figurine depicting what a nuclear operative might wear.... You think? It emits a faint static hum.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/pareidolia.rsi
+    state: icon
+  - type: SpeakOnTrigger
+    pack: FigurinesNukiePareidolia
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineCrewLing
+  name: figure?
+  description: A figurine depicting... uhhhhh...
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/changeling.rsi
+    state: icon
+  - type: SpeakOnTrigger
+    pack: FigurinesCrewLing

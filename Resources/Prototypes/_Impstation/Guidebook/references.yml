@@ -1,0 +1,4 @@
+﻿- type: guideEntry
+  id: CookingTechniques
+  name: guide-entry-cooking-techniques
+  text: "/ServerInfo/_Impstation/Guidebook/Service/CookingTechniques.xml"

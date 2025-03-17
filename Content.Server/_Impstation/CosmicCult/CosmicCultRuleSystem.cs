@@ -1,4 +1,3 @@
-using System.Globalization;
 using Content.Server.Antag;
 using Content.Server.Mind;
 using Content.Server.GameTicking.Rules;
@@ -53,6 +52,15 @@ using Content.Shared._Impstation.CosmicCult.Prototypes;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Content.Shared.Humanoid;
+using Robust.Shared.Enums;
+using Content.Shared.Mobs.Systems;
+using Content.Server.Voting;
+using Content.Server.Voting.Managers;
+using Content.Shared.IdentityManagement;
+using Content.Shared._Impstation.CosmicCult;
+using Content.Server.Administration.Logs;
+using Content.Shared.Database;
+using Content.Server.CrewManifest;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -89,6 +97,9 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly IVoteManager _votes = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly CrewManifestSystem _crewManifest = default!;
     [Dependency] private readonly CosmicCorruptingSystem _corrupting = default!;
 
     private readonly SoundSpecifier _briefingSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_briefing.ogg");
@@ -109,16 +120,23 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         base.Initialize();
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
-        SubscribeLocalEvent<CosmicCultRuleComponent, AfterAntagEntitySelectedEvent>(OnAntagSelect);
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
+
+        SubscribeLocalEvent<CosmicCultRuleComponent, AfterAntagEntitySelectedEvent>(OnAntagSelect);
+
         SubscribeLocalEvent<CosmicCultComponent, ComponentShutdown>(OnComponentShutdown);
         SubscribeLocalEvent<CosmicMarkGodComponent, ComponentInit>(OnGodSpawn);
         SubscribeLocalEvent<CosmicCultComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
+    #region Starting Events
+    protected override void Started(EntityUid uid, CosmicCultRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    {
+        Timer.Spawn(TimeSpan.FromSeconds(10), () => { LeaderVote(); });
+    }
 
     private void OnRoundStart(RoundStartingEvent ev)
     {
-        // Reset the cult data to defaults.
+        // Reset the cult data to defaults. We should tidy this up differently at some point.
         EntropySiphoned = 0;
         CurrentTier = 0;
         TotalCrew = 0;
@@ -126,10 +144,55 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
         PercentConverted = 0;
     }
 
+    private void LeaderVote()
+    {
+        var cultists = new Dictionary<string, EntityUid>();
+
+        var cultQuery = EntityQueryEnumerator<CosmicCultComponent>();
+        while (cultQuery.MoveNext(out var cult, out _))
+        {
+            var playerInfo = $"{Comp<MetaDataComponent>(cult).EntityName}";
+            cultists.Add(playerInfo, cult);
+        }
+
+        var options = new VoteOptions
+        {
+            DisplayVotes = false,
+            Title = Loc.GetString("cosmiccult-vote-leadership-title"),
+            InitiatorText = Loc.GetString("cosmiccult-vote-leadership-initiator"),
+            Duration = TimeSpan.FromSeconds(_config.GetCVar(ImpCCVars.CosmicCultStewardVoteTimer)),
+            VoterEligibility = VoteManager.VoterEligibility.CosmicCult
+        };
+
+        foreach (var (name, ent) in cultists)
+        {
+            options.Options.Add((Loc.GetString(name), ent));
+        }
+
+        var vote = _votes.CreateVote(options);
+
+        vote.OnFinished += (_, args) =>
+        {
+            EntityUid picked;
+            if (args.Winner == null)
+            {
+                picked = (EntityUid)_rand.Pick(args.Winners);
+            }
+            else
+            {
+                picked = (EntityUid)args.Winner;
+            }
+            var winner = Identity.Entity(picked, EntityManager);
+            _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Cult stewardship vote finished: {winner} is now steward.");
+            AddComp<CosmicCultLeadComponent>(picked);
+        };
+    }
+
     private void OnAntagSelect(Entity<CosmicCultRuleComponent> uid, ref AfterAntagEntitySelectedEvent args)
     {
         TryStartCult(args.EntityUid, uid);
     }
+    #endregion
 
     #region Round & Objectives
 
@@ -241,6 +304,8 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             MonumentInGame.Comp.Enabled = false;
             finComp.CurrentState = FinaleState.Unavailable;
             _popup.PopupCoordinates(Loc.GetString("cosmiccult-monument-powerdown"), Transform(MonumentInGame).Coordinates, PopupType.Large);
+            _sound.StopStationEventMusic(MonumentInGame, StationEventMusicType.CosmicCult);
+            UpdateMonumentAppearance(MonumentInGame, false);
         }
 
         if (TotalCult == 0)
@@ -304,11 +369,10 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
 
     public void UpdateCultData(Entity<MonumentComponent> uid) // This runs every time Entropy is Inserted into The Monument, and every time a Cultist is Converted or Deconverted.
     {
-
         if (!TryComp<CosmicFinaleComponent>(uid, out var finaleComp))
             return;
 
-        TotalCrew = _antag.GetTotalPlayerCount(_playerMan.Sessions);
+        TotalCrew = _playerMan.Sessions.Count(session => session.Status == SessionStatus.InGame && HasComp<HumanoidAppearanceComponent>(session.AttachedEntity));
 
 #if DEBUG
         if (TotalCrew < 25)
@@ -427,11 +491,15 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             MonumentTier2(uid);
             UpdateMonumentReqsForTier(uid, CurrentTier);
 
-            Timer.Spawn(TimeSpan.FromSeconds(_config.GetCVar(ImpCCVars.CosmicCultT3RevealDelaySeconds)),
+            Timer.Spawn(TimeSpan.FromSeconds(_config.GetCVar(ImpCCVars.CosmicCultT2RevealDelaySeconds)),
                 () =>
                 {
                     //do spooky effects
-                    _audio.PlayGlobal(_tier2Sound, Filter.Broadcast(), false, AudioParams.Default);
+                    var sender = Loc.GetString("cosmiccult-announcement-sender");
+                    var mapData = _map.GetMap(_transform.GetMapId(MonumentInGame.Owner.ToCoordinates()));
+                    _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier2-progress"), sender, Color.FromHex("#4cabb3"));
+                    _announce.SendAnnouncementMessage(_announce.GetAnnouncementId("SpawnAnnounceCaptain"), Loc.GetString("cosmiccult-announce-tier2-warning"), null, Color.FromHex("#cae8e8"));
+                    _audio.PlayGlobal(_tier3Sound, Filter.Broadcast(), false, AudioParams.Default);
 
                     for (var i = 0; i < Convert.ToInt16(TotalCrew / 4); i++) // spawn # malign rifts equal to 25% of the playercount
                     {
