@@ -10,14 +10,3 @@
     time: 43200 # 12h
   guides: [ CosmicCult ]
 
-- type: antag
-  id: CosmicAntagLeader
-  name: roles-antag-cosmiccultlead-name
-  antagonist: true
-  setPreference: true
-  objective: roles-antag-cosmiccultlead-description
-  playTimeTracker: AntagCosmicCultLead
-  requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 144000 # 40h
-  guides: [ CosmicCult ]

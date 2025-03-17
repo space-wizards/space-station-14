@@ -12,7 +12,7 @@
 
   Entropy may be infused into the Monument to empower it. As you infuse the Monument with entropy, the cult will collectively gain access to more [color=#4cabb3][bold]Influences[/bold][/color] and [color=#4cabb3][bold]Glyphs[/bold][/color], which can be attained by interacting with the Monument.
 
-  Cultists can interact with the monument to purchase additional [color=#4cabb3][bold]Influences[/bold][/color]. Entropy stored in the monument for the sake of purchasing is [italic]per person,[/italic] so one cultist purchasing an ability will not spend any entropy collected by other cultists.
+  Cultists can interact with the Monument to purchase additional [color=#4cabb3][bold]Influences[/bold][/color]. Entropy stored in the monument for the sake of purchasing is [italic]per person,[/italic] so one cultist purchasing an ability will not spend any entropy collected by other cultists.
 
   [textlink="For more on Influences, click here." link="CosmicCultInfluences"]
 
@@ -21,11 +21,13 @@
     <GuideEntityEmbed Entity="PlushieCosmicCult" Caption=""/>
   </Box>
 
-  Should you succeed in fully empowering the Monument to the third stage, it will hunger for one last threshold of entropy - fuel to feed the final curtain call. Once enough entropy has been infused, the empowered Monument will glow, signalling that it can now be used to [color=#4cabb3][bold]Beckon[/bold][/color] the Unknown. Any cultist may do so by interacting with the monument.
+  Should you succeed in fully empowering the Monument to the third stage, it will hunger for one last threshold of entropy - fuel to feed the final curtain call. Once enough entropy has been infused, the empowered Monument will glow, signalling that it can now be used to [color=#4cabb3][bold]Beckon[/bold][/color] the Unknown. Any cultist may do so by interacting with the Monument.
 
-  Be prepared to defend the Monument when doing so, as just one waylaid action from a single disruptive soul is all it will take to bring this ritual to a sudden, unceremonious halt.
+  Once the Monument is ready to activate, cultists [bold]must[/bold] activate it in order to regain access the Monument's store and glyphs - the end [bold]cannot[/bold] be forestalled.
 
-  Once the Monument becomes ready to activate, cultists [bold]must[/bold] activate it before being once again able to access the Monument's store and glyphs - the end [bold]cannot[/bold] be forestalled.
+  Be prepared to defend the Monument during the Beckoning, as just one waylaid action from a single disruptive soul will bring this ritual to a sudden, unceremonious halt.
+
+  Converting additional crewmembers using a [color=#4cabb3]Glyph of Truth[/color] while the Beckoning is active will accelerate its speed, bringing the cult closer to total victory.
 
   ## Glyphs
   Glyphs may be [color=#4cabb3]Scribed[/color] by interacting with the Monument. You may also [color=#4cabb3]Unscribe[/color] an unused Glyph in a similar manner at The Monument.

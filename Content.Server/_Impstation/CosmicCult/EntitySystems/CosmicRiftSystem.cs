@@ -9,6 +9,8 @@ using Content.Server.Body.Components;
 using Content.Server.Bible.Components;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Temperature.Components;
+using Content.Shared.Popups;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server._Impstation.CosmicCult.EntitySystems;
 public sealed class CosmicRiftSystem : EntitySystem
@@ -108,7 +110,7 @@ public sealed class CosmicRiftSystem : EntitySystem
         comp.Respiration = false;
         EnsureComp<PressureImmunityComponent>(args.User);
         EnsureComp<TemperatureImmunityComponent>(args.User);
-        _popup.PopupEntity(Loc.GetString("cosmiccult-rift-absorb"), uid, uid);
+        _popup.PopupCoordinates(Loc.GetString("cosmiccult-rift-absorb", ("NAME", Identity.Entity(args.Args.User, EntityManager))), Transform(args.Args.User).Coordinates, PopupType.MediumCaution);
         QueueDel(target);
     }
 
@@ -123,7 +125,7 @@ public sealed class CosmicRiftSystem : EntitySystem
         var tgtpos = Transform(uid).Coordinates;
         Spawn(uid.Comp.PurgeVFX, tgtpos);
         _audio.PlayPvs(uid.Comp.PurgeSound, args.User);
-        _popup.PopupEntity(Loc.GetString("cosmiccult-rift-purge"), args.User, args.User);
+        _popup.PopupCoordinates(Loc.GetString("cosmiccult-rift-purge", ("NAME", Identity.Entity(args.Args.User, EntityManager))), Transform(args.Args.User).Coordinates, PopupType.Medium);
         QueueDel(uid);
     }
 

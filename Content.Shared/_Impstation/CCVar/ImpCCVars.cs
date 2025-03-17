@@ -51,6 +51,9 @@ public sealed class ImpCCVars : CVars
     public static readonly CVarDef<int> CosmicCultTargetConversionPercent =
         CVarDef.Create("cosmiccult.target_conversion_percent", 40, CVar.SERVER, "How much of the crew the cult is aiming to convert for a tier 3 monument");
 
+    public static readonly CVarDef<int> CosmicCultStewardVoteTimer =
+        CVarDef.Create("cosmiccult.steward_vote_timer", 40, CVar.SERVER, "How long the timer for the cult's stewardship vote lasts.");
+
     public static readonly CVarDef<int> CosmicCultT2RevealDelaySeconds =
         CVarDef.Create<int>("cosmiccult.t2_reveal_delay_seconds", 120, CVar.SERVER, "The delay between the monument getting upgraded to tier 2 and the crew learning of that fact. the monument cannot be upgraded again in this time.");
 
