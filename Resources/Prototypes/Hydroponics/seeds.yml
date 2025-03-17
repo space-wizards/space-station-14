@@ -557,7 +557,7 @@
   plantRsi: Objects/Specific/Hydroponics/blue_tomato.rsi
   packetPrototype: BlueTomatoSeeds
   productPrototypes:
-    - blueTomato
+    - FoodBlueTomato
   harvestRepeat: Repeat
   lifespan: 25
   maturation: 8
