@@ -79,6 +79,7 @@
     - Blood
     - CopperBlood
     - Slime
+    - ShimmeringBlood #imp
   - quantity: 25
     weight: 1
     reagents:
