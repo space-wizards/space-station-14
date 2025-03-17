@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: RumiTiger
-  changes:
-  - message: A chocolate and banana muffin has been added to the game. The berry and
-      cherry muffins have also been resprited!
-    type: Add
-  - message: Now you can make a regular, chocolate, banana, and berry muffin!
-    type: Tweak
-  - message: Muffin tins have been added to the game. They are needed for making muffins!
-    type: Add
-  id: 7574
-  time: '2024-11-01T02:06:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29318
 - author: ScarKy0
   changes:
   - message: AI can no longer toggle seeing jobs off.
@@ -3892,3 +3880,10 @@
   id: 8073
   time: '2025-03-17T16:27:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35892
+- author: SlamBamActionman
+  changes:
+  - message: The Syndicate Backpack can now fit more items (35 item slots, from 28).
+    type: Tweak
+  id: 8074
+  time: '2025-03-17T17:58:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35888
