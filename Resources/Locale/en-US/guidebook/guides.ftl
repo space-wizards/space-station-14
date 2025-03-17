@@ -100,7 +100,6 @@ guide-entry-references = Tables & References
 guide-entry-chemicals = Chemicals
 guide-entry-drinks = Drinks
 guide-entry-foodrecipes = Food Recipes
-guide-entry-microwaverecipes = Microwave Recipes
 guide-entry-elements = Elements
 guide-entry-medicine = Medicine
 guide-entry-narcotics = Narcotics
