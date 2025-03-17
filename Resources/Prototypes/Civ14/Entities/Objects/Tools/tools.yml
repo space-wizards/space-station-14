@@ -35,3 +35,56 @@
     - type: Construction
       graph: BonePickaxe
       node: bonepickaxe
+
+- type: entity
+  name: bone knife
+  parent: BaseKnife
+  id: BoneKnife
+  description: A crude sharpened bone knife.
+  components:
+    - type: Tag
+      tags:
+        - Knife
+    - type: MeleeWeapon
+      damage:
+        types:
+          Slash: 10
+    - type: Construction
+      graph: BoneKnife
+      node: boneknife
+
+    - type: Sprite
+      sprite: Objects/_civ/StoneAge/bone_knife.rsi
+      size: 2
+      state: icon
+    - type: Item
+      size: 10
+      sprite: Objects/_civ/StoneAge/bone_knife.rsi
+
+- type: entity
+  id: BoneAxe
+  name: bone axe
+  parent: HydroponicsToolHatchet
+  description: A crude hatched made of sharpened bone.
+  components:
+    - type: Sprite
+      sprite: Objects/_civ/StoneAge/bone_axe.rsi
+      state: icon
+    - type: MeleeWeapon
+      attackRate: 1.1
+      damage:
+        types:
+          Blunt: 5
+          Slash: 8
+          Structural: 4
+    - type: Item
+      size: 60
+    - type: Clothing
+      sprite: Objects/_civ/StoneAge/bone_axe.rsi
+      quickEquip: false
+      slots:
+        - back
+        - belt
+    - type: Construction
+      graph: BoneAxe
+      node: boneaxe
