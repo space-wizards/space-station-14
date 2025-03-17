@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Removed about half the lights from banana so it is less blinding.
-    type: Tweak
-  id: 838
-  time: '2025-01-01T17:26:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1188
 - author: honeyed-lemons
   changes:
   - message: Added Chemmaster boards to Box, Xeno, and Fland
@@ -4092,3 +4085,10 @@
   id: 1337
   time: '2025-03-17T18:28:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1988
+- author: SixValentine
+  changes:
+  - message: The same figure 33 times!
+    type: Add
+  id: 1338
+  time: '2025-03-17T18:30:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1993
