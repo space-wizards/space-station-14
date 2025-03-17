@@ -113,3 +113,17 @@
           steps:
             - tool: Prying
               doAfter: 2
+
+- type: constructionGraph
+  id: WoodHammer
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: woodhammer
+          steps:
+            - material: WoodPlank
+              amount: 4
+              doAfter: 6
+    - node: woodhammer
+      entity: WoodHammer

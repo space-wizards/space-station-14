@@ -147,3 +147,39 @@
     - type: Construction
       graph: Plough
       node: plough
+
+- type: entity
+  name: hammer
+  parent: BaseItem
+  id: Hammer
+  description: Hit stuff apart with this.
+  components:
+    - type: Sprite
+      sprite: Objects/_civ/items.rsi
+      state: hammer
+    - type: Item
+      size: 20
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 6
+      soundHit:
+        collection: MetalThud
+
+- type: entity
+  name: wood hammer
+  parent: Hammer
+  id: WoodHammer
+  components:
+    - type: Sprite
+      sprite: Objects/_civ/StoneAge/wood_hammer.rsi
+      state: icon
+    - type: Item
+      size: 20
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 3
+    - type: Construction
+      graph: WoodHammer
+      node: woodhammer

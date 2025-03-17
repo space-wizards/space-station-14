@@ -63,3 +63,14 @@
   description: A simple wood plough.
   icon: { sprite: Objects/_civ/items.rsi, state: plough }
   objectType: Item
+
+- type: construction
+  name: wood hammer
+  id: WoodHammer
+  graph: WoodHammer
+  startNode: start
+  targetNode: woodhammer
+  category: construction-category-tools
+  description: A simple wood hammer.
+  icon: { sprite: Objects/_civ/StoneAge/wood_hammer.rsi, state: icon }
+  objectType: Item
