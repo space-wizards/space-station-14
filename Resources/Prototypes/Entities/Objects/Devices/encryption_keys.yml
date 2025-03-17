@@ -57,7 +57,7 @@
     - state: nano_label
 
 - type: entity
-  parent: [ EncryptionKey, BaseCentcommCommandContraband ]
+  parent: [ EncryptionKey, BaseCommandContraband ] #imp edit, cenctomm implicitly allowed through this contraband entity. also all centcomm jobs are already part of command, so like...
   id: EncryptionKeyStationMaster
   name: station master encryption key
   description: An encryption key used by station's bosses.
