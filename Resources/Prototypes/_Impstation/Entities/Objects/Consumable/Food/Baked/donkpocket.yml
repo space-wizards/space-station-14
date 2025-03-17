@@ -1,0 +1,42 @@
+﻿- type: entity
+  name: cloth-pocket
+  parent: FoodDonkpocketBase
+  id: FoodDonkpocketCloth
+  description: Imitation donk-pockets woven from cheap cloth.
+  components:
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+    - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 3
+  - type: Sprite
+    state: cloth
+  - type: Tag
+    tags:
+    - DonkPocket
+    - ClothMade
+
+- type: entity
+  name: warm cloth-pocket
+  parent: FoodDonkpocketCloth
+  id: FoodDonkpocketClothWarm
+  description: Imitation donk-pockets woven from cheap cloth and burnt to perfection.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - cheap
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 8
+        - ReagentId: Omnizine
+          Quantity: 2
