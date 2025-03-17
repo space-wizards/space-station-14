@@ -85,7 +85,7 @@ public sealed partial class CosmicCorruptingComponent : Component
     /// <summary>
     /// The tile we spawn when replacing a normal tile.
     /// </summary>
-    [DataField] //todo make this a dict. later though, there are so many fucking tiles.
+    [DataField] //not a dict like the entity conversion below because there's too many fucking tiles
     public ProtoId<ContentTileDefinition> ConversionTile = "FloorCosmicCorruption";
 
     /// <remarks>

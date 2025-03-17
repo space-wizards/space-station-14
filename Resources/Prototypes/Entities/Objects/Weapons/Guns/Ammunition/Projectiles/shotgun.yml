@@ -276,8 +276,8 @@
     layers:
     - state: shard
       shader: unshaded
-  - type: EmbeddableProjectile
-    deleteOnRemove: true
+  #- type: EmbeddableProjectile # imp edit - was causing integration tests to fail via pelletGlassSpread
+  #  deleteOnRemove: true
   - type: Projectile
     deleteOnCollide: false
     damage:
