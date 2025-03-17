@@ -116,3 +116,34 @@
     - type: Construction
       graph: BoneAxe
       node: boneaxe
+
+- type: entity
+  parent: BaseItem
+  name: plough
+  id: Plough
+  description: A simple wood plough. Use it on dirt to plough farming areas.
+  components:
+    - type: Sprite
+      sprite: Objects/_civ/items.rsi
+      state: plough
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 6
+      soundHit:
+        collection: MetalThud
+    - type: Item
+      size: Large
+      shape:
+        - 0,0,4,4 # 5x5
+    - type: PhysicalComposition
+      materialComposition:
+        Wood: 100
+    - type: Clothing
+      sprite: Objects/_civ/items.rsi
+      quickEquip: false
+      slots:
+        - back
+    - type: Construction
+      graph: Plough
+      node: plough

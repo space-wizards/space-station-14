@@ -52,3 +52,14 @@
   description: A crude flint axe.
   icon: { sprite: Objects/_civ/StoneAge/flint_axe.rsi, state: icon }
   objectType: Item
+
+- type: construction
+  name: plough
+  id: Plough
+  graph: Plough
+  startNode: start
+  targetNode: plough
+  category: construction-category-tools
+  description: A simple wood plough.
+  icon: { sprite: Objects/_civ/items.rsi, state: plough }
+  objectType: Item

@@ -67,6 +67,20 @@
       entity: BoneKnife
 
 - type: constructionGraph
+  id: Plough
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: plough
+          steps:
+            - material: WoodPlank
+              amount: 4
+              doAfter: 6
+    - node: plough
+      entity: Plough
+
+- type: constructionGraph
   id: FlintAxe
   start: start
   graph:
