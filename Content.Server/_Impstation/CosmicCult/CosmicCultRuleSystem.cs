@@ -33,6 +33,7 @@ using Content.Server.GameTicking;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using System.Linq;
+using Content.Server._Impstation.CosmicCult.EntitySystems;
 using Content.Server.Shuttles.Systems;
 using Content.Shared._Impstation.CosmicCult.Components.Examine;
 using Content.Shared.Mind.Components;
@@ -88,6 +89,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly CosmicCorruptingSystem _corrupting = default!;
 
     private readonly SoundSpecifier _briefingSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_briefing.ogg");
     private readonly SoundSpecifier _deconvertSound = new SoundPathSpecifier("/Audio/_Impstation/CosmicCult/antag_cosmic_deconvert.ogg");
@@ -604,7 +606,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     private void ReadyFinale(Entity<MonumentComponent> uid, CosmicFinaleComponent finaleComp)
     {
         if (TryComp<CosmicCorruptingComponent>(uid, out var comp))
-            comp.Enabled = true;
+            _corrupting.Enable((uid, comp));
 
         if (TryComp<ActivatableUIComponent>(uid, out var uiComp))
         {
