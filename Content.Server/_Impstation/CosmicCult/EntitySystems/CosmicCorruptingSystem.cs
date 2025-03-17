@@ -48,13 +48,12 @@ public sealed class CosmicCorruptingSystem : EntitySystem
         if (xform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var mapGrid))
             return;
 
-        if (!ent.Comp.Enabled) //slight hack but maybe this'll fix the test please?
-            return;
-
         var grid = (gridUid, mapGrid);
         var tile = _map.GetTileRef(grid, xform.Coordinates);
         var convertTile = (ContentTileDefinition)_tileDefinition[ent.Comp.ConversionTile];
-        _tile.ReplaceTile(tile, convertTile);
+
+        if (ent.Comp.Enabled)
+            _tile.ReplaceTile(tile, convertTile);
 
         //add every neighbouring tile to the corruptable list
         foreach (var neighbourPos in _neighbourPositions)
@@ -90,6 +89,8 @@ public sealed class CosmicCorruptingSystem : EntitySystem
             ent.Comp.CorruptableTiles.Add(neighbourRef.GridIndices);
         }
     }
+
+    //todo floodFill for the monument
 
     public override void Update(float frameTime)
     {
