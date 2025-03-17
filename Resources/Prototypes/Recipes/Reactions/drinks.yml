@@ -766,7 +766,7 @@
     Nollazine:
       amount: 1
   products:
-    Nothing: 0 # seems to be nothing
+    Nothing: 1 # funny
 
 - type: reaction
   id: NuclearCola
