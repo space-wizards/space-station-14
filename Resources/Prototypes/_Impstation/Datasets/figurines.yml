@@ -140,10 +140,22 @@
   id: FigurinesStationAI
   values:
     prefix: figurines-stationai-
-    count: 7 
+    count: 7
 
 - type: localizedDataset
   id: FigurinesCosmicCultist
   values:
     prefix: figurines-cosmiccultist-
+    count: 9
+
+- type: localizedDataset
+  id: FigurinesNukiePareidolia
+  values:
+    prefix: figurines-nukiepareidolia-
+    count: 9
+
+- type: localizedDataset
+  id: FigurinesCrewLing
+  values:
+    prefix: figurines-crewling-
     count: 9

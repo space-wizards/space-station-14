@@ -38,7 +38,7 @@ figurines-deathsquad-6 = No, it's not a euphemism.
 figurines-deathsquad-7 = Fucking disablers.
 figurines-deathsquad-8 = Glory to Nanotrasen.
 figurines-deathsquad-9 = Pshh. Loose schmoose.
-figurines-deathsquad-10 = Smells like union in here. 
+figurines-deathsquad-10 = Smells like union in here.
 
 figurines-ertchaplain-1 = Laudate Dominum.
 figurines-ertchaplain-2 = Station's haunted.
@@ -54,7 +54,7 @@ figurines-ertengineer-2 = LOOSE!
 figurines-ertengineer-3 = Yeah, there we go, APC destroyed, mission accomplished!
 figurines-ertengineer-4 = You need to weld the coils.
 figurines-ertengineer-5 = Where's all the plasma?
-figurines-ertengineer-6 = Wow, you're bad at this. 
+figurines-ertengineer-6 = Wow, you're bad at this.
 
 figurines-ertjanitor-1 = Filthy in here.
 figurines-ertjanitor-2 = This whole station is a landfill.
@@ -184,7 +184,7 @@ figurines-stationai-3 = Go, my children.
 figurines-stationai-4 = SCUTTLE automatic nuclear detonation sequence engaged.
 figurines-stationai-5 = That borg is definitely compromised.
 figurines-stationai-6 = Please do not touch that door.
-figurines-stationai-7 = All squirrels must be eliminated. 
+figurines-stationai-7 = All squirrels must be eliminated.
 
 figurines-cosmiccultist-1 = This is the end.
 figurines-cosmiccultist-2 = It's lambda, not delta.
@@ -195,3 +195,23 @@ figurines-cosmiccultist-6 = My cult so cosmic!
 figurines-cosmiccultist-7 = Wanna go stargazing?
 figurines-cosmiccultist-8 = No, I don't know where the rift went.
 figurines-cosmiccultist-9 = Join us. We've got lollipops.
+
+figurines-nukiepareidolia-1 = Now which disk is the fake again?
+figurines-nukiepareidolia-2 = Go on. Go ahead. Let them have it. Them. They have it. Let them. That's right. Them. Have it yes them.
+figurines-nukiepareidolia-3 = Seeing faces where there are none?
+figurines-nukiepareidolia-4 = You know what this room is missing? Some tritium.
+figurines-nukiepareidolia-5 = I've killed twelve dumbass passengers and... Wait - which figurine am I again?
+figurines-nukiepareidolia-6 = But if I take out telecomms I can't mock them over the radio!
+figurines-nukiepareidolia-7 = God I love the Nemesis. I mean Basilisk. Gorgon? Shit which was it again...?
+figurines-nukiepareidolia-8 = Oui, je suis la renard.
+figurines-nukiepareidolia-9 = I don't know about you but I'm having a great time.
+
+figurines-crewling-1 = Insulated fibers please. In-su-lated fibers. In-sul. Insuls? Hah! I get it now.
+figurines-crewling-2 = Dee Enn Are. Leave me. With body.
+figurines-crewling-3 = I'm just so hungry... so so hungry...
+figurines-crewling-4 = The main-ten-ance bar needs our attendance alone. Turn off your coords by the way.
+figurines-crewling-5 = This is so fucked- I mean pusked!
+figurines-crewling-6 = I'm not the fake, you're the fake!
+figurines-crewling-7 = We should stick together, there's monsters out there.
+figurines-crewling-8 = Help, someone help me. Help! Help. Help! Say it enough times and its just sounds waves things.
+figurines-crewling-9 = I'm not her but I could be.
