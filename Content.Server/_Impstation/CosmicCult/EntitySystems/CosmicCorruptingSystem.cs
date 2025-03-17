@@ -3,12 +3,10 @@ using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
-using System.Numerics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Content.Shared.Tag;
 using Content.Server._Impstation.CosmicCult.Components;
-using Content.Server.Shuttles.Components;
 using Content.Shared.Doors.Components;
 
 namespace Content.Server._Impstation.CosmicCult.EntitySystems;
@@ -69,6 +67,30 @@ public sealed class CosmicCorruptingSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// use this instead of directly setting enable to true
+    /// </summary>
+    public void Enable(Entity<CosmicCorruptingComponent> ent)
+    {
+        ent.Comp.Enabled = true;
+        var convertTile = (ContentTileDefinition)_tileDefinition[ent.Comp.ConversionTile];
+        var xform = Transform(ent);
+        if (xform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var mapGrid))
+            return;
+        var grid = (gridUid, mapGrid);
+        var tile = _map.GetTileRef(grid, xform.Coordinates);
+
+        //add every neighbouring tile to the corruptable list
+        foreach (var neighbourPos in _neighbourPositions)
+        {
+            var neighbourRef = _map.GetTileRef((gridUid, mapGrid), tile.GridIndices + neighbourPos);
+            if (neighbourRef.Tile.TypeId == convertTile.TileId)
+                continue; //ignore already converted tiles
+
+            ent.Comp.CorruptableTiles.Add(neighbourRef.GridIndices);
+        }
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -100,9 +122,9 @@ public sealed class CosmicCorruptingSystem : EntitySystem
 
         var convertTile = (ContentTileDefinition)_tileDefinition[uid.Comp.ConversionTile];
 
-        //if this is a mobile corruptor, reset the list of corruptable tiles every attempt. also used to populate the list of corruptable tiles if it's empty.
-        //not a super clean solution for the mobile thing but it works well enough for the current uses
-        if (uid.Comp.Mobile || uid.Comp.CorruptableTiles.Count == 0)
+        //if this is a mobile corruptor, reset the list of corruptable tiles every attempt.
+        //not a super clean solution but it works well enough for the current uses
+        if (uid.Comp.Mobile)
         {
             uid.Comp.CorruptableTiles.Clear();
             var tile = _map.GetTileRef((gridUid, mapGrid), xform.Coordinates);
