@@ -293,8 +293,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         Dictionary<ICommonSession, TimeSpan> sessionAndRoleTimes = [];
         foreach (var session in playerPool.GetPoolSessions())
         {
-            // if the session has the preferred role enabled,
-            if (HasPrimaryAntagPreference(session, def))
+            // if we've picked a valid session from the pool and there are mindroles to assign in the def,
+            if (session != null && def.PrefRoles != null)
             {
                 var ruleTimeTotal = TimeSpan.Zero;
                 // grab this session's playtimes for each role,
@@ -320,7 +320,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         List<ICommonSession> guaranteed = [];
         foreach (var keyValuePair in playersByRoleTimeAsc) // for each entry, decide whether or not it should override random antag selection based on its weight, and add it to a list if it should.
         {
-            if (_random.Prob(probToGuarantee))
+            if (HasPrimaryAntagPreference(keyValuePair.Key, def) && _random.Prob(probToGuarantee))
             {
                 guaranteed.Add(keyValuePair.Key);
             }
