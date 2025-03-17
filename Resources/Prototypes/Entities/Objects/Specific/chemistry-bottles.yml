@@ -223,81 +223,6 @@
           Quantity: 30
 
 - type: entity
-  id: PotassiumChemistryBottle
-  suffix: potassium
-  parent: BaseChemistryBottleFilled
-  components:
-  - type: Label
-    currentLabel: reagent-name-potassium
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Potassium
-          Quantity: 30
-
-- type: entity
-  id: NitrogenChemistryBottle
-  suffix: nitrogen
-  parent: BaseChemistryBottleFilled
-  components:
-  - type: Label
-    currentLabel: reagent-name-nitrogen
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Nitrogen
-          Quantity: 30
-
-- type: entity
-  id: PhosphorusChemistryBottle
-  suffix: phosphorus
-  parent: BaseChemistryBottleFilled
-  components:
-  - type: Label
-    currentLabel: reagent-name-phosphorus
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Phosphorus
-          Quantity: 30
-
-- type: entity
-  id: HydrogenChemistryBottle
-  suffix: hydrogen
-  parent: BaseChemistryBottleFilled
-  components:
-  - type: Label
-    currentLabel: reagent-name-hydrogen
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Hydrogen
-          Quantity: 30
-
-- type: entity
-  id: EthanolChemistryBottle
-  suffix: ethanol
-  parent: BaseChemistryBottleFilled
-  components:
-  - type: Label
-    currentLabel: reagent-name-ethanol
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Ethanol
-          Quantity: 30
-
-- type: entity
   id: NocturineChemistryBottle
   suffix: nocturine
   parent: BaseChemistryBottleFilled
@@ -416,3 +341,330 @@
         reagents:
           - ReagentId: Toxin
             Quantity: 30
+
+# Base reagent bottles
+- type: entity
+  id: AluminiumChemistryBottle
+  suffix: aluminium
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-aluminium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 30
+
+- type: entity
+  id: CarbonChemistryBottle
+  suffix: carbon
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-carbon
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 30
+
+- type: entity
+  id: ChlorineChemistryBottle
+  suffix: chlorine
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-chlorine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Chlorine
+          Quantity: 30
+
+- type: entity
+  id: CopperChemistryBottle
+  suffix: copper
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-copper
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Copper
+          Quantity: 30
+
+- type: entity
+  id: EthanolChemistryBottle
+  suffix: ethanol
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-ethanol
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Ethanol
+          Quantity: 30
+
+- type: entity
+  id: FluorineChemistryBottle
+  suffix: fluorine
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-fluorine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Fluorine
+          Quantity: 30
+
+- type: entity
+  id: HydrogenChemistryBottle
+  suffix: hydrogen
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-hydrogen
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Hydrogen
+          Quantity: 30
+
+- type: entity
+  id: IodineChemistryBottle
+  suffix: iodine
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-iodine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Iodine
+          Quantity: 30
+
+- type: entity
+  id: IronChemistryBottle
+  suffix: iron
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-iron
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Iron
+          Quantity: 30
+
+- type: entity
+  id: LithiumChemistryBottle
+  suffix: lithium
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-lithium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Lithium
+          Quantity: 30
+
+- type: entity
+  id: MercuryChemistryBottle
+  suffix: mercury
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-mercury
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Mercury
+          Quantity: 30
+
+- type: entity
+  id: NitrogenChemistryBottle
+  suffix: nitrogen
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-nitrogen
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nitrogen
+          Quantity: 30
+
+- type: entity
+  id: OxygenChemistryBottle
+  suffix: oxygen
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-oxygen
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Oxygen
+          Quantity: 30
+
+- type: entity
+  id: PhosphorusChemistryBottle
+  suffix: phosphorus
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-phosphorus
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Phosphorus
+          Quantity: 30
+
+- type: entity
+  id: PotassiumChemistryBottle
+  suffix: potassium
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-potassium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Potassium
+          Quantity: 30
+
+- type: entity
+  id: RadiumChemistryBottle
+  suffix: radium
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-radium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Radium
+          Quantity: 30
+
+- type: entity
+  id: SiliconChemistryBottle
+  suffix: silicon
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-silicon
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 30
+
+- type: entity
+  id: SodiumChemistryBottle
+  suffix: sodium
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-sodium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Sodium
+          Quantity: 30
+
+- type: entity
+  id: SugarChemistryBottle
+  suffix: sugar
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-sugar
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 30
+
+- type: entity
+  id: SulfurChemistryBottle
+  suffix: sulfur
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-sulfur
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Sulfur
+          Quantity: 30
+
+# Entity tables
+- type: entityTable
+  id: BasicReagentBottlesTable
+  table: !type:GroupSelector
+    children:
+    - id: AluminiumChemistryBottle
+    - id: CarbonChemistryBottle
+    - id: ChlorineChemistryBottle
+    - id: CopperChemistryBottle
+    - id: EthanolChemistryBottle
+    - id: FluorineChemistryBottle
+    - id: HydrogenChemistryBottle
+    - id: IodineChemistryBottle
+    - id: IronChemistryBottle
+    - id: LithiumChemistryBottle
+    - id: MercuryChemistryBottle
+    - id: NitrogenChemistryBottle
+    - id: OxygenChemistryBottle
+    - id: PhosphorusChemistryBottle
+    - id: PotassiumChemistryBottle
+    - id: RadiumChemistryBottle
+    - id: SiliconChemistryBottle
+    - id: SodiumChemistryBottle
+    - id: SugarChemistryBottle
+    - id: SulfurChemistryBottle
