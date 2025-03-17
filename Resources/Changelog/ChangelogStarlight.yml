@@ -4197,4 +4197,12 @@ Entries:
   id: 581
   time: '2025-03-16T20:58:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/402
+- author: Happyrobot33
+  changes:
+  - message: Fixed Resomi, Cyclorites and Bees appearing to glow to other players
+      and not just the local player controlling them.
+    type: Fix
+  id: 582
+  time: '2025-03-17T05:18:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/403
 
