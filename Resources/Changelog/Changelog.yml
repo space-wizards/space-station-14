@@ -1,35 +1,4 @@
 ﻿Entries:
-- author: Bhijn and Myr
-  changes:
-  - message: Tail thumping has been downmixed to mono to fix the sound lacking any
-      sort of positioning. They're now capable of having a presence in the actual
-      soundspace, in turn meaning lizards are no longer occupying your headset at
-      all times of day.
-    type: Fix
-  id: 7570
-  time: '2024-10-31T21:30:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33092
-- author: reesque
-  changes:
-  - message: pie not dropping tin on thrown
-    type: Fix
-  id: 7571
-  time: '2024-11-01T01:43:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33013
-- author: SlamBamActionman
-  changes:
-  - message: Votekicks can now be initiated during the pregame lobby.
-    type: Fix
-  id: 7572
-  time: '2024-11-01T01:52:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32528
-- author: PopGamer46
-  changes:
-  - message: Fixed bolt lights of recently unpowered bolted doors
-    type: Fix
-  id: 7573
-  time: '2024-11-01T02:04:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33063
 - author: RumiTiger
   changes:
   - message: A chocolate and banana muffin has been added to the game. The berry and
@@ -3891,3 +3860,35 @@
   id: 8069
   time: '2025-03-16T18:15:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35855
+- author: slarticodefast
+  changes:
+  - message: Paradox clones now recieve a copy of (almost) all the inventory items
+      their original has.
+    type: Tweak
+  id: 8070
+  time: '2025-03-16T22:02:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35838
+- author: Errant
+  changes:
+  - message: Some ghostrole antagonists were incorrectly not marked as such in the
+      round end playerlist. Now all antagonists are sorted to the top and have red
+      names.
+    type: Fix
+  id: 8071
+  time: '2025-03-16T22:11:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35832
+- author: slarticodefast
+  changes:
+  - message: Paradox clones now receive any objective the original had.
+    type: Add
+  id: 8072
+  time: '2025-03-16T22:24:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35829
+- author: Errant-4
+  changes:
+  - message: The Syndicate Instigator shuttle's crew now has the proper antagonist
+      role type.
+    type: Fix
+  id: 8073
+  time: '2025-03-17T16:27:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35892
