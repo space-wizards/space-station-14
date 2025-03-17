@@ -5,6 +5,7 @@ namespace Content.Server._Impstation.CosmicCult.Components;
 
 [RegisterComponent]
 [AutoGenerateComponentPause]
+//todo access restrictions
 public sealed partial class CosmicCorruptingComponent : Component
 {
     /// <summary>
@@ -51,7 +52,7 @@ public sealed partial class CosmicCorruptingComponent : Component
     public float CorruptionReduction = 0f;
 
     /// <summary>
-    /// Wether or not the CosmicCorruptingSystem should be running on this entity.
+    /// Wether or not the CosmicCorruptingSystem should be running on this entity. use CosmicCorruptingSystem.Enable() instead of directly interacting with this variable.
     /// </summary>
     [DataField]
     public bool Enabled = true;
