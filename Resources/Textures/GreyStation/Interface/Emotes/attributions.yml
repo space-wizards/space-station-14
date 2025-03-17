@@ -1,0 +1,7 @@
+# Attempted to keep the files in alphabetical order so its easier to audit.
+# Finding individual authors is an unfeasible task. If you can reference the author please do so.
+
+- files: ["flip.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by ps3moira for Space Station 14"
+  source: "https://github.com/ps3moira"
