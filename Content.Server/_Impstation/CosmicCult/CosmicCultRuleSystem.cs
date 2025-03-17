@@ -606,7 +606,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
     private void ReadyFinale(Entity<MonumentComponent> uid, CosmicFinaleComponent finaleComp)
     {
         if (TryComp<CosmicCorruptingComponent>(uid, out var comp))
-            _corrupting.Enable((uid, comp));
+            comp.Enabled = true;
 
         if (TryComp<ActivatableUIComponent>(uid, out var uiComp))
         {

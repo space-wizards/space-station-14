@@ -3,12 +3,13 @@ using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+using System.Numerics;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Content.Shared.Tag;
 using Content.Server._Impstation.CosmicCult.Components;
+using Content.Server.Shuttles.Components;
 using Content.Shared.Doors.Components;
-
 namespace Content.Server._Impstation.CosmicCult.EntitySystems;
 public sealed class CosmicCorruptingSystem : EntitySystem
 {
@@ -47,13 +48,11 @@ public sealed class CosmicCorruptingSystem : EntitySystem
         var xform = Transform(ent);
         if (xform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var mapGrid))
             return;
-
         var grid = (gridUid, mapGrid);
         var tile = _map.GetTileRef(grid, xform.Coordinates);
         var convertTile = (ContentTileDefinition)_tileDefinition[ent.Comp.ConversionTile];
 
-        if (ent.Comp.Enabled)
-            _tile.ReplaceTile(tile, convertTile);
+        _tile.ReplaceTile(tile, convertTile);
 
         //add every neighbouring tile to the corruptable list
         foreach (var neighbourPos in _neighbourPositions)
@@ -61,41 +60,12 @@ public sealed class CosmicCorruptingSystem : EntitySystem
             var neighbourRef = _map.GetTileRef((gridUid, mapGrid), tile.GridIndices + neighbourPos);
             if (neighbourRef.Tile.TypeId == convertTile.TileId)
                 continue; //ignore already converted tiles
-
             ent.Comp.CorruptableTiles.Add(neighbourRef.GridIndices);
         }
     }
-
-    /// <summary>
-    /// use this instead of directly setting enable to true
-    /// </summary>
-    public void Enable(Entity<CosmicCorruptingComponent> ent)
-    {
-        ent.Comp.Enabled = true;
-        var convertTile = (ContentTileDefinition)_tileDefinition[ent.Comp.ConversionTile];
-        var xform = Transform(ent);
-        if (xform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var mapGrid))
-            return;
-        var grid = (gridUid, mapGrid);
-        var tile = _map.GetTileRef(grid, xform.Coordinates);
-
-        //add every neighbouring tile to the corruptable list
-        foreach (var neighbourPos in _neighbourPositions)
-        {
-            var neighbourRef = _map.GetTileRef((gridUid, mapGrid), tile.GridIndices + neighbourPos);
-            if (neighbourRef.Tile.TypeId == convertTile.TileId)
-                continue; //ignore already converted tiles
-
-            ent.Comp.CorruptableTiles.Add(neighbourRef.GridIndices);
-        }
-    }
-
-    //todo floodFill for the monument
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
         var blanktimer = EntityQueryEnumerator<CosmicCorruptingComponent>();
         while (blanktimer.MoveNext(out var uid, out var comp))
         {
@@ -108,35 +78,28 @@ public sealed class CosmicCorruptingSystem : EntitySystem
                     comp.CorruptionTicks++;
                     comp.CorruptionChance -= comp.CorruptionReduction;
                 }
-
                 if (comp.CorruptionTicks >= comp.CorruptionMaxTicks && comp.AutoDisable)
                     comp.Enabled = false; //maybe just remComp this? atm nothing re-enables a corruptor so that should be safe to do?
             }
         }
     }
-
     private void ConvertTiles(Entity<CosmicCorruptingComponent> uid)
     {
         var xform = Transform(uid);
         if (xform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var mapGrid))
             return;
-
         var convertTile = (ContentTileDefinition)_tileDefinition[uid.Comp.ConversionTile];
 
-        //if this is a mobile corruptor, reset the list of corruptable tiles every attempt.
-        //not a super clean solution but it works well enough for the current uses
-        if (uid.Comp.Mobile)
+        if (uid.Comp.Mobile) //if this is a mobile corruptor, reset the list of corruptable tiles every attempt. not a super clean solution because I didn't account for the astral nova in the first rewrite but it works fine.
         {
             uid.Comp.CorruptableTiles.Clear();
             var tile = _map.GetTileRef((gridUid, mapGrid), xform.Coordinates);
-
             //add every neighbouring tile to the corruptable list
             foreach (var neighbourPos in _neighbourPositions)
             {
                 var neighbourRef = _map.GetTileRef((gridUid, mapGrid), tile.GridIndices + neighbourPos);
                 if (neighbourRef.Tile.TypeId == convertTile.TileId)
                     continue; //ignore already converted tiles
-
                 uid.Comp.CorruptableTiles.Add(neighbourRef.GridIndices);
             }
         }
@@ -150,29 +113,24 @@ public sealed class CosmicCorruptingSystem : EntitySystem
                 uid.Comp.CorruptableTiles.Remove(pos);
                 continue;
             }
-
             if (_rand.Prob(uid.Comp.CorruptionChance)) //if it rolls good
             {
                 //replace & variantise the tile
                 _tile.ReplaceTile(tileRef, convertTile);
                 _tile.PickVariant(convertTile);
-
                 //then add the new neighbours as targets as long as they're not already corrupted
                 foreach (var neighbourPos in _neighbourPositions)
                 {
                     var neighbourRef = _map.GetTileRef((gridUid, mapGrid), tileRef.GridIndices + neighbourPos);
                     if (neighbourRef.Tile.TypeId == convertTile.TileId)
                         continue;
-
                     uid.Comp.CorruptableTiles.Add(neighbourRef.GridIndices);
                 }
-
                 //corrupt anything that can be corrupted
                 foreach (var convertedEnt in _map.GetAnchoredEntities((gridUid, mapGrid), pos).ToList())
                 {
                     if (!TryComp<TagComponent>(convertedEnt, out var tagComp))
                         continue;
-
                     var tags = tagComp.Tags; //I hate tags
                     var proto = Prototype(convertedEnt);
                     if (tags.Contains("Wall") && proto != null && (proto.ID != uid.Comp.ConversionWall || proto.ID != uid.Comp.ConversionDoor)) //if we hit something that isn't already converted & can be, convert it
@@ -191,11 +149,9 @@ public sealed class CosmicCorruptingSystem : EntitySystem
                         QueueDel(convertedEnt);
                     }
                 }
-
                 //spawn the vfx if we should
                 if (uid.Comp.UseVFX)
                     Spawn(uid.Comp.TileConvertVFX, _turfs.GetTileCenter(tileRef));
-
                 uid.Comp.CorruptableTiles.Remove(pos);
             }
         }
