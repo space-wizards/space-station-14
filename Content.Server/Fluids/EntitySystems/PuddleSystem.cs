@@ -433,7 +433,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         }
 
         // Turn on the step trigger if it's slippery
-        _stepTrigger.SetActive(entity, true, comp);
+        _stepTrigger.SetActive(entity, slipperyUnits > smallPuddleThreshold, comp);
 
         // This is based of the total volume and not just the slippery volume because there is a default
         // slippery for all reagents even if they aren't technically slippery.
