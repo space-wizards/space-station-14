@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PopGamer46
-  changes:
-  - message: Fixed bolt lights of recently unpowered bolted doors
-    type: Fix
-  id: 7573
-  time: '2024-11-01T02:04:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33063
 - author: RumiTiger
   changes:
   - message: A chocolate and banana muffin has been added to the game. The berry and
@@ -3891,3 +3884,11 @@
   id: 8072
   time: '2025-03-16T22:24:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35829
+- author: Errant-4
+  changes:
+  - message: The Syndicate Instigator shuttle's crew now has the proper antagonist
+      role type.
+    type: Fix
+  id: 8073
+  time: '2025-03-17T16:27:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35892
