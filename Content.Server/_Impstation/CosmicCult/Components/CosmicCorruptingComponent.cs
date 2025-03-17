@@ -108,14 +108,14 @@ public sealed partial class CosmicCorruptingComponent : Component
         {"WallSolidChitin", "WallCosmicCult"},
         {"WallReinforcedChitin", "WallCosmicCult"},
         {"WallMining", "WallCosmicCult"},
-        {"WallAndesiteCobbleBrick", "WallCosmicCult"},
-        {"WallAsteroidCobbleBrick", "WallCosmicCult"},
+        {"WallAndesiteCobblebrick", "WallCosmicCult"},
+        {"WallAsteroidCobblebrick", "WallCosmicCult"},
         {"WallClown", "WallCosmicCult"},
         {"WallVaultAlien", "WallCosmicCult"},
-        {"WallBasaltCobbleBrick", "WallCosmicCult"},
+        {"WallBasaltCobblebrick", "WallCosmicCult"},
         {"WallBrick", "WallCosmicCult"},
-        {"WallChromiteCobbleBrick", "WallCosmicCult"},
-        {"WallCobbleBrick", "WallCosmicCult"},
+        {"WallChromiteCobblebrick", "WallCosmicCult"},
+        {"WallCobblebrick", "WallCosmicCult"},
         {"WallCult", "WallCosmicCult"}, //the cooler cult wins here
         {"WallDiamond", "WallCosmicCult"},
         {"WallGold", "WallCosmicCult"},
@@ -123,11 +123,11 @@ public sealed partial class CosmicCorruptingComponent : Component
         {"WallPlasma", "WallCosmicCult"},
         {"WallPlastic", "WallCosmicCult"},
         {"WallVaultRock", "WallCosmicCult"},
-        {"WallSandCobbleBrick", "WallCosmicCult"},
+        {"WallSandCobblebrick", "WallCosmicCult"},
         {"WallVaultSandstone", "WallCosmicCult"},
         {"WallSandstone", "WallCosmicCult"},
         {"WallSilver", "WallCosmicCult"},
-        {"WallSnowCobbleBrick", "WallCosmicCult"},
+        {"WallSnowCobblebrick", "WallCosmicCult"},
         {"WallNecropolis", "WallCosmicCult"},
         {"WallUranium", "WallCosmicCult"},
         {"WallWood", "WallCosmicCult"},
@@ -137,7 +137,7 @@ public sealed partial class CosmicCorruptingComponent : Component
 
         //doors
         {"SolidSecretDoor", "DoorCosmicCult"},
-        {"ReinfSecredDoor", "DoorCosmicCult"},
+        {"ReinfSecretDoor", "DoorCosmicCult"},
         //ignoring real doors because I don't want to figure out copying accesses over
 
         //windows
