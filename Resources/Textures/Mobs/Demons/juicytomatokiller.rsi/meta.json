@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": " taken from TG on commit https://github.com/tgstation/tgstation/commit/7e5f13f558253e76865e81c9641b7ec68e57754b, edited by gentlebutter on Discord",
+  "copyright": "Taken from TG on commit https://github.com/tgstation/tgstation/commit/7e5f13f558253e76865e81c9641b7ec68e57754b and modified by gentlebutter (Discord)",
   "states": [
     {
       "name": "alive",
