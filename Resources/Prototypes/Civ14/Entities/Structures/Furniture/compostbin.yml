@@ -36,18 +36,10 @@
       bodyType: Static
     - type: Anchorable
     - type: Pullable
-    - type: Storage
-      grid:
-        - 0,0,15,3
-      maxItemSize: Small
-      whitelist:
-        tags:
-          - Fruit
-    - type: UserInterface
-      interfaces:
-        enum.StorageUiKey.Key:
-          type: StorageBoundUserInterface
     - type: InteractionOutline
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
+    - type: Composting
+      whitelist:
+        - Fruit
+        - Egg
+        - Meat
+      compostTime: 20.0
