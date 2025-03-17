@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: The Dino Wars have ended...
-    type: Remove
-  id: 840
-  time: '2025-01-01T23:43:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1191
 - author: aada
   changes:
   - message: Salt once again tastes like salt.
@@ -4098,3 +4091,12 @@
   id: 1339
   time: '2025-03-17T18:34:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1984
+- author: DinnerCalzone
+  changes:
+  - message: The Captain, HoP, and other appropriate heads of staff will now be cleared
+      to use departmental or job restricted contraband in that contraband's examine
+      text.
+    type: Add
+  id: 1340
+  time: '2025-03-17T18:36:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1967
