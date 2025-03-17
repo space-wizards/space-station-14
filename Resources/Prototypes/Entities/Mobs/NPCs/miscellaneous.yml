@@ -126,8 +126,8 @@
           groups:
             Brute: -2
             Burn: -2
-    - reagents: [WeedKiller, PlantBGone]
-      methods: [Touch]
+    - reagents: [ WeedKiller, PlantBGone ]
+      methods: [ Touch ]
       effects:
       - !type:HealthChange
         scaleByQuantity: true
