@@ -1,0 +1,37 @@
+- type: entity
+  name: bone shovel
+  parent: Shovel
+  id: BoneShovel
+  description: A large tool for digging and moving dirt.
+  components:
+    - type: Tag
+      tags:
+        - Shovel
+    - type: Sprite
+      sprite: Objects/_civ/StoneAge/bone_shovel.rsi
+      state: icon
+    - type: Item
+      size: 20
+    - type: Construction
+      graph: BoneShovel
+      node: boneshovel
+
+- type: entity
+  name: bone pickaxe
+  parent: Pickaxe
+  id: BonePickaxe
+  description: A crude pickaxe, with a shaped bone head.
+  components:
+    - type: Sprite
+      sprite: Objects/_civ/StoneAge/bone_pickaxe.rsi
+      state: icon
+    - type: MeleeWeapon
+      damage:
+        types:
+          Piercing: 8
+          Blunt: 3
+    - type: Item
+      size: 20
+    - type: Construction
+      graph: BonePickaxe
+      node: bonepickaxe

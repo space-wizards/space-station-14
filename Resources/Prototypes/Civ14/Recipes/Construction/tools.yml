@@ -1,0 +1,21 @@
+- type: construction
+  name: bone shovel
+  id: BoneShovel
+  graph: BoneShovel
+  startNode: start
+  targetNode: boneshovel
+  category: construction-category-tools
+  description: A crude bone shovel.
+  icon: { sprite: Objects/_civ/StoneAge/bone_shovel.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: bone pickaxe
+  id: BonePickaxe
+  graph: BonePickaxe
+  startNode: start
+  targetNode: bonepickaxe
+  category: construction-category-tools
+  description: A crude bone pickaxe.
+  icon: { sprite: Objects/_civ/StoneAge/bone_pickaxe.rsi, state: icon }
+  objectType: Item

@@ -1,0 +1,33 @@
+- type: constructionGraph
+  id: BoneShovel
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: boneshovel
+      steps:
+        - material: Bones
+          amount: 4
+          doAfter: 4
+        - material: WoodPlank
+          amount: 4
+          doAfter: 4
+  - node: boneshovel
+    entity: BoneShovel
+
+- type: constructionGraph
+  id: BonePickaxe
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bonepickaxe
+      steps:
+      - material: Bones
+        amount: 4
+        doAfter: 4
+      - material: WoodPlank
+        amount: 4
+        doAfter: 4
+  - node: bonepickaxe
+    entity: BonePickaxe
