@@ -37,7 +37,7 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
             return;
         }
 
-        _actions.IsValidAction(user.Owner, entityTarget, target, Transform(target).Coordinates);
+        _actions.TryValidAction(user.Owner, entityTarget, target, Transform(target).Coordinates);
     }
 
     public override void Update(float frameTime)

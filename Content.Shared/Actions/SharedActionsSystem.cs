@@ -391,7 +391,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (args.SenderSession.AttachedEntity is not { } user)
             return;
 
-        IsValidAction(user, GetEntity(ev.Action), GetEntity(ev.EntityTarget), GetCoordinates(ev.EntityCoordinatesTarget));
+        TryValidAction(user, GetEntity(ev.Action), GetEntity(ev.EntityTarget), GetCoordinates(ev.EntityCoordinatesTarget));
     }
 
     public bool ValidateEntityTarget(EntityUid user, EntityUid target, Entity<EntityTargetActionComponent> actionEnt)
@@ -889,7 +889,11 @@ public abstract class SharedActionsSystem : EntitySystem
 
     #endregion
 
-    public void IsValidAction(EntityUid user, EntityUid actionEnt, EntityUid? entTarget, EntityCoordinates? actionCoords)
+    /// <summary>
+    /// Tries to validate an action and use it. If it's not valid or can't be used it blocks the action from being used.
+    /// This is its own method so that NPCs may use it without having to make a whole new method exclusively for them.
+    /// </summary>
+    public void TryValidAction(EntityUid user, EntityUid actionEnt, EntityUid? entTarget, EntityCoordinates? actionCoords)
     {
         if (!TryComp(user, out ActionsComponent? component))
             return;
