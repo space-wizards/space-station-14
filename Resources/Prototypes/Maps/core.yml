@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_rod.yml
         - type: StationCargoShuttle
-          path: /Maps/_Impstation/Shuttles/cargo_core.yml # imp
+          path: /Maps/Shuttles/cargo_core.yml # imp
         - type: StationJobs
           availableJobs: # Total of 63 jobs roundstart, max of 75 inc. latejoins and trainees.
             # command - 9

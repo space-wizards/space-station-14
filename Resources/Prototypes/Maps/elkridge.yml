@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_elkridge.yml
         - type: StationCargoShuttle
-          path: /Maps/_Impstation/Shuttles/cargo_elkridge.yml # imp
+          path: /Maps/Shuttles/cargo_elkridge.yml # imp
         - type: StationJobs
           availableJobs: # Total of 53 jobs roundstart, max of 63 inc. latejoins and trainees.
             # command - 9
