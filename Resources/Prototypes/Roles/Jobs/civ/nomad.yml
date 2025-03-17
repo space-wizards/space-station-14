@@ -11,9 +11,3 @@
 
 - type: startingGear
   id: NomadGear
-  equipment:
-    id: PassengerPDA
-    ears: ClothingHeadsetGrey
-  #storage:
-  #back:
-  #- Stuff
