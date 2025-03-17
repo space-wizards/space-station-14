@@ -38,13 +38,7 @@ public sealed class DeviceLinkingTest
         var mapSys = server.System<SharedMapSystem>();
         var deviceLinkSys = server.System<DeviceLinkSystem>();
 
-        // Find every EntityPrototypes with a DeviceLinkSinkComponent
-        var prototypes = server.ProtoMan
-            .EnumeratePrototypes<EntityPrototype>()
-            .Where(p => !p.Abstract)
-            .Where(p => !pair.IsTestPrototype(p))
-            .Where(p => p.HasComponent<DeviceLinkSinkComponent>())
-            .OrderBy(p => p.ID);
+        var prototypes = server.ProtoMan.EnumeratePrototypes<EntityPrototype>().OrderBy(p => p.ID);
 
         List<MapId> maps = [];
         await server.WaitAssertion(() =>
@@ -53,8 +47,11 @@ public sealed class DeviceLinkingTest
             {
                 foreach (var proto in prototypes)
                 {
-                    Assert.That(proto.TryGetComponent<DeviceLinkSinkComponent>(out var protoSinkComp, compFact),
-                        $"Prototype {proto.ID} does not have a DeviceLinkSinkComponent!");
+                    if (proto.Abstract || pair.IsTestPrototype(proto))
+                        continue;
+
+                    if (!proto.TryGetComponent<DeviceLinkSinkComponent>(out var protoSinkComp, compFact))
+                        continue;
 
                     foreach (var port in protoSinkComp.Ports)
                     {
