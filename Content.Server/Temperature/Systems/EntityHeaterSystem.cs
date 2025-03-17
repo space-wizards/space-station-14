@@ -21,7 +21,7 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
     public override void Update(float deltaTime)
     {
         var query = EntityQueryEnumerator<EntityHeaterComponent, ItemPlacerComponent, ApcPowerReceiverComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var placer, out var power))
+        while (query.MoveNext(out _, out _, out var placer, out var power))
         {
             if (!power.Powered)
                 continue;
@@ -32,7 +32,8 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
             var energy = power.PowerReceived * deltaTime;
             foreach (var ent in placer.PlacedEntities)
             {
-                Temperature.ChangeHeat(ent, energy);
+                Entity<TemperatureComponent?> target = (ent, null);
+                Temperature.ChangeHeat(target, energy);
             }
         }
     }
@@ -41,23 +42,28 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
     {
         // disable heating element glowing layer if theres no power
         // doesn't actually turn it off since that would be annoying
-        var setting = args.Powered ? comp.Setting : EntityHeaterSetting.Off;
+        var setting = args.Powered
+            ? comp.Setting
+            : EntityHeaterSetting.Off;
         Appearance.SetData(uid, EntityHeaterVisuals.Setting, setting);
     }
 
-    public override void ChangeSetting(Entity<EntityHeaterComponent?> heater, EntityHeaterSetting setting)
+    public override void ChangeSetting(Entity<EntityHeaterComponent> heater, EntityHeaterSetting setting)
     {
         ChangeSetting((heater, heater.Comp, null), setting);
     }
 
     public void ChangeSetting(Entity<EntityHeaterComponent?, ApcPowerReceiverComponent?> heater, EntityHeaterSetting setting)
     {
-        base.ChangeSetting(heater, setting);
+        if (!Resolve(heater, ref heater.Comp1))
+            return;
+
+        base.ChangeSetting((heater, heater.Comp1), setting);
 
         if (!Resolve(heater, ref heater.Comp2))
             return;
 
-        heater.Comp2.Load = SettingPower(setting, heater.Comp1!.Power);
+        heater.Comp2.Load = SettingPower(setting, heater.Comp1.Power);
         Appearance.SetData(heater, EntityHeaterVisuals.Setting, setting);
         Audio.PlayPvs(heater.Comp1.SettingSound, heater);
     }

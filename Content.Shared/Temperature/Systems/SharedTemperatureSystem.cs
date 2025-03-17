@@ -336,19 +336,12 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
 
     private void OnParentThresholdStartup(EntityUid uid, ContainerTemperatureDamageThresholdsComponent component, ComponentStartup args)
     {
-        ThresholdUpdate(uid);
+        RecursiveThresholdUpdate(uid);
     }
 
     private void OnParentThresholdShutdown(EntityUid uid, ContainerTemperatureDamageThresholdsComponent component, ComponentShutdown args)
     {
-        ThresholdUpdate(uid);
-    }
-
-    private void ThresholdUpdate(EntityUid uid)
-    {
-        RecursiveThresholdUpdate(
-            uid
-        );
+        RecursiveThresholdUpdate(uid);
     }
 
     /// <summary>
@@ -399,14 +392,12 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
             {
                 if (newThresholds.HeatDamageThreshold != null)
                 {
-                    newHeatThreshold = Math.Max(newThresholds.HeatDamageThreshold.Value,
-                        newHeatThreshold ?? 0);
+                    newHeatThreshold = Math.Max(newThresholds.HeatDamageThreshold.Value, newHeatThreshold ?? 0);
                 }
 
                 if (newThresholds.ColdDamageThreshold != null)
                 {
-                    newColdThreshold = Math.Min(newThresholds.ColdDamageThreshold.Value,
-                        newColdThreshold ?? float.MaxValue);
+                    newColdThreshold = Math.Min(newThresholds.ColdDamageThreshold.Value, newColdThreshold ?? float.MaxValue);
                 }
             }
 

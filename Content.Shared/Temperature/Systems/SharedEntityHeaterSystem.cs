@@ -3,6 +3,7 @@ using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Temperature.Systems;
 
@@ -11,12 +12,13 @@ namespace Content.Shared.Temperature.Systems;
 /// </summary>
 public abstract class SharedEntityHeaterSystem : EntitySystem
 {
+    [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] protected readonly SharedTemperatureSystem Temperature = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
 
-    private readonly int SettingCount = Enum.GetValues(typeof(EntityHeaterSetting)).Length;
+    private readonly int _settingCount = Enum.GetValues(typeof(EntityHeaterSetting)).Length;
 
     public override void Initialize()
     {
@@ -39,9 +41,14 @@ public abstract class SharedEntityHeaterSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
+        if (!Timing.IsFirstTimePredicted)
+        {
+            return;
+        }
+
         var setting = (int) comp.Setting;
         setting++;
-        setting %= SettingCount;
+        setting %= _settingCount;
         var nextSetting = (EntityHeaterSetting) setting;
 
         args.Verbs.Add(new AlternativeVerb
@@ -50,15 +57,13 @@ public abstract class SharedEntityHeaterSystem : EntitySystem
             Act = () =>
             {
                 ChangeSetting((uid, comp), nextSetting);
-                Popup.PopupEntity(Loc.GetString("entity-heater-switched-setting", ("setting", nextSetting)), uid, args.User);
+                Popup.PopupPredicted(Loc.GetString("entity-heater-switched-setting", ("setting", nextSetting)), uid, args.User);
             }
         });
     }
 
-    public virtual void ChangeSetting(Entity<EntityHeaterComponent?> heater, EntityHeaterSetting setting)
+    public virtual void ChangeSetting(Entity<EntityHeaterComponent> heater, EntityHeaterSetting setting)
     {
-        if (!Resolve(heater, ref heater.Comp))
-            return;
         heater.Comp.Setting = setting;
         Dirty(heater);
     }

@@ -36,17 +36,18 @@ public sealed class ThermalRegulatorSystem : SharedThermalRegulatorSystem
     /// </summary>
     private void ProcessThermalRegulation(Entity<ThermalRegulatorComponent, TemperatureComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp2, logMissing: false))
+        TemperatureComponent? temperature = ent;
+        if (!Resolve(ent, ref temperature, logMissing: false))
             return;
 
         ThermalRegulatorComponent thermalRegulator = ent;
         var totalMetabolismTempChange = thermalRegulator.MetabolismHeat - thermalRegulator.RadiatedHeat;
 
         // implicit heat regulation
-        var tempDiff = Math.Abs(ent.Comp2.CurrentTemperature - thermalRegulator.NormalBodyTemperature);
+        var tempDiff = Math.Abs(temperature.CurrentTemperature - thermalRegulator.NormalBodyTemperature);
         var heatCapacity = _tempSys.GetHeatCapacity((ent, ent, null));
         var targetHeat = tempDiff * heatCapacity;
-        if (ent.Comp2.CurrentTemperature > thermalRegulator.NormalBodyTemperature)
+        if (temperature.CurrentTemperature > thermalRegulator.NormalBodyTemperature)
         {
             totalMetabolismTempChange -= Math.Min(targetHeat, thermalRegulator.ImplicitHeatRegulation);
         }
@@ -55,10 +56,11 @@ public sealed class ThermalRegulatorSystem : SharedThermalRegulatorSystem
             totalMetabolismTempChange += Math.Min(targetHeat, thermalRegulator.ImplicitHeatRegulation);
         }
 
-        _tempSys.ChangeHeat(ent, totalMetabolismTempChange, ignoreHeatResistance: true, ent);
+        var tempEnt = (ent, temperature);
+        _tempSys.ChangeHeat(tempEnt, totalMetabolismTempChange, ignoreHeatResistance: true);
 
         // recalc difference and target heat
-        tempDiff = Math.Abs(ent.Comp2.CurrentTemperature - thermalRegulator.NormalBodyTemperature);
+        tempDiff = Math.Abs(temperature.CurrentTemperature - thermalRegulator.NormalBodyTemperature);
         targetHeat = tempDiff * heatCapacity;
 
         // if body temperature is not within comfortable, thermal regulation
@@ -66,19 +68,19 @@ public sealed class ThermalRegulatorSystem : SharedThermalRegulatorSystem
         if (tempDiff > thermalRegulator.ThermalRegulationTemperatureThreshold)
             return;
 
-        if (ent.Comp2.CurrentTemperature > thermalRegulator.NormalBodyTemperature)
+        if (temperature.CurrentTemperature > thermalRegulator.NormalBodyTemperature)
         {
             if (!_actionBlockerSys.CanSweat(ent))
                 return;
 
-            _tempSys.ChangeHeat(ent, -Math.Min(targetHeat, thermalRegulator.SweatHeatRegulation), ignoreHeatResistance: true, ent);
+            _tempSys.ChangeHeat(tempEnt, -Math.Min(targetHeat, thermalRegulator.SweatHeatRegulation), ignoreHeatResistance: true);
         }
         else
         {
             if (!_actionBlockerSys.CanShiver(ent))
                 return;
 
-            _tempSys.ChangeHeat(ent, Math.Min(targetHeat, thermalRegulator.ShiveringHeatRegulation), ignoreHeatResistance: true, ent);
+            _tempSys.ChangeHeat(tempEnt, Math.Min(targetHeat, thermalRegulator.ShiveringHeatRegulation), ignoreHeatResistance: true);
         }
     }
 }
