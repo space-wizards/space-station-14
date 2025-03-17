@@ -18,43 +18,43 @@ public sealed partial class TemperatureComponent : Component
     /// <summary>
     /// Surface temperature which is modified by the environment.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float CurrentTemperature = Atmospherics.T20C;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float HeatDamageThreshold = 360f;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float ColdDamageThreshold = 260f;
 
     /// <summary>
     /// Overrides HeatDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float? ParentHeatDamageThreshold;
 
     /// <summary>
     /// Overrides ColdDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float? ParentColdDamageThreshold;
 
     /// <summary>
     /// Heat capacity per kg of mass.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float SpecificHeat = 50f;
 
     /// <summary>
     /// How well does the air surrounding you merge into your body temperature?
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public float AtmosTemperatureTransferEfficiency = 0.1f;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public DamageSpecifier ColdDamage = new();
 
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public DamageSpecifier HeatDamage = new();
 
     /// <summary>
@@ -63,7 +63,7 @@ public sealed partial class TemperatureComponent : Component
     /// <remarks>
     /// Okay it genuinely reaches this basically immediately for a plasma fire.
     /// </remarks>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 DamageCap = FixedPoint2.New(8);
 
     /// <summary>

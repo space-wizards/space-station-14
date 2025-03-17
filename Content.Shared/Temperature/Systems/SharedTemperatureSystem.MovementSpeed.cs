@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Temperature.Components;
@@ -27,23 +26,28 @@ public abstract partial class SharedTemperatureSystem
 
     private void OnTemperatureChanged(Entity<TemperatureSpeedComponent> ent, ref OnTemperatureChangeEvent args)
     {
-        foreach (var (threshold, modifier) in ent.Comp.Thresholds)
+        TemperatureSpeedComponent temperatureSpeed = ent;
+
+        float maxThreshold = 0;
+        foreach (var (threshold, modifier) in temperatureSpeed.Thresholds)
         {
-            if (args.CurrentTemperature < threshold && args.LastTemperature > threshold ||
-                args.CurrentTemperature > threshold && args.LastTemperature < threshold)
+            if (threshold > maxThreshold)
+                maxThreshold = threshold;
+
+            if (args.CurrentTemperature < threshold && args.LastTemperature > threshold
+                || args.CurrentTemperature > threshold && args.LastTemperature < threshold)
             {
-                ent.Comp.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
-                ent.Comp.CurrentSpeedModifier = modifier;
+                temperatureSpeed.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
+                temperatureSpeed.CurrentSpeedModifier = modifier;
                 Dirty(ent);
                 break;
             }
         }
 
-        var maxThreshold = ent.Comp.Thresholds.Max(p => p.Key);
         if (args.CurrentTemperature > maxThreshold && args.LastTemperature < maxThreshold)
         {
-            ent.Comp.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
-            ent.Comp.CurrentSpeedModifier = null;
+            temperatureSpeed.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
+            temperatureSpeed.CurrentSpeedModifier = null;
             Dirty(ent);
         }
     }

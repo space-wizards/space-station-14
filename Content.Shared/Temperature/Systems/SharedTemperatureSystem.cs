@@ -33,10 +33,18 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
 
     private float _accumulatedFrametime;
 
+    private EntityQuery<TemperatureComponent> _temperatureQuery;
+    private EntityQuery<TransformComponent> _transformQuery;
+    private EntityQuery<ContainerTemperatureDamageThresholdsComponent> _thresholdsQuery;
+
     public static readonly ProtoId<AlertCategoryPrototype> TemperatureAlertCategory = "Temperature";
 
     public override void Initialize()
     {
+        _temperatureQuery = GetEntityQuery<TemperatureComponent>();
+        _transformQuery = GetEntityQuery<TransformComponent>();
+        _thresholdsQuery = GetEntityQuery<ContainerTemperatureDamageThresholdsComponent>();
+
         SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
         SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
@@ -314,19 +322,16 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
 
     private void OnParentChange(EntityUid uid, TemperatureComponent component, ref EntParentChangedMessage args)
     {
-        var temperatureQuery = GetEntityQuery<TemperatureComponent>();
-        var transformQuery = GetEntityQuery<TransformComponent>();
-        var thresholdsQuery = GetEntityQuery<ContainerTemperatureDamageThresholdsComponent>();
         // We only need to update thresholds if the thresholds changed for the entity's ancestors.
         var oldThresholds = args.OldParent != null
-            ? RecalculateParentThresholds(args.OldParent.Value, transformQuery, thresholdsQuery)
+            ? RecalculateParentThresholds(args.OldParent.Value)
             : (null, null);
-        var newThresholds = RecalculateParentThresholds(transformQuery.GetComponent(uid).ParentUid, transformQuery, thresholdsQuery);
+        var newThresholds = RecalculateParentThresholds(_transformQuery.GetComponent(uid).ParentUid);
 
         if (oldThresholds == newThresholds)
             return;
 
-        RecursiveThresholdUpdate(uid, temperatureQuery, transformQuery, thresholdsQuery);
+        RecursiveThresholdUpdate(uid);
     }
 
     private void OnParentThresholdStartup(EntityUid uid, ContainerTemperatureDamageThresholdsComponent component, ComponentStartup args)
@@ -342,49 +347,36 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
     private void ThresholdUpdate(EntityUid uid)
     {
         RecursiveThresholdUpdate(
-            uid,
-            GetEntityQuery<TemperatureComponent>(),
-            GetEntityQuery<TransformComponent>(),
-            GetEntityQuery<ContainerTemperatureDamageThresholdsComponent>()
+            uid
         );
     }
 
     /// <summary>
     /// Recalculate and apply parent thresholds for the root entity and all its descendant.
     /// </summary>
-    private void RecursiveThresholdUpdate(
-        EntityUid root,
-        EntityQuery<TemperatureComponent> temperatureQuery,
-        EntityQuery<TransformComponent> transformQuery,
-        EntityQuery<ContainerTemperatureDamageThresholdsComponent> tempThresholdsQuery
-    )
+    private void RecursiveThresholdUpdate(EntityUid root)
     {
-        RecalculateAndApplyParentThresholds(root, temperatureQuery, transformQuery, tempThresholdsQuery);
+        RecalculateAndApplyParentThresholds(root);
 
         var enumerator = Transform(root).ChildEnumerator;
         while (enumerator.MoveNext(out var child))
         {
-            RecursiveThresholdUpdate(child, temperatureQuery, transformQuery, tempThresholdsQuery);
+            RecursiveThresholdUpdate(child);
         }
     }
 
     /// <summary>
     /// Recalculate parent thresholds and apply them on the uid temperature component.
     /// </summary>
-    private void RecalculateAndApplyParentThresholds(
-        EntityUid uid,
-        EntityQuery<TemperatureComponent> temperatureQuery,
-        EntityQuery<TransformComponent> transformQuery,
-        EntityQuery<ContainerTemperatureDamageThresholdsComponent> tempThresholdsQuery
-    )
+    private void RecalculateAndApplyParentThresholds(EntityUid uid)
     {
-        if (!temperatureQuery.TryGetComponent(uid, out var temperature))
+        if (!_temperatureQuery.TryGetComponent(uid, out var temperature))
         {
             return;
         }
 
-        var parentUid = transformQuery.GetComponent(uid).ParentUid;
-        var newThresholds = RecalculateParentThresholds(parentUid, transformQuery, tempThresholdsQuery);
+        var parentUid = _transformQuery.GetComponent(uid).ParentUid;
+        var newThresholds = RecalculateParentThresholds(parentUid);
         temperature.ParentHeatDamageThreshold = newThresholds.HeatThreshold;
         temperature.ParentColdDamageThreshold = newThresholds.ColdThreshold;
         Dirty(uid, temperature);
@@ -395,10 +387,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
     /// maximum HeatDamageThreshold and the minimum ColdDamageThreshold if any exists (aka the best value for each).
     /// Will return null for each new threshold value not found.
     /// </summary>
-    private (float? HeatThreshold, float? ColdThreshold) RecalculateParentThresholds(
-        EntityUid initialParentUid,
-        EntityQuery<TransformComponent> transformQuery,
-        EntityQuery<ContainerTemperatureDamageThresholdsComponent> tempThresholdsQuery)
+    private (float? HeatThreshold, float? ColdThreshold) RecalculateParentThresholds(EntityUid initialParentUid)
     {
         // Recursively check parents for the best threshold available
         var parentUid = initialParentUid;
@@ -406,7 +395,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         float? newColdThreshold = null;
         while (parentUid.IsValid())
         {
-            if (tempThresholdsQuery.TryGetComponent(parentUid, out var newThresholds))
+            if (_thresholdsQuery.TryGetComponent(parentUid, out var newThresholds))
             {
                 if (newThresholds.HeatDamageThreshold != null)
                 {
@@ -421,7 +410,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
                 }
             }
 
-            parentUid = transformQuery.GetComponent(parentUid).ParentUid;
+            parentUid = _transformQuery.GetComponent(parentUid).ParentUid;
         }
 
         return (newHeatThreshold, newColdThreshold);

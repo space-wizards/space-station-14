@@ -10,6 +10,7 @@ public sealed class TemperatureSystem : SharedTemperatureSystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
     }
 
