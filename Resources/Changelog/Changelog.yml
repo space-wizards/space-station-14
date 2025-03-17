@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: AI can no longer toggle seeing jobs off.
-    type: Tweak
-  - message: Borgs can no longer see mindshield status.
-    type: Fix
-  id: 7575
-  time: '2024-11-01T02:32:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33069
 - author: Minemoder5000
   changes:
   - message: The cargo shuttle's cargo pallets can no longer sell or buy.
@@ -3887,3 +3878,11 @@
   id: 8074
   time: '2025-03-17T17:58:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35888
+- author: beck-thompson
+  changes:
+  - message: Chameleon vests now have the same stats as winter coats (Cold protection,
+      minor heat increase, 5% slash resistance, 10% heat resistance)
+    type: Tweak
+  id: 8075
+  time: '2025-03-17T18:39:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34929
