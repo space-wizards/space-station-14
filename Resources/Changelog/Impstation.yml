@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: suyo
-  changes:
-  - message: shaved 1.5 seconds off of the goliath's tentacle grapple stun to accommodate
-      for crawling's extremely interruptible doafter (1 second)
-    type: Tweak
-  id: 835
-  time: '2025-01-01T01:19:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1176
-- author: crocodilecarousel
-  changes:
-  - message: Added almost TWO HUNDRED brand new markings for nearly every species!
-    type: Add
-  id: 836
-  time: '2025-01-01T02:25:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1181
 - author: EpicToastTM
   changes:
   - message: Christmas is over. (Maps have been updated to remove presents, Christmas
@@ -4090,3 +4075,18 @@
   id: 1334
   time: '2025-03-17T05:39:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1994
+- author: hivehum
+  changes:
+  - message: The guidebook has instructions on how to cook without a microwave.
+    type: Add
+  id: 1335
+  time: '2025-03-17T18:26:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1997
+- author: Darkmajia
+  changes:
+  - message: Fallback antagonist rolls should no longer occassionally overwrite preferred
+      antagonist rolls. Hopefully. This primarily affected nuclear operatives.
+    type: Fix
+  id: 1336
+  time: '2025-03-17T18:26:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1998
