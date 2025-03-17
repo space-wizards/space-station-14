@@ -1357,7 +1357,7 @@
     Nollazine: # do kill me
       Min: 2
       Max: 15
-      PotencyDivisor: 4
+      PotencyDivisor: 5
     Cryptobiolin:
       Min: 1
       Max: 5
