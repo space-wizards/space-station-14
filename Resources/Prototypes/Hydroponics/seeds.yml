@@ -1268,6 +1268,7 @@
     - FoodAmbrosiaVulgaris
   mutationPrototypes:
     - ambrosiaDeus
+    - ambrosiaHorribilis
   lifespan: 25
   maturation: 10
   production: 3
@@ -1306,8 +1307,6 @@
   packetPrototype: AmbrosiaDeusSeeds
   productPrototypes:
     - FoodAmbrosiaDeus
-  mutationPrototypes:
-    - ambrosiaHorribilis
   lifespan: 25
   maturation: 10
   production: 3
