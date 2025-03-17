@@ -85,14 +85,106 @@ public sealed partial class CosmicCorruptingComponent : Component
     /// <summary>
     /// The tile we spawn when replacing a normal tile.
     /// </summary>
-    [DataField]
+    [DataField] //todo make this a dict. later though, there are so many fucking tiles.
     public ProtoId<ContentTileDefinition> ConversionTile = "FloorCosmicCorruption";
 
+    /// <remarks>
+    /// this data entry brought to you by UNKILLABLE ANGEL - Ada Rook
+    /// </remarks>
     /// <summary>
-    /// The wall we spawn when replacing a normal wall.
+    /// The dict that we look through to determine what entities should be converted and what they should be converted into.
+    /// absolutely fucking massive so that multiple things don't need to re-specify it in yamlland
     /// </summary>
     [DataField]
-    public EntProtoId ConversionWall = "WallCosmicCult";
+    public Dictionary<EntProtoId, EntProtoId> EntityConversionDict = new Dictionary<EntProtoId, EntProtoId>()
+    {
+        //walls
+        {"WallSolid", "WallCosmicCult"},
+        {"WallSolidRust", "WallCosmicCult"},
+        {"WallReinforced", "WallCosmicCult"},
+        {"WallReinforcedRust", "WallCosmicCult"},
+        {"WallShuttleInterior", "WallCosmicCult"},
+        {"WallShuttle", "WallCosmicCult"},
+        {"WallSolidChitin", "WallCosmicCult"},
+        {"WallReinforcedChitin", "WallCosmicCult"},
+        {"WallMining", "WallCosmicCult"},
+        {"WallAndesiteCobbleBrick", "WallCosmicCult"},
+        {"WallAsteroidCobbleBrick", "WallCosmicCult"},
+        {"WallClown", "WallCosmicCult"},
+        {"WallVaultAlien", "WallCosmicCult"},
+        {"WallBasaltCobbleBrick", "WallCosmicCult"},
+        {"WallBrick", "WallCosmicCult"},
+        {"WallChromiteCobbleBrick", "WallCosmicCult"},
+        {"WallCobbleBrick", "WallCosmicCult"},
+        {"WallCult", "WallCosmicCult"}, //the cooler cult wins here
+        {"WallDiamond", "WallCosmicCult"},
+        {"WallGold", "WallCosmicCult"},
+        {"WallIce", "WallCosmicCult"},
+        {"WallPlasma", "WallCosmicCult"},
+        {"WallPlastic", "WallCosmicCult"},
+        {"WallVaultRock", "WallCosmicCult"},
+        {"WallSandCobbleBrick", "WallCosmicCult"},
+        {"WallVaultSandstone", "WallCosmicCult"},
+        {"WallSandstone", "WallCosmicCult"},
+        {"WallSilver", "WallCosmicCult"},
+        {"WallSnowCobbleBrick", "WallCosmicCult"},
+        {"WallNecropolis", "WallCosmicCult"},
+        {"WallUranium", "WallCosmicCult"},
+        {"WallWood", "WallCosmicCult"},
+        {"WallClock", "WallCosmicCult"},
+        //ignoring meat walls & asteroid for being organic, + girders & inflatable walls for being cheap and easy to spam
+        //ignoring diagonals because they're not real
+
+        //doors
+        {"SolidSecretDoor", "DoorCosmicCult"},
+        {"ReinfSecredDoor", "DoorCosmicCult"},
+        //ignoring real doors because I don't want to figure out copying accesses over
+
+        //windows
+        {"Window", "WindowCosmicCult"},
+        {"ReinforcedWindow", "WindowCosmicCult"},
+        {"PlasmaWindow", "WindowCosmicCult"},
+        {"ReinforcedPlasmaWindow", "WindowCosmicCult"},
+        {"UraniumWindow", "WindowCosmicCult"},
+        {"ReinforcedUraniumWindow", "WindowCosmicCult"},
+        {"TintedWindow", "WindowCosmicCultDark"},
+        {"ClockworkWindow", "WindowCosmicCult"},
+        {"ShuttleWindow", "WindowCosmicCult"},
+        {"MiningWindow", "WindowCosmicCult"},
+        //ignoring diagonals because they're not real
+
+        //furniture
+        //tables
+        {"Table", "CosmicTable"},
+        {"TableBrass", "CosmicTable"},
+        {"TableFancyBlack", "CosmicTable"},
+        {"TableFancyBlue", "CosmicTable"},
+        {"TableFancyCyan", "CosmicTable"},
+        {"TableFancyGreen", "CosmicTable"},
+        {"TableFancyOrange", "CosmicTable"},
+        {"TableFancyPink", "CosmicTable"},
+        {"TableFancyPurple", "CosmicTable"},
+        {"TableFancyRed", "CosmicTable"},
+        {"TableFancyWhite", "CosmicTable"},
+        {"TableCarpet", "CosmicTable"},
+        {"TableGlass", "CosmicTable"},
+        {"TableReinforcedGlass", "CosmicTable"},
+        {"TableCounterMetal", "CosmicTable"},
+        {"TableReinforced", "CosmicTable"},
+        {"TableWood", "CosmicTable"},
+        {"TableCounterWood", "CosmicTable"},
+        {"TableWoodReinforced", "CosmicTable"},
+        {"TableStone", "CosmicTable"},
+        {"TableUraniumGlass", "CosmicTable"},
+        //chairs
+        {"Chair", "CosmicChair"},
+        {"ChairGreyscale", "CosmicChair"},
+        {"ComfyChair", "CosmicChair"},
+        {"ChairPilotSeat", "CosmicChair"},
+        {"ChairBrass", "CosmicChair"},
+        //ignoring office chairs and a few others because they don't need to be anchored
+        //if I missed something yell at me
+    };
 
     /// <summary>
     /// the door we spawn when replacing a secret door

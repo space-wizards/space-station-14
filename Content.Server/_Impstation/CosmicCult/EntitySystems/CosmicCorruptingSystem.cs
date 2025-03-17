@@ -5,9 +5,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
-using Content.Shared.Tag;
 using Content.Server._Impstation.CosmicCult.Components;
-using Content.Shared.Doors.Components;
 
 namespace Content.Server._Impstation.CosmicCult.EntitySystems;
 public sealed class CosmicCorruptingSystem : EntitySystem
@@ -87,7 +85,7 @@ public sealed class CosmicCorruptingSystem : EntitySystem
         foreach (var pos in new HashSet<Vector2i>(ent.Comp.CorruptableTiles)) //we love avoiding ConcurrentModificationExceptions
         {
             var tileRef = _map.GetTileRef((gridUid, mapGrid), pos);
-            if (tileRef.Tile.TypeId == convertTile.TileId) //if it's already corrupted, remove it from the list and continue
+            if (tileRef.Tile.TypeId == convertTile.TileId || tileRef.Tile.IsEmpty) //if it's already corrupted (or space), remove it from the list and continue
             {
                 ent.Comp.CorruptableTiles.Remove(pos);
                 continue;
@@ -103,7 +101,7 @@ public sealed class CosmicCorruptingSystem : EntitySystem
                 foreach (var neighbourPos in _neighbourPositions)
                 {
                     var neighbourRef = _map.GetTileRef((gridUid, mapGrid), tileRef.GridIndices + neighbourPos);
-                    if (neighbourRef.Tile.TypeId == convertTile.TileId)
+                    if (neighbourRef.Tile.TypeId == convertTile.TileId || tileRef.Tile.IsEmpty) //ignore already corrupted (or space) tiles
                         continue;
 
                     ent.Comp.CorruptableTiles.Add(neighbourRef.GridIndices);
@@ -112,24 +110,10 @@ public sealed class CosmicCorruptingSystem : EntitySystem
                 //corrupt anything that can be corrupted
                 foreach (var convertedEnt in _map.GetAnchoredEntities((gridUid, mapGrid), pos).ToList())
                 {
-                    if (!TryComp<TagComponent>(convertedEnt, out var tagComp))
-                        continue;
-
-                    var tags = tagComp.Tags; //I hate tags
                     var proto = Prototype(convertedEnt);
-                    if (tags.Contains("Wall") && proto != null && (proto.ID != ent.Comp.ConversionWall || proto.ID != ent.Comp.ConversionDoor)) //if we hit something that isn't already converted & can be, convert it
+                    if (ent.Comp.EntityConversionDict.TryGetValue(proto?.ID!, out var conversion))
                     {
-                        //the secret door check (if has "wall" tag && a doorComponent) is a little hacky & heuristic.
-                        //ideally there'd be a <protoID, protoID> hashmap for this & we wouldn't be checking tags or anything, but that's a lot of manual data entry that I can foist onto future me, she's a sucker for that kinda thing - ruddygreat
-                        //also not using a ternary here because this is nicer to read in my imo
-                        if (TryComp<DoorComponent>(convertedEnt, out _))
-                        {
-                            Spawn(ent.Comp.ConversionDoor, Transform(convertedEnt).Coordinates);
-                        }
-                        else
-                        {
-                            Spawn(ent.Comp.ConversionWall, Transform(convertedEnt).Coordinates);
-                        }
+                        Spawn(conversion, Transform(convertedEnt).Coordinates);
                         QueueDel(convertedEnt);
                     }
                 }
@@ -206,6 +190,7 @@ public sealed class CosmicCorruptingSystem : EntitySystem
                     else
                     {
                         //else, it's not been converted, so mark it as visited and add it to the corruptible tiles list
+                        //we don't care if the tile is empty, that'll get checked later
                         visitedTiles.Add(neighbourRef.GridIndices);
                         ent.Comp.CorruptableTiles.Add(neighbourRef.GridIndices);
                     }
