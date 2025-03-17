@@ -230,7 +230,7 @@
   id: MobJuicyTomatoKiller
   parent: MobTomatoKiller
   name: juicy tomato killer
-  description: "Looks like it's not you eating tomatoes today, it's E X T R A   T H I C C."
+  description: "Looks like it's not you eating tomatoes today, it's E X T R A   T H I C C tomatoes eating you."
   components:
   - type: Item
     size: Large
