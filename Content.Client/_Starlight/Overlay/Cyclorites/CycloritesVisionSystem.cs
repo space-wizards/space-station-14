@@ -38,7 +38,7 @@ public sealed class CycloritesVisionSystem : EntitySystem
 
     private void OnFlashImmunityChanged(Entity<CycloritesVisionComponent> ent, ref FlashImmunityChangedEvent args)
     {
-        if (_player.LocalEntity != ent.Owner) return;
+        if (_player.LocalSession?.AttachedEntity != ent.Owner) return;
 
         if (args.IsImmune)
         {

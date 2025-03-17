@@ -39,7 +39,7 @@ public sealed class NightVisionSystem : EntitySystem
 
     private void OnFlashImmunityChanged(Entity<NightVisionComponent> ent, ref FlashImmunityChangedEvent args)
     {
-        if (_player.LocalEntity != ent.Owner) return;
+        if (_player.LocalSession?.AttachedEntity != ent.Owner) return;
 
         if (args.IsImmune)
         {
