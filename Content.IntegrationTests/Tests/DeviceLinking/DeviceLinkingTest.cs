@@ -40,7 +40,6 @@ public sealed class DeviceLinkingTest
 
         var prototypes = server.ProtoMan.EnumeratePrototypes<EntityPrototype>().OrderBy(p => p.ID);
 
-        List<MapId> maps = [];
         await server.WaitAssertion(() =>
         {
             Assert.Multiple(() =>
@@ -57,7 +56,6 @@ public sealed class DeviceLinkingTest
                     {
                         // Create a map for each entity/port combo so they can't interfere
                         mapSys.CreateMap(out var mapId);
-                        maps.Add(mapId);
                         var grid = mapMan.CreateGridEntity(mapId);
                         mapSys.SetTile(grid.Owner, grid.Comp, Vector2i.Zero, new Tile(1));
                         var coord = new EntityCoordinates(grid.Owner, 0, 0);
@@ -84,15 +82,11 @@ public sealed class DeviceLinkingTest
                         // Send a signal to the port
                         Assert.DoesNotThrow(() => { deviceLinkSys.InvokePort(sourceEnt, "Output", null, sourceComp); },
                             $"Exception thrown while triggering port {port.Id} of sink device {proto.ID}");
+
+                        mapSys.DeleteMap(mapId);
                     }
                 }
             });
-
-            // Cleanup created maps
-            foreach (var map in maps)
-            {
-                mapSys.DeleteMap(map);
-            }
         });
 
         await pair.CleanReturnAsync();
