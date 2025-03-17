@@ -7,7 +7,11 @@ using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.StatusEffect;
+using Content.Shared.Stacks;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Whitelist;
+using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
@@ -28,6 +32,9 @@ public sealed class CloningSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedStorageSystem _storage = default!;
+    [Dependency] private readonly SharedStackSystem _stack = default!;
 
     /// <summary>
     ///     Spawns a clone of the given humanoid mob at the specified location or in nullspace.
@@ -81,6 +88,10 @@ public sealed class CloningSystem : EntitySystem
         if (settings.CopyEquipment != null)
             CopyEquipment(original, clone.Value, settings.CopyEquipment.Value, settings.Whitelist, settings.Blacklist);
 
+        // Copy storage on the mob itself as well.
+        // This is needed for slime storage.
+        CopyStorage(original, clone.Value, settings.Whitelist, settings.Blacklist);
+
         var originalName = Name(original);
         if (TryComp<NameModifierComponent>(original, out var nameModComp)) // if the originals name was modified, use the unmodified name
             originalName = nameModComp.BaseName;
@@ -100,24 +111,89 @@ public sealed class CloningSystem : EntitySystem
     ///     Copies the equipment the original has to the clone.
     ///     This uses the original prototype of the items, so any changes to components that are done after spawning are lost!
     /// </summary>
-    public void CopyEquipment(EntityUid original, EntityUid clone, SlotFlags slotFlags, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
+    public void CopyEquipment(Entity<InventoryComponent?> original, Entity<InventoryComponent?> clone, SlotFlags slotFlags, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
     {
-        if (!TryComp<InventoryComponent>(original, out var originalInventory) || !TryComp<InventoryComponent>(clone, out var cloneInventory))
+        if (!Resolve(original, ref original.Comp) || !Resolve(clone, ref clone.Comp))
             return;
+
+        var coords = Transform(clone).Coordinates;
+
         // Iterate over all inventory slots
-        var slotEnumerator = _inventory.GetSlotEnumerator((original, originalInventory), slotFlags);
+        var slotEnumerator = _inventory.GetSlotEnumerator(original, slotFlags);
         while (slotEnumerator.NextItem(out var item, out var slot))
         {
-            // Spawn a copy of the item using the original prototype.
-            // This means any changes done to the item after spawning will be reset, but that should not be a problem for simple items like clothing etc.
-            // we use a whitelist and blacklist to be sure to exclude any problematic entities
+            var cloneItem = CopyItem(item, coords, whitelist, blacklist);
 
-            if (_whitelist.IsWhitelistFail(whitelist, item) || _whitelist.IsBlacklistPass(blacklist, item))
-                continue;
+            if (cloneItem != null && !_inventory.TryEquip(clone, cloneItem.Value, slot.Name, silent: true, inventory: clone.Comp))
+                Del(cloneItem); // delete it again if the clone cannot equip it
+        }
+    }
 
-            var prototype = MetaData(item).EntityPrototype;
-            if (prototype != null)
-                _inventory.SpawnItemInSlot(clone, slot.Name, prototype.ID, silent: true, inventory: cloneInventory);
+    /// <summary>
+    ///     Copies an item and its storage recursively, placing all items at the same position in grid storage.
+    ///     This uses the original prototype of the items, so any changes to components that are done after spawning are lost!
+    /// </summary>
+    /// <remarks>
+    ///     This is not perfect and only considers item in storage containers.
+    ///     Some components have their own additional spawn logic on map init, so we cannot just copy all containers.
+    /// </remarks>
+    public EntityUid? CopyItem(EntityUid original, EntityCoordinates coords, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
+    {
+        // we use a whitelist and blacklist to be sure to exclude any problematic entities
+        if (!_whitelist.CheckBoth(original, blacklist, whitelist))
+            return null;
+
+        var prototype = MetaData(original).EntityPrototype?.ID;
+        if (prototype == null)
+            return null;
+
+        var spawned = EntityManager.SpawnAtPosition(prototype, coords);
+
+        // if the original is a stack, adjust the count of the copy
+        if (TryComp<StackComponent>(original, out var originalStack) && TryComp<StackComponent>(spawned, out var spawnedStack))
+            _stack.SetCount(spawned, originalStack.Count, spawnedStack);
+
+        // if the original has items inside its storage, copy those as well
+        if (TryComp<StorageComponent>(original, out var originalStorage) && TryComp<StorageComponent>(spawned, out var spawnedStorage))
+        {
+            // remove all items that spawned with the entity inside its storage
+            // this ignores other containers, but this should be good enough for our purposes
+            _container.CleanContainer(spawnedStorage.Container);
+
+            // recursively replace them
+            // surely no one will ever create two items that contain each other causing an infinite loop, right?
+            foreach ((var itemUid, var itemLocation) in originalStorage.StoredItems)
+            {
+                var copy = CopyItem(itemUid, coords, whitelist, blacklist);
+                if (copy != null)
+                    _storage.InsertAt((spawned, spawnedStorage), copy.Value, itemLocation, out _, playSound: false);
+            }
+        }
+
+        return spawned;
+    }
+
+    /// <summary>
+    ///     Copies an item's storage recursively to another storage.
+    ///     The storage grids should have the same shape or it will drop on the floor.
+    ///     Basically the same as CopyItem, but we don't copy the outermost container.
+    /// </summary>
+    public void CopyStorage(Entity<StorageComponent?> original, Entity<StorageComponent?> target, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
+    {
+        if (!Resolve(original, ref original.Comp, false) || !Resolve(target, ref target.Comp, false))
+            return;
+
+        var coords = Transform(target).Coordinates;
+
+        // delete all items in the target storage
+        _container.CleanContainer(target.Comp.Container);
+
+        // recursively replace them
+        foreach ((var itemUid, var itemLocation) in original.Comp.StoredItems)
+        {
+            var copy = CopyItem(itemUid, coords, whitelist, blacklist);
+            if (copy != null)
+                _storage.InsertAt(target, copy.Value, itemLocation, out _, playSound: false);
         }
     }
 }
