@@ -64,7 +64,7 @@ public sealed class DeviceLinkingTest
 
                         // Spawn the sink entity
                         var sinkEnt = server.EntMan.SpawnEntity(proto.ID, coord);
-                        // Get the actual sink component, since the one we got from the prototype doesn't its owner set up
+                        // Get the actual sink component, since the one we got from the prototype doesn't have its owner set up
                         Assert.That(server.EntMan.TryGetComponent<DeviceLinkSinkComponent>(sinkEnt, out var sinkComp),
                             $"Tester prototype does not have a DeviceLinkSourceComponent!");
 
