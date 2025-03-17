@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Added Chemmaster boards to Box, Xeno, and Fland
-    type: Add
-  - message: Heavily tweaked boxes bar and kitchen area
-    type: Tweak
-  - message: Removes Christmas from Box
-    type: Tweak
-  id: 839
-  time: '2025-01-01T23:20:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1189
 - author: hivehum
   changes:
   - message: The Dino Wars have ended...
@@ -4092,3 +4081,20 @@
   id: 1338
   time: '2025-03-17T18:30:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1993
+- author: AftrLite, ruddygreat, jtfg-dev
+  changes:
+  - message: Cosmic "Cult Lead" deprecated. There is now a cult stewardship vote system
+      instead! Woo, Democracy!
+    type: Add
+  - message: Malign Rifts now display loud accountability text when purged/absorbed.
+    type: Tweak
+  - message: The Monument's beckoning has been tweaked. Read the Monument's guidebook
+      entry!
+    type: Tweak
+  - message: Various changes to Astral Ascended's abilities.
+    type: Tweak
+  - message: Cosmic Cult 1.1.2b (Release Candidate)
+    type: Tweak
+  id: 1339
+  time: '2025-03-17T18:34:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1984
