@@ -126,7 +126,7 @@ public sealed partial class HereticSystem : EntitySystem
             eligibleTargets.Add(target.AttachedEntity!.Value); // it can't be null because see .Where(HasValue)
 
         // no ghouls or lings
-        eligibleTargets = eligibleTargets.Where(t => !HasComp<GhoulComponent>(t) || !HasComp<ChangelingComponent>(t)).ToList();
+        eligibleTargets = eligibleTargets.Where(t => !HasComp<HellVictimComponent>(t) || !HasComp<GhoulComponent>(t) || !HasComp<ChangelingComponent>(t)).ToList();
 
         var pickedTargets = new List<EntityUid?>();
 

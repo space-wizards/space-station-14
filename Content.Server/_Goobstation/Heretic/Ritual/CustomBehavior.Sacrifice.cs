@@ -10,6 +10,23 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Heretic;
 using Content.Server.Heretic.EntitySystems;
+using Content.Server.Humanoid;
+using Content.Shared.Forensics.Components;
+using Robust.Shared.Toolshed.TypeParsers;
+using Robust.Server.GameObjects;
+using System;
+using System.Linq;
+using Content.Server._Goobstation.Heretic.EntitySystems;
+using Content.Server.Heretic.Components;
+using Content.Server.Forensics;
+using Content.Server.Body.Systems;
+using Content.Server.Body.Components;
+using Content.Shared.Forensics;
+using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.GameObjects;
+using Content.Shared.Chemistry.EntitySystems;
+
+
 
 namespace Content.Server.Heretic.Ritual;
 
@@ -36,21 +53,42 @@ namespace Content.Server.Heretic.Ritual;
     [DataField] public bool OnlyTargets = false;
 
     // this is awful but it works so i'm not complaining
+    // i'm complaining -kandiyaki
     protected SharedMindSystem _mind = default!;
     protected HereticSystem _heretic = default!;
+    protected SharedTransformSystem _xform = default!;
     protected DamageableSystem _damage = default!;
     protected EntityLookupSystem _lookup = default!;
+    protected HumanoidAppearanceSystem _humanoid = default!;
+    protected TransformSystem _transformSystem = default!;
+    protected HellWorldSystem _hellworld = default!;
+    protected BloodstreamSystem _bloodstream = default!;
+    protected SharedSolutionContainerSystem _solutionContainerSystem = default!;
+
+
     [Dependency] protected IPrototypeManager _proto = default!;
+    [Dependency] protected IEntityManager _entmanager = default!;
+
 
     protected List<EntityUid> uids = new();
 
     public override bool Execute(RitualData args, out string? outstr)
     {
+        //it was like this when i got here -kandiyaki
         _mind = args.EntityManager.System<SharedMindSystem>();
         _heretic = args.EntityManager.System<HereticSystem>();
+        _xform = args.EntityManager.System<SharedTransformSystem>();
         _damage = args.EntityManager.System<DamageableSystem>();
         _lookup = args.EntityManager.System<EntityLookupSystem>();
+        _humanoid = args.EntityManager.System<HumanoidAppearanceSystem>();
+        _transformSystem = args.EntityManager.System<TransformSystem>();
+        _hellworld = args.EntityManager.System<HellWorldSystem>();
+        _bloodstream = args.EntityManager.System<BloodstreamSystem>();
+        _solutionContainerSystem = args.EntityManager.System<SharedSolutionContainerSystem>();
+
         _proto = IoCManager.Resolve<IPrototypeManager>();
+        _entmanager = IoCManager.Resolve<IEntityManager>();
+
 
         if (!args.EntityManager.TryGetComponent<HereticComponent>(args.Performer, out var hereticComp))
         {
@@ -87,21 +125,58 @@ namespace Content.Server.Heretic.Ritual;
         return true;
     }
 
+    //this does way too much
     public override void Finalize(RitualData args)
     {
+
         for (int i = 0; i < Max; i++)
         {
             var isCommand = args.EntityManager.HasComponent<CommandStaffComponent>(uids[i]);
             var knowledgeGain = isCommand ? 2f : 1f;
 
-            // YES!!! GIB!!!
+            //get the humanoid appearance component
+            if (!args.EntityManager.TryGetComponent<HumanoidAppearanceComponent>(uids[i], out var humanoid))
+                return;
+
+            //get the species prototype from that
+            if (!_proto.TryIndex(humanoid.Species, out var speciesPrototype))
+                return;
+
+            //spawn a clone of the victim 
+            var sacrificialWhiteBoy = args.EntityManager.Spawn(speciesPrototype.Prototype, _transformSystem.GetMapCoordinates(uids[i]));
+            _humanoid.CloneAppearance(uids[i], sacrificialWhiteBoy);
+            //make sure it has the right DNA
+            if (args.EntityManager.TryGetComponent<DnaComponent>(uids[i], out var victimDna))
+            {
+                if (args.EntityManager.TryGetComponent<BloodstreamComponent>(sacrificialWhiteBoy, out var dummyBlood))
+                {
+                    //this is copied from BloodstreamSystem's OnDnaGenerated
+                    //i hate it
+                    if(_solutionContainerSystem.ResolveSolution(sacrificialWhiteBoy, dummyBlood.BloodSolutionName, ref dummyBlood.BloodSolution, out var bloodSolution))
+                    {
+                        foreach (var reagent in bloodSolution.Contents)
+                        {
+                            List<ReagentData> reagentData = reagent.Reagent.EnsureReagentData();
+                            reagentData.RemoveAll(x => x is DnaData);
+                            reagentData.AddRange(_bloodstream.GetEntityBloodData(uids[i]));
+                        }
+                    }
+                }
+            }
+            //beat the clone to death. this is just to get matching organs
             if (args.EntityManager.TryGetComponent<DamageableComponent>(uids[i], out var dmg))
             {
                 var prot = (ProtoId<DamageGroupPrototype>) "Brute";
                 var dmgtype = _proto.Index(prot);
-                _damage.TryChangeDamage(uids[i], new DamageSpecifier(dmgtype, 1984f), true);
+                _damage.TryChangeDamage(sacrificialWhiteBoy, new DamageSpecifier(dmgtype, 1984f), true);
             }
 
+            //send the target to hell world
+            _hellworld.AddVictimComponent(uids[i]);
+            _hellworld.TeleportRandomly(args, uids[i]);
+            _hellworld.SendToHell(uids[i], args, speciesPrototype);
+
+            //update the heretic's knowledge
             if (args.EntityManager.TryGetComponent<HereticComponent>(args.Performer, out var hereticComp))
                 _heretic.UpdateKnowledge(args.Performer, hereticComp, knowledgeGain);
 
