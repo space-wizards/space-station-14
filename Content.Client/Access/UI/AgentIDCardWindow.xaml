@@ -1,46 +1,65 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:s="clr-namespace:Content.Client.Stylesheets"
+            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             Title="{Loc agent-id-menu-title}">
     <BoxContainer Orientation="Vertical" Margin="12 0" SeparationOverride="4" MinWidth="150" >
         <!-- Id current status header -->
         <BoxContainer Orientation="Horizontal" Margin="0 12 0 4">
-                <TextureRect Name="CurrentJobIcon" Stretch="KeepAspectCentered"
+            <PanelContainer> <!-- Inset aesthetics -->
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#444444" BackgroundColor="#1E1E22" />
+                </PanelContainer.PanelOverride>
+                    <TextureRect Margin="4" Name="CurrentJobIcon" Stretch="KeepAspectCentered"
                         VerticalAlignment="Center" HorizontalAlignment="Center" SetSize="64 64" />
+            </PanelContainer>
             <BoxContainer Margin="8 4 0 0" Orientation="Vertical">
                 <Label Name="CurrentName" SetHeight="24" FontColorOverride="{x:Static s:StyleNano.NanoGold}" StyleClasses="LabelBig" />
                 <Label Name="CurrentJob" Margin="8 4 0 0" />
             </BoxContainer>
         </BoxContainer>
-        <!-- TODO Tabs -->
-        <!-- Settings box -->
-        <BoxContainer Orientation="Vertical">
-            <Label Name="Name" Text="{Loc 'agent-id-card-current-name'}" />
-            <LineEdit Name="NameLineEdit" SelectAllOnFocus="True" />
-            <Label Name="Job" Text="{Loc 'agent-id-card-current-job'}" />
-            <LineEdit Name="JobLineEdit" SelectAllOnFocus="True" />
-            <CheckBox Name="CheckCopyAll" Margin="0 12 0 0" Text="Copy scanned IDs" />
-            <BoxContainer Orientation="Vertical" Margin="24 4 0 0">
-                <CheckBox Name="CheckCopyName" Text="Name" Pressed="True" />
-                <CheckBox Name="CheckCopyJob" Text="Job" Pressed="True" />
-                <CheckBox Name="CheckCopyJobIcon" Text="Job icon" Pressed="True" />
-                <CheckBox Name="CheckCopyAccess" Text="Exact access" />
+        <PanelContainer Margin="0 8" StyleClasses="LowDivider" /> <!-- Probably temp -->
+        <PanelContainer> <!-- Inset aesthetics -->
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#444444" BackgroundColor="#1E1E22" />
+            </PanelContainer.PanelOverride>
+            <BoxContainer Margin="4" Orientation="Vertical"><!-- TODO Tabs -->
+                <!-- Settings tab -->
+                <BoxContainer Orientation="Vertical">
+                    <Label Name="Name" Text="{Loc 'agent-id-card-current-name'}" />
+                    <LineEdit Name="NameLineEdit" SelectAllOnFocus="True" />
+                    <Label Name="Job" Text="{Loc 'agent-id-card-current-job'}" />
+                    <LineEdit Name="JobLineEdit" SelectAllOnFocus="True" />
+                    <CheckBox Name="CheckCopyAll" Margin="0 12 0 0" Text="Copy scanned IDs" />
+                    <BoxContainer Orientation="Vertical" Margin="24 4 0 0">
+                        <CheckBox Name="CheckCopyName" Text="Name" Pressed="True" />
+                        <CheckBox Name="CheckCopyJob" Text="Job" Pressed="True" />
+                        <CheckBox Name="CheckCopyJobIcon" Text="Job icon" Pressed="True" />
+                        <CheckBox Name="CheckCopyAccess" Text="Exact access" />
+                    </BoxContainer>
+                </BoxContainer>
+                <!-- Job icon tab -->
+                <!-- temp --><Label Text="{Loc 'agent-id-card-job-icon-label'}" />
+                <BoxContainer Orientation="Horizontal">
+                    <GridContainer Name="JobGroupGrid" Columns="6">
+                        <!-- Group buttons are generated in code -->
+                    </GridContainer>
+                    <PanelContainer Margin="4 0" StyleClasses="LowDivider" />
+                    <PanelContainer>
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BorderThickness="2" BackgroundColor="#000000" BorderColor="#FFFFFF" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Margin="4" SetWidth="104">
+                            <GridContainer Name="IconGrid" Columns="3">
+                                <!-- Job icon buttons are generated in code -->
+                            </GridContainer>
+                        </BoxContainer>
+                    </PanelContainer>
+                </BoxContainer>
             </BoxContainer>
-        </BoxContainer>
-        <!-- Job icon box -->
-        <Label Text="{Loc 'agent-id-card-job-icon-label'}" />
-        <BoxContainer Orientation="Horizontal">
-            <GridContainer Name="JobGroupGrid" Columns="6">
-                <!-- Group buttons are generated in code -->
-            </GridContainer>
-            <BoxContainer Margin="4 0 0 0" SetWidth="104">
-                <GridContainer Name="IconGrid" Columns="3">
-                    <!-- Job icon buttons are generated in code -->
-                </GridContainer>
-            </BoxContainer>
-        </BoxContainer>
-         <!-- Footer -->
+        </PanelContainer>
+        <!-- Footer -->
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
