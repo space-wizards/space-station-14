@@ -19,12 +19,14 @@ public sealed partial class SalvageSystem
     private const string MagnetChannel = "Supply";
 
     private EntityQuery<SalvageMobRestrictionsComponent> _salvMobQuery;
+    private EntityQuery<MobStateComponent> _mobStateQuery;
 
     private List<(Entity<TransformComponent> Entity, EntityUid MapUid, Vector2 LocalPosition)> _detachEnts = new();
 
     private void InitializeMagnet()
     {
         _salvMobQuery = GetEntityQuery<SalvageMobRestrictionsComponent>();
+        _mobStateQuery = GetEntityQuery<MobStateComponent>();
 
         SubscribeLocalEvent<SalvageMagnetDataComponent, MapInitEvent>(OnMagnetDataMapInit);
 
@@ -153,6 +155,21 @@ public sealed partial class SalvageSystem
                     continue;
 
                 if (_salvMobQuery.HasComp(mobUid))
+                    continue;
+
+                bool CheckParents(EntityUid uid)
+                {
+                    do
+                    {
+                        uid = _transform.GetParentUid(uid);
+                        if (_mobStateQuery.HasComp(uid))
+                            return true;
+                    }
+                    while (uid != xform.GridUid && uid != EntityUid.Invalid);
+                    return false;
+                }
+
+                if (CheckParents(mobUid))
                     continue;
 
                 // Can't parent directly to map as it runs grid traversal.

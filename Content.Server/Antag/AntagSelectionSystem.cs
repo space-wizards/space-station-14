@@ -393,6 +393,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             return;
         }
 
+        // TODO: This is really messy because this part runs twice for midround events.
+        // Once when the ghostrole spawner is created and once when a player takes it.
+        // Therefore any component subscribing to this has to make sure both subscriptions return the same value
+        // or the ghost role raffle location preview will be wrong.
+
         var getPosEv = new AntagSelectLocationEvent(session, ent);
         RaiseLocalEvent(ent, ref getPosEv, true);
         if (getPosEv.Handled)
