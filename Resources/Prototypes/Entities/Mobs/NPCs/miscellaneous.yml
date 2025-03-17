@@ -268,11 +268,12 @@
     thresholds:
       0: Alive
       45: Dead
-#  - type: FootstepModifier # Swap to something vile
-#    footstepSoundCollection:
-#      path: /Audio/Effects/Footsteps/slime1.ogg
-#      params:
-#        volume: 3
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Effects/Footsteps/timpani.ogg
+      params:
+        volume: 0.5
+        variation: 0.125
   - type: Produce
     seedId: killerJuicyTomato
   - type: PassiveDamage
