@@ -1,0 +1,36 @@
+﻿<Document>
+  ## Non-Microwave Cooking Techniques
+
+  There are many ways to process and prepare food that don't involve a microwave! Here are some examples:
+
+  <Box>
+    <GuideEntityEmbed Entity="FoodDoughSlice"/>
+    <GuideEntityEmbed Entity="FoodMeatCutlet"/>
+    <GuideEntityEmbed Entity="FoodCheeseSlice"/>
+    <GuideEntityEmbed Entity="FoodDoughFlat"/>
+    <GuideEntityEmbed Entity="FoodDoughTortillaSlice"/>
+  </Box>
+
+  ## Secondary Products
+
+  - Dough Slice: Cut Dough
+  - Cutlet: Slice Raw Meat
+  - Cheese Wedge: Slice Cheese Wheel
+  - Flat Dough: Use a rolling pin or a round object (fire extinguisher, soda can, bottle) on Dough.
+  - Tortilla Dough Slice: cut Tortilla Dough
+  - Flat Tortilla Dough: Use a rolling pin or a round object (fire extinguisher, soda can, bottle) on Tortilla Dough Slice
+
+  ## Burgers, Tacos and Kebabs
+
+  <Box>
+    <GuideEntityEmbed Entity="FoodBurgerCrazyBlackAndWhite"/>
+    <GuideEntityEmbed Entity="FoodTacoRat"/>
+    <GuideEntityEmbed Entity="FoodKebabSkewer"/>
+  </Box>
+
+  Unlike most food, burgers, tacos, and kebabs can be filled with a wide variety of items. Experiment and find out what you can make!
+
+  - To start a burger tower, slice a bun in two and place ingredients on the bottom bun. To finish the burger, place the top bun as the final ingredient.
+  - To create a kebab, use your ingredients on a metal skewer.
+  - To create a taco, use your ingredients on a taco shell.
+</Document>

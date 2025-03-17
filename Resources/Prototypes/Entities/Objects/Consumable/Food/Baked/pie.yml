@@ -103,47 +103,6 @@
 # Tastes like pie, apple.
 
 - type: entity
-  name: lemo pie
-  parent: FoodPieBase
-  id: FoodPieLemo
-  description: A new spin on the classic. Makes you want to sing!
-  components:
-  - type: FlavorProfile
-    flavors:
-      - sweet
-      - lemo
-  - type: Sprite
-    layers:
-    - state: tin
-    - state: lemo
-  - type: SliceableFood
-    slice: FoodPieLemoSlice
-  - type: Tag
-    tags:
-    - Fruit
-    - Pie
-
-- type: entity
-  name: slice of lemo pie
-  parent: FoodPieSliceBase
-  id: FoodPieLemoSlice
-  components:
-  - type: FlavorProfile
-    flavors:
-      - sweet
-      - lemo
-  - type: Sprite
-    layers:
-    - state: plain-slice
-    - state: alpha-slice-filling
-      color: pink
-  - type: Tag
-    tags:
-    - Fruit
-    - Pie
-    - Slice
-
-- type: entity
   name: baklava
   parent: FoodPieBase
   id: FoodPieBaklava
