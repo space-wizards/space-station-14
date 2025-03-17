@@ -4205,4 +4205,11 @@ Entries:
   id: 582
   time: '2025-03-17T05:18:56.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/403
+- author: Happyrobot33
+  changes:
+  - message: Fixed the ability to toggle thermal vision on and off.
+    type: Fix
+  id: 583
+  time: '2025-03-17T11:39:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/404
 
