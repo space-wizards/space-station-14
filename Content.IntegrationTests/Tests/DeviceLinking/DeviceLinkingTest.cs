@@ -38,7 +38,7 @@ public sealed class DeviceLinkingTest
         var mapSys = server.System<SharedMapSystem>();
         var deviceLinkSys = server.System<DeviceLinkSystem>();
 
-        var prototypes = server.ProtoMan.EnumeratePrototypes<EntityPrototype>().OrderBy(p => p.ID);
+        var prototypes = server.ProtoMan.EnumeratePrototypes<EntityPrototype>();
 
         await server.WaitAssertion(() =>
         {
