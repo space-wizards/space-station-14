@@ -154,7 +154,7 @@
     contents:
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitRanger
-        - id: ClothingMaskGasSecurity
+        - id: ClothingMaskBreath
   - type: AccessReader
     access: [["Security"]]
 
