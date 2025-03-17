@@ -42,4 +42,7 @@
         - Fruit
         - Egg
         - Meat
+        - Bread
+        - Pizza
+        - Cheese
       compostTime: 20.0

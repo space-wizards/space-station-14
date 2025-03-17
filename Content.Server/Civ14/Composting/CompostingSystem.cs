@@ -122,15 +122,32 @@ public sealed partial class CompostingSystem : EntitySystem
     /// <summary>
     /// Displays the amount of ready compost when examining the composter.
     /// </summary>
+    /// <summary>
+    /// Displays the status of the compost bin when examined.
+    /// </summary>
     private void OnExamined(EntityUid uid, CompostingComponent component, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
-        var message = component.ReadyCompost > 0
-            ? $"There are {component.ReadyCompost} units of compost ready."
-            : "The compost bin is empty.";
-        args.PushMarkup(message);
+        var compostingCount = component.CompostingItems.Count;
+        var readyCompost = component.ReadyCompost;
+
+        if (compostingCount == 0 && readyCompost == 0)
+        {
+            args.PushMarkup("It's empty.");
+            return;
+        }
+
+        if (compostingCount > 0)
+        {
+            args.PushMarkup($"Its currently composting.");
+        }
+
+        if (readyCompost > 0)
+        {
+            args.PushMarkup($"There are {readyCompost} units of compost ready.");
+        }
     }
 
     private void OnDestroyed(EntityUid uid, CompostingComponent component, DestructionEventArgs args)
