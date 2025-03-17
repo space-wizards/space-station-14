@@ -557,7 +557,7 @@
   plantRsi: Objects/Specific/Hydroponics/blue_tomato.rsi
   packetPrototype: BlueTomatoSeeds
   productPrototypes:
-    - killerJuicyTomato # Swap to killerJuicyTomato from FoodBlueTomato so we can actully see them
+    - blueTomato
   harvestRepeat: Repeat
   lifespan: 25
   maturation: 8
