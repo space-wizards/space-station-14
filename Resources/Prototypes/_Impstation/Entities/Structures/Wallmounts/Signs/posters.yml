@@ -1,0 +1,42 @@
+#Contraband Imp Posters
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandLiar
+  name: "Defaced Medical"
+  description: "Someone took red paint to this old recruitment drive poster."
+  components:
+    - type: Sprite
+      sprite: _Impstation/Structures/Wallmounts/posters.rsi
+      state: poster64_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandFraud
+  name: "Defaced Anchor"
+  description: "Seems like someone isn't a fan of the book."
+  components:
+    - type: Sprite
+      sprite: _Impstation/Structures/Wallmounts/posters.rsi
+      state: poster65_contraband
+
+#Legit Imp Posters
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitJoinMedical
+  name: "Join Medical"
+  description: "A poster from an old recruitment drive for Medical featuring a doctor with white buns, fingers crossed behind his back."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Wallmounts/posters.rsi
+    state: poster54_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitAnchor
+  name: "The Anchor"
+  description: "A motivational medical poster featuring the author of the book 'Guide To Medical'"
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Wallmounts/posters.rsi
+    state: poster55_legit

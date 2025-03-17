@@ -134,6 +134,11 @@
   description: flavor-complex-orangecoffee
 
 - type: flavor
+  id: kodepiia
+  flavorType: Base
+  description: flavor-base-kodepiia
+
+- type: flavor
   id: thavenflesh
   flavorType: Complex
   description: flavor-complex-thavenflesh

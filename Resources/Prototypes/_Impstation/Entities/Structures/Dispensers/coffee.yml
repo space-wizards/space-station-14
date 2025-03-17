@@ -39,3 +39,5 @@
       tags:
       - DrinkBottle
     pack: EmptyInventory
+  - type: Machine
+    board: ImpCoffeeMachineCircuitboard

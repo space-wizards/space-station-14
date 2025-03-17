@@ -1,4 +1,4 @@
-﻿- type: speechVerb
+- type: speechVerb
   id: FinfinExclamation
   name: chat-speech-verb-name-finfin-exclamation
   speechVerbStrings:
@@ -40,10 +40,17 @@
   - chat-speech-verb-bros
 
 - type: speechVerb
+  id: Kodepiia
+  name: chat-speech-verb-name-kodepiia
+  speechVerbStrings:
+  - chat-speech-verb-kodepiia-1
+  - chat-speech-verb-kodepiia-2
+  - chat-speech-verb-kodepiia-3
+
+- type: speechVerb
   id: Suppy
   name: chat-speech-verb-name-suppy
   speechVerbStrings:
   - chat-speech-verb-electricity-1
   - chat-speech-verb-suppy1
   - chat-speech-verb-suppy2
-

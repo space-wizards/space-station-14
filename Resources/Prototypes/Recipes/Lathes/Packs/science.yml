@@ -68,6 +68,7 @@
 
 # Only contains parts for making basic modular grenades, no actual explosives
 - type: latheRecipePack
+  parent: ScienceExplosivesImp # imp
   id: ScienceExplosives
   recipes:
   - ChemicalPayload
@@ -125,3 +126,4 @@
   - ThrusterMachineCircuitboard
   - GyroscopeMachineCircuitboard
   - MiniGravityGeneratorCircuitboard
+  - MiniGyroscopeMachineCircuitboard # Imp (I think?)

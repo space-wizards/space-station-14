@@ -1368,6 +1368,8 @@ entities:
           - 553
           - 561
           - 557
+    - type: StorageFill
+      contents: [ ] # This is illegal lmao
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage

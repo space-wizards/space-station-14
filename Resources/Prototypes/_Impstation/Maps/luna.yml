@@ -3,7 +3,7 @@
   mapName: 'Embryo'
   mapPath: /Maps/_Impstation/luna.yml
   minPlayers: 35
-  maxPlayers: 70
+  maxPlayers: 80
   stations:
     Luna:
       stationProto: StandardNanotrasenStation
@@ -18,7 +18,7 @@
         - type: StationCargoShuttle
           path: /Maps/_Impstation/Shuttles/cargojeep_luna.yml
         - type: StationJobs
-          availableJobs: # Total of 65 jobs.
+          availableJobs: # Total of 68 jobs.
             # command - 9
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -42,12 +42,12 @@
             Musician: [ 1, 1 ]
             Reporter: [ 2, 2 ]
             ServiceWorker: [ 2, 2 ]
-            # engineering - 7-10
+            # engineering - 6
             AtmosphericTechnician: [ 2, 2 ]
             StationEngineer: [ 3, 3 ]
             TechnicalAssistant: [ 1, 1 ]
-            # medical - 8-11
-            Chemist: [ 1, 1 ]
+            # medical - 9
+            Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
             MedicalIntern: [ 2, 2 ]
             Paramedic: [ 1, 1 ]
@@ -57,15 +57,15 @@
             ResearchAssistant: [ 1, 1 ]
             Scientist: [ 3, 3 ]
             StationAi: [ 1, 1 ]
-            # security - 11
+            # security - 12
             Brigmedic: [ 1, 1 ]
             Detective: [ 1, 1 ]
-            Lawyer: [ 1, 1 ]
+            Lawyer: [ 2, 2 ]
             SecurityCadet: [ 3, 3 ]
             SecurityOfficer: [ 4, 4 ]
             Warden: [ 1, 1 ]
-            # supply - 7
-            CargoTechnician: [ 2, 2 ]
+            # supply - 8
+            CargoTechnician: [ 3, 3 ]
             Courier: [ 1, 1 ]
             SalvageSpecialist: [ 2, 2 ]
             SupplyAssistant: [ 2, 2 ]

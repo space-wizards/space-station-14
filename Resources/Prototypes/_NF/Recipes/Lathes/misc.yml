@@ -1,12 +1,4 @@
 - type: latheRecipe
-  id: ClothingShoesBootsMagAdv
-  result: ClothingShoesBootsMagAdv 
-  completetime: 12
-  materials:
-    Silver: 1000
-    Gold: 500
-
-- type: latheRecipe
   id: MailCapsule
   result: MailCapsulePrimed
   completetime: 1

@@ -1,0 +1,15 @@
+- type: reaction
+  id: ShimmeringBloodBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    ShimmeringBlood:
+      amount: 15
+  products:
+    Water: 4
+    Protein: 4
+    Sugar: 2
+    Iron: 1
+    Silver: 1
+    SpaceDrugs: 3

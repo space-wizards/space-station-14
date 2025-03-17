@@ -45,10 +45,10 @@ trait-monotonous-name = Monotonous
 trait-monotonous-desc = You speak in a way that others see as total disinterest. Always.
 
 trait-basicfrench-name = French (Basic)
-trait-basicfrench-desc = You speak with the cadence of someone who has cast off their vow of silence, with much less word replacements.
+trait-basicfrench-desc = You speak with the cadence of someone who has cast off their vow of silence, with far fewer word replacements.
 
 trait-basicrussian-name = Russian (Basic)
-trait-basicrussian-desc = You speak with a russian accent, with much less word replacements.
+trait-basicrussian-desc = You speak with a Russian accent, with far fewer word replacements.
 
 trait-stiltedspeech-name = Stilted speech
 trait-stiltedspeech-desc = You Speak Very Properly At All Times.
@@ -62,5 +62,8 @@ trait-properpunctuation-desc = Your sentences end with periods or other punctuat
 trait-echolalia-name = Echolalia
 trait-echolalia-desc = You can't help yourself from repeating phrases you've heard.
 
-trait-transatlantic-name = Transatlantic Accent
+trait-transatlantic-name = Transatlantic accent
 trait-transatlantic-desc = You sound like a hardboiled detective, or a peppy newshawk.
+
+trait-positivity-name = Relentless positivity
+trait-positivity-desc = You're always making speeches about the power of friendship. Enjoy your shift!

@@ -25,6 +25,25 @@
     startingCharge: 1000
   - type: StaticPrice
     price: 500
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    range: 0.8
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 6
+    damage:
+      types:
+        Blunt: 5
+#imp edit end
 
 - type: entity
   id: BaseWeaponPowerCell
@@ -60,6 +79,25 @@
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    range: 0.8
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 6
+    damage:
+      types:
+        Blunt: 5
+#imp edit end
 
 - type: entity
   id: BaseWeaponBatterySmall
@@ -228,12 +266,27 @@
     fireCost: 62.5
   - type: StaticPrice
     price: 300
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    attackRate: 0.6
+  - type: StaminaDamageOnHit
+    damage: 10 #slight stagger, but still like 10 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 10
+    damage:
+      types:
+        Blunt: 8
+#imp edit end
 
 - type: entity
   name: laser rifle
   parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponLaserCarbine
-  description: Favored by Nanotrasen Security for being cheap and easy to use.
+  description: A laser-based energy rifle with familiar ergonomics and controls to its kinetic counterparts. Favored by Nanotrasen for security forces, as they are cheap and easy to use. #imp
   components:
   - type: StaticPrice
     price: 420
@@ -245,7 +298,7 @@
   name: pulse pistol
   parent: BaseWeaponBatterySmall
   id: WeaponPulsePistol
-  description: A state-of-the-art energy pistol favored as a sidearm by NT operatives.
+  description: A state-of-the-art energy pistol favored as a sidearm by Nanotrasen operatives.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Battery/pulse_pistol.rsi #imp
@@ -279,7 +332,7 @@
   name: pulse carbine
   parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
   id: WeaponPulseCarbine
-  description: A high-tech energy carbine favored by the NT-ERT operatives.
+  description: A high-tech energy carbine favored by Nanotrasen ERT operatives. #imp
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Battery/pulse_carbine.rsi #imp
@@ -310,12 +363,27 @@
   - type: Battery
     maxCharge: 5000
     startingCharge: 5000
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    attackRate: 0.6
+  - type: StaminaDamageOnHit
+    damage: 10 #slight stagger, but still like 10 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 10
+    damage:
+      types:
+        Blunt: 8
+#imp edit end
 
 - type: entity
   name: pulse rifle
   parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponPulseRifle
-  description: A weapon that is almost as infamous as its users.
+  description: A weapon almost as infamous as its users.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Battery/pulse_rifle.rsi #imp
@@ -342,6 +410,21 @@
   - type: Battery
     maxCharge: 40000
     startingCharge: 40000
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    attackRate: 0.6
+  - type: StaminaDamageOnHit
+    damage: 10 #slight stagger, but still like 10 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 10
+    damage:
+      types:
+        Blunt: 8
+#imp edit end
 
 - type: entity
   name: laser cannon
@@ -354,7 +437,7 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-unshaded-4
+    - state: mag-unshaded-3
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: MagazineVisuals
@@ -371,6 +454,24 @@
   - type: HitscanBatteryAmmoProvider
     proto: RedHeavyLaser
     fireCost: 100
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    attackRate: 0.4 #slower, but hits harder; bigger object to shove with
+    damage:
+      types:
+        blunt: 8
+  - type: StaminaDamageOnHit
+    damage: 15 #slight stagger, but still like 7 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 15
+    damage:
+      types:
+        Blunt: 12
+#imp edit end
 
 - type: entity
   name: portable particle decelerator
@@ -402,6 +503,24 @@
     - type: Battery
       maxCharge: 10000
       startingCharge: 10000
+#imp edit begin; weapon melee
+    - type: MeleeWeapon
+      attackRate: 0.4 #slower, but hits harder; bigger object to shove with
+      damage:
+        types:
+            blunt: 8
+    - type: StaminaDamageOnHit
+      damage: 15 #slight stagger, but still like 7 hits to stun completely
+    - type: MeleeRequiresWield
+    - type: MeleeThrowOnHit
+      distance: 0.8
+      speed: 5
+    - type: DamageOtherOnHit #for throwing
+      staminaCost: 15
+      damage:
+        types:
+            Blunt: 12
+#imp edit end
 
 - type: entity
   name: x-ray cannon
@@ -430,6 +549,24 @@
     steps: 6 #impstation
     zeroVisible: true
   - type: Appearance
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    attackRate: 0.4 #slower, but hits harder; bigger object to shove with
+    damage:
+      types:
+        blunt: 8
+  - type: StaminaDamageOnHit
+    damage: 15 #slight stagger, but still like 7 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 15
+    damage:
+      types:
+        Blunt: 12
+#imp edit end
 
 - type: entity
   name: practice disabler
@@ -795,3 +932,18 @@
     autoRechargeRate: 24
     autoRechargePause: true
     autoRechargePauseTime: 30
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    attackRate: 0.6
+  - type: StaminaDamageOnHit
+    damage: 10 #slight stagger, but still like 10 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 10
+    damage:
+      types:
+        Blunt: 8
+#imp edit end

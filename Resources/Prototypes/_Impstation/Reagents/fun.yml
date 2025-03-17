@@ -30,6 +30,10 @@
           types:
             Poison: 2
             Blunt: 1
+        conditions:
+        - !type:HasTag
+          invert: true
+          tag: BROS
 
 - type: reagent
   id: GroundBros

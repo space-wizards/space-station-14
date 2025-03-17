@@ -31,7 +31,7 @@ entities:
       name: Unknown
     - type: Transform
       pos: 22.326925,-7.8882475
-      parent: 966
+      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -530,19 +530,6 @@ entities:
     - type: RadiationGridResistance
     - type: Shuttle
     - type: NavMap
-  - uid: 966
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
-    - type: LoadedMap
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 17
@@ -1382,6 +1369,8 @@ entities:
           - 553
           - 561
           - 557
+    - type: StorageFill
+      contents: [] # This is illegal lmao
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage

@@ -13,3 +13,29 @@
       map: [ "empty-icon" ]
   # todo: add itemcomponent with inhandVisuals states using unused texture and animation assets in kinetic_accelerator.rsi
   # todo: add clothingcomponent with clothingVisuals states using unused texture and animations assets in kinetic_accelerator.rsi
+
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    range: 0.8
+    attackRate: 0.6
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 10
+    damage:
+      types:
+        Blunt: 8
+  - type: StaminaDamageOnHit
+    damage: 10 #slight stagger, but still like 10 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
+#imp edit end

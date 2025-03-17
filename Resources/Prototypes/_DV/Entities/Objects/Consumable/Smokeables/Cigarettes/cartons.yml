@@ -1,0 +1,26 @@
+﻿- type: entity
+  id: CigCartonSyndicate
+  parent: [CigCartonGreen, Tier2Contraband] # imp - same contraband tier as interdynes
+  name: Interdyne Herbals carton
+  description: A carton containing 6 packets of Interdynes, plus an exclusive flippo.
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Consumable/Smokeables/Cigarettes/Cartons/syndicate.rsi
+  - type: Item
+    sprite: _DV/Objects/Consumable/Smokeables/Cigarettes/Cartons/syndicate.rsi
+  - type: StorageFill
+    contents:
+    - id: CigPackSyndicate
+      amount: 6
+    - id: SyndicateFlippo
+      amount: 1
+  - type: Storage
+    grid:
+    - 0,0,5,1
+    - 6,1,6,1
+  #- type: ReverseEngineering # parity with other valid storage options # imp - not a feature we have
+  #  difficulty: 4
+  #  recipes:
+  #  - ClothingBackpackHolding
+  #  - ClothingBackpackDuffelHolding
+  #  - ClothingBackpackSatchelHolding

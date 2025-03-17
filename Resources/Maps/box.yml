@@ -144822,13 +144822,6 @@ entities:
     - type: Transform
       pos: 0.4975611,39.394394
       parent: 8364
-- proto: RobocopCircuitBoard
-  entities:
-  - uid: 22443
-    components:
-    - type: Transform
-      pos: -3.5,-23.2
-      parent: 8364
 - proto: RobustHarvestChemistryBottle
   entities:
   - uid: 13505

@@ -24,6 +24,11 @@ chat-speech-verb-finfin-mumble-1 = quavers
 chat-speech-verb-name-bros = Bros
 chat-speech-verb-bros = grunts
 
+chat-speech-verb-name-kodepiia = Kodepiia
+chat-speech-verb-kodepiia-1 = wheezes
+chat-speech-verb-kodepiia-2 = crackles
+chat-speech-verb-kodepiia-3 = hums
+
 chat-speech-verb-name-suppy = Suppy
 chat-speech-verb-suppy1 = rumbles
 chat-speech-verb-suppy2 = resonates

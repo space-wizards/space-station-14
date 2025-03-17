@@ -67,3 +67,6 @@
       collection: SupermatterAccentNormal
   - type: StealTarget
     stealGroup: PetSuppy
+  - type: ContainerContainer
+    containers:
+      body_root_part: !type:ContainerSlot

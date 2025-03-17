@@ -111,6 +111,15 @@
   - type: StiltedSpeech
 
 - type: trait
+  id: RelentlessPositivity
+  name: trait-positivity-name
+  description: trait-positivity-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: RelentlessPositivity
+
+- type: trait
   id: Echolalia
   name: trait-echolalia-name
   description: trait-echolalia-desc

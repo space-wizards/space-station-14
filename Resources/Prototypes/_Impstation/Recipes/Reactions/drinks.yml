@@ -101,19 +101,19 @@
   products:
     GatorWine: 2
 
-- type: reaction
-  id: Rotgut
-  requiredMixerCategories:
-    - Shake
-  reactants:
-    Water:
-      amount: 1
-    Sugar:
-      amount: 4
-    Nicotine:
-      amount: 5
-  products:
-    Rotgut: 10
+#- type: reaction # This recipe doesn't work, and I don't understand why. It also doesnt seem to work in game and causes a testfail when enabled.
+#  id: Rotgut
+#  requiredMixerCategories:
+#    - Shake
+#  reactants:
+#    Water:
+#      amount: 1
+#    Sugar:
+#      amount: 4
+#    Nicotine:
+#      amount: 5
+#  products:
+#    Rotgut: 10
 
 - type: reaction
   id: BumWine
@@ -424,7 +424,7 @@
     ShimmeringBlood:
       amount: 2
     Absinthe:
-      amount: 2
+      amount: 1
     Champagne:
       amount: 1
     Egg:

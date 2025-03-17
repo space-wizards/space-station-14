@@ -124,6 +124,7 @@
   - FlashPayload
   - ExplosivePayload
   - ChemicalPayload
+  - SignallerDeadMans # DeltaV - Dead Man's Signaller
 
 - type: technology
   id: SpecialMeans

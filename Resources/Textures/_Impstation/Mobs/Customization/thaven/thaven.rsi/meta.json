@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "by Widgetbeck, eyeglow made and piercings edited by Sha-Seng",
+  "copyright": "by Widgetbeck, eyeglow/sharkminnow/stub/nurse/eel made by Sha-Seng (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -49,6 +49,72 @@
     },
     {
       "name": "leyeglow",
+      "directions": 4
+    },
+    {
+      "name": "eyessharkminnow",
+      "directions": 4
+    },
+    {
+      "name": "taileel1",
+      "directions": 4
+    },
+    {
+      "name": "taileel2",
+      "directions": 4
+    },
+    {
+      "name": "taileel3",
+      "directions": 4,
+        "delays": [
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ]
+        ]
+    },
+    {
+      "name": "tailnurse1",
+      "directions": 4
+    },
+    {
+      "name": "tailnurse2",
+      "directions": 4
+    },
+    {
+      "name": "tailstub1",
+      "directions": 4
+    },
+    {
+      "name": "tailstub2",
       "directions": 4
     }
   ]

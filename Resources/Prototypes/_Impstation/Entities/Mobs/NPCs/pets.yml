@@ -338,3 +338,55 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalWalter
+
+- type: entity
+  name: Oswald
+  parent: [ MobPenguin, MobCombat, StripableInventoryBase ]
+  id: MobPenguinOswald
+  description: The Hospitality Director's waddling companion. She loves fish.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: oswald
+      sprite: _Impstation/Mobs/Pets/oswald.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: oswald
+      Critical:
+        Base: oswald_dead
+      Dead:
+        Base: oswald_dead
+  - type: ReplacementAccent
+    accent: chicken # this is basically the same thing as a penguin probably
+  - type: Speech
+    speechVerb: Vox
+    speechSounds: Cluck
+  - type: Inventory
+    speciesId: penguin
+    templateId: oswald
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 15 # turn this down if her soloing carp turns into a problem
+  - type: NpcFactionMember
+    factions:
+    - Penguin # she loves fish!
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: female
+  - type: StealTarget
+    stealGroup: AnimalOswald
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-avian

@@ -1,6 +1,18 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/15/2025 03:42:32
+  entityCount: 26361
+maps:
+- 1
+grids:
+- 2
+- 25288
+orphans: []
+nullspace: []
 tilemap:
   0: Space
   1: FloorArcadeBlue
@@ -80,7 +92,6 @@ entities:
     - type: OccluderTree
     - type: Parallax
       parallax: BagelStation
-    - type: LoadedMap
   - uid: 2
     components:
     - type: MetaData
@@ -7203,7 +7214,8 @@ entities:
           5,-9:
             0: 65531
           5,-4:
-            0: 65311
+            0: 63263
+            4: 2048
           6,-8:
             0: 127
             3: 28672
@@ -7246,7 +7258,8 @@ entities:
           5,0:
             0: 36590
           6,-3:
-            0: 12047
+            0: 12045
+            5: 2
           6,-2:
             0: 48058
           6,-1:
@@ -8426,7 +8439,7 @@ entities:
             0: 255
             1: 16384
           17,-7:
-            4: 1
+            6: 1
             1: 4104
           17,-6:
             1: 4593
@@ -8535,17 +8548,17 @@ entities:
           -13,7:
             1: 39312
           -12,8:
-            5: 12
-            6: 3072
+            7: 12
+            8: 3072
           -11,5:
             0: 63351
           -11,6:
             0: 4607
             1: 49152
           -11,8:
-            5: 1
+            7: 1
             1: 17476
-            6: 256
+            8: 256
           -11,7:
             1: 17484
           -10,5:
@@ -8643,10 +8656,10 @@ entities:
             0: 255
             1: 57344
           -8,11:
-            7: 816
+            9: 816
             1: 34952
           -9,11:
-            7: 2176
+            9: 2176
             1: 8738
           -8,12:
             1: 34959
@@ -8666,7 +8679,7 @@ entities:
           -6,11:
             0: 4095
           -6,12:
-            7: 61166
+            9: 61166
           -5,9:
             0: 65528
           -5,10:
@@ -8674,7 +8687,7 @@ entities:
           -5,11:
             0: 36863
           -5,12:
-            7: 30515
+            9: 30515
             0: 12
           -4,9:
             0: 65528
@@ -8684,7 +8697,7 @@ entities:
             0: 4095
           -4,12:
             0: 1
-            7: 65518
+            9: 65518
           -4,13:
             1: 61680
           -5,13:
@@ -8698,7 +8711,7 @@ entities:
           -5,15:
             1: 17487
           -3,12:
-            7: 13107
+            9: 13107
             0: 136
             1: 32768
           -3,13:
@@ -8763,8 +8776,8 @@ entities:
             0: 65307
           -12,9:
             0: 16
-            8: 12
-            7: 3072
+            10: 12
+            9: 3072
           -13,9:
             1: 39305
           -13,10:
@@ -8775,20 +8788,20 @@ entities:
           -12,12:
             1: 15
           -12,10:
-            7: 12
-            4: 3072
+            9: 12
+            6: 3072
           -12,11:
-            7: 3084
+            9: 3084
           -11,9:
-            8: 1
-            7: 256
+            10: 1
+            9: 256
             1: 17476
           -11,10:
-            7: 1
-            4: 256
+            9: 1
+            6: 256
             1: 17476
           -11,11:
-            7: 257
+            9: 257
             1: 17476
           -11,12:
             1: 19527
@@ -8842,8 +8855,8 @@ entities:
             1: 255
           -13,12:
             1: 34952
-            6: 48
-            5: 12288
+            8: 48
+            7: 12288
           -12,13:
             1: 61455
           -13,13:
@@ -8876,11 +8889,11 @@ entities:
             1: 62671
           -7,14:
             1: 244
-            7: 57344
+            9: 57344
             0: 1024
           -7,15:
             1: 61440
-            7: 238
+            9: 238
             0: 1024
           -7,16:
             1: 65524
@@ -8941,8 +8954,8 @@ entities:
           -14,12:
             0: 1
             1: 8738
-            6: 128
-            5: 32768
+            8: 128
+            7: 32768
           -17,12:
             0: 52232
           -16,13:
@@ -9524,6 +9537,36 @@ entities:
           moles:
           - 21.824879
           - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.6852
+          - 81.57766
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.14975
+          moles:
+          - 20.078888
+          - 75.53487
           - 0
           - 0
           - 0
@@ -11026,28 +11069,6 @@ entities:
       - 577
       - 14945
       - 14763
-  - uid: 5588
-    components:
-    - type: MetaData
-      name: Supermatter Perimeter
-    - type: Transform
-      pos: 1.5,43.5
-      parent: 2
-    - type: DeviceList
-      devices:
-      - 26232
-      - 26182
-      - 26149
-      - 26189
-      - 26188
-      - 26137
-      - 26181
-      - 26109
-      - 26126
-      - 26173
-      - 26190
-      - 26191
-      - 26125
   - uid: 8319
     components:
     - type: Transform
@@ -11096,6 +11117,29 @@ entities:
       - 556
       - 11271
       - 11270
+  - uid: 19351
+    components:
+    - type: MetaData
+      name: Supermatter Perimeter
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -2.5,39.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 26232
+      - 26182
+      - 26149
+      - 26189
+      - 26188
+      - 26137
+      - 26181
+      - 26109
+      - 26126
+      - 26173
+      - 26190
+      - 26191
+      - 26125
   - uid: 25655
     components:
     - type: Transform
@@ -14739,8 +14783,8 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 5588
       - 5590
+      - 19351
   - uid: 26247
     components:
     - type: Transform
@@ -71217,6 +71261,13 @@ entities:
     - type: Transform
       pos: -40.5,9.5
       parent: 2
+- proto: DrinkBottleOfNothingFull
+  entities:
+  - uid: 15902
+    components:
+    - type: Transform
+      pos: 26.729984,-11.18581
+      parent: 2
 - proto: DrinkDoctorsDelightGlass
   entities:
   - uid: 10756
@@ -75321,8 +75372,8 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 5588
       - 5590
+      - 19351
   - uid: 26189
     components:
     - type: Transform
@@ -75331,8 +75382,8 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 5588
       - 5590
+      - 19351
   - uid: 26190
     components:
     - type: Transform
@@ -75343,8 +75394,8 @@ entities:
       deviceLists:
       - 26186
       - 26187
-      - 5588
       - 5590
+      - 19351
   - uid: 26191
     components:
     - type: Transform
@@ -75355,8 +75406,8 @@ entities:
       deviceLists:
       - 26186
       - 26187
-      - 5588
       - 5590
+      - 19351
   - uid: 26192
     components:
     - type: Transform
@@ -103827,7 +103878,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 5588
+      - 19351
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 26137
@@ -103838,8 +103889,8 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 5588
       - 5590
+      - 19351
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 26149
@@ -103850,8 +103901,8 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 5588
       - 5590
+      - 19351
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 26173
@@ -103862,8 +103913,8 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 5588
       - 5590
+      - 19351
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 26194
@@ -105464,7 +105515,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 5588
+      - 19351
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 26125
@@ -105475,7 +105526,7 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 5588
+      - 19351
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 26139
@@ -105493,8 +105544,8 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 5588
       - 5590
+      - 19351
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 26182
@@ -105505,8 +105556,8 @@ entities:
       parent: 2
     - type: DeviceNetwork
       deviceLists:
-      - 5588
       - 5590
+      - 19351
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 26195
@@ -117120,13 +117171,6 @@ entities:
     - type: Transform
       pos: 25.5,-11.5
       parent: 2
-- proto: LockerMusician
-  entities:
-  - uid: 19651
-    components:
-    - type: Transform
-      pos: 23.5,-13.5
-      parent: 2
     - type: EntityStorage
       air:
         volume: 200
@@ -117145,15 +117189,40 @@ entities:
         - 0
         - 0
         - 0
+- proto: LockerMusician
+  entities:
+  - uid: 19651
+    components:
+    - type: Transform
+      pos: 23.5,-13.5
+      parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.8856695
+        - 7.0937095
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 19349
-          - 25270
           - 9757
+          - 25270
+          - 19349
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -120804,6 +120873,12 @@ entities:
       parent: 2
 - proto: PosterLegitSafetyMothDelam
   entities:
+  - uid: 5588
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 1.5,43.5
+      parent: 2
   - uid: 17501
     components:
     - type: Transform
@@ -120822,6 +120897,12 @@ entities:
     components:
     - type: Transform
       pos: 9.5,16.5
+      parent: 2
+  - uid: 22946
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 3.5,33.5
       parent: 2
 - proto: PosterLegitSafetyMothMeth
   entities:
@@ -131973,13 +132054,6 @@ entities:
     - type: Transform
       pos: 41.440662,-10.344523
       parent: 2
-- proto: RubberStampMime
-  entities:
-  - uid: 19351
-    components:
-    - type: Transform
-      pos: 27.742582,-12.3142805
-      parent: 2
 - proto: RubberStampTrader
   entities:
   - uid: 19352
@@ -140081,13 +140155,6 @@ entities:
     components:
     - type: Transform
       pos: 12.5,20.5
-      parent: 2
-- proto: SuitStorageCourier
-  entities:
-  - uid: 15902
-    components:
-    - type: Transform
-      pos: 56.5,17.5
       parent: 2
 - proto: SuitStorageEngi
   entities:

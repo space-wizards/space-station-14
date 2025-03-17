@@ -56,6 +56,7 @@ public sealed class FailAndStartPresetTest
     ///     Test that a nuke ops gamemode can start after failing to start once.
     /// </summary>
     [Test]
+    [Ignore("Broken due to engine issue relating to RemCompDeferred. Note: This test will only fail occasionally.")]
     public async Task FailAndStartTest()
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings

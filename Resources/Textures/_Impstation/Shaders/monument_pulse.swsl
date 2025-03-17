@@ -1,20 +1,15 @@
 light_mode unshaded;
 
 uniform highp vec2 tileSize; //this can probably just be TEXTURE_PIXEL_SIZE instead?
-
-const highp float pulseTime = 4;
+const highp float pulseTime = 4.0;
 
 void fragment() {
-    highp vec2 crunched = quantiseVecDown(UV);
-    highp float aMultPulse = sin(TIME);
-    highp vec4 baseCol = vec4(texture(TEXTURE, UV).rgb, texture(TEXTURE, UV).a * (0.6 + (0.4 * aMultPulse)));
-
     highp float pulseProgress = mod(TIME, pulseTime) / pulseTime;
-    highp float distA = pulseProgress - crunched.y;
-    highp float distB = crunched.y - pulseProgress;
+    highp float distA = pulseProgress - UV2.y;
+    highp float distB = UV2.y - pulseProgress;
     highp float distReal = min(abs(distA), 1.0 - abs(distB));
 
-    COLOR = vec4(baseCol.rgb, 1.0 * (distReal * distReal * distReal * distReal));
+    COLOR = vec4(texture(TEXTURE, UV).rgb,  distReal * distReal * distReal);
 }
 
 //something might have become fucked with this between copying it over?
@@ -26,9 +21,9 @@ highp vec2 quantiseVecDown(highp vec2 v) {
 }
 
 //hate that I have to do this because we can't just set the loop behaviour on the texture
-highp vec2 loopVec(highp vec2 toLoop) {
-    return abs(mod(toLoop, 1));
-}
+//highp vec2 loopVec(highp vec2 toLoop) {
+//    return abs(mod(toLoop, 1));
+//}
 
 highp vec3 rgb2hsv(highp vec3 c) {
     highp vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);

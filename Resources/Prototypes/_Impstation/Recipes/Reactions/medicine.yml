@@ -18,3 +18,25 @@
       amount: 1
   products:
     Brutoxidone: 1
+
+- type: reaction
+  id: Subjuzine-Activation-Radium #imp, so greys can use it
+  preserveDNA: true
+  reactants:
+    Subjuzine:
+      amount: 4
+    Radium:
+      amount: 1
+  products:
+    ActivatedSubjuzine: 5
+
+- type: reaction
+  id: Subjuzine-Activation-ShimmeringBlood #imp, so thaven can use it
+  preserveDNA: true
+  reactants:
+    Subjuzine:
+      amount: 4
+    ShimmeringBlood:
+      amount: 1
+  products:
+    ActivatedSubjuzine: 5

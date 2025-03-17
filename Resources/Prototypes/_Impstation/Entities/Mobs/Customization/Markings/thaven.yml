@@ -135,3 +135,86 @@
   - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
     state: leyeglow
   shader: unshaded
+
+- type: marking
+  id: ThavenEyesSharkminnow
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: eyessharkminnow
+
+- type: marking
+  id: ThavenEyesSharkminnowGlowing
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Thaven]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: eyessharkminnow
+  shader: unshaded
+
+- type: marking
+  id: ThavenTailEel
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Thaven ]
+  forcedColoring: false
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: taileel1
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: taileel2
+
+- type: marking
+  id: ThavenTailEelOverlay
+  bodyPart: Tail
+  markingCategory: Overlay
+  speciesRestriction: [ Thaven ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: taileel3
+  shader: unshaded
+
+- type: marking
+  id: ThavenTailNurse
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Thaven ]
+  forcedColoring: false
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: tailnurse1
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: tailnurse2
+
+- type: marking
+  id: ThavenTailStub
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [ Thaven ]
+  forcedColoring: false
+  followSkinColor: true
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: tailstub1
+  - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
+    state: tailstub2

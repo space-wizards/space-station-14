@@ -14,6 +14,9 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+      Lung:
+        canReact: false
+        maxVol: 100
   - type: Stomach
   - type: Metabolizer
     metabolizerTypes: [ Decapoid ]

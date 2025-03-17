@@ -1,6 +1,6 @@
 - type: entity
   name: Daito
-  parent: [BaseWeaponRifle, BaseRestrictedContraband]
+  parent: [BaseWeaponRifle, BaseSecurityContraband]
   id: WeaponRifleDaito
   description: A military precision rifle for the efficient combatant. Uses .30 rifle ammo.
   components:
@@ -58,6 +58,29 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
+  - type: MeleeWeapon
+    range: 0.8
+    attackRate: 0.6
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 10
+    damage:
+      types:
+        Blunt: 8
+  - type: StaminaDamageOnHit
+    damage: 10 #slight stagger, but still like 10 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
 
 - type: entity
   name: Basilisk-11
@@ -121,3 +144,27 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
+  - type: MeleeWeapon
+    range: 0.8
+    attackRate: 0.6
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 10
+    damage:
+      types:
+        Blunt: 8
+  - type: StaminaDamageOnHit
+    damage: 10 #slight stagger, but still like 10 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
+    

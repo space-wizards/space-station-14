@@ -151933,7 +151933,7 @@ entities:
       parent: 5350
 - proto: SpawnPointBrigmedic
   entities:
-  - uid: 6163
+  - uid: 28709
     components:
     - type: Transform
       pos: 0.5,52.5

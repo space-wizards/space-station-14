@@ -71,6 +71,9 @@
         whitelist:
           tags:
           - Bucket
+  - type: ContainerContainer # Imp - If you're gonna add slots pls add a containercontainer so tests dont die
+    containers:
+      bucket: !type:ContainerSlot
 
 - type: entity
   parent: BaseMaterialDoor

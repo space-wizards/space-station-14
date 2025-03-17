@@ -153157,18 +153157,6 @@ entities:
     - type: Transform
       pos: -14.5,-38.5
       parent: 5350
-- proto: SuitStorageCourier
-  entities:
-  - uid: 3706
-    components:
-    - type: Transform
-      pos: -39.5,6.5
-      parent: 5350
-  - uid: 7323
-    components:
-    - type: Transform
-      pos: -38.5,6.5
-      parent: 5350
 - proto: SuitStorageEngi
   entities:
   - uid: 9208

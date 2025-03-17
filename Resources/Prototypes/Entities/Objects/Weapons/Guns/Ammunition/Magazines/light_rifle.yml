@@ -38,7 +38,7 @@
 - type: entity
   id: MagazineLightRifleBox
   name: "L6 SAW magazine box (.20 rifle)" #imp
-  description: A 100-round .20 rifle box magazine of disintegrating links, designed for a belt-fed machine gun.
+  description: A 100-round .20 rifle box magazine of disintegrating links, designed for a belt-fed machine gun. #imp
   parent: BaseMagazineLightRifle
   components:
   - type: Tag

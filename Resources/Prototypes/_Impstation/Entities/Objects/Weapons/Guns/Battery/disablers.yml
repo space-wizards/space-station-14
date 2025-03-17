@@ -30,7 +30,7 @@
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
     fireCost: 100
-    
+
 - type: entity
   name: pocket disabler
   parent: [ WeaponDisablerPractice, BaseSecurityCommandContraband ]
@@ -58,7 +58,7 @@
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
-    steps: 5 
+    steps: 5
     zeroVisible: true
   - type: Battery
     maxCharge: 500
@@ -108,7 +108,7 @@
   - type: ProjectileBatteryAmmoProvider
     proto: BulletAutoDisabler
     fireCost: 80
-    
+
 - type: entity
   name: stun projector
   parent: [ BaseWeaponBatterySmall, BaseSecurityCommandContraband ]
@@ -134,7 +134,7 @@
   - type: Appearance
   - type: MagazineVisuals
     magState: mag
-    steps: 4
+    steps: 5
     zeroVisible: true
   - type: Gun
     fireRate: 0.9

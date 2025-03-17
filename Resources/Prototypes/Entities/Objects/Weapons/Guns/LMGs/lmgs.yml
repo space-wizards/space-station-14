@@ -64,6 +64,31 @@
     price: 500
   - type: UseDelay
     delay: 1
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    range: 0.8
+    attackRate: 0.4 #slower, but hits harder; bigger object to shove with
+    damage:
+      types:
+        Blunt: 8
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 15
+    damage:
+      types:
+        Blunt: 12
+  - type: StaminaDamageOnHit
+    damage: 15 #slight stagger, but still like 7 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
+#imp edit end
 
 - type: entity
   name: L6 Nidhogg SAW #imp

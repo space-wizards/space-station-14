@@ -99908,13 +99908,6 @@ entities:
     - type: Transform
       pos: -0.5,-203.5
       parent: 2
-- proto: SuitStorageCourier
-  entities:
-  - uid: 18626
-    components:
-    - type: Transform
-      pos: -6.5,-287.5
-      parent: 2
 - proto: SuitStorageEVA
   entities:
   - uid: 13918

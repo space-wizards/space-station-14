@@ -16,6 +16,7 @@
   - ConveyorBeltAssembly
 
 - type: latheRecipePack
+  parent: ImpLightPack # imp
   id: LightsStatic
   recipes:
   - LightTube
@@ -44,6 +45,8 @@
 
 # Things you'd expect sci salv and engi to make use of
 - type: latheRecipePack
+  parent:
+  - EquipmentDeltaV # DeltaV
   id: Equipment
   recipes:
   - HandHeldMassScanner

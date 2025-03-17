@@ -7,6 +7,7 @@
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtSalvageSpecialist
   result: ClothingUniformJumpskirtSalvageSpecialist
+
 # Courier
 - type: latheRecipe
   parent: BaseHatRecipe
@@ -27,3 +28,65 @@
   parent: BaseCoatRecipe
   id: ClothingOuterWinterCourier
   result: ClothingOuterWinterCourier
+
+# Hospitality Director
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitHD
+  result: ClothingUniformJumpsuitHD
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtHD
+  result: ClothingUniformJumpskirtHD
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitHDTurtle
+  result: ClothingUniformJumpsuitHDTurtle
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtHDTurtle
+  result: ClothingUniformJumpskirtHDTurtle
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitHospitalityDirectorJanitor
+  result: ClothingUniformJumpsuitHospitalityDirectorJanitor
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtHospitalityDirectorJanitor
+  result: ClothingUniformJumpskirtHospitalityDirectorJanitor
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitHospitalityDirectorBartender
+  result: ClothingUniformJumpsuitHospitalityDirectorBartender
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpskirtHospitalityDirectorBartender
+  result: ClothingUniformJumpskirtHospitalityDirectorBartender
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitHospitalityDirectorBotany
+  result: ClothingUniformJumpsuitHospitalityDirectorBotany
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatHDsoft
+  result: ClothingHeadHatHDsoft
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadBandHD
+  result: ClothingHeadBandHD
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretHD
+  result: ClothingHeadHatBeretHD

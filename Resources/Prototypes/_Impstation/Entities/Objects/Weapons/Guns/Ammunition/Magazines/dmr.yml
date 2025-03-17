@@ -31,6 +31,8 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: [ "enum.GunVisualLayers.Mag" ]
 
 - type: entity
   id: MagazineDMRPractice
@@ -70,7 +72,7 @@
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLightRifleIncendiary
-    
+
 - type: entity
   id: MagazineBR
   name: "magazine (.25 caseless)"

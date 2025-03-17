@@ -112,3 +112,62 @@
     state: heartcarpaccio
   - type: Item
     size: Normal
+
+- type: entity
+  name: raw kodepiia meat
+  parent: FoodMeatRawBase
+  id: FoodMeatKodepiia
+  description: Is it still moving...?
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/meat.rsi
+    state: kodepiia
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
+  - type: InternalTemperature
+    conductivity: 0.41
+  - type: Construction
+    graph: KodepiiaFlakes
+    node: start
+    defaultTarget: crispy kodepiia flakes
+  - type: FlavorProfile
+    flavors:
+    - meaty
+    - kodepiia
+
+- type: entity
+  name: crispy kodepiia flakes
+  parent: FoodMeatBase
+  id: FoodMeatKodepiiaCooked
+  description: Crackly, salty, and just a little alive.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/meat.rsi
+    layers:
+    - state: kodepiia-cooked
+      map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 5
+  - type: Construction
+    graph: KodepiiaFlakes
+    node: crispy kodepiia flakes
+  - type: FlavorProfile
+    flavors:
+    - meaty
+    - kodepiia

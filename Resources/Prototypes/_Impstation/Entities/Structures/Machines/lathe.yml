@@ -25,16 +25,20 @@
     unlitIdleState: unlit
     unlitRunningState: unlit-building
     staticPacks:
-      - LightPack
+      - LightsStatic
+      - ServiceStatic
       - CleanPack
       - BotanyPack
       - BarPack
       - KitchenPack
+      - BasicChemistryStatic
       - ServiceMiscPack
+      - ReportingStatic # DeltaV
     dynamicPacks:
       - CleanPackDynamic
       - ServiceMiscPackDynamic
-      - TilePackDynamic
+      - FauxTiles
+      - NFService # Frontier
   - type: EmagLatheRecipes
     emagStaticPacks:
       - ServiceEmagged

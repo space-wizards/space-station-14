@@ -1,6 +1,9 @@
 ## Static
 
 - type: latheRecipePack
+  parent:
+  - FloorTilesStaticImp # imp
+  - FloorTilesStaticCorvax # also imp lol
   id: FloorTilesStatic
   recipes:
   - FloorTileItemDark

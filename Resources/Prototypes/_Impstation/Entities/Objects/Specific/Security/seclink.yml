@@ -1,7 +1,7 @@
 #Token Currency
 - type: entity
   name: baton token
-  parent: [BaseItem, BaseRestrictedContraband]
+  parent: [BaseItem, BaseSecurityContraband]
   id: BatonToken
   suffix: 3 BT
   description: This is a Baton Token, used in the SecLink radio to purchase a stun baton. It is not lemon flavored.
@@ -32,8 +32,16 @@
     count: 1
 
 - type: entity
+  parent: BatonToken
+  id: BatonToken5
+  suffix: 5 BT
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
   name: disabler token
-  parent: [BaseItem, BaseRestrictedContraband]
+  parent: [BaseItem, BaseSecurityContraband]
   id: DisablerToken
   suffix: 3 DT
   description: This is a Disabler Token, used in the SecLink radio to purchase a disabler. CentComm would like to remind you that these tokens are not edible, and that this token is not blue raspberry flavored.
@@ -64,8 +72,16 @@
     count: 1
 
 - type: entity
+  parent: DisablerToken
+  id: DisablerToken5
+  suffix: 5 DT
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
   name: utility token
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  parent: [ BaseItem, BaseSecurityContraband ]
   id: UtilityToken
   suffix: 3 UT
   description: This is a Utility Token, used in the SecLink radio to purchase a utility option. Due to several hospitalization from "accidental" consumption, R&D has given this token an artificial grape flavor to dissuade officers from eating it.
@@ -95,9 +111,17 @@
   - type: Stack
     count: 1
 
+- type: entity
+  parent: UtilityToken
+  id: UtilityToken5
+  suffix: 5 BT
+  components:
+  - type: Stack
+    count: 5
+
 #SecLink Radio
 - type: entity
-  parent: [BaseItem, StorePresetSeclink, BaseRestrictedContraband]
+  parent: [BaseItem, StorePresetSeclink, BaseSecurityContraband]
   id: BaseSeclinkRadio
   name: SecLink radio
   description: Housing a miniature teleporter, you can use this to trade your SecLink Tokens for useful equipment! It's a little suspiciously familiar, but it's probably nothing to worry about.

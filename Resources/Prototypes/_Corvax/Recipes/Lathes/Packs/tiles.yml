@@ -1,0 +1,23 @@
+﻿# Static
+
+- type: latheRecipePack
+  id: FloorTilesStaticCorvax
+  recipes:
+  - FloorTileItemWoodParquet
+  - FloorTileItemWoodBlack
+  - FloorTileItemWoodDark
+  - FloorTileItemWoodLight
+  - FloorTileItemWoodRed
+  - FloorTileItemWoodLargeBlack
+  - FloorTileItemWoodLargeDark
+  - FloorTileItemWoodLargeLight
+  - FloorTileItemWoodLargeRed
+  - FloorTileItemWoodParquetBlack
+  - FloorTileItemWoodParquetDark
+  - FloorTileItemWoodParquetLight
+  - FloorTileItemWoodParquetRed
+  - FloorTileItemWoodChess
+  - FloorTileItemWoodChessBlack
+  - FloorTileItemWoodChessDark
+  - FloorTileItemWoodChessLight
+  - FloorTileItemWoodChessRed

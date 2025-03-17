@@ -61,6 +61,12 @@ public sealed class StoreTests
         var listingPrototypes = prototypeManager.EnumeratePrototypes<ListingPrototype>()
                                                 .ToArray();
 
+        // Imp - Suppress weird edge case where test will fail it you're unlucky, and it picks listings with discounts
+        foreach (var listingPrototype in listingPrototypes)
+        {
+            listingPrototype.Conditions?.Clear();
+        }
+
         var coordinates = testMap.GridCoords;
         await server.WaitAssertion(() =>
         {

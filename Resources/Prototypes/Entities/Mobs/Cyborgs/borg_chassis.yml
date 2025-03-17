@@ -83,64 +83,11 @@
 
 - type: entity
   id: BorgChassisCargo
-  parent: BaseBorgChassisNT
+  parent: BorgChassisSelectable
   name: cargo cyborg
   components:
-  - type: Sprite
-    layers:
-    - state: cargo
-      map: ["movement"]
-    - state: cargo_e_r
-      map: ["enum.BorgVisualLayers.Light"]
-      shader: unshaded
-      visible: false
-    - state: cargo_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: cargo_moving
-    noMovementLayers:
-      movement:
-        state: cargo
-  - type: BorgChassis
-    maxModules: 4
-    moduleWhitelist:
-      tags:
-      - BorgModuleGeneric
-      - BorgModuleCargo
-    hasMindState: cargo_e
-    noMindState: cargo_e_r
-  - type: BorgTransponder
-    sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: cargo
-    name: cargo cyborg
-  - type: Construction
-    node: cargo
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Supply
-    - Binary
-    - Common
-    - Science
-  - type: ActiveRadio
-    channels:
-    - Supply
-    - Binary
-    - Common
-    - Science
-  - type: AccessReader
-    access: [["Cargo"], ["Salvage"], ["Command"], ["Research"]]
-  - type: Inventory
-    templateId: borgTall
-  - type: InteractionPopup
-    interactSuccessString: petting-success-cargo-cyborg
-    interactFailureString: petting-failure-cargo-cyborg
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: BorgSwitchableType
+    selectedBorgType: cargo
 
 - type: entity
   id: BorgChassisSyndicateAssault

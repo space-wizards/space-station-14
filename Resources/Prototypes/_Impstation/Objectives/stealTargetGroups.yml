@@ -21,6 +21,13 @@
     sprite: Objects/Consumable/Food/Baked/cake.rsi
     state: suppermatter
 
+- type: stealTargetGroup
+  id: AnimalOswald
+  name: steal-target-groups-animal-oswald
+  sprite:
+    sprite: _Impstation/Mobs/Pets/oswald.rsi
+    state: oswald
+
 # critical infrastructure
 
 - type: stealTargetGroup

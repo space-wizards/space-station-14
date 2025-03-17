@@ -1,0 +1,14 @@
+- type: accent
+  id: bros
+  fullReplacements:
+  - accent-words-bros
+
+- type: accent
+  id: kodepiia
+  fullReplacements:
+  - accent-words-kodepiia-1
+  - accent-words-kodepiia-2
+  - accent-words-kodepiia-3
+  - accent-words-kodepiia-4
+  - accent-words-kodepiia-5
+  - accent-words-kodepiia-6
