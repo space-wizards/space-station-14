@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: It's Dino Clues...
-    type: Add
-  id: 834
-  time: '2024-12-31T21:59:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1179
 - author: suyo
   changes:
   - message: shaved 1.5 seconds off of the goliath's tentacle grapple stun to accommodate
@@ -4090,3 +4083,10 @@
   id: 1333
   time: '2025-03-17T03:57:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1992
+- author: Sha-Seng
+  changes:
+  - message: Thaven blood now works for heretics, artifacts, subjuzine, and centrifuges
+    type: Fix
+  id: 1334
+  time: '2025-03-17T05:39:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1994
