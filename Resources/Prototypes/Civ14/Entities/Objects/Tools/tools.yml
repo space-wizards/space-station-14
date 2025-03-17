@@ -52,13 +52,12 @@
     - type: Construction
       graph: BoneKnife
       node: boneknife
-
     - type: Sprite
       sprite: Objects/_civ/StoneAge/bone_knife.rsi
       size: 2
       state: icon
     - type: Item
-      size: 10
+      size: Normal
       sprite: Objects/_civ/StoneAge/bone_knife.rsi
 
 - type: entity
