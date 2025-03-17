@@ -41,6 +41,8 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
 
     private void OnFlashImmunityChanged(Entity<ThermalVisionComponent> ent, ref FlashImmunityChangedEvent args)
     {
+        if (_player.LocalSession?.AttachedEntity != ent.Owner) return;
+
         if (args.IsImmune)
         {
             ent.Comp.blockedByFlashImmunity = true;

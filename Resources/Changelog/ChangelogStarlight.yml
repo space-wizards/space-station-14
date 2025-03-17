@@ -4176,4 +4176,40 @@ Entries:
   id: 578
   time: '2025-03-16T10:18:41.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/399
+- author: Killer Tamashi
+  changes:
+  - message: Added Double Security Lockers
+    type: Add
+  id: 579
+  time: '2025-03-16T15:28:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/388
+- author: Happyrobot33
+  changes:
+  - message: Added filled variant for the NT locker. It has not been mapped yet.
+    type: Add
+  id: 580
+  time: '2025-03-16T20:58:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/402
+- author: Happyrobot33
+  changes:
+  - message: Fixed sprite rendering for BlueShield Officer locker
+    type: Fix
+  id: 581
+  time: '2025-03-16T20:58:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/402
+- author: Happyrobot33
+  changes:
+  - message: Fixed Resomi, Cyclorites and Bees appearing to glow to other players
+      and not just the local player controlling them.
+    type: Fix
+  id: 582
+  time: '2025-03-17T05:18:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/403
+- author: Happyrobot33
+  changes:
+  - message: Fixed the ability to toggle thermal vision on and off.
+    type: Fix
+  id: 583
+  time: '2025-03-17T11:39:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/404
 

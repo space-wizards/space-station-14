@@ -1,26 +1,41 @@
+# Basic
+- type: entity
+  id: LockerSteelLarge
+  parent: LockerLargeBaseSecure
+  name: large secure closet
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: secure
+    stateDoorOpen: secure_open
+    stateDoorClosed: secure_door
+
+# Security Officer
+- type: entity
+  id: LockerSecurityLarge
+  parent: LockerLargeBaseSecure
+  name: large security officer's locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: sec
+    stateDoorOpen: sec_open
+    stateDoorClosed: sec_door
+  - type: AccessReader
+    access: [["Security"]]
+
+# NanoTrasen Representives
 - type: entity
   id: LockerBlueshield
   parent: LockerBaseSecure
   name: BlueShield officer's locker
   components:
-    - type: Appearance
-    - type: Sprite
-      sprite: _Starlight/Structures/Storage/closet.rsi
-      noRot: true
-      layers:
-      - state: bssecure
-        map: ["enum.StorageVisualLayers.Base"]
-      - state: bssecure_door
-        map: ["enum.StorageVisualLayers.Door"]
-      - state: locked
-        map: ["enum.LockVisualLayers.Lock"]
-        shader: unshaded
-      - state: welded
-        visible: false
-        map: ["enum.WeldableLayers.BaseWelded"]
-    - type: EntityStorageVisuals
-      stateBaseClosed: bssecure
-      stateDoorOpen: bssecure_open
-      stateDoorClosed: bssecure_door
-    - type: AccessReader
-      access: [["BlueShield"]]
+  - type: Appearance
+  - type: Sprite
+    sprite: _Starlight/Structures/Storage/closet.rsi
+  - type: EntityStorageVisuals
+    stateBaseClosed: bssecure
+    stateDoorOpen: bssecure_open
+    stateDoorClosed: bssecure_door
+  - type: AccessReader
+    access: [ [ "BlueShield" ] ]
