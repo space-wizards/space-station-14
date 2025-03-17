@@ -293,8 +293,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         Dictionary<ICommonSession, TimeSpan> sessionAndRoleTimes = [];
         foreach (var session in playerPool.GetPoolSessions())
         {
-            // if we've picked a valid session from the pool and there are mindroles to assign in the def,
-            if (session != null && def.PrefRoles != null)
+            // if the session has the preferred role enabled,
+            if (HasPrimaryAntagPreference(session, def))
             {
                 var ruleTimeTotal = TimeSpan.Zero;
                 // grab this session's playtimes for each role,
