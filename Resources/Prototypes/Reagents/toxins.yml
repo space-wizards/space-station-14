@@ -719,7 +719,7 @@
   - !type:PlantAdjustHealth
     amount: -10
   metabolisms:
-    Medicine:
+    Poison:
       effects:
       - !type:ChemVomit
         probability: 0.1
