@@ -272,7 +272,6 @@
     footstepSoundCollection:
       path: /Audio/Effects/Footsteps/timpani.ogg
       params:
-        volume: 0.5
         variation: 0.125
   - type: Produce
     seedId: killerJuicyTomato
