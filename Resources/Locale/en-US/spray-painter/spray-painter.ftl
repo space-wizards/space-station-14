@@ -1,5 +1,10 @@
 spray-painter-window-title = Spray painter
 
+spray-painter-ammo-on-examine = It holds {$charges} charges.
+spray-painter-ammo-after-interact-full = The spray painter is full!
+spray-painter-ammo-after-interact-refilled = You refill the spray painter.
+spray-painter-interact-no-charges = There's not enough charge.
+
 spray-painter-style-not-available = Cannot apply the selected style to this type of airlock
 spray-painter-selected-style = Selected style:
 
@@ -13,6 +18,7 @@ spray-painter-color-blue = blue
 spray-painter-color-white = white
 spray-painter-color-black = black
 
+# Categories
 spray-painter-tabs-airlocks = Airlocks
 spray-painter-tabs-pipes = Pipes
 spray-painter-tabs-crates = Crates
