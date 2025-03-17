@@ -65,3 +65,37 @@
               doAfter: 2
     - node: boneknife
       entity: BoneKnife
+
+- type: constructionGraph
+  id: FlintAxe
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: flintaxe
+          steps:
+            - tag: SharpenedFlint
+              name: a sharpened flint
+              icon:
+                sprite: Objects/_civ/old_weapons.rsi
+                state: sharpened_flint
+              doAfter: 5
+            - tag: SharpenedStick
+              name: a sharpened stick
+              icon:
+                sprite: Objects/_civ/old_weapons.rsi
+                state: sharpened_stick
+              doAfter: 4
+    - node: flintaxe
+      entity: FlintAxe
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SharpenedFlint
+            - !type:SpawnPrototype
+              prototype: SharpenedStick
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Prying
+              doAfter: 2

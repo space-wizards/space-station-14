@@ -41,3 +41,14 @@
   description: A crude bone knife.
   icon: { sprite: Objects/_civ/StoneAge/bone_knife.rsi, state: icon }
   objectType: Item
+
+- type: construction
+  name: flint axe
+  id: FlintAxe
+  graph: FlintAxe
+  startNode: start
+  targetNode: flintaxe
+  category: construction-category-tools
+  description: A crude flint axe.
+  icon: { sprite: Objects/_civ/StoneAge/flint_axe.rsi, state: icon }
+  objectType: Item

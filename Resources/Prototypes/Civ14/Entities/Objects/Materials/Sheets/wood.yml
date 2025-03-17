@@ -5,18 +5,18 @@
   description: A branch from a tree, it has some leaves on it.
   suffix: Single
   components:
-  - type: Sprite
-    netsync: false
-    sprite: Objects/_civ/old_weapons.rsi
-    state: leaved_stick
-  - type: Item
-    shape:
-    - 0,0,1,0
-    storedOffset: 0,-6
-  - type: Sharpenable
-    sharpenTime: 5.0
-    resultPrototype: SharpenedStick
-    canSharpenByHand: true
+    - type: Sprite
+      netsync: false
+      sprite: Objects/_civ/old_weapons.rsi
+      state: leaved_stick
+    - type: Item
+      shape:
+        - 0,0,1,0
+      storedOffset: 0,-6
+    - type: Sharpenable
+      sharpenTime: 5.0
+      resultPrototype: SharpenedStick
+      canSharpenByHand: true
 
 - type: entity
   name: sharpened stick
@@ -24,11 +24,14 @@
   id: SharpenedStick
   description: A sharpened stick, ready for use.
   components:
-  - type: Sprite
-    netsync: false
-    sprite: Objects/_civ/old_weapons.rsi
-    state: sharpened_stick
-  - type: Item
-    shape:
-    - 0,0,1,0
-    storedOffset: 0,-6
+    - type: Sprite
+      netsync: false
+      sprite: Objects/_civ/old_weapons.rsi
+      state: sharpened_stick
+    - type: Item
+      shape:
+        - 0,0,1,0
+      storedOffset: 0,-6
+    - type: Tag
+      tags:
+        - SharpenedStick

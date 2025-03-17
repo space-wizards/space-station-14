@@ -62,6 +62,34 @@
       sprite: Objects/_civ/StoneAge/bone_knife.rsi
 
 - type: entity
+  id: FlintAxe
+  name: flint axe
+  parent: HydroponicsToolHatchet
+  description: A crude hatchet made of sharpened flint.
+  components:
+    - type: Sprite
+      sprite: Objects/_civ/StoneAge/flint_axe.rsi
+      state: icon
+    - type: MeleeWeapon
+      attackRate: 1.1
+      damage:
+        types:
+          Blunt: 4
+          Slash: 8
+          Structural: 4
+    - type: Item
+      size: 60
+    - type: Clothing
+      sprite: Objects/_civ/StoneAge/flint_axe.rsi
+      quickEquip: false
+      slots:
+        - back
+        - belt
+    - type: Construction
+      graph: FlintAxe
+      node: flintaxe
+
+- type: entity
   id: BoneAxe
   name: bone axe
   parent: HydroponicsToolHatchet
