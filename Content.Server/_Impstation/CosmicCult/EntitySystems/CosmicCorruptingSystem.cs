@@ -38,36 +38,6 @@ public sealed class CosmicCorruptingSystem : EntitySystem
     /// <remarks>
     /// this system is a mostly generic way of replacing tiles around an entity. the only hardcoded behaviour is secret walls -> malign doors, but that shouldn't be too hard to fix if this is needed for smth else later.
     /// </remarks>
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<CosmicCorruptingComponent, MapInitEvent>(OnMapInit);
-    }
-
-    //when the entity spawns, convert the tile under it & add all neighbouring tiles to the corruptable list
-    private void OnMapInit(Entity<CosmicCorruptingComponent> ent, ref MapInitEvent args)
-    {
-        /*
-        var xform = Transform(ent);
-        if (xform.GridUid is not { } gridUid || !TryComp<MapGridComponent>(gridUid, out var mapGrid))
-            return;
-
-        var grid = (gridUid, mapGrid);
-        var tile = _map.GetTileRef(grid, xform.Coordinates);
-        var convertTile = (ContentTileDefinition)_tileDefinition[ent.Comp.ConversionTile];
-        _tile.ReplaceTile(tile, convertTile);
-
-        //add every neighbouring tile to the corruptable list
-        foreach (var neighbourPos in _neighbourPositions)
-        {
-            var neighbourRef = _map.GetTileRef((gridUid, mapGrid), tile.GridIndices + neighbourPos);
-            if (neighbourRef.Tile.TypeId == convertTile.TileId)
-                continue; //ignore already converted tiles
-
-            ent.Comp.CorruptableTiles.Add(neighbourRef.GridIndices);
-        }
-        */
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
