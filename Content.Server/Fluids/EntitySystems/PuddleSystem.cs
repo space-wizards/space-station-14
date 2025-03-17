@@ -611,8 +611,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     ("target", Identity.Entity(owner, EntityManager))), owner, PopupType.SmallCaution);
         }
 
-        _color.RaiseEffect(solution.GetColor(_prototypeManager), targets,
-            Filter.Pvs(uid, entityManager: EntityManager));
+        _color.RaiseEffect(EffectSource.HitFluid, targets,
+            Filter.Pvs(uid, entityManager: EntityManager), solution.GetColor(_prototypeManager));
 
         return TrySpillAt(coordinates, solution, out puddleUid, sound);
     }

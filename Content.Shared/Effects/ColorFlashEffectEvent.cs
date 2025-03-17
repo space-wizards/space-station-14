@@ -15,9 +15,12 @@ public sealed class ColorFlashEffectEvent : EntityEventArgs
 
     public List<NetEntity> Entities;
 
-    public ColorFlashEffectEvent(Color color, List<NetEntity> entities)
+    public EffectSource EffectSource;
+
+    public ColorFlashEffectEvent(EffectSource source, Color color, List<NetEntity> entities)
     {
         Color = color;
         Entities = entities;
+        EffectSource = source;
     }
 }
