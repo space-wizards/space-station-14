@@ -82,7 +82,8 @@ public sealed class DeviceLinkingTest
                             sinkComp);
 
                         // Send a signal to the port
-                        deviceLinkSys.InvokePort(sourceEnt, "Output", null, sourceComp);
+                        Assert.DoesNotThrow(() => { deviceLinkSys.InvokePort(sourceEnt, "Output", null, sourceComp); },
+                            $"Exception thrown while triggering port {port.Id} of sink device {proto.ID}");
                     }
                 }
             });
