@@ -51,9 +51,9 @@ highp vec2 quantiseVecDown(highp vec2 v, highp vec2 divisions) {
 }
 
 //hate that I have to do this because we can't just set the loop behaviour on the texture
-highp vec2 loopVec(highp vec2 toLoop) {
-    return abs(mod(toLoop, 1));
-}
+//highp vec2 loopVec(highp vec2 toLoop) {
+//   return abs(mod(toLoop, 1));
+//}
 
 highp vec3 rgb2hsv(highp vec3 c) {
     highp vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
