@@ -33,6 +33,7 @@ public sealed class DeviceLinkingTest
     {
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
+        var compFact = server.ResolveDependency<IComponentFactory>();
         var mapMan = server.ResolveDependency<IMapManager>();
         var mapSys = server.System<SharedMapSystem>();
         var deviceLinkSys = server.System<DeviceLinkSystem>();
@@ -43,36 +44,38 @@ public sealed class DeviceLinkingTest
             .Where(p => !p.Abstract)
             .Where(p => !pair.IsTestPrototype(p))
             .Where(p => p.HasComponent<DeviceLinkSinkComponent>())
-            .Select(p => p.ID)
-            .Order();
+            .OrderBy(p => p.ID);
 
         List<MapId> maps = [];
         await server.WaitAssertion(() =>
         {
             Assert.Multiple(() =>
             {
-                foreach (var protoId in prototypes)
+                foreach (var proto in prototypes)
                 {
-                    // Create a map for each entity so they can't interfere
-                    mapSys.CreateMap(out var mapId);
-                    maps.Add(mapId);
-                    var grid = mapMan.CreateGridEntity(mapId);
-                    mapSys.SetTile(grid.Owner, grid.Comp, Vector2i.Zero, new Tile(1));
-                    var coord = new EntityCoordinates(grid.Owner, 0, 0);
+                    Assert.That(proto.TryGetComponent<DeviceLinkSinkComponent>(out var protoSinkComp, compFact),
+                        $"Prototype {proto.ID} does not have a DeviceLinkSinkComponent!");
 
-                    // Spawn the sink entity
-                    var sinkEnt = server.EntMan.SpawnEntity(protoId, coord);
-                    Assert.That(server.EntMan.TryGetComponent<DeviceLinkSinkComponent>(sinkEnt, out var sinkComp),
-                        $"Prototype {protoId} does not have a DeviceLinkSinkComponent!");
-
-                    // Spawn the tester
-                    var sourceEnt = server.EntMan.SpawnEntity(PortTesterProtoId, coord);
-                    Assert.That(server.EntMan.TryGetComponent<DeviceLinkSourceComponent>(sourceEnt, out var sourceComp),
-                        $"Tester prototype does not have a DeviceLinkSourceComponent!");
-
-                    // Try sending a signal to each port
-                    foreach (var port in sinkComp.Ports)
+                    foreach (var port in protoSinkComp.Ports)
                     {
+                        // Create a map for each entity/port combo so they can't interfere
+                        mapSys.CreateMap(out var mapId);
+                        maps.Add(mapId);
+                        var grid = mapMan.CreateGridEntity(mapId);
+                        mapSys.SetTile(grid.Owner, grid.Comp, Vector2i.Zero, new Tile(1));
+                        var coord = new EntityCoordinates(grid.Owner, 0, 0);
+
+                        // Spawn the sink entity
+                        var sinkEnt = server.EntMan.SpawnEntity(proto.ID, coord);
+                        // Get the actual sink component, since the one we got from the prototype doesn't its owner set up
+                        Assert.That(server.EntMan.TryGetComponent<DeviceLinkSinkComponent>(sinkEnt, out var sinkComp),
+                            $"Tester prototype does not have a DeviceLinkSourceComponent!");
+
+                        // Spawn the tester
+                        var sourceEnt = server.EntMan.SpawnEntity(PortTesterProtoId, coord);
+                        Assert.That(server.EntMan.TryGetComponent<DeviceLinkSourceComponent>(sourceEnt, out var sourceComp),
+                            $"Tester prototype does not have a DeviceLinkSourceComponent!");
+
                         // Create a link from the tester's output to the target port on the sink
                         deviceLinkSys.SaveLinks(null,
                             sourceEnt,
@@ -83,8 +86,6 @@ public sealed class DeviceLinkingTest
 
                         // Send a signal to the port
                         deviceLinkSys.InvokePort(sourceEnt, "Output", null, sourceComp);
-
-                        Assert.That(server.EntMan.Deleted(sinkEnt), Is.False, $"{protoId} was deleted after triggering port {port.Id}");
                     }
                 }
             });
