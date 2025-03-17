@@ -42,7 +42,7 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
             return;
 
         var targets = _chameleon.GetValidTargets(st.Slot);
-        if (st.RequiredTags != null)
+        if (st.RequiredTags != null && st.RequiredTags.Any())
         {
             var newTargets = new List<string>();
             foreach (var target in targets)
