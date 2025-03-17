@@ -702,3 +702,34 @@
           shouldHave: false
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
+
+- type: reagent
+  id: Nollazine #evil omnizine
+  name: reagent-name-nollazine
+  group: Toxins
+  desc: reagent-desc-nollazine
+  physicalDesc: reagent-physical-desc-unsettling
+  flavor: horrible
+  color: "#1a000c"
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 10
+  - !type:PlantAdjustWeeds
+    amount: -10
+  - !type:PlantAdjustHealth
+    amount: -10
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ChemVomit
+        probability: 0.1
+      - !type:Emote
+        emote: Scream
+        probability: 0.3
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: 2
+            Toxin: 2
+            Airloss: 2
+            Brute: 2

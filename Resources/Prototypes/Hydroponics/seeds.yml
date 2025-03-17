@@ -1306,6 +1306,8 @@
   packetPrototype: AmbrosiaDeusSeeds
   productPrototypes:
     - FoodAmbrosiaDeus
+  mutationPrototypes:
+    - ambrosiaHorribilis
   lifespan: 25
   maturation: 10
   production: 3
@@ -1330,6 +1332,40 @@
       Min: 1
       Max: 10
       PotencyDivisor: 10
+
+- type: seed
+  id: ambrosiaHorribilis
+  name: seeds-ambrosiahorribilis-name
+  noun: seeds-noun-seeds
+  displayName: seeds-ambrosiahorribilis-display-name
+  plantRsi: Objects/Specific/Hydroponics/ambrosia_horribilis.rsi
+  packetPrototype: AmbrosiaHorribilisSeeds
+  productPrototypes:
+    - FoodAmbrosiaHorribilis
+  lifespan: 5
+  maturation: 5
+  production: 3
+  yield: 5
+  potency: 10
+  growthStages: 4
+  waterConsumption: 0.30
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 10
+    Nollazine: # do kill me
+      Min: 2
+      Max: 15
+      PotencyDivisor: 4
+    Cryptobiolin:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 10
+    Lipolicide: 
+      Min: 1
+      Max: 2
+      PotencyDivisor: 20
 
 - type: seed
   id: galaxythistle

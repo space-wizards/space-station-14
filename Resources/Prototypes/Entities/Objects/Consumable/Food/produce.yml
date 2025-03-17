@@ -1615,6 +1615,45 @@
       Burger: AmbrosiaDeusBurger
 
 - type: entity
+  name: ambrosia horribilis
+  parent: FoodProduceBase
+  id: FoodAmbrosiaHorribilis
+  description: An unspeakably horrible plant. May make you feel considerably less alive.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - leafy
+      - terrible
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nollazine
+          Quantity: 10
+        - ReagentId: Cryptobiolin
+          Quantity: 3
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Lipolicide
+          Quantity: 1
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/ambrosia_horribilis.rsi
+  - type: Produce
+    seedId: ambrosiaHorribilis
+  - type: Extractable
+    grindableSolutionName: food
+  - type: Clothing
+    sprite: Objects/Specific/Hydroponics/ambrosia_horribilis.rsi
+    slots:
+    - HEAD
+  - type: Tag
+    tags:
+    - Ambrosia
+  - type: Item
+    heldPrefix: produce
+
+- type: entity
   name: galaxythistle
   parent: FoodProduceBase
   id: FoodGalaxythistle

@@ -759,6 +759,16 @@
 # Waiting until Morphine added
 
 - type: reaction
+  id: Nothing
+  reactants:
+    Omnizine:
+      amount: 1
+    Nollazine:
+      amount: 1
+  products:
+    Nothing: 0
+
+- type: reaction
   id: NuclearCola
   reactants:
     Cola:
