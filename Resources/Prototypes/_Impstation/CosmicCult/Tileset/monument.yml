@@ -108,6 +108,7 @@
   - type: CosmicCorrupting
     corruptionReduction: 0.01
     enabled: false
+    floodFillStarting: true
 
  ########### SPAWN-IN ANIMATION #############
 

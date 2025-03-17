@@ -405,6 +405,9 @@ public sealed partial class CosmicCultSystem : EntitySystem
                         _transform.SetCoordinates(destComp.Monument.Value, xform.Coordinates);
                         _transform.AnchorEntity(destComp.Monument.Value); //no idea if this does anything but let's be safe about it
                         Spawn("MonumentCollider", xform.Coordinates);
+
+                        if (TryComp<CosmicCorruptingComponent>(destComp.Monument.Value, out var cosmicCorruptingComp))
+                            _corrupting.RecalculateStartingTiles((destComp.Monument.Value, cosmicCorruptingComp));
                     });
             });
     }

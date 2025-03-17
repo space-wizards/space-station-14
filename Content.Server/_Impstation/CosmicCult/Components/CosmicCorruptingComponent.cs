@@ -1,3 +1,4 @@
+using Content.Server._Impstation.CosmicCult.EntitySystems;
 using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 
@@ -5,7 +6,7 @@ namespace Content.Server._Impstation.CosmicCult.Components;
 
 [RegisterComponent]
 [AutoGenerateComponentPause]
-//todo access restrictions
+[Access(typeof(CosmicCorruptingSystem))]
 public sealed partial class CosmicCorruptingComponent : Component
 {
     /// <summary>
@@ -26,6 +27,12 @@ public sealed partial class CosmicCorruptingComponent : Component
     /// </summary>
     [DataField]
     public bool Mobile = false;
+
+    /// <summary>
+    /// if this corruption source should floodfill through all corruptible tiles to initialise its corruptible tile set on activation.
+    /// </summary>
+    [DataField]
+    public bool FloodFillStarting = false;
 
     /// <summary>
     /// How many times has this corruption source ticked?
