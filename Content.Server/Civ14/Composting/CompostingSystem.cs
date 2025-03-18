@@ -77,7 +77,7 @@ public sealed partial class CompostingSystem : EntitySystem
             return;
 
         // Spawn compost and try to place it in the player's hand
-        var compost = Spawn("AnimalPoo", Transform(uid).MapPosition);
+        var compost = Spawn("Compost", Transform(uid).MapPosition);
         if (_hands.TryPickupAnyHand(args.User, compost))
         {
             component.ReadyCompost--;
@@ -155,7 +155,7 @@ public sealed partial class CompostingSystem : EntitySystem
         // Drops all ready compost
         for (int i = 0; i < component.ReadyCompost; i++)
         {
-            Spawn("AnimalPoo", Transform(uid).MapPosition);
+            Spawn("Compost", Transform(uid).MapPosition);
         }
     }
 }
