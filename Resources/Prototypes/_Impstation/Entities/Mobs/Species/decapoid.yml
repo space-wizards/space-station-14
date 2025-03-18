@@ -154,11 +154,7 @@
   - type: Puller
     needsHands: false # they drag with the claw, or their back legs
     applySpeedModifier: false # they're strong as fuck. also i made this variable just for them.
-  - type: RemoveComp # this solution sucks but what are u gonna do shrug
-    unwantedComponents:
-      requireAll: true
-      components:
-      - InjectableSolution
+  - type: BlockInjection
   - type: Inventory
     speciesId: decapoid
     templateId: decapoid

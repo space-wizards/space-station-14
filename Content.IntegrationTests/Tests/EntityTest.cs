@@ -357,7 +357,6 @@ namespace Content.IntegrationTests.Tests
                 "LoadedChunk", // Worldgen chunk loading malding.
                 "BiomeSelection", // Whaddya know, requires config.
                 "ActivatableUI", // Requires enum key
-                "RemoveComp", // Imp - Breaks the test when init'd
                 "RevealRevenantOnCollide", // Imp - Breaks because it requires physicscomp
             };
 
