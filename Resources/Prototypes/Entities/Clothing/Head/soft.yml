@@ -165,14 +165,14 @@
 
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
-  id: ClothingHeadHatWhitesoft
+  id: ClothingHeadHatMimesoft
   name: white cap
   description: "It's a baseball hat in a tasteless white colour."
   components:
   - type: Sprite
-    sprite: Clothing/Head/Soft/whitesoft.rsi
+    sprite: Clothing/Head/Soft/mimesoft.rsi
   - type: Clothing
-    sprite: Clothing/Head/Soft/whitesoft.rsi
+    sprite: Clothing/Head/Soft/mimesoft.rsi
 
 - type: entity
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatWhitesoft]
