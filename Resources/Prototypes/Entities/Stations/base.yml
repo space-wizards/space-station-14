@@ -54,7 +54,7 @@
             - /Maps/Shuttles/trading_outpost.yml
         mining: !type:GridSpawnGroup
           paths:
-          - /Maps/Shuttles/mining.yml
+          - /Maps/_Ronstation/Shuttles/mining.yml
         # Spawn last
         ruins: !type:GridSpawnGroup
           hide: true

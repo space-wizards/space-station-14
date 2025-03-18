@@ -1,0 +1,17 @@
+## Mapping prototypes
+# Long Range
+- type: entity
+  parent: HolopadLongRange
+  id: HolopadCargoSalvageShuttleCockpit
+  suffix: Salvage Shuttle Cockpit
+  components:
+  - type: Label
+    currentLabel: holopad-cargo-salvage-shuttle-cockpit
+
+- type: entity
+  parent: HolopadLongRange
+  id: HolopadCargoSalvageShuttleBay
+  suffix: Salvage Shuttle Bay
+  components:
+  - type: Label
+    currentLabel: holopad-cargo-salvage-shuttle-bay
