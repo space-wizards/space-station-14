@@ -203,11 +203,6 @@
           shouldHave: false
       - !type:Drunk
         boozePower: 2
-      # DeadSpace
-      - !type:DrugIntoxication
-        addictionEffect: 0.08
-        toleranceEffect: 0.04
-        drugStrenght: 1
 
 - type: reagent
   id: Gin

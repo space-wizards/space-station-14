@@ -19,8 +19,6 @@
   # - Virology (when it's back)
     - Botany
     - Chemicals
-  # - DeadSpace
-  - type: DrugTestStick
 
 - type: entity
   parent: BaseAmmoProvider # this is for cycling swabs out and not spawning 30 entities, trust
