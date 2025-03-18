@@ -1,29 +1,45 @@
 - type: entity
   parent: MaterialBase
   id: BasePoo
+  description: It smells really bad.
   abstract: true
-  name: poo
   components:
     - type: Sprite
       sprite: Objects/_civ/pooeffect.rsi
+      layers:
+        - state: poop1
+          map: ["random"]
+    - type: RandomSprite
+      available:
+        - random:
+            poop1: ""
+            poop2: ""
+            poop3: ""
+            poop4: ""
+            poop5: ""
+            poop6: ""
+            poop7: ""
     - type: Appearance
     - type: Item
       sprite: Objects/_civ/pooeffect.rsi
-      size: Tiny
       heldPrefix: poo
-    - type: Extractable
-      grindableSolutionName: nutriment
-    - type: SolutionContainerManager
-      solutions:
-        wood:
-          reagents:
-            - ReagentId: Nutriment
-              Quantity: 100
+
+- type: entity
+  parent: BasePoo
+  id: HumanPoo
+  name: poo
+
+- type: entity
+  parent: BasePoo
+  id: AnimalPoo
+  name: poo
+  description: Smells bad and has an earthy scent.
 
 - type: entity
   parent: MaterialBase
-  id: AnimalPoo
-  name: poo
+  id: Compost
+  name: compost
+  description: Decomposed organic matter, full of nutrients for the soil.
   components:
     - type: Sprite
       sprite: Objects/_civ/pooeffect.rsi
