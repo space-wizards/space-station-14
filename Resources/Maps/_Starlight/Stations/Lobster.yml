@@ -98558,7 +98558,7 @@ entities:
     - type: Transform
       pos: 10.5,22.5
       parent: 2
-- proto: LockerRepresentative
+- proto: LockerRepresentativeFilled
   entities:
   - uid: 6535
     components:
