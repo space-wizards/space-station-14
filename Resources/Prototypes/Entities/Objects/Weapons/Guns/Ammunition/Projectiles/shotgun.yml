@@ -276,8 +276,8 @@
     layers:
     - state: shard
       shader: unshaded
-  - type: EmbeddableProjectile
-    deleteOnRemove: true
+  #- type: EmbeddableProjectile #imp edit - this was causing test failures via PelletGlassSpread below - when that spawned it had a chance to embed into something
+  #  deleteOnRemove: true #imp note - also looking at other uses of this component, EmbeddableProjectile is only used for things that embed when you throw them & not actual projectiles
   - type: Projectile
     deleteOnCollide: false
     damage:
