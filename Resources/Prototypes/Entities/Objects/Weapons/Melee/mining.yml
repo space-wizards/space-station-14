@@ -107,17 +107,17 @@
   - type: Tag
     tags:
       - Pickaxe
-  - type: Item
-    size: Ginormous
-    sprite: Objects/Weapons/Melee/crusher-inhands.rsi
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher.rsi
     state: icon
+  - type: Item
+    size: Ginormous
+    sprite: Objects/Weapons/Melee/crusher-inhands.rsi
   - type: Clothing
     sprite: Objects/Weapons/Melee/crusher.rsi
     quickEquip: false
     slots:
-    - back
+    - Back
     - suitStorage
   - type: AmmoCounter
   - type: UseDelayOnShoot
@@ -193,19 +193,19 @@
   parent: [ WeaponCrusher, BaseSecurityCargoContraband]
   id: WeaponCrusherGlaive
   name: crusher glaive
-  description: An iterative design on the proto-kinetic crusher. An improved particle accelerator allows the user to leech even more health from their foes.
+  description: An early design of the proto-kinetic accelerator, in glaive form.
   components:
-  - type: Item
-    size: Ginormous
-    sprite: Objects/Weapons/Melee/crusher_glaive-inhands.rsi
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher_glaive.rsi
     state: icon
+  - type: Item
+    size: Ginormous
+    sprite: Objects/Weapons/Melee/crusher_glaive-inhands.rsi
   - type: Clothing
     sprite: Objects/Weapons/Melee/crusher_glaive.rsi
     quickEquip: false
     slots:
-    - back
+    - Back
     - suitStorage
   - type: UseDelay
     delay: 1.9
