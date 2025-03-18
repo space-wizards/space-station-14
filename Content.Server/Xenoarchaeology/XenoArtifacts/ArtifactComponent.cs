@@ -35,6 +35,12 @@ public sealed partial class ArtifactComponent : Component
     #endregion
 
     /// <summary>
+    /// The type of artifact this is, which determines what triggers and effects it can have
+    /// </summary>
+    [DataField("artiType")]
+    public ArtiOrigin ArtiType = ArtiOrigin.Undecided;
+
+    /// <summary>
     /// Cooldown time between artifact activations (in seconds).
     /// </summary>
     [DataField("timer"), ViewVariables(VVAccess.ReadWrite)]

@@ -8,9 +8,9 @@
   - type: Sprite
     sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
     layers:
-    - state: ano01
+    - state: ano11
       map: [ "enum.ArtifactsVisualLayers.Base" ]
-    - state: ano01_on
+    - state: ano11_on
       map: [ "enum.ArtifactsVisualLayers.Effect" ]
       visible: false
   - type: Damageable
@@ -37,8 +37,12 @@
         friction: 0.2
   - type: Artifact
   - type: RandomArtifactSprite
-    maxSprite: 11
     activationTime: 2.4
+    eldritchSprites: [ 7, 8 ]
+    martianSprites: [ 3, 4 ]
+    precursorSprites: [ 9, 10, 11 ]
+    siliconSprites: [ 1, 2 ]
+    wizardSprites: [ 5, 6 ]
   - type: RandomSprite
     available:
     - enum.ArtifactsVisualLayers.Effect:
@@ -69,7 +73,7 @@
 - type: entity
   parent: BaseXenoArtifactItem
   id: SimpleXenoArtifactItem
-  suffix: Simple
+  suffix: Random Simple
   components:
   - type: Artifact
     nodesMin: 2
@@ -78,7 +82,7 @@
 - type: entity
   parent: BaseXenoArtifactItem
   id: MediumXenoArtifactItem
-  suffix: Medium
+  suffix: Random Medium
   components:
   - type: Artifact
     nodesMin: 5
@@ -87,7 +91,7 @@
 - type: entity
   parent: BaseXenoArtifactItem
   id: ComplexXenoArtifactItem
-  suffix: Complex
+  suffix: Random Complex
   components:
   - type: Artifact
     nodesMin: 9
@@ -97,11 +101,91 @@
 - type: entity
   parent: BaseXenoArtifactItem
   id: VariedXenoArtifactItem
-  suffix: Varied
+  suffix: Random Varied
   components:
   - type: Artifact
     nodesMin: 2
     nodesMax: 13
+
+- type: entity
+  parent: BaseXenoArtifactItem
+  id: EldritchXenoArtifactItem
+  suffix: Eldritch
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
+    layers:
+    - state: ano07
+      map: [ "enum.ArtifactsVisualLayers.Base" ]
+    - state: ano07_on
+      map: [ "enum.ArtifactsVisualLayers.Effect" ]
+      visible: false
+  - type: Artifact
+    artiType: Eldritch
+
+- type: entity
+  parent: BaseXenoArtifactItem
+  id: MartianXenoArtifactItem
+  suffix: Martian
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
+    layers:
+    - state: ano03
+      map: [ "enum.ArtifactsVisualLayers.Base" ]
+    - state: ano03_on
+      map: [ "enum.ArtifactsVisualLayers.Effect" ]
+      visible: false
+  - type: Artifact
+    artiType: Martian
+
+- type: entity
+  parent: BaseXenoArtifactItem
+  id: PrecursorXenoArtifactItem
+  suffix: Precursor
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
+    layers:
+    - state: ano09
+      map: [ "enum.ArtifactsVisualLayers.Base" ]
+    - state: ano09_on
+      map: [ "enum.ArtifactsVisualLayers.Effect" ]
+      visible: false
+  - type: Artifact
+    artiType: Precursor
+
+- type: entity
+  parent: BaseXenoArtifactItem
+  id: SiliconXenoArtifactItem
+  suffix: Silicon
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
+    layers:
+    - state: ano01
+      map: [ "enum.ArtifactsVisualLayers.Base" ]
+    - state: ano01_on
+      map: [ "enum.ArtifactsVisualLayers.Effect" ]
+      visible: false
+  - type: Artifact
+    artiType: Silicon
+
+- type: entity
+  parent: BaseXenoArtifactItem
+  id: WizardXenoArtifactItem
+  suffix: Wizard
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
+    layers:
+    - state: ano05
+      map: [ "enum.ArtifactsVisualLayers.Base" ]
+    - state: ano05_on
+      map: [ "enum.ArtifactsVisualLayers.Effect" ]
+      visible: false
+  - type: Artifact
+    artiType: Wizard
 
 - type: entity
   id: ArtifactFragment

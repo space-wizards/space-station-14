@@ -10,6 +10,17 @@ public enum SharedArtifactsVisuals : byte
     IsActivated
 }
 
+[Serializable, NetSerializable]
+public enum ArtiOrigin : byte
+{
+    Undecided,
+    Eldritch,
+    Martian,
+    Precursor,
+    Silicon,
+    Wizard
+}
+
 /// <summary>
 ///     Raised as an instant action event when a sentient artifact activates itself using an action.
 /// </summary>
