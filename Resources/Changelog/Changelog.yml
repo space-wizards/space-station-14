@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Minemoder5000
-  changes:
-  - message: The cargo shuttle's cargo pallets can no longer sell or buy.
-    type: Fix
-  id: 7576
-  time: '2024-11-01T06:22:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33022
 - author: aspiringLich
   changes:
   - message: Fixed the logic triggering popups when inserting items into machines.
@@ -3886,3 +3879,12 @@
   id: 8075
   time: '2025-03-17T18:39:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34929
+- author: slarticodefast
+  changes:
+  - message: Paradox clones now receive any implants the original has.
+    type: Add
+  - message: Cloning pods no longer copy items in slime storage.
+    type: Fix
+  id: 8076
+  time: '2025-03-18T05:21:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35906
