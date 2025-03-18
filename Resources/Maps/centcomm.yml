@@ -53982,7 +53982,7 @@ entities:
         - Left: Reverse
         - Right: Forward
         - Middle: Off
-- proto: UnstableMutagenChemistryBottle
+- proto: ChemistryBottleUnstableMutagen
   entities:
   - uid: 1035
     components:
