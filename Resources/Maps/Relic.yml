@@ -39870,7 +39870,7 @@ entities:
     - type: Transform
       pos: 46.69603,21.421711
       parent: 2
-- proto: ToxinChemistryBottle
+- proto: ChemistryBottleToxin
   entities:
   - uid: 6709
     components:
