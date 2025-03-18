@@ -18,7 +18,7 @@
     - state: icon_flipped
       map: ["foldedLayer"]
       visible: false
-      
+
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHeadHatBaseFlipped
@@ -98,7 +98,7 @@
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatQMsoft]
   id: ClothingHeadHatQMsoftFlipped
   name: quartermaster's cap
-    
+
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatCorpsoft
@@ -165,19 +165,19 @@
 
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
-  id: ClothingHeadHatMimesoft
-  name: mime cap
+  id: ClothingHeadHatWhitesoft
+  name: white cap
   description: "It's a baseball hat in a tasteless white colour."
   components:
   - type: Sprite
-    sprite: Clothing/Head/Soft/mimesoft.rsi
+    sprite: Clothing/Head/Soft/whitesoft.rsi
   - type: Clothing
-    sprite: Clothing/Head/Soft/mimesoft.rsi
+    sprite: Clothing/Head/Soft/whitesoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatMimesoft]
-  id: ClothingHeadHatMimesoftFlipped
-  name: mime cap
+  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatWhitesoft]
+  id: ClothingHeadHatWhitesoftFlipped
+  name: white cap
 
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
@@ -285,7 +285,7 @@
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBizarreSoft]
   id: ClothingHeadHatBizarreSoftFlipped
   name: troublemaker's cap
-    
+
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatParamedicsoft
