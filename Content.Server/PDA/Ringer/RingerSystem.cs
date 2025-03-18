@@ -4,8 +4,12 @@ using Content.Shared.PDA.Ringer;
 
 namespace Content.Server.PDA.Ringer;
 
+/// <summary>
+/// Handles the server-side logic for <see cref="SharedRingerSystem"/>.
+/// </summary>
 public sealed class RingerSystem : SharedRingerSystem
 {
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
@@ -13,9 +17,12 @@ public sealed class RingerSystem : SharedRingerSystem
         SubscribeLocalEvent<RingerComponent, CurrencyInsertAttemptEvent>(OnCurrencyInsert);
     }
 
+    /// <summary>
+    /// Handles the <see cref="CurrencyInsertAttemptEvent"/> for <see cref="RingerUplinkComponent"/>.
+    /// </summary>
     private void OnCurrencyInsert(Entity<RingerComponent> ent, ref CurrencyInsertAttemptEvent args)
     {
-        // TOOD: Store isn't predicted, can't move it to shared
+        // TODO: Store isn't predicted, can't move it to shared
         if (!TryComp<RingerUplinkComponent>(ent, out var uplink))
         {
             args.Cancel();
