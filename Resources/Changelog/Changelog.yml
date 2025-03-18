@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Minemoder5000
-  changes:
-  - message: The cargo shuttle's cargo pallets can no longer sell or buy.
-    type: Fix
-  id: 7576
-  time: '2024-11-01T06:22:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33022
-- author: aspiringLich
-  changes:
-  - message: Fixed the logic triggering popups when inserting items into machines.
-    type: Fix
-  id: 7577
-  time: '2024-11-02T01:33:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28856
 - author: K-Dynamic
   changes:
   - message: Pills are explosion resistant.
@@ -3886,3 +3872,19 @@
   id: 8075
   time: '2025-03-17T18:39:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34929
+- author: slarticodefast
+  changes:
+  - message: Paradox clones now receive any implants the original has.
+    type: Add
+  - message: Cloning pods no longer copy items in slime storage.
+    type: Fix
+  id: 8076
+  time: '2025-03-18T05:21:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35906
+- author: slarticodefast
+  changes:
+  - message: Tomato Killers now take damage from weedkiller and plant b gone.
+    type: Tweak
+  id: 8077
+  time: '2025-03-18T08:00:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35898
