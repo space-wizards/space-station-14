@@ -3,7 +3,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.PDA.Ringer;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true, true), AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedRingerSystem))]
+[AutoGenerateComponentState(true, true), AutoGenerateComponentPause]
 public sealed partial class RingerComponent : Component
 {
     /// <summary>

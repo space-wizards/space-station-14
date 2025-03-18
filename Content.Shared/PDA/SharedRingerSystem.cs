@@ -244,8 +244,7 @@ public abstract class SharedRingerSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), ent, Filter.Pvs(ent, 0.05f), false, PopupType.Medium);
         }
 
-        DirtyFields(ent.Owner,
-            ent.Comp,
+        DirtyFields(ent.AsNullable(),
             null,
             nameof(RingerComponent.NextNoteTime),
             nameof(RingerComponent.Active),
