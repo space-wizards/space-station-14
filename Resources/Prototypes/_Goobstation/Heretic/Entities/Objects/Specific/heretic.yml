@@ -103,7 +103,7 @@
     mode: SnapgridCenter
     snap:
     - Wall
-    
+
 - type: entity
   id: HellSpawnPointMarker
   name: hellworldtarget
@@ -120,6 +120,7 @@
     fx: EffectRCDDeconstruct2
   - type: Physics
     bodyType: Static
+    canCollide: false
   - type: HellSpawnPoint
   placement:
     mode: SnapgridCenter
