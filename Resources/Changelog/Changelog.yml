@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: aspiringLich
-  changes:
-  - message: Fixed the logic triggering popups when inserting items into machines.
-    type: Fix
-  id: 7577
-  time: '2024-11-02T01:33:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28856
 - author: K-Dynamic
   changes:
   - message: Pills are explosion resistant.
@@ -3888,3 +3881,10 @@
   id: 8076
   time: '2025-03-18T05:21:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35906
+- author: slarticodefast
+  changes:
+  - message: Tomato Killers now take damage from weedkiller and plant b gone.
+    type: Tweak
+  id: 8077
+  time: '2025-03-18T08:00:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35898
