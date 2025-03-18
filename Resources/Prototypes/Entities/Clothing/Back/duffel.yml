@@ -82,7 +82,7 @@
     microFiberColor: micro-fibers-green
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseRestrictedContraband]
+  parent: [ClothingBackpackDuffel, BaseSecurityContraband]
   id: ClothingBackpackDuffelSecurity
   name: security duffel bag
   description: A large duffel bag for holding extra security related goods.
@@ -94,7 +94,7 @@
     microFiberColor: micro-fibers-black
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseRestrictedContraband]
+  parent: [ClothingBackpackDuffel, BaseSecurityContraband]
   id: ClothingBackpackDuffelBrigmedic
   name: brigmedic duffel bag
   description: A large duffel bag for holding extra medical related goods.

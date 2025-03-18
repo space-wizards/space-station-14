@@ -14,10 +14,16 @@ namespace Content.Server.Antag.Components;
 public sealed partial class AntagSelectionComponent : Component
 {
     /// <summary>
-    /// Has the primary selection of antagonists finished yet?
+    /// Has the primary assignment of antagonists finished yet?
     /// </summary>
     [DataField]
-    public bool SelectionsComplete;
+    public bool AssignmentComplete;
+
+    /// <summary>
+    /// Has the antagonists been preselected but yet to be fully assigned?
+    /// </summary>
+    [DataField]
+    public bool PreSelectionsComplete;
 
     /// <summary>
     /// The definitions for the antagonists
@@ -26,10 +32,10 @@ public sealed partial class AntagSelectionComponent : Component
     public List<AntagSelectionDefinition> Definitions = new();
 
     /// <summary>
-    /// The minds and original names of the players selected to be antagonists.
+    /// The minds and original names of the players assigned to be antagonists.
     /// </summary>
     [DataField]
-    public List<(EntityUid, string)> SelectedMinds = new();
+    public List<(EntityUid, string)> AssignedMinds = new();
 
     /// <summary>
     /// When the antag selection will occur.
@@ -38,10 +44,16 @@ public sealed partial class AntagSelectionComponent : Component
     public AntagSelectionTime SelectionTime = AntagSelectionTime.PostPlayerSpawn;
 
     /// <summary>
+    /// Cached sessions of antag definitions and selected players. Players in this dict are not guaranteed to have been assigned the role yet.
+    /// </summary>
+    [DataField]
+    public Dictionary<AntagSelectionDefinition, HashSet<ICommonSession>>PreSelectedSessions = new();
+
+    /// <summary>
     /// Cached sessions of players who are chosen. Used so we don't have to rebuild the pool multiple times in a tick.
     /// Is not serialized.
     /// </summary>
-    public HashSet<ICommonSession> SelectedSessions = new();
+    public HashSet<ICommonSession> AssignedSessions = new();
 
     /// <summary>
     /// Locale id for the name of the antag.
