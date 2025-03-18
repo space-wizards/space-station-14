@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: PopGamer46
-  changes:
-  - message: Fixed bolt lights of recently unpowered bolted doors
-    type: Fix
-  id: 7573
-  time: '2024-11-01T02:04:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33063
-- author: RumiTiger
-  changes:
-  - message: A chocolate and banana muffin has been added to the game. The berry and
-      cherry muffins have also been resprited!
-    type: Add
-  - message: Now you can make a regular, chocolate, banana, and berry muffin!
-    type: Tweak
-  - message: Muffin tins have been added to the game. They are needed for making muffins!
-    type: Add
-  id: 7574
-  time: '2024-11-01T02:06:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29318
-- author: ScarKy0
-  changes:
-  - message: AI can no longer toggle seeing jobs off.
-    type: Tweak
-  - message: Borgs can no longer see mindshield status.
-    type: Fix
-  id: 7575
-  time: '2024-11-01T02:32:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33069
 - author: Minemoder5000
   changes:
   - message: The cargo shuttle's cargo pallets can no longer sell or buy.
@@ -3891,3 +3863,26 @@
   id: 8072
   time: '2025-03-16T22:24:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35829
+- author: Errant-4
+  changes:
+  - message: The Syndicate Instigator shuttle's crew now has the proper antagonist
+      role type.
+    type: Fix
+  id: 8073
+  time: '2025-03-17T16:27:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35892
+- author: SlamBamActionman
+  changes:
+  - message: The Syndicate Backpack can now fit more items (35 item slots, from 28).
+    type: Tweak
+  id: 8074
+  time: '2025-03-17T17:58:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35888
+- author: beck-thompson
+  changes:
+  - message: Chameleon vests now have the same stats as winter coats (Cold protection,
+      minor heat increase, 5% slash resistance, 10% heat resistance)
+    type: Tweak
+  id: 8075
+  time: '2025-03-17T18:39:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34929
