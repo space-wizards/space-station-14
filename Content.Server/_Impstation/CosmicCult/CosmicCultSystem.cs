@@ -1,5 +1,6 @@
 using Content.Server.Popups;
 using Content.Server._Impstation.CosmicCult.Components;
+using Content.Server._Impstation.CosmicCult.EntitySystems;
 using Content.Shared._Impstation.CosmicCult.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Examine;
@@ -82,6 +83,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedInteractionSystem _interact = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly CosmicCorruptingSystem _corrupting = default!;
 
     private readonly ResPath _mapPath = new("Maps/_Impstation/Nonstations/cosmicvoid.yml");
 

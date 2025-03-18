@@ -245,9 +245,7 @@
   - type: CosmicMarkStructure
   - type: CosmicMalignRift
   - type: CosmicCorrupting
-    corruptionGrowth: true
-    corruptionRadius: 0.5
-    corruptionMaxRadius: 6
+    corruptionMaxTicks: 6
     corruptionSpeed: 8
     corruptionChance: 1
     corruptionReduction: 0.16
