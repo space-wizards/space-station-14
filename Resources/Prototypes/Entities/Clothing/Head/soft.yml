@@ -175,8 +175,8 @@
     sprite: Clothing/Head/Soft/mimesoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatWhitesoft]
-  id: ClothingHeadHatWhitesoftFlipped
+  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatMimesoft]
+  id: ClothingHeadHatMimesoftFlipped
   name: white cap
 
 - type: entity
