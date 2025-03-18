@@ -58,32 +58,18 @@ public sealed partial class PowerWireAction : BaseWireAction
     private void SetPower(EntityUid owner, bool pulsed)
     {
         if (!EntityManager.TryGetComponent(owner, out ApcPowerReceiverComponent? power))
-        {
             return;
-        }
 
         var receiverSys = EntityManager.System<PowerReceiverSystem>();
 
-        if (pulsed)
-        {
+        if (pulsed || AllWiresCut(owner))
             receiverSys.SetPowerDisabled(owner, true, power);
+
+        else if (WiresSystem.TryGetData<bool>(owner, PowerWireActionKey.Pulsed, out var isPulsed) && isPulsed)
             return;
-        }
 
-        if (AllWiresCut(owner))
-        {
-            receiverSys.SetPowerDisabled(owner, true, power);
-        }
         else
-        {
-            if (WiresSystem.TryGetData<bool>(owner, PowerWireActionKey.Pulsed, out var isPulsed)
-                && isPulsed)
-            {
-                return;
-            }
-
             receiverSys.SetPowerDisabled(owner, false, power);
-        }
     }
 
     private void SetWireCuts(EntityUid owner, bool isCut)
