@@ -1,7 +1,7 @@
 - type: gameMap
   id: Nomads
   mapName: "Nomads Classic"
-  mapPath: /Maps/civ/empty.yml
+  mapPath: /Maps/civ/emptymapfinal.yml
   minPlayers: 0
   stations:
     Nomads:
@@ -9,6 +9,9 @@
       components:
         - type: StationNameSetup
           mapNameTemplate: "Nomads Classic"
+        - type: StationBiome
+          biome: Grasslands
+          mapLightColor: "#D8B059"
         - type: StationJobs
           availableJobs:
-            Nomad: [-1, -1]
+            Passenger: [1, 1]
