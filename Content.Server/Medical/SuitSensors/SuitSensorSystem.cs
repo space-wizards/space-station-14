@@ -350,7 +350,7 @@ public sealed class SuitSensorSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Set all suit sensors on the equipment someone is wearing.
+    ///     Set all suit sensors on the equipment someone is wearing to the specified mode.
     /// </summary>
     public void SetAllSensors(EntityUid target, SuitSensorMode mode, SlotFlags slots = SlotFlags.All )
     {
