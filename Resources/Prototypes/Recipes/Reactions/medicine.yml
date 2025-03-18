@@ -458,17 +458,6 @@
     ActivatedSubjuzine: 5
 
 - type: reaction
-  id: Subjuzine-Activation-Radium #so greys can use it
-  preserveDNA: true
-  reactants:
-    Subjuzine:
-      amount: 4
-    Radium:
-      amount: 1
-  products:
-    ActivatedSubjuzine: 5
-
-- type: reaction
   id: Sigynate
   impact: Medium
   minTemp: 370

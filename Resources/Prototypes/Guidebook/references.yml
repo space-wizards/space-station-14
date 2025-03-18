@@ -7,7 +7,6 @@
   - Chemicals
   - Drinks
   - FoodRecipes
-  - MicrowaveRecipes
   - Writing
 
 - type: guideEntry
@@ -22,6 +21,7 @@
   text: "/ServerInfo/Guidebook/Service/FoodRecipes.xml"
   filterEnabled: True
   children:
+  - CookingTechniques # imp
   - PizzaRecipes
   - SavoryRecipes
   - BreadRecipes
@@ -126,12 +126,6 @@
   id: SecretRecipes
   name: guide-entry-secret-recipes
   text: "/ServerInfo/Guidebook/Service/SecretRecipes.xml"
-  filterEnabled: True
-
-- type: guideEntry
-  id: MicrowaveRecipes
-  name: guide-entry-microwaverecipes
-  text: "/ServerInfo/Guidebook/Service/MicrowaveRecipes.xml"
   filterEnabled: True
 
 - type: guideEntry

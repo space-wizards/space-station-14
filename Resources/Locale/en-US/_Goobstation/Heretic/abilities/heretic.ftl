@@ -10,6 +10,7 @@ heretic-blade-examine = [color=yellow]Using it while it's in your hand will brea
 heretic-blade-use = The blade shatters, and you feel the voices pulling you away.
 
 heretic-ghoul-examine = { CAPITALIZE(POSS-ADJ($ent)) } body looks like a decaying corpse.
+heretic-hell-victim-examine = { CAPITALIZE(POSS-ADJ($ent)) } eyes and skin are worryingly pale.
 
 heretic-rust-mark-itembreak = {$name} shatters into dust!
 

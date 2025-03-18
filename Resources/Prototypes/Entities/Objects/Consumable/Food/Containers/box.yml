@@ -482,21 +482,6 @@
       amount: 6
 
 - type: entity
-  parent: FoodBoxDonkpocket
-  id: FoodBoxDonkpocketCloth
-  name: box of cloth-pockets
-  description: A box of imitation donk-pockets made of cloth.
-  components:
-  - type: Sprite
-    state: cloth-box
-  - type: Item
-    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
-  - type: StorageFill
-    contents:
-    - id: FoodDonkpocketCloth
-      amount: 6
-
-- type: entity
   id: HappyHonk
   parent: [ BoxCardboard, BaseBagOpenClose ]
   name: happy honk meal

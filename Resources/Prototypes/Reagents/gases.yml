@@ -421,9 +421,6 @@
         - !type:ReagentThreshold
           reagent: Frezon
           min: 1
-        - !type:OrganType #imp, thaven can breathe all gases safely
-          type: Thaven
-          shouldHave: false
       - !type:PopupMessage
         type: Local
         messages: [ "frezon-lungs-cold" ]

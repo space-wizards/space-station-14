@@ -49,3 +49,5 @@
     transferAmount: 100
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static

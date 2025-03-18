@@ -15,25 +15,10 @@
     - CosmicEntropyObjective
   - type: AntagSelection
     definitions:
-    - prefRoles: [ CosmicAntagLeader ]
-      min: 1
-      max: 1
-      playerRatio: 10
-      blacklist:
-        components:
-        - AntagImmune
-        - BibleUser
-      components:
-      - type: CosmicCult
-      - type: CosmicCultLead
-      mindRoles:
-      - MindRoleCosmicCultLead
     - prefRoles: [ CosmicAntagCultist ]
-      fallbackRoles: [ CosmicAntagLeader ]
-      min: 1
-      max: 5
+      min: 2
+      max: 6
       playerRatio: 10
-      lateJoinAdditional: true
       blacklist:
         components:
         - AntagImmune

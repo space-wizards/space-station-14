@@ -43,7 +43,7 @@
       Steel: 120
   - type: StaticPrice
     price: 22
-    
+
 - type: entity
   name: micro drill
   parent: BaseItem
@@ -64,12 +64,14 @@
     qualities:
       - Anchoring
     speedModifier: 1.5
-    useSound: /Audio/Items/drill_use.ogg
+    useSound:
+      path: /Audio/_Impstation/Items/minidrill.ogg
   - type: ToolTileCompatible
     delay: 0.5
   - type: Prying
     speedModifier: 1.5
     pryPowered: false # lets not do this again
+    enabled: false # keep false, otherwise modified on spawn fails
   - type: MultipleTool
     statusShowBehavior: true
     entries:
@@ -111,7 +113,7 @@
         Blunt: 2
     soundHit:
       collection: WeakHit
-  
+
 - type: entity
   id: RCDRechargingTckTck
   parent: RCD

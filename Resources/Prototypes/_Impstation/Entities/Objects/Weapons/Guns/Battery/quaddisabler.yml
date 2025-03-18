@@ -9,6 +9,9 @@
     layers:
       - state: base
         map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-0
+        map: [ "enum.GunVisualLayers.MagUnshaded" ]
+        shader: unshaded
   - type: Clothing
     sprite: _Impstation/Objects/Weapons/Guns/Launchers/quaddisabler.rsi
     quickEquip: false
@@ -25,3 +28,7 @@
     size: Ginormous
   - type: Gun
     projectileSpeed: 1.3
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4 # None of these steps inbetween will ever be visible lmfao
+    zeroVisible: true

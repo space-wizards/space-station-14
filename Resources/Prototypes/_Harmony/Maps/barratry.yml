@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/_Harmony/Shuttles/emergency_pioneer.yml
         - type: StationCargoShuttle
-          path: /Maps/_Impstation/Shuttles/cargo_barratry.yml # imp
+          path: /Maps/_Harmony/Shuttles/cargo_barratry.yml
         - type: StationJobs
           availableJobs: # Total of 66 jobs roundstart, max of 84 inc. latejoins and trainees.
             # command - 9

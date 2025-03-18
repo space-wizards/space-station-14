@@ -1,6 +1,6 @@
 - type: entity
   name: PRIbar+ conversion kit
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  parent: [ BaseItem, BaseSecurityContraband ]
   id: PRIbarPlusConversionKit
   description: A package of parts and tools for adding a ratchet to a PRIbar.
   components:
@@ -15,7 +15,7 @@
 
 - type: entity
   name: full-auto conversion kit
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  parent: [ BaseItem, BaseSecurityContraband ]
   id: FullAutoConversionKit
   description: A package of parts and tools for modifying an mk 58.
   components:
@@ -30,7 +30,7 @@
 
 - type: entity
   name: hyper-burst conversion kit
-  parent: [ BaseItem, BaseRestrictedContraband ]
+  parent: [ BaseItem, BaseSecurityContraband ]
   id: HyperBurstConversionKit
   description: A package of parts and tools for modifying an mk 58.
   components:

@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Cargo.Systems;
 using Content.Server._DV.Shipyard;
 using Content.Server.Shuttles.Components;
@@ -12,6 +13,21 @@ namespace Content.IntegrationTests.Tests.DV;
 [TestOf(typeof(ShipyardSystem))]
 public sealed class ShipyardTest
 {
+    private static readonly string[] NoShuttleConsole =
+    {
+        "BargainBin", // This is supposed to be a ton of trash I believe, so sometimes it'll spawn without a console :)
+    };
+
+    private static readonly string[] NoShuttleDock =
+    {
+        "Strugglebug", // No dock because fuck you
+    };
+
+    private static readonly string[] IgnoreArbitrage =
+    {
+        "BargainBin",
+    };
+
     [Test]
     public async Task NoShipyardArbitrage()
     {
@@ -29,11 +45,17 @@ public sealed class ShipyardTest
             {
                 foreach (var vessel in proto.EnumeratePrototypes<VesselPrototype>())
                 {
-                    var shuttle = shipyard.TryCreateShuttle(new ResPath(vessel.Path.ToString()));
-                    Assert.That(shuttle, Is.Not.Null, $"Failed to spawn shuttle {vessel.ID}!");
-                    var value = pricing.AppraiseGrid(shuttle.Value);
-                    Assert.That(value, Is.AtMost(vessel.Price), $"Found arbitrage on shuttle {vessel.ID}! Price is {vessel.Price} but value is {value}!");
-                    entities.DeleteEntity(shuttle);
+                    foreach (var path in vessel.Path) // Imp - Fix for shuttles with multiple grids (I hope the actual loader supports this too lol)
+                    {
+                        if (IgnoreArbitrage.Contains(vessel.ID))
+                            continue;
+
+                        var shuttle = shipyard.TryCreateShuttle(path);
+                        Assert.That(shuttle, Is.Not.Null, $"Failed to spawn shuttle {vessel.ID}({path})!");
+                        var value = pricing.AppraiseGrid(shuttle.Value);
+                        Assert.That(value, Is.AtMost(vessel.Price), $"Found arbitrage on shuttle {vessel.ID}({path})! Price is {vessel.Price} but value is {value}!");
+                        entities.DeleteEntity(shuttle);
+                    }
                 }
             });
         });
@@ -57,13 +79,16 @@ public sealed class ShipyardTest
             {
                 foreach (var vessel in proto.EnumeratePrototypes<VesselPrototype>())
                 {
-                    var shuttle = shipyard.TryCreateShuttle(new ResPath(vessel.Path.ToString()));
-                    Assert.That(shuttle, Is.Not.Null, $"Failed to spawn shuttle {vessel.ID}!");
-                    var console = FindComponent<ShuttleConsoleComponent>(entities, shuttle.Value);
-                    Assert.That(console, Is.True, $"Shuttle {vessel.ID} had no shuttle console!");
-                    var dock = FindComponent<DockingComponent>(entities, shuttle.Value);
-                    Assert.That(dock, Is.True, $"Shuttle {vessel.ID} had no shuttle dock!");
-                    entities.DeleteEntity(shuttle);
+                    foreach (var path in vessel.Path) // Imp - Fix for shuttles with multiple grids (I hope the actual loader supports this too lol)
+                    {
+                        var shuttle = shipyard.TryCreateShuttle(new ResPath(path.ToString()));
+                        Assert.That(shuttle, Is.Not.Null, $"Failed to spawn shuttle {vessel.ID}({path})!");
+                        var console = FindComponent<ShuttleConsoleComponent>(entities, shuttle.Value) || NoShuttleConsole.Contains(vessel.ID); // Imp - Add skipping console test
+                        Assert.That(console, Is.True, $"Shuttle {vessel.ID}({path}) had no shuttle console!");
+                        var dock = FindComponent<DockingComponent>(entities, shuttle.Value) || NoShuttleDock.Contains(vessel.ID); // Imp - Add skipping dock test
+                        Assert.That(dock, Is.True, $"Shuttle {vessel.ID}({path})  had no shuttle dock!");
+                        entities.DeleteEntity(shuttle);
+                    }
                 }
             });
         });

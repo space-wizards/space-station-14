@@ -1,5 +1,7 @@
 cosmicability-generic-fail = Your influence fails to take hold..
 
+cosmicability-glare-confirm = Press again to activate Null Glare.
+
 cosmicability-siphon-success = You silently draw Entropy from {CAPITALIZE(THE($target))}.
 cosmicability-siphon-fail = You can't seem to siphon Entropy from {CAPITALIZE(THE($target))}.
 

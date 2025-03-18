@@ -1,0 +1,46 @@
+﻿- type: entity
+  name: Teoean pizza
+  parent: FoodPizzaBase
+  id: FoodPizzaLemo
+  description: Makes people burst into tears. Tears of joy or sadness depends on the persons fondness for dolphin birds.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - meaty
+    - pineapple
+    - cheesy
+    - oily
+    - bread
+    - finfin
+  - type: Sprite
+    layers:
+    - state: pineapple
+  - type: SliceableFood
+    slice: FoodPizzaLemoSlice
+  - type: Tag
+    tags:
+    - Meat
+    - Pizza
+
+- type: entity
+  name: slice of Teoean pizza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaLemoSlice
+  description: A slice of joy/sin.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - meaty
+    - pineapple
+    - cheesy
+    - oily
+    - bread
+    - finfin
+  - type: Sprite
+    layers:
+    - state: pineapple-slice
+  - type: Tag
+    tags:
+    - Meat
+    - Pizza
+    - Slice

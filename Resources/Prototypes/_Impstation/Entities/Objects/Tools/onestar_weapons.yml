@@ -24,10 +24,6 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 50
-  - type: MagazineVisuals
-    magState: mag
-    steps: 4
-    zeroVisible: true
   - type: Appearance
   - type: ContainerContainer
     containers:
@@ -80,7 +76,7 @@
     autoRechargeRate: 500
   - type: MagazineVisuals
     magState: mag
-    steps: 1
+    steps: 2
     zeroVisible: true
   - type: Appearance
 

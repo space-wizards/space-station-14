@@ -8,10 +8,10 @@
   components:
   - type: Fixtures
     fixtures:
-      rune:
+      glyph:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.4,-0.4,0.4,0.4"
+          bounds: "-1.2,-0.5,1.2,0.5"
         hard: false
         mask:
         - ItemMask
@@ -21,9 +21,10 @@
   - type: Clickable
   - type: CosmicGlyph
   - type: Sprite
-    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    sprite: _Impstation/CosmicCult/Objects/glyphs_floor.rsi
     layers:
       - state: aid
+    drawdepth: Puddles
   - type: Appearance
 
 - type: entity
@@ -32,9 +33,10 @@
   name: Glyph of Truth
   components:
   - type: Sprite
-    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    sprite: _Impstation/CosmicCult/Objects/glyphs_floor.rsi
     layers:
       - state: truth
+    drawdepth: Puddles
   - type: CosmicGlyphConversion
     negateProtection: true
   - type: CosmicGlyph
@@ -48,9 +50,10 @@
   name: Glyph of Knowledge
   components:
   - type: Sprite
-    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    sprite: _Impstation/CosmicCult/Objects/glyphs_floor.rsi
     layers:
       - state: knowledge
+    drawdepth: Puddles
   - type: CosmicGlyphConversion
   - type: CosmicGlyph
     glyphName: knowledge
@@ -64,8 +67,9 @@
   components:
   - type: Sprite
     layers:
-    - sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    - sprite: _Impstation/CosmicCult/Objects/glyphs_floor.rsi
       state: cessation
+    drawdepth: Puddles
   - type: CosmicGlyphTransmuteSpire
   - type: CosmicGlyph
     glyphName: cessation
@@ -78,9 +82,10 @@
   name: Glyph of Blades
   components:
   - type: Sprite
-    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    sprite: _Impstation/CosmicCult/Objects/glyphs_floor.rsi
     layers:
       - state: blades
+    drawdepth: Puddles
   - type: CosmicGlyphTransmuteWeapon
   - type: CosmicGlyph
     glyphName: blades
@@ -93,9 +98,10 @@
   name: Glyph of Warding
   components:
   - type: Sprite
-    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    sprite: _Impstation/CosmicCult/Objects/glyphs_floor.rsi
     layers:
       - state: warding
+    drawdepth: Puddles
   - type: CosmicGlyphTransmuteArmor
   - type: CosmicGlyph
     glyphName: warding
@@ -108,12 +114,12 @@
   name: Glyph of Projection
   components:
   - type: Sprite
-    sprite: _Impstation/CosmicCult/Objects/glyphs.rsi
+    sprite: _Impstation/CosmicCult/Objects/glyphs_floor.rsi
     layers:
       - state: projection
+    drawdepth: Puddles
   - type: CosmicGlyphAstralProjection
   - type: CosmicGlyph
     glyphName: projection
     requiredCultists: 1
-    activationRange: 0.5
 

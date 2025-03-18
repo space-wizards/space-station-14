@@ -14,13 +14,13 @@ chaplain-gearmenu-window-selected = Form selected: ({$selectedCount}/{$maxCount}
 chaplain-gearset-category-rosary-name = Silvered Rosary
 chaplain-gearset-category-rosary-description =
     An expensive-looking rosary, made from silver. Exudes somewhat
-    soothing vibes. Nice!A potent tool against those who devote
+    soothing vibes. Nice! A potent tool against those who devote
     themselves to entities beyond the veil of bluespace.
 
 chaplain-gearset-category-grail-name = Gildgrail
 chaplain-gearset-category-grail-description =
     A jewel-encrusted golden chalice. Can hold a deceptively
-    large volume of liquid. The perfect centrepiece for a communion..
+    large volume of liquid. The perfect centrepiece for a communion.
     Or a laboratory. You could even use it for serving drinks at the bar!
 
 chaplain-gearset-category-glove-name = Divine Grasp

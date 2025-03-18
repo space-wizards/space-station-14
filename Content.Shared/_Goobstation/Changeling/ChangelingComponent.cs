@@ -26,7 +26,7 @@ public sealed partial class ChangelingComponent : Component
     [DataField("shriekPower")]
     public float ShriekPower = 2.5f;
 
-    public readonly List<ProtoId<EntityPrototype>> BaseChangelingActions = new()
+    public readonly List<EntProtoId> BaseChangelingActions = new()
     {
         "ActionEvolutionMenu",
         "ActionAbsorbDNA",

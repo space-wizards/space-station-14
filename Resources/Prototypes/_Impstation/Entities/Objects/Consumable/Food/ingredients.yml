@@ -1,0 +1,27 @@
+﻿- type: entity
+  name: stick of rainbow cannabis butter
+  parent: [FoodBakingBase, BaseMinorContraband]
+  id: FoodRainbowCannabisButter
+  description: Add this to your favorite baked goods for a horrible time.
+  components:
+  - type: Sprite
+    state: butter
+    color: "#82C36E"
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 100
+        reagents:
+        - ReagentId: Butter
+          Quantity: 10
+        - ReagentId: THC
+          Quantity: 16.4
+        - ReagentId: ForeverWeed
+          Quantity: 8.2
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+  - type: RgbLightController
+    cycleRate: 0.6
+  - type: Extractable
+    grindableSolutionName: food

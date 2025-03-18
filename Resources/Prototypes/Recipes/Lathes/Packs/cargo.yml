@@ -22,6 +22,7 @@
   - MineralScannerEmpty
   - AdvancedMineralScannerEmpty
   - OreBagOfHolding
+  - BorgModuleMining # Imp
 
 - type: latheRecipePack
   id: CargoBoards

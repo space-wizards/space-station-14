@@ -36,3 +36,18 @@ marking-ThavenEyesSharkminnow = Sharkminnow Eyes
 
 marking-ThavenEyesSharkminnowGlowing-eyessharkminnow = Glowing Sharkminnow Eyes
 marking-ThavenEyesSharkminnowGlowing = Glowing Sharkminnow Eyes
+
+marking-ThavenTailEel-taileel1 = Tail
+marking-ThavenTailEel-taileel2 = Fin
+marking-ThavenTailEel = Eel Tail (Underlay)
+
+marking-ThavenTailEelOverlay-taileel3 = Eel Tail (Overlay)
+marking-ThavenTailEelOverlay = Eel Tail (Overlay)
+
+marking-ThavenTailNurse-tailnurse1 = Tail
+marking-ThavenTailNurse-tailnurse2 = Stripes
+marking-ThavenTailNurse = Swept Tail
+
+marking-ThavenTailStub-tailstub1 = Tail
+marking-ThavenTailStub-tailstub2 = Stripes
+marking-ThavenTailStub = Stub Tail

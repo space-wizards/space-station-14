@@ -41,7 +41,7 @@
   id: SpawnPointGhostGoblinKnight
   name: ghost role spawn point
   suffix: sir gollylad
-  parent: [ MarkerBase, BaseItem ]
+  parent: [ MarkerBase, BaseItem ] # Giving this BaseItem feels wrong lol
   components:
   - type: GhostRole
     name: ghost-role-information-goblin-knight-name
@@ -53,6 +53,8 @@
     - MindRoleGhostRoleFamiliar
   - type: GhostRoleMobSpawner
     prototype: MobGoblinKnight
+  - type: Transform
+    anchored: false # This is wrong, I hate this. Test works tho :)
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:

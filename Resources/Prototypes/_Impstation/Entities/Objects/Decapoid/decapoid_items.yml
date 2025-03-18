@@ -166,6 +166,7 @@
         - 2.051379050 # water vapor
       temperature: 293.15
   - type: Drink
+    solution: waterTank
   - type: SolutionContainerManager
     solutions:
       waterTank:

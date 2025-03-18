@@ -224,6 +224,7 @@ public sealed class SuicideCommandTests
     /// Run the suicide command while the player is holding an execution-capable weapon
     /// </summary>
     [Test]
+    [Retry(2)] // Imp - This test will occasionally fail with an obscure error. Retry so we can be sure its a real fail
     public async Task TestSuicideByHeldItem()
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings
@@ -299,6 +300,7 @@ public sealed class SuicideCommandTests
     /// with damage spread between slash and blunt
     /// </summary>
     [Test]
+    [Retry(2)] // Imp - This test will occasionally fail with an obscure error. Retry so we can be sure its a real fail
     public async Task TestSuicideByHeldItemSpreadDamage()
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings

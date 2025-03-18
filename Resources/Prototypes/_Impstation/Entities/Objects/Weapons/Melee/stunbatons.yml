@@ -1,6 +1,6 @@
 - type: entity
   name: fun baton
-  parent: [Stunbaton, BaseRestrictedContraband]
+  parent: [Stunbaton, BaseSecurityContraband]
   id: Funbaton
   description: A powered implement capable of safely entertaining any criminal, just be mindful of the 'on' switch.
   components:
@@ -20,7 +20,7 @@
 
 - type: entity
   name: stun bat
-  parent: [Stunbaton, BaseRestrictedContraband]
+  parent: [Stunbaton, BaseSecurityContraband]
   id: Stunbat
   description: A Stun Baton designed with the athletic security officer in mind. Using this unpowered is sure to have a foul called.
   components:
@@ -37,7 +37,7 @@
 
 - type: entity
   name: stun sabre
-  parent: [Stunbaton, BaseRestrictedContraband]
+  parent: [Stunbaton, BaseSecurityContraband]
   id: Stunsabre
   description: A state-of-the-art Stun Baton derived from the signature weapons of underground assassins. Unpowered, it's no better than hitting someone with a stick.
   components:

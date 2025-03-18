@@ -320,7 +320,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         List<ICommonSession> guaranteed = [];
         foreach (var keyValuePair in playersByRoleTimeAsc) // for each entry, decide whether or not it should override random antag selection based on its weight, and add it to a list if it should.
         {
-            if (_random.Prob(probToGuarantee))
+            if (HasPrimaryAntagPreference(keyValuePair.Key, def) && _random.Prob(probToGuarantee))
             {
                 guaranteed.Add(keyValuePair.Key);
             }

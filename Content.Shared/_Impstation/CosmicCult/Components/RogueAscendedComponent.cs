@@ -12,12 +12,17 @@ namespace Content.Shared._Impstation.CosmicCult.Components;
 [AutoGenerateComponentState]
 public sealed partial class RogueAscendedComponent : Component
 {
+    /// <summary>
+    /// The duration of our slumber DoAfter.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public TimeSpan RogueSlumberDoAfterTime = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// The duration of our infection DoAfter.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan RogueInfectionTime = TimeSpan.FromSeconds(10);
+    public TimeSpan RogueInfectionDoAfterTime = TimeSpan.FromSeconds(8);
 
     /// <summary>
     /// The duration inflicted by Slumber Shell
@@ -43,15 +48,15 @@ public sealed partial class RogueAscendedComponent : Component
     {
         DamageDict = new()
         {
-            { "Blunt", 50},
-            { "Slash", 50},
-            { "Piercing", 50},
-            { "Heat", 50},
-            { "Shock", 50},
-            { "Cold", 99},
-            { "Poison", 50},
-            { "Radiation", 50},
-            { "Asphyxiation", 50}
+            { "Blunt", 25},
+            { "Slash", 25},
+            { "Piercing", 25},
+            { "Heat", 25},
+            { "Shock", 25},
+            { "Cold", 25},
+            { "Poison", 25},
+            { "Radiation", 25},
+            { "Asphyxiation", 25}
         }
     };
 

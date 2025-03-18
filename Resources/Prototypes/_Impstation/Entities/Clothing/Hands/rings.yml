@@ -6,6 +6,8 @@
   components:
   - type: StaticPrice
     price: 1
+  - type: PhysicalComposition # You get NOTHING! You lose! Good day, sir!
+    materialComposition: {}
 
 - type: entity
   parent: SilverRing
@@ -15,3 +17,5 @@
   components:
   - type: StaticPrice
     price: 1
+  - type: PhysicalComposition
+    materialComposition: {}

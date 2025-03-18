@@ -4,6 +4,7 @@ using System.Numerics;
 using Content.Server._Impstation.CosmicCult.Components;
 using Content.Server._Impstation.Thaven;
 using Content.Server.Actions;
+using Content.Server.Antag;
 using Content.Server.Bible.Components;
 using Content.Server.Interaction;
 using Content.Server.Light.Components;
@@ -65,6 +66,7 @@ public sealed class RogueAscendedSystem : EntitySystem
     [Dependency] private readonly ThrowingSystem _throw = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly ThavenMoodsSystem _moodSystem = default!; //impstation
 
     [ValidatePrototypeId<DatasetPrototype>]
@@ -83,13 +85,15 @@ public sealed class RogueAscendedSystem : EntitySystem
         SubscribeLocalEvent<RogueAscendedComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RogueAscendedDendriteComponent, BeforeFullyEatenEvent>(OnDendriteConsumed);
 
-        SubscribeLocalEvent<RogueAscendedComponent, EventRogueSlumber>(OnRogueSlumber);
         SubscribeLocalEvent<RogueAscendedComponent, EventRogueGrandShunt>(OnRogueShunt);
         SubscribeLocalEvent<RogueAscendedComponent, EventRogueCosmicNova>(OnRogueNova);
         SubscribeLocalEvent<HumanoidAppearanceComponent, EventRogueCosmicNova>(OnPlayerNova);
 
         SubscribeLocalEvent<RogueAscendedComponent, EventRogueInfection>(OnAttemptInfection);
+        SubscribeLocalEvent<RogueAscendedComponent, EventRogueSlumber>(OnAttemptSlumber);
         SubscribeLocalEvent<RogueAscendedComponent, EventRogueInfectionDoAfter>(OnInfectionDoAfter);
+        SubscribeLocalEvent<RogueAscendedComponent, EventRogueSlumberDoAfter>(OnSlumberDoAfter);
+
         SubscribeLocalEvent<RogueAscendedInfectionComponent, ComponentShutdown>(OnInfectionCleansed);
     }
     #region Spawn
@@ -152,29 +156,42 @@ public sealed class RogueAscendedSystem : EntitySystem
     }
     #endregion
 
-    #region Ability - Shatter
-    private void OnRogueSlumber(Entity<RogueAscendedComponent> uid, ref EventRogueSlumber args)
+    #region Ability - Slumber
+    private void OnAttemptSlumber(Entity<RogueAscendedComponent> uid, ref EventRogueSlumber args)
     {
         if (TryComp<MobStateComponent>(args.Target, out var state) && state.CurrentState != MobState.Alive)
         {
             _popup.PopupEntity(Loc.GetString("rogue-ascended-shatter-fail"), uid, uid);
             return;
         }
-        _statusEffects.TryAddStatusEffect<ForcedSleepingComponent>(args.Target, "ForcedSleep", uid.Comp.RogueSlumberTime, false);
-        _audio.PlayPvs(uid.Comp.ShatterSfx, args.Target);
+        var doargs = new DoAfterArgs(EntityManager, uid, uid.Comp.RogueSlumberDoAfterTime, new EventRogueSlumberDoAfter(), uid, args.Target)
+        {
+            DistanceThreshold = 2f,
+            Hidden = false,
+            BreakOnDamage = true,
+            BreakOnMove = true,
+            BlockDuplicate = true,
+        };
         args.Handled = true;
-        Spawn(uid.Comp.Vfx, Transform(args.Target).Coordinates);
+        _doAfter.TryStartDoAfter(doargs);
     }
+    private void OnSlumberDoAfter(Entity<RogueAscendedComponent> uid, ref EventRogueSlumberDoAfter args)
+    {
+        if (args.Cancelled || args.Target == null)
+            return;
+        var target = args.Target.Value;
+
+        _statusEffects.TryAddStatusEffect<ForcedSleepingComponent>(target, "ForcedSleep", uid.Comp.RogueSlumberTime, false);
+        _audio.PlayPvs(uid.Comp.ShatterSfx, target);
+        args.Handled = true;
+        Spawn(uid.Comp.Vfx, Transform(target).Coordinates);
+    }
+
     #endregion
 
     #region Ability - Infection
     private void OnAttemptInfection(Entity<RogueAscendedComponent> uid, ref EventRogueInfection args)
     {
-        if (HasComp<RogueAscendedInfectionComponent>(args.Target))
-        {
-            _popup.PopupEntity(Loc.GetString("rogue-ascended-infection-alreadyinfected", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid);
-            return;
-        }
         if (TryComp<MobStateComponent>(args.Target, out var state) && state.CurrentState != MobState.Alive && HasComp<ForcedSleepingComponent>(args.Target))
         {
             _popup.PopupEntity(Loc.GetString("rogue-ascended-infection-fail"), uid, uid);
@@ -185,7 +202,7 @@ public sealed class RogueAscendedSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("rogue-ascended-infection-error"), uid, uid);
             return;
         }
-        var doargs = new DoAfterArgs(EntityManager, uid, uid.Comp.RogueInfectionTime, new EventRogueInfectionDoAfter(), uid, args.Target)
+        var doargs = new DoAfterArgs(EntityManager, uid, uid.Comp.RogueInfectionDoAfterTime, new EventRogueInfectionDoAfter(), uid, args.Target)
         {
             DistanceThreshold = 2f,
             Hidden = false,
@@ -217,9 +234,10 @@ public sealed class RogueAscendedSystem : EntitySystem
         _moodSystem.ToggleSharedMoods((target, moodComp)); // disable shared moods
         _moodSystem.TryAddRandomMood((target, moodComp), AscendantDataset, false); // we don't need to notify them twice
         _moodSystem.TryAddRandomMood((target, moodComp), AscendantDataset);
+        Dirty(target, moodComp);
 
+        _antag.SendBriefing(target, Loc.GetString("rogue-ascended-infection-briefing"), Color.FromHex("#4cabb3"), null);
         _damageable.TryChangeDamage(target, uid.Comp.InfectionHeal * -1);
-        _statusEffects.TryRemoveStatusEffect(target, "ForcedSleep");
 
         _stun.TryStun(target, uid.Comp.StunTime, false);
         _audio.PlayPvs(uid.Comp.InfectionSfx, target);

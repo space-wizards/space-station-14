@@ -64,3 +64,6 @@ trait-echolalia-desc = You can't help yourself from repeating phrases you've hea
 
 trait-transatlantic-name = Transatlantic accent
 trait-transatlantic-desc = You sound like a hardboiled detective, or a peppy newshawk.
+
+trait-positivity-name = Relentless positivity
+trait-positivity-desc = You're always making speeches about the power of friendship. Enjoy your shift!

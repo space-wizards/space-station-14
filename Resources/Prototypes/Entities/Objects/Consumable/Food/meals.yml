@@ -586,34 +586,6 @@
 # tastes exotic
 
 - type: entity
-  name: finfin sashimi
-  parent: FoodMealBase
-  id: FoodMealFinfinSashimi
-  description: An unscrupulous delicacy. Japanese-Teoean fusion cuisine!
-  components:
-  - type: FlavorProfile
-    flavors:
-      - carpflesh #imp
-      - finfin
-  - type: Sprite
-    state: sashimi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 18
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: CarpoToxin
-          Quantity: 15
-  - type: Tag
-    tags:
-    - Meat
-  - type: FoodSequenceElement
-    entries:
-      Burger: FinfinSashimiBurger
-
-- type: entity
   name: enchiladas
   parent: FoodMealBase
   id: FoodMealEnchiladas

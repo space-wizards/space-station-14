@@ -15,7 +15,7 @@
       bodypart: !type:Container
         ents: []
   - type: StaticPrice
-    price: 5
+    price: 9 # Imp - Borgs include plastic, so the price was increased from 5. Actual sell value is like 8,75 so holy shit profit????
   - type: Tag
     tags:
       - Trash

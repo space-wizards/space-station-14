@@ -2,6 +2,7 @@
   id: RecipeBigLollipop
   name: big lollipop recipe
   result: FoodMealBigLollipop
+  group: BarsAndCookies # idk there isnt a candy section
   time: 5
   reagents:
      Sugar: 10
@@ -12,6 +13,7 @@
   id: RecipeClothLollipop
   name: cloth lollipop recipe
   result: FoodMealClothLollipop
+  group: Moth
   time: 5
   reagents:
      Sugar: 10
@@ -23,6 +25,7 @@
   id: RecipeFruitLollipop
   name: fruit lollipop recipe
   result: FoodMealFruitLollipop
+  group: BarsAndCookies
   time: 5
   reagents:
      Sugar: 10
@@ -37,6 +40,7 @@
   id: RecipeMeatLollipop
   name: meat lollipop recipe
   result: FoodMealMeatLollipop
+  group: Savory
   time: 5
   reagents:
      Sugar: 10
@@ -48,6 +52,7 @@
   id: RecipeCultLollipop
   name: entro-pop recipe
   result: FoodMealCultLollipop
+  group: BarsAndCookies
   time: 5
   solids:
      FoodKebabSkewer: 1
@@ -57,6 +62,7 @@
   id: RecipeCamelSoup
   name: camel's soup recipe
   result: FoodCamelSoup
+  group: Soup
   time: 15
   solids:
      TearGasGrenade: 1
@@ -75,6 +81,7 @@
   id: RecipeToddlerRingsStew
   name: toddler rings stew recipe
   result: FoodToddlerRingsStew
+  group: Soup
   time: 15
   reagents:
      JuiceTomato: 10
@@ -86,6 +93,7 @@
   id: RecipeChocolateHeart
   name: homemade chocolate heart recipe
   result: FoodHomemadeChocolateHeart
+  group: BarsAndCookies
   time: 5
   reagents:
     Sugar: 2
@@ -96,6 +104,7 @@
   id: RecipeHeartCarpaccio
   name: heart carpaccio recipe
   result: MealHeartCarpaccio
+  group: Savory
   time: 5 # warming it as a formality
   solids:
     OrganAnimalHeart: 1 # use the whole mouse. whatever
@@ -107,6 +116,7 @@
   id: RecipeMacaronBerry
   name: berry macaron recipe
   result: FoodMacaronBerry
+  group: Dessert
   time: 15
   reagents: # just like real life this has to fucking suck to make
     Sugar: 5
@@ -119,6 +129,7 @@
   id: RecipeMacaronCherry
   name: cherry macaron recipe
   result: FoodMacaronCherry
+  group: Dessert
   time: 15
   reagents:
     Sugar: 5
@@ -131,6 +142,7 @@
   id: RecipeMacaronLemon
   name: lemon macaron recipe
   result: FoodMacaronLemon
+  group: Dessert
   time: 15
   reagents:
     Sugar: 5
@@ -143,6 +155,7 @@
   id: RecipeMacaronCotton
   name: cotton macaron recipe
   result: FoodMacaronCotton
+  group: Dessert
   time: 15
   reagents:
     Fiber: 5
@@ -155,6 +168,7 @@
   id: RecipeMacaronMimana
   name: mimana macaron recipe
   result: FoodMacaronMimana
+  group: Dessert
   time: 15
   reagents:
     Sugar: 5
@@ -169,6 +183,7 @@
   id: RecipeCrazyHamburgerBlack
   name: berserk hamburger recipe
   result: FoodBurgerCrazyBlack
+  group: Savory
   time: 15
   reagents:
     OilOlive: 15
@@ -185,6 +200,7 @@
   id: RecipeCrazyHamburgerBlackAndWhite
   name: wacky hamburger recipe
   result: FoodBurgerCrazyBlackAndWhite
+  group: Savory
   time: 15
   reagents:
     OilOlive: 15
@@ -201,6 +217,7 @@
   id: RecipeCrazyHamburgerBlue
   name: barmy hamburger recipe
   result: FoodBurgerCrazyBlue
+  group: Savory
   time: 15
   reagents:
     OilOlive: 15
@@ -217,6 +234,7 @@
   id: RecipeCrazyHamburgerOrange
   name: mental hamburger recipe
   result: FoodBurgerCrazyOrange
+  group: Savory
   time: 15
   reagents:
     OilOlive: 15
@@ -233,6 +251,7 @@
   id: RecipeCrazyHamburgerPurple
   name: daft hamburger recipe
   result: FoodBurgerCrazyPurple
+  group: Savory
   time: 15
   reagents:
     OilOlive: 15
@@ -249,6 +268,7 @@
   id: RecipeCrazyHamburgerRainbow
   name: insane hamburger recipe
   result: FoodBurgerCrazyRainbow
+  group: Savory
   time: 15
   reagents:
     OilOlive: 15
@@ -264,6 +284,7 @@
 - type: microwaveMealRecipe
   id: RecipeCrazyHamburgerRed
   name: deranged hamburger recipe
+  group: Savory
   result: FoodBurgerCrazyRed
   time: 15
   reagents:
@@ -280,6 +301,7 @@
 - type: microwaveMealRecipe
   id: RecipeCrazyHamburgerWhite
   name: cuckoo hamburger recipe
+  group: Savory
   result: FoodBurgerCrazyWhite
   time: 15
   reagents:
@@ -297,6 +319,7 @@
   id: RecipeCrazyHamburgerYellow
   name: mad hamburger recipe
   result: FoodBurgerCrazyYellow
+  group: Savory
   time: 15
   reagents:
     OilOlive: 15
@@ -308,3 +331,96 @@
     FoodCabbage: 1
     CrayonYellow: 1
     Flare: 1
+# moth food
+
+- type: microwaveMealRecipe
+  id: RecipeDonkpocketCloth
+  name: warm cloth-pocket recipe
+  result: FoodDonkpocketClothWarm
+  group: Moth
+  time: 5
+  solids:
+    FoodDonkpocketCloth: 1
+
+# fin fin related
+
+- type: microwaveMealRecipe
+  id: RecipeFinfinBurger
+  name: finfin sandwich recipe
+  result: FoodBurgerFinfin
+  group: Savory
+  time: 10
+  solids:
+    FoodBreadBun: 1
+    FoodMeatFinfin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFinfinSashimi
+  name: finfin sashimi recipe
+  result: FoodMealFinfinSashimi
+  group: Savory
+  time: 15
+  reagents:
+    TableSalt: 1
+  solids:
+    FoodMeatFinfin: 2
+
+- type: microwaveMealRecipe
+  id: RecipeLemoPie
+  name: lemo pie recipe
+  result: FoodPieLemo
+  group: Pie
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodLemo: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
+  id: RecipeMuffinLemo
+  name: lemuffin recipe
+  result: FoodBakedMuffinLemo
+  group: Dessert
+  time: 5
+  reagents:
+    Flour: 5
+    Sugar: 5
+  solids:
+    FoodLemo: 3
+
+- type: microwaveMealRecipe
+  id: RecipeTeoeanPizza
+  name: Teoean pizza recipe
+  result: FoodPizzaLemo
+  group: Pizza
+  time: 30
+  solids:
+    FoodDoughFlat: 1
+    FoodMeatFinfinCutlet: 3
+    FoodLemoSlice: 5
+
+# FIRST CLOOOOOOOO IS SOMETHING GREEN
+
+- type: microwaveMealRecipe
+  id: RecipeRainbowCannabisButter
+  name: rainbow cannabis butter recipe
+  result: FoodRainbowCannabisButter
+  # normal cannabis butter is in other so this also doesnt get a group
+  time: 15
+  solids:
+    FoodButter: 1
+    LeavesCannabisRainbow: 6
+
+- type: microwaveMealRecipe
+  id: RecipeForeverWeedBrownies
+  name: cannabis brownie recipe
+  result: FoodBakedForeverWeedBrownieBatch
+  group: BarsAndCookies
+  time: 25
+  reagents:
+    Flour: 15
+    Sugar: 30
+  solids:
+    FoodRainbowCannabisButter: 2
+    FoodSnackChocolateBar: 2
+    FoodEgg: 3

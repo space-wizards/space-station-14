@@ -216,10 +216,10 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
             while (choices.Count > 0)
             {
                 var choice = _random.PickAndTake(choices);
-                if (alreadyChosen.Contains(choice))
+                if (alreadyChosen.Contains(choice) || mood.MoodVars.ContainsValue(choice))
                     continue;
 
-                mood.MoodVars.Add(name, choice);
+                mood.MoodVars.TryAdd(name, choice);
                 alreadyChosen.Add(choice);
                 foundChoice = true;
                 break;
@@ -227,8 +227,10 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
 
             if (!foundChoice)
             {
-                Log.Warning($"Ran out of choices for moodvar \"{name}\" in \"{proto.ID}\"! Picking a duplicate...");
-                mood.MoodVars.Add(name, _random.Pick(dataset));
+                //Log.Warning($"Ran out of choices for moodvar \"{name}\" in \"{proto.ID}\"! Picking a duplicate...");
+                //mood.MoodVars.Add(name, _random.Pick(dataset));
+
+                Log.Warning($"Ran out of choices for moodvar \"{name}\" in \"{proto.ID}\"!"); // You can't add duplicates to dicts, what is the goal here?
             }
         }
 

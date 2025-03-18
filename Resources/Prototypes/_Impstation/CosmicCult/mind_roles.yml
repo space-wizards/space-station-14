@@ -9,17 +9,6 @@
     roleType: TeamAntagonist
   - type: CosmicCultRole
 
-- type: entity
-  parent: MindRoleCosmicCult
-  id: MindRoleCosmicCultLead
-  name: Cosmic Cult Leader Role
-  components:
-  - type: MindRole
-    antagPrototype: CosmicAntagLeader
-    exclusiveAntag: true
-    roleType: TeamAntagonist
-  - type: CosmicCultRole
-
 # Ascendant Event
 - type: entity
   parent: BaseMindRoleAntag

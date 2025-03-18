@@ -236,7 +236,7 @@
     angle: 90
     range: 2
     animation: WeaponArcCosmic
-    attackRate: 0.9
+    attackRate: 1
     clickDamageModifier: 1
     damage:
       types:
@@ -260,7 +260,7 @@
         variation: 0.2
         volume: -11
   - type: StaminaDamageOnHit
-    damage: 34
+    damage: 30
   - type: Puller
     needsHands: false
   - type: MobState

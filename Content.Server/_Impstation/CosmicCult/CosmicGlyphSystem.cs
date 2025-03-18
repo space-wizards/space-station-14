@@ -14,6 +14,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mind;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
@@ -26,6 +27,7 @@ public sealed class CosmicGlyphSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly CosmicCultRuleSystem _cultRule = default!;
+    [Dependency] private readonly CosmicCultSystem _cosmicCult = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -151,6 +153,12 @@ public sealed class CosmicGlyphSystem : EntitySystem
                 _stun.TryStun(target, TimeSpan.FromSeconds(4f), false);
                 _damageable.TryChangeDamage(target, uid.Comp.ConversionHeal * -1);
                 _cultRule.CosmicConversion(target);
+                var finaleQuery = EntityQueryEnumerator<CosmicFinaleComponent>(); // Enumerator for The Monument's Finale
+                while (finaleQuery.MoveNext(out var monument, out var comp) && comp.CurrentState == FinaleState.ActiveBuffer)
+                {
+                    comp.BufferTimer -= TimeSpan.FromSeconds(45);
+                    _popup.PopupCoordinates(Loc.GetString("cosmiccult-finale-speedup"), Transform(monument).Coordinates, PopupType.Large);
+                }
             }
         }
     }
@@ -264,7 +272,7 @@ public sealed class CosmicGlyphSystem : EntitySystem
     public HashSet<EntityUid> GatherCultists(EntityUid uid, float range)
     {
         var entities = _lookup.GetEntitiesInRange(Transform(uid).Coordinates, range);
-        entities.RemoveWhere(entity => !HasComp<CosmicCultComponent>(entity) || _container.IsEntityInContainer(entity));
+        entities.RemoveWhere(entity => !HasComp<CosmicCultComponent>(entity) || !_mobState.IsAlive(entity) || _container.IsEntityInContainer(entity));
         return entities;
     }
 

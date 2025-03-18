@@ -4,7 +4,7 @@
   id: Sacrifice
   locName: heretic-ritual-basic-sacrifice
   locDesc: heretic-ritual-basic-sacrifice-desc
-  icon: 
+  icon:
     sprite: Mobs/Species/Human/organs.rsi
     state: heart-on
   customBehaviors:
@@ -15,7 +15,7 @@
   id: AmberFocus
   locName: heretic-ritual-basic-focus
   locDesc: heretic-ritual-basic-focus-desc
-  icon: 
+  icon:
     sprite: _Goobstation/Heretic/amber_focus.rsi
     state: icon
   requiredTags:
@@ -28,7 +28,7 @@
   id: LivingHeart
   locName: heretic-ritual-basic-heart
   locDesc: heretic-ritual-basic-heart-desc
-  icon: 
+  icon:
     sprite: _Goobstation/Heretic/items.rsi
     state: living_heart
   requiredTags:
@@ -56,7 +56,7 @@
   id: BladeAsh
   locName: knowledge-path-ash-s1-name
   locDesc: knowledge-path-ash-s1-desc
-  icon: 
+  icon:
     sprite: _Goobstation/Heretic/Blades/blade_ash.rsi
     state: icon
   requiredTags:
@@ -69,7 +69,7 @@
   id: MaskOfMadness
   locName: knowledge-path-ash-s6-name
   locDesc: knowledge-path-ash-s6-desc
-  icon: 
+  icon:
     sprite: _Goobstation/Heretic/mad_mask.rsi
     state: icon
   requiredTags:
@@ -84,7 +84,7 @@
   id: AscensionAsh
   locName: knowledge-path-ash-s9-name
   locDesc: knowledge-path-ash-s9-desc
-  icon: 
+  icon:
     sprite: _Goobstation/Heretic/abilities_heretic.rsi
     state: ashlord_rite2
   customBehaviors:
@@ -101,20 +101,21 @@
   id: BladeFlesh
   locName: knowledge-path-flesh-s1-name
   locDesc: knowledge-path-flesh-s1-desc
-  icon: 
+  icon:
     sprite: _Goobstation/Heretic/Blades/blade_flesh.rsi
     state: icon
   customBehaviors:
   - !type:RitualReagentPuddleBehavior
     reagents:
     - Blood
-    - Radium
+    - Radium #imp
     - InsectBlood
     - Slime
     - Sap
     - CopperBlood
     - AmmoniaBlood
     - ZombieBlood
+    - ShimmeringBlood #imp
   requiredTags:
     Knife: 1
   output:
@@ -124,7 +125,7 @@
   id: ImperfectRitual
   locName: knowledge-path-flesh-s3-name
   locDesc: knowledge-path-flesh-s3-desc
-  icon: 
+  icon:
     sprite: Mobs/Species/Skeleton/parts.rsi
     state: full
   customBehaviors:
@@ -136,20 +137,21 @@
   id: RawRitual
   locName: knowledge-path-flesh-s6-name
   locDesc: knowledge-path-flesh-s6-desc
-  icon: 
+  icon:
     sprite: _Goobstation/Heretic/eldritch_mobs.rsi
     state: raw_prophet
   customBehaviors:
   - !type:RitualReagentPuddleBehavior
     reagents:
     - Blood
-    - Radium
+    - Radium #imp
     - InsectBlood
     - Slime
     - Sap
     - CopperBlood
     - AmmoniaBlood
     - ZombieBlood
+    - ShimmeringBlood #imp
   requiredTags:
     Eyes: 1
     Stomach: 1
@@ -160,20 +162,21 @@
   id: LonelyRitual
   locName: knowledge-path-flesh-s8-name
   locDesc: knowledge-path-flesh-s8-desc
-  icon: 
+  icon:
     sprite: _Goobstation/Heretic/eldritch_mobs.rsi
     state: stalker
   customBehaviors:
   - !type:RitualReagentPuddleBehavior
     reagents:
     - Blood
-    - Radium
+    - Radium #imp
     - InsectBlood
     - Slime
     - Sap
     - CopperBlood
     - AmmoniaBlood
     - ZombieBlood
+    - ShimmeringBlood #imp
   requiredTags:
     Pen: 1
     Heart: 1
@@ -186,7 +189,7 @@
   id: AscensionFlesh
   locName: knowledge-path-flesh-s9-name
   locDesc: knowledge-path-flesh-s9-desc
-  icon: 
+  icon:
     sprite: _Goobstation/Heretic/abilities_heretic.rsi
     state: final_hymn
   customBehaviors:
@@ -203,7 +206,7 @@
   id: BladeVoid
   locName: knowledge-path-void-s1-name
   locDesc: knowledge-path-void-s1-desc
-  icon: 
+  icon:
     sprite: _Goobstation/Heretic/Blades/blade_void.rsi
     state: icon
   customBehaviors:
@@ -218,7 +221,7 @@
   id: AscensionVoid
   locName: knowledge-path-void-s9-name
   locDesc: knowledge-path-void-s9-desc
-  icon: 
+  icon:
     sprite: Interface/Alerts/temperature.rsi
     state: cold3
   customBehaviors:
@@ -237,7 +240,7 @@
   id: RitualOfKnowledge
   locName: heretic-ritual-side-knowledge
   locDesc: knowledge-path-side-knowledge-desc
-  icon: 
+  icon:
     sprite: _Goobstation/Heretic/book.rsi
     state: icon
   customBehaviors:
@@ -248,7 +251,7 @@
   id: ArmorerRitual
   locName: knowledge-path-side-s3-armor-name
   locDesc: knowledge-path-side-s3-armor-desc
-  icon: 
+  icon:
     sprite: _Goobstation/Heretic/eldritch_armor.rsi
     state: icon
   requiredTags:

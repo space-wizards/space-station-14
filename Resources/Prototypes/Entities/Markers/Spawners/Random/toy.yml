@@ -110,8 +110,9 @@
       - ToyFigurineERTJanitor
       - ToyFigurineERTLeader
       - ToyFigurineERTMedic
-      - ToyFigurineERTSecurity 
+      - ToyFigurineERTSecurity
       - ToyFigurineCosmicCultist #</imp>
+      - ToyFigurineCrewLing #Imp
       rareChance: 0.05
       prototypes:
       - ToyFigurinePassenger
