@@ -4,7 +4,7 @@ meta:
   engineVersion: 248.0.2
   forkId: ""
   forkVersion: ""
-  time: 03/18/2025 14:37:32
+  time: 03/18/2025 14:59:33
   entityCount: 2
 maps:
   - 1
@@ -179,10 +179,10 @@ entities:
             mixture:
               volume: 2500
               immutable: True
-              temperature: 293.15
+              temperature: 300
               moles:
-                - 21.82478
-                - 82.10312
+                - 21.82
+                - 82.1
                 - 0
                 - 0
                 - 0
@@ -193,6 +193,11 @@ entities:
                 - 0
                 - 0
                 - 0
+          - type: GridAtmosphere
+            version: 2
+            data:
+              chunkSize: 4
+          - type: GasTileOverlay
   - proto: SpawnPointPassenger
     entities:
       - uid: 2
