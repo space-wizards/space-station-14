@@ -1,0 +1,1 @@
+Do not place new sprites on the exported folder. That folder is only for automatically exported sprites and is unorganised. Place new sprites in the right clothing folders!
