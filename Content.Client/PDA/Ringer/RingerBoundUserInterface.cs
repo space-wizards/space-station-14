@@ -7,14 +7,10 @@ using Robust.Shared.Timing;
 namespace Content.Client.PDA.Ringer
 {
     [UsedImplicitly]
-    public sealed class RingerBoundUserInterface : BoundUserInterface
+    public sealed class RingerBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
     {
         [ViewVariables]
         private RingtoneMenu? _menu;
-
-        public RingerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-        {
-        }
 
         protected override void Open()
         {
@@ -22,9 +18,11 @@ namespace Content.Client.PDA.Ringer
             _menu = this.CreateWindow<RingtoneMenu>();
             _menu.OpenToLeft();
 
+            Update();
+
             _menu.TestRingerButton.OnPressed += _ =>
             {
-                SendMessage(new RingerPlayRingtoneMessage());
+                SendPredictedMessage(new RingerPlayRingtoneMessage());
             };
 
             _menu.SetRingerButton.OnPressed += _ =>
@@ -32,10 +30,11 @@ namespace Content.Client.PDA.Ringer
                 if (!TryGetRingtone(out var ringtone))
                     return;
 
-                SendMessage(new RingerSetRingtoneMessage(ringtone));
+                SendPredictedMessage(new RingerSetRingtoneMessage(ringtone));
                 _menu.SetRingerButton.Disabled = true;
 
-                Timer.Spawn(333, () =>
+                Timer.Spawn(333,
+                    () =>
                 {
                     if (_menu is { Disposed: false, SetRingerButton: { Disposed: false } ringer})
                         ringer.Disabled = false;
@@ -63,36 +62,28 @@ namespace Content.Client.PDA.Ringer
             return true;
         }
 
-        protected override void UpdateState(BoundUserInterfaceState state)
+        public override void Update()
         {
-            base.UpdateState(state);
+            base.Update();
 
-            if (_menu == null || state is not RingerUpdateState msg)
+            if (_menu == null)
                 return;
 
-            for (int i = 0; i < _menu.RingerNoteInputs.Length; i++)
+            if (!EntMan.TryGetComponent(Owner, out RingerComponent? ringer))
+                return;
+
+            for (var i = 0; i < _menu.RingerNoteInputs.Length; i++)
             {
+                var note = ringer.Ringtone[i].ToString();
 
-                var note = msg.Ringtone[i].ToString();
-                if (RingtoneMenu.IsNote(note))
-                {
-                    _menu.PreviousNoteInputs[i] = note.Replace("sharp", "#");
-                    _menu.RingerNoteInputs[i].Text = _menu.PreviousNoteInputs[i];
-                }
+                if (!RingtoneMenu.IsNote(note))
+                    continue;
 
+                _menu.PreviousNoteInputs[i] = note.Replace("sharp", "#");
+                _menu.RingerNoteInputs[i].Text = _menu.PreviousNoteInputs[i];
             }
 
-            _menu.TestRingerButton.Disabled = msg.IsPlaying;
-        }
-
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing)
-                return;
-
-            _menu?.Dispose();
+            _menu.TestRingerButton.Disabled = ringer.Active;
         }
     }
 }

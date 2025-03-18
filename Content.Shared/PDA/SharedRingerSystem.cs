@@ -5,6 +5,7 @@ using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -18,54 +19,70 @@ public abstract class SharedRingerSystem : EntitySystem
     public const int NoteTempo = 300;
     public const float NoteDelay = 60f / NoteTempo;
 
-    [Dependency] private readonly SharedPdaSystem _pda = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPdaSystem _pda = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<RingerComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<RingerUplinkComponent, ComponentInit>(OnUplinkInit);
+
         // RingerBoundUserInterface Subscriptions
         SubscribeLocalEvent<RingerUplinkComponent, BeforeRingtoneSetEvent>(OnSetUplinkRingtone);
         SubscribeLocalEvent<RingerComponent, RingerSetRingtoneMessage>(OnSetRingtone);
-        SubscribeLocalEvent<RingerComponent, RingerPlayRingtoneMessage>(RingerPlayRingtone);
-        SubscribeLocalEvent<RingerComponent, RingerRequestUpdateInterfaceMessage>(UpdateRingerUserInterfaceDriver);
+        SubscribeLocalEvent<RingerComponent, RingerPlayRingtoneMessage>(OnRingerPlayRingtone);
     }
 
     /// <inheritdoc/>
     public override void Update(float frameTime)
     {
-        var curTime = _timing.CurTime;
-
         var ringerQuery = EntityQueryEnumerator<RingerComponent>();
         while (ringerQuery.MoveNext(out var uid, out var ringer))
         {
             if (!ringer.Active || !ringer.NextNoteTime.HasValue)
                 continue;
 
+            var curTime = _timing.CurTime;
+
             // Check if it's time to play the next note
             if (curTime < ringer.NextNoteTime.Value)
                 continue;
 
-            // Play current note
-            var ringerXform = Transform(uid);
-            _audio.PlayEntity(
-                GetSound(ringer.Ringtone[ringer.NoteCount]),
-                Filter.Empty().AddInRange(_xform.GetMapCoordinates(uid, ringerXform), ringer.Range),
-                uid,
-                true,
-                AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume)
-            );
+            // Play the note
+            // We only do this on the server because otherwise the sound either dupes or blends into a mess
+            // There's no easy way to figure out which player started it, so that we can exclude them from the list
+            // and play it separately with PlayLocal, so that it's actually predicted
+            if (_net.IsServer)
+            {
+                var ringerXform = Transform(uid);
+                _audio.PlayEntity(
+                    GetSound(ringer.Ringtone[ringer.NoteCount]),
+                    Filter.Empty().AddInRange(_xform.GetMapCoordinates(uid, ringerXform), ringer.Range),
+                    uid,
+                    true,
+                    AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume)
+                );
+            }
 
             // Schedule next note
             ringer.NextNoteTime = curTime + TimeSpan.FromSeconds(NoteDelay);
             ringer.NoteCount++;
+
+            // Dirty the fields we just changed
+            DirtyFields(uid,
+                ringer,
+                null,
+                nameof(RingerComponent.NextNoteTime),
+                nameof(RingerComponent.NoteCount));
 
             // Check if we've finished playing all notes
             if (ringer.NoteCount >= RingtoneLength)
@@ -73,14 +90,17 @@ public abstract class SharedRingerSystem : EntitySystem
                 ringer.Active = false;
                 ringer.NextNoteTime = null;
                 ringer.NoteCount = 0;
-                UpdateRingerUi((uid, ringer), false);
+
+                DirtyFields(uid,
+                    ringer,
+                    null,
+                    nameof(RingerComponent.Active),
+                    nameof(RingerComponent.NextNoteTime),
+                    nameof(RingerComponent.NoteCount));
+
+                UpdateRingerUi((uid, ringer));
             }
         }
-    }
-
-    private void UpdateRingerUserInterfaceDriver(Entity<RingerComponent> ent, ref RingerRequestUpdateInterfaceMessage args)
-    {
-        UpdateRingerUi(ent, ent.Comp.Active);
     }
 
     private void OnSetRingtone(Entity<RingerComponent> ent, ref RingerSetRingtoneMessage args)
@@ -101,7 +121,13 @@ public abstract class SharedRingerSystem : EntitySystem
         if (ev.Handled)
             return;
 
+        DirtyField(ent.AsNullable(), nameof(RingerComponent.LastRingtoneSetTime));
         UpdateRingerRingtone(ent, args.Ringtone);
+    }
+
+    private void OnRingerPlayRingtone(Entity<RingerComponent> ent, ref RingerPlayRingtoneMessage args)
+    {
+        StartRingtone(ent);
     }
 
     private void OnSetUplinkRingtone(Entity<RingerUplinkComponent> ent, ref BeforeRingtoneSetEvent args)
@@ -114,16 +140,11 @@ public abstract class SharedRingerSystem : EntitySystem
 
             // can't keep store open after locking it
             if (!ent.Comp.Unlocked)
-                _ui.CloseUi(ent.Owner, StoreUiKey.Key);
+                UI.CloseUi(ent.Owner, StoreUiKey.Key);
 
             // no saving the code to prevent meta click set on sus guys pda -> wewlad
             args.Handled = true;
         }
-    }
-
-    private void RingerPlayRingtone(Entity<RingerComponent> ent, ref RingerPlayRingtoneMessage args)
-    {
-        StartRingtone(ent);
     }
 
     public void RingerPlayRingtone(Entity<RingerComponent?> ent)
@@ -136,14 +157,30 @@ public abstract class SharedRingerSystem : EntitySystem
 
     private void StartRingtone(Entity<RingerComponent> ent)
     {
+        // Already active? Don't start it again
+        if (ent.Comp.Active)
+            return;
+
         ent.Comp.Active = true;
         ent.Comp.NoteCount = 0;
         ent.Comp.NextNoteTime = _timing.CurTime;
 
-        _popup.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), ent, Filter.Pvs(ent, 0.05f), false, PopupType.Medium);
+        // No predicted popups with PVS filtering so we do this to avoid duplication
+        if (_timing.IsFirstTimePredicted)
+        {
+            _popup.PopupPredicted(Loc.GetString("comp-ringer-vibration-popup"), ent, ent.Owner, PopupType.Medium);
+        }
+        else if (!_net.IsClient)
+        {
+            _popup.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), ent, Filter.Pvs(ent, 0.05f), false, PopupType.Medium);
+        }
 
-        Dirty(ent);
-        UpdateRingerUi(ent, true);
+        DirtyFields(ent.Owner,
+            ent.Comp,
+            null,
+            nameof(RingerComponent.NextNoteTime),
+            nameof(RingerComponent.Active),
+            nameof(RingerComponent.NoteCount));
     }
 
     /// <summary>
@@ -158,15 +195,15 @@ public abstract class SharedRingerSystem : EntitySystem
             return;
 
         ent.Comp.Unlocked = false;
-        _ui.CloseUi(ent.Owner, StoreUiKey.Key);
+        UI.CloseUi(ent.Owner, StoreUiKey.Key);
     }
 
-    protected void RandomizeRingtone(Entity<RingerComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<RingerComponent> ent, ref MapInitEvent args)
     {
         UpdateRingerRingtone(ent, GenerateRingtone());
     }
 
-    protected void RandomizeUplinkCode(Entity<RingerUplinkComponent> ent, ref ComponentInit args)
+    private void OnUplinkInit(Entity<RingerUplinkComponent> ent, ref ComponentInit args)
     {
         ent.Comp.Code = GenerateRingtone();
     }
@@ -202,18 +239,17 @@ public abstract class SharedRingerSystem : EntitySystem
     {
         // Assume validation has already happened.
         ent.Comp.Ringtone = ringtone;
-        Dirty(ent);
-        UpdateRingerUi(ent, ent.Comp.Active);
+        DirtyField(ent.AsNullable(), nameof(RingerComponent.Ringtone));
+        UpdateRingerUi(ent);
     }
 
-    private void UpdateRingerUi(Entity<RingerComponent> ent, bool isPlaying)
+    protected virtual void UpdateRingerUi(Entity<RingerComponent> ent)
     {
-        _ui.SetUiState(ent.Owner, RingerUiKey.Key, new RingerUpdateState(isPlaying, ent.Comp.Ringtone));
     }
 
     public bool ToggleRingerUi(EntityUid uid, EntityUid actor)
     {
-        _ui.TryToggleUi(uid, RingerUiKey.Key, actor);
+        UI.TryToggleUi(uid, RingerUiKey.Key, actor);
         return true;
     }
 

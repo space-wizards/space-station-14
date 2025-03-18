@@ -43,14 +43,27 @@ namespace Content.Client.PDA.Ringer
                     foo();
                     input.CursorPosition = input.Text.Length; // Resets caret position to the end of the typed input
                 };
-                input.OnTextChanged += _ =>
+                input.OnTextChanged += args =>
                 {
-                    input.Text = input.Text.ToUpper();
+                    // Convert to uppercase
+                    var upperText = args.Text.ToUpper();
 
-                    if (!IsNote(input.Text))
+                    // Filter to only valid notes
+                    var newText = upperText;
+                    if (!IsNote(newText))
+                    {
+                        newText = PreviousNoteInputs[index];
                         input.AddStyleClass("Caution");
+                    }
                     else
+                    {
+                        PreviousNoteInputs[index] = newText;
                         input.RemoveStyleClass("Caution");
+                    }
+
+                    // Only update if there's a change
+                    if (newText != input.Text)
+                        input.Text = newText;
                 };
             }
         }
