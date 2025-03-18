@@ -108,7 +108,7 @@ public abstract class SharedStrippableSystem : EntitySystem
             StartStripRemoveInventory(user, strippable.Owner, held!.Value, args.Slot);
     }
 
-    private void StripHand(
+    public void StripHand(
         Entity<HandsComponent?> user,
         Entity<HandsComponent?> target,
         string handId,
@@ -124,15 +124,6 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (!_handsSystem.TryGetHand(target.Owner, handId, out var handSlot))
             return;
-
-        // Is the target a handcuff?
-        if (TryComp<VirtualItemComponent>(handSlot.HeldEntity, out var virtualItem) &&
-            TryComp<CuffableComponent>(target.Owner, out var cuffable) &&
-            _cuffableSystem.GetAllCuffs(cuffable).Contains(virtualItem.BlockingEntity))
-        {
-            _cuffableSystem.TryUncuff(target.Owner, user, virtualItem.BlockingEntity, cuffable);
-            return;
-        }
 
         if (user.Comp.ActiveHandEntity != null && handSlot.HeldEntity == null)
             StartStripInsertHand(user, target, user.Comp.ActiveHandEntity.Value, handId, targetStrippable);
@@ -276,7 +267,7 @@ public abstract class SharedStrippableSystem : EntitySystem
     /// <summary>
     ///     Begins a DoAfter to remove the item from the target's inventory and insert it in the user's active hand.
     /// </summary>
-    private void StartStripRemoveInventory(
+    public void StartStripRemoveInventory(
         EntityUid user,
         EntityUid target,
         EntityUid item,
@@ -331,12 +322,7 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (!CanStripRemoveInventory(user, target, item, slot))
             return;
 
-        if (!_inventorySystem.TryUnequip(user, target, slot))
-            return;
-
-        RaiseLocalEvent(item, new DroppedEvent(user), true); // Gas tank internals etc.
-
-        _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth);
+        _inventorySystem.TransferInventoryItem(user, target, item, slot, stealth);
         _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s {slot} slot");
     }
 
@@ -533,17 +519,11 @@ public abstract class SharedStrippableSystem : EntitySystem
         string handName,
         bool stealth)
     {
-        if (!Resolve(user, ref user.Comp) ||
-            !Resolve(target, ref target.Comp))
-            return;
-
         if (!CanStripRemoveHand(user, target, item, handName))
             return;
 
-        _handsSystem.TryDrop(target, item, checkActionBlocker: false, handsComp: target.Comp);
-        _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth, handsComp: user.Comp);
+        _handsSystem.TransferHeldEntity(user, target, item, stealth);
         _adminLogger.Add(LogType.Stripping, LogImpact.Medium, $"{ToPrettyString(user):actor} has stripped the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
-
         // Hand update will trigger strippable update.
     }
 

@@ -21,6 +21,7 @@ using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.VirtualItem;
@@ -51,7 +52,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
     [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly ServerInventorySystem _inventory = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly StationSystem _station = default!;
@@ -89,51 +90,38 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
     private void OnRemoveItemBuiMessage(Entity<CryostorageComponent> ent, ref CryostorageRemoveItemBuiMessage args)
     {
-        var (_, comp) = ent;
-        var attachedEntity = args.Actor;
-        var cryoContained = GetEntity(args.StoredEntity);
+        var actor = args.Actor;
+        var target = GetEntity(args.StoredEntity);
 
-        if (!comp.StoredPlayers.Contains(cryoContained) || !IsInPausedMap(cryoContained))
+        if (!ent.Comp.StoredPlayers.Contains(target) || !IsInPausedMap(target))
             return;
 
-        if (!HasComp<HandsComponent>(attachedEntity))
-            return;
-
-        if (!_accessReader.IsAllowed(attachedEntity, ent))
+        if (!_accessReader.IsAllowed(actor, ent))
         {
-            _popup.PopupEntity(Loc.GetString("cryostorage-popup-access-denied"), attachedEntity, attachedEntity);
+            _popup.PopupEntity(Loc.GetString("cryostorage-popup-access-denied"), actor, actor);
             return;
         }
 
         EntityUid? entity = null;
+
         if (args.Type == CryostorageRemoveItemBuiMessage.RemovalType.Hand)
         {
-            if (_hands.TryGetHand(cryoContained, args.Key, out var hand))
+            if (_hands.TryGetHand(target, args.Key, out var hand))
             {
                 entity = hand.HeldEntity;
 
-                if (entity == null)
-                    return;
-
-                // Is the item handcuffs? If so, Uncuff the target.
-                if (TryComp<VirtualItemComponent>(entity, out var virtualItem) &&
-                    TryComp<CuffableComponent>(cryoContained, out var cuffable) &&
-                    _cuffable.GetAllCuffs(cuffable).Contains(virtualItem.BlockingEntity))
-                {
-                    _cuffable.Uncuff(cryoContained, attachedEntity, virtualItem.BlockingEntity, cuffable);
-                }
-                else
-                    _hands.TryDrop(attachedEntity, entity.Value);
+                if (entity != null)
+                    _hands.TransferHeldEntity(actor, target, entity.Value, false);
             }
         }
         else
         {
-            if (_inventory.TryGetSlotContainer(cryoContained, args.Key, out var slot, out _))
+            if (_inventory.TryGetSlotContainer(target, args.Key, out var slot, out _))
             {
                 entity = slot.ContainedEntity;
 
-                if (!_inventorySystem.TryUnequip(attachedEntity, cryoContained, slot.ID))
-                    return;
+                if (entity != null)
+                    _inventorySystem.TransferInventoryItem(actor, target, entity.Value, slot.ID, false);
             }
         }
 
@@ -141,10 +129,9 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             return;
 
         AdminLog.Add(LogType.Action, LogImpact.High,
-            $"{ToPrettyString(attachedEntity):player} removed item {ToPrettyString(entity)} from cryostorage-contained player " +
-            $"{ToPrettyString(cryoContained):player}, stored in cryostorage {ToPrettyString(ent)}");
+            $"{ToPrettyString(actor):player} removed item {ToPrettyString(entity)} from cryostorage-contained player " +
+            $"{ToPrettyString(target):player}, stored in cryostorage {ToPrettyString(ent)}");
 
-        _hands.PickupOrDrop(attachedEntity, entity.Value);
         UpdateCryostorageUIState(ent);
     }
 

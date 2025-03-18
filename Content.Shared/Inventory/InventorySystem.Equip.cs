@@ -6,6 +6,7 @@ using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.Systems;
@@ -308,6 +309,22 @@ public abstract partial class InventorySystem
             reason = itemAttemptEvent.Reason ?? reason;
             return false;
         }
+        return true;
+    }
+
+
+    public bool TransferInventoryItem(
+        EntityUid user,
+        EntityUid target,
+        EntityUid item,
+        string slot,
+        bool stealth)
+    {
+        if (!TryUnequip(user, target, slot))
+            return false;
+
+        RaiseLocalEvent(item, new DroppedEvent(user), true); // Gas tank internals etc.
+        _handsSystem.PickupOrDrop(user, item, animateUser: stealth, animate: !stealth);
         return true;
     }
 
