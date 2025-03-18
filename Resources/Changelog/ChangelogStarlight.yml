@@ -4226,4 +4226,11 @@ Entries:
   id: 585
   time: '2025-03-18T05:28:33.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/406
+- author: Happyrobot33
+  changes:
+  - message: Fixed Boxcutter sprite when in a inventory.
+    type: Fix
+  id: 586
+  time: '2025-03-18T09:39:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/407
 
