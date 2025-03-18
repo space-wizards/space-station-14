@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Handcrafted gauze now takes 3 seconds instead of 10 seconds of crafting
-    type: Tweak
-  - message: Medical techfab gauze recipe now takes 1 cloth instead of 2
-    type: Tweak
-  id: 7579
-  time: '2024-11-02T09:53:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32744
 - author: Ubaser
   changes:
   - message: Service workers can now be antagonists.
@@ -3888,3 +3879,14 @@
   id: 8078
   time: '2025-03-18T20:07:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35909
+- author: AgentSmithRadio
+  changes:
+  - message: Smite Vendors can now be restocked using the standard beverage restock
+      box.
+    type: Fix
+  - message: Smite and other soda vendors now carry more soda, and are less likely
+      to be empty at shift start.
+    type: Tweak
+  id: 8079
+  time: '2025-03-18T23:45:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35144
