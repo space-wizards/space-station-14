@@ -4,8 +4,8 @@ meta:
   engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 03/13/2025 08:55:17
-  entityCount: 14427
+  time: 03/18/2025 07:12:56
+  entityCount: 14435
 maps:
 - 1
 grids:
@@ -6061,13 +6061,6 @@ entities:
     - type: Transform
       pos: 6.5,18.5
       parent: 2
-- proto: AirlockCommandLocked
-  entities:
-  - uid: 144
-    components:
-    - type: Transform
-      pos: -13.5,18.5
-      parent: 2
 - proto: AirlockCourierGlassLocked
   entities:
   - uid: 124
@@ -6130,6 +6123,12 @@ entities:
       parent: 2
 - proto: AirlockEngineeringLocked
   entities:
+  - uid: 144
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -13.5,18.5
+      parent: 2
   - uid: 154
     components:
     - type: Transform
@@ -33546,33 +33545,21 @@ entities:
     - type: Transform
       pos: 3.4675388,-14.361706
       parent: 2
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 5205
     components:
     - type: Transform
       pos: 25.449461,-19.268694
       parent: 2
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 5207
     components:
     - type: Transform
       pos: 9.501655,-16.456053
       parent: 2
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 14389
     components:
     - type: Transform
       pos: 43.441658,-23.376392
       parent: 2
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesSunglasses
   entities:
   - uid: 5208
@@ -33592,9 +33579,6 @@ entities:
     - type: Transform
       pos: -9.466419,-48.16831
       parent: 2
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesHudDiagnostic
   entities:
   - uid: 5211
@@ -33602,9 +33586,6 @@ entities:
     - type: Transform
       pos: -43.49446,-7.521168
       parent: 2
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesHudMedical
   entities:
   - uid: 5212
@@ -33612,17 +33593,11 @@ entities:
     - type: Transform
       pos: -14.516666,-20.606585
       parent: 2
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 5213
     components:
     - type: Transform
       pos: -14.766666,-20.481499
       parent: 2
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesHudSecurity
   entities:
   - uid: 5214
@@ -33630,9 +33605,6 @@ entities:
     - type: Transform
       pos: -35.493202,16.440695
       parent: 2
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingHandsGlovesColorGray
   entities:
   - uid: 5215
@@ -39100,6 +39072,11 @@ entities:
     components:
     - type: Transform
       pos: -36.5,14.5
+      parent: 2
+  - uid: 14434
+    components:
+    - type: Transform
+      pos: 5.5,-42.5
       parent: 2
 - proto: DonkpocketBoxSpawner
   entities:
@@ -63473,6 +63450,24 @@ entities:
     - type: Transform
       pos: 11.5,54.5
       parent: 2
+  - uid: 14428
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -2.5,30.5
+      parent: 2
+  - uid: 14429
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -25.5,-29.5
+      parent: 2
+  - uid: 14432
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 4.5,-43.5
+      parent: 2
 - proto: IntercomCommon
   entities:
   - uid: 9500
@@ -63513,11 +63508,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 10.5,8.5
-      parent: 2
-  - uid: 9507
-    components:
-    - type: Transform
-      pos: -15.5,-31.5
       parent: 2
   - uid: 9508
     components:
@@ -63592,8 +63582,18 @@ entities:
       rot: 3.141592653589793 rad
       pos: -35.5,9.5
       parent: 2
+  - uid: 14433
+    components:
+    - type: Transform
+      pos: 18.5,-13.5
+      parent: 2
 - proto: IntercomService
   entities:
+  - uid: 9507
+    components:
+    - type: Transform
+      pos: -15.5,-31.5
+      parent: 2
   - uid: 9519
     components:
     - type: Transform
@@ -63626,6 +63626,24 @@ entities:
     components:
     - type: Transform
       pos: -20.5,-10.5
+      parent: 2
+  - uid: 14200
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 1.5,-3.5
+      parent: 2
+  - uid: 14430
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 3.5,-36.5
+      parent: 2
+  - uid: 14431
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 11.5,-42.5
       parent: 2
 - proto: IntercomSupply
   entities:
@@ -75908,6 +75926,13 @@ entities:
     components:
     - type: Transform
       pos: -28.5,-17.5
+      parent: 2
+- proto: SpawnMobPenguinOswald
+  entities:
+  - uid: 14435
+    components:
+    - type: Transform
+      pos: 5.5,-42.5
       parent: 2
 - proto: SpawnMobPoly
   entities:
@@ -91948,17 +91973,11 @@ entities:
     - type: Transform
       pos: -19.5,-37.5
       parent: 2
-    - type: ContainerContainer
-      containers:
-        bucket: !type:ContainerSlot {}
   - uid: 14174
     components:
     - type: Transform
       pos: -21.5,-39.5
       parent: 2
-    - type: ContainerContainer
-      containers:
-        bucket: !type:ContainerSlot {}
 - proto: Wrench
   entities:
   - uid: 14175

@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/18/2025 06:25:29
+  entityCount: 10195
+maps:
+- 1
+grids:
+- 2
+orphans: []
+nullspace: []
 tilemap:
   50: Space
   59: FloorAsteroidSand
@@ -48,7 +59,6 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
-    - type: LoadedMap
   - uid: 2
     components:
     - type: MetaData
@@ -23328,17 +23338,11 @@ entities:
       parent: 2
     - type: Physics
       canCollide: False
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 3516
     components:
     - type: Transform
       pos: -15.023331,-10.379705
       parent: 2
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesMeson
   entities:
   - uid: 3517
@@ -23346,9 +23350,6 @@ entities:
     - type: Transform
       pos: -31.359314,-1.6768641
       parent: 2
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingHandsGlovesColorYellow
   entities:
   - uid: 3518
@@ -27473,6 +27474,11 @@ entities:
     components:
     - type: Transform
       pos: 10.5,15.5
+      parent: 2
+  - uid: 10185
+    components:
+    - type: Transform
+      pos: 30.5,-15.5
       parent: 2
 - proto: DonkpocketBoxSpawner
   entities:
@@ -47958,6 +47964,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -62.5,-28.5
       parent: 2
+  - uid: 10183
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 33.5,10.5
+      parent: 2
 - proto: IntercomCommand
   entities:
   - uid: 6756
@@ -47965,6 +47977,54 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 33.5,-3.5
+      parent: 2
+  - uid: 10184
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 37.5,2.5
+      parent: 2
+  - uid: 10187
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 31.5,-14.5
+      parent: 2
+  - uid: 10188
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 1.5,-13.5
+      parent: 2
+  - uid: 10189
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -20.5,-11.5
+      parent: 2
+  - uid: 10190
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -38.5,7.5
+      parent: 2
+  - uid: 10191
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -27.5,18.5
+      parent: 2
+  - uid: 10193
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 29.5,-4.5
+      parent: 2
+  - uid: 10195
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 0.5,19.5
       parent: 2
 - proto: IntercomCommon
   entities:
@@ -48001,6 +48061,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: 2.5,-4.5
       parent: 2
+  - uid: 10182
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -1.5,-3.5
+      parent: 2
 - proto: IntercomScience
   entities:
   - uid: 6763
@@ -48017,6 +48083,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 16.5,8.5
       parent: 2
+  - uid: 10192
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -1.5,25.5
+      parent: 2
 - proto: IntercomService
   entities:
   - uid: 6765
@@ -48024,6 +48096,12 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -7.5,3.5
+      parent: 2
+  - uid: 10194
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 17.5,-3.5
       parent: 2
 - proto: IntercomSupply
   entities:
@@ -48335,7 +48413,7 @@ entities:
     - type: Transform
       pos: 0.5,-14.5
       parent: 2
-- proto: LockerCourierFilledHardsuit
+- proto: LockerCourierFilled
   entities:
   - uid: 3585
     components:
@@ -56032,6 +56110,13 @@ entities:
     components:
     - type: Transform
       pos: -38.5,-5.5
+      parent: 2
+- proto: SpawnMobPenguinOswald
+  entities:
+  - uid: 10186
+    components:
+    - type: Transform
+      pos: 30.5,-15.5
       parent: 2
 - proto: SpawnMobPoly
   entities:
@@ -67364,9 +67449,6 @@ entities:
     - type: Transform
       pos: 32.5,-16.5
       parent: 2
-    - type: ContainerContainer
-      containers:
-        bucket: !type:ContainerSlot {}
 - proto: Wrench
   entities:
   - uid: 9905
