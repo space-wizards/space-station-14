@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC0-1.0",
-  "copyright": "Made by brainfood1183 (github) for ss14",
+  "copyright": "Made by brainfood1183 (github) for ss14 and modified by Flareguy for ss14. station_map_broken based on broken state in Cryogenic2.dmi from vgstation13 at https://github.com/vgstation-coders/vgstation13/blob/96246eed6e19899971a6d18e849fa6fe0b8ab52a/icons/obj/Cryogenic2.dmi",
   "size": {
     "x": 32,
     "y": 32

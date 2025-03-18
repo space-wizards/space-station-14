@@ -31,6 +31,11 @@
     - /Audio/Effects/Emotes/clap4.ogg
 
 - type: soundCollection
+  id: ClapSingle
+  files:
+  - /Audio/Effects/Emotes/clap-single.ogg
+
+- type: soundCollection
   id: Snaps
   files:
     - /Audio/Effects/Emotes/snap1.ogg
@@ -92,3 +97,8 @@
   id: Weh
   files:
   - /Audio/Items/Toys/weh.ogg
+
+- type: soundCollection
+  id: Hew
+  files:
+  - /Audio/Items/Toys/hew.ogg

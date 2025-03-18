@@ -1,6 +1,5 @@
 <BoxContainer xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         xmlns:s="clr-namespace:Content.Client.Stylesheets"
          xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
          xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
          Orientation="Vertical" HorizontalExpand ="True" Margin="0 0 0 3">
@@ -62,7 +61,7 @@
                     </PanelContainer>
                 </BoxContainer>
 
-                <!-- If the alarm is inactive, this is label is diplayed instead -->
+                <!-- If the alarm is inactive, this is label is displayed instead -->
                 <Label Name="NoDataLabel" Text="{Loc 'atmos-alerts-window-no-data-available'}" HorizontalAlignment="Center" Margin="0 15" FontColorOverride="#a9a9a9" ReservesSpace="False" Visible="False"></Label>
 
                 <!-- Silencing progress bar -->

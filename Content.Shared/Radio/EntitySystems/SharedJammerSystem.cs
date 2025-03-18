@@ -42,10 +42,12 @@ public abstract class SharedJammerSystem : EntitySystem
                 {
                     entity.Comp.SelectedPowerLevel = currIndex;
                     Dirty(entity);
-                    if (_jammer.TrySetRange(entity.Owner, GetCurrentRange(entity)))
-                    {
-                        Popup.PopupPredicted(Loc.GetString(setting.Message), user, user);
-                    }
+
+                    // If the jammer is off, this won't do anything which is fine.
+                    // The range should be updated when it turns on again!
+                    _jammer.TrySetRange(entity.Owner, GetCurrentRange(entity));
+
+                    Popup.PopupClient(Loc.GetString(setting.Message), user, user);
                 },
                 Text = Loc.GetString(setting.Name),
             };
