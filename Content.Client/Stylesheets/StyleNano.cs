@@ -65,6 +65,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassChatLineEdit = "chatLineEdit";
         public const string StyleClassChatChannelSelectorButton = "chatSelectorOptionButton";
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
+        public const string StyleClassChatScrollDownButton = "chatScrollDownButton";
         public const string StyleClassStorageButton = "storageButton";
 
         public const string StyleClassSliderRed = "Red";
@@ -343,6 +344,16 @@ namespace Content.Client.Stylesheets
             };
             chatFilterButton.SetPatchMargin(StyleBox.Margin.All, 5);
             chatFilterButton.SetPadding(StyleBox.Margin.All, 2);
+
+            var chatScrollDownButtonTex = resCache.GetTexture("/Textures/Interface/Nano/rounded_button_half_bordered.svg.96dpi.png");
+            var chatScrollDownButton = new StyleBoxTexture
+            {
+                Texture = chatScrollDownButtonTex,
+            };
+            chatScrollDownButton.SetPatchMargin(StyleBox.Margin.All, 5);
+            chatScrollDownButton.SetPadding(StyleBox.Margin.All, 2);
+            chatScrollDownButton.SetPadding(StyleBox.Margin.Top, 0);
+            chatScrollDownButton.SetPadding(StyleBox.Margin.Bottom, 0);
 
             var smallButtonTex = resCache.GetTexture("/Textures/Interface/Nano/button_small.svg.96dpi.png");
             var smallButtonBase = new StyleBoxTexture
@@ -1307,6 +1318,12 @@ namespace Content.Client.Stylesheets
                 {
                     new StyleProperty(Button.StylePropertyStyleBox, chatChannelButton),
                 }),
+
+                // chat scroll button
+                Element<Button>()
+                    .Class(StyleClassChatScrollDownButton)
+                    .Prop(Button.StylePropertyStyleBox, chatScrollDownButton),
+
                 // chat filter button
                 new StyleRule(new SelectorElement(typeof(ContainerButton), new[] {StyleClassChatFilterOptionButton}, null, null), new[]
                 {
