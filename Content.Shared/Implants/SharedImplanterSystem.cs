@@ -75,13 +75,16 @@ public abstract class SharedImplanterSystem : EntitySystem
         return implanted.ImplantContainer.ContainedEntities.Any(entity => Prototype(entity) == implantPrototype);
     }
 
-    public bool CheckIncompatibleImplant(EntityUid target, EntityWhitelist? implants)
+    public bool CheckIncompatibleImplant(EntityUid target, List<EntProtoId> implants)
     {
         if (!TryComp<ImplantedComponent>(target, out var implanted))
             return false;
-        if (implants is null)
-            return false;
-        return implanted.ImplantContainer.ContainedEntities.Any(entity => _whitelistSystem.IsWhitelistPass(implants, entity));
+        foreach (var blacklistedImplant in implants)
+        {
+            if (implanted.ImplantContainer.ContainedEntities.Any(entity => blacklistedImplant == Prototype(entity)!))
+                return true;
+        }
+        return false;
     }
 
     private void OnVerb(EntityUid uid, ImplanterComponent component, GetVerbsEvent<InteractionVerb> args)

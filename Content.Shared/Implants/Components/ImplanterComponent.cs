@@ -34,7 +34,7 @@ public sealed partial class ImplanterComponent : Component
     /// Blacklist to check implants against before implanting - displays a popup whenever it prevents an implant.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityWhitelist? ImplantBlacklist = null;
+    public List<EntProtoId> ImplantBlacklist = new();
 
     /// <summary>
     /// Used for implanters that start with specific implants
