@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/89456d18dd3e7c330839121e3c6bc8c609700137/icons/obj/ammo.dmi , tweaked by Alekshhh",
+  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/ca674eff9d23e04357b7609ef7e07eadfc1a993f, modified by ps3moira (github)",
   "size": {
     "x": 32,
     "y": 32
@@ -11,7 +11,7 @@
       "name": "base"
     },
     {
-      "name": "base-b"
+      "name": "base-big"
     },
     {
       "name": "mag-1"
@@ -23,25 +23,19 @@
       "name": "mag-3"
     },
     {
-      "name": "magb-1"
+      "name": "mag-big-1"
     },
     {
-      "name": "magb-2"
+      "name": "mag-big-2"
     },
     {
-      "name": "magb-3"
+      "name": "mag-big-3"
     },
     {
       "name": "incendiary"
     },
     {
       "name": "practice"
-    },
-    {
-      "name": "practice-b"
-    },
-    {
-      "name": "rubber"
     },
     {
       "name": "uranium"

@@ -94,11 +94,11 @@ public sealed class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComp
                 continue;
 
             // use the access reader from the door electronics if they exist
-            if (!_access.GetMainAccessReader(airlockUid, out var accessComp))
+            if (!_access.GetMainAccessReader(airlockUid, out var accessEnt))
                 continue;
 
             // check access
-            if (!_access.AreAccessTagsAllowed(accessIds, accessComp) || _access.AreAccessTagsAllowed(virusComp.Blacklist, accessComp))
+            if (!_access.AreAccessTagsAllowed(accessIds, accessEnt.Value.Comp) || _access.AreAccessTagsAllowed(virusComp.Blacklist, accessEnt.Value.Comp))
                 continue;
 
             // open and bolt airlocks
