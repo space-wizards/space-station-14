@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: K-Dynamic
   changes:
-  - message: Pills are explosion resistant.
-    type: Tweak
-  id: 7578
-  time: '2024-11-02T09:51:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32458
-- author: K-Dynamic
-  changes:
   - message: Handcrafted gauze now takes 3 seconds instead of 10 seconds of crafting
     type: Tweak
   - message: Medical techfab gauze recipe now takes 1 cloth instead of 2
@@ -3888,3 +3881,10 @@
   id: 8077
   time: '2025-03-18T08:00:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35898
+- author: slarticodefast
+  changes:
+  - message: Paradox Clones now start with their suit sensors turned off.
+    type: Tweak
+  id: 8078
+  time: '2025-03-18T20:07:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35909
