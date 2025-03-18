@@ -48,7 +48,6 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     [DataField]
     public bool CopyImplants = true;
 
-
     /// <summary>
     ///     Whitelist for the equipment allowed to be copied.
     /// </summary>

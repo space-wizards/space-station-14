@@ -210,6 +210,11 @@ public sealed class CloningSystem : EntitySystem
     ///     Might result in duplicates if the target already has them.
     ///     Can copy the storage inside a storage implant according to a whitelist and blacklist.
     /// </summary>
+    /// <param name="original">Entity to copy implants from.</param>
+    /// <param name="target">Entity to copy implants to.</param>
+    /// <param name="copyStorage">If true will copy storage of the implants (E.g storage implant)</param>
+    /// <param name="whitelist">Whitelist for the storage copy (If copyStorage is true)</param>
+    /// <param name="blacklist">Blacklist for the storage copy (If copyStorage is true)</param>
     public void CopyImplants(Entity<ImplantedComponent?> original, EntityUid target, bool copyStorage = false, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
     {
         if (!Resolve(original, ref original.Comp, false))
