@@ -59,6 +59,9 @@ namespace Content.Client.Access.UI
 
             NameLineEdit.IsValid = s => s.Length <= NameMaxLength;
             JobLineEdit.IsValid = s => s.Length <= JobMaxLength;
+
+            CTabContainer.SetTabTitle(0, Loc.GetString("agent-id-ui-tab-settings"));
+            CTabContainer.SetTabTitle(1, Loc.GetString("agent-id-ui-tab-job-icons"));
         }
 
         //TODO rename, remove currentJobIconId, summary
