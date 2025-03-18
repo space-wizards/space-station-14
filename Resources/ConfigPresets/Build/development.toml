@@ -2,7 +2,7 @@
 # Straight in-game baby
 lobbyenabled = false
 # Dev map for faster loading & convenience
-map = "Nomads"
+map = "Dev"
 role_timers = false
 
 [events]
