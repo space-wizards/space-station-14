@@ -65,8 +65,10 @@
   id: Antag
   parent: BaseClone
   components:
-  - HeadRevolutionary
-  - Revolutionary
+  # disabled until mind roles are properly copied so they show up on the round end screen
+  # - HeadRevolutionary
+  # - Revolutionary
+  - NukeOperative
 
 - type: cloningSettings
   id: CloningPod
