@@ -89,7 +89,7 @@
 /* - Fill gun safe? Or just get rid of it? And rename. */
 - Make sure QM has perms for the safe
 
-- Engineering: Give Command, Security encryption keys to CE
+/* - Engineering: Give Command, Security encryption keys to CE */
 
 /* - Evac: Make the shuttle like the Amogus lobby. */
 -	Rename + fill ore crates
@@ -206,6 +206,169 @@ What I currently have left:
 -Various hooking up levers, buttons, airlocks
 -All the bits and pieces above that this doesn't cover
 ==
+
+==
+Things to fix:
+-Arrivals going to wrong dock
+/* -Lights around command table */
+Station beacons:
+	Cafeteria
+	Shields
+	/* Captain (double) */
+	Execution, Airlock
+	Storage
+	Electrical
+	/* Brig (double) */
+	Evac Medbay
+	Medbay
+	Restaurant
+	/* Service Docking Arm (double) */
+	High-sec brig
+	Reactor
+	Nuke Chamber
+	/* AI Dock (says "General") */
+	Both Lawyers
+	/* Chem (double) */
+	Sec: labels too crowded
+	/* Execution: Labels too long */
+	/* Nuke chamber: Label too long */
+	/* Cryopod + Surgery: Move one above */
+	Wait, a bunch of these just turned on...? Maybe a power issue.
+Air sensors: Cafeteria? Meeting? Chapel + Def? Library + News? Botany + Kitchen? TEG? AI Dock?
+	Little compartments like: High-sec brig desk, cams at sec, interrogation room cell...
+	Also high-sec brigs antechamber, armory front section
+	coms chamber
+	Hallway next to robotics
+	Admin table public computer
+	Admin atmos corner
+	Inner storage
+	Maints chapel
+	Nuke room
+	AI approach airlock?
+	South AME mini-maints
+	Bathroom stalls?
+	Little room next to engie front
+	Evac escape pod
+	Evac maints airlock and little room that I forget if it's a substation?
+	^ I think these all need to be hooked up to an air alarm?
+		Some of them already have sensors.
+	Arrivals and service dock are spaced! Science seems leaky, too? Maybe? (But not the arti room?)
+
+Airlocks:
+	Atmos
+	Salv Shuttle
+	Evac escape pod
+	Evac secondary dock
+	Evac maints
+	Perma entrance
+	Engie - PA grid
+
+Label buttons:
+	Atmos
+
+/* Atmos needs wires */
+/* Def/prosc signs: Hidden under disposal chute and wires */
+"Distribution Loop: No data available"
+	Gas sensor for distro loop now has LV cable. Did that fix it?
+Camera monitors not finding camera networks
+/* Two Hamlet cages, and both fell off the table. */
+/* Captain's suit room door unpowered (and this room kinda sucks in general) */
+/* Should put something at end of maints hallway just north of Nav hall */
+/* Should put something in chamber in maints NW of shields */
+Mice in sci mice crate no air
+Arti analyzers not connected (Am I sure I want to fix this?)
+/* Maints dart room no power */
+Disposals north door no power...?
+Coms room runs through its battery really dang quick
+	Over 10000 W
+	Replaced with High Cap. Two higher levels possible.
+Admin also runs dry on power right quick (Load: 5409 W)
+	Replaced with High Cap.
+/* HoP's personal room kinda boring */
+/* Secret door from chapel to law...? Is this a good idea? */
+/* Second chapel door shutter not connected */
+	/* Yes it was, but I extended an LV cable a bit */
+/* Execution room doors both overlapping with wall */
+/* Inner doors, too */
+/* Execution audience telescreen not accessible (wrong facing?) */
+/* Disposals airlock last row of belts (under blast doors) not linked to */
+	/* execution room button */
+/* Trash in disposals airlock can get stuck under plastic flaps */
+Execution rites room telescreen also finds no cams
+Storage NW maints door *does* have power
+	At both ends
+		Moved some LV cables from other circuits away
+	But inner doors don't
+		They should! They're connected to the rest of the maints wiring.
+/* Tools table has a big empty spot */
+/* Cargo conveyor belt plastic flaps missing occluder */
+Mid-cargo maints: Grilles don't actually block vision
+	What if I just added an occluder component to them...?
+	Do they block vision in the context of only PDA light?
+	/* and glass walls do block fun */
+Mid electrical hallway doors: Only top one powered? This is the case in multiple places?
+Cargo dock conveyor belts are probably wrong
+/* Salv conveyor belt outer lever not hooked up */
+/* Salv docking bay/shuttle workshop: No power at all? */
+/* Asphalt shows cables + disposal chutes */
+Medbay wallmount nanomeds facing wrong way
+	Re-added facing south. Lights might also be blocking?
+/* CMO locker right in front of the door for some reason? */
+"Surgery" in maints: Grilles still don't block LoS
+/* Librarian shutter button not hooked up */
+	Yes it is.
+/* Library rear wall (where the air alarm is) really feels like */
+	/* it could use a door or something? */
+/* Chempendium in chem just kinda sitting on the floor */
+/* Brigmed locker blocking door */
+/* 	Brigmed locker also has a disabler, sec headset, and stuff I */
+/* 	don't want to just give to medics or w/e. */
+Brigmed wall locker empty
+	Replaced with 'medicine wall locker [Filled]'
+/* Brigmed defib on top of air alarm */
+/* Brig maints door not blocked by camera, needs better protected */
+Prisoner wall closets also start empty
+	Filled 'em
+/* Interrogation room space law book just kinda sitting on the floor */
+/* High-sec brig telepad facing wrong way */
+	Replaced it with an east-facing one, but it already was east.
+Armory needs more armor
+/* Check wall TV facings - the one by EVA at least is wrong. */
+	Nope. I think it was a power issue. They're very obvious when wrong.
+Bridge front window very prone to spacing
+Perma + high sec brig no eva suits for prisoners?
+Could also use a sec locker
+Engineering break room also prone to spacing
+Solars prone to meteor breakages
+/* Nitrogen closet by maints chapel is empty */
+Weird color room in east service maints starts with lights on
+Musician's formal closet starts empty?
+NE solars: It'd be nice to have power monitoring
+Weapons weapons have machine boards in 'em! Gotta break those, too
+Chef's closets have stuff in 'em they shouldn't? Like, crowbars and N2 tanks.
+/* Restaurant door bolt button not linked */
+	Yes it is. (Restaurant restroom.)
+	Could other bathroom stalls have these?
+Tider shop: Maybe rotate shutters, maybe get rid of some of the counter frames - 
+	or the disposal thingy - so it's less annoying to walk around in.
+
+/* Security upper: APC not labeled or connected to LV */
+Security hallway to brig second light on north wall is redundant
+Deleting and replacing dispos north airlock that wasn't getting power
+	seems to have fixed it...?
+/* Unutilized substation above O2: Room is blocked by table/power monitor */
+	Might be nice to place more power monitoring computers around
+	in general.
+Tree room: Blocked by grave and, uh, tree
+/* Lockers behind clown's room are positioned weird. Possibly the */
+	/* lightbulb is getting in the way? No, it was literally on top of a PACMAN somehow./*
+Arrivals problem: The docks are just flat-out wrong. Should be, like, 5 wall tiles in between doors or something.
+	I also need to double-check if the shuttle even fits in the space.
+
+Also: When I'm testing in Release mode, I get these exceptions in the server terminal 
+	about the no transform component thing. Can I use those to hunt it
+	down live?
+On the second try I never got this exception. Maybe I just never visited that part of the station?
 
 THINGS I COULD MAKE:
 - Plastic table
