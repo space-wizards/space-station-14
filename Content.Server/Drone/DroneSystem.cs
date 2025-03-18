@@ -145,8 +145,8 @@ namespace Content.Server.Drone
         {
             UpdateBatteryAlert((uid, component));
 
-            // if we run out of charge, kill the drone
-            if (!_powerCell.HasDrawCharge(uid))
+            // if we run out of charge & the drone isn't being deleted, kill the drone
+            if (!TerminatingOrDeleted(uid) && !_powerCell.HasDrawCharge(uid))
             {
                 _mobStateSystem.ChangeMobState(uid, MobState.Dead);
             }
@@ -156,7 +156,8 @@ namespace Content.Server.Drone
 
         private void OnPowerCellSlotEmpty(EntityUid uid, DroneComponent component, ref PowerCellSlotEmptyEvent args)
         {
-            _mobStateSystem.ChangeMobState(uid, MobState.Dead);
+            if (!TerminatingOrDeleted(uid))
+                _mobStateSystem.ChangeMobState(uid, MobState.Dead);
         }
 
         private void OnMindAdded(EntityUid uid, DroneComponent drone, MindAddedMessage args)
