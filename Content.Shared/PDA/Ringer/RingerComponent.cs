@@ -24,6 +24,12 @@ public sealed partial class RingerComponent : Component
     public TimeSpan? NextNoteTime;
 
     /// <summary>
+    /// The cooldown before the ringtone can be changed again.
+    /// </summary>
+    [DataField]
+    public TimeSpan Cooldown = TimeSpan.FromMilliseconds(250);
+
+    /// <summary>
     /// Keeps track of how many notes have elapsed if the ringer component is playing.
     /// </summary>
     [DataField]

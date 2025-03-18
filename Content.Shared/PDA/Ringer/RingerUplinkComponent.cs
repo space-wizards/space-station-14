@@ -11,7 +11,7 @@ public sealed partial class RingerUplinkComponent : Component
     /// Notes to set ringtone to in order to lock or unlock the uplink.
     /// Automatically initialized to random notes.
     /// </summary>
-    [DataField(serverOnly: true)]
+    [DataField]
     public Note[] Code = new Note[SharedRingerSystem.RingtoneLength];
 
     /// <summary>
