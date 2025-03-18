@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Added the improvised grappling gun, craftable with the crafting menu.
-    type: Add
-  id: 844
-  time: '2025-01-02T10:57:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1177
 - author: aada
   changes:
   - message: Bananium can now be smelted in a microwave.
@@ -4102,3 +4095,10 @@
   id: 1343
   time: '2025-03-17T18:52:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1917
+- author: formlessnameless
+  changes:
+  - message: Night vision and thermal vision now exist!
+    type: Add
+  id: 1344
+  time: '2025-03-18T20:40:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1972
