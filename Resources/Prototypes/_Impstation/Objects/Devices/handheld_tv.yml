@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: CameraHandheld
-  parent: [ BaseItem ]
-  suffix: entertainment
+  parent: BaseItem
+  suffix: Entertainment
   name: handheld television
   description: A nifty device that lets you scare yourself from anywhere on the station!
   components:
@@ -10,41 +10,36 @@
     sprite: _Impstation/Objects/Devices/handheld_tv.rsi
     layers:
     - state: handheld_tv
-
   - type: Item
-
   - type: ActivatableUI
     requireActiveHand: false
     inHandsOnly: true
     key: enum.SurveillanceCameraMonitorUiKey.Key
-
   - type: UserInterface
     interfaces:
       enum.SurveillanceCameraMonitorUiKey.Key:
         type: SurveillanceCameraMonitorBoundUserInterface
-
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: SurveillanceCamera
     transmitFrequencyId: SurveillanceCamera
-
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot {}
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
   - type: ItemSlots
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
-
   - type: DamageOtherOnHit # imp
     damage:
       types:
         Blunt: 5
   - type: WirelessNetworkConnection
     range: 200
-
   - type: DeviceNetworkRequiresPower
-
   - type: Speech
     speechVerb: Robotic
-
   - type: SurveillanceCameraSpeaker
-
   - type: SurveillanceCameraMonitor
