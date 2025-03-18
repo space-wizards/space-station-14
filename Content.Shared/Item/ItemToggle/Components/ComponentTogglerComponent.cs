@@ -29,4 +29,10 @@ public sealed partial class ComponentTogglerComponent : Component
     /// </summary>
     [DataField]
     public bool Parent;
+
+    /// <summary>
+    /// Tracks the target of the component toggle.
+    /// </summary>
+    [DataField]
+    public EntityUid? Target;
 }
