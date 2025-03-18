@@ -43141,7 +43141,7 @@ entities:
     - type: Transform
       pos: -1.4979519,1.1034296
       parent: 1668
-- proto: OmnizineChemistryBottle
+- proto: ChemistryBottleOmnizine
   entities:
   - uid: 6862
     components:
