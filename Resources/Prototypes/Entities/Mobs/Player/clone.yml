@@ -4,6 +4,8 @@
 # The datafields of the components are only shallow copied using CopyComp.
 # Subscribe to CloningEvent instead if that is not enough.
 
+# for basic traits etc.
+# used by the random clone spawner
 - type: cloningSettings
   id: BaseClone
   components:
@@ -61,15 +63,16 @@
     - HumanoidAppearance # will cause problems for downstream felinids getting cloned as Urists
     - VirtualItem
 
+# all antagonist roles
 - type: cloningSettings
   id: Antag
   parent: BaseClone
   components:
-  # disabled until mind roles are properly copied so they show up on the round end screen
-  # - HeadRevolutionary
-  # - Revolutionary
+  - HeadRevolutionary
+  - Revolutionary
   - NukeOperative
 
+# for cloning pods
 - type: cloningSettings
   id: CloningPod
   parent: Antag
