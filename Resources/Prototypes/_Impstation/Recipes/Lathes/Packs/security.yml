@@ -21,6 +21,7 @@
   id: SecurityEquipmentImp
   recipes:
   - PRIbarPlusConversionKit
+  - ClothingEyesNightVisionSecurityGoggles
 
 - type: latheRecipePack
   id: SecurityAmmoImp

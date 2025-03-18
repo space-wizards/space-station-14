@@ -857,6 +857,10 @@
         Heat: 0.80
         Radiation: 0.80
         Caustic: 0.95
+  - type: ThermalVision # EE edit
+    isEquipment: true
+    color: "#98EEFB"
+    lightRadius: 15
 
 #MISC. HARDSUITS
 #Clown Hardsuit

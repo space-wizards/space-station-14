@@ -149,6 +149,8 @@
     - id: ToolboxSyndicateFilled
     - id: BalloonSyn
     - id: WeaponSniperMosin
+    - id: ClothingEyesNightVisionGogglesSyndie
+    - id: ClothingEyesThermalVisionGogglesSyndie
       weight: 2
 
 - type: entityTable

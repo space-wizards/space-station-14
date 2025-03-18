@@ -491,6 +491,7 @@
     - ImpMedStatic # Imp
     dynamicPacks:
     - Chemistry
+    - ImpMedDynamic # Imp
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: StealTarget

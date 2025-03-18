@@ -300,3 +300,5 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
   - type: FlashImmunity
+  - type: NightVision # EE edit
+    isEquipment: true

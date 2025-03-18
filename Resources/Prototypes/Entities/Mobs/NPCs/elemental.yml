@@ -73,6 +73,12 @@
   - type: MobMover
   - type: ZombieImmune
   - type: ProtectedFromStepTriggers
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   abstract: true
@@ -298,6 +304,12 @@
     solution: bloodstream
   - type: DrainableSolution
     solution: bloodstream
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   name: Reagent Slime Spawner
@@ -408,14 +420,14 @@
   - type: Bloodstream
     bloodReagent: THC
   - type: PointLight
-    color: "#808080"
+    color: "#50595C"
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/elemental.rsi
     layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
-        color: "#808080"
+        color: "#50595C"
 
 - type: entity
   id: ReagentSlimeBicaridine

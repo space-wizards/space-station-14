@@ -36,7 +36,13 @@
     speedModifierThresholds:
       60: 0.7
       80: 0.5
-      
+  - type: NightVision # EE edit - don't know where things will go in the future but shadow mobs should be able to see through shadow clouds.
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
+
 - type: entity
   name: shadow cat
   parent: BaseShadowMob
