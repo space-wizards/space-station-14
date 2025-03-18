@@ -1,0 +1,4883 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: under-chaplain
+  name: preacher's clothing
+  description: Typical priest clothing.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/chaplain.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/chaplain.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ballas1
+  name: white t-shirt and purple shorts
+  description: An oversized white t-shirt and purple cargo shorts.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ballas1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ballas1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ballas2
+  name: baggy black clothing
+  description: An oversized black outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ballas2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ballas2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ballas3
+  name: purple shirt and khaki pants
+  description: An oversized purple shirt and khaki cargo pants.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ballas3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ballas3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-grove1
+  name: green sweatshirt and jeans
+  description: An oversized green sweatshirt and jeans.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/grove1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/grove1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-grove2
+  name: green checkered outfit
+  description: A green checkered shirt and beige pants.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/grove2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/grove2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-grove3
+  name: green jersey and jeans
+  description: A green basketball jersey and black jeans.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/grove3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/grove3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-chad
+  name: chad clothing
+  description: Wow!
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/chad.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/chad.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-squid_contestant
+  name: contestant clothing
+  description: regular jumpsuit for contestants
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/squid_player.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/squid_player.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-bodyglove
+  name: replicant black bodyglove
+  description: A tight bodyglove worn by troopers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/replicant_bodyglove.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/replicant_bodyglove.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-redbodyglove
+  name: red bodyglove
+  description: A tight red bodyglove worn by Red guards.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/redbodyglove.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/redbodyglove.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-bluebodyglove
+  name: blue bodyglove
+  description: A tight blue bodyglove worn by senate guards.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bluebodyglove.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bluebodyglove.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-impstormofficer
+  name: imperial stormtrooper officer uniform
+  description: A double-breasted black tunic rank and trousers with a metal plac denoting rank for NCO's in the Stormtrooper Corps.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/imp_stormofficer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/imp_stormofficer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-impnavyofficer
+  name: imperial stormtrooper officer uniform
+  description: A double-breasted olive-green tunic rank and trousers with a metal plac denoting rank for CO's in the Imperial Navy.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/impofficer_captain.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/impofficer_captain.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-imptechnician
+  name: imperial technician grey uniform
+  description: A grey jumpsuit for technician's in the Engineering Corps.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/imp_technician_grey.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/imp_technician_grey.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-imptechnician2
+  name: imperial technician blue uniform
+  description: A blue jumpsuit for technician's in the Engineering Corps.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/imp_technician_blue.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/imp_technician_blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-imptechnician3
+  name: imperial technician black uniform
+  description: A black jumpsuit for technician's in the Engineering Corps.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/imp_technician_black.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/imp_technician_black.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-repensignofficer
+  name: republic ensign uniform
+  description: A double-breasted blue-grey tunic and trousers for NCO's in the Republic Navy.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/repofficer_ensign.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/repofficer_ensign.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-repmedicalofficer
+  name: republic medical officer
+  description: A double-breasted white-grey tunic and trousers for NCO's in the Republic Medical Corps.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/repofficer_medical.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/repofficer_medical.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-repnavyofficer
+  name: republic naval officer uniform
+  description: A double-breasted olive-green tunic rank and trousers with a metal plac denoting rank for CO's in the Republic Navy.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/repofficer_navcaptain.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/repofficer_navcaptain.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-navalcaptain
+  name: republic naval captain uniform
+  description: A well adjusted captain's jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/repcaptain_uniform.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/repcaptain_uniform.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-navalensign
+  name: republic naval ensign uniform
+  description: A well adjusted ensign's jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/repensign_uniform.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/repensign_uniform.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-navalsurgeon
+  name: republic medical officer uniform
+  description: A well adjusted medical jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/repmedical_uniform.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/repmedical_uniform.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-dartharmor
+  name: black cybernetic armor
+  description: A dark mechanical armor made for souless individuals.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/darth_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/darth_armor.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-navallieutenant
+  name: imperial naval lieutenant uniform
+  description: A well adjusted lieutenant's jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/imp_stormofficer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/imp_stormofficer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-wise_tutor
+  name: wise tutor's outfit
+  description: A loose outfit worn by the wise & experienced.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/wise_tutor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/wise_tutor.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-wise_tutor2
+  name: wise tutor's alternative outfit
+  description: A loose outfit worn by the wise & experienced.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/wise_tutor2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/wise_tutor2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-wise_disciple
+  name: wise disciple outfit
+  description: A loose outfit worn by the unwise & unexperienced.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/wise_tutor3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/wise_tutor3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-arrogant_student
+  name: arrogant student's outfit
+  description: A loose outfit worn by arrogant students.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/arrogant_student.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/arrogant_student.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-rebel
+  name: rebellion trooper uniform
+  description: A plain looking uniform worn by soldiers of the rebel alliance.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/rebel1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/rebel1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-rebel-officer
+  name: rebellion officer uniform
+  description: A plain looking uniform worn by officers of the rebel alliance.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/rebel_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/rebel_officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-roman
+  name: roman legionary uniform
+  description: A red tunic covered with iron armor. Used by the roman army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/roman.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/roman.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-toga
+  name: white toga
+  description: A simple cloth toga.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/toga.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/toga.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-toga2
+  name: half-shoulder white toga
+  description: A simple cloth toga, covering just one of the shoulders.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/toga2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/toga2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-roman_centurion
+  name: roman centurion uniform
+  description: A red tunic covered with iron armor, with added golden plates. Used by the roman army's centurions.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/roman_centurion.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/roman_centurion.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-greek1
+  name: greek uniform
+  description: A light tunic, covered with bronze and leather armor. Used by the hellenic armies.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/athens.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/athens.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-greek2
+  name: greek uniform
+  description: A light tunic, covered with bronze and leather armor. Used by the hellenic armies.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/thebes.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/thebes.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-greek3
+  name: greek uniform
+  description: A light tunic, covered with bronze and leather armor. Used by the hellenic armies.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/corinthia.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/corinthia.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-greek_commander
+  name: greek commander uniform
+  description: A light blue tunic covered by a bronze plate armor. Used by hellenic commanders.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/greek_commander.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/greek_commander.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-toxotai
+  name: white tunic
+  description: A light white tunic.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/toxotai.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/toxotai.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-celtic_green
+  name: green celtic trousers
+  description: Celtic-style trousers, in green.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/celtic_green.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/celtic_green.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-celtic_blue
+  name: blue celtic trousers
+  description: Celtic-style trousers, in blue.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/celtic_blue.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/celtic_blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-celtic_red
+  name: red celtic trousers
+  description: Celtic-style trousers, in red.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/celtic_red.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/celtic_red.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-celtic_short_braccae
+  name: short celtic braccae
+  description: Short, celtic-style wool trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/celtic_short_braccae.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/celtic_short_braccae.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-celtic_long_braccae
+  name: long celtic braccae
+  description: Long, celtic-style wool trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/celtic_long_braccae.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/celtic_long_braccae.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-mayan_loincloth
+  name: mayan loincloth
+  description: Mayan-style loincloth.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/mayan_loincloth.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/mayan_loincloth.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-aztec_loincloth
+  name: aztec loincloth
+  description: A loincloth fit for a ferocious aztec warrior.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/aztec_loincloth.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/aztec_loincloth.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-pharaoh
+  name: pharaohic shendyt
+  description: A fancy, decorated shendyt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/pharaoh.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/pharaoh.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-pharaoh2
+  name: nemes shendyt
+  description: A fancy, decorated shendyt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/greatshendyt.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/greatshendyt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ainu
+  name: ainu robes
+  description: A set of robes worn by the ainu.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ainu_robe.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ainu_robe.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ainu2
+  name: ainu robes
+  description: A set of robes worn by the ainu.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ainu_robe2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ainu_robe2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-kimono
+  name: white kimono
+  description: A plain kimono in popular asian style, with simplistic underwear concealed beneath.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/kimono.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/kimono.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-towel
+  name: white towel
+  description: A simple towel to wrap around yourself.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/towel.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/towel.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-traffic_police
+  name: police outfit
+  description: An outfit composed of a blue emergency services shirt and denim trousers. It has a police badge attached
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/traffic_cop.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/traffic_cop.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-traffic_police-supervisor
+  name: police supervisor outfit
+  description: An outfit composed of a blue emergency services shirt and denim trousers. It has a police supervisor badge attached
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/traffic_cop_sup.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/traffic_cop_sup.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-countysheriff
+  name: sheriff's department sheriff outfit
+  description: A law enforcement outfit worn by the town's sherrif.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sd_sheriff.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sd_sheriff.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-countysheriff-deputy
+  name: sheriff's department deputy outfit
+  description: A law enforcement outfit worn by the town's deputies.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sd_deputy.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sd_deputy.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-countysheriff-deputy-short
+  name: sheriff's department deputy outfit
+  description: A law enforcement outfit worn by the town's deputies. Short sleeved version.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sd_deputy_shortsleeves.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sd_deputy_shortsleeves.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni
+  name: OG-107 uniform
+  description: The standard US Army uniform of the mid-20th century.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_uni_og107.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_uni_og107.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni-us_camo
+  name: woodland camo uniform
+  description: The standard US Army camo uniform implemented in the early 1980s. Still used during the present day by many countries.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_camo.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_camo.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni-us_greentrousers
+  name: OG-107 trousers
+  description: The standard US Army OG-107 uniform trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_greentrousers_og107.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_greentrousers_og107.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni-us_lightuni
+  name: OG-107 uniform with rolled sleeves
+  description: A rolled-sleeves version of the US Army OG-107 uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_uni_og107_rolled.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_uni_og107_rolled.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni-us_lightuni2
+  name: OG-107 trousers and khaki undershirt
+  description: A light version of the US Army OG-107 trousers and the service khaki undershirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_og107_lightuni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_og107_lightuni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni-us_lightuni3
+  name: OG-107 trousers and white undershirt
+  description: A light version of the US Army OG-107 trousers and the service white untucked undershirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_og107_lightuni2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_og107_lightuni2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni-us_tigerstripes
+  name: tigerstripes camo uniform
+  description: A camo uniform in the tigerstripes pattern.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_camo_tigerstripes.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_camo_tigerstripes.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni-us_camo_dcu
+  name: desert camouflage uniform
+  description: The standard US Army desert camo uniform the late 20th century.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_camo_dcu.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_camo_dcu.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni-us_camo_woodland
+  name: woodland camouflage uniform
+  description: The standard US Army camo uniform the late 20th century.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_camo_woodland.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_camo_woodland.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni-us_camo_woodland-hezbollah
+  name: woodland camouflage uniform
+  description: The standard US Army camo uniform the late 20th century, with Hezbollah insiginia.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_camo_woodland_hez.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_camo_woodland_hez.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni-us_camo_woodland-hezbollah-officer
+  name: woodland camouflage uniform
+  description: The standard US Army camo uniform the late 20th century, with Hezbollah insiginia of an officer.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_camo_woodland_hez_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_camo_woodland_hez_officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni-us_camo_ucp
+  name: UCP camo uniform
+  description: The standard US Army camo uniform the early 21st century.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_camo_ucp.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_camo_ucp.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni-us_camo_ocp
+  name: OCP camo uniform
+  description: The standard US Army camo uniform from 2018 onwards.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_camo_ocp.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_camo_ocp.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni-us_lightuni_modern
+  name: U.S. Army training uniform
+  description: An informal outfit made of OCP pattern trousers and a olive drab shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_lightuni_modern.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_lightuni_modern.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-us_uni_korean
+  name: american uniform
+  description: The standard us army uniform of the korean war, this one outfitted for winter.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/usuni_korea.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/usuni_korea.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-chinese_winter
+  name: chinese uniform
+  description: The standard winter chinese uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/korea_china.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/korea_china.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-localnlf1
+  name: local NLF uniform
+  description: A black uniform of the NLF.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/localnlfuniform_v1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/localnlfuniform_v1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-localnlf2
+  name: local NLF uniform
+  description: A black and blue uniform of the NLF.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/localnlfuniform_v2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/localnlfuniform_v2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-localnlf3
+  name: local NLF uniform
+  description: A black and khaki uniform of the NLF.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/localnlfuniform_v3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/localnlfuniform_v3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-localnlf4
+  name: local NLF uniform
+  description: A blue and khaki uniform of the NLF.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/localnlfuniform_v4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/localnlfuniform_v4.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-localnlf5
+  name: local NLF uniform
+  description: A grey uniform of the NLF.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/localnlfuniform_v5.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/localnlfuniform_v5.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-nva
+  name: NVA uniform
+  description: A khaki uniform of the North Vietnamese Army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/NVAuni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/NVAuni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-nva-green
+  name: NVA uniform
+  description: A green uniform of the North Vietnamese Army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/NVAuni_green.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/NVAuni_green.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-nva-sl
+  name: NVA sergeant uniform
+  description: A khaki uniform of the North Vietnamese Army. This one is bearing the ranks of a sergeant.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/NVAuni_sl.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/NVAuni_sl.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-nva-sl-green
+  name: NVA sergeant uniform
+  description: A green uniform of the North Vietnamese Army. This one is bearing the ranks of a sergeant.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/NVAuni_green_sl.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/NVAuni_green_sl.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-nva-officer
+  name: NVA officer uniform
+  description: A khaki uniform of the North Vietnamese Army. This one is bearing the ranks of an officer
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/NVAuni_off.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/NVAuni_off.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-toughguy
+  name: specialist pants with woodland pattern paint
+  description: A army issued pair of pants and woodland pattern body-paint; to blend seamlessly into the enviroment
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/toughguy.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/toughguy.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-afghanka
+  name: afghanka uniform
+  description: A standard soviet uniform developped and issued in the early 80's, still in use after the collapse of the Soviet Union.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/milrus_afghanka_open.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/milrus_afghanka_open.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-sov_klmk
+  name: KLMK camo uniform
+  description: A suit in the KLMK camo pattern, issued by the Soviet Union in the 1970s.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sov_klmk.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sov_klmk.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-sov_kzs
+  name: KZS camo uniform
+  description: A suit in the KZS camo pattern, issued by the Soviet Union in the late 1970s.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sov_kzs.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sov_kzs.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-coldwar-soviet_officer
+  name: soviet officer uniform
+  description: An officer uniform, used by officers in the Soviet Army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sovuni_officer2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sovuni_officer2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-coldwar-dra-soldier
+  name: DRA uniform
+  description: A military uniform worn by DRA soldiers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dra_uni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dra_uni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-coldwar-dra-nco
+  name: DRA NCO uniform
+  description: A military uniform worn by DRA NCOs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dra_uni_nco.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dra_uni_nco.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-coldwar-dra-officer
+  name: DRA officer uniform
+  description: A military uniform worn by DRA officers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dra_uni_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dra_uni_officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-coldwar-bowling_red
+  name: red bowling outfit
+  description: A stylish red bowling shirt with black pants.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bowling_red.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bowling_red.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-coldwar-bowling_yellow
+  name: yellow bowling outfit
+  description: A stylish yellow bowling shirt with black pants.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bowling_yellow.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bowling_yellow.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-coldwar-bowling_green
+  name: green bowling outfit
+  description: A stylish green bowling shirt with black pants.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bowling_green.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bowling_green.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-coldwar-bowling_blue
+  name: blue bowling outfit
+  description: A stylish blue bowling shirt with black pants.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bowling_blue.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bowling_blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-coldwar-hippie
+  name: hippie outfit
+  description: A tie-dye t-shirt with bootleg grey jeans. Right on, man!
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/hippy.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/hippy.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-sundress
+  name: yellow sundress
+  description: A mid century style dress often worn outside in fair weather associated with a new generation of independent women
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sundress_yellow.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sundress_yellow.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-sundress-blue
+  name: blue sundress
+  description: A mid century style dress often worn outside in fair weather associated with a new generation of independent women
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sundress_blue.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sundress_blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-sundress-orange
+  name: orange sundress
+  description: A mid century style dress often worn outside in fair weather associated with a new generation of independent women
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sundress_orange.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sundress_orange.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-sundress-purple
+  name: purple sundress
+  description: A mid century style dress often worn outside in fair weather associated with a new generation of independent women
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sundress_purple.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sundress_purple.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-sundress-red
+  name: red sundress
+  description: A mid century style dress often worn outside in fair weather associated with a new generation of independent women
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sundress_red.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sundress_red.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-gatorpants
+  name: shirtless gator pants
+  description: A tight fitting pair of alligator scale pants. When you're this on-point; wearing a shirt would just cramp your style.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gator_pants.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gator_pants.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-soviet_nkvd
+  name: NKVD uniform
+  description: A soviet nkvd uniform, used by nkvd.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nkvd_uni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nkvd_uni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-soviet_nkvd-kgb
+  name: KGB uniform
+  description: A Russian KGB uniform, used by KGB.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nkvd_uni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nkvd_uni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-gulag_prisoner
+  name: GULAG prisoner clothing
+  description: A worn out GULAG prisoner outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gulagprisoner.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gulagprisoner.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-japoffuni
+  name: japanese officer uniform
+  description: A imperial japanese army officer uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww2_japoffuni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww2_japoffuni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-japuni
+  name: japanese uniform
+  description: A imperial japanese army uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww2_japuni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww2_japuni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-japuni_snlf
+  name: japanese uniform
+  description: A imperial japanese SNLF uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww2_japuni_snlf.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww2_japuni_snlf.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-japuni_tanker
+  name: japanese tanker uniform
+  description: A imperial japanese army uniform, this one bears the rank of a tanker.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/japtanker.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/japtanker.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-british
+  name: british uniform
+  description: A khaki british uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww2_british_tropical.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww2_british_tropical.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-british_off
+  name: british officer uniform
+  description: A tropical green british officer uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww2_british_off_tropical.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww2_british_off_tropical.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-chiuni
+  name: chinese uniform
+  description: A chinese army uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww2_china.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww2_china.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-chiuni_off
+  name: chinese uniform
+  description: A chinese army uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww2_china_off.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww2_china_off.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-chiuni2
+  name: chinese uniform
+  description: A chinese army uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww2_china2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww2_china2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-chiuni2_off
+  name: chinese uniform
+  description: A chinese army uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww2_china2_off.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww2_china2_off.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-cra_uni
+  name: Chinese Red Army uniform
+  description: An uniform worn by the Chinese Red Army troops.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/cra_uni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/cra_uni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-german
+  name: german uniform
+  description: A german feldgrau uniform, used by the Wehrmacht.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/geruni_ww2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/geruni_ww2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-german_doctor
+  name: german doctor uniform
+  description: A german feldgrau uniform, used by doctors in the Wehrmacht.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/geruni_doctor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/geruni_doctor.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-german_officer
+  name: german officer uniform
+  description: A german feldgrau uniform, used by officers in the Wehrmacht.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/geruni_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/geruni_officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-german_tanker
+  name: german tanker uniform
+  description: A german feldgrau uniform, used by tankers in the Wehrmacht.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gertanker.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gertanker.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-german_mp
+  name: german mp uniform
+  description: A german feldgrau uniform, used by military police in the Wehrmacht.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/geruni_mp.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/geruni_mp.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-german_ss
+  name: german ss uniform
+  description: A german SS uniform, used by soldaten in the Schutzstaffel.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ssuni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ssuni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-german_ss_officer
+  name: german ss officer uniform
+  description: A german SS officer uniform, used by officers in the Schutzstaffel.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ssuni_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ssuni_officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-german_ss_camo
+  name: german camo ss uniform
+  description: A german SS uniform, in 1944 Erbsenmuster dot pattern.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ssuni_camo.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ssuni_camo.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-soviet
+  name: soviet uniform
+  description: A soviet uniform, used by infantry in the Red Army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sovuni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sovuni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-soviet_tanker
+  name: soviet tanker uniform
+  description: A soviet tanker uniform, used by tank crewmen in the red army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sovtanker.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sovtanker.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-soviet_officer
+  name: soviet officer uniform
+  description: A soviet officer uniform, used by officers in the red army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sovuni_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sovuni_officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-soviet_berezka
+  name: soviet berezka uniform
+  description: A soviet berezka uniform, adapted to the winter wilderness.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/berezka.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/berezka.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-soviet_amoeba
+  name: soviet amoeba outfit
+  description: A soviet camouflage outfit, concieved for reconnaissance units.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/amoeba.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/amoeba.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-civ1
+  name: green civilian outfit
+  description: A mid 20th-century civilian outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww2_civuni1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww2_civuni1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-civ2
+  name: brown civilian outfit
+  description: A mid 20th-century civilian outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww2_civuni2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww2_civuni2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-hitlerjugend
+  name: Hitlerjugend outfit
+  description: The standard uniform of the HJ.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/hj_uni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/hj_uni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-us
+  name: american uniform
+  description: An american uniform, used by soldiers in the US army during WW2.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/usuni2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/usuni2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-us_tanker
+  name: american tanker uniform
+  description: An american uniform, used by tankers in the US army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ustanker.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ustanker.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-us_navy
+  name: U.S. Navy uniform
+  description: An american uniform, used by sailors in the US navy during WW2.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_navy.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_navy.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-us_cap
+  name: american captain uniform
+  description: An american uniform, used by captains in the US army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/usuni_cap.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/usuni_cap.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-us_mp
+  name: american mp uniform
+  description: An american uniform, used by Military Police in the US army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/usuni_mp.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/usuni_mp.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-us_shirtless
+  name: american uniform with shirt
+  description: An american uniform, used by soldiers in the US army, this one has no jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_shirtless.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_shirtless.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-finnish
+  name: finnish uniform
+  description: A finnish winter uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/geruni_ww2_winter.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/geruni_ww2_winter.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-upa
+  name: UPA uniform
+  description: A Ukrayins'ka Povstans'ka Armiya uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/upa_uni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/upa_uni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww2-upa-off
+  name: UPA officer uniform
+  description: A Ukrayins'ka Povstans'ka Armiya officer uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/upa_off.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/upa_off.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-blugoslavian_sailor
+  name: Blugoslavian navy uniform
+  description: A blue uniform of the Blugoslavian Navy.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/blugoslavian_sailor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/blugoslavian_sailor.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-redmenian_sailor
+  name: Redmenian navy uniform
+  description: A red uniform of the Redmenian Navy.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/redmenian_sailor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/redmenian_sailor.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-scrubs
+  name: white medical scrubs
+  description: Sanitary clothing worn by medical personnel.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/scrubs_white.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/scrubs_white.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-scrubs-darkgreen
+  name: dark green medical scrubs
+  description: Sanitary clothing worn by medical personnel. This one is dark green.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/scrubs_darkgreen.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/scrubs_darkgreen.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-scrubs-lightgreen
+  name: light green medical scrubs
+  description: Sanitary clothing worn by medical personnel. This one is light green.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/scrubs_lightgreen.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/scrubs_lightgreen.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-scrubs-blue
+  name: blue medical scrubs
+  description: Sanitary clothing worn by medical personnel. This one is blue.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/scrubs_blue.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/scrubs_blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-scrubs-navy
+  name: navy medical scrubs
+  description: Sanitary clothing worn by medical personnel. This one is navy.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/scrubs_navy.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/scrubs_navy.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-un_irish
+  name: irish olive uniform
+  description: A uniform worn by the UN Irish troops.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/un_irish.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/un_irish.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-afr_merc
+  name: african mercenary uniform
+  description: A light uniform worn by mercenaries.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/afr_merc.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/afr_merc.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-afr_merc-alt
+  name: african mercenary uniform
+  description: A light uniform worn by mercenaries.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/afr_merc2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/afr_merc2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-creed
+  name: creed shirt
+  description: A white shirt of the creed.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ac_shirt.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ac_shirt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-abashiri
+  name: Abashiri Guard Uniform
+  description: A standard uniform for the guards of Abashiri Prison.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/abashiri_guard.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/abashiri_guard.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-abashiri_prisoner
+  name: Abashiri Prison Uniform
+  description: A standard yukata for the guards of Abashiri Prison.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/abashiri_prisoner.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/abashiri_prisoner.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-japuni
+  name: Japanese Army Uniform
+  description: A standard imperial japanese army uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/japuni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/japuni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-japoffuni
+  name: Japanese Officer Uniform
+  description: A imperial japanese army officer uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/japoffuni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/japoffuni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-rusuni
+  name: Russian Army uniform
+  description: A standard imperial russian army uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/rusuni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/rusuni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-rusuni_ww1
+  name: Russian Army uniform
+  description: A standard imperial russian army uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww1_russian2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww1_russian2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-rusuni_ww1_officer
+  name: Russian Army officer uniform
+  description: A standard imperial russian army uniform, with officer epaulettes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww1_russian_o.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww1_russian_o.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-rusuni_rcw
+  name: Red Army uniform
+  description: A standard early 20th century russian uniform, with no epaulettes or insignias.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww1_russian.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww1_russian.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-kuban_cossak
+  name: Kuban Cossak beshmet
+  description: A red beshmet with grey trousers, traditional of the Kuban Cossaks.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/kuban_cossak.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/kuban_cossak.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-modern1
+  name: light brown outfit
+  description: An outfit composed of a white shirt and light brown trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/modern1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/modern1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-modern2
+  name: black outfit
+  description: An outfit composed of a white shirt and black trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/modern2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/modern2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-expensive
+  name: shirt outfit
+  description: An outfit composed of a expensive white shirt and black trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bman.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bman.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-expensive-green
+  name: green tie shirt outfit
+  description: An outfit composed of a expensive white shirt and black trousers, with a green tie.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bman_green.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bman_green.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-expensive-blue
+  name: blue tie shirt outfit
+  description: An outfit composed of a expensive white shirt and black trousers, with a blue tie.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bman_blue.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bman_blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-expensive-red
+  name: red tie shirt outfit
+  description: An outfit composed of a expensive white shirt and black trousers, with a red tie.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bman_red.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bman_red.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-expensive-yellow
+  name: yellow tie shirt outfit
+  description: An outfit composed of a expensive white shirt and black trousers, with a yellow tie.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bman_yellow.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bman_yellow.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-modern3
+  name: grey outfit
+  description: An outfit composed of a white shirt and grey trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/modern3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/modern3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-modern4
+  name: brown outfit
+  description: An outfit composed of a white shirt and brown trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/modern4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/modern4.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-modern7
+  name: modern outfit
+  description: An outfit composed of a white shirt and black cargo pants.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/modern7.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/modern7.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-swat
+  name: swat outfit
+  description: A uniform used by police special forces.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/swat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/swat.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-swat_new
+  name: swat outfit
+  description: A uniform used by police special forces.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/swat_new.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/swat_new.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-combat
+  name: combat outfit
+  description: A combat uniform plated with kevlar.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/combat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/combat.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-police
+  name: police outfit
+  description: A uniform used by police forces.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/police.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/police.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-prisoner
+  name: prison outfit
+  description: Normally worn by criminals and scum.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/prisoner.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/prisoner.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-milrus2
+  name: russian military outfit
+  description: An outfit composed of camo pants and shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/milrus2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/milrus2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-baily
+  name: security outfit
+  description: An outfit composed of a green jacket and black pants.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/baily.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/baily.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tactical1
+  name: tactical outfit
+  description: An outfit composed of a camo cargo pants and tan ubac.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tactical1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tactical1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-pmc
+  name: pmc outfit
+  description: A outfit used by PMC units.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/pmc.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/pmc.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-mafia
+  name: fancy outfit
+  description: A outfit that is expensive and has style.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/mafia.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/mafia.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-engi
+  name: worker outfit
+  description: A outfit used by construction workers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/engi.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/engi.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-gorka
+  name: gorka outfit
+  description: A gorka outfit used by Spetsnaz.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gorka.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gorka.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-modern8
+  name: modern skirt
+  description: An outfit composed of a black skirt and white shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/modern8.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/modern8.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-oldmansuit
+  name: old man suit
+  description: An outfit worn by fancy men in the 1800s.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/oldmansuit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/oldmansuit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-cozyoldy
+  name: fancy outfit
+  description: An outfit worn by fancy men in the 1800s.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/cozyoldy.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/cozyoldy.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-peakyblinder
+  name: fancy suit
+  description: An outfit used by scum.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/peakyblinder.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/peakyblinder.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-constable
+  name: constable outfit
+  description: An black outfit used by enforcers of the law.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/constable.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/constable.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-oldfirefighter
+  name: fire fighter uniform
+  description: An outfit used by fire fighters. Damn hot.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/oldfirefighter.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/oldfirefighter.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-blacktango
+  name: black dress
+  description: An dress used by fancy woman.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/black_tango_alt_s.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/black_tango_alt_s.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-clown
+  name: clown outfit
+  description: An outfit used by clowns.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/clown.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/clown.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-jester
+  name: jester outfit
+  description: A jester outfit. WHERE IS ME FUN HAHA.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/jester.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/jester.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-farmer_outfit
+  name: farmer outfit
+  description: An outfit composed of a checkered shirt and a denim bib.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/farmer_outfit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/farmer_outfit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-mechanic_outfit
+  name: mechanic outfit
+  description: An outfit composed of a white shirt and a leather bib.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/mechanic_outfit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/mechanic_outfit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tradwife
+  name: blue traditional dress
+  description: A early 20th century style dress made to be well fitting, often worn by housewives
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tradwife_blue.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tradwife_blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tradwife-yellow
+  name: yellow traditional dress
+  description: A early 20th century style dress made to be well fitting, often worn by housewives
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tradwife_yellow.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tradwife_yellow.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tradwife-orange
+  name: orange traditional dress
+  description: A early 20th century style dress made to be well fitting, often worn by housewives
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tradwife_orange.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tradwife_orange.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tradwife-purple
+  name: purple traditional dress
+  description: A early 20th century style dress made to be well fitting, often worn by housewives
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tradwife_purple.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tradwife_purple.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tradwife-red
+  name: red traditional dress
+  description: A early 20th century style dress made to be well fitting, often worn by housewives
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tradwife_red.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tradwife_red.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-blue_shorts
+  name: blue shorts
+  description: Basic blue shorts.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/shorts_blue.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/shorts_blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-red_shorts
+  name: red shorts
+  description: Basic red shorts
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/shorts_red.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/shorts_red.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-yellow_shorts
+  name: yellow shorts
+  description: Basic yellow shorts
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/shorts_yellow.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/shorts_yellow.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ph_us_war-filipino-filuni
+  name: Philippine Republic Army Uniform
+  description: A standard philippine republic army uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/filuni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/filuni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ph_us_war-filipino-tiradores
+  name: Tiradores de Muerta Uniform
+  description: A standard philippine republic army uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/filuni_sniper.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/filuni_sniper.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ph_us_war-american-us_uni
+  name: US Army Uniform
+  description: A standard tropical US army uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_fp.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_fp.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ph_us_war-american-us_off_uni
+  name: US Army Officer Uniform
+  description: A standard tropical US army officer uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_fp_off.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_fp_off.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-civ4
+  name: fancy colonial clothing
+  description: A set composed of a quality white linen shirt and black trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/civuni4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/civuni4.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-civ1
+  name: blue colonial clothing
+  description: A set composed of a light blue linen shirt and short trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/civuni1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/civuni1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-civ2
+  name: white colonial clothing
+  description: A set composed of a white linen shirt and black trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/civuni2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/civuni2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-civ3
+  name: short-sleeved colonial clothing
+  description: A set composed of a light white linen shirt with short sleeves and black trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/civuni3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/civuni3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-civ5
+  name: green colonial clothing
+  description: A set composed of a green linen shirt and black trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/civuni5.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/civuni5.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-civ6
+  name: pink colonial clothing
+  description: A set composed of a pink linen shirt and black trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/civuni6.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/civuni6.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-civf1
+  name: dark dress
+  description: A dark dress, used by peasant women.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dress1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dress1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-civf2
+  name: blue dress
+  description: A blue dress.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dress2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dress2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-civf3
+  name: brown dress
+  description: A brown dress.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dress3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dress3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-civfg
+  name: green dress
+  description: A green dress.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dressg.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dressg.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-civfr
+  name: red dress
+  description: A red dress.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dressr.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dressr.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-debutante-blue
+  name: blue debutante gown
+  description: A long and elegant debutante gown, often worn by women of high status at societal events.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gown_blue.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gown_blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-debutante-orange
+  name: orange debutante gown
+  description: A long and elegant debutante gown, often worn by women of high status at societal events.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gown_orange.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gown_orange.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-debutante-purple
+  name: purple debutante gown
+  description: A long and elegant debutante gown, often worn by women of high status at societal events.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gown_purple.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gown_purple.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-debutante-red
+  name: red debutante gown
+  description: A long and elegant debutante gown, often worn by women of high status at societal events.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gown_red.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gown_red.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-debutante-yellow
+  name: red debutante gown
+  description: A long and elegant debutante gown, often worn by women of high status at societal events.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gown_yellow.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gown_yellow.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-conquistador
+  name: conquistador uniform
+  description: A regal uniform often worn by a class of explorers known as conquistadors in search of wealth.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/conquistador.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/conquistador.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-pilgrim
+  name: pilgrim clothing
+  description: A set of plain black and grey clothes worn by transient followers of faith.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/pilgrim.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/pilgrim.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-pirate1
+  name: black stripes clothing
+  description: A set of clothes with a black striped shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/pirate1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/pirate1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-pirate2
+  name: red stripes clothing
+  description: A set of clothes with a red striped shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/pirate2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/pirate2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-pirate3
+  name: blue stripes clothing
+  description: A set of clothes with a blue striped shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/pirate3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/pirate3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-pirate4
+  name: baggy clothing
+  description: A set of clothes with a white shirt and baggy trousers
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/pirate4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/pirate4.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-pirate5
+  name: sleeveless clothing
+  description: A set of clothes with a sleeveless shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/pirate5.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/pirate5.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-british_sailor1
+  name: british sailor clothes
+  description: A set of royal navy sailor clothes, with a white shirt and trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/british_sailor1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/british_sailor1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-british_sailor2
+  name: open british sailor clothes
+  description: A set of royal navy sailor clothes, with an unbuttoned white shirt and trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/british_sailor2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/british_sailor2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-british_sailor3
+  name: british sailor trousers
+  description: White british sailor trousers. For when it's too hot to wear a shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/british_sailor3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/british_sailor3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-british_sailor4
+  name: grey british sailor clothes
+  description: A set of royal navy sailor clothes, with a grey shirt and trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/british_sailor4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/british_sailor4.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-portuguese_sailor1
+  name: portuguese sailor clothes
+  description: A set of portuguese navy sailor clothes, with a white shirt and green trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/portuguese_sailor1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/portuguese_sailor1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-portuguese_sailor2
+  name: open portuguese sailor clothes
+  description: A set of portuguese navy sailor clothes, with an unbuttoned white shirt and geen trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/portuguese_sailor2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/portuguese_sailor2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-portuguese_sailor3
+  name: portuguese sailor trousers
+  description: Green portuguese sailor trousers. For when it's too hot to wear a shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/portuguese_sailor3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/portuguese_sailor3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-portuguese_sailor4
+  name: portuguese sailor clothes with scarf
+  description: A set of portuguese navy sailor clothes, with a white shirt and green trousers. There's a green scarf attached.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/portuguese_sailor4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/portuguese_sailor4.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-spanish_sailor1
+  name: spanish sailor clothes
+  description: A set of spanish navy sailor clothes, with brown shirt and trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/spanish_sailor1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/spanish_sailor1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-spanish_sailor2
+  name: open spanish sailor clothes
+  description: A set of spanish navy sailor clothes, with an unbuttoned brown shirt and trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/spanish_sailor2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/spanish_sailor2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-spanish_sailor3
+  name: spanish sailor trousers
+  description: Brown spanish sailor trousers. For when it's too hot to wear a shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/spanish_sailor3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/spanish_sailor3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-spanish_soldier
+  name: spanish soldier uniform
+  description: Blue spanish soldier trousers and a fancy white shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/spanish_soldier.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/spanish_soldier.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-french_officer
+  name: french officer clothes
+  description: A set of french officer clothes, with a light blue shirt and black trousers, both with golden buttons.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/french_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/french_officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-baycona
+  name: baycona outfit
+  description: A set of baycona officer clothes, this seems to be very old.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/baycona.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/baycona.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-french_sailor1
+  name: french sailor clothes
+  description: A set of french navy sailor clothes, with light blue shirt and trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/french_sailor1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/french_sailor1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-french_sailor2
+  name: open french sailor clothes
+  description: A set of french navy sailor clothes, with an unbuttoned light blue shirt and trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/french_sailor2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/french_sailor2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-french_sailor3
+  name: french sailor trousers
+  description: Light blue french sailor trousers. For when it's too hot to wear a shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/french_sailor3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/french_sailor3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-dutch_sailor1
+  name: dutch sailor clothes
+  description: A set of dutch navy sailor clothes, with a white shirt and orange trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dutch_sailor1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dutch_sailor1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-dutch_sailor2
+  name: open dutch sailor clothes
+  description: A set of dutch navy sailor clothes, with an unbuttoned white shirt and orange trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dutch_sailor2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dutch_sailor2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-dutch_sailor3
+  name: dutch sailor trousers
+  description: Orange dutch sailor trousers. For when it's too hot to wear a shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dutch_sailor3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dutch_sailor3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-generic_officer
+  name: officer clothes
+  description: A set of officer clothes, with a white shirt and black trousers, both with golden buttons.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-dutch_soldier
+  name: dutch army uniform
+  description: A set of united provinces army clothes. Yellow shirts and trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dutch_army.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dutch_army.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-portuguese_soldier
+  name: portuguese army uniform
+  description: A set of portuguese army clothes. Red shirt with black and white trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/portuguese_army.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/portuguese_army.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-french_soldier
+  name: French Army uniform
+  description: A set of french army clothes. White shirt with blue and white trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/french_army.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/french_army.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-nightingale
+  name: nightingale dress
+  description: A modest nurse dress with a sown on apron. Often found worn by nurses tending to the injuries within wartime field hospitals.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nightingale.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nightingale.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-napoleonic
+  name: napoleonic french soldier uniform
+  description: A uniform of the french army, with golden epaulettes, black shirt and a gold buttoned white gilet.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nap_french_army.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nap_french_army.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-napoleonic-british
+  name: napoleonic british soldier uniform
+  description: A uniform of the british army, with a red shirt, blue epaulettes and white frogging.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nap_british_army.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nap_british_army.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-napoleonic-blackwatch
+  name: napoleonic blackwatch soldier uniform
+  description: A uniform of the british army's scottish infantry. Often worn in fearsome highland charges with a red shirt, itchy kilt and a white saltire.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/blackwatch.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/blackwatch.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-napoleonic-walloon
+  name: napoleonic walloon soldier uniform
+  description: A uniform of the spanish army. Often worn by swiss conscripts loyal to spain it has a dark navy shirt with a red gilet with gold buttons.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/walloon_guard.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/walloon_guard.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-napoleonic-russian
+  name: napoleonic russian soldier uniform
+  description: A uniform of the russian army. It has brown trousers and a green shirt with a single line of gold buttons.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nap_russian_army.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nap_russian_army.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-napoleonic-patriot
+  name: patriotic american soldier uniform
+  description: A uniform of the american army. Often worn by proud defenders of freedom and liberty it is blue with a white saltire and a red undershirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/patriot.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/patriot.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-napoleonic-prussian
+  name: napoleonic prussian soldier uniform
+  description: A uniform of the prussian army. Often worn by professional troops it has a navy shirt with red and white leather shoulder epaulettes with a assortment of buttons.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nap_prussian_army.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nap_prussian_army.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-napoleonic-jaeger
+  name: napoleonic jaeger soldier uniform
+  description: A uniform of the joint austrian and german army. It has a dark green shirt with black saltire, and a lime green collar and epaulletes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nap_jaegers.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nap_jaegers.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-napoleonic-portuguese
+  name: napoleonic portuguese soldier uniform
+  description: A uniform of the portuguese army. Often worn by pennisula soldiers, it has a dark navy shirt with a white saltire.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nap_portuguese_army.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nap_portuguese_army.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-napoleonic-italian
+  name: napoleonic italian soldier uniform
+  description: A uniform of the italian army. It has a dark green shirt with a bright orange trimmings along the arms and feet and a white saltire.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nap_portuguese_army.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nap_portuguese_army.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-napoleonic-satsuma
+  name: japanese soldier uniform
+  description: A uniform of the imperial japanese army. It has a black buttoned shirt and blue trousers with a white harness.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nap_satsuma.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nap_satsuma.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-merchant_suit
+  name: merchant suit
+  description: A fancy imperial merchant suit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/merchant_suit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/merchant_suit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-scavfit
+  name: Ripped outfit
+  description: A set of blue jeans and brown hoodie.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/scavfit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/scavfit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-wastelander
+  name: outfit
+  description: A set of tan pants and a brown coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/wastelander.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/wastelander.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-industrial1
+  name: pioneer outfit
+  description: A red shirt with leather trousers, commonly used among pioneers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/pioneer_outfit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/pioneer_outfit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-industrial2
+  name: rancher outfit
+  description: A blue shirt with light beige trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/rancher_outfit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/rancher_outfit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-industrial3
+  name: cowboy outfit
+  description: A white shirt with leather trousers, worn among cowboys and ranchers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/cowboy_outfit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/cowboy_outfit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-industrial4
+  name: checkered outfit
+  description: A red-and-white checkered shirt and light beige trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/checkered_outfit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/checkered_outfit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-industrial5
+  name: worker outfit
+  description: A navy blue shirt with denim trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/worker_outfit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/worker_outfit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-texan
+  name: texan shirt outfit
+  description: A white undershirt with beige briefs. it has texan style bowtie.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/texas.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/texas.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-lederhosen
+  name: lederhosen
+  description: The traditional south german attire.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/lederhosen.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/lederhosen.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-gang_leader
+  name: classy outlaw outfit
+  description: A well made black and red outfit with white arms and gold buttons. Often worn by self styled leaders, always with a plan.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gang_leader.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gang_leader.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-outlaw
+  name: outlaw outfit
+  description: A blue shirt with blue denim trousers and white suspenders. Often worn by people at arms length with the wrong side of the law, clothes sense is no judicator of character however.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/arthur_morgan.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/arthur_morgan.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-bartender
+  name: bartender outfit
+  description: A stylish bartender outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bartender.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bartender.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-victorian_vest
+  name: black victorian shirt and vest
+  description: A no nonsense black shirt & vest with gold buttons, made in victorian style.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/victorianvest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/victorianvest.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-victorian_vest-redvest
+  name: black victorian shirt and red vest
+  description: A no nonsense black shirt & red vest with gold buttons, made in victorian style.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/victorianredvest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/victorianredvest.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-victorian_vest-redshirt
+  name: red victorian shirt and black vest
+  description: A no nonsense red shirt & black vest with gold buttons, made in victorian style.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/victorianblred.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/victorianblred.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-waistcoat
+  name: white shirt and black waistcoat
+  description: A no nonsense black waistcoat with white shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/waistcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/waistcoat.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-saloondress
+  name: saloon dress outfit
+  description: A eye catching dress often worn by frontier damsels looking to drum up business.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dress_saloon.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dress_saloon.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-cheongsam
+  name: cheongsam dress
+  description: A tight fitting and attractive dress commmonly worn by women hailing from the orient.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/cheongsam.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/cheongsam.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-blackdress
+  name: plain black dress
+  description: A plain black dress for women to properly uphold their modesty
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dress_black.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dress_black.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-blackdress-short
+  name: short black dress
+  description: A plain black dress for women, this one is notably shorter and less modest.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dress_black_short.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dress_black_short.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-wedding
+  name: white wedding dress
+  description: A cermonial white wedding dress. Something old, something new, something borrowed, something blue.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bride_white.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bride_white.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-victorian_dress
+  name: victorian black dress
+  description: A black dress for a lady, made in a victorian style.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/victorianblackdress.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/victorianblackdress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-victorian_dress-red
+  name: victorian red dress
+  description: A red dress for a lady, made in a victorian style.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/victorianreddress.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/victorianreddress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-victorian_prim
+  name: neck length black dress
+  description: A prim and proper black dress, covers from neck to ankle.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/victorian_dress.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/victorian_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-union_uniform
+  name: union uniform
+  description: A blue uniform worn by union soldiers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/union_uniform.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/union_uniform.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-confederate_uniform
+  name: confederate uniform
+  description: A grey uniform worn by confederate soldiers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/confederate_uniform2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/confederate_uniform2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-confederate_uniform-grey
+  name: confederate uniform
+  description: A grey uniform worn by confederate soldiers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/confederate_uniform1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/confederate_uniform1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-confederate_uniform-grey_blue
+  name: confederate uniform
+  description: A grey uniform worn by confederate soldiers, however this one has union pants.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/confederate_uniform2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/confederate_uniform2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-dimmadome
+  name: eccentric businessman outfit
+  description: A cream jacket with white undershirt, the jacket and the shirt seem to be sown into one piece for convenience and it has texan style bowtie. This person probably has a lot of money..
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/doug_dimmadome.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/doug_dimmadome.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval
+  name: white tunic
+  description: A long white tunic, with golden trimmings.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/white_tunic_long.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/white_tunic_long.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-crusader
+  name: crusader tunic
+  description: A white tunic with a red cross in the middle.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/crusader1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/crusader1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-yellow
+  name: yellow tunic
+  description: A light yellow tunic.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/yellow_tunic.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/yellow_tunic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-leather
+  name: leather tunic
+  description: A light leather tunic.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/leather_tunic.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/leather_tunic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-kilt
+  name: kilt
+  description: A green and tartan woolen kilt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/kilt.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/kilt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-beggar_clothing
+  name: beggar clothing
+  description: Loosely stitched from patch cloth, contains deep pockets for spare change.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/beggar_clothing.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/beggar_clothing.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-blue
+  name: blue tunic
+  description: A light blue tunic.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/blue_tunic.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/blue_tunic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-blue2
+  name: blue-white tunic
+  description: A light blue and white tunic.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/blue_tunic2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/blue_tunic2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-green
+  name: green tunic
+  description: A light green tunic.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/green_tunic.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/green_tunic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-red
+  name: red tunic
+  description: A light red tunic.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/red_tunic.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/red_tunic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-red2
+  name: yellow-red tunic
+  description: A light red and yellow tunic.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/red_tunic2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/red_tunic2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-arabic_tunic
+  name: fancy arabic tunic
+  description: A light fitting tunic with arabic motifs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/arabw_tunic.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/arabw_tunic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-lighttunic
+  name: light brown tunic
+  description: A light, loose fitting tunic.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/arab1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/arab1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-emirate
+  name: emirate tunic
+  description: A loose fitting green tunic with arabic motifs and long sleeves. Often worn by emirate rulers
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/emir_tunic.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/emir_tunic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-arab1
+  name: light brown arabic tunic
+  description: A light, loose fitting arabic tunic.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/arab1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/arab1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-arab2
+  name: light white arabic tunic
+  description: A light, loose fitting arabic tunic.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/arab2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/arab2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-arab3
+  name: white arabic tunic
+  description: A loose fitting arabic tunic.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/arab3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/arab3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-wise_knight
+  name: Wise Knight robes
+  description: A lightly darkened robe used by wise knights.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/wise_knight.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/wise_knight.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-arrogant_warrior
+  name: Arrogant Warrior robes
+  description: A darkened robe used by upset warriors.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/arrogant_warrior.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/arrogant_warrior.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-medieval-steppe_tunic
+  name: steppe wool tunic
+  description: A brown tunic made out of wool. Often worn by nomads upon the great steppes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/steppe_wool_tunic.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/steppe_wool_tunic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-count_outfit
+  name: count outfit
+  description: A fancy count outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/count_outfit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/count_outfit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-renaissance
+  name: purple renaissance clothing
+  description: A baggy renaissance-style outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/renaissance.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/renaissance.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-renaissance-doge
+  name: doge outfit
+  description: A gold embroidered baggy renaissance-style outfit. Often worn by republic rulers over many petty merchantile aristocrats.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/doge.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/doge.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-renaissance_pontifical
+  name: pontifical renaissance clothing
+  description: A baggy renaissance-style outfit, with colored stripes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/pontifical.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/pontifical.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-nun
+  name: nun dress
+  description: A very modest nun dress. With a small cross around the neck, to aide protection against temptation.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nun.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nun.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-christian_priest
+  name: black priest outfit
+  description: A plain black outfit with a clerical white collar around the neck, often worn by priests of organized religions.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/christian_priest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/christian_priest.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-landschneckt
+  name: green landschneckt uniform
+  description: A ornate and bright uniform often worn by elite mercenaries & central european troops during the 15th century.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/landschneckt.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/landschneckt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-landschneckt-blue
+  name: blue landschneckt uniform
+  description: A ornate and bright uniform often worn by elite mercenaries & central european troops during the 15th century.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/b_landschneckt.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/b_landschneckt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-landschneckt-red
+  name: red landschneckt uniform
+  description: A ornate and bright uniform often worn by elite mercenaries & central european troops during the 15th century.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/r_landschneckt.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/r_landschneckt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-sari-blue
+  name: blue sari
+  description: A satin layered piece of clothing for women, made in indian style
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/blue_sari.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/blue_sari.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-sari-red
+  name: red sari
+  description: A satin layered piece of clothing for women, made in indian style
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/red_sari.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/red_sari.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-huipil
+  name: huipil
+  description: a light cloth, with blue trimmings.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/huipil.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/huipil.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-halfhuipil
+  name: half huipil
+  description: a light cloth, covering the lower part of the body. With red trimmings.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/halfhuipil.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/halfhuipil.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-hanfu
+  name: dark hanfu
+  description: A light, loose fitting hanfu.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dark_hanfu.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dark_hanfu.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-hanfu-light
+  name: light hanfu
+  description: A light, loose fitting hanfu.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/light_hanfu.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/light_hanfu.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-hanfu-green
+  name: green hanfu
+  description: A green, loose fitting hanfu.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/green_hanfu.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/green_hanfu.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-artisan
+  name: artisan clothing
+  description: A light, loose fitting bit of clothes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/artisan1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/artisan1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-artisan-dark
+  name: dark artisan clothing
+  description: A light, loose fitting bit of clothes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/artisan2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/artisan2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-artisan-light
+  name: light artisan clothing
+  description: A light, loose fitting bit of clothes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/artisan3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/artisan3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-haori
+  name: haori
+  description: A light, loose fitting bit of clothes, worn in japan.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/haori.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/haori.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-haori-blue
+  name: haori
+  description: A light, loose fitting bit of clothes, worn in japan.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/haori3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/haori3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-haori-red
+  name: haori
+  description: A light, loose fitting bit of clothes, worn in japan.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/haori2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/haori2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-haori-samurai
+  name: haori
+  description: A light, loose fitting bit of clothes, worn in japan.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/haori_samurai.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/haori_samurai.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-haori-samurai-blue
+  name: haori
+  description: A light, loose fitting bit of clothes, worn in japan.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/haori_samurai2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/haori_samurai2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-haori-samurai-red
+  name: haori
+  description: A light, loose fitting bit of clothes, worn in japan.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/haori_samurai3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/haori_samurai3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tes13-stormcloak
+  name: stormcloak curass
+  description: A blue tabard over some leather armor with chainmail underneath.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/stormcloak.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/stormcloak.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tes13-stormcloak-female
+  name: stormcloak curass
+  description: A blue tabard over some leather armor with chainmail underneath. This one is fitted for women.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/stormcloak_f.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/stormcloak_f.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tes13-stormcloak-ulfirc
+  name: Ulfric Stormcloak's clothes
+  description: A suit of blue fine clothing over some trousers
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ulfric.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ulfric.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tes13-whiterun
+  name: whiterun guard curass
+  description: An orange tabard over some leather armor with chainmail underneath.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/whiterun.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/whiterun.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tes13-whiterun-female
+  name: whiterun guard curass
+  description: An orange tabard over some leather armor with chainmail underneath. This one is fitted for women.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/whiterun_f.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/whiterun_f.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tes13-imperial
+  name: imperial armor
+  description: A red tunic with leather armor overtop.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tes13_imperial.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tes13_imperial.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tes13-imperial-bolgruf
+  name: Jarl Bolgruf's clothes
+  description: A suit of fine clothing over some trousers
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bolgruf.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bolgruf.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-milrus_vsr93
+  name: russian military outfit VSR 93
+  description: An outfit composed of the VSR93 camo pants and shirt, along with a high waistbelt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/milrus_vsr93.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/milrus_vsr93.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-milrus_omon
+  name: russian OMON uniform
+  description: An outfit designed and issued for the OMON forces of the Russian Federation.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/milrus_omon.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/milrus_omon.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-insurgent_black
+  name: black tunic
+  description: An all black tunic and trousers outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/insurgent_black.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/insurgent_black.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-insurgent_sand
+  name: sand-colored tunic
+  description: A dark yellow, sand-colored tunic and trousers outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/insurgent_sand.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/insurgent_sand.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-insurgent_sand_woodland
+  name: sand-colored tunic with woodland camo trousers
+  description: A dark yellow, sand-colored tunic with woodland camo trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/insurgent_sand_woodland.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/insurgent_sand_woodland.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-insurgent_sand_dcu
+  name: sand-colored uniform with desert camo trousers
+  description: A dark yellow, sand-colored uniform with desert camo trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/insurgent_sand_dcu.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/insurgent_sand_dcu.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-insurgent_sand_green
+  name: light brown uniform with green trousers
+  description: A light brown uniform with green trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/insurgent_sand_green.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/insurgent_sand_green.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-insurgent_leader
+  name: black tunic with desert camo trousers
+  description: A black tunic with desert camo trousers, worn by insurgent leaders.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/insurgent_leader.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/insurgent_leader.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-idf
+  name: IDF olive uniform
+  description: The plain olive coloured uniform of the Israeli Defense Forces.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/idf_olive.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/idf_olive.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-motorist
+  name: motorist outfit
+  description: A casual jeans and white shirt combo.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/motorist.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/motorist.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-reporter
+  name: war correspondent outfit
+  description: Casual brown trousers and a black shirt, perfect for running away from gunfire.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/reporter.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/reporter.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-punk
+  name: punk outfit
+  description: A rowdy alternative culture purple sleeveless shirt and purple trousers for bringing down the establishment.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/punk.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/punk.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-paramedic
+  name: paramedic uniform
+  description: A uniform used by EMS workers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/paramedic.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/paramedic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-firefighter
+  name: firefighter uniform
+  description: A uniform used by firefighters. Offers heat protection on the legs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/firefighter.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/firefighter.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-detective1
+  name: shirt outfit
+  description: A brown shirt with black pants.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/detective1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/detective1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-detective2
+  name: shirt outfit
+  description: A blue shirt with black pants.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/detective2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/detective2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-detective3
+  name: shirt outfit
+  description: A black shirt with grey pants.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/detective3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/detective3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-trackpants
+  name: track pants
+  description: A shirt with tracksuit pants.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/trackpants.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/trackpants.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tacti
+  name: tactical outfit
+  description: A outfit used by tactical units.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tacti.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tacti.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tacticool_hawaiian
+  name: tacticool hawaiian outfit
+  description: Assorted surplus cammo trousers with a nice hawaiian shirt for all your operating needs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tacticool_hawaiian_blue.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tacticool_hawaiian_blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tacticool_hawaiian-green
+  name: tacticool hawaiian outfit
+  description: Assorted surplus cammo trousers with a nice hawaiian shirt for all your operating needs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tacticool_hawaiian_green.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tacticool_hawaiian_green.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tacticool_hawaiian-orange
+  name: tacticool hawaiian outfit
+  description: Assorted surplus cammo trousers with a nice hawaiian shirt for all your operating needs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tacticool_hawaiian_orange.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tacticool_hawaiian_orange.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-tacticool_hawaiian-purple
+  name: tacticool hawaiian outfit
+  description: Assorted surplus cammo trousers with a nice hawaiian shirt for all your operating needs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tacticool_hawaiian_purple.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tacticool_hawaiian_purple.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-boomerwaffen1
+  name: patriot outfit
+  description: A uniform used by patriotic American militias.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/boomerwaffen1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/boomerwaffen1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-boomerwaffen2
+  name: patriot outfit
+  description: A uniform used by patriotic American militias.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/boomerwaffen2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/boomerwaffen2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-boomerwaffen3
+  name: patriot outfit
+  description: A uniform used by patriotic American militias.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/boomerwaffen3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/boomerwaffen3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-modern_shaman
+  name: modern shaman outfit
+  description: A modern shaman outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/modern_shaman.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/modern_shaman.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ukraine
+  name: ACU pattern uniform
+  description: The standard Ukrainian Ground Forces camo uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ukraine_acu.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ukraine_acu.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-russian
+  name: EMR pattern uniform
+  description: The standard Russian Federation Army camo uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/russian_emr.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/russian_emr.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-warband1
+  name: jeans with suspenders
+  description: A pair of jeans secured by suspenders.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/warband1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/warband1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-warband2
+  name: camo trousers and white sleeveless shirt
+  description: A mix of woodland camoflage trousers and a white sleeveless shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/warband2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/warband2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-caf
+  name: cadpat uniform
+  description: A canadian pattern uniform
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/cad_pat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/cad_pat.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-chinese_type07
+  name: type 07 chinese uniform
+  description: The standard modern Chinese military uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/type07.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/type07.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-cartel
+  name: floral shirt with light pants
+  description: A pair of light pants with a red floral shirt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/cartel1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/cartel1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-loinleather
+  name: leather loincloth
+  description: A wrap of leather cloth, worn around the waist.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/leatherloincloth1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/leatherloincloth1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-loincotton
+  name: cotton loincloth
+  description: An wrap of cotton loincloth, worn around the waist.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/loincloth1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/loincloth1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-leaves_skirt
+  name: leaf skirt
+  description: A wrap of leaves, worn around the waist.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/leaves_skirt.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/leaves_skirt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-leaves_skirt-long
+  name: long leaf skirt
+  description: A wrap of leaves, worn around the waist.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/leaves_skirt_long.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/leaves_skirt_long.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-leaves_skirt-au_naturel
+  name: au naturel leaf covering
+  description: leaves arranged on the body to preserve modesty
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/adam.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/adam.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-leaves_skirt-au_naturel-eve
+  name: au naturel leaf covering
+  description: leaves arranged on the body to preserve modesty
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/eve.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/eve.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-indian1
+  name: short leather loincloth
+  description: A wrap of leather cloth, worn around the waist.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/indian1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/indian1.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-indian2
+  name: long leather loincloth
+  description: A wrap of leather cloth, worn around the waist.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/indian2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/indian2.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-indian3
+  name: covering leather loincloth
+  description: A wrap of leather cloth, worn around the waist and the chest.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/indian3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/indian3.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-indianchief
+  name: indian chief clothing
+  description: An elaborate wrap of leather cloth, worn by tribal chiefs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/indianchef.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/indianchef.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-indianchief-pygmy
+  name: pygmy chief clothing
+  description: An elaborate wrap of leather cloth, worn by tribal chiefs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/indianchef.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/indianchef.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-indianshaman
+  name: indian shaman clothing
+  description: A white cloth, worn around the waist, painted with religious symbols.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/indianshaman.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/indianshaman.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-indianshaman-pygmy
+  name: pygmy shaman clothing
+  description: A white cloth, worn around the waist, painted with religious symbols.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/indianshaman.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/indianshaman.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-indianhuge
+  name: big leopard pelt
+  description: A massive leopard pelt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/giant_leopard_pelt.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/giant_leopard_pelt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-zulu_slene
+  name: slene cattle fur loincloth
+  description: A wrap of cattle fur tassles fashioned into a loincloth, often worn by the zulu people.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/zulu_slene.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/zulu_slene.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-lizardpants
+  name: shirtless lizard pants
+  description: A tight fitting pair of lizard scale pants. When you're this on-point; wearing a shirt would just cramp your style.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/lizard_pants.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/lizard_pants.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww1-german
+  name: german uniform
+  description: A german feldgrau uniform, used by the Imperial German Army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww1_german.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww1_german.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww1-british
+  name: british uniform
+  description: A british khaki uniform, used by the Royal Army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww1_british.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww1_british.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww1-trenchsuit
+  name: british uniform
+  description: A british khaki uniform, used by the army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/trenchsuit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/trenchsuit.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-ww1-french
+  name: french uniform
+  description: A french light blue uniform, used by the French Army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww1_french.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww1_french.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-red-strappedbikini
+  name: Red Strap Bikini
+  description: Seems to be two piece red Bikini, the top is held up by straps.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/r_strapbikini.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/r_strapbikini.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-red-bandbikini
+  name: Red Band Bikini
+  description: Seems to be two piece red Bikini, the top is held up by a tight horizontal band.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/r_bandbikini.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/r_bandbikini.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-red-swimtrunks
+  name: Red Swimtrunks
+  description: Seems to be pants made for swiming in.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/r_swimtrunks.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/r_swimtrunks.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-blue-strappedbikini
+  name: Blue Strap Bikini
+  description: Seems to be two piece blue Bikini, the top is held up by straps.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/b_strapbikini.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/b_strapbikini.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-blue-bandbikini
+  name: Blue Band Bikini
+  description: Seems to be two piece blue Bikini, the top is held up by a tight horizontal band.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/b_bandbikini.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/b_bandbikini.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-blue-swimtrunks
+  name: Blue Swimtrunks
+  description: Seems to be pants made for swiming in.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/b_swimtrunks.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/b_swimtrunks.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-green-strappedbikini
+  name: Green Strap Bikini
+  description: Seems to be two piece green Bikini, the top is held up by straps.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/g_strapbikini.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/g_strapbikini.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-green-bandbikini
+  name: Green Band Bikini
+  description: Seems to be two piece green Bikini, the top is held up by a tight horizontal cloth.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/g_bandbikini.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/g_bandbikini.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-green-swimtrunks
+  name: Green Swimtrunks
+  description: Seems to be pants made for swiming in.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/g_swimtrunks.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/g_swimtrunks.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-custom-toga
+  name: toga
+  description: A simple cloth toga.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customtoga.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customtoga.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-custom-toga-purple
+  name: purple toga
+  description: A fancy cloth toga.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customtoga.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customtoga.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-custom-stola
+  name: stola
+  description: A simple cloth stola, roman clothing for women.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fem_roman.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fem_roman.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-custom-roman
+  name: long tunic
+  description: A simple cloth tunic, with a brass and leather belt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customroman.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customroman.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-custom-spartan
+  name: short loincloth
+  description: A simple, small loincloth.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customspartan.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customspartan.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-custom-shendyt
+  name: shendyt
+  description: A kilt-like cloth used around the waist.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customshendyt.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customshendyt.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-custom-celtic
+  name: celtic trousers
+  description: Thick cloth celtic trousers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customceltic.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customceltic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-custom-tunic
+  name: tunic
+  description: A simple cloth tunic, with a leather belt.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customtunic.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customtunic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-custom-haori
+  name: haori
+  description: A light, loose fitting bit of clothes, worn in japan.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/haori_custom.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/haori_custom.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-custom-arabictunic
+  name: arabic tunic
+  description: A light cloth tunic, in arabic style.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customarabictunic.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customarabictunic.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-customren
+  name: renaissance outfit
+  description: A renaissance-style outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customren.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customren.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-custompontifical
+  name: renaissance outfit
+  description: A renaissance-style pontifical outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/custom_pontifical.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/custom_pontifical.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-customdress
+  name: dress
+  description: A female dress.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customdress.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customdress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-customdress2
+  name: dress
+  description: A female dress.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/custombuttonup_full.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/custombuttonup_full.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-customtribalrobe
+  name: tribal robe
+  description: A tribal robe.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tribalrobe_robe.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tribalrobe_robe.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-customvicuniform
+  name: uniform
+  description: A victorian Era uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customuni.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customuni.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-customuniform_modern
+  name: camo uniform
+  description: A modern era camouflaged uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/modern_camo_custom.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/modern_camo_custom.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-custompyjamas
+  name: pyjamas
+  description: Basic striped pyjamas.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/custompyjamas.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/custompyjamas.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-crinoline_dress
+  name: crinoine dress
+  description: A laced dress.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/crinoline_dress.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/crinoline_dress.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-customuniform
+  name: modern outfit
+  description: A generic outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/custom_mod_full.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/custom_mod_full.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-customuniform-facilityg
+  name: Facility uniform
+  description: A sterile white uniform.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/custom_mod_full.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/custom_mod_full.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-customuniform-baggy
+  name: baggy modern outfit
+  description: A generic outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/custom_modbaggy_full.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/custom_modbaggy_full.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-customuniform-short
+  name: short modern outfit
+  description: A generic outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/custom_modshort_full.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/custom_modshort_full.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-customuniform-colonial
+  name: colonial outfit
+  description: A generic outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/custom_col_full.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/custom_col_full.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-customuniform-colonial-short
+  name: short colonial outfit
+  description: A generic outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/custom_col_short_full.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/custom_col_short_full.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-customtrackpants
+  name: track pants
+  description: A shirt with tracksuit pants.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/trackpants_custom.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/trackpants_custom.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-football
+  name: Unga Bunga jersey
+  description: A football jersey of the Unga Bunga United, U.B.U.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/football_red.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/football_red.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-football-flamengo
+  name: flamengo shirt with yellow shorts
+  description: A C.R. Flamengo football shirt, with yellow swimming trunks.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/flamengo.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/flamengo.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-football-red
+  name: Unga Bunga jersey
+  description: A football jersey of the Unga Bunga United, U.B.U.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/football_red.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/football_red.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-football-red-goalkeeper
+  name: Unga Bunga goalkeeper jersey
+  description: A football jersey of the goalkeeper of Unga Bunga United, U.B.U.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/football_red_gk.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/football_red_gk.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-football-blue
+  name: Chad Town jersey
+  description: A football jersey of the Chad Town Football Club, C.T.F.C.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/football_blue.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/football_blue.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-football-blue-goalkeeper
+  name: Chad Town goalkeeper jersey
+  description: A football jersey of the goalkeeper of Chad Town Football Club, C.T.F.C.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/football_blue_gk.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/football_blue_gk.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: under-football-custom
+  name: football jersey
+  description: A football team's official jersey.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/football_custom.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/football_custom.rsi

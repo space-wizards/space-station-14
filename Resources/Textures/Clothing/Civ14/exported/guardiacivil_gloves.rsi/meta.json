@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"copyright": "Taken from civ13 at commit https://github.com/Civ13/Civ13/commit/c07b37fbca55b690d80cc2ec0c2c61839cbecf5c",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"directions": 4,
+			"name": "equipped-HAND"
+		},
+		{
+			"name": "icon"
+		}
+	]
+}

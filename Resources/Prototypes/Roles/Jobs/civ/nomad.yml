@@ -11,3 +11,5 @@
 
 - type: startingGear
   id: NomadGear
+  equipment:
+    jumpsuit: under-indian2

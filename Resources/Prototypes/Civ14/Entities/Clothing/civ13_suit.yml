@@ -1,0 +1,4452 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-chaplain
+  name: preacher's robe
+  description: Typical priest robe.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/chaplain_hoodie.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/chaplain_hoodie.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-squid_coat
+  name: contestant jacket
+  description: A simple green jumpsuit jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/squid_player.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/squid_player.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-rebel_vest
+  name: black vest
+  description: A simple black vest.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/rebel_vest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/rebel_vest.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-rebel_vest-officer
+  name: rebel officer vest
+  description: A khaki and orange vest worn by officers of the Rebel Alliance.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/rebel_officer_vest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/rebel_officer_vest.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-afghanka
+  name: afghanka coat
+  description: A soviet winter jacket issued and developped in the early 80's.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/rus_winter_afghanka.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/rus_winter_afghanka.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.12
+          Slash: 0.12
+          Piercing: 0
+          Arrow: 0.05
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-forensics
+  name: forensics jacket
+  description: A forensic department jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/forensics.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/forensics.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-police
+  name: police jacket
+  description: A police jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/policejacket.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/policejacket.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-police-black
+  name: police jacket
+  description: A black police jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/policejacket_black.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/policejacket_black.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-haori_jacket-abashiri
+  name: Abashiri Haori
+  description: A simple haori jacket usually worn over a haori outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/haori_jacket.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/haori_jacket.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.12
+          Slash: 0.12
+          Piercing: 0
+          Arrow: 0.05
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-haori_jacket-abashiri-wing1
+  name: Abashiri Haori
+  description: A simple haori jacket usually worn over a haori outfit. This one is designated with Wing1 on its back.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/haori_jacket1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/haori_jacket1.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.12
+          Slash: 0.12
+          Piercing: 0
+          Arrow: 0.05
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-haori_jacket-abashiri-wing2
+  name: Abashiri Haori
+  description: A simple haori jacket usually worn over a haori outfit. This one is designated with Wing 2 on its back.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/haori_jacket2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/haori_jacket2.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.12
+          Slash: 0.12
+          Piercing: 0
+          Arrow: 0.05
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-haori_jacket-abashiri-wing3
+  name: Abashiri Haori
+  description: A simple haori jacket usually worn over a haori outfit. This one is designated with Wing 3 on its back.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/haori_jacket3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/haori_jacket3.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.12
+          Slash: 0.12
+          Piercing: 0
+          Arrow: 0.05
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-black_suit
+  name: black suit
+  description: A formal black suit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/black_suit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/black_suit.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-really_black_suit
+  name: dark black suit
+  description: A very black formal suit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/really_black_suit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/really_black_suit.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-charcoal_suit
+  name: charcoal suit
+  description: A formal charcoal grey suit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/charcoal_suit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/charcoal_suit.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-navy_suit
+  name: navy suit
+  description: A formal navy blue suit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/navy_suit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/navy_suit.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-checkered_suit
+  name: checkered suit
+  description: A formal grey checkered suit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/checkered_suit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/checkered_suit.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-burgundy_suit
+  name: burgundy suit
+  description: A formal burgundy colored suit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/burgundy_suit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/burgundy_suit.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-doctor
+  name: white labcoat
+  description: A white labcoat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/labcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/labcoat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-surgeon
+  name: surgery apron
+  description: A blue plastic surgery apron.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/surgical.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/surgical.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-coveralls
+  name: coveralls
+  description: A blue pair of coveralls, protects against heat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/coveralls.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/coveralls.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-piratejacket1
+  name: black jacket
+  description: A long black jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/piratejacket1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/piratejacket1.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-piratejacket2
+  name: fancy brown jacket
+  description: A fancy jacket. This one is brown.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/piratejacket2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/piratejacket2.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-piratejacket3
+  name: blue vest
+  description: A sleeveless vest. This one is blue.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/piratejacket3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/piratejacket3.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-piratejacket4
+  name: black vest
+  description: A sleeveless vest. This one is black.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/piratejacket4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/piratejacket4.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-piratejacket5
+  name: fancy red jacket
+  description: A fancy jacket. This one is red.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/piratejacket5.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/piratejacket5.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-british_captain
+  name: royal navy captain jacket
+  description: A standard captain jacket of the royal navy. Blue with golden buttons, white laces and golden cuffs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/british_captain.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/british_captain.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-british_officer
+  name: royal navy officer jacket
+  description: A standard officer jacket of the royal navy. Blue with golden buttons.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/british_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/british_officer.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-british_soldier
+  name: british red jacket
+  description: The british redcoat, used by the british army and marines.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/british_soldier_jacket.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/british_soldier_jacket.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-portuguese_captain
+  name: portuguese captain jacket
+  description: A standard captain jacket of the portuguese navy. Blue with golden buttons, white laces and golden cuffs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/portuguese_captain.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/portuguese_captain.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-portuguese_officer
+  name: portuguese officer jacket
+  description: A standard officer jacket of the portuguese navy. Blue with golden buttons.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/portuguese_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/portuguese_officer.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-spanish_captain
+  name: spanish captain jacket
+  description: A standard Captain jacket of the spanish navy. Yellow with golden buttons, white laces and golden cuffs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/spanish_captain.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/spanish_captain.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-spanish_officer
+  name: spanish officer jacket
+  description: A standard Officer jacket of the spanish navy. Yellow with golden buttons.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/spanish_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/spanish_officer.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-spanish_soldier
+  name: spanish soldier jacket
+  description: A standard jacket of the spanish army. Yellow with red trimming.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/spanish_army.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/spanish_army.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-french_captain
+  name: french captain jacket
+  description: A standard captain jacket of the french navy. White with golden buttons, blue laces and golden cuffs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/french_captain.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/french_captain.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-french_officer
+  name: french officer jacket
+  description: A standard officer jacket of the french navy. White with golden buttons.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/french_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/french_officer.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-dutch_captain
+  name: united provinces captain jacket
+  description: A standard captain jacket of the united provinces navy. Orange with golden buttons, white laces and golden cuffs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dutch_captain.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dutch_captain.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-dutch_officer
+  name: united provinces officer jacket
+  description: A standard officer jacket of the united provinces navy. Orange with golden buttons.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dutch_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dutch_officer.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-dutch_officer_army
+  name: united provinces army jacket
+  description: A standard army jacket of the united provinces army. Orange with golden buttons.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dutch_army.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dutch_army.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-spanish_officer_army
+  name: spanish army jacket
+  description: A standard army jacket of the spanish Army. Yellow with golden buttons.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/spanish_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/spanish_officer.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-portuguese_officer_army
+  name: portuguese army jacket
+  description: A standard army jacket of the portuguese Army. Green with golden buttons.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/portuguese_army.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/portuguese_army.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-french_officer_army
+  name: french army jacket
+  description: A standard army jacket of the french army. White with blue trimmings.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/french_army.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/french_army.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-british_officer_army
+  name: british army jacket
+  description: A standard army jacket of the british army. Red and white.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/british_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/british_officer.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-vict_tailcoat
+  name: victorian tailcoat
+  description: Also known as a butler suit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/victorian_tailcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/victorian_tailcoat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-leatherovercoat1
+  name: leather overcoat
+  description: A long leather overcoat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/leather_overcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/leather_overcoat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-leatherovercoat2
+  name: black leather overcoat
+  description: A long black leather overcoat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/black_leather_overcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/black_leather_overcoat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-blackvest
+  name: black vest
+  description: A simple black vest.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/blackvest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/blackvest.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-olivevest
+  name: olive vest
+  description: A simple olive vest.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/olivevest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/olivevest.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-bluevest
+  name: blue vest
+  description: A simple blue vest.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bluevest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bluevest.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-texan
+  name: cream short jacket
+  description: A cream colored short jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/texas.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/texas.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-kool_kids_klub
+  name: white robe with hood
+  description: A white robe with a white hood, covering the whole body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/kool_kids_klub.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/kool_kids_klub.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-arabic_robe
+  name: arabic robe
+  description: A light, loose fitting arabic robe.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/arabw_robe.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/arabw_robe.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-plaguedoctor
+  name: plague doctor suit
+  description: Used by plague doctors. Only adds to the mystery behind their methods.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/plaguedoctor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/plaguedoctor.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-regal
+  name: regal ermine cape
+  description: A large cape finely decked in stylized fur pattern often used to denote the most prominent members amongst noble circles.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/regal_cape.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/regal_cape.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-steppe_shaman
+  name: steppe shaman wool coat
+  description: A colorful woolen coat, used by shamans to wrap warm whilst performing rituals on the open steppe.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/steppe_shaman_wool_coat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/steppe_shaman_wool_coat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-motorist
+  name: motorist jacket
+  description: A jacket often worn by enthusiasts of vehicles, speed and the smell of burning rubber.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/motorist_jacket.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/motorist_jacket.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-rus_winter_vsr93
+  name: Russian Federal Forces winter jacket
+  description: A winter jacket used by the Russian Federal Forces in VSR93 camo.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/rus_winter_vsr93.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/rus_winter_vsr93.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-punk
+  name: punk jacket
+  description: A loose jacket often worn by counter-cultural types, commonly additional inscriptions can be found on the back.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/punk_vest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/punk_vest.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.15
+          Slash: 0.15
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-highvis
+  name: high visibility jacket
+  description: A yellow high visibility jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/high_vis_jacket_yellow.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/high_vis_jacket_yellow.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-highvis-paramedic
+  name: paramedic jacket
+  description: A yellow high visibility jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/paramedic_jacket.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/paramedic_jacket.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-tracksuit
+  name: track suit
+  description: A sporty track suit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tracksuit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tracksuit.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-bonearmor
+  name: bone armor
+  description: A spooky armor, made of assorted bones.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bonearmor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bonearmor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-imperial-commissar
+  name: commissar jacket
+  description: A red jacket belonging to overzealous leaders of large squadrons of infantry. The authority this grants means rejecting orders will by no means be acceptable...
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/commissar.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/commissar.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-inquisition
+  name: inquisitorial jacket
+  description: A black jacket with red arm stripes belonging to expert investigators of intrigue and heresy. By all means nessecary...
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/commissar.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/commissar.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-inquisition-alt
+  name: inquisitorial light jacket
+  description: A black light jacket belonging to expert investigators of intrigue and heresy. By all means nessecary...
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/inquistor_alt.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/inquistor_alt.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-inquisition-alt-hood
+  name: inquisitorial jacket
+  description: A black light jacket belonging to expert investigators of intrigue and heresy. By all means nessecary...
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/inqcape_alt.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/inqcape_alt.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-elf-warlock
+  name: elven warlock robe
+  description: A long robe worn by mystic leaders of the elven race.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/elf_warlock.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/elf_warlock.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-elf-harlequin
+  name: elven harlequin jacket
+  description: A flamboyant jacket worn by roaming troupes of deadly elven assassins with theatrical motifs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/elf_harlequin.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/elf_harlequin.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-custom-haori_jacket
+  name: haori jacket
+  description: A simple jacket worn over a haori outfit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/haori_jacket_custom.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/haori_jacket_custom.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-custom-poncho
+  name: poncho
+  description: A simple cloth poncho.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customponcho.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customponcho.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-custom-hoodie
+  name: hoodie
+  description: A simple comfy cloth hoodie.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customhoodie.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customhoodie.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-custom-cloth_jacket
+  name: cloth jacket
+  description: A simple cloth jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customjacket.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customjacket.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-custom-blazer
+  name: suit blazer
+  description: A simple cloth blazer.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customblazer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customblazer.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-customcolonialcoat
+  name: colonial coat
+  description: A colonial coat of the XVIIIth century.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customcolonialcoat_full.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customcolonialcoat_full.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-customcolonial
+  name: colonial jacket
+  description: A colonial jacket of the XVIIIth century.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customcolonial_full.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customcolonial_full.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-jacket-customtracksuit
+  name: track suit
+  description: A sporty track suit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/customtracksuit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/customtracksuit.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-wise_tutor_robes
+  name: wise tutor robes
+  description: Robes commonly worn by wise tutors.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/wise_tutor_robe.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/wise_tutor_robe.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-arrogant_student_robes
+  name: arrogant student robes
+  description: Robes commonly worn by spiteful students.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/arrogant_student_robe.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/arrogant_student_robe.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-fur
+  name: fur coat
+  description: A thick fur coat, great for the winter.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur_jacket3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur_jacket3.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-fur-brown
+  name: brown fur coat
+  description: A thick brown fur coat, great for the winter.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur_jacket1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur_jacket1.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-fur-white
+  name: white fur coat
+  description: A thick white fur coat, great for the winter.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur_jacket4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur_jacket4.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-fur-black
+  name: black fur coat
+  description: A thick black fur coat, great for the winter.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur_jacket3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur_jacket3.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-fur-grey
+  name: grey fur coat
+  description: A thick grey fur coat, great for the winter.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur_jacket2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur_jacket2.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-fur-pink
+  name: human skin coat
+  description: A coat made of human skin. Spooky...
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur_jacket5.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur_jacket5.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-fur-m05
+  name: M05 snow pattern coat
+  description: A coat in Finnish M05 snow pattern.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur_jacket7.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur_jacket7.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-fur-ukrainian
+  name: Ukrainian winter camo coat
+  description: A coat in Ukrainian winter pattern.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur_jacket8.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur_jacket8.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-fur-klyaksa
+  name: Klyaksa camo coat
+  description: A coat in Russian 'Klyaksa' snow pattern.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur_jacket10.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur_jacket10.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-fur-schneetarn
+  name: Schneetarn camo coat
+  description: A coat in German Schneetarn pattern.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur_jacket9.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur_jacket9.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-fur-orc
+  name: orc fur coat
+  description: A thick dark green fur coat, made from disgusting orc pelts.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur_jacket6.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur_jacket6.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-modern_winter
+  name: dark green winter coat
+  description: An army-style coat, in olive drab.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/modern_winter.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/modern_winter.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.12
+          Slash: 0.12
+          Piercing: 0
+          Arrow: 0.05
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-oldyjacket
+  name: red jacket
+  description: A red jacket from the 80s.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/jacket80s.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/jacket80s.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-chinese
+  name: chinese coat
+  description: A chinese winter coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/chi_korea_coat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/chi_korea_coat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.12
+          Slash: 0.12
+          Piercing: 0
+          Arrow: 0.05
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-chinese-officer
+  name: chinese officer coat
+  description: A chinese winter coat, designed for officers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/chi_korea_offcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/chi_korea_offcoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.12
+          Slash: 0.12
+          Piercing: 0
+          Arrow: 0.05
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-american
+  name: american coat
+  description: An american winter coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_coat_korea.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_coat_korea.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.12
+          Slash: 0.12
+          Piercing: 0
+          Arrow: 0.05
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-bizarre_coat
+  name: bizarre dark blue coat
+  description: A very stylish coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bizarre_coat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bizarre_coat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.15
+          Slash: 0.15
+          Piercing: 0
+          Arrow: 0.05
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-cheka
+  name: Cheka leather coat
+  description: A shiny black leather coat used by Cheka agents.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/leathercoat_c.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/leathercoat_c.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-kuban_cossak
+  name: black cherkesska coat
+  description: A traditional Kuban Cossak coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/kuban_cossak.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/kuban_cossak.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-russian_rcw
+  name: Soviet coat
+  description: An early Red Army coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/japcoat2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/japcoat2.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-japcoat
+  name: Japanese Coat
+  description: A japanese army coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/japcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/japcoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-japcoat-abashiri
+  name: Abashiri Guard Coat
+  description: An Abashiri Prison Guard coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/japcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/japcoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-priest
+  name: priest sleev
+  description: A holy coat worn by a priest.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/priestwhite.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/priestwhite.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-japcoat2
+  name: Japanese Coat
+  description: A japanese army coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/japcoat2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/japcoat2.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-japcoat2-brown
+  name: Brown Winter Coat
+  description: A thick winter coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/japcoat2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/japcoat2.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-japcoat2-trench
+  name: brown trench coat
+  description: A long coat to keep you clean and dry.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/japcoat2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/japcoat2.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ruscoat
+  name: Russian Coat
+  description: A russian army coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ruscoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ruscoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ruscoat-grey
+  name: Grey Winter Coat
+  description: A thick winter coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ruscoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ruscoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-rusoffcoat
+  name: Russian Officer Coat.
+  description: A russian army  officer coat. Worn by officers, acknowledge their rank.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/rusoffcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/rusoffcoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-winter_coat
+  name: brown winter coat
+  description: A thick winter coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/winter_coat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/winter_coat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-victorian_peacoat
+  name: black peacoat
+  description: A no nonsense black peacoat
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/victorian_peacoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/victorian_peacoat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-kozhanka
+  name: fur coat
+  description: A thick fur coat, great for the winter.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/kozhanka.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/kozhanka.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-kozhanka-white
+  name: white fur coat
+  description: A thick white fur coat, great for the winter.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/kozhanka_w.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/kozhanka_w.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-fancy_fur_coat
+  name: fancy fur coat
+  description: A fancy and expensive fur coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fancy_fur_coat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fancy_fur_coat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-overlord_coat
+  name: overlord robe
+  description: An extremely elegant robe worn by powerful undead.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/overlord_coat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/overlord_coat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-monk_robes
+  name: monk robes
+  description: Robes commonly worn by monks, warm in the winters.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/monk_robes.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/monk_robes.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-tes13-fine_clothing
+  name: fine clothing
+  description: A fine fur jacket and shirt, for the better off people.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fine_clothes.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fine_clothes.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-tes13-fine_clothing-blue
+  name: fine clothing
+  description: A fine fur jacket and shirt, for the better off people. This one is blue
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fine_clothes2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fine_clothes2.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-firefighter
+  name: firefighter coat
+  description: A coat used by firefighters. Offers heat protection on the torso and arms.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/firefighter.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/firefighter.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-biker
+  name: biker jacket
+  description: A black jacket, favoured by the bold and recreational thrill seekers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/biker.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/biker.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-biker-lizard_jacket
+  name: lizard scale jacket
+  description: A sleek lizard scale jacket, bold and impression-setting like the people who wear it. `Too cool for S-s-s-school'.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/lizard_jacket.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/lizard_jacket.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-biker-gator_jacket
+  name: alligator scale jacket
+  description: A sleek alligator scale jacket, bold and impression-setting like the people who wear it. 'See-ya later alligator'.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gator_jacket.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gator_jacket.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-japcoat
+  name: japanese coat
+  description: A japanese army coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww2_japcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww2_japcoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-japcoat-sand
+  name: sand-colored jacket
+  description: A sand-colored army jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ww2_japcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ww2_japcoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-japcoat_rain
+  name: japanese rain coat
+  description: A japanese army coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/jap_raincoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/jap_raincoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-japcoat_pilot
+  name: japanese pilot coat
+  description: A japanese air force kamikaze jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/jappilotcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/jappilotcoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-german
+  name: german parka
+  description: A german parka, worn by soldaten in the Wehrmacht.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gerparka.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gerparka.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-german-civ
+  name: grey parka
+  description: A grey parka, good for warmth in the winters.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gerparka.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gerparka.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-german_officer
+  name: german officer coat
+  description: A german officer's coat, worn by officers in the Wehrmacht.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ger_offcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ger_offcoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-ss_parka
+  name: ss parka
+  description: A german ss parka, in 1944 Erbsenmuster dot camo, worn by soldaten in the Schutzstaffel.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sssmock.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sssmock.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-soviet
+  name: soviet coat
+  description: A soviet trenchcoat, worn by krasarmanev in the red army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ruscoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ruscoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-sovcoat
+  name: soviet winter coat
+  description: A traditional Soviet coat, in dark yellow.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gulagguard.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gulagguard.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-sovcoat2
+  name: soviet winter coat
+  description: A traditional Soviet coat, in light blue.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gulagprisoner3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gulagprisoner3.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-soviet_officer
+  name: soviet officer coat
+  description: A soviet trenchcoat, worn by officers in the red army.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sov_offcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sov_offcoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-moderncoat
+  name: modern coat
+  description: A standard coat made from wool.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/moderncoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/moderncoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-fancycoat
+  name: black coat
+  description: A fancy coat made from wool.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/woolcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/woolcoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-expensivecoat
+  name: fancy  coat
+  description: A expensive coat made from wool and leather.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/expensivecoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/expensivecoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-servicejacket
+  name: service jacket
+  description: A standard military jacket.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/servicejacket.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/servicejacket.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.05
+          Slash: 0.05
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.1
+          Radiation: 0.15
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-bomberjacketbrown
+  name: brown bomber's jacket
+  description: A brown jacket meant for high-alititude temperatures.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bomberjacket.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bomberjacket.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww2-bomberjacketblack
+  name: black bomber's jacket
+  description: A black jacket meant for high-alititude temperatures.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/blackbomberjacket.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/blackbomberjacket.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-germcoat
+  name: german coat
+  description: A German army coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/germtrench.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/germtrench.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.2
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-frenchcoat
+  name: french trench coat
+  description: A French trench coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/frenchtrench.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/frenchtrench.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-britishcoat
+  name: british coat
+  description: A British coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/britishtrench.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/britishtrench.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.2
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-ww1-royalcoat
+  name: royal coat
+  description: A royal coat used for royal people.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/royalcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/royalcoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.15
+          Radiation: 0.3
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-leathercoat_black
+  name: black leather long coat
+  description: A long black leather coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/leathercoat_black.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/leathercoat_black.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-modern_long_brown
+  name: modern brown coat
+  description: A modern long brown coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/mlongcoat_brown.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/mlongcoat_brown.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-modern_long_black
+  name: modern black coat
+  description: A modern long black coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/mlongcoat_black.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/mlongcoat_black.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-coat-gentleman
+  name: gentleman coat
+  description: An elegant black coat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gentlemancoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gentlemancoat.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-hazard
+  name: hazard vest
+  description: A vest used for high visibility and reflectivity.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/hazard.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/hazard.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-hazard-blue
+  name: blue hazard vest
+  description: A vest used for high visibility and reflectivity.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/hazard_b.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/hazard_b.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-hazard-yellow
+  name: yellow high visibility vest
+  description: A vest used for high visibility and reflectivity.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/hazard_y.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/hazard_y.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-hazard-green
+  name: green hazard vest
+  description: A vest used for high visibility and reflectivity.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/hazard_g.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/hazard_g.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-sealvest
+  name: seal lifevest
+  description: A vest used for keeping the seals afloat during training among other things.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sealvest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sealvest.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-fbi
+  name: FBI jacket
+  description: A secret FBI jacket perhaps.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fbi2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fbi2.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-atf
+  name: ATF jacket
+  description: An ATF jacket, standard issue for ATF agents.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/atf.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/atf.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-dea
+  name: DEA jacket
+  description: A DEA jacket, standard issue for DEA agents.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dea.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dea.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-us_jacket
+  name: olive drab jacket
+  description: The standard us army olive drab jacket of the mid-20th century.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/us_jacket.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/us_jacket.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-ghillie
+  name: ghillie suit
+  description: A camo ghillie suit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ghillie.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ghillie.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.12
+          Slash: 0.12
+          Piercing: 0
+          Arrow: 0.05
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-ghillie-winter
+  name: winter ghillie suit
+  description: A camo winter ghillie suit.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ghillie_winter.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ghillie_winter.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.12
+          Slash: 0.12
+          Piercing: 0
+          Arrow: 0.05
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-closechest_apron_f
+  name: chest length apron
+  description: A white apron that covers up to the chest, the ruffles are popular with the french.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/closechest_apron_f.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/closechest_apron_f.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-openchest_apron_f
+  name: waist length apron
+  description: A white apron that covers up to the waist, the ruffles are popular with the french.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/openchest_apron_f.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/openchest_apron_f.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: suit-storage-arabic_robe
+  name: light white arabic robe
+  description: A light, white, loose fitting garment for keeping the sun off.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/arab2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/arab2.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-chef
+  name: a classic chef's apron.
+  description: A basic, dull, white chef's apron.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/apronchef.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/apronchef.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-chef-tfc
+  name: Texas Fried Chicken apron
+  description: A cloth apron. It reads TFC.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/aprontfc.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/aprontfc.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-hawaiian
+  name: blue hawaiian shirt.
+  description: A brightly patterned and gaudy hawaiian shirt. It has a blue hue
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/hawaiian_blue.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/hawaiian_blue.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-hawaiian-orange
+  name: orange hawaiian shirt.
+  description: A brightly patterned and gaudy hawaiian shirt. It has a orange hue
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/hawaiian_orange.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/hawaiian_orange.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-hawaiian-purple
+  name: purple hawaiian shirt.
+  description: A brightly patterned and gaudy hawaiian shirt. It has a purple hue
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/hawaiian_purple.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/hawaiian_purple.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-hawaiian-green
+  name: green hawaiian shirt.
+  description: A brightly patterned and gaudy hawaiian shirt. It has a green hue
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/hawaiian_green.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/hawaiian_green.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-pimpsuit
+  name: purple pimp jacket.
+  description: A brightly colored purple button up coat for gangsters.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/pimpcoat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/pimpcoat.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-gorillasuit
+  name: full body gorilla outfit
+  description: A lifelike full body gorilla suit-outfit, ideal for costume parties and pranksters.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gorilla_suit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gorilla_suit.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-replicant
+  name: replicant trooper armor
+  description: A thick, expensive plastoid armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/replicant_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/replicant_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.45
+          Slash: 0.45
+          Piercing: 0.75
+          Arrow: 0.9
+          Heat: 0.55
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-replicant-pilot
+  name: replicant pilot armor
+  description: A thin, expensive plastoid armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/reppilot_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/reppilot_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.25
+          Slash: 0.25
+          Piercing: 0.55
+          Arrow: 0.5
+          Heat: 0.4
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-replicant-mp
+  name: replicant MP armor
+  description: An extremely thick, expensive plastoid armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/repmp_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/repmp_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.25
+          Slash: 0.25
+          Piercing: 0.55
+          Arrow: 0.5
+          Heat: 0.4
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-replicant-sgt
+  name: replicant sergeant armor
+  description: A thick, expensive green marked plastoid armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/repsgt_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/repsgt_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.45
+          Slash: 0.45
+          Piercing: 0.75
+          Arrow: 0.9
+          Heat: 0.45
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-replicant-reinforced
+  name: replicant reinforced armor
+  description: A thick, expensive plastoid armor with a blast plate, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/repreinforced.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/repreinforced.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.45
+          Slash: 0.45
+          Piercing: 0.8
+          Arrow: 0.9
+          Heat: 0.47
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-replicant-lieutenant
+  name: replicant lieutenant armor
+  description: A thick, expensive blue marked plastoid armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/replieutenant_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/replieutenant_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.45
+          Slash: 0.45
+          Piercing: 0.75
+          Arrow: 0.9
+          Heat: 0.45
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-replicant-commando
+  name: replicant commando armor
+  description: A thick, extremely expensive plastoid armor, covering most of the chest.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/repcommando.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/repcommando.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.55
+          Slash: 0.55
+          Piercing: 0.85
+          Arrow: 0.95
+          Heat: 0.55
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-replicant-captain
+  name: replicant captain armor
+  description: A thick, expensive red marked plastoid armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/repcaptain_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/repcaptain_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.45
+          Slash: 0.45
+          Piercing: 0.75
+          Arrow: 0.9
+          Heat: 0.45
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-replicant-commander
+  name: replicant commander armor
+  description: A thick, expensive gold marked plastoid armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/repcommander_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/repcommander_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.55
+          Slash: 0.55
+          Piercing: 0.85
+          Arrow: 0.95
+          Heat: 0.45
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-redguard
+  name: red guard armor with robe.
+  description: A thick, extremely expensive plastoid armor with a crimson red robe attached.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/redguard.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/redguard.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.75
+          Slash: 0.75
+          Piercing: 0.95
+          Arrow: 0.9
+          Heat: 0.75
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-senateguard
+  name: senate guard armor with robe.
+  description: A thick, extremely expensive plastoid armor with a royal blue robe attached.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/senateguard.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/senateguard.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.75
+          Slash: 0.75
+          Piercing: 0.95
+          Arrow: 0.9
+          Heat: 0.75
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-stormtrooper
+  name: standard stormtrooper armor
+  description: A thick, expensive imperial plastoid armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/stormtrooper_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/stormtrooper_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.45
+          Slash: 0.45
+          Piercing: 0.88
+          Arrow: 0.96
+          Heat: 0.5
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-stormsurgeon
+  name: stormsurgeon armor
+  description: A thick, expensive imperial stormsurgeon plastoid armor with mint green highlights, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/stormsurgeon_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/stormsurgeon_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.45
+          Slash: 0.45
+          Piercing: 0.68
+          Arrow: 0.86
+          Heat: 0.4
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-stormradio
+  name: light stormtrooper armor
+  description: A light, substandard imperial stormtrooper plastoid armor with removed plates for added mobility , covering some of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/stormradio_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/stormradio_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.35
+          Slash: 0.35
+          Piercing: 0.58
+          Arrow: 0.66
+          Heat: 0.35
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-ancient-scale
+  name: segmented armor
+  description: A thick, expensive segmented iron armor, covering the torso.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/scale_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/scale_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.65
+          Slash: 0.65
+          Piercing: 0.1
+          Arrow: 0.45
+          Heat: 0.15
+          Radiation: 0.45
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-ancient-chainmail
+  name: early Chainmail
+  description: Wearable armor made of several small interlinked chains.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/early_chainmail.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/early_chainmail.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.07
+          Arrow: 0.35
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-ancient-linen
+  name: linothorax armor
+  description: A thick linen armor, covering the torso and lower body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/heavycloth_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/heavycloth_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.55
+          Slash: 0.55
+          Piercing: 0
+          Arrow: 0.35
+          Heat: 0.15
+          Radiation: 0.1
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-ancient-bronze_lamellar
+  name: bronze egyptian lamellar
+  description: A bronze lamellar armor, used by soldiers of pharoahic dynasties.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/egyptian_lamellar.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/egyptian_lamellar.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.07
+          Arrow: 0.35
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-ancient-bronze_lamellar-chinese
+  name: bronze chinese lamellar
+  description: A bronze lamellar armor, used by warriors of early chinese dynasties.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/chinese_lamellar.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/chinese_lamellar.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.07
+          Arrow: 0.35
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-ancient-scaled
+  name: scaled armor
+  description: An armor made of serveral scales made of bronze.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/scaled_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/scaled_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.07
+          Arrow: 0.35
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-ancient-aztec_harness
+  name: aztec harness
+  description: A few metal plates on leather strips, covering the torso.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/aztec_harness.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/aztec_harness.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.35
+          Slash: 0.35
+          Piercing: 0.02
+          Arrow: 0.15
+          Heat: 0.02
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-ancient-gator_scale_armor
+  name: alligator scale armor
+  description: A carefully cured & hardened alligator scale armor, covering the torso.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gator_scale_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gator_scale_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.45
+          Slash: 0.45
+          Piercing: 0.05
+          Arrow: 0.25
+          Heat: 0.1
+          Radiation: 0.1
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-god_pharoah
+  name: pharoahic armor of the gods
+  description: The armor of the divine gods of the desert
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/settra.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/settra.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.95
+          Slash: 0.95
+          Piercing: 0.3
+          Arrow: 0.9
+          Heat: 0.2
+          Radiation: 0.45
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-creed
+  name: creed armor
+  description: A leather armor worn by the creed.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ac_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ac_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.65
+          Slash: 0.65
+          Piercing: 0.1
+          Arrow: 0.8
+          Heat: 0.15
+          Radiation: 0.1
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-creed-unity
+  name: creed armor
+  description: A leather armor worn by the creed.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ac_armor_napol.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ac_armor_napol.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.65
+          Slash: 0.65
+          Piercing: 0.1
+          Arrow: 0.8
+          Heat: 0.15
+          Radiation: 0.1
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-japmisc-japvest
+  name: Matagi Vest
+  description: A warm, fur lined vest made of leather.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/japvest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/japvest.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.1
+          Heat: 0.1
+          Radiation: 0.15
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-imperial-imperial_chestplate
+  name: imperial chestplate
+  description: An iron chestplate made in a imperial style, it is not wholly protective against bullets but allows more maneuverability to avoid them.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/imperial_breastplate.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/imperial_breastplate.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.12
+          Arrow: 0.5
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-imperial-arbites
+  name: arbites armor
+  description: A thick, authoritive red armor with reinforced steel leggings and shoulder plates, covering most of the body. Futile attempts to assault arbite enforcers of the law find that rebellion is fruitless.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/arbit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/arbit.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.35
+          Arrow: 0.9
+          Heat: 0.65
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval
+  name: plated armor
+  description: A thick, expensive iron armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/knight_simple.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/knight_simple.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.1
+          Arrow: 0.9
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-blue
+  name: blue plated armor
+  description: A thick, expensive iron armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/knight_blue.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/knight_blue.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.1
+          Arrow: 0.9
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-red
+  name: red plated armor
+  description: A thick, expensive iron armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/knight_red.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/knight_red.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.1
+          Arrow: 0.9
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-yellow
+  name: yellow plated armor
+  description: A thick, expensive iron armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/knight_yellow.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/knight_yellow.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.1
+          Arrow: 0.9
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-green
+  name: green plated armor
+  description: A thick, expensive iron armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/knight_green.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/knight_green.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.1
+          Arrow: 0.9
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-templar
+  name: templar plated armor
+  description: A thick, expensive iron armor, covering most of the body. This one is covered by white linen with the cross.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/knight_templar.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/knight_templar.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.1
+          Arrow: 0.9
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-bronze_chestplate
+  name: bronze chestplate
+  description: A bronze chestplate.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bronze_chestplate.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bronze_chestplate.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.07
+          Arrow: 0.35
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-iron_chestplate
+  name: iron chestplate
+  description: An iron chestplate.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/iron_chestplate.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/iron_chestplate.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.08
+          Arrow: 0.4
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-iron_chestplate-red
+  name: iron chestplate
+  description: An iron chestplate.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/iron_chestplater.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/iron_chestplater.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.08
+          Arrow: 0.4
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-iron_chestplate-crusader
+  name: iron chestplate
+  description: An iron chestplate.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/iron_chestplatec.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/iron_chestplatec.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.08
+          Arrow: 0.4
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-iron_chestplate-blue
+  name: iron chestplate
+  description: An iron chestplate.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/iron_chestplateb.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/iron_chestplateb.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.08
+          Arrow: 0.4
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-leather
+  name: leather armor
+  description: Several pressed sheets of leather, making a reasonable armor plate.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/leather_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/leather_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.3
+          Slash: 0.3
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-hauberk
+  name: hauberk
+  description: A longer version of the chainmail, worn as a coat. Offers greater protection.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/hauberk.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/hauberk.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.1
+          Arrow: 0.55
+          Heat: 0.2
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-emirate
+  name: emirate armor
+  description: A loosely fitting but protective suit of armor to wrap around the body & tunic for a emirate lord
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/emir_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/emir_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.55
+          Slash: 0.55
+          Piercing: 0.1
+          Arrow: 0.5
+          Heat: 0.2
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-chainmail
+  name: chainmail
+  description: Wearable armor made of several small interlinked chains.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/chainmail.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/chainmail.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.07
+          Arrow: 0.35
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-varangian
+  name: varangian lamellar armor
+  description: A close fitting armor of small iron rectangular shapes to make a scale vest. Manageably heavy but flexible.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/varangian_lamellar.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/varangian_lamellar.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.1
+          Arrow: 0.55
+          Heat: 0.2
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-imperial_chinese
+  name: imperial chinese armor
+  description: A well built & laquered armor with iron plates concealed inwardly and outwardly protecting the body, made in imperial chinese style
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/imperial_chinese.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/imperial_chinese.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.55
+          Slash: 0.55
+          Piercing: 0.1
+          Arrow: 0.5
+          Heat: 0.2
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-medieval-steppe_leather
+  name: steppe leather armor
+  description: Leather armor made from sheets of leather bound in a steppe nomad style, making adequate protection for prospective warriors.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/steppe_leather_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/steppe_leather_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.45
+          Slash: 0.45
+          Piercing: 0.05
+          Arrow: 0.25
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-royal
+  name: royal plated armor
+  description: A thick, expensive iron armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/royalplate.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/royalplate.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.2
+          Arrow: 1
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-samurai
+  name: leather samurai armor
+  description: A protective & lightweight armor, bound to and covering most of the body yet slightly flexible. Often worn by a lord's bodyguards.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/samurai3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/samurai3.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.07
+          Arrow: 0.35
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-samurai-red
+  name: red leather samurai armor
+  description: A protective & lightweight armor, bound to and covering most of the body yet slightly flexible. Often worn by a lord's bodyguards.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/samurai1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/samurai1.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.07
+          Arrow: 0.35
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-samurai-blue
+  name: blue leather samurai armor
+  description: A protective & lightweight armor, bound to and covering most of the body yet slightly flexible. Often worn by a lord's bodyguards.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/samurai2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/samurai2.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.07
+          Arrow: 0.35
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-samurai-black
+  name: black leather samurai armor
+  description: A protective & lightweight armor, bound to and covering most of the body yet slightly flexible. Often worn by a lord's bodyguards.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/samurai4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/samurai4.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.07
+          Arrow: 0.35
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-samurai-warrior
+  name: samurai armor
+  description: A dense, metal armor of japanese origin, covering most of the body. Often worn by a loyal warriors to a feudal lord.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/samurai_warrior3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/samurai_warrior3.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.65
+          Slash: 0.65
+          Piercing: 0.05
+          Arrow: 0.75
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-samurai-warrior-red
+  name: red samurai armor
+  description: A dense, metal armor of japanese origin, covering most of the body. Often worn by a loyal warriors to a feudal lord.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/samurai_warrior1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/samurai_warrior1.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.65
+          Slash: 0.65
+          Piercing: 0.05
+          Arrow: 0.75
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-samurai-warrior-blue
+  name: blue kozane armor
+  description: A dense, metal armor of japanese origin, covering most of the body. Often worn by a loyal warriors to a feudal lord.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/samurai_warrior2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/samurai_warrior2.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.65
+          Slash: 0.65
+          Piercing: 0.05
+          Arrow: 0.75
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-samurai-warrior-black
+  name: black kozane armor
+  description: A dense, metal armor of japanese origin, covering most of the body. Often worn by a loyal warriors to a feudal lord.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/samurai_warrior4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/samurai_warrior4.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.65
+          Slash: 0.65
+          Piercing: 0.05
+          Arrow: 0.75
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-samurai-lord
+  name: samurai lord armor
+  description: A thick, expensive armor of japanese origin. Often worn by feudal lords.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/samurai_lord3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/samurai_lord3.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.1
+          Arrow: 0.9
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-samurai-lord-red
+  name: red samurai lord armor
+  description: A thick, expensive armor of japanese origin. Often worn by feudal lords.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/samurai_lord1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/samurai_lord1.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.1
+          Arrow: 0.9
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-samurai-lord-blue
+  name: blue samurai lord armor
+  description: A thick, expensive armor of japanese origin. Often worn by feudal lords.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/samurai_lord2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/samurai_lord2.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.1
+          Arrow: 0.9
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-samurai-lord-black
+  name: black samurai lord armor
+  description: A thick, expensive armor of japanese origin. Often worn by feudal lords.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/samurai_lord4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/samurai_lord4.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.1
+          Arrow: 0.9
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-tes13-dwemmer
+  name: dwemmer armor
+  description: A thick, expensive armor of dwemmer metal.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dwarmor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dwarmor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 0.1
+          Arrow: 0.9
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-tes13-stormcloak
+  name: stormcloak officer armor
+  description: A thick, leather armor of hide with a bearpelt draped over it.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/stormcloak.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/stormcloak.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.65
+          Slash: 0.65
+          Piercing: 0.1
+          Arrow: 0.45
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-tes13-imperial
+  name: imperial officer armor
+  description: A thick, steel armor worn by imperial officers
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/imperial_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/imperial_officer.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.65
+          Slash: 0.65
+          Piercing: 0.1
+          Arrow: 0.45
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-zgz1
+  name: zgz1 advanced armor
+  description: An advanced piece of armor that provides medium protection against kinetic and other projectiles. This armor is mostly used by the Chinese.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/zgz1_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/zgz1_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.45
+          Slash: 0.45
+          Piercing: 0.78
+          Arrow: 0.9
+          Heat: 0.5
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-zgz1-med
+  name: Medical zgz1 advanced armor
+  description: An advanced piece of armor that provides medium protection against kinetic and other projectiles. This armor is mostly used by the Chinese medics.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/zgz1med_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/zgz1med_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.45
+          Slash: 0.45
+          Piercing: 0.78
+          Arrow: 0.9
+          Heat: 0.5
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-scrap
+  name: scrap plate armor
+  description: A ramshackle suit of armor, reminiscence of medieval times.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/scraparmor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/scraparmor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.7
+          Piercing: 0.2
+          Arrow: 0.85
+          Heat: 0.2
+          Radiation: 0.4
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-mechanical
+  name: mechanized armor
+  description: A thick, thrown together iron armor, covering most of the body.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/mechanicalarmor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/mechanicalarmor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.85
+          Slash: 0.85
+          Piercing: 1.5
+          Arrow: 1.5
+          Heat: 0.55
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-sauronarmor
+  name: sauron's armor
+  description: The armor of sauron
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sauronarmor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sauronarmor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.95
+          Slash: 0.95
+          Piercing: 0.3
+          Arrow: 0.9
+          Heat: 0.2
+          Radiation: 0.45
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-darkplate
+  name: plated armor
+  description: A cheap dark iron armor.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ork_plate_elite.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ork_plate_elite.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.7
+          Piercing: 0.1
+          Arrow: 0.9
+          Heat: 0.15
+          Radiation: 0.45
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-darkplateelite
+  name: plated armor
+  description: A cheap dark iron armor.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ork_plate_commander.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ork_plate_commander.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.1
+          Arrow: 0.9
+          Heat: 0.15
+          Radiation: 0.45
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-ork_urukhai
+  name: orc urukhai armor
+  description: Orc make good armor!
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/urukhai_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/urukhai_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.08
+          Arrow: 0.4
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-ork_whitehand
+  name: orc whitehand armor
+  description: Orc make good armor!
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/whitehand_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/whitehand_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.08
+          Arrow: 0.4
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-armor-ork_grunt
+  name: orc grunt armor
+  description: Orc make good armor!
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/grunt_armor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/grunt_armor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 0.06
+          Arrow: 0.35
+          Heat: 0.1
+          Radiation: 0.2
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-cape
+  name: red cape
+  description: A long red cape.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/redcape.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/redcape.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-cape-blue
+  name: blue cape
+  description: A long blue cape.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bluecape.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bluecape.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-swat
+  name: swat heavy vest
+  description: A heavy NIJ level IV vest, used by swat officers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/swat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/swat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.9
+          Arrow: 0.8
+          Heat: 0.4
+          Radiation: 0.4
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-swat_new
+  name: swat bulletproof vest
+  description: A heavy NIJ level IV vest, used by swat officers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/policevest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/policevest.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.9
+          Arrow: 0.8
+          Heat: 0.4
+          Radiation: 0.4
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-police
+  name: police bulletproof vest
+  description: A police vest (Level III).
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/policevest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/policevest.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.6
+          Slash: 0.6
+          Piercing: 0.74
+          Arrow: 0.2
+          Heat: 0.4
+          Radiation: 0.2
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-b3
+  name: 6B3 body armor
+  description: A ballistic vest of Soviet origin, issued in the mid 1980s.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/6b3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/6b3.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.67
+          Slash: 0.67
+          Piercing: 0.6
+          Arrow: 0.95
+          Heat: 0.15
+          Radiation: 0
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-nbc
+  name: yellow NBC suit
+  description: A yellow coloured NBC suit, made protect against biological, chemical and nuclear threats.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nbc.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nbc.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0
+          Slash: 0
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.25
+          Radiation: 0.8
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-nbc-olive
+  name: olive drab NBC suit
+  description: An olive drab coloured NBC suit, made protect against biological, chemical and nuclear threats.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nbc2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nbc2.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0
+          Slash: 0
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.25
+          Radiation: 0.8
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-nbc-olive-fire
+  name: firefighting suit
+  description: A suit primarily intended to protect against fire.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/nbc2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/nbc2.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.4
+          Slash: 0.4
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.8
+          Radiation: 0.4
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-hazmat
+  name: hazmat suit
+  description: A bright hazard protection suit, made to protect against biological, chemical and nuclear threats.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/hazmat_suit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/hazmat_suit.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0
+          Slash: 0
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.05
+          Radiation: 1
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-astronaut
+  name: astronaut suit
+  description: A grey space suit, made protect to against low pressure, temperature and radioactive threats.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/astronaut.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/astronaut.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0
+          Slash: 0
+          Piercing: 0
+          Arrow: 0
+          Heat: 0.05
+          Radiation: 1.95
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-bx
+  name: carbon black suit
+  description: A high tech suit made of comprssed carbon materials.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/bxsuit.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/bxsuit.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 1.4
+          Slash: 1.4
+          Piercing: 1.5
+          Arrow: 2
+          Heat: 1
+          Radiation: 0.8
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-a6b45
+  name: 6B45 heavy vest
+  description: 6B45 is a modular bullet-resistant vest. It comprises frontal and rear section and soft-armour shoulder and side protection.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/a6b45.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/a6b45.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 1.03
+          Slash: 1.03
+          Piercing: 1.1
+          Arrow: 1.1
+          Heat: 0.67
+          Radiation: 0.36
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-heavyvest1
+  name: heavy vest
+  description: a heavy NIJ level IV vest.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/heavypolice.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/heavypolice.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.5
+          Slash: 0.5
+          Piercing: 1.12
+          Arrow: 0.4
+          Heat: 0.68
+          Radiation: 0.2
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-medvest
+  name: medium vest
+  description: a heavy NIJ level III vest.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/mediumvest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/mediumvest.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.3
+          Slash: 0.3
+          Piercing: 0.84
+          Arrow: 0.4
+          Heat: 0.47
+          Radiation: 0.1
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-a6b44
+  name: 6B44 vest
+  description: 6B44 is a modular bullet-resistant vest.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/a6b44.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/a6b44.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.93
+          Arrow: 1
+          Heat: 0.56
+          Radiation: 0.36
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-a6b28
+  name: 6B28 plate carrier
+  description: 6B28 is a level III plate carrier.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/a6b28.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/a6b28.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.74
+          Slash: 0.74
+          Piercing: 0.83
+          Arrow: 0.87
+          Heat: 0.67
+          Radiation: 0.36
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-coldwar-dra-officer
+  name: DRA officer jacket
+  description: A military jacket worn by DRA officers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dra_officer.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dra_officer.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-arabic_robe
+  name: light white arabic robe
+  description: A light, white, loose fitting garment for keeping the sun off.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/arab2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/arab2.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-lifejacket
+  name: lifejacket
+  description: A red lifejacket, to improve survival on sea.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sealvest.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sealvest.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.05
+          Heat: 0
+          Radiation: 0.05
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-lifejacket-yellow
+  name: lifejacket
+  description: A yellow lifejacket, to improve survival on sea.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sealvest_yellow.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sealvest_yellow.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.05
+          Heat: 0
+          Radiation: 0.05
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-prehistoricfurcoat
+  name: primitive pelt coat
+  description: A makeshift pelt coat made from fur skins, worn to protect early man from the elements.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/prehistoric_fur4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/prehistoric_fur4.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-prehistoricfurcoat-brown
+  name: brown primitive pelt coat
+  description: A makeshift brown pelt coat made from fur skins, worn to protect early man from the elements.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/prehistoric_fur1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/prehistoric_fur1.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-prehistoricfurcoat-black
+  name: black primitive pelt coat
+  description: A makeshift black pelt coat made from fur skins, worn to protect early man from the elements.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/prehistoric_fur2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/prehistoric_fur2.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-prehistoricfurcoat-white
+  name: white primitive pelt coat
+  description: A makeshift white pelt coat made from fur skins, worn to protect early man from the elements.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/prehistoric_fur3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/prehistoric_fur3.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-prehistoricfurcoat-grey
+  name: grey primitive pelt coat
+  description: A makeshift grey pelt coat made from fur skins, worn to protect early man from the elements.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/prehistoric_fur4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/prehistoric_fur4.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.1
+          Slash: 0.1
+          Piercing: 0
+          Arrow: 0.15
+          Heat: 0.15
+          Radiation: 0.25
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-woodarmor
+  name: primitive wood armor
+  description: A wooden set of armor made of small planks held together by plant fiber ropes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/wooden_chestarmor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/wooden_chestarmor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.15
+          Slash: 0.15
+          Piercing: 0
+          Arrow: 0.18
+          Heat: 0.1
+          Radiation: 0.15
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-hairbonearmor
+  name: primitive bone hair-pipe armor
+  description: A bone set of chest armor made of tightly packed small bones held together by plant fiber ropes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/native_bonearmor.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/native_bonearmor.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.21
+          Slash: 0.21
+          Piercing: 0
+          Arrow: 0.13
+          Heat: 0.08
+          Radiation: 0.18
+
+- type: entity
+  parent: ClothingOuterBase
+  id: suit-zulu_mbata
+  name: mbata pelt vest
+  description: A shoulder vest made from big cat pelt, worn ceremonially & military dress by the zulu.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/zulu_mbata.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/zulu_mbata.rsi

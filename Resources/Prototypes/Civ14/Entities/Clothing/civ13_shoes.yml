@@ -1,0 +1,791 @@
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-color
+  name: shoes
+  description: A pair of shoes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/white.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/white.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-color-white
+  name: white shoes
+  description: A pair of shoes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/white.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/white.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-color-blue
+  name: blue shoes
+  description: A pair of shoes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/blue.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/blue.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-color-brown
+  name: brown shoes
+  description: A pair of shoes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/brown.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/brown.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-color-red
+  name: red shoes
+  description: Stylish red shoes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/red.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/red.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-color-orange
+  name: orange shoes
+  description: A pair of shoes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/orange.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/orange.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-jackboots
+  name: jackboots
+  description: Standard-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/jackboots.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/jackboots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-jackboots-modern
+  name: jackboots
+  description: Standard-issue Security combat boots for combat scenarios or combat situations. All combat, all the time.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/jackboots2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/jackboots2.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-jackboots-soviet
+  name: soviet sapogi boots
+  description: Jackboots of soviet origin. Also known as 'Yuftevyje sapogi'.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sovietboots.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sovietboots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-workboots
+  name: workboots
+  description: A pair of steel-toed work boots designed for use in industrial settings. Safety first.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/workboots.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/workboots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-black
+  name: black shoes
+  description: A pair of black shoes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/black.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/black.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-heavyboots
+  name: military boots
+  description: When you want to turn up the heat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/swat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/swat.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-heavyboots-wrappedboots
+  name: wrapped boots
+  description: When you want to turn up the heat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/wrappedboots.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/wrappedboots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-heavyboots-wrappedboots-jap_ww2
+  name: leather boots
+  description: A pair of hobnailed leather boots
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/japboots_ww2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/japboots_ww2.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-heavyboots-wrappedboots-jap_ww2-puttees
+  name: leather boots
+  description: A pair of hobnailed leather boots
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/japboots_ww2_puttees.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/japboots_ww2_puttees.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-swat
+  name: SWAT boots
+  description: When you want to turn up the heat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/swat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/swat.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-combat
+  name: combat boots
+  description: When you REALLY want to turn up the heat
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/swat.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/swat.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-iogboots
+  name: IOG boots
+  description: When you REALLY want to turn up the heat.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/iogboot.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/iogboot.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-iogboots-black
+  name: combat boots
+  description: Sturdy military footwear.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/iogboot.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/iogboot.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-sandal
+  name: sandals
+  description: A pair of rather plain, wooden sandals.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/flipflops.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/flipflops.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-sandal-leather
+  name: sandals
+  description: A pair of simple, thin leather strap sandals. Covers up to the lower foot.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/flipflops.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/flipflops.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-sandal-marisa
+  name: magic shoes
+  description: A pair of magic, black shoes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/black.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/black.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-laceup
+  name: laceup shoes
+  description: The height of fashion, and they're pre-polished!
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/laceups.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/laceups.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-laceup-brown
+  name: brown laceup shoes
+  description: The height of fashion, and they're pre-polished!
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/brown_laceups.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/brown_laceups.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-laceup-grey
+  name: grey laceup shoes
+  description: The height of fashion, and they're pre-polished!
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/grey_laceups.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/grey_laceups.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-laceup-white
+  name: white laceup shoes
+  description: The height of fashion, and they're pre-polished!
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/white_laceups.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/white_laceups.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-gator_laceup
+  name: alligator scale laceup shoes
+  description: The height of luxurious footwear, and they're pre-polished!
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gator_laceups.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gator_laceups.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-leather
+  name: leather shoes
+  description: A sturdy pair of leather shoes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/leather.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/leather.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-chad
+  name: chad shoes
+  description: Ouch!
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/chad.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/chad.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-flipflops
+  name: flip-flops
+  description: Brazilian style flip-flops.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/flipflops.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/flipflops.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-replicantshoes
+  name: plastoid boots
+  description: A pair of plastoid boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/white.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/white.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-redguardshoes
+  name: red plastoid boots
+  description: A pair of red plastoid boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/redboots.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/redboots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-senateguardshoes
+  name: blue plastoid boots
+  description: A pair of blue plastoid boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/senateboots.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/senateboots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-roman
+  name: sandals
+  description: Basic leather sandals, going up to the knee.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/roman.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/roman.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-aztec_sandals
+  name: aztec sandals
+  description: Basic leather sandals, hailing from the jungles.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/aztec_sandals.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/aztec_sandals.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-fur
+  name: fur boots
+  description: Dense fur boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur4.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-fur-black
+  name: black fur boots
+  description: Dense fur boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur3.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur3.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-fur-brown
+  name: brown fur boots
+  description: Dense fur boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur1.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-fur-white
+  name: white fur boots
+  description: Dense fur boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur4.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur4.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-fur-grey
+  name: grey fur boots
+  description: Dense fur boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur2.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-fur-pink
+  name: human skin boots
+  description: Human skin boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur5.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur5.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-fur-orc
+  name: orc fur boots
+  description: Dense fur boots made from orc skin.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/fur6.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/fur6.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-toughguy
+  name: specialist boots
+  description: A well made and importantly quiet treading pair of army-issue leather boots..
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/toughguy.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/toughguy.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-creed
+  name: creed boots
+  description: A pair of leather boots worn by the creed.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ac_boots.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ac_boots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-japboots
+  name: Winter wrapped boots
+  description: A pair of simple, thin leather boots. Covers up to the lower leg.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/japboots.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/japboots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-blackboots
+  name: black boots
+  description: Classic black boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sailorboots1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sailorboots1.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-leatherboots
+  name: leather boots
+  description: Classic leather boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sailorboots2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sailorboots2.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-winterboots
+  name: winter boots
+  description: Classic winter boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/winterboots.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/winterboots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-whiteputtee
+  name: black puttee boots
+  description: Classic black boots with white puttees.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/whiteput.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/whiteput.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-soldiershoes
+  name: infantry shoes
+  description: Low black infantry shoes.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/soldier_shoes.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/soldier_shoes.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-sailorboots1
+  name: black sailor boots
+  description: Classic black sailor boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sailorboots1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sailorboots1.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-sailorboots2
+  name: leather sailor boots
+  description: Classic leather sailor boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/sailorboots2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/sailorboots2.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-usmc
+  name: military boots
+  description: Classic tan military boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/usmc.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/usmc.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-riding1
+  name: black riding boots
+  description: Black leather boots with spurs, perfect for riding.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/cowboyboots1.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/cowboyboots1.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-riding1-gator_cowboy
+  name: alligator scale riding boots
+  description: Alligator scale patterned boots with spurs, perfect for riding in style.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gator_cowboy.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gator_cowboy.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-riding1-lizard_cowboy
+  name: lizard scale riding boots
+  description: lizard scale patterned boots with spurs, perfect for riding in style.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/lizard_cowboy.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/lizard_cowboy.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-riding2
+  name: leather riding boots
+  description: Leather boots with spurs, perfect for riding.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/cowboyboots2.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/cowboyboots2.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-gator_ankleboots
+  name: alligator scale ankle boots
+  description: Classy alligator scale ankle-length boots, a certain statement for fashion.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/gator_ankleboots.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/gator_ankleboots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-medieval
+  name: leather shoes
+  description: A pair of simple, thin leather shoes. Covers up to the ankle.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/medieval.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/medieval.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-medieval-arab
+  name: arabic leather shoes
+  description: A pair of simple, thin leather shoes. Loose at the tip.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/arab.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/arab.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-medieval-emirate
+  name: emirate leather shoes
+  description: A pair of simple, arabic style leather shoes. Extra padded & loose at the tip.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/emir.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/emir.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-medieval-knight
+  name: Sabatons
+  description: A pair of plated armored boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/knight.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/knight.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-steppe_shoes
+  name: steppe wool shoe
+  description: A pair of insulated rough woolen shoes for keeping feet warm on the open steppe.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/steppe_wool_shoes.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/steppe_wool_shoes.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-geta
+  name: geta sandals
+  description: A pair of simple, wood sandals. Keeps you elevated off he ground slightly.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/geta.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/geta.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-tsuranuki
+  name: tsuranuki
+  description: A pair of plated shin guards & shoes of japanese origin.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/tsuranuki.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/tsuranuki.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-dwemmer
+  name: dwemmer boots
+  description: A pair of plated boots made of dwemmer metal.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/dwoots.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/dwoots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-sneakers-courier
+  name: courier sneakers
+  description: A pair of simple, thin grey sneakers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/courier_sneakers.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/courier_sneakers.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-punk
+  name: punk boots
+  description: A pair of stylized high leather boots for kicking the snot out of 'The Man'.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/punk.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/punk.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-orc
+  name: orcish sabatons
+  description: A pair of orc plated armored boots.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/ork_warrior.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/ork_warrior.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-lizard_ankleboots
+  name: lizard scale ankle boots
+  description: Classy lizard scale ankle-length boots, a certain statement for fashion.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/lizard_ankleboots.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/lizard_ankleboots.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-lizard_laceup
+  name: lizard scale laceup shoes
+  description: The height of luxurious footwear, and they're pre-polished!
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/lizard_laceups.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/lizard_laceups.rsi
+
+- type: entity
+  parent: ClothingShoesBase
+  id: shoes-football
+  name: football trainers
+  description: A pair of football trainers.
+  components:
+    - type: Sprite
+      sprite: Clothing/Civ14/exported/football.rsi
+    - type: Clothing
+      sprite: Clothing/Civ14/exported/football.rsi
