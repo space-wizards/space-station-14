@@ -118,22 +118,23 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
         if (ent.Comp.Enabled == enabled)
             return;
 
-        ent.Comp.Enabled = enabled;
-
-        // Close the wires panel UI on activation
-        if (ent.Comp.Enabled && TryComp<WiresPanelComponent>(ent, out var wires))
+        // Hide the wires panel UI on activation
+        if (enabled && TryComp<WiresPanelComponent>(ent, out var wires) && wires.Open)
+        {
             _wires.TogglePanel(ent, wires, false);
+            _audio.PlayPredicted(wires.ScrewdriverCloseSound, ent, user);
+        }
 
         // Determine how much time is remaining in the current animation and the one next in queue
         var animTimeRemaining = MathF.Max((float)(ent.Comp.AnimationCompletionTime - _timing.CurTime).TotalSeconds, 0f);
-        var animTimeNext = ent.Comp.Enabled ? ent.Comp.DeploymentLength : ent.Comp.RetractionLength;
+        var animTimeNext = enabled ? ent.Comp.DeploymentLength : ent.Comp.RetractionLength;
 
         ent.Comp.AnimationCompletionTime = _timing.CurTime + TimeSpan.FromSeconds(animTimeNext + animTimeRemaining);
 
         // Change the turret's damage modifiers
         if (TryComp<DamageableComponent>(ent, out var damageable))
         {
-            var damageSetID = ent.Comp.Enabled ? ent.Comp.DeployedDamageModifierSetId : ent.Comp.RetractedDamageModifierSetId;
+            var damageSetID = enabled ? ent.Comp.DeployedDamageModifierSetId : ent.Comp.RetractedDamageModifierSetId;
             _damageable.SetDamageModifierSetId(ent, damageSetID, damageable);
         }
 
@@ -142,12 +143,13 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
             TryComp(ent, out FixturesComponent? fixtures) &&
             fixtures.Fixtures.TryGetValue(ent.Comp.DeployedFixture, out var fixture))
         {
-            _physics.SetHard(ent, fixture, ent.Comp.Enabled);
+            _physics.SetHard(ent, fixture, enabled);
         }
 
-        var msg = ent.Comp.Enabled ? "deployable-turret-component-activating" : "deployable-turret-component-deactivating";
+        var msg = enabled ? "deployable-turret-component-activating" : "deployable-turret-component-deactivating";
         _popup.PopupClient(Loc.GetString(msg), ent, user);
 
+        ent.Comp.Enabled = enabled;
         Dirty(ent);
     }
 
