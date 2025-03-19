@@ -8,7 +8,6 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Stacks;
 using Robust.Server.Containers;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 
 namespace Content.Server.StationEvents.Events;
