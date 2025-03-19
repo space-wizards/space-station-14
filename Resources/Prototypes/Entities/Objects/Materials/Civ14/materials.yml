@@ -87,9 +87,9 @@
   suffix: Full
   components:
     - type: Sprite
-      state: dirt
+      state: dirt_pile
       layers:
-        - state: dirt
+        - state: dirt_pile
           map: ["base"]
     - type: Stack
       stackType: Dirt
