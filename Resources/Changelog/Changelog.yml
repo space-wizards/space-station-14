@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Service workers can now be antagonists.
-    type: Fix
-  id: 7580
-  time: '2024-11-02T10:07:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31359
 - author: AftrLite
   changes:
   - message: The AME now has a new sound effect for fuel injection!
@@ -3890,3 +3883,10 @@
   id: 8079
   time: '2025-03-18T23:45:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35144
+- author: claustro305
+  changes:
+  - message: Fixed an issue where small lights are too hard to shoot.
+    type: Fix
+  id: 8080
+  time: '2025-03-19T15:07:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35920
