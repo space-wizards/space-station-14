@@ -50,3 +50,5 @@
               solution: soil
     - type: Appearance
     - type: PlantHolderVisuals
+    - type: CompostableField
+      compostTime: 5.0
