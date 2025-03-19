@@ -1,94 +1,4 @@
 ﻿Entries:
-- author: Psychpsyo
-  changes:
-  - message: Carp plushies can now be placed in mop buckets, along with other rehydratable
-      things like monkey cubes.
-    type: Add
-  id: 7569
-  time: '2024-10-31T18:46:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33079
-- author: Bhijn and Myr
-  changes:
-  - message: Tail thumping has been downmixed to mono to fix the sound lacking any
-      sort of positioning. They're now capable of having a presence in the actual
-      soundspace, in turn meaning lizards are no longer occupying your headset at
-      all times of day.
-    type: Fix
-  id: 7570
-  time: '2024-10-31T21:30:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33092
-- author: reesque
-  changes:
-  - message: pie not dropping tin on thrown
-    type: Fix
-  id: 7571
-  time: '2024-11-01T01:43:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33013
-- author: SlamBamActionman
-  changes:
-  - message: Votekicks can now be initiated during the pregame lobby.
-    type: Fix
-  id: 7572
-  time: '2024-11-01T01:52:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32528
-- author: PopGamer46
-  changes:
-  - message: Fixed bolt lights of recently unpowered bolted doors
-    type: Fix
-  id: 7573
-  time: '2024-11-01T02:04:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33063
-- author: RumiTiger
-  changes:
-  - message: A chocolate and banana muffin has been added to the game. The berry and
-      cherry muffins have also been resprited!
-    type: Add
-  - message: Now you can make a regular, chocolate, banana, and berry muffin!
-    type: Tweak
-  - message: Muffin tins have been added to the game. They are needed for making muffins!
-    type: Add
-  id: 7574
-  time: '2024-11-01T02:06:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29318
-- author: ScarKy0
-  changes:
-  - message: AI can no longer toggle seeing jobs off.
-    type: Tweak
-  - message: Borgs can no longer see mindshield status.
-    type: Fix
-  id: 7575
-  time: '2024-11-01T02:32:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33069
-- author: Minemoder5000
-  changes:
-  - message: The cargo shuttle's cargo pallets can no longer sell or buy.
-    type: Fix
-  id: 7576
-  time: '2024-11-01T06:22:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33022
-- author: aspiringLich
-  changes:
-  - message: Fixed the logic triggering popups when inserting items into machines.
-    type: Fix
-  id: 7577
-  time: '2024-11-02T01:33:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28856
-- author: K-Dynamic
-  changes:
-  - message: Pills are explosion resistant.
-    type: Tweak
-  id: 7578
-  time: '2024-11-02T09:51:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32458
-- author: K-Dynamic
-  changes:
-  - message: Handcrafted gauze now takes 3 seconds instead of 10 seconds of crafting
-    type: Tweak
-  - message: Medical techfab gauze recipe now takes 1 cloth instead of 2
-    type: Tweak
-  id: 7579
-  time: '2024-11-02T09:53:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32744
 - author: Ubaser
   changes:
   - message: Service workers can now be antagonists.
@@ -3891,3 +3801,92 @@
   id: 8068
   time: '2025-03-16T00:41:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34300
+- author: Tayrtahn
+  changes:
+  - message: Cyborgs no longer have their brains removed if the salvage site they
+      are on despawns.
+    type: Fix
+  id: 8069
+  time: '2025-03-16T18:15:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35855
+- author: slarticodefast
+  changes:
+  - message: Paradox clones now recieve a copy of (almost) all the inventory items
+      their original has.
+    type: Tweak
+  id: 8070
+  time: '2025-03-16T22:02:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35838
+- author: Errant
+  changes:
+  - message: Some ghostrole antagonists were incorrectly not marked as such in the
+      round end playerlist. Now all antagonists are sorted to the top and have red
+      names.
+    type: Fix
+  id: 8071
+  time: '2025-03-16T22:11:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35832
+- author: slarticodefast
+  changes:
+  - message: Paradox clones now receive any objective the original had.
+    type: Add
+  id: 8072
+  time: '2025-03-16T22:24:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35829
+- author: Errant-4
+  changes:
+  - message: The Syndicate Instigator shuttle's crew now has the proper antagonist
+      role type.
+    type: Fix
+  id: 8073
+  time: '2025-03-17T16:27:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35892
+- author: SlamBamActionman
+  changes:
+  - message: The Syndicate Backpack can now fit more items (35 item slots, from 28).
+    type: Tweak
+  id: 8074
+  time: '2025-03-17T17:58:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35888
+- author: beck-thompson
+  changes:
+  - message: Chameleon vests now have the same stats as winter coats (Cold protection,
+      minor heat increase, 5% slash resistance, 10% heat resistance)
+    type: Tweak
+  id: 8075
+  time: '2025-03-17T18:39:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34929
+- author: slarticodefast
+  changes:
+  - message: Paradox clones now receive any implants the original has.
+    type: Add
+  - message: Cloning pods no longer copy items in slime storage.
+    type: Fix
+  id: 8076
+  time: '2025-03-18T05:21:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35906
+- author: slarticodefast
+  changes:
+  - message: Tomato Killers now take damage from weedkiller and plant b gone.
+    type: Tweak
+  id: 8077
+  time: '2025-03-18T08:00:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35898
+- author: slarticodefast
+  changes:
+  - message: Paradox Clones now start with their suit sensors turned off.
+    type: Tweak
+  id: 8078
+  time: '2025-03-18T20:07:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35909
+- author: AgentSmithRadio
+  changes:
+  - message: Smite Vendors can now be restocked using the standard beverage restock
+      box.
+    type: Fix
+  - message: Smite and other soda vendors now carry more soda, and are less likely
+      to be empty at shift start.
+    type: Tweak
+  id: 8079
+  time: '2025-03-18T23:45:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35144
