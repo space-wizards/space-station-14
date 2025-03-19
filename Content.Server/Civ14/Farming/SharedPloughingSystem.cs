@@ -36,16 +36,16 @@ namespace Content.Server.Farming
 
             // Grass tiles that can be turned into dirt tiles
             var grassTiles = new HashSet<string>
-            {
-                "FloorGrass",
-                "FloorGrassJungle",
-                "FloorGrassDark",
-                "FloorGrassLight",
-                "FloorAstroGrass",
-                "FloorPlanetGrass",
-                "FloorJungleAstroGrass",
-                "FloorMowedAstroGrass"
-            };
+    {
+        "FloorGrass",
+        "FloorGrassJungle",
+        "FloorGrassDark",
+        "FloorGrassLight",
+        "FloorAstroGrass",
+        "FloorPlanetGrass",
+        "FloorJungleAstroGrass",
+        "FloorMowedAstroGrass"
+    };
 
             // Get clicked grid
             var gridUid = _transform.GetGrid(args.ClickLocation);
@@ -59,39 +59,38 @@ namespace Content.Server.Farming
             var tileRef = _map.GetTileRef(gridUid.Value, grid, snapPos);
             var tileDef = (ContentTileDefinition)_tileManager[tileRef.Tile.TypeId];
 
-            // Check if tile is ploughable or transformable
+            PloughActionType actionType;
+            string popupMessage;
+
+            // Ploughing dirt or grass?
             if (tileDef.ID == "FloorDirt")
             {
-                // Logic for FloorDirt: start DoAfter to create ploughedField
-                var delay = comp.Delay;
-                var netGridUid = GetNetEntity(gridUid.Value);
-                var doAfterArgs = new DoAfterArgs(EntityManager, user, delay, new PloughDoAfterEvent(netGridUid, snapPos), ent)
-                {
-                    BreakOnMove = true,
-                    BreakOnDamage = true,
-                    NeedHand = true
-                };
-
-                if (_doAfter.TryStartDoAfter(doAfterArgs))
-                {
-                    _popup.PopupEntity("You begin plowing the soil.", ent, user);
-                    args.Handled = true;
-                }
+                actionType = PloughActionType.Plough;
+                popupMessage = "You begin plowing the soil.";
             }
-            // Clear grass, turning into floor dirt
             else if (grassTiles.Contains(tileDef.ID))
             {
-                // Transform grass tile to FloorDirt
-                var dirtTile = _tileManager["FloorDirt"];
-                var newTile = new Tile(dirtTile.TileId);
-                _map.SetTile(gridUid.Value, grid, snapPos, newTile);
-
-                _popup.PopupEntity("You clear the grass, turning it into dirt.", ent, user);
-                args.Handled = true;
+                actionType = PloughActionType.ClearGrass;
+                popupMessage = "You begin clearing the grass.";
             }
             else
             {
-                _popup.PopupEntity("This tile cannot be plowed or transformed.", ent, user);
+                return; // Cant plough this tile
+            }
+
+            var delay = comp.Delay;
+            var netGridUid = GetNetEntity(gridUid.Value);
+            var doAfterArgs = new DoAfterArgs(EntityManager, user, delay, new PloughDoAfterEvent(netGridUid, snapPos, actionType), ent)
+            {
+                BreakOnMove = true,
+                BreakOnDamage = true,
+                NeedHand = true
+            };
+
+            if (_doAfter.TryStartDoAfter(doAfterArgs))
+            {
+                _popup.PopupEntity(popupMessage, ent, user);
+                args.Handled = true;
             }
         }
 
@@ -104,9 +103,24 @@ namespace Content.Server.Farming
             if (!TryComp<MapGridComponent>(gridUid, out var grid))
                 return;
 
-            var coordinates = grid.GridTileToLocal(args.SnapPos);
-            var ploughedField = Spawn("ploughedField", coordinates);
-            _popup.PopupEntity("You finish plowing the field.", ent, args.User);
+            var snapPos = args.SnapPos;
+            var coordinates = grid.GridTileToLocal(snapPos);
+
+            if (args.ActionType == PloughActionType.Plough)
+            {
+                // Create entity ploughedField
+                var ploughedField = Spawn("ploughedField", coordinates);
+                _popup.PopupEntity("You finish plowing the field.", ent, args.User);
+            }
+            else if (args.ActionType == PloughActionType.ClearGrass)
+            {
+                // Turns grass fields into dirt
+                var dirtTile = _tileManager["FloorDirt"];
+                var newTile = new Tile(dirtTile.TileId);
+                _map.SetTile(gridUid, grid, snapPos, newTile);
+                _popup.PopupEntity("You finish clearing the grass, turning it into dirt.", ent, args.User);
+            }
+
             args.Handled = true;
         }
     }
