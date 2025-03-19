@@ -25,7 +25,6 @@
     - WhitelistChameleonIdCard
   - type: StealTarget
     stealGroup: IDCard
-  - type: PhoneBillTarget
 
 #IDs with layers
 
