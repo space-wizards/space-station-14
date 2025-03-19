@@ -1,5 +1,5 @@
 - type: entity
-  parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseRestrictedContraband]
+  parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseMajorContraband]
   id: EmergencyWeaponLaserCarbine
   name: emergency laser rifle
   description: An emergency laser rifle, for when getting proper clearance isn't an option. Hand this in to security once the coast is clear.
