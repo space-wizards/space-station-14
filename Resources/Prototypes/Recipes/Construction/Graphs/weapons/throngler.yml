@@ -1,0 +1,103 @@
+- type: constructionGraph
+  id: ThronglerFools
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: throngler
+          steps:
+            - tag: PlushieThrongler
+              name: throngler plushie
+              icon:
+                sprite: Objects/Weapons/Melee/ThronglerPlushie.rsi
+                state: icon
+              doAfter: 5
+            - tag: EnergyKatana
+              name: energy katana
+              icon:
+                sprite: Objects/Weapons/Melee/energykatana.rsi
+                state: icon
+              doAfter: 5
+            - tag: BaseballBat
+              name: baseball bat
+              icon:
+                sprite: Objects/Weapons/Melee/baseball_bat.rsi
+                state: icon
+              doAfter: 5
+            - tag: WeaponCrusherDagger
+              name: crusher dagger
+              icon:
+                sprite: Objects/Weapons/Melee/crusher_dagger.rsi
+                state: icon
+              doAfter: 5
+            - tag: Pickaxe
+              name: pickaxe
+              icon:
+                sprite: Objects/Weapons/Melee/pickaxe.rsi
+                state: pickaxe
+              doAfter: 5
+            - tag: EnergySword
+              name: energy sword
+              icon:
+                sprite: Objects/Weapons/Melee/e_sword.rsi
+                state: icon
+              doAfter: 5
+            - tag: FireAxe
+              name: fireaxe
+              icon:
+                sprite: Objects/Weapons/Melee/fireaxe.rsi
+                state: icon
+              doAfter: 5
+            - tag: CaptainSabre
+              name: captain's sabre
+              icon:
+                sprite: Objects/Weapons/Melee/captain_sabre.rsi
+                state: icon
+              doAfter: 5
+            - tag: Machete
+              name: machete
+              icon:
+                sprite: Objects/Weapons/Melee/machete.rsi
+                state: icon
+              doAfter: 5
+            - tag: Sledgehammer
+              name: sledgehammer
+              icon:
+                sprite: Objects/Weapons/Melee/sledgehammer.rsi
+                state: icon
+              doAfter: 5
+            - tag: SyndicateIDCard
+              name: syndicate ID card
+              icon:
+                sprite: Objects/Misc/id_cards.rsi
+                state: syndie
+              doAfter: 5
+            - tag: CaptainIDCard
+              name: captain ID card
+              icon:
+                sprite: Objects/Misc/id_cards.rsi
+                state: gold
+              doAfter: 5
+            - tag: Stunbaton
+              name: stun baton
+              icon:
+                sprite: Objects/Weapons/Melee/stunbaton.rsi
+                state: stunbaton_off
+              doAfter: 5
+            - material: Plasteel
+              amount: 2
+              doAfter: 2
+            - material: Diamond
+              amount: 7
+              doAfter: 7
+            - material: Uranium
+              amount: 1
+              doAfter: 1
+            - material: Plasma
+              amount: 1
+              doAfter: 1
+            - material: Bananium
+              amount: 10
+              doAfter: 10
+    - node: throngler
+      entity: ThronglerFools

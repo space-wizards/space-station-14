@@ -120,6 +120,7 @@
     - WhitelistChameleon
     - WhitelistChameleonIdCard
     - HighRiskItem
+    - CaptainIDCard
   - type: StealTarget
     stealGroup: CaptainIDCard
 
@@ -649,6 +650,9 @@
     tags:
     - NuclearOperative
     - SyndicateAgent
+  - type: Tag
+    tags:
+    - SyndicateIDCard
 
 - type: entity
   parent: IDCardStandard
@@ -793,6 +797,21 @@
 
 - type: entity
   parent: IDCardStandard
+  id: WizardIDCard
+  name: wizard ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: wizard
+    - state: idwizard
+  - type: Access
+    tags:
+    - Wizard
+    - External
+    - Maintenance
+
+- type: entity
+  parent: IDCardStandard
   id: UniversalIDCard
   name: universal ID card
   suffix: Admin
@@ -821,3 +840,11 @@
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
+  - type: AgentIDCard
+  - type: ActivatableUI
+    key: enum.AgentIDCardUiKey.Key
+    inHandsOnly: true
+  - type: UserInterface
+    interfaces:
+      enum.AgentIDCardUiKey.Key:
+        type: AgentIDCardBoundUserInterface
