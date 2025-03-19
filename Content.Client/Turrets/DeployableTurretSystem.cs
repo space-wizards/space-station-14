@@ -52,16 +52,13 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
-        if (!TryComp<AnimationPlayerComponent>(ent, out var animPlayer))
-            return;
-
         if (!_appearance.TryGetData<DeployableTurretState>(ent, DeployableTurretVisuals.Turret, out var state))
             state = ent.Comp.VisualState;
 
         // Convert to terminal state
         var targetState = state & DeployableTurretState.Deployed;
 
-        UpdateVisuals(ent, targetState, sprite, animPlayer);
+        UpdateVisuals(ent, targetState, sprite, args.AnimationPlayer);
     }
 
     private void OnAppearanceChange(Entity<DeployableTurretComponent> ent, ref AppearanceChangeEvent args)

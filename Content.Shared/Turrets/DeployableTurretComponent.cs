@@ -9,7 +9,7 @@ namespace Content.Shared.Turrets;
 /// <summary>
 /// Attached to turrets that can be toggled between an inactive and active state
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 [Access(typeof(SharedDeployableTurretSystem))]
 public sealed partial class DeployableTurretComponent : Component
 {
@@ -18,18 +18,6 @@ public sealed partial class DeployableTurretComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Enabled = false;
-
-    /// <summary>
-    /// Whether the turret is currently broken
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Broken = false;
-
-    /// <summary>
-    /// Whether the turret is currently powered (required until power is predicted)
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Powered = false;
 
     /// <summary>
     /// The current state of the turret. Used to inform the device network. 
@@ -169,4 +157,5 @@ public enum DeployableTurretState : byte
     Deploying = (1 << 1) | Deployed,
     Firing = (1 << 2) | Deployed,
     Disabled = (1 << 3),
+    Broken = (1 << 4),
 }

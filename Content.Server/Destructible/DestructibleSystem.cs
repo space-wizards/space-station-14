@@ -55,6 +55,8 @@ namespace Content.Server.Destructible
         /// </summary>
         public void Execute(EntityUid uid, DestructibleComponent component, DamageChangedEvent args)
         {
+            component.IsBroken = false;
+
             foreach (var threshold in component.Thresholds)
             {
                 if (threshold.Reached(args.Damageable, this))
@@ -81,6 +83,9 @@ namespace Content.Server.Destructible
                         _adminLogger.Add(LogType.Damaged, LogImpact.Medium,
                             $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
                     }
+
+                    component.IsBroken |= threshold.Behaviors.Any(b => b is DoActsBehavior doActsBehavior &&
+                        (doActsBehavior.HasAct(ThresholdActs.Breakage) || doActsBehavior.HasAct(ThresholdActs.Destruction)));
 
                     threshold.Execute(uid, this, EntityManager, args.Origin);
                 }

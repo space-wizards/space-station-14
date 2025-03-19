@@ -1,3 +1,4 @@
+using Content.Server.Destructible;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
@@ -38,30 +39,21 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
 
     private void OnAmmoShot(Entity<DeployableTurretComponent> ent, ref AmmoShotEvent args)
     {
-        if (!HasAmmo(ent))
-            SetState(ent, false);
+        UpdateAmmoStatus(ent);
     }
 
     private void OnChargeChanged(Entity<DeployableTurretComponent> ent, ref ChargeChangedEvent args)
     {
-        if (!HasAmmo(ent))
-            SetState(ent, false);
+        UpdateAmmoStatus(ent);
     }
 
     private void OnPowerChanged(Entity<DeployableTurretComponent> ent, ref PowerChangedEvent args)
     {
-        ent.Comp.Powered = args.Powered;
-        Dirty(ent);
-
-        if (!HasAmmo(ent))
-            SetState(ent, false);
+        UpdateAmmoStatus(ent);
     }
 
     private void OnBroken(Entity<DeployableTurretComponent> ent, ref BreakageEventArgs args)
     {
-        ent.Comp.Broken = true;
-        Dirty(ent);
-
         if (TryComp<AppearanceComponent>(ent, out var appearance))
             _appearance.SetData(ent, DeployableTurretVisuals.Broken, true, appearance);
 
@@ -70,9 +62,6 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
 
     private void OnRepaired(Entity<DeployableTurretComponent> ent, ref RepairedEvent args)
     {
-        ent.Comp.Broken = false;
-        Dirty(ent);
-
         if (TryComp<AppearanceComponent>(ent, out var appearance))
             _appearance.SetData(ent, DeployableTurretVisuals.Broken, false, appearance);
     }
@@ -117,7 +106,7 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
             return;
 
         base.SetState(ent, enabled, user);
-        Dirty(ent);
+        DirtyField(ent, ent.Comp, nameof(DeployableTurretComponent.Enabled));
 
         // Determine how much time is remaining in the current animation and the one next in queue
         var animTimeRemaining = MathF.Max((float)(ent.Comp.AnimationCompletionTime - _timing.CurTime).TotalSeconds, 0f);
@@ -134,10 +123,20 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
         _audio.PlayPvs(ent.Comp.Enabled ? ent.Comp.DeploymentSound : ent.Comp.RetractionSound, ent, new AudioParams { Volume = -10f });
     }
 
-    private DeployableTurretState GetTurretState(Entity<DeployableTurretComponent> ent)
+    private void UpdateAmmoStatus(Entity<DeployableTurretComponent> ent)
     {
-        if (!TryComp<HTNComponent>(ent, out var htn) ||
-            ent.Comp.Broken || !HasAmmo(ent))
+        if (!HasAmmo(ent))
+            SetState(ent, false);
+    }
+
+    private DeployableTurretState GetTurretState(Entity<DeployableTurretComponent> ent, DestructibleComponent? destructable = null, HTNComponent? htn = null)
+    {
+        Resolve(ent, ref destructable, ref htn);
+
+        if (destructable?.IsBroken == true)
+            return DeployableTurretState.Broken;
+
+        if (htn == null || !HasAmmo(ent))
             return DeployableTurretState.Disabled;
 
         if (htn.Plan?.CurrentTask.Operator is GunOperator)
@@ -153,17 +152,19 @@ public sealed partial class DeployableTurretSystem : SharedDeployableTurretSyste
     {
         base.Update(frameTime);
 
-        var query = EntityQueryEnumerator<DeployableTurretComponent>();
-        while (query.MoveNext(out var uid, out var deployableTurret))
+        var query = EntityQueryEnumerator<DeployableTurretComponent, DestructibleComponent, HTNComponent>();
+        while (query.MoveNext(out var uid, out var deployableTurret, out var destructible, out var htn))
         {
             // Check if the turret state has changed since the last update,
             // and if it has, inform the device network
             var ent = new Entity<DeployableTurretComponent>(uid, deployableTurret);
-            var newState = GetTurretState(ent);
+            var newState = GetTurretState(ent, destructible, htn);
 
             if (newState != deployableTurret.CurrentState)
             {
                 deployableTurret.CurrentState = newState;
+                DirtyField(uid, deployableTurret, nameof(DeployableTurretComponent.CurrentState));
+
                 SendStateUpdateToDeviceNetwork(ent);
 
                 if (TryComp<AppearanceComponent>(ent, out var appearance))

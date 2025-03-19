@@ -53,7 +53,10 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         if (component.FireModes.Count < 2)
             return;
 
-        if (TryComp<AccessReaderComponent>(uid, out var accessReader) && !_accessReaderSystem.IsAllowed(args.User, uid, accessReader))
+        var ev = new AccessAttemptedEvent(args.User);
+        RaiseLocalEvent(uid, ref ev);
+
+        if (ev.Cancelled)
             return;
 
         for (var i = 0; i < component.FireModes.Count; i++)
@@ -72,7 +75,7 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
                 DoContactInteraction = true,
                 Act = () =>
                 {
-                    SetFireMode(uid, component, index, args.User);
+                    TrySetFireMode(uid, component, index, args.User);
                 }
             };
 
@@ -82,27 +85,27 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
     private void OnUseInHandEvent(EntityUid uid, BatteryWeaponFireModesComponent component, UseInHandEvent args)
     {
-        if (component.FireModes.Count < 2)
-            return;
-
-        if (TryComp<AccessReaderComponent>(uid, out var accessReader) && !_accessReaderSystem.IsAllowed(args.User, uid, accessReader))
-            return;
-
-        CycleFireMode(uid, component, args.User);
+        TryCycleFireMode(uid, component, args.User);
     }
 
-    private void CycleFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, EntityUid user)
+    public void TryCycleFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, EntityUid? user = null)
     {
         if (component.FireModes.Count < 2)
             return;
 
         var index = (component.CurrentFireMode + 1) % component.FireModes.Count;
-        SetFireMode(uid, component, index, user);
+        TrySetFireMode(uid, component, index, user);
     }
 
     public bool TrySetFireMode(EntityUid uid, BatteryWeaponFireModesComponent component, int index, EntityUid? user = null)
     {
         if (index < 0 || index >= component.FireModes.Count)
+            return false;
+
+        var ev = new AccessAttemptedEvent(user);
+        RaiseLocalEvent(uid, ref ev);
+
+        if (ev.Cancelled)
             return false;
 
         SetFireMode(uid, component, index, user);
@@ -116,14 +119,14 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         component.CurrentFireMode = index;
         Dirty(uid, component);
 
-        if (!_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
-            return;
+        if (_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
+        {
+            if (TryComp<AppearanceComponent>(uid, out var appearance))
+                _appearanceSystem.SetData(uid, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
 
-        if (TryComp<AppearanceComponent>(uid, out var appearance))
-            _appearanceSystem.SetData(uid, BatteryWeaponFireModeVisuals.State, prototype.ID, appearance);
-
-        if (user != null)
-            _popupSystem.PopupClient(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), uid, user.Value);
+            if (user != null)
+                _popupSystem.PopupClient(Loc.GetString("gun-set-fire-mode", ("mode", prototype.Name)), uid, user.Value);
+        }
 
         if (TryComp(uid, out ProjectileBatteryAmmoProviderComponent? projectileBatteryAmmoProviderComponent))
         {
