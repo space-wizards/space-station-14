@@ -60,12 +60,14 @@ public sealed partial class PowerWireAction : BaseWireAction
         var receiverSys = EntityManager.System<PowerReceiverSystem>();
 
         if (EntityManager.TryGetComponent(owner, out PowerNetworkBatteryComponent? battery))
+        {
             if (pulsed || AllWiresCut(owner))
                 receiverSys.SetPowerDisabled(owner, true, battery);
             else if (WiresSystem.TryGetData<bool>(owner, PowerWireActionKey.Pulsed, out var isPulsed) && isPulsed)
                 return;
             else
                 receiverSys.SetPowerDisabled(owner, false, battery);
+        }
 
         else if (EntityManager.TryGetComponent(owner, out ApcPowerReceiverComponent? receiver))
         {
