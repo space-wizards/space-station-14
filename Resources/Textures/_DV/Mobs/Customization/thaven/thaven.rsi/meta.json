@@ -1,0 +1,27 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "cheek_barbels, eyebrow_barbels, underbelly_face, underbelly_torso, carp_spots by kushbreth (github), underbellies edited for Impstation by Sha-Seng (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "cheek_barbels",
+            "directions": 4
+        },
+        {
+            "name": "eyebrow_barbels",
+            "directions": 4
+        },
+        {
+            "name": "underbelly_face",
+            "directions": 4
+        },
+        {
+            "name": "underbelly_torso",
+            "directions": 4
+        }
+    ]
+}
