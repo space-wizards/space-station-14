@@ -867,21 +867,6 @@
         - MobHonkBot
 
 - type: entity
-  name: gingerbread man Spawner
-  id: SpawnMobGingerbreadAI
-  suffix: Ghostrole
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: green
-        - state: full
-          sprite: Mobs/Species/Gingerbread/parts.rsi
-    - type: ConditionalSpawner
-      prototypes:
-        - MobGingerbreadAI
-
-- type: entity
   name: Reindeer Buck Spawner
   id: SpawnMobReindeerBuck
   parent: MarkerBase

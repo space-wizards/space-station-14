@@ -6,11 +6,6 @@
     Revenant: 1
 
 - type: ninjaHackingThreat
-  id: Dragon
-  announcement: terror-dragon
-  rule: DragonSpawn
-
-- type: ninjaHackingThreat
   id: Revenant
   announcement: terror-revenant
   rule: RevenantSpawn
