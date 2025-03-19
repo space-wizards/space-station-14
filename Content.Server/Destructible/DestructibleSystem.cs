@@ -84,10 +84,13 @@ namespace Content.Server.Destructible
                             $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
                     }
 
+                    threshold.Execute(uid, this, EntityManager, args.Origin);
+                }
+
+                if (threshold.OldTriggered)
+                {
                     component.IsBroken |= threshold.Behaviors.Any(b => b is DoActsBehavior doActsBehavior &&
                         (doActsBehavior.HasAct(ThresholdActs.Breakage) || doActsBehavior.HasAct(ThresholdActs.Destruction)));
-
-                    threshold.Execute(uid, this, EntityManager, args.Origin);
                 }
 
                 // if destruction behavior (or some other deletion effect) occurred, don't run other triggers.
