@@ -16,6 +16,9 @@
   id: AirSensor
 
 - type: Tag
+  id: AllowGhostShownByEvent
+
+- type: Tag
   id: Ambrosia
 
 - type: Tag
@@ -417,6 +420,9 @@
   id: Cryobeaker
 
 - type: Tag
+  id: CrystalBlack
+
+- type: Tag
   id: CrystalBlue
 
 - type: Tag
@@ -433,6 +439,9 @@
 
 - type: Tag
   id: CrystalRed
+
+- type: Tag
+  id: CrystalYellow
 
 - type: Tag
   id: CubanCarp
@@ -750,6 +759,12 @@
   id: IntercomElectronics
 
 - type: Tag
+  id: InvalidForGlobalSpawnSpell
+
+- type: Tag
+  id: InvalidForSurvivorAntag
+
+- type: Tag
   id: JawsOfLife
 
 - type: Tag
@@ -940,6 +955,9 @@
   id: Packet
 
 - type: Tag
+  id: ParadoxCloneObjectiveBlacklist # objective entities with this tag don't get copied to paradox clones
+
+- type: Tag
   id: Paper
 
 - type: Tag
@@ -1004,6 +1022,9 @@
 
 - type: Tag
   id: PlushieGhost
+
+- type: Tag
+  id: PlushieLizard
 
 - type: Tag
   id: PlushieSharkBlue

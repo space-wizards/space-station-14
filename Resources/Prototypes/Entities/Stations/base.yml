@@ -129,6 +129,12 @@
     - type: StationNews
 
 - type: entity
+  id: BaseStationDeliveries
+  abstract: true
+  components:
+  - type: CargoDeliveryData
+
+- type: entity
   id: BaseStationAllEventsEligible
   abstract: true
   components:
