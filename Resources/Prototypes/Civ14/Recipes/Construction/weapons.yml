@@ -1,0 +1,10 @@
+- type: construction
+  name: wood club
+  id: WoodClub
+  graph: WoodClub
+  startNode: start
+  targetNode: woodclub
+  category: construction-category-weapons
+  description: A crude wood club.
+  icon: { sprite: Objects/_civ/StoneAge/club.rsi, state: icon }
+  objectType: Item
