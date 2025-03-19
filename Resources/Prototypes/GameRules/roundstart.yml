@@ -354,7 +354,7 @@
     selectionTime: IntraPlayerSpawn # Pre-selection before jobs; assignment doesn't really matter though, we only care about the pre-selection to block other antags.
     removeUponFailedSpawn: false
     definitions:
-    - prefRoles: [ ]
+    - prefRoles: [ InitialInfected, Traitor, Thief, HeadRev ]
       max: 2
       playerRatio: 30
 
