@@ -25,15 +25,6 @@
     back:
       - BoxHug
 
-- type: loadout
-  id: EmergencyNitrogenClown
-  effects:
-    - !type:GroupLoadoutEffect
-      proto: NitrogenBreather
-  storage:
-    back:
-      - BoxHugNitrogen
-
 # Mime
 - type: loadout
   id: EmergencyOxygenMime
@@ -43,15 +34,6 @@
   storage:
     back:
       - BoxMime
-
-- type: loadout
-  id: EmergencyNitrogenMime
-  effects:
-    - !type:GroupLoadoutEffect
-      proto: NitrogenBreather
-  storage:
-    back:
-      - BoxMimeNitrogen
 
 # Engineering / Extended
 - type: loadout
@@ -63,15 +45,6 @@
     back:
       - BoxSurvivalEngineering
 
-- type: loadout
-  id: EmergencyNitrogenExtended
-  effects:
-    - !type:GroupLoadoutEffect
-      proto: NitrogenBreather
-  storage:
-    back:
-      - BoxSurvivalEngineeringNitrogen
-
 # Medical
 - type: loadout
   id: EmergencyOxygenMedical
@@ -82,15 +55,6 @@
     back:
       - BoxSurvivalMedical
 
-- type: loadout
-  id: EmergencyNitrogenMedical
-  effects:
-    - !type:GroupLoadoutEffect
-      proto: NitrogenBreather
-  storage:
-    back:
-      - BoxSurvivalMedicalNitrogen
-
 # Security
 - type: loadout
   id: EmergencyOxygenSecurity
@@ -100,15 +64,6 @@
   storage:
     back:
       - BoxSurvivalSecurity
-
-- type: loadout
-  id: EmergencyNitrogenSecurity
-  effects:
-    - !type:GroupLoadoutEffect
-      proto: NitrogenBreather
-  storage:
-    back:
-      - BoxSurvivalSecurityNitrogen
 
 # Syndicate
 - type: loadout
@@ -121,39 +76,12 @@
       - BoxSurvivalSyndicate
 
 - type: loadout
-  id: EmergencyNitrogenSyndicate
-  effects:
-    - !type:GroupLoadoutEffect
-      proto: NitrogenBreather
-  storage:
-    back:
-      - BoxSurvivalSyndicateNitrogen
-
-# Full EVA Tank, Any Species
-- type: loadout
-  id: LoadoutSpeciesEVANitrogen
-  effects:
-    - !type:GroupLoadoutEffect
-      proto: NitrogenBreather
-  equipment:
-    suitstorage: NitrogenTankFilled
-
-- type: loadout
   id: LoadoutSpeciesEVAOxygen
   effects:
     - !type:GroupLoadoutEffect
       proto: OxygenBreather
   equipment:
     suitstorage: OxygenTankFilled
-
-# Species-appropriate Double Emergency Tank in Pocket 1
-- type: loadout
-  id: LoadoutSpeciesPocketDoubleNitrogen
-  effects:
-    - !type:GroupLoadoutEffect
-      proto: NitrogenBreather
-  equipment:
-    pocket1: DoubleEmergencyNitrogenTankFilled
 
 - type: loadout
   id: LoadoutSpeciesPocketDoubleOxygen
