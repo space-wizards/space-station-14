@@ -257,19 +257,6 @@
 
 - type: entity
   parent: BasePlushie
-  id: PlushieLamp
-  name: lamp plushie
-  description: A light emitting friend!
-  components:
-  - type: Sprite
-    state: plushie_lamp
-  - type: PointLight
-    radius: 1.5
-    energy: 2
-    netsync: false
-
-- type: entity
-  parent: BasePlushie
   id: PlushieArachind
   name: arachnid plushie
   description: An adorable stuffed toy that resembles an arachnid. It feels silky..
@@ -974,37 +961,6 @@
   components:
   - type: Sprite
     state: plushie_penguin
-
-- type: entity
-  parent: BasePlushie
-  id: PlushieHuman
-  name: human plushie
-  description: This is a felt plush of a human. All craftsmanship is of the lowest quality. The human is naked. The human is crying. The human is screaming.
-  components:
-  - type: Sprite
-    state: plushie_human
-  - type: EmitSoundOnUse
-    sound:
-      path: /Audio/Voice/Human/malescream_1.ogg
-  - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Voice/Human/malescream_2.ogg
-  - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Voice/Human/malescream_3.ogg
-  - type: EmitSoundOnCollide
-    sound:
-      path: /Audio/Voice/Human/malescream_4.ogg
-  - type: Food
-    requiresSpecialDigestion: true
-    useSound:
-      path: /Audio/Voice/Human/malescream_1.ogg
-  - type: MeleeWeapon
-    soundHit:
-      path: /Audio/Voice/Human/malescream_4.ogg
-  - type: EmitSoundOnTrigger
-    sound:
-      path: /Audio/Voice/Human/malescream_5.ogg
 
 - type: entity
   parent: BasePlushie
