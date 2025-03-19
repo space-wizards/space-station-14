@@ -9,22 +9,38 @@ public sealed class DisplacementMapSystem : EntitySystem
 {
     [Dependency] private readonly ISerializationManager _serialization = default!;
 
-    public bool TryAddDisplacement(DisplacementData data, SpriteComponent sprite, int index, string key, HashSet<string> revealedLayers)
+    /// <summary>
+    /// Attempting to apply a displacement map to a specific layer of SpriteComponent
+    /// </summary>
+    /// <param name="data">Information package for applying the displacement map</param>
+    /// <param name="sprite">SpriteComponent</param>
+    /// <param name="index">Index of the layer for which the displacement map will be applied</param>
+    /// <param name="key">The unique key used by this layer. The displacement layer key is generated based on this key. Example: ["hair"] key for hair species layer -> ["hair-displacement"] for new displacement layer</param>
+    /// <param name="revealedLayers">A group of layers tracked by another system, such as layers of clothing. When this system wants to completely redraw all clothing layers, and will delete all these layers, it must also delete the displacement layers that are applied to the clothing. If this parameter is passed, it will automatically add a layer to this group</param>
+    /// <returns></returns>
+    public bool TryAddDisplacement(DisplacementData data,
+        SpriteComponent sprite,
+        int index,
+        string key,
+        HashSet<string>? revealedLayers = null)
     {
         if (data.ShaderOverride != null)
             sprite.LayerSetShader(index, data.ShaderOverride);
 
         var displacementKey = $"{key}-displacement";
-        if (!revealedLayers.Add(displacementKey))
+        if (revealedLayers is not null)
         {
-            Log.Warning($"Duplicate key for DISPLACEMENT: {displacementKey}.");
-            return false;
+            if (!revealedLayers.Add(displacementKey))
+            {
+                Log.Warning($"Duplicate key for DISPLACEMENT: {displacementKey}.");
+                return false;
+            }
         }
 
         //allows you not to write it every time in the YML
         foreach (var pair in data.SizeMaps)
         {
-            pair.Value.CopyToShaderParameters??= new()
+            pair.Value.CopyToShaderParameters ??= new()
             {
                 LayerKey = "dummy",
                 ParameterTexture = "displacementMap",
@@ -45,11 +61,14 @@ public sealed class DisplacementMapSystem : EntitySystem
         if (actualRSI is not null)
         {
             if (actualRSI.Size.X != actualRSI.Size.Y)
-                Log.Warning($"DISPLACEMENT: {displacementKey} has a resolution that is not 1:1, things can look crooked");
+            {
+                Log.Warning(
+                    $"DISPLACEMENT: {displacementKey} has a resolution that is not 1:1, things can look crooked");
+            }
 
             var layerSize = actualRSI.Size.X;
-            if (data.SizeMaps.ContainsKey(layerSize))
-                displacementDataLayer = data.SizeMaps[layerSize];
+            if (data.SizeMaps.TryGetValue(layerSize, out var map))
+                displacementDataLayer = map;
         }
 
         var displacementLayer = _serialization.CreateCopy(displacementDataLayer, notNullableOverride: true);
@@ -58,7 +77,7 @@ public sealed class DisplacementMapSystem : EntitySystem
         sprite.AddLayer(displacementLayer, index);
         sprite.LayerMapSet(displacementKey, index);
 
-        revealedLayers.Add(displacementKey);
+        revealedLayers?.Add(displacementKey);
 
         return true;
     }

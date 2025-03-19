@@ -1,3 +1,4 @@
+using Content.Shared.DisplacementMap;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -41,7 +42,7 @@ public sealed partial class HumanoidSpeciesSpriteLayer : IPrototype
     ///     If this is null, no sprite will be displayed, and the
     ///     layer will be invisible until otherwise set.
     /// </summary>
-    [DataField("baseSprite")]
+    [DataField]
     public SpriteSpecifier? BaseSprite { get; private set; }
 
     /// <summary>
@@ -49,20 +50,20 @@ public sealed partial class HumanoidSpeciesSpriteLayer : IPrototype
     ///     this layer will start with this percentage
     ///     of alpha.
     /// </summary>
-    [DataField("layerAlpha")]
+    [DataField]
     public float LayerAlpha { get; private set; } = 1.0f;
 
     /// <summary>
     ///     If this sprite layer should allow markings or not.
     /// </summary>
-    [DataField("allowsMarkings")]
+    [DataField]
     public bool AllowsMarkings { get; private set; } = true;
 
     /// <summary>
     ///     If this layer should always match the
     ///     skin tone in a character profile.
     /// </summary>
-    [DataField("matchSkin")]
+    [DataField]
     public bool MatchSkin { get; private set; } = true;
 
     /// <summary>
@@ -70,6 +71,12 @@ public sealed partial class HumanoidSpeciesSpriteLayer : IPrototype
     ///     match the skin tone of this part, including
     ///     alpha.
     /// </summary>
-    [DataField("markingsMatchSkin")]
+    [DataField]
     public bool MarkingsMatchSkin { get; private set; }
+
+    /// <summary>
+    ///     The displacement map that will be applied to this species layer
+    /// </summary>
+    [DataField]
+    public DisplacementData? Displacement { get; private set; }
 }
