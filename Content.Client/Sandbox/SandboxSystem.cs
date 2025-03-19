@@ -119,8 +119,8 @@ namespace Content.Client.Sandbox
             if (_placement.Eraser)
                 _placement.ToggleEraser();
 
-            _placement.Direction = (Direction)(tileRef.Tile.Rotation * 2);
-            _placement.Mirrored = tileRef.Tile.Mirrored;
+            _placement.Direction = (Direction)((tileRef.Tile.RotationMirroring % 4) * 2);
+            _placement.Mirrored = tileRef.Tile.RotationMirroring >= 4;
 
             _placement.BeginPlacing(new()
             {
