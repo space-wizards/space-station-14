@@ -1,12 +1,13 @@
-- Make sure barkeep's medicine cabinet has proper access (bartender only)
-- Also that the contents actually contain the medicines they're supposed to
-- Add ipecac? Syringe, or pills?
-- Add Haloperidol
+/* - Make sure barkeep's medicine cabinet has proper access (bartender only) */
+/* - Also that the contents actually contain the medicines they're supposed to */
+/* - Add ipecac? Syringe, or pills? */
+/* - Add Haloperidol */
 - Diphenhydramine? Diphenylmethylamine?
-- Special Drink Ingredients:
-- Add Sulphuric Acid, for Acidspit
-- Blood packs: "Something-brand Floor Juice! Now with extra hemoglobin! There's a picture of a reptile fella happily lapping some out of a bowl with a forked tongue."
+/* - Special Drink Ingredients: */
+/* - Add Sulphuric Acid, for Acidspit */
+/* - Blood packs: "Something-brand Floor Juice! Now with extra hemoglobin! There's a picture of a reptile fella happily lapping some out of a bowl with a forked tongue." */
 /* -- Plus a syringe? I assume you can pull blood from one of those with a syringe? */ Seems like no.
+	/* I added blood tomatoes instead. */
 
 - Make sure musician stage railings don't block barstools
 
@@ -20,9 +21,9 @@
 
 /* - Graytider Shop: Bolt cafeteria-side door */
 /* - Also a button for un-bolting it. */
---SHOULD be good to go, but do test.
-- Somehow secure those shutters?
--- They *should* be welded now?
+/* --SHOULD be good to go, but do test. */
+/* - Somehow secure those shutters? */
+/* -- They *should* be welded now? */
 
 /* - Law Office: Direct lawyers wrt "defense" and "prosecution." */
 - Prosecutor PW references: A whip, a mug and visor (syndie gas mask?), an electric guitar...
@@ -34,11 +35,11 @@
 /* - Science: Hook up gas stuff in arti room */
 /* - Also put the cans in the cans room */ No more cans room :C
 - Research server needs to be hooked up?
-- Big floor decal in Shield room space
+/* - Big floor decal in Shield room space */
 
 - Medbay: Chem-Masters sentient component? Smart Fridge?
 - Morgue: Give morgues a spooky speaking component? Might make a good general PR, actually.
-- Doctors' Nap Room station beacon: Make sure it's right
+/* - Doctors' Nap Room station beacon: Make sure it's right */
 
 /* - Engineering: Make sure all the solars rooms have their stuff */
 - Figure out how much power the AMEs generate, how much the tesla/singulo generates, how much solars generate,
@@ -56,15 +57,15 @@
 - Execution chamber door access
 - Execution cams and monitors: Hooked up correctly?
 
-- Unlabel all the circuitboards in the unlabeled circuitboard crate (and maybe label the crate?)
+/* - Unlabel all the circuitboards in the unlabeled circuitboard crate (and maybe label the crate?) */
 
-- Check perms: Musician's secure locker
+/* - Check perms: Musician's secure locker */
 
 /* - Actually tile clown and mime rooms (under the carpet) */
 
 /* - Bridge: Hamlet. Does he spawn in the cage, or do I have to set that up? */
 - Cap's office: Make fax machine sentientable
-- Vault: Fill syringe with 1 dose of cogni (unlabeled)
+/* - Vault: Fill syringe with 1 dose of cogni (unlabeled) */
 -	Remove water from survival kit water bottle
 -	Make flare spent
 -	Make corpse rotten
@@ -364,6 +365,14 @@ Tree room: Blocked by grave and, uh, tree
 	/* lightbulb is getting in the way? No, it was literally on top of a PACMAN somehow./*
 Arrivals problem: The docks are just flat-out wrong. Should be, like, 5 wall tiles in between doors or something.
 	I also need to double-check if the shuttle even fits in the space.
+
+Make the "smokin'" room door not glass. More fun not to see it until you go in.
+Rubbing alcohol is empty??
+	Should be 'drink,' not 'food'
+Make shutter over bar opening glass
+I don't like the LED lights in the cafeteria. Maybe that's okay in Arrivals, but not Caf.
+Firelocks between Arrivals and Docking Arm
+Airlocks or at least tinyfans on shutter doors. And/or lock 'em.
 
 Also: When I'm testing in Release mode, I get these exceptions in the server terminal 
 	about the no transform component thing. Can I use those to hunt it
