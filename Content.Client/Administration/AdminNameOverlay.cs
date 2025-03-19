@@ -122,7 +122,7 @@ internal sealed class AdminNameOverlay : Overlay
             {
                 var label = symbol + _antagLabelClassic;
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, _antagColorClassic);
-                // currentOffset += lineoffset;
+                currentOffset += lineoffset;
             }
             // Role Type
             else if (!_overlayClassic && _filter.Contains(playerInfo.RoleProto)) // Should this also just check Antag? But that would not show Harmless Free Agents
