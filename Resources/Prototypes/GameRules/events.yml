@@ -631,7 +631,7 @@
   components:
   - type: StationEvent
     earliestStart: 0 # All hell breaks loose.
-    reoccurenceDelay: 0 # It's payment time, motherfucker.
+    reoccurrenceDelay: 0 # It's payment time, motherfucker.
   - type: PhoneBillRule
     delay: 150
     price: 5
