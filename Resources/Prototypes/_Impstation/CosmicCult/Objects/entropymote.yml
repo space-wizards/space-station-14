@@ -7,8 +7,6 @@
   description: A solidified mote of entropic essence. Feels numbing to the touch.
   suffix: Full
   components:
-  - type: Visibility # yep it's invisible byebye
-    layer: 777
   - type: Stack
     count: 6
     stackType: Entropy

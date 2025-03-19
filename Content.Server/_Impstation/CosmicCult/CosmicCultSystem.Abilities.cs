@@ -160,7 +160,12 @@ public sealed partial class CosmicCultSystem : EntitySystem
     #region Siphon Entropy
     private void OnCosmicSiphon(Entity<CosmicCultComponent> uid, ref EventCosmicSiphon args)
     {
-        if (HasComp<CosmicCultComponent>(args.Target) || HasComp<BibleUserComponent>(args.Target) || HasComp<ActiveNPCComponent>(args.Target) || TryComp<MobStateComponent>(args.Target, out var state) && state.CurrentState != MobState.Alive)
+        if (uid.Comp.EntropyStored >= uid.Comp.EntropyStoredCap)
+        {
+            _popup.PopupEntity(Loc.GetString("cosmicability-siphon-full"), uid, uid);
+            return;
+        }
+        if (HasComp<ActiveNPCComponent>(args.Target) || TryComp<MobStateComponent>(args.Target, out var state) && state.CurrentState != MobState.Alive)
         {
             _popup.PopupEntity(Loc.GetString("cosmicability-siphon-fail", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid);
             return;
@@ -193,10 +198,13 @@ public sealed partial class CosmicCultSystem : EntitySystem
         if (_mind.TryGetMind(uid, out var _, out var mind) && mind.Session != null)
             RaiseNetworkEvent(new CosmicSiphonIndicatorEvent(GetNetEntity(target!)), mind.Session);
 
-        var entropyMote1 = _stack.Spawn(uid.Comp.CosmicSiphonQuantity, "Entropy", Transform(uid).Coordinates);
+        uid.Comp.EntropyStored += uid.Comp.CosmicSiphonQuantity;
+        uid.Comp.EntropyBudget += uid.Comp.CosmicSiphonQuantity;
+        Dirty(uid, uid.Comp);
+
         _statusEffects.TryAddStatusEffect<CosmicEntropyDebuffComponent>(target, "EntropicDegen", TimeSpan.FromSeconds(21), true);
         _popup.PopupEntity(Loc.GetString("cosmicability-siphon-success", ("target", Identity.Entity(target, EntityManager))), uid, uid);
-        _hands.TryForcePickupAnyHand(uid, entropyMote1);
+        _alerts.ShowAlert(uid, uid.Comp.EntropyAlert);
         _cultRule.IncrementCultObjectiveEntropy(uid);
 
         if (uid.Comp.CosmicEmpowered) // if you're empowered there's a 50% chance to flicker lights on siphon

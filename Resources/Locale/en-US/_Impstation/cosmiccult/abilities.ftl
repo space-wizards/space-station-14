@@ -4,6 +4,7 @@ cosmicability-glare-confirm = Press again to activate Null Glare.
 
 cosmicability-siphon-success = You silently draw Entropy from {CAPITALIZE(THE($target))}.
 cosmicability-siphon-fail = You can't seem to siphon Entropy from {CAPITALIZE(THE($target))}.
+cosmicability-siphon-full = You can't hold any more Entropy!
 
 cosmicability-blank-begin = {CAPITALIZE(THE($target))} attempts to grab hold of you!
 cosmicability-blank-success = You shunt {CAPITALIZE(THE($target))}'s mind unto the cosmic dark.
