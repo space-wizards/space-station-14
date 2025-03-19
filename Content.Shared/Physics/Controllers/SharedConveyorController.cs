@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
+using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
@@ -34,7 +35,7 @@ public abstract class SharedConveyorController : VirtualController
     [Dependency] private   readonly FixtureSystem _fixtures = default!;
     [Dependency] private   readonly RayCastSystem _ray = default!;
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private   readonly SharedMapSystem _maps = default!;
+    [Dependency] private   readonly SharedMoverController _mover = default!;
 
     protected const string ConveyorFixture = "conveyor";
 
@@ -64,13 +65,14 @@ public abstract class SharedConveyorController : VirtualController
 
         UpdatesAfter.Add(typeof(SharedMoverController));
 
-        SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
-        SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
+
         SubscribeLocalEvent<ConveyedComponent, PhysicsWakeEvent>(OnConveyedWake);
         SubscribeLocalEvent<ConveyedComponent, PhysicsSleepEvent>(OnConveyedSleep);
+        SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
+        SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
+
 
         SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnConveyorStartCollide);
-        SubscribeLocalEvent<ConveyorComponent, EndCollideEvent>(OnConveyorEndCollide);
         SubscribeLocalEvent<ConveyorComponent, ComponentStartup>(OnConveyorStartup);
 
         base.Initialize();
@@ -79,28 +81,23 @@ public abstract class SharedConveyorController : VirtualController
     private void OnConveyedStartup(Entity<ConveyedComponent> ent, ref ComponentStartup args)
     {
         // We need waking / sleeping to work and don't want collisionwake interfering with us.
-        EnsureComp<ActiveConveyedComponent>(ent);
+        EnsureComp<ActiveConveyedComponent>(ent.Owner);
         _wake.SetEnabled(ent.Owner, false);
     }
 
     private void OnConveyedShutdown(Entity<ConveyedComponent> ent, ref ComponentShutdown args)
     {
+        RemCompDeferred<ActiveConveyedComponent>(ent.Owner);
         _wake.SetEnabled(ent.Owner, true);
     }
 
     private void OnConveyedWake(Entity<ConveyedComponent> ent, ref PhysicsWakeEvent args)
     {
-        if (_timing.ApplyingState)
-            return;
-
         EnsureComp<ActiveConveyedComponent>(ent);
     }
 
     private void OnConveyedSleep(Entity<ConveyedComponent> ent, ref PhysicsSleepEvent args)
     {
-        if (_timing.ApplyingState)
-            return;
-
         RemCompDeferred<ActiveConveyedComponent>(ent);
     }
 
@@ -141,19 +138,8 @@ public abstract class SharedConveyorController : VirtualController
         if (!args.OtherFixture.Hard || args.OtherBody.BodyType == BodyType.Static)
             return;
 
+        EnsureComp<ActiveConveyedComponent>(otherUid);
         EnsureComp<ConveyedComponent>(otherUid);
-    }
-
-    private void OnConveyorEndCollide(Entity<ConveyorComponent> ent, ref EndCollideEvent args)
-    {
-        if (!_conveyedQuery.HasComp(args.OtherEntity))
-            return;
-
-        if (IsConveyed(args.OtherEntity))
-            return;
-
-        RemCompDeferred<ConveyedComponent>(args.OtherEntity);
-        RemCompDeferred<ActiveConveyedComponent>(args.OtherEntity);
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -236,6 +222,7 @@ public abstract class SharedConveyorController : VirtualController
         var bestSpeed = 0f;
         var contacts = PhysicsSystem.GetContacts((entity.Owner, fixtures));
         var worldPos = TransformSystem.GetWorldPosition(entity.Owner);
+        var anyConveyors = false;
 
         while (contacts.MoveNext(out var contact))
         {
@@ -244,13 +231,15 @@ public abstract class SharedConveyorController : VirtualController
 
             // Check if our center is over their fixture otherwise ignore it.
             var other = contact.OtherEnt(entity.Owner);
+
+            if (!_conveyorQuery.TryComp(other, out var conveyor))
+                continue;
+
+            anyConveyors = true;
             var otherFixture = contact.OtherFixture(entity.Owner);
             var otherWorldPos = PhysicsSystem.GetPhysicsTransform(other);
 
             if (!_fixtures.TestPoint(otherFixture.Item2.Shape, otherWorldPos, worldPos))
-                continue;
-
-            if (!_conveyorQuery.TryComp(other, out var conveyor))
                 continue;
 
             if (conveyor.Speed > bestSpeed && CanRun(conveyor))
@@ -259,6 +248,10 @@ public abstract class SharedConveyorController : VirtualController
                 bestConveyor = (other, conveyor);
             }
         }
+
+        // If we have no touching contacts we shouldn't be using conveyed anyway so nuke it.
+        if (!anyConveyors)
+            return false;
 
         if (bestSpeed == 0f || bestConveyor == default)
             return true;
@@ -417,6 +410,9 @@ public abstract class SharedConveyorController : VirtualController
 
         while (contacts.MoveNext(out var contact))
         {
+            if (!contact.IsTouching)
+                continue;
+
             var other = contact.OtherEnt(ent.Owner);
 
             if (_conveyorQuery.HasComp(other))
