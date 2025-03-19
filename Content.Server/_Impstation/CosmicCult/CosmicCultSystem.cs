@@ -41,6 +41,7 @@ using Content.Shared.StatusEffect;
 using Robust.Shared.Utility;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Hands;
+using Content.Shared.Alert;
 
 namespace Content.Server._Impstation.CosmicCult;
 
@@ -83,6 +84,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
     [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedInteractionSystem _interact = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly CosmicCorruptingSystem _corrupting = default!;
 
     private readonly ResPath _mapPath = new("Maps/_Impstation/Nonstations/cosmicvoid.yml");
@@ -100,7 +102,8 @@ public sealed partial class CosmicCultSystem : EntitySystem
         SubscribeLocalEvent<CosmicCultComponent, ComponentInit>(OnStartCultist);
         SubscribeLocalEvent<CosmicCultLeadComponent, ComponentInit>(OnStartCultLead);
         SubscribeLocalEvent<MonumentComponent, ComponentInit>(OnStartMonument);
-        SubscribeLocalEvent<MonumentComponent, InteractUsingEvent>(OnInfuseEntropy);
+        SubscribeLocalEvent<MonumentComponent, InteractUsingEvent>(OnInfuseHeldEntropy);
+        SubscribeLocalEvent<MonumentComponent, ActivateInWorldEvent>(OnInfuseEntropy);
 
         SubscribeLocalEvent<CosmicEquipmentComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<CosmicEquipmentComponent, GotUnequippedEvent>(OnGotUnequipped);
@@ -221,6 +224,7 @@ public sealed partial class CosmicCultSystem : EntitySystem
         }
         if (TryComp<EyeComponent>(uid, out var eye))
             _eye.SetVisibilityMask(uid, eye.VisibilityMask | MonumentComponent.LayerMask);
+        _alerts.ShowAlert(uid, uid.Comp.EntropyAlert);
     }
 
     /// <summary>
@@ -243,26 +247,50 @@ public sealed partial class CosmicCultSystem : EntitySystem
         _cultRule.UpdateCultData(uid);
     }
 
-    private void OnInfuseEntropy(Entity<MonumentComponent> uid, ref InteractUsingEvent args)
+    private void OnInfuseEntropy(Entity<MonumentComponent> uid, ref ActivateInWorldEvent args)
     {
-        if (!HasComp<CosmicEntropyMoteComponent>(args.Used) || !HasComp<CosmicCultComponent>(args.User) || !uid.Comp.Enabled || args.Handled)
+        if (!args.Complex)
+            return;
+        if (TryComp<CosmicCultComponent>(args.User, out var cultComp) && cultComp.EntropyStored > 0)
+        {
+            args.Handled = AddEntropy(uid, (args.User, cultComp));
+        }
+    }
+
+    private void OnInfuseHeldEntropy(Entity<MonumentComponent> uid, ref InteractUsingEvent args)
+    {
+        if (!HasComp<CosmicEntropyMoteComponent>(args.Used) || !TryComp<CosmicCultComponent>(args.User, out var cultComp) || !uid.Comp.Enabled || args.Handled)
         {
             _popup.PopupEntity(Loc.GetString("cosmiccult-entropy-unavailable"), args.User, args.User);
             return;
         }
-
-        args.Handled = AddEntropy(uid, args.Used, args.User);
+        args.Handled = AddEntropy(uid, args.Used, (args.User, cultComp));
     }
-    private bool AddEntropy(Entity<MonumentComponent> monument, EntityUid entropy, EntityUid cultist)
+
+    /// <summary>
+    /// Method for adding the Cultist's internal Entropy to The Monument.
+    /// </summary>
+    private bool AddEntropy(Entity<MonumentComponent> monument, Entity<CosmicCultComponent> cultist)
+    {
+        _audio.PlayEntity(_audio.ResolveSound(monument.Comp.InfusionSFX), cultist, monument);
+        _popup.PopupEntity(Loc.GetString("cosmiccult-entropy-inserted", ("count", cultist.Comp.EntropyStored)), cultist, cultist);
+        monument.Comp.TotalEntropy += cultist.Comp.EntropyStored;
+        cultist.Comp.EntropyStored = 0;
+        Dirty(cultist, cultist.Comp);
+        _cultRule.UpdateCultData(monument);
+        return true;
+    }
+
+    /// <summary>
+    /// Method for adding itemized Entropy to The Monument.
+    /// </summary>
+    private bool AddEntropy(Entity<MonumentComponent> monument, EntityUid entropy, Entity<CosmicCultComponent> cultist)
     {
         var quant = TryComp<StackComponent>(entropy, out var stackComp) ? stackComp.Count : 1;
-        if (TryComp<CosmicCultComponent>(cultist, out var cultComp))
-        {
-            cultComp.EntropyBudget += quant;
-            Dirty(cultist, cultComp);
-        }
-
         monument.Comp.TotalEntropy += quant;
+        cultist.Comp.EntropyBudget += quant;
+
+        Dirty(cultist, cultist.Comp);
         _cultRule.UpdateCultData(monument);
 
         _popup.PopupEntity(Loc.GetString("cosmiccult-entropy-inserted", ("count", quant)), cultist, cultist);

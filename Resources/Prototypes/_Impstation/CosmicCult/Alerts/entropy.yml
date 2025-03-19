@@ -1,0 +1,18 @@
+- type: alert
+  id: CosmicEntropy
+  icons:
+  - sprite: /Textures/_Impstation/CosmicCult/Icons/alert_entropy.rsi
+    state: base0
+  alertViewEntity: AlertCosmicEntropySpriteView
+  name: alerts-cosmiccult-entropy-name
+  description: alerts-cosmiccult-entropy-desc
+
+- type: entity
+  id: AlertCosmicEntropySpriteView
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: /Textures/_Impstation/CosmicCult/Icons/alert_entropy.rsi
+    layers:
+    - map: [ "enum.AlertVisualLayers.Base" ]
+    - map: [ "enum.CultAlertVisualLayers.Counter" ]

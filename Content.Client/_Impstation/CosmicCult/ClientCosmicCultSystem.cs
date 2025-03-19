@@ -9,6 +9,8 @@ using System.Numerics;
 using Timer = Robust.Shared.Timing.Timer;
 using Robust.Client.Audio;
 using Robust.Shared.Audio;
+using Content.Client.Alerts;
+using Content.Client.UserInterface.Systems.Alerts.Controls;
 
 namespace Content.Client._Impstation.CosmicCult;
 
@@ -39,7 +41,9 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
         SubscribeLocalEvent<CosmicMarkBlankComponent, GetStatusIconsEvent>(GetCosmicSSDIcon);
 
         SubscribeNetworkEvent<CosmicSiphonIndicatorEvent>(OnSiphon);
+        SubscribeLocalEvent<CosmicCultComponent, UpdateAlertSpriteEvent>(OnUpdateAlert);
     }
+    #region Siphon Visuals
     private void OnSiphon(CosmicSiphonIndicatorEvent args)
     {
         var ent = GetEntity(args.Target);
@@ -56,7 +60,18 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
         }
     }
 
-    #region Additions
+    private void OnUpdateAlert(Entity<CosmicCultComponent> ent, ref UpdateAlertSpriteEvent args)
+    {
+        if (args.Alert.ID != ent.Comp.EntropyAlert)
+            return;
+        var entropy = Math.Clamp(ent.Comp.EntropyStored, 0, 14);
+        var sprite = args.SpriteViewEnt.Comp;
+        sprite.LayerSetState(AlertVisualLayers.Base, $"base{entropy}");
+        sprite.LayerSetState(CultAlertVisualLayers.Counter, $"num{entropy}");
+    }
+    #endregion
+
+    #region Layer Additions
     private void OnAscendedInfectionAdded(Entity<RogueAscendedInfectionComponent> uid, ref ComponentStartup args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite) || sprite.LayerMapTryGet(AscendedInfectionKey.Key, out _))
@@ -105,7 +120,7 @@ public sealed partial class CosmicCultSystem : SharedCosmicCultSystem
     }
     #endregion
 
-    #region Removals
+    #region Layer Removals
     private void OnAscendedInfectionRemoved(Entity<RogueAscendedInfectionComponent> uid, ref ComponentShutdown args)
     {
         if (!TryComp<SpriteComponent>(uid, out var sprite) || !sprite.LayerMapTryGet(AscendedInfectionKey.Key, out var layer))

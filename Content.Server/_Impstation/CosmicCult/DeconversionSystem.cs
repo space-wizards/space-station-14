@@ -132,5 +132,6 @@ public sealed class DeconversionSystem : EntitySystem
     private void DeconvertCultist(EntityUid uid)
     {
         RemComp<CosmicCultComponent>(uid);
+        RemComp<RogueAscendedInfectionComponent>(uid);
     }
 }

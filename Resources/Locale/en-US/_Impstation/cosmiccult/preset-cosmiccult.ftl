@@ -8,14 +8,15 @@ cosmiccult-description = Cultists lurk amongst the crew.
 roles-antag-cosmiccult-name = Cosmic Cultist
 roles-antag-cosmiccult-description = Usher in the end of all things through subterfuge and sabotage, brainwashing those who would oppose you.
 
-roles-antag-cosmiccultlead-name = Cosmic Cult Leader
-roles-antag-cosmiccultlead-description = Organize the cult into a force to be reckoned with, so that you may usher in the end of all things.
-
 cosmiccult-gamemode-title = The Cosmic Cult
 cosmiccult-gamemode-description = Scanners detect an anomalous increase in Λ-CDM. There is no additional data.
 
-cosmiccult-vote-leadership-initiator = The Unknown
-cosmiccult-vote-leadership-title = Cosmic Cult Stewardship
+cosmiccult-vote-steward-initiator = The Unknown
+cosmiccult-vote-steward-title = Cosmic Cult Stewardship
+cosmiccult-vote-steward-briefing =
+    You are the Cosmic Cult's Steward!
+    Ensure that The Monument is placed in a secure location, and organize the cult to ensure your collective victory.
+    You are not permitted to instruct cultists on how to use or spend their Entropy.
 
 cosmiccult-finale-autocall-briefing = The Monument activates {$minutesandseconds}! Gather yourselves, and prepare for the end.
 cosmiccult-finale-ready = A terrifying light surges forth from The Monument!
@@ -56,7 +57,7 @@ cosmiccult-summary-cultcomplete = The cosmic cultists ushered in the end!
 cosmiccult-summary-cultmajor = The cosmic cultists' victory will be inevitable.
 cosmiccult-summary-cultminor = The Monument was completed, but not fully empowered.
 cosmiccult-summary-neutral = The cult will live to see another day.
-cosmiccult-summary-crewminor = The cult has been left leaderless.
+cosmiccult-summary-crewminor = The cult has been left stewardless.
 cosmiccult-summary-crewmajor = All cosmic cultists were eliminated.
 cosmiccult-summary-crewcomplete = Every single cosmic cultist was deconverted!
 
@@ -136,7 +137,7 @@ cosmiccult-ui-roundstart-text-1 =
     You are a Cosmic Cultist!
 cosmiccult-ui-roundstart-text-2 =
     Aid the cult in its goals whilst ensuring its secrecy.
-    Listen to your cult leader's directions.
+    Listen to your cult steward's directions.
 
 cosmiccult-ui-deconverted-text-1 =
     You are no longer a Cosmic Cultist.
@@ -153,7 +154,7 @@ cosmiccult-ui-popup-confirm = Confirm
 objective-issuer-cosmiccult = [bold][color=#cae8e8]The Unknown[/color][/bold]
 
 objective-cosmiccult-charactermenu = You must usher in the end of all things. Complete your tasks to advance the cult's progress.
-objective-cosmiccultlead-charactermenu = You must lead the cult to usher in the end of all things. Oversee and ensure the cult's progress.
+objective-cosmiccult-steward-charactermenu = You must direct the cult to usher in the end of all things. Oversee and ensure the cult's progress.
 
 objective-condition-entropy-title = SIPHON ENTROPY
 objective-condition-entropy-desc = Collectively siphon at least {$count} entropy from the crew.

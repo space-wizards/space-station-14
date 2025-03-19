@@ -21,7 +21,6 @@
   name: secret-title
   description: secret-description
   showInVote: false
-  cooldown: 1
   rules:
     - CosmicCult
     - SubGamemodesRule

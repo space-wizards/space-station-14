@@ -203,7 +203,6 @@ public abstract partial class SharedHandsSystem : EntitySystem
     {
         var heldItemNames = EnumerateHeld(examinedUid, handsComp)
             .Where(entity => !HasComp<VirtualItemComponent>(entity))
-            .Where(entity => !HasComp<CosmicEntropyMoteComponent>(entity)) // imp | impstation edit to make Entropy Motes unexaminable for metagaming // TODO: Unexaminable Component?
             .Select(item => FormattedMessage.EscapeText(Identity.Name(item, EntityManager)))
             .Select(itemName => Loc.GetString("comp-hands-examine-wrapper", ("item", itemName)))
             .ToList();
