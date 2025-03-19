@@ -293,8 +293,7 @@ namespace Content.IntegrationTests.Tests
                 data,
                 DeserializationOptions.Default,
                 ev.RenamedPrototypes,
-                ev.DeletedPrototypes
-                );
+                ev.DeletedPrototypes);
 
             if (!reader.TryProcessData())
             {
