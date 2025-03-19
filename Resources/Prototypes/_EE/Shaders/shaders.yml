@@ -1,0 +1,4 @@
+- type: shader
+  id: NightVision
+  kind: source
+  path: "/Textures/_EE/Shaders/nightvision.swsl"

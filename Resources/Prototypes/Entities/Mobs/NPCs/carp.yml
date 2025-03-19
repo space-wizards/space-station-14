@@ -87,6 +87,12 @@
       interactFailureString: petting-failure-carp
       interactFailureSound:
         path: /Audio/Effects/bite.ogg
+    - type: NightVision # EE edit
+      isActive: true
+      toggleAction: null
+      color: "#50595C"
+      activateSound: null
+      deactivateSound: null
     - type: Body #imp
       prototype: AnimalCarp
     - type: Bloodstream #imp
@@ -173,6 +179,12 @@
       interactFailureString: petting-failure-nicecarp
       interactFailureSound:
         path: /Audio/Effects/bite.ogg
+    - type: NightVision # EE edit
+      isActive: true
+      toggleAction: null
+      color: "#50595C"
+      activateSound: null
+      deactivateSound: null
     - type: Body #imp
       prototype: AnimalCarp
     - type: Bloodstream #imp

@@ -1,0 +1,118 @@
+# Night Vision Goggles
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesNightVisionGoggles
+  name: night vision goggles
+  description: An advanced heads-up display which provides id data and vision in complete darkness.
+  components:
+  - type: Sprite
+    sprite: _EE/Clothing/Eyes/Goggles/nightvision.rsi
+  - type: Clothing
+    sprite: _EE/Clothing/Eyes/Goggles/nightvision.rsi
+  - type: NightVision
+    isEquipment: true
+  - type: IdentityBlocker
+    coverage: EYES
+
+- type: entity
+  parent: [ClothingEyesNightVisionGoggles, ShowSecurityIcons]
+  id: ClothingEyesNightVisionSecurityGoggles
+  name: night vision security goggles
+  components:
+  - type: Sprite
+    sprite: _EE/Clothing/Eyes/Goggles/security_nightvision.rsi
+  - type: Clothing
+    sprite: _EE/Clothing/Eyes/Goggles/security_nightvision.rsi
+
+- type: entity
+  parent: [ClothingEyesNightVisionGoggles, ClothingEyesHudMedical]
+  id: ClothingEyesNightVisionMedicalGoggles
+  name: night vision medical goggles
+  components:
+  - type: Sprite
+    sprite: _EE/Clothing/Eyes/Goggles/medical_nightvision.rsi
+  - type: Clothing
+    sprite: _EE/Clothing/Eyes/Goggles/medical_nightvision.rsi
+
+- type: entity
+  parent: [ClothingEyesNightVisionGoggles, ClothingEyesHudDiagnostic]
+  id: ClothingEyesNightVisionDiagnosticGoggles
+  name: night vision diagnostic goggles
+  components:
+  - type: Sprite
+    sprite: _EE/Clothing/Eyes/Goggles/diagnostic_nightvision.rsi
+  - type: Clothing
+    sprite: _EE/Clothing/Eyes/Goggles/diagnostic_nightvision.rsi
+
+- type: entity
+  parent: ClothingEyesNightVisionGoggles
+  id: ClothingEyesNightVisionGogglesSyndie
+  suffix: "Chameleon"
+  components:
+  - type: ChameleonClothing
+    slot: [eyes]
+    default: ClothingEyesNightVisionGoggles
+  - type: UserInterface
+    interfaces:
+      enum.ChameleonUiKey.Key:
+        type: ChameleonBoundUserInterface
+
+- type: entity
+  parent: [ClothingEyesNightVisionGogglesSyndie, ShowSecurityIcons]
+  name: night vision heads-up display
+  id: ClothingEyesNightVisionGogglesNukie
+  suffix: "Chameleon, NukeOps"
+  components:
+  - type: ShowSyndicateIcons
+
+# Thermal Vision Goggles
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesThermalVisionGoggles
+  name: thermal vision goggles
+  description: Thermals in the shape of glasses.
+  components:
+  - type: Sprite
+    sprite: _EE/Clothing/Eyes/Goggles/thermal.rsi
+  - type: Clothing
+    sprite: _EE/Clothing/Eyes/Goggles/thermal.rsi
+  - type: ThermalVision
+    isEquipment: true
+    pulseTime: 2
+    toggleAction: PulseThermalVision
+  - type: IdentityBlocker
+    coverage: EYES
+
+- type: entity
+  parent: ClothingEyesThermalVisionGoggles
+  id: ClothingEyesThermalVisionMonocle
+  name: thermonocle
+  description: Never before has seeing through walls felt so gentlepersonly.
+  components:
+  - type: Sprite
+    sprite: _EE/Clothing/Eyes/Goggles/monocle_thermal.rsi
+  - type: Clothing
+    sprite: _EE/Clothing/Eyes/Goggles/monocle_thermal.rsi
+
+- type: entity
+  parent: ClothingEyesThermalVisionGoggles
+  id: ClothingEyesThermalVisionGogglesSyndie
+  suffix: "Chameleon"
+  components:
+  - type: ChameleonClothing
+    slot: [eyes]
+    default: ClothingEyesThermalVisionGoggles
+  - type: UserInterface
+    interfaces:
+      enum.ChameleonUiKey.Key:
+        type: ChameleonBoundUserInterface
+
+- type: entity
+  parent: [ClothingEyesThermalVisionGogglesSyndie, ShowSecurityIcons]
+  id: ClothingEyesThermalVisionGogglesNukie
+  name: thermal vision heads-up display
+  suffix: "Chameleon, NukeOps"
+  components:
+  - type: ShowSyndicateIcons

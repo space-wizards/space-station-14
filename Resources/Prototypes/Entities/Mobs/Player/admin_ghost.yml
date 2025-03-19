@@ -27,6 +27,7 @@
     bodyType: Kinematic
   - type: Body
     prototype: Aghost
+    thermalVisibility: false # EE edit
   - type: Access
     groups:
     - AllAccess

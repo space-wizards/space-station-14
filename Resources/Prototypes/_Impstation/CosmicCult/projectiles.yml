@@ -41,8 +41,8 @@
       path: /Audio/_Impstation/CosmicCult/ability_nova_ambient.ogg
   - type: CosmicCorrupting
     corruptionSpeed: 0.4
-    corruptionRadius: 1
     useVFX: false
+    mobile: true
 
 - type: entity
   id: ProjectileRogueCosmicNova

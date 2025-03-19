@@ -66,6 +66,12 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   name: bee
@@ -418,6 +424,12 @@
     damage:
       types:
         Piercing: 0
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   name: glockroach
@@ -586,6 +598,12 @@
     interfaces:
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
   - type: InventorySlots
   - type: Inventory
     speciesId: hamster
@@ -616,6 +634,7 @@
           32:
             sprite: Mobs/Animals/mothroach/displacement.rsi
             state: neck
+
 
 
 # Note that the mallard duck is actually a male drake mallard, with the brown duck being the female variant of the same species, however ss14 lacks sex specific textures
@@ -976,6 +995,12 @@
       task: RuminantCompound
   - type: Body
     prototype: AnimalHemocyanin
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   name: goat
@@ -1703,7 +1728,7 @@
   id: MobMouse
   description: Squeak!
   components:
-  - type: VentCrawler
+  - type: VentCrawler # imp edit
     enterDelay: 1
   - type: Body
     prototype: Mouse
@@ -1886,6 +1911,12 @@
   - type: MeleeChemicalInjector #imp
     solution: mousebites
     transferAmount: 1
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   parent: MobMouse
@@ -2080,6 +2111,12 @@
     tags:
     - VimPilot
     - MultitoolDefibrillatorTarget
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 
 - type: entity
@@ -2135,6 +2172,12 @@
   - type: Tag
     tags:
     - MultitoolDefibrillatorTarget
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   name: frog
@@ -2199,6 +2242,12 @@
     tags:
     - VimPilot
     - MultitoolDefibrillatorTarget
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
@@ -2443,6 +2492,12 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
@@ -2550,6 +2605,12 @@
         Burn: -0.07
   - type: Absorbable # imp edit - big enough to restore a good amount of biomass
     biomassRestored: 0.7
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   parent: MobSpiderBase
@@ -2738,6 +2799,12 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   name: possum
@@ -2759,6 +2826,12 @@
         Base: possum_dead_old
       Dead:
         Base: possum_dead_old
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   name: raccoon
@@ -2814,6 +2887,12 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   name: fox
@@ -2895,6 +2974,12 @@
     tags:
     - VimPilot
   - type: DogVision # imp
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   name: corgi
@@ -3124,6 +3209,12 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   name: calico cat
@@ -3411,6 +3502,12 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   name: hamster
@@ -3798,6 +3895,12 @@
       task: SimpleHostileCompound
   - type: Puller
     needsHands: false
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   name: reindeer doe

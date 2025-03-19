@@ -106,10 +106,9 @@
     location: The Monument
   - type: CosmicMarkStructure
   - type: CosmicCorrupting
-    disintegrate: true
-    corruptionGrowth: true
     corruptionReduction: 0.01
     enabled: false
+    floodFillStarting: true
 
  ########### SPAWN-IN ANIMATION #############
 

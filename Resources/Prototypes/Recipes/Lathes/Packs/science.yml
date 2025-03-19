@@ -97,6 +97,7 @@
   - ArtifactCrusherMachineCircuitboard
 
 - type: latheRecipePack
+  parent: CameraBoardsImp # imp
   id: CameraBoards
   recipes:
   - SurveillanceCameraRouterCircuitboard

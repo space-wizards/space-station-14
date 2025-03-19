@@ -1,35 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Added the improvised grappling gun, craftable with the crafting menu.
-    type: Add
-  id: 844
-  time: '2025-01-02T10:57:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1177
-- author: aada
-  changes:
-  - message: Bananium can now be smelted in a microwave.
-    type: Add
-  id: 845
-  time: '2025-01-02T11:48:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1201
-- author: DinnerCalzone
-  changes:
-  - message: Removed the chemmaster flatpack prestige item from the bartender's loadout.
-    type: Remove
-  - message: Chemmasters and chemmaster machine boards have been added to the bar
-      across a number of stations.
-    type: Add
-  id: 846
-  time: '2025-01-02T11:50:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1163
-- author: ultramario1998
-  changes:
-  - message: Admins now have a new toy!
-    type: Add
-  id: 847
-  time: '2025-01-02T11:52:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1198
 - author: Darkmajia
   changes:
   - message: Air alarms can now override the pressure lockout functions of individual
@@ -4102,3 +4071,34 @@
   id: 1343
   time: '2025-03-17T18:52:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1917
+- author: formlessnameless
+  changes:
+  - message: Night vision and thermal vision now exist!
+    type: Add
+  id: 1344
+  time: '2025-03-18T20:40:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1972
+- author: DinnerCalzone
+  changes:
+  - message: Origin Station has been shot with a gun.
+    type: Remove
+  id: 1345
+  time: '2025-03-18T23:44:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2006
+- author: Sha-Seng
+  changes:
+  - message: Barbel markings for thaven from Delta-V
+    type: Add
+  - message: +1 Head Top marking budget for thaven
+    type: Add
+  id: 1346
+  time: '2025-03-19T00:46:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1989
+- author: Sha-Seng
+  changes:
+  - message: Decapoids can now be admin and supply assistants without immediately
+      suffocating
+    type: Fix
+  id: 1347
+  time: '2025-03-19T00:58:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2003

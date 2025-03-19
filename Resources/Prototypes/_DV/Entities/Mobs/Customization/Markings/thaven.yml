@@ -1,0 +1,57 @@
+# Head
+- type: marking
+  id: ThavenCheekBarbels
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Thaven]
+  coloring: #imp
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: _DV/Mobs/Customization/thaven/thaven.rsi
+    state: cheek_barbels
+
+- type: marking
+  id: ThavenEyebrowBarbels
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Thaven]
+  coloring: #imp
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: _DV/Mobs/Customization/thaven/thaven.rsi
+    state: eyebrow_barbels
+
+#- type: marking
+#  id: ThavenUnderbellyFace
+#  bodyPart: Head
+#  markingCategory: Head
+#  speciesRestriction: [Thaven]
+#  coloring: #imp
+#    default:
+#      type:
+#        !type:TattooColoring
+#      fallbackColor: "#FFFFFF"
+#  sprites:
+#  - sprite: _DV/Mobs/Customization/thaven/thaven.rsi
+#    state: underbelly_face
+
+# Torso
+#- type: marking
+#  id: ThavenUnderbellyTorso
+#  bodyPart: Chest
+#  markingCategory: Chest
+#  speciesRestriction: [Thaven]
+#  coloring: #imp
+#    default:
+#      type:
+#        !type:TattooColoring
+#      fallbackColor: "#FFFFFF"
+#  sprites:
+#  - sprite: _DV/Mobs/Customization/thaven/thaven.rsi
+#    state: underbelly_torso

@@ -65,3 +65,8 @@
       - state: inhand-right
   - type: CanEscapeInventory
     baseResistTime: 0.25
+  - type: NightVision
+    isActive: true
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null

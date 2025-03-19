@@ -84,7 +84,7 @@
     neck: SyndicateWhistle
     outerClothing: ClothingOuterHardsuitSyndieCommander
   storage:
-    back: 
+    back:
     - NukieSpectralLocator # Imp special!!
   inhand:
   - NukeOpsDeclarationOfWar
@@ -118,7 +118,10 @@
   equipment:
     pocket2: BaseUplinkRadio60TC
   storage:
-    back: 
+    back:
+    - WeaponPistolViper
+    - PinpointerSyndicateNuclear
+    - DeathAcidifierImplanter
     - NukieSpectralLocator # Imp special!!
     - DeathAcidifierImplanter
     - WeaponPistolViper

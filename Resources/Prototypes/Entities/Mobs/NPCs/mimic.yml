@@ -46,3 +46,9 @@
     spawned:
     - id: DrinkChangelingStingCan
       amount: 1
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null

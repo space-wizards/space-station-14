@@ -81,6 +81,12 @@
   - type: Speech
     speechVerb: SmallMob
   - type: NonSpreaderZombie
+  - type: NightVision # EE edit
+    isActive: true
+    toggleAction: null
+    color: "#50595C"
+    activateSound: null
+    deactivateSound: null
 
 - type: entity
   id: MobTickSalvage

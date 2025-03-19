@@ -1,0 +1,9 @@
+- type: latheRecipe
+  id: ClothingEyesNightVisionSecurityGoggles
+  result: ClothingEyesNightVisionSecurityGoggles
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 300
+    Silver: 100
+    Gold: 100

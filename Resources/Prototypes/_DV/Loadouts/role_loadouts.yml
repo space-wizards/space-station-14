@@ -1,13 +1,15 @@
 - type: roleLoadout
   id: JobSupplyAssistant
   groups:
-  - GroupTankHarness
   - SupplyAssistantJumpsuit
   - SupplyAssistantBackpack
   - Glasses
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
+  - GroupTankHarness
+  - GroupBreathToolDecapoid #imp
+  - GroupTankHarnessAquatic #imp
 
 - type: roleLoadout
   id: JobAdministrativeAssistant
@@ -22,3 +24,6 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
+  - GroupTankHarnessWithOuterwear #imp
+  - GroupBreathToolDecapoid #imp
+  - GroupTankHarnessWithOuterwearAquatic #imp

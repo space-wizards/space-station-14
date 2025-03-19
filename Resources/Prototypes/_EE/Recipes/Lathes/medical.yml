@@ -1,0 +1,10 @@
+- type: latheRecipe
+  id: ClothingEyesNightVisionMedicalGoggles
+  result: ClothingEyesNightVisionMedicalGoggles
+  completetime: 7
+  materials:
+    Steel: 300
+    Glass: 300
+    Silver: 100
+    Gold: 100
+    Plasma: 200
