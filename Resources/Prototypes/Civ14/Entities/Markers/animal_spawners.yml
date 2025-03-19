@@ -36,3 +36,58 @@
     - type: ConditionalSpawner
       prototypes:
         - MobSabertooth
+
+- type: entity
+  name: Rabbit Spawner
+  id: SpawnMobRabbit
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobRabbit
+        - MobRabbitBlack
+        - MobRabbitWhite
+
+- type: entity
+  name: Chicken Spawner
+  id: SpawnMobChicken
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobChicken
+
+- type: entity
+  name: Deer Spawner
+  id: SpawnMobDeer
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobDeerBuck
+        - MobDeerDoe
+
+- type: entity
+  name: Pig Spawner
+  id: SpawnMobChicken
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobChicken

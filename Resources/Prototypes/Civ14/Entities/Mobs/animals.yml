@@ -193,3 +193,44 @@
       price: 50
     - type: BadFood
     - type: NonSpreaderZombie
+
+- type: entity
+  name: black rabbit
+  parent: MobRabbit
+  id: MobRabbitBlack
+  description: Squeak!
+  components:
+    - type: Sprite
+      drawdepth: SmallMobs
+      sprite: Mobs/Civ14/animal.rsi
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+          state: rabbitblack
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: rabbitblack
+        Critical:
+          Base: rabbitblack_dead
+        Dead:
+          Base: rabbitblack_dead
+- type: entity
+  name: white rabbit
+  parent: MobRabbit
+  id: MobRabbitWhite
+  description: Squeak!
+  components:
+    - type: Sprite
+      drawdepth: SmallMobs
+      sprite: Mobs/Civ14/animal.rsi
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+          state: rabbitwhite
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: rabbitwhite
+        Critical:
+          Base: rabbitwhite_dead
+        Dead:
+          Base: rabbitwhite_dead
