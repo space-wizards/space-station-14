@@ -1,3 +1,4 @@
+using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Enums;
@@ -97,6 +98,12 @@ public sealed partial class HumanoidAppearanceComponent : Component
 
     [DataField]
     public ProtoId<MarkingPrototype>? UndergarmentBottom = new ProtoId<MarkingPrototype>("UndergarmentBottomBoxers");
+
+    /// <summary>
+    ///     The displacement maps that will be applied to specific layers of the humanoid.
+    /// </summary>
+    [DataField]
+    public Dictionary<HumanoidVisualLayers, DisplacementData> MarkingsDisplacement = new();
 }
 
 [DataDefinition]

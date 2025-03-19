@@ -14,28 +14,25 @@ public sealed class DisplacementMapSystem : EntitySystem
     /// </summary>
     /// <param name="data">Information package for applying the displacement map</param>
     /// <param name="sprite">SpriteComponent</param>
-    /// <param name="index">Index of the layer for which the displacement map will be applied</param>
-    /// <param name="key">The unique key used by this layer. The displacement layer key is generated based on this key. Example: ["hair"] key for hair species layer -> ["hair-displacement"] for new displacement layer</param>
-    /// <param name="revealedLayers">A group of layers tracked by another system, such as layers of clothing. When this system wants to completely redraw all clothing layers, and will delete all these layers, it must also delete the displacement layers that are applied to the clothing. If this parameter is passed, it will automatically add a layer to this group</param>
+    /// <param name="index">Index of the layer where the new map layer will be added</param>
+    /// <param name="key">Unique layer key, which will determine which layer to apply displacement map to</param>
+    /// <param name="trackedLayers">A group of layers tracked by another system, such as layers of clothing. When this system wants to completely redraw all clothing layers, and will delete all these layers, it must also delete the displacement layers that are applied to the clothing. If this parameter is passed, it will automatically add a layer to this group</param>
     /// <returns></returns>
     public bool TryAddDisplacement(DisplacementData data,
         SpriteComponent sprite,
         int index,
-        string key,
-        HashSet<string>? revealedLayers = null)
+        object key,
+        HashSet<string>? trackedLayers = null)
     {
+        if (key.ToString() is null)
+            return false;
+
         if (data.ShaderOverride != null)
             sprite.LayerSetShader(index, data.ShaderOverride);
 
         var displacementKey = $"{key}-displacement";
-        if (revealedLayers is not null)
-        {
-            if (!revealedLayers.Add(displacementKey))
-            {
-                Log.Warning($"Duplicate key for DISPLACEMENT: {displacementKey}.");
-                return false;
-            }
-        }
+
+        sprite.RemoveLayer(displacementKey);
 
         //allows you not to write it every time in the YML
         foreach (var pair in data.SizeMaps)
@@ -72,12 +69,12 @@ public sealed class DisplacementMapSystem : EntitySystem
         }
 
         var displacementLayer = _serialization.CreateCopy(displacementDataLayer, notNullableOverride: true);
-        displacementLayer.CopyToShaderParameters!.LayerKey = key;
+        displacementLayer.CopyToShaderParameters!.LayerKey = key.ToString() ?? "this is impossible";
 
         sprite.AddLayer(displacementLayer, index);
         sprite.LayerMapSet(displacementKey, index);
 
-        revealedLayers?.Add(displacementKey);
+        trackedLayers?.Add(displacementKey);
 
         return true;
     }

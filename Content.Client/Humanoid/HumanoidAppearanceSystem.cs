@@ -112,9 +112,6 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
         if (proto.BaseSprite != null)
             sprite.LayerSetSprite(layerIndex, proto.BaseSprite);
-
-        if (proto.Displacement is not null)
-            _displacement.TryAddDisplacement(proto.Displacement, sprite, layerIndex, protoId);
     }
 
     /// <summary>
@@ -372,6 +369,11 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             else
             {
                 sprite.LayerSetColor(layerId, Color.White);
+            }
+
+            if (humanoid.MarkingsDisplacement.TryGetValue(markingPrototype.BodyPart, out var displacementData))
+            {
+                _displacement.TryAddDisplacement(displacementData, sprite, targetLayer + j + 1, layerId);
             }
         }
     }

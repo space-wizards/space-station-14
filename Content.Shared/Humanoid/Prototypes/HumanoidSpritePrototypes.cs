@@ -73,10 +73,4 @@ public sealed partial class HumanoidSpeciesSpriteLayer : IPrototype
     /// </summary>
     [DataField]
     public bool MarkingsMatchSkin { get; private set; }
-
-    /// <summary>
-    ///     The displacement map that will be applied to this species layer
-    /// </summary>
-    [DataField]
-    public DisplacementData? Displacement { get; private set; }
 }

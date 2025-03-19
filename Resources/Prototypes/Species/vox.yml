@@ -19,7 +19,7 @@
   sprites:
     Head: MobVoxHead
     Snout: MobHumanoidAnyMarking
-    Hair: MobVoxHair
+    Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
     UndergarmentTop: MobHumanoidAnyMarking
     UndergarmentBottom: MobHumanoidAnyMarking
@@ -79,14 +79,6 @@
   baseSprite:
     sprite: Mobs/Species/Vox/parts.rsi
     state: eyes
-
-- type: humanoidBaseSprite
-  id: MobVoxHair
-  displacement:
-    sizeMaps:
-      32:
-        sprite: Mobs/Species/Vox/displacement.rsi
-        state: hair
 
 - type: humanoidBaseSprite
   id: MobVoxHead
