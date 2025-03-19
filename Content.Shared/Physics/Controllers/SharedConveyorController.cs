@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Collections;
@@ -144,13 +145,21 @@ public abstract class SharedConveyorController : VirtualController
 
             if (ent.Result)
             {
-                _mover.Friction(0f, frameTime: frameTime, friction: 5f, ref velocity);
+                // We apply friction here so when we push items towards the center of the conveyor they don't go overspeed.
+                // We also don't want this to apply to mobs as they apply their own friction and otherwise
+                // they'll go too slow.
+                if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
+                {
+                    _mover.Friction(0f, frameTime: frameTime, friction: 5f, ref velocity);
+                }
+
                 SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
             }
             else
             {
                 // Need friction to outweigh the movement as it will bounce a bit against the wall.
-                _mover.Friction(0f, frameTime: frameTime, friction: 20f, ref velocity);
+                // This facilitates being able to sleep entities colliding into walls.
+                _mover.Friction(0f, frameTime: frameTime, friction: 40f, ref velocity);
             }
 
             PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity);
