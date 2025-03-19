@@ -4,7 +4,7 @@
   description: A field that was ploughed.
   components:
     - type: Sprite
-      texture: Objects/_civ/floors.rsi/dirt_ploughed.png
+      texture: Tiles/_civ/dirt_ploughed.png
     - type: Clickable
     - type: InteractionOutline
     - type: Physics
