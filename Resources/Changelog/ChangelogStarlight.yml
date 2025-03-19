@@ -4233,4 +4233,12 @@ Entries:
   id: 586
   time: '2025-03-18T09:39:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/407
+- author: Happyrobot33
+  changes:
+  - message: Clarified the essence costs for the vampires ability in the evolution
+      menu.
+    type: Tweak
+  id: 587
+  time: '2025-03-19T05:37:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/408
 
