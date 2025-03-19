@@ -28,5 +28,7 @@ public sealed class ComponentTogglerSystem : EntitySystem
             EntityManager.RemoveComponents(target.Value, ent.Comp.RemoveComponents ?? ent.Comp.Components);
             ent.Comp.Target = null;
         }
+
+        Dirty(ent);
     }
 }

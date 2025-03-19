@@ -8,7 +8,7 @@ namespace Content.Shared.Item.ItemToggle.Components;
 /// Adds or removes components when toggled.
 /// Requires <see cref="ItemToggleComponent"/>.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(ComponentTogglerSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(ComponentTogglerSystem)), AutoGenerateComponentState]
 public sealed partial class ComponentTogglerComponent : Component
 {
     /// <summary>
@@ -33,6 +33,6 @@ public sealed partial class ComponentTogglerComponent : Component
     /// <summary>
     /// Tracks the target of the component toggle.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? Target;
 }
