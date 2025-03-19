@@ -24,12 +24,6 @@ public sealed partial class RoleTypePrototype : IPrototype
     public Color Color { get; private set; } = Color.FromHex("#eeeeee");
 
     /// <summary>
-    ///     Used to order the role types
-    /// </summary>
-    [DataField]
-    public string Sort = "0";
-
-    /// <summary>
     ///     A symbol used to represent the role type.
     /// </summary>
     [DataField]

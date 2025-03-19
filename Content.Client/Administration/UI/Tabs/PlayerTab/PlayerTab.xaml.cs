@@ -208,7 +208,7 @@ public sealed partial class PlayerTab : Control
             Header.Username => Compare(x.Username, y.Username),
             Header.Character => Compare(x.CharacterName, y.CharacterName),
             Header.Job => Compare(x.StartingJob, y.StartingJob),
-            Header.RoleType => Compare(x.RoleProto.Sort , y.RoleProto.Sort),
+            Header.RoleType => y.SortWeight - x.SortWeight,
             Header.Playtime => TimeSpan.Compare(x.OverallPlaytime ?? default, y.OverallPlaytime ?? default),
             _ => 1
         };
