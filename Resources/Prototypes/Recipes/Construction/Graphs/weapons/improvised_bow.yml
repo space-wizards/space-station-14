@@ -9,7 +9,7 @@
       - material: WoodPlank
         amount: 10
         doAfter: 4
-      - material: Cloth
+      - material: Straw
         amount: 5
         doAfter: 4
 

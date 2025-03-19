@@ -1,0 +1,16 @@
+- type: job
+  id: Nomad
+  name: job-name-nomad
+  description: job-description-nomad
+  playTimeTracker: JobNomad
+  startingGear: NomadGear
+  icon: "JobIconPassenger"
+  supervisors: job-supervisors-everyone
+  access:
+    - Maintenance
+
+- type: startingGear
+  id: NomadGear
+  equipment:
+    jumpsuit: under-indian2
+    pocket1: Torch

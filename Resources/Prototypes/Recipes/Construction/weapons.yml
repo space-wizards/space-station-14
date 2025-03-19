@@ -181,7 +181,7 @@
   startNode: start
   targetNode: ImprovisedBow
   category: construction-category-weapons
-  description: A shoddily constructed bow made out of wood and cloth. It's not much, but it's gotten the job done for millennia.
+  description: A shoddily constructed bow made out of wood and fiber. It's not much, but it's gotten the job done for millennia.
   icon: { sprite: Objects/Weapons/Guns/Bow/bow.rsi, state: unwielded }
   objectType: Item
 

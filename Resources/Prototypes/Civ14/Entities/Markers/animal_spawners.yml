@@ -1,0 +1,93 @@
+- type: entity
+  name: Bear Spawner
+  id: SpawnMobBear
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobBrownBear
+
+- type: entity
+  name: Wolf Spawner
+  id: SpawnMobGreyWolf
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobGreyWolf
+
+- type: entity
+  name: Sabertooth Spawner
+  id: SpawnMobSabertooth
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobSabertooth
+
+- type: entity
+  name: Rabbit Spawner
+  id: SpawnMobRabbit
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobRabbit
+        - MobRabbitBlack
+        - MobRabbitWhite
+
+- type: entity
+  name: Chicken Spawner
+  id: SpawnMobChicken
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobChicken
+
+- type: entity
+  name: Deer Spawner
+  id: SpawnMobDeer
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobDeerBuck
+        - MobDeerDoe
+
+- type: entity
+  name: Pig Spawner
+  id: SpawnMobPig
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobPig

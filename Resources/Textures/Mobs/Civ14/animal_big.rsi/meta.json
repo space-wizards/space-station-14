@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "license": null,
+  "copyright": null,
+  "size": {
+    "x": 64,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "alligator_dead"
+    },
+    {
+      "name": "alligator",
+      "directions": 4
+    },
+    {
+      "name": "velociraptor",
+      "directions": 4
+    },
+    {
+      "name": "velociraptor_dead"
+    },
+    {
+      "name": "panther",
+      "directions": 4
+    },
+    {
+      "name": "panther_dead"
+    },
+    {
+      "name": "greatwhite_above",
+      "directions": 4
+    },
+    {
+      "name": "greatwhite_dead"
+    },
+    {
+      "name": "greatwhite_below",
+      "directions": 4
+    },
+    {
+      "name": "jaguar_dead"
+    },
+    {
+      "name": "jaguar",
+      "directions": 4
+    },
+    {
+      "name": "sabertoothcat_brown",
+      "directions": 4
+    },
+    {
+      "name": "sabertoothcat_white",
+      "directions": 4
+    },
+    {
+      "name": "sabertooth_dead"
+    },
+    {
+      "name": "whitesabertooth_dead"
+    },
+    {
+      "name": "boa_dead"
+    },
+    {
+      "name": "boa",
+      "directions": 4
+    },
+    {
+      "name": "boa_overlay",
+      "directions": 4
+    },
+    {
+      "name": "lion",
+      "directions": 4
+    },
+    {
+      "name": "lion_dead"
+    },
+    {
+      "name": "pachycephalosaurus",
+      "directions": 4
+    },
+    {
+      "name": "pachycephalosaurus_dead"
+    },
+    {
+      "name": "dimetrodon_dead"
+    },
+    {
+      "name": "dimetrodon",
+      "directions": 4
+    }
+  ]
+}

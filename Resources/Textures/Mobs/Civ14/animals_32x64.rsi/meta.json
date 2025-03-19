@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "license": null,
+  "copyright": null,
+  "size": {
+    "x": 32,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "gorilla_standing",
+      "directions": 4
+    },
+    {
+      "name": "standing_overlay",
+      "directions": 4
+    },
+    {
+      "name": "gorilla_crawling",
+      "directions": 4
+    },
+    {
+      "name": "gorilla_dead"
+    },
+    {
+      "name": "gigantopithecus",
+      "directions": 4
+    },
+    {
+      "name": "gigantopithecus_dead"
+    },
+    {
+      "name": "yeti",
+      "directions": 4
+    },
+    {
+      "name": "yeti_dead"
+    }
+  ]
+}

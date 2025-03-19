@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: WoodClub
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: woodclub
+          steps:
+            - material: WoodPlank
+              amount: 8
+              doAfter: 8
+    - node: woodclub
+      entity: WoodClub

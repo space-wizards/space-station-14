@@ -10,7 +10,7 @@
         - type: StationNameSetup
           mapNameTemplate: "Nomads Classic"
         - type: StationBiome
-          biome: Grasslands
+          biome: Continental
           mapLightColor: "#D8B059"
         - type: StationJobs
           availableJobs:

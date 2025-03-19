@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": null,
+  "copyright": null,
+  "size": {
+    "x": 85,
+    "y": 85
+  },
+  "states": [
+    {
+      "name": "triceratops_bull",
+      "directions": 4
+    },
+    {
+      "name": "triceratops_cow",
+      "directions": 4
+    }
+  ]
+}
