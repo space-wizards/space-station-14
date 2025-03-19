@@ -10,90 +10,88 @@
     layers:
     - state: tele-server-nopower
     - state: tele-stripe
-    - state: tele-server-on  # Default powered state when multiple keys or EncryptionElse
+    - state: tele-server-on
       shader: unshaded
       visible: false
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: ["tele-server-on"]
     - state: tele-server-on-common
-      shader: unshaded
-      visible: false
       map: ["tele-server-on-common"]
     - state: tele-server-on-cargo
-      shader: unshaded
-      visible: false
       map: ["tele-server-on-cargo"]
     - state: tele-server-on-engineering
-      shader: unshaded
-      visible: false
       map: ["tele-server-on-engineering"]
     - state: tele-server-on-medical
-      shader: unshaded
-      visible: false
       map: ["tele-server-on-medical"]
     - state: tele-server-on-science
-      shader: unshaded
-      visible: false
       map: ["tele-server-on-science"]
     - state: tele-server-on-sec
-      shader: unshaded
-      visible: false
       map: ["tele-server-on-sec"]
     - state: tele-server-on-service
-      shader: unshaded
-      visible: false
       map: ["tele-server-on-service"]
     - state: tele-server-on-command
-      shader: unshaded
-      visible: false
       map: ["tele-server-on-command"]
+    - state: tele-server-on-multiple
+      map: ["tele-server-on-multiple"]
+    - state: tele-server-on-default  # Default powered state when multiple keys or EncryptionElse
+      map: ["tele-server-on-default"]
     - state: tele_o
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: ItemMapper
-    requireAll: False
-    sprite: Structures/Machines/telecomms.rsi
-    mapLayers:
-      tele-server-on-common:
-        whitelist:
-          tag:
-          - EncryptionCommon
-      tele-server-on-cargo:
-        whitelist:
-          tag:
-          - EncryptionCargo
-      tele-server-on-engineering:
-        whitelist:
-          tag:
-          - EncryptionEngineering
-      tele-server-on-medical:
-        whitelist:
-          tag:
-          - EncryptionMedical
-      tele-server-on-science:
-        whitelist:
-          tag:
-          - EncryptionScience
-      tele-server-on-sec:
-        whitelist:
-          tag:
-          - EncryptionSecurity
-      tele-server-on-service:
-        whitelist:
-          tag:
-          - EncryptionService
-      tele-server-on-command:
-        whitelist:
-          tag:
-          - EncryptionCommand
-      tele-server-on:
         # This will show the default "on" state when either:
         # 1. There are multiple keys of different types
         # 2. There's a key with EncryptionElse tag
         # 3. No keys are present (fallback)
+  - type: ItemMapper
+    sprite: Structures/Machines/telecomms.rsi
+    mapLayers:
+      tele-server-on-common:
         whitelist:
-          tag:
+          tags:
+          - EncryptionCommon
+      tele-server-on-cargo:
+        whitelist:
+          tags:
+          - EncryptionCargo
+      tele-server-on-engineering:
+        whitelist:
+          tags:
+          - EncryptionEngineering
+      tele-server-on-medical:
+        whitelist:
+          tags:
+          - EncryptionMedical
+      tele-server-on-science:
+        whitelist:
+          tags:
+          - EncryptionScience
+      tele-server-on-sec:
+        whitelist:
+          tags:
+          - EncryptionSecurity
+      tele-server-on-service:
+        whitelist:
+          tags:
+          - EncryptionService
+      tele-server-on-command:
+        whitelist:
+          tags:
+          - EncryptionCommand
+      tele-server-on-default:
+        whitelist:
+          tags:
           - EncryptionElse
         minCount: 1
-        fallback: true
+      tele-server-on-multiple:
+        whitelist:
+          tags:
+          - EncryptionCommon
+          - EncryptionCargo
+          - EncryptionEngineering
+          - EncryptionMedical
+          - EncryptionScience
+          - EncryptionSecurity
+          - EncryptionService
+          - EncryptionCommand
+        minCount: 2
   - type: PointLight
     enabled: false
     castShadows: false
@@ -104,9 +102,39 @@
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
-        enum.PowerDeviceVisualLayers.Powered:
+        tele-server-on:
           True: { visible: true }
           False: { visible: false }
+        tele-server-on-common:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        tele-server-on-cargo:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        tele-server-on-engineering:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        tele-server-on-medical:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        tele-server-on-science:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        tele-server-on-sec:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        tele-server-on-service:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        tele-server-on-command:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        tele-server-on-default:
+          True: { shader: unshaded }
+          False: { shader: shaded }
+        tele-server-on-multiple:
+          True: { shader: unshaded }
+          False: { shader: shaded }
   - type: Appearance
     visuals:
     - type: MappedItemVisualizer

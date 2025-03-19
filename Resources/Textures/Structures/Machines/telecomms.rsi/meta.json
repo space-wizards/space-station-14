@@ -51,6 +51,12 @@
             "name": "tele-server-on-command"
         },
         {
+            "name": "tele-server-on-default"
+        },
+        {
+            "name": "tele-server-on-multiple"
+        },
+        {
             "name": "tele_o"
         }
     ]
