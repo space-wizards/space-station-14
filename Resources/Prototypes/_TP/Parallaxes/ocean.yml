@@ -1,0 +1,10 @@
+- type: parallax
+  id: Ocean
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/_TP/Parallaxes/land.png"
+      slowness: 0
+      scale: 1,1
+      scrolling: "0, -0.2"
+      shader: ""
