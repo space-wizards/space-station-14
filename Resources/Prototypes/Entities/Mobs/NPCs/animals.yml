@@ -3433,14 +3433,6 @@
         task: RuminantCompound
 
 - type: entity
-  parent: MobDionaNymph
-  id: MobDionaNymphAccent # No talky. For non-brain & wild nymphs
-  suffix: Accent
-  components:
-    - type: ReplacementAccent
-      accent: nymph
-
-- type: entity
   name: reindeer buck
   parent: [SimpleMobBase, MobCombat]
   id: MobReindeerBuck
