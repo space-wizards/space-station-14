@@ -157,35 +157,6 @@
 
 - type: entity
   parent: BaseGameRule
-  id: DragonSpawn
-  components:
-  - type: StationEvent
-    weight: 6.5
-    earliestStart: 40
-    reoccurrenceDelay: 20
-    minimumPlayers: 20
-    duration: null
-  - type: SpaceSpawnRule
-    spawnDistance: 0
-  - type: AntagSpawner
-    prototype: MobDragon
-  - type: DragonRule
-  - type: AntagObjectives
-    objectives:
-    - CarpRiftsObjective
-    - DragonSurviveObjective
-  - type: AntagSelection
-    agentName: dragon-round-end-agent-name
-    definitions:
-    - spawnerPrototype: SpawnPointGhostDragon
-      min: 1
-      max: 1
-      pickPlayer: false
-      mindRoles:
-      - MindRoleDragon
-
-- type: entity
-  parent: BaseGameRule
   id: NinjaSpawn
   components:
   - type: StationEvent

@@ -78,10 +78,10 @@
           layer:
             - MobLayer
     - type: Physics
-    - type: Butcherable
     - type: MovementSpeedModifier
       baseWalkSpeed: 3.25
       baseSprintSpeed: 4.25
+    - type: Butcherable
       spawned:
         - id: FoodMeat
           amount: 2

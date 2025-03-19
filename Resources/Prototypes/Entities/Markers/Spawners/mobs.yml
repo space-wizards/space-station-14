@@ -280,20 +280,6 @@
         - MobWalter
 
 - type: entity
-  name: Space Bear Spawner
-  id: SpawnMobBear
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: green
-        - state: bear
-          sprite: Mobs/Animals/bear.rsi
-    - type: ConditionalSpawner
-      prototypes:
-        - MobBearSpace
-
-- type: entity
   name: Space Carp Spawner
   id: SpawnMobCarp
   parent: MarkerBase

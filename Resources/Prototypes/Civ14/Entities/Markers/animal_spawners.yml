@@ -81,7 +81,7 @@
 
 - type: entity
   name: Pig Spawner
-  id: SpawnMobChicken
+  id: SpawnMobPig
   parent: MarkerBase
   components:
     - type: Sprite
@@ -90,4 +90,4 @@
         - state: ai
     - type: ConditionalSpawner
       prototypes:
-        - MobChicken
+        - MobPig
