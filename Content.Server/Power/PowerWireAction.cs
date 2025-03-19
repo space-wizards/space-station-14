@@ -53,42 +53,29 @@ public sealed partial class PowerWireAction : BaseWireAction
                && cut == 0;
     }
 
-
-    private void SetNetworkBatteryPowered(EntityUid owner, bool pulsed, PowerNetworkBatteryComponent? battery)
-    {
-        if (battery == null)
-            return;
-
-        if (pulsed || AllWiresCut(owner))
-            battery.Enabled = false;
-        else if (WiresSystem.TryGetData<bool>(owner, PowerWireActionKey.Pulsed, out var isPulsed) && isPulsed)
-            return;
-        else
-            battery.Enabled = true;
-    }
-
-    private void SetPowerReceiverPowered(EntityUid owner, bool pulsed, ApcPowerReceiverComponent? receiver)
-    {
-        if (receiver == null)
-            return;
-
-        if (pulsed || AllWiresCut(owner))
-            receiver.PowerDisabled = true;
-        else if (WiresSystem.TryGetData<bool>(owner, PowerWireActionKey.Pulsed, out var isPulsed) && isPulsed)
-            return;
-        else
-            receiver.PowerDisabled = false;
-    }
-
     // I feel like these two should be within ApcPowerReceiverComponent at this point.
     // Getting it from a dictionary is significantly more expensive.
     private void SetPower(EntityUid owner, bool pulsed)
     {
-        if (EntityManager.TryGetComponent(owner, out PowerNetworkBatteryComponent? battery))
-            SetNetworkBatteryPowered(owner, pulsed, battery);
+        var receiverSys = EntityManager.System<PowerReceiverSystem>();
 
-        else if (!EntityManager.TryGetComponent(owner, out ApcPowerReceiverComponent? receiver))
-            SetPowerReceiverPowered(owner, pulsed, receiver);
+        if (EntityManager.TryGetComponent(owner, out PowerNetworkBatteryComponent? battery))
+            if (pulsed || AllWiresCut(owner))
+                receiverSys.SetPowerDisabled(owner, true, battery);
+            else if (WiresSystem.TryGetData<bool>(owner, PowerWireActionKey.Pulsed, out var isPulsed) && isPulsed)
+                return;
+            else
+                receiverSys.SetPowerDisabled(owner, false, battery);
+
+        else if (EntityManager.TryGetComponent(owner, out ApcPowerReceiverComponent? receiver))
+        {
+            if (pulsed || AllWiresCut(owner))
+                receiverSys.SetPowerDisabled(owner, true, receiver);
+            else if (WiresSystem.TryGetData<bool>(owner, PowerWireActionKey.Pulsed, out var isPulsed) && isPulsed)
+                return;
+            else
+                receiverSys.SetPowerDisabled(owner, false, receiver);
+        }
     }
 
     private void SetWireCuts(EntityUid owner, bool isCut)

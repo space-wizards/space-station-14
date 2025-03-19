@@ -102,9 +102,6 @@ public sealed class ApcSystem : EntitySystem
         if (!Resolve(uid, ref apc, ref battery))
             return;
 
-        if (battery.Enabled)
-            return;
-
         apc.MainBreakerEnabled = !apc.MainBreakerEnabled;
         battery.CanDischarge = apc.MainBreakerEnabled;
 

@@ -178,5 +178,17 @@ namespace Content.Server.Power.EntitySystems
             component = receiver;
             return true;
         }
+
+        public override bool ResolveNetworkBattery(EntityUid entity, [NotNullWhen(true)] ref SharedPowerNetworkBatteryComponent? component)
+        {
+            if (component != null)
+                return true;
+
+            if (!TryComp(entity, out PowerNetworkBatteryComponent? battery))
+                return false;
+
+            component = battery;
+            return true;
+        }
     }
 }

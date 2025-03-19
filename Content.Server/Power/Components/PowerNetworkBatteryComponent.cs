@@ -1,5 +1,6 @@
 ﻿using Content.Server.Power.Pow3r;
 using Content.Shared.Guidebook;
+using Content.Shared.Power.Components;
 
 namespace Content.Server.Power.Components
 {
@@ -11,7 +12,7 @@ namespace Content.Server.Power.Components
     ///     and battery storage should be handed off to components like <see cref="BatteryComponent"/>.
     /// </remarks>
     [RegisterComponent]
-    public sealed partial class PowerNetworkBatteryComponent : Component
+    public sealed partial class PowerNetworkBatteryComponent : SharedPowerNetworkBatteryComponent
     {
         [ViewVariables] public float LastSupply = 0f;
 
@@ -110,6 +111,13 @@ namespace Content.Server.Power.Components
         {
             get => NetworkBattery.Efficiency;
             set => NetworkBattery.Efficiency = value;
+        }
+
+        [DataField("powerDisabled")]
+        public override bool PowerDisabled
+        {
+            get => !NetworkBattery.Enabled;
+            set => NetworkBattery.Enabled = !value;
         }
 
         [ViewVariables]
