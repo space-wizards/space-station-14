@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": null,
+  "copyright": null,
+  "size": {
+    "x": 192,
+    "y": 144
+  },
+  "states": [
+    {
+      "name": "mammoth",
+      "directions": 4
+    },
+    {
+      "name": "mammoth_dead"
+    }
+  ]
+}

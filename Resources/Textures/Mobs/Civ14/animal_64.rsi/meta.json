@@ -1,0 +1,318 @@
+{
+  "version": 1,
+  "license": null,
+  "copyright": null,
+  "size": {
+    "x": 64,
+    "y": 64
+  },
+  "states": [
+    {
+      "name": "camel_dead"
+    },
+    {
+      "name": "pack_camel",
+      "directions": 4
+    },
+    {
+      "name": "wendigo",
+      "directions": 4
+    },
+    {
+      "name": "wendigo_Dead"
+    },
+    {
+      "name": "camel_riding",
+      "directions": 4
+    },
+    {
+      "name": "horse",
+      "directions": 4
+    },
+    {
+      "name": "horse_dead"
+    },
+    {
+      "name": "horse_riding",
+      "directions": 4
+    },
+    {
+      "name": "human_m_s",
+      "directions": 4
+    },
+    {
+      "name": "camel",
+      "directions": 4
+    },
+    {
+      "name": "troll",
+      "directions": 4
+    },
+    {
+      "name": "troll_dead",
+      "directions": 4
+    },
+    {
+      "name": "giantgroundsloth_living",
+      "directions": 4
+    },
+    {
+      "name": "giantgroundsloth_dead"
+    },
+    {
+      "name": "naturedragon",
+      "directions": 4
+    },
+    {
+      "name": "naturedragon_dead"
+    },
+    {
+      "name": "green_troll",
+      "directions": 4
+    },
+    {
+      "name": "green_troll_dead",
+      "directions": 4
+    },
+    {
+      "name": "buffalo_dead"
+    },
+    {
+      "name": "buffalo",
+      "directions": 4
+    },
+    {
+      "name": "sabertooth_white",
+      "directions": 4
+    },
+    {
+      "name": "sabertooth_white_dead"
+    },
+    {
+      "name": "sabertooth_brown",
+      "directions": 4
+    },
+    {
+      "name": "sabertooth_brown_dead"
+    },
+    {
+      "name": "cave_kingtroll",
+      "directions": 4
+    },
+    {
+      "name": "cave_kingtroll_dead",
+      "directions": 4
+    },
+    {
+      "name": "cave_troll",
+      "directions": 4
+    },
+    {
+      "name": "cave_troll_dead",
+      "directions": 4
+    },
+    {
+      "name": "cave_troll_horned",
+      "directions": 4
+    },
+    {
+      "name": "cave_troll_horned_dead",
+      "directions": 4
+    },
+    {
+      "name": "bisonbull",
+      "directions": 4
+    },
+    {
+      "name": "bison_cow",
+      "directions": 4
+    },
+    {
+      "name": "bison_calf",
+      "directions": 4
+    },
+    {
+      "name": "bisonbull_dead"
+    },
+    {
+      "name": "bison_cow_dead"
+    },
+    {
+      "name": "bison_calf_dead"
+    },
+    {
+      "name": "brownbear",
+      "directions": 4
+    },
+    {
+      "name": "greybear",
+      "directions": 4
+    },
+    {
+      "name": "blackbear",
+      "directions": 4
+    },
+    {
+      "name": "blondebear",
+      "directions": 4
+    },
+    {
+      "name": "polarbear",
+      "directions": 4
+    },
+    {
+      "name": "darkbrownbear",
+      "directions": 4
+    },
+    {
+      "name": "comradebear",
+      "directions": 4
+    },
+    {
+      "name": "aryanbear",
+      "directions": 4
+    },
+    {
+      "name": "Grauel",
+      "directions": 4
+    },
+    {
+      "name": "brownbear_dead"
+    },
+    {
+      "name": "greybear_dead"
+    },
+    {
+      "name": "blackbear_dead"
+    },
+    {
+      "name": "blondebear_dead"
+    },
+    {
+      "name": "polarbear_dead"
+    },
+    {
+      "name": "darkbrownbear_dead"
+    },
+    {
+      "name": "polarbear_cub",
+      "directions": 4
+    },
+    {
+      "name": "blackbear_cub",
+      "directions": 4
+    },
+    {
+      "name": "brownbear_cub",
+      "directions": 4
+    },
+    {
+      "name": "blackbear_gib",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "brownbear_gib",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "polarbear_gib",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "polarbear_cub_dead"
+    },
+    {
+      "name": "blackbear_cub_dead"
+    },
+    {
+      "name": "brownbear_cub_dead"
+    },
+    {
+      "name": "horse2",
+      "directions": 4
+    },
+    {
+      "name": "horse2_dead"
+    },
+    {
+      "name": "horse2_riding",
+      "directions": 4
+    },
+    {
+      "name": "horse3",
+      "directions": 4
+    },
+    {
+      "name": "horse3_dead"
+    },
+    {
+      "name": "horse3_riding",
+      "directions": 4
+    },
+    {
+      "name": "horse4",
+      "directions": 4
+    },
+    {
+      "name": "horse4_dead"
+    },
+    {
+      "name": "horse4_riding",
+      "directions": 4
+    }
+  ]
+}

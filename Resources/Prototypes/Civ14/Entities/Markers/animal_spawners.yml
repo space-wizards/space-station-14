@@ -1,0 +1,38 @@
+- type: entity
+  name: Bear Spawner
+  id: SpawnMobBear
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobBrownBear
+
+- type: entity
+  name: Wolf Spawner
+  id: SpawnMobGreyWolf
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobGreyWolf
+
+- type: entity
+  name: Sabertooth Spawner
+  id: SpawnMobSabertooth
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobSabertooth

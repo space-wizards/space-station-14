@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "license": null,
+  "copyright": null,
+  "size": {
+    "x": 96,
+    "y": 96
+  },
+  "states": [
+    {
+      "name": "horse",
+      "directions": 4
+    },
+    {
+      "name": "horse_dead"
+    },
+    {
+      "name": "horse_ridingX",
+      "directions": 4
+    },
+    {
+      "name": "horse_ridingX1",
+      "directions": 4
+    },
+    {
+      "name": "horse_riding",
+      "directions": 4
+    }
+  ]
+}

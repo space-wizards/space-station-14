@@ -1,0 +1,168 @@
+- type: entity
+  name: brown bear
+  parent:
+    - SimpleMobBase
+    - MobCombat
+  id: MobBrownBear
+  description: Do not poke.
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base"]
+          state: brownbear
+          sprite: Mobs/Civ14/animal.rsi
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape: !type:PhysShapeCircle
+            radius: 0.4
+          density: 150
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: Physics
+    - type: Butcherable
+      spawned:
+        - id: FoodMeat
+          amount: 4
+        - id: MaterialLeather
+          amount: 3
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: brownbear
+        Critical:
+          Base: brownbear_dead
+        Dead:
+          Base: brownbear_dead
+    - type: MeleeWeapon
+      damage:
+        types:
+          Blunt: 8
+          Slash: 12
+      animation: WeaponArcBite
+    - type: NPCRetaliation
+      attackMemoryLength: 10
+    - type: FactionException
+    - type: NpcFactionMember
+      factions:
+        - SimpleHostile
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+
+- type: entity
+  name: grey wolf
+  parent:
+    - SimpleMobBase
+    - MobCombat
+  id: MobGreyWolf
+  description: It's not a dog. IT'S NOT A DOG!
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base"]
+          state: greywolf
+          sprite: Mobs/Civ14/animal.rsi
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape: !type:PhysShapeCircle
+            radius: 0.3
+          density: 100
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: Physics
+    - type: Butcherable
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 3.25
+      baseSprintSpeed: 4.25
+      spawned:
+        - id: FoodMeat
+          amount: 2
+        - id: MaterialLeather
+          amount: 1
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: greywolf
+        Critical:
+          Base: greywolf_dead
+        Dead:
+          Base: greywolf_dead
+    - type: MeleeWeapon
+      damage:
+        types:
+          Slash: 15
+      animation: WeaponArcBite
+    - type: NPCRetaliation
+      attackMemoryLength: 10
+    - type: FactionException
+    - type: NpcFactionMember
+      factions:
+        - SimpleHostile
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+
+- type: entity
+  name: sabertooth tiger
+  parent:
+    - SimpleMobBase
+    - MobCombat
+  id: MobSabertooth
+  description: An ancient tiger with protuding fangs. Better stay clear.
+  components:
+    - type: Sprite
+      drawdepth: Mobs
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base"]
+          state: sabertoothcat_brown
+          sprite: Mobs/Civ14/animal_big.rsi
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape: !type:PhysShapeCircle
+            radius: 0.6
+          density: 200
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: Physics
+    - type: Butcherable
+      spawned:
+        - id: FoodMeat
+          amount: 3
+        - id: MaterialLeather
+          amount: 2
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 3.5
+      baseSprintSpeed: 4.5
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: sabertoothcat_brown
+        Critical:
+          Base: sabertooth_dead
+        Dead:
+          Base: sabertooth_dead
+    - type: MeleeWeapon
+      damage:
+        types:
+          Slash: 22
+      animation: WeaponArcBite
+    - type: NPCRetaliation
+      attackMemoryLength: 10
+    - type: FactionException
+    - type: NpcFactionMember
+      factions:
+        - SimpleHostile
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
