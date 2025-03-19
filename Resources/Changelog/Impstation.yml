@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: Air alarms can now override the pressure lockout functions of individual
-      air vents.
-    type: Add
-  id: 848
-  time: '2025-01-02T13:19:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1193
-- author: Darkmajia
-  changes:
   - message: Embedded projectiles no longer disappear along with the destroyed or
       eaten objects they're attached to.
     type: Fix
@@ -4102,3 +4094,14 @@
   id: 1347
   time: '2025-03-19T00:58:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2003
+- author: AftrLite
+  changes:
+  - message: Cosmic Cult is now officially in regular gamemode rotation!
+    type: Add
+  - message: Entropy is no longer itemized, and is now a cultist-innate resouruce.
+    type: Tweak
+  - message: Cosmic Cult 1.1.3r
+    type: Tweak
+  id: 1348
+  time: '2025-03-19T22:26:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2004
