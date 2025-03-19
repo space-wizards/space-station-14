@@ -4,8 +4,8 @@ meta:
   engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 03/02/2025 20:40:12
-  entityCount: 9679
+  time: 03/05/2025 09:01:26
+  entityCount: 9680
 maps: []
 grids:
 - 1668
@@ -5801,13 +5801,6 @@ entities:
     components:
     - type: Transform
       pos: -22.492147,-17.432499
-      parent: 1668
-- proto: AntimovCircuitBoard
-  entities:
-  - uid: 9629
-    components:
-    - type: Transform
-      pos: -38.4537,10.519212
       parent: 1668
 - proto: APCBasic
   entities:
@@ -20980,6 +20973,31 @@ entities:
     - type: Transform
       pos: -17.376116,11.607917
       parent: 1668
+- proto: CentcommComputerComms
+  entities:
+  - uid: 506
+    components:
+    - type: Transform
+      pos: -15.5,13.5
+      parent: 1668
+  - uid: 2820
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -38.5,12.5
+      parent: 1668
+  - uid: 2936
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -1.5,-2.5
+      parent: 1668
+  - uid: 6006
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -18.5,5.5
+      parent: 1668
 - proto: CentcomPDA
   entities:
   - uid: 22
@@ -23231,6 +23249,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -36.5,10.5
       parent: 1668
+  - uid: 9680
+    components:
+    - type: Transform
+      pos: 1.5,1.5
+      parent: 1668
 - proto: ComputerCargoBounty
   entities:
   - uid: 4021
@@ -23275,11 +23298,6 @@ entities:
         - CloningPodSender: CloningPodReceiver
 - proto: ComputerComms
   entities:
-  - uid: 2820
-    components:
-    - type: Transform
-      pos: -15.5,13.5
-      parent: 1668
   - uid: 2821
     components:
     - type: Transform
@@ -23291,12 +23309,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -43.5,-8.5
-      parent: 1668
-  - uid: 9615
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -38.5,12.5
       parent: 1668
 - proto: ComputerCriminalRecords
   entities:
@@ -26628,11 +26640,6 @@ entities:
       parent: 1668
 - proto: filingCabinetRandom
   entities:
-  - uid: 506
-    components:
-    - type: Transform
-      pos: -1.5,-2.5
-      parent: 1668
   - uid: 2082
     components:
     - type: Transform
@@ -26667,6 +26674,11 @@ entities:
     components:
     - type: Transform
       pos: -36.5,7.5
+      parent: 1668
+  - uid: 9629
+    components:
+    - type: Transform
+      pos: -2.5,1.5
       parent: 1668
 - proto: FireAxeCabinetFilled
   entities:
@@ -52953,11 +52965,6 @@ entities:
     - type: Transform
       pos: -18.5,6.5
       parent: 1668
-  - uid: 2936
-    components:
-    - type: Transform
-      pos: -18.5,5.5
-      parent: 1668
   - uid: 2937
     components:
     - type: Transform
@@ -60990,12 +60997,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -29.5,6.5
       parent: 1668
-  - uid: 6006
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -18.5,5.5
-      parent: 1668
   - uid: 6007
     components:
     - type: Transform
@@ -62346,6 +62347,12 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -35.5,13.5
+      parent: 1668
+  - uid: 9615
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -18.5,5.5
       parent: 1668
 - proto: Wirecutter
   entities:
