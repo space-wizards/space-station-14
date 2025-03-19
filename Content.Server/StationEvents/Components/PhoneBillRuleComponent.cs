@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Audio;
+﻿using Content.Server.StationEvents.Events;
+using Robust.Shared.Audio;
 
 namespace Content.Server.StationEvents.Components;
 
@@ -16,6 +17,11 @@ public sealed partial class PhoneBillRuleComponent : Component
     /// </summary>
     [DataField]
     public int Price = 0;
+
+    /// <summary>
+    ///     A list of PDAs and IDs on someone, keyed by that person.
+    /// </summary>
+    public Dictionary<EntityUid, List<EntityUid>> YoullPayForThis = new();
 
     /// <summary>
     ///     The sound that plays when the first announcement is sent.

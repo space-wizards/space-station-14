@@ -19,8 +19,6 @@ public sealed class PhoneBillRule : StationEventSystem<PhoneBillRuleComponent>
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
 
-    private Dictionary<EntityUid, List<EntityUid>> YoullPayForThis = new();
-
     protected override void Added(EntityUid uid, PhoneBillRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
         base.Added(uid, component, gameRule, args);
@@ -46,10 +44,10 @@ public sealed class PhoneBillRule : StationEventSystem<PhoneBillRuleComponent>
             {
                 if (PhoneBillable.Contains(container.Owner))
                 {
-                    if (!YoullPayForThis.TryGetValue(container.Owner, out var list))
+                    if (!component.YoullPayForThis.TryGetValue(container.Owner, out var list))
                     {
                         list = new();
-                        YoullPayForThis[container.Owner] = list;
+                        component.YoullPayForThis[container.Owner] = list;
                     }
                     list.Add(target);
                     break;
@@ -62,14 +60,14 @@ public sealed class PhoneBillRule : StationEventSystem<PhoneBillRuleComponent>
 
     protected override void Started(EntityUid uid, PhoneBillRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
-        if (YoullPayForThis.Count == 0)
+        if (component.YoullPayForThis.Count == 0)
             return; // Huh.
 
         int unpaid = 0;
-        foreach (var (forsaken, items) in YoullPayForThis)
+        foreach (var (forsaken, items) in component.YoullPayForThis)
         {
             bool tendered = false;
-            int required = component.Price * items.Count;
+            var required = component.Price * items.Count;
             foreach (var ransom in _inventorySystem.GetHandOrInventoryEntities(forsaken))
             {
                 if (HasComp(ransom, typeof(CashComponent))
@@ -105,7 +103,7 @@ public sealed class PhoneBillRule : StationEventSystem<PhoneBillRuleComponent>
         }
         else
         {
-            var unpaidPercent = (int)(100f * unpaid / YoullPayForThis.Count);
+            var unpaidPercent = (int)(100f * unpaid / component.YoullPayForThis.Count);
             ChatSystem.DispatchGlobalAnnouncement(Loc.GetString("station-event-phone-bill-unpaid-announcement", ("percent", unpaidPercent)), announcementSound: component.FailureSound, colorOverride: Color.Yellow);
         }
     }
