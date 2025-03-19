@@ -36,8 +36,8 @@
               prototype: APCElectronics
               amount: 1
           conditions:
-            - !type:WirePanel
-              open: true
+            - !type:WirePanel {}
+            - !type:AllWiresCut
           steps:
             - tool: Prying
               doAfter: 4
