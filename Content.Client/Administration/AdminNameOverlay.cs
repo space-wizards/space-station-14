@@ -21,6 +21,7 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly EntityLookupSystem _entityLookup;
     private readonly IUserInterfaceManager _userInterfaceManager;
     private readonly Font _font;
+    private readonly Font _fontBold;
     private bool _overlayClassic;
     private bool _overlaySymbols;
     private bool _overlayPlaytime;
@@ -49,6 +50,7 @@ internal sealed class AdminNameOverlay : Overlay
         ZIndex = 200;
         // Setting this to a specific font would break the antag symbols
         _font = resourceCache.NotoStack();
+        _fontBold = resourceCache.NotoStack(variation: "Bold");
 
         config.OnValueChanged(CCVars.AdminOverlayClassic, (show) => { _overlayClassic = show; }, true);
         config.OnValueChanged(CCVars.AdminOverlaySymbols, (show) => { _overlaySymbols = show; }, true);
@@ -117,20 +119,22 @@ internal sealed class AdminNameOverlay : Overlay
             }
 
             // Classic Antag Label
-            var symbol = _overlaySymbols ? playerInfo.RoleProto.Symbol : string.Empty;
             if (_overlayClassic && playerInfo.Antag)
             {
-                var label = symbol + _antagLabelClassic;
-                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, _antagColorClassic);
+                var symbol = _overlaySymbols ? Loc.GetString("player-tab-antag-prefix") : string.Empty;
+                var label = Loc.GetString("player-tab-character-name-antag-symbol", ("symbol", symbol), ("name",  _antagLabelClassic));
+                args.ScreenHandle.DrawString(_fontBold, screenCoordinates + currentOffset, label, uiScale, _antagColorClassic);
                 currentOffset += lineoffset;
             }
             // Role Type
             else if (!_overlayClassic && _filter.Contains(playerInfo.RoleProto))
             {
-                var label = symbol + Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
+                var symbol = _overlaySymbols && playerInfo.Antag ? playerInfo.RoleProto.Symbol : string.Empty;
+                var role = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
+                var label = Loc.GetString("player-tab-character-name-antag-symbol", ("symbol", symbol), ("name", role));
                 var color = playerInfo.RoleProto.Color;
 
-                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, color);
+                args.ScreenHandle.DrawString(_fontBold, screenCoordinates + currentOffset, label, uiScale, color);
                 currentOffset += lineoffset;
             }
         }
