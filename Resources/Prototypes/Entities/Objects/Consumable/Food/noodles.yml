@@ -59,8 +59,8 @@
   components:
   - type: Food
     trash:
-      - FoodPlateSmall
-      - FoodPlateSmall
+    - FoodPlateSmall
+    - FoodPlateSmall
   - type: FlavorProfile
     flavors:
       - copypasta
