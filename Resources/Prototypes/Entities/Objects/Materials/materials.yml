@@ -4,24 +4,23 @@
   id: MaterialBase
   description: A raw material.
   components:
-  - type: Sprite
-    sprite: Objects/Materials/materials.rsi
-  - type: Item
-    sprite: Objects/Materials/materials.rsi
-    size: Normal
-  - type: Tag
-    tags:
-      - RawMaterial
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+    - type: Sprite
+      sprite: Objects/Materials/materials.rsi
+    - type: Item
+      sprite: Objects/Materials/materials.rsi
+      size: Normal
+    - type: Tag
+      tags:
+        - RawMaterial
+    - type: Damageable
+      damageContainer: Inorganic
+    - type: Destructible
+      thresholds:
+        - trigger: !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
 
 - type: entity
   parent: MaterialBase
@@ -29,53 +28,53 @@
   name: cardboard
   suffix: Full
   components:
-  - type: Material
-  - type: PhysicalComposition
-    materialComposition:
-      Cardboard: 100
-  - type: Stack
-    stackType: Cardboard
-    baseLayer: base
-    layerStates:
-    - cardboard
-    - cardboard_2
-    - cardboard_3
-  - type: Sprite
-    state: cardboard_3
-    layers:
-    - state: cardboard_3
-      map: ["base"]
-  - type: Appearance
-  - type: Extractable
-    grindableSolutionName: cardboard
-  - type: SolutionContainerManager
-    solutions:
-      cardboard:
-        reagents:
-        - ReagentId: Cellulose
-          Quantity: 6
-  - type: Item
-    heldPrefix: cardboard
+    - type: Material
+    - type: PhysicalComposition
+      materialComposition:
+        Cardboard: 100
+    - type: Stack
+      stackType: Cardboard
+      baseLayer: base
+      layerStates:
+        - cardboard
+        - cardboard_2
+        - cardboard_3
+    - type: Sprite
+      state: cardboard_3
+      layers:
+        - state: cardboard_3
+          map: ["base"]
+    - type: Appearance
+    - type: Extractable
+      grindableSolutionName: cardboard
+    - type: SolutionContainerManager
+      solutions:
+        cardboard:
+          reagents:
+            - ReagentId: Cellulose
+              Quantity: 6
+    - type: Item
+      heldPrefix: cardboard
 
 - type: entity
   parent: MaterialCardboard
   id: MaterialCardboard10
   suffix: 10
   components:
-  - type: Sprite
-    state: cardboard
-  - type: Stack
-    count: 10
+    - type: Sprite
+      state: cardboard
+    - type: Stack
+      count: 10
 
 - type: entity
   parent: MaterialCardboard
   id: MaterialCardboard1
   suffix: Single
   components:
-  - type: Sprite
-    state: cardboard
-  - type: Stack
-    count: 1
+    - type: Sprite
+      state: cardboard
+    - type: Stack
+      count: 1
 
 - type: entity
   parent: MaterialBase
@@ -83,82 +82,82 @@
   name: cloth
   suffix: Full
   components:
-  - type: Healing
-    damageContainers:
-      - Biological
-    damage:
-      types:
-        Slash: -0.5
-        Piercing: -0.5
-    bloodlossModifier: -4
-    healingBeginSound:
-      path: "/Audio/Items/Medical/brutepack_begin.ogg"
-    healingEndSound:
-      path: "/Audio/Items/Medical/brutepack_end.ogg"
-  - type: Stack
-    stackType: Cloth
-    baseLayer: base
-    layerStates:
-    - cloth
-    - cloth_2
-    - cloth_3
-  - type: Material
-  - type: PhysicalComposition
-    materialComposition:
-      Cloth: 100
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Fiber
-        Quantity: 3
-  - type: Sprite
-    state: cloth_3
-    layers:
-    - state: cloth_3
-      map: ["base"]
-  - type: Appearance
-  - type: Food
-    requiresSpecialDigestion: true
-  - type: FlavorProfile
-    flavors:
-    - fiber
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
+    - type: Healing
+      damageContainers:
+        - Biological
+      damage:
+        types:
+          Slash: -0.5
+          Piercing: -0.5
+      bloodlossModifier: -4
+      healingBeginSound:
+        path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      healingEndSound:
+        path: "/Audio/Items/Medical/brutepack_end.ogg"
+    - type: Stack
+      stackType: Cloth
+      baseLayer: base
+      layerStates:
+        - cloth
+        - cloth_2
+        - cloth_3
+    - type: Material
+    - type: PhysicalComposition
+      materialComposition:
+        Cloth: 100
+    - type: Extractable
+      juiceSolution:
         reagents:
-        - ReagentId: Fiber
-          Quantity: 5
-  - type: Tag
-    tags:
-      - ClothMade
-      - Gauze
-      - RawMaterial
-  - type: Construction
-    graph: WebObjects # not sure if I should either keep this here or just make another prototype. Will keep it here just in case.
-    node: cloth
-  - type: Item
-    heldPrefix: cloth
+          - ReagentId: Fiber
+            Quantity: 3
+    - type: Sprite
+      state: cloth_3
+      layers:
+        - state: cloth_3
+          map: ["base"]
+    - type: Appearance
+    - type: Food
+      requiresSpecialDigestion: true
+    - type: FlavorProfile
+      flavors:
+        - fiber
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 5
+          reagents:
+            - ReagentId: Fiber
+              Quantity: 5
+    - type: Tag
+      tags:
+        - ClothMade
+        - Gauze
+        - RawMaterial
+    - type: Construction
+      graph: WebObjects # not sure if I should either keep this here or just make another prototype. Will keep it here just in case.
+      node: cloth
+    - type: Item
+      heldPrefix: cloth
 
 - type: entity
   parent: MaterialCloth
   id: MaterialCloth10
   suffix: 10
   components:
-  - type: Sprite
-    state: cloth
-  - type: Stack
-    count: 10
+    - type: Sprite
+      state: cloth
+    - type: Stack
+      count: 10
 
 - type: entity
   parent: MaterialCloth
   id: MaterialCloth1
   suffix: Single
   components:
-  - type: Sprite
-    state: cloth
-  - type: Stack
-    count: 1
+    - type: Sprite
+      state: cloth
+    - type: Stack
+      count: 1
 
 - type: entity
   parent: MaterialBase
@@ -166,58 +165,58 @@
   name: durathread
   suffix: Full
   components:
-  - type: Stack
-    stackType: Durathread
-    baseLayer: base
-    layerStates:
-    - durathread
-    - durathread_2
-    - durathread_3
-  - type: Material
-  - type: PhysicalComposition
-    materialComposition:
-      Durathread: 100
-  - type: Sprite
-    state: durathread_3
-    layers:
-    - state: durathread_3
-      map: ["base"]
-  - type: Appearance
-  - type: Construction
-    graph: Durathread
-    node: MaterialDurathread
-  - type: Food
-    requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 5
-  - type: Tag
-    tags:
-      - ClothMade
-      - RawMaterial
-  - type: Item
-    heldPrefix: durathread
+    - type: Stack
+      stackType: Durathread
+      baseLayer: base
+      layerStates:
+        - durathread
+        - durathread_2
+        - durathread_3
+    - type: Material
+    - type: PhysicalComposition
+      materialComposition:
+        Durathread: 100
+    - type: Sprite
+      state: durathread_3
+      layers:
+        - state: durathread_3
+          map: ["base"]
+    - type: Appearance
+    - type: Construction
+      graph: Durathread
+      node: MaterialDurathread
+    - type: Food
+      requiresSpecialDigestion: true
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 5
+          reagents:
+            - ReagentId: Fiber
+              Quantity: 5
+    - type: Tag
+      tags:
+        - ClothMade
+        - RawMaterial
+    - type: Item
+      heldPrefix: durathread
 
 - type: entity
   parent: MaterialDurathread
   id: MaterialDurathread1
   suffix: Single
   components:
-  - type: Sprite
-    state: durathread
-  - type: Stack
-    count: 1
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents: #Hell if I know what durathread is made out of.
-        - ReagentId: Fiber
-          Quantity: 6
+    - type: Sprite
+      state: durathread
+    - type: Stack
+      count: 1
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 5
+          reagents: #Hell if I know what durathread is made out of.
+            - ReagentId: Fiber
+              Quantity: 6
 
 - type: entity
   parent: MaterialBase
@@ -225,53 +224,53 @@
   name: wood
   suffix: Full
   components:
-  - type: Material
-  - type: PhysicalComposition
-    materialComposition:
-      Wood: 100
-  - type: Stack
-    stackType: WoodPlank
-    baseLayer: base
-    layerStates:
-    - wood
-    - wood_2
-    - wood_3
-  - type: Sprite
-    state: wood
-    layers:
-    - state: wood
-      map: ["base"]
-  - type: Appearance
-  - type: Item
-    heldPrefix: wood
-  - type: Tag
-    tags:
-    - Wooden
-    - RawMaterial
-  - type: Extractable
-    grindableSolutionName: wood
-  - type: SolutionContainerManager
-    solutions:
-      wood:
-        reagents:
-        - ReagentId: Cellulose
-          Quantity: 10
+    - type: Material
+    - type: PhysicalComposition
+      materialComposition:
+        Wood: 100
+    - type: Stack
+      stackType: WoodPlank
+      baseLayer: base
+      layerStates:
+        - wood
+        - wood_2
+        - wood_3
+    - type: Sprite
+      state: wood
+      layers:
+        - state: wood
+          map: ["base"]
+    - type: Appearance
+    - type: Item
+      heldPrefix: wood
+    - type: Tag
+      tags:
+        - Wooden
+        - RawMaterial
+    - type: Extractable
+      grindableSolutionName: wood
+    - type: SolutionContainerManager
+      solutions:
+        wood:
+          reagents:
+            - ReagentId: Cellulose
+              Quantity: 10
 
 - type: entity
   parent: MaterialWoodPlank
   id: MaterialWoodPlank10
   suffix: 10
   components:
-  - type: Stack
-    count: 10
+    - type: Stack
+      count: 10
 
 - type: entity
   parent: MaterialWoodPlank
   id: MaterialWoodPlank1
   suffix: Single
   components:
-  - type: Stack
-    count: 1
+    - type: Stack
+      count: 1
 
 - type: entity
   parent: MaterialBase
@@ -279,28 +278,28 @@
   name: biomass
   suffix: Full
   components:
-  - type: Material
-  - type: PhysicalComposition
-    materialComposition:
-      Biomass: 1
-  - type: Stack
-    stackType: Biomass
-    count: 100
-  - type: Sprite
-    sprite: /Textures/Objects/Misc/monkeycube.rsi
-    state: cube
-    color: "#8A9A5B"
-  - type: GuideHelp
-    guides:
-    - Cloning
+    - type: Material
+    - type: PhysicalComposition
+      materialComposition:
+        Biomass: 1
+    - type: Stack
+      stackType: Biomass
+      count: 100
+    - type: Sprite
+      sprite: /Textures/Objects/Misc/monkeycube.rsi
+      state: cube
+      color: "#8A9A5B"
+    - type: GuideHelp
+      guides:
+        - Cloning
 
 - type: entity
   parent: MaterialBiomass
   id: MaterialBiomass1
   suffix: Single
   components:
-  - type: Stack
-    count: 1
+    - type: Stack
+      count: 1
 
 # Following not used currently
 - type: entity
@@ -308,27 +307,27 @@
   id: MaterialHideBear
   name: bear hide
   components:
-  - type: Sprite
-    sprite: Objects/Materials/materials.rsi
-    layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: bearpelt
-    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-      state: bearpelt_glow
-      shader: unshaded
-  - type: Item
-    sprite: Clothing/Head/Misc/hides.rsi
-    heldPrefix: bear
-  - type: Clothing
-    sprite: Clothing/Head/Misc/hides.rsi
-    equippedPrefix: bear
-    slots:
-      - HEAD
-  - type: PointLight
-    radius: 1.2
-    energy: 1.5
-    color: "#4faffb"
-    slots:
+    - type: Sprite
+      sprite: Objects/Materials/materials.rsi
+      layers:
+        - map: ["enum.DamageStateVisualLayers.Base"]
+          state: bearpelt
+        - map: ["enum.DamageStateVisualLayers.BaseUnshaded"]
+          state: bearpelt_glow
+          shader: unshaded
+    - type: Item
+      sprite: Clothing/Head/Misc/hides.rsi
+      heldPrefix: bear
+    - type: Clothing
+      sprite: Clothing/Head/Misc/hides.rsi
+      equippedPrefix: bear
+      slots:
+        - HEAD
+    - type: PointLight
+      radius: 1.2
+      energy: 1.5
+      color: "#4faffb"
+      slots:
 
 - type: entity
   parent: MaterialBase
@@ -336,19 +335,19 @@
   name: corgi hide
   description: Luxury pelt used in only the most elite fashion. Rumors say this is found when a corgi is sent to the nice farm.
   components:
-  - type: Sprite
-    sprite: Objects/Materials/materials.rsi
-    state: corgihide
-  - type: Item
-    heldPrefix: corgihide
-  - type: Clothing
-    sprite: Clothing/Head/Misc/hides.rsi
-    equippedPrefix: corgi2
-    slots:
-    - HEAD
-  - type: Tag
-    tags:
-    - HideCorgi
+    - type: Sprite
+      sprite: Objects/Materials/materials.rsi
+      state: corgihide
+    - type: Item
+      heldPrefix: corgihide
+    - type: Clothing
+      sprite: Clothing/Head/Misc/hides.rsi
+      equippedPrefix: corgi2
+      slots:
+        - HEAD
+    - type: Tag
+      tags:
+        - HideCorgi
 
 - type: entity
   parent: MaterialBase
@@ -356,41 +355,41 @@
   name: refined diamond
   suffix: Full
   components:
-  - type: Stack
-    stackType: Diamond
-    baseLayer: base
-    layerStates:
-    - diamond
-    - diamond_2
-    - diamond_3
-  - type: Sprite
-    state: diamond
-    layers:
-    - state: diamond
-      map: ["base"]
-  - type: Appearance
-  - type: Item
-    heldPrefix: diamond
-  - type: Extractable
-    grindableSolutionName: diamond
-  - type: SolutionContainerManager
-    solutions:
-      diamond:
-        reagents:
-        - ReagentId: Carbon
-          Quantity: 20
-  - type: Material
-  - type: PhysicalComposition
-    materialComposition:
-      Diamond: 100
+    - type: Stack
+      stackType: Diamond
+      baseLayer: base
+      layerStates:
+        - diamond
+        - diamond_2
+        - diamond_3
+    - type: Sprite
+      state: diamond
+      layers:
+        - state: diamond
+          map: ["base"]
+    - type: Appearance
+    - type: Item
+      heldPrefix: diamond
+    - type: Extractable
+      grindableSolutionName: diamond
+    - type: SolutionContainerManager
+      solutions:
+        diamond:
+          reagents:
+            - ReagentId: Carbon
+              Quantity: 20
+    - type: Material
+    - type: PhysicalComposition
+      materialComposition:
+        Diamond: 100
 
 - type: entity
   parent: MaterialDiamond
   id: MaterialDiamond1
   suffix: Single
   components:
-  - type: Stack
-    count: 1
+    - type: Stack
+      count: 1
 
 - type: entity
   parent: MaterialBase
@@ -398,52 +397,52 @@
   name: cotton
   suffix: Full
   components:
-  - type: Stack
-    stackType: Cotton
-    baseLayer: base
-    layerStates:
-    - cotton
-    - cotton_2
-    - cotton_3
-  - type: Sprite
-    state: cotton_3
-    layers:
-    - state: cotton_3
-      map: ["base"]
-  - type: Appearance
-  - type: Food
-    requiresSpecialDigestion: true
-  - type: FlavorProfile
-    flavors:
-    - fiber
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
+    - type: Stack
+      stackType: Cotton
+      baseLayer: base
+      layerStates:
+        - cotton
+        - cotton_2
+        - cotton_3
+    - type: Sprite
+      state: cotton_3
+      layers:
+        - state: cotton_3
+          map: ["base"]
+    - type: Appearance
+    - type: Food
+      requiresSpecialDigestion: true
+    - type: FlavorProfile
+      flavors:
+        - fiber
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 5
+          reagents:
+            - ReagentId: Fiber
+              Quantity: 5
+    - type: Extractable
+      juiceSolution:
         reagents:
-        - ReagentId: Fiber
-          Quantity: 5
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Fiber
-        Quantity: 3
-  - type: Tag
-    tags:
-      - ClothMade
-      - RawMaterial
-  - type: Item
-    heldPrefix: cotton
+          - ReagentId: Fiber
+            Quantity: 3
+    - type: Tag
+      tags:
+        - ClothMade
+        - RawMaterial
+    - type: Item
+      heldPrefix: cotton
 
 - type: entity
   parent: MaterialCotton
   id: MaterialCotton1
   suffix: Single
   components:
-  - type: Sprite
-    state: cotton
-  - type: Stack
-    count: 1
+    - type: Sprite
+      state: cotton
+    - type: Stack
+      count: 1
 
 - type: entity
   parent: MaterialBase
@@ -451,53 +450,53 @@
   name: pyrotton
   suffix: Full
   components:
-  - type: Stack
-    stackType: Pyrotton
-    baseLayer: base
-    layerStates:
-    - pyrotton
-    - pyrotton_2
-    - pyrotton_3
-  - type: Sprite
-    state: pyrotton_3
-    layers:
-    - state: pyrotton_3
-      map: ["base"]
-  - type: Appearance
-  - type: Food
-    requiresSpecialDigestion: true
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 10
+    - type: Stack
+      stackType: Pyrotton
+      baseLayer: base
+      layerStates:
+        - pyrotton
+        - pyrotton_2
+        - pyrotton_3
+    - type: Sprite
+      state: pyrotton_3
+      layers:
+        - state: pyrotton_3
+          map: ["base"]
+    - type: Appearance
+    - type: Food
+      requiresSpecialDigestion: true
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 10
+          reagents:
+            - ReagentId: Fiber
+              Quantity: 5
+            - ReagentId: Phlogiston
+              Quantity: 5
+    - type: Extractable
+      juiceSolution:
         reagents:
-        - ReagentId: Fiber
-          Quantity: 5
-        - ReagentId: Phlogiston
-          Quantity: 5
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Fiber
-        Quantity: 3
-      - ReagentId: Phlogiston
-        Quantity: 3
-  - type: Tag
-    tags:
-      - ClothMade
-      - RawMaterial
-  - type: Item
-    heldPrefix: pyrotton
+          - ReagentId: Fiber
+            Quantity: 3
+          - ReagentId: Phlogiston
+            Quantity: 3
+    - type: Tag
+      tags:
+        - ClothMade
+        - RawMaterial
+    - type: Item
+      heldPrefix: pyrotton
 
 - type: entity
   parent: MaterialPyrotton
   id: MaterialPyrotton1
   suffix: Single
   components:
-  - type: Sprite
-    state: pyrotton
-  - type: Stack
-    count: 1
+    - type: Sprite
+      state: pyrotton
+    - type: Stack
+      count: 1
 
 - type: entity
   parent: MaterialBase
@@ -505,60 +504,60 @@
   name: bananium
   suffix: Full
   components:
-  - type: Material
-  - type: PhysicalComposition
-    materialComposition:
-      Bananium: 150
-  - type: Sprite
-    state: bananium_1
-    layers:
-    - state: bananium_1
-      map: ["base"]
-  - type: Stack
-    stackType: Bananium
-    count: 10
-    baseLayer: base
-    layerStates:
-      - bananium
-      - bananium_1
-  - type: FlavorProfile
-    flavors:
-      - banana
-  - type: Food
-    trash:
-    - TrashBananiumPeel
-  - type: BadFood
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 11
+    - type: Material
+    - type: PhysicalComposition
+      materialComposition:
+        Bananium: 150
+    - type: Sprite
+      state: bananium_1
+      layers:
+        - state: bananium_1
+          map: ["base"]
+    - type: Stack
+      stackType: Bananium
+      count: 10
+      baseLayer: base
+      layerStates:
+        - bananium
+        - bananium_1
+    - type: FlavorProfile
+      flavors:
+        - banana
+    - type: Food
+      trash:
+        - TrashBananiumPeel
+    - type: BadFood
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 11
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 4
+            - ReagentId: Vitamin
+              Quantity: 2
+            - ReagentId: Honk
+              Quantity: 5
+    - type: Extractable
+      juiceSolution:
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Vitamin
-          Quantity: 2
-        - ReagentId: Honk
-          Quantity: 5
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: JuiceBanana
-        Quantity: 5
-      - ReagentId: Honk
-        Quantity: 5
-  - type: Appearance
-  - type: Item
-    heldPrefix: bananium
+          - ReagentId: JuiceBanana
+            Quantity: 5
+          - ReagentId: Honk
+            Quantity: 5
+    - type: Appearance
+    - type: Item
+      heldPrefix: bananium
 
 - type: entity
   parent: MaterialBananium
   id: MaterialBananium1
   suffix: Single
   components:
-  - type: Sprite
-    state: bananium
-  - type: Stack
-    count: 1
+    - type: Sprite
+      state: bananium
+    - type: Stack
+      count: 1
 
 - type: entity
   parent: MaterialBase
@@ -567,57 +566,57 @@
   description: A webby material.
   suffix: Full
   components:
-  - type: PhysicalComposition
-    materialComposition:
-      WebSilk: 100
-  - type: Sprite
-    sprite: Objects/Materials/silk.rsi
-    state: icon
-  - type: Stack
-    count: 50
-    stackType: WebSilk
-  - type: Food
-    requiresSpecialDigestion: true
-  - type: FlavorProfile
-    flavors:
-      - cobwebs
-    ignoreReagents:
-      - Fiber
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: Fiber
-        Quantity: 3
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 3
+    - type: PhysicalComposition
+      materialComposition:
+        WebSilk: 100
+    - type: Sprite
+      sprite: Objects/Materials/silk.rsi
+      state: icon
+    - type: Stack
+      count: 50
+      stackType: WebSilk
+    - type: Food
+      requiresSpecialDigestion: true
+    - type: FlavorProfile
+      flavors:
+        - cobwebs
+      ignoreReagents:
+        - Fiber
+    - type: Extractable
+      juiceSolution:
         reagents:
-        - ReagentId: Fiber
-          Quantity: 3
-  - type: Tag
-    tags:
-      - ClothMade
-      - RawMaterial
-  - type: Item
-    sprite: Objects/Materials/silk.rsi
-    heldPrefix: silk
+          - ReagentId: Fiber
+            Quantity: 3
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 3
+          reagents:
+            - ReagentId: Fiber
+              Quantity: 3
+    - type: Tag
+      tags:
+        - ClothMade
+        - RawMaterial
+    - type: Item
+      sprite: Objects/Materials/silk.rsi
+      heldPrefix: silk
 
 - type: entity
   parent: MaterialWebSilk
   id: MaterialWebSilk25
   suffix: 25
   components:
-  - type: Stack
-    count: 25
+    - type: Stack
+      count: 25
 
 - type: entity
   parent: MaterialWebSilk
   id: MaterialWebSilk1
   suffix: 1
   components:
-  - type: Stack
-    count: 1
+    - type: Stack
+      count: 1
 
 - type: entity
   parent: MaterialBase
@@ -626,75 +625,75 @@
   description: Pretty small but plenty nasty. You like them best when they're not sinking into you.
   suffix: Full
   components:
-  - type: Sprite
-    sprite: Objects/Materials/Mob/carptooth.rsi
-    layers:
-    - state: tooth
-      map: [ "base" ]
-  - type: Item
-    sprite: Objects/Materials/Mob/carptooth.rsi
-    size: Normal
-  - type: Appearance
-  - type: Stack
-    stackType: SpaceCarpTooth
-    count: 30
-    baseLayer: base
-    layerStates:
-    - tooth
-    - tooth_2
-    - tooth_3
-  - type: StackPrice
-    price: 50
-  - type: Tag
-    tags:
-    - ToothSpaceCarp
+    - type: Sprite
+      sprite: Objects/Materials/Mob/carptooth.rsi
+      layers:
+        - state: tooth
+          map: ["base"]
+    - type: Item
+      sprite: Objects/Materials/Mob/carptooth.rsi
+      size: Normal
+    - type: Appearance
+    - type: Stack
+      stackType: SpaceCarpTooth
+      count: 30
+      baseLayer: base
+      layerStates:
+        - tooth
+        - tooth_2
+        - tooth_3
+    - type: StackPrice
+      price: 50
+    - type: Tag
+      tags:
+        - ToothSpaceCarp
 
 - type: entity
   parent: MaterialToothSpaceCarp
   id: MaterialToothSpaceCarp1
   suffix: 1
   components:
-  - type: Stack
-    count: 1
+    - type: Stack
+      count: 1
 
 - type: entity
-  parent: [ MaterialBase, BaseKnife ]
+  parent: [MaterialBase, BaseKnife]
   id: MaterialToothSharkminnow
   name: sharkminnow tooth
   description: Looks sharp. Sharp enough to poke someone's eye out. Holy fuck it's big.
   suffix: Full
   components:
-  - type: Sprite
-    sprite: Objects/Materials/Mob/sharktooth.rsi
-    layers:
-    - state: tooth
-      map: [ "base" ]
-  - type: Item
-    sprite: Objects/Materials/Mob/sharktooth.rsi
-    size: Normal
-  - type: Appearance
-  - type: Stack
-    stackType: SharkMinnowTooth
-    count: 30
-    baseLayer: base
-    layerStates:
-    - tooth
-    - tooth_2
-    - tooth_3
-  - type: StackPrice
-    price: 150
-  - type: Tag
-    tags:
-    - Knife
-    - ToothSharkminnow
+    - type: Sprite
+      sprite: Objects/Materials/Mob/sharktooth.rsi
+      layers:
+        - state: tooth
+          map: ["base"]
+    - type: Item
+      sprite: Objects/Materials/Mob/sharktooth.rsi
+      size: Normal
+    - type: Appearance
+    - type: Stack
+      stackType: SharkMinnowTooth
+      count: 30
+      baseLayer: base
+      layerStates:
+        - tooth
+        - tooth_2
+        - tooth_3
+    - type: StackPrice
+      price: 150
+    - type: Tag
+      tags:
+        - Knife
+        - ToothSharkminnow
 
 - type: entity
   parent: MaterialToothSharkminnow
   id: MaterialToothSharkminnow1
   suffix: 1
   components:
-  - type: Stack
-    count: 1
+    - type: Stack
+      count: 1
 
 - type: entity
   parent: MaterialBase
@@ -702,38 +701,38 @@
   name: bones
   suffix: Full
   components:
-  - type: Stack
-    stackType: Bones
-    baseLayer: base
-    layerStates:
-    - bones
-    - bones_2
-    - bones_3
-  - type: Sprite
-    state: cotton_3
-    layers:
-    - state: cotton_3
-      map: ["base"]
-  - type: Appearance
-  - type: Food
-  - type: BadFood
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 5
-        reagents:
-        - ReagentId: Vitamin
-          Quantity: 3
-  - type: Item
-    heldPrefix: bones
+    - type: Stack
+      stackType: Bones
+      baseLayer: base
+      layerStates:
+        - bones
+        - bones_2
+        - bones_3
+    - type: Sprite
+      state: cotton_3
+      layers:
+        - state: cotton_3
+          map: ["base"]
+    - type: Appearance
+    - type: Food
+    - type: BadFood
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 5
+          reagents:
+            - ReagentId: Vitamin
+              Quantity: 3
+    - type: Item
+      heldPrefix: bones
 
 - type: entity
   parent: MaterialBones
   id: MaterialBones1
   suffix: 1
   components:
-  - type: Stack
-    count: 1
+    - type: Stack
+      count: 1
 
 - type: entity
   parent: MaterialBase
@@ -741,18 +740,18 @@
   name: gunpowder
   description: An explosive compound.
   components:
-  - type: Stack
-    stackType: Gunpowder
-    count: 1
-  - type: Sprite
-    sprite: Objects/Misc/reagent_fillings.rsi
-    state: powderpile
-    color: darkgray
-  - type: PhysicalComposition
-    materialComposition:
-      Gunpowder: 100
-  - type: Item
-    size: Tiny
+    - type: Stack
+      stackType: Gunpowder
+      count: 1
+    - type: Sprite
+      sprite: Objects/Misc/reagent_fillings.rsi
+      state: powderpile
+      color: darkgray
+    - type: PhysicalComposition
+      materialComposition:
+        Gunpowder: 100
+    - type: Item
+      size: Tiny
 
 - type: entity
   parent: MaterialBase
@@ -761,34 +760,34 @@
   description: Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna.
   suffix: Full
   components:
-  - type: Sprite
-    sprite: Objects/Materials/hide.rsi
-    layers:
-    - state: goliath_hide
-      map: [ "base" ]
-  - type: StaticPrice
-    price: 0
-  - type: StackPrice
-    price: 1500
-  - type: Appearance
-  - type: Stack
-    stackType: GoliathHide
-    baseLayer: base
-    layerStates:
-    - goliath_hide
-    - goliath_hide_2
-    - goliath_hide_3
-  - type: Item
-    size: Large
-    heldPrefix: goliathhide
-    sprite: Objects/Materials/hide.rsi
-    shape:
-    - 0,0,2,2
+    - type: Sprite
+      sprite: Objects/Materials/hide.rsi
+      layers:
+        - state: goliath_hide
+          map: ["base"]
+    - type: StaticPrice
+      price: 0
+    - type: StackPrice
+      price: 1500
+    - type: Appearance
+    - type: Stack
+      stackType: GoliathHide
+      baseLayer: base
+      layerStates:
+        - goliath_hide
+        - goliath_hide_2
+        - goliath_hide_3
+    - type: Item
+      size: Large
+      heldPrefix: goliathhide
+      sprite: Objects/Materials/hide.rsi
+      shape:
+        - 0,0,2,2
 
 - type: entity
   parent: MaterialGoliathHide
   id: MaterialGoliathHide1
   suffix: 1
   components:
-  - type: Stack
-    count: 1
+    - type: Stack
+      count: 1

@@ -1,0 +1,27 @@
+- type: stack
+  id: Straw
+  name: straw
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: straw }
+  spawn: MaterialStraw1
+  maxCount: 30
+
+- type: stack
+  id: Leather
+  name: leather
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: leather }
+  spawn: MaterialLeather1
+  maxCount: 30
+
+- type: stack
+  id: Stone
+  name: stone
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: stone }
+  spawn: MaterialStone1
+  maxCount: 20
+
+- type: stack
+  id: Dirt
+  name: dirt
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: dirt_pile }
+  spawn: MaterialDirt1
+  maxCount: 20

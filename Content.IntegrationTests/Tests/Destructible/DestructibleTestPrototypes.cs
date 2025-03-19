@@ -23,6 +23,10 @@ namespace Content.IntegrationTests.Tests.Destructible
   name: damage-type-piercing
 
 - type: damageType
+  id: TestArrow
+  name: damage-type-arrow
+
+- type: damageType
   id: TestHeat
   name: damage-type-heat
 
