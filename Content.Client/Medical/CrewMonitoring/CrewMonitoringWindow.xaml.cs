@@ -79,10 +79,19 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
         NoServerLabel.Visible = false;
 
+        // Convert to a list with a single sensor status per crew member
+        var uniqueSensors = sensors
+            .GroupBy(s => s.OwnerUid)
+            .Select(allSensors =>
+                // Prioritise an entry with coords if it exists
+                allSensors.OrderByDescending(sensor => sensor.Coordinates != null).ThenBy(sensor => sensor.DamagePercentage != null).First()
+            )
+            .ToList();
+
         // Order sensor data
-        var orderedSensors = sensors.OrderBy(n => n.Name).OrderBy(j => j.Job);
+        var orderedSensors = uniqueSensors.OrderBy(n => n.Name).OrderBy(j => j.Job);
         var assignedSensors = new HashSet<SuitSensorStatus>();
-        var departments = sensors.SelectMany(d => d.JobDepartments).Distinct().OrderBy(n => n);
+        var departments = uniqueSensors.SelectMany(d => d.JobDepartments).Distinct().OrderBy(n => n);
 
         // Create department labels and populate lists
         foreach (var department in departments)
