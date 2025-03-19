@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: Zipper is more common
-    type: Tweak
-  id: 852
-  time: '2025-01-03T15:45:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1210
 - author: mqole
   changes:
   - message: he needs mouse bites to live
@@ -4099,3 +4092,12 @@
   id: 1351
   time: '2025-03-19T22:56:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2009
+- author: Darkmajia
+  changes:
+  - message: Embeddable items properly deal damage when thrown.
+    type: Fix
+  - message: Gibbing no longer deletes embedded items.
+    type: Fix
+  id: 1352
+  time: '2025-03-19T23:12:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2012
