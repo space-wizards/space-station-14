@@ -5,35 +5,22 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Threading;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Physics.Controllers;
 
 public abstract class SharedConveyorController : VirtualController
 {
-    /*
-     * Conveyors move entities directly rather than using velocity as we don't want to interfere with other sources
-     * of velocity, e.g. throwing, so we don't have to worry about tracking velocity sources every tick.
-     *
-     * This means we need a slim version of physics to handle this so the below handles:
-     * - Conveyor sleeping
-     * - Conveyor waking
-     */
-
-    [Dependency] private   readonly IGameTiming _timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] private   readonly IParallelManager _parallel = default!;
     [Dependency] private   readonly CollisionWakeSystem _wake = default!;
     [Dependency] protected readonly EntityLookupSystem Lookup = default!;
     [Dependency] private   readonly FixtureSystem _fixtures = default!;
-    [Dependency] private   readonly RayCastSystem _ray = default!;
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
     [Dependency] private   readonly SharedMoverController _mover = default!;
 
@@ -48,13 +35,6 @@ public abstract class SharedConveyorController : VirtualController
 
     protected HashSet<EntityUid> Intersecting = new();
 
-    private ValueList<EntityUid> _ents = new();
-
-    /// <summary>
-    /// How much a conveyed item needs to move in the desired direction to avoid sleeping.
-    /// </summary>
-    private const float DirectionAmount = 0.3f;
-
     public override void Initialize()
     {
         _job = new ConveyorJob(this);
@@ -65,13 +45,9 @@ public abstract class SharedConveyorController : VirtualController
 
         UpdatesAfter.Add(typeof(SharedMoverController));
 
-        SubscribeLocalEvent<ActiveConveyedComponent, TileFrictionEvent>(OnConveyedFriction);
-
-        SubscribeLocalEvent<ConveyedComponent, PhysicsWakeEvent>(OnConveyedWake);
-        SubscribeLocalEvent<ConveyedComponent, PhysicsSleepEvent>(OnConveyedSleep);
+        SubscribeLocalEvent<ConveyedComponent, TileFrictionEvent>(OnConveyedFriction);
         SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
         SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
-
 
         SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnConveyorStartCollide);
         SubscribeLocalEvent<ConveyorComponent, ComponentStartup>(OnConveyorStartup);
@@ -79,7 +55,7 @@ public abstract class SharedConveyorController : VirtualController
         base.Initialize();
     }
 
-    private void OnConveyedFriction(Entity<ActiveConveyedComponent> ent, ref TileFrictionEvent args)
+    private void OnConveyedFriction(Entity<ConveyedComponent> ent, ref TileFrictionEvent args)
     {
         // Conveyed entities don't get friction, they just get wishdir applied so will inherently slowdown anyway.
         args.Modifier = 0f;
@@ -88,24 +64,12 @@ public abstract class SharedConveyorController : VirtualController
     private void OnConveyedStartup(Entity<ConveyedComponent> ent, ref ComponentStartup args)
     {
         // We need waking / sleeping to work and don't want collisionwake interfering with us.
-        EnsureComp<ActiveConveyedComponent>(ent.Owner);
         _wake.SetEnabled(ent.Owner, false);
     }
 
     private void OnConveyedShutdown(Entity<ConveyedComponent> ent, ref ComponentShutdown args)
     {
-        RemCompDeferred<ActiveConveyedComponent>(ent.Owner);
         _wake.SetEnabled(ent.Owner, true);
-    }
-
-    private void OnConveyedWake(Entity<ConveyedComponent> ent, ref PhysicsWakeEvent args)
-    {
-        EnsureComp<ActiveConveyedComponent>(ent);
-    }
-
-    private void OnConveyedSleep(Entity<ConveyedComponent> ent, ref PhysicsSleepEvent args)
-    {
-        RemCompDeferred<ActiveConveyedComponent>(ent);
     }
 
     private void OnConveyorStartup(Entity<ConveyorComponent> ent, ref ComponentStartup args)
@@ -138,14 +102,13 @@ public abstract class SharedConveyorController : VirtualController
         }
     }
 
-    private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, ref StartCollideEvent args)
+    private void OnConveyorStartCollide(Entity<ConveyorComponent> conveyor, ref StartCollideEvent args)
     {
         var otherUid = args.OtherEntity;
 
         if (!args.OtherFixture.Hard || args.OtherBody.BodyType == BodyType.Static)
             return;
 
-        EnsureComp<ActiveConveyedComponent>(otherUid);
         EnsureComp<ConveyedComponent>(otherUid);
     }
 
@@ -153,14 +116,12 @@ public abstract class SharedConveyorController : VirtualController
     {
         base.UpdateBeforeSolve(prediction, frameTime);
 
-        _job.FrameTime = frameTime;
         _job.Prediction = prediction;
         _job.Conveyed.Clear();
-        _ents.Clear();
 
-        var query = EntityQueryEnumerator<ActiveConveyedComponent, ConveyedComponent, FixturesComponent, PhysicsComponent>();
+        var query = EntityQueryEnumerator<ConveyedComponent, FixturesComponent, PhysicsComponent>();
 
-        while (query.MoveNext(out var uid, out _, out var comp, out var fixtures, out var body))
+        while (query.MoveNext(out var uid, out var comp, out var fixtures, out var body))
         {
             _job.Conveyed.Add(((uid, comp, fixtures, body, Transform(uid)), Vector2.Zero, false));
         }
@@ -169,52 +130,51 @@ public abstract class SharedConveyorController : VirtualController
 
         foreach (var ent in _job.Conveyed)
         {
-            if (!ent.Direction.Equals(Vector2.Zero))
+            var physics = ent.Entity.Comp3;
+            var velocity = physics.LinearVelocity;
+            var targetDir = ent.Direction;
+
+            // If mob is moving with the conveyor then combine the directions.
+            var wishDir = _mover.GetWishDir(ent.Entity.Owner);
+
+            if (Vector2.Dot(wishDir, targetDir) > 0f)
             {
-                var physics = ent.Entity.Comp3;
-                var velocity = physics.LinearVelocity;
+                targetDir += wishDir;
+            }
 
-                // If mob is moving with the conveyor then combine the directions.
-                var targetDir = ent.Direction;
-                var wishDir = _mover.GetWishDir(ent.Entity.Owner);
-
-                if (Vector2.Dot(wishDir, targetDir) > 0f)
-                {
-                    targetDir += wishDir;
-                }
-
+            if (ent.Result)
+            {
                 SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
-
-                PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity);
             }
-
-            // Stop tracking conveying for whatever reason.
-            if (!ent.Result)
+            else
             {
-                _ents.Add(ent.Entity.Owner);
+                _mover.Friction(0f, frameTime: frameTime, friction: 50f, ref velocity);
             }
-        }
 
-        foreach (var ent in _ents)
-        {
-            RemComp<ActiveConveyedComponent>(ent);
-            RemComp<ConveyedComponent>(ent);
+            PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity);
+
+            if (!IsConveyed((ent.Entity.Owner, ent.Entity.Comp2)))
+            {
+                RemComp<ConveyedComponent>(ent.Entity.Owner);
+            }
         }
     }
 
     /// <summary>
     /// Gets the conveying direction for an entity.
     /// </summary>
-    /// <returns>False if we should no longer be considered conveyed</returns>
+    /// <returns>False if we should no longer be considered actively conveyed.</returns>
     private bool TryConvey(Entity<ConveyedComponent, FixturesComponent, PhysicsComponent, TransformComponent> entity,
         bool prediction,
-        float frameTime,
         out Vector2 direction)
     {
         direction = Vector2.Zero;
         var fixtures = entity.Comp2;
         var physics = entity.Comp3;
         var xform = entity.Comp4;
+
+        if (!physics.Awake)
+            return true;
 
         // Client moment
         if (!physics.Predict && prediction)
@@ -232,7 +192,7 @@ public abstract class SharedConveyorController : VirtualController
         Entity<ConveyorComponent> bestConveyor = default;
         var bestSpeed = 0f;
         var contacts = PhysicsSystem.GetContacts((entity.Owner, fixtures));
-        var worldPos = TransformSystem.GetWorldPosition(entity.Owner);
+        var transform = PhysicsSystem.GetPhysicsTransform(entity.Owner);
         var anyConveyors = false;
 
         while (contacts.MoveNext(out var contact))
@@ -243,14 +203,31 @@ public abstract class SharedConveyorController : VirtualController
             // Check if our center is over their fixture otherwise ignore it.
             var other = contact.OtherEnt(entity.Owner);
 
+            // Check for blocked, if so then we can't convey at all and just try to sleep
+            // Otherwise we may just keep pushing it into the wall
+            Transform? otherTransform;
+            if (contact.Hard)
+            {
+                otherTransform = PhysicsSystem.GetPhysicsTransform(other);
+                var aTransform = contact.EntityA == entity.Owner ? transform : otherTransform.Value;
+                var bTransform = contact.EntityB == entity.Owner ? transform : otherTransform.Value;
+                contact.GetWorldManifold(aTransform, bTransform, out var normal);
+
+                if (Vector2.Dot(bTransform.Position - aTransform.Position, normal) > 0f)
+                {
+                    return false;
+                }
+            }
+
             if (!_conveyorQuery.TryComp(other, out var conveyor))
                 continue;
 
             anyConveyors = true;
             var otherFixture = contact.OtherFixture(entity.Owner);
-            var otherWorldPos = PhysicsSystem.GetPhysicsTransform(other);
+            otherTransform = PhysicsSystem.GetPhysicsTransform(other);
 
-            if (!_fixtures.TestPoint(otherFixture.Item2.Shape, otherWorldPos, worldPos))
+            // Check if our center is over the conveyor, otherwise ignore it.
+            if (!_fixtures.TestPoint(otherFixture.Item2.Shape, otherTransform.Value, transform.Position))
                 continue;
 
             if (conveyor.Speed > bestSpeed && CanRun(conveyor))
@@ -262,7 +239,7 @@ public abstract class SharedConveyorController : VirtualController
 
         // If we have no touching contacts we shouldn't be using conveyed anyway so nuke it.
         if (!anyConveyors)
-            return false;
+            return true;
 
         if (bestSpeed == 0f || bestConveyor == default)
             return true;
@@ -279,70 +256,12 @@ public abstract class SharedConveyorController : VirtualController
         var conveyorDirection = conveyorRot.ToWorldVec();
         direction = conveyorDirection;
 
-        var itemRelative = conveyorPos - TransformSystem.GetWorldPosition(xform);
-
-        // TODO: Remove frametime from convey
-        direction = Convey(direction, bestSpeed, frameTime, itemRelative) / frameTime;
-
-        // Shapecast to the desired spot
-        var result = new RayResult();
-
-        foreach (var fixture in fixtures.Fixtures.Values)
-        {
-            if (!fixture.Hard)
-                continue;
-
-            var filter = new QueryFilter
-            {
-                LayerBits = fixture.CollisionLayer,
-                MaskBits = fixture.CollisionMask,
-                Flags = QueryFlags.Static,
-            };
-
-            var transform = PhysicsSystem.GetLocalPhysicsTransform(entity.Owner, xform);
-
-            foreach (var contact in fixture.Contacts.Values)
-            {
-                var normal = contact.Manifold.LocalNormal;
-
-                // If it's overlapping already and we're not conveying in that direction.
-                if (contact.IsTouching && contact.Hard && Vector2.Dot(conveyorDirection, normal) > DirectionAmount)
-                {
-                    direction = Vector2.Zero;
-                    return false;
-                }
-            }
-
-            _ray.CastShape(xform.GridUid.Value,
-                ref result,
-                fixture.Shape,
-                transform,
-                direction * frameTime,
-                filter,
-                RayCastSystem.RayCastClosestCallback);
-
-            if (result.Hit)
-            {
-                foreach (var (uid, localNormal, fraction) in result.Results)
-                {
-                    if (Vector2.Dot(conveyorDirection, localNormal) > DirectionAmount)
-                    {
-                        continue;
-                    }
-
-                    if (fraction < 1f)
-                    {
-                        // Can't go all the way so move partially and stop.
-                        direction *= fraction;
-                        return false;
-                    }
-                }
-            }
-        }
+        var itemRelative = conveyorPos - transform.Position;
+        direction = Convey(direction, bestSpeed, itemRelative);
 
         return true;
     }
-    private static Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelative)
+    private static Vector2 Convey(Vector2 direction, float speed, Vector2 itemRelative)
     {
         if (speed == 0 || direction.Length() == 0)
             return Vector2.Zero;
@@ -363,7 +282,7 @@ public abstract class SharedConveyorController : VirtualController
         if (r.Length() < 0.1)
         {
             var velocity = direction * speed;
-            return velocity * frameTime;
+            return velocity;
         }
         else
         {
@@ -371,7 +290,7 @@ public abstract class SharedConveyorController : VirtualController
             // to collidable objects (e.g. crates) on the locker from getting stuck
             // pushing each other when rounding a corner.
             var velocity = (r + direction*0.2f).Normalized() * speed;
-            return velocity * frameTime;
+            return velocity;
         }
     }
 
@@ -388,7 +307,6 @@ public abstract class SharedConveyorController : VirtualController
 
         public SharedConveyorController System;
 
-        public float FrameTime;
         public bool Prediction;
 
         public ConveyorJob(SharedConveyorController controller)
@@ -402,7 +320,7 @@ public abstract class SharedConveyorController : VirtualController
 
             var result = System.TryConvey(
                 (convey.Entity.Owner, convey.Entity.Comp1, convey.Entity.Comp2, convey.Entity.Comp3, convey.Entity.Comp4),
-                Prediction, FrameTime, out var direction);
+                Prediction, out var direction);
 
             Conveyed[index] = (convey.Entity, direction, result);
         }
