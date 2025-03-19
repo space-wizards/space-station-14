@@ -16,6 +16,7 @@
     - id: MassHallucinations
     - id: MimicVendorRule
     - id: MouseMigration
+    - id: PhoneBillEvent
     - id: PowerGridCheck
     - id: RandomSentience
     - id: SlimesSpawn
