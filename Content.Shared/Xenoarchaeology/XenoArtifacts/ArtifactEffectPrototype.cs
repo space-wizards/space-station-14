@@ -36,6 +36,12 @@ public sealed partial class ArtifactEffectPrototype : IPrototype
     [DataField("effectHint")]
     public string? EffectHint;
 
+    /// <summary>
+    /// Artifact types that can have this effect, leave blank for all
+    /// </summary>
+    [DataField("originWhitelist")]
+    public List<String>? OriginWhitelist;
+
     [DataField("whitelist")]
     public EntityWhitelist? Whitelist;
 

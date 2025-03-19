@@ -107,6 +107,8 @@
   id: TriggerBlood
   targetDepth: 1
   triggerHint: artifact-trigger-hint-blood
+  originWhitelist:
+    - Eldritch
   components:
   - type: Reactive
     groups:
@@ -126,7 +128,70 @@
     groups:
       Acidic: [ Touch ]
     reactions:
-    - reagents: [ Dylovene, Diphenhydramine, Arithrazine, Bicaridine, Dermaline, Dexalin, DexalinPlus, Tricordrazine, Leporazine, Bruizine, Lacerinol, Puncturase, Pyrazine, Insuzine, Kelotane, Hyronalin, Inaprovaline, Epinephrine ]
+    - reagents: [ Dylovene, Diphenhydramine, Arithrazine, Bicaridine, Dermaline, Dexalin, DexalinPlus, Tricordrazine, Leporazine, Bruizine, Lacerinol, Puncturase, Pyrazine, Insuzine, Kelotane, Hyronalin, Inaprovaline, Epinephrine, Omnizine, Barozine, Saline, Holywater ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerPyrotechnic
+  targetDepth: 4
+  triggerHint: artifact-trigger-hint-blood
+  originWhitelist:
+    - Wizard
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Thermite, Napalm, Phlogiston, ChlorineTrifluoride, FoamingAgent, Fluorosurfactant ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerElemental
+  targetDepth: 2
+  triggerHint: artifact-trigger-hint-blood
+  originWhitelist:
+    - Precursor
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Aluminium, Carbon, Chlorine, Copper, Fluorine, Gold, Hydrogen, Iodine, Iron, Lithium, Mercury, Potassium, Phosphorus, Radium, Silicon, Silver, Sulfur, Sodium, Uranium, Zinc, Lead ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerAcidic
+  triggerHint: artifact-trigger-hint-blood
+  originWhitelist:
+    - Martian
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ PolytrinicAcid, FerrochromicAcid, FluorosulfuricAcid, SulfuricAcid, NorepinephricAcid, AcidSpit, TranexamicAcid ]
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+
+- type: artifactTrigger
+  id: TriggerToxin
+  targetDepth: 3
+  triggerHint: artifact-trigger-hint-blood
+  originWhitelist:
+    - Martian
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [ Touch ]
+    reactions:
+    - reagents: [ Toxin, CarpoToxin, ChloralHydrate, GastroToxin, Mold, HeartbreakerToxin, Lexorin, Histamine, Amatoxin, VentCrud, Romerol, Bungotoxin, Vestine, Lipolicide, Mechanotoxin, Ipecac ]
       methods: [ Touch ]
       effects:
       - !type:ActivateArtifact

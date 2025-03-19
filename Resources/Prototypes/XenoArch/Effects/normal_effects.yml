@@ -104,16 +104,49 @@
   - type: LightFlickerArtifact
 
 - type: artifactEffect
-  id: EffectPointLight
+  id: EffectWizardLight #nice and slow RGB that covers a room
   targetDepth: 0
+  originWhitelist:
+    - Wizard
+  components:
+  - type: RgbLightController
+    cycleRate: 0.04
+  - type: PointLight
+    radius: 8
+    energy: 8
+  - type: TriggerArtifact
+  - type: FlashOnTrigger
+    range: 4
+
+- type: artifactEffect
+  id: EffectMartianLight #basically blinding purple
+  targetDepth: 0
+  originWhitelist:
+    - Martian
   components:
   - type: PointLight
     radius: 8
     energy: 10
-    color: "#daa3fd"
+    color: "#cd80ff"
   - type: TriggerArtifact
   - type: FlashOnTrigger
-    range: 8
+    range: 10
+
+- type: artifactEffect
+  id: EffectSiliconLight #normal room lighting
+  targetDepth: 0
+  originWhitelist:
+    - Silicon
+  triggerWhitelist:
+    - TriggerSiliconTouch
+  components:
+  - type: PointLight
+    radius: 10
+    energy: 8
+    color: "#6c798c"
+  - type: TriggerArtifact
+  - type: FlashOnTrigger
+    range: 6
 
 - type: artifactEffect #bornana
   id: EffectBananaSpawn

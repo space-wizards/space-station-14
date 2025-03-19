@@ -25,6 +25,12 @@ public sealed partial class ArtifactTriggerPrototype : IPrototype
     [DataField("triggerHint")]
     public string? TriggerHint;
 
+    /// <summary>
+    /// Artifact types that can have this trigger, leave blank for all
+    /// </summary>
+    [DataField("originWhitelist")]
+    public List<String>? OriginWhitelist;
+
     [DataField("whitelist")]
     public EntityWhitelist? Whitelist;
 

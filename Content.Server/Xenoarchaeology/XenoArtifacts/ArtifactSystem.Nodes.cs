@@ -83,7 +83,8 @@ public sealed partial class ArtifactSystem
     {
         var allTriggers = _prototype.EnumeratePrototypes<ArtifactTriggerPrototype>()
             .Where(x => _whitelistSystem.IsWhitelistPassOrNull(x.Whitelist, artifact) &&
-            _whitelistSystem.IsBlacklistFailOrNull(x.Blacklist, artifact)).ToList();
+            _whitelistSystem.IsBlacklistFailOrNull(x.Blacklist, artifact) &&
+            IsTriggerValid(EntityManager.GetComponent<ArtifactComponent>(artifact), x)).ToList();
         var validDepth = allTriggers.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);
@@ -98,7 +99,8 @@ public sealed partial class ArtifactSystem
     {
         var allEffects = _prototype.EnumeratePrototypes<ArtifactEffectPrototype>()
             .Where(x => _whitelistSystem.IsWhitelistPassOrNull(x.Whitelist, artifact) &&
-            _whitelistSystem.IsBlacklistFailOrNull(x.Blacklist, artifact)).ToList();
+            _whitelistSystem.IsBlacklistFailOrNull(x.Blacklist, artifact) &&
+            IsEffectValid(EntityManager.GetComponent<ArtifactComponent>(artifact), x)).ToList();
         var validDepth = allEffects.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);
@@ -240,5 +242,19 @@ public sealed partial class ArtifactSystem
     public ArtifactNode GetNodeFromId(int id, IEnumerable<ArtifactNode> nodes)
     {
         return nodes.First(x => x.Id == id);
+    }
+
+    private bool IsTriggerValid(ArtifactComponent artifact, ArtifactTriggerPrototype artiTrigger)
+    {
+        if (artiTrigger.OriginWhitelist != null && !artiTrigger.OriginWhitelist.Contains(artifact.ArtiType.ToString()))
+            return false;
+        return true;
+    }
+
+    private bool IsEffectValid(ArtifactComponent artifact, ArtifactEffectPrototype artiEffect)
+    {
+        if (artiEffect.OriginWhitelist != null && !artiEffect.OriginWhitelist.Contains(artifact.ArtiType.ToString()))
+            return false;
+        return true;
     }
 }
