@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Removed the chemmaster flatpack prestige item from the bartender's loadout.
-    type: Remove
-  - message: Chemmasters and chemmaster machine boards have been added to the bar
-      across a number of stations.
-    type: Add
-  id: 846
-  time: '2025-01-02T11:50:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1163
 - author: ultramario1998
   changes:
   - message: Admins now have a new toy!
@@ -4102,3 +4092,12 @@
   id: 1345
   time: '2025-03-18T23:44:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2006
+- author: Sha-Seng
+  changes:
+  - message: Barbel markings for thaven from Delta-V
+    type: Add
+  - message: +1 Head Top marking budget for thaven
+    type: Add
+  id: 1346
+  time: '2025-03-19T00:46:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1989
