@@ -1,0 +1,91 @@
+* EXAMPLE TITLE
+"short description"
+* feature type:
+details: ( type of role, item stats, etc )
+* status: (unstarted, started, unfinished, finished)
+( * = required )
+
+RESPRITE TOOLS, MEDKITS, COMMON ITEMS
+"4 tones, 10 value cent difference, establish artstyle"
+feature type: sprites
+status: unstarted
+
+SUPER OBJECTIVE
+"the universal objective: the ultimate sandwich"
+feature type: Antag (and crew?) objective
+details: needs sprite, objective conditions, mapped
+status: unstarted
+
+NT ASSASSIN
+"Anti-espionage measures. Spawns during the midround ninja event to kill them"
+feature type: midround free agent
+details: Objectives- kill (or arrest) the ninja at all costs, loses if the ninja completes all its objectives
+status: unstarted
+
+NATIONAL TRAGEDY DRINK
+" (1) B52, (1) Manhattan = (2) redacted drink"
+feature type: drink
+status: unstarted
+
+ASCENSION CULTIST
+"Do enough rituals and a final self sacrafice to summon an eldrich horror"
+feature type: roundstart antag
+status: unstarted
+
+CLOWN ADJUSTMENTS
+"lock it behind 100 hours, naturally slips everyone"
+feature type: systematic change
+status: unstarted
+
+PIRATES
+"make as much money as possible, killing people costs money"
+feature type: major team-based gamemode
+details: a certain ratio (TBD) of players spawn on a pirate shuttle, armed with high firepower and weak armor, are instructed to make as much money as possible. The pirate captain would get a choice in some sort of uplink.
+status: unstarted
+
+VISUAL ALERTS FOR BLIND
+feature type: trait
+details: decrease effective vision range, but sounds outside of the range are illuminated visually
+status: unstarted
+
+SYNDICATE SUBMARINE CREW
+"gain intell, get out"
+feature type: Major team-based gamemode
+details: a certain ratio (TBD) of players spawn on a hidden syndicate submarine, without externals. Not sure what the objective would be, but being discovered would be defeat.
+status: unstarted
+
+MOLE MAN
+"a blind vent dweller that steals shinies"
+feature type: solo midround free agent
+details: primary objective- get as much gold as possible, basically a solo pirate without weapons
+status: unstarted
+
+GELATINOUS CUBE
+"absorbs mass for utility"
+feature type: solo midround antag
+details: absorb walls and items to gain abilities, leaving a slime trail that does damage. Primary objective- hit a certain mass, then do something, idk
+status: unstarted
+
+MEDUSA
+"defend something, freeze your enemies"
+feature type: team based role
+details: spawn around something (TBD) and defend it, with a powerful ability that freezes anyone in Line of Sight for (TBD) ammount of time. Medusas do extra damage to frozen targets
+status: unstarted
+
+ANTI-RAIDING COUNTERMEASURE (?)
+"turns anyone who says a slur into bread automatically"
+feature type: administration
+details: somehow make slurs a voice command that turns the user into bread. Ideally automatically logs an admin note, too.
+status: unstarted
+
+GUARDIAN ANGEL
+"anti revenant ghost"
+feature type: midround ghostrole familiar
+details: primary objective- keep your host alive. Tools given to the guardian angel will help the host in various, small ways. Things like a slight naturally healing boost for (TBD) ammount of time, or slipping enemies by using points that regenerate. The familiar dies if the host dies
+status: unstarted
+
+TIDERVISION GOGGLES 
+"do you believe in insuls?"
+feature type: equipment
+details: a visor that does SOMETHING like pyrovision goggles. (TBD)
+status: unstarted
