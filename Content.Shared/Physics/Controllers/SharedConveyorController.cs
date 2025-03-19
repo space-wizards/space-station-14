@@ -38,10 +38,77 @@ public abstract class SharedConveyorController : VirtualController
 
         UpdatesAfter.Add(typeof(SharedMoverController));
 
+        SubscribeLocalEvent<ActiveConveyedComponent, TileFrictionEvent>(OnConveyedFriction);
+
+        SubscribeLocalEvent<ConveyedComponent, PhysicsWakeEvent>(OnConveyedWake);
+        SubscribeLocalEvent<ConveyedComponent, PhysicsSleepEvent>(OnConveyedSleep);
+        SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
+        SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
+
+
         SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnConveyorStartCollide);
         SubscribeLocalEvent<ConveyorComponent, EndCollideEvent>(OnConveyorEndCollide);
 
         base.Initialize();
+    }
+
+    private void OnConveyedFriction(Entity<ActiveConveyedComponent> ent, ref TileFrictionEvent args)
+    {
+        // Conveyed entities don't get friction, they just get wishdir applied so will inherently slowdown anyway.
+        args.Modifier = 0f;
+    }
+
+    private void OnConveyedStartup(Entity<ConveyedComponent> ent, ref ComponentStartup args)
+    {
+        // We need waking / sleeping to work and don't want collisionwake interfering with us.
+        EnsureComp<ActiveConveyedComponent>(ent.Owner);
+        _wake.SetEnabled(ent.Owner, false);
+    }
+
+    private void OnConveyedShutdown(Entity<ConveyedComponent> ent, ref ComponentShutdown args)
+    {
+        RemCompDeferred<ActiveConveyedComponent>(ent.Owner);
+        _wake.SetEnabled(ent.Owner, true);
+    }
+
+    private void OnConveyedWake(Entity<ConveyedComponent> ent, ref PhysicsWakeEvent args)
+    {
+        EnsureComp<ActiveConveyedComponent>(ent);
+    }
+
+    private void OnConveyedSleep(Entity<ConveyedComponent> ent, ref PhysicsSleepEvent args)
+    {
+        RemCompDeferred<ActiveConveyedComponent>(ent);
+    }
+
+    private void OnConveyorStartup(Entity<ConveyorComponent> ent, ref ComponentStartup args)
+    {
+        AwakenConveyor(ent.Owner);
+    }
+
+    /// <summary>
+    /// Forcefully awakens all entities near the conveyor.
+    /// </summary>
+    protected virtual void AwakenConveyor(Entity<TransformComponent?> ent)
+    {
+    }
+
+    /// <summary>
+    /// Wakes all conveyed entities contacting this conveyor.
+    /// </summary>
+    protected void WakeConveyed(EntityUid conveyorUid)
+    {
+        var contacts = PhysicsSystem.GetContacts(conveyorUid);
+
+        while (contacts.MoveNext(out var contact))
+        {
+            var other = contact.OtherEnt(conveyorUid);
+
+            if (_conveyedQuery.HasComp(other))
+            {
+                PhysicsSystem.WakeBody(other);
+            }
+        }
     }
 
     private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, ref StartCollideEvent args)
@@ -83,7 +150,27 @@ public abstract class SharedConveyorController : VirtualController
             if (TryConvey((uid, comp, physics, xform), prediction, frameTime))
                 continue;
 
-            _ents.Add(uid);
+            // Not conveying anywhere.
+            if (ent.Direction.Equals(Vector2.Zero))
+            {
+                continue;
+            }
+
+            var physics = ent.Entity.Comp3;
+            var velocity = physics.LinearVelocity;
+
+            // If mob is moving with the conveyor then combine the directions.
+            var targetDir = ent.Direction;
+            var wishDir = _mover.GetWishDir(ent.Entity.Owner);
+
+            if (Vector2.Dot(wishDir, targetDir) > 0f)
+            {
+                targetDir += wishDir;
+            }
+
+            SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
+
+            PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity);
         }
 
         foreach (var ent in _ents)
@@ -144,9 +231,8 @@ public abstract class SharedConveyorController : VirtualController
             return true;
 
         var comp = bestConveyor.Comp!;
-        var conveyorXform = _xformQuery.GetComponent(bestConveyor.Owner);
-        var conveyorPos = conveyorXform.LocalPosition;
-        var conveyorRot = conveyorXform.LocalRotation;
+        var conveyorXform = XformQuery.GetComponent(bestConveyor.Owner);
+        var (conveyorPos, conveyorRot) = TransformSystem.GetWorldPositionRotation(conveyorXform);
 
         conveyorRot += bestConveyor.Comp!.Angle;
 
@@ -155,16 +241,65 @@ public abstract class SharedConveyorController : VirtualController
 
         var direction = conveyorRot.ToWorldVec();
 
-        var localPos = xform.LocalPosition;
-        var itemRelative = conveyorPos - localPos;
+        var itemRelative = conveyorPos - TransformSystem.GetWorldPosition(xform);
 
-        localPos += Convey(direction, bestSpeed, frameTime, itemRelative);
+        // TODO: Remove frametime from convey
+        direction = Convey(direction, bestSpeed, frameTime, itemRelative) / frameTime;
 
         TransformSystem.SetLocalPosition(entity, localPos, xform);
 
-        // Force it awake for collisionwake reasons.
-        Physics.SetAwake((entity, physics), true);
-        Physics.SetSleepTime(physics, 0f);
+        foreach (var fixture in fixtures.Fixtures.Values)
+        {
+            if (!fixture.Hard)
+                continue;
+
+            var filter = new QueryFilter
+            {
+                LayerBits = fixture.CollisionLayer,
+                MaskBits = fixture.CollisionMask,
+                Flags = QueryFlags.Static,
+            };
+
+            var transform = PhysicsSystem.GetLocalPhysicsTransform(entity.Owner, xform);
+
+            foreach (var contact in fixture.Contacts.Values)
+            {
+                var normal = contact.Manifold.LocalNormal;
+
+                // If it's overlapping already and we're not conveying in that direction.
+                if (contact.IsTouching && contact.Hard && Vector2.Dot(conveyorDirection, normal) > DirectionAmount)
+                {
+                    direction = Vector2.Zero;
+                    return true;
+                }
+            }
+
+            _ray.CastShape(xform.GridUid.Value,
+                ref result,
+                fixture.Shape,
+                transform,
+                direction * frameTime,
+                filter,
+                RayCastSystem.RayCastClosestCallback);
+
+            if (result.Hit)
+            {
+                foreach (var (uid, localNormal, fraction) in result.Results)
+                {
+                    if (Vector2.Dot(conveyorDirection, localNormal) > DirectionAmount)
+                    {
+                        continue;
+                    }
+
+                    if (fraction < 1f)
+                    {
+                        // Can't go all the way so move partially and stop.
+                        direction *= fraction;
+                        return true;
+                    }
+                }
+            }
+        }
 
         return true;
     }
