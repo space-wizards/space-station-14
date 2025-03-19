@@ -27,7 +27,6 @@ public abstract class SharedConveyorController : VirtualController
      * - Conveyor waking
      */
 
-    [Dependency] private   readonly IGameTiming _timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] private   readonly IParallelManager _parallel = default!;
     [Dependency] private   readonly CollisionWakeSystem _wake = default!;
@@ -186,7 +185,6 @@ public abstract class SharedConveyorController : VirtualController
 
         foreach (var ent in _ents)
         {
-            RemComp<ActiveConveyedComponent>(ent);
             RemComp<ConveyedComponent>(ent);
         }
     }
