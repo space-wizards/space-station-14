@@ -106,16 +106,6 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
             AddComp(uid, lightBehaviour);
         }
 
-        if (!proto.TryGetComponent(out HandheldLightComponent? handheldLight, _factory)) RemComp<HandheldLightComponent>(uid);
-        else
-        {
-            if (HasComp<HandheldLightComponent>(uid))
-                RemComp<HandheldLightComponent>(uid);
-
-            AddComp(uid, handheldLight);
-            Dirty(uid, handheldLight);
-        }
-
         if (!proto.TryGetComponent(out BatteryComponent? battery, _factory)) RemComp<BatteryComponent>(uid);
         else
         {
@@ -123,6 +113,15 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
                 RemComp<BatteryComponent>(uid);
 
             AddComp(uid, battery);
+        }
+
+        if (!proto.TryGetComponent(out BatterySelfRechargerComponent? batterySelfRecharger, _factory)) RemComp<BatterySelfRechargerComponent>(uid);
+        else
+        {
+            if (HasComp<BatterySelfRechargerComponent>(uid))
+                RemComp<BatterySelfRechargerComponent>(uid);
+
+            AddComp(uid, batterySelfRecharger);
         }
 
         if (!proto.TryGetComponent(out AutoRechargeComponent? autoRecharge, _factory)) RemComp<AutoRechargeComponent>(uid);

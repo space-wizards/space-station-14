@@ -5,6 +5,8 @@ using Content.Shared.Contraband;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.Light;
+using Content.Shared.Light.Components;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
@@ -17,6 +19,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ClothingSystem _clothingSystem = default!;
     [Dependency] private readonly ContrabandSystem _contraband = default!;
+    [Dependency] private readonly SharedHandheldLightSystem _handheldLight = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -96,6 +99,19 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             }
         }
 
+        RemComp<HandheldLightComponent>(uid);
+        // add handheld lights
+        if (proto.TryGetComponent("HandheldLight", out HandheldLightComponent? handheldLight))
+        {
+            EnsureComp<HandheldLightComponent>(uid, out var current);
+            EnsureComp<AppearanceComponent>(uid, out var currentAppearance);
+            _handheldLight.CopyDetails(uid, handheldLight, current);
+            _handheldLight.UpdateVisuals(uid, current, currentAppearance);
+            Dirty(uid, current);
+
+            if (appearance != null)
+                Dirty(uid, appearance);
+        }
 
         // properly mark contraband
         if (proto.TryGetComponent("Contraband", out ContrabandComponent? contra))
