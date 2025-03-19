@@ -34,6 +34,19 @@ namespace Content.Server.Farming
             var user = args.User;
             var clickLocation = args.ClickLocation;
 
+            // Grass tiles that can be turned into dirt tiles
+            var grassTiles = new HashSet<string>
+            {
+                "FloorGrass",
+                "FloorGrassJungle",
+                "FloorGrassDark",
+                "FloorGrassLight",
+                "FloorAstroGrass",
+                "FloorPlanetGrass",
+                "FloorJungleAstroGrass",
+                "FloorMowedAstroGrass"
+            };
+
             // Get clicked grid
             var gridUid = _transform.GetGrid(args.ClickLocation);
             if (!gridUid.HasValue || !TryComp<MapGridComponent>(gridUid.Value, out var grid))
@@ -66,7 +79,7 @@ namespace Content.Server.Farming
                 }
             }
             // Clear grass, turning into floor dirt
-            else if (tileDef.ID == "FloorGrass" || tileDef.ID == "FloorGrassJungle" || tileDef.ID == "FloorGrassDark" || tileDef.ID == "FloorGrassLight")
+            else if (grassTiles.Contains(tileDef.ID))
             {
                 // Transform grass tile to FloorDirt
                 var dirtTile = _tileManager["FloorDirt"];
