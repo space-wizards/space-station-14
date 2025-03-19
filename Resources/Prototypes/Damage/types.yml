@@ -7,7 +7,6 @@
   armorCoefficientPrice: 5
   armorFlatPrice: 50
 
-
 # Damage representing not having enough blood.
 # Represents there not enough blood to supply oxygen (or equivalent).
 - type: damageType
@@ -52,6 +51,12 @@
   armorCoefficientPrice: 2
   armorFlatPrice: 10
 
+- type: damageType
+  id: Arrow
+  name: damage-type-arrow
+  armorCoefficientPrice: 2
+  armorFlatPrice: 10
+
 # Poison damage. Generally caused by various reagents being metabolised.
 - type: damageType
   id: Poison
@@ -91,4 +96,3 @@
   name: damage-type-holy
   armorCoefficientPrice: 1
   armorFlatPrice: 1
-

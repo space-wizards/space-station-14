@@ -360,7 +360,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             _audio.PlayGlobal(announcementSound?.ToString() ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
         }
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"World Announcement from {sender}: {message}");
     }
 
     /// <summary>
@@ -401,7 +401,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             _audio.PlayGlobal(announcementSound?.ToString() ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
         }
 
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"World Announcement on {station} from {sender}: {message}");
     }
 
     #endregion

@@ -179,6 +179,10 @@ namespace Content.Tests.Shared
   name: damage-type-piercing
 
 - type: damageType
+  id: TestArrow
+  name: damage-type-arrow
+
+- type: damageType
   id: Heat
   name: damage-type-heat
 
