@@ -210,31 +210,31 @@ What I currently have left:
 
 ==
 Things to fix:
--Arrivals going to wrong dock
+/* -Arrivals going to wrong dock */
 /* -Lights around command table */
-Station beacons:
-	Cafeteria
-	Shields
+/* Station beacons: */
+	/* Cafeteria */
+	/* Shields */
 	/* Captain (double) */
-	Execution, Airlock
-	Storage
-	Electrical
+	/* Execution, Airlock */
+	/* Storage */
+	/* Electrical */
 	/* Brig (double) */
-	Evac Medbay
-	Medbay
-	Restaurant
+	/* Evac Medbay */
+	/* Medbay */
+	/* Restaurant */
 	/* Service Docking Arm (double) */
-	High-sec brig
-	Reactor
-	Nuke Chamber
+	/* High-sec brig */
+	/* Reactor */
+	/* Nuke Chamber */
 	/* AI Dock (says "General") */
-	Both Lawyers
+	/* Both Lawyers */
 	/* Chem (double) */
-	Sec: labels too crowded
+	/* Sec: labels too crowded */
 	/* Execution: Labels too long */
 	/* Nuke chamber: Label too long */
 	/* Cryopod + Surgery: Move one above */
-	Wait, a bunch of these just turned on...? Maybe a power issue.
+	/* Wait, a bunch of these just turned on...? Maybe a power issue. */
 Air sensors: Cafeteria? Meeting? Chapel + Def? Library + News? Botany + Kitchen? TEG? AI Dock?
 	Little compartments like: High-sec brig desk, cams at sec, interrogation room cell...
 	Also high-sec brigs antechamber, armory front section
