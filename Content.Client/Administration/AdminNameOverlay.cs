@@ -117,7 +117,7 @@ internal sealed class AdminNameOverlay : Overlay
             }
 
             // Classic Antag Label
-            var symbol = _overlaySymbols && playerInfo.Antag ? Loc.GetString(playerInfo.RoleProto.Symbol) + " " : string.Empty;
+            var symbol = _overlaySymbols ? playerInfo.RoleProto.Symbol : string.Empty;
             if (_overlayClassic && playerInfo.Antag)
             {
                 var label = symbol + _antagLabelClassic;
@@ -125,7 +125,7 @@ internal sealed class AdminNameOverlay : Overlay
                 currentOffset += lineoffset;
             }
             // Role Type
-            else if (!_overlayClassic && _filter.Contains(playerInfo.RoleProto)) // Should this also just check Antag? But that would not show Harmless Free Agents
+            else if (!_overlayClassic && _filter.Contains(playerInfo.RoleProto))
             {
                 var label = symbol + Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
                 var color = playerInfo.RoleProto.Color;

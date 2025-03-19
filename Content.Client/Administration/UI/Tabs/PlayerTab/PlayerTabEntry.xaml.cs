@@ -22,11 +22,10 @@ public sealed partial class PlayerTabEntry : PanelContainer
         if (!player.Connected)
             UsernameLabel.StyleClasses.Add("Disabled");
         JobLabel.Text = player.StartingJob;
-        var separateSymbols = config.GetCVar(CCVars.AdminPlayerlistSeparateSymbols);
-        var genericAntagSymbol = player.Antag ? Loc.GetString("generic-antag-symbol") : string.Empty;
-        var roleSymbol = player.Antag ? Loc.GetString(player.RoleProto.Symbol) : string.Empty;
-        var symbol = separateSymbols ? roleSymbol : genericAntagSymbol;
-        CharacterLabel.Text = Loc.GetString("player-tab-character-name-antag", ("symbol", symbol), ("name", player.CharacterName));
+        var separateAntagSymbols = config.GetCVar(CCVars.AdminPlayerlistSeparateSymbols);
+        var antagSymbol = player.Antag ? Loc.GetString("player-tab-antag-prefix") + " " : string.Empty;
+        var symbol = separateAntagSymbols ? player.RoleProto.Symbol : antagSymbol;
+        CharacterLabel.Text = symbol + player.CharacterName;
 
         if (player.Antag && config.GetCVar(CCVars.AdminPlayerlistHighlightedCharacterColor))
             CharacterLabel.FontColorOverride = player.RoleProto.Color;
