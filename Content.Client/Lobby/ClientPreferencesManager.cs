@@ -1,8 +1,10 @@
 using System.Linq;
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Preferences;
 using Robust.Client;
 using Robust.Client.Player;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Lobby
@@ -106,7 +108,7 @@ namespace Content.Client.Lobby
             _netManager.ClientSendMessage(msg);
         }
 
-        public void UpdateConstructionFavorites(IReadOnlyList<string> favorites)
+        public void UpdateConstructionFavorites(List<ProtoId<ConstructionPrototype>> favorites)
         {
             Preferences = new PlayerPreferences(Preferences.Characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor, favorites);
             var msg = new MsgUpdateConstructionFavorites

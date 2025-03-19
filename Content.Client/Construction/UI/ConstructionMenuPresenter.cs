@@ -464,7 +464,7 @@ namespace Content.Client.Construction.UI
                     OnViewPopulateRecipes(_constructionView, (string.Empty, string.Empty));
             }
 
-            var newFavorites = new List<string>(_favoritedRecipes.Count);
+            var newFavorites = new List<ProtoId<ConstructionPrototype>>(_favoritedRecipes.Count);
             foreach (var recipe in _favoritedRecipes)
                 newFavorites.Add(recipe.ID);
 
@@ -473,13 +473,13 @@ namespace Content.Client.Construction.UI
             PopulateCategories(_selectedCategory);
         }
 
-        public void SetFavorites(IReadOnlyList<string> favorites)
+        public void SetFavorites(IReadOnlyList<ProtoId<ConstructionPrototype>> favorites)
         {
             _favoritedRecipes.Clear();
 
             foreach (var id in favorites)
             {
-                if (_prototypeManager.TryIndex(id, out ConstructionPrototype? recipe))
+                if (_prototypeManager.TryIndex(id, out ConstructionPrototype? recipe, logError: false))
                     _favoritedRecipes.Add(recipe);
             }
 
