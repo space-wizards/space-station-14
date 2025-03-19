@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Embedded projectiles no longer disappear along with the destroyed or
-      eaten objects they're attached to.
-    type: Fix
-  id: 849
-  time: '2025-01-02T19:45:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1207
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: New sprites for the AKMS
-    type: Add
-  - message: some sound effects for the Daito and Nemesis were changed (not the firing
-      sounds)
-    type: Tweak
-  - message: Cargo Prices for Impstation guns have been reduced, as has the TC price
-      for the Nemesis reduced slightly.
-    type: Tweak
-  id: 850
-  time: '2025-01-02T20:05:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1208
 - author: hivehum
   changes:
   - message: New!!!! Food
@@ -4105,3 +4084,18 @@
   id: 1348
   time: '2025-03-19T22:26:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2004
+- author: Darkmajia
+  changes:
+  - message: Power grid events will no longer trigger announcements twice when they
+      finish.
+    type: Fix
+  id: 1349
+  time: '2025-03-19T22:54:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2013
+- author: Toby222
+  changes:
+  - message: Decapoids now spawn with their tanks equipped instead of in their hand
+    type: Add
+  id: 1350
+  time: '2025-03-19T22:53:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2014
