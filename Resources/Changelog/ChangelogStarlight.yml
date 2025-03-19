@@ -4212,4 +4212,33 @@ Entries:
   id: 583
   time: '2025-03-17T11:39:02.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/404
+- author: Happyrobot33
+  changes:
+  - message: Added Resomi to the species guidebook.
+    type: Add
+  id: 584
+  time: '2025-03-18T05:27:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/405
+- author: Happyrobot33
+  changes:
+  - message: Filled NT Rep Locker on Cog, Hotel, Lobster, Manor and Reach.
+    type: Fix
+  id: 585
+  time: '2025-03-18T05:28:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/406
+- author: Happyrobot33
+  changes:
+  - message: Fixed Boxcutter sprite when in a inventory.
+    type: Fix
+  id: 586
+  time: '2025-03-18T09:39:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/407
+- author: Happyrobot33
+  changes:
+  - message: Clarified the essence costs for the vampires ability in the evolution
+      menu.
+    type: Tweak
+  id: 587
+  time: '2025-03-19T05:37:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/408
 
