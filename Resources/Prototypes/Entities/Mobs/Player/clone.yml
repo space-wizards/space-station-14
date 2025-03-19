@@ -36,7 +36,6 @@
   - DamagedSiliconAccent
   - FrenchAccent
   - GermanAccent
-  - ScandinavianAccent
   - LizardAccent
   - MobsterAccent
   - MonkeyAccent
@@ -50,6 +49,7 @@
   # TODO: AddAccentClothingComponent should use an inventory relay event.
   # Also ZombieComponent overwrites the old replacement accent, because you can only have one at a time.
   - RussianAccent
+  - ScandinavianAccent
   - ScrambledAccent
   - SkeletonAccent
   - SlurredAccent
