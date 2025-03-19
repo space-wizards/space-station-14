@@ -53,7 +53,13 @@ public sealed partial class CompostInteractionSystem : EntitySystem
         if (!TryComp<PlantHolderComponent>(field, out var plantHolder))
             return;
 
-        plantHolder.NutritionLevel += 50;
+
+        if (TryComp<CompostComponent>(args.Used, out var compostComp))
+        {
+            plantHolder.NutritionLevel += compostComp.NutritionValue;
+        }
+
+        QueueDel(args.Used);
 
         _popup.PopupEntity("You finish applying compost to the field.", field, args.User);
         args.Handled = true;
