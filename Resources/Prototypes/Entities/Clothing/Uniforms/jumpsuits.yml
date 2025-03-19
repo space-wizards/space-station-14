@@ -278,7 +278,7 @@
 
 # Harmony Change - Updates sprite pathing, contraband level, name, and description.
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformJumpsuitDetective
   name: detective's hard-worn suit
   description: This suit used to really catch the light. The tie is god awful.
@@ -291,7 +291,7 @@
 
 # Harmony Change - Updates sprite pathing, contraband level, name, and description.
 - type: entity
-  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  parent: [ClothingUniformBase, BaseSecurityContraband]
   id: ClothingUniformJumpsuitDetectiveGrey
   name: detective's noir suit
   description: Beyond the shadow of a doubt, this is the epitome of impeccable tailoring.

@@ -134,10 +134,10 @@
 
 # Harmony Change - Updates sprite pathing, contraband level, name, and description.
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseRestrictedContraband]
+  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
   id: ClothingUniformJumpskirtDetective
   name: detective's hard-worn suitskirt
-  description: This suit used to really catch the light. The tie is god awful. 
+  description: This suit used to really catch the light. The tie is god awful.
   components:
     - type: Sprite
       sprite: _Harmony/Clothing/Uniforms/Jumpskirt/detective.rsi
@@ -147,7 +147,7 @@
 
 # Harmony Change - Updates sprite pathing, contraband level, name, and description.
 - type: entity
-  parent: [ClothingUniformSkirtBase, BaseRestrictedContraband]
+  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
   id: ClothingUniformJumpskirtDetectiveGrey
   name: detective's noir suitskirt
   description: Beyond the shadow of a doubt, this is the epitome of impeccable tailoring.
