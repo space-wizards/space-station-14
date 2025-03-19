@@ -32,6 +32,8 @@
               acts: ["Destruction"]
     - type: PlantHolder
       drawWarnings: false
+      nutritionLevel: 0
+      waterLevel: 0
     - type: SolutionContainerManager
       solutions:
         soil:
