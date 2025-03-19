@@ -4,15 +4,76 @@
   <Box>
     <GuideEntityEmbed Entity="MobResomi" Caption=""/>
   </Box>
+  small, upright, raptor-like creatures with four ears.
+  Their thin tail is still strong enough to pull things without needing their hands for assistance.
 
-small, upright, raptor-like creatures with four ears.
+  ## Sounds
+  Resomi make sounds akin to common bird noises found on Earth, such as chirping and squawking.
 
-  - Night Vision.
-  - Flash duration longer(x2).
-  - Lower Health.
-  - Can't use large guns like Rifles, HMG, LMG, Launchers, Battery Guns.
-  - Can't be nukeop or lone op.
-  - Can jump.
-  - Can run through tables.
+  ## Nightvision
+  Resomi have a innate nightvision given to them by their eyes.
+  This allows them to see in pure darkness farther than any normal handheld lightsource would provide.
+  They will have normal vision when wearing any equipment that provides flash immunity.
+  Using HUD variants allows you to keep your innate vision, at the cost of losing flash immunity.
+  You can configure if you start with glasses or HUD in the loadouts for all relevant roles.
+  <Box>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesSecurity" Scale="5" Caption="Security Glasses\nNo Nightvision\nHas flash immunity"/>
+    <GuideEntityEmbed Entity="ClothingEyesHudSecurity" Scale="5" Caption="Security Hud\nNightvision\nNo flash immunity"/>
+  </Box>
+  ## Flash Duration
+  Due to their eyes being more sensitive to light, Resomi will be stunned for a longer duration when flashed.
+  Flashes will take [color=yellow]2[/color] times as long as normal for other species, lasting up to [color=#ffa500]10[/color] seconds in the case of a localized flash.
+  
+  ## Health
+  Resomi have lower health due to their small stature, falling into a critical state at [color=#ffa500]85[/color] points of damage and dying at [color=#ffa500]170[/color] points of damage.
+  Resomi also prefer colder temperatures compared to humans, being roughly akin to Moths.
+  
+  ## Claw attack
+  Resomi are able to slash at others with their claws.
+  These attacks deal [color=red]5[/color] points of Slash damage with a hit rate that is the same as humans fists attack.
+  
+  ## Weapon Restrictions
+  Resomi have a few restrictions on what weapons they can hold due to their hands being too small.
+  [color=yellow]Due to these restrictions, the Syndicate has opted to not use Resomi for Nuclear Operatives at this time.[/color]
+  These are all the current weapons they cannot use.
+  <Box>
+    <GuideEntityEmbed Entity="WeaponMinigun"/>
+    <GuideEntityEmbed Entity="WeaponLauncherChinaLake"/>
+    <GuideEntityEmbed Entity="WeaponLauncherRocket"/>
+    <GuideEntityEmbed Entity="WeaponLauncherPirateCannon"/>
+    <GuideEntityEmbed Entity="WeaponLauncherAdmemeMeteorLarge"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="WeaponLauncherAdmemeImmovableRodSlow"/>
+    <GuideEntityEmbed Entity="WeaponLightMachineGunL6"/>
+    <GuideEntityEmbed Entity="WeaponSniperMosin"/>
+    <GuideEntityEmbed Entity="WeaponSniperHristov"/>
+    <GuideEntityEmbed Entity="Musket"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="WeaponPistolFlintlock"/>
+    <GuideEntityEmbed Entity="WeaponShotgunBulldog"/>
+    <GuideEntityEmbed Entity="WeaponShotgunDoubleBarreled"/>
+    <GuideEntityEmbed Entity="WeaponShotgunEnforcer"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="WeaponShotgunKammerer"/>
+    <GuideEntityEmbed Entity="WeaponShotgunSawn"/>
+    <GuideEntityEmbed Entity="WeaponShotgunHandmade"/>
+    <GuideEntityEmbed Entity="WeaponShotgunBlunderbuss"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="WeaponShotgunImprovised"/>
+    <GuideEntityEmbed Entity="WeaponRifleAk"/>
+    <GuideEntityEmbed Entity="WeaponRifleM90GrenadeLauncher"/>
+    <GuideEntityEmbed Entity="WeaponRifleLecter"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="WeaponRifleFoam"/>
+  </Box>
 
+  ## Jumping
+  Resomi are able to jump, allowing them to move around station hallways quickly, and to jump ahead of others in a chase.
+  This ability has a cooldown of [color=yellow]30[/color] seconds between uses.
+  If the Resomi is dragging anything and trys to jump, the object will hold them back accordingly, leading to most of the time the Resomi jumping in place.
 </Document>

@@ -103695,7 +103695,7 @@ entities:
     - type: Transform
       pos: -16.5,-26.5
       parent: 2
-- proto: LockerRepresentative
+- proto: LockerRepresentativeFilled
   entities:
   - uid: 1060
     components:
