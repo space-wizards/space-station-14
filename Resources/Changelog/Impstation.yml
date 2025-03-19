@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: New!!!! Food
-    type: Add
-  id: 851
-  time: '2025-01-03T03:17:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1206
 - author: DVDPlayerOfDiscordFame
   changes:
   - message: Zipper is more common
@@ -4099,3 +4092,10 @@
   id: 1350
   time: '2025-03-19T22:53:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2014
+- author: Darkmajia
+  changes:
+  - message: Fixed cyborg and drone batteries rapidly draining under certain conditions.
+    type: Fix
+  id: 1351
+  time: '2025-03-19T22:56:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2009
