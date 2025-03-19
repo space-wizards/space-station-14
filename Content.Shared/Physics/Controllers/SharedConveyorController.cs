@@ -144,11 +144,13 @@ public abstract class SharedConveyorController : VirtualController
 
             if (ent.Result)
             {
+                _mover.Friction(0f, frameTime: frameTime, friction: 5f, ref velocity);
                 SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
             }
             else
             {
-                _mover.Friction(0f, frameTime: frameTime, friction: 50f, ref velocity);
+                // Need friction to outweigh the movement as it will bounce a bit against the wall.
+                _mover.Friction(0f, frameTime: frameTime, friction: 20f, ref velocity);
             }
 
             PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity);
@@ -281,7 +283,7 @@ public abstract class SharedConveyorController : VirtualController
 
         if (r.Length() < 0.1)
         {
-            var velocity = direction * speed;
+            var velocity = direction.Normalized() * speed;
             return velocity;
         }
         else
@@ -289,7 +291,7 @@ public abstract class SharedConveyorController : VirtualController
             // Give a slight nudge in the direction of the conveyor to prevent
             // to collidable objects (e.g. crates) on the locker from getting stuck
             // pushing each other when rounding a corner.
-            var velocity = (r + direction*0.2f).Normalized() * speed;
+            var velocity = (r + direction).Normalized() * speed;
             return velocity;
         }
     }
