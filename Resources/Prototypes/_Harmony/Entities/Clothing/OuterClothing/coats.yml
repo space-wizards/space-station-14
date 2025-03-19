@@ -1,10 +1,33 @@
 - type: entity
-  parent: [ClothingOuterCoatDetectiveLoadout]
+  parent: ClothingOuterCoatDetectiveLoadout
   id: ClothingOuterCoatDetectiveLoadoutBlueHarmony
-  name: blue trenchcoat
+  name: detective's blue trenchcoat
   description: A classy spin on an old style, how could you not love it?
   components:
   - type: Sprite
     sprite: _Harmony/Clothing/OuterClothing/Coats/detective_blue.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/OuterClothing/Coats/detective_blue.rsi
+
+- type: entity
+  parent: ClothingOuterCoatDetectiveLoadout
+  id: ClothingOuterCoatDetectiveLoadoutBomberHarmony
+  name: detective's bomber jacket
+  description: An old fashioned leather jacket reminiscent of those worn by pilots flying high above Earth. You're much higher than that.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/OuterClothing/Coats/detective_bomber.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/OuterClothing/Coats/detective_bomber.rsi
+
+- type: entity
+  parent: ClothingOuterCoatDetectiveLoadout
+  id: ClothingOuterCoatDetectiveLoadoutDiscoHarmony
+  name: detective's disco blazer
+  description: You have some understanding of the recent history of disco. The rest is darkness.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/OuterClothing/Coats/detective_disco.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/OuterClothing/Coats/detective_disco.rsi
+    

@@ -4,10 +4,14 @@
     ClothingUniformJumpsuitDetective: 2
     ClothingUniformJumpskirtDetective: 2
     ClothingUniformJumpsuitDetectiveBlueHarmony: 2 # Harmony
+    ClothingUniformJumpskirtDetectiveBlueHarmony: 2 # Harmony
     ClothingShoesColorBrown: 2
+    ClothingShoesLeather: 2 # Harmony 
     ClothingOuterCoatDetectiveLoadout: 1
     ClothingOuterCoatDetectiveLoadoutGrey: 1
     ClothingOuterCoatDetectiveLoadoutBlueHarmony: 1 # Harmony
+    ClothingOuterCoatDetectiveLoadoutBomberHarmony: 1 # Harmony
+    ClothingOuterCoatDetectiveLoadoutDiscoHarmony: 1 # Harmony
     ClothingHeadHatFedoraBrown: 2
     ClothingHeadHatFedoraBlueHarmony: 2 # Harmony
     ClothingUniformJumpsuitDetectiveGrey: 2

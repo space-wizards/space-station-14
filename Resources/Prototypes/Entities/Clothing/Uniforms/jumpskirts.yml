@@ -132,27 +132,31 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/cmo_turtle.rsi
 
+# Harmony Change - Updates sprite pathing, contraband level, name, and description.
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, BaseRestrictedContraband]
   id: ClothingUniformJumpskirtDetective
-  name: hard-worn suit
-  description: Someone who wears this means business.
+  name: detective's hard-worn suitskirt
+  description: This suit used to really catch the light. The tie is god awful. 
   components:
     - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/detective.rsi
+      sprite: _Harmony/Clothing/Uniforms/Jumpskirt/detective.rsi
     - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/detective.rsi
+      sprite: _Harmony/Clothing/Uniforms/Jumpskirt/detective.rsi
+# End of Harmony changes.
 
+# Harmony Change - Updates sprite pathing, contraband level, name, and description.
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, BaseRestrictedContraband]
   id: ClothingUniformJumpskirtDetectiveGrey
-  name: noir suit
-  description: A hard-boiled private investigator's grey suit, complete with tie clip.
+  name: detective's noir suitskirt
+  description: Beyond the shadow of a doubt, this is the epitome of impeccable tailoring.
   components:
     - type: Sprite
-      sprite: Clothing/Uniforms/Jumpskirt/detective_grey.rsi
+      sprite: _Harmony/Clothing/Uniforms/Jumpskirt/detective_grey.rsi
     - type: Clothing
-      sprite: Clothing/Uniforms/Jumpskirt/detective_grey.rsi
+      sprite: _Harmony/Clothing/Uniforms/Jumpskirt/detective_grey.rsi
+# End of Harmony changes.
 
 - type: entity
   parent: ClothingUniformSkirtBase
