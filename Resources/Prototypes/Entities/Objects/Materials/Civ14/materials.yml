@@ -79,3 +79,85 @@
   components:
     - type: Stack
       count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialDirt
+  name: dirt
+  suffix: Full
+  components:
+    - type: Sprite
+      state: dirt
+      layers:
+        - state: dirt
+          map: ["base"]
+    - type: Stack
+      stackType: Dirt
+      baseLayer: base
+      layerStates:
+        - dirt_pile
+        - dirt_pile_2
+        - dirt_pile_3
+    - type: Appearance
+    - type: Item
+      heldPrefix: dirt
+    - type: Tag
+      tags:
+        - RawMaterial
+
+- type: entity
+  parent: MaterialDirt
+  id: MaterialDirt10
+  suffix: 10
+  components:
+    - type: Stack
+      count: 10
+
+- type: entity
+  parent: MaterialDirt
+  id: MaterialDirt1
+  suffix: Single
+  components:
+    - type: Stack
+      count: 1
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialStone
+  name: stone
+  suffix: Full
+  components:
+    - type: Sprite
+      state: stone
+      layers:
+        - state: stone
+          map: ["base"]
+    - type: Stack
+      stackType: Stone
+      baseLayer: base
+      layerStates:
+        - stone
+        - stone_2
+        - stone_3
+    - type: Appearance
+    - type: Item
+      heldPrefix: stone
+    - type: Tag
+      tags:
+        - RawMaterial
+
+- type: entity
+  parent: MaterialStone
+  id: MaterialStone10
+  suffix: 10
+  components:
+    - type: Stack
+      count: 10
+
+- type: entity
+  parent: MaterialStone
+  id: MaterialStone1
+  suffix: Single
+  components:
+    - type: Stack
+      count: 1

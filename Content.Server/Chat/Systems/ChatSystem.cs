@@ -330,7 +330,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             _audio.PlayGlobal(announcementSound == null ? DefaultAnnouncementSound : _audio.ResolveSound(announcementSound), Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
         }
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global announcement from {sender}: {message}");
     }
 
     /// <summary>

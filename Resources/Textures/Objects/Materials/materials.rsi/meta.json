@@ -337,7 +337,22 @@
             "name": "wool_roll"
         },
         {
-            "name": "sheet-stone"
+            "name": "stone"
+        },
+        {
+            "name": "stone_2"
+        },
+        {
+            "name": "stone_3"
+        },
+        {
+            "name": "dirt_pile"
+        },
+        {
+            "name": "dirt_pile_2"
+        },
+        {
+            "name": "dirt_pile_3"
         },
         {
             "name": "sheet-stone-small"
