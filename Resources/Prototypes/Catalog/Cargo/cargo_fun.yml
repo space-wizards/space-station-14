@@ -14,7 +14,7 @@
     sprite: Objects/Fun/Instruments/structureinstruments.rsi
     state: tuba
   product: CrateFunInstrumentsBrass
-  cost: 2500
+  cost: 2000
   category: cargoproduct-category-name-fun
   group: market
 
@@ -34,7 +34,7 @@
     sprite: Objects/Fun/Instruments/harmonica.rsi
     state: icon
   product: CrateFunInstrumentsWoodwind
-  cost: 2500
+  cost: 3000
   category: cargoproduct-category-name-fun
   group: market
 
