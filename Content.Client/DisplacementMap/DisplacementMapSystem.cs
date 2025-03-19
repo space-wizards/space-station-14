@@ -32,7 +32,8 @@ public sealed class DisplacementMapSystem : EntitySystem
 
         var displacementKey = $"{key}-displacement";
 
-        sprite.RemoveLayer(displacementKey);
+        if (sprite.LayerMapTryGet(displacementKey, out var oldIndex))
+            sprite.RemoveLayer(oldIndex);
 
         //allows you not to write it every time in the YML
         foreach (var pair in data.SizeMaps)
