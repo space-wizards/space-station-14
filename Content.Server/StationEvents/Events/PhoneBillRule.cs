@@ -105,7 +105,7 @@ public sealed class PhoneBillRule : StationEventSystem<PhoneBillRuleComponent>
         }
         else
         {
-            int unpaidPercent = (int)(100 * (float)unpaid / (float)YoullPayForThis.Count);
+            var unpaidPercent = (int)(100f * unpaid / YoullPayForThis.Count);
             ChatSystem.DispatchGlobalAnnouncement(Loc.GetString("station-event-phone-bill-unpaid-announcement", ("percent", unpaidPercent)), announcementSound: component.FailureSound, colorOverride: Color.Yellow);
         }
     }
