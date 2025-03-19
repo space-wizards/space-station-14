@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: Admins now have a new toy!
-    type: Add
-  id: 847
-  time: '2025-01-02T11:52:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1198
 - author: Darkmajia
   changes:
   - message: Air alarms can now override the pressure lockout functions of individual
@@ -4101,3 +4094,11 @@
   id: 1346
   time: '2025-03-19T00:46:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1989
+- author: Sha-Seng
+  changes:
+  - message: Decapoids can now be admin and supply assistants without immediately
+      suffocating
+    type: Fix
+  id: 1347
+  time: '2025-03-19T00:58:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2003
