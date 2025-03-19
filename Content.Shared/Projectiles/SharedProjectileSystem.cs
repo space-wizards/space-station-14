@@ -142,8 +142,11 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             return;
         }
 
+        // imp edit - who the fuck uses TryComp and just prays it returns something. are you fucking kidding me?
+        if (!TryComp<PhysicsComponent>(uid, out var physics))
+            return;
+
         var xform = Transform(uid);
-        TryComp<PhysicsComponent>(uid, out var physics);
         _physics.SetBodyType(uid, BodyType.Dynamic, body: physics, xform: xform);
         _transform.AttachToGridOrMap(uid, xform);
         component.EmbeddedIntoUid = null;
@@ -193,17 +196,21 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     {
         Embed(uid, args.Target, args.Shooter, component);
 
+        // imp edit
+        if (!TryComp<ProjectileComponent>(uid, out var projectile) || projectile.Weapon is not { } weapon)
+            return;
+
         // Raise a specific event for projectiles.
-        if (TryComp(uid, out ProjectileComponent? projectile))
-        {
-            var ev = new ProjectileEmbedEvent(projectile.Shooter!.Value, projectile.Weapon!.Value, args.Target);
-            RaiseLocalEvent(uid, ref ev);
-        }
+        var ev = new ProjectileEmbedEvent(projectile.Shooter, weapon, args.Target);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     private void Embed(EntityUid uid, EntityUid target, EntityUid? user, EmbeddableProjectileComponent component)
     {
-        TryComp<PhysicsComponent>(uid, out var physics);
+        // imp edit - who the fuck uses TryComp and just prays it returns something. are you fucking kidding me?
+        if (!TryComp<PhysicsComponent>(uid, out var physics))
+            return;
+
         _physics.SetLinearVelocity(uid, Vector2.Zero, body: physics);
         _physics.SetBodyType(uid, BodyType.Static, body: physics);
         var xform = Transform(uid);
