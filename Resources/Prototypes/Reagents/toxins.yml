@@ -704,7 +704,7 @@
         sprintSpeedModifier: 0.4
 
 - type: reagent
-  id: Nollazine #evil omnizine
+  id: Nollazine # evil omnizine
   name: reagent-name-nollazine
   group: Toxins
   desc: reagent-desc-nollazine
