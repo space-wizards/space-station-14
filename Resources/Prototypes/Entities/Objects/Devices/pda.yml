@@ -120,6 +120,7 @@
     proto: robot
   - type: Speech
     speechVerb: Robotic
+  - type: PhoneBillTarget
 
 - type: entity
   parent: BasePDA
