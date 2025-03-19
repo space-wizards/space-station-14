@@ -31,7 +31,9 @@ public sealed partial class CompostInteractionSystem : EntitySystem
         var comp = field.Comp;
         var user = args.User;
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, comp.CompostTime, new CompostDoAfterEvent(), field, usedItem)
+        var netUsedItem = GetNetEntity(usedItem);
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, comp.CompostTime,
+            new CompostDoAfterEvent(netUsedItem), field, usedItem)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
@@ -44,7 +46,6 @@ public sealed partial class CompostInteractionSystem : EntitySystem
             args.Handled = true;
         }
     }
-
     private void OnDoAfter(Entity<CompostableFieldComponent> field, ref CompostDoAfterEvent args)
     {
         if (args.Cancelled || args.Handled)
@@ -53,13 +54,13 @@ public sealed partial class CompostInteractionSystem : EntitySystem
         if (!TryComp<PlantHolderComponent>(field, out var plantHolder))
             return;
 
-
-        if (TryComp<CompostComponent>(args.Used, out var compostComp))
+        var usedEntity = GetEntity(args.Used);
+        if (TryComp<CompostComponent>(usedEntity, out var compostComp))
         {
             plantHolder.NutritionLevel += compostComp.NutritionValue;
         }
 
-        QueueDel(args.Used);
+        QueueDel(usedEntity);
 
         _popup.PopupEntity("You finish applying compost to the field.", field, args.User);
         args.Handled = true;
