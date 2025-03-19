@@ -1,0 +1,52 @@
+- type: entity
+  parent: BaseItem
+  id: SeedBaseCiv
+  abstract: true
+  components:
+    - type: Seed
+      seedId: wheat
+    - type: Sprite
+      sprite: Objects/_civ/farming.rsi
+      state: seeds
+    - type: Item
+      size: Normal
+
+- type: entity
+  parent: SeedBaseCiv
+  id: WheatSeedsCiv
+  name: "wheat seeds"
+  components:
+    - type: Seed
+      seedId: wheat
+    - type: Sprite
+      color: "#B87333"
+
+- type: entity
+  parent: SeedBaseCiv
+  id: CornSeedsCiv
+  name: "corn seeds"
+  components:
+    - type: Seed
+      seedId: corn
+    - type: Sprite
+      color: "#FFFF00"
+
+- type: entity
+  parent: SeedBaseCiv
+  id: RiceSeedsCiv
+  name: "rice seeds"
+  components:
+    - type: Seed
+      seedId: rice
+    - type: Sprite
+      state: riceseeds
+
+- type: entity
+  parent: SeedBaseCiv
+  id: PotatoSeedsCiv
+  name: "potato seeds"
+  components:
+    - type: Seed
+      seedId: potato
+    - type: Sprite
+      state: potato
