@@ -27,6 +27,7 @@ public abstract class SharedConveyorController : VirtualController
      * - Conveyor waking
      */
 
+    [Dependency] private   readonly IGameTiming _timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] private   readonly IParallelManager _parallel = default!;
     [Dependency] private   readonly CollisionWakeSystem _wake = default!;
@@ -159,31 +160,44 @@ public abstract class SharedConveyorController : VirtualController
 
         var query = EntityQueryEnumerator<ActiveConveyedComponent, ConveyedComponent, FixturesComponent, PhysicsComponent>();
 
-            // Not conveying anywhere.
-            if (ent.Direction.Equals(Vector2.Zero))
+        while (query.MoveNext(out var uid, out _, out var comp, out var fixtures, out var body))
+        {
+            _job.Conveyed.Add(((uid, comp, fixtures, body, Transform(uid)), Vector2.Zero, false));
+        }
+
+        _parallel.ProcessNow(_job, _job.Conveyed.Count);
+
+        foreach (var ent in _job.Conveyed)
+        {
+            if (!ent.Direction.Equals(Vector2.Zero))
             {
-                continue;
+                var physics = ent.Entity.Comp3;
+                var velocity = physics.LinearVelocity;
+
+                // If mob is moving with the conveyor then combine the directions.
+                var targetDir = ent.Direction;
+                var wishDir = _mover.GetWishDir(ent.Entity.Owner);
+
+                if (Vector2.Dot(wishDir, targetDir) > 0f)
+                {
+                    targetDir += wishDir;
+                }
+
+                SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
+
+                PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity);
             }
 
-            var physics = ent.Entity.Comp3;
-            var velocity = physics.LinearVelocity;
-
-            // If mob is moving with the conveyor then combine the directions.
-            var targetDir = ent.Direction;
-            var wishDir = _mover.GetWishDir(ent.Entity.Owner);
-
-            if (Vector2.Dot(wishDir, targetDir) > 0f)
+            // Stop tracking conveying for whatever reason.
+            if (!ent.Result)
             {
-                targetDir += wishDir;
+                _ents.Add(ent.Entity.Owner);
             }
-
-            SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
-
-            PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity);
         }
 
         foreach (var ent in _ents)
         {
+            RemComp<ActiveConveyedComponent>(ent);
             RemComp<ConveyedComponent>(ent);
         }
     }
@@ -295,7 +309,7 @@ public abstract class SharedConveyorController : VirtualController
                 if (contact.IsTouching && contact.Hard && Vector2.Dot(conveyorDirection, normal) > DirectionAmount)
                 {
                     direction = Vector2.Zero;
-                    return true;
+                    return false;
                 }
             }
 
@@ -320,7 +334,7 @@ public abstract class SharedConveyorController : VirtualController
                     {
                         // Can't go all the way so move partially and stop.
                         direction *= fraction;
-                        return true;
+                        return false;
                     }
                 }
             }
