@@ -306,6 +306,14 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         var n = component.LastAnalyzedNode;
 
+        if (EntityManager.TryGetComponent(component.LastAnalyzedArtifact, out ArtifactComponent? arti))
+        {
+            var origin = Loc.GetString($"{arti.ArtiType}-artifact-type");
+
+            msg.AddMarkupOrThrow(Loc.GetString("analysis-console-info-origin", ("origin", origin)));
+            msg.PushNewline();
+        }
+
         msg.AddMarkupOrThrow(Loc.GetString("analysis-console-info-id", ("id", n.Id)));
         msg.PushNewline();
         msg.AddMarkupOrThrow(Loc.GetString("analysis-console-info-depth", ("depth", n.Depth)));

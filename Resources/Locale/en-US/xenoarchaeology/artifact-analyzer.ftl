@@ -15,6 +15,7 @@ analysis-console-info-no-scanner = No analyzer connected! Please connect one usi
 analysis-console-info-no-artifact = No artifact present! Place one on the pad then scan for information.
 analysis-console-info-ready = Systems operational. Ready to scan.
 
+analysis-console-info-origin = ORIGIN: {$origin}
 analysis-console-info-id = NODE_ID: {$id}
 analysis-console-info-depth = DEPTH: {$depth}
 analysis-console-info-triggered-true = ACTIVATED: TRUE
