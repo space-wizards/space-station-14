@@ -22,6 +22,7 @@ using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
+using Robust.Shared.Map.Events;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -223,9 +224,10 @@ namespace Content.IntegrationTests.Tests
             }
 
             var deps = server.ResolveDependency<IEntitySystemManager>().DependencyCollection;
+            var bus = server.EntMan.EventBus;
             foreach (var map in v7Maps)
             {
-                Assert.That(IsPreInit(map, loader, deps));
+                Assert.That(IsPreInit(map, loader, deps, bus));
             }
 
             // Check that the test actually does manage to catch post-init maps and isn't just blindly passing everything.
@@ -238,12 +240,12 @@ namespace Content.IntegrationTests.Tests
             // First check that a pre-init version passes
             var path = new ResPath($"{nameof(NoSavedPostMapInitTest)}.yml");
             Assert.That(loader.TrySaveMap(id, path));
-            Assert.That(IsPreInit(path, loader, deps));
+            Assert.That(IsPreInit(path, loader, deps, bus));
 
             // and the post-init version fails.
             await server.WaitPost(() => mapSys.InitializeMap(id));
             Assert.That(loader.TrySaveMap(id, path));
-            Assert.That(IsPreInit(path, loader, deps), Is.False);
+            Assert.That(IsPreInit(path, loader, deps, bus), Is.False);
 
             await pair.CleanReturnAsync();
         }
@@ -276,7 +278,7 @@ namespace Content.IntegrationTests.Tests
             });
         }
 
-        private bool IsPreInit(ResPath map, MapLoaderSystem loader, IDependencyCollection deps)
+        private bool IsPreInit(ResPath map, MapLoaderSystem loader, IDependencyCollection deps, IEventBus eventBus)
         {
             if (!loader.TryReadFile(map, out var data))
             {
@@ -284,7 +286,16 @@ namespace Content.IntegrationTests.Tests
                 return false;
             }
 
-            var reader = new EntityDeserializer(deps, data, DeserializationOptions.Default);
+            var ev = new BeforeEntityReadEvent();
+            eventBus.RaiseEvent(EventSource.Local, ev);
+
+            var reader = new EntityDeserializer(deps,
+                data,
+                DeserializationOptions.Default,
+                ev.RenamedPrototypes,
+                ev.DeletedPrototypes
+                );
+
             if (!reader.TryProcessData())
             {
                 Assert.Fail($"Failed to process {map}");
