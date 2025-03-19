@@ -224,10 +224,12 @@ namespace Content.IntegrationTests.Tests
             }
 
             var deps = server.ResolveDependency<IEntitySystemManager>().DependencyCollection;
-            var bus = server.EntMan.EventBus;
+            var ev = new BeforeEntityReadEvent();
+            server.EntMan.EventBus.RaiseEvent(EventSource.Local, ev);
+
             foreach (var map in v7Maps)
             {
-                Assert.That(IsPreInit(map, loader, deps, bus));
+                Assert.That(IsPreInit(map, loader, deps, ev.RenamedPrototypes, ev.DeletedPrototypes));
             }
 
             // Check that the test actually does manage to catch post-init maps and isn't just blindly passing everything.
@@ -240,12 +242,12 @@ namespace Content.IntegrationTests.Tests
             // First check that a pre-init version passes
             var path = new ResPath($"{nameof(NoSavedPostMapInitTest)}.yml");
             Assert.That(loader.TrySaveMap(id, path));
-            Assert.That(IsPreInit(path, loader, deps, bus));
+            Assert.That(IsPreInit(path, loader, deps, ev.RenamedPrototypes, ev.DeletedPrototypes));
 
             // and the post-init version fails.
             await server.WaitPost(() => mapSys.InitializeMap(id));
             Assert.That(loader.TrySaveMap(id, path));
-            Assert.That(IsPreInit(path, loader, deps, bus), Is.False);
+            Assert.That(IsPreInit(path, loader, deps, ev.RenamedPrototypes, ev.DeletedPrototypes), Is.False);
 
             await pair.CleanReturnAsync();
         }
@@ -278,7 +280,11 @@ namespace Content.IntegrationTests.Tests
             });
         }
 
-        private bool IsPreInit(ResPath map, MapLoaderSystem loader, IDependencyCollection deps, IEventBus eventBus)
+        private bool IsPreInit(ResPath map,
+            MapLoaderSystem loader,
+            IDependencyCollection deps,
+            Dictionary<string, string> renamedPrototypes,
+            HashSet<string> deletedPrototypes)
         {
             if (!loader.TryReadFile(map, out var data))
             {
@@ -286,14 +292,11 @@ namespace Content.IntegrationTests.Tests
                 return false;
             }
 
-            var ev = new BeforeEntityReadEvent();
-            eventBus.RaiseEvent(EventSource.Local, ev);
-
             var reader = new EntityDeserializer(deps,
                 data,
                 DeserializationOptions.Default,
-                ev.RenamedPrototypes,
-                ev.DeletedPrototypes);
+                renamedPrototypes,
+                deletedPrototypes);
 
             if (!reader.TryProcessData())
             {
