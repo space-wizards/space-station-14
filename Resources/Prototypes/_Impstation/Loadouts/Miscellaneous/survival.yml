@@ -26,25 +26,14 @@
 #    - BoxSurvivalEngineeringAquatic
 
 # Pre-equipped species gear
-
-# decapoid claw and vapor tank. it is very annoying that it has to be done this way
-- type: loadout
-  id: LoadoutDecapoidClaw
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: Aquatic
-  inhand:
-    - DecapoidVaporTank
-    - DecapoidClawItem
-
-# Full tank for auqatics as part of any Survival loadout
+# Full tank for aquatics as part of any Survival loadout
 - type: loadout
   id: LoadoutSpeciesAquaticFullTank
   effects:
   - !type:GroupLoadoutEffect
     proto: Aquatic
   equipment:
-    suitstorage: DecapoidVaporTank
+    suitstorage: DecapoidVaporTankFilled
 
 # Tank Harnesses for jobs that don't spawn with outerwear
 - type: loadout

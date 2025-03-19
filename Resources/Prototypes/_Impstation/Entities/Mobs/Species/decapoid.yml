@@ -16,9 +16,6 @@
   - type: Icon
     sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
     state: full
-  - type: Loadout
-    prototypes:
-      - StartingGearDecapoidClaw
   - type: SpeechRequiresEquipment
     equipment:
       mask:

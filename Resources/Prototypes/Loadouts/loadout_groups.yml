@@ -110,6 +110,7 @@
   loadouts:
   - EmergencyNitrogen
   - EmergencyOxygen
+  - LoadoutSpeciesAquaticFullTank # Imp
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
@@ -117,6 +118,7 @@
   name: loadout-group-EVA-tank
   hidden: true
   loadouts:
+  - LoadoutSpeciesAquaticFullTank # Imp
   - LoadoutSpeciesEVANitrogen
   - LoadoutSpeciesEVAOxygen
 
@@ -575,6 +577,7 @@
   loadouts:
   - EmergencyNitrogenClown
   - EmergencyOxygenClown
+  - LoadoutSpeciesAquaticFullTank # Imp
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
@@ -633,6 +636,7 @@
   loadouts:
   - EmergencyNitrogenMime
   - EmergencyOxygenMime
+  - LoadoutSpeciesAquaticFullTank # Imp
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
@@ -937,6 +941,7 @@
   loadouts:
   - EmergencyNitrogenExtended
   - EmergencyOxygenExtended
+  - LoadoutSpeciesAquaticFullTank # Imp
   - LoadoutSpeciesVoxNitrogen
 
 # Science
@@ -1287,6 +1292,7 @@
   loadouts:
   - EmergencyNitrogenSecurity
   - EmergencyOxygenSecurity
+  - LoadoutSpeciesAquaticFullTank # Imp
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
@@ -1494,6 +1500,7 @@
   loadouts:
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
+  - LoadoutSpeciesAquaticFullTank # Imp
   - LoadoutSpeciesVoxNitrogen
 
 # Wildcards
@@ -1530,6 +1537,7 @@
   loadouts:
   - EmergencyNitrogenSyndicate
   - EmergencyOxygenSyndicate
+  - LoadoutSpeciesAquaticFullTank # Imp
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup

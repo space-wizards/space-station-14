@@ -107,10 +107,27 @@
     speechSounds: Decapoid
     speechVerb: Robotic
 
+- type: entity
+  name: vapor tank
+  parent: DecapoidVaporTank
+  id: DecapoidVaporTankFilled
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      volume: 5
+      moles:
+        - 0 # oxygen
+        - 0 # nitrogen
+        - 0 # CO2
+        - 0 # plasma
+        - 0 # tritium
+        - 2.051379050 # water vapor
+      temperature: 293.15
 
 - type: entity
   name: vapor tank
-  suffix: Filled
   parent: GasTankRoundBase
   id: DecapoidVaporTank
   description: 'An alien contraption consisting of two tanks. The smaller tank takes in water and converts it into vapor, which is stored in the larger tank. It can hold 5 L of gas, and 30u of fluid.'
@@ -142,29 +159,12 @@
     slots:
     - Back
     - suitStorage
-  - type: ActivatableUI
-    key: enum.SharedGasTankUiKey.Key
   - type: UserInterface
     interfaces:
       enum.SharedGasTankUiKey.Key:
         type: GasTankBoundUserInterface
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
-  - type: Tag
-    tags:
-      - GasTank
-  - type: GasTank
-    outputPressure: 21.3
-    air:
-      volume: 5
-      moles:
-        - 0 # oxygen
-        - 0 # nitrogen
-        - 0 # CO2
-        - 0 # plasma
-        - 0 # tritium
-        - 2.051379050 # water vapor
-      temperature: 293.15
   - type: Drink
     solution: waterTank
   - type: SolutionContainerManager

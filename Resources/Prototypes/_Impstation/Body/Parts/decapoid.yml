@@ -44,6 +44,8 @@
   name: "decapoid claw"
   parent: [PartDecapoid, BaseLeftHand]
   components:
+  - type: InnateHeldItem
+    itemPrototype: DecapoidClawItem
   - type: Sprite
     state: "l_hand"
 

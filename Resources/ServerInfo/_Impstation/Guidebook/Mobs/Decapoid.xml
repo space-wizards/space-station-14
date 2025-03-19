@@ -18,7 +18,7 @@
 
   <Box>
     <GuideEntityEmbed Entity="DecapoidBreathingApparatus" Caption=""/>
-    <GuideEntityEmbed Entity="DecapoidVaporTank" Caption=""/>
+    <GuideEntityEmbed Entity="DecapoidVaporTankFilled" Caption=""/>
   </Box>
 
   Their recently aquatic ancestry left them with respiratory needs unique among NT-accepted species. [color=#ffa500]Decapoids require a steady supply of water vapor to survive.[/color] Luckily, the Decapoid Empire has seen fit to supply each Decapoid with a [color=#1e90ff]Vaporizer[/color] and a [color=#1e90ff]Vapor Tank,[/color] devices capable of safely turning water into water vapor and supplying it to their gills, respectively. The Decapoid Empire has not, however, deigned to provide Nanotrasen with the blueprints for these devices, so [color=red]Decapoids are encouraged not to lose theirs.[/color]

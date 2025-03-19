@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server.Decapoids.Components; // Imp
 using Content.Server.Inventory;
 using Content.Server.Stack;
 using Content.Server.Stunnable;
@@ -11,6 +12,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
 using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Item; // Imp
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
@@ -117,6 +119,16 @@ namespace Content.Server.Hands.Systems
             };
 
             AddHand(uid, args.Slot, location);
+
+            // ImpStation - for giving Decapoids their claws
+            if (TryComp<InnateHeldItemComponent>(args.Part, out var innateHeldItem))
+            {
+                var item = Spawn(innateHeldItem.ItemPrototype);
+                if (!TryPickup(uid, item, component.Hands[component.SortedHands[^1]], false, false, component, Comp<ItemComponent>(item)))
+                {
+                    Log.Error("Failed to put innately held item into hand");
+                }
+            }
         }
 
         private void HandleBodyPartRemoved(EntityUid uid, HandsComponent component, ref BodyPartRemovedEvent args)

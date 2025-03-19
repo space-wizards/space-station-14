@@ -32,30 +32,12 @@
   loadouts:
   - LoadoutSpeciesAquaticFullTank
 
-# decapoid claw and tank
-- type: loadoutGroup
-  id: GroupDecapoidClawLeft
-  name: loadout-group-decapoid-claw-left
-  minLimit: 1
-  hidden: true
-  loadouts:
-  - LoadoutDecapoidClaw
-
-# the claw and tank but as StartingGear
-- type: startingGear
-  id: StartingGearDecapoidClaw
-  inhand:
-    - DecapoidVaporTank
-    - DecapoidClawItem
-
-# the full internals setup for decapoids but as StartingGear
+# the full internals setup for decapoids as StartingGear
 - type: startingGear
   id: StartingGearDecapoidVaporizer
   equipment:
     mask: DecapoidBreathingApparatus
-  inhand:
-    - DecapoidVaporTank
-    - DecapoidClawItem
+    suitstorage: DecapoidVaporTankFilled
 
 # The usual loadouts of the decapoid harness that spawn in your chest slot for jobs that don't have outerwear in their loadout
 - type: loadoutGroup
@@ -296,6 +278,7 @@
   loadouts:
   - EmergencyNitrogenCommand
   - EmergencyOxygenCommand
+  - LoadoutSpeciesAquaticFullTank
   - LoadoutSpeciesVoxNitrogenCommand
 
 - type: loadoutGroup
@@ -306,6 +289,7 @@
   loadouts:
   - EmergencyNitrogenExtendedCommand
   - EmergencyOxygenExtendedCommand
+  - LoadoutSpeciesAquaticFullTank
   - LoadoutSpeciesVoxNitrogenCommand
 
 - type: loadoutGroup
@@ -316,6 +300,7 @@
   loadouts:
   - EmergencyNitrogenSecurityCommand
   - EmergencyOxygenSecurityCommand
+  - LoadoutSpeciesAquaticFullTank
   - LoadoutSpeciesVoxNitrogenCommand
 
 - type: loadoutGroup
@@ -1025,6 +1010,7 @@
   loadouts:
   - EmergencyNitrogenBrigmedic
   - EmergencyOxygenBrigmedic
+  - LoadoutSpeciesAquaticFullTank
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
