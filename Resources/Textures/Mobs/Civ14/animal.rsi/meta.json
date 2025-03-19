@@ -1,0 +1,1562 @@
+{
+    "version": 1,
+    "license": null,
+    "copyright": null,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "cow_random"
+        },
+        {
+            "name": "cow_spawner"
+        },
+        {
+            "name": "bull_spawner"
+        },
+        {
+            "name": "cow",
+            "directions": 4
+        },
+        {
+            "name": "cow_dead"
+        },
+        {
+            "name": "cow_gib",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "bull",
+            "directions": 4
+        },
+        {
+            "name": "bull_dead"
+        },
+        {
+            "name": "calf",
+            "directions": 4
+        },
+        {
+            "name": "calf_dead"
+        },
+        {
+            "name": "bull_plough",
+            "directions": 4
+        },
+        {
+            "name": "cow_plough",
+            "directions": 4
+        },
+        {
+            "name": "sheep_ewe",
+            "directions": 4
+        },
+        {
+            "name": "sheep_ewe_dead",
+            "directions": 4
+        },
+        {
+            "name": "sheep_ewe_sheared",
+            "directions": 4
+        },
+        {
+            "name": "sheep_ewe_sheared_dead",
+            "directions": 4
+        },
+        {
+            "name": "sheep_ram",
+            "directions": 4
+        },
+        {
+            "name": "sheep_ram_dead",
+            "directions": 4
+        },
+        {
+            "name": "sheep_ram_sheared",
+            "directions": 4
+        },
+        {
+            "name": "sheep_ram_sheared_dead",
+            "directions": 4
+        },
+        {
+            "name": "sheep_lamb",
+            "directions": 4
+        },
+        {
+            "name": "sheep_lamb_dead",
+            "directions": 4
+        },
+        {
+            "name": "goat_ewe",
+            "directions": 4
+        },
+        {
+            "name": "goat_ewe_dead"
+        },
+        {
+            "name": "goat_ram_dead"
+        },
+        {
+            "name": "goat_ram",
+            "directions": 4
+        },
+        {
+            "name": "goat_lamb",
+            "directions": 4
+        },
+        {
+            "name": "goat_lamb_dead"
+        },
+        {
+            "name": "goat",
+            "directions": 4
+        },
+        {
+            "name": "goat_dead"
+        },
+        {
+            "name": "pig_gilt",
+            "directions": 4
+        },
+        {
+            "name": "pig_gilt_dead"
+        },
+        {
+            "name": "pig_boar",
+            "directions": 4
+        },
+        {
+            "name": "pig_boar_dead"
+        },
+        {
+            "name": "pig_piglet",
+            "directions": 4
+        },
+        {
+            "name": "pig_piglet_dead"
+        },
+        {
+            "name": "boar_gilt",
+            "directions": 4
+        },
+        {
+            "name": "boar_boar",
+            "directions": 4
+        },
+        {
+            "name": "boar_dead"
+        },
+        {
+            "name": "boar_piglet",
+            "directions": 4
+        },
+        {
+            "name": "boar_female",
+            "directions": 4
+        },
+        {
+            "name": "boar_female_dead"
+        },
+        {
+            "name": "boar_male",
+            "directions": 4
+        },
+        {
+            "name": "boar_male_dead"
+        },
+        {
+            "name": "deer_f",
+            "directions": 4
+        },
+        {
+            "name": "deer_f_dead"
+        },
+        {
+            "name": "deer_m",
+            "directions": 4
+        },
+        {
+            "name": "deer_m_dead"
+        },
+        {
+            "name": "babydeer",
+            "directions": 4
+        },
+        {
+            "name": "babydeer_dead"
+        },
+        {
+            "name": "reindeer_f",
+            "directions": 4
+        },
+        {
+            "name": "reindeer_f_dead"
+        },
+        {
+            "name": "reindeer_m",
+            "directions": 4
+        },
+        {
+            "name": "reindeer_m_dead"
+        },
+        {
+            "name": "reindeer_baby",
+            "directions": 4
+        },
+        {
+            "name": "reindeer_baby_dead"
+        },
+        {
+            "name": "dikdik_female",
+            "directions": 4
+        },
+        {
+            "name": "dikdik_male",
+            "directions": 4
+        },
+        {
+            "name": "dikdik_dead"
+        },
+        {
+            "name": "babydikdik",
+            "directions": 4
+        },
+        {
+            "name": "elk_m",
+            "directions": 4
+        },
+        {
+            "name": "elk_f_dead"
+        },
+        {
+            "name": "elk_f",
+            "directions": 4
+        },
+        {
+            "name": "elk_m_dead"
+        },
+        {
+            "name": "rabbitwhite",
+            "directions": 4
+        },
+        {
+            "name": "rabbitwhite_dead"
+        },
+        {
+            "name": "rabbitblack",
+            "directions": 4
+        },
+        {
+            "name": "rabbitblack_dead"
+        },
+        {
+            "name": "rabbitgrey",
+            "directions": 4
+        },
+        {
+            "name": "rabbitgrey_dead"
+        },
+        {
+            "name": "mouse_brown",
+            "directions": 4
+        },
+        {
+            "name": "mouse_brown_dead"
+        },
+        {
+            "name": "mouse_brown_splat"
+        },
+        {
+            "name": "mouse_brown_sleep",
+            "delays": [
+                [
+                    1.5,
+                    1.5
+                ]
+            ]
+        },
+        {
+            "name": "mouse_gray",
+            "directions": 4
+        },
+        {
+            "name": "mouse_gray_dead"
+        },
+        {
+            "name": "mouse_gray_splat"
+        },
+        {
+            "name": "mouse_gray_sleep",
+            "delays": [
+                [
+                    1.5,
+                    1.5
+                ]
+            ]
+        },
+        {
+            "name": "mouse_white",
+            "directions": 4
+        },
+        {
+            "name": "mouse_white_dead"
+        },
+        {
+            "name": "mouse_white_splat"
+        },
+        {
+            "name": "mouse_white_sleep",
+            "delays": [
+                [
+                    1.5,
+                    1.5
+                ]
+            ]
+        },
+        {
+            "name": "mouse_black",
+            "directions": 4
+        },
+        {
+            "name": "mouse_black_dead"
+        },
+        {
+            "name": "mouse_black_splat"
+        },
+        {
+            "name": "mouse_black_sleep",
+            "delays": [
+                [
+                    1.5,
+                    1.5
+                ]
+            ]
+        },
+        {
+            "name": "possum",
+            "directions": 4
+        },
+        {
+            "name": "possum_dead"
+        },
+        {
+            "name": "raccoon",
+            "directions": 4
+        },
+        {
+            "name": "raccoon_dead"
+        },
+        {
+            "name": "cat",
+            "directions": 4
+        },
+        {
+            "name": "cat_dead"
+        },
+        {
+            "name": "cat_rest",
+            "delays": [
+                [
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "cat_sit"
+        },
+        {
+            "name": "cat2",
+            "directions": 4
+        },
+        {
+            "name": "cat2_dead"
+        },
+        {
+            "name": "cat2_rest",
+            "delays": [
+                [
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "cat2_sit"
+        },
+        {
+            "name": "kitten",
+            "directions": 4
+        },
+        {
+            "name": "kitten_dead"
+        },
+        {
+            "name": "cat3",
+            "directions": 4
+        },
+        {
+            "name": "cat3_dead"
+        },
+        {
+            "name": "cat3_rest",
+            "delays": [
+                [
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "cat3_sit"
+        },
+        {
+            "name": "cat4",
+            "directions": 4
+        },
+        {
+            "name": "cat4_dead"
+        },
+        {
+            "name": "ca4_rest",
+            "delays": [
+                [
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "cat4_sit"
+        },
+        {
+            "name": "fox",
+            "directions": 4
+        },
+        {
+            "name": "fox_dead"
+        },
+        {
+            "name": "arcticfox",
+            "directions": 4
+        },
+        {
+            "name": "arcticfox_dead"
+        },
+        {
+            "name": "corgi",
+            "directions": 4
+        },
+        {
+            "name": "corgi-lying"
+        },
+        {
+            "name": "corgi_dead"
+        },
+        {
+            "name": "german_shepherd",
+            "directions": 4
+        },
+        {
+            "name": "german_shepherd_rest",
+            "delays": [
+                [
+                    0.5,
+                    0.5,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "german_shepherd_dead"
+        },
+        {
+            "name": "beagle",
+            "directions": 4
+        },
+        {
+            "name": "beagle-lying"
+        },
+        {
+            "name": "beagle_dead"
+        },
+        {
+            "name": "pug",
+            "directions": 4
+        },
+        {
+            "name": "pug-lying"
+        },
+        {
+            "name": "pug_dead"
+        },
+        {
+            "name": "bullterrier",
+            "directions": 4
+        },
+        {
+            "name": "samoyed",
+            "directions": 4
+        },
+        {
+            "name": "samoyed_rest",
+            "delays": [
+                [
+                    0.5,
+                    0.5,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "samoyed_dead"
+        },
+        {
+            "name": "greywolf",
+            "directions": 4
+        },
+        {
+            "name": "greywolf_rest",
+            "delays": [
+                [
+                    0.5,
+                    0.5,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "greywolf_dead"
+        },
+        {
+            "name": "greywolf_cub",
+            "directions": 4
+        },
+        {
+            "name": "greywolf_cub_dead"
+        },
+        {
+            "name": "whitewolf",
+            "directions": 4
+        },
+        {
+            "name": "whitewolf_dead"
+        },
+        {
+            "name": "whitewolf_cub",
+            "directions": 4
+        },
+        {
+            "name": "whitewolf_cub_dead"
+        },
+        {
+            "name": "brownbear",
+            "directions": 4
+        },
+        {
+            "name": "brownbear_dead"
+        },
+        {
+            "name": "brownbear_gib",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "brownbear_cub",
+            "directions": 4
+        },
+        {
+            "name": "brownbear_cub_dead"
+        },
+        {
+            "name": "blackbear",
+            "directions": 4
+        },
+        {
+            "name": "blackbear_dead"
+        },
+        {
+            "name": "blackbearfloor"
+        },
+        {
+            "name": "blackbear_gib",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "blackbear_cub",
+            "directions": 4
+        },
+        {
+            "name": "blackbear_cub_dead"
+        },
+        {
+            "name": "polarbear",
+            "directions": 4
+        },
+        {
+            "name": "polarbear_dead"
+        },
+        {
+            "name": "polarbear_gib",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "polarbear_cub",
+            "directions": 4
+        },
+        {
+            "name": "polarbear_cub_dead"
+        },
+        {
+            "name": "parrot_fly",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "parrot_sit",
+            "directions": 4
+        },
+        {
+            "name": "parrot_dead"
+        },
+        {
+            "name": "blackrooster",
+            "directions": 4
+        },
+        {
+            "name": "blackhen",
+            "directions": 4
+        },
+        {
+            "name": "blackhen_dead",
+            "directions": 4
+        },
+        {
+            "name": "blackrooster_dead",
+            "directions": 4
+        },
+        {
+            "name": "blackhen_roosting",
+            "directions": 4
+        },
+        {
+            "name": "blackrooster_roosting",
+            "directions": 4
+        },
+        {
+            "name": "greyrooster",
+            "directions": 4
+        },
+        {
+            "name": "greyhen",
+            "directions": 4
+        },
+        {
+            "name": "greyhen_dead",
+            "directions": 4
+        },
+        {
+            "name": "greyrooster_dead",
+            "directions": 4
+        },
+        {
+            "name": "greyhen_roosting",
+            "directions": 4
+        },
+        {
+            "name": "greyrooster_roosting",
+            "directions": 4
+        },
+        {
+            "name": "brownrooster",
+            "directions": 4
+        },
+        {
+            "name": "brownhen",
+            "directions": 4
+        },
+        {
+            "name": "brownhen_dead",
+            "directions": 4
+        },
+        {
+            "name": "brownrooster_dead",
+            "directions": 4
+        },
+        {
+            "name": "brownrooster_roosting",
+            "directions": 4
+        },
+        {
+            "name": "brownhen_roosting",
+            "directions": 4
+        },
+        {
+            "name": "whiterooster",
+            "directions": 4
+        },
+        {
+            "name": "whitehen",
+            "directions": 4
+        },
+        {
+            "name": "whitehen_dead",
+            "directions": 4
+        },
+        {
+            "name": "whiterooster_dead",
+            "directions": 4
+        },
+        {
+            "name": "whitehen_roosting",
+            "directions": 4
+        },
+        {
+            "name": "whiterooster_roosting",
+            "directions": 4
+        },
+        {
+            "name": "chicken_brown",
+            "directions": 4
+        },
+        {
+            "name": "chicken_black",
+            "directions": 4
+        },
+        {
+            "name": "chicken_white",
+            "directions": 4
+        },
+        {
+            "name": "chicken_brown_dead"
+        },
+        {
+            "name": "chicken_black_dead"
+        },
+        {
+            "name": "chicken_white_dead"
+        },
+        {
+            "name": "chick",
+            "directions": 4
+        },
+        {
+            "name": "chick_dead"
+        },
+        {
+            "name": "chick_gib",
+            "delays": [
+                [
+                    0.6,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "turkey-hen",
+            "directions": 4
+        },
+        {
+            "name": "turkey-hen-dead"
+        },
+        {
+            "name": "turkey-tom",
+            "directions": 4
+        },
+        {
+            "name": "turkey-tom-dead"
+        },
+        {
+            "name": "turkey-chick",
+            "directions": 4
+        },
+        {
+            "name": "turkey-chick-dead"
+        },
+        {
+            "name": "turkey-chickX",
+            "directions": 4
+        },
+        {
+            "name": "turkey-chick-deadX"
+        },
+        {
+            "name": "gull",
+            "directions": 4
+        },
+        {
+            "name": "gull-dead"
+        },
+        {
+            "name": "goose",
+            "directions": 4
+        },
+        {
+            "name": "goose-dead"
+        },
+        {
+            "name": "penguin",
+            "directions": 4
+        },
+        {
+            "name": "penguin_dead"
+        },
+        {
+            "name": "pelican",
+            "directions": 4
+        },
+        {
+            "name": "pelican-filled",
+            "directions": 4
+        },
+        {
+            "name": "pelican_dead"
+        },
+        {
+            "name": "pigeon_grey",
+            "directions": 4
+        },
+        {
+            "name": "pigeon_blue",
+            "directions": 4
+        },
+        {
+            "name": "crow",
+            "directions": 4
+        },
+        {
+            "name": "crow_dead"
+        },
+        {
+            "name": "bat_black",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "bat_black_dead"
+        },
+        {
+            "name": "vampire_bat_black",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "vampire_bat_black_dead"
+        },
+        {
+            "name": "leaf_bed1"
+        },
+        {
+            "name": "leaf_bed2"
+        },
+        {
+            "name": "leaf_bed3"
+        },
+        {
+            "name": "frog",
+            "directions": 4
+        },
+        {
+            "name": "frog-dead"
+        },
+        {
+            "name": "frog_poisonous",
+            "directions": 4
+        },
+        {
+            "name": "frog_poisonous-dead"
+        },
+        {
+            "name": "beelzebufo",
+            "directions": 4
+        },
+        {
+            "name": "beelzebufo-dead"
+        },
+        {
+            "name": "tiktaalik",
+            "directions": 4
+        },
+        {
+            "name": "ichthyostega",
+            "directions": 4
+        },
+        {
+            "name": "amphibianeggs_1"
+        },
+        {
+            "name": "amphibianeggs_2"
+        },
+        {
+            "name": "amphibianeggs_3"
+        },
+        {
+            "name": "lizard",
+            "directions": 4
+        },
+        {
+            "name": "lizard_dead"
+        },
+        {
+            "name": "lizard_gib",
+            "delays": [
+                [
+                    0.6,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "snake_dead",
+            "delays": [
+                [
+                    0.2,
+                    0.030000001,
+                    0.030000001,
+                    0.030000001,
+                    0.030000001,
+                    0.030000001
+                ]
+            ]
+        },
+        {
+            "name": "snake",
+            "directions": 4,
+            "delays": [
+                [
+                    2.5,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    2.5,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    2.5,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    2.5,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "python",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "python_overlay",
+            "directions": 4
+        },
+        {
+            "name": "python_dead"
+        },
+        {
+            "name": "cobra",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "cobra_aggressive"
+        },
+        {
+            "name": "cobra_dead"
+        },
+        {
+            "name": "compsognathus",
+            "directions": 4
+        },
+        {
+            "name": "compsognathus_dead"
+        },
+        {
+            "name": "tiktaalik_dead"
+        },
+        {
+            "name": "ichthyostega_dead"
+        },
+        {
+            "name": "ianthasaurus",
+            "directions": 4
+        },
+        {
+            "name": "ianthasaurus_dead"
+        },
+        {
+            "name": "pachycephalosaurus",
+            "directions": 4
+        },
+        {
+            "name": "pachycephalosaurus_dead"
+        },
+        {
+            "name": "Tortoise",
+            "directions": 4
+        },
+        {
+            "name": "Tortoise_dead"
+        },
+        {
+            "name": "mirelurk",
+            "directions": 4
+        },
+        {
+            "name": "mirelurk_dead"
+        },
+        {
+            "name": "crab-old"
+        },
+        {
+            "name": "crab_dead-old"
+        },
+        {
+            "name": "evilcrab"
+        },
+        {
+            "name": "evilcrab_dead"
+        },
+        {
+            "name": "crab",
+            "directions": 4
+        },
+        {
+            "name": "crab_dead"
+        },
+        {
+            "name": "crab_small",
+            "directions": 4
+        },
+        {
+            "name": "crab_small_dead"
+        },
+        {
+            "name": "red_crab"
+        },
+        {
+            "name": "blue_crab"
+        },
+        {
+            "name": "blue_crab_dead"
+        },
+        {
+            "name": "red_crab_dead"
+        },
+        {
+            "name": "crab_san"
+        },
+        {
+            "name": "crab_san2"
+        },
+        {
+            "name": "crab_san_dead",
+            "delays": [
+                [
+                    0.2,
+                    0.1,
+                    0.2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "leopard_seal",
+            "directions": 4
+        },
+        {
+            "name": "leopard_seal_dead"
+        },
+        {
+            "name": "monkey",
+            "directions": 4
+        },
+        {
+            "name": "monkey_dead"
+        },
+        {
+            "name": "monkey_infant",
+            "directions": 4
+        },
+        {
+            "name": "monkey_infant_dead"
+        },
+        {
+            "name": "gorilla",
+            "directions": 4
+        },
+        {
+            "name": "wolfman",
+            "directions": 4
+        },
+        {
+            "name": "monkey_kenobi",
+            "directions": 4
+        },
+        {
+            "name": "monkey_kenobi_hostile",
+            "directions": 4,
+            "delays": [
+                [
+                    0.6,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ],
+                [
+                    0.6,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ],
+                [
+                    0.6,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ],
+                [
+                    0.6,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15,
+                    0.15
+                ]
+            ]
+        },
+        {
+            "name": "monkey_kenobi_dead"
+        },
+        {
+            "name": "luminary_palladium",
+            "directions": 4
+        },
+        {
+            "name": "apostle_lime",
+            "directions": 4
+        },
+        {
+            "name": "skeleton_remains1"
+        },
+        {
+            "name": "skeleton_remains2"
+        },
+        {
+            "name": "skeleton_remains3"
+        },
+        {
+            "name": "skeleton1",
+            "directions": 4
+        },
+        {
+            "name": "skeleton-dead"
+        },
+        {
+            "name": "skeleton2",
+            "directions": 4
+        },
+        {
+            "name": "skeleton3",
+            "directions": 4
+        },
+        {
+            "name": "skeleton1_pir",
+            "directions": 4
+        },
+        {
+            "name": "skeleton2_pir",
+            "directions": 4
+        },
+        {
+            "name": "skeleton3_pir",
+            "directions": 4
+        },
+        {
+            "name": "skeleton4_pir",
+            "directions": 4
+        },
+        {
+            "name": "skeleton_jap",
+            "directions": 4
+        },
+        {
+            "name": "skeleton_jap1",
+            "directions": 4
+        },
+        {
+            "name": "skeleton_jap2",
+            "directions": 4
+        },
+        {
+            "name": "skeleton_jap3",
+            "directions": 4
+        },
+        {
+            "name": "skeleton_jap_samurai",
+            "directions": 4
+        },
+        {
+            "name": "skeleton_jap_lord",
+            "directions": 4
+        },
+        {
+            "name": "draugr",
+            "directions": 4
+        },
+        {
+            "name": "draugr-dead"
+        },
+        {
+            "name": "draugr1",
+            "directions": 4
+        },
+        {
+            "name": "draugr2",
+            "directions": 4
+        },
+        {
+            "name": "draugr3",
+            "directions": 4
+        },
+        {
+            "name": "draugr4",
+            "directions": 4
+        },
+        {
+            "name": "mimic",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "goliath_blackwidow",
+            "directions": 4
+        },
+        {
+            "name": "goliath_dead_blackwidow"
+        },
+        {
+            "name": "anthill",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "ants",
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "trilobite_living",
+            "directions": 4
+        },
+        {
+            "name": "trilobite_dead"
+        }
+    ]
+}

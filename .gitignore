@@ -307,3 +307,4 @@ Resources/MapImages
 # Direnv stuff
 .direnv/
 Civ14.code-workspace
+_extras/
