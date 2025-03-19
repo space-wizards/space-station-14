@@ -1,6 +1,6 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
- using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
- using Content.Shared.Mind.Components;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Teleportation.Systems;
 using Robust.Shared.Collections;
