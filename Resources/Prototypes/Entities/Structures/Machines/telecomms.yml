@@ -136,8 +136,6 @@
           True: { shader: unshaded }
           False: { shader: shaded }
   - type: Appearance
-    visuals:
-    - type: MappedItemVisualizer
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -9
