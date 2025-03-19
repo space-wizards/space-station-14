@@ -46,25 +46,39 @@ namespace Content.Server.Farming
             var tileRef = _map.GetTileRef(gridUid.Value, grid, snapPos);
             var tileDef = (ContentTileDefinition)_tileManager[tileRef.Tile.TypeId];
 
-            // Check if tile can be ploughed
-            if (tileDef.ID != "FloorDirt")
+            // Check if tile is ploughable or transformable
+            if (tileDef.ID == "FloorDirt")
             {
-                return;
+                // Logic for FloorDirt: start DoAfter to create ploughedField
+                var delay = comp.Delay;
+                var netGridUid = GetNetEntity(gridUid.Value);
+                var doAfterArgs = new DoAfterArgs(EntityManager, user, delay, new PloughDoAfterEvent(netGridUid, snapPos), ent)
+                {
+                    BreakOnMove = true,
+                    BreakOnDamage = true,
+                    NeedHand = true
+                };
+
+                if (_doAfter.TryStartDoAfter(doAfterArgs))
+                {
+                    _popup.PopupEntity("You begin plowing the soil.", ent, user);
+                    args.Handled = true;
+                }
             }
-
-            var delay = comp.Delay;
-            var netGridUid = GetNetEntity(gridUid.Value);
-            var doAfterArgs = new DoAfterArgs(EntityManager, user, delay, new PloughDoAfterEvent(netGridUid, snapPos), ent)
+            // Clear grass, turning into floor dirt
+            else if (tileDef.ID == "FloorGrass" || tileDef.ID == "FloorGrassJungle" || tileDef.ID == "FloorGrassDark" || tileDef.ID == "FloorGrassLight")
             {
-                BreakOnMove = true,
-                BreakOnDamage = true,
-                NeedHand = true
-            };
+                // Transform grass tile to FloorDirt
+                var dirtTile = _tileManager["FloorDirt"];
+                var newTile = new Tile(dirtTile.TileId);
+                _map.SetTile(gridUid.Value, grid, snapPos, newTile);
 
-            if (_doAfter.TryStartDoAfter(doAfterArgs))
-            {
-                _popup.PopupEntity("You begin plowing the soil.", ent, user);
+                _popup.PopupEntity("You clear the grass, turning it into dirt.", ent, user);
                 args.Handled = true;
+            }
+            else
+            {
+                _popup.PopupEntity("This tile cannot be plowed or transformed.", ent, user);
             }
         }
 
