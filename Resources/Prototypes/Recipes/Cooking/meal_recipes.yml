@@ -773,6 +773,7 @@
   time: 10
   solids:
     FoodNoodles: 2
+    FoodPlateSmall: 2
 
 #Soups & Stew
 - type: microwaveMealRecipe
