@@ -10,12 +10,90 @@
     layers:
     - state: tele-server-nopower
     - state: tele-stripe
-    - state: tele-server-on
+    - state: tele-server-on  # Default powered state when multiple keys or EncryptionElse
       shader: unshaded
       visible: false
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: tele-server-on-common
+      shader: unshaded
+      visible: false
+      map: ["tele-server-on-common"]
+    - state: tele-server-on-cargo
+      shader: unshaded
+      visible: false
+      map: ["tele-server-on-cargo"]
+    - state: tele-server-on-engineering
+      shader: unshaded
+      visible: false
+      map: ["tele-server-on-engineering"]
+    - state: tele-server-on-medical
+      shader: unshaded
+      visible: false
+      map: ["tele-server-on-medical"]
+    - state: tele-server-on-science
+      shader: unshaded
+      visible: false
+      map: ["tele-server-on-science"]
+    - state: tele-server-on-sec
+      shader: unshaded
+      visible: false
+      map: ["tele-server-on-sec"]
+    - state: tele-server-on-service
+      shader: unshaded
+      visible: false
+      map: ["tele-server-on-service"]
+    - state: tele-server-on-command
+      shader: unshaded
+      visible: false
+      map: ["tele-server-on-command"]
     - state: tele_o
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: ItemMapper
+    requireAll: False
+    sprite: Structures/Machines/telecomms.rsi
+    mapLayers:
+      tele-server-on-common:
+        whitelist:
+          tag:
+          - EncryptionCommon
+      tele-server-on-cargo:
+        whitelist:
+          tag:
+          - EncryptionCargo
+      tele-server-on-engineering:
+        whitelist:
+          tag:
+          - EncryptionEngineering
+      tele-server-on-medical:
+        whitelist:
+          tag:
+          - EncryptionMedical
+      tele-server-on-science:
+        whitelist:
+          tag:
+          - EncryptionScience
+      tele-server-on-sec:
+        whitelist:
+          tag:
+          - EncryptionSecurity
+      tele-server-on-service:
+        whitelist:
+          tag:
+          - EncryptionService
+      tele-server-on-command:
+        whitelist:
+          tag:
+          - EncryptionCommand
+      tele-server-on:
+        # This will show the default "on" state when either:
+        # 1. There are multiple keys of different types
+        # 2. There's a key with EncryptionElse tag
+        # 3. No keys are present (fallback)
+        whitelist:
+          tag:
+          - EncryptionElse
+        minCount: 1
+        fallback: true
   - type: PointLight
     enabled: false
     castShadows: false
@@ -30,6 +108,8 @@
           True: { visible: true }
           False: { visible: false }
   - type: Appearance
+    visuals:
+    - type: MappedItemVisualizer
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -9
@@ -106,28 +186,6 @@
     containers:
       key_slots:
       - EncryptionKeyCommon
-  - type: Sprite
-    sprite: Structures/Machines/telecomms.rsi
-    snapCardinals: true
-    layers:
-    - state: tele-server-nopower
-    - state: tele-stripe
-    - state: tele-server-on-common
-      shader: unshaded
-      visible: false
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: tele_o
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: GenericVisualizer
-    visuals:
-      enum.PowerDeviceVisuals.Powered:
-        enum.PowerDeviceVisualLayers.Powered:
-          True: { visible: true }
-          False: { visible: false }
-  - type: Appearance
-  - type: WiresVisuals
-  - type: Physics
-    bodyType: Static
 
 - type: entity
   parent: TelecomServer
@@ -138,28 +196,6 @@
     containers:
       key_slots:
       - EncryptionKeyCargo
-  - type: Sprite
-    sprite: Structures/Machines/telecomms.rsi
-    snapCardinals: true
-    layers:
-    - state: tele-server-nopower
-    - state: tele-stripe
-    - state: tele-server-on-cargo
-      shader: unshaded
-      visible: false
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: tele_o
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: GenericVisualizer
-    visuals:
-      enum.PowerDeviceVisuals.Powered:
-        enum.PowerDeviceVisualLayers.Powered:
-          True: { visible: true }
-          False: { visible: false }
-  - type: Appearance
-  - type: WiresVisuals
-  - type: Physics
-    bodyType: Static
 
 - type: entity
   parent: TelecomServer
@@ -170,28 +206,6 @@
     containers:
       key_slots:
       - EncryptionKeyEngineering
-  - type: Sprite
-    sprite: Structures/Machines/telecomms.rsi
-    snapCardinals: true
-    layers:
-    - state: tele-server-nopower
-    - state: tele-stripe
-    - state: tele-server-on-engineering
-      shader: unshaded
-      visible: false
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: tele_o
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: GenericVisualizer
-    visuals:
-      enum.PowerDeviceVisuals.Powered:
-        enum.PowerDeviceVisualLayers.Powered:
-          True: { visible: true }
-          False: { visible: false }
-  - type: Appearance
-  - type: WiresVisuals
-  - type: Physics
-    bodyType: Static
 
 - type: entity
   parent: TelecomServer
@@ -202,28 +216,6 @@
     containers:
       key_slots:
       - EncryptionKeyMedical
-  - type: Sprite
-    sprite: Structures/Machines/telecomms.rsi
-    snapCardinals: true
-    layers:
-    - state: tele-server-nopower
-    - state: tele-stripe
-    - state: tele-server-on-medical
-      shader: unshaded
-      visible: false
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: tele_o
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: GenericVisualizer
-    visuals:
-      enum.PowerDeviceVisuals.Powered:
-        enum.PowerDeviceVisualLayers.Powered:
-          True: { visible: true }
-          False: { visible: false }
-  - type: Appearance
-  - type: WiresVisuals
-  - type: Physics
-    bodyType: Static
 
 - type: entity
   parent: TelecomServer
@@ -234,28 +226,6 @@
     containers:
       key_slots:
       - EncryptionKeyScience
-  - type: Sprite
-    sprite: Structures/Machines/telecomms.rsi
-    snapCardinals: true
-    layers:
-    - state: tele-server-nopower
-    - state: tele-stripe
-    - state: tele-server-on-science
-      shader: unshaded
-      visible: false
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: tele_o
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: GenericVisualizer
-    visuals:
-      enum.PowerDeviceVisuals.Powered:
-        enum.PowerDeviceVisualLayers.Powered:
-          True: { visible: true }
-          False: { visible: false }
-  - type: Appearance
-  - type: WiresVisuals
-  - type: Physics
-    bodyType: Static
 
 - type: entity
   parent: TelecomServer
@@ -266,28 +236,6 @@
     containers:
       key_slots:
       - EncryptionKeySecurity
-  - type: Sprite
-    sprite: Structures/Machines/telecomms.rsi
-    snapCardinals: true
-    layers:
-    - state: tele-server-nopower
-    - state: tele-stripe
-    - state: tele-server-on-sec
-      shader: unshaded
-      visible: false
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: tele_o
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: GenericVisualizer
-    visuals:
-      enum.PowerDeviceVisuals.Powered:
-        enum.PowerDeviceVisualLayers.Powered:
-          True: { visible: true }
-          False: { visible: false }
-  - type: Appearance
-  - type: WiresVisuals
-  - type: Physics
-    bodyType: Static
 
 - type: entity
   parent: TelecomServer
@@ -298,28 +246,6 @@
     containers:
       key_slots:
       - EncryptionKeyService
-  - type: Sprite
-    sprite: Structures/Machines/telecomms.rsi
-    snapCardinals: true
-    layers:
-    - state: tele-server-nopower
-    - state: tele-stripe
-    - state: tele-server-on-service
-      shader: unshaded
-      visible: false
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: tele_o
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: GenericVisualizer
-    visuals:
-      enum.PowerDeviceVisuals.Powered:
-        enum.PowerDeviceVisualLayers.Powered:
-          True: { visible: true }
-          False: { visible: false }
-  - type: Appearance
-  - type: WiresVisuals
-  - type: Physics
-    bodyType: Static
 
 - type: entity
   parent: TelecomServer
@@ -330,25 +256,3 @@
     containers:
       key_slots:
       - EncryptionKeyCommand
-  - type: Sprite
-    sprite: Structures/Machines/telecomms.rsi
-    snapCardinals: true
-    layers:
-    - state: tele-server-nopower
-    - state: tele-stripe
-    - state: tele-server-on-command
-      shader: unshaded
-      visible: false
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: tele_o
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: GenericVisualizer
-    visuals:
-      enum.PowerDeviceVisuals.Powered:
-        enum.PowerDeviceVisualLayers.Powered:
-          True: { visible: true }
-          False: { visible: false }
-  - type: Appearance
-  - type: WiresVisuals
-  - type: Physics
-    bodyType: Static
