@@ -338,13 +338,7 @@ public sealed class FoodSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        // Unembed any embedded projectiles
-        var childEnumerator = Transform(food).ChildEnumerator;
-        while (childEnumerator.MoveNext(out var child))
-        {
-            if (TryComp<EmbeddableProjectileComponent>(child, out var embeddable))
-                _projectile.RemoveEmbed(child, embeddable);
-        }
+        _projectile.RemoveEmbeddedChildren(food); // imp edit
 
         var dev = new DestructionEventArgs();
         RaiseLocalEvent(food, dev);

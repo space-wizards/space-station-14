@@ -104,8 +104,10 @@ namespace Content.Shared.Damage.Systems
             if (component.HitQuantity >= component.MaxHitQuantity)
                 return;
 
-            // Ignore thrown items that are too slow
-            if (physics.LinearVelocity.LengthSquared() < component.MinVelocity)
+            var isEmbedded = TryComp<EmbeddableProjectileComponent>(uid, out var embed) && embed.Target != null;
+
+            // Ignore thrown items that are too slow, as long as the projectile is not embedded
+            if (!isEmbedded && physics.LinearVelocity.LengthSquared() < component.MinVelocity)
                 return;
 
             var modifiedDamage = _damageable.TryChangeDamage(args.Target, GetDamage(uid, component, args.Component.Thrower),
