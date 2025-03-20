@@ -308,3 +308,4 @@ Resources/MapImages
 .direnv/
 Civ14.code-workspace
 _extras/
+server_config.toml
