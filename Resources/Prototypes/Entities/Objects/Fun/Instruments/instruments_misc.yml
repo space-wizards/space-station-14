@@ -186,3 +186,23 @@
     notificationPrefix: prayer-chat-notify-honkmother
     verb: prayer-verbs-call
     verbImage: null
+
+- type: entity
+  parent: BaseHandheldInstrument
+  id: WehpetInstrument
+  name: weh-pet
+  description: A lizard had too much time on their hands when they made this.
+  components:
+  - type: Instrument
+    program: 1
+    bank: 5
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/wehpet.rsi
+    state: icon
+  - type: Item
+    size: Small
+    sprite: Objects/Fun/Instruments/wehpet.rsi
+    storedRotation: -90
+  - type: Tag
+    tags:
+    - BrassInstrument
