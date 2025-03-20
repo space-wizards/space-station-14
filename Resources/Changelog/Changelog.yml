@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: thetolbean
-  changes:
-  - message: The web coat and boots can now be broken down into silk.
-    type: Fix
-  id: 7589
-  time: '2024-11-04T03:33:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33121
 - author: Kickguy223
   changes:
   - message: Ion Storms now notify a Borg that their laws have changed via a sound
@@ -3892,3 +3885,14 @@
   id: 8088
   time: '2025-03-20T02:15:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35743
+- author: Seam_Less
+  changes:
+  - message: Added in-hand sprites to many common medical items that previously lacked
+      one.
+    type: Add
+  - message: Fixed the bruise pack using the ointment in-hand sprite instead of it's
+      own sprite.
+    type: Fix
+  id: 8089
+  time: '2025-03-20T02:18:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34984
