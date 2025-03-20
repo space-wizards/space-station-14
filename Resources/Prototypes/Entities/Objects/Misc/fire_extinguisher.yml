@@ -28,7 +28,7 @@
     transferAmount: 100
   - type: UseDelay
   - type: Spray
-    transferAmount: 10
+    TransferAmountPercentage: 10
     pushbackAmount: 60
     spraySound:
       path: /Audio/Effects/extinguish.ogg
