@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: iaada
-  changes:
-  - message: The ninja's katana now deals stun damage. 4 hits to down.
-    type: Tweak
-  - message: The energy katana can be activated to return to its previous damage.  It
-      gets 10 attacks before needing to be charged.
-    type: Add
-  id: 855
-  time: '2025-01-04T14:54:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1225
 - author: DinnerCalzone
   changes:
   - message: Added a blood-red phone to the lone ops shuttle.
@@ -4101,3 +4091,11 @@
   id: 1354
   time: '2025-03-20T12:57:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2020
+- author: kipdotnet, AfterLite
+  changes:
+  - message: Prize tickets have been added to the service techfab! they come in varying
+      values and are great monopoly money for poker night.
+    type: Add
+  id: 1355
+  time: '2025-03-20T13:00:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2024
