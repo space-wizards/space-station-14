@@ -200,7 +200,7 @@
     sprite: Objects/Fun/Instruments/wehpet.rsi
     state: icon
   - type: Item
-    size: Small
+    size: Medium
     sprite: Objects/Fun/Instruments/wehpet.rsi
     storedRotation: -90
   - type: Tag
