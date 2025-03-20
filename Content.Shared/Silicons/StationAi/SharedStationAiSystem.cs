@@ -133,12 +133,12 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         args.Handled = true;
 
         // Hopefully AI never needs storage
-        if (_containers.TryGetContainingContainer(args.Target, out var targetContainer))
+        if (_containers.TryGetContainingContainer((args.Target, null), out var targetContainer))
         {
             return;
         }
 
-        if (!_containers.IsInSameOrTransparentContainer(args.User, args.Target, otherContainer: targetContainer))
+        if (!_containers.IsInSameOrTransparentContainer((args.User, null), (args.Target, null), otherContainer: targetContainer))
         {
             return;
         }
