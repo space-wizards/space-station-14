@@ -37,12 +37,25 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
     private void OnEquip(EntityUid user)
     {
-        EnsureComp<TrayScannerUserComponent>(user);
+        var comp = EnsureComp<TrayScannerUserComponent>(user);
+        comp.Count++;
+
+        if (comp.Count > 1)
+            return;
+
         _eye.RefreshVisibilityMask(user);
     }
 
     private void OnUnequip(EntityUid user)
     {
+        if (!TryComp(user, out TrayScannerUserComponent? comp))
+            return;
+
+        comp.Count--;
+
+        if (comp.Count > 0)
+            return;
+
         RemComp<TrayScannerUserComponent>(user);
         _eye.RefreshVisibilityMask(user);
     }
