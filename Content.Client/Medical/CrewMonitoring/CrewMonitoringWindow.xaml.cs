@@ -79,14 +79,23 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
         NoServerLabel.Visible = false;
 
-        // Convert to a list with a single sensor status per crew member
-        var uniqueSensors = sensors
-            .GroupBy(s => s.OwnerUid)
-            .Select(allSensors =>
-                // Prioritise an entry with coords if it exists
-                allSensors.OrderByDescending(sensor => sensor.Coordinates != null).ThenBy(sensor => sensor.DamagePercentage != null).First()
-            )
-            .ToList();
+        // Collect one status per user, using the sensor with the most data available.
+        Dictionary<NetEntity, SuitSensorStatus> uniqueSensorsMap = new();
+        foreach (var sensor in sensors)
+        {
+            if (uniqueSensorsMap.TryGetValue(sensor.OwnerUid, out var existingSensor))
+            {
+                // Skip if we already have a sensor with more data for this mob.
+                if (existingSensor.Coordinates != null && sensor.Coordinates == null)
+                    continue;
+
+                if (existingSensor.DamagePercentage != null && sensor.DamagePercentage == null)
+                    continue;
+            }
+
+            uniqueSensorsMap[sensor.OwnerUid] = sensor;
+        }
+        var uniqueSensors = uniqueSensorsMap.Values.ToList();
 
         // Order sensor data
         var orderedSensors = uniqueSensors.OrderBy(n => n.Name).OrderBy(j => j.Job);
