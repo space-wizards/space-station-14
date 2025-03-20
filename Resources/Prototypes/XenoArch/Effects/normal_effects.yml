@@ -140,8 +140,6 @@
   effectHint: artifact-effect-hint-release
   originWhitelist:
     - Silicon
-  triggerWhitelist:
-    - TriggerSiliconTouch
   components:
   - type: PointLight
     radius: 10
