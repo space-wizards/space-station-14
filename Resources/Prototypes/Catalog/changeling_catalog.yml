@@ -343,7 +343,7 @@
 - type: listing
   id: EvolutionMenuUtilityFakeMindshield
   name: evolutionmenu-utility-fakemindshield-name
-  description: evolutionmenu-usility-fakemindshield-desc
+  description: evolutionmenu-utility-fakemindshield-desc
   productAction: FakeMindShieldToggleAction
   cost:
     EvolutionPoint: 2
