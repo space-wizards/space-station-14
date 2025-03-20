@@ -6,11 +6,11 @@
     entity: ShardGlass
     edges:
     - to: icon
-      steps:
       completed:
       - !type:AdminLog
         message: "Construction"
         impact: High
+      steps:
       - material: Cloth
         amount: 1
         doAfter: 1
