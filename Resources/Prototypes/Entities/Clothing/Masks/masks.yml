@@ -16,8 +16,8 @@
     - HamsterWearable
     - WhitelistChameleon
   - type: HideLayerClothing
-    layers:
-      Snout: Mask
+    slots:
+    - Snout
     hideOnToggle: true
 
 - type: entity

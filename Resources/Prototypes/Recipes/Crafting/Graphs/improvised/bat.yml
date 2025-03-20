@@ -23,10 +23,6 @@
             - tool: Prying
               doAfter: 1
         - to: bat
-          completed:
-          - !type:AdminLog
-            message: "Construction"
-            impact: High
           steps:
             - tool: Slicing
               doAfter: 4

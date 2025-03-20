@@ -1,7 +1,6 @@
 using Content.Server.Botany.Components;
 using Content.Server.Botany.Systems;
 using Content.Shared.Atmos;
-using Content.Shared.Database;
 using Content.Shared.EntityEffects;
 using Content.Shared.Random;
 using Robust.Shared.Audio;
@@ -243,18 +242,6 @@ public partial class SeedData
     /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdListSerializer<SeedPrototype>))]
     public List<string> MutationPrototypes = new();
-
-    /// <summary>
-    ///  Log impact for when the seed is planted.
-    /// </summary>
-    [DataField]
-    public LogImpact? PlantLogImpact = null;
-
-    /// <summary>
-    ///  Log impact for when the seed is harvested.
-    /// </summary>
-    [DataField]
-    public LogImpact? HarvestLogImpact = null;
 
     public SeedData Clone()
     {

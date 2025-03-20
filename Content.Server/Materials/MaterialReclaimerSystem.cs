@@ -24,7 +24,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
-using Content.Shared.Humanoid;
 
 namespace Content.Server.Materials;
 
@@ -187,8 +186,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         if (CanGib(uid, item, component))
         {
-            var logImpact = HasComp<HumanoidAppearanceComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
-            _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
+            _adminLogger.Add(LogType.Gib, LogImpact.Extreme, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
             SpawnChemicalsFromComposition(uid, item, completion, false, component, xform);
             _body.GibBody(item, true);
             _appearance.SetData(uid, RecyclerVisuals.Bloody, true);

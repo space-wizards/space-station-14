@@ -7,7 +7,6 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
-using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -144,11 +143,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(uid, ref component) || !Resolve(victimUid, ref butcherable))
                 return;
 
-            var logImpact = LogImpact.Medium;
-            if (HasComp<HumanoidAppearanceComponent>(victimUid))
-                logImpact = LogImpact.Extreme;
-
-            _logger.Add(LogType.Gib, logImpact, $"{ToPrettyString(userUid):user} kitchen spiked {ToPrettyString(victimUid):target}");
+            _logger.Add(LogType.Gib, LogImpact.Extreme, $"{ToPrettyString(userUid):user} kitchen spiked {ToPrettyString(victimUid):target}");
 
             // TODO VERY SUS
             component.PrototypesToSpawn = EntitySpawnCollection.GetSpawns(butcherable.SpawnedEntities, _random);

@@ -1,4 +1,6 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Shared.SubFloor
 {
@@ -25,7 +27,7 @@ namespace Content.Shared.SubFloor
         /// <remarks>
         ///     Useful for entities like vents, which are only partially hidden. Anchor attempts will still be blocked.
         /// </remarks>
-        [DataField]
+        [DataField("blockInteractions")]
         public bool BlockInteractions { get; set; } = true;
 
         /// <summary>
@@ -34,15 +36,15 @@ namespace Content.Shared.SubFloor
         /// <remarks>
         /// Useful for cables and piping, gives maint it's distinct noise.
         /// </remarks>
-        [DataField]
+        [DataField("blockAmbience")]
         public bool BlockAmbience { get; set; } = true;
 
         /// <summary>
         ///     Sprite layer keys for the layers that are always visible, even if the entity is below a floor tile. E.g.,
         ///     the vent part of a vent is always visible, even though the piping is hidden.
         /// </summary>
-        [DataField]
-        public HashSet<Enum> VisibleLayers = new();
+        [DataField("visibleLayers")]
+        public HashSet<Enum> VisibleLayers = new() { SubfloorLayers.FirstLayer };
 
         /// <summary>
         /// This is used for storing the original draw depth of a t-ray revealed entity.

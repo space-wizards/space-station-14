@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Ghost;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedGhostSystem))]
-[AutoGenerateComponentState(true), AutoGenerateComponentPause]
+[AutoGenerateComponentState(true)]
 public sealed partial class GhostComponent : Component
 {
     // Actions
@@ -41,7 +41,7 @@ public sealed partial class GhostComponent : Component
 
     // End actions
 
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoPausedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField]
     public TimeSpan TimeOfDeath = TimeSpan.Zero;
 
     [DataField("booRadius"), ViewVariables(VVAccess.ReadWrite)]

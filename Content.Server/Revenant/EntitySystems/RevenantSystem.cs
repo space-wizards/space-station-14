@@ -63,14 +63,7 @@ public sealed partial class RevenantSystem : EntitySystem
         SubscribeLocalEvent<RevenantComponent, StatusEffectEndedEvent>(OnStatusEnded);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
 
-        SubscribeLocalEvent<RevenantComponent, GetVisMaskEvent>(OnRevenantGetVis);
-
         InitializeAbilities();
-    }
-
-    private void OnRevenantGetVis(Entity<RevenantComponent> ent, ref GetVisMaskEvent args)
-    {
-        args.VisibilityMask |= (int)VisibilityFlags.Ghost;
     }
 
     private void OnStartup(EntityUid uid, RevenantComponent component, ComponentStartup args)
@@ -91,7 +84,10 @@ public sealed partial class RevenantSystem : EntitySystem
         }
 
         //ghost vision
-        _eye.RefreshVisibilityMask(uid);
+        if (TryComp(uid, out EyeComponent? eye))
+        {
+            _eye.SetVisibilityMask(uid, eye.VisibilityMask | (int) (VisibilityFlags.Ghost), eye);
+        }
     }
 
     private void OnMapInit(EntityUid uid, RevenantComponent component, MapInitEvent args)
