@@ -4,8 +4,8 @@ meta:
   engineVersion: 247.2.0
   forkId: Starlight
   forkVersion: 1732131340
-  time: 03/20/2025 19:30:00
-  entityCount: 8870
+  time: 03/20/2025 21:26:42
+  entityCount: 8869
 maps:
 - 1
 grids:
@@ -3731,7 +3731,7 @@ entities:
       pos: 11.5,20.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -52866.062
+      secondsUntilStateChange: -52896.85
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -3765,7 +3765,7 @@ entities:
       pos: 28.5,14.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -40898.07
+      secondsUntilStateChange: -40928.86
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4079,7 +4079,7 @@ entities:
       pos: -19.5,7.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -50306.96
+      secondsUntilStateChange: -50337.75
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -24208,7 +24208,7 @@ entities:
       pos: -1.5,-20.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -78.600365
+      secondsUntilStateChange: -109.390175
       state: Closing
   - uid: 3851
     components:
@@ -27039,7 +27039,7 @@ entities:
       pos: -13.5,-20.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -48846.73
+      secondsUntilStateChange: -48877.52
       state: Closing
   - uid: 4311
     components:
@@ -35801,11 +35801,6 @@ entities:
       parent: 8751
     - type: Physics
       canCollide: False
-  - uid: 8753
-    components:
-    - type: Transform
-      pos: 5.1059356,-0.48042858
-      parent: 2
   - uid: 8755
     components:
     - type: Transform
@@ -57918,7 +57913,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -40864.605
+      secondsUntilStateChange: -40895.395
       state: Opening
     - type: Airlock
       autoClose: False
