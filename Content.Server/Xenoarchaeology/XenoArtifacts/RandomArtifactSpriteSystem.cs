@@ -42,7 +42,7 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, RandomArtifactSpriteComponent component, MapInitEvent args)
     {
-        var artiType = EntityManager.EnsureComponent<ArtifactComponent>(uid).ArtiType;
+        var artiType = EnsureComp<ArtifactComponent>(uid).ArtiType;
         int[] randomSpriteChoices = [];
         switch (artiType)
         {
