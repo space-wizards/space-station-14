@@ -111,7 +111,8 @@
       vapor:
         maxVol: 50
   - type: Vapor
-    TransferAmountPercentage: 0.5
+    active: true
+    transferAmountPercentage: 0.5
   - type: AnimationPlayer
   - type: Sprite
     sprite: Effects/chempuff.rsi
