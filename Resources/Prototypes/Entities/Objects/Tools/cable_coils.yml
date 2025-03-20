@@ -84,12 +84,12 @@
 
 - type: entity
   parent: CableHVStack10
-  id: CableHVStackLingering10
-  suffix: Lingering, 10
+  id: CableHVStackLingering30
+  suffix: Lingering, 30
   components:
   - type: Stack
     lingering: true
-    count: 10
+    count: 30
 
 - type: entity
   parent: CableHVStack
@@ -149,12 +149,12 @@
 
 - type: entity
   parent: CableMVStack10
-  id: CableMVStackLingering10
-  suffix: Lingering, 10
+  id: CableMVStackLingering30
+  suffix: Lingering, 30
   components:
   - type: Stack
     lingering: true
-    count: 10
+    count: 30
 
 - type: entity
   parent: CableMVStack
@@ -213,12 +213,12 @@
 
 - type: entity
   parent: CableApcStack10
-  id: CableApcStackLingering10
-  suffix: Lingering, 10
+  id: CableApcStackLingering30
+  suffix: Lingering, 30
   components:
   - type: Stack
     lingering: true
-    count: 10
+    count: 30
 
 - type: entity
   parent: CableApcStack
