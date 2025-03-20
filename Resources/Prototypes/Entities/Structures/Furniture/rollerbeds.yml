@@ -8,6 +8,7 @@
       noRot: true
     - type: Item
       size: Normal
+      heldPrefix: rollerbed
     - type: Sprite
       sprite: Structures/Furniture/rollerbeds.rsi
       noRot: true
@@ -88,6 +89,8 @@
   parent: RollerBed
   description: A run-down rollerbed. Used to carry patients around.
   components:
+  - type: Item
+    heldPrefix: cheap_rollerbed
   - type: Sprite
     layers:
     - state: cheap_rollerbed
@@ -116,6 +119,8 @@
   parent: RollerBed
   description: A robust looking rollerbed used for emergencies.
   components:
+  - type: Item
+    heldPrefix: emergency_rollerbed
   - type: Sprite
     layers:
     - state: emergency_rollerbed
