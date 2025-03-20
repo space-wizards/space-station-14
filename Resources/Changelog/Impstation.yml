@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MintyTheBinty
-  changes:
-  - message: Added 10 new suits and made them available in drobes and loadouts!
-    type: Add
-  id: 854
-  time: '2025-01-04T02:25:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1223
 - author: iaada
   changes:
   - message: The ninja's katana now deals stun damage. 4 hits to down.
@@ -4101,3 +4094,10 @@
   id: 1353
   time: '2025-03-20T05:12:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2022
+- author: AvianMaiden
+  changes:
+  - message: Hit and stab more things more ways more guns more!!
+    type: Add
+  id: 1354
+  time: '2025-03-20T12:57:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2020
