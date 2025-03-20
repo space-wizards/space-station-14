@@ -16,6 +16,9 @@
   id: AirSensor
 
 - type: Tag
+  id: AllowGhostShownByEvent
+
+- type: Tag
   id: Ambrosia
 
 - type: Tag

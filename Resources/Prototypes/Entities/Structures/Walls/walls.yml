@@ -543,7 +543,7 @@
   - type: Tag
     tags:
     - Wall
-    - Diagonal    
+    - Diagonal
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/plastitanium_diagonal.rsi
