@@ -12,6 +12,9 @@
     - Mousetrap
     - TrashBag
     - DeskBell
+    - PrizeTicketGold
+    - PrizeTicketSilver
+    - PrizeTicketBronze
 
 - type: latheRecipePack
   id: CleanPack
@@ -87,3 +90,4 @@
   id: ServiceEmagged
   recipes:
     - ButchCleaver
+    - PrizeTicketDiamond

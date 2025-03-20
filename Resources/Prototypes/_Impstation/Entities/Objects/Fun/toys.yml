@@ -624,3 +624,73 @@
   - type: Tag
     tags:
     - WoodwindInstrument
+
+- type: entity
+  parent: BaseItem
+  id: PrizeTicketGold
+  name: prize ticket (1000)
+  description: A shiny golden ticket! Can be redeemed for.. something? It's mostly just used as fake money.
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      Cardboard: 10
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/prizeticket.rsi
+    state: gold
+  - type: Appearance
+  - type: Flammable
+    fireSpread: true
+    alwaysCombustible: true
+    damage:
+      types:
+        Heat: 1
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: fire
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+            Ash:
+              min: 1
+              max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: PrizeTicketGold
+  id: PrizeTicketSilver
+  name: prize ticket (100)
+  description: A shiny silver ticket! Can be redeemed for.. something? It's mostly just used as fake money.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/prizeticket.rsi
+    state: silver
+
+- type: entity
+  parent: PrizeTicketGold
+  id: PrizeTicketBronze
+  name: prize ticket (10)
+  description: A shiny bronze ticket! Can be redeemed for.. something? It's mostly just used as fake money.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/prizeticket.rsi
+    state: bronze
+
+- type: entity
+  parent: PrizeTicketGold
+  id: PrizeTicketDiamond #emag item
+  name: prize ticket (1,000,000)
+  description: A shiny diamond ticket! Can be redeemed for.. something? It's mostly just used as fake money.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/prizeticket.rsi
+    state: diamond

@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by AftrLite (github), edited by kipdotnet (github) for Impstation",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bronze"
+    },
+    {
+      "name": "silver"
+    },
+    {
+      "name": "gold"
+    },
+    {
+      "name": "diamond"
+    }
+  ]
+}
