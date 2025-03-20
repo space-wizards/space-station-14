@@ -66,7 +66,7 @@ public sealed class PhoneBillRule : StationEventSystem<PhoneBillRuleComponent>
         int unpaid = 0;
         foreach (var (forsaken, items) in component.YoullPayForThis)
         {
-            bool tendered = false;
+            var tendered = false;
             var required = component.Price * items.Count;
             foreach (var ransom in _inventorySystem.GetHandOrInventoryEntities(forsaken))
             {
