@@ -21,7 +21,7 @@ public sealed partial class PhoneBillRuleComponent : Component
     /// <summary>
     ///     A list of PDAs and IDs on someone, keyed by that person.
     /// </summary>
-    [DataField(readOnly:true)]
+    [DataField]
     public Dictionary<EntityUid, List<EntityUid>> YoullPayForThis = new();
 
     /// <summary>
