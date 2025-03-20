@@ -203,7 +203,7 @@ public partial class ListingData : IEquatable<ListingData>
     /// </summary>
     [DataField]
     public bool DisableRefund = false;
-    
+
     public bool Equals(ListingData? listing)
     {
         if (listing == null)
