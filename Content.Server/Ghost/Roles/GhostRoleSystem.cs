@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
@@ -33,12 +34,14 @@ using Content.Server.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Collections;
 using Content.Shared.Ghost.Roles.Components;
+using Content.Shared.Popups;
 
 namespace Content.Server.Ghost.Roles;
 
 [UsedImplicitly]
 public sealed class GhostRoleSystem : EntitySystem
 {
+    [Dependency] private readonly IBanManager _ban = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -54,6 +57,9 @@ public sealed class GhostRoleSystem : EntitySystem
 
     private uint _nextRoleIdentifier;
     private bool _needsUpdateGhostRoleCount = true;
+
+    private const string JobPrefix = "Job:";
+    private const string AntagPrefix = "Antag:";
 
     private readonly Dictionary<uint, Entity<GhostRoleComponent>> _ghostRoles = new();
     private readonly Dictionary<uint, Entity<GhostRoleRaffleComponent>> _ghostRoleRaffles = new();
@@ -460,6 +466,24 @@ public sealed class GhostRoleSystem : EntitySystem
         if (!_ghostRoles.TryGetValue(identifier, out var roleEnt))
             return;
 
+        // Don't let the player take a role they are banned from
+        if (IsBanned(player, roleEnt))
+        {
+            // TODO Popup window? Audio cue
+            // Disable the buttons in the first place in the client's GhostRoleButtonsBox.xaml.cs ?
+
+            if (player.AttachedEntity is not null)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("role-ban"),
+                    player.AttachedEntity.Value,
+                    player.AttachedEntity.Value,
+                    PopupType.LargeCaution);
+
+                return;
+            }
+        }
+
+        // Decide to do a raffle or not
         if (roleEnt.Comp.RaffleConfig is not null)
         {
             JoinRaffle(player, identifier);
@@ -468,6 +492,53 @@ public sealed class GhostRoleSystem : EntitySystem
         {
             Takeover(player, identifier);
         }
+    }
+
+    /// <summary>
+    /// Check if the player has been banned from any of the roles on the ghostrole
+    /// </summary>
+    private bool IsBanned(ICommonSession player, Entity<GhostRoleComponent> roleEnt)
+    {
+        var bans = _ban.GetRoleBans(player.UserId);
+
+        if (bans is null || bans.Count == 0)
+            return false;
+
+        // If there is a mind already, check its mind roles. I don't think this can ever actually happen.
+        if (TryComp<MindContainerComponent>(roleEnt, out var mindCont)
+            && TryComp<MindComponent>(mindCont.Mind, out var mind))
+        {
+            foreach (var role in mind.MindRoles)
+            {
+                if(!TryComp<MindRoleComponent>(role, out var comp))
+                    continue;
+
+                if ( bans.Contains(JobPrefix + comp.JobPrototype)
+                     || bans.Contains(AntagPrefix + comp.AntagPrototype))
+                    return true;
+            }
+
+            return false;
+        }
+
+        var job = roleEnt.Comp.JobProto;
+        if (job is not null && bans.Contains(JobPrefix + job))
+            return true;
+
+        // If there is no mind, check the mindRole prototypes
+        foreach (var proto in roleEnt.Comp.MindRoles)
+        {
+            if (!_prototype.TryIndex(proto, out var indexed)
+                || !indexed.Components.TryGetComponent("MindRole", out var comp))
+                continue;
+            var roleComp = (MindRoleComponent)comp;
+
+            if (bans.Contains(AntagPrefix + roleComp.AntagPrototype)
+                || bans.Contains(JobPrefix + roleComp.JobPrototype))
+                return true;
+        }
+
+        return false;
     }
 
     /// <summary>
