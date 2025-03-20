@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Tr1bute
-  changes:
-  - message: A popup now appears when attempting to harvest mutated plants that require
-      sharp tools.
-    type: Add
-  id: 7587
-  time: '2024-11-04T00:56:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33136
 - author: Boolean-Buckeye
   changes:
   - message: Emergency lights can be constructed and deconstructed
@@ -3891,3 +3883,11 @@
   id: 8086
   time: '2025-03-20T01:32:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35702
+- author: GaussiArson
+  changes:
+  - message: Disablers, practice disablers, and disabler smgs no longer deal heat
+      damage. They still deal the same amount of stamina damage.
+    type: Tweak
+  id: 8087
+  time: '2025-03-20T01:50:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35834
