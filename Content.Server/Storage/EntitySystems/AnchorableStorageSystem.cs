@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Popups;
 using Content.Shared.Construction.Components;
 using Content.Shared.Mind.Components;
-using Content.Shared.Item.PseudoItem;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -47,10 +46,7 @@ public sealed class AnchorableStorageSystem : EntitySystem
         if (!TryComp(ent.Owner, out StorageComponent? storage))
             return;
 
-        var entsToRemove = storage.StoredItems.Keys.Where(storedItem =>
-                HasComp<MindContainerComponent>(storedItem)
-                || HasComp<PseudoItemComponent>(storedItem)
-            ).ToList();
+        var entsToRemove = storage.StoredItems.Keys.Where(HasComp<MindContainerComponent>).ToList();
 
         foreach (var removeUid in entsToRemove)
             _container.RemoveEntity(ent.Owner, removeUid);
@@ -61,7 +57,7 @@ public sealed class AnchorableStorageSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        // Nothing around? We can anchor without issue.
+        // No other stashes or anchored items?
         if (!CheckOverlap((ent, ent.Comp, Transform(ent))))
             return;
 
@@ -75,24 +71,24 @@ public sealed class AnchorableStorageSystem : EntitySystem
             return;
 
         // Check for living things, they should not insert when anchored.
-        if (!HasComp<MindContainerComponent>(args.EntityUid) && !HasComp<PseudoItemComponent>(args.EntityUid))
+        if (!HasComp<MindContainerComponent>(args.EntityUid))
             return;
 
         if (Transform(ent.Owner).Anchored)
             args.Cancel();
     }
 
+    /// <summary>
+    ///     Check the overlap of this entity on its tile.
+    /// </summary>
+    /// <param name="ent">Entity to check.</param>
+    /// <returns>True if there isn't any overlap, and false if there is.</returns>
     [PublicAPI]
-    public bool CheckOverlap(EntityUid uid)
+    public bool CheckOverlap(Entity<AnchorableStorageComponent?, TransformComponent?> ent)
     {
-        if (!TryComp(uid, out AnchorableStorageComponent? comp))
+        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2, false))
             return false;
 
-        return CheckOverlap((uid, comp, Transform(uid)));
-    }
-
-    public bool CheckOverlap(Entity<AnchorableStorageComponent, TransformComponent> ent)
-    {
         if (ent.Comp2.GridUid is not { } grid || !TryComp<MapGridComponent>(grid, out var gridComp))
             return false;
 
