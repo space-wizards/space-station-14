@@ -41,7 +41,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void HandleCollide(Entity<VaporComponent> entity, ref StartCollideEvent args)
         {
-            if (!EntityManager.TryGetComponent(entity.Owner, out SolutionContainerManagerComponent? contents)) return;
+            if (!EntityManager.TryGetComponent(entity.Owner, out SolutionContainerManagerComponent? contents))
+                return;
 
             foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((entity.Owner, contents)))
             {
@@ -98,18 +99,17 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, container)))
                 {
-                    Update(frameTime, (uid, vaporComp), soln, xform);
+                    Update((uid, vaporComp), soln, xform);
                 }
             }
         }
 
-        private void Update(float frameTime, Entity<VaporComponent> ent, Entity<SolutionComponent> soln, TransformComponent xform)
+        private void Update(Entity<VaporComponent> ent, Entity<SolutionComponent> soln, TransformComponent xform)
         {
             var (entity, vapor) = ent;
             if (!vapor.Active)
                 return;
 
-            vapor.ReactTimer += frameTime;
 
             var contents = soln.Comp.Solution;
             if (vapor.ReactTimer >= ReactTime && TryComp(xform.GridUid, out MapGridComponent? gridComp))
@@ -119,7 +119,8 @@ namespace Content.Server.Chemistry.EntitySystems
                 var tile = _map.GetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates);
                 foreach (var reagentQuantity in contents.Contents.ToArray())
                 {
-                    if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
+                    if (reagentQuantity.Quantity == FixedPoint2.Zero)
+                        continue;
                     var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
 
                     var reaction =
