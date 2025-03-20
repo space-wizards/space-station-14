@@ -61,9 +61,12 @@ namespace Content.Server.Destructible
                 {
                     RaiseLocalEvent(uid, new DamageThresholdReached(component, threshold), true);
 
+                    var logImpact = LogImpact.Low;
                     // Convert behaviors into string for logs
                     var triggeredBehaviors = string.Join(", ", threshold.Behaviors.Select(b =>
                     {
+                        if (logImpact <= b.Impact)
+                            logImpact = b.Impact;
                         if (b is DoActsBehavior doActsBehavior)
                         {
                             return $"{b.GetType().Name}:{doActsBehavior.Acts.ToString()}";
@@ -73,12 +76,14 @@ namespace Content.Server.Destructible
 
                     if (args.Origin != null)
                     {
-                        _adminLogger.Add(LogType.Damaged, LogImpact.Medium,
+                        _adminLogger.Add(LogType.Damaged,
+                            logImpact,
                             $"{ToPrettyString(args.Origin.Value):actor} caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
                     }
                     else
                     {
-                        _adminLogger.Add(LogType.Damaged, LogImpact.Medium,
+                        _adminLogger.Add(LogType.Damaged,
+                            logImpact,
                             $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
                     }
 
