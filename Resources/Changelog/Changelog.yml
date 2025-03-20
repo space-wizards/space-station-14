@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Centronias
-  changes:
-  - message: Fixed a bug where attempting to speak into a handheld radio and an intercom
-      simultaneously would lead to only one device transmitting the message.
-    type: Fix
-  id: 7583
-  time: '2024-11-02T15:04:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32737
 - author: joshepvodka
   changes:
   - message: Headphones are now selectable in loadouts.
@@ -3890,3 +3882,11 @@
   id: 8082
   time: '2025-03-19T23:14:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35323
+- author: MisterImp
+  changes:
+  - message: The copypasta recipe now requires two small plates, which are left behind
+      when it is consumed.
+    type: Tweak
+  id: 8083
+  time: '2025-03-20T00:35:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35925
