@@ -27,11 +27,13 @@
   - Clumsy
   - MindShield
   - MimePowers
+  - SpaceNinja
   # accents
   - Accentless
   - BackwardsAccent
   - BarkAccent
   - BleatingAccent
+  - DamagedSiliconAccent
   - FrenchAccent
   - GermanAccent
   - LizardAccent
@@ -56,6 +58,8 @@
   blacklist:
     components:
     - AttachedClothing # helmets, which are part of the suit
+    - HumanoidAppearance # will cause problems for downstream felinids getting cloned as Urists
+    - VirtualItem
 
 - type: cloningSettings
   id: Antag
@@ -69,6 +73,8 @@
   parent: Antag
   forceCloning: false
   copyEquipment: null
+  copyInternalStorage: false
+  copyImplants: false
 
 # spawner
 
@@ -78,7 +84,7 @@
   suffix: Non-Antag
   components:
   - type: Sprite
-    sprite: Markers/paradox_clone.rsi
+    sprite: Mobs/Aliens/paradox_clone.rsi
     state: preview
   - type: RandomCloneSpawner
     settings: BaseClone
