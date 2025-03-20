@@ -11,7 +11,7 @@ namespace Content.Shared.Chemistry.Dispenser
     /// to define which reagents it's able to dispense. Based off of how vending
     /// machines define their inventory.
     /// </summary>
-    [Serializable, NetSerializable, Prototype("reagentDispenserInventory")]
+    [Serializable, NetSerializable, Prototype]
     public sealed partial class ReagentDispenserInventoryPrototype : IPrototype
     {
         [DataField("inventory", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
