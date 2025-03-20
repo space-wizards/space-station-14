@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Removed the wanted list cartridge from the captain's PDA.
-    type: Remove
-  id: 7595
-  time: '2024-11-06T13:20:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33084
 - author: BramvanZijp
   changes:
   - message: Flare guns have been reworked to no longer automatically eject shells
@@ -3894,3 +3887,11 @@
   id: 8094
   time: '2025-03-20T22:40:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35971
+- author: SlamBamActionman
+  changes:
+  - message: Added playtest cvars for mob and stamina damage. Can be changed via changecvar
+      with VVEDIT perms.
+    type: Add
+  id: 8095
+  time: '2025-03-20T23:01:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35599
