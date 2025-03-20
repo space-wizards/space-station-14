@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Syndicate Reinforcements no longer list their (hidden and unused) codewords
-      on the Round End window.
-    type: Fix
-  id: 7593
-  time: '2024-11-05T18:18:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33181
 - author: Baptr0b0t
   changes:
   - message: Fixed Intelicard can see through walls.
@@ -3893,3 +3885,12 @@
   id: 8092
   time: '2025-03-20T21:01:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35967
+- author: SonicHDC
+  changes:
+  - message: Added zips for senior coats!
+    type: Add
+  - message: Added zip and sprites for expensive coat!
+    type: Add
+  id: 8093
+  time: '2025-03-20T21:46:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35029
