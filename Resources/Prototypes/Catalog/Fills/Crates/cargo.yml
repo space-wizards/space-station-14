@@ -1,12 +1,22 @@
 - type: entity
-  id: CrateCargoLuxuryHardsuit
+  id: CrateCargoMiningHardsuit
   parent: CratePirate
-  name: luxury mining hardsuit crate
-  description: Finally, a hardsuit Quartermasters could call their own. Centcomm has heard you, now stop asking.
+  name: mining hardsuit crate
+  description: A hardsuit that can be used for both basic and advanced mining trips.
   components:
   - type: StorageFill
     contents:
-    - id: ClothingOuterHardsuitLuxury
+    - id: ClothingOuterHardsuitSalvage
+
+#- type: entity #Disabled until discussions finish of it being QM exclusive
+#  id: CrateCargoLuxuryHardsuit
+#  parent: CratePirate
+#  name: luxury mining hardsuit crate
+#  description: Finally, a hardsuit Quartermasters could call their own. Centcomm has heard you, now stop asking.
+#  components:
+#  - type: StorageFill
+#    contents:
+#    - id: ClothingOuterHardsuitLuxury
 
 - type: entity
   id: CrateCargoGambling
