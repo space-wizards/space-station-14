@@ -28,7 +28,7 @@
 - type: emote
   id: Flip
   name: chat-emote-name-flip
-  icon: Interface/Emotes/flip.png
+  icon: GreyStation/Interface/Emotes/flip.png
   whitelist:
     components:
     - FlipAnimation
