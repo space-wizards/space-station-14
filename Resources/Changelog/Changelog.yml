@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: kirus59
-  changes:
-  - message: Fixed display of icons when using hunger or thirst huds
-    type: Fix
-  - message: Fixed errors spam when using beer goggles
-    type: Fix
-  id: 7592
-  time: '2024-11-05T16:58:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32832
 - author: Errant
   changes:
   - message: Syndicate Reinforcements no longer list their (hidden and unused) codewords
@@ -3895,3 +3886,10 @@
   id: 8091
   time: '2025-03-20T16:38:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35951
+- author: Tayrtahn
+  changes:
+  - message: Erasing the content from a paper will now make it appear blank.
+    type: Fix
+  id: 8092
+  time: '2025-03-20T21:01:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35967
