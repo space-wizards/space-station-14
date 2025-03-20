@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Shared.Construction.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Storage;
+using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -20,6 +21,7 @@ public sealed class AnchorableStorageSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -41,15 +43,14 @@ public sealed class AnchorableStorageSystem : EntitySystem
             return;
         }
 
-        // Eject any sapient creatures inside the storage.
-        // Does not recurse down into bags in bags - player characters are the largest concern, and they'll only fit in duffelbags.
-        if (!TryComp(ent.Owner, out StorageComponent? storage))
+        if (!TryComp<StorageComponent>(ent.Owner, out var storage) || ent.Comp.StorageBlacklist == null)
             return;
 
-        var entsToRemove = storage.StoredItems.Keys.Where(HasComp<MindContainerComponent>).ToList();
-
-        foreach (var removeUid in entsToRemove)
-            _container.RemoveEntity(ent.Owner, removeUid);
+        foreach (var item in storage.StoredItems.Keys)
+        {
+            if (_whitelist.IsBlacklistPassOrNull(ent.Comp.StorageBlacklist, item))
+                _container.RemoveEntity(ent.Owner, item);
+        }
     }
 
     private void OnAnchorAttempt(Entity<AnchorableStorageComponent> ent, ref AnchorAttemptEvent args)
@@ -70,9 +71,10 @@ public sealed class AnchorableStorageSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        // Check for living things, they should not insert when anchored.
-        if (!HasComp<MindContainerComponent>(args.EntityUid))
-            return;
+        if (!_whitelist.IsBlacklistPassOrNull(ent.Comp.StorageBlacklist, args.EntityUid))
+        {
+            args.Cancel();
+        }
 
         if (Transform(ent.Owner).Anchored)
             args.Cancel();
