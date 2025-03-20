@@ -18,7 +18,7 @@ namespace Content.Server.Chemistry.Components
         /// Ex: 0.5 = 50% reacts.
         /// </summary>
         [DataField]
-        public FixedPoint2 TransferAmount;
+        public float TransferAmountPercentage;
 
         [DataField]
         public bool Active;

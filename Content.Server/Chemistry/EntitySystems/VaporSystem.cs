@@ -78,14 +78,10 @@ internal sealed class VaporSystem : EntitySystem
     internal bool TryAddSolution(Entity<VaporComponent> vapor, Solution solution)
     {
         if (solution.Volume == 0)
-        {
             return false;
-        }
 
         if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, VaporComponent.SolutionName, out var vaporSolution))
-        {
             return false;
-        }
 
         return _solutionContainerSystem.TryAddSolution(vaporSolution.Value, solution);
     }
@@ -130,23 +126,20 @@ internal sealed class VaporSystem : EntitySystem
                         // Preform the reagent's TileReaction
                         var reaction =
                             reagent.ReactionTile(tile,
-                                reagentQuantity.Quantity * vaporComp.TransferAmount,
+                                reagentQuantity.Quantity * vaporComp.TransferAmountPercentage,
                                 EntityManager,
                                 reagentQuantity.Reagent.Data);
 
                         if (reaction > reagentQuantity.Quantity)
-                        {
                             reaction = reagentQuantity.Quantity;
-                        }
 
                         _solutionContainerSystem.RemoveReagent(soln, reagentQuantity.Reagent, reaction);
                     }
 
+                    // Delete the vapor entity if it has no contents
                     if (contents.Volume == 0)
-                    {
-                        // Delete the vapor entity if it has no contents
                         EntityManager.QueueDeleteEntity(uid);
-                    }
+
                 }
                 // Set the previous tile reference to the current tile
                 vaporComp.PreviousTileRef = tile;
