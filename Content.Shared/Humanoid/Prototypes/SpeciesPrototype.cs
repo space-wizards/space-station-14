@@ -1,3 +1,4 @@
+using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -61,7 +62,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     ///     The limit of body markings that you can place on this species.
     /// </summary>
     [DataField("markingLimits")]
-    public string MarkingPoints { get; private set; } = default!;
+    public ProtoId<MarkingPointsPrototype> MarkingPoints { get; private set; } = default!;
 
     /// <summary>
     ///     Humanoid species variant used by this entity.

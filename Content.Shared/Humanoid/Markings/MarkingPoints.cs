@@ -9,8 +9,18 @@ public sealed partial class MarkingPoints
 {
     [DataField(required: true)]
     public int Points = 0;
+
     [DataField(required: true)]
-    public bool Required = false;
+    public bool Required;
+
+    /// <summary>
+    ///     If the user of this marking point set is only allowed to
+    ///     use whitelisted markings, and not globally usable markings.
+    ///     Only used for validation and profile construction. Ignored anywhere else.
+    /// </summary>
+    [DataField]
+    public bool OnlyWhitelisted;
+
     // Default markings for this layer.
     [DataField]
     public List<ProtoId<MarkingPrototype>> DefaultMarkings = new();
@@ -25,6 +35,7 @@ public sealed partial class MarkingPoints
             {
                 Points = points.Points,
                 Required = points.Required,
+                OnlyWhitelisted = points.OnlyWhitelisted,
                 DefaultMarkings = points.DefaultMarkings
             };
         }

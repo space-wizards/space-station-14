@@ -18,7 +18,7 @@ public sealed partial class MarkingPrototype : IPrototype
     public MarkingCategories MarkingCategory { get; private set; }
 
     [DataField]
-    public List<string>? SpeciesRestrictions { get; private set; }
+    public List<string>? SpeciesRestriction { get; private set; }
 
     [DataField]
     public Sex? SexRestriction { get; private set; }

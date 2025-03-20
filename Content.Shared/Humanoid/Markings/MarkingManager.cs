@@ -62,17 +62,17 @@ namespace Content.Shared.Humanoid.Markings
             string species)
         {
             var speciesProto = _prototypeManager.Index<SpeciesPrototype>(species);
-            var onlyWhitelisted = _prototypeManager.Index<MarkingPointsPrototype>(speciesProto.MarkingPoints).OnlyWhitelisted;
+            var markingPoints = _prototypeManager.Index(speciesProto.MarkingPoints);
             var res = new Dictionary<string, MarkingPrototype>();
 
             foreach (var (key, marking) in MarkingsByCategory(category))
             {
-                if (onlyWhitelisted && marking.SpeciesRestrictions == null)
+                if ((markingPoints.OnlyWhitelisted || markingPoints.Points[category].OnlyWhitelisted) && marking.SpeciesRestriction == null)
                 {
                     continue;
                 }
 
-                if (marking.SpeciesRestrictions != null && !marking.SpeciesRestrictions.Contains(species))
+                if (marking.SpeciesRestriction != null && !marking.SpeciesRestriction.Contains(species))
                 {
                     continue;
                 }
@@ -130,12 +130,12 @@ namespace Content.Shared.Humanoid.Markings
 
             foreach (var (key, marking) in MarkingsByCategory(category))
             {
-                if (onlyWhitelisted && marking.SpeciesRestrictions == null)
+                if (onlyWhitelisted && marking.SpeciesRestriction == null)
                 {
                     continue;
                 }
 
-                if (marking.SpeciesRestrictions != null && !marking.SpeciesRestrictions.Contains(species))
+                if (marking.SpeciesRestriction != null && !marking.SpeciesRestriction.Contains(species))
                 {
                     continue;
                 }
@@ -172,7 +172,7 @@ namespace Content.Shared.Humanoid.Markings
             }
 
             if (proto.MarkingCategory != category ||
-                proto.SpeciesRestrictions != null && !proto.SpeciesRestrictions.Contains(species) ||
+                proto.SpeciesRestriction != null && !proto.SpeciesRestriction.Contains(species) ||
                 proto.SexRestriction != null && proto.SexRestriction != sex)
             {
                 return false;
@@ -204,13 +204,13 @@ namespace Content.Shared.Humanoid.Markings
                 return false;
             }
 
-            if (onlyWhitelisted && prototype.SpeciesRestrictions == null)
+            if (onlyWhitelisted && prototype.SpeciesRestriction == null)
             {
                 return false;
             }
 
-            if (prototype.SpeciesRestrictions != null
-                && !prototype.SpeciesRestrictions.Contains(species))
+            if (prototype.SpeciesRestriction != null
+                && !prototype.SpeciesRestriction.Contains(species))
             {
                 return false;
             }
@@ -230,13 +230,13 @@ namespace Content.Shared.Humanoid.Markings
             var speciesProto = prototypeManager.Index<SpeciesPrototype>(species);
             var onlyWhitelisted = prototypeManager.Index<MarkingPointsPrototype>(speciesProto.MarkingPoints).OnlyWhitelisted;
 
-            if (onlyWhitelisted && prototype.SpeciesRestrictions == null)
+            if (onlyWhitelisted && prototype.SpeciesRestriction == null)
             {
                 return false;
             }
 
-            if (prototype.SpeciesRestrictions != null &&
-                !prototype.SpeciesRestrictions.Contains(species))
+            if (prototype.SpeciesRestriction != null &&
+                !prototype.SpeciesRestriction.Contains(species))
             {
                 return false;
             }
