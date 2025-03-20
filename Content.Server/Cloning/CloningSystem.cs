@@ -5,6 +5,8 @@ using Content.Shared.Cloning.Events;
 using Content.Shared.Database;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
+using Content.Shared.Implants;
+using Content.Shared.Implants.Components;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stacks;
@@ -35,6 +37,7 @@ public sealed class CloningSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
     [Dependency] private readonly SharedStackSystem _stack = default!;
+    [Dependency] private readonly SharedSubdermalImplantSystem _subdermalImplant = default!;
 
     /// <summary>
     ///     Spawns a clone of the given humanoid mob at the specified location or in nullspace.
@@ -90,7 +93,12 @@ public sealed class CloningSystem : EntitySystem
 
         // Copy storage on the mob itself as well.
         // This is needed for slime storage.
-        CopyStorage(original, clone.Value, settings.Whitelist, settings.Blacklist);
+        if (settings.CopyInternalStorage)
+            CopyStorage(original, clone.Value, settings.Whitelist, settings.Blacklist);
+
+        // copy implants and their storage contents
+        if (settings.CopyImplants)
+            CopyImplants(original, clone.Value, settings.CopyInternalStorage, settings.Whitelist, settings.Blacklist);
 
         var originalName = Name(original);
         if (TryComp<NameModifierComponent>(original, out var nameModComp)) // if the originals name was modified, use the unmodified name
@@ -195,5 +203,38 @@ public sealed class CloningSystem : EntitySystem
             if (copy != null)
                 _storage.InsertAt(target, copy.Value, itemLocation, out _, playSound: false);
         }
+    }
+
+    /// <summary>
+    ///     Copies all implants from one mob to another.
+    ///     Might result in duplicates if the target already has them.
+    ///     Can copy the storage inside a storage implant according to a whitelist and blacklist.
+    /// </summary>
+    /// <param name="original">Entity to copy implants from.</param>
+    /// <param name="target">Entity to copy implants to.</param>
+    /// <param name="copyStorage">If true will copy storage of the implants (E.g storage implant)</param>
+    /// <param name="whitelist">Whitelist for the storage copy (If copyStorage is true)</param>
+    /// <param name="blacklist">Blacklist for the storage copy (If copyStorage is true)</param>
+    public void CopyImplants(Entity<ImplantedComponent?> original, EntityUid target, bool copyStorage = false, EntityWhitelist? whitelist = null, EntityWhitelist? blacklist = null)
+    {
+        if (!Resolve(original, ref original.Comp, false))
+            return; // they don't have any implants to copy!
+
+        foreach (var originalImplant in original.Comp.ImplantContainer.ContainedEntities)
+        {
+            if (!HasComp<SubdermalImplantComponent>(originalImplant))
+                continue; // not an implant (should only happen with admin shenanigans)
+
+            var implantId = MetaData(originalImplant).EntityPrototype?.ID;
+
+            if (implantId == null)
+                continue;
+
+            var targetImplant = _subdermalImplant.AddImplant(target, implantId);
+
+            if (copyStorage && targetImplant != null)
+                CopyStorage(originalImplant, targetImplant.Value, whitelist, blacklist); // only needed for storage implants
+        }
+
     }
 }

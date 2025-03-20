@@ -73,6 +73,8 @@
   parent: Antag
   forceCloning: false
   copyEquipment: null
+  copyInternalStorage: false
+  copyImplants: false
 
 # spawner
 
