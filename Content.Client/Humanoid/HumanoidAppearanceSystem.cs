@@ -371,7 +371,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
                 sprite.LayerSetColor(layerId, Color.White);
             }
 
-            if (humanoid.MarkingsDisplacement.TryGetValue(markingPrototype.BodyPart, out var displacementData) && markingPrototype.SupportDisplacement)
+            if (humanoid.MarkingsDisplacement.TryGetValue(markingPrototype.BodyPart, out var displacementData) && markingPrototype.CanBeDisplaced)
             {
                 _displacement.TryAddDisplacement(displacementData, sprite, targetLayer + j + 1, layerId, out _);
             }

@@ -3,34 +3,33 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid.Markings
 {
-
     [Prototype]
     public sealed partial class MarkingPrototype : IPrototype
     {
         [IdDataField]
-        public string ID { get; private set; } = "uwu"; //uwu
+        public string ID { get; private set; } = "uwu";
 
         public string Name { get; private set; } = default!;
 
-        [DataField(required: true)]
+        [DataField("bodyPart", required: true)]
         public HumanoidVisualLayers BodyPart { get; private set; }
 
-        [DataField(required: true)]
+        [DataField("markingCategory", required: true)]
         public MarkingCategories MarkingCategory { get; private set; }
 
         [DataField("speciesRestriction")]
         public List<string>? SpeciesRestrictions { get; private set; }
 
-        [DataField]
+        [DataField("sexRestriction")]
         public Sex? SexRestriction { get; private set; }
 
-        [DataField]
+        [DataField("followSkinColor")]
         public bool FollowSkinColor { get; private set; }
 
-        [DataField]
+        [DataField("forcedColoring")]
         public bool ForcedColoring { get; private set; }
 
-        [DataField]
+        [DataField("coloring")]
         public MarkingColors Coloring { get; private set; } = new();
 
         /// <summary>
@@ -38,9 +37,9 @@ namespace Content.Shared.Humanoid.Markings
         /// with a standard human doll, and is used for some special races with unusual shapes
         /// </summary>
         [DataField]
-        public bool SupportDisplacement { get; private set; } = true;
+        public bool CanBeDisplaced { get; private set; } = true;
 
-        [DataField(required: true)]
+        [DataField("sprites", required: true)]
         public List<SpriteSpecifier> Sprites { get; private set; } = default!;
 
         public Marking AsMarking()

@@ -42,7 +42,7 @@ public sealed partial class HumanoidSpeciesSpriteLayer : IPrototype
     ///     If this is null, no sprite will be displayed, and the
     ///     layer will be invisible until otherwise set.
     /// </summary>
-    [DataField]
+    [DataField("baseSprite")]
     public SpriteSpecifier? BaseSprite { get; private set; }
 
     /// <summary>
@@ -50,20 +50,20 @@ public sealed partial class HumanoidSpeciesSpriteLayer : IPrototype
     ///     this layer will start with this percentage
     ///     of alpha.
     /// </summary>
-    [DataField]
+    [DataField("layerAlpha")]
     public float LayerAlpha { get; private set; } = 1.0f;
 
     /// <summary>
     ///     If this sprite layer should allow markings or not.
     /// </summary>
-    [DataField]
+    [DataField("allowsMarkings")]
     public bool AllowsMarkings { get; private set; } = true;
 
     /// <summary>
     ///     If this layer should always match the
     ///     skin tone in a character profile.
     /// </summary>
-    [DataField]
+    [DataField("matchSkin")]
     public bool MatchSkin { get; private set; } = true;
 
     /// <summary>
@@ -71,6 +71,6 @@ public sealed partial class HumanoidSpeciesSpriteLayer : IPrototype
     ///     match the skin tone of this part, including
     ///     alpha.
     /// </summary>
-    [DataField]
+    [DataField("markingsMatchSkin")]
     public bool MarkingsMatchSkin { get; private set; }
 }
