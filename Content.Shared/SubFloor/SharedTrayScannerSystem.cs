@@ -3,12 +3,14 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SubFloor;
 
 public abstract class SharedTrayScannerSystem : EntitySystem
 {
+    [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
 
@@ -37,6 +39,9 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
     private void OnEquip(EntityUid user)
     {
+        if (_netMan.IsClient)
+            return;
+
         var comp = EnsureComp<TrayScannerUserComponent>(user);
         comp.Count++;
 
@@ -48,6 +53,9 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
     private void OnUnequip(EntityUid user)
     {
+        if (_netMan.IsClient)
+            return;
+
         if (!TryComp(user, out TrayScannerUserComponent? comp))
             return;
 
