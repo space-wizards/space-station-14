@@ -63,7 +63,7 @@
   - type: Sprite
     color: "#ffffd1"
   - type: Machine
-    board: PaperPrinterSecurityMachineCircuitboard
+    board: PaperPrinterEngineeringMachineCircuitboard
   - type: Lathe
     staticPacks:
     - PrinterGeneralBasic
@@ -77,7 +77,7 @@
   - type: Sprite
     color: "#d1d1ff"
   - type: Machine
-    board: PaperPrinterSecurityMachineCircuitboard
+    board: PaperPrinterMedicalMachineCircuitboard
   - type: Lathe
     staticPacks:
     - PrinterGeneralBasic
