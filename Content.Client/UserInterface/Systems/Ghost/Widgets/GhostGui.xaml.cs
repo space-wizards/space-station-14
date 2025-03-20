@@ -14,7 +14,7 @@ public sealed partial class GhostGui : UIWidget
     public event Action? RequestWarpsPressed;
     public event Action? ReturnToBodyPressed;
     public event Action? GhostRolesPressed;
-    int PrevNumberRoles;
+    private int _prevNumberRoles;
 
     public GhostGui()
     {
@@ -44,12 +44,12 @@ public sealed partial class GhostGui : UIWidget
         {
             GhostRolesButton.Text = Loc.GetString("ghost-gui-ghost-roles-button", ("count", roles));
 
-            if (roles > PrevNumberRoles)
+            if (roles > _prevNumberRoles)
             {
                 GhostRolesButton.StyleClasses.Add(StyleBase.ButtonCaution);
             }
 
-            PrevNumberRoles = (int)roles;
+            _prevNumberRoles = (int)roles;
         }
 
         TargetWindow.Populate();
