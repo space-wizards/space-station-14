@@ -26,7 +26,7 @@
 /* -- They *should* be welded now? */
 
 /* - Law Office: Direct lawyers wrt "defense" and "prosecution." */
-- Prosecutor PW references: A whip, a mug and visor (syndie gas mask?), an electric guitar...
+/* - Prosecutor PW references: A whip, a mug and visor (syndie gas mask?), an electric guitar... */
 
 /* - Weapons Room: Make sure I can't actually fall into the chasms through the railings. */
 /* - Check that "radar" computer board. What does it actually do? (Literally the Mass Scanner.) */
@@ -66,16 +66,16 @@
 /* - Bridge: Hamlet. Does he spawn in the cage, or do I have to set that up? */
 - Cap's office: Make fax machine sentientable
 /* - Vault: Fill syringe with 1 dose of cogni (unlabeled) */
--	Remove water from survival kit water bottle
+/* -	Remove water from survival kit water bottle */
 -	Make flare spent
 -	Make corpse rotten
 --		And add ammonia gas?
 --		Make corpse exist even
 --			Give: Passenger PDA/ID (name?), Ancient jumpsuit, gas mask, budget insuls,
 				shoes, bling, ID computer board in pocket
--	Put more stuff in backpack
--	Add diary page to room with welder
--	Empty welder of fuel
+/* -	Put more stuff in backpack */
+/* -	Add diary page to room with welder */
+/* -	Empty welder of fuel */
 
 - Coms: Do the camera monitors work? Do the camera servers work?
 - Extra encryption keys somewhere?
@@ -86,9 +86,9 @@
 /* - Mime's too */
 - Stuff that gets flushed down toilets, aside from the mime and clowns', goes to the QM's shower for some reason.
 /* - Re-label the quartermaster's quarters that belong in the quartermaster's quarters */
-- Re-label (and add) station beacon
+/* - Re-label (and add) station beacon */
 /* - Fill gun safe? Or just get rid of it? And rename. */
-- Make sure QM has perms for the safe
+/* - Make sure QM has perms for the safe */
 
 /* - Engineering: Give Command, Security encryption keys to CE */
 
@@ -256,13 +256,13 @@ Air sensors: Cafeteria? Meeting? Chapel + Def? Library + News? Botany + Kitchen?
 	Arrivals and service dock are spaced! Science seems leaky, too? Maybe? (But not the arti room?)
 
 Airlocks:
-	Atmos
-	Salv Shuttle
-	Evac escape pod
-	Evac secondary dock
-	Evac maints
-	Perma entrance
-	Engie - PA grid
+	/* Atmos */
+	/* Salv Shuttle */
+	/* Evac escape pod */
+	/* Evac secondary dock */
+	/* Evac maints */
+	/* Perma entrance */
+	/* Engie - PA grid */
 
 Label buttons:
 	Atmos
@@ -363,16 +363,22 @@ Deleting and replacing dispos north airlock that wasn't getting power
 Tree room: Blocked by grave and, uh, tree
 /* Lockers behind clown's room are positioned weird. Possibly the */
 	/* lightbulb is getting in the way? No, it was literally on top of a PACMAN somehow./*
-Arrivals problem: The docks are just flat-out wrong. Should be, like, 5 wall tiles in between doors or something.
-	I also need to double-check if the shuttle even fits in the space.
+/* Arrivals problem: The docks are just flat-out wrong. Should be, like, 5 wall tiles in between doors or something. */
+	/* I also need to double-check if the shuttle even fits in the space. */
 
 Make the "smokin'" room door not glass. More fun not to see it until you go in.
-Rubbing alcohol is empty??
-	Should be 'drink,' not 'food'
+/* Rubbing alcohol is empty?? */
+/* 	Should be 'drink,' not 'food' */
 Make shutter over bar opening glass
 I don't like the LED lights in the cafeteria. Maybe that's okay in Arrivals, but not Caf.
 Firelocks between Arrivals and Docking Arm
 Airlocks or at least tinyfans on shutter doors. And/or lock 'em.
+
+I still have to add fire alarms!
+I also still have to label fax machines!
+And reach a conclusion about mail chute thingies! (I could of course keep just the book return one.)
+	A mail system between Atmo and Engie might also be nice.
+	Or even... a disposal chute? Hmm.
 
 Also: When I'm testing in Release mode, I get these exceptions in the server terminal 
 	about the no transform component thing. Can I use those to hunt it
