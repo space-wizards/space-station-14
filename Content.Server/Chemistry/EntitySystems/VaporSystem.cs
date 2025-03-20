@@ -104,7 +104,8 @@ internal sealed class VaporSystem : EntitySystem
                 var tile = _map.GetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates);
 
                 // Check if the tile is a tile we've reacted with previously. If so, skip it.
-                if (tile == vaporComp.PreviousTileRef)
+                // If we have no previous tile reference, we don't return so we can save one.
+                if (vaporComp.PreviousTileRef != null && tile == vaporComp.PreviousTileRef)
                     return;
 
                 // Enumerate over all the reagents in the vapor entity solution

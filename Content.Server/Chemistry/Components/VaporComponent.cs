@@ -1,5 +1,4 @@
-﻿using Content.Shared.FixedPoint;
-using Robust.Shared.Map;
+﻿using Robust.Shared.Map;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -11,7 +10,8 @@ namespace Content.Server.Chemistry.Components
         /// <summary>
         /// Stores data on the previously reacted tile. We only want to do reaction checks once per tile.
         /// </summary>
-        public TileRef PreviousTileRef;
+        [DataField]
+        public TileRef? PreviousTileRef;
 
         /// <summary>
         /// Percentage of the solution that is reacted with the TileReaction.
