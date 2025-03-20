@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Wielding weapons no longer displays your character's real identity when
-      your identity is hidden.
-    type: Fix
-  id: 7585
-  time: '2024-11-03T11:25:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33134
 - author: MilenVolf
   changes:
   - message: Ghost roles menu is now collapsible! This makes it much easier to find
@@ -3892,3 +3884,11 @@
   id: 8084
   time: '2025-03-20T00:53:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35151
+- author: Seam_Less
+  changes:
+  - message: Added in-hand sprites to Bling, Camera Bug, Cap Cap, Centcom Cap, Damp
+      Rag, and Incomplete Baseball Bat.
+    type: Add
+  id: 8085
+  time: '2025-03-20T01:04:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35433
