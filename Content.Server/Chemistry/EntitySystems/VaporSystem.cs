@@ -30,8 +30,6 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly ReactiveSystem _reactive = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
-        private const float ReactTime = 0.125f;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -94,52 +92,61 @@ namespace Content.Server.Chemistry.EntitySystems
 
         public override void Update(float frameTime)
         {
+            base.Update(frameTime);
+
+            // Enumerate over all VaporComponents
             var query = EntityQueryEnumerator<VaporComponent, SolutionContainerManagerComponent, TransformComponent>();
             while (query.MoveNext(out var uid, out var vaporComp, out var container, out var xform))
             {
-                foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, container)))
+                // Return early if we're not active
+                if (!vaporComp.Active)
+                    return;
+
+                // Get the current location of the vapor entity first
+                if (TryComp(xform.GridUid, out MapGridComponent? gridComp))
                 {
-                    Update((uid, vaporComp), soln, xform);
-                }
-            }
-        }
+                    var tile = _map.GetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates);
 
-        private void Update(Entity<VaporComponent> ent, Entity<SolutionComponent> soln, TransformComponent xform)
-        {
-            var (entity, vapor) = ent;
-            if (!vapor.Active)
-                return;
-
-
-            var contents = soln.Comp.Solution;
-            if (vapor.ReactTimer >= ReactTime && TryComp(xform.GridUid, out MapGridComponent? gridComp))
-            {
-                vapor.ReactTimer = 0;
-
-                var tile = _map.GetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates);
-                foreach (var reagentQuantity in contents.Contents.ToArray())
-                {
-                    if (reagentQuantity.Quantity == FixedPoint2.Zero)
-                        continue;
-                    var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
-
-                    var reaction =
-                        reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f, EntityManager, reagentQuantity.Reagent.Data);
-
-                    if (reaction > reagentQuantity.Quantity)
+                    // Enumerate over all the reagents in the vapor entity solution
+                    foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, container)))
                     {
-                        Log.Error($"Tried to tile react more than we have for reagent {reagentQuantity}. Found {reaction} and we only have {reagentQuantity.Quantity}");
-                        reaction = reagentQuantity.Quantity;
+                        // Iterate over the reagents in the solution
+                        // Reason: Each reagent in our solution may have a unique TileReaction
+                        // In this instance, we check individually for each reagent's TileReaction
+                        // This is not doing chemical reactions!
+                        var contents = soln.Comp.Solution;
+                        foreach (var reagentQuantity in contents.Contents.ToArray())
+                        {
+                            // Check if the reagent is empty
+                            if (reagentQuantity.Quantity == FixedPoint2.Zero)
+                                continue;
+
+                            var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+
+                            // Preform the reagent's TileReaction
+                            var reaction =
+                                reagent.ReactionTile(tile,
+                                    reagentQuantity.Quantity / vaporComp.TransferAmount,
+                                    EntityManager,
+                                    reagentQuantity.Reagent.Data);
+
+                            if (reaction > reagentQuantity.Quantity)
+                            {
+                                Log.Error(
+                                    $"Tried to tile react more than we have for reagent {reagentQuantity}. Found {reaction} and we only have {reagentQuantity.Quantity}");
+                                reaction = reagentQuantity.Quantity;
+                            }
+
+                            _solutionContainerSystem.RemoveReagent(soln, reagentQuantity.Reagent, reaction);
+                        }
+
+                        if (contents.Volume == 0)
+                        {
+                            // Delete the vapor entity if it has no contents
+                            EntityManager.QueueDeleteEntity(uid);
+                        }
                     }
-
-                    _solutionContainerSystem.RemoveReagent(soln, reagentQuantity.Reagent, reaction);
                 }
-            }
-
-            if (contents.Volume == 0)
-            {
-                // Delete this
-                EntityManager.QueueDeleteEntity(entity);
             }
         }
     }

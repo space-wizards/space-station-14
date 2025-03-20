@@ -7,11 +7,10 @@ namespace Content.Server.Chemistry.Components
     {
         public const string SolutionName = "vapor";
 
-        [DataField("transferAmount")]
-        public FixedPoint2 TransferAmount = FixedPoint2.New(0.5);
+        [DataField]
+        public FixedPoint2 TransferAmount = FixedPoint2.New(0.15);
 
-        public float ReactTimer;
-        [DataField("active")]
+        [DataField]
         public bool Active;
     }
 }
