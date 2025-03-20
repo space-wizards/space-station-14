@@ -17,140 +17,139 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Spawners;
 using System.Numerics;
 
-namespace Content.Server.Chemistry.EntitySystems
+namespace Content.Server.Chemistry.EntitySystems;
+
+[UsedImplicitly]
+internal sealed class VaporSystem : EntitySystem
 {
-    [UsedImplicitly]
-    internal sealed class VaporSystem : EntitySystem
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly ReactiveSystem _reactive = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
-        [Dependency] private readonly SharedMapSystem _map = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly ThrowingSystem _throwing = default!;
-        [Dependency] private readonly ReactiveSystem _reactive = default!;
-        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<VaporComponent, StartCollideEvent>(HandleCollide);
+    }
+
+    private void HandleCollide(Entity<VaporComponent> entity, ref StartCollideEvent args)
+    {
+        if (!EntityManager.TryGetComponent(entity.Owner, out SolutionContainerManagerComponent? contents))
+            return;
+
+        foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((entity.Owner, contents)))
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<VaporComponent, StartCollideEvent>(HandleCollide);
+            var solution = soln.Comp.Solution;
+            _reactive.DoEntityReaction(args.OtherEntity, solution, ReactionMethod.Touch);
         }
 
-        private void HandleCollide(Entity<VaporComponent> entity, ref StartCollideEvent args)
+        // Check for collision with a impassable object (e.g. wall) and stop
+        if ((args.OtherFixture.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && args.OtherFixture.Hard)
         {
-            if (!EntityManager.TryGetComponent(entity.Owner, out SolutionContainerManagerComponent? contents))
+            EntityManager.QueueDeleteEntity(entity);
+        }
+    }
+
+    public void Start(Entity<VaporComponent> vapor, TransformComponent vaporXform, Vector2 dir, float speed, MapCoordinates target, float aliveTime, EntityUid? user = null)
+    {
+        vapor.Comp.Active = true;
+        var despawn = EnsureComp<TimedDespawnComponent>(vapor);
+        despawn.Lifetime = aliveTime;
+
+        // Set Move
+        if (EntityManager.TryGetComponent(vapor, out PhysicsComponent? physics))
+        {
+            _physics.SetLinearDamping(vapor, physics, 0f);
+            _physics.SetAngularDamping(vapor, physics, 0f);
+
+            _throwing.TryThrow(vapor, dir, speed, user: user);
+
+            var distance = (target.Position - _transformSystem.GetWorldPosition(vaporXform)).Length();
+            var time = (distance / physics.LinearVelocity.Length());
+            despawn.Lifetime = MathF.Min(aliveTime, time);
+        }
+    }
+
+    internal bool TryAddSolution(Entity<VaporComponent> vapor, Solution solution)
+    {
+        if (solution.Volume == 0)
+        {
+            return false;
+        }
+
+        if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, VaporComponent.SolutionName, out var vaporSolution))
+        {
+            return false;
+        }
+
+        return _solutionContainerSystem.TryAddSolution(vaporSolution.Value, solution);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        // Enumerate over all VaporComponents
+        var query = EntityQueryEnumerator<VaporComponent, SolutionContainerManagerComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var vaporComp, out var container, out var xform))
+        {
+            // Return early if we're not active
+            if (!vaporComp.Active)
                 return;
 
-            foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((entity.Owner, contents)))
+            // Get the current location of the vapor entity first
+            if (TryComp(xform.GridUid, out MapGridComponent? gridComp))
             {
-                var solution = soln.Comp.Solution;
-                _reactive.DoEntityReaction(args.OtherEntity, solution, ReactionMethod.Touch);
-            }
+                var tile = _map.GetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates);
 
-            // Check for collision with a impassable object (e.g. wall) and stop
-            if ((args.OtherFixture.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && args.OtherFixture.Hard)
-            {
-                EntityManager.QueueDeleteEntity(entity);
-            }
-        }
-
-        public void Start(Entity<VaporComponent> vapor, TransformComponent vaporXform, Vector2 dir, float speed, MapCoordinates target, float aliveTime, EntityUid? user = null)
-        {
-            vapor.Comp.Active = true;
-            var despawn = EnsureComp<TimedDespawnComponent>(vapor);
-            despawn.Lifetime = aliveTime;
-
-            // Set Move
-            if (EntityManager.TryGetComponent(vapor, out PhysicsComponent? physics))
-            {
-                _physics.SetLinearDamping(vapor, physics, 0f);
-                _physics.SetAngularDamping(vapor, physics, 0f);
-
-                _throwing.TryThrow(vapor, dir, speed, user: user);
-
-                var distance = (target.Position - _transformSystem.GetWorldPosition(vaporXform)).Length();
-                var time = (distance / physics.LinearVelocity.Length());
-                despawn.Lifetime = MathF.Min(aliveTime, time);
-            }
-        }
-
-        internal bool TryAddSolution(Entity<VaporComponent> vapor, Solution solution)
-        {
-            if (solution.Volume == 0)
-            {
-                return false;
-            }
-
-            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, VaporComponent.SolutionName, out var vaporSolution))
-            {
-                return false;
-            }
-
-            return _solutionContainerSystem.TryAddSolution(vaporSolution.Value, solution);
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-
-            // Enumerate over all VaporComponents
-            var query = EntityQueryEnumerator<VaporComponent, SolutionContainerManagerComponent, TransformComponent>();
-            while (query.MoveNext(out var uid, out var vaporComp, out var container, out var xform))
-            {
-                // Return early if we're not active
-                if (!vaporComp.Active)
+                // Check if the tile is a tile we've reacted with previously. If so, skip it.
+                if (tile == vaporComp.PreviousTileRef)
                     return;
 
-                // Get the current location of the vapor entity first
-                if (TryComp(xform.GridUid, out MapGridComponent? gridComp))
+                // Enumerate over all the reagents in the vapor entity solution
+                foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, container)))
                 {
-                    var tile = _map.GetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates);
-
-                    // Check if the tile is a tile we've reacted with previously. If so, skip it.
-                    if (tile == vaporComp.PreviousTileRef)
-                        return;
-
-                    // Enumerate over all the reagents in the vapor entity solution
-                    foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, container)))
+                    // Iterate over the reagents in the solution
+                    // Reason: Each reagent in our solution may have a unique TileReaction
+                    // In this instance, we check individually for each reagent's TileReaction
+                    // This is not doing chemical reactions!
+                    var contents = soln.Comp.Solution;
+                    foreach (var reagentQuantity in contents.Contents.ToArray())
                     {
-                        // Iterate over the reagents in the solution
-                        // Reason: Each reagent in our solution may have a unique TileReaction
-                        // In this instance, we check individually for each reagent's TileReaction
-                        // This is not doing chemical reactions!
-                        var contents = soln.Comp.Solution;
-                        foreach (var reagentQuantity in contents.Contents.ToArray())
+                        // Check if the reagent is empty
+                        if (reagentQuantity.Quantity == FixedPoint2.Zero)
+                            continue;
+
+                        var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+
+                        // Preform the reagent's TileReaction
+                        var reaction =
+                            reagent.ReactionTile(tile,
+                                reagentQuantity.Quantity * vaporComp.TransferAmount,
+                                EntityManager,
+                                reagentQuantity.Reagent.Data);
+
+                        if (reaction > reagentQuantity.Quantity)
                         {
-                            // Check if the reagent is empty
-                            if (reagentQuantity.Quantity == FixedPoint2.Zero)
-                                continue;
-
-                            var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
-
-                            // Preform the reagent's TileReaction
-                            var reaction =
-                                reagent.ReactionTile(tile,
-                                    reagentQuantity.Quantity * vaporComp.TransferAmount,
-                                    EntityManager,
-                                    reagentQuantity.Reagent.Data);
-
-                            if (reaction > reagentQuantity.Quantity)
-                            {
-                                reaction = reagentQuantity.Quantity;
-                            }
-
-                            _solutionContainerSystem.RemoveReagent(soln, reagentQuantity.Reagent, reaction);
+                            reaction = reagentQuantity.Quantity;
                         }
 
-                        if (contents.Volume == 0)
-                        {
-                            // Delete the vapor entity if it has no contents
-                            EntityManager.QueueDeleteEntity(uid);
-                        }
+                        _solutionContainerSystem.RemoveReagent(soln, reagentQuantity.Reagent, reaction);
                     }
-                    // Set the previous tile reference to the current tile
-                    vaporComp.PreviousTileRef = tile;
+
+                    if (contents.Volume == 0)
+                    {
+                        // Delete the vapor entity if it has no contents
+                        EntityManager.QueueDeleteEntity(uid);
+                    }
                 }
+                // Set the previous tile reference to the current tile
+                vaporComp.PreviousTileRef = tile;
             }
         }
     }
