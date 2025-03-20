@@ -92,6 +92,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookSmoke
+  name: spellbook-smoke-name
+  description: spellbook-smoke-desc
+  productAction: ActionSmoke
+  cost:
+    WizCoin: 1
+  categories:
+  - SpellbookDefensive
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Utility
 - type: listing
   id: SpellbookPolymorphSpider
