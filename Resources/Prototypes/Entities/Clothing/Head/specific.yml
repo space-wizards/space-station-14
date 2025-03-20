@@ -56,7 +56,6 @@
   name: EVA helmet
   description: An old-but-gold helmet designed for extravehicular activites. Infamous for making security officers paranoid.
   components:
-  - type: AttachedClothing
   - type: BreathMask
   - type: Sprite
     sprite: Clothing/Head/Helmets/eva.rsi
