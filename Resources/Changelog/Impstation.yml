@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Added a blood-red phone to the lone ops shuttle.
-    type: Add
-  id: 856
-  time: '2025-01-04T14:56:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1226
 - author: kipdotnet
   changes:
   - message: Banana has been updated!
@@ -4099,3 +4092,12 @@
   id: 1355
   time: '2025-03-20T13:00:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2024
+- author: Sha-Seng
+  changes:
+  - message: Polish pass for thaven hairstyles
+    type: Tweak
+  - message: Sharkminnow Eyeliner displays under bangs now
+    type: Tweak
+  id: 1356
+  time: '2025-03-20T13:05:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2023
