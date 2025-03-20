@@ -134,10 +134,10 @@ namespace Content.Server.Chemistry.EntitySystems
                                     EntityManager,
                                     reagentQuantity.Reagent.Data);
 
-                            // if (reaction > reagentQuantity.Quantity)
-                            // {
-                            //     reaction = reagentQuantity.Quantity;
-                            // }
+                            if (reaction > reagentQuantity.Quantity)
+                            {
+                                reaction = reagentQuantity.Quantity;
+                            }
 
                             _solutionContainerSystem.RemoveReagent(soln, reagentQuantity.Reagent, reaction);
                         }
