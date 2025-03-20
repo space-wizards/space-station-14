@@ -56,7 +56,7 @@
   - type: Sprite
     state: medical
   - type: MachineBoard
-    prototype: PaperPrinterCommand
+    prototype: PaperPrinterMedical
     stackRequirements:
       MatterBin: 1
       Manipulator: 2
