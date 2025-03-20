@@ -31,6 +31,8 @@
         amount: 2
       - id: ClothingEyesGlassesSecurity
         amount: 2
+      - id: ClothingEyesHudSecurity
+        amount: 2
       - id: ClothingHeadsetSecurity
         amount: 2
       - id: ClothingHandsGlovesSecurityRed
