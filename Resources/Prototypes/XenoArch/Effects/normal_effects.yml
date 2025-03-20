@@ -105,7 +105,7 @@
 
 - type: artifactEffect
   id: EffectWizardLight #nice and slow RGB that covers a room
-  targetDepth: 0
+  targetDepth: 2
   effectHint: artifact-effect-hint-release
   originWhitelist:
     - Wizard
@@ -121,7 +121,7 @@
 
 - type: artifactEffect
   id: EffectMartianLight #basically blinding purple
-  targetDepth: 0
+  targetDepth: 2
   effectHint: artifact-effect-hint-release
   originWhitelist:
     - Martian
@@ -136,7 +136,7 @@
 
 - type: artifactEffect
   id: EffectSiliconLight #normal room lighting
-  targetDepth: 0
+  targetDepth: 2
   effectHint: artifact-effect-hint-release
   originWhitelist:
     - Silicon
