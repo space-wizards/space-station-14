@@ -81,10 +81,11 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
         if (EntityName != null)
         {
             var name = EntityName.Trim();
+            var maxNameLength = configManager.GetCVar(CCVars.MaxNameLength);
 
-            if (name.Length > configManager.GetCVar(CCVars.MaxNameLength))
+            if (name.Length > maxNameLength)
             {
-                EntityName = name[..configManager.GetCVar(CCVars.MaxNameLength)];
+                EntityName = name[..maxNameLength];
             }
 
             if (name.Length == 0)

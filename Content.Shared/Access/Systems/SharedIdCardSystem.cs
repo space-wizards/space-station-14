@@ -22,6 +22,10 @@ public abstract class SharedIdCardSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+    // CCVar.
+    private int _maxNameLength;
+    private int _maxIdJobLength;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -29,6 +33,9 @@ public abstract class SharedIdCardSystem : EntitySystem
         SubscribeLocalEvent<IdCardComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
         SubscribeLocalEvent<EntityRenamedEvent>(OnRename);
+
+        Subs.CVar(_cfgManager, CCVars.MaxNameLength, value => _maxNameLength = value, true);
+        Subs.CVar(_cfgManager, CCVars.MaxIdJobLength, value => _maxIdJobLength = value, true);
     }
 
     private void OnRename(ref EntityRenamedEvent ev)
@@ -131,8 +138,8 @@ public abstract class SharedIdCardSystem : EntitySystem
         {
             jobTitle = jobTitle.Trim();
 
-            if (jobTitle.Length > _cfgManager.GetCVar(CCVars.MaxIdJobLength))
-                jobTitle = jobTitle[.._cfgManager.GetCVar(CCVars.MaxIdJobLength)];
+            if (jobTitle.Length > _maxIdJobLength)
+                jobTitle = jobTitle[.._maxIdJobLength];
         }
         else
         {
@@ -209,8 +216,8 @@ public abstract class SharedIdCardSystem : EntitySystem
         if (!string.IsNullOrWhiteSpace(fullName))
         {
             fullName = fullName.Trim();
-            if (fullName.Length > _cfgManager.GetCVar(CCVars.MaxNameLength))
-                fullName = fullName[.._cfgManager.GetCVar(CCVars.MaxNameLength)];
+            if (fullName.Length > _maxNameLength)
+                fullName = fullName[.._maxNameLength];
         }
         else
         {

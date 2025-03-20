@@ -18,9 +18,16 @@ namespace Content.Client.Access.UI
 
         private IdCardConsoleWindow? _window;
 
+        // CCVar.
+        private int _maxNameLength;
+        private int _maxIdJobLength;
+
         public IdCardConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
             _idCardConsoleSystem = EntMan.System<SharedIdCardConsoleSystem>();
+
+            _maxNameLength =_cfgManager.GetCVar(CCVars.MaxNameLength);
+            _maxIdJobLength = _cfgManager.GetCVar(CCVars.MaxIdJobLength);
         }
 
         protected override void Open()
@@ -69,11 +76,11 @@ namespace Content.Client.Access.UI
 
         public void SubmitData(string newFullName, string newJobTitle, List<ProtoId<AccessLevelPrototype>> newAccessList, string newJobPrototype)
         {
-            if (newFullName.Length > _cfgManager.GetCVar(CCVars.MaxNameLength))
-                newFullName = newFullName[.._cfgManager.GetCVar(CCVars.MaxNameLength)];
+            if (newFullName.Length > _maxNameLength)
+                newFullName = newFullName[.._maxNameLength];
 
-            if (newJobTitle.Length > _cfgManager.GetCVar(CCVars.MaxIdJobLength))
-                newJobTitle = newJobTitle[.._cfgManager.GetCVar(CCVars.MaxIdJobLength)];
+            if (newJobTitle.Length > _maxIdJobLength)
+                newJobTitle = newJobTitle[.._maxIdJobLength];
 
             SendMessage(new WriteToTargetIdMessage(
                 newFullName,

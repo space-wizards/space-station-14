@@ -17,6 +17,9 @@ public sealed partial class NavMapBeaconWindow : FancyWindow
     private bool _defaultEnabled;
     private Color _defaultColor;
 
+    // CCVar.
+    private int _maxNameLength;
+
     public event Action<string?, bool, Color>? OnApplyButtonPressed;
 
     public NavMapBeaconWindow()
@@ -24,6 +27,7 @@ public sealed partial class NavMapBeaconWindow : FancyWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
 
         VisibleButton.OnPressed += args => UpdateVisibleButton(args.Button.Pressed);
         LabelLineEdit.OnTextChanged += OnTextChanged;
@@ -56,8 +60,8 @@ public sealed partial class NavMapBeaconWindow : FancyWindow
 
     private void OnTextChanged(LineEdit.LineEditEventArgs obj)
     {
-        if (obj.Text.Length > _cfgManager.GetCVar(CCVars.MaxNameLength))
-            obj.Control.Text = obj.Text.Substring(0, _cfgManager.GetCVar(CCVars.MaxNameLength));
+        if (obj.Text.Length > _maxNameLength)
+            obj.Control.Text = obj.Text.Substring(0, _maxNameLength);
 
         TryEnableApplyButton();
     }

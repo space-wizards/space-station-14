@@ -504,13 +504,14 @@ namespace Content.Shared.Preferences
             };
 
             string name;
+            var maxNameLength = configManager.GetCVar(CCVars.MaxNameLength);
             if (string.IsNullOrEmpty(Name))
             {
                 name = GetName(Species, gender);
             }
-            else if (Name.Length > configManager.GetCVar(CCVars.MaxNameLength))
+            else if (Name.Length > maxNameLength)
             {
-                name = Name[..configManager.GetCVar(CCVars.MaxNameLength)];
+                name = Name[..maxNameLength];
             }
             else
             {
@@ -536,9 +537,10 @@ namespace Content.Shared.Preferences
             }
 
             string flavortext;
-            if (FlavorText.Length > configManager.GetCVar(CCVars.MaxFlavorTextLength))
+            var maxFlavorTextLength = configManager.GetCVar(CCVars.MaxFlavorTextLength);
+            if (FlavorText.Length > maxFlavorTextLength)
             {
-                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..configManager.GetCVar(CCVars.MaxFlavorTextLength)];
+                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..maxFlavorTextLength];
             }
             else
             {

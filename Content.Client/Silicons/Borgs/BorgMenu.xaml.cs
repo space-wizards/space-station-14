@@ -28,12 +28,17 @@ public sealed partial class BorgMenu : FancyWindow
     private string _lastValidName;
     private List<EntityUid> _modules = new();
 
+    // CCVar.
+    private int _maxNameLength;
+
     public EntityUid Entity;
 
     public BorgMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+
+        _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
 
         _lastValidName = NameLineEdit.Text;
 
@@ -154,9 +159,9 @@ public sealed partial class BorgMenu : FancyWindow
             return;
         }
 
-        if (obj.Text.Length > _cfgManager.GetCVar(CCVars.MaxNameLength))
+        if (obj.Text.Length > _maxNameLength)
         {
-            obj.Control.Text = obj.Text.Substring(0, _cfgManager.GetCVar(CCVars.MaxNameLength));
+            obj.Control.Text = obj.Text.Substring(0, _maxNameLength);
         }
 
         _lastValidName = obj.Control.Text;
@@ -170,7 +175,7 @@ public sealed partial class BorgMenu : FancyWindow
 
     private void OnNameFocusExit(LineEdit.LineEditEventArgs obj)
     {
-        if (obj.Text.Length > _cfgManager.GetCVar(CCVars.MaxNameLength) ||
+        if (obj.Text.Length > _maxNameLength ||
             obj.Text.Length == 0 ||
             string.IsNullOrWhiteSpace(obj.Text) ||
             string.IsNullOrEmpty(obj.Text))

@@ -25,13 +25,18 @@ public sealed partial class LoadoutWindow : FancyWindow
 
     public HumanoidCharacterProfile Profile;
 
+    // CCvar.
+    private int _maxLoadoutNameLength;
+
     public LoadoutWindow(HumanoidCharacterProfile profile, RoleLoadout loadout, RoleLoadoutPrototype proto, ICommonSession session, IDependencyCollection collection)
     {
         RobustXamlLoader.Load(this);
         Profile = profile;
         var protoManager = collection.Resolve<IPrototypeManager>();
         var configManager = collection.Resolve<IConfigurationManager>();
-        RoleNameEdit.IsValid = text => text.Length <= configManager.GetCVar(CCVars.MaxLoadoutNameLength);
+
+        _maxLoadoutNameLength = configManager.GetCVar(CCVars.MaxLoadoutNameLength);
+        RoleNameEdit.IsValid = text => text.Length <= _maxLoadoutNameLength;
 
         // Hide if we can't edit the name.
         if (!proto.CanCustomizeName)
@@ -48,7 +53,7 @@ public sealed partial class LoadoutWindow : FancyWindow
 
             RoleNameEdit.ToolTip = Loc.GetString(
                 "loadout-name-edit-tooltip",
-                ("max", configManager.GetCVar(CCVars.MaxLoadoutNameLength)));
+                ("max", _maxLoadoutNameLength));
             RoleNameEdit.Text = name ?? string.Empty;
             RoleNameEdit.OnTextChanged += args => OnNameChanged?.Invoke(args.Text);
         }
