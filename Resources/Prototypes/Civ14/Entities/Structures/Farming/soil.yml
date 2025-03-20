@@ -1,0 +1,56 @@
+- type: entity
+  name: ploughed field
+  id: ploughedField
+  description: A field that was ploughed.
+  components:
+    - type: Sprite
+      texture: Tiles/_civ/dirt_ploughed.png
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape: !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.1"
+          density: 190
+          hard: false
+          mask:
+            - FullTileMask
+          layer:
+            - FullTileMask
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger: !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+    - type: PlantHolder
+      drawWarnings: false
+      nutritionLevel: 0
+      waterLevel: 0
+    - type: SolutionContainerManager
+      solutions:
+        soil:
+          maxVol: 200
+    - type: RefillableSolution
+      solution: soil
+      maxRefill: 50
+    - type: Transform
+      anchored: true
+    - type: Reactive
+      reactions:
+        - reagents: [Water]
+          methods: [Touch, Ingestion, Injection]
+          effects:
+            - !type:AddToSolutionReaction
+              solution: soil
+    - type: Appearance
+    - type: PlantHolderVisuals
+    - type: CompostableField
+      compostTime: 5.0

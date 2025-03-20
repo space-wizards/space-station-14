@@ -1,0 +1,1116 @@
+{
+  "version": 1,
+  "license": "AGPL3",
+  "copyright": "https://github.com/Civ13/Civ13",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "plating"
+    },
+    {
+      "name": "floor"
+    },
+    {
+      "name": "white"
+    },
+    {
+      "name": "dark"
+    },
+    {
+      "name": "steel_grid"
+    },
+    {
+      "name": "steel_ridged"
+    },
+    {
+      "name": "techmaint"
+    },
+    {
+      "name": "stage_stairs"
+    },
+    {
+      "name": "whiteyellowfull"
+    },
+    {
+      "name": "black"
+    },
+    {
+      "name": "gcircuitoff"
+    },
+    {
+      "name": "neutral",
+      "directions": 8
+    },
+    {
+      "name": "neutralfull"
+    },
+    {
+      "name": "neutralcorner",
+      "directions": 4
+    },
+    {
+      "name": "floorgrime"
+    },
+    {
+      "name": "freezerfloor"
+    },
+    {
+      "name": "damaged1"
+    },
+    {
+      "name": "damaged3"
+    },
+    {
+      "name": "damaged2"
+    },
+    {
+      "name": "panelscorched"
+    },
+    {
+      "name": "floorscorched1"
+    },
+    {
+      "name": "floorscorched2"
+    },
+    {
+      "name": "damaged4"
+    },
+    {
+      "name": "damaged5"
+    },
+    {
+      "name": "platingdmg1"
+    },
+    {
+      "name": "platingdmg2"
+    },
+    {
+      "name": "platingdmg3"
+    },
+    {
+      "name": "asteroid"
+    },
+    {
+      "name": "hydrofloor"
+    },
+    {
+      "name": "carpetside",
+      "directions": 8
+    },
+    {
+      "name": "carpetcorner",
+      "directions": 4
+    },
+    {
+      "name": "carpet",
+      "directions": 4
+    },
+    {
+      "name": "carpetnoconnect"
+    },
+    {
+      "name": "carpetsymbol",
+      "directions": 8
+    },
+    {
+      "name": "showroomfloor"
+    },
+    {
+      "name": "vault",
+      "directions": 8
+    },
+    {
+      "name": "rockvault"
+    },
+    {
+      "name": "sandstonevault"
+    },
+    {
+      "name": "siding1"
+    },
+    {
+      "name": "siding2"
+    },
+    {
+      "name": "siding4"
+    },
+    {
+      "name": "siding8"
+    },
+    {
+      "name": "siding6"
+    },
+    {
+      "name": "siding5"
+    },
+    {
+      "name": "siding10"
+    },
+    {
+      "name": "siding9"
+    },
+    {
+      "name": "siding7"
+    },
+    {
+      "name": "siding11"
+    },
+    {
+      "name": "siding13"
+    },
+    {
+      "name": "siding14"
+    },
+    {
+      "name": "siding15"
+    },
+    {
+      "name": "wall_thermite"
+    },
+    {
+      "name": "wood_siding1"
+    },
+    {
+      "name": "wood_siding2"
+    },
+    {
+      "name": "wood_siding3"
+    },
+    {
+      "name": "wood_siding4"
+    },
+    {
+      "name": "wood_siding5"
+    },
+    {
+      "name": "wood_siding6"
+    },
+    {
+      "name": "wood_siding7"
+    },
+    {
+      "name": "wood_siding8"
+    },
+    {
+      "name": "wood_siding9"
+    },
+    {
+      "name": "wood_siding10"
+    },
+    {
+      "name": "wood_siding11"
+    },
+    {
+      "name": "wood_siding12"
+    },
+    {
+      "name": "wood_siding13"
+    },
+    {
+      "name": "wood_siding14"
+    },
+    {
+      "name": "wood_siding15"
+    },
+    {
+      "name": "asteroid0"
+    },
+    {
+      "name": "asteroid1"
+    },
+    {
+      "name": "asteroid2"
+    },
+    {
+      "name": "asteroid3"
+    },
+    {
+      "name": "asteroid4"
+    },
+    {
+      "name": "asteroid5"
+    },
+    {
+      "name": "asteroid6"
+    },
+    {
+      "name": "asteroid7"
+    },
+    {
+      "name": "asteroid8"
+    },
+    {
+      "name": "asteroid9"
+    },
+    {
+      "name": "catwalk_plated"
+    },
+    {
+      "name": "catwalk_plateddark"
+    },
+    {
+      "name": "catwalk_platedwhite"
+    },
+    {
+      "name": "whitebot"
+    },
+    {
+      "name": "plaque"
+    },
+    {
+      "name": "wood"
+    },
+    {
+      "name": "wood-broken1"
+    },
+    {
+      "name": "wood-broken2"
+    },
+    {
+      "name": "wood-broken3"
+    },
+    {
+      "name": "wood-broken4"
+    },
+    {
+      "name": "wood-broken5"
+    },
+    {
+      "name": "wood-broken6"
+    },
+    {
+      "name": "wood-broken7"
+    },
+    {
+      "name": "carpet0-0"
+    },
+    {
+      "name": "carpet1-0"
+    },
+    {
+      "name": "carpet2-0"
+    },
+    {
+      "name": "carpet3-0"
+    },
+    {
+      "name": "carpet4-0"
+    },
+    {
+      "name": "carpet5-0"
+    },
+    {
+      "name": "carpet5-1"
+    },
+    {
+      "name": "carpet6-0"
+    },
+    {
+      "name": "carpet6-2"
+    },
+    {
+      "name": "carpet7-0"
+    },
+    {
+      "name": "carpet7-1"
+    },
+    {
+      "name": "carpet7-2"
+    },
+    {
+      "name": "carpet7-3"
+    },
+    {
+      "name": "carpet8-0"
+    },
+    {
+      "name": "carpet9-0"
+    },
+    {
+      "name": "carpet9-4"
+    },
+    {
+      "name": "carpet10-0"
+    },
+    {
+      "name": "carpet10-8"
+    },
+    {
+      "name": "carpet11-0"
+    },
+    {
+      "name": "carpet11-4"
+    },
+    {
+      "name": "carpet11-8"
+    },
+    {
+      "name": "carpet11-12"
+    },
+    {
+      "name": "carpet12-0"
+    },
+    {
+      "name": "carpet13-0"
+    },
+    {
+      "name": "carpet13-1"
+    },
+    {
+      "name": "carpet13-4"
+    },
+    {
+      "name": "carpet13-5"
+    },
+    {
+      "name": "carpet14-0"
+    },
+    {
+      "name": "carpet14-2"
+    },
+    {
+      "name": "carpet14-8"
+    },
+    {
+      "name": "carpet14-10"
+    },
+    {
+      "name": "carpet15-15"
+    },
+    {
+      "name": "carpet15-14"
+    },
+    {
+      "name": "carpet15-13"
+    },
+    {
+      "name": "carpet15-12"
+    },
+    {
+      "name": "carpet15-11"
+    },
+    {
+      "name": "carpet15-10"
+    },
+    {
+      "name": "carpet15-9"
+    },
+    {
+      "name": "carpet15-8"
+    },
+    {
+      "name": "carpet15-7"
+    },
+    {
+      "name": "carpet15-6"
+    },
+    {
+      "name": "carpet15-5"
+    },
+    {
+      "name": "carpet15-4"
+    },
+    {
+      "name": "carpet15-3"
+    },
+    {
+      "name": "carpet15-2"
+    },
+    {
+      "name": "carpet15-1"
+    },
+    {
+      "name": "carpet15-0"
+    },
+    {
+      "name": "carpet-broken"
+    },
+    {
+      "name": "tentfloor"
+    },
+    {
+      "name": "ironsand1"
+    },
+    {
+      "name": "ironsand2"
+    },
+    {
+      "name": "ironsand3"
+    },
+    {
+      "name": "ironsand4"
+    },
+    {
+      "name": "ironsand5"
+    },
+    {
+      "name": "ironsand6"
+    },
+    {
+      "name": "ironsand7"
+    },
+    {
+      "name": "ironsand8"
+    },
+    {
+      "name": "ironsand9"
+    },
+    {
+      "name": "ironsand10"
+    },
+    {
+      "name": "ironsand11"
+    },
+    {
+      "name": "ironsand12"
+    },
+    {
+      "name": "ironsand13"
+    },
+    {
+      "name": "ironsand14"
+    },
+    {
+      "name": "ironsand15"
+    },
+    {
+      "name": "ramptop",
+      "directions": 4
+    },
+    {
+      "name": "rampbottom",
+      "directions": 4
+    },
+    {
+      "name": "snow"
+    },
+    {
+      "name": "bcarpet01"
+    },
+    {
+      "name": "bcarpet02"
+    },
+    {
+      "name": "bcarpet03"
+    },
+    {
+      "name": "bcarpet04"
+    },
+    {
+      "name": "bcarpet05"
+    },
+    {
+      "name": "bcarpet06"
+    },
+    {
+      "name": "bcarpet07"
+    },
+    {
+      "name": "bcarpet08"
+    },
+    {
+      "name": "bcarpet09"
+    },
+    {
+      "name": "asteroid_edge_s"
+    },
+    {
+      "name": "asteroid_edge_n"
+    },
+    {
+      "name": "asteroid_edge_e"
+    },
+    {
+      "name": "asteroid_edge_w"
+    },
+    {
+      "name": "grass_dark"
+    },
+    {
+      "name": "dirt"
+    },
+    {
+      "name": "dark_dirt"
+    },
+    {
+      "name": "concrete1"
+    },
+    {
+      "name": "concrete2"
+    },
+    {
+      "name": "concrete3"
+    },
+    {
+      "name": "concrete4"
+    },
+    {
+      "name": "concrete5"
+    },
+    {
+      "name": "concrete6"
+    },
+    {
+      "name": "concrete7"
+    },
+    {
+      "name": "concrete8"
+    },
+    {
+      "name": "concrete9"
+    },
+    {
+      "name": "concrete10"
+    },
+    {
+      "name": "concrete11"
+    },
+    {
+      "name": "concrete12"
+    },
+    {
+      "name": "sand1"
+    },
+    {
+      "name": "sand2"
+    },
+    {
+      "name": "sand3"
+    },
+    {
+      "name": "sky"
+    },
+    {
+      "name": "cobble_vertical"
+    },
+    {
+      "name": "cobble_horizontal"
+    },
+    {
+      "name": "cobble_vertical_dark"
+    },
+    {
+      "name": "cobble_horizontal_dark"
+    },
+    {
+      "name": "black_open"
+    },
+    {
+      "name": "dirtnew"
+    },
+    {
+      "name": "dust"
+    },
+    {
+      "name": "dust2"
+    },
+    {
+      "name": "wood_ship1"
+    },
+    {
+      "name": "wood_ship"
+    },
+    {
+      "name": "wood_ship_broken"
+    },
+    {
+      "name": "wood_ship_repaired2"
+    },
+    {
+      "name": "wood_ship_repaired"
+    },
+    {
+      "name": "black_open2"
+    },
+    {
+      "name": "dirt_ploughed"
+    },
+    {
+      "name": "wooden_floor_s1"
+    },
+    {
+      "name": "wooden_floor_s2"
+    },
+    {
+      "name": "wooden_floor_s3"
+    },
+    {
+      "name": "wooden_floor_s4"
+    },
+    {
+      "name": "wooden_floor_s5"
+    },
+    {
+      "name": "sand"
+    },
+    {
+      "name": "stone_old"
+    },
+    {
+      "name": "stone_old2"
+    },
+    {
+      "name": "stone_old1"
+    },
+    {
+      "name": "sandstone_floor"
+    },
+    {
+      "name": "roof"
+    },
+    {
+      "name": "roof_builder"
+    },
+    {
+      "name": "burned_dirt"
+    },
+    {
+      "name": "flood_dirt"
+    },
+    {
+      "name": "flood_dirt_ploughed"
+    },
+    {
+      "name": "sand_edges",
+      "directions": 8
+    },
+    {
+      "name": "dirt_edges",
+      "directions": 8
+    },
+    {
+      "name": "ograss0"
+    },
+    {
+      "name": "ograss1"
+    },
+    {
+      "name": "ograss2"
+    },
+    {
+      "name": "ograss3"
+    },
+    {
+      "name": "grass_edges",
+      "directions": 8
+    },
+    {
+      "name": "grass_edges-old",
+      "directions": 8
+    },
+    {
+      "name": "dust_edges",
+      "directions": 8
+    },
+    {
+      "name": "flood_dirt_edges",
+      "directions": 8
+    },
+    {
+      "name": "snow_edges",
+      "directions": 8
+    },
+    {
+      "name": "snowgrass"
+    },
+    {
+      "name": "snowgrass_edges",
+      "directions": 8
+    },
+    {
+      "name": "dirt_edges",
+      "directions": 8
+    },
+    {
+      "name": "bridge",
+      "directions": 4
+    },
+    {
+      "name": "minerals"
+    },
+    {
+      "name": "grass_dry"
+    },
+    {
+      "name": "odead_grass0"
+    },
+    {
+      "name": "odead_grass1"
+    },
+    {
+      "name": "odead_grass2"
+    },
+    {
+      "name": "odead_grass3"
+    },
+    {
+      "name": "dead_grass_edges",
+      "directions": 8
+    },
+    {
+      "name": "sandstone_tile_floor"
+    },
+    {
+      "name": "sandstone_flooring"
+    },
+    {
+      "name": "darksand"
+    },
+    {
+      "name": "fancywood"
+    },
+    {
+      "name": "slatefloor"
+    },
+    {
+      "name": "marblefloor1"
+    },
+    {
+      "name": "roman_road"
+    },
+    {
+      "name": "marble"
+    },
+    {
+      "name": "lava_dry"
+    },
+    {
+      "name": "lava1"
+    },
+    {
+      "name": "lava2"
+    },
+    {
+      "name": "lava0",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "lava_flowing",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "metro",
+      "directions": 8
+    },
+    {
+      "name": "metroline",
+      "directions": 8
+    },
+    {
+      "name": "red_sandstone_slab"
+    },
+    {
+      "name": "sandstone_brick"
+    },
+    {
+      "name": "sandstone_tile"
+    },
+    {
+      "name": "sandstone_decorative_tile"
+    },
+    {
+      "name": "red_sandstone_decorative_tile"
+    },
+    {
+      "name": "sandstone_slab"
+    },
+    {
+      "name": "stone_bricks"
+    },
+    {
+      "name": "sidewalk"
+    },
+    {
+      "name": "tileframe"
+    },
+    {
+      "name": "black_marble0"
+    },
+    {
+      "name": "black_marble1"
+    },
+    {
+      "name": "black_marble2"
+    },
+    {
+      "name": "black_marble3"
+    },
+    {
+      "name": "pink_marble_tile"
+    },
+    {
+      "name": "marble_checkerboard"
+    },
+    {
+      "name": "marble_checkerboard_reverse"
+    },
+    {
+      "name": "pink_marble_checkerboard"
+    },
+    {
+      "name": "pink_marble_checkerboard_reverse"
+    },
+    {
+      "name": "stone_slab_wip"
+    },
+    {
+      "name": "decorative_stone_slab"
+    },
+    {
+      "name": "pink_marble0"
+    },
+    {
+      "name": "pink_marble1"
+    },
+    {
+      "name": "pink_marble2"
+    },
+    {
+      "name": "raw_marble0"
+    },
+    {
+      "name": "raw_marble1"
+    },
+    {
+      "name": "raw_marble2"
+    },
+    {
+      "name": "marble_grid"
+    },
+    {
+      "name": "ornate_marble"
+    },
+    {
+      "name": "tileframe_v1"
+    },
+    {
+      "name": "marble_tile0"
+    },
+    {
+      "name": "marble_tile1"
+    },
+    {
+      "name": "marble_tile2"
+    },
+    {
+      "name": "pink_marble_tile0"
+    },
+    {
+      "name": "pink_marble_tile1"
+    },
+    {
+      "name": "pink_marble_tile2"
+    },
+    {
+      "name": "decorative_marble_tile0"
+    },
+    {
+      "name": "decorative_marble_tile1"
+    },
+    {
+      "name": "decorative_marble_tile2"
+    },
+    {
+      "name": "decorative_black_marble_tile0"
+    },
+    {
+      "name": "decorative_black_marble_tile1"
+    },
+    {
+      "name": "decorative_black_marble_tile2"
+    },
+    {
+      "name": "decorative_black_marble_tile3"
+    },
+    {
+      "name": "decorative_pink_marble_tile0"
+    },
+    {
+      "name": "decorative_pink_marble_tile1"
+    },
+    {
+      "name": "decorative_pink_marble_tile2"
+    },
+    {
+      "name": "black_marble_tile0"
+    },
+    {
+      "name": "black_marble_tile1"
+    },
+    {
+      "name": "black_marble_tile2"
+    },
+    {
+      "name": "black_marble_tile3"
+    },
+    {
+      "name": "ornate_black_marble"
+    },
+    {
+      "name": "tatami0"
+    },
+    {
+      "name": "tatami_dark0"
+    },
+    {
+      "name": "tatami1"
+    },
+    {
+      "name": "tatami_dark1"
+    },
+    {
+      "name": "road_1"
+    },
+    {
+      "name": "road_2"
+    },
+    {
+      "name": "road_3"
+    },
+    {
+      "name": "road_line",
+      "directions": 8
+    },
+    {
+      "name": "road_yellowline",
+      "directions": 8
+    },
+    {
+      "name": "road_center_yellowline",
+      "directions": 8
+    },
+    {
+      "name": "delivery"
+    },
+    {
+      "name": "grass0"
+    },
+    {
+      "name": "grass1"
+    },
+    {
+      "name": "grass2"
+    },
+    {
+      "name": "grass3"
+    },
+    {
+      "name": "dry_grass"
+    },
+    {
+      "name": "dead_grass0"
+    },
+    {
+      "name": "dead_grass1"
+    },
+    {
+      "name": "dead_grass2"
+    },
+    {
+      "name": "dead_grass3"
+    },
+    {
+      "name": "space"
+    },
+    {
+      "name": "woodalt"
+    },
+    {
+      "name": "woodalt2"
+    },
+    {
+      "name": "woodalt3"
+    },
+    {
+      "name": "woodalt4"
+    },
+    {
+      "name": "woodalt5"
+    },
+    {
+      "name": "woodalt6"
+    },
+    {
+      "name": "woodalt7"
+    },
+    {
+      "name": "woodalt8"
+    },
+    {
+      "name": "woodalt9"
+    },
+    {
+      "name": "woodalt10"
+    },
+    {
+      "name": "woodalt11"
+    },
+    {
+      "name": "edgemask",
+      "directions": 8
+    },
+    {
+      "name": "arcadefloor1"
+    },
+    {
+      "name": "disco1",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "gravel",
+      "directions": 4
+    },
+    {
+      "name": "gravel_alt",
+      "directions": 4
+    },
+    {
+      "name": "gravel_dust",
+      "directions": 4
+    },
+    {
+      "name": "openspace"
+    },
+    {
+      "name": "rockyfloor"
+    }
+  ]
+}

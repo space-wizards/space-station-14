@@ -1,0 +1,48 @@
+- type: entity
+  id: CompostBin
+  parent: BaseStructure
+  name: "compost bin"
+  description: A wood box, used to turn trash and scraps into fertilizer.
+  components:
+    - type: Sprite
+      sprite: Objects/_civ/structures.rsi
+      state: compostbin
+    - type: Appearance
+    - type: Damageable
+      damageModifierSet: Wood
+      damageContainer: StructuralInorganic
+    - type: Destructible
+      thresholds:
+        - trigger: !type:DamageTrigger
+            damage: 30
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                collection: WoodDestroyHeavy
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                MaterialWoodPlank:
+                  min: 2
+                  max: 3
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+    - type: Tag
+      tags:
+        - Structure
+        - Wooden
+    - type: Transform
+      anchored: true
+    - type: Physics
+      bodyType: Static
+    - type: Anchorable
+    - type: Pullable
+    - type: InteractionOutline
+    - type: Composting
+      whitelist:
+        - Fruit
+        - Egg
+        - Meat
+        - Bread
+        - Pizza
+        - Cheese
+      compostTime: 20.0
