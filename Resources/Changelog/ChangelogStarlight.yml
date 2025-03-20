@@ -4248,4 +4248,12 @@ Entries:
   id: 588
   time: '2025-03-20T06:18:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/410
+- author: InanimateIJK
+  changes:
+  - message: Introduction of the track "Cosmonaut" by "Artifyber" into the lobby music
+      shuffle.
+    type: Add
+  id: 589
+  time: '2025-03-20T19:40:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/416
 
