@@ -65,7 +65,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             }
 
             _adminLogger.Add(LogType.BulletHit,
-                LogImpact.Medium,
+                HasComp<ActorComponent>(target) ? LogImpact.Extreme : LogImpact.High,
                 $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter!.Value):user} hit {otherName:target} and dealt {modifiedDamage.GetTotal():damage} damage");
         }
 

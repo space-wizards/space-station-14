@@ -1,0 +1,181 @@
+[1mdiff --git a/.github/workflows/changelog.yml b/.github/workflows/changelog.yml[m
+[1mnew file mode 100644[m
+[1mindex 0000000000..70821e5e59[m
+[1m--- /dev/null[m
+[1m+++ b/.github/workflows/changelog.yml[m
+[36m@@ -0,0 +1,56 @@[m
+[32m+[m[32mname: PR Changelogs[m
+[32m+[m[32mconcurrency: commit_action[m
+[32m+[m[32mon:[m
+[32m+[m[32m  pull_request_target:[m
+[32m+[m[32m    types: [closed][m
+[32m+[m
+[32m+[m[32menv:[m
+[32m+[m[32m  GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}[m
+[32m+[m[32m  CHANGELOG_DIR: ${{ vars.CHANGELOG_DIR }}[m
+[32m+[m[32m  PR_NUMBER: ${{ github.event.number }}[m
+[32m+[m
+[32m+[m[32mjobs:[m
+[32m+[m[32m  changelog:[m
+[32m+[m[32m    runs-on: self-hosted[m
+[32m+[m[32m    if: github.event.pull_request.merged == true[m
+[32m+[m[32m    permissions:[m
+[32m+[m[32m      contents: write[m
+[32m+[m[32m    steps:[m
+[32m+[m[32m      - name: Checkout Master[m
+[32m+[m[32m        uses: actions/checkout@v3[m
+[32m+[m[32m        with:[m
+[32m+[m[32m          token: ${{ secrets.BOT_TOKEN }}[m
+[32m+[m[32m          ref: "${{ vars.CHANGELOG_BRANCH }}"[m
+[32m+[m
+[32m+[m[32m      - name: Setup Git[m
+[32m+[m[32m        run: |[m
+[32m+[m[32m          git config --global user.name "${{ vars.CHANGELOG_USER }}"[m
+[32m+[m[32m          git config --global user.email "${{ vars.CHANGELOG_EMAIL }}"[m
+[32m+[m[32m        shell: bash[m
+[32m+[m
+[32m+[m[32m      - name: Setup Node[m
+[32m+[m[32m        uses: actions/setup-node@v3[m
+[32m+[m[32m        with:[m
+[32m+[m[32m          node-version: 18.x[m
+[32m+[m
+[32m+[m[32m      - name: Install Dependencies[m
+[32m+[m[32m        run: |[m
+[32m+[m[32m          cd "Tools/changelog"[m
+[32m+[m[32m          npm install[m
+[32m+[m[32m        shell: bash[m
+[32m+[m[32m        continue-on-error: true[m
+[32m+[m
+[32m+[m[32m      - name: Generate Changelog[m
+[32m+[m[32m        run: |[m
+[32m+[m[32m          cd "Tools/changelog"[m
+[32m+[m[32m          node changelog.js[m
+[32m+[m[32m        shell: bash[m
+[32m+[m[32m        continue-on-error: true[m
+[32m+[m
+[32m+[m[32m      - name: Commit Changelog[m
+[32m+[m[32m        run: |[m
+[32m+[m[32m          git add *.yml[m
+[32m+[m[32m          git commit -m "${{ vars.CHANGELOG_MESSAGE }} (#${{ env.PR_NUMBER }})"[m
+[32m+[m[32m          git push[m
+[32m+[m[32m        shell: bash[m
+[32m+[m[32m        continue-on-error: true[m
+[1mdiff --git a/.github/workflows/update-credits.yml b/.github/workflows/update-credits.yml[m
+[1mindex 87babfa2a6..430a6540ff 100644[m
+[1m--- a/.github/workflows/update-credits.yml[m
+[1m+++ b/.github/workflows/update-credits.yml[m
+[36m@@ -10,7 +10,7 @@[m [mjobs:[m
+     runs-on: ubuntu-latest[m
+     # Hey there fork dev! If you like to include your own contributors in this then you can probably just change this to your own repo[m
+     # Do this in dump_github_contributors.ps1 too into your own repo[m
+[31m-    if: github.repository == 'space-wizards/space-station-14'[m
+[32m+[m[32m    if: github.repository == 'greystation14/GreyStation14'[m
+     [m
+     steps:[m
+       - uses: actions/checkout@v3.6.0[m
+[1mdiff --git a/Content.Client/Clothing/ClientClothingSystem.cs b/Content.Client/Clothing/ClientClothingSystem.cs[m
+[1mindex 5db7209d22..46f879e815 100644[m
+[1m--- a/Content.Client/Clothing/ClientClothingSystem.cs[m
+[1m+++ b/Content.Client/Clothing/ClientClothingSystem.cs[m
+[36m@@ -162,7 +162,7 @@[m [mprivate void OnGetVisuals(EntityUid uid, ClothingComponent item, GetEquipmentVis[m
+ [m
+         var state = $"equipped-{correctedSlot}";[m
+ [m
+[31m-        if (!string.IsNullOrEmpty(clothing.EquippedPrefix))[m
+[32m+[m[32m        if (clothing.EquippedPrefix != null)[m
+             state = $"{clothing.EquippedPrefix}-equipped-{correctedSlot}";[m
+ [m
+         if (clothing.EquippedState != null)[m
+[1mdiff --git a/Content.Client/Gameplay/GameplayState.cs b/Content.Client/Gameplay/GameplayState.cs[m
+[1mindex 0ce6436f2d..4ea20f5995 100644[m
+[1m--- a/Content.Client/Gameplay/GameplayState.cs[m
+[1m+++ b/Content.Client/Gameplay/GameplayState.cs[m
+[36m@@ -113,11 +113,7 @@[m [mprivate void UnloadMainScreen()[m
+ [m
+         private void LoadMainScreen()[m
+         {[m
+[31m-            var screenTypeString = _configurationManager.GetCVar(CCVars.UILayout);[m
+[31m-            if (!Enum.TryParse(screenTypeString, out ScreenType screenType))[m
+[31m-            {[m
+[31m-                screenType = default;[m
+[31m-            }[m
+[32m+[m[32m            var screenType = ScreenType.Separated; // GreyStation: Ignore cvar and force separated hud[m
+ [m
+             switch (screenType)[m
+             {[m
+[1mdiff --git a/Content.Client/GreyStation/Clothing/ShaderClothingComponent.cs b/Content.Client/GreyStation/Clothing/ShaderClothingComponent.cs[m
+[1mnew file mode 100644[m
+[1mindex 0000000000..610ea382b6[m
+[1m--- /dev/null[m
+[1m+++ b/Content.Client/GreyStation/Clothing/ShaderClothingComponent.cs[m
+[36m@@ -0,0 +1,23 @@[m
+[32m+[m[32musing Robust.Client.Graphics;[m
+[32m+[m[32musing Robust.Shared.Prototypes;[m
+[32m+[m
+[32m+[m[32mnamespace Content.Client.GreyStation.Clothing;[m
+[32m+[m
+[32m+[m[32m/// <summary>[m
+[32m+[m[32m/// Applies a shader overlay to the screen when worn.[m
+[32m+[m[32m/// </summary>[m
+[32m+[m[32m[RegisterComponent, Access(typeof(ShaderClothingSystem))][m
+[32m+[m[32mpublic sealed partial class ShaderClothingComponent : Component[m
+[32m+[m[32m{[m
+[32m+[m[32m    /// <summary>[m
+[32m+[m[32m    /// The shader to use fullscreen.[m
+[32m+[m[32m    /// </summary>[m
+[32m+[m[32m    [DataField(required: true)][m
+[32m+[m[32m    public ProtoId<ShaderPrototype> Shader = string.Empty;[m
+[32m+[m
+[32m+[m[32m    /// <summary>[m
+[32m+[m[32m    /// Shader instance created on mapinit.[m
+[32m+[m[32m    /// </summary>[m
+[32m+[m[32m    [ViewVariables][m
+[32m+[m[32m    public ShaderInstance? Instance;[m
+[32m+[m[32m}[m
+[1mdiff --git a/Content.Client/GreyStation/Clothing/ShaderClothingOverlay.cs b/Content.Client/GreyStation/Clothing/ShaderClothingOverlay.cs[m
+[1mnew file mode 100644[m
+[1mindex 0000000000..5239431321[m
+[1m--- /dev/null[m
+[1m+++ b/Content.Client/GreyStation/Clothing/ShaderClothingOverlay.cs[m
+[36m@@ -0,0 +1,47 @@[m
+[32m+[m[32musing Robust.Client.Graphics;[m
+[32m+[m[32musing Robust.Client.Player;[m
+[32m+[m[32musing Robust.Shared.Enums;[m
+[32m+[m
+[32m+[m[32mnamespace Content.Client.GreyStation.Clothing;[m
+[32m+[m
+[32m+[m[32mpublic sealed class ShaderClothingOverlay : Overlay[m
+[32m+[m[32m{[m
+[32m+[m[32m    [Dependency] private readonly IEntityManager _ent = default!;[m
+[32m+[m[32m    [Dependency] private readonly IPlayerManager _player = default!;[m
+[32m+[m
+[32m+[m[32m    public override bool RequestScreenTexture => true;[m
+[32m+[m[32m    public override OverlaySpace Space => OverlaySpace.WorldSpace;[m
+[32m+[m
+[32m+[m[32m    public ShaderInstance? Shader;[m
+[32m+[m
+[32m+[m[32m    private EntityQuery<EyeComponent> _eyeQuery;[m
+[32m+[m
+[32m+[m[32m    public ShaderClothingOverlay()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        IoCManager.InjectDependencies(this);[m
+[32m+[m
+[32m+[m[32m        _eyeQuery = _ent.GetEntityQuery<EyeComponent>();[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    protected override bool BeforeDraw(in OverlayDrawArgs args)[m
+[32m+[m[32m    {[m
+[32m+[m[32m        if (!_eyeQuery.TryComp(_player.LocalSession?.AttachedEntity, out var eye))[m
+[32m+[m[32m            return false;[m
+[32m+[m
+[32m+[m[32m        return args.Viewport.Eye == eye.Eye;[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    protected override void Draw(in OverlayDrawArgs args)[m
+[32m+[m[32m    {[m
+[32m+[m[32m        if (ScreenTexture == null || Shader is not {} shader)[m
+[32m+[m[32m            return;[m
+[32m+[m
+[32m+[m[32m        shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);[m
+[32m+[m
+[32m+[m[32m        va

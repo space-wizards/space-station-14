@@ -1,5 +1,3 @@
-using Content.Shared.Dataset;
-using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -44,7 +42,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     // sprite accessories.
 
     [DataField("sprites")]
-    public ProtoId<HumanoidSpeciesBaseSpritesPrototype> SpriteSet { get; private set; } = default!;
+    public string SpriteSet { get; private set; } = default!;
 
     /// <summary>
     ///     Default skin tone for this species. This applies for non-human skin tones.
@@ -63,7 +61,7 @@ public sealed partial class SpeciesPrototype : IPrototype
     ///     The limit of body markings that you can place on this species.
     /// </summary>
     [DataField("markingLimits")]
-    public ProtoId<MarkingPointsPrototype> MarkingPoints { get; private set; } = default!;
+    public string MarkingPoints { get; private set; } = default!;
 
     /// <summary>
     ///     Humanoid species variant used by this entity.
@@ -84,13 +82,13 @@ public sealed partial class SpeciesPrototype : IPrototype
     public HumanoidSkinColor SkinColoration { get; private set; }
 
     [DataField]
-    public ProtoId<LocalizedDatasetPrototype> MaleFirstNames { get; private set; } = "NamesFirstMale";
+    public string MaleFirstNames { get; private set; } = "NamesFirstMale";
 
     [DataField]
-    public ProtoId<LocalizedDatasetPrototype> FemaleFirstNames { get; private set; } = "NamesFirstFemale";
+    public string FemaleFirstNames { get; private set; } = "NamesFirstFemale";
 
     [DataField]
-    public ProtoId<LocalizedDatasetPrototype> LastNames { get; private set; } = "NamesLast";
+    public string LastNames { get; private set; } = "NamesLast";
 
     [DataField]
     public SpeciesNaming Naming { get; private set; } = SpeciesNaming.FirstLast;

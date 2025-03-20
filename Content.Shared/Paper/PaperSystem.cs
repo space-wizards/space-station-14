@@ -180,10 +180,8 @@ public sealed class PaperSystem : EntitySystem
         {
             SetContent(entity, args.Text);
 
-            var paperStatus = string.IsNullOrWhiteSpace(args.Text) ? PaperStatus.Blank : PaperStatus.Written;
-
             if (TryComp<AppearanceComponent>(entity, out var appearance))
-                _appearance.SetData(entity, PaperVisuals.Status, paperStatus, appearance);
+                _appearance.SetData(entity, PaperVisuals.Status, PaperStatus.Written, appearance);
 
             if (TryComp(entity, out MetaDataComponent? meta))
                 _metaSystem.SetEntityDescription(entity, "", meta);

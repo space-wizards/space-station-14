@@ -162,7 +162,7 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         var state = $"equipped-{correctedSlot}";
 
-        if (!string.IsNullOrEmpty(clothing.EquippedPrefix))
+        if (clothing.EquippedPrefix != null)
             state = $"{clothing.EquippedPrefix}-equipped-{correctedSlot}";
 
         if (clothing.EquippedState != null)

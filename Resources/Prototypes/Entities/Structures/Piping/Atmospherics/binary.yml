@@ -39,9 +39,6 @@
   - type: Rotatable
   - type: Transform
     noRot: false
-  - type: SubFloorHide
-    visibleLayers:
-    - enum.SubfloorLayers.FirstLayer
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:
@@ -98,9 +95,6 @@
     - type: Rotatable
     - type: Transform
       noRot: false
-    - type: SubFloorHide
-      visibleLayers:
-      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/pump.rsi
       layers:
@@ -155,9 +149,6 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: SubFloorHide
-      visibleLayers:
-      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/pump.rsi
       layers:
@@ -193,9 +184,6 @@
     mode: SnapgridCenter
   components:
     # TODO ATMOS: Give unique sprite.
-    - type: SubFloorHide
-      visibleLayers:
-      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: GreyStation/Structures/Piping/Atmospherics/pump.rsi # GreyStation - Resprite
       layers:
@@ -249,9 +237,6 @@
     mode: SnapgridCenter
   components:
   - type: StationAiWhitelist
-  - type: SubFloorHide
-    visibleLayers:
-    - enum.SubfloorLayers.FirstLayer
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:
@@ -315,9 +300,6 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: SubFloorHide
-      visibleLayers:
-      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
       layers:
@@ -352,9 +334,6 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: SubFloorHide
-      visibleLayers:
-      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
@@ -522,9 +501,6 @@
   id: HeatExchangerBend
   suffix: Bend
   components:
-    - type: SubFloorHide
-      visibleLayers:
-      - enum.SubfloorLayers.FirstLayer
     - type: Sprite
       layers:
       - sprite: Structures/Piping/Atmospherics/pipe.rsi
