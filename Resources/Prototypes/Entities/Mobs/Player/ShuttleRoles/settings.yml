@@ -845,6 +845,8 @@
       name: ghost-role-information-cossack-name
       description: ghost-role-information-cossack-description
       rules: ghost-role-information-freeagent-rules
+      mindRoles:
+        - MindRoleGhostRoleFreeAgent
       raffle:
         settings: default
     - type: Loadout
