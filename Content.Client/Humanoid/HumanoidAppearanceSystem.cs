@@ -373,7 +373,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
             if (humanoid.MarkingsDisplacement.TryGetValue(markingPrototype.BodyPart, out var displacementData))
             {
-                _displacement.TryAddDisplacement(displacementData, sprite, targetLayer + j + 1, layerId);
+                _displacement.TryAddDisplacement(displacementData, sprite, targetLayer + j + 1, layerId, out _);
             }
         }
     }

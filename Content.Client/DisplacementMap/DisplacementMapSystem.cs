@@ -16,21 +16,21 @@ public sealed class DisplacementMapSystem : EntitySystem
     /// <param name="sprite">SpriteComponent</param>
     /// <param name="index">Index of the layer where the new map layer will be added</param>
     /// <param name="key">Unique layer key, which will determine which layer to apply displacement map to</param>
-    /// <param name="trackedLayers">A group of layers tracked by another system, such as layers of clothing. When this system wants to completely redraw all clothing layers, and will delete all these layers, it must also delete the displacement layers that are applied to the clothing. If this parameter is passed, it will automatically add a layer to this group</param>
+    /// <param name="displacementKey">The key of the new displacement map layer added by this function.</param>
     /// <returns></returns>
     public bool TryAddDisplacement(DisplacementData data,
         SpriteComponent sprite,
         int index,
         object key,
-        HashSet<string>? trackedLayers = null)
+        out string displacementKey)
     {
+        displacementKey = $"{key}-displacement";
+
         if (key.ToString() is null)
             return false;
 
         if (data.ShaderOverride != null)
             sprite.LayerSetShader(index, data.ShaderOverride);
-
-        var displacementKey = $"{key}-displacement";
 
         if (sprite.LayerMapTryGet(displacementKey, out var oldIndex))
             sprite.RemoveLayer(oldIndex);
@@ -74,8 +74,6 @@ public sealed class DisplacementMapSystem : EntitySystem
 
         sprite.AddLayer(displacementLayer, index);
         sprite.LayerMapSet(displacementKey, index);
-
-        trackedLayers?.Add(displacementKey);
 
         return true;
     }
