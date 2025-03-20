@@ -136,7 +136,7 @@
 - type: artifactTrigger
   id: TriggerPyrotechnic
   targetDepth: 4
-  triggerHint: artifact-trigger-hint-blood
+  triggerHint: artifact-trigger-hint-pyrotechnic
   originWhitelist:
     - Wizard
   components:
@@ -152,7 +152,7 @@
 - type: artifactTrigger
   id: TriggerElemental
   targetDepth: 2
-  triggerHint: artifact-trigger-hint-blood
+  triggerHint: artifact-trigger-hint-elemental
   originWhitelist:
     - Precursor
   components:
@@ -167,7 +167,8 @@
 
 - type: artifactTrigger
   id: TriggerAcidic
-  triggerHint: artifact-trigger-hint-blood
+  targetDepth: 3
+  triggerHint: artifact-trigger-hint-acidic
   originWhitelist:
     - Martian
   components:
@@ -183,9 +184,7 @@
 - type: artifactTrigger
   id: TriggerToxin
   targetDepth: 3
-  triggerHint: artifact-trigger-hint-blood
-  originWhitelist:
-    - Martian
+  triggerHint: artifact-trigger-hint-toxic
   components:
   - type: Reactive
     groups:

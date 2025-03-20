@@ -41,4 +41,8 @@ artifact-trigger-hint-plasma = Gaseous plasma
 artifact-trigger-hint-land = Active deceleration
 artifact-trigger-hint-examine = Examination
 artifact-trigger-hint-medical = Therapeutic chemicals
+artifact-trigger-hint-pyrotechnic = Combustive chemicals
+artifact-trigger-hint-elemental = Elemental chemicals
+artifact-trigger-hint-acidic = Acidic chemicals
+artifact-trigger-hint-toxic = Noxious chemicals
 
