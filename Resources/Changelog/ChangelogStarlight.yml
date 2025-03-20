@@ -4241,4 +4241,11 @@ Entries:
   id: 587
   time: '2025-03-19T05:37:32.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/408
+- author: Happyrobot33
+  changes:
+  - message: Add sec huds to large security lockers.
+    type: Fix
+  id: 588
+  time: '2025-03-20T06:18:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/410
 
