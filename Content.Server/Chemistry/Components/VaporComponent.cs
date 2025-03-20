@@ -11,7 +11,6 @@ namespace Content.Server.Chemistry.Components
         /// <summary>
         /// Stores data on the previously reacted tile. We only want to do reaction checks once per tile.
         /// </summary>
-        [DataField]
         public TileRef PreviousTileRef;
 
         /// <summary>
