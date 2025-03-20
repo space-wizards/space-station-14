@@ -1,43 +1,42 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Humanoid.Markings
+namespace Content.Shared.Humanoid.Markings;
+
+[Prototype]
+public sealed partial class MarkingPrototype : IPrototype
 {
-    [Prototype]
-    public sealed partial class MarkingPrototype : IPrototype
+    [IdDataField]
+    public string ID { get; private set; } = "uwu"; //uwu
+
+    public string Name { get; private set; } = default!;
+
+    [DataField(required: true)]
+    public HumanoidVisualLayers BodyPart { get; private set; }
+
+    [DataField(required: true)]
+    public MarkingCategories MarkingCategory { get; private set; }
+
+    [DataField]
+    public List<string>? SpeciesRestrictions { get; private set; }
+
+    [DataField]
+    public Sex? SexRestriction { get; private set; }
+
+    [DataField]
+    public bool FollowSkinColor { get; private set; }
+
+    [DataField]
+    public bool ForcedColoring { get; private set; }
+
+    [DataField]
+    public MarkingColors Coloring { get; private set; } = new();
+
+    [DataField(required: true)]
+    public List<SpriteSpecifier> Sprites { get; private set; } = default!;
+
+    public Marking AsMarking()
     {
-        [IdDataField]
-        public string ID { get; private set; } = "uwu";
-
-        public string Name { get; private set; } = default!;
-
-        [DataField("bodyPart", required: true)]
-        public HumanoidVisualLayers BodyPart { get; private set; } = default!;
-
-        [DataField("markingCategory", required: true)]
-        public MarkingCategories MarkingCategory { get; private set; } = default!;
-
-        [DataField("speciesRestriction")]
-        public List<string>? SpeciesRestrictions { get; private set; }
-
-        [DataField("sexRestriction")]
-        public Sex? SexRestriction { get; private set; }
-
-        [DataField("followSkinColor")]
-        public bool FollowSkinColor { get; private set; } = false;
-
-        [DataField("forcedColoring")]
-        public bool ForcedColoring { get; private set; } = false;
-
-        [DataField("coloring")]
-        public MarkingColors Coloring { get; private set; } = new();
-
-        [DataField("sprites", required: true)]
-        public List<SpriteSpecifier> Sprites { get; private set; } = default!;
-
-        public Marking AsMarking()
-        {
-            return new Marking(ID, Sprites.Count);
-        }
+        return new Marking(ID, Sprites.Count);
     }
 }

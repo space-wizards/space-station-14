@@ -1,6 +1,5 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Humanoid.Markings;
 
@@ -8,13 +7,13 @@ namespace Content.Shared.Humanoid.Markings;
 [Serializable, NetSerializable]
 public sealed partial class MarkingPoints
 {
-    [DataField("points", required: true)]
+    [DataField(required: true)]
     public int Points = 0;
-    [DataField("required", required: true)]
+    [DataField(required: true)]
     public bool Required = false;
     // Default markings for this layer.
-    [DataField("defaultMarkings", customTypeSerializer:typeof(PrototypeIdListSerializer<MarkingPrototype>))]
-    public List<string> DefaultMarkings = new();
+    [DataField]
+    public List<ProtoId<MarkingPrototype>> DefaultMarkings = new();
 
     public static Dictionary<MarkingCategories, MarkingPoints> CloneMarkingPointDictionary(Dictionary<MarkingCategories, MarkingPoints> self)
     {
@@ -44,8 +43,9 @@ public sealed partial class MarkingPointsPrototype : IPrototype
     ///     use whitelisted markings, and not globally usable markings.
     ///     Only used for validation and profile construction. Ignored anywhere else.
     /// </summary>
-    [DataField("onlyWhitelisted")] public bool OnlyWhitelisted;
+    [DataField]
+    public bool OnlyWhitelisted;
 
-    [DataField("points", required: true)]
+    [DataField(required: true)]
     public Dictionary<MarkingCategories, MarkingPoints> Points { get; private set; } = default!;
 }
