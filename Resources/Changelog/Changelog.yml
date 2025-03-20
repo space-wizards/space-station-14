@@ -3896,3 +3896,40 @@
   id: 8089
   time: '2025-03-20T02:18:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34984
+- author: psykana
+  changes:
+  - message: C4 head slot equip/unequip is now delayed similar to EVA helmet
+    type: Add
+  id: 8090
+  time: '2025-03-20T16:33:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35922
+- author: Darkmajia
+  changes:
+  - message: Correctly set default production amount in Lathe UI
+    type: Fix
+  id: 8091
+  time: '2025-03-20T16:38:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35951
+- author: Tayrtahn
+  changes:
+  - message: Erasing the content from a paper will now make it appear blank.
+    type: Fix
+  id: 8092
+  time: '2025-03-20T21:01:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35967
+- author: SonicHDC
+  changes:
+  - message: Added zips for senior coats!
+    type: Add
+  - message: Added zip and sprites for expensive coat!
+    type: Add
+  id: 8093
+  time: '2025-03-20T21:46:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35029
+- author: shibechef
+  changes:
+  - message: Bodies can now thermally regulate themselves again.
+    type: Fix
+  id: 8094
+  time: '2025-03-20T22:40:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35971
