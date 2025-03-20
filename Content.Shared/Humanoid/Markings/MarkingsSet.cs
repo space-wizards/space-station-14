@@ -164,13 +164,13 @@ public sealed partial class MarkingSet
                     continue;
                 }
 
-                if (onlyWhitelisted && prototype.SpeciesRestriction == null)
+                if (onlyWhitelisted && prototype.SpeciesRestrictions == null)
                 {
                     toRemove.Add((category, marking.MarkingId));
                 }
 
-                if (prototype.SpeciesRestriction != null
-                    && !prototype.SpeciesRestriction.Contains(species))
+                if (prototype.SpeciesRestrictions != null
+                    && !prototype.SpeciesRestrictions.Contains(species))
                 {
                     toRemove.Add((category, marking.MarkingId));
                 }
