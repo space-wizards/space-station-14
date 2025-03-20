@@ -13,7 +13,7 @@ public sealed partial class RandomArtifactSpriteComponent : Component
     public int[] PrecursorSprites = [];
 
     [DataField("siliconSprites")]
-    public int[] SilicionSprites = [];
+    public int[] SiliconSprites = [];
 
     [DataField("wizardSprites")]
     public int[] WizardSprites = [];

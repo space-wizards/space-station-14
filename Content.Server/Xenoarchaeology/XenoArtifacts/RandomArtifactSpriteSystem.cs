@@ -42,7 +42,7 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, RandomArtifactSpriteComponent component, MapInitEvent args)
     {
-        var artiType = EnsureComp<ArtifactComponent>(uid).ArtiType;
+        var artiType = EntityManager.GetComponent<ArtifactComponent>(uid).ArtiType;
         var randomSpriteChoices = Array.Empty<int>();
         switch (artiType)
         {
@@ -56,7 +56,7 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
                 randomSpriteChoices = component.PrecursorSprites;
                 break;
             case ArtiOrigin.Silicon:
-                randomSpriteChoices = component.SilicionSprites;
+                randomSpriteChoices = component.SiliconSprites;
                 break;
             case ArtiOrigin.Wizard:
                 randomSpriteChoices = component.WizardSprites;
