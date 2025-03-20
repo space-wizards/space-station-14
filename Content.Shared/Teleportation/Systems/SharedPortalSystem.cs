@@ -110,11 +110,8 @@ public abstract class SharedPortalSystem : EntitySystem
             return;
         }
 
-        if (TryComp<LinkedEntityComponent>(uid, out var link))
+        if (TryComp<LinkedEntityComponent>(uid, out var link) && link.LinkedEntities.Any())
         {
-            if (!link.LinkedEntities.Any())
-                return;
-
             // client can't predict outside of simple portal-to-portal interactions due to randomness involved
             // --also can't predict if the target doesn't exist on the client / is outside of PVS
             if (_netMan.IsClient)
