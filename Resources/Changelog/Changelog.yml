@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: joshepvodka
-  changes:
-  - message: Headphones are now selectable in loadouts.
-    type: Add
-  id: 7584
-  time: '2024-11-02T15:12:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33067
 - author: Plykiya
   changes:
   - message: Wielding weapons no longer displays your character's real identity when
@@ -3890,3 +3883,12 @@
   id: 8083
   time: '2025-03-20T00:35:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35925
+- author: muburu
+  changes:
+  - message: Produce now has in-hand sprites.
+    type: Add
+  - message: Killer tomatoes now require two hands to hold.
+    type: Tweak
+  id: 8084
+  time: '2025-03-20T00:53:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35151
