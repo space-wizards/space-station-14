@@ -9,7 +9,8 @@ public sealed partial class TrayScannerComponent : Component
     /// <summary>
     ///     Whether the scanner is currently on.
     /// </summary>
-    [DataField] public bool Enabled;
+    [DataField]
+    public bool Enabled;
 
     /// <summary>
     ///     Radius in which the scanner will reveal entities. Centered on the <see cref="LastLocation"/>.
