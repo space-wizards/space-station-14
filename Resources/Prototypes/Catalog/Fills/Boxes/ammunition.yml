@@ -58,10 +58,10 @@
 
 # Magnum
 - type: entity
-  name: box of SMG .45 magnum magazines
+  name: box of SMG magazines (.45 magnum) #imp
   parent: BoxMagazine
   id: BoxMagazineMagnumSubMachineGun
-  description: A box full of SMG .45 magnum magazines.
+  description: A box of .45 magnum SMG magazines, marked as live-fire ammo. #imp
   components:
   - type: StorageFill
     contents:
@@ -69,10 +69,10 @@
         amount: 3
 
 - type: entity
-  name: box of SMG .45 magnum (practice) magazines
+  name: box of SMG magazines (.45 magnum practice) #imp
   parent: BoxMagazine
   id: BoxMagazineMagnumSubMachineGunPractice
-  description: A box full of SMG .45 magnum (practice) magazines.
+  description: A box of .45 magnum SMG magazines, marked as practice ammo. #imp.
   components:
   - type: StorageFill
     contents:

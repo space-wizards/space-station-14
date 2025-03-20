@@ -190,6 +190,7 @@
 - type: entity
   id: MagazineMagnumSubMachineGunPiercing
   name: SMG magazine (.45 magnum armour-piercing)
+  description: A 25-round .45 magnum SMG magazine, marked as armor-piercing ammo. #imp
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider

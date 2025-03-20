@@ -55,6 +55,7 @@
       # TODO: This is actually a issue with all the speed loaders:
       #       You can mix different ammo types, but it will always
       #       use the one it was printed for.
+      # AvianMaiden here. It's funny. Mix and match. Fuck with people. Smiles.
       - state: base-6
         map: [ "enum.GunVisualLayers.Mag" ]
 

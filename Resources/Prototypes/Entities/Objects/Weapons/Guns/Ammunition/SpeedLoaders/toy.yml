@@ -32,7 +32,7 @@
 - type: entity
   id: SpeedLoaderCap
   name: "cap gun loader"
-  description: Boom, boom. Bang, bang. Lie down; you're dead!
+  description: Boom, boom. Bang, bang. Lie down; you're dead! #imp
   parent: BaseSpeedLoaderCap
   components:
   - type: BallisticAmmoProvider

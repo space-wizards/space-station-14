@@ -38,7 +38,7 @@
 - type: entity
   id: MagazineLightRifleBox
   name: "L6 SAW magazine box (.20 rifle)" #imp
-  description: A 100-round .20 rifle box magazine of disintegrating links, designed for a belt-fed machine gun. #imp
+  description: A 100-round .20 rifle box magazine of disintegrating links, designed for a belt-fed light machine gun. #imp
   parent: BaseMagazineLightRifle
   components:
   - type: Tag
@@ -123,7 +123,7 @@
 - type: entity
   id: MagazineLightRifleIncendiary
   name: "magazine (.30 rifle incendiary)"
-  description: A 23-round .30 rifle magazine, marked as uranium ammo. #imp
+  description: A 23-round .30 rifle magazine, marked as incendiary ammo. #imp
   parent: MagazineLightRifle
   components:
   - type: BallisticAmmoProvider

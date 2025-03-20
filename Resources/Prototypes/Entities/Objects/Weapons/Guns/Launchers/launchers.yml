@@ -110,6 +110,31 @@
     steps: 2
     zeroVisible: false
   - type: Appearance
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    range: 0.8
+    attackRate: 0.4 #slower, but hits harder; bigger object to shove with
+    damage:
+      types:
+        Blunt: 8
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 15
+    damage:
+      types:
+        Blunt: 12
+  - type: StaminaDamageOnHit
+    damage: 15 #slight stagger, but still like 7 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
+#imp edit end
 
 - type: entity
   name: multiple rocket launcher
@@ -145,6 +170,31 @@
     steps: 2
     zeroVisible: true
   - type: Appearance
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    range: 0.8
+    attackRate: 0.4 #slower, but hits harder; bigger object to shove with
+    damage:
+      types:
+        Blunt: 8
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 15
+    damage:
+      types:
+        Blunt: 12
+  - type: StaminaDamageOnHit
+    damage: 15 #slight stagger, but still like 7 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
+#imp edit end
 
 - type: entity
   name: pirate cannon
@@ -177,6 +227,31 @@
       proto: CannonBall
       soundInsert:
         path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
+#imp edit begin; weapon melee
+    - type: MeleeWeapon
+      range: 0.8
+      attackRate: 0.4 #slower, but hits harder; bigger object to shove with
+      damage:
+        types:
+          Blunt: 8
+      soundHit:
+        path: /Audio/Effects/hit_kick.ogg
+      soundSwing:
+        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+    - type: AltFireMelee
+      attackType: Heavy
+    - type: DamageOtherOnHit #for throwing
+      staminaCost: 15
+      damage:
+        types:
+          Blunt: 12
+    - type: StaminaDamageOnHit
+      damage: 15 #slight stagger, but still like 7 hits to stun completely
+    - type: MeleeRequiresWield
+    - type: MeleeThrowOnHit
+      distance: 0.8
+      speed: 5
+#imp edit end
 
 - type: entity
   name: tether gun
@@ -219,6 +294,25 @@
           unshaded:
             True: { visible: true }
             False: { visible: false }
+#imp edit begin; weapon melee
+    - type: MeleeWeapon
+      range: 0.8
+      attackRate: 0.8
+      damage:
+        types:
+          Blunt: 5
+      soundHit:
+        path: /Audio/Effects/hit_kick.ogg
+      soundSwing:
+        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+    - type: AltFireMelee
+      attackType: Heavy
+    - type: DamageOtherOnHit #for throwing
+      staminaCost: 6
+      damage:
+        types:
+          Blunt: 5
+#imp edit end
 
 - type: entity
   name: force gun
@@ -267,6 +361,25 @@
               unshaded:
                 True: { visible: true }
                 False: { visible: false }
+#imp edit begin; weapon melee
+    - type: MeleeWeapon
+      range: 0.8
+      attackRate: 0.8
+      damage:
+        types:
+          Blunt: 5
+      soundHit:
+        path: /Audio/Effects/hit_kick.ogg
+      soundSwing:
+        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+    - type: AltFireMelee
+      attackType: Heavy
+    - type: DamageOtherOnHit #for throwing
+      staminaCost: 6
+      damage:
+        types:
+          Blunt: 5
+#imp edit end
 
 - type: entity
   name: grappling gun
@@ -299,6 +412,25 @@
             True: { state: base-unshaded }
             False: { state: base-unshaded-off }
     - type: PacifismAllowedGun
+#imp edit begin; weapon melee
+    - type: MeleeWeapon
+      range: 0.8
+      attackRate: 0.8
+      damage:
+        types:
+          Blunt: 5
+      soundHit:
+        path: /Audio/Effects/hit_kick.ogg
+      soundSwing:
+        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+    - type: AltFireMelee
+      attackType: Heavy
+    - type: DamageOtherOnHit #for throwing
+      staminaCost: 6
+      damage:
+        types:
+          Blunt: 5
+#imp edit end
 
 # Admeme
 - type: entity
@@ -339,6 +471,28 @@
           unshaded:
             True: { visible: true }
             False: { visible: false }
+#imp edit begin; weapon melee
+    - type: MeleeWeapon
+      range: 0.8
+      attackRate: 0.8
+      damage:
+        types:
+          Blunt: 5
+      soundHit:
+        path: /Audio/Effects/hit_kick.ogg
+      soundSwing:
+        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+    - type: AltFireMelee
+      attackType: Heavy
+    - type: DamageOtherOnHit #for throwing
+      staminaCost: 6
+      damage:
+        types:
+          Blunt: 5
+    - type: MeleeThrowOnHit
+      distance: 6
+      speed: 6
+#imp edit end
 
 - type: entity
   name: force gun
@@ -381,6 +535,28 @@
           unshaded:
             True: { visible: true }
             False: { visible: false }
+#imp edit begin; weapon melee
+    - type: MeleeWeapon
+      range: 0.8
+      attackRate: 0.8
+      damage:
+        types:
+          Blunt: 5
+      soundHit:
+        path: /Audio/Effects/hit_kick.ogg
+      soundSwing:
+        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+    - type: AltFireMelee
+      attackType: Heavy
+    - type: DamageOtherOnHit #for throwing
+      staminaCost: 6
+      damage:
+        types:
+          Blunt: 5
+    - type: MeleeThrowOnHit
+      distance: 6
+      speed: 6
+#imp edit end
 
 - type: entity
   name: meteor launcher

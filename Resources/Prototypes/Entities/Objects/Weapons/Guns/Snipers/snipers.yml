@@ -147,7 +147,6 @@
   id: Musket
   description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:
-  - type: Sharp
   - type: Item
     size: Large
   - type: Sprite
@@ -172,16 +171,37 @@
       - CartridgeAntiMateriel
     capacity: 1
     proto: CartridgeAntiMateriel
+#imp edit begin; weapon melee
   - type: MeleeWeapon
+    range: 2
     wideAnimationRotation: -135
+    attackRate: 1.2
     damage:
       types:
-        Piercing: 15 #you fucking stab em
-        Bloodloss: 2 #no way to apply bleed, triangular bayonet wounds are hard to fix(source:that one copypasta)
+        Piercing: 12
+        Slash: 4
     angle: 0
     animation: WeaponArcThrust
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+  - type: EmbeddableProjectile
+    offset: -0.15,0.0
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: ThrowingAngle
+    angle: 225
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 15
+        Slash: 5
+  - type: Sharp
+  - type: Execution
+    doAfterDuration: 2.0
+  - type: MeleeRequiresWield
+  - type: AltFireMelee
+    attackType: Heavy
+#imp edit end
 
 - type: entity
   name: flintlock pistol
@@ -210,4 +230,23 @@
     proto: CartridgeAntiMateriel
   - type: StaticPrice
     price: 0
+#imp edit begin; weapon melee
+  - type: MeleeWeapon
+    range: 0.8
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 6
+    damage:
+      types:
+        Blunt: 5
+#imp edit end
 

@@ -15,7 +15,7 @@
   id: CrateArmoryShotgun
   parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   name: shotgun crate
-  description: For when the enemy absolutely needs to be replaced with lead. Contains two Enforcer shotguns with four boxes of lethal pellet shotgun shells. Requires Armory access to open.
+  description: For when the enemy absolutely needs to be replaced with lead. Contains two Enforcer shotguns with four boxes of buckshot shells. Requires Armory access to open. #imp
   components:
   - type: StorageFill
     contents:

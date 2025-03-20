@@ -723,7 +723,7 @@
     deleteOnCollide: false
     damage:
       types:
-        Blunt: 1
+        Blunt: 15 #imp
     soundHit:
       path: /Audio/Effects/gen_hit.ogg
   - type: StaminaDamageOnCollide
