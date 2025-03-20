@@ -104,7 +104,17 @@
       map: ["enum.SolutionContainerLayers.Fill"]
   - type: Item
     sprite: Objects/Specific/Medical/medipen.rsi
-    heldPrefix: medipen
+    inhandVisuals:
+      left:
+      - state: base-needle-inhand-left
+      - state: base-colorA-inhand-left
+        color: "#439822"
+      - state: base-colorB-inhand-left
+      right:
+      - state: base-needle-inhand-right
+      - state: base-colorA-inhand-right
+        color: "#439822"
+      - state: base-colorB-inhand-right
     size: Tiny
   - type: SolutionContainerManager
     solutions:
@@ -168,7 +178,17 @@
   description: A rapid dose of anti-poison. Contains ultravasculine and epinephrine.
   components:
   - type: Item
-    heldPrefix: penacid
+    inhandVisuals:
+      left:
+      - state: base-needle-inhand-left
+      - state: base-colorA-inhand-left
+        color: "#573d9e"
+      - state: base-colorB-inhand-left
+      right:
+      - state: base-needle-inhand-right
+      - state: base-colorA-inhand-right
+        color: "#573d9e"
+      - state: base-colorB-inhand-right
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -197,7 +217,17 @@
   description: A rapid dose of bicaridine and tranexamic acid, intended for combat applications.
   components:
   - type: Item
-    heldPrefix: bicpen
+    inhandVisuals:
+      left:
+      - state: base-needle-inhand-left
+      - state: base-colorA-inhand-left
+        color: "#c73333"
+      - state: base-colorB-inhand-left
+      right:
+      - state: base-needle-inhand-right
+      - state: base-colorA-inhand-right
+        color: "#c73333"
+      - state: base-colorB-inhand-right
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -231,7 +261,17 @@
   description: A rapid dose of dermaline and leporazine, intended for combat applications.
   components:
   - type: Item
-    heldPrefix: dermpen
+    inhandVisuals:
+      left:
+      - state: base-needle-inhand-left
+      - state: base-colorA-inhand-left
+        color: "#427485"
+      - state: base-colorB-inhand-left
+      right:
+      - state: base-needle-inhand-right
+      - state: base-colorA-inhand-right
+        color: "#427485"
+      - state: base-colorB-inhand-right
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -265,7 +305,17 @@
   description: A rapid dose of anti-radiation. Contains arithrazine and bicaridine.
   components:
   - type: Item
-    heldPrefix: arithpen
+    inhandVisuals:
+      left:
+      - state: base-needle-inhand-left
+      - state: base-colorA-inhand-left
+        color: "#e3832f"
+      - state: base-colorB-inhand-left
+      right:
+      - state: base-needle-inhand-right
+      - state: base-colorA-inhand-right
+        color: "#e3832f"
+      - state: base-colorB-inhand-right
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -299,7 +349,17 @@
   description: A rapid dose of puncturase and tranexamic acid, intended for combat applications.
   components:
   - type: Item
-    heldPrefix: punctpen
+    inhandVisuals:
+      left:
+      - state: base-needle-inhand-left
+      - state: base-colorA-inhand-left
+        color: "#c7be5d"
+      - state: base-colorB-inhand-left
+      right:
+      - state: base-needle-inhand-right
+      - state: base-colorA-inhand-right
+        color: "#c7be5d"
+      - state: base-colorB-inhand-right
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -333,7 +393,17 @@
   description: A rapid dose of pyrazine and dermaline, intended for combat applications.
   components:
   - type: Item
-    heldPrefix: pyrapen
+    inhandVisuals:
+      left:
+      - state: base-needle-inhand-left
+      - state: base-colorA-inhand-left
+        color: "#c7a45d"
+      - state: base-colorB-inhand-left
+      right:
+      - state: base-needle-inhand-right
+      - state: base-colorA-inhand-right
+        color: "#c7a45d"
+      - state: base-colorB-inhand-right
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -367,7 +437,17 @@
   description: A rapid dose of saline and dexalin plus, intended to get someone up quickly.
   components:
   - type: Item
-    heldPrefix: dexpen
+    inhandVisuals:
+      left:
+      - state: base-needle-inhand-left
+      - state: base-colorA-inhand-left
+        color: "#5d81c7"
+      - state: base-colorB-inhand-left
+      right:
+      - state: base-needle-inhand-right
+      - state: base-colorA-inhand-right
+        color: "#5d81c7"
+      - state: base-colorB-inhand-right
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -401,7 +481,17 @@
   description: Contains a mix of chemicals that protect you from the deadly effects of space.
   components:
   - type: Item
-    heldPrefix: hypovolemic
+    inhandVisuals:
+      left:
+      - state: base-needle-inhand-left
+      - state: base-colorA-inhand-left
+        color: "#a84597"
+      - state: base-colorB-inhand-left
+      right:
+      - state: base-needle-inhand-right
+      - state: base-colorA-inhand-right
+        color: "#a84597"
+      - state: base-colorB-inhand-right
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -436,7 +526,19 @@
   description: Contains enough hyperzine for you to have the chemical's effect for 30 seconds. Use it when you're sure you're ready to throw down.
   components:
   - type: Item
-    heldPrefix: stimpen
+    inhandVisuals:
+      left:
+      - state: base-needle-inhand-left
+      - state: base-colorA-inhand-left
+        color: "#9a040e"
+      - state: base-colorB-inhand-left
+        color: "#c62933"
+      right:
+      - state: base-needle-inhand-right
+      - state: base-colorA-inhand-right
+        color: "#9a040e"
+      - state: base-colorB-inhand-right
+        color: "#c62933"
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -470,7 +572,19 @@
   description: A microinjector of hyperzine that give you about 15 seconds of the chemical's effects.
   components:
   - type: Item
-    heldPrefix: stimpen
+    inhandVisuals:
+      left:
+      - state: base-needle-inhand-left
+      - state: base-colorA-inhand-left
+        color: "#9a040e"
+      - state: base-colorB-inhand-left
+        color: "#c62933"
+      right:
+      - state: base-needle-inhand-right
+      - state: base-colorA-inhand-right
+        color: "#9a040e"
+      - state: base-colorB-inhand-right
+        color: "#c62933"
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:
@@ -499,7 +613,17 @@
   description: A single-use medipen containing chemicals that regenerate most types of damage.
   components:
   - type: Item
-    heldPrefix: morphen
+    inhandVisuals:
+      left:
+      - state: base-needle-inhand-left
+      - state: base-colorA-inhand-left
+        color: "#5bcaca"
+      - state: base-colorB-inhand-left
+      right:
+      - state: base-needle-inhand-right
+      - state: base-colorA-inhand-right
+        color: "#5bcaca"
+      - state: base-colorB-inhand-right
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi
     layers:

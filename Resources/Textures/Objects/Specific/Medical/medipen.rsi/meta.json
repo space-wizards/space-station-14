@@ -23,26 +23,10 @@
       "name": "hypovolemic"
     },
     {
-      "name": "hypovolemic-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "hypovolemic-inhand-right",
-      "directions": 4
-    },
-    {
       "name": "hypovolemic_empty"
     },
     {
       "name": "stimpen"
-    },
-    {
-      "name": "stimpen-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "stimpen-inhand-right",
-      "directions": 4
     },
     {
       "name": "stimpen_empty"
@@ -57,14 +41,6 @@
       "name": "morphen"
     },
     {
-      "name": "morphen-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "morphen-inhand-right",
-      "directions": 4
-    },
-    {
       "name": "morphen_empty"
     },
     {
@@ -77,14 +53,6 @@
       "name": "penacid"
     },
     {
-      "name": "penacid-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "penacid-inhand-right",
-      "directions": 4
-    },
-    {
       "name": "penacid_empty"
     },
     {
@@ -94,26 +62,10 @@
       "name": "bicpen"
     },
     {
-      "name": "bicpen-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "bicpen-inhand-right",
-      "directions": 4
-    },
-    {
       "name": "bicpen_empty"
     },
     {
       "name": "dermpen"
-    },
-    {
-      "name": "dermpen-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "dermpen-inhand-right",
-      "directions": 4
     },
     {
       "name": "dermpen_empty"
@@ -137,34 +89,10 @@
       "name": "arithpen"
     },
     {
-      "name": "arithpen-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "arithpen-inhand-right",
-      "directions": 4
-    },
-    {
       "name": "arithpen_empty"
     },
     {
-      "name": "medipen-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "medipen-inhand-right",
-      "directions": 4
-    },
-    {
       "name": "punctpen"
-    },
-    {
-      "name": "punctpen-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "punctpen-inhand-right",
-      "directions": 4
     },
     {
       "name": "punctpen_empty"
@@ -173,29 +101,37 @@
       "name": "pyrapen"
     },
     {
-      "name": "pyrapen-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "pyrapen-inhand-right",
-      "directions": 4
-    },
-    {
       "name": "pyrapen_empty"
     },
     {
       "name": "dexpen"
     },
     {
-      "name": "dexpen-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "dexpen-inhand-right",
-      "directions": 4
-    },
-    {
       "name": "dexpen_empty"
+    },
+    {
+      "name": "base-needle-inhand-left",
+        "directions": 4
+    },
+    {
+      "name": "base-needle-inhand-right",
+        "directions": 4
+    },
+    {
+      "name": "base-colorA-inhand-left",
+        "directions": 4
+    },
+    {
+      "name": "base-colorA-inhand-right",
+        "directions": 4
+    },
+    {
+      "name": "base-colorB-inhand-left",
+        "directions": 4
+    },
+    {
+      "name": "base-colorB-inhand-right",
+        "directions": 4
     }
   ]
 }
