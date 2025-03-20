@@ -67,6 +67,9 @@
             "name": "tele-server-on-multiple"
         },
         {
+            "name": "tele-server-no-key"
+        },
+        {
             "name": "tele_o"
         }
     ]

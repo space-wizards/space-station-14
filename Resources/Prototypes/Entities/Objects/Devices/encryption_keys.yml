@@ -10,6 +10,9 @@
     sprite: Objects/Devices/encryption_keys.rsi
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
+  - type: Tag
+    tags:
+    - EncryptionKey
 
 - type: entity
   parent: EncryptionKey
@@ -27,6 +30,7 @@
     - state: common_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionCommon
 
 - type: entity
@@ -45,6 +49,7 @@
     - state: cargo_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionCargo
 
 - type: entity
@@ -63,6 +68,7 @@
     - state: nano_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionElse
 
 - type: entity
@@ -88,6 +94,7 @@
     - state: cap_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionElse
 
 - type: entity
@@ -106,6 +113,7 @@
     - state: com_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionCommand
 
 - type: entity
@@ -124,6 +132,7 @@
     - state: eng_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionEngineering
 
 - type: entity
@@ -142,6 +151,7 @@
     - state: med_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionMedical
 
 - type: entity
@@ -161,6 +171,7 @@
     - state: medsci_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionElse
 
 - type: entity
@@ -179,6 +190,7 @@
     - state: sci_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionScience
 
 - type: entity
@@ -197,6 +209,7 @@
     - state: robotics_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionElse
 
 - type: entity
@@ -215,6 +228,7 @@
     - state: sec_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionSecurity
 
 - type: entity
@@ -233,6 +247,7 @@
     - state: service_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionService
 
 - type: entity
@@ -251,6 +266,7 @@
     - state: synd_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionElse
 
 - type: entity
@@ -269,6 +285,7 @@
     - state: ai_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionElse
 
 - type: entity
@@ -287,6 +304,7 @@
     - state: ai_label
   - type: Tag
     tags:
+    - EncryptionKey
     - EncryptionElse
 
 - type: entity
@@ -305,4 +323,5 @@
         - state: pirate_label
     - type: Tag
       tags:
+      - EncryptionKey
       - EncryptionElse
