@@ -190,10 +190,7 @@ public partial class MobStateSystem
 
     private void OnDamageModify(Entity<MobStateComponent> ent, ref DamageModifyEvent args)
     {
-        if (_damageable.UniversalMobDamageModifier != 1)
-        {
-            args.Damage *= _damageable.UniversalMobDamageModifier;
-        }
+        args.Damage *= _damageable.UniversalMobDamageModifier;
     }
 
     #endregion
