@@ -296,7 +296,7 @@
 
 - type: marking
   id: SharkminnowEyeliner
-  bodyPart: HeadTop
+  bodyPart: Eyes
   markingCategory: HeadTop
   speciesRestriction: [ Thaven ]
   forcedColoring: false

@@ -49,6 +49,11 @@
   speciesRestriction: [Thaven]
   forcedColoring: false
   followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
   sprites:
   - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
     state: piercings
@@ -60,6 +65,11 @@
   speciesRestriction: [Thaven]
   forcedColoring: false
   followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
   sprites:
   - sprite: _Impstation/Mobs/Customization/thaven/thaven.rsi
     state: piercings2
