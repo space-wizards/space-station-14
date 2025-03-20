@@ -107,6 +107,10 @@ namespace Content.Server.Chemistry.EntitySystems
                 {
                     var tile = _map.GetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates);
 
+                    // Check if the tile is a tile we've reacted with previously. If so, skip it.
+                    if (tile == vaporComp.PreviousTileRef)
+                        return;
+
                     // Enumerate over all the reagents in the vapor entity solution
                     foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, container)))
                     {
@@ -126,16 +130,14 @@ namespace Content.Server.Chemistry.EntitySystems
                             // Preform the reagent's TileReaction
                             var reaction =
                                 reagent.ReactionTile(tile,
-                                    reagentQuantity.Quantity / vaporComp.TransferAmount,
+                                    reagentQuantity.Quantity * vaporComp.TransferAmount,
                                     EntityManager,
                                     reagentQuantity.Reagent.Data);
 
-                            if (reaction > reagentQuantity.Quantity)
-                            {
-                                Log.Error(
-                                    $"Tried to tile react more than we have for reagent {reagentQuantity}. Found {reaction} and we only have {reagentQuantity.Quantity}");
-                                reaction = reagentQuantity.Quantity;
-                            }
+                            // if (reaction > reagentQuantity.Quantity)
+                            // {
+                            //     reaction = reagentQuantity.Quantity;
+                            // }
 
                             _solutionContainerSystem.RemoveReagent(soln, reagentQuantity.Reagent, reaction);
                         }
@@ -146,6 +148,8 @@ namespace Content.Server.Chemistry.EntitySystems
                             EntityManager.QueueDeleteEntity(uid);
                         }
                     }
+                    // Set the previous tile reference to the current tile
+                    vaporComp.PreviousTileRef = tile;
                 }
             }
         }

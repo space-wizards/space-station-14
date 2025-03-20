@@ -99,8 +99,8 @@
   - type: Tag
     tags:
       - Spray
-# Vapor
 
+# Vapor
 - type: entity
   id: Vapor
   name: "vapor"
@@ -111,6 +111,7 @@
       vapor:
         maxVol: 50
   - type: Vapor
+    transferAmount: 0.5
   - type: AnimationPlayer
   - type: Sprite
     sprite: Effects/chempuff.rsi

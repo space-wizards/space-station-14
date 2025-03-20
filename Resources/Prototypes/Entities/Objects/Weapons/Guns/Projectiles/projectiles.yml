@@ -874,6 +874,7 @@
         - BulletImpassable
   - type: Vapor
     active: true
+    transferAmount: 0.5
   - type: Appearance
   - type: VaporVisuals
 
