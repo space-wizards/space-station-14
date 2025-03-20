@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Boolean-Buckeye
-  changes:
-  - message: Emergency lights can be constructed and deconstructed
-    type: Add
-  id: 7588
-  time: '2024-11-04T03:24:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32945
 - author: thetolbean
   changes:
   - message: The web coat and boots can now be broken down into silk.
@@ -3891,3 +3884,11 @@
   id: 8087
   time: '2025-03-20T01:50:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35834
+- author: Errant
+  changes:
+  - message: The correct popup messages will now show for both players when someone
+      removes someone else's handcuffs.
+    type: Fix
+  id: 8088
+  time: '2025-03-20T02:15:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35743
