@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Kickguy223
-  changes:
-  - message: Ion Storms now notify a Borg that their laws have changed via a sound
-      cue.
-    type: Add
-  id: 7590
-  time: '2024-11-04T11:23:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32887
-- author: DrSmugleaf
-  changes:
-  - message: Fixed not being able to see vote counts for non-votekick votes.
-    type: Fix
-  id: 7591
-  time: '2024-11-05T00:12:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33170
 - author: kirus59
   changes:
   - message: Fixed display of icons when using hunger or thirst huds
@@ -3896,3 +3881,17 @@
   id: 8089
   time: '2025-03-20T02:18:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34984
+- author: psykana
+  changes:
+  - message: C4 head slot equip/unequip is now delayed similar to EVA helmet
+    type: Add
+  id: 8090
+  time: '2025-03-20T16:33:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35922
+- author: Darkmajia
+  changes:
+  - message: Correctly set default production amount in Lathe UI
+    type: Fix
+  id: 8091
+  time: '2025-03-20T16:38:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35951
