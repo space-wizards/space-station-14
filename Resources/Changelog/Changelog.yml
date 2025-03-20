@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: MilenVolf
-  changes:
-  - message: Ghost roles menu is now collapsible! This makes it much easier to find
-      a specific role that you want.
-    type: Tweak
-  id: 7586
-  time: '2024-11-04T00:49:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32717
 - author: Tr1bute
   changes:
   - message: A popup now appears when attempting to harvest mutated plants that require
@@ -3892,3 +3884,10 @@
   id: 8085
   time: '2025-03-20T01:04:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35433
+- author: Velken
+  changes:
+  - message: Cargo can now find a special bag for carrying mail in their drobe vendor.
+    type: Add
+  id: 8086
+  time: '2025-03-20T01:32:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35702
