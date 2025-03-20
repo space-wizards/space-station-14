@@ -214,9 +214,6 @@ namespace Content.Shared.Damage
 
             damage = ApplyUniversalAllModifiers(damage);
 
-            if (UniversalMobDamageModifier != 1f && HasComp<MobStateComponent>(uid))
-                damage *= UniversalMobDamageModifier;
-
             // TODO DAMAGE PERFORMANCE
             // Consider using a local private field instead of creating a new dictionary here.
             // Would need to check that nothing ever tries to cache the delta.
