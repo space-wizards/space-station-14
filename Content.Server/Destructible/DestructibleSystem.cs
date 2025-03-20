@@ -21,6 +21,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Shared.Humanoid;
+using Robust.Shared.Player;
 
 namespace Content.Server.Destructible
 {
@@ -73,6 +75,10 @@ namespace Content.Server.Destructible
                         }
                         return b.GetType().Name;
                     }));
+
+                    // If it doesn't have a humanoid component, it's probably not particularly notable?
+                    if (logImpact > LogImpact.Medium && !HasComp<HumanoidAppearanceComponent>(uid))
+                        logImpact = LogImpact.Medium;
 
                     if (args.Origin != null)
                     {
