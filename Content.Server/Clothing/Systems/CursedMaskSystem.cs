@@ -46,7 +46,7 @@ public sealed class CursedMaskSystem : SharedCursedMaskSystem
 
             _popup.PopupEntity(Loc.GetString("cursed-mask-takeover-popup"), wearer, session, PopupType.LargeCaution);
             _adminLog.Add(LogType.Action,
-                LogImpact.High,
+                LogImpact.Extreme,
                 $"{ToPrettyString(wearer):player} had their body taken over and turned into an enemy through the cursed mask {ToPrettyString(ent):entity}");
         }
 

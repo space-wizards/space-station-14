@@ -317,7 +317,7 @@ namespace Content.Server.GameTicking
         public void Respawn(ICommonSession player)
         {
             _mind.WipeMind(player);
-            _adminLogger.Add(LogType.Respawn, LogImpact.Extreme, $"Player {player} was respawned.");
+            _adminLogger.Add(LogType.Respawn, LogImpact.Medium, $"Player {player} was respawned.");
 
             if (LobbyEnabled)
                 PlayerJoinLobby(player);
