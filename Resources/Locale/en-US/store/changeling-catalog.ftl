@@ -132,3 +132,9 @@ evolutionmenu-utility-hivemindaccess-name = Hivemind Access
 evolutionmenu-utility-hivemindaccess-desc =
     Tunes our chemical receptors for hivemind communication, allowing us to recognize and communicate with other changelings who have also evolved this ability.
     Default radio key is +h
+
+evolutionmenu-utility-fakemindshield-name = Fake MindShield
+evolutionmenu-utility-fakemindshield-desc = 
+    Modifies a small portion of greymatter to be able to mimic MindShield signals, allowing you to trick specific devices.
+    May need a few toggle attempts to get the right frequency.
+    Cost 0 chemicals.
