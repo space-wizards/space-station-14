@@ -43,7 +43,7 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
     private void OnMapInit(EntityUid uid, RandomArtifactSpriteComponent component, MapInitEvent args)
     {
         var artiType = EnsureComp<ArtifactComponent>(uid).ArtiType;
-        int[] randomSpriteChoices = [];
+        var randomSpriteChoices = Array.Empty<int>();
         switch (artiType)
         {
             case ArtiOrigin.Eldritch:
