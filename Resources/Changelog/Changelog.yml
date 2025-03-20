@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Kickguy223
-  changes:
-  - message: Ion Storms now notify a Borg that their laws have changed via a sound
-      cue.
-    type: Add
-  id: 7590
-  time: '2024-11-04T11:23:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32887
 - author: DrSmugleaf
   changes:
   - message: Fixed not being able to see vote counts for non-votekick votes.
@@ -3896,3 +3888,10 @@
   id: 8089
   time: '2025-03-20T02:18:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34984
+- author: psykana
+  changes:
+  - message: C4 head slot equip/unequip is now delayed similar to EVA helmet
+    type: Add
+  id: 8090
+  time: '2025-03-20T16:33:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35922
