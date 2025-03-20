@@ -1,94 +1,4 @@
 ﻿Entries:
-- author: K-Dynamic
-  changes:
-  - message: Pills are explosion resistant.
-    type: Tweak
-  id: 7578
-  time: '2024-11-02T09:51:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32458
-- author: K-Dynamic
-  changes:
-  - message: Handcrafted gauze now takes 3 seconds instead of 10 seconds of crafting
-    type: Tweak
-  - message: Medical techfab gauze recipe now takes 1 cloth instead of 2
-    type: Tweak
-  id: 7579
-  time: '2024-11-02T09:53:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32744
-- author: Ubaser
-  changes:
-  - message: Service workers can now be antagonists.
-    type: Fix
-  id: 7580
-  time: '2024-11-02T10:07:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31359
-- author: AftrLite
-  changes:
-  - message: The AME now has a new sound effect for fuel injection!
-    type: Add
-  id: 7581
-  time: '2024-11-02T13:19:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33097
-- author: deltanedas
-  changes:
-  - message: Printing cables in an autolathe is now 20 times faster.
-    type: Tweak
-  id: 7582
-  time: '2024-11-02T13:24:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31521
-- author: Centronias
-  changes:
-  - message: Fixed a bug where attempting to speak into a handheld radio and an intercom
-      simultaneously would lead to only one device transmitting the message.
-    type: Fix
-  id: 7583
-  time: '2024-11-02T15:04:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32737
-- author: joshepvodka
-  changes:
-  - message: Headphones are now selectable in loadouts.
-    type: Add
-  id: 7584
-  time: '2024-11-02T15:12:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33067
-- author: Plykiya
-  changes:
-  - message: Wielding weapons no longer displays your character's real identity when
-      your identity is hidden.
-    type: Fix
-  id: 7585
-  time: '2024-11-03T11:25:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33134
-- author: MilenVolf
-  changes:
-  - message: Ghost roles menu is now collapsible! This makes it much easier to find
-      a specific role that you want.
-    type: Tweak
-  id: 7586
-  time: '2024-11-04T00:49:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32717
-- author: Tr1bute
-  changes:
-  - message: A popup now appears when attempting to harvest mutated plants that require
-      sharp tools.
-    type: Add
-  id: 7587
-  time: '2024-11-04T00:56:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33136
-- author: Boolean-Buckeye
-  changes:
-  - message: Emergency lights can be constructed and deconstructed
-    type: Add
-  id: 7588
-  time: '2024-11-04T03:24:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32945
-- author: thetolbean
-  changes:
-  - message: The web coat and boots can now be broken down into silk.
-    type: Fix
-  id: 7589
-  time: '2024-11-04T03:33:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33121
 - author: Kickguy223
   changes:
   - message: Ion Storms now notify a Borg that their laws have changed via a sound
@@ -3888,3 +3798,101 @@
   id: 8077
   time: '2025-03-18T08:00:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35898
+- author: slarticodefast
+  changes:
+  - message: Paradox Clones now start with their suit sensors turned off.
+    type: Tweak
+  id: 8078
+  time: '2025-03-18T20:07:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35909
+- author: AgentSmithRadio
+  changes:
+  - message: Smite Vendors can now be restocked using the standard beverage restock
+      box.
+    type: Fix
+  - message: Smite and other soda vendors now carry more soda, and are less likely
+      to be empty at shift start.
+    type: Tweak
+  id: 8079
+  time: '2025-03-18T23:45:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35144
+- author: claustro305
+  changes:
+  - message: Fixed an issue where small lights are too hard to shoot.
+    type: Fix
+  id: 8080
+  time: '2025-03-19T15:07:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35920
+- author: aada
+  changes:
+  - message: Donk Co. Microwaves now burn twice as hot as their competitors.
+    type: Tweak
+  id: 8081
+  time: '2025-03-19T22:33:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35937
+- author: TiniestShark
+  changes:
+  - message: Added inhand and neck sprites to the snake plushie.
+    type: Add
+  id: 8082
+  time: '2025-03-19T23:14:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35323
+- author: MisterImp
+  changes:
+  - message: The copypasta recipe now requires two small plates, which are left behind
+      when it is consumed.
+    type: Tweak
+  id: 8083
+  time: '2025-03-20T00:35:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35925
+- author: muburu
+  changes:
+  - message: Produce now has in-hand sprites.
+    type: Add
+  - message: Killer tomatoes now require two hands to hold.
+    type: Tweak
+  id: 8084
+  time: '2025-03-20T00:53:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35151
+- author: Seam_Less
+  changes:
+  - message: Added in-hand sprites to Bling, Camera Bug, Cap Cap, Centcom Cap, Damp
+      Rag, and Incomplete Baseball Bat.
+    type: Add
+  id: 8085
+  time: '2025-03-20T01:04:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35433
+- author: Velken
+  changes:
+  - message: Cargo can now find a special bag for carrying mail in their drobe vendor.
+    type: Add
+  id: 8086
+  time: '2025-03-20T01:32:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35702
+- author: GaussiArson
+  changes:
+  - message: Disablers, practice disablers, and disabler smgs no longer deal heat
+      damage. They still deal the same amount of stamina damage.
+    type: Tweak
+  id: 8087
+  time: '2025-03-20T01:50:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35834
+- author: Errant
+  changes:
+  - message: The correct popup messages will now show for both players when someone
+      removes someone else's handcuffs.
+    type: Fix
+  id: 8088
+  time: '2025-03-20T02:15:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35743
+- author: Seam_Less
+  changes:
+  - message: Added in-hand sprites to many common medical items that previously lacked
+      one.
+    type: Add
+  - message: Fixed the bruise pack using the ointment in-hand sprite instead of it's
+      own sprite.
+    type: Fix
+  id: 8089
+  time: '2025-03-20T02:18:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34984
