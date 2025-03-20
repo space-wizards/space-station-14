@@ -32,6 +32,13 @@ public sealed partial class MarkingPrototype : IPrototype
     [DataField]
     public MarkingColors Coloring { get; private set; } = new();
 
+    /// <summary>
+    /// Do we need to apply any displacement maps to this marking? Set to false if your marking is incompatible
+    /// with a standard human doll, and is used for some special races with unusual shapes
+    /// </summary>
+    [DataField]
+    public bool SupportDisplacement { get; private set; } = true;
+
     [DataField(required: true)]
     public List<SpriteSpecifier> Sprites { get; private set; } = default!;
 
