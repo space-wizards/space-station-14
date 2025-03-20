@@ -42,9 +42,11 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, RandomArtifactSpriteComponent component, MapInitEvent args)
     {
-        var artiType = EntityManager.GetComponent<ArtifactComponent>(uid).ArtiType;
+        if (!EntityManager.TryGetComponent<ArtifactComponent>(uid, out var arti))
+            return;
+
         var randomSpriteChoices = Array.Empty<int>();
-        switch (artiType)
+        switch (arti.ArtiType)
         {
             case ArtiOrigin.Eldritch:
                 randomSpriteChoices = component.EldritchSprites;
