@@ -34,6 +34,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
         SubscribeLocalEvent<BorgChassisComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
+        SubscribeLocalEvent<BrainUnborgableComponent, ContainerGettingInsertedAttemptEvent>(OnUnborgableInsertAttempt);
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
 
         InitializeRelay();
@@ -123,6 +124,18 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
         var sprintDif = movement.BaseWalkSpeed / movement.BaseSprintSpeed;
         args.ModifySpeed(1f, sprintDif);
+    }
+
+    private void OnUnborgableInsertAttempt(Entity<BrainUnborgableComponent> entity, ref ContainerGettingInsertedAttemptEvent args)
+    {
+        if (!HasComp<MMIComponent>(args.Container.Owner))
+            return;
+
+        args.Cancel();
+        Popup.PopupPredicted(
+            Loc.GetString(entity.Comp.FailureMessage, ("brain", Name(entity)), ("mmi", Name(args.Container.Owner))),
+            args.Container.Owner,
+            entity);
     }
 
     /// <summary>

@@ -74,3 +74,11 @@
   category: Disabilities
   components:
   - type: PainNumbness
+
+- type: trait
+  id: Unborgable
+  name: trait-unborgable-name
+  description: trait-unborgable-desc
+  category: Disabilities
+  components:
+  - type: Unborgable
