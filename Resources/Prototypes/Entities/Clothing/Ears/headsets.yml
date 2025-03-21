@@ -26,6 +26,7 @@
   - type: GuideHelp
     guides:
     - Radio
+  - type: PhoneBillTarget
 
 - type: entity
   parent: ClothingHeadset

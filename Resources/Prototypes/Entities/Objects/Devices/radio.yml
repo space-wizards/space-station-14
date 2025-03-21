@@ -24,6 +24,7 @@
   - type: Tag
     tags:
     - Radio
+  - type: PhoneBillTarget
 
 - type: entity
   name: security radio
