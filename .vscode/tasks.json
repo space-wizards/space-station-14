@@ -1,6 +1,4 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
         {
@@ -9,8 +7,10 @@
             "type": "shell",
             "args": [
                 "build",
-                "/property:GenerateFullPaths=true", // Ask dotnet build to generate full paths for file names.
-                "/consoleloggerparameters:'ForceNoAlign;NoSummary'" // Do not generate summary otherwise it leads to duplicate errors in Problems panel
+                "--configuration",
+                "Release",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:'ForceNoAlign;NoSummary'"
             ],
             "group": {
                 "kind": "build",
@@ -27,6 +27,8 @@
             "type": "process",
             "args": [
                 "build",
+                "--configuration",
+                "Release",
                 "${workspaceFolder}/Content.YAMLLinter/Content.YAMLLinter.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:'ForceNoAlign;NoSummary'"
