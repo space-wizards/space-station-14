@@ -100,6 +100,18 @@ namespace Content.Shared.Movement.Systems
 
             var ev = new SpriteMoveEvent(entity.Comp.HeldMoveButtons != MoveButtons.None);
             RaiseLocalEvent(entity, ref ev);
+
+            // Run container stuff because legacy
+            // For stuff like "Moving out of locker" or the likes
+            // We'll relay a movement input to the parent.
+            if (_container.IsEntityInContainer(entity) &&
+                XformQuery.TryComp(entity, out var xform) &&
+                xform.ParentUid.IsValid() &&
+                _mobState.IsAlive(entity))
+            {
+                var relayMoveEvent = new ContainerRelayMovementEntityEvent(entity);
+                RaiseLocalEvent(xform.ParentUid, ref relayMoveEvent);
+            }
         }
 
         private void OnMoverHandleState(Entity<InputMoverComponent> entity, ref ComponentHandleState args)
@@ -297,18 +309,6 @@ namespace Content.Shared.Movement.Systems
         {
             if (!MoverQuery.TryGetComponent(entity, out var moverComp))
                 return;
-
-            // For stuff like "Moving out of locker" or the likes
-            // We'll relay a movement input to the parent.
-            // TODO: Make this use relays and make relays use a list of sources.
-            if (_container.IsEntityInContainer(entity) &&
-                TryComp(entity, out TransformComponent? xform) &&
-                xform.ParentUid.IsValid() &&
-                _mobState.IsAlive(entity))
-            {
-                var relayMoveEvent = new ContainerRelayMovementEntityEvent(entity);
-                RaiseLocalEvent(xform.ParentUid, ref relayMoveEvent);
-            }
 
             SetVelocityDirection((entity, moverComp), dir, subTick, state);
         }

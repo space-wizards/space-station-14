@@ -44,7 +44,8 @@ namespace Content.Shared.Movement.Systems
 
             if (MathHelper.CloseTo(ev.WeightlessAcceleration, move.WeightlessAcceleration) &&
                 MathHelper.CloseTo(ev.WeightlessModifier, move.WeightlessModifier) &&
-                MathHelper.CloseTo(ev.WeightlessFriction, move.WeightlessFriction))
+                MathHelper.CloseTo(ev.WeightlessFriction, move.WeightlessFriction) &&
+                MathHelper.CloseTo(ev.WeightlessFrictionNoInput, move.WeightlessFrictionNoInput))
             {
                 return;
             }
@@ -52,6 +53,7 @@ namespace Content.Shared.Movement.Systems
             move.WeightlessAcceleration = ev.WeightlessAcceleration;
             move.WeightlessModifier = ev.WeightlessModifier;
             move.WeightlessFriction = ev.WeightlessFriction;
+            move.WeightlessFrictionNoInput = ev.WeightlessFrictionNoInput;
             Dirty(uid, move);
         }
 
