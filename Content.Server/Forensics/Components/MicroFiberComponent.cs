@@ -7,9 +7,15 @@ namespace Content.Server.Forensics;
 [RegisterComponent]
 public sealed partial class MicroFiberComponent : Component
 {
+    /// <summary>
+    /// Locale id for the microfiber material of this item
+    /// </summary>
     [DataField]
     public LocId MicroFiberMaterial = "micro-fibers-synthetic";
 
+    /// <summary>
+    /// Microfiber color if needed
+    /// </summary>
     [DataField]
     public string? MicroFiberColor;
 }

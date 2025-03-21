@@ -25,7 +25,7 @@ namespace Content.Server.Forensics
         /// <summary>
         /// A list of backpack and pockets of clothes fibers that the forensic scanner found from the <see cref="ForensicsComponent"/> on an entity.
         /// </summary>
-        [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly), DataField]
         public List<string> MicroFibers = new();
 
         /// <summary>
