@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
 
@@ -12,12 +13,6 @@ public sealed partial class MobCollisionComponent : Component
     // If you want to tweak the feel of the pushing use SpeedModifier and Strength.
     // Strength goes both ways and affects how much the other mob is pushed by so controls static pushing a lot.
     // Speed mod affects your own mob primarily.
-
-    /// <summary>
-    /// Flags this component as being handled this tick to avoid receiving 10 trillion messages.
-    /// </summary>
-    [ViewVariables]
-    public bool HandledThisTick;
 
     /// <summary>
     /// Is this mob currently colliding? Used for SpeedModifier.
@@ -41,13 +36,13 @@ public sealed partial class MobCollisionComponent : Component
     /// By setting this low you can ensure you don't have to set the push-strength too high if you can push static entities.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float SpeedModifier = 0.50f;
+    public float SpeedModifier = 0.35f;
 
     /// <summary>
     /// Strength of the pushback for entities. This is combined between the 2 entities being pushed.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float Strength = 140f;
+    public float Strength = 50f;
 
     // Yes I know, I will deal with it if I ever refactor collision layers due to misuse.
     // If anything it probably needs some assurance on mobcollisionsystem for it.
@@ -56,4 +51,7 @@ public sealed partial class MobCollisionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public string FixtureId = "flammable";
+
+    [DataField, AutoNetworkedField]
+    public Vector2 Direction;
 }

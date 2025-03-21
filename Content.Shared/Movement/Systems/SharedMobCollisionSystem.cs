@@ -64,8 +64,6 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var comp))
         {
-            comp.HandledThisTick = false;
-
             if (!comp.Colliding)
                 continue;
 
@@ -75,6 +73,19 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             if (comp.BufferAccumulator <= 0f)
             {
                 SetColliding((uid, comp), false);
+            }
+            else if (comp.Direction != Vector2.Zero && PhysicsQuery.TryComp(uid, out var physics))
+            {
+                var direction = comp.Direction;
+
+                if (direction.Length() > _pushingCap)
+                {
+                    direction = direction.Normalized() * _pushingCap;
+                }
+
+                Physics.ApplyLinearImpulse(uid, direction * physics.Mass, body: physics);
+                comp.Direction = Vector2.Zero;
+                Dirty(uid, comp);
             }
         }
     }
@@ -121,20 +132,13 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
         var direction = msg.Direction;
 
-        if (direction.Length() > _pushingCap)
-        {
-            direction = direction.Normalized() * _pushingCap;
-        }
-
         MoveMob((player.Value, comp, xform), direction);
     }
 
     protected void MoveMob(Entity<MobCollisionComponent, TransformComponent> entity, Vector2 direction)
     {
-        if (!PhysicsQuery.TryComp(entity.Owner, out var physics))
-            return;
-
-        Physics.ApplyLinearImpulse(entity.Owner, direction * physics.Mass, body: physics);
+        entity.Comp1.Direction = direction;
+        Dirty(entity.Owner, entity.Comp1);
         SetColliding(entity, true);
     }
 
@@ -145,10 +149,6 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         if (physics.ContactCount == 0)
             return false;
 
-        if (entity.Comp1.HandledThisTick)
-            return true;
-
-        entity.Comp1.HandledThisTick = true;
         var ourVelocity = entity.Comp2.LinearVelocity;
 
         if (ourVelocity == Vector2.Zero && !CfgManager.GetCVar(CCVars.MovementPushingStatic))
@@ -210,9 +210,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             return contactCount > 0;
         }
 
-        var parentAngle = worldRot - xform.LocalRotation;
         direction *= frameTime;
-        var localDir = (-parentAngle).RotateVec(direction);
         RaiseCollisionEvent(entity.Owner, direction);
         return true;
     }
