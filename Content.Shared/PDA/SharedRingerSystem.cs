@@ -42,7 +42,7 @@ public abstract class SharedRingerSystem : EntitySystem
         // RingerBoundUserInterface Subscriptions
         SubscribeLocalEvent<RingerUplinkComponent, BeforeRingtoneSetEvent>(OnSetUplinkRingtone);
         SubscribeLocalEvent<RingerComponent, RingerSetRingtoneMessage>(OnSetRingtone);
-        SubscribeLocalEvent<RingerComponent, RingerPlayRingtoneMessage>(OnRingerPlayRingtone);
+        SubscribeLocalEvent<RingerComponent, RingerPlayRingtoneMessage>(OnPlayRingtone);
     }
 
     /// <inheritdoc/>
@@ -194,7 +194,7 @@ public abstract class SharedRingerSystem : EntitySystem
     /// <summary>
     /// Handles the <see cref="RingerPlayRingtoneMessage"/> from the client UI.
     /// </summary>
-    private void OnRingerPlayRingtone(Entity<RingerComponent> ent, ref RingerPlayRingtoneMessage args)
+    private void OnPlayRingtone(Entity<RingerComponent> ent, ref RingerPlayRingtoneMessage args)
     {
         StartRingtone(ent);
     }
@@ -233,6 +233,8 @@ public abstract class SharedRingerSystem : EntitySystem
         ent.Comp.Active = true;
         ent.Comp.NoteCount = 0;
         ent.Comp.NextNoteTime = _timing.CurTime;
+
+        UpdateRingerUi(ent);
 
         // No predicted popups with PVS filtering so we do this to avoid duplication
         if (_timing.IsFirstTimePredicted)

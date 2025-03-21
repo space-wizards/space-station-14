@@ -18,28 +18,10 @@ namespace Content.Client.PDA.Ringer
             _menu = this.CreateWindow<RingtoneMenu>();
             _menu.OpenToLeft();
 
+            _menu.TestRingtoneButtonPressed += OnTestRingtoneButtonPressed;
+            _menu.SetRingtoneButtonPressed += OnSetRingtoneButtonPressed;
+
             Update();
-
-            _menu.TestRingerButton.OnPressed += _ =>
-            {
-                SendPredictedMessage(new RingerPlayRingtoneMessage());
-            };
-
-            _menu.SetRingerButton.OnPressed += _ =>
-            {
-                if (!TryGetRingtone(out var ringtone))
-                    return;
-
-                SendPredictedMessage(new RingerSetRingtoneMessage(ringtone));
-                _menu.SetRingerButton.Disabled = true;
-
-                Timer.Spawn(333,
-                    () =>
-                {
-                    if (_menu is { Disposed: false, SetRingerButton: { Disposed: false } ringer})
-                        ringer.Disabled = false;
-                });
-            };
         }
 
         private bool TryGetRingtone(out Note[] ringtone)
@@ -84,6 +66,37 @@ namespace Content.Client.PDA.Ringer
             }
 
             _menu.TestRingerButton.Disabled = ringer.Active;
+        }
+
+        private void OnTestRingtoneButtonPressed()
+        {
+            if (_menu is null)
+                return;
+
+            SendPredictedMessage(new RingerPlayRingtoneMessage());
+
+            // We disable it instantly to remove the delay before the client receives the next compstate
+            // Makes the UI feel responsive, will be re-enabled by ringer.Active once it gets an update.
+            _menu.TestRingerButton.Disabled = true;
+        }
+
+        private void OnSetRingtoneButtonPressed()
+        {
+            if (_menu is null)
+                return;
+
+            if (!TryGetRingtone(out var ringtone))
+                return;
+
+            SendPredictedMessage(new RingerSetRingtoneMessage(ringtone));
+            _menu.SetRingerButton.Disabled = true;
+
+            Timer.Spawn(333,
+                () =>
+                {
+                    if (_menu is { Disposed: false, SetRingerButton: { Disposed: false } ringer})
+                        ringer.Disabled = false;
+                });
         }
     }
 }
