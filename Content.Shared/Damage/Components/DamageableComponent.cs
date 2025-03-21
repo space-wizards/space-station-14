@@ -65,6 +65,13 @@ namespace Content.Shared.Damage
         [DataField("radiationDamageTypes")]
         public List<ProtoId<DamageTypePrototype>> RadiationDamageTypeIDs = new() { "Radiation" };
 
+        /// <summary>
+        ///     Group types that affect the pain overlay.
+        /// </summary>
+        ///     TODO: Add support for adding damage types specifically rather than whole damage groups
+        [DataField]
+        public List<ProtoId<DamageGroupPrototype>> PainDamageGroups = new() { "Brute", "Burn" };
+
         [DataField]
         public Dictionary<MobState, ProtoId<HealthIconPrototype>> HealthIcons = new()
         {
@@ -84,15 +91,18 @@ namespace Content.Shared.Damage
     public sealed class DamageableComponentState : ComponentState
     {
         public readonly Dictionary<string, FixedPoint2> DamageDict;
+        public readonly string? DamageContainerId;
         public readonly string? ModifierSetId;
         public readonly FixedPoint2? HealthBarThreshold;
 
         public DamageableComponentState(
             Dictionary<string, FixedPoint2> damageDict,
+            string? damageContainerId,
             string? modifierSetId,
             FixedPoint2? healthBarThreshold)
         {
             DamageDict = damageDict;
+            DamageContainerId = damageContainerId;
             ModifierSetId = modifierSetId;
             HealthBarThreshold = healthBarThreshold;
         }

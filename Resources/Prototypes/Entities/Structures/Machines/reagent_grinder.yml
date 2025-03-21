@@ -5,8 +5,6 @@
   description: From BlenderTech. Will It Blend? Let's find out!
   suffix: grinder/juicer
   components:
-  - type: Transform
-    anchored: true
   - type: ReagentGrinder
   - type: ActivatableUI
     key: enum.ReagentGrinderUiKey.Key
@@ -19,8 +17,8 @@
     visuals:
       enum.ReagentGrinderVisualState.BeakerAttached:
         grinder:
-          True: {state: "juicer1"}
-          False: {state: "juicer0"}
+          True: {state: "grinder_beaker_attached"}
+          False: {state: "grinder_empty"}
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -33,13 +31,13 @@
         layer:
         - TabletopMachineLayer
   - type: Sprite
-    sprite: Structures/Machines/juicer.rsi
+    sprite: Structures/Machines/grinder.rsi
     drawdepth: SmallObjects
     snapCardinals: true
     offset: "0.0,0.4"
     layers:
     - map: [ "grinder" ]
-      state: "juicer0"
+      state: "grinder_empty"
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: ItemSlots

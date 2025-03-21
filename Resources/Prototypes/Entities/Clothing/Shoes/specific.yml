@@ -104,7 +104,7 @@
     sprite: Clothing/Shoes/Specific/cult.rsi
 
 - type: entity
-  parent: ClothingShoesBase
+  parent: [ ClothingShoesBase, BaseJanitorContraband ]
   id: ClothingShoesGaloshes
   name: galoshes
   description: Rubber boots.
@@ -137,8 +137,7 @@
     walkModifier: 1.1
     sprintModifier: 1.3
   - type: FootstepModifier
-    footstepSoundCollection:
-      collection: null
+    footstepSoundCollection: null
 
 - type: entity
   parent: ClothingShoesBaseButcherable
