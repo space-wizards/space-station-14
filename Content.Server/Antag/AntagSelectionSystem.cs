@@ -475,11 +475,25 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (!IsSessionValid(ent, session, def) || !IsEntityValid(session.AttachedEntity, def))
                 continue;
 
-            if (HasPrimaryAntagPreference(session, def))
+            var banned = false;
+            var fallbackBanned = false;
+            foreach (var role in def.PrefRoles)
+            {
+                if (_ghostRole.IsBanned(session, role))
+                    banned = true;
+            }
+
+            foreach (var role in def.FallbackRoles)
+            {
+                if (_ghostRole.IsBanned(session, role))
+                    fallbackBanned = true;
+            }
+
+            if (HasPrimaryAntagPreference(session, def) && !banned)
             {
                 preferredList.Add(session);
             }
-            else if (HasFallbackAntagPreference(session, def))
+            else if (HasFallbackAntagPreference(session, def) && !fallbackBanned)
             {
                 fallbackList.Add(session);
             }
