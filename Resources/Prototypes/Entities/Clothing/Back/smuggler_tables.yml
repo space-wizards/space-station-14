@@ -46,22 +46,6 @@
       tableId: RandomSatchelChemsTable
 
 - type: entityTable
-  id: RandomSatchelGenericTable
-  table: !type:GroupSelector
-    children:
-    - id: SpaceCash100
-      weight: 20
-    - id: DrinkSpaceGlue
-      amount: !type:RangeNumberSelector
-        range: 1, 2
-    - id: DrinkSpaceLube
-      amount: !type:RangeNumberSelector
-        range: 1, 2
-    - id: CrazyGlue
-      amount: !type:RangeNumberSelector
-        range: 1, 2
-
-- type: entityTable
   id: RandomSatchelFunnyTable
   table: !type:GroupSelector
     children:
@@ -78,17 +62,6 @@
     - id: StrangePill
       amount: !type:RangeNumberSelector
         range: 1, 5
-
-- type: entityTable
-  id: RandomSatchelClothingTable
-  table: !type:GroupSelector
-    children:
-    - id: SpaceCash100
-      weight: 6
-    - id: ClothingHeadHatOutlawHat
-    - id: ClothingMaskItalianMoustache
-    - id: ClothingHandsGlovesCombat
-    - id: ClothingNeckScarfStripedSyndieRed
 
 - type: entityTable
   id: RandomSatchelCannabisTable
