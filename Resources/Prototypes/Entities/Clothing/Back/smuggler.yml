@@ -2,10 +2,10 @@
   id: SubfloorAnchorStorageBase
   abstract: true
   components:
+  - type: Appearance
   - type: SubFloorHide
   - type: Anchorable
   - type: CollideOnAnchor
-    enable: false
   - type: Transform
     anchored: false
   - type: AnchoredStorageFilter
@@ -16,6 +16,8 @@
     blacklist:
       components:
       - AnchoredStorageFilter
+  - type: Visibility
+    layer: 1
 
 - type: entity
   parent: SubfloorAnchorStorageBase
@@ -40,6 +42,7 @@
   - type: Sprite
     sprite: Clothing/Back/Satchels/smuggler.rsi
     state: icon
+
 
 - type: entity
   parent: [AnchoredSubfloorAnchorStorageBase, BriefcaseSyndie]
