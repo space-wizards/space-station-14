@@ -324,7 +324,7 @@ namespace Content.Server.Forensics
         {
             var targetComp = EnsureComp<ForensicsComponent>(args.Entity);
 
-            targetComp.MicroFibers.Add(string.IsNullOrEmpty(ent.Comp.MicroFiberColor) ? Loc.GetString("forensic-fibers", ("material", ent.Comp.MicroFiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", ent.Comp.MicroFiberColor), ("material", ent.Comp.MicroFiberMaterial)));
+            targetComp.MicroFibers.Add(string.IsNullOrEmpty(ent.Comp.MicroFiberColor) ? Loc.GetString("forensic-micro-fibers", ("material", ent.Comp.MicroFiberMaterial)) : Loc.GetString("forensic-micro-fibers-colored", ("color", ent.Comp.MicroFiberColor), ("material", ent.Comp.MicroFiberMaterial)));
         }
 
         #region Public API
