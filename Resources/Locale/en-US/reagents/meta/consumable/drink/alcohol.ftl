@@ -286,5 +286,38 @@ reagent-desc-watermelon-wakeup = If you want to be awake, this will do it... Als
 reagent-name-rubberneck = juice that makes for a synthetic diet
 reagent-desc-rubberneck = A popular drink amongst those adhering to an all synthetic diet.
 
+reagent-name-caipirinha = juice that makes you samba
+reagent-desc-caipirinha = The São Paulo special, straight from old Brazil.
+
+reagent-name-daiquiri = juice that makes you beachy
+reagent-desc-daiquiri = A classic rum cocktail which remains popular even in the cold reaches of space.
+
+reagent-name-death-in-the-afternoon = juice that makes you poetic
+reagent-desc-death-in-the-afternoon = "Pour one jigger absinthe into a Champagne glass. Add iced Champagne until it attains the proper opalescent milkiness. Drink three to five of these slowly." - Ernest Hemingway
+
+reagent-name-empress-75 = juice that makes you royal
+reagent-desc-empress-75 = A more refined take on the mimosa. Just the thing Marie Antoinette might've sipped on before the revolution.
+
+reagent-name-espresso-martini = juice that makes you wired
+reagent-desc-espresso-martini = To wake you up and wind you down. Garnished with coffee beans and icy-cold.
+
+reagent-name-mayojito = juice that makes gods weep
+reagent-desc-mayojito = An affront to god and man. Do not drink it.
+
+reagent-name-mimeosa = juice that silently bubbles
+reagent-desc-mimeosa = It has an orange tang so sour you just can't describe it.
+
+reagent-name-mimosa = juice that makes you fancy
+reagent-desc-mimosa = Perfect for a lively brunch out with the girls.
+
+reagent-name-moscow-mule = juice that kicks with copper
+reagent-desc-moscow-mule = A surpsingly strong and refreshing mixed drink, served in an iconic copper mug.
+
+reagent-name-the-sun-also-rises = juice that makes you brooding
+reagent-desc-the-sun-also-rises = A strong cocktail mixed into a murky blend. A secret favorite of tortured authors.
+
+reagent-name-whiskey-sour = juice that makes you pucker
+reagent-desc-whiskey-sour = What's the secret ingredient? Eggs. It's eggs.
+
 reagent-name-zombiecocktail = juice that makes you feel dead inside
 reagent-desc-zombiecocktail = It gets in your head. Your he-eyeh-ead.
