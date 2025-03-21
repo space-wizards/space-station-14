@@ -54,7 +54,7 @@
         children:
         - id: SpaceCash5000
           amount: !type:RangeNumberSelector
-            range: 1, 10
+            range: 1, 11
 
 - type: entity
   parent: [AnchoredSubfloorAnchorStorageBase, ClothingBackpackDuffelClown]
