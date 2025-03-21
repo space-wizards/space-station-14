@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Banana has been updated!
-    type: Tweak
-  id: 857
-  time: '2025-01-04T15:13:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1222
 - author: starlighthowls
   changes:
   - message: Increases the amount of usable limb markings on humans/dwarves, reptilians,
@@ -4101,3 +4094,16 @@
   id: 1356
   time: '2025-03-20T13:05:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2023
+- author: hivehum
+  changes:
+  - message: Nutribricks are far less nutritious...
+    type: Tweak
+  - message: Chefs will notice a subtle but substantial increase in the intensity
+      of their output.
+    type: Tweak
+  - message: Yeah um so it turns out every food from a vending machine had no nutritional
+      value. That's fixed now. Oops.
+    type: Fix
+  id: 1357
+  time: '2025-03-21T01:11:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2021
