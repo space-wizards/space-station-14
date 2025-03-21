@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
+using Content.Server.Speech.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Database;
@@ -46,7 +47,11 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
         Filter allPlayersInGame = Filter.Empty().AddWhere(GameTicker.UserHasJoinedGame);
 
         if (stationEvent.StartAnnouncement != null)
-            ChatSystem.DispatchFilteredAnnouncement(allPlayersInGame, Loc.GetString(stationEvent.StartAnnouncement), playSound: false, colorOverride: stationEvent.StartAnnouncementColor);
+        {
+            var announcement = Loc.GetString(stationEvent.StartAnnouncement);
+            announcement = RandomAccentuator.MaybeAccentuate(announcement);
+            ChatSystem.DispatchFilteredAnnouncement(allPlayersInGame, announcement, playSound: false, colorOverride: stationEvent.StartAnnouncementColor);
+        }
 
         Audio.PlayGlobal(stationEvent.StartAudio, allPlayersInGame, true);
     }

@@ -381,6 +381,9 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         sender ??= Loc.GetString("chat-manager-sender-announcement");
 
+        if (!sender.Equals(Loc.GetString("comms-console-announcement-title-station"), StringComparison.OrdinalIgnoreCase))
+            message = RandomAccentuator.MaybeAccentuate(message);
+
         var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
         var station = _stationSystem.GetOwningStation(source);
 

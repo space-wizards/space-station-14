@@ -42,6 +42,11 @@ public sealed class PirateAccentSystem : EntitySystem
         return msg;
     }
 
+    public string Accentuate(string message)
+    {
+        return Accentuate(message, new PirateAccentComponent { YarrChance = 0.3f });
+    }
+
     private void OnAccentGet(EntityUid uid, PirateAccentComponent component, AccentGetEvent args)
     {
         args.Message = Accentuate(args.Message, component);
