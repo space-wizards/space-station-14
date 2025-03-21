@@ -12,5 +12,5 @@ public sealed partial class BrainUnborgableComponent : Component
     /// The message that will be displayed when a player tries to insert the brain in an MMI.
     /// </summary>
     [DataField]
-    public string FailureMessage = "error-brain-incompatible-mmi";
+    public LocId FailureMessage = "error-brain-incompatible-mmi";
 }
