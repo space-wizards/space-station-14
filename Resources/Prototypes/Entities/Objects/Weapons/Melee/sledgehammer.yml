@@ -1,0 +1,20 @@
+
+- type: entity
+  name: the hammer of space asshole
+  parent: Sledgehammer
+  id: HammerSpaceAsshole
+  components:
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 20
+        Structural: 25
+  - type: LandAtCursor
+  - type: MeleeThrowOnHit
+    stunTime: 3
+    activateOnThrown: true
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 15
+        Structural: 15

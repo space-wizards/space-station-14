@@ -114,3 +114,19 @@
   - type: NpcFactionMember
     factions:
     - Wizard
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: MobHuman
+  id: MobHumanSpaceAsshole
+  name: Space Asshole
+  components:
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+  #- type: SpaceAsshole
+  - type: Loadout
+    prototypes: [SpaceAssholeGearFull]
+    roleLoadout: [ RoleSurvivalSyndicate ]
+  - type: NpcFactionMember
+    factions:
+    - Syndicate

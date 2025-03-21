@@ -40,6 +40,7 @@
     - id: LoneOpsSpawn
     - id: DerelictCyborgSpawn
     - id: WizardSpawn
+    - id: SpaceAssholeSpawn
 
 - type: entity
   id: BaseStationEvent
@@ -550,6 +551,54 @@
         - Syndicate
       mindRoles:
       - MindRoleNukeops
+
+- type: entity
+  parent: BaseGameRule
+  id: SpaceAssholeSpawn
+  components:
+  - type: StationEvent
+    earliestStart: 35
+    weight: 5.5
+    minimumPlayers: 20
+    duration: 1
+  - type: RuleGrids
+  - type: LoadMapRule
+    mapPath: /Maps/Shuttles/ShuttleEvent/guerrilla-truck.yml
+  - type: AntagLoadProfileRule
+  - type: AntagObjectives
+    agentName: Space Asshole
+    objectives:
+    - SpaceAssholeKillRandomHeadObjective
+    - SpaceAssholeSurviveObjective
+    - SpaceAssholeHijackShuttleObjective
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointSpaceAsshole
+      min: 1
+      max: 1
+      pickPlayer: false
+      startingGear: SpaceAssholeGearFull
+      roleLoadout:
+      - RoleSurvivalNukie
+      components:
+      #- type: SpaceAsshole
+      - type: RandomMetadata
+        nameSegments:
+        - SpaceAssholeName
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      - type: AutoImplant
+        implants:
+        - MacroBombImplant
+        - MicroBombImplant
+      mindRoles:
+      - MindRoleSpaceAsshole
+      briefing:
+        text: "Wanton carnage is all you can enjoy."
+        color: Green
+        sound: "/Audio/Lobby/space_asshole.ogg"
+      allowNonHumans: True
 
 - type: entity
   parent: BaseTraitorRule

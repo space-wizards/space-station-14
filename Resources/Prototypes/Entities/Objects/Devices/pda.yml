@@ -1403,6 +1403,19 @@
     state: pda-pirate
 
 - type: entity
+  parent: SyndiPDA
+  id: SpaceAssholePDA
+  name: space asshole PDA
+  components:
+  - type: Pda
+    penSlot:
+      startingItem: PenExploding
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+
+- type: entity
   parent: BaseMedicalPDA
   id: SyndiAgentPDA
   name: syndicate agent PDA
