@@ -53,7 +53,7 @@ namespace Content.Shared.SubFloor
             if (TryComp<MapGridComponent>(xform.GridUid, out var grid)
                 && HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates)))
             {
-                _popup.PopupPredicted(Loc.GetString("subfloor-anchor-failure", ("entity", uid)), uid, null);
+                _popup.PopupClient(Loc.GetString("subfloor-anchor-failure", ("entity", uid)), args.User);
                 args.Cancel();
             }
         }
@@ -64,7 +64,7 @@ namespace Content.Shared.SubFloor
             // despite being partially under the floor.
             if (component.IsUnderCover)
             {
-                _popup.PopupPredicted(Loc.GetString("subfloor-unanchor-failure", ("entity", uid)), uid, null);
+                _popup.PopupClient(Loc.GetString("subfloor-unanchor-failure", ("entity", uid)), args.User);
                 args.Cancel();
             }
         }
