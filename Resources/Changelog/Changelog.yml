@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: Flare guns have been reworked to no longer automatically eject shells
-      after firing, and must now be opened manually to insert or eject shells. A safety
-      feature has also been added to prevent loading lethal shells into them.
-    type: Tweak
-  - message: Flare guns are twice as likely to appear in emergency closets, with the
-      same rarity as MRE's.
-    type: Tweak
-  - message: Added the security shell gun, a modified flare gun which is capable of
-      handling both nonlethal and lethal shotgun shells. It is able to be crafted
-      in the security techfab without needing any research.
-    type: Add
-  id: 7596
-  time: '2024-11-06T14:27:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32829
 - author: SlamBamActionman
   changes:
   - message: WT550 and C20-r's "burst" firemodes are now actual bursts.
@@ -3895,3 +3879,10 @@
   id: 8095
   time: '2025-03-20T23:01:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35599
+- author: K-Dynamic
+  changes:
+  - message: Dragons and carps now fight NT pets, xenos and zombies.
+    type: Fix
+  id: 8096
+  time: '2025-03-21T00:13:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35578
