@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Light.Components;
+using Content.Shared.Audio;
 using Content.Shared.Weather;
 using Robust.Client.Audio;
 using Robust.Client.GameObjects;
@@ -48,7 +49,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
         if (!Timing.IsFirstTimePredicted || weatherProto.Sound == null)
             return;
 
-        weather.Stream ??= _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true)?.Entity;
+        weather.Stream ??= _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true, FunAudioParams.WithUniformPitch())?.Entity;
 
         if (!TryComp(weather.Stream, out AudioComponent? comp))
             return;
@@ -132,7 +133,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
         // TODO: Fades (properly)
         weather.Stream = _audio.Stop(weather.Stream);
-        weather.Stream = _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true)?.Entity;
+        weather.Stream = _audio.PlayGlobal(weatherProto.Sound, Filter.Local(), true, FunAudioParams.WithUniformPitch())?.Entity;
         return true;
     }
 

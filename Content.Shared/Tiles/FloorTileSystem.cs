@@ -179,7 +179,7 @@ public sealed class FloorTileSystem : EntitySystem
         var variant = _tile.PickVariant((ContentTileDefinition) _tileDefinitionManager[tileId], random);
         _map.SetTile(gridUid, mapGrid,location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
 
-        _audio.PlayPredicted(placeSound, location, user);
+        _audio.PlayPredicted(placeSound, location, user, FunAudioParams.WithUniformPitch(FunAudioParams.WithUniformPitch()));
     }
 
     public bool CanPlaceTile(EntityUid gridUid, MapGridComponent component, [NotNullWhen(false)] out string? reason)

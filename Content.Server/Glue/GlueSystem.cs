@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Glue;
@@ -84,7 +85,7 @@ public sealed class GlueSystem : SharedGlueSystem
             {
                 EnsureComp<GluedComponent>(target).Duration = quantity.Double() * entity.Comp.DurationPerUnit;
                 _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} glued {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
-                _audio.PlayPvs(entity.Comp.Squeeze, entity.Owner);
+                _audio.PlayPvs(entity.Comp.Squeeze, entity.Owner, FunAudioParams.WithUniformPitch());
                 _popup.PopupEntity(Loc.GetString("glue-success", ("target", target)), actor, actor, PopupType.Medium);
                 return true;
             }

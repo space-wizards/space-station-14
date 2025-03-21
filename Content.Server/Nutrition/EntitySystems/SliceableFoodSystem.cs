@@ -1,5 +1,6 @@
 using Content.Server.DoAfter;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
@@ -93,7 +94,7 @@ public sealed class SliceableFoodSystem : EntitySystem
             FillSlice(sliceUid, lostSolution);
         }
 
-        _audio.PlayPvs(component.Sound, transform.Coordinates, AudioParams.Default.WithVolume(-2));
+        _audio.PlayPvs(component.Sound, transform.Coordinates, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2)));
         var ev = new SliceFoodEvent();
         RaiseLocalEvent(uid, ref ev);
 

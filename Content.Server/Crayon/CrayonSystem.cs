@@ -4,6 +4,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Decals;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
+using Content.Shared.Audio;
 using Content.Shared.Crayon;
 using Content.Shared.Database;
 using Content.Shared.Decals;
@@ -71,7 +72,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
             return;
 
         if (component.UseSound != null)
-            _audio.PlayPvs(component.UseSound, uid, AudioParams.Default.WithVariation(0.125f));
+            _audio.PlayPvs(component.UseSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(0.125f)));
 
         // Decrease "Ammo"
         component.Charges--;

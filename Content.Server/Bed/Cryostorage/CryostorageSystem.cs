@@ -10,6 +10,7 @@ using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Systems;
+using Content.Shared.Audio;
 using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Chat;
 using Content.Shared.Climbing.Systems;
@@ -196,7 +197,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
             }
         }
 
-        _audio.PlayPvs(cryostorageComponent.RemoveSound, ent);
+        _audio.PlayPvs(cryostorageComponent.RemoveSound, ent, FunAudioParams.WithUniformPitch());
 
         EnsurePausedMap();
         if (PausedMap == null)

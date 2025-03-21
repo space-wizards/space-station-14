@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Audio;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Timing;
 using Robust.Shared.Audio.Systems;
@@ -49,6 +50,6 @@ public sealed class MechSoundboardSystem : EntitySystem
             return;
 
         // honk!!!!!
-        _audio.PlayPvs(comp.Sounds[msg.Sound], uid);
+        _audio.PlayPvs(comp.Sounds[msg.Sound], uid, FunAudioParams.WithUniformPitch());
     }
 }

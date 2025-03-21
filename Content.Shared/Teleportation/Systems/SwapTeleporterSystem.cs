@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -130,8 +131,8 @@ public sealed class SwapTeleporterSystem : EntitySystem
             return;
         }
 
-        _audio.PlayPredicted(comp.TeleportSound, uid, user);
-        _audio.PlayPredicted(otherComp.TeleportSound, comp.LinkedEnt.Value, user);
+        _audio.PlayPredicted(comp.TeleportSound, uid, user, FunAudioParams.WithUniformPitch());
+        _audio.PlayPredicted(otherComp.TeleportSound, comp.LinkedEnt.Value, user, FunAudioParams.WithUniformPitch());
         comp.NextTeleportUse = _timing.CurTime + comp.Cooldown;
         comp.TeleportTime = _timing.CurTime + comp.TeleportDelay;
         Dirty(uid, comp);

@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item.ItemToggle.Components;
@@ -143,9 +144,9 @@ public sealed class ItemToggleSystem : EntitySystem
         if (attempt.Cancelled)
         {
             if (predicted)
-                _audio.PlayPredicted(comp.SoundFailToActivate, uid, user);
+                _audio.PlayPredicted(comp.SoundFailToActivate, uid, user, FunAudioParams.WithUniformPitch());
             else
-                _audio.PlayPvs(comp.SoundFailToActivate, uid);
+                _audio.PlayPvs(comp.SoundFailToActivate, uid, FunAudioParams.WithUniformPitch());
 
             if (attempt.Popup != null && user != null)
             {
@@ -195,9 +196,9 @@ public sealed class ItemToggleSystem : EntitySystem
         var (uid, comp) = ent;
         var soundToPlay = comp.SoundActivate;
         if (predicted)
-            _audio.PlayPredicted(soundToPlay, uid, user);
+            _audio.PlayPredicted(soundToPlay, uid, user, FunAudioParams.WithUniformPitch());
         else
-            _audio.PlayPvs(soundToPlay, uid);
+            _audio.PlayPvs(soundToPlay, uid, FunAudioParams.WithUniformPitch());
 
         comp.Activated = true;
         UpdateVisuals((uid, comp));
@@ -215,9 +216,9 @@ public sealed class ItemToggleSystem : EntitySystem
         var (uid, comp) = ent;
         var soundToPlay = comp.SoundDeactivate;
         if (predicted)
-            _audio.PlayPredicted(soundToPlay, uid, user);
+            _audio.PlayPredicted(soundToPlay, uid, user, FunAudioParams.WithUniformPitch());
         else
-            _audio.PlayPvs(soundToPlay, uid);
+            _audio.PlayPvs(soundToPlay, uid, FunAudioParams.WithUniformPitch());
 
         comp.Activated = false;
         UpdateVisuals((uid, comp));
@@ -284,8 +285,8 @@ public sealed class ItemToggleSystem : EntitySystem
         {
             var loop = comp.ActiveSound.Params.WithLoop(true);
             var stream = args.Predicted
-                ? _audio.PlayPredicted(comp.ActiveSound, uid, args.User, loop)
-                : _audio.PlayPvs(comp.ActiveSound, uid, loop);
+                ? _audio.PlayPredicted(comp.ActiveSound, uid, args.User, FunAudioParams.WithUniformPitch(loop))
+                : _audio.PlayPvs(comp.ActiveSound, uid, FunAudioParams.WithUniformPitch(loop));
             if (stream?.Entity is {} entity)
                 comp.PlayingStream = entity;
         }

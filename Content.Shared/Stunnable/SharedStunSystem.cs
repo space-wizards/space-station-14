@@ -1,5 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
@@ -268,7 +269,7 @@ public abstract class SharedStunSystem : EntitySystem
         knocked.HelpTimer = knocked.HelpInterval / 2f;
 
         _statusEffect.TryRemoveTime(uid, "KnockedDown", TimeSpan.FromSeconds(knocked.HelpInterval));
-        _audio.PlayPredicted(knocked.StunAttemptSound, uid, args.User);
+        _audio.PlayPredicted(knocked.StunAttemptSound, uid, args.User, FunAudioParams.WithUniformPitch());
         Dirty(uid, knocked);
 
         args.Handled = true;

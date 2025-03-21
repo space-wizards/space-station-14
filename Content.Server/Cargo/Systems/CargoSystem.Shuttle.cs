@@ -1,4 +1,5 @@
 using Content.Server.Cargo.Components;
+using Content.Shared.Audio;
 using Content.Shared.Stacks;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
@@ -317,7 +318,7 @@ public sealed partial class CargoSystem
 
         var stackPrototype = _protoMan.Index<StackPrototype>(component.CashType);
         _stack.Spawn((int) price, stackPrototype, xform.Coordinates);
-        _audio.PlayPvs(ApproveSound, uid);
+        _audio.PlayPvs(ApproveSound, uid, FunAudioParams.WithUniformPitch());
         UpdatePalletConsoleInterface(uid);
     }
 

@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -42,6 +43,6 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
         }
 
         // Play attached to our entity because the projectile may immediately delete or the likes.
-        _audio.PlayPredicted(component.Sound, attachedEnt.Value, attachedEnt.Value);
+        _audio.PlayPredicted(component.Sound, attachedEnt.Value, attachedEnt.Value, FunAudioParams.WithUniformPitch());
     }
 }

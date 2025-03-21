@@ -2,6 +2,7 @@ using Content.Server.Ghost;
 using Content.Server.Morgue.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
@@ -100,10 +101,10 @@ public sealed class CrematoriumSystem : EntitySystem
         if (HasComp<ActiveCrematoriumComponent>(uid))
             return false;
 
-        _audio.PlayPvs(component.CremateStartSound, uid);
+        _audio.PlayPvs(component.CremateStartSound, uid, FunAudioParams.WithUniformPitch());
         _appearance.SetData(uid, CrematoriumVisuals.Burning, true);
 
-        _audio.PlayPvs(component.CrematingSound, uid);
+        _audio.PlayPvs(component.CrematingSound, uid, FunAudioParams.WithUniformPitch());
 
         AddComp<ActiveCrematoriumComponent>(uid);
         return true;
@@ -141,7 +142,7 @@ public sealed class CrematoriumSystem : EntitySystem
         }
 
         _entityStorage.OpenStorage(uid, storage);
-        _audio.PlayPvs(component.CremateFinishSound, uid);
+        _audio.PlayPvs(component.CremateFinishSound, uid, FunAudioParams.WithUniformPitch());
     }
 
     private void OnSuicideByEnvironment(EntityUid uid, CrematoriumComponent component, SuicideByEnvironmentEvent args)

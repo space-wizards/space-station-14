@@ -11,6 +11,7 @@ using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Serialization;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Audio;
 
 namespace Content.Shared.Silicons.Bots;
 
@@ -138,7 +139,7 @@ public sealed class MedibotSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target, target);
         _popup.PopupClient(Loc.GetString("medibot-target-injected"), medibot, medibot);
 
-        _audio.PlayPredicted(medibot.Comp.InjectSound, medibot, medibot);
+        _audio.PlayPredicted(medibot.Comp.InjectSound, medibot, medibot, FunAudioParams.WithUniformPitch());
 
         return true;
     }

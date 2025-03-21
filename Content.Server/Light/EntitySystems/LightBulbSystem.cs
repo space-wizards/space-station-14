@@ -1,4 +1,5 @@
 using Content.Server.Light.Components;
+using Content.Shared.Audio;
 using Content.Shared.Destructible;
 using Content.Shared.Light.Components;
 using Content.Shared.Throwing;
@@ -70,7 +71,7 @@ namespace Content.Server.Light.EntitySystems
             if (!Resolve(uid, ref bulb))
                 return;
 
-            _audio.PlayPvs(bulb.BreakSound, uid);
+            _audio.PlayPvs(bulb.BreakSound, uid, FunAudioParams.WithUniformPitch());
         }
 
         private void UpdateAppearance(EntityUid uid, LightBulbComponent? bulb = null,

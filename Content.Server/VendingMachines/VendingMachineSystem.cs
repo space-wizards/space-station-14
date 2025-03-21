@@ -4,6 +4,7 @@ using Content.Server.Cargo.Systems;
 using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
@@ -143,7 +144,7 @@ namespace Content.Server.VendingMachines
 
             Popup.PopupEntity(Loc.GetString("vending-machine-restock-done", ("this", args.Args.Used), ("user", args.Args.User), ("target", uid)), args.Args.User, PopupType.Medium);
 
-            Audio.PlayPvs(restockComponent.SoundRestockDone, uid, AudioParams.Default.WithVolume(-2f).WithVariation(0.2f));
+            Audio.PlayPvs(restockComponent.SoundRestockDone, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)));
 
             Del(args.Args.Used.Value);
 

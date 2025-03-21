@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
@@ -40,7 +41,7 @@ public sealed partial class PuddleSystem
 
             if (success)
             {
-                _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, args.Target);
+                _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, args.Target, FunAudioParams.WithUniformPitch());
             }
             else
             {
@@ -60,7 +61,7 @@ public sealed partial class PuddleSystem
 
             if (_solutionContainerSystem.TryAddSolution(soln.Value, split))
             {
-                _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, entity);
+                _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, entity, FunAudioParams.WithUniformPitch());
             }
             else
             {

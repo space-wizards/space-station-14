@@ -222,7 +222,7 @@ namespace Content.Server.Guardian
             if (TryComp<GuardianComponent>(guardian, out var guardianComp))
             {
                 guardianComp.Host = args.Args.Target.Value;
-                _audio.PlayPvs("/Audio/Effects/guardian_inject.ogg", args.Args.Target.Value);
+                _audio.PlayPvs("/Audio/Effects/guardian_inject.ogg", args.Args.Target.Value, FunAudioParams.WithUniformPitch());
                 _popupSystem.PopupEntity(Loc.GetString("guardian-created"), args.Args.Target.Value, args.Args.Target.Value);
                 // Exhaust the activator
                 component.Used = true;
@@ -247,12 +247,12 @@ namespace Content.Server.Guardian
             if (args.NewMobState == MobState.Critical)
             {
                 _popupSystem.PopupEntity(Loc.GetString("guardian-host-critical-warn"), component.HostedGuardian.Value, component.HostedGuardian.Value);
-                _audio.PlayPvs("/Audio/Effects/guardian_warn.ogg", component.HostedGuardian.Value);
+                _audio.PlayPvs("/Audio/Effects/guardian_warn.ogg", component.HostedGuardian.Value, FunAudioParams.WithUniformPitch());
             }
             else if (args.NewMobState == MobState.Dead)
             {
                 //TODO: Replace WithVariation with datafield
-                _audio.PlayPvs("/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioParams.Default.WithVariation(0.20f));
+                _audio.PlayPvs("/Audio/Voice/Human/malescream_guardian.ogg", uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(0.20f)));
                 RemComp<GuardianHostComponent>(uid);
             }
         }

@@ -1,5 +1,6 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.Audio.Jukebox;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
@@ -56,7 +57,7 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
                 return;
             }
 
-            component.AudioStream = Audio.PlayPvs(jukeboxProto.Path, uid, AudioParams.Default.WithMaxDistance(10f))?.Entity;
+            component.AudioStream = Audio.PlayPvs(jukeboxProto.Path, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithMaxDistance(10f)))?.Entity;
             Dirty(uid, component);
         }
     }

@@ -1,4 +1,5 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
@@ -46,7 +47,7 @@ public sealed class IgniteOnTriggerSystem : EntitySystem
             return;
 
         _source.SetIgnited(ent.Owner);
-        _audio.PlayPvs(ent.Comp.IgniteSound, ent);
+        _audio.PlayPvs(ent.Comp.IgniteSound, ent, FunAudioParams.WithUniformPitch());
 
         _useDelay.TryResetDelay((ent.Owner, useDelay));
         ent.Comp.IgnitedUntil = _timing.CurTime + ent.Comp.IgnitedTime;

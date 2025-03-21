@@ -25,6 +25,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Audio;
 
 namespace Content.Shared.RCD.Systems;
 
@@ -271,7 +272,7 @@ public class RCDSystem : EntitySystem
         FinalizeRCDOperation(uid, component, mapGridData.Value, args.Direction, args.Target, args.User);
 
         // Play audio and consume charges
-        _audio.PlayPredicted(component.SuccessSound, uid, args.User);
+        _audio.PlayPredicted(component.SuccessSound, uid, args.User, FunAudioParams.WithUniformPitch());
         _charges.UseCharges(uid, args.Cost);
     }
 

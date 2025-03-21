@@ -11,6 +11,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
@@ -329,7 +330,7 @@ public sealed class GasCanisterSystem : EntitySystem
         if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked)
         {
             _popup.PopupEntity(Loc.GetString("gas-canister-popup-denied"), uid, user);
-            _audio.PlayPvs(comp.AccessDeniedSound, uid);
+            _audio.PlayPvs(comp.AccessDeniedSound, uid, FunAudioParams.WithUniformPitch());
 
             return true;
         }

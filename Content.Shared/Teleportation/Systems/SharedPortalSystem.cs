@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Shared.Audio;
 using Content.Shared.Ghost;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
@@ -212,8 +213,8 @@ public abstract class SharedPortalSystem : EntitySystem
         if (!playSound)
             return;
 
-        _audio.PlayPredicted(departureSound, portal, subject);
-        _audio.PlayPredicted(arrivalSound, subject, subject);
+        _audio.PlayPredicted(departureSound, portal, subject, FunAudioParams.WithUniformPitch());
+        _audio.PlayPredicted(arrivalSound, subject, subject, FunAudioParams.WithUniformPitch());
     }
 
     private void TeleportRandomly(EntityUid portal, EntityUid subject, PortalComponent? component = null)

@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Actions;
+using Content.Shared.Audio;
 using Content.Shared.DoAfter;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
@@ -133,7 +134,7 @@ public abstract class SharedRatKingSystem : EntitySystem
 
         component.Looted = true;
         Dirty(uid, component);
-        _audio.PlayPredicted(component.Sound, uid, args.User);
+        _audio.PlayPredicted(component.Sound, uid, args.User, FunAudioParams.WithUniformPitch());
 
         var spawn = PrototypeManager.Index<WeightedRandomEntityPrototype>(component.RummageLoot).Pick(Random);
         if (_net.IsServer)

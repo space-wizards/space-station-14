@@ -10,6 +10,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Shared.Atmos;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
@@ -209,7 +210,7 @@ namespace Content.Server.Lathe
             var ev = new LatheStartPrintingEvent(recipe);
             RaiseLocalEvent(uid, ref ev);
 
-            _audio.PlayPvs(component.ProducingSound, uid);
+            _audio.PlayPvs(component.ProducingSound, uid, FunAudioParams.WithUniformPitch());
             UpdateRunningAppearance(uid, true);
             UpdateUserInterfaceState(uid, component);
 

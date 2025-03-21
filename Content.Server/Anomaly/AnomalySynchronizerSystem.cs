@@ -5,6 +5,7 @@ using Content.Server.DeviceLinking.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -151,7 +152,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
             _anomaly.DoAnomalyPulse(anomaly, anomaly);
 
         _popup.PopupEntity(Loc.GetString("anomaly-sync-connected"), ent, PopupType.Medium);
-        _audio.PlayPvs(ent.Comp.ConnectedSound, ent);
+        _audio.PlayPvs(ent.Comp.ConnectedSound, ent, FunAudioParams.WithUniformPitch());
     }
 
     //TODO: disconnection from the anomaly should also be triggered if the anomaly is far away from the synchronizer.
@@ -168,7 +169,7 @@ public sealed partial class AnomalySynchronizerSystem : EntitySystem
         }
 
         _popup.PopupEntity(Loc.GetString("anomaly-sync-disconnected"), ent, PopupType.Large);
-        _audio.PlayPvs(ent.Comp.ConnectedSound, ent);
+        _audio.PlayPvs(ent.Comp.ConnectedSound, ent, FunAudioParams.WithUniformPitch());
 
         ent.Comp.ConnectedAnomaly = null;
     }

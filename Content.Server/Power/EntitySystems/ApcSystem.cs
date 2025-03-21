@@ -4,6 +4,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.Pow3r;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
+using Content.Shared.Audio;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Rounding;
@@ -106,7 +107,7 @@ public sealed class ApcSystem : EntitySystem
         battery.CanDischarge = apc.MainBreakerEnabled;
 
         UpdateUIState(uid, apc);
-        _audio.PlayPvs(apc.OnReceiveMessageSound, uid, AudioParams.Default.WithVolume(-2f));
+        _audio.PlayPvs(apc.OnReceiveMessageSound, uid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)));
     }
 
     private void OnEmagged(EntityUid uid, ApcComponent comp, ref GotEmaggedEvent args)

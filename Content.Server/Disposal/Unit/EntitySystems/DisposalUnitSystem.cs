@@ -11,6 +11,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal;
@@ -775,7 +776,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     public void AfterInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid inserted, EntityUid? user = null, bool doInsert = false)
     {
-        _audioSystem.PlayPvs(component.InsertSound, uid);
+        _audioSystem.PlayPvs(component.InsertSound, uid, FunAudioParams.WithUniformPitch());
 
         if (doInsert && !_containerSystem.Insert(inserted, component.Container))
             return;

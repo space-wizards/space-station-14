@@ -1,4 +1,5 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
@@ -65,7 +66,7 @@ public sealed class DamageOnInteractSystem : EntitySystem
         {
             args.Handled = true;
             _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} injured their hand by interacting with {ToPrettyString(args.Target):target} and received {totalDamage.GetTotal():damage} damage");
-            _audioSystem.PlayPredicted(entity.Comp.InteractSound, args.Target, args.User);
+            _audioSystem.PlayPredicted(entity.Comp.InteractSound, args.Target, args.User, FunAudioParams.WithUniformPitch());
 
             if (entity.Comp.PopupText != null)
                 _popupSystem.PopupClient(Loc.GetString(entity.Comp.PopupText), args.User, args.User);

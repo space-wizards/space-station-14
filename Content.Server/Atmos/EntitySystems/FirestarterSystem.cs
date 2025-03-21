@@ -2,6 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Shared.Actions.Events;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -38,7 +39,7 @@ public sealed class FirestarterSystem : SharedFirestarterSystem
         var xform = Transform(uid);
         var ignitionRadius = component.IgnitionRadius;
         IgniteNearby(uid, xform.Coordinates, args.Severity, ignitionRadius);
-        _audio.PlayPvs(component.IgniteSound, uid);
+        _audio.PlayPvs(component.IgniteSound, uid, FunAudioParams.WithUniformPitch());
 
         args.Handled = true;
     }

@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage.Expeditions;
@@ -29,7 +30,7 @@ public sealed partial class SalvageSystem
         data.NextOffer = _timing.CurTime + mission.Duration + TimeSpan.FromSeconds(1);
 
         _labelSystem.Label(cdUid, GetFTLName(_prototypeManager.Index<LocalizedDatasetPrototype>("NamesBorer"), missionparams.Seed));
-        _audio.PlayPvs(component.PrintSound, uid);
+        _audio.PlayPvs(component.PrintSound, uid, FunAudioParams.WithUniformPitch());
 
         UpdateConsoles((station.Value, data));
     }

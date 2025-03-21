@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
 using Content.Server.Station.Components;
+using Content.Shared.Audio;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Components;
@@ -12,6 +13,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Paper;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -61,7 +63,7 @@ namespace Content.Server.Cargo.Systems
             if (!TryComp(stationUid, out StationBankAccountComponent? bank))
                 return;
 
-            _audio.PlayPvs(component.ConfirmSound, uid);
+            _audio.PlayPvs(component.ConfirmSound, uid, FunAudioParams.WithUniformPitch());
             UpdateBankAccount((stationUid.Value, bank), (int) price);
             QueueDel(args.Used);
             args.Handled = true;

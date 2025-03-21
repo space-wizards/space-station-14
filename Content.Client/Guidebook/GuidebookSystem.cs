@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Client.Guidebook.Components;
 using Content.Client.Light;
 using Content.Client.Verbs;
+using Content.Shared.Audio;
 using Content.Shared.Guidebook;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Components;

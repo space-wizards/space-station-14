@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Audio;
 using Content.Shared.Salvage.Fulton;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -75,7 +76,7 @@ public sealed class FultonSystem : SharedFultonSystem
             });
         }
 
-        Audio.PlayPvs(component.Sound, uid);
+        Audio.PlayPvs(component.Sound, uid, FunAudioParams.WithUniformPitch());
         RemCompDeferred<FultonedComponent>(uid);
     }
 }

@@ -9,6 +9,7 @@ using Content.Shared.SprayPainter.Prototypes;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared.Audio;
 
 namespace Content.Shared.SprayPainter;
 
@@ -72,7 +73,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         airlock.Department = args.Department;
         Dirty(target, airlock);
 
-        Audio.PlayPredicted(ent.Comp.SpraySound, ent, args.Args.User);
+        Audio.PlayPredicted(ent.Comp.SpraySound, ent, args.Args.User, FunAudioParams.WithUniformPitch());
         Appearance.SetData(target, DoorVisuals.BaseRSI, args.Sprite);
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Args.User):user} painted {ToPrettyString(args.Args.Target.Value):target}");
 

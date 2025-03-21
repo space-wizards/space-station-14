@@ -102,7 +102,7 @@ public sealed class DrainSystem : SharedDrainSystem
             var solutionToPutInDrain = _solutionContainerSystem.SplitSolution(containerSoln.Value, amountToPutInDrain);
             _solutionContainerSystem.TryAddSolution(drain.Solution.Value, solutionToPutInDrain);
 
-            _audioSystem.PlayPvs(drain.ManualDrainSound, target);
+            _audioSystem.PlayPvs(drain.ManualDrainSound, target, FunAudioParams.WithUniformPitch());
             _ambientSoundSystem.SetAmbience(target, true);
         }
 
@@ -228,7 +228,7 @@ public sealed class DrainSystem : SharedDrainSystem
             return;
         }
 
-        _audioSystem.PlayPvs(entity.Comp.PlungerSound, entity);
+        _audioSystem.PlayPvs(entity.Comp.PlungerSound, entity, FunAudioParams.WithUniformPitch());
 
 
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, entity.Comp.UnclogDuration, new DrainDoAfterEvent(), entity, args.Target, args.Used)
@@ -260,7 +260,7 @@ public sealed class DrainSystem : SharedDrainSystem
 
 
         _solutionContainerSystem.RemoveAllSolution(entity.Comp.Solution.Value);
-        _audioSystem.PlayPvs(entity.Comp.UnclogSound, args.Target.Value);
+        _audioSystem.PlayPvs(entity.Comp.UnclogSound, args.Target.Value, FunAudioParams.WithUniformPitch());
         _popupSystem.PopupEntity(Loc.GetString("drain-component-unclog-success", ("object", args.Target.Value)), args.Target.Value);
     }
 }

@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Body.Systems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
+using Content.Shared.Audio;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -165,7 +166,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 QueueDel(gib);
             }
 
-            _audio.PlayPvs(component.SpikeSound, uid);
+            _audio.PlayPvs(component.SpikeSound, uid, FunAudioParams.WithUniformPitch());
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,

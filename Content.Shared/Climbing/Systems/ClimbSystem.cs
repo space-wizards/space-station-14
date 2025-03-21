@@ -1,4 +1,5 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Audio;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Events;
@@ -233,7 +234,7 @@ public sealed partial class ClimbSystem : VirtualController
             DuplicateCondition = DuplicateConditions.SameTool | DuplicateConditions.SameTarget
         };
 
-        _audio.PlayPredicted(comp.StartClimbSound, climbable, user);
+        _audio.PlayPredicted(comp.StartClimbSound, climbable, user, FunAudioParams.WithUniformPitch());
         return _doAfterSystem.TryStartDoAfter(args, out id);
     }
 
@@ -296,7 +297,7 @@ public sealed partial class ClimbSystem : VirtualController
         climbing.IsClimbing = true;
         Dirty(uid, climbing);
 
-        _audio.PlayPredicted(comp.FinishClimbSound, climbable, user);
+        _audio.PlayPredicted(comp.FinishClimbSound, climbable, user, FunAudioParams.WithUniformPitch());
 
         var startEv = new StartClimbEvent(climbable);
         var climbedEv = new ClimbedOnEvent(uid, user);

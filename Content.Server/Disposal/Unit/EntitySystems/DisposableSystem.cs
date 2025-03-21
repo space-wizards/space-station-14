@@ -2,6 +2,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
+using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Item;
@@ -216,7 +217,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 {
                     _damageable.TryChangeDamage(ent, to.DamageOnTurn);
                 }
-                _audio.PlayPvs(to.ClangSound, toUid);
+                _audio.PlayPvs(to.ClangSound, toUid, FunAudioParams.WithUniformPitch());
             }
 
             return true;

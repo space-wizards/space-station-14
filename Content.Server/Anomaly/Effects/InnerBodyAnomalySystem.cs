@@ -7,6 +7,7 @@ using Content.Server.Stunnable;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
+using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Chat;
 using Content.Shared.Database;
@@ -98,7 +99,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         _jitter.DoJitter(ent, TimeSpan.FromSeconds(ent.Comp.StunDuration), true);
 
         if (ent.Comp.StartSound is not null)
-            _audio.PlayPvs(ent.Comp.StartSound, ent);
+            _audio.PlayPvs(ent.Comp.StartSound, ent, FunAudioParams.WithUniformPitch());
 
         if (ent.Comp.StartMessage is not null &&
             _mind.TryGetMind(ent, out _, out var mindComponent) &&

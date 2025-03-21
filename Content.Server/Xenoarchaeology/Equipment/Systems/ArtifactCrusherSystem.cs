@@ -5,6 +5,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.Storage.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
+using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Power;
@@ -78,7 +79,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
         crusher.Crushing = true;
         crusher.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
         crusher.CrushEndTime = _timing.CurTime + crusher.CrushDuration;
-        crusher.CrushingSoundEntity = AudioSystem.PlayPvs(crusher.CrushingSound, ent);
+        crusher.CrushingSoundEntity = AudioSystem.PlayPvs(crusher.CrushingSound, ent, FunAudioParams.WithUniformPitch());
         Appearance.SetData(ent, ArtifactCrusherVisuals.Crushing, true);
         Dirty(ent, ent.Comp1);
     }
@@ -87,7 +88,7 @@ public sealed class ArtifactCrusherSystem : SharedArtifactCrusherSystem
     {
         var (_, crusher, storage) = ent;
         StopCrushing((ent, ent.Comp1), false);
-        AudioSystem.PlayPvs(crusher.CrushingCompleteSound, ent);
+        AudioSystem.PlayPvs(crusher.CrushingCompleteSound, ent, FunAudioParams.WithUniformPitch());
         crusher.CrushingSoundEntity = null;
         Dirty(ent, ent.Comp1);
 

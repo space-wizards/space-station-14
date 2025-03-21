@@ -3,6 +3,7 @@ using Content.Server.NodeContainer;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Nodes;
 using Content.Server.Power.NodeGroups;
+using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -84,7 +85,7 @@ public sealed class PowerSensorSystem : EntitySystem
         UpdateOutputs(uid, comp);
 
         // notify the user
-        _audio.PlayPvs(comp.SwitchSound, uid);
+        _audio.PlayPvs(comp.SwitchSound, uid, FunAudioParams.WithUniformPitch());
         var msg = Loc.GetString("power-sensor-switch", ("output", comp.Output));
         _popup.PopupEntity(msg, uid, args.User);
     }

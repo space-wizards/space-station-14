@@ -22,6 +22,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using System.Linq;
+using Content.Shared.Audio;
 
 namespace Content.Server.Telephone;
 
@@ -151,7 +152,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
                     else if (telephone.RingTone != null &&
                         _timing.CurTime > telephone.NextRingToneTime)
                     {
-                        _audio.PlayPvs(telephone.RingTone, uid);
+                        _audio.PlayPvs(telephone.RingTone, uid, FunAudioParams.WithUniformPitch());
                         telephone.NextRingToneTime = _timing.CurTime + TimeSpan.FromSeconds(telephone.RingInterval);
                     }
 

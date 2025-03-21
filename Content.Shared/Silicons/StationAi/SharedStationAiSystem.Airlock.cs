@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Doors.Components;
 using Robust.Shared.Serialization;
 using Content.Shared.Electrocution;
@@ -65,7 +66,7 @@ public abstract partial class SharedStationAiSystem
         var soundToPlay = component.Enabled
             ? component.AirlockElectrifyDisabled
             : component.AirlockElectrifyEnabled;
-        _audio.PlayLocal(soundToPlay, ent, args.User);
+        _audio.PlayLocal(soundToPlay, ent, args.User, FunAudioParams.WithUniformPitch());
     }
 }
 

@@ -1,4 +1,5 @@
 using Content.Server.Light.Components;
+using Content.Shared.Audio;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IgnitionSource;
@@ -145,12 +146,12 @@ namespace Content.Server.Light.EntitySystems
             switch (component.CurrentState)
             {
                 case ExpendableLightState.Lit:
-                    _audio.PlayPvs(component.LitSound, ent);
+                    _audio.PlayPvs(component.LitSound, ent, FunAudioParams.WithUniformPitch());
                     break;
                 case ExpendableLightState.Fading:
                     break;
                 default:
-                    _audio.PlayPvs(component.DieSound, ent);
+                    _audio.PlayPvs(component.DieSound, ent, FunAudioParams.WithUniformPitch());
                     break;
             }
 

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared.Audio;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.CCVar;
 using Content.Shared.Friction;
@@ -264,11 +265,11 @@ public abstract partial class SharedMoverController : VirtualController
                 // If we're a relay target then predict the sound for all relays.
                 if (relayTarget != null)
                 {
-                    _audio.PlayPredicted(sound, uid, relayTarget.Source, audioParams);
+                    _audio.PlayPredicted(sound, uid, relayTarget.Source, FunAudioParams.WithUniformPitch(audioParams));
                 }
                 else
                 {
-                    _audio.PlayPredicted(sound, uid, uid, audioParams);
+                    _audio.PlayPredicted(sound, uid, uid, FunAudioParams.WithUniformPitch(audioParams));
                 }
             }
         }

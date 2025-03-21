@@ -1,6 +1,7 @@
 using Content.Shared.Containers.ItemSlots;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
+using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -71,7 +72,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (_robustRandom.Prob(component.BreakChance))
             {
-                _audio.PlayPvs(component.BreakSound, userUid, AudioParams.Default.WithVolume(-2f));
+                _audio.PlayPvs(component.BreakSound, userUid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(-2f)));
                 EntityManager.DeleteEntity(uid);
             }
         }

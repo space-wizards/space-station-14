@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -24,7 +25,7 @@ namespace Content.Server.Construction.Completions
             var scale = (float) IoCManager.Resolve<IRobustRandom>().NextGaussian(1, Variation);
             if (entityManager.TryGetComponent<TransformComponent>(uid, out var xform))
                 entityManager.EntitySysManager.GetEntitySystem<SharedAudioSystem>()
-                .PlayPvs(Sound, xform.Coordinates, AudioParams.WithPitchScale(scale));
+                .PlayPvs(Sound, xform.Coordinates, FunAudioParams.WithUniformPitch(AudioParams.WithPitchScale(scale)));
         }
     }
 }

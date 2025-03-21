@@ -1,4 +1,5 @@
-﻿using Robust.Server.Audio;
+﻿using Content.Shared.Audio;
+using Robust.Server.Audio;
 using Robust.Shared.Audio;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
@@ -21,7 +22,7 @@ public sealed partial class PlaySoundOperator : HTNOperator
     {
         var uid = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        _audio.PlayPvs(Sound, uid);
+        _audio.PlayPvs(Sound, uid, FunAudioParams.WithUniformPitch());
 
         return base.Update(blackboard, frameTime);
     }

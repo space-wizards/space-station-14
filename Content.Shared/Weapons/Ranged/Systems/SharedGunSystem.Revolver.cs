@@ -8,6 +8,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System;
 using System.Linq;
+using Content.Shared.Audio;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Wieldable;
 using Content.Shared.Wieldable.Components;
@@ -162,7 +163,7 @@ public partial class SharedGunSystem
             UpdateAmmoCount(revolverUid);
             Dirty(revolverUid, component);
 
-            Audio.PlayPredicted(component.SoundInsert, revolverUid, user);
+            Audio.PlayPredicted(component.SoundInsert, revolverUid, user, FunAudioParams.WithUniformPitch());
             Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);
             return true;
         }
@@ -181,7 +182,7 @@ public partial class SharedGunSystem
             component.AmmoSlots[index] = uid;
             Containers.Insert(uid, component.AmmoContainer);
             SetChamber(index, component, uid);
-            Audio.PlayPredicted(component.SoundInsert, revolverUid, user);
+            Audio.PlayPredicted(component.SoundInsert, revolverUid, user, FunAudioParams.WithUniformPitch());
             Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);
             UpdateRevolverAppearance(revolverUid, component);
             UpdateAmmoCount(revolverUid);
@@ -325,7 +326,7 @@ public partial class SharedGunSystem
 
         if (anyEmpty)
         {
-            Audio.PlayPredicted(component.SoundEject, revolverUid, user);
+            Audio.PlayPredicted(component.SoundEject, revolverUid, user, FunAudioParams.WithUniformPitch());
             UpdateAmmoCount(revolverUid, prediction: false);
             UpdateRevolverAppearance(revolverUid, component);
             Dirty(revolverUid, component);
@@ -345,7 +346,7 @@ public partial class SharedGunSystem
 
     protected virtual void SpinRevolver(EntityUid revolverUid, RevolverAmmoProviderComponent component, EntityUid? user = null)
     {
-        Audio.PlayPredicted(component.SoundSpin, revolverUid, user);
+        Audio.PlayPredicted(component.SoundSpin, revolverUid, user, FunAudioParams.WithUniformPitch());
         Popup(Loc.GetString("gun-revolver-spun"), revolverUid, user);
     }
 

@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -86,6 +87,6 @@ public abstract partial class SharedVendingMachineSystem
                 PopupType.Medium);
         }
 
-        Audio.PlayPredicted(component.SoundRestockStart, uid, args.User);
+        Audio.PlayPredicted(component.SoundRestockStart, uid, args.User, FunAudioParams.WithUniformPitch());
     }
 }

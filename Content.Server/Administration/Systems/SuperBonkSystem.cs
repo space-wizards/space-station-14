@@ -1,4 +1,5 @@
 using Content.Server.Administration.Components;
+using Content.Shared.Audio;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Clumsy;
 using Content.Shared.Mobs;
@@ -88,7 +89,7 @@ public sealed class SuperBonkSystem : EntitySystem
 
         _clumsySystem.HitHeadClumsy((comp.Target, clumsyComp), uid);
 
-        _audioSystem.PlayPvs(clumsyComp.TableBonkSound, comp.Target);
+        _audioSystem.PlayPvs(clumsyComp.TableBonkSound, comp.Target, FunAudioParams.WithUniformPitch());
     }
 
     private void OnMobStateChanged(EntityUid uid, SuperBonkComponent comp, MobStateChangedEvent args)

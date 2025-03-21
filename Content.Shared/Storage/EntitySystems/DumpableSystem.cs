@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Audio;
 using Content.Shared.Disposal;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -179,7 +180,7 @@ public sealed class DumpableSystem : EntitySystem
 
         if (dumped)
         {
-            _audio.PlayPredicted(component.DumpSound, uid, args.User);
+            _audio.PlayPredicted(component.DumpSound, uid, args.User, FunAudioParams.WithUniformPitch());
         }
     }
 }

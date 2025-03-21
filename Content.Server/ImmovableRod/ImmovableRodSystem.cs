@@ -1,6 +1,7 @@
 using Content.Server.Body.Systems;
 using Content.Server.Polymorph.Components;
 using Content.Server.Popups;
+using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
@@ -85,7 +86,7 @@ public sealed class ImmovableRodSystem : EntitySystem
 
         if (_random.Prob(component.HitSoundProbability))
         {
-            _audio.PlayPvs(component.Sound, uid);
+            _audio.PlayPvs(component.Sound, uid, FunAudioParams.WithUniformPitch());
         }
 
         if (HasComp<ImmovableRodComponent>(ent))

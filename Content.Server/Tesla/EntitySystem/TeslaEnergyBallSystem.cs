@@ -9,6 +9,7 @@ using Robust.Shared.Physics.Events;
 using Content.Server.Lightning.Components;
 using Robust.Server.Audio;
 using Content.Server.Singularity.Events;
+using Content.Shared.Audio;
 
 namespace Content.Server.Tesla.EntitySystems;
 
@@ -49,7 +50,7 @@ public sealed class TeslaEnergyBallSystem : EntitySystem
         }
         if (component.Energy < component.EnergyToDespawn)
         {
-            _audio.PlayPvs(component.SoundCollapse, uid);
+            _audio.PlayPvs(component.SoundCollapse, uid, FunAudioParams.WithUniformPitch());
             QueueDel(uid);
         }
     }

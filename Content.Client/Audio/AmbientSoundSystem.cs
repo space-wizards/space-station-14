@@ -305,7 +305,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
                     .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
                     .WithMaxDistance(comp.Range);
 
-                var stream = _audio.PlayEntity(comp.Sound, Filter.Local(), uid, false, audioParams);
+                var stream = _audio.PlayEntity(comp.Sound, Filter.Local(), uid, false, FunAudioParams.WithUniformPitch(audioParams));
                 if (stream == null)
                     continue;
 

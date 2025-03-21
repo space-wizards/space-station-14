@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Light.Components;
+using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Light.EntitySystems;
@@ -161,7 +162,7 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
         var wasReplaced = _poweredLight.ReplaceBulb(fixtureUid, bulb, fixture);
         if (wasReplaced)
         {
-            _audio.PlayPvs(replacer.Sound, replacerUid);
+            _audio.PlayPvs(replacer.Sound, replacerUid, FunAudioParams.WithUniformPitch());
         }
 
         return wasReplaced;

@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Hands.EntitySystems;
@@ -199,7 +200,7 @@ public sealed partial class PressurizedSolutionSystem : EntitySystem
                 _popup.PopupEntity(Loc.GetString(entity.Comp.SprayGroundMessage, ("drink", drinkName)), entity);
         }
 
-        _audio.PlayPredicted(entity.Comp.SpraySound, entity, target);
+        _audio.PlayPredicted(entity.Comp.SpraySound, entity, target, FunAudioParams.WithUniformPitch());
 
         // We just used all our fizziness, so clear it
         TryClearFizziness(entity);

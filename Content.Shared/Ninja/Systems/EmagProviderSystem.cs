@@ -1,4 +1,5 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Interaction;
@@ -53,7 +54,7 @@ public sealed class EmagProviderSystem : EntitySystem
         if (!emagEv.Handled)
             return;
 
-        _audio.PlayPredicted(comp.EmagSound, uid, uid);
+        _audio.PlayPredicted(comp.EmagSound, uid, uid, FunAudioParams.WithUniformPitch());
 
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(uid):player} emagged {ToPrettyString(target):target} with flag(s): {ent.Comp.EmagType}");
         var ev = new EmaggedSomethingEvent(target);

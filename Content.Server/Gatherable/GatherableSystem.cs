@@ -1,5 +1,6 @@
 using Content.Server.Destructible;
 using Content.Server.Gatherable.Components;
+using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
@@ -57,7 +58,7 @@ public sealed partial class GatherableSystem : EntitySystem
 
         if (TryComp<SoundOnGatherComponent>(gatheredUid, out var soundComp))
         {
-            _audio.PlayPvs(soundComp.Sound, Transform(gatheredUid).Coordinates);
+            _audio.PlayPvs(soundComp.Sound, Transform(gatheredUid).Coordinates, FunAudioParams.WithUniformPitch());
         }
 
         // Complete the gathering process

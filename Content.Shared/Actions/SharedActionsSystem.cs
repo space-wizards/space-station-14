@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Events;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -701,7 +702,7 @@ public abstract class SharedActionsSystem : EntitySystem
             action.Toggled = !action.Toggled;
         }
 
-        _audio.PlayPredicted(action.Sound, performer, predicted ? performer : null);
+        _audio.PlayPredicted(action.Sound, performer, predicted ? performer : null, FunAudioParams.WithUniformPitch());
 
         var dirty = toggledBefore != action.Toggled;
 

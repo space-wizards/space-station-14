@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.DoAfter;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Verbs;
@@ -91,13 +92,13 @@ public sealed class EnvelopeSystem : EntitySystem
 
         if (ent.Comp.State == EnvelopeComponent.EnvelopeState.Open)
         {
-            _audioSystem.PlayPredicted(ent.Comp.SealSound, ent.Owner, args.User);
+            _audioSystem.PlayPredicted(ent.Comp.SealSound, ent.Owner, args.User, FunAudioParams.WithUniformPitch());
             ent.Comp.State = EnvelopeComponent.EnvelopeState.Sealed;
             Dirty(ent.Owner, ent.Comp);
         }
         else if (ent.Comp.State == EnvelopeComponent.EnvelopeState.Sealed)
         {
-            _audioSystem.PlayPredicted(ent.Comp.TearSound, ent.Owner, args.User);
+            _audioSystem.PlayPredicted(ent.Comp.TearSound, ent.Owner, args.User, FunAudioParams.WithUniformPitch());
             ent.Comp.State = EnvelopeComponent.EnvelopeState.Torn;
             Dirty(ent.Owner, ent.Comp);
 

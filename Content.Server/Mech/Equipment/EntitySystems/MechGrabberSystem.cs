@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Interaction;
 using Content.Server.Mech.Equipment.Components;
 using Content.Server.Mech.Systems;
+using Content.Shared.Audio;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;
@@ -155,7 +156,7 @@ public sealed class MechGrabberSystem : EntitySystem
             return;
 
         args.Handled = true;
-        component.AudioStream = _audio.PlayPvs(component.GrabSound, uid)?.Entity;
+        component.AudioStream = _audio.PlayPvs(component.GrabSound, uid, FunAudioParams.WithUniformPitch())?.Entity;
         var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.GrabDelay, new GrabberDoAfterEvent(), uid, target: target, used: uid)
         {
             BreakOnMove = true

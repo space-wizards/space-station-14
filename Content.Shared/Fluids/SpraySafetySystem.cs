@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Item.ItemToggle;
@@ -30,7 +31,7 @@ public sealed class SpraySafetySystem : EntitySystem
 
     private void OnTransferred(Entity<SpraySafetyComponent> ent, ref SolutionTransferredEvent args)
     {
-        _audio.PlayPredicted(ent.Comp.RefillSound, ent, args.User);
+        _audio.PlayPredicted(ent.Comp.RefillSound, ent, args.User, FunAudioParams.WithUniformPitch());
     }
 
     private void OnSprayAttempt(Entity<SpraySafetyComponent> ent, ref SprayAttemptEvent args)

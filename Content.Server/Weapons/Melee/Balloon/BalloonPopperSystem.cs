@@ -1,5 +1,6 @@
 ﻿using Content.Server.Hands.Systems;
 using Content.Server.Popups;
+using Content.Shared.Audio;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
@@ -58,7 +59,7 @@ public sealed class BalloonPopperSystem : EntitySystem
         if (!Resolve(popper, ref component))
             return;
 
-        _audio.PlayPvs(component.PopSound, balloon);
+        _audio.PlayPvs(component.PopSound, balloon, FunAudioParams.WithUniformPitch());
         _popup.PopupCoordinates(Loc.GetString("melee-balloon-pop",
             ("balloon", Identity.Entity(balloon, EntityManager))), Transform(balloon).Coordinates, PopupType.Large);
         QueueDel(balloon);

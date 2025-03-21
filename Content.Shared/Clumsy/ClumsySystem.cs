@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Hypospray.Events;
 using Content.Shared.Climbing.Components;
@@ -38,7 +39,7 @@ public sealed class ClumsySystem : EntitySystem
     private void BeforeHyposprayEvent(Entity<ClumsyComponent> ent, ref SelfBeforeHyposprayInjectsEvent args)
     {
         // Clumsy people sometimes inject themselves! Apparently syringes are clumsy proof...
-    
+
         // checks if ClumsyHypo is false, if so, skips.
         if (!ent.Comp.ClumsyHypo)
             return;
@@ -48,13 +49,13 @@ public sealed class ClumsySystem : EntitySystem
 
         args.TargetGettingInjected = args.EntityUsingHypospray;
         args.InjectMessageOverride = "hypospray-component-inject-self-clumsy-message";
-        _audio.PlayPvs(ent.Comp.ClumsySound, ent);
+        _audio.PlayPvs(ent.Comp.ClumsySound, ent, FunAudioParams.WithUniformPitch());
     }
 
     private void BeforeDefibrillatorZapsEvent(Entity<ClumsyComponent> ent, ref SelfBeforeDefibrillatorZapsEvent args)
     {
         // Clumsy people sometimes defib themselves!
-        
+
         // checks if ClumsyDefib is false, if so, skips.
         if (!ent.Comp.ClumsyDefib)
             return;
@@ -63,7 +64,7 @@ public sealed class ClumsySystem : EntitySystem
             return;
 
         args.DefibTarget = args.EntityUsingDefib;
-        _audio.PlayPvs(ent.Comp.ClumsySound, ent);
+        _audio.PlayPvs(ent.Comp.ClumsySound, ent, FunAudioParams.WithUniformPitch());
 
     }
 
@@ -87,8 +88,8 @@ public sealed class ClumsySystem : EntitySystem
         _stun.TryParalyze(ent, ent.Comp.GunShootFailStunTime, true);
 
         // Apply salt to the wound ("Honk!") (No idea what this comment means)
-        _audio.PlayPvs(ent.Comp.GunShootFailSound, ent);
-        _audio.PlayPvs(ent.Comp.ClumsySound, ent);
+        _audio.PlayPvs(ent.Comp.GunShootFailSound, ent, FunAudioParams.WithUniformPitch());
+        _audio.PlayPvs(ent.Comp.ClumsySound, ent, FunAudioParams.WithUniformPitch());
 
         _popup.PopupEntity(Loc.GetString("gun-clumsy"), ent, ent);
         args.Cancel();
@@ -109,9 +110,9 @@ public sealed class ClumsySystem : EntitySystem
 
         HitHeadClumsy(ent, args.BeingClimbedOn);
 
-        _audio.PlayPredicted(ent.Comp.ClumsySound, ent, ent);
+        _audio.PlayPredicted(ent.Comp.ClumsySound, ent, ent, FunAudioParams.WithUniformPitch());
 
-        _audio.PlayPredicted(ent.Comp.TableBonkSound, ent, ent);
+        _audio.PlayPredicted(ent.Comp.TableBonkSound, ent, ent, FunAudioParams.WithUniformPitch());
 
         var gettingPutOnTableName = Identity.Entity(args.GettingPutOnTable, EntityManager);
         var puttingOnTableName = Identity.Entity(args.PuttingOnTable, EntityManager);

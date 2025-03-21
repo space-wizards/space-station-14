@@ -1,4 +1,5 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.Popups;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Shared.Audio;
@@ -28,7 +29,7 @@ public sealed class LandMineSystem : EntitySystem
             args.Tripper,
             PopupType.LargeCaution);
 
-        _audioSystem.PlayPvs(component.Sound, uid);
+        _audioSystem.PlayPvs(component.Sound, uid, FunAudioParams.WithUniformPitch());
     }
 
     private void HandleStepOffTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOffEvent args)

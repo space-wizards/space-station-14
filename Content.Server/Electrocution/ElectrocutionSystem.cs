@@ -8,6 +8,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Weapons.Melee;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
@@ -486,6 +487,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         {
             return;
         }
-        _audio.PlayPvs(electrified.ShockNoises, targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
+        _audio.PlayPvs(electrified.ShockNoises, targetUid, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVolume(electrified.ShockVolume)));
     }
 }

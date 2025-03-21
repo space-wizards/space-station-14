@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Content.Shared.Lock;
@@ -231,7 +232,7 @@ public sealed partial class OpenableSystem : EntitySystem
             return false;
 
         SetOpen(uid, true, comp, user);
-        _audio.PlayPredicted(comp.Sound, uid, user);
+        _audio.PlayPredicted(comp.Sound, uid, user, FunAudioParams.WithUniformPitch());
         return true;
     }
 
@@ -246,7 +247,7 @@ public sealed partial class OpenableSystem : EntitySystem
 
         SetOpen(uid, false, comp, user);
         if (comp.CloseSound != null)
-            _audio.PlayPredicted(comp.CloseSound, uid, user);
+            _audio.PlayPredicted(comp.CloseSound, uid, user, FunAudioParams.WithUniformPitch());
         return true;
     }
 

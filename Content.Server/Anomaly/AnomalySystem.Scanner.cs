@@ -1,6 +1,7 @@
 using Content.Server.Anomaly.Components;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Audio;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Robust.Shared.Player;
@@ -105,7 +106,7 @@ public sealed partial class AnomalySystem
         if (args.Cancelled || args.Handled || args.Args.Target == null)
             return;
 
-        Audio.PlayPvs(component.CompleteSound, uid);
+        Audio.PlayPvs(component.CompleteSound, uid, FunAudioParams.WithUniformPitch());
         Popup.PopupEntity(Loc.GetString("anomaly-scanner-component-scan-complete"), uid);
         UpdateScannerWithNewAnomaly(uid, args.Args.Target.Value, component);
 

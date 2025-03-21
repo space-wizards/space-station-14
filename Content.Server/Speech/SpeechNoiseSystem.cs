@@ -1,6 +1,7 @@
 using Robust.Shared.Audio;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
+using Content.Shared.Audio;
 using Content.Shared.Speech;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -72,7 +73,7 @@ namespace Content.Server.Speech
 
             var sound = GetSpeechSound((uid, component), args.Message);
             component.LastTimeSoundPlayed = currentTime;
-            _audio.PlayPvs(sound, uid);
+            _audio.PlayPvs(sound, uid, FunAudioParams.WithUniformPitch());
         }
     }
 }

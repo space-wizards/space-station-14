@@ -9,6 +9,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
@@ -170,7 +171,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!TryComp(uid, out UseDelayComponent? useDelay) || !_useDelay.TryResetDelay((uid, useDelay), true))
                 return;
 
-            _audio.PlayPvs(component.ExtinguishAttemptSound, uid);
+            _audio.PlayPvs(component.ExtinguishAttemptSound, uid, FunAudioParams.WithUniformPitch());
 
             if (_random.Prob(component.Probability))
             {

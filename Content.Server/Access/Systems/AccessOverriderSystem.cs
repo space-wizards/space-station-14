@@ -4,6 +4,7 @@ using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
@@ -233,7 +234,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         {
             _sawmill.Warning($"User {ToPrettyString(uid)} tried to modify permissions when they do not have sufficient access!");
             _popupSystem.PopupEntity(Loc.GetString("access-overrider-cannot-modify-access"), player, player);
-            _audioSystem.PlayPvs(component.DenialSound, uid);
+            _audioSystem.PlayPvs(component.DenialSound, uid, FunAudioParams.WithUniformPitch());
 
             return;
         }

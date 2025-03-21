@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Botany.Components;
 using Content.Server.Materials.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 using Robust.Server.Audio;
@@ -41,7 +42,7 @@ public sealed class ProduceMaterialExtractorSystem : EntitySystem
             .Sum(r => r.Quantity.Float());
         _materialStorage.TryChangeMaterialAmount(ent, ent.Comp.ExtractedMaterial, (int) matAmount);
 
-        _audio.PlayPvs(ent.Comp.ExtractSound, ent);
+        _audio.PlayPvs(ent.Comp.ExtractSound, ent, FunAudioParams.WithUniformPitch());
         QueueDel(args.Used);
         args.Handled = true;
     }

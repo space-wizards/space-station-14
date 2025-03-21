@@ -1,5 +1,6 @@
 using Content.Server.Ninja.Events;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
@@ -60,7 +61,7 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
             return;
         }
 
-        _audio.PlayPvs(comp.Sound, target);
+        _audio.PlayPvs(comp.Sound, target, FunAudioParams.WithUniformPitch());
 
         _damageable.TryChangeDamage(target, comp.StunDamage, false, true, null, origin: uid);
         _stun.TryParalyze(target, comp.StunTime, refresh: false);

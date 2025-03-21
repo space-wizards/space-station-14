@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -68,7 +69,7 @@ public sealed class PlungerSystem : EntitySystem
 
         var spawn = _proto.Index<WeightedRandomEntityPrototype>(plunge.PlungerLoot).Pick(_random);
 
-        _audio.PlayPredicted(plunge.Sound, uid, uid);
+        _audio.PlayPredicted(plunge.Sound, uid, uid, FunAudioParams.WithUniformPitch());
         Spawn(spawn, Transform(target).Coordinates);
         RemComp<PlungerUseComponent>(target);
         Dirty(target, plunge);

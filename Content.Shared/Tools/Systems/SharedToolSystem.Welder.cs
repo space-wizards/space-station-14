@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Database;
@@ -111,7 +112,7 @@ public abstract partial class SharedToolSystem
             {
                 var drained = SolutionContainerSystem.Drain(target, targetSoln.Value, trans);
                 SolutionContainerSystem.TryAddSolution(solutionComp.Value, drained);
-                _audioSystem.PlayPredicted(entity.Comp.WelderRefill, entity, user: args.User);
+                _audioSystem.PlayPredicted(entity.Comp.WelderRefill, entity, user: args.User, FunAudioParams.WithUniformPitch());
                 _popup.PopupClient(Loc.GetString("welder-component-after-interact-refueled-message"), entity, args.User);
             }
             else if (welderSolution.AvailableVolume <= 0)

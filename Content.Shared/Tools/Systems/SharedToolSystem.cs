@@ -1,4 +1,5 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -92,7 +93,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (tool.UseSound == null)
             return;
 
-        _audioSystem.PlayPredicted(tool.UseSound, uid, user);
+        _audioSystem.PlayPredicted(tool.UseSound, uid, user, FunAudioParams.WithUniformPitch());
     }
 
     /// <summary>

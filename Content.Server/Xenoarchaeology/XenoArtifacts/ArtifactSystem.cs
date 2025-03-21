@@ -6,6 +6,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
+using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using JetBrains.Annotations;
@@ -173,7 +174,7 @@ public sealed partial class ArtifactSystem : EntitySystem
         if (component.CurrentNodeId == null)
             return;
 
-        _audio.PlayPvs(component.ActivationSound, uid);
+        _audio.PlayPvs(component.ActivationSound, uid, FunAudioParams.WithUniformPitch());
         component.LastActivationTime = _gameTiming.CurTime;
 
         var ev = new ArtifactActivatedEvent

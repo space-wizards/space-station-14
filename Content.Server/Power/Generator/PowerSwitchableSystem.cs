@@ -3,6 +3,7 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.Nodes;
+using Content.Shared.Audio;
 using Content.Shared.Power.Generator;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -108,7 +109,7 @@ public sealed class PowerSwitchableSystem : SharedPowerSwitchableSystem
         var popup = Loc.GetString(comp.SwitchText, ("voltage", VoltageString(voltage)));
         _popup.PopupEntity(popup, uid, user);
 
-        _audio.PlayPvs(comp.SwitchSound, uid);
+        _audio.PlayPvs(comp.SwitchSound, uid, FunAudioParams.WithUniformPitch());
 
         _useDelay.TryResetDelay((uid, useDelay));
     }

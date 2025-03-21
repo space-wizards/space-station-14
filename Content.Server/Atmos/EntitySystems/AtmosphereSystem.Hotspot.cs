@@ -3,6 +3,7 @@ using Content.Server.Decals;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Reactions;
+using Content.Shared.Audio;
 using Content.Shared.Database;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -112,7 +113,7 @@ namespace Content.Server.Atmos.EntitySystems
                 // A few details on the audio parameters for fire.
                 // The greater the fire state, the lesser the pitch variation.
                 // The greater the fire state, the greater the volume.
-                _audio.PlayPvs(HotspotSound, coordinates, AudioParams.Default.WithVariation(0.15f/tile.Hotspot.State).WithVolume(-5f + 5f * tile.Hotspot.State));
+                _audio.PlayPvs(HotspotSound, coordinates, FunAudioParams.WithUniformPitch(AudioParams.Default.WithVariation(0.15f/tile.Hotspot.State)).WithVolume(-5f + 5f * tile.Hotspot.State));
             }
 
             if (_hotspotSoundCooldown > HotspotSoundCooldownCycles)

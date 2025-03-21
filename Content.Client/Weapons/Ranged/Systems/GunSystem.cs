@@ -3,6 +3,7 @@ using Content.Client.Animations;
 using Content.Client.Gameplay;
 using Content.Client.Items;
 using Content.Client.Weapons.Ranged.Components;
+using Content.Shared.Audio;
 using Content.Shared.Camera;
 using Content.Shared.CombatMode;
 using Content.Shared.Weapons.Ranged;
@@ -242,7 +243,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         SetCartridgeSpent(ent!.Value, cartridge, true);
                         MuzzleFlash(gunUid, cartridge, worldAngle, user);
-                        Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+                        Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user, FunAudioParams.WithUniformPitch());
                         Recoil(user, direction, gun.CameraRecoilScalarModified);
                         // TODO: Can't predict entity deletions.
                         //if (cartridge.DeleteOnSpawn)
@@ -251,7 +252,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     else
                     {
                         userImpulse = false;
-                        Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
+                        Audio.PlayPredicted(gun.SoundEmpty, gunUid, user, FunAudioParams.WithUniformPitch());
                     }
 
                     if (IsClientSide(ent!.Value))
@@ -260,7 +261,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     break;
                 case AmmoComponent newAmmo:
                     MuzzleFlash(gunUid, newAmmo, worldAngle, user);
-                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user, FunAudioParams.WithUniformPitch());
                     Recoil(user, direction, gun.CameraRecoilScalarModified);
                     if (IsClientSide(ent!.Value))
                         Del(ent.Value);
@@ -268,7 +269,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         RemoveShootable(ent.Value);
                     break;
                 case HitscanPrototype:
-                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user);
+                    Audio.PlayPredicted(gun.SoundGunshotModified, gunUid, user, FunAudioParams.WithUniformPitch());
                     Recoil(user, direction, gun.CameraRecoilScalarModified);
                     break;
             }
