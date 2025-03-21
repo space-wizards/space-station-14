@@ -1,8 +1,8 @@
 - type: entity
-  name: Remilia
-  parent: MobBat
+  name: "\"Remilia\""
+  parent: MobBaseEmotionalSupportScurret
   id: MobBatRemilia
-  description: The chaplain's familiar. Likes fruit.
+  description: How did the chaplain even summon this to begin with? Likes blue fruit.
   components:
   - type: GhostRole
     makeSentient: true
@@ -32,12 +32,25 @@
     - PetsNT
   - type: Alerts
   - type: Familiar
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#c961c1"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretChappieGear ]
 
 - type: entity
-  name: Cerberus
-  parent: MobCorgiNarsi
+  name: "\"Cerberus\""
+  parent: MobBaseEmotionalSupportScurret
   id: MobCorgiCerberus
-  description: This pupper is not wholesome.
+  description: This is both smaller and significantly more adorable than the picture in the advert. Smells a bit sulferous.
   components:
   - type: GhostRole
     makeSentient: true
@@ -74,7 +87,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      120: Dead
+      125: Dead # Matches base scurret
   - type: Grammar
     attributes:
       gender: male
@@ -89,8 +102,16 @@
   - type: MindContainer
     showExamineInfo: true
   - type: Familiar
-  - type: Vocal
-    sounds:
-      Male: Cerberus
-      Female: Cerberus
-      Unsexed: Cerberus
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret.rsi
+      state: scurret
+      color: "#bb2727"
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  - type: Loadout
+    prototypes: [ ScurretEvilChappieGear ]

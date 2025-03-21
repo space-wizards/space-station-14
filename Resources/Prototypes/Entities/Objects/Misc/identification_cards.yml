@@ -308,7 +308,8 @@
 - type: entity
   parent: IDCardStandard
   id: PunPunIDCard
-  name: pun pun ID card
+  name: Wa Wa's ID card
+  description: Wa's only had it for two hours and it already smells of booze.
   components:
     - type: Sprite
       layers:
@@ -316,7 +317,7 @@
         - state: idbartender
     - type: PresetIdCard
       job: Bartender
-      name: Pun Pun
+      name: Wa Wa
     - type: Tag #  Ignore Chameleon tags
       tags:
       - DoorBumpOpener
