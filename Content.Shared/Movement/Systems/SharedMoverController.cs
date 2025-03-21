@@ -120,6 +120,8 @@ public abstract partial class SharedMoverController : VirtualController
         // If we're a relay then apply all of our data to the parent instead and go next.
         if (RelayQuery.TryComp(uid, out var relay))
         {
+            // TODO: Need to fix held move buttons
+            // Probably just revert the handledirchanges entirely.
             if (!MoverQuery.TryComp(relay.RelayEntity, out var relayTargetMover))
                 return;
 
