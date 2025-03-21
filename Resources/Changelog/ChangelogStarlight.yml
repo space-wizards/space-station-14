@@ -4263,4 +4263,12 @@ Entries:
   id: 590
   time: '2025-03-21T09:12:28.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/414
+- author: aedler
+  changes:
+  - message: Neo CC is here w/ Maltese Falcon nightclub to drink your memories away
+      -- no cloning required.
+    type: Tweak
+  id: 591
+  time: '2025-03-21T15:04:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/417
 
