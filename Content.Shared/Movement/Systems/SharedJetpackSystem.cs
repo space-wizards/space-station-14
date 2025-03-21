@@ -27,8 +27,8 @@ public abstract class SharedJetpackSystem : EntitySystem
         SubscribeLocalEvent<JetpackComponent, GetItemActionsEvent>(OnJetpackGetAction);
         SubscribeLocalEvent<JetpackComponent, DroppedEvent>(OnJetpackDropped);
         SubscribeLocalEvent<JetpackComponent, ToggleJetpackEvent>(OnJetpackToggle);
-        SubscribeLocalEvent<JetpackComponent, CanWeightlessMoveEvent>(OnJetpackCanWeightlessMove);
 
+        SubscribeLocalEvent<JetpackUserComponent, RefreshWeightlessModifiersEvent>(OnJetpackUserMovement);
         SubscribeLocalEvent<JetpackUserComponent, CanWeightlessMoveEvent>(OnJetpackUserCanWeightless);
         SubscribeLocalEvent<JetpackUserComponent, EntParentChangedMessage>(OnJetpackUserEntParentChanged);
 
@@ -36,15 +36,18 @@ public abstract class SharedJetpackSystem : EntitySystem
         SubscribeLocalEvent<JetpackComponent, MapInitEvent>(OnMapInit);
     }
 
+    private void OnJetpackUserMovement(Entity<JetpackUserComponent> ent, ref RefreshWeightlessModifiersEvent args)
+    {
+        // Yes this bulldozes the values but primarily for backwards compat atm.
+        args.WeightlessAcceleration = ent.Comp.WeightlessAcceleration;
+        args.WeightlessModifier = ent.Comp.WeightlessModifier;
+        args.WeightlessFriction = ent.Comp.WeightlessFriction;
+    }
+
     private void OnMapInit(EntityUid uid, JetpackComponent component, MapInitEvent args)
     {
         _actionContainer.EnsureAction(uid, ref component.ToggleActionEntity, component.ToggleAction);
         Dirty(uid, component);
-    }
-
-    private void OnJetpackCanWeightlessMove(EntityUid uid, JetpackComponent component, ref CanWeightlessMoveEvent args)
-    {
-        args.CanMove = true;
     }
 
     private void OnJetpackUserGravityChanged(ref GravityChangedEvent ev)
@@ -89,12 +92,12 @@ public abstract class SharedJetpackSystem : EntitySystem
     private void SetupUser(EntityUid user, EntityUid jetpackUid)
     {
         var userComp = EnsureComp<JetpackUserComponent>(user);
-        _mover.SetRelay(user, jetpackUid);
 
         if (TryComp<PhysicsComponent>(user, out var physics))
             _physics.SetBodyStatus(user, physics, BodyStatus.InAir);
 
         userComp.Jetpack = jetpackUid;
+        _movementSpeedModifier.RefreshWeightlessModifiers(user);
     }
 
     private void RemoveUser(EntityUid uid)
@@ -105,7 +108,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (TryComp<PhysicsComponent>(uid, out var physics))
             _physics.SetBodyStatus(uid, physics, BodyStatus.OnGround);
 
-        RemComp<RelayInputMoverComponent>(uid);
+        _movementSpeedModifier.RefreshWeightlessModifiers(uid);
     }
 
     private void OnJetpackToggle(EntityUid uid, JetpackComponent component, ToggleJetpackEvent args)
@@ -178,8 +181,6 @@ public abstract class SharedJetpackSystem : EntitySystem
             {
                 RemoveUser(user.Value);
             }
-
-            _movementSpeedModifier.RefreshMovementSpeedModifiers(user.Value);
         }
 
         Appearance.SetData(uid, JetpackVisuals.Enabled, enabled);

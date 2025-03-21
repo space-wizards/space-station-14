@@ -123,13 +123,19 @@ public abstract partial class SharedMoverController : VirtualController
             if (!MoverQuery.TryComp(relay.RelayEntity, out var relayTargetMover))
                 return;
 
+            // Always lerp rotation so relay entities aren't cooked.
+            LerpRotation(uid, mover, frameTime);
+
             relayTargetMover.RelativeEntity = mover.RelativeEntity;
             relayTargetMover.RelativeRotation = mover.RelativeRotation;
             relayTargetMover.TargetRelativeRotation = mover.TargetRelativeRotation;
-            relayTargetMover.CanMove = mover.CanMove;
+            relayTargetMover.CanMove = mover.CanMove && relayTargetMover.CanMove;
             // TODO: Dirty spam
             Dirty(relay.RelayEntity, relayTargetMover);
-            SetMoveInput((relay.RelayEntity, relayTargetMover), mover.HeldMoveButtons);
+
+            // MoveInput is a combo of the target's held buttons and our held buttons.
+            var buttons = relayTargetMover.HeldMoveButtons | mover.HeldMoveButtons;
+            SetMoveInput((relay.RelayEntity, relayTargetMover), buttons);
 
             return;
         }
@@ -152,21 +158,26 @@ public abstract partial class SharedMoverController : VirtualController
             LerpRotation(uid, mover, frameTime);
         }
 
+        // If we can't move then just use tile-friction / no movement handling.
         if (!mover.CanMove
             || !PhysicsQuery.TryComp(uid, out var physicsComponent)
-            || physicsComponent.BodyStatus != BodyStatus.OnGround && !CanMoveInAirQuery.HasComponent(uid)
             || PullableQuery.TryGetComponent(uid, out var pullable) && pullable.BeingPulled)
         {
             UsedMobMovement[uid] = false;
             return;
         }
 
-        // Reset velocity every tick so we can handle mob movement.
-        //PhysicsSystem.SetLinearVelocity(physicsUid, Vector2.Zero, body: physicsComponent);
+        // If the body is in air but isn't weightless then can't move
+        var weightless = _gravity.IsWeightless(uid, physicsComponent, xform);
+
+        if (physicsComponent.BodyStatus != BodyStatus.OnGround && !CanMoveInAirQuery.HasComponent(uid) && !weightless)
+        {
+            UsedMobMovement[uid] = false;
+            return;
+        }
 
         UsedMobMovement[uid] = true;
-        // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
-        var weightless = _gravity.IsWeightless(uid, physicsComponent, xform);
+
         var (walkDir, sprintDir) = GetVelocityInput(mover);
         var touching = false;
 
@@ -270,7 +281,7 @@ public abstract partial class SharedMoverController : VirtualController
             {
                 // TODO apparently this results in a duplicate move event because "This should have its event run during
                 // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
-                _transform.SetLocalRotation(uid, total.ToWorldAngle(), xform: xform);
+                _transform.SetLocalRotation(uid, wishDir.ToAngle(), xform: xform);
             }
 
             if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&
@@ -333,14 +344,12 @@ public abstract partial class SharedMoverController : VirtualController
                 adjustment = Math.Clamp(adjustment, -angleDiff, angleDiff);
             }
 
-            mover.RelativeRotation += adjustment;
-            mover.RelativeRotation.FlipPositive();
+            mover.RelativeRotation = (mover.RelativeRotation + adjustment).FlipPositive();
             Dirty(uid, mover);
         }
         else if (!angleDiff.Equals(Angle.Zero))
         {
-            mover.TargetRelativeRotation.FlipPositive();
-            mover.RelativeRotation = mover.TargetRelativeRotation;
+            mover.RelativeRotation = mover.TargetRelativeRotation.FlipPositive();
             Dirty(uid, mover);
         }
     }

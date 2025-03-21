@@ -8,6 +8,15 @@ namespace Content.Shared.Movement.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class JetpackUserComponent : Component
 {
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public EntityUid Jetpack;
+
+    [DataField, AutoNetworkedField]
+    public float WeightlessAcceleration = 1f;
+
+    [DataField, AutoNetworkedField]
+    public float WeightlessFriction = 0.3f;
+
+    [DataField, AutoNetworkedField]
+    public float WeightlessModifier = 1.2f;
 }
