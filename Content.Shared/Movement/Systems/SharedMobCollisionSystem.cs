@@ -24,6 +24,10 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     private float _pushingCap;
     private float _pushingDotProduct;
 
+    /// <summary>
+    /// Time after we stop colliding with another mob before adjusting the movespeedmodifier.
+    /// This is required so if we stop colliding for a frame we don't fully reset and get jerky movement.
+    /// </summary>
     public const float BufferTime = 0.2f;
 
     public override void Initialize()
@@ -127,13 +131,10 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
     protected void MoveMob(Entity<MobCollisionComponent, TransformComponent> entity, Vector2 direction)
     {
-        // Wake it so we don't clip into a wall.
-        Physics.WakeBody(entity.Owner);
-        var xform = entity.Comp2;
+        if (!PhysicsQuery.TryComp(entity.Owner, out var physics))
+            return;
 
-        // Alternative though needs tweaks to mob movement code.
-        // Physics.ApplyLinearImpulse(entity.Owner, direction);
-        _xformSystem.SetLocalPosition(entity.Owner, xform.LocalPosition + direction);
+        Physics.ApplyLinearImpulse(entity.Owner, direction * physics.Mass, body: physics);
         SetColliding(entity, true);
     }
 
@@ -212,7 +213,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         var parentAngle = worldRot - xform.LocalRotation;
         direction *= frameTime;
         var localDir = (-parentAngle).RotateVec(direction);
-        RaiseCollisionEvent(entity.Owner, localDir);
+        RaiseCollisionEvent(entity.Owner, direction);
         return true;
     }
 
