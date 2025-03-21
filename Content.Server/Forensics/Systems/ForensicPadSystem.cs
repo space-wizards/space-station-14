@@ -117,6 +117,12 @@ namespace Content.Server.Forensics
             StartScan(ent, user, target, ent.Comp, sample);
         }
 
+        /// <summary>
+        /// Used to obtain samples from entities to forensic pads.
+        /// </summary>
+        /// <param name="ent">That's what we're looking for samples from.</param>
+        /// <param name="user">Popup recipient in case of sample retrieval failure.</param>
+        /// <param name="sample">A string with a sample that is not zero if successful.</param>
         private bool TryGetSample(EntityUid ent, EntityUid user, out string? sample)
         {
             sample = null;

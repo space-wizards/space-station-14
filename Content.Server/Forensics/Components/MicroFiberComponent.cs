@@ -1,16 +1,15 @@
-namespace Content.Server.Forensics
-{
-    /// <summary>
-    /// This controls fibers left by backpacks and pockets of clothes on stored items,
-    /// which the forensics system uses.
-    /// </summary>
-    [RegisterComponent]
-    public sealed partial class MicroFiberComponent : Component
-    {
-        [DataField]
-        public LocId MicroFiberMaterial = "micro-fibers-synthetic";
+namespace Content.Server.Forensics;
 
-        [DataField]
-        public string? MicroFiberColor;
-    }
+/// <summary>
+/// This controls fibers left by backpacks and pockets of clothes on stored items,
+/// which the forensics system uses.
+/// </summary>
+[RegisterComponent]
+public sealed partial class MicroFiberComponent : Component
+{
+    [DataField]
+    public LocId MicroFiberMaterial = "micro-fibers-synthetic";
+
+    [DataField]
+    public string? MicroFiberColor;
 }
