@@ -59,8 +59,3 @@
   id: SalvageSecurityWeapons
   recipes:
   - WeaponProtoKineticAccelerator
-
-- type: latheRecipePack
-  id: ScienceSecurityClothing
-  recipes:
-  - ClothingShoesBootsMagSci
