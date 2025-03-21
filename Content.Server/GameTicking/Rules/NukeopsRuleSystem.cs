@@ -420,6 +420,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         {
             if (nuke.Status == NukeStatus.ARMED)
                 return;
+            // So if the nuke isn't armed, and the disk isn't inside, don't end the round. This is so that nuke calibration event doesn't end the round upon the nuke being disarmed.
+            else if (!nuke.DiskSlot.HasItem)
+                return;
         }
 
         var shuttle = GetShuttle((ent, ent));

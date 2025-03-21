@@ -1,5 +1,7 @@
 using System.Threading;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.StationEvents.Components;
+using Content.Server.StationEvents.Events;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Explosion;
 using Content.Shared.Nuke;
@@ -170,6 +172,20 @@ namespace Content.Server.Nuke
         /// </summary>
         [ViewVariables]
         public NukeStatus Status = NukeStatus.AWAIT_DISK;
+
+        /// <summary>
+        ///     Should we allow disarming/arming, even if there's no disk?
+        ///     Does not allow anchoring/unanchoring without the disk.
+        ///     Arming nuke still requires code to be entered.
+        /// </summary>
+        [ViewVariables]
+        public bool DiskBypassEnabled = false;
+
+        /// <summary>
+        ///     Should we reset the disk bypass value to false when the nuke is disarmed?
+        /// </summary>
+        [ViewVariables]
+        public bool ShouldResetDiskBypass = false;
 
         /// <summary>
         ///     Check if nuke has already played the nuke song so we don't do it again
