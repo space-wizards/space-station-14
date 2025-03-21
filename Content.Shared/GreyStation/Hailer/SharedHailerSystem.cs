@@ -129,7 +129,7 @@ public abstract class SharedHailerSystem : EntitySystem
     private void OnMaskToggled(Entity<HailerComponent> ent, ref ItemMaskToggledEvent args)
     {
         // if you pull the mask down the menu is closed
-        if (args.IsToggled)
+        if (TryComp<MaskComponent>(ent, out var mask) && mask.IsToggled)
             _ui.CloseUi(ent.Owner, HailerUiKey.Key);
     }
 
