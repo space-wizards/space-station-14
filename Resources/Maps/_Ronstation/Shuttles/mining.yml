@@ -1,16 +1,16 @@
 meta:
   format: 7
-  category: Map
+  category: Grid
   engineVersion: 248.0.2
   forkId: ""
   forkVersion: ""
-  time: 03/21/2025 17:17:58
-  entityCount: 173
-maps:
-- 2
+  time: 03/21/2025 17:43:32
+  entityCount: 172
+maps: []
 grids:
 - 181
-orphans: []
+orphans:
+- 181
 nullspace: []
 tilemap:
   0: Space
@@ -23,25 +23,13 @@ tilemap:
 entities:
 - proto: ""
   entities:
-  - uid: 2
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
   - uid: 181
     components:
     - type: MetaData
       name: NT-Reclaimer
     - type: Transform
       pos: 2.2710133,-2.4148211
-      parent: 2
+      parent: invalid
     - type: MapGrid
       chunks:
         -1,0:
