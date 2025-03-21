@@ -47,7 +47,7 @@ namespace Content.Shared.SubFloor
             if (TryComp<MapGridComponent>(xform.GridUid, out var grid)
                 && HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates)))
             {
-                _popup.PopupPredicted(Loc.GetString("subfloor-anchor-failure", ("entitydxcxx", uid)), uid, null);
+                _popup.PopupPredicted(Loc.GetString("subfloor-anchor-failure", ("entity", uid)), uid, null);
                 args.Cancel();
             }
         }
