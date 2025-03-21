@@ -11,6 +11,8 @@ public sealed class AnchoredStorageFilterSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<AnchoredStorageFilterComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
         SubscribeLocalEvent<AnchoredStorageFilterComponent, ContainerIsInsertingAttemptEvent>(OnInsertAttempt);
     }

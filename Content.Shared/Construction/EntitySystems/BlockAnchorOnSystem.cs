@@ -14,6 +14,8 @@ public sealed class BlockAnchorOnSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<BlockAnchorOnComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
         SubscribeLocalEvent<BlockAnchorOnComponent, AnchorAttemptEvent>(OnAnchorAttempt);
     }

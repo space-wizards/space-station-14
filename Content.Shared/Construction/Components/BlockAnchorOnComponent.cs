@@ -1,3 +1,4 @@
+using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
@@ -6,7 +7,7 @@ namespace Content.Shared.Construction.Components;
 /// <summary>
 ///     Will not allow anchoring if there is an anchored item in the same tile that fails the whitelist checks.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(BlockAnchorOnSystem))]
 public sealed partial class BlockAnchorOnComponent : Component
 {
     /// <summary>

@@ -1,6 +1,6 @@
 - type: entity
-  id: SubfloorAnchorStorageBase
   abstract: true
+  id: SubfloorAnchorStorageBase
   components:
   - type: Appearance
   - type: SubFloorHide
@@ -20,9 +20,9 @@
     layer: 1
 
 - type: entity
+  abstract: true
   parent: SubfloorAnchorStorageBase
   id: AnchoredSubfloorAnchorStorageBase
-  abstract: true
   placement:
     mode: SnapgridCenter
   components:
@@ -93,9 +93,9 @@
         tableId: FillSmugglerBackpack
 
 - type: entity
+  parent: MarkerBase
   id: RandomSatchel
   name: random smuggler's satchel spawner
-  parent: MarkerBase
   suffix: Do Not Map
   components:
   - type: Sprite
