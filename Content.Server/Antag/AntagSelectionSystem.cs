@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Administration.Managers;
 using Content.Server.Antag.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
@@ -40,6 +41,7 @@ namespace Content.Server.Antag;
 public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelectionComponent>
 {
     [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly IBanManager _ban = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly GhostRoleSystem _ghostRole = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
@@ -500,10 +502,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             var banned = false;
             var fallbackBanned = false;
 
-            if (_ghostRole.IsBanned(session, def.PrefRoles))
+            if (_ban.IsRoleBanned(session, def.PrefRoles))
                 banned = true;
 
-            if (_ghostRole.IsBanned(session, def.FallbackRoles))
+            if (_ban.IsRoleBanned(session, def.FallbackRoles))
                 fallbackBanned = true;
 
             if (HasPrimaryAntagPreference(session, def) && !banned)

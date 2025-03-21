@@ -468,7 +468,7 @@ public sealed class GhostRoleSystem : EntitySystem
         var prototypes = GetPrototypes(roleEnt);
 
         // Check role bans
-        if (IsBanned(player, prototypes))
+        if (_ban.IsRoleBanned(player, prototypes))
         {
             // TODO Popup window? Audio cue
             // Disable the buttons in the first place in the client's GhostRoleButtonsBox.xaml.cs ?
@@ -492,40 +492,6 @@ public sealed class GhostRoleSystem : EntitySystem
         {
             Takeover(player, identifier);
         }
-    }
-
-    /// <summary>
-    /// Check if the player is currently banned from any of the listed roles
-    /// </summary>
-    private bool IsBanned(ICommonSession player, List<string> roles) // Should this be in BanManager?
-    {
-        var bans = _ban.GetRoleBans(player.UserId);
-
-        if (bans is null || bans.Count == 0)
-            return false;
-
-        foreach (var role in roles)
-        {
-            if ( bans.Contains(role))
-                return true;
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// Check if the player is currently banned from this roles
-    /// </summary>
-    public bool IsBanned(ICommonSession player, List<ProtoId<AntagPrototype>> prototypes) // Should this be in BanManager?
-    {
-        var list = new List<string>();
-
-        foreach (var proto in prototypes)
-        {
-            list.Add(AntagPrefix + proto);
-        }
-
-        return IsBanned(player, list);
     }
 
     /// <summary>

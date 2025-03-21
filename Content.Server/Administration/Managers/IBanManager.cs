@@ -26,6 +26,16 @@ public interface IBanManager
     /// <param name="reason">Reason for the ban</param>
     public void CreateServerBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, uint? minutes, NoteSeverity severity, string reason);
     public HashSet<string>? GetRoleBans(NetUserId playerUserId);
+
+    /// <summary>
+    /// Check if the player is currently banned from any of the listed roles
+    /// </summary>
+    public bool IsRoleBanned(ICommonSession player, List<string> roles);
+
+    /// <summary>
+    /// Check if the player is currently banned from any of the listed roles
+    /// </summary>
+    public bool IsRoleBanned(ICommonSession player, List<ProtoId<AntagPrototype>> prototypes);
     public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId);
 
     /// <summary>

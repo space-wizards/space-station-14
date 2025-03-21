@@ -336,6 +336,34 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     }
     #endregion
 
+    public bool IsRoleBanned(ICommonSession player, List<string> roles)
+    {
+        var bans = GetRoleBans(player.UserId);
+
+        if (bans is null || bans.Count == 0)
+            return false;
+
+        foreach (var role in roles)
+        {
+            if ( bans.Contains(role))
+                return true;
+        }
+
+        return false;
+    }
+
+    public bool IsRoleBanned(ICommonSession player, List<ProtoId<AntagPrototype>> prototypes)
+    {
+        var list = new List<string>();
+
+        foreach (var proto in prototypes)
+        {
+            list.Add(AntagPrefix + proto);
+        }
+
+        return IsRoleBanned(player, list);
+    }
+
     public void SendRoleBans(ICommonSession pSession)
     {
         var roleBans = _cachedRoleBans.GetValueOrDefault(pSession) ?? new List<ServerRoleBanDef>();
