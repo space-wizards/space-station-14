@@ -151,7 +151,7 @@
 
 - type: entity
   name: pirate revolver
-  parent: [BaseWeaponRevolver, BaseMinorContraband]
+  parent: [BaseWeaponRevolver, BaseMajorContraband]
   id: WeaponRevolverPirate
   description: An odd, old-looking revolver, favoured by pirate crews. Uses .45 magnum ammo.
   components:
