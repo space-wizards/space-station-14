@@ -280,7 +280,7 @@
       coefficients:
         Blunt: 0.9
         Slash: 0.85
-        Piercing: 0.7
+        Piercing: 0.75
         # Heat: 0.9 See PR #30212
         Caustic: 0.7
   - type: ClothingSpeedModifier
