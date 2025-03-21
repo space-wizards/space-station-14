@@ -135,6 +135,7 @@ public abstract partial class SharedMoverController : VirtualController
             // TODO: Dirty spam
             Dirty(relay.RelayEntity, relayTargetMover);
 
+            // TODO: This doesn't work maybe just revert it.
             // MoveInput is a combo of the target's held buttons and our held buttons.
             var buttons = relayTargetMover.HeldMoveButtons | mover.HeldMoveButtons;
             SetMoveInput((relay.RelayEntity, relayTargetMover), buttons);
