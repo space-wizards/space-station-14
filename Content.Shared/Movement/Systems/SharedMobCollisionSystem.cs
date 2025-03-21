@@ -36,6 +36,8 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     /// </summary>
     private float _minimumPushSquared = 0.01f;
 
+    private float _penCap;
+
     /// <summary>
     /// Time after we stop colliding with another mob before adjusting the movespeedmodifier.
     /// This is required so if we stop colliding for a frame we don't fully reset and get jerky movement.
@@ -49,6 +51,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         UpdatePushCap();
         Subs.CVar(CfgManager, CVars.NetTickrate, _ => UpdatePushCap());
         Subs.CVar(CfgManager, CCVars.MovementMinimumPush, val => _minimumPushSquared = val * val, true);
+        Subs.CVar(CfgManager, CCVars.MovementPenetrationCap, val => _penCap = val, true);
         Subs.CVar(CfgManager, CCVars.MovementPushingCap, _ => UpdatePushCap());
         Subs.CVar(CfgManager, CCVars.MovementPushingVelocityProduct,
             value =>
@@ -210,6 +213,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
             var velocityProduct = Vector2.Dot(ourVelocity, otherPhysics.LinearVelocity);
 
+            // If we're moving opposite directions for example then ignore (based on cvar).
             if (velocityProduct < _pushingDotProduct)
             {
                 continue;
@@ -223,7 +227,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             // Clamp so we don't get a heap of penetration depth and suddenly lurch other mobs.
             // This is also so we don't have to trigger the speed-cap above.
             // Maybe we just do speedcap and dump this? Though it's less configurable and the cap is just there for cheaters.
-            var penDepth = Math.Clamp(0.7f - diff.Length(), 0f, 0.40f);
+            var penDepth = Math.Clamp(0.7f - diff.Length(), 0f, _penCap);
 
             // Sum the strengths so we get pushes back the same amount (impulse-wise, ignoring prediction).
             var mobMovement = penDepth * diff.Normalized() * (entity.Comp1.Strength + otherComp.Strength);
@@ -245,6 +249,9 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
     protected abstract void RaiseCollisionEvent(EntityUid uid, Vector2 direction);
 
+    /// <summary>
+    /// Raised from client -> server indicating mob push direction OR server -> server for NPC mob pushes.
+    /// </summary>
     [Serializable, NetSerializable]
     protected sealed class MobCollisionMessage : EntityEventArgs
     {
