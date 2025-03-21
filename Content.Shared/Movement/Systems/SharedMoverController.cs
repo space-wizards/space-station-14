@@ -264,7 +264,8 @@ public abstract partial class SharedMoverController : VirtualController
             {
                 // TODO apparently this results in a duplicate move event because "This should have its event run during
                 // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
-                _transform.SetLocalRotation(xform, total.ToWorldAngle());
+                var worldRot = _transform.GetWorldRotation(xform);
+                _transform.SetLocalRotation(uid, xform.LocalRotation + wishDir.ToWorldAngle() - worldRot, xform);
             }
 
             if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&
