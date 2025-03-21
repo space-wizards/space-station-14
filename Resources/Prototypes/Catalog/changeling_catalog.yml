@@ -346,7 +346,7 @@
   description: evolutionmenu-utility-fakemindshield-desc
   productAction: FakeMindShieldToggleAction
   cost:
-    EvolutionPoint: 2
+    EvolutionPoint: 4
   categories:
     - ChangelingAbilityUtility
   conditions:
