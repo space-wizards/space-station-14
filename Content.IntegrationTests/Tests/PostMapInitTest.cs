@@ -78,6 +78,7 @@ namespace Content.IntegrationTests.Tests
             "Amber",
             "Loop",
             "Plasma",
+            "Claustrophobia",
             "Elkridge",
             "Convex",
             "Relic"
