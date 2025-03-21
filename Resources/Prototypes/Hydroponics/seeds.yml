@@ -523,8 +523,7 @@
   productPrototypes:
     - FoodTomato
   mutationPrototypes:
-    - blueTomato
-    - bloodTomato
+    - killerJuicyTomato # Swap to killerJuicyTomato from blueTomato and bloodTomato so we can actully see them
   harvestRepeat: Repeat
   lifespan: 25
   maturation: 8
@@ -594,7 +593,7 @@
   productPrototypes:
     - FoodBloodTomato
   mutationPrototypes:
-    - killerTomato
+    - killerJuicyTomato # Swap to killerJuicyTomato from killerTomato so we can actully see them
   harvestRepeat: Repeat
   lifespan: 60
   maturation: 8
@@ -625,6 +624,37 @@
   packetPrototype: KillerTomatoSeeds
   productPrototypes:
     - MobTomatoKiller
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 15
+  production: 6
+  yield: 2
+  potency: 10
+  waterConsumption: 0.60
+  nutrientConsumption: 0.70
+  idealLight: 8
+  idealHeat: 298
+  growthStages: 2
+  splatPrototype: PuddleSplatter
+  chemicals:
+    Blood:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    JuiceTomato:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: killerJuicyTomato
+  name: seeds-killerjuicytomato-name
+  noun: seeds-noun-seeds
+  displayName: seeds-killerjuicytomato-display-name
+  plantRsi: Objects/Specific/Hydroponics/tomatokiller.rsi
+  packetPrototype: KillerJuicyTomatoSeeds
+  productPrototypes:
+    - MobJuicyTomatoKiller
   harvestRepeat: Repeat
   lifespan: 25
   maturation: 15
