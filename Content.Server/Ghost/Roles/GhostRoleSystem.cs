@@ -465,9 +465,10 @@ public sealed class GhostRoleSystem : EntitySystem
     {
         if (!_ghostRoles.TryGetValue(identifier, out var roleEnt))
             return;
+        var prototypes = GetPrototypes(roleEnt);
 
-        // Don't let the player take a role they are banned from
-        if (IsBanned(player, roleEnt))
+        // Check role bans
+        if (IsBanned(player, prototypes))
         {
             // TODO Popup window? Audio cue
             // Disable the buttons in the first place in the client's GhostRoleButtonsBox.xaml.cs ?
@@ -478,7 +479,6 @@ public sealed class GhostRoleSystem : EntitySystem
                     player.AttachedEntity.Value,
                     player.AttachedEntity.Value,
                     PopupType.LargeCaution);
-
                 return;
             }
         }
@@ -497,12 +497,28 @@ public sealed class GhostRoleSystem : EntitySystem
     /// <summary>
     /// Check if the player has been banned from any of the roles on the ghostrole
     /// </summary>
-    private bool IsBanned(ICommonSession player, Entity<GhostRoleComponent> roleEnt)
+    private bool IsBanned(ICommonSession player, List<string> roles)
     {
         var bans = _ban.GetRoleBans(player.UserId);
 
         if (bans is null || bans.Count == 0)
             return false;
+
+        foreach (var role in roles)
+        {
+            if ( bans.Contains(role))
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Collect all role prototypes on the Ghostrole
+    /// </summary>
+    private List<string> GetPrototypes(Entity<GhostRoleComponent> roleEnt)
+    {
+        var list = new List<string>();
 
         // If there is a mind already, check its mind roles. I don't think this can ever actually happen.
         if (TryComp<MindContainerComponent>(roleEnt, out var mindCont)
@@ -513,17 +529,18 @@ public sealed class GhostRoleSystem : EntitySystem
                 if(!TryComp<MindRoleComponent>(role, out var comp))
                     continue;
 
-                if ( bans.Contains(JobPrefix + comp.JobPrototype)
-                     || bans.Contains(AntagPrefix + comp.AntagPrototype))
-                    return true;
+                if (comp.JobPrototype is not null)
+                    list.Add(JobPrefix + comp.JobPrototype);
+
+                if (comp.AntagPrototype is not null)
+                    list.Add(AntagPrefix + comp.AntagPrototype);
             }
 
-            return false;
+            return list;
         }
 
-        var job = roleEnt.Comp.JobProto;
-        if (job is not null && bans.Contains(JobPrefix + job))
-            return true;
+        if(roleEnt.Comp.JobProto is not null)
+            list.Add(JobPrefix + roleEnt.Comp.JobProto);
 
         // If there is no mind, check the mindRole prototypes
         foreach (var proto in roleEnt.Comp.MindRoles)
@@ -533,12 +550,14 @@ public sealed class GhostRoleSystem : EntitySystem
                 continue;
             var roleComp = (MindRoleComponent)comp;
 
-            if (bans.Contains(AntagPrefix + roleComp.AntagPrototype)
-                || bans.Contains(JobPrefix + roleComp.JobPrototype))
-                return true;
+            if (roleComp.AntagPrototype is not null)
+                list.Add(AntagPrefix + roleComp.AntagPrototype);
+
+            if (roleComp.JobPrototype is not null)
+                list.Add(JobPrefix + roleComp.JobPrototype);
         }
 
-        return false;
+        return list;
     }
 
     /// <summary>
