@@ -225,7 +225,7 @@
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
   id: ClothingUniformJumpskirtCommandGeneric
   name: command jumpskirt
-  description: A generic command colored jumpsuit not associated with any particular department.
+  description: A generic Command-colored jumpsuit not associated with any particular department.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpskirt/commandgeneric.rsi
