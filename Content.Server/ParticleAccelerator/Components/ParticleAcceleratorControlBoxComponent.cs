@@ -62,48 +62,6 @@ public sealed partial class ParticleAcceleratorControlBoxComponent : Component
     public ParticleAcceleratorPowerState MaxStrength = ParticleAcceleratorPowerState.Level2;
 
     /// <summary>
-    /// The power supply unit of the assembled particle accelerator.
-    /// Implies the existance of a <see cref="ParticleAcceleratorPowerBoxComponent"/> attached to this entity.
-    /// </summary>
-    [ViewVariables]
-    public EntityUid? PowerBox;
-
-    /// <summary>
-    /// Whether the PA is currently firing or charging to fire.
-    /// Implies the existance of a <see cref="ParticleAcceleratorEndCapComponent"/> attached to this entity.
-    /// </summary>
-    [ViewVariables]
-    public EntityUid? EndCap;
-
-    /// <summary>
-    /// Whether the PA is currently firing or charging to fire.
-    /// Implies the existance of a <see cref="ParticleAcceleratorFuelChamberComponent"/> attached to this entity.
-    /// </summary>
-    [ViewVariables]
-    public EntityUid? FuelChamber;
-
-    /// <summary>
-    /// Whether the PA is currently firing or charging to fire.
-    /// Implies the existance of a <see cref="ParticleAcceleratorEmitterComponent"/> attached to this entity.
-    /// </summary>
-    [ViewVariables]
-    public EntityUid? PortEmitter;
-
-    /// <summary>
-    /// Whether the PA is currently firing or charging to fire.
-    /// Implies the existance of a <see cref="ParticleAcceleratorEmitterComponent"/> attached to this entity.
-    /// </summary>
-    [ViewVariables]
-    public EntityUid? ForeEmitter;
-
-    /// <summary>
-    /// Whether the PA is currently firing or charging to fire.
-    /// Implies the existance of a <see cref="ParticleAcceleratorEmitterComponent"/> attached to this entity.
-    /// </summary>
-    [ViewVariables]
-    public EntityUid? StarboardEmitter;
-
-    /// <summary>
     /// The amount of power the particle accelerator must be provided with relative to the expected power draw to function.
     /// </summary>
     [ViewVariables]
