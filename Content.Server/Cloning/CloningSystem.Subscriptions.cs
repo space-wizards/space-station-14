@@ -1,8 +1,10 @@
 using Content.Server.Forensics;
 using Content.Shared.Cloning.Events;
+using Content.Shared.Clothing.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Labels.Components;
 using Content.Shared.Labels.EntitySystems;
+using Content.Shared.Paper;
 using Content.Shared.Stacks;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
@@ -25,6 +27,7 @@ public sealed partial class CloningSystem : EntitySystem
     [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly SharedLabelSystem _label = default!;
     [Dependency] private readonly ForensicsSystem _forensics = default!;
+    [Dependency] private readonly PaperSystem _paper = default!;
 
     public override void Initialize()
     {
@@ -32,6 +35,7 @@ public sealed partial class CloningSystem : EntitySystem
 
         SubscribeLocalEvent<StackComponent, CloningItemEvent>(OnCloneStack);
         SubscribeLocalEvent<LabelComponent, CloningItemEvent>(OnCloneLabel);
+        SubscribeLocalEvent<PaperComponent, CloningItemEvent>(OnClonePaper);
         SubscribeLocalEvent<ForensicsComponent, CloningItemEvent>(OnCloneForensics);
         SubscribeLocalEvent<StoreComponent, CloningItemEvent>(OnCloneStore);
     }
@@ -47,6 +51,16 @@ public sealed partial class CloningSystem : EntitySystem
     {
         // copy the label
         _label.Label(args.CloneUid, ent.Comp.CurrentLabel);
+    }
+
+    private void OnClonePaper(Entity<PaperComponent> ent, ref CloningItemEvent args)
+    {
+        // copy the text and any stamps
+        if (TryComp<PaperComponent>(args.CloneUid, out var clonePaperComp))
+        {
+            _paper.SetContent((args.CloneUid, clonePaperComp), ent.Comp.Content);
+            _paper.CopyStamps(ent.AsNullable(), (args.CloneUid, clonePaperComp));
+        }
     }
 
     private void OnCloneForensics(Entity<ForensicsComponent> ent, ref CloningItemEvent args)
