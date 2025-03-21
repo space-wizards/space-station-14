@@ -1,4 +1,5 @@
 using Content.Shared.Audio;
+using Content.Shared.Construction.Components;
 using Content.Shared.Explosion;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
@@ -32,6 +33,28 @@ namespace Content.Shared.SubFloor
             SubscribeLocalEvent<SubFloorHideComponent, GettingInteractedWithAttemptEvent>(OnInteractionAttempt);
             SubscribeLocalEvent<SubFloorHideComponent, GettingAttackedAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<SubFloorHideComponent, GetExplosionResistanceEvent>(OnGetExplosionResistance);
+            SubscribeLocalEvent<SubFloorHideComponent, AnchorAttemptEvent>(OnAnchorAttempt);
+            SubscribeLocalEvent<SubFloorHideComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
+        }
+
+        private void OnAnchorAttempt(EntityUid uid, SubFloorHideComponent component, AnchorAttemptEvent args)
+        {
+            // No teleporting entities through floor tiles when anchoring them.
+            var xform = Transform(uid);
+
+            if (TryComp<MapGridComponent>(xform.GridUid, out var grid)
+                && HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates)))
+            {
+                args.Cancel();
+            }
+        }
+
+        private void OnUnanchorAttempt(EntityUid uid, SubFloorHideComponent component, UnanchorAttemptEvent args)
+        {
+            // No un-anchoring things under the floor. Only required for something like vents, which are still interactable
+            // despite being partially under the floor.
+            if (component.IsUnderCover)
+                args.Cancel();
         }
 
         private void OnGetExplosionResistance(EntityUid uid, SubFloorHideComponent component, ref GetExplosionResistanceEvent args)
