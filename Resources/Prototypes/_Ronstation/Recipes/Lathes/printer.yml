@@ -1,0 +1,83 @@
+# General
+- type: latheRecipe
+  id: PrinterPaperWrittenFormGeneralLetter
+  result: PaperWrittenFormGeneralLetter
+  completetime: 1
+  materials:
+    Paper: 50
+
+- type: latheRecipe
+  id: PrinterPaperWrittenFormGeneralItemRequest
+  result: PaperWrittenFormGeneralItemRequest
+  completetime: 1
+  materials:
+    Paper: 50
+
+- type: latheRecipe
+  id: PrinterPaperWrittenFormGeneralJobApplication
+  result: PaperWrittenFormGeneralJobApplication
+  completetime: 1
+  materials:
+    Paper: 50
+
+- type: latheRecipe
+  id: PrinterPaperWrittenFormGeneralFormalComplaint
+  result: PaperWrittenFormGeneralFormalComplaint
+  completetime: 1
+  materials:
+    Paper: 50
+
+# Security
+
+- type: latheRecipe
+  id: PrinterPaperWrittenFormSecurityArrestWarrant
+  result: PaperWrittenFormSecurityArrestWarrant
+  completetime: 1
+  materials:
+    Paper: 50
+
+- type: latheRecipe
+  id: PrinterPaperWrittenFormSecurityWeaponsPermit
+  result: PaperWrittenFormSecurityWeaponsPermit
+  completetime: 1
+  materials:
+    Paper: 50
+
+- type: latheRecipe
+  id: PrinterPaperWrittenFormSecurityIncidentReport
+  result: PaperWrittenFormSecurityIncidentReport
+  completetime: 1
+  materials:
+    Paper: 50
+
+- type: latheRecipe
+  id: PrinterPaperWrittenFormSecurityCriminalRecord
+  result: PaperWrittenFormSecurityCriminalRecord
+  completetime: 1
+  materials:
+    Paper: 50
+
+- type: latheRecipe
+  id: PrinterPaperWrittenFormSecurityRestrainingOrder
+  result: PaperWrittenFormSecurityRestrainingOrder
+  completetime: 1
+  materials:
+    Paper: 50
+
+# Engineering
+
+- type: latheRecipe
+  id: PrinterPaperWrittenFormEngineeringBuildingPermit
+  result: PaperWrittenFormEngineeringBuildingPermit
+  completetime: 1
+  materials:
+    Paper: 50
+
+# Medical
+
+- type: latheRecipe
+  id: PrinterPaperWrittenFormMedicalDeathCertificate
+  result: PaperWrittenFormMedicalDeathCertificate
+  completetime: 1
+  materials:
+    Paper: 50
