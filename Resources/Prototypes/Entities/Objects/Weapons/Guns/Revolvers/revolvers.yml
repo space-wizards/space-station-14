@@ -177,6 +177,10 @@
   suffix: Empty
   components:
   - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum
+        - SpeedLoaderMagnum
     proto: null
     capacity: 5
     chambers: [ True, True, True, True, True ]
