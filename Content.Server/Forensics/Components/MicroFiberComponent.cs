@@ -8,7 +8,7 @@ namespace Content.Server.Forensics
     public sealed partial class MicroFiberComponent : Component
     {
         [DataField]
-        public LocId MicroFiberMaterial = "fibers-synthetic";
+        public LocId MicroFiberMaterial = "micro-fibers-synthetic";
 
         [DataField]
         public string? MicroFiberColor;
