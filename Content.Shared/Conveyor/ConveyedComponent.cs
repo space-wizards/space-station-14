@@ -3,11 +3,8 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Conveyor;
 
 /// <summary>
-/// Indicates this entity is currently being conveyed.
+/// Indicates this entity is currently contacting a conveyor and will subscribe to events as appropriate.
+/// For entities actively being conveyed see <see cref="ActiveConveyedComponent"/>.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
-public sealed partial class ConveyedComponent : Component
-{
-    [ViewVariables, AutoNetworkedField]
-    public List<EntityUid> Colliding = new();
-}
+[RegisterComponent, NetworkedComponent]
+public sealed partial class ConveyedComponent : Component;
