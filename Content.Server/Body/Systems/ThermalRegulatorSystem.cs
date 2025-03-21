@@ -40,6 +40,7 @@ public sealed class ThermalRegulatorSystem : SharedThermalRegulatorSystem
         if (!Resolve(ent, ref temperature, logMissing: false))
             return;
 
+        // TODO: Why do we have two datafields for this if they are only ever used once here?
         ThermalRegulatorComponent thermalRegulator = ent;
         var totalMetabolismTempChange = thermalRegulator.MetabolismHeat - thermalRegulator.RadiatedHeat;
 
@@ -65,7 +66,7 @@ public sealed class ThermalRegulatorSystem : SharedThermalRegulatorSystem
 
         // if body temperature is not within comfortable, thermal regulation
         // processes starts
-        if (tempDiff > thermalRegulator.ThermalRegulationTemperatureThreshold)
+        if (tempDiff < thermalRegulator.ThermalRegulationTemperatureThreshold)
             return;
 
         if (temperature.CurrentTemperature > thermalRegulator.NormalBodyTemperature)
