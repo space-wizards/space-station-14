@@ -43,7 +43,6 @@ public abstract partial class SharedMoverController : VirtualController
     [Dependency] private   readonly SharedContainerSystem _container = default!;
     [Dependency] private   readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
-    [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] private   readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly TagSystem _tags = default!;
 
@@ -112,47 +111,49 @@ public abstract partial class SharedMoverController : VirtualController
     ///     Movement while considering actionblockers, weightlessness, etc.
     /// </summary>
     protected void HandleMobMovement(
-        EntityUid uid,
-        InputMoverComponent mover,
-        EntityUid physicsUid,
-        PhysicsComponent physicsComponent,
-        TransformComponent xform,
+        Entity<InputMoverComponent> entity,
         float frameTime)
     {
-        var canMove = mover.CanMove;
+        var uid = entity.Owner;
+        var mover = entity.Comp;
 
-        // TODO: Apply mover data to relay
-
-        // TODO: If we are a relay target then don't touch SHIT.
-
-        if (RelayTargetQuery.TryGetComponent(uid, out var relayTarget))
+        // If we're a relay then apply all of our data to the parent instead and go next.
+        if (RelayQuery.TryComp(uid, out var relay))
         {
-            if (_mobState.IsIncapacitated(relayTarget.Source) ||
-                TryComp<SleepingComponent>(relayTarget.Source, out _) ||
-                !MoverQuery.TryGetComponent(relayTarget.Source, out var relayedMover))
-            {
-                canMove = false;
-            }
-            else
-            {
-                mover.RelativeEntity = relayedMover.RelativeEntity;
-                mover.RelativeRotation = relayedMover.RelativeRotation;
-                mover.TargetRelativeRotation = relayedMover.TargetRelativeRotation;
-            }
+            if (!MoverQuery.TryComp(relay.RelayEntity, out var relayTargetMover))
+                return;
+
+            relayTargetMover.RelativeEntity = mover.RelativeEntity;
+            relayTargetMover.RelativeRotation = mover.RelativeRotation;
+            relayTargetMover.TargetRelativeRotation = mover.TargetRelativeRotation;
+            relayTargetMover.CanMove = mover.CanMove;
+            // TODO: Dirty spam
+            Dirty(relay.RelayEntity, relayTargetMover);
+            SetMoveInput((relay.RelayEntity, relayTargetMover), mover.HeldMoveButtons);
+
+            return;
         }
 
-        // Update relative movement
-        if (mover.LerpTarget < Timing.CurTime)
+        if (!XformQuery.TryComp(entity.Owner, out var xform))
+            return;
+
+        RelayTargetQuery.TryComp(uid, out var relayTarget);
+        var relaySource = relayTarget?.Source;
+
+        // If we're not the target of a relay then handle lerp data.
+        if (relaySource == null)
         {
-            if (TryUpdateRelative(mover, xform))
+            // Update relative movement
+            if (mover.LerpTarget < Timing.CurTime)
             {
-                Dirty(uid, mover);
+                TryUpdateRelative(uid, mover, xform);
             }
+
+            LerpRotation(uid, mover, frameTime);
         }
 
-        LerpRotation(uid, mover, frameTime);
-
-        if (!canMove
+        if (!mover.CanMove
+            || !PhysicsQuery.TryComp(uid, out var physicsComponent)
             || physicsComponent.BodyStatus != BodyStatus.OnGround && !CanMoveInAirQuery.HasComponent(uid)
             || PullableQuery.TryGetComponent(uid, out var pullable) && pullable.BeingPulled)
         {
@@ -165,7 +166,7 @@ public abstract partial class SharedMoverController : VirtualController
 
         UsedMobMovement[uid] = true;
         // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
-        var weightless = _gravity.IsWeightless(physicsUid, physicsComponent, xform);
+        var weightless = _gravity.IsWeightless(uid, physicsComponent, xform);
         var (walkDir, sprintDir) = GetVelocityInput(mover);
         var touching = false;
 
@@ -182,8 +183,8 @@ public abstract partial class SharedMoverController : VirtualController
                 // No gravity: is our entity touching anything?
                 touching = ev.CanMove;
 
-                if (!touching && TryComp<MobMoverComponent>(uid, out var mobMover))
-                    touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, physicsUid, physicsComponent);
+                if (!touching && MobMoverQuery.TryComp(uid, out var mobMover))
+                    touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, uid, physicsComponent);
             }
         }
 
@@ -257,10 +258,10 @@ public abstract partial class SharedMoverController : VirtualController
 
         SetWishDir((uid, mover), wishDir);
 
-        PhysicsSystem.SetLinearVelocity(physicsUid, velocity, body: physicsComponent);
+        PhysicsSystem.SetLinearVelocity(uid, velocity, body: physicsComponent);
 
         // Ensures that players do not spiiiiiiin
-        PhysicsSystem.SetAngularVelocity(physicsUid, 0, body: physicsComponent);
+        PhysicsSystem.SetAngularVelocity(uid, 0, body: physicsComponent);
 
         // Handle footsteps at the end
         if (total != Vector2.Zero)
@@ -269,7 +270,7 @@ public abstract partial class SharedMoverController : VirtualController
             {
                 // TODO apparently this results in a duplicate move event because "This should have its event run during
                 // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
-                _transform.SetLocalRotation(xform, total.ToWorldAngle());
+                _transform.SetLocalRotation(uid, total.ToWorldAngle(), xform: xform);
             }
 
             if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&
@@ -282,9 +283,9 @@ public abstract partial class SharedMoverController : VirtualController
                     .WithVariation(sound.Params.Variation ?? mobMover.FootstepVariation);
 
                 // If we're a relay target then predict the sound for all relays.
-                if (relayTarget != null)
+                if (relaySource != null)
                 {
-                    _audio.PlayPredicted(sound, uid, relayTarget.Source, audioParams);
+                    _audio.PlayPredicted(sound, uid, relaySource.Value, audioParams);
                 }
                 else
                 {

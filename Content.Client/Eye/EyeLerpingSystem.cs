@@ -34,7 +34,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         SubscribeLocalEvent<LerpingEyeComponent, LocalPlayerDetachedEvent>(OnDetached);
 
         UpdatesAfter.Add(typeof(TransformSystem));
-        UpdatesAfter.Add(typeof(PhysicsSystem));
+        UpdatesAfter.Add(typeof(Robust.Client.Physics.PhysicsSystem));
         UpdatesBefore.Add(typeof(SharedEyeSystem));
         UpdatesOutsidePrediction = true;
     }

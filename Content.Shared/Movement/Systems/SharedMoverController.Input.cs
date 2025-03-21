@@ -169,7 +169,7 @@ namespace Content.Shared.Movement.Systems
             }
 
             // If we updated parent then cancel the accumulator and force it now.
-            if (!TryUpdateRelative(mover, XformQuery.GetComponent(uid)) && mover.TargetRelativeRotation.Equals(Angle.Zero))
+            if (!TryUpdateRelative(uid, mover, XformQuery.GetComponent(uid)) && mover.TargetRelativeRotation.Equals(Angle.Zero))
                 return;
 
             mover.LerpTarget = TimeSpan.Zero;
@@ -177,7 +177,7 @@ namespace Content.Shared.Movement.Systems
             Dirty(uid, mover);
         }
 
-        private bool TryUpdateRelative(InputMoverComponent mover, TransformComponent xform)
+        private bool TryUpdateRelative(EntityUid uid, InputMoverComponent mover, TransformComponent xform)
         {
             var relative = xform.GridUid;
             relative ??= xform.MapUid;
@@ -224,6 +224,7 @@ namespace Content.Shared.Movement.Systems
 
             mover.RelativeEntity = relative;
             mover.TargetRelativeRotation = targetRotation;
+            Dirty(uid, mover);
             return true;
         }
 
@@ -294,28 +295,12 @@ namespace Content.Shared.Movement.Systems
 
         private void HandleDirChange(EntityUid entity, Direction dir, ushort subTick, bool state)
         {
-            // Relayed movement just uses the same keybinds given we're moving the relayed entity
-            // the same as us.
-
-            if (TryComp<RelayInputMoverComponent>(entity, out var relayMover))
-            {
-                DebugTools.Assert(relayMover.RelayEntity != entity);
-                DebugTools.AssertNotNull(relayMover.RelayEntity);
-
-                if (MoverQuery.TryGetComponent(entity, out var mover))
-                    SetMoveInput((entity, mover), MoveButtons.None);
-
-                if (!_mobState.IsIncapacitated(entity))
-                    HandleDirChange(relayMover.RelayEntity, dir, subTick, state);
-
-                return;
-            }
-
             if (!MoverQuery.TryGetComponent(entity, out var moverComp))
                 return;
 
             // For stuff like "Moving out of locker" or the likes
             // We'll relay a movement input to the parent.
+            // TODO: Make this use relays and make relays use a list of sources.
             if (_container.IsEntityInContainer(entity) &&
                 TryComp(entity, out TransformComponent? xform) &&
                 xform.ParentUid.IsValid() &&

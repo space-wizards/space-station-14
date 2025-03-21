@@ -93,12 +93,7 @@ public sealed class MoverController : SharedMoverController
 
         foreach (var mover in _movers)
         {
-            HandleMobMovement(uid,
-                mover,
-                physicsUid,
-                body,
-                xformMover,
-                frameTime);
+            HandleMobMovement(mover, frameTime);
         }
 
         HandleShuttleMovement(frameTime);
