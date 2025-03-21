@@ -251,14 +251,14 @@ public abstract class SharedRoleSystem : EntitySystem
         else
         {
             var error = $"The Character Window of {_minds.MindOwnerLoggingString(comp)} potentially did not update immediately : session error";
-            _adminLogger.Add(LogType.Mind, LogImpact.High, $"{error}");
+            _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{error}");
         }
 
         if (comp.OwnedEntity is null)
         {
             Log.Error($"{ToPrettyString(mind)} does not have an OwnedEntity!");
             _adminLogger.Add(LogType.Mind,
-                LogImpact.High,
+                LogImpact.Medium,
                 $"Role Type of {ToPrettyString(mind)} changed to {roleTypeId}");
             return;
         }
