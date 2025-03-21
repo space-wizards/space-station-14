@@ -196,7 +196,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretCommand
   name: command beret
-  description: A beret with a command insignia emblazoned on it. It has an aura of authority.
+  description: A beret with a Command insignia emblazoned on it. It has an aura of authority.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_command.rsi
