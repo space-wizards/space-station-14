@@ -495,9 +495,9 @@ public sealed class GhostRoleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Check if the player has been banned from any of the roles on the ghostrole
+    /// Check if the player is currently banned from any of the listed roles
     /// </summary>
-    private bool IsBanned(ICommonSession player, List<string> roles)
+    private bool IsBanned(ICommonSession player, List<string> roles) // Should this be in BanManager?
     {
         var bans = _ban.GetRoleBans(player.UserId);
 
