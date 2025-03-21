@@ -4,8 +4,8 @@ meta:
   engineVersion: 247.2.0
   forkId: Starlight
   forkVersion: 1732131340
-  time: 03/20/2025 21:26:42
-  entityCount: 8869
+  time: 03/21/2025 10:44:01
+  entityCount: 8880
 maps:
 - 1
 grids:
@@ -150,7 +150,7 @@ entities:
           version: 6
         0,2:
           ind: 0,2
-          tiles: eQAAAAAAeQAAAAAATQAAAAAATQAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAATQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAEgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAEgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAATQAAAAAATQAAAAAATQAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAATQAAAAAATQAAAAAATQAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAATQAAAAAATQAAAAAATQAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+          tiles: eQAAAAAAeQAAAAAATQAAAAAATQAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAAEgAAAAAATQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAEgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAEgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAATQAAAAAATQAAAAAATQAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAATQAAAAAATQAAAAAATQAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAATQAAAAAATQAAAAAATQAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
           version: 6
         1,2:
           ind: 1,2
@@ -3596,6 +3596,25 @@ entities:
     - type: GasTileOverlay
     - type: SpreaderGrid
     - type: GridPathfinding
+  - uid: 7283
+    mapInit: true
+    paused: true
+    components:
+    - type: MetaData
+      name: solution - food
+    - type: Transform
+      parent: 3646
+    - type: Solution
+      solution:
+        maxVol: 10
+        name: food
+        reagents:
+        - data: []
+          ReagentId: Fiber
+          Quantity: 10
+    - type: ContainedSolution
+      containerName: food
+      container: 3646
 - proto: AbductorAlienPad
   entities:
   - uid: 3
@@ -3619,6 +3638,9 @@ entities:
   entities:
   - uid: 6
     components:
+    - type: MetaData
+      desc: Stalks unsuspecting unstable individuals and enemies of the corporation.
+      name: Quantum observation console
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -30.5,8.5
@@ -3731,7 +3753,7 @@ entities:
       pos: 11.5,20.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -52896.85
+      secondsUntilStateChange: -55880.137
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -3765,7 +3787,7 @@ entities:
       pos: 28.5,14.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -40928.86
+      secondsUntilStateChange: -43912.145
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4079,7 +4101,7 @@ entities:
       pos: -19.5,7.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -50337.75
+      secondsUntilStateChange: -53321.035
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -4956,6 +4978,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 7.5,36.5
       parent: 2
+    missingComponents:
+    - Damageable
 - proto: Ash
   entities:
   - uid: 231
@@ -19180,6 +19204,8 @@ entities:
     - type: Transform
       pos: 7.5,36.5
       parent: 2
+    missingComponents:
+    - Damageable
 - proto: CableMVStack
   entities:
   - uid: 3031
@@ -21862,12 +21888,12 @@ entities:
   - uid: 3497
     components:
     - type: Transform
-      pos: -26.286768,-3.4157004
+      pos: -27.409395,-3.639081
       parent: 2
   - uid: 3498
     components:
     - type: Transform
-      pos: -26.396143,-3.3063254
+      pos: -27.565645,-3.654706
       parent: 2
 - proto: CigarGoldCase
   entities:
@@ -22077,7 +22103,7 @@ entities:
   - uid: 3532
     components:
     - type: Transform
-      pos: -26.540686,12.537982
+      pos: -26.49101,12.51641
       parent: 2
 - proto: ClothingBeltChiefEngineerFilled
   entities:
@@ -22227,7 +22253,7 @@ entities:
   - uid: 3553
     components:
     - type: Transform
-      pos: -27.5,-3.5
+      pos: -27.33127,-3.404706
       parent: 2
 - proto: ClothingHandsGlovesColorBlue
   entities:
@@ -22287,6 +22313,14 @@ entities:
     - type: Transform
       pos: -11.295264,17.437752
       parent: 2
+- proto: ClothingHeadHatCentcomcap
+  entities:
+  - uid: 8753
+    components:
+    - type: Transform
+      parent: 8518
+    - type: Physics
+      canCollide: False
 - proto: ClothingHeadHatCone
   entities:
   - uid: 3564
@@ -22544,6 +22578,14 @@ entities:
       parent: 3606
     - type: Physics
       canCollide: False
+- proto: ClothingNeckCloakCentcomAdmiral
+  entities:
+  - uid: 8871
+    components:
+    - type: Transform
+      parent: 8518
+    - type: Physics
+      canCollide: False
 - proto: ClothingNeckCloakCentcomBlack
   entities:
   - uid: 3621
@@ -22608,6 +22650,14 @@ entities:
     missingComponents:
     - Item
     - Pullable
+- proto: ClothingOuterArmorHeavyGreen
+  entities:
+  - uid: 8872
+    components:
+    - type: Transform
+      parent: 8518
+    - type: Physics
+      canCollide: False
 - proto: ClothingOuterCoatJensen
   entities:
   - uid: 3630
@@ -22815,10 +22865,27 @@ entities:
 - proto: ClothingShoesTourist
   entities:
   - uid: 3646
+    mapInit: true
+    paused: true
     components:
+    - type: MetaData
+      desc: These sandals look surprisingly comfortable.
+      name: freedom shoes
     - type: Transform
-      pos: -17.488367,-9.703083
+      pos: -17.482988,-9.637934
       parent: 2
+    - type: SolutionContainerManager
+      solutions: null
+      containers:
+      - food
+    - type: EmitSoundOnCollide
+      nextSound: -962.5998929
+    - type: ContainerContainer
+      containers:
+        solution@food: !type:ContainerSlot
+          ent: 7283
+    - type: ClothingSlowOnDamageModifier
+      modifier: 0.3
 - proto: ClothingUniformJumpskirtCargoFormal
   entities:
   - uid: 3647
@@ -24208,7 +24275,7 @@ entities:
       pos: -1.5,-20.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -109.390175
+      secondsUntilStateChange: -3092.6736
       state: Closing
   - uid: 3851
     components:
@@ -25999,7 +26066,7 @@ entities:
   - uid: 4145
     components:
     - type: Transform
-      pos: -26.535545,11.773157
+      pos: -26.478779,11.722803
       parent: 2
   - uid: 4146
     components:
@@ -26218,7 +26285,7 @@ entities:
   - uid: 4180
     components:
     - type: Transform
-      pos: -24.572554,-3.3475308
+      pos: -24.51877,-3.576581
       parent: 2
   - uid: 4181
     components:
@@ -26351,7 +26418,7 @@ entities:
   - uid: 4202
     components:
     - type: Transform
-      pos: -26.974268,-3.2125754
+      pos: -24.659395,-3.154706
       parent: 2
 - proto: DrinkWhiskeySodaGlass
   entities:
@@ -26848,6 +26915,20 @@ entities:
     - type: Transform
       pos: -9.5,17.5
       parent: 2
+- proto: Finka
+  entities:
+  - uid: 8873
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -25.462185,12.680849
+      parent: 2
+  - uid: 8876
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -25.697529,12.644678
+      parent: 2
 - proto: FireAxeCabinetFilled
   entities:
   - uid: 4274
@@ -27039,7 +27120,7 @@ entities:
       pos: -13.5,-20.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -48877.52
+      secondsUntilStateChange: -51860.805
       state: Closing
   - uid: 4311
     components:
@@ -31956,7 +32037,7 @@ entities:
           referenceDistance: 1
           rolloffFactor: 1
           maxDistance: 15
-          pitch: 1
+          pitch: 0.7
           volume: 0
         path: /Audio/Items/trayhit2.ogg
       soundSwing: !type:SoundPathSpecifier
@@ -34996,6 +35077,13 @@ entities:
     - type: Transform
       pos: -13.5,5.5
       parent: 2
+    - type: DoorBolt
+      powered: True
+      boltsDown: True
+    - type: ApcPowerReceiver
+      needsPower: False
+    missingComponents:
+    - Damageable
   - uid: 5369
     components:
     - type: Transform
@@ -35185,6 +35273,8 @@ entities:
     missingComponents:
     - Implanter
     - Item
+    - Physics
+    - Fixtures
     - Pullable
 - proto: JanitorialTrolley
   entities:
@@ -35347,6 +35437,26 @@ entities:
     components:
     - type: Transform
       pos: 11.5,40.5
+      parent: 2
+  - uid: 8877
+    components:
+    - type: Transform
+      pos: 5.5,35.5
+      parent: 2
+  - uid: 8878
+    components:
+    - type: Transform
+      pos: 13.5,35.5
+      parent: 2
+  - uid: 8879
+    components:
+    - type: Transform
+      pos: 13.5,37.5
+      parent: 2
+  - uid: 8880
+    components:
+    - type: Transform
+      pos: 5.5,37.5
       parent: 2
 - proto: LargeBeaker
   entities:
@@ -36616,6 +36726,45 @@ entities:
           showEnts: False
           occludes: False
           ent: null
+  - uid: 8518
+    components:
+    - type: Transform
+      pos: -26.5,-3.5
+      parent: 2
+    - type: ContainerContainer
+      containers:
+        jumpsuit: !type:ContainerSlot
+          showEnts: False
+          occludes: False
+          ent: null
+        outerClothing: !type:ContainerSlot
+          showEnts: False
+          occludes: False
+          ent: 8872
+        neck: !type:ContainerSlot
+          showEnts: False
+          occludes: False
+          ent: 8871
+        mask: !type:ContainerSlot
+          showEnts: False
+          occludes: False
+          ent: null
+        eyes: !type:ContainerSlot
+          showEnts: False
+          occludes: False
+          ent: null
+        head: !type:ContainerSlot
+          showEnts: False
+          occludes: False
+          ent: 8753
+        suitstorage: !type:ContainerSlot
+          showEnts: False
+          occludes: False
+          ent: null
+        back: !type:ContainerSlot
+          showEnts: False
+          occludes: False
+          ent: null
 - proto: MaterialBiomass
   entities:
   - uid: 5473
@@ -36662,7 +36811,7 @@ entities:
   - uid: 5480
     components:
     - type: Transform
-      pos: -26.460194,9.130088
+      pos: -26.480595,11.51641
       parent: 2
 - proto: MedicalBed
   entities:
@@ -37872,7 +38021,7 @@ entities:
   - uid: 5573
     components:
     - type: Transform
-      pos: -26.771143,-3.4938254
+      pos: -27.61252,-3.248456
       parent: 2
 - proto: PianoInstrument
   entities:
@@ -38069,6 +38218,11 @@ entities:
     - type: Transform
       pos: -21.5,2.5
       parent: 2
+    - type: ApcPowerReceiver
+      needsPower: False
+    - type: DoorBolt
+      powered: True
+      boltsDown: True
     missingComponents:
     - Damageable
     - RCDDeconstructable
@@ -39958,22 +40112,38 @@ entities:
       rot: 3.141592653589793 rad
       pos: 13.5,40.5
       parent: 2
+    missingComponents:
+    - Physics
+    - Fixtures
+    - Damageable
   - uid: 5917
     components:
     - type: Transform
       pos: 13.5,39.5
       parent: 2
+    missingComponents:
+    - Physics
+    - Fixtures
+    - Damageable
   - uid: 5918
     components:
     - type: Transform
       pos: 5.5,39.5
       parent: 2
+    missingComponents:
+    - Physics
+    - Fixtures
+    - Damageable
   - uid: 5919
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,40.5
       parent: 2
+    missingComponents:
+    - Physics
+    - Fixtures
+    - Damageable
   - uid: 5920
     components:
     - type: Transform
@@ -49494,12 +49664,20 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 13.5,39.5
       parent: 2
+    missingComponents:
+    - Physics
+    - Fixtures
+    - Damageable
   - uid: 7013
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 5.5,39.5
       parent: 2
+    missingComponents:
+    - Physics
+    - Fixtures
+    - Damageable
   - uid: 7014
     components:
     - type: Transform
@@ -50923,11 +51101,6 @@ entities:
     - type: Transform
       pos: -27.5,-3.5
       parent: 2
-  - uid: 7283
-    components:
-    - type: Transform
-      pos: -26.5,-3.5
-      parent: 2
   - uid: 7284
     components:
     - type: Transform
@@ -51032,6 +51205,14 @@ entities:
     - type: Transform
       pos: -10.611931,6.5603595
       parent: 2
+- proto: ThrowingKnife
+  entities:
+  - uid: 8875
+    components:
+    - type: Transform
+      rot: -2.356194490192345 rad
+      pos: -25.567244,12.537243
+      parent: 2
 - proto: TintedWindow
   entities:
   - uid: 7304
@@ -51059,12 +51240,35 @@ entities:
     - type: Transform
       pos: -12.515615,-7.328125
       parent: 2
+- proto: ToolDebug
+  entities:
+  - uid: 8874
+    components:
+    - type: MetaData
+      name: corporate operative knife
+    - type: Transform
+      pos: -26.480595,9.151826
+      parent: 2
+    - type: Tool
+      useSound: !type:SoundPathSpecifier
+        params:
+          variation: null
+          playOffsetSeconds: 0
+          loop: False
+          referenceDistance: 1
+          rolloffFactor: 1
+          maxDistance: 15
+          pitch: 1
+          volume: 0
+        path: /Audio/Items/jaws_pry.ogg
+      qualities:
+      - Prying
 - proto: TowelColorBlack
   entities:
   - uid: 7308
     components:
     - type: Transform
-      pos: -30.245945,10.697689
+      pos: -30.128242,10.701142
       parent: 2
 - proto: TowelColorCentcom
   entities:
@@ -53000,18 +53204,24 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -9.5,3.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7638
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -9.5,4.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7639
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -9.5,5.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7640
     components:
     - type: Transform
@@ -53066,12 +53276,16 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -9.5,6.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7649
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -9.5,7.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7650
     components:
     - type: Transform
@@ -53280,21 +53494,29 @@ entities:
     - type: Transform
       pos: -13.5,7.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7688
     components:
     - type: Transform
       pos: -12.5,7.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7689
     components:
     - type: Transform
       pos: -11.5,7.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7690
     components:
     - type: Transform
       pos: -10.5,7.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7691
     components:
     - type: Transform
@@ -54616,26 +54838,36 @@ entities:
     - type: Transform
       pos: 1.5,34.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7955
     components:
     - type: Transform
       pos: 2.5,34.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7956
     components:
     - type: Transform
       pos: 3.5,34.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7957
     components:
     - type: Transform
       pos: 4.5,34.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7958
     components:
     - type: Transform
       pos: 5.5,34.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7959
     components:
     - type: Transform
@@ -54676,21 +54908,29 @@ entities:
     - type: Transform
       pos: 13.5,34.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7967
     components:
     - type: Transform
       pos: 14.5,34.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7968
     components:
     - type: Transform
       pos: 15.5,34.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7969
     components:
     - type: Transform
       pos: 16.5,34.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 7970
     components:
     - type: Transform
@@ -54946,21 +55186,29 @@ entities:
     - type: Transform
       pos: -10.5,3.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8021
     components:
     - type: Transform
       pos: -11.5,3.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8022
     components:
     - type: Transform
       pos: -12.5,3.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8023
     components:
     - type: Transform
       pos: -13.5,3.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8024
     components:
     - type: Transform
@@ -55131,11 +55379,15 @@ entities:
     - type: Transform
       pos: -13.5,6.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8058
     components:
     - type: Transform
       pos: -13.5,4.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8059
     components:
     - type: Transform
@@ -57064,76 +57316,106 @@ entities:
     - type: Transform
       pos: 12.5,35.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8438
     components:
     - type: Transform
       pos: 12.5,36.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8439
     components:
     - type: Transform
       pos: 12.5,37.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8440
     components:
     - type: Transform
       pos: 12.5,38.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8441
     components:
     - type: Transform
       pos: 12.5,39.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8442
     components:
     - type: Transform
       pos: 11.5,39.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8443
     components:
     - type: Transform
       pos: 10.5,39.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8444
     components:
     - type: Transform
       pos: 9.5,39.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8445
     components:
     - type: Transform
       pos: 8.5,39.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8446
     components:
     - type: Transform
       pos: 7.5,39.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8447
     components:
     - type: Transform
       pos: 6.5,39.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8448
     components:
     - type: Transform
       pos: 6.5,38.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8449
     components:
     - type: Transform
       pos: 6.5,37.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8450
     components:
     - type: Transform
       pos: 6.5,36.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8451
     components:
     - type: Transform
       pos: 6.5,35.5
       parent: 2
+    missingComponents:
+    - Damageable
   - uid: 8452
     components:
     - type: Transform
@@ -57561,6 +57843,18 @@ entities:
     - type: Transform
       pos: 8.51666,29.42835
       parent: 2
+    - type: Gun
+      soundGunshot: !type:SoundPathSpecifier
+        params:
+          variation: null
+          playOffsetSeconds: 0
+          loop: False
+          referenceDistance: 1
+          rolloffFactor: 1
+          maxDistance: 15
+          pitch: 0.8
+          volume: 0
+        path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
 - proto: WeaponSubMachineGunWt550
   entities:
   - uid: 8515
@@ -57579,11 +57873,6 @@ entities:
     components:
     - type: Transform
       pos: -4.4574313,-9.606358
-      parent: 2
-  - uid: 8518
-    components:
-    - type: Transform
-      pos: -25.555511,12.593331
       parent: 2
   - uid: 8519
     components:
@@ -57627,6 +57916,12 @@ entities:
     - type: HitscanBatteryAmmoProvider
       fireCost: 10
       proto: Pulse
+    - type: BatterySelfRecharger
+      autoRechargeRate: 10
+      autoRecharge: True
+    - type: Battery
+      startingCharge: 900000
+      maxCharge: 900000
     missingComponents:
     - BallisticAmmoProvider
     - Damageable
@@ -57669,6 +57964,12 @@ entities:
     - type: HitscanBatteryAmmoProvider
       fireCost: 10
       proto: Pulse
+    - type: BatterySelfRecharger
+      autoRechargeRate: 10
+      autoRecharge: True
+    - type: Battery
+      startingCharge: 900000
+      maxCharge: 900000
     missingComponents:
     - BallisticAmmoProvider
     - Damageable
@@ -57731,6 +58032,12 @@ entities:
     - type: HitscanBatteryAmmoProvider
       fireCost: 10
       proto: Pulse
+    - type: BatterySelfRecharger
+      autoRechargeRate: 10
+      autoRecharge: True
+    - type: Battery
+      startingCharge: 900000
+      maxCharge: 900000
     missingComponents:
     - BallisticAmmoProvider
     - Damageable
@@ -57913,7 +58220,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -40895.395
+      secondsUntilStateChange: -43878.68
       state: Opening
     - type: Airlock
       autoClose: False
