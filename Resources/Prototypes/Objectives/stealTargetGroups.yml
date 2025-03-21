@@ -129,6 +129,13 @@
     state: datadisk_base
 
 - type: stealTargetGroup
+  id: Mail
+  name: steal-target-groups-mail
+  sprite:
+    sprite: Objects/Specific/Cargo/mail.rsi
+    state: icon
+
+- type: stealTargetGroup
   id: IDCard
   name: steal-target-groups-id-cards
   sprite:
