@@ -101,16 +101,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 30
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 16
         - ReagentId: Protein
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 1
-        - ReagentId: Mayo
-          Quantity: 3
+          Quantity: 9
   - type: Tag
     tags:
     - Meat

@@ -9,6 +9,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 20
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
@@ -23,6 +24,61 @@
     graph: FinfinSteak
     node: start
     defaultTarget: cooked finfin
+
+- type: entity
+  name: raw finfin cutlet
+  parent: FoodMeatBase
+  id: FoodMeatFinfinCutlet
+  description: A cutlet of raw finfin. He was your best friend!
+  components:
+  - type: Tag
+    tags:
+    - Raw
+    - Cutlet
+    - Meat
+  - type: Sprite
+    state: cutlet
+    color: white
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 3
+  - type: Construction
+    graph: FinfinCutlet
+    node: cooked finfin cutlet
+
+- type: entity
+  name: finfin cutlet
+  parent: FoodMeatBase
+  id: FoodMeatFinfinCutletCooked
+  description: A cutlet of cooked finfin. Will these hands never be clean?
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Cutlet
+    - Meat
+  - type: Sprite
+    state: cutlet-cooked
+    color: white
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Protein
+          Quantity: 3
+  - type: FoodSequenceElement
+    entries:
+      Burger: FinfinCutlet
+      Taco: FinfinCutlet
 
 - type: entity
   name: cooked Fin Fin
@@ -40,6 +96,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -74,6 +131,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -99,19 +157,48 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 25
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
         - ReagentId: UncookedAnimalProteins
-          Quantity: 1
-        - ReagentId: Fat
-          Quantity: 5
+          Quantity: 20
   - type: Sprite
     sprite: _Impstation/Objects/Consumable/Food/candy.rsi
     state: heartcarpaccio
   - type: Item
     size: Normal
+
+# cannibalism
+
+- type: entity
+  name: raw thaven fillet
+  parent: FoodMeatBase
+  id: FoodThavenMeat
+  description: Concerning.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - thavenflesh
+  - type: Tag
+    tags:
+    - Raw
+    - Meat
+  - type: Sprite
+    state: fish
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: CarpoToxin
+          Quantity: 5
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: CarpoToxin
+        Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: ThavenBurger
 
 - type: entity
   name: raw kodepiia meat
@@ -125,6 +212,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 20
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
@@ -159,11 +247,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 9
         - ReagentId: Protein
-          Quantity: 5
+          Quantity: 9
   - type: Construction
     graph: KodepiiaFlakes
     node: crispy kodepiia flakes

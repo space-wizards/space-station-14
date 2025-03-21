@@ -21,7 +21,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 10 # imp
         reagents:
         - ReagentId: Egg
           Quantity: 6
@@ -78,7 +78,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 2
+        maxVol: 5 # imp
         reagents:
         - ReagentId: Egg
           Quantity: 1
@@ -87,7 +87,7 @@
     - Egg
     - Trash
   - type: SpaceGarbage
-  - type: FoodSequenceElement
+  - type: FoodSequenceElement # imp
     entries:
       Burger: EggshellsBurger
 
@@ -124,7 +124,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 10 # imp
         reagents:
         - ReagentId: EggCooked
           Quantity: 6

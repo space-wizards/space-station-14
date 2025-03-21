@@ -44,8 +44,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - cheesy
+    - meaty
+    - cheesy
   - type: Food
     transferAmount: 3
   - type: Sprite
@@ -64,7 +64,7 @@
     storedRotation: -90
   - type: Tag
     tags:
-      - Meat
+    - Meat
 
 - type: entity
   name: beef taco
@@ -75,6 +75,15 @@
   - type: Food
   - type: Sprite
     state: beeftaco
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 14
+        - ReagentId: Protein
+          Quantity: 3
 
 - type: entity
   name: chicken taco
@@ -85,6 +94,15 @@
   - type: Food
   - type: Sprite
     state: chickentaco
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 14
+        - ReagentId: Protein
+          Quantity: 3
 
 - type: entity
   name: fish taco
@@ -94,20 +112,26 @@
   components:
   - type: FlavorProfile
     flavors:
-      - onion
-      - fishy
+    - onion
+    #- fishy # imp
+    - carpflesh # imp
+    - tomato # imp
   - type: Food
   - type: Sprite
     state: fishtaco
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 28 # imp
         - ReagentId: Vitamin
-          Quantity: 6
+          Quantity: 9 # imp
+        - ReagentId: CarpoToxin # imp
+          Quantity: 5
+        - ReagentId: Allicin # imp
+          Quantity: 2
 
 - type: entity
   name: rat taco
@@ -121,50 +145,70 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 14
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 4
+        - ReagentId: Protein # imp
+          Quantity: 3
 
 - type: entity
   name: beef taco supreme
   parent: FoodTacoBase
   id: FoodTacoBeefSupreme
-  description: It's like a regular beef taco, but surpeme!
+  description: It's like a regular beef taco, but supreme! # imp
   components:
+  - type: FlavorProfile # imp
+    flavors:
+    - meaty
+    - cheesy
+    - tomato
   - type: Food
   - type: Sprite
     state: beeftacosupreme
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 55 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 14
+          Quantity: 35 # imp
         - ReagentId: Vitamin
-          Quantity: 6
+          Quantity: 9 # imp
+        - ReagentId: Protein # imp
+          Quantity: 3
+        - ReagentId: Allicin # imp
+          Quantity: 1
 
 - type: entity
   name: chicken taco supreme
   parent: FoodTacoBase
   id: FoodTacoChickenSupreme
-  description: It's like a regular chicken taco, but surpeme!
+  description: It's like a regular chicken taco, but supreme! # imp
   components:
+  - type: FlavorProfile # imp
+    flavors:
+    - meaty
+    - cheesy
+    - tomato
   - type: Food
   - type: Sprite
     state: chickentacosupreme
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 55 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 14
+          Quantity: 35 # imp
         - ReagentId: Vitamin
-          Quantity: 6
+          Quantity: 9 # imp
+        - ReagentId: Protein # imp
+          Quantity: 3
+        - ReagentId: Allicin # imp
+          Quantity: 1
 
 - type: entity
   name: soft taco
@@ -174,12 +218,21 @@
   components:
   - type: FlavorProfile
     flavors:
-      - cheesy
-      - tomato
-      - meaty
-      - onion
+    - cheesy
+    - tomato
+    - meaty
+    - onion
   - type: Sprite
     state: softtaco
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 35
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 18
   - type: Tag
     tags:
-      - Meat
+    - Meat

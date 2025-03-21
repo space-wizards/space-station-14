@@ -18,7 +18,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 25 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
@@ -33,10 +33,19 @@
   components:
   - type: FlavorProfile
     flavors:
-      - cheesy
-      - potatoes
+    - cheesy
+    - potatoes
   - type: Sprite
     state: loadedbakedpotato
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 14
+        - ReagentId: Vitamin
+          Quantity: 4
 # Tastes like potato.
 
 - type: entity
@@ -47,18 +56,22 @@
   components:
   - type: FlavorProfile
     flavors:
-      - potatoes
-      - salty
+    - potatoes
+    - salty
   - type: Sprite
     state: fries
-  - type: SolutionContainerManager
+  - type: SolutionContainerManager # imp
     solutions:
       food:
-        maxVol: 26
+        maxVol: 25
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 4
         - ReagentId: TableSalt
           Quantity: 5
-  - type: FoodSequenceElement
+  - type: FoodSequenceElement # imp
     entries:
       Burger: SpaceFriesBurger
 # Tastes like fries, salt.
@@ -71,19 +84,23 @@
   components:
   - type: FlavorProfile
     flavors:
-      - potatoes
-      - salty
-      - cheesy
+    - potatoes
+    - salty
+    - cheesy
   - type: Sprite
     state: fries-cheesy
-  - type: SolutionContainerManager
+  - type: SolutionContainerManager # imp
     solutions:
       food:
-        maxVol: 26
+        maxVol: 30 # imp
         reagents:
+        - ReagentId: Nutriment
+          Quantity: 14
+        - ReagentId: Vitamin
+          Quantity: 4
         - ReagentId: TableSalt
           Quantity: 5
-  - type: FoodSequenceElement
+  - type: FoodSequenceElement # imp
     entries:
       Burger: CheesyFriesBurger
 # Tastes like fries, cheese.
@@ -96,8 +113,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - carrots
-      - salty
+    - carrots
+    - salty
   - type: Sprite
     state: fries-carrot
   - type: Tag
@@ -106,13 +123,13 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 20 # imp
         reagents:
         - ReagentId: JuiceCarrot
-          Quantity: 15
-        - ReagentId: TableSalt
+          Quantity: 10 # imp
+        - ReagentId: TableSalt # imp
           Quantity: 5
-  - type: FoodSequenceElement
+  - type: FoodSequenceElement # imp
     entries:
       Burger: CarrotFriesBurger
 # Tastes like carrots, salt.
@@ -128,18 +145,18 @@
     - FoodPlateSmall
   - type: FlavorProfile
     flavors:
-      - nachos
+    - nachos
   - type: Sprite
     state: nachos
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 11
+        maxVol: 10 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 5 # imp
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 1
         - ReagentId: TableSalt
           Quantity: 1
 # Tastes like nachos.
@@ -155,21 +172,21 @@
     - FoodPlateSmall
   - type: FlavorProfile
     flavors:
-      - nachos
-      - cheesy
+    - nachos
+    - cheesy
   - type: Sprite
     state: nachos-cheesy
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 15 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 3
+          Quantity: 9 # imp
+        # - ReagentId: Vitamin # imp
+        #  Quantity: 3
         - ReagentId: TableSalt
-          Quantity: 4
+          Quantity: 1 # imp
 # Tastes like nachos, cheese.
 
 - type: entity
@@ -183,22 +200,22 @@
     - FoodPlateSmall
   - type: FlavorProfile
     flavors:
-      - nachos
-      - tomato
-      - spicy
+    - nachos
+    - tomato
+    - spicy
   - type: Sprite
     state: nachos-cuban
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 30 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
+          Quantity: 9 # imp
         - ReagentId: CapsaicinOil
-          Quantity: 7
+          Quantity: 10 # imp
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 4 # imp
 # Tastes like nachos, hot pepper.
 
 - type: entity
@@ -209,18 +226,18 @@
   components:
   - type: FlavorProfile
     flavors:
-      - minty
+    - minty
   - type: Sprite
     state: mint
   - type: SolutionContainerManager
     solutions:
       food:
         # Note that this acts as the limiter against injecting anything.
-        maxVol: 2
+        maxVol: 2 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 1
-        - ReagentId: TableSalt
+        - ReagentId: TableSalt # imp
           Quantity: 1
 # Tastes like parsnips, salt.
 
@@ -232,8 +249,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - eggplant
-      - cheesy
+    - eggplant
+    - cheesy
   - type: Sprite
     state: eggplantparm
   - type: SolutionContainerManager
@@ -258,8 +275,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - sweet
-      - potatoes
+    - sweet
+    - potatoes
   - type: Sprite
     state: yakiimo
 # Tastes like sweet potato.
@@ -272,20 +289,25 @@
   components:
   - type: FlavorProfile
     flavors:
-      - carpflesh #imp
-      - batter
-      - spicy
+    - carpflesh #imp
+    #- fishy # imp
+    - batter
+    - spicy
   - type: Sprite
     state: cubancarp
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 60 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 27 # imp
         - ReagentId: CarpoToxin
-          Quantity: 3
+          Quantity: 10 # imp
+        - ReagentId: Vitamin # imp
+          Quantity: 4
+        - ReagentId: CapsaicinOil # imp
+          Quantity: 10
   - type: Tag
     tags:
     - CubanCarp
@@ -300,8 +322,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - cabbage
+    - meaty
+    - cabbage
   - type: Sprite
     state: cornedbeef
   - type: SolutionContainerManager
@@ -326,18 +348,20 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - carpflesh #imp
+    - meaty
+    - fishy
   - type: Sprite
     state: bearsteak
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 10 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
-        - ReagentId: Vitamin
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 5
+        - ReagentId: UncookedAnimalProteins # imp
           Quantity: 5
   - type: Tag
     tags:
@@ -352,14 +376,14 @@
   components:
   - type: FlavorProfile
     flavors:
-      - meaty
-      - butter
+    - meaty
+    - butter
   - type: Sprite
     state: pigblanket
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 10 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
@@ -381,27 +405,25 @@
     - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
-      - meaty
-      - smokey
+    - meaty
+    - smokey
+    - sweet # imp - bbq sauce
   - type: Sprite
     state: ribs
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 20 # imp
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 3
+        # - ReagentId: Nutriment # imp
+        #  Quantity: 3
         - ReagentId: Protein
-          Quantity: 10
-        - ReagentId: BbqSauce
-          Quantity: 10
+          Quantity: 18 # imp
+        #- ReagentId: BbqSauce # imp
+        #  Quantity: 10
   - type: Tag
     tags:
     - Meat
-  - type: FoodSequenceElement
-    entries:
-      Burger: RibsBurger
 # Tastes like meat, smokey sauce.
 
 - type: entity
@@ -412,9 +434,9 @@
   components:
   - type: FlavorProfile
     flavors:
-      - egg
-      - bacon
-      - bun
+    - egg
+    - bacon
+    - bun
   - type: Sprite
     state: benedict
   - type: SolutionContainerManager
@@ -439,8 +461,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - egg
-      - cheesy
+    - egg
+    - cheesy
   - type: Sprite
     state: omelette
   - type: SolutionContainerManager
@@ -463,26 +485,26 @@
   components:
   - type: FlavorProfile
     flavors:
-      - egg
-      - salty
-      - peppery
+    - egg
+    - salty
+    - peppery
   - type: Sprite
     state: friedegg
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 5 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
         - ReagentId: TableSalt
-          Quantity: 5
+          Quantity: 1 # imp
         - ReagentId: Blackpepper
           Quantity: 1
   - type: Tag
     tags:
     - Meat
-  - type: FoodSequenceElement
+  - type: FoodSequenceElement # imp
     entries:
       Burger: FriedEggBurger
 # Tastes like egg, salt, pepper.
@@ -495,8 +517,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - milk
-      - chocolate
+    - milk
+    - chocolate
   - type: Sprite
     state: milkape
 # Tastes like milk, chocolate, the jungle.
@@ -509,7 +531,7 @@
   components:
   - type: FlavorProfile
     flavors:
-      - memoryleek
+    - memoryleek
   - type: Sprite
     state: memoryLeek
   - type: SolutionContainerManager
@@ -534,14 +556,20 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 40 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 9
         - ReagentId: Water
           Quantity: 10
-        - ReagentId: Blackpepper
+        # - ReagentId: Blackpepper # imp
+        #  Quantity: 3
+        - ReagentId: Cola # imp
+          Quantity: 5
+        - ReagentId: Vitamin # imp
           Quantity: 3
+        - ReagentId: TableSalt # imp
+          Quantity: 5
 # Tastes awesome.
 
 - type: entity
@@ -552,12 +580,25 @@
   components:
     - type: FlavorProfile
       flavors:
-        - cheesy
+      - cheesy
     - type: Sprite
       state: queso
-    - type: FoodSequenceElement
+    - type: FoodSequenceElement # imp
       entries:
         Burger: QuesoBurger
+    - type: SolutionContainerManager # imp
+      solutions:
+        food:
+          maxVol: 35
+          reagents:
+          - ReagentId: Nutriment
+            Quantity: 12
+          - ReagentId: Blackpepper
+            Quantity: 5
+          - ReagentId: CapsaicinOil
+            Quantity: 10
+          - ReagentId: Vitamin
+            Quantity: 4
 # Its queso! Everyone loves queso... Right?.
 
 - type: entity
@@ -568,18 +609,21 @@
   components:
   - type: FlavorProfile
     flavors:
-      - carpflesh #imp
+    #- fishy # imp
+    - carpflesh #imp
   - type: Sprite
     state: sashimi
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 15 # imp
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 6
+        #- ReagentId: Nutriment # imp
+        #  Quantity: 6
         - ReagentId: CarpoToxin
-          Quantity: 15
+          Quantity: 10 # imp
+        - ReagentId: TableSalt # imp
+          Quantity: 1
   - type: Tag
     tags:
     - Meat
@@ -591,23 +635,27 @@
   id: FoodMealEnchiladas
   description: Viva La Mexico!
   components:
-    - type: FlavorProfile
-      flavors:
-        - meaty
-    - type: Sprite
-      state: enchiladas
-    - type: SolutionContainerManager
-      solutions:
-        food:
-          maxVol: 15
-          reagents:
-          - ReagentId: Nutriment
-            Quantity: 8
-          - ReagentId: CapsaicinOil
-            Quantity: 6
-    - type: Tag
-      tags:
-      - Meat
+  - type: FlavorProfile
+    flavors:
+    - meaty
+  - type: Sprite
+    state: enchiladas
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 70 # imp
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 30 # imp
+        - ReagentId: Protein # imp
+          Quantity: 2 # imp
+        - ReagentId: CapsaicinOil
+          Quantity: 20 # imp
+        - ReagentId: Vitamin # imp
+          Quantity: 8
+  - type: Tag
+    tags:
+    - Meat
 # What do Europeans eat instead of enchiladas? 25.4 millimeter-iladas.
 
 - type: entity
@@ -618,25 +666,31 @@
   components:
   - type: FlavorProfile
     flavors:
-      - fruity
-      - sour
+    - fruity
+    - sour
+    - apple # imp
+    - orange # imp
+    - watermelon # imp
+    - banana # imp
   - type: Sprite
     state: melonfruitbowl
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 65
+        maxVol: 100 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
+          Quantity: 38 # imp
         - ReagentId: Vitamin
-          Quantity: 15
+          Quantity: 20 # imp
         - ReagentId: Water
-          Quantity: 5
+          Quantity: 10 # imp
         - ReagentId: Bicaridine
           Quantity: 5
         - ReagentId: Kelotane
           Quantity: 5
+        - ReagentId: Desoxyephedrine # imp
+          Quantity: 10
   - type: Tag
     tags:
     - Fruit
@@ -652,17 +706,18 @@
     - FoodPlate
   - type: FlavorProfile
     flavors:
-      - corn
-      - butter
+    - corn
+    - butter
   - type: Sprite
     state: corn-in-butter
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 30 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Vitamin
-          Quantity: 4
-
+          Quantity: 20
+        - ReagentId: Butter # imp
+          Quantity: 5
+        #- ReagentId: Vitamin
+        #  Quantity: 4

@@ -1,0 +1,10 @@
+﻿- type: cargoProduct
+  name: shrimps pack
+  id: ShrimpsPack
+  icon:
+    sprite: _Impstation/Objects/Consumable/Food/snacks.rsi
+    state: shrimps
+  product: FoodSnackShrimpspack
+  cost: 35
+  category: cargoproduct-category-name-food
+  group: market

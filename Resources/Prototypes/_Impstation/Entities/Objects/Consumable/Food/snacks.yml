@@ -12,12 +12,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 2
         - ReagentId: Protein
-          Quantity: 10
+          Quantity: 4
   - type: FlavorProfile
     flavors:
       - salty
@@ -42,16 +42,5 @@
   - type: Tag
     tags:
     - Trash
-
-- type: cargoProduct
-  name: shrimps pack
-  id: ShrimpsPack
-  icon:
-    sprite: _Impstation/Objects/Consumable/Food/snacks.rsi
-    state: shrimps
-  product: FoodSnackShrimpspack
-  cost: 45 #was 35 because votv, upped to 45 because arbitrage and I'm no fun.
-  category: cargoproduct-category-name-food
-  group: market
 
 #end shrimps

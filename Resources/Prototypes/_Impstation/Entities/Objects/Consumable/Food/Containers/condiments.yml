@@ -1,0 +1,18 @@
+﻿- type: entity
+  parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketTeriyaki
+  name: teriyaki sauce
+  description: A sweet and savory marinade.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: TeriyakiSauce
+          Quantity: 10
+  - type: Icon
+    state: packet-soysauce # TODO Make a new sprite?
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-

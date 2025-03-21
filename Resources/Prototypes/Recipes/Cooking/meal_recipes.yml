@@ -1039,7 +1039,7 @@
   solids:
     FoodBowlBig: 1
     FoodBanana: 1
-    ShardGlass: 1
+    MaterialBananium1: 1 # imp - great news op
     #idk probably replace shard with someting bananium when #14663 merged
 
 - type: microwaveMealRecipe
@@ -1240,12 +1240,12 @@
   time: 15
   group: Pie
   reagents:
-    Gold: 10
+    # Gold: 10 # imp - gapple real
     Sugar: 5
     Milk: 5
   solids:
     FoodDoughPie: 1
-    FoodApple: 2 #in absence of the real gapple i'm substituting one apple with 10u gold (one ingot)
+    FoodGoldenApple: 2 # imp
     FoodPlateTin: 1
 
 - type: microwaveMealRecipe
@@ -1858,9 +1858,8 @@
   result: FoodMealQueso
   time: 15
   group: Soup
-  #todo Add blackpepper
-  #reagents:
-    #blackpepper: 5
+  reagents:
+    Blackpepper: 5 # imp - great news pal Blackpepper is real
   solids:
     FoodChiliPepper: 1
     FoodCheeseSlice: 2

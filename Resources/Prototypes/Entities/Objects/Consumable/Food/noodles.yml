@@ -29,9 +29,18 @@
   components:
   - type: FlavorProfile
     flavors:
-      - pasta
+    - pasta
   - type: Sprite
     state: boiled
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 19
+        - ReagentId: EggCooked
+          Quantity: 6
 # Tastes like pasta.
 
 - type: entity
@@ -42,10 +51,19 @@
   components:
   - type: FlavorProfile
     flavors:
-      - pasta
-      - tomato
+    - pasta
+    - tomato
   - type: Sprite
     state: tomato
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 39
+        - ReagentId: Vitamin
+          Quantity: 6
   - type: Tag
     tags:
     - Fruit
@@ -59,18 +77,18 @@
   components:
   - type: FlavorProfile
     flavors:
-      - copypasta
+    - copypasta
   - type: Sprite
     state: copypasta
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 25
+        maxVol: 55 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 12
-        - ReagentId: Vitamin
-          Quantity: 8
+          Quantity: 50 # imp
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 8
 # Tastes like pasta, bad humor.
 
 - type: entity
@@ -81,19 +99,21 @@
   components:
   - type: FlavorProfile
     flavors:
-      - pasta
-      - meaty
+    - pasta
+    - meaty
   - type: Sprite
     state: meatball
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 40 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 36 # imp
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 4
+        - ReagentId: Protein # imp
+          Quantity: 5
   - type: Tag
     tags:
     - Meat
@@ -107,14 +127,14 @@
   components:
   - type: FlavorProfile
     flavors:
-      - pasta
-      - meaty
+    - pasta
+    - meaty
   - type: Sprite
     state: spesslaw
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 8
@@ -130,22 +150,26 @@
   components:
   - type: FlavorProfile
     flavors:
-      - pasta
-      - oily
-      - eggplant
-      - carrot
+    - pasta
+    - oily
+    - eggplant
+    - carrot
   - type: Sprite
     state: chowmein
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 85 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
-        - ReagentId: Vitamin
-          Quantity: 6
-# Tastes like pasta, tomato.
+          Quantity: 49 # imp
+        - ReagentId: EggCooked # imp
+          Quantity: 12
+        - ReagentId: Vitamin # imp
+          Quantity: 8
+        - ReagentId: JuiceCarrot # imp
+          Quantity: 5
+# Tastes like pasta, tomato. # IMP - THERES NO TOMATOES IN THIS!!!!!!!
 
 - type: entity
   name: butter noodles
@@ -155,17 +179,19 @@
   components:
   - type: FlavorProfile
     flavors:
-      - pasta
-      - butter
+    - pasta
+    - butter
   - type: Sprite
     state: butter
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 45 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 8
-        - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 25 # imp
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 1
+        - ReagentId: Butter # imp
+          Quantity: 15
 # Tastes like pasta, butter.

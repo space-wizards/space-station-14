@@ -66,7 +66,7 @@
     solutions:
       smokable:
         maxVol: 20
-      food:
+      food: # imp
         maxVol: 20
         reagents:
         - ReagentId: Nicotine
@@ -93,7 +93,7 @@
             Quantity: 10
           - ReagentId: Omnizine
             Quantity: 30
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -115,7 +115,7 @@
             Quantity: 10
           - ReagentId: Omnizine
             Quantity: 10
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -137,7 +137,7 @@
             Quantity: 10
           - ReagentId: Iron
             Quantity: 10
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -159,7 +159,7 @@
             Quantity: 10
           - ReagentId: Tricordrazine
             Quantity: 10
-      food:
+      food: # imp
           maxVol: 40
           reagents:
             - ReagentId: Nicotine
@@ -181,7 +181,7 @@
             Quantity: 10
           - ReagentId: Dylovene
             Quantity: 10
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -204,7 +204,7 @@
             Quantity: 10
           - ReagentId: Dermaline
             Quantity: 10
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -226,7 +226,7 @@
             Quantity: 10
           - ReagentId: Arithrazine
             Quantity: 10
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -248,7 +248,7 @@
             Quantity: 10
           - ReagentId: Ipecac
             Quantity: 2
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -270,7 +270,7 @@
             Quantity: 10
           - ReagentId: Bicaridine
             Quantity: 10
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -292,7 +292,7 @@
             Quantity: 10
           - ReagentId: Dexalin
             Quantity: 10
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -314,7 +314,7 @@
             Quantity: 10
           - ReagentId: Pax
             Quantity: 2
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -336,7 +336,7 @@
             Quantity: 10
           - ReagentId: BbqSauce
             Quantity: 10
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -358,7 +358,7 @@
             Quantity: 10
           - ReagentId: Blackpepper
             Quantity: 10
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -380,7 +380,7 @@
             Quantity: 10
           - ReagentId: CapsaicinOil
             Quantity: 10
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -400,7 +400,7 @@
         reagents:
           - ReagentId: Nicotine
             Quantity: 10
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -420,7 +420,7 @@
             Quantity: 10
           - ReagentId: Milk
             Quantity: 10
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -442,7 +442,7 @@
             Quantity: 10
           - ReagentId: BananaHonk
             Quantity: 10
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -464,7 +464,7 @@
             Quantity: 10
           - ReagentId: SpaceDrugs
             Quantity: 10
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -486,7 +486,7 @@
             Quantity: 10
           - ReagentId: MuteToxin
             Quantity: 2
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -508,7 +508,7 @@
             Quantity: 10
           - ReagentId: Mold
             Quantity: 2
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -530,7 +530,7 @@
             Quantity: 10
           - ReagentId: Licoxide
             Quantity: 5
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -552,7 +552,7 @@
             Quantity: 10
           - ReagentId: WeldingFuel
             Quantity: 5
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
@@ -574,7 +574,7 @@
             Quantity: 10
           - ReagentId: THC
             Quantity: 5
-      food:
+      food: # imp
         maxVol: 40
         reagents:
           - ReagentId: Nicotine

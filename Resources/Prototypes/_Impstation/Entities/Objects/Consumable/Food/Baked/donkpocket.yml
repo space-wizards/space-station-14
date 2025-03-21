@@ -1,4 +1,24 @@
-﻿- type: entity
+﻿- type: weightedRandomFillSolution
+  id: RandomFillStonk
+  fills:
+  - quantity: 5 # Average result
+    weight: 5
+    reagents:
+    - Nutriment
+  - quantity: 10 # Quality result
+    weight: 3
+    reagents:
+    - Nutriment
+  - quantity: 4 # Losing result
+    weight: 3
+    reagents:
+    - Ipecac
+  - quantity: 9 # Jackpot
+    weight: 1
+    reagents:
+    - Omnizine
+
+- type: entity
   name: cloth-pocket
   parent: FoodDonkpocketBase
   id: FoodDonkpocketCloth
@@ -12,6 +32,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 5
         reagents:
         - ReagentId: Fiber
           Quantity: 3
@@ -37,6 +58,6 @@
         maxVol: 10
         reagents:
         - ReagentId: Fiber
-          Quantity: 8
+          Quantity: 6
         - ReagentId: Omnizine
           Quantity: 2

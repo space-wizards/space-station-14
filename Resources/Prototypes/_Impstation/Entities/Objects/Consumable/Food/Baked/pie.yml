@@ -18,6 +18,15 @@
     tags:
     - Fruit
     - Pie
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 80
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 57
+        - ReagentId: Vitamin
+          Quantity: 12
 
 - type: entity
   name: slice of lemo pie
@@ -38,3 +47,12 @@
     - Fruit
     - Pie
     - Slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 14.25
+        - ReagentId: Vitamin
+          Quantity: 3

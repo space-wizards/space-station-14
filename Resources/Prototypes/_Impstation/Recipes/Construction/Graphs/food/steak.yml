@@ -3,7 +3,6 @@
   id: FinfinSteak
   start: start
   graph:
-
   - node: start
     edges:
     - to: cooked finfin
@@ -12,9 +11,23 @@
         sound: /Audio/_Impstation/Effects/sizzle_ghostlywail.ogg
       steps:
       - minTemperature: 345
-
   - node: cooked finfin
     entity: FoodMeatFinfinCooked
+
+- type: constructionGraph
+  id: FinfinCutlet
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: cooked finfin cutlet
+      completed:
+      - !type:PlaySound
+        sound: /Audio/_Impstation/Effects/sizzle_ghostlywail.ogg
+      steps:
+      - minTemperature: 345
+  - node: cooked finfin cutlet
+    entity: FoodMeatFinfinCutletCooked
 
 # kodepiia flakes
 - type: constructionGraph

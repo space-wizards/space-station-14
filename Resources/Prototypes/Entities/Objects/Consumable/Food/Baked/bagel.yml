@@ -16,7 +16,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 7
+        maxVol: 10 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -44,12 +44,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 15 # imp
         reagents:
         - ReagentId: Bicaridine
-          Quantity: 5
+          Quantity: 4 # imp
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 6.5 # imp
 
 - type: entity
   id: FoodBagelCotton
@@ -71,10 +71,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 10 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2.5
+          Quantity: 1.5 # imp
         - ReagentId: Fiber
-          Quantity: 2.5
+          Quantity: 3.5 # imp
 

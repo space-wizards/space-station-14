@@ -15,7 +15,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 3
+        maxVol: 5
         reagents:
         - ReagentId: Sugar
           Quantity: 3
@@ -46,35 +46,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 1
+        maxVol: 5
         reagents:
         - ReagentId: Sugar
           Quantity: 1
   - type: RandomMetadata
     descriptionSegments: [ConversationHeartDescriptions]
-
-- type: entity
-  name: box of conversation hearts
-  parent: BoxCardboard
-  id: BoxConversationHeart
-  description: A little container full of chalky treats to give to your honey. Or eat all on your own like some kind of weirdo.
-  components:
-  - type: StorageFill
-    contents:
-    - id: FoodConversationHeart
-      amount: 5
-    - id: FoodGummyWorm
-      prob: 0.01
-      orGroup: SometimesWorm
-    - id: FoodConversationHeart
-      orGroup: SometimesWorm
-  - type: Storage
-    grid:
-    - 0,0,2,1
-    maxItemSize: Tiny
-  - type: Sprite
-    sprite: _Impstation/Objects/Consumable/Food/candy.rsi
-    state: chalkheartpackage2
 
 - type: entity
   name: chocolate heart
@@ -94,7 +71,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 10
         reagents:
         - ReagentId: Sugar
           Quantity: 2
@@ -126,37 +103,6 @@
     - state: chocolateheartwhite
 
 - type: entity
-  name: heart-shaped box
-  parent: BoxCardboard
-  id: BoxChocolateHearts
-  description: A box of romantic treats, brought to you by your friends at GetMore Chocolate Corp!
-  components:
-  - type: Sprite
-    sprite: _Impstation/Objects/Consumable/Food/candy.rsi
-    layers:
-    - map: [ base ]
-      state: heartbox-closed
-  - type: StorageFill
-    contents:
-    - id: FoodChocolateHeart
-      amount: 2
-    - id: FoodChocolateHeartDark
-      amount: 2
-    - id: FoodChocolateHeartWhite
-      amount: 2
-  - type: Storage
-    grid:
-    - 0,0,2,1
-    maxItemSize: Tiny
-  - type: GenericVisualizer
-    visuals:
-      enum.StorageVisuals.Open:
-        base:
-          True: { state: heartbox-open }
-          False: { state: heartbox-closed }
-  - type: Appearance
-
-- type: entity
   name: homemade chocolate heart
   parent: FoodChocolateHeart
   id: FoodHomemadeChocolateHeart
@@ -174,6 +120,8 @@
         - ReagentId: Sugar
           Quantity: 2
         - ReagentId: CocoaPowder
+          Quantity: 2
+        - ReagentId: Milk
           Quantity: 2
         - ReagentId: Theobromine
           Quantity: 1
@@ -195,7 +143,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 10
         reagents:
         - ReagentId: Sugar
           Quantity: 3
@@ -212,7 +160,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 10
         reagents:
         - ReagentId: Sugar
           Quantity: 3
@@ -236,7 +184,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 10
         reagents:
         - ReagentId: Sugar
           Quantity: 3
@@ -253,7 +201,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 10
         reagents:
         - ReagentId: Sugar
           Quantity: 3
@@ -271,97 +219,9 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 10
         reagents:
         - ReagentId: Sugar
           Quantity: 3
         - ReagentId: MuteToxin
           Quantity: 2
-
-- type: entity
-  name: box of macarons
-  parent: BoxCardboard
-  id: BoxMacarons
-  description: We don't need collectable figurines or trading cards. We need collectable macarons.
-  components:
-  - type: StorageFill # good god there has to be a better way to do this
-    contents:
-    - id: FoodMacaronBerry
-      prob: 0.25
-      orGroup: Macaron1
-    - id: FoodMacaronCherry
-      prob: 0.25
-      orGroup: Macaron1
-    - id: FoodMacaronLemon
-      prob: 0.25
-      orGroup: Macaron1
-    - id: FoodMacaronCotton
-      prob: 0.2
-      orGroup: Macaron1
-    - id: FoodMacaronMimana
-      prob: 0.04
-      orGroup: Macaron1
-    - id: FoodGummyWorm
-      prob: 0.01
-      orGroup: Macaron1
-    - id: FoodMacaronBerry
-      prob: 0.25
-      orGroup: Macaron2
-    - id: FoodMacaronCherry
-      prob: 0.25
-      orGroup: Macaron2
-    - id: FoodMacaronLemon
-      prob: 0.25
-      orGroup: Macaron2
-    - id: FoodMacaronCotton
-      prob: 0.2
-      orGroup: Macaron2
-    - id: FoodMacaronMimana
-      prob: 0.04
-      orGroup: Macaron2
-    - id: FoodGummyWorm
-      prob: 0.01
-      orGroup: Macaron2
-    - id: FoodMacaronBerry
-      prob: 0.25
-      orGroup: Macaron3
-    - id: FoodMacaronCherry
-      prob: 0.25
-      orGroup: Macaron3
-    - id: FoodMacaronLemon
-      prob: 0.25
-      orGroup: Macaron3
-    - id: FoodMacaronCotton
-      prob: 0.2
-      orGroup: Macaron3
-    - id: FoodMacaronMimana
-      prob: 0.04
-      orGroup: Macaron3
-    - id: FoodGummyWorm
-      prob: 0.01
-      orGroup: Macaron3
-    - id: FoodMacaronBerry
-      prob: 0.25
-      orGroup: Macaron4
-    - id: FoodMacaronCherry
-      prob: 0.25
-      orGroup: Macaron4
-    - id: FoodMacaronLemon
-      prob: 0.25
-      orGroup: Macaron4
-    - id: FoodMacaronCotton
-      prob: 0.2
-      orGroup: Macaron4
-    - id: FoodMacaronMimana
-      prob: 0.04
-      orGroup: Macaron4
-    - id: FoodGummyWorm
-      prob: 0.01
-      orGroup: Macaron4
-  - type: Storage
-    grid:
-    - 0,0,1,1
-    maxItemSize: Tiny
-  - type: Sprite
-    sprite: _Impstation/Objects/Consumable/Food/candy.rsi
-    state: chalkheartpackage1

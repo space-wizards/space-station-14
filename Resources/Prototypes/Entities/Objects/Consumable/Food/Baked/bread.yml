@@ -18,7 +18,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 25 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
@@ -40,7 +40,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 8
+        maxVol: 5 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 4
@@ -99,6 +99,15 @@
     tags:
     - Fruit
     - Bread
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 24
+        - ReagentId: Vitamin
+          Quantity: 2
 # Tastes like bread, banana, nut.
 
 - type: entity
@@ -120,6 +129,15 @@
     - Fruit
     - Bread
     - Slice
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4.8
+        - ReagentId: Vitamin
+          Quantity: 0.4
 
 - type: entity
   name: cotton bread
@@ -145,7 +163,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 25 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
@@ -175,7 +193,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 8
+        maxVol: 5 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
@@ -201,10 +219,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 25 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 15
+          Quantity: 20 # imp - this is harder to make than bread... whys it worth less
 # Tastes like bread, banana, nut.
 
 - type: entity
@@ -227,7 +245,7 @@
         maxVol: 5
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 4 # imp
 
 - type: entity
   name: cream cheese bread
@@ -249,11 +267,13 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 35
+        maxVol: 35 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
-        - ReagentId: Vitamin
+          Quantity: 23 # imp
+        # - ReagentId: Vitamin # imp
+        #  Quantity: 5
+        - ReagentId: Milk # imp
           Quantity: 5
 # Tastes like bread, cheese.
 
@@ -278,9 +298,9 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Vitamin
-          Quantity: 1.2
+          Quantity: 4.6 # imp
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 1.2
 
 - type: entity
   name: meat bread
@@ -301,12 +321,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 35 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 25 # imp
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 5
+        - ReagentId: Protein # imp
+          Quantity: 6
   - type: Tag
     tags:
     - Meat
@@ -333,8 +355,10 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
+          Quantity: 5 # imp
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 1.2
+        - ReagentId: Protein # imp
           Quantity: 1.2
   - type: Tag
     tags:
@@ -361,12 +385,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 40
+        maxVol: 30 # imp
         reagents:
         - ReagentId: Nutriment
           Quantity: 15
         - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 2 # imp
         - ReagentId: Nothing
           Quantity: 5
         - ReagentId: MuteToxin
@@ -395,7 +419,7 @@
         - ReagentId: Nutriment
           Quantity: 3
         - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 0.4 # imp
         - ReagentId: Nothing
           Quantity: 1
         - ReagentId: MuteToxin
@@ -429,7 +453,7 @@
   name: sausage bread
   parent: FoodBreadBase
   id: FoodBreadSausage
-  description: Dont think too much about it.
+  description: Don't think too much about it. # imp
   components:
   - type: FlavorProfile
     flavors:
@@ -444,14 +468,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 30 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
-        - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 15 # imp
+        # - ReagentId: Vitamin # imp
+        #  Quantity: 5
         - ReagentId: Protein
-          Quantity: 5
+          Quantity: 9 # imp
   - type: Tag
     tags:
     - Meat
@@ -461,7 +485,7 @@
   name: sausage bread slice
   parent: FoodBreadSliceBase
   id: FoodBreadSausageSlice
-  description: Dont think too much about it.
+  description: Don't think too much about it. # imp
   components:
   - type: FlavorProfile
     flavors:
@@ -477,11 +501,11 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
-        - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 3 # imp
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 1
         - ReagentId: Protein
-          Quantity: 1
+          Quantity: 1.8 # imp
   - type: Tag
     tags:
     - Meat
@@ -507,12 +531,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 35 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 25 # imp
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 5
+        - ReagentId: Protein # imp
+          Quantity: 6 # imp
   - type: Tag
     tags:
     - Meat
@@ -536,11 +562,13 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 10 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
+          Quantity: 5 # imp
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 1.2
+        - ReagentId: Protein # imp
           Quantity: 1.2
   - type: Tag
     tags:
@@ -567,12 +595,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 48
+        maxVol: 30 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
+          Quantity: 20 # imp
         - ReagentId: Protein
-          Quantity: 12
+          Quantity: 5 # imp
 # Tastes like bread, tofu.
 
 - type: entity
@@ -595,9 +623,11 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 2.4
+          Quantity: 4 # imp
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 2.4
+        - ReagentId: Protein # imp
+          Quantity: 1 # imp
 
 - type: entity
   name: xeno meat bread
@@ -618,12 +648,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 30 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: Vitamin
-          Quantity: 5
+          Quantity: 25 # imp
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 5
+        - ReagentId: Protein # imp
+          Quantity: 2 # imp
   - type: Tag
     tags:
     - Meat
@@ -650,9 +682,11 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1.2
+          Quantity: 5 # imp
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 1.2
+        - ReagentId: Protein
+          Quantity: 0.4 # imp
   - type: Tag
     tags:
     - Meat
@@ -675,16 +709,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 30 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 15 # imp
+        # - ReagentId: Vitamin # imp
+        #  Quantity: 1
         - ReagentId: TableSalt
-          Quantity: 1
+          Quantity: 5
         - ReagentId: Blackpepper
-          Quantity: 1
+          Quantity: 5
   - type: Clothing
     slots: [ BELT ]
     equippedPrefix: baguette
@@ -729,18 +763,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 30 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 5 # imp
         - ReagentId: Fiber
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 1
+          Quantity: 10 # imp
+        # - ReagentId: Vitamin # imp
+        #  Quantity: 1
         - ReagentId: TableSalt
-          Quantity: 1
+          Quantity: 5 # imp
         - ReagentId: Blackpepper
-          Quantity: 1
+          Quantity: 5 # imp
 
 - type: entity
   name: crostini
@@ -753,16 +787,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 2
+        maxVol: 5
         reagents:
         - ReagentId: Nutriment
-          Quantity: 0.5
-        - ReagentId: Vitamin
-          Quantity: 0.1
+          Quantity: 1.25 # imp
+        # - ReagentId: Vitamin # imp
+        #  Quantity: 0.1
         - ReagentId: TableSalt
-          Quantity: 0.1
+          Quantity: 0.4 # imp
         - ReagentId: Blackpepper
-          Quantity: 0.1
+          Quantity: 0.4 # imp
 
 - type: entity
   name: cotton crostini
@@ -782,18 +816,18 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 2
+        maxVol: 5 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 0.25
+          Quantity: 0.4 # imp
         - ReagentId: Fiber
-          Quantity: 0.25
-        - ReagentId: Vitamin
-          Quantity: 0.1
+          Quantity: 0.8 # imp
+        # - ReagentId: Vitamin # imp
+        #  Quantity: 0.1
         - ReagentId: TableSalt
-          Quantity: 0.1
+          Quantity: 0.4 # imp
         - ReagentId: Blackpepper
-          Quantity: 0.1
+          Quantity: 0.4 # imp
 
 - type: entity
   name: buttered toast
@@ -813,9 +847,11 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Butter # imp
           Quantity: 5
-        - ReagentId: Vitamin
-          Quantity: 1
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 1
 # Tastes like bread, butter.
 
 - type: entity
@@ -833,12 +869,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 25 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Vitamin
-          Quantity: 2
+          Quantity: 4 # imp
+        - ReagentId: Milk # imp
+          Quantity: 5
+        - ReagentId: EggCooked # imp
+          Quantity: 12
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 2
 # Tastes like bread, butter.
 
 - type: entity
@@ -857,12 +897,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 30 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
+          Quantity: 14 # imp
         - ReagentId: Vitamin
+          Quantity: 4 # imp
+        - ReagentId: Butter # imp
           Quantity: 5
+        - ReagentId: Allicin # imp
+          Quantity: 4
 # Tastes like garlic, Italy.
 
 - type: entity
@@ -881,12 +925,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 10
+        maxVol: 40 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 10 # imp
+        #- ReagentId: Vitamin # imp
+        #  Quantity: 4
+        - ReagentId: Amatoxin # imp - its made with fly amanitia jelly??????? hello?????
+          Quantity: 6
 # Tastes like garlic, Italy.
 
 - type: entity
@@ -904,10 +950,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 4
+          Quantity: 9 # imp
         - ReagentId: Mold
           Quantity: 7
 # Tastes like decaying fungus.
@@ -927,9 +973,9 @@
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
-        - ReagentId: Vitamin
-          Quantity: 2
+          Quantity: 8 # imp
+        # - ReagentId: Vitamin # imp
+        #  Quantity: 2
         - ReagentId: Wine
           Quantity: 5
 # Tastes like decaying fungus.
@@ -949,14 +995,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 50 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 10
+          Quantity: 25 # imp
         - ReagentId: Vitamin
           Quantity: 5
         - ReagentId: Protein
-          Quantity: 5
+          Quantity: 14 # imp
   - type: Sprite
     noRot: true
     drawdepth: Mobs

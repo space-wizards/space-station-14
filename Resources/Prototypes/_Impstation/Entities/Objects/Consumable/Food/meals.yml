@@ -24,10 +24,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 1 # sugar needs nutriment to be able to satiate hunger so im nerfing this but keeping it
         - ReagentId: Sugar
           Quantity: 10
 
@@ -58,10 +58,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 1
         - ReagentId: Sugar
           Quantity: 10
         - ReagentId: Fiber
@@ -84,6 +84,9 @@
     flavors:
       - whimsy
       - fruity
+      - apple
+      - orange
+      - watermelon
   - type: Sprite
     sprite: _Impstation/Objects/Consumable/Food/meals.rsi
     state: fruit-lollipop
@@ -92,18 +95,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 40
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Vitamin
+          Quantity: 5.25
         - ReagentId: Sugar
-          Quantity: 5
-        - ReagentId: JuiceOrange
-          Quantity: 5
-        - ReagentId: JuiceApple
-          Quantity: 5
-        - ReagentId: JuiceWatermelon
-          Quantity: 5
+          Quantity: 10
+        - ReagentId: Water
+          Quantity: 7.5
 
 - type: entity
   name: meat lollipop
@@ -130,14 +131,14 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 35
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 9
         - ReagentId: Sugar
           Quantity: 10
-        - ReagentId: Blood
-          Quantity: 5
+        - ReagentId: Protein
+          Quantity: 9
 
 - type: entity
   name: entro-pop
@@ -163,10 +164,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 1
         - ReagentId: Sugar
           Quantity: 10
         - ReagentId: Fresium
@@ -182,19 +183,21 @@
   components:
   - type: FlavorProfile
     flavors:
-    - carpflesh
+    - fishy
     - finfin
   - type: Sprite
     state: sashimi
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 18
+        maxVol: 45
         reagents:
         - ReagentId: Nutriment
-          Quantity: 6
-        - ReagentId: CarpoToxin
-          Quantity: 15
+          Quantity: 18
+        - ReagentId: Protein
+          Quantity: 18
+        - ReagentId: TableSalt
+          Quantity: 1
   - type: Tag
     tags:
     - Meat

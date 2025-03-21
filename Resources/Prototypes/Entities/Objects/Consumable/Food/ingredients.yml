@@ -376,6 +376,13 @@
   - type: Tag
     tags:
     - Slice
+  - type: SolutionContainerManager # imp - nutriment dupe
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
   name: tortilla dough
@@ -411,6 +418,13 @@
   - type: Tag
     tags:
     - Slice
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
   name: flattened tortilla dough
@@ -475,6 +489,7 @@
   - type: Tag
     tags:
     - Slice
+    - ClothMade # imp
   - type: Construction
     graph: DoughRopeCotton
     node: start
@@ -512,6 +527,10 @@
           Quantity: 1.5
         - ReagentId: Fiber
           Quantity: 3.5
+  - type: Tag # imp - humans shouldnt be eating moth food
+    tags:
+    - Ingredient
+    - ClothMade
 
 - type: entity
   name: raw pastry base
@@ -569,6 +588,19 @@
   - type: SliceableFood
     count: 3
     slice: FoodCroissantRawCotton
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: Tag # imp - humans shouldnt be eating moth food
+    tags:
+    - Ingredient
+    - ClothMade
 
 - type: entity
   name: pizza bread
@@ -664,12 +696,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 100
+        maxVol: 110
         reagents:
         - ReagentId: Butter
           Quantity: 10
         - ReagentId: THC
-          Quantity: 82
+          Quantity: 90 # imp
   - type: Extractable
     grindableSolutionName: food
 
@@ -864,6 +896,8 @@
           Quantity: 1
         - ReagentId: CocoaPowder
           Quantity: 2
+        - ReagentId: Theobromine # imp - poisonous to lizzers
+          Quantity: 1
   - type: Extractable
     juiceSolution:
       reagents:
@@ -887,10 +921,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 4
+        maxVol: 6 # imp
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 5 # imp
 
 - type: entity
   name: raw cotton croissant
@@ -904,3 +938,16 @@
     - cotton
   - type: Sprite
     state: croissant-raw-cotton
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1.67
+        - ReagentId: Fiber
+          Quantity: 3.33
+  - type: Tag # imp - humans shouldnt be eating moth food
+    tags:
+    - Ingredient
+    - ClothMade
