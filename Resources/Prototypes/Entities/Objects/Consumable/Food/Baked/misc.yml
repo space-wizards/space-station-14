@@ -257,6 +257,7 @@
   - type: Tag
     tags:
       - Nugget
+      - Meat
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/nuggets.rsi
     layers:
@@ -836,7 +837,7 @@
         - ReagentId: Vitamin
           Quantity: 1
 
-- type: entity         
+- type: entity
   name: grilled cheese sandwich
   parent: FoodBakedBase
   id: FoodBakedGrilledCheeseSandwich
@@ -860,3 +861,27 @@
           Quantity: 2
         - ReagentId: Vitamin
           Quantity: 3
+
+# Entity Tables
+
+- type: entityTable
+  id: FoodRandomCakeTable
+  table: !type:GroupSelector
+    children:
+    - id: FoodCakeApple
+    - id: FoodCakeBirthday
+    - id: FoodCakeBlueberry
+    - id: FoodCakePlain
+    - id: FoodCakeCarrot
+    - id: FoodCakeCheese
+    - id: FoodCakeChocolate
+    - id: FoodCakeChristmas
+    - id: FoodCakeClown
+    - id: FoodCakeLemon
+    - id: FoodCakeLime
+    - id: FoodCakeOrange
+    - id: FoodCakePumpkin
+    - id: FoodCakeSlime
+    - id: FoodCakeSpaceman
+    - id: FoodCakeVanilla
+    - id: FoodCakeLemoon
