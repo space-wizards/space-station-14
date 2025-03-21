@@ -78,7 +78,6 @@ public sealed partial class BorgSystem : SharedBorgSystem
         SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnBrainPointAttempt);
 
         InitializeModules();
-        InitializeMMI();
         InitializeUI();
         InitializeTransponder();
     }
