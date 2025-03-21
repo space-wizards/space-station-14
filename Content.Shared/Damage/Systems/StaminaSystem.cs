@@ -11,6 +11,7 @@ using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Rounding;
+using Content.Shared.Standing;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
@@ -58,6 +59,7 @@ public sealed partial class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
 
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
+        SubscribeLocalEvent<BoxingComponent, DownedEvent>(OnFallOver);
     }
 
     private void OnStamHandleState(EntityUid uid, StaminaComponent component, ref AfterAutoHandleStateEvent args)
@@ -170,6 +172,13 @@ public sealed partial class StaminaSystem : EntitySystem
         {
             TakeStaminaDamage(ent, damage / toHit.Count, comp, source: args.User, with: args.Weapon, sound: component.Sound);
         }
+    }
+
+
+    private void OnFallOver(EntityUid uid, BoxingComponent component, DownedEvent args)
+    {
+        if (_net.IsServer)
+            _audio.PlayPvs(component.Sound, uid);
     }
 
     private void OnProjectileHit(EntityUid uid, StaminaDamageOnCollideComponent component, ref ProjectileHitEvent args)
