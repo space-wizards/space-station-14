@@ -397,5 +397,39 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     {
         return GetStatus(entity, id, comp) == DoAfterStatus.Running;
     }
+
+    /// <summary>
+    /// Returns a distinct list of entities which are currently interacting with the specified target entity.
+    /// This is done by finding the <see cref="DoAfterArgs.User"/> for each currently ongoing DoAfter with the given <see cref="DoAfterArgs.Target"/>.
+    /// </summary>
+    public List<EntityUid> GetEntitiesInteractingWithTarget(EntityUid target)
+    {
+        HashSet<EntityUid> result = new();
+        var doAfters = Array.Empty<DoAfter>();
+
+        var enumerator = EntityQueryEnumerator<ActiveDoAfterComponent, DoAfterComponent>();
+        while (enumerator.MoveNext(out var uid, out var active, out var comp))
+        {
+            var values = comp.DoAfters.Values;
+            var count = values.Count;
+
+            if (doAfters.Length < count)
+                doAfters = new DoAfter[count];
+
+            values.CopyTo(doAfters, 0);
+
+            for (var i = 0; i < count; i++)
+            {
+                var doAfter = doAfters[i];
+                if (doAfter.Cancelled || doAfter.Completed)
+                    continue;
+
+                if (doAfter.Args.Target == target)
+                    result.Add(doAfter.Args.User);
+            }
+        }
+
+        return new List<EntityUid>(result);
+    }
     #endregion
 }

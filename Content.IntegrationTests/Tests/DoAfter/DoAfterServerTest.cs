@@ -121,5 +121,60 @@ namespace Content.IntegrationTests.Tests.DoAfter
 
             await pair.CleanReturnAsync();
         }
+
+        [Test]
+        public async Task TestGetInteractingEntities()
+        {
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var timing = server.ResolveDependency<IGameTiming>();
+            var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<SharedDoAfterSystem>();
+            var ev = new TestDoAfterEvent();
+
+            EntityUid mob = default;
+            EntityUid target = default;
+            EntityUid mob2 = default;
+            EntityUid target2 = default;
+
+            await server.WaitPost(() =>
+            {
+                var tickTime = 1.0f / timing.TickRate;
+
+                mob = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
+                target = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
+                var args = new DoAfterArgs(entityManager, mob, tickTime * 5, ev, null, target) { Broadcast = true };
+
+                if (!doAfterSystem.TryStartDoAfter(args))
+                {
+                    Assert.Fail();
+                    return;
+                }
+
+                // Start a second do after with a different target
+                mob2 = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
+                target2 = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
+                var args2 = new DoAfterArgs(entityManager, mob2, tickTime * 5, ev, null, target2) { Broadcast = true };
+
+                if (!doAfterSystem.TryStartDoAfter(args2))
+                {
+                    Assert.Fail();
+                    return;
+                }
+            });
+
+            // Run a single tick to trigger a DoAfterSystem update
+            await server.WaitRunTicks(1);
+
+            var list = doAfterSystem.GetEntitiesInteractingWithTarget(target);
+            Assert.That(list, Has.Count.EqualTo(1));
+            Assert.That(list[0], Is.EqualTo(mob));
+
+            var list2 = doAfterSystem.GetEntitiesInteractingWithTarget(target2);
+            Assert.That(list2, Has.Count.EqualTo(1));
+            Assert.That(list2[0], Is.EqualTo(mob2));
+
+            await pair.CleanReturnAsync();
+        }
     }
 }
