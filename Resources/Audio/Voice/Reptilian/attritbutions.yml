@@ -7,3 +7,28 @@
   copyright: "Taken from https://freesound.org/"
   license: "CC0-1.0"
   source: https://freesound.org/people/TylerAM/sounds/389665/
+
+- files: [reptilian_cough.ogg, reptilian_deathgasp.ogg]
+  copyright: Made by Michel88 on freesound.org. Modified by QWERTY."
+  license: "Custom"
+  source: https://freesound.org/people/Michel88/sounds/76973/
+
+- files: [reptilian_gasp.ogg]
+  copyright: Made by Garuda1982 on freesound.org. Modified by QWERTY."
+  license: "Attribution 4.0"
+  source: https://freesound.org/people/Garuda1982/sounds/541656/
+
+- files: [reptilian_sigh.ogg]
+  copyright: Made by -sihiL on freesound.org. Modified by QWERTY."
+  license: "Attribution 3.0"
+  source: https://freesound.org/people/-sihiL/sounds/213844/
+
+- files: [reptilian_sneeze.ogg]
+  copyright: Made by Michel88 on freesound.org. Modified by QWERTY."
+  license: "Custom"
+  source: https://freesound.org/people/Michel88/sounds/76964/
+
+- files: [reptilian_yawn.ogg]
+  copyright: Made by Angel3355 on freesound.org. Modified by QWERTY."
+  license: "Attribution 4.0"
+  source: https://freesound.org/people/Angel3355/sounds/607290/

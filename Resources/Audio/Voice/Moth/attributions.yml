@@ -7,3 +7,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from https://github.com/BeeStation/BeeStation-Hornet/commit/11ba3fa04105c93dd96a63ad4afaef4b20c02d0d"
   source: "https://github.com/BeeStation/BeeStation-Hornet/blob/11ba3fa04105c93dd96a63ad4afaef4b20c02d0d/sound/emotes/"
+
+- files: ["moth_cough.ogg", "moth_gasp.ogg", "moth_sigh.ogg", "moth_whistle.ogg", "moth_cleansthroat.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from BeeStation and tgstation. Modified by QWERTY."
+  source: "https://github.com/BeeStation/BeeStation-Hornet/blob/11ba3fa04105c93dd96a63ad4afaef4b20c02d0d/sound/emotes/"
