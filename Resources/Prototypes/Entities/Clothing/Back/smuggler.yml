@@ -43,7 +43,6 @@
     sprite: Clothing/Back/Satchels/smuggler.rsi
     state: icon
 
-
 - type: entity
   parent: [AnchoredSubfloorAnchorStorageBase, BriefcaseSyndie]
   id: BriefcaseSmugglerCash
@@ -55,7 +54,7 @@
         children:
         - id: SpaceCash5000
           amount: !type:RangeNumberSelector
-            range: 1, 12
+            range: 1, 10
 
 - type: entity
   parent: [AnchoredSubfloorAnchorStorageBase, ClothingBackpackDuffelClown]
@@ -66,19 +65,20 @@
     containers:
       storagebase: !type:AllSelector
         children:
+        - id: SpeedLoaderCap
+          amount: !type:RangeNumberSelector
+            range: 4, 8
         - !type:GroupSelector
           children:
           - id: RevolverCapGun
             amount: !type:RangeNumberSelector
-              range: 1, 4
+              range: 4, 8
+            weight: 95
           - id: RevolverCapGunFake
             amount: !type:RangeNumberSelector
-              range: 4, 8
-        - id: SpeedLoaderCap
-          amount: !type:RangeNumberSelector
-            range: 4, 8
+              range: 1, 8
+            weight: 5
 
-# anchored standard stash
 - type: entity
   parent: [AnchoredSubfloorAnchorStorageBase, ClothingBackpackSatchelSmuggler]
   id: ClothingBackpackSatchelSmugglerFilled
@@ -100,7 +100,6 @@
   components:
   - type: Sprite
     layers:
-      - state: red
       - sprite: Clothing/Back/Satchels/smuggler.rsi
         state: icon
   - type: EntityTableSpawner
