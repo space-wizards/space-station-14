@@ -639,9 +639,9 @@
     - Service
     blacklist:
     - External # don't space everything
-    
+
 - type: entity
-  id: SmugglerStashRule
+  id: SmugglerStashVariationPass
   parent: BaseGameRule
   components:
     - type: StationEvent
@@ -651,7 +651,7 @@
       maxOccurrences: 2
       weight: 10
     - type: RandomSpawnRule
-      prototype: RandomSatchel 
+      prototype: RandomSatchel
 
 - type: entity
   parent: BaseGameRule
