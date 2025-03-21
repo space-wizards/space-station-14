@@ -8,6 +8,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Movement.Systems;
 
@@ -23,6 +24,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
     private float _pushingCap;
     private float _pushingDotProduct;
+    private float _minimumPushSquared = 0.01f;
 
     /// <summary>
     /// Time after we stop colliding with another mob before adjusting the movespeedmodifier.
@@ -36,6 +38,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
         UpdatePushCap();
         Subs.CVar(CfgManager, CVars.NetTickrate, _ => UpdatePushCap());
+        Subs.CVar(CfgManager, CCVars.MovementMinimumPush, val => _minimumPushSquared = val * val, true);
         Subs.CVar(CfgManager, CCVars.MovementPushingCap, _ => UpdatePushCap());
         Subs.CVar(CfgManager, CCVars.MovementPushingVelocityProduct,
             value =>
@@ -69,14 +72,18 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
             comp.BufferAccumulator -= frameTime;
             DirtyField(uid, comp, nameof(MobCollisionComponent.BufferAccumulator));
+            var direction = comp.Direction;
 
             if (comp.BufferAccumulator <= 0f)
             {
                 SetColliding((uid, comp), false);
             }
-            else if (comp.Direction != Vector2.Zero && PhysicsQuery.TryComp(uid, out var physics))
+            // Apply the mob collision; if it's too low ignore it (e.g. if mob friction would overcome it).
+            // This is so we don't spam velocity changes every tick. It's not that expensive for physics but
+            // avoids the networking side.
+            else if (PhysicsQuery.TryComp(uid, out var physics))
             {
-                var direction = comp.Direction;
+                DebugTools.Assert(direction.LengthSquared() > _minimumPushSquared);
 
                 if (direction.Length() > _pushingCap)
                 {
@@ -85,7 +92,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
                 Physics.ApplyLinearImpulse(uid, direction * physics.Mass, body: physics);
                 comp.Direction = Vector2.Zero;
-                Dirty(uid, comp);
+                DirtyField(uid, comp, nameof(MobCollisionComponent.Direction));
             }
         }
     }
@@ -137,9 +144,19 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
     protected void MoveMob(Entity<MobCollisionComponent, TransformComponent> entity, Vector2 direction)
     {
-        entity.Comp1.Direction = direction;
-        Dirty(entity.Owner, entity.Comp1);
+        // Length too short to do anything.
+        if (direction.LengthSquared() < _minimumPushSquared)
+        {
+            direction = Vector2.Zero;
+        }
+
         SetColliding(entity, true);
+
+        if (direction == entity.Comp1.Direction)
+            return;
+
+        entity.Comp1.Direction = direction;
+        DirtyField(entity.Owner, entity.Comp1, nameof(MobCollisionComponent.Direction));
     }
 
     protected bool HandleCollisions(Entity<MobCollisionComponent, PhysicsComponent> entity, float frameTime)

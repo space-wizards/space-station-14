@@ -27,4 +27,11 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> MovementPushingCap =
         CVarDef.Create("movement.pushing_cap", 30f, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    /// Minimum pushing impulse per tick. If the value is below this it rounds to 0.
+    /// This is an optimisation to avoid pushing small values that won't actually move the mobs.
+    /// </summary>
+    public static readonly CVarDef<float> MovementMinimumPush =
+        CVarDef.Create("movement.minimum_push", 0.1f, CVar.SERVER | CVar.REPLICATED);
 }
