@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Shared.Buckle.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
 using Robust.Shared;
@@ -22,8 +21,19 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     protected EntityQuery<MobCollisionComponent> MobQuery;
     protected EntityQuery<PhysicsComponent> PhysicsQuery;
 
+    /// <summary>
+    /// <see cref="CCVars.MovementPushingCap"/>
+    /// </summary>
     private float _pushingCap;
+
+    /// <summary>
+    /// <see cref="CCVars.MovementPushingVelocityProduct"/>
+    /// </summary>
     private float _pushingDotProduct;
+
+    /// <summary>
+    /// <see cref="CCVars.MovementMinimumPush"/>
+    /// </summary>
     private float _minimumPushSquared = 0.01f;
 
     /// <summary>
@@ -107,9 +117,6 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
     private void SetColliding(Entity<MobCollisionComponent> entity, bool value)
     {
-        if (entity.Comp.SpeedModifier.Equals(1f))
-            return;
-
         if (value)
         {
             entity.Comp.BufferAccumulator = BufferTime;
@@ -121,6 +128,10 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
         entity.Comp.Colliding = value;
         DirtyField(entity.Owner, entity.Comp, nameof(MobCollisionComponent.Colliding));
+
+        if (entity.Comp.SpeedModifier.Equals(1f))
+            return;
+
         _moveMod.RefreshMovementSpeedModifiers(entity.Owner);
     }
 
