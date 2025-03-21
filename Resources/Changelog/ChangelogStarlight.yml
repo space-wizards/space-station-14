@@ -4256,4 +4256,11 @@ Entries:
   id: 589
   time: '2025-03-20T19:40:20.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/416
+- author: Chim
+  changes:
+  - message: Updated the IAA/Magistrate Icons to be NT-ified.
+    type: Tweak
+  id: 590
+  time: '2025-03-21T09:12:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/414
 
