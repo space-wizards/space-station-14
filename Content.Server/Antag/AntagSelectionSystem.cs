@@ -477,17 +477,12 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
             var banned = false;
             var fallbackBanned = false;
-            foreach (var role in def.PrefRoles)
-            {
-                if (_ghostRole.IsBanned(session, role))
-                    banned = true;
-            }
 
-            foreach (var role in def.FallbackRoles)
-            {
-                if (_ghostRole.IsBanned(session, role))
-                    fallbackBanned = true;
-            }
+            if (_ghostRole.IsBanned(session, def.PrefRoles))
+                banned = true;
+
+            if (_ghostRole.IsBanned(session, def.FallbackRoles))
+                fallbackBanned = true;
 
             if (HasPrimaryAntagPreference(session, def) && !banned)
             {

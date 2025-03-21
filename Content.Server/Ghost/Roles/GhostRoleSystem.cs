@@ -516,10 +516,14 @@ public sealed class GhostRoleSystem : EntitySystem
     /// <summary>
     /// Check if the player is currently banned from this roles
     /// </summary>
-    public bool IsBanned(ICommonSession player, ProtoId<AntagPrototype> proto) // Should this be in BanManager?
+    public bool IsBanned(ICommonSession player, List<ProtoId<AntagPrototype>> prototypes) // Should this be in BanManager?
     {
-        var list = new List<string>(); //TODO:ERRANT do something with this
-        list.Add(AntagPrefix + proto);
+        var list = new List<string>();
+
+        foreach (var proto in prototypes)
+        {
+            list.Add(AntagPrefix + proto);
+        }
 
         return IsBanned(player, list);
     }
