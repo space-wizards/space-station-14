@@ -3,6 +3,7 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Explosion;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -20,6 +21,7 @@ namespace Content.Shared.SubFloor
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] protected readonly SharedMapSystem Map = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+        [Dependency] protected readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -45,6 +47,7 @@ namespace Content.Shared.SubFloor
             if (TryComp<MapGridComponent>(xform.GridUid, out var grid)
                 && HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates)))
             {
+                _popup.PopupPredicted(Loc.GetString("subfloor-anchor-failure", ("entitydxcxx", uid)), uid, null);
                 args.Cancel();
             }
         }
@@ -54,7 +57,10 @@ namespace Content.Shared.SubFloor
             // No un-anchoring things under the floor. Only required for something like vents, which are still interactable
             // despite being partially under the floor.
             if (component.IsUnderCover)
+            {
+                _popup.PopupPredicted(Loc.GetString("subfloor-unanchor-failure", ("entity", uid)), uid, null);
                 args.Cancel();
+            }
         }
 
         private void OnGetExplosionResistance(EntityUid uid, SubFloorHideComponent component, ref GetExplosionResistanceEvent args)
