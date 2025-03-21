@@ -120,6 +120,11 @@ public abstract partial class SharedMoverController : VirtualController
         float frameTime)
     {
         var canMove = mover.CanMove;
+
+        // TODO: Apply mover data to relay
+
+        // TODO: If we are a relay target then don't touch SHIT.
+
         if (RelayTargetQuery.TryGetComponent(uid, out var relayTarget))
         {
             if (_mobState.IsIncapacitated(relayTarget.Source) ||
