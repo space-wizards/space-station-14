@@ -1,0 +1,10 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io" xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+    <BoxContainer Orientation="Vertical" Margin="8">
+        <Label Name="Description" Access="Public" />
+        <BoxContainer Orientation="Horizontal" Margin="8" HorizontalAlignment="Center" HorizontalExpand="True">
+            <Button Name="AcceptButton" Text="{Loc 'confirmation-window-accept'}" Access="Public" />
+            <controls:VSpacer Spacing="2" />
+            <Button Name="CancelButton" Text="{Loc 'confirmation-window-cancel'}" Access="Public" />
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

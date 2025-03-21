@@ -1,5 +1,6 @@
-﻿using Content.Server.Roles;
+﻿using Content.Server.EUI;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Borgs.Components;
@@ -10,7 +11,7 @@ namespace Content.Server.Silicons.Borgs;
 /// <inheritdoc/>
 public sealed partial class BorgSystem
 {
-
+    [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
 
     public override void InitializeMMI()
@@ -47,12 +48,21 @@ public sealed partial class BorgSystem
         linked.LinkedMMI = uid;
         Dirty(uid, component);
 
-        if (_mind.TryGetMind(ent, out var mindId, out var mind))
+        if (_mind.TryGetMind(ent, out var mindId, out var mind) &&
+            mind.Session is { } playerSession)
         {
-            _mind.TransferTo(mindId, uid, true, mind: mind);
-
-            if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
-                _roles.MindAddRole(mindId, "MindRoleSiliconBrain", silent: true);
+            // If mind is not already in the MMI, open a confirmation window.
+            // Otherwise, add the mind role.
+            if (mind.CurrentEntity != args.Entity)
+            {
+                _euiManager.OpenEui(
+                    new AcceptBorgingEui(args.Entity, (uid, component), (mindId, mind), _dependencies),
+                    playerSession);
+            }
+            else
+            {
+                DirectTransferToMMI((uid, component), (mindId, mind));
+            }
         }
 
         _appearance.SetData(uid, MMIVisuals.BrainPresent, true);
@@ -95,5 +105,16 @@ public sealed partial class BorgSystem
         }
 
         _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
+    }
+
+    /// <summary>
+    /// Directly transfer a brain into a man-machine interface.
+    /// </summary>
+    public void DirectTransferToMMI(Entity<MMIComponent> mmi, Entity<MindComponent> mind)
+    {
+        _mind.TransferTo(mind, mmi, true, mind: mind);
+
+        if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mind))
+            _roles.MindAddRole(mind, "MindRoleSiliconBrain", silent: true);
     }
 }
