@@ -37,6 +37,7 @@ namespace Content.Shared.Movement.Systems
                 WeightlessAcceleration = move.BaseWeightlessAcceleration,
                 WeightlessModifier = move.BaseWeightlessModifier,
                 WeightlessFriction = move.BaseWeightlessFriction,
+                WeightlessFrictionNoInput = move.BaseWeightlessFrictionNoInput,
             };
 
             RaiseLocalEvent(uid, ref ev);
@@ -130,5 +131,7 @@ namespace Content.Shared.Movement.Systems
         public float WeightlessFriction;
 
         public float WeightlessModifier;
+
+        public float WeightlessFrictionNoInput;
     }
 }

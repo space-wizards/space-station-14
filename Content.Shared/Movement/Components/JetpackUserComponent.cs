@@ -18,5 +18,8 @@ public sealed partial class JetpackUserComponent : Component
     public float WeightlessFriction = 0.3f;
 
     [DataField, AutoNetworkedField]
+    public float WeightlessFrictionNoInput = 0.3f;
+
+    [DataField, AutoNetworkedField]
     public float WeightlessModifier = 1.2f;
 }

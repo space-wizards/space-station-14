@@ -42,6 +42,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         args.WeightlessAcceleration = ent.Comp.WeightlessAcceleration;
         args.WeightlessModifier = ent.Comp.WeightlessModifier;
         args.WeightlessFriction = ent.Comp.WeightlessFriction;
+        args.WeightlessFrictionNoInput = ent.Comp.WeightlessFrictionNoInput;
     }
 
     private void OnMapInit(EntityUid uid, JetpackComponent component, MapInitEvent args)

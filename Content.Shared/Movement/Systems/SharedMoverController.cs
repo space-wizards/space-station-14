@@ -234,12 +234,20 @@ public abstract partial class SharedMoverController : VirtualController
         // Whether we use weightless friction or not.
         if (weightless)
         {
-            if (gridComp == null && !MapGridQuery.HasComp(xform.GridUid))
-                friction = moveSpeedComponent?.OffGridFriction ?? MovementSpeedModifierComponent.DefaultOffGridFriction;
-            else if (wishDir != Vector2.Zero && touching)
-                friction = moveSpeedComponent?.WeightlessFriction ?? MovementSpeedModifierComponent.DefaultWeightlessFriction;
+            // If we're touching then use the weightless values
+            // Some stuff like jetpacks for example might flag it as touching even if it isn't.
+            if (touching || gridComp != null || MapGridQuery.HasComp(xform.GridUid))
+            {
+                if (wishDir != Vector2.Zero)
+                    friction = moveSpeedComponent?.WeightlessFriction ?? MovementSpeedModifierComponent.DefaultWeightlessFriction;
+                else
+                    friction = moveSpeedComponent?.WeightlessFrictionNoInput ?? MovementSpeedModifierComponent.DefaultWeightlessFrictionNoInput;
+            }
+            // Otherwise use the off-grid values.
             else
-                friction = moveSpeedComponent?.WeightlessFrictionNoInput ?? MovementSpeedModifierComponent.DefaultWeightlessFrictionNoInput;
+            {
+                friction = moveSpeedComponent?.OffGridFriction ?? MovementSpeedModifierComponent.DefaultOffGridFriction;
+            }
 
             weightlessModifier = moveSpeedComponent?.WeightlessModifier ?? MovementSpeedModifierComponent.DefaultWeightlessModifier;
             accel = moveSpeedComponent?.WeightlessAcceleration ?? MovementSpeedModifierComponent.DefaultWeightlessAcceleration;
