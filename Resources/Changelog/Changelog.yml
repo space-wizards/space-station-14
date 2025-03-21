@@ -1,74 +1,4 @@
 ﻿Entries:
-- author: kirus59
-  changes:
-  - message: Fixed display of icons when using hunger or thirst huds
-    type: Fix
-  - message: Fixed errors spam when using beer goggles
-    type: Fix
-  id: 7592
-  time: '2024-11-05T16:58:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32832
-- author: Errant
-  changes:
-  - message: Syndicate Reinforcements no longer list their (hidden and unused) codewords
-      on the Round End window.
-    type: Fix
-  id: 7593
-  time: '2024-11-05T18:18:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33181
-- author: Baptr0b0t
-  changes:
-  - message: Fixed Intelicard can see through walls.
-    type: Fix
-  id: 7594
-  time: '2024-11-06T03:28:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33177
-- author: slarticodefast
-  changes:
-  - message: Removed the wanted list cartridge from the captain's PDA.
-    type: Remove
-  id: 7595
-  time: '2024-11-06T13:20:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33084
-- author: BramvanZijp
-  changes:
-  - message: Flare guns have been reworked to no longer automatically eject shells
-      after firing, and must now be opened manually to insert or eject shells. A safety
-      feature has also been added to prevent loading lethal shells into them.
-    type: Tweak
-  - message: Flare guns are twice as likely to appear in emergency closets, with the
-      same rarity as MRE's.
-    type: Tweak
-  - message: Added the security shell gun, a modified flare gun which is capable of
-      handling both nonlethal and lethal shotgun shells. It is able to be crafted
-      in the security techfab without needing any research.
-    type: Add
-  id: 7596
-  time: '2024-11-06T14:27:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32829
-- author: SlamBamActionman
-  changes:
-  - message: WT550 and C20-r's "burst" firemodes are now actual bursts.
-    type: Tweak
-  - message: Drozd is now a burst-only weapon (DPS remains unchanged!).
-    type: Tweak
-  id: 7597
-  time: '2024-11-06T14:39:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31292
-- author: PopGamer46
-  changes:
-  - message: Fixed Lambordeere (botany shuttle) bolt buttons not being connected
-    type: Fix
-  id: 7598
-  time: '2024-11-07T22:02:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33065
-- author: Boaz1111
-  changes:
-  - message: Added casual green jumpsuits and skirts to the clothesmate.
-    type: Add
-  id: 7599
-  time: '2024-11-08T14:50:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31710
 - author: ScarKy0
   changes:
   - message: Intellicarding the AI is now a doAfter.
@@ -3895,3 +3825,63 @@
   id: 8091
   time: '2025-03-20T16:38:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35951
+- author: Tayrtahn
+  changes:
+  - message: Erasing the content from a paper will now make it appear blank.
+    type: Fix
+  id: 8092
+  time: '2025-03-20T21:01:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35967
+- author: SonicHDC
+  changes:
+  - message: Added zips for senior coats!
+    type: Add
+  - message: Added zip and sprites for expensive coat!
+    type: Add
+  id: 8093
+  time: '2025-03-20T21:46:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35029
+- author: shibechef
+  changes:
+  - message: Bodies can now thermally regulate themselves again.
+    type: Fix
+  id: 8094
+  time: '2025-03-20T22:40:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35971
+- author: SlamBamActionman
+  changes:
+  - message: Added playtest cvars for mob and stamina damage. Can be changed via changecvar
+      with VVEDIT perms.
+    type: Add
+  id: 8095
+  time: '2025-03-20T23:01:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35599
+- author: K-Dynamic
+  changes:
+  - message: Dragons and carps now fight NT pets, xenos and zombies.
+    type: Fix
+  id: 8096
+  time: '2025-03-21T00:13:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35578
+- author: Moomoobeef
+  changes:
+  - message: New sprite for Singularity Generator.
+    type: Tweak
+  id: 8097
+  time: '2025-03-21T08:48:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31500
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed organic thermoregulation. Humans, arachnids, moths, etc. will maintain
+      their desired body temperature better.
+    type: Fix
+  id: 8098
+  time: '2025-03-21T09:36:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35981
+- author: TiniestShark
+  changes:
+  - message: Added inhand sprites to Grenades, Bolas and Throwing Stars
+    type: Add
+  id: 8099
+  time: '2025-03-21T09:37:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35974
