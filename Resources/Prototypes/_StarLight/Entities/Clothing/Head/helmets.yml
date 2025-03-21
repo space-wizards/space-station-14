@@ -86,3 +86,93 @@
     - type: IngestionBlocker
     - type: FlashImmunity
     - type: IdentityBlocker
+
+- type: entity
+  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
+  id: ClothingHeadHelmetReflective
+  name: reflective helmet
+  description: A shiny helmet for your equally shiny vest.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/reflect.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/reflect.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.80
+  - type: Reflect
+    reflectProb: 0.4
+    reflects:
+      - Energy  
+  - type: Tag
+    tags:
+    - SecurityHelmet
+
+- type: entity
+  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
+  id: ClothingHeadHelmetPlate
+  name: plate helmet
+  description: A modified security helmet with a ceramic plate insert, which means less padding for blunt hits.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/plate.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/plate.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.87
+        Heat: 0.95
+  - type: Tag
+    tags:
+    - SecurityHelmet
+
+- type: entity
+  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
+  id: ClothingHeadHelmetStabproof
+  name: stabproof helmet
+  description: The most "comfortable" security helmet, as rated by officers. Will take a blow to the head nicely, but a bullet'll go right through it.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/stabproof.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/stabproof.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.87
+        Slash: 0.87
+        Piercing: 0.95
+        Heat: 0.95
+  - type: Tag
+    tags:
+    - SecurityHelmet
+
+- type: entity
+  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
+  id: ClothingHeadHelmetHeatAbsorbent
+  name: heat absorbent helmet
+  description: Advanced helmet best paired with the vest for pure style, has minor reflective properties and can absorb heat fairly well.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/heatabsorbent.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/heatabsorbent.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.87
+  - type: Reflect
+    reflectProb: 0.2
+  - type: Tag
+    tags:
+    - SecurityHelmet
