@@ -264,20 +264,6 @@
         maxVol: 1000
 
 - type: entity
-  name: Big Lube Beaker
-  suffix: DEBUG
-  parent: BluespaceBeaker
-  id: BiggestBeakerLube
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 1000
-        reagents:
-        - ReagentId: SpaceLube
-          Quantity: 1000
-
-- type: entity
   name: dropper
   parent: BaseItem
   description: Used to transfer small amounts of chemical solution between containers.

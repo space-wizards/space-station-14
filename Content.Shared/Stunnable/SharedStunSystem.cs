@@ -58,7 +58,7 @@ public abstract class SharedStunSystem : EntitySystem
         SubscribeLocalEvent<KnockedDownComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
 
-        //SubscribeLocalEvent<KnockedDownComponent, TileFrictionEvent>(OnKnockedTileFriction);
+        SubscribeLocalEvent<KnockedDownComponent, TileFrictionEvent>(OnKnockedTileFriction);
 
         // Attempt event subscriptions.
         SubscribeLocalEvent<StunnedComponent, ChangeDirectionAttemptEvent>(OnAttempt);
@@ -141,7 +141,6 @@ public abstract class SharedStunSystem : EntitySystem
 
     private void OnKnockShutdown(EntityUid uid, KnockedDownComponent component, ComponentShutdown args)
     {
-        //TODO: Make standing a do-after to get up that can be interrupted
         _standingState.Stand(uid);
     }
 
@@ -173,7 +172,8 @@ public abstract class SharedStunSystem : EntitySystem
     /// <summary>
     ///     Stuns the entity, disallowing it from doing many interactions temporarily.
     /// </summary>
-    public bool TryStun(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null)
+    public bool TryStun(EntityUid uid, TimeSpan time, bool refresh,
+        StatusEffectsComponent? status = null)
     {
         if (time <= TimeSpan.Zero)
             return false;
@@ -194,7 +194,8 @@ public abstract class SharedStunSystem : EntitySystem
     /// <summary>
     ///     Knocks down the entity, making it fall to the ground.
     /// </summary>
-    public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null)
+    public bool TryKnockdown(EntityUid uid, TimeSpan time, bool refresh,
+        StatusEffectsComponent? status = null)
     {
         if (time <= TimeSpan.Zero)
             return false;
