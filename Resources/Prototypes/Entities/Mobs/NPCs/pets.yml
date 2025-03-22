@@ -276,10 +276,11 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Pets/mcgriff.rsi
+    sprite: Mobs/Pets/mcgriff/mcgriff.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mcgriff
+    - map: [ "head" ]
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -295,6 +296,12 @@
   - type: Inventory
     speciesId: puppy
     templateId: pet
+    displacements:
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/mcgriff/mcgriff_displacement.rsi
+            state: head
   - type: DamageStateVisuals
     states:
       Alive:
