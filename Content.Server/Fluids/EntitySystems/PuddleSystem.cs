@@ -456,7 +456,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         var slipRatio = slipComp.SlipData.RequiredSlipSpeed / entity.Comp.DefaultSlippery;
         _tile.SetModifier(entity, TileFrictionController.DefaultFriction * slipRatio*slipRatio);
 
-        Dirty(entity);
+        Dirty(entity, slipComp);
     }
 
     private void UpdateSlow(EntityUid uid, Solution solution)
