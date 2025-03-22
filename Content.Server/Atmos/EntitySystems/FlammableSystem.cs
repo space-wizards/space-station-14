@@ -2,7 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
 using Content.Server.IgnitionSource;
 using Content.Server.Stunnable;
-using Content.Server.Temperature.Components;
+using Content.Shared.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Server.Damage.Components;
 using Content.Shared.ActionBlocker;
