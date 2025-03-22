@@ -10,55 +10,41 @@ namespace Content.Shared.Configurable
     [RegisterComponent, NetworkedComponent]
     public sealed partial class ConfigurationComponent : Component
     {
-        [DataField("config")]
+        [DataField]
         public Dictionary<string, string?> Config = new();
 
-        [DataField("qualityNeeded", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string QualityNeeded = SharedToolSystem.PulseQuality;
 
-        [DataField("validation")]
+        [DataField]
         public Regex Validation = new("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
 
         [Serializable, NetSerializable]
-        public sealed class ConfigurationBoundUserInterfaceState : BoundUserInterfaceState
+        public sealed class ConfigurationBoundUserInterfaceState(Dictionary<string, string?> config)
+            : BoundUserInterfaceState
         {
-            public Dictionary<string, string?> Config { get; }
-
-            public ConfigurationBoundUserInterfaceState(Dictionary<string, string?> config)
-            {
-                Config = config;
-            }
+            public readonly Dictionary<string, string?> Config = config;
         }
 
         /// <summary>
         ///     Message data sent from client to server when the device configuration is updated.
         /// </summary>
         [Serializable, NetSerializable]
-        public sealed class ConfigurationUpdatedMessage : BoundUserInterfaceMessage
+        public sealed class ConfigurationUpdatedMessage(Dictionary<string, string> config) : BoundUserInterfaceMessage
         {
-            public Dictionary<string, string> Config { get; }
-
-            public ConfigurationUpdatedMessage(Dictionary<string, string> config)
-            {
-                Config = config;
-            }
+            public readonly Dictionary<string, string> Config = config;
         }
 
         [Serializable, NetSerializable]
-        public sealed class ValidationUpdateMessage : BoundUserInterfaceMessage
+        public sealed class ValidationUpdateMessage(string validationString) : BoundUserInterfaceMessage
         {
-            public string ValidationString { get; }
-
-            public ValidationUpdateMessage(string validationString)
-            {
-                ValidationString = validationString;
-            }
+            public readonly string ValidationString = validationString;
         }
 
         [Serializable, NetSerializable]
         public enum ConfigurationUiKey
         {
-            Key
+            Key,
         }
     }
 }
