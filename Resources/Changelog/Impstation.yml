@@ -1,21 +1,6 @@
 ﻿Entries:
 - author: hivehum
   changes:
-  - message: ACME is proud to announce a brand new product for any jesters, pranksters,
-      and aspiring comedians!
-    type: Add
-  id: 861
-  time: '2025-01-06T22:54:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1218
-- author: honeyed-lemons
-  changes:
-  - message: Fixed pda notifications and attempts to fix the notification button
-    type: Fix
-  id: 862
-  time: '2025-01-06T22:55:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1220
-- author: hivehum
-  changes:
   - message: Drones can now sing a jaunty little tune and also check a map whenever
       they want.
     type: Add
@@ -4104,3 +4089,19 @@
   id: 1360
   time: '2025-03-22T01:38:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2052
+- author: DinnerCalzone
+  changes:
+  - message: A number of warp points on maps should no longer be duplicated.
+    type: Fix
+  - message: Whale's RD's office should no longer start vacuumed.
+    type: Fix
+  id: 1361
+  time: '2025-03-22T15:12:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2035
+- author: SivShele
+  changes:
+  - message: Convex fixes
+    type: Tweak
+  id: 1362
+  time: '2025-03-22T15:11:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2053
