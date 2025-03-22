@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: The Flare Gun & Security Shell Gun now start in their open/unbolted state.
-    type: Tweak
-  id: 7602
-  time: '2024-11-11T16:12:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33248
 - author: AndrewMontagne
   changes:
   - message: APEs could be powered on without local power
@@ -3881,3 +3874,10 @@
   id: 8101
   time: '2025-03-21T09:40:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35715
+- author: metalgearsloth
+  changes:
+  - message: Fix pulling alert being goofy.
+    type: Fix
+  id: 8102
+  time: '2025-03-22T11:41:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36004
