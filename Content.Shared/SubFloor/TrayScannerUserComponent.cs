@@ -5,4 +5,7 @@ namespace Content.Shared.SubFloor;
 /// Added to anyone using <see cref="TrayScannerComponent"/> to handle the vismask changes.
 /// </summary>
 [RegisterComponent]
-public sealed partial class TrayScannerUserComponent : Component;
+public sealed partial class TrayScannerUserComponent : Component
+{
+    public int Count;
+}
