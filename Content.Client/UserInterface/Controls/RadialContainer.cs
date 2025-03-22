@@ -97,7 +97,8 @@ public class RadialContainer : LayoutContainer
     public RadialContainer()
     {
         IoCManager.InjectDependencies(this);
-        _shader = _prototypeManager.Index<ShaderPrototype>("RadialMenu").Instance();
+        _shader = _prototypeManager.Index<ShaderPrototype>("RadialMenu")
+                                   .InstanceUnique();
     }
 
     /// <inheritdoc />
@@ -174,8 +175,6 @@ public class RadialContainer : LayoutContainer
     {
         base.Draw(handle);
 
-        var clone = _shader.Duplicate();
-
         float selectedFrom = 0;
         float selectedTo = 0;
 
@@ -215,19 +214,19 @@ public class RadialContainer : LayoutContainer
             screenSize.Y - ScreenCoordinates.Y - (Size.Y / 2) * UIScale
         );
 
-        clone.SetParameter("separatorAngles", _angles);
-        clone.SetParameter("sectorMedianAngles", _sectorMedians);
-        clone.SetParameter("selectedFrom", selectedFrom);
-        clone.SetParameter("selectedTo", selectedTo);
-        clone.SetParameter("childCount", i);
-        clone.SetParameter("sectorColors", _sectorColors);
-        clone.SetParameter("borderColors", _borderColors);
-        clone.SetParameter("centerPos", menuCenter);
-        clone.SetParameter("screenSize", screenSize);
-        clone.SetParameter("innerRadius", CalculatedRadius * InnerRadiusMultiplier * UIScale);
-        clone.SetParameter("outerRadius", CalculatedRadius * OuterRadiusMultiplier * UIScale);
+        _shader.SetParameter("separatorAngles", _angles);
+        _shader.SetParameter("sectorMedianAngles", _sectorMedians);
+        _shader.SetParameter("selectedFrom", selectedFrom);
+        _shader.SetParameter("selectedTo", selectedTo);
+        _shader.SetParameter("childCount", i);
+        _shader.SetParameter("sectorColors", _sectorColors);
+        _shader.SetParameter("borderColors", _borderColors);
+        _shader.SetParameter("centerPos", menuCenter);
+        _shader.SetParameter("screenSize", screenSize);
+        _shader.SetParameter("innerRadius", CalculatedRadius * InnerRadiusMultiplier * UIScale);
+        _shader.SetParameter("outerRadius", CalculatedRadius * OuterRadiusMultiplier * UIScale);
 
-        handle.UseShader(clone);
+        handle.UseShader(_shader);
         handle.DrawRect(new UIBox2(0, 0, screenSize.X, screenSize.Y), Color.White);
         handle.UseShader(null);
     }
