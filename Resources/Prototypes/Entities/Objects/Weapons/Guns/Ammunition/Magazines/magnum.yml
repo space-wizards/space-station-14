@@ -61,6 +61,12 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      right:
+      - state: inhand-right-mag
 
 - type: entity
   id: MagazineMagnum
@@ -75,6 +81,16 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#9b0000"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#9b0000"
 
 - type: entity
   id: MagazineMagnumPractice
@@ -89,6 +105,16 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#ea5800"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#ea5800"
 
 - type: entity
   id: MagazineMagnumUranium
@@ -103,6 +129,16 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#00cd42"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#00cd42"
 
 - type: entity
   id: MagazineMagnumAP
@@ -117,7 +153,16 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#540000"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#540000"
 
 - type: entity
   id: MagazineMagnumSubMachineGunEmpty
@@ -133,6 +178,12 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      right:
+      - state: inhand-right-mag
 
 - type: entity
   id: MagazineMagnumSubMachineGun
@@ -147,6 +198,16 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#9b0000"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#9b0000"
 
 - type: entity
   id: MagazineMagnumSubMachineGunPractice
@@ -161,6 +222,16 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#ea5800"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#ea5800"
 
 - type: entity
   id: MagazineMagnumSubMachineGunUranium
@@ -175,6 +246,16 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#00cd42"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#00cd42"
 
 - type: entity
   id: MagazineMagnumSubMachineGunPiercing
@@ -189,3 +270,13 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-mag
+      - state: inhand-left-stripe
+        color: "#540000"
+      right:
+      - state: inhand-right-mag
+      - state: inhand-right-stripe
+        color: "#540000"
