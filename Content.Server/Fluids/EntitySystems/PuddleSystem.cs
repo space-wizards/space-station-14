@@ -456,9 +456,17 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         slipComp.SlipData.SuperSlippery = superSlipperyUnits >= smallPuddleThreshold;
 
         // Lower tile friction based on how slippery it is, lets items slide across a puddle of lube
-        // We square the value because it ends up feeling better with lube being very slippery
-        var slipRatio = slipComp.SlipData.RequiredSlipSpeed / entity.Comp.DefaultSlippery;
-        _tile.SetModifier(entity, TileFrictionController.DefaultFriction * slipRatio*slipRatio);
+        if (slipComp.SlipData.SuperSlippery)
+            // If it's superSlippery, it has no friction
+            slipComp.SlipData.SlipFriction = 0;
+        else
+        {
+            // We square the value because it ends up feeling better with lube being very slippery
+            var slipRatio = slipComp.SlipData.RequiredSlipSpeed / entity.Comp.DefaultSlippery;
+            slipComp.SlipData.SlipFriction = TileFrictionController.DefaultFriction * slipRatio * slipRatio;
+        }
+        //Apply the value here
+        _tile.SetModifier(entity, slipComp.SlipData.SlipFriction);
 
         Dirty(entity, slipComp);
     }
