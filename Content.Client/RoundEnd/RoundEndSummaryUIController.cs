@@ -1,5 +1,4 @@
 using Content.Client.GameTicking.Managers;
-using Content.Client.RoundEnd;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
@@ -10,7 +9,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.UserInterface.Systems.RoundEnd;
+namespace Content.Client.RoundEnd;
 
 [UsedImplicitly]
 public sealed class RoundEndSummaryUIController : UIController,
@@ -20,7 +19,7 @@ public sealed class RoundEndSummaryUIController : UIController,
 
     private RoundEndSummaryWindow? _window;
 
-    private MenuButton? SummaryButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.SummaryButton;
+    private MenuButton? SummaryButton => UIManager.GetActiveUIWidgetOrNull<UserInterface.Systems.MenuBar.Widgets.GameTopMenuBar>()?.SummaryButton;
 
     public void UnloadButton()
     {
