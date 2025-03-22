@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Fixed medical wall locker sprites' open state
-    type: Fix
-  - message: Fixed a stray pixel on the Chaplain's Divine Grasp
-    type: Fix
-  id: 867
-  time: '2025-01-06T23:36:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1245
 - author: kipdotnet
   changes:
   - message: Removed the cyrillic text conversion from the russian accent.
@@ -4103,3 +4094,11 @@
   id: 1366
   time: '2025-03-22T15:30:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2040
+- author: mqole, crocodilecarousel
+  changes:
+  - message: Head Revolutionaries now start with 4 revolutionary radio keys to give
+      to their comrades. Viva!
+    type: Add
+  id: 1367
+  time: '2025-03-22T15:32:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2047
