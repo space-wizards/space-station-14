@@ -2,6 +2,10 @@
 ### UI
 
 # For the PDA screen
+comp-pda-ui-copied = Copied!
+
+comp-pda-ui-footer-home = Clicking on the fields will copy their value!
+
 comp-pda-ui = ID: [color=white]{$owner}[/color], [color=yellow]{$jobTitle}[/color]
 
 comp-pda-ui-blank = ID:
