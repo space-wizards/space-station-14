@@ -34,6 +34,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Server.Shuttles.Components;
+using Content.Server.Weather;
+using Content.Shared.Weather;
 
 namespace Content.Server.Salvage;
 
@@ -148,6 +150,14 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
             _entManager.System<AtmosphereSystem>().SetMapSpace(mapUid, air.Space, atmos);
             _entManager.System<AtmosphereSystem>().SetMapGasMixture(mapUid, new GasMixture(moles, mission.Temperature), atmos);
+
+            // Weather
+            if (mission.Weather != null)
+            {
+                // intentionally let the weather fade in
+                _entManager.System<WeatherSystem>()
+                    .SetWeather(mapId, _prototypeManager.Index<WeatherPrototype>(mission.Weather), null);
+            }
 
             if (mission.Color != null)
             {
