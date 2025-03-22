@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: new artifact effect for those scientists that avoid foam
-    type: Add
-  id: 864
-  time: '2025-01-06T23:10:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1233
 - author: Sha-Seng
   changes:
   - message: Doll Joint arm and leg tattoos, and 'Cut Here' chest tattoo for humans,
@@ -4104,3 +4097,11 @@
   id: 1363
   time: '2025-03-22T15:13:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2049
+- author: DinnerCalzone
+  changes:
+  - message: Thieves will no longer receive steal objectives for steal targets that
+      they may have easy access to through their departments.
+    type: Tweak
+  id: 1364
+  time: '2025-03-22T15:14:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2054
