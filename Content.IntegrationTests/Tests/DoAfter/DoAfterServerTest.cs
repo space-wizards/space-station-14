@@ -127,9 +127,9 @@ namespace Content.IntegrationTests.Tests.DoAfter
         {
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
-            var entityManager = server.ResolveDependency<IEntityManager>();
+            var entityManager = server.EntMan;
             var timing = server.ResolveDependency<IGameTiming>();
-            var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<SharedDoAfterSystem>();
+            var doAfterSystem = entityManager.System<SharedDoAfterSystem>();
             var ev = new TestDoAfterEvent();
 
             EntityUid mob = default;
@@ -139,40 +139,25 @@ namespace Content.IntegrationTests.Tests.DoAfter
 
             await server.WaitPost(() =>
             {
-                var tickTime = 1.0f / timing.TickRate;
-
                 mob = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
                 target = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
-                var args = new DoAfterArgs(entityManager, mob, tickTime * 5, ev, null, target) { Broadcast = true };
+                var args = new DoAfterArgs(entityManager, mob, timing.TickPeriod * 5, ev, null, target) { Broadcast = true };
 
-                if (!doAfterSystem.TryStartDoAfter(args))
-                {
-                    Assert.Fail();
-                    return;
-                }
+                Assert.That(doAfterSystem.TryStartDoAfter(args));
 
                 // Start a second do after with a different target
                 mob2 = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
                 target2 = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
-                var args2 = new DoAfterArgs(entityManager, mob2, tickTime * 5, ev, null, target2) { Broadcast = true };
+                var args2 = new DoAfterArgs(entityManager, mob2, timing.TickPeriod * 5, ev, null, target2) { Broadcast = true };
 
-                if (!doAfterSystem.TryStartDoAfter(args2))
-                {
-                    Assert.Fail();
-                    return;
-                }
+                Assert.That(doAfterSystem.TryStartDoAfter(args2));
             });
 
-            // Run a single tick to trigger a DoAfterSystem update
-            await server.WaitRunTicks(1);
-
             var list = doAfterSystem.GetEntitiesInteractingWithTarget(target);
-            Assert.That(list, Has.Count.EqualTo(1));
-            Assert.That(list[0], Is.EqualTo(mob));
+            Assert.That(list, Is.EquivalentTo([mob]));
 
             var list2 = doAfterSystem.GetEntitiesInteractingWithTarget(target2);
-            Assert.That(list2, Has.Count.EqualTo(1));
-            Assert.That(list2[0], Is.EqualTo(mob2));
+            Assert.That(list2, Is.EquivalentTo([mob2]));
 
             await pair.CleanReturnAsync();
         }
