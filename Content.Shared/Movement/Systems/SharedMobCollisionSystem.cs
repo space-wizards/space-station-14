@@ -190,6 +190,13 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         if (xform.ParentUid != xform.GridUid && xform.ParentUid != xform.MapUid)
             return false;
 
+        var ev = new AttemptMobCollideEvent();
+
+        RaiseLocalEvent(entity.Owner, ref ev);
+
+        if (ev.Cancelled)
+            return false;
+
         var (worldPos, worldRot) = _xformSystem.GetWorldPositionRotation(xform);
         var ourTransform = new Transform(worldPos, worldRot);
         var contacts = Physics.GetContacts(entity.Owner);
@@ -257,4 +264,13 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     {
         public Vector2 Direction;
     }
+}
+
+/// <summary>
+/// Raised on the entity itself when attempting to handle mob collisions.
+/// </summary>
+[ByRefEvent]
+public record struct AttemptMobCollideEvent
+{
+    public bool Cancelled;
 }

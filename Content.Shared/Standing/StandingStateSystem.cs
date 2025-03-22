@@ -1,21 +1,44 @@
+using System.Numerics;
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Rotation;
-using Robust.Shared.Audio;
+using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Standing
 {
     public sealed class StandingStateSystem : EntitySystem
     {
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedHandsSystem _hands = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly ThrowingSystem _throw = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
         private const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<StandingStateComponent, AttemptMobCollideEvent>(OnMobCollide);
+        }
+
+        private void OnMobCollide(Entity<StandingStateComponent> ent, ref AttemptMobCollideEvent args)
+        {
+            if (!ent.Comp.Standing)
+            {
+                args.Cancelled = true;
+            }
+        }
 
         public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
         {
@@ -47,9 +70,14 @@ namespace Content.Shared.Standing
             // 99% of the time you'll want to drop items but in some scenarios (e.g. buckling) you don't want to.
             // We do this BEFORE downing because something like buckle may be blocking downing but we want to drop hand items anyway
             // and ultimately this is just to avoid boilerplate in Down callers + keep their behavior consistent.
-            if (dropHeldItems && hands != null)
+            if (dropHeldItems)
             {
-                RaiseLocalEvent(uid, new DropHandItemsEvent(), false);
+                if (hands != null)
+                {
+                    RaiseLocalEvent(uid, new DropHandItemsEvent(), false);
+                }
+
+                FallOver((uid, hands, null));
             }
 
             if (!force)
@@ -135,6 +163,32 @@ namespace Content.Shared.Standing
             standingState.ChangedFixtures.Clear();
 
             return true;
+        }
+
+        private void FallOver(Entity<HandsComponent?, PhysicsComponent?> entity)
+        {
+            var uid = entity.Owner;
+
+            var direction = Resolve(uid, ref entity.Comp2, false) ? entity.Comp2.LinearVelocity / 50 : Vector2.Zero;
+            var dropAngle = _random.NextFloat(0.8f, 1.2f);
+
+            if (Resolve(uid, ref entity.Comp1, false))
+            {
+                var worldRotation = _transform.GetWorldRotation(uid).ToVec();
+                foreach (var hand in entity.Comp1.Hands.Values)
+                {
+                    if (hand.HeldEntity is not { } held)
+                        continue;
+
+                    if (!_hands.TryDrop(uid, hand, targetDropLocation: null, checkActionBlocker: false, handsComp: entity.Comp1))
+                        continue;
+
+                    _throw.TryThrow(held,
+                        _random.NextAngle().RotateVec(direction / dropAngle + worldRotation / 50),
+                        0.5f * dropAngle * _random.NextFloat(-0.9f, 1.1f),
+                        uid, 0);
+                }
+            }
         }
     }
 
