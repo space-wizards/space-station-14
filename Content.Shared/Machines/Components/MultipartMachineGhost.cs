@@ -1,6 +1,9 @@
-namespace Content.Client.Machines.Components;
+namespace Content.Shared.Machines.Components;
 
-// Component attached to all multipart machine ghosts
+/// <summary>
+/// Component attached to all multipart machine ghosts
+/// Intended for client side usage only, but used on prototypes.
+/// </summary>
 [RegisterComponent]
 public sealed partial class MultipartMachineGhostComponent : Component
 {
