@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 247.2.0
+  engineVersion: 248.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/08/2025 00:22:15
-  entityCount: 26217
+  time: 03/09/2025 09:02:52
+  entityCount: 26218
 maps:
 - 1
 grids:
@@ -54752,6 +54752,13 @@ entities:
     components:
     - type: Transform
       pos: -129.5,7.5
+      parent: 2
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 22056
+    components:
+    - type: Transform
+      pos: -102.5,16.5
       parent: 2
 - proto: Carpet
   entities:
@@ -166255,7 +166262,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -199285.47
+      secondsUntilStateChange: -199343.58
       state: Opening
     - type: Airlock
       autoClose: False
