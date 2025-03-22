@@ -81,7 +81,7 @@ public sealed class RespiratorSystem : EntitySystem
                 switch (respirator.Status)
                 {
                     case RespiratorStatus.Inhaling:
-                        Inhale(uid, body);
+                        Inhale((uid, respirator, body));
                         respirator.Status = RespiratorStatus.Exhaling;
                         break;
                     case RespiratorStatus.Exhaling:
@@ -109,22 +109,59 @@ public sealed class RespiratorSystem : EntitySystem
         }
     }
 
-    public void Inhale(EntityUid uid, BodyComponent? body = null)
+    public void Inhale(Entity<RespiratorComponent?, BodyComponent?> ent)
     {
-        if (!Resolve(uid, ref body, logMissing: false))
+        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2, logMissing: false))
             return;
 
-        var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((uid, body));
+        var organs = _bodySystem.GetBodyOrganEntityComps<LungComponent>((ent, ent.Comp2));
 
         // Inhale gas
         var ev = new InhaleLocationEvent();
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(ent, ref ev);
 
-        ev.Gas ??= _atmosSys.GetContainingMixture(uid, excite: true);
+        ev.Gas ??= _atmosSys.GetContainingMixture(ent.Owner, excite: true);
 
         if (ev.Gas is null)
         {
             return;
+        }
+
+        // Check for temperature damage before removing gas
+        var gasTemp = ev.Gas.Temperature;
+
+        // Handle high temperature damage
+        if (gasTemp > ent.Comp1.HighTemperatureDamageThreshold)
+        {
+            var tempDelta = gasTemp - ent.Comp1.HighTemperatureDamageThreshold;
+            // Scale factor starts at 1.0 at threshold and increases by 0.5 for every 50K above
+            var scaleFactor = 1.0f + tempDelta / 50.0f * 0.5f;
+            // Cap the scale factor at 5x damage
+            scaleFactor = Math.Min(scaleFactor, 5.0f);
+
+            var scaledDamage = ent.Comp1.HighTemperatureDamage * scaleFactor;
+            _damageableSys.TryChangeDamage(ent, scaledDamage, true);
+
+            // Log damage for admins
+            _adminLogger.Add(LogType.Temperature,
+                $"{ToPrettyString(ent):entity} took {scaledDamage} breathing damage from {gasTemp:F1}K gas");
+        }
+        // Handle low temperature damage
+        else if (gasTemp < ent.Comp1.LowTemperatureDamageThreshold)
+        {
+            var tempDelta = ent.Comp1.LowTemperatureDamageThreshold - gasTemp;
+            // Scale factor starts at 1.0 at threshold and increases by 0.5 for every 10K below
+            // Using a smaller temperature step (10K vs 50K) since low temperatures have a smaller range
+            var scaleFactor = 1.0f + tempDelta / 10.0f * 0.5f;
+            // Cap the scale factor at 5x damage
+            scaleFactor = Math.Min(scaleFactor, 5.0f);
+
+            var scaledDamage = ent.Comp1.LowTemperatureDamage * scaleFactor;
+            _damageableSys.TryChangeDamage(ent, scaledDamage, true);
+
+            // Log damage for admins
+            _adminLogger.Add(LogType.Temperature,
+                $"{ToPrettyString(ent):entity} took {scaledDamage} breathing damage from {gasTemp:F1}K gas");
         }
 
         var actualGas = ev.Gas.RemoveVolume(Atmospherics.BreathVolume);
