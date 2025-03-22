@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: Artistic borg module has a new action image.
-    type: Add
-  - message: Service borg module has been replaced with a bureaucracy module and bartender
-      module.
-    type: Tweak
-  id: 866
-  time: '2025-01-06T23:34:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1241
 - author: AftrLite
   changes:
   - message: Fixed medical wall locker sprites' open state
@@ -4104,3 +4094,12 @@
   id: 1365
   time: '2025-03-22T15:22:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2025
+- author: Tyranex
+  changes:
+  - message: Lathes now have an option to return 30 of a material.
+    type: Tweak
+  - message: The ore processor now defaults to 30, instead of 10.
+    type: Tweak
+  id: 1366
+  time: '2025-03-22T15:30:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2040
