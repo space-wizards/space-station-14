@@ -5111,7 +5111,6 @@ entities:
   - uid: 108
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 14.5,23.5
       parent: 179
   - uid: 986
