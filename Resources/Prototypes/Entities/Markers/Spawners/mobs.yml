@@ -34,6 +34,7 @@
 
 - type: entity
   name: HoP Corgi Spawner
+  suffix: HoP's pet, steal target #imp edit
   id: SpawnMobCorgi
   parent: MarkerBase
   components:
@@ -64,6 +65,7 @@
 
 - type: entity
   name: Possum Morty Spawner
+  suffix: Morgue pet, steal target #imp edit
   id: SpawnMobPossumMorty
   parent: MarkerBase
   components:
@@ -90,6 +92,7 @@
 
 - type: entity
   name: Fox Renault Spawner
+  suffix: Captain's pet, steal target #imp edit
   id: SpawnMobFoxRenault
   parent: MarkerBase
   components:
@@ -104,8 +107,7 @@
 - type: entity
   name: Runtime Spawner
   id: SpawnMobCatRuntime
-  #suffix imp edit
-  suffix: CMO's pet, steal target
+  suffix: CMO's pet, steal target #imp edit
   parent: MarkerBase
   components:
   - type: Sprite
@@ -119,8 +121,7 @@
 - type: entity
   name: Exception Spawner
   id: SpawnMobCatException
-  #suffix imp edit
-  suffix: CMO's pet, steal target
+  suffix: CMO's pet, steal target #imp edit
   parent: MarkerBase
   components:
   - type: Sprite
@@ -147,8 +148,7 @@
 - type: entity
   name: Floppa Spawner
   id: SpawnMobCatFloppa
-  #suffix imp edit
-  suffix: CMO's pet, steal target
+  suffix: CMO's pet, steal target #imp edit
   parent: MarkerBase
   components:
   - type: Sprite
@@ -162,8 +162,7 @@
 - type: entity
   name: Bingus Spawner
   id: SpawnMobCatBingus
-  #suffix imp edit
-  suffix: CMO's pet, steal target
+  suffix: CMO's pet, steal target #imp edit
   parent: MarkerBase
   components:
   - type: Sprite
@@ -203,8 +202,7 @@
 - type: entity
   name: Cat Spawner
   id: SpawnMobCat
-  #suffix imp edit
-  suffix: CMO's pet, steal target
+  suffix: CMO's pet, steal target # imp edit
   parent: MarkerBase
   components:
   - type: Sprite
@@ -257,6 +255,7 @@
 
 - type: entity
   name:  McGriff Spawner
+  suffix: Warden's pet, steal target # imp edit
   id: SpawnMobMcGriff
   parent: MarkerBase
   components:
@@ -396,6 +395,7 @@
 - type: entity
   name: Shiva Spawner
   id: SpawnMobShiva
+  suffix: HoS's pet, steal target # imp edit
   parent: MarkerBase
   components:
   - type: Sprite

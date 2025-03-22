@@ -1,7 +1,7 @@
 - type: entity
   name: Suppy
   id: PetSuppy
-  suffix: Steal target
+  suffix: Engineering's pet, steal target
   description: Engineering's pet suppermatter chunk. He dreams of causing station-wide destruction some day, but his bark is bigger than his bite.
   components:
   - type: Clickable

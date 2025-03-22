@@ -4,8 +4,9 @@
   parent: BaseThiefStealAnimalObjective
   id: FinFinStealObjective
   components:
+  - type: NotJobRequirement
+    job: [ MedicalDoctor, Paramedic, Chemist ]
   - type: StealCondition
-    verifyMapExistence: true
     stealGroup: AnimalFinFin
   - type: Objective
     difficulty: 2
@@ -15,10 +16,9 @@
   id: PolyStealObjective
   components:
   - type: StealCondition
-    verifyMapExistence: true
     stealGroup: AnimalPoly
   - type: NotJobRequirement
-    job: StationEngineer
+    job: [ StationEngineer, AtmosphericTechnician ]
   - type: Objective
     difficulty: 2.5 # this thing will not shut the fuck up
 
@@ -27,7 +27,7 @@
   id: PetSuppyStealObjective #engineering pet by supermatter
   components:
   - type: NotJobRequirement
-    job: StationEngineer
+    job: [ StationEngineer, AtmosphericTechnician ]
   - type: StealCondition
     stealGroup: PetSuppy
     descriptionText: objective-condition-thief-suppy-description
@@ -41,7 +41,6 @@
   - type: NotJobRequirement
     job: HospitalityDirector
   - type: StealCondition
-    verifyMapExistence: true # why tf is this false for stealanimalobjective anyway
     stealGroup: AnimalOswald
   - type: Objective
     difficulty: 1 # shes literally nice
@@ -53,7 +52,7 @@
   id: GeneratorStealObjective #tesla or singulo generator
   components:
   - type: NotJobRequirement
-    job: StationEngineer
+    job: [ StationEngineer, AtmosphericTechnician ]
   - type: StealCondition
     stealGroup: Generator
     descriptionText: objective-condition-thief-generator-description
@@ -89,7 +88,7 @@
   id: ParticleAcceleratorStealObjective #lol
   components:
   - type: NotJobRequirement
-    job: StationEngineer
+    job: [ StationEngineer, AtmosphericTechnician ]
   - type: StealCondition
     stealGroup: ParticleAccelerator
     descriptionText: objective-condition-thief-multiply-structure-description
@@ -104,7 +103,7 @@
   id: ShipyardComputerCircuitboardStealObjective
   components:
   - type: NotJobRequirement
-    job: SalvageSpecialist
+    job: [ CargoTechnician, SalvageSpecialist, Courier ]
   - type: StealCondition
     stealGroup: ShipyardComputerCircuitboard
   - type: Objective
@@ -165,7 +164,7 @@
   id: MedTekCartridgeStealObjective
   components:
   - type: NotJobRequirement
-    job: MedicalDoctor
+    job: [ MedicalDoctor, Paramedic, Chemist ]
   - type: StealCondition
     stealGroup: MedTekCartridge
   - type: Objective
@@ -187,7 +186,7 @@
   id: AstroNavCartridgeStealObjective
   components:
   - type: NotJobRequirement
-    job: SalvageSpecialist
+    job: [ SalvageSpecialist, CargoTechnician, Courier ]
   - type: StealCondition
     stealGroup: AstroNavCartridge
   - type: Objective
@@ -197,6 +196,8 @@
   parent: BaseThiefStealObjective
   id: StockTradingCartridgeStealObjective
   components:
+  - type: NotJobRequirement
+    job: [ SalvageSpecialist, CargoTechnician, Courier ]
   - type: StealCondition
     stealGroup: StockTradingCartridge
   - type: Objective
@@ -219,7 +220,7 @@
   id: SecTechStealObjective
   components:
   - type: NotJobRequirement
-    job: SecurityOfficer #you never know!
+    job: [ SecurityOfficer, Detective ] #you never know!
   - type: StealCondition
     stealGroup: SecTech
   - type: Objective
@@ -252,7 +253,7 @@
   id: SecDrobeStealObjective
   components:
   - type: NotJobRequirement
-    job: SecurityOfficer
+    job: [ SecurityOfficer, Detective ]
   - type: StealCondition
     stealGroup: SecDrobe
   - type: Objective
@@ -285,7 +286,7 @@
   id: CargoDrobeStealObjective
   components:
   - type: NotJobRequirement
-    job: CargoTechnician
+    job: [ CargoTechnician, SalvageSpecialist, Courier ]
   - type: StealCondition
     stealGroup: CargoDrobe
   - type: Objective
@@ -296,7 +297,7 @@
   id: MediDrobeStealObjective
   components:
   - type: NotJobRequirement
-    job: MedicalDoctor
+    job: [ MedicalDoctor, Paramedic, Chemist ]
   - type: StealCondition
     stealGroup: MediDrobe
   - type: Objective
@@ -307,7 +308,7 @@
   id: ChemDrobeStealObjective
   components:
   - type: NotJobRequirement
-    job: Chemist
+    job: [ MedicalDoctor, Paramedic, Chemist ]
   - type: StealCondition
     stealGroup: ChemDrobe
   - type: Objective
@@ -329,7 +330,7 @@
   id: AtmosDrobeStealObjective
   components:
   - type: NotJobRequirement
-    job: AtmosphericTechnician
+    job: [ StationEngineer, AtmosphericTechnician ]
   - type: StealCondition
     stealGroup: AtmosDrobe
   - type: Objective
@@ -340,7 +341,7 @@
   id: EngiDrobeStealObjective
   components:
   - type: NotJobRequirement
-    job: StationEngineer
+    job: [ StationEngineer, AtmosphericTechnician ]
   - type: StealCondition
     stealGroup: EngiDrobe
   - type: Objective
@@ -406,7 +407,7 @@
   id: GeneDrobeStealObjective
   components:
   - type: NotJobRequirement
-    job: MedicalDoctor
+    job: [ MedicalDoctor, Paramedic, Chemist ]
   - type: StealCondition
     stealGroup: GeneDrobe
   - type: Objective
@@ -417,7 +418,7 @@
   id: ViroDrobeStealObjective
   components:
   - type: NotJobRequirement
-    job: MedicalDoctor
+    job: [ MedicalDoctor, Paramedic, Chemist ]
   - type: StealCondition
     stealGroup: ViroDrobe
   - type: Objective
@@ -427,6 +428,8 @@
   parent: BaseThiefStealObjective
   id: ServiceTechFabStealObjective
   components:
+  - type: NotJobRequirement
+    job: [ Bartender, Botanist, Chef, Janitor, Lawyer, Librarian, ServiceWorker ] #everyone with service access
   - type: StealCondition
     stealGroup: ServiceTechFab
   - type: Objective
@@ -477,7 +480,7 @@
     - Diona
     - Decapoid
   - type: NotJobRequirement
-    job: AtmosphericTechnician
+    job: [ StationEngineer, AtmosphericTechnician ]
   - type: StealCondition
     stealGroup: FireSuit
   - type: Objective
