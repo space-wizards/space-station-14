@@ -40,7 +40,8 @@ public sealed class RoundEndSummaryUIController : UIController
         if (Window?.RoundId == message.RoundId)
             return;
 
-        Window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, EntityManager);
+        Window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
+            message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, EntityManager);
     }
 
     public void OnSystemLoaded(ClientGameTicker system)
