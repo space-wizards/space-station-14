@@ -532,7 +532,7 @@
   - type: CombatMode
   - type: Butcherable
     spawned:
-    - id: FoodMeatSlime
+    - id: FoodMeat
       amount: 2
   - type: Extractable
     grindableSolutionName: food
