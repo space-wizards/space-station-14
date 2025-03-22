@@ -15,6 +15,7 @@ public sealed partial class LoadedDiceComponent : Component
     ///     The currently selected side. If null, the die behaves as normal.
     /// </summary>
     [AutoNetworkedField]
+    [DataField]
     public int? SelectedSide = null;
 
     /// <summary>
