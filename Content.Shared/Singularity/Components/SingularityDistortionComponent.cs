@@ -5,7 +5,6 @@ namespace Content.Shared.Singularity.Components
 {
     [RegisterComponent, NetworkedComponent]
     [AutoGenerateComponentState]
-    [Access(typeof(SharedSingularitySystem))]
     public sealed partial class SingularityDistortionComponent : Component
     {
         [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]

@@ -196,3 +196,30 @@
   - type: Construction
     graph: BananiumHorn
     node: bananiumHorn
+
+- type: entity
+  parent: BikeHorn
+  id: PushHorn
+  name: push horn
+  description: This powerful bikehorn is sure to blast their frowns away.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/push_horn.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/push_horn.rsi
+    size: Tiny
+  - type: Clothing
+    sprite: Objects/Fun/push_horn.rsi
+    slots: [Belt]
+  - type: UseDelay
+    delay: 10
+  - type: GravityWell
+    maxRange: 4
+    baseRadialAcceleration: 0
+    baseTangentialAcceleration: 0
+    ravPulsePeriod: 0
+  - type: SingularityDistortion
+    intensity: 0
+    falloffPower: 1.5
+  - type: PushHorn
