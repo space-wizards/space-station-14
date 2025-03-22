@@ -104,6 +104,9 @@
   - type: RatKing
     hungerPerArmyUse: 25
     hungerPerDomainUse: 50
+  - type: CanRummage
+    rummageLoot: !type:NestedSelector
+      tableId: RatKingLoot
   - type: MobsterAccent
   - type: Speech
     speechVerb: SmallMob
@@ -295,12 +298,16 @@
     sprite: Mobs/Effects/onfire.rsi
     normalState: Mouse_burning
 
-- type: weightedRandomEntity
+- type: entityTable
   id: RatKingLoot
-  weights:
-    RandomSpawner100: 66 #garbage
-    FoodCheese: 28 #food
-    IngotGold1: 5 #loot
+  table: !type:GroupSelector
+    children:
+    - id: RandomSpawner100 # garbage
+      weight: 66
+    - id: FoodCheese # food
+      weight: 28
+    - id: IngotGold1 # loot
+      weight: 5
 
 - type: entity
   id: ActionRatKingRaiseArmy
