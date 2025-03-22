@@ -3,7 +3,7 @@ positronic-brain-off = No neural activity detected.
 positronic-brain-still-searching = Synthetic neuron descrambling in progress...
 positronic-brain-searching = Beginning synthetic neuron descrambling...
 
-positronic-brain-role-name = positronic brain
+positronic-brain-role-name = Positronic Brain
 positronic-brain-role-description = Serve the station crew.
 
 positronic-brain-wipe-device-verb-text = Wipe Brain

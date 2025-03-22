@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/59f2a4e10e5ba36033c9734ddebfbbdc6157472d, pda-cluwne made by brainfood1183 (github) ss14 | pda-brigmedic and pda-centcom made by PuroSlavKing (Github) | pda-brigemdic resprited by Hülle#2562 (Discord), pda-pirate made by brainfood1183 (Github), pda-syndi-agent drawn by Ubaser",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/59f2a4e10e5ba36033c9734ddebfbbdc6157472d, pda-cluwne made by brainfood1183 (github) ss14 | pda-brigmedic and pda-centcom made by PuroSlavKing (Github) | pda-brigemdic resprited by Hülle#2562 (Discord), pda-pirate made by brainfood1183 (Github), pda-syndi-agent drawn by Ubaser, pda-wizard recolour by Velken",
   "size": {
     "x": 32,
     "y": 32
@@ -225,6 +225,17 @@
     },
     {
       "name": "pda-seniorofficer"
+    },
+	{
+      "name": "pda-wizard",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
     },
     {
       "name": "equipped-IDCARD",

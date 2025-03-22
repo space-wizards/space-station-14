@@ -44,7 +44,7 @@ public sealed class LogicGateSystem : EntitySystem
             }
             if (comp.StateB == SignalState.Momentary)
             {
-                comp.StateB = SignalState.High;
+                comp.StateB = SignalState.Low;
             }
 
             // output most likely changed so update it

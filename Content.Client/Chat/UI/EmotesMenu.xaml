@@ -1,4 +1,4 @@
-﻿<ui:RadialMenu xmlns="https://spacestation14.io"
+<ui:RadialMenu xmlns="https://spacestation14.io"
                 xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
                 BackButtonStyleClass="RadialMenuBackButton"
                 CloseButtonStyleClass="RadialMenuCloseButton"
@@ -7,25 +7,25 @@
                 MinSize="450 450">
 
     <!-- Main -->
-    <ui:RadialContainer Name="Main" VerticalExpand="True" HorizontalExpand="True" Radius="64" ReserveSpaceForHiddenChildren="False">
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'emote-menu-category-general'}" TargetLayer="General" Visible="False">
+    <ui:RadialContainer Name="Main" VerticalExpand="True" HorizontalExpand="True" InitialRadius="100" ReserveSpaceForHiddenChildren="False">
+        <ui:RadialMenuTextureButtonWithSector SetSize="64 64" ToolTip="{Loc 'emote-menu-category-general'}" TargetLayer="General" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Clothing/Head/Soft/mimesoft.rsi/icon.png"/>
-        </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'emote-menu-category-vocal'}" TargetLayer="Vocal" Visible="False">
+        </ui:RadialMenuTextureButtonWithSector>
+        <ui:RadialMenuTextureButtonWithSector SetSize="64 64" ToolTip="{Loc 'emote-menu-category-vocal'}" TargetLayer="Vocal" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Emotes/vocal.png"/>
-        </ui:RadialMenuTextureButton>
-        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'emote-menu-category-hands'}" TargetLayer="Hands" Visible="False">
+        </ui:RadialMenuTextureButtonWithSector>
+        <ui:RadialMenuTextureButtonWithSector SetSize="64 64" ToolTip="{Loc 'emote-menu-category-hands'}" TargetLayer="Hands" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Clothing/Hands/Gloves/latex.rsi/icon.png"/>
-        </ui:RadialMenuTextureButton>
+        </ui:RadialMenuTextureButtonWithSector>
     </ui:RadialContainer>
 
     <!-- General -->
-    <ui:RadialContainer Name="General"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <ui:RadialContainer Name="General"  VerticalExpand="True" HorizontalExpand="True" InitialRadius="100"/>
 
     <!-- Vocal -->
-    <ui:RadialContainer Name="Vocal"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <ui:RadialContainer Name="Vocal"  VerticalExpand="True" HorizontalExpand="True" InitialRadius="100"/>
 
     <!-- Hands -->
-    <ui:RadialContainer Name="Hands"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+    <ui:RadialContainer Name="Hands"  VerticalExpand="True" HorizontalExpand="True" InitialRadius="100"/>
 
 </ui:RadialMenu>

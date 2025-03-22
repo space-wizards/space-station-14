@@ -83,6 +83,18 @@
     count: 8
 
 - type: localizedDataset
+  id: DrGibbAds
+  values:
+    prefix: advertisement-gibb-
+    count: 8
+
+- type: localizedDataset
+  id: SmiteAds
+  values:
+    prefix: advertisement-smite-
+    count: 8
+
+- type: localizedDataset
   id: CondimentVendAds
   values:
     prefix: advertisement-condiment-
@@ -273,3 +285,9 @@
   values:
     prefix: advertisement-medibot-
     count: 17
+
+- type: localizedDataset
+  id: PrideDrobeAds
+  values:
+    prefix: advertisement-pride-
+    count: 4
