@@ -214,8 +214,7 @@ public enum LogType
     /// Entity started or stopped taking temperature damage.
     /// </summary>
     Temperature = 49,
-    Hunger = 50,
-    Thirst = 51,
+    Satiation = 50,
 
     /// <summary>
     /// Entity received electrocution damage.
