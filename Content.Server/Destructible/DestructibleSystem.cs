@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
@@ -10,6 +9,7 @@ using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Stack;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
@@ -21,6 +21,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Shared.Humanoid;
+using Robust.Shared.Player;
 
 namespace Content.Server.Destructible
 {
@@ -37,7 +39,7 @@ namespace Content.Server.Destructible
         [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;
         [Dependency] public readonly StackSystem StackSystem = default!;
         [Dependency] public readonly TriggerSystem TriggerSystem = default!;
-        [Dependency] public readonly SolutionContainerSystem SolutionContainerSystem = default!;
+        [Dependency] public readonly SharedSolutionContainerSystem SolutionContainerSystem = default!;
         [Dependency] public readonly PuddleSystem PuddleSystem = default!;
         [Dependency] public readonly SharedContainerSystem ContainerSystem = default!;
         [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
@@ -61,9 +63,12 @@ namespace Content.Server.Destructible
                 {
                     RaiseLocalEvent(uid, new DamageThresholdReached(component, threshold), true);
 
+                    var logImpact = LogImpact.Low;
                     // Convert behaviors into string for logs
                     var triggeredBehaviors = string.Join(", ", threshold.Behaviors.Select(b =>
                     {
+                        if (logImpact <= b.Impact)
+                            logImpact = b.Impact;
                         if (b is DoActsBehavior doActsBehavior)
                         {
                             return $"{b.GetType().Name}:{doActsBehavior.Acts.ToString()}";
@@ -71,14 +76,20 @@ namespace Content.Server.Destructible
                         return b.GetType().Name;
                     }));
 
+                    // If it doesn't have a humanoid component, it's probably not particularly notable?
+                    if (logImpact > LogImpact.Medium && !HasComp<HumanoidAppearanceComponent>(uid))
+                        logImpact = LogImpact.Medium;
+
                     if (args.Origin != null)
                     {
-                        _adminLogger.Add(LogType.Damaged, LogImpact.Medium,
+                        _adminLogger.Add(LogType.Damaged,
+                            logImpact,
                             $"{ToPrettyString(args.Origin.Value):actor} caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
                     }
                     else
                     {
-                        _adminLogger.Add(LogType.Damaged, LogImpact.Medium,
+                        _adminLogger.Add(LogType.Damaged,
+                            logImpact,
                             $"Unknown damage source caused {ToPrettyString(uid):subject} to trigger [{triggeredBehaviors}]");
                     }
 

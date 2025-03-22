@@ -1,10 +1,12 @@
 - type: entity
+  parent: BaseMinorContraband
   id: ThiefBeacon
   name: thieving beacon
   description: A device that will teleport everything around it to the thief's vault at the end of the shift.
   components:
     - type: ThiefBeacon
     - type: StealArea
+      range: 2 # Slightly larger than fulton beacon's random offset
     - type: Item
       size: Normal
     - type: Physics

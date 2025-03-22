@@ -41,10 +41,15 @@
   - type: CameraRecoil
   - type: MindContainer
   - type: MovementSpeedModifier
-  - type: Polymorphable
-  - type: StatusIcon
   - type: RequireProjectileTarget
     active: False
+
+- type: entity
+  save: false
+  id: MobPolymorphable
+  abstract: true
+  components:
+  - type: Polymorphable
 
 # Used for mobs that have health and can take damage.
 - type: entity
@@ -152,7 +157,7 @@
     sweatHeatRegulation: 2000
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 25
+    thermalRegulationTemperatureThreshold: 10
   - type: MovedByPressure
 
 # Used for mobs that require regular atmospheric conditions.
@@ -168,7 +173,7 @@
     sweatHeatRegulation: 500
     shiveringHeatRegulation: 500
     normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 25
+    thermalRegulationTemperatureThreshold: 10
   - type: Temperature
     heatDamageThreshold: 325
     coldDamageThreshold: 260

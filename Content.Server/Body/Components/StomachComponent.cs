@@ -25,8 +25,8 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     The solution inside of this stomach this transfers reagents to the body.
         /// </summary>
-        [DataField]
-        public Entity<SolutionComponent>? Solution = null;
+        [ViewVariables]
+        public Entity<SolutionComponent>? Solution;
 
         /// <summary>
         ///     What solution should this stomach push reagents into, on the body?

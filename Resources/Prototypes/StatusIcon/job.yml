@@ -31,6 +31,14 @@
 
 - type: jobIcon
   parent: JobIcon
+  id: JobIconStationAi
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: StationAi
+  jobName: job-name-station-ai
+
+- type: jobIcon
+  parent: JobIcon
   id: JobIconBotanist
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi

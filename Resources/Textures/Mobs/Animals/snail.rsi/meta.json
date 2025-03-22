@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by Kezu (discord) & IProduceWidgets (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "snail",
+      "directions": 4
+    },
+    {
+      "name": "dead"
+    },
+	{
+      "name": "spacesnail",
+      "directions": 4
+    },
+    {
+      "name": "spacedead"
+    },
+    {
+      "name": "snoth",
+      "directions": 4
+    },
+    {
+      "name": "snothdead"
+    }
+  ]
+}

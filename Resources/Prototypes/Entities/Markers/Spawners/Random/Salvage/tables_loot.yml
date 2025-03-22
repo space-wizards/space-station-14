@@ -49,6 +49,8 @@
     - id: SheetSteel10
     - id: SheetGlass10
     - id: SheetPlastic10
+    - id: ScrapGeneratorFuelTank
+      weight: 0.5
     - id: PartRodMetal10
       weight: 0.33
     - id: MaterialWoodPlank10
@@ -64,6 +66,9 @@
   id: SalvageScrapLarge
   table: !type:GroupSelector
     children:
+    - !type:NestedSelector
+      tableId: RandomGeneratorTable
+      weight: 2
     - id: ScrapAirlock1
     - id: ScrapCloset
     - id: ScrapFirelock1
@@ -114,6 +119,8 @@
         range: 4, 7
     - id: SpaceCash1000
     - id: WristwatchGold
+    - !type:NestedSelector
+      tableId: RingTableCommon
 
 - type: entityTable
   id: SalvageTreasureRare
@@ -145,6 +152,8 @@
           weight: 14
         - id: SpaceCash10000
           weight: 1
+    - !type:NestedSelector
+      tableId: RingTableRare
 
 - type: entityTable
   id: SalvageTreasureLegendary
@@ -157,6 +166,10 @@
     - id: TreasureCoinDiamond
       amount: !type:RangeNumberSelector
         range: 2, 5
+    - !type:NestedSelector
+      tableId: RingTableRare
+      rolls: !type:RangeNumberSelector
+        range: 2, 3
 
 # Equipment: Tools and things used by salvagers. Quote unquote "Gamer Loot"
 
@@ -189,10 +202,12 @@
     - id: PowerCellHighPrinted
     - id: RadioHandheld
     - id: ClothingBeltUtility
+    - id: Floodlight
     - id: WeaponProtoKineticAccelerator
       weight: 0.5
     - id: OxygenTankFilled
     - id: WelderIndustrial
+    - id: WeaponGrapplingGun
     - !type:GroupSelector
       children:
       - id: ClothingHeadHatWelding
@@ -207,6 +222,7 @@
   id: SalvageEquipmentRare
   table: !type:GroupSelector
     children:
+    - id: BlueprintDoubleEmergencyTank
     - id: FultonBeacon
     - id: Fulton
       amount: !type:RangeNumberSelector
@@ -217,6 +233,8 @@
     - id: ClothingEyesGlassesMeson
     - id: ClothingBeltSalvageWebbing
     - id: SeismicCharge
+    - id: MineralScanner
+      weight: 0.5
     - id: WeaponCrusher
       weight: 0.5
     - !type:GroupSelector
@@ -228,6 +246,9 @@
   id: SalvageEquipmentLegendary
   table: !type:GroupSelector
     children:
+    - id: AdvancedMineralScanner
+    - id: BlueprintFulton
+    - id: BlueprintSeismicCharge
     - id: WeaponCrusherGlaive
     - id: ClothingOuterHardsuitSalvage
     - id: OmnizineChemistryBottle
@@ -235,3 +256,16 @@
       children:
       - id: JetpackBlueFilled
       - id: JetpackBlackFilled
+
+- type: entityTable
+  id: RandomGeneratorTable
+  table: !type:GroupSelector
+    children:
+    - id: ScrapGeneratorPlasmaLeaking
+    - id: ScrapGeneratorUraniumLeaking
+    - id: ScrapGeneratorPlasma
+      weight: 0.5
+    - id: ScrapGeneratorUranium
+      weight: 0.5
+    - id: ScrapGeneratorFrame
+      weight: 0.25

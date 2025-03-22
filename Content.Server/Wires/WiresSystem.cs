@@ -9,6 +9,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
@@ -386,11 +387,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
     private void OnWiresActionMessage(EntityUid uid, WiresComponent component, WiresActionMessage args)
     {
-        if (args.Actor == null)
-        {
-            return;
-        }
-        var player = (EntityUid) args.Actor;
+        var player = args.Actor;
 
         if (!EntityManager.TryGetComponent(player, out HandsComponent? handsComponent))
         {
@@ -725,7 +722,7 @@ public sealed class WiresSystem : SharedWiresSystem
                     break;
                 }
 
-                Tool.PlayToolSound(toolEntity, tool, user);
+                Tool.PlayToolSound(toolEntity, tool, null);
                 if (wire.Action == null || wire.Action.Cut(user, wire))
                 {
                     wire.IsCut = true;
@@ -746,7 +743,7 @@ public sealed class WiresSystem : SharedWiresSystem
                     break;
                 }
 
-                Tool.PlayToolSound(toolEntity, tool, user);
+                Tool.PlayToolSound(toolEntity, tool, null);
                 if (wire.Action == null || wire.Action.Mend(user, wire))
                 {
                     wire.IsCut = false;

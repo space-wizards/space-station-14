@@ -2,7 +2,7 @@
   name: book
   parent: BaseItem
   id: BookBase
-  description: 'A hardcover book.'
+  description: A hardcover book.
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
@@ -22,26 +22,61 @@
     contentSize: 12000
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
+    requiresComplex: false
   - type: UserInterface
     interfaces:
       enum.PaperUiKey.Key:
         type: PaperBoundUserInterface
   - type: Tag
     tags:
-      - Book
+    - Book
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_book.svg.96dpi.png"
     backgroundPatchMargin: 23.0, 16.0, 14.0, 15.0
     contentMargin: 20.0, 20.0, 20.0, 20.0
+  - type: MeleeWeapon  # This was originally a feature exclusive to the law book but maintainers decided it should apply to all books for consistency. I frankly disagree but :P
+    soundHit:
+      collection: Punch
+    damage:
+      types:
+        Blunt: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 1
+
+- type: entity
+  parent: BaseItem
+  id: BaseGuidebook
+  abstract: true
+  suffix: guidebook
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - SS14
+  - type: MeleeWeapon  # Should write it again since BaseGuidebook doesn't inherit BookBase
+    soundHit:
+      collection: Punch
+    damage:
+      types:
+        Blunt: 1
+  - type: DamageOtherOnHit
+    damage:
+      types:
 
 - type: entity
   id: BookSpaceEncyclopedia
-  parent: BaseItem
+  parent: BaseGuidebook
   name: space encyclopedia
   description: An encyclopedia containing all the knowledge. The author of this encyclopedia is unknown.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
@@ -52,22 +87,17 @@
       color: gold
     - state: icon_planet
       color: "#42b6f5"
-  - type: Tag
-    tags:
-    - Book
   - type: GuideHelp
-    openOnActivation: true
     guides:
     - SS14
 
 - type: entity
   id: BookTheBookOfControl
-  parent: BaseItem
+  parent: BaseGuidebook
   name: the book of control
   description: Essential to become robust.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
@@ -78,22 +108,17 @@
       color: red
     - state: icon_corner
       color: red
-  - type: Tag
-    tags:
-    - Book
   - type: GuideHelp
-    openOnActivation: true
     guides:
     - Controls
 
 - type: entity
   id: BookBartendersManual
-  parent: BaseItem
+  parent: BaseGuidebook
   name: bartender's manual
   description: This manual is stained with beer.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
@@ -101,46 +126,36 @@
     - state: decor_wingette
       color: "#006666"
     - state: icon_bar
-  - type: Tag
-    tags:
-    - Book
   - type: GuideHelp
-    openOnActivation: true
     guides:
     - Bartender
     - Drinks
 
 - type: entity
   id: BookHowToCookForFortySpaceman
-  parent: BaseItem
+  parent: BaseGuidebook
   name: How To Cook For Forty Spacemen
   description: A book about cooking written by a space chef.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
       color: "#e22541"
     - state: decor_wingette
     - state: icon_apple
-  - type: Tag
-    tags:
-    - Book
   - type: GuideHelp
-    openOnActivation: true
     guides:
     - Chef
     - FoodRecipes
 
 - type: entity
   id: BookLeafLoversSecret
-  parent: BaseItem
+  parent: BaseGuidebook
   name: leaf lover's secret
   description: It has a strong weed smell. It motivates you to feed and seed.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
@@ -150,23 +165,18 @@
     - state: icon_cabbage
     - state: icon_corner
       color: gold
-  - type: Tag
-    tags:
-    - Book
   - type: GuideHelp
-    openOnActivation: true
     guides:
     - Botany
     - Chemicals
 
 - type: entity
   id: BookEngineersHandbook
-  parent: BaseItem
+  parent: BaseGuidebook
   name: engineer's handbook
   description: A handbook about engineering written by Nanotrasen.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
@@ -176,22 +186,17 @@
     - state: icon_wrench
     - state: icon_corner
       color: gold
-  - type: Tag
-    tags:
-    - Book
   - type: GuideHelp
-    openOnActivation: true
     guides:
     - Engineering
 
 - type: entity
   id: BookScientistsGuidebook
-  parent: BaseItem
+  parent: BaseGuidebook
   name: scientist's guidebook
   description: A guidebook about science written by Nanotrasen.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
@@ -199,22 +204,17 @@
     - state: decor_wingette_circle
       color: "#be69f0"
     - state: icon_dna
-  - type: Tag
-    tags:
-    - Book
   - type: GuideHelp
-    openOnActivation: true
     guides:
     - Science
 
 - type: entity
   id: BookSecurity
-  parent: BaseItem
+  parent: BaseGuidebook
   name: security 101
   description: A book about security written by Nanotrasen. The book is stained with blood. It seems to have been used more as a weapon than reading material.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
@@ -222,50 +222,40 @@
     - state: decor_wingette
       color: "#e05334"
     - state: icon_stunbaton
-  - type: Tag
-    tags:
-    - Book
   - type: MeleeWeapon
     wideAnimationRotation: 180
     damage:
       types:
         Blunt: 6
   - type: GuideHelp
-    openOnActivation: true
     guides:
     - Security
     - Antagonists
 
 - type: entity
   id: BookHowToKeepStationClean
-  parent: BaseItem
+  parent: BaseGuidebook
   name: how to keep station clean
   description: This book is very clean.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
       color: "#550c82"
     - state: decor_wingette
     - state: icon_bucket
-  - type: Tag
-    tags:
-    - Book
   - type: GuideHelp
-    openOnActivation: true
     guides:
     - Janitorial
 
 - type: entity
   id: BookHowToRockAndStone
-  parent: BaseItem
+  parent: BaseGuidebook
   name: how to rock and stone
   description: A very detailed guide about salvage written by Karl, a legendary space miner, however he's missing. It motivates you to rock and stone.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
@@ -276,22 +266,17 @@
     - state: icon_diamond
     - state: icon_text
       color: "#fcdf74"
-  - type: Tag
-    tags:
-    - Book
   - type: GuideHelp
-    openOnActivation: true
     guides:
     - Salvage
 
 - type: entity
   id: BookMedicalReferenceBook
-  parent: BaseItem
+  parent: BaseGuidebook
   name: medical reference book
   description: A reference book about medical written by an old doctor. The handwriting is barely comprehensible.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
@@ -300,22 +285,17 @@
       color: "#f7f7f7"
     - state: icon_medical
       color: "#58abcc"
-  - type: Tag
-    tags:
-    - Book
   - type: GuideHelp
-    openOnActivation: true
     guides:
     - Medical
 
 - type: entity
   id: BookHowToSurvive
-  parent: BaseItem
+  parent: BaseGuidebook
   name: how to survive
   description: Ironically the author of this book is dead.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_old
@@ -326,22 +306,17 @@
       color: red
     - state: icon_wrench
     - state: overlay_blood
-  - type: Tag
-    tags:
-    - Book
   - type: GuideHelp
-    openOnActivation: true
     guides:
     - Survival
 
 - type: entity
   id: BookChemicalCompendium
-  parent: BaseItem
+  parent: BaseGuidebook
   name: chempendium
   description: A comprehensive guide written by some old skeleton of a professor about chemical synthesis.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
@@ -349,42 +324,27 @@
     - state: decor_wingette
       color: "#2a7b74"
     - state: icon_chemical
-  - type: Tag
-    tags:
-    - Book
   - type: GuideHelp
-    openOnActivation: true
     guides:
     - Chemicals
     - Chemist
 
 - type: entity
   id: BookSpaceLaw
-  parent: BaseItem
+  parent: BaseGuidebook
   name: space law
   description: A set of Nanotrasen guidelines for keeping law and order on their space stations.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_strong
       color: "#87011c"
     - state: icon_law
       color: "#f7d61a"
-  - type: Tag
-    tags:
-    - Book
   - type: GuideHelp
-    openOnActivation: true
     guides:
     - SpaceLaw
-  - type: MeleeWeapon # so you can beat stupid cadets
-    soundHit:
-      collection: Punch
-    damage:
-      types:
-        Blunt: 1
 
 - type: entity
   parent: BookBase
@@ -465,7 +425,6 @@
   description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
@@ -485,7 +444,6 @@
   description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
@@ -505,7 +463,6 @@
   description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
@@ -525,7 +482,6 @@
   description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
   components:
   - type: Sprite
-    sprite: Objects/Misc/books.rsi
     layers:
     - state: paper
     - state: cover_base
