@@ -56,6 +56,11 @@
     state: icon
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_blue.rsi
+  - type: Tag
+    tags:
+    - Toolbox
+    - DevoterToolbox
+
 
 - type: entity
   name: electrical toolbox

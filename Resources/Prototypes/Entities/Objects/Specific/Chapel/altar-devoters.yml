@@ -1,0 +1,112 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseAltarDevoter
+  components:
+  - type: Item
+    size: Small
+
+- type: entity
+  parent: BaseAltarDevoter
+  id: AltarDevoterNanotrasen
+  name: nanotrasen altar devoter
+  description: Used to devote an undevoted altar to Nanotrasen.
+  components:
+  - type: Tag
+    tags:
+    - DevoterNanotrasen
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/Devoters/nanotrasen.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/Devoters/nanotrasen.rsi
+
+- type: entity
+  parent: BaseAltarDevoter
+  id: AltarDevoterChaos
+  name: chaos altar devoter
+  description: Used to devote an undevoted altar to Chaos.
+  components:
+  - type: Tag
+    tags:
+    - DevoterChaos
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/Devoters/chaos.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/Devoters/chaos.rsi
+
+- type: entity
+  parent: BaseAltarDevoter
+  id: AltarDevoterDruid
+  name: druid altar devoter
+  description: Used to devote an undevoted altar to the druidic gods.
+  components:
+  - type: Tag
+    tags:
+    - DevoterDruid
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/Devoters/druid.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/Devoters/druid.rsi
+
+- type: entity
+  parent: BaseAltarDevoter
+  id: AltarDevoterToolbox
+  name: toolbox altar devoter
+  description: Used to devote an undevoted altar to the Holy Toolbox.
+  components:
+  - type: Tag
+    tags:
+    - DevoterToolbox
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/Devoters/toolbox.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/Devoters/toolbox.rsi
+
+- type: entity
+  parent: BaseAltarDevoter
+  id: AltarDevoterSpaceChristian
+  name: space-Christian altar devoter
+  description: Used to devote an undevoted altar to Space Jesus.
+  components:
+  - type: Tag
+    tags:
+    - DevoterSpaceChristian
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/Devoters/space_christian.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/Devoters/space_christian.rsi
+
+- type: entity
+  parent: BaseAltarDevoter
+  id: AltarDevoterSatana
+  name: satanic altar devoter
+  description: Used to devote an undevoted altar to the Infernal gods.
+  components:
+  - type: Tag
+    tags:
+    - DevoterSatana
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/Devoters/satana.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/Devoters/satana.rsi
+
+- type: entity
+  parent: BaseAltarDevoter
+  id: AltarDevoterTechnology
+  name: technology altar devoter
+  description: Used to devote an undevoted altar to technology.
+  components:
+  - type: Tag
+    tags:
+    - DevoterTechnology
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/Devoters/technology.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Specific/Chapel/Devoters/technology.rsi
