@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8581a636acfc1517611a680b7711a74fc7ef335 and modified by IProduceWidgets (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "black"
+    },
+    {
+      "name": "black-side"
+    },
+    {
+      "name": "blue"
+    },
+    {
+      "name": "blue-side"
+    },
+    {
+      "name": "can-connector"
+    },
+    {
+      "name": "locked"
+    },
+    {
+      "name": "unlocked"
+    },
+    {
+      "name": "can-o0",
+      "delays": [
+        [
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "can-o1"
+    },
+    {
+      "name": "can-o2"
+    },
+    {
+      "name": "can-o3"
+    },
+    {
+      "name": "can-open"
+    },
+    {
+      "name": "grey"
+    },
+    {
+      "name": "grey-side"
+    },
+    {
+      "name": "orange"
+    },
+    {
+      "name": "orange-side"
+    },
+    {
+      "name": "red"
+    },
+    {
+      "name": "red-side"
+    },
+    {
+      "name": "yellow"
+    },
+    {
+      "name": "yellow-side"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "green-side"
+    },
+    {
+      "name": "greenys"
+    },
+    {
+      "name": "greenys-side"
+    },
+    {
+      "name": "darkblue"
+    },
+    {
+      "name": "darkblue-side"
+    },
+    {
+      "name": "frezon"
+    },
+    {
+      "name": "frezon-side"
+    },
+	{
+      "name": "crack1"
+    },
+	{
+      "name": "crack2"
+    },
+	{
+      "name": "crack3"
+    },
+	{
+      "name": "stripes"
+    },
+	{
+      "name": "rings"
+    },
+	{
+      "name": "rings-side"
+    },
+	{
+      "name": "rings2"
+    },
+	{
+      "name": "rings2-side"
+    },
+	{
+      "name": "valve-closed"
+    },
+	{
+      "name": "valve-closed-side"
+    },
+	{
+      "name": "valve-open"
+    },
+	{
+      "name": "valve-open-side"
+    }
+  ]
+}
