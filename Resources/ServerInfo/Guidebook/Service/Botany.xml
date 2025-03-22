@@ -13,7 +13,7 @@ There are many tools that can be used to keep your crops healthy and growing. Th
 <Box>
 <GuideEntityEmbed Entity="hydroponicsTray"/>
 </Box>
-It's a hydroponics tray, it grows plants with water. First fill the tray with water, then add seeds. 
+It's a hydroponics tray, it grows plants with water. First fill the tray with water, then add seeds.
 Hydroponics tray lights indicate different things depending on color and position:
 - [color=red]Red Light, Left[/color]: Dead plant that needs re-planting. Use a spade to remove the plant.
 - [color=orange]Flashing Orange Light, Center[/color]: The environment is sub-optimal. Check what is affecting the plant by Shift Clicking on it. It is likely weeds but it could be undesirable pressure or lack of oxygen. If weeds, use a mini hoe or spray 1 time with weed spray. Be warned, however, that overuse of weed killers can lead to unhealthy plants, possibly killing them.
@@ -64,7 +64,7 @@ Plants treated with [color=cyan]unstable mutagen[/color] will experience random 
 The more unstable mutagen you use, the more mutations you will get. Since many genes are vital to a plant's survival, most mutations will cause a plant to die.
 
 <Box>
-<GuideEntityEmbed Entity="UnstableMutagenChemistryBottle"/>
+<GuideEntityEmbed Entity="ChemistryBottleUnstableMutagen"/>
 </Box>
 
 ## Cross-Pollination
@@ -85,5 +85,5 @@ Some chemicals have special effects on plants.
 <GuideReagentEmbed Reagent="Necrosol"/>
 <GuideReagentEmbed Reagent="Phalanximine"/>
 <GuideReagentGroupEmbed Group="Botanical"/>
-  
+
 </Document>

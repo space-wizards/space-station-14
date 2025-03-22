@@ -33400,7 +33400,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 63.32031,34.513424
       parent: 2
-- proto: MuteToxinChemistryBottle
+- proto: ChemistryBottleMuteToxin
   entities:
   - uid: 6710
     components:
@@ -39870,7 +39870,7 @@ entities:
     - type: Transform
       pos: 46.69603,21.421711
       parent: 2
-- proto: ToxinChemistryBottle
+- proto: ChemistryBottleToxin
   entities:
   - uid: 6709
     components:
