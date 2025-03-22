@@ -1,12 +1,13 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Cargo.Systems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Storage.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.Throwing;
 using Content.Shared.Toggleable;
@@ -18,7 +19,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
-using Content.Shared.CCVar;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -53,7 +53,6 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<GasTankComponent, GasTankSetPressureMessage>(OnGasTankSetPressure);
             SubscribeLocalEvent<GasTankComponent, GasTankToggleInternalsMessage>(OnGasTankToggleInternals);
             SubscribeLocalEvent<GasTankComponent, GasAnalyzerScanEvent>(OnAnalyzed);
-            SubscribeLocalEvent<GasTankComponent, PriceCalculationEvent>(OnGasTankPrice);
             SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerb);
             Subs.CVar(_cfg, CCVars.AtmosTankFragment, UpdateMaxRange, true);
         }
@@ -88,7 +87,7 @@ namespace Content.Server.Atmos.EntitySystems
             _ui.SetUiState(owner, SharedGasTankUiKey.Key,
                 new GasTankBoundUserInterfaceState
                 {
-                    TankPressure = component.Air?.Pressure ?? 0,
+                    TankPressure = Comp<InternalAirComponent>(ent.Owner)?.Air?.Pressure ?? 0,
                     OutputPressure = initialUpdate ? component.OutputPressure : null,
                     InternalsConnected = component.IsConnected,
                     CanConnectInternals = CanConnectToInternals(ent)
@@ -117,8 +116,8 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnExamined(EntityUid uid, GasTankComponent component, ExaminedEvent args)
         {
             using var _ = args.PushGroup(nameof(GasTankComponent));
-            if (args.IsInDetailsRange)
-                args.PushMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(component.Air?.Pressure ?? 0))));
+            if (args.IsInDetailsRange && TryComp<InternalAirComponent>(uid, out var internalAir))
+                args.PushMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(internalAir.Air?.Pressure ?? 0))));
             if (component.IsConnected)
                 args.PushMarkup(Loc.GetString("comp-gas-tank-connected"));
             args.PushMarkup(Loc.GetString(component.IsValveOpen ? "comp-gas-tank-examine-open-valve" : "comp-gas-tank-examine-closed-valve"));
@@ -148,7 +147,7 @@ namespace Content.Server.Atmos.EntitySystems
             while (query.MoveNext(out var uid, out var comp))
             {
                 var gasTank = (uid, comp);
-                if (comp.IsValveOpen && !comp.IsLowPressure && comp.OutputPressure > 0)
+                if (comp.IsValveOpen && !IsLowPressure((uid, comp)) && comp.OutputPressure > 0)
                 {
                     ReleaseGas(gasTank);
                 }
@@ -163,9 +162,9 @@ namespace Content.Server.Atmos.EntitySystems
                     }
                 }
 
-                if (comp.Air != null)
+                if (TryComp<InternalAirComponent>(uid, out var internalAir) && internalAir.Air != null)
                 {
-                    _atmosphereSystem.React(comp.Air, comp);
+                    _atmosphereSystem.React(internalAir.Air, internalAir);
                 }
                 CheckStatus(gasTank);
                 if (_ui.IsUiOpen(uid, SharedGasTankUiKey.Key))
@@ -204,18 +203,22 @@ namespace Content.Server.Atmos.EntitySystems
 
         public GasMixture? RemoveAir(Entity<GasTankComponent> gasTank, float amount)
         {
-            var gas = gasTank.Comp.Air?.Remove(amount);
-            CheckStatus(gasTank);
-            return gas;
+            if (TryComp<InternalAirComponent>(gasTank.Owner, out var internalAir))
+            {
+                var gas = internalAir.Air.Remove(amount);
+                CheckStatus(gasTank);
+                return gas;
+            }
+            return null;
         }
 
         public GasMixture RemoveAirVolume(Entity<GasTankComponent> gasTank, float volume)
         {
             var component = gasTank.Comp;
-            if (component.Air == null)
+            if (!TryComp<InternalAirComponent>(gasTank.Owner, out var internalAir) || internalAir.Air == null)
                 return new GasMixture(volume);
 
-            var molesNeeded = component.OutputPressure * volume / (Atmospherics.R * component.Air.Temperature);
+            var molesNeeded = component.OutputPressure * volume / (Atmospherics.R * internalAir.Air.Temperature);
 
             var air = RemoveAir(gasTank, molesNeeded);
 
@@ -318,27 +321,27 @@ namespace Content.Server.Atmos.EntitySystems
 
         public void AssumeAir(Entity<GasTankComponent> ent, GasMixture giver)
         {
-            _atmosphereSystem.Merge(ent.Comp.Air, giver);
+            _atmosphereSystem.Merge(Comp<InternalAirComponent>(ent.Owner).Air, giver);
             CheckStatus(ent);
         }
 
         public void CheckStatus(Entity<GasTankComponent> ent)
         {
             var (owner, component) = ent;
-            if (component.Air == null)
+            if (!TryComp<InternalAirComponent>(ent.Owner, out var internalAir) || internalAir.Air == null)
                 return;
 
-            var pressure = component.Air.Pressure;
+            var pressure = internalAir.Air.Pressure;
 
             if (pressure > component.TankFragmentPressure && _maxExplosionRange > 0)
             {
                 // Give the gas a chance to build up more pressure.
                 for (var i = 0; i < 3; i++)
                 {
-                    _atmosphereSystem.React(component.Air, component);
+                    _atmosphereSystem.React(internalAir.Air, internalAir);
                 }
 
-                pressure = component.Air.Pressure;
+                pressure = internalAir.Air.Pressure;
                 var range = MathF.Sqrt((pressure - component.TankFragmentPressure) / component.TankFragmentScale);
 
                 // Let's cap the explosion, yeah?
@@ -356,7 +359,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var environment = _atmosphereSystem.GetContainingMixture(owner, false, true);
                     if (environment != null)
-                        _atmosphereSystem.Merge(environment, component.Air);
+                        _atmosphereSystem.Merge(environment, internalAir.Air);
 
                     _audioSys.PlayPvs(component.RuptureSound, Transform(owner).Coordinates, AudioParams.Default.WithVariation(0.125f));
 
@@ -376,7 +379,7 @@ namespace Content.Server.Atmos.EntitySystems
                     if (environment == null)
                         return;
 
-                    var leakedGas = component.Air.RemoveRatio(0.25f);
+                    var leakedGas = internalAir.Air.RemoveRatio(0.25f);
                     _atmosphereSystem.Merge(environment, leakedGas);
                 }
                 else
@@ -396,13 +399,11 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private void OnAnalyzed(EntityUid uid, GasTankComponent component, GasAnalyzerScanEvent args)
         {
-            args.GasMixtures ??= new List<(string, GasMixture?)>();
-            args.GasMixtures.Add((Name(uid), component.Air));
-        }
-
-        private void OnGasTankPrice(EntityUid uid, GasTankComponent component, ref PriceCalculationEvent args)
-        {
-            args.Price += _atmosphereSystem.GetPrice(component.Air);
+            if (TryComp<InternalAirComponent>(uid, out var internalAir))
+            {
+                args.GasMixtures ??= new List<(string, GasMixture?)>();
+                args.GasMixtures.Add((Name(uid), internalAir.Air));
+            }
         }
 
         private void OnGetAlternativeVerb(EntityUid uid, GasTankComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -419,6 +420,12 @@ namespace Content.Server.Atmos.EntitySystems
                 },
                 Disabled = component.IsConnected,
             });
+        }
+        public bool IsLowPressure(Entity<GasTankComponent> entity)
+        {
+            if (!TryComp<InternalAirComponent>(entity, out var internalAir))
+                return true;
+            return (internalAir.Air?.Pressure ?? 0F) <= entity.Comp.TankLowPressure;
         }
     }
 }
