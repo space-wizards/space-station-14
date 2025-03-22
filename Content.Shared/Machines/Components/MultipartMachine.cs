@@ -57,4 +57,12 @@ public sealed partial class MultipartMachineComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Angle? Rotation = null;
+
+    /// <summary>
+    /// Flag for whether the client side system is allowed to show
+    /// ghosts of missing machine parts.
+    /// Controlled/Used by the client side.
+    /// </summary>
+    [DataField]
+    public List<EntityUid> Ghosts = [];
 }

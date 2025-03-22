@@ -4,6 +4,7 @@
   id: MultipartMachineGhost
   categories: [ HideSpawnMenu ]
   components:
+    - type: MultipartMachineGhost
     - type: Sprite
       sprite: Markers/cross.rsi
       layers:
