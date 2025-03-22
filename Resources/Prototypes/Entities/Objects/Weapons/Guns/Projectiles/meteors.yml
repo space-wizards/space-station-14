@@ -15,7 +15,7 @@
       types:
         Blunt: 1
   - type: TimedDespawn
-    lifetime: 120
+    lifetime: 240
   - type: Clickable
   - type: Physics
     bodyType: Dynamic
@@ -52,7 +52,9 @@
   description: Makes a station sneeze.
   components:
   - type: Sprite
-    state: space_dust
+    layers:
+    - state: "space_dust"
+      shader: unshaded
   - type: Fixtures
     fixtures:
       projectile:
@@ -87,7 +89,9 @@
   suffix: Small
   components:
   - type: Sprite
-    state: small
+    layers:
+    - state: "small"
+      shader: unshaded
   - type: Fixtures
     fixtures:
       projectile:
@@ -127,7 +131,9 @@
   suffix: Medium
   components:
   - type: Sprite
-    state: medium
+    layers:
+    - state: "medium"
+      shader: unshaded
   - type: Fixtures
     fixtures:
       projectile:
@@ -168,7 +174,9 @@
   suffix: Large
   components:
   - type: Sprite
-    state: big
+    layers:
+    - state: "big"
+      shader: unshaded
   - type: Explosive
     totalIntensity: 150
   - type: Destructible
