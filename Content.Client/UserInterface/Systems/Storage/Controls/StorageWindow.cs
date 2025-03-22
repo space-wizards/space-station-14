@@ -199,7 +199,7 @@ public sealed class StorageWindow : BaseWindow
         var containerSystem = _entity.System<SharedContainerSystem>();
         var uiSystem = _entity.System<UserInterfaceSystem>();
 
-        if (containerSystem.TryGetContainingContainer(StorageEntity.Value, out var container) &&
+        if (containerSystem.TryGetContainingContainer((StorageEntity.Value, null), out var container) &&
             _entity.TryGetComponent(container.Owner, out StorageComponent? storage) &&
             storage.Container.Contains(StorageEntity.Value) &&
             uiSystem
@@ -281,7 +281,7 @@ public sealed class StorageWindow : BaseWindow
             {
                 var containerSystem = _entity.System<SharedContainerSystem>();
 
-                if (containerSystem.TryGetContainingContainer(StorageEntity.Value, out var container) &&
+                if (containerSystem.TryGetContainingContainer((StorageEntity.Value, null), out var container) &&
                     _entity.TryGetComponent(container.Owner, out StorageComponent? storage) &&
                     storage.Container.Contains(StorageEntity.Value))
                 {
@@ -519,7 +519,7 @@ public sealed class StorageWindow : BaseWindow
             if (StorageEntity != null && _entity.System<StorageSystem>().NestedStorage)
             {
                 // If parent container nests us then show back button
-                if (containerSystem.TryGetContainingContainer(StorageEntity.Value, out var container) &&
+                if (containerSystem.TryGetContainingContainer((StorageEntity.Value, null), out var container) &&
                     _entity.TryGetComponent(container.Owner, out StorageComponent? storageComp) && storageComp.Container.Contains(StorageEntity.Value))
                 {
                     _backButton.Visible = true;
