@@ -37,3 +37,5 @@ names-ninja-dataset-36 = Samurai
 names-ninja-dataset-37 = Eater
 names-ninja-dataset-38 = Ryu
 names-ninja-dataset-39 = Raiden
+# imp
+names-ninja-dataset-40 = Larper
