@@ -178,7 +178,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (tile.Hotspot.Bypassing)
             {
-                tile.Hotspot.Volume = tile.Air.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
+                tile.Hotspot.Volume = tile.Air.ReactionResults[(byte)GasReaction.Fire] * Atmospherics.FireGrowthRate;
                 tile.Hotspot.Temperature = tile.Air.Temperature;
             }
             else
@@ -187,7 +187,7 @@ namespace Content.Server.Atmos.EntitySystems
                 affected.Temperature = tile.Hotspot.Temperature;
                 React(affected, tile);
                 tile.Hotspot.Temperature = affected.Temperature;
-                tile.Hotspot.Volume = affected.ReactionResults[GasReaction.Fire] * Atmospherics.FireGrowthRate;
+                tile.Hotspot.Volume = affected.ReactionResults[(byte)GasReaction.Fire] * Atmospherics.FireGrowthRate;
                 Merge(tile.Air, affected);
             }
 

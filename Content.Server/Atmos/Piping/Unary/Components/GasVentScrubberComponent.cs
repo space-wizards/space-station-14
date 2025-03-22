@@ -9,8 +9,12 @@ namespace Content.Server.Atmos.Piping.Unary.Components
     [Access(typeof(GasVentScrubberSystem))]
     public sealed partial class GasVentScrubberComponent : Component
     {
+        /// <summary>
+        /// Identifies if the device is enabled by an air alarm. Does not indicate if the device is powered.
+        /// By default, all air scrubbers start enabled, whether linked to an alarm or not.
+        /// </summary>
         [DataField]
-        public bool Enabled { get; set; } = false;
+        public bool Enabled { get; set; } = true;
 
         [DataField]
         public bool IsDirty { get; set; } = false;
