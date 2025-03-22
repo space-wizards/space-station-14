@@ -5,6 +5,7 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Effects;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Robust.Shared.Physics.Events;
@@ -61,7 +62,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             if (modifiedDamage.AnyPositive() && !deleted)
             {
-                _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
+                _color.RaiseEffect(EffectSource.HitDamage, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
             }
 
             _adminLogger.Add(LogType.BulletHit,
