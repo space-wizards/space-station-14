@@ -12,75 +12,35 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.RoundEnd;
 
 [UsedImplicitly]
-public sealed class RoundEndSummaryUIController : UIController,
-    IOnSystemLoaded<ClientGameTicker>
+public sealed class RoundEndSummaryUIController : UIController
 {
     [Dependency] private readonly IInputManager _input = default!;
 
-    private RoundEndSummaryWindow? _window;
+    public RoundEndSummaryWindow? Window;
 
-    private MenuButton? SummaryButton;
-
-    public void UnloadButton(MenuButton summaryButton)
+    public void ToggleScoreboardWindow(ICommonSession? session = null)
     {
-        summaryButton.Visible = false;
-        summaryButton.OnPressed -= SummaryButtonPressed;
-    }
-
-    public void LoadButton(MenuButton summaryButton)
-    {
-        SummaryButton = summaryButton;
-        SummaryButton.OnPressed += SummaryButtonPressed;
-    }
-
-    private void OnWindowOpen()
-    {
-        SummaryButton?.SetClickPressed(true);
-    }
-
-    private void OnWindowClosed()
-    {
-        SummaryButton?.SetClickPressed(false);
-    }
-
-    private void SummaryButtonPressed(ButtonEventArgs args)
-    {
-        ToggleScoreboardWindow();
-    }
-
-    private void ToggleScoreboardWindow(ICommonSession? session = null)
-    {
-        if (_window == null)
+        if (Window == null)
             return;
 
-        if (_window.IsOpen)
+        if (Window.IsOpen)
         {
-            _window.Close();
+            Window.Close();
         }
         else
         {
-            _window.OpenCenteredRight();
-            _window.MoveToFront();
+            Window.OpenCenteredRight();
+            Window.MoveToFront();
         }
     }
 
     public void OpenRoundEndSummaryWindow(RoundEndMessageEvent message)
     {
         // Don't open duplicate windows (mainly for replays).
-        if (_window?.RoundId == message.RoundId)
+        if (Window?.RoundId == message.RoundId)
             return;
 
-        _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
-            message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, EntityManager);
-
-        _window.OnOpen += OnWindowOpen;
-        _window.OnClose += OnWindowClosed;
-
-        if (SummaryButton != null)
-        {
-            SummaryButton.Pressed = true;
-            SummaryButton.Visible = true;
-        }
+        Window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText, message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, EntityManager);
     }
 
     public void OnSystemLoaded(ClientGameTicker system)
