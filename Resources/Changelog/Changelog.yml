@@ -1,45 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: WT550 and C20-r's "burst" firemodes are now actual bursts.
-    type: Tweak
-  - message: Drozd is now a burst-only weapon (DPS remains unchanged!).
-    type: Tweak
-  id: 7597
-  time: '2024-11-06T14:39:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31292
-- author: PopGamer46
-  changes:
-  - message: Fixed Lambordeere (botany shuttle) bolt buttons not being connected
-    type: Fix
-  id: 7598
-  time: '2024-11-07T22:02:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33065
-- author: Boaz1111
-  changes:
-  - message: Added casual green jumpsuits and skirts to the clothesmate.
-    type: Add
-  id: 7599
-  time: '2024-11-08T14:50:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31710
-- author: ScarKy0
-  changes:
-  - message: Intellicarding the AI is now a doAfter.
-    type: Tweak
-  - message: AI now gets notified when someone tries to intellicard it.
-    type: Add
-  - message: You can no longer exchange the AI between intellicards.
-    type: Fix
-  id: 7600
-  time: '2024-11-09T19:29:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33198
-- author: IProduceWidgets
-  changes:
-  - message: weather now has a completion result for how to unset the weather.
-    type: Tweak
-  id: 7601
-  time: '2024-11-10T04:26:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33130
 - author: BramvanZijp
   changes:
   - message: The Flare Gun & Security Shell Gun now start in their open/unbolted state.
@@ -3886,3 +3845,39 @@
   id: 8096
   time: '2025-03-21T00:13:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35578
+- author: Moomoobeef
+  changes:
+  - message: New sprite for Singularity Generator.
+    type: Tweak
+  id: 8097
+  time: '2025-03-21T08:48:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31500
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed organic thermoregulation. Humans, arachnids, moths, etc. will maintain
+      their desired body temperature better.
+    type: Fix
+  id: 8098
+  time: '2025-03-21T09:36:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35981
+- author: TiniestShark
+  changes:
+  - message: Added inhand sprites to Grenades, Bolas and Throwing Stars
+    type: Add
+  id: 8099
+  time: '2025-03-21T09:37:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35974
+- author: TeenSarlacc
+  changes:
+  - message: You can now buy Foam Force weapons through Cargo.
+    type: Add
+  id: 8100
+  time: '2025-03-21T09:39:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35824
+- author: aada
+  changes:
+  - message: 17 machine boards have been recolored.
+    type: Tweak
+  id: 8101
+  time: '2025-03-21T09:40:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35715
