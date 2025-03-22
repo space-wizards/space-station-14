@@ -9,13 +9,22 @@
 /* -- Plus a syringe? I assume you can pull blood from one of those with a syringe? */ Seems like no.
 	/* I added blood tomatoes instead. */
 
-- Make sure musician stage railings don't block barstools
+/* - Make sure musician stage railings don't block barstools */
 
 - Shutters!
 - Bar, Kitchen, Botany, Graytider Shop - Do they work? Do they all start open (except shop)?
+/* bar */ 
+/* chapel */
+/* kitchen */
+/* botany */
 - Front counters: Sci, Eng, Cargo, Med?, Sec?
+	Atmos: Doesn't have
+	Robotics: Doesn't have
+	Sci: Doesn't have
+	Cargo: Doesn't have
 - Others?
-- Command Meeting Room - Also do they work, and do they correctly block the camera?
+/* - Command Meeting Room - Also do they work, and do they correctly block the camera? */
+	Camera shutter not hooked up?
 
 - Command Meeting Room: Camera to execution chamber, maybe even a button to open the blast doors.
 
@@ -54,7 +63,7 @@
 /* - Do I put a gateway from atmos to engineering? */ No.
 
 /* - Disposals: Make the windoors and the blast doors have good logic for not spacing disposals whenever the lever is pulled. */
-- Execution chamber door access
+/* - Execution chamber door access */
 - Execution cams and monitors: Hooked up correctly?
 
 /* - Unlabel all the circuitboards in the unlabeled circuitboard crate (and maybe label the crate?) */
@@ -68,18 +77,18 @@
 /* - Vault: Fill syringe with 1 dose of cogni (unlabeled) */
 /* -	Remove water from survival kit water bottle */
 -	Make flare spent
--	Make corpse rotten
---		And add ammonia gas?
---		Make corpse exist even
+/* -	Make corpse rotten */
+/* --		And add ammonia gas? */
+/* --		Make corpse exist even */
 --			Give: Passenger PDA/ID (name?), Ancient jumpsuit, gas mask, budget insuls,
 				shoes, bling, ID computer board in pocket
 /* -	Put more stuff in backpack */
 /* -	Add diary page to room with welder */
 /* -	Empty welder of fuel */
 
-- Coms: Do the camera monitors work? Do the camera servers work?
-- Extra encryption keys somewhere?
-- Non-security/AI cameras: Are they viewable on TVs?
+/* - Coms: Do the camera monitors work? Do the camera servers work? */
+/* - Extra encryption keys somewhere? */
+/* - Non-security/AI cameras: Are they viewable on TVs? */
 
 - Cargo: Give QM's escargot the ability to scream if sentient
 - ...and figure out the 'flavor' tag in the component for sentience
@@ -135,8 +144,8 @@
 /* - Borg rechargers */
 /* - Lights */
 /* - Emergency Lights */
-- Holopads
-- Station Beacons
+/* - Holopads */
+/* - Station Beacons */
 /* - Emergency lockers, Fire lockers */
 /* -- And nitrogen */
 /* - Water and Welding tanks */
@@ -144,33 +153,33 @@
 /* - PACMAN generators */
 /* - Maints Loot */
 -- Maints bar?
-- Amogi multitudinous
+/* - Amogi multitudinous */
 - AI cams
-- Security Cams
+/* - Security Cams */
 /* - Firelock doors (follow Impostor Door Sabotage as much as possible) */
 - Vending Machines
-- Disposal chutes
+/* - Disposal chutes */
 /* - APCs, Substations, whatever else is needed for power */
 /* - Air alarms, fans, scrubbers, whatever else is needed for atmo */
-- Fire alarms to make those firelock shutters shut inconveniently
+/* - Fire alarms to make those firelock shutters shut inconveniently */
 /* - At least a couple of escape pods */
 - Deconstructable stuff for getting mats
 /* - Vault */
 /* - AI */
 - Lamps on tables, paper, folders, filecabinets, pens
-- Fax machines
+/* - Fax machines */
 /* - Detective, Psychologist */
 /* - Courtroom */
 - Intercoms
 - Make sure containers have what I expect them to have in them in them.
 - Make sure I can interact with posters correctly
 - Add directional wall signs as per Amonugs
-- Relabel station beacons to match Amogus
+/* - Relabel station beacons to match Amogus */
 - Mailing units
-- Fax machines - and make sure they have the right names or whatever
+/* - Fax machines - and make sure they have the right names or whatever */
 /* - Evac countdown monitors */
 - Name buttons and levers(?) for clarity
-- Mail Teleporter
+/* - Mail Teleporter */
 
 - Make the station move forward!
 
@@ -203,9 +212,9 @@ What I currently have left:
 /* -Gas pipes */
 -Disposal/Mail/Toilet networks
 /* -Lighting */
--Decals
--Various hooking up levers, buttons, airlocks
--All the bits and pieces above that this doesn't cover
+/* -Decals */
+/* -Various hooking up levers, buttons, airlocks */
+/* -All the bits and pieces above that this doesn't cover */
 ==
 
 ==
@@ -269,9 +278,9 @@ Label buttons:
 
 /* Atmos needs wires */
 /* Def/prosc signs: Hidden under disposal chute and wires */
-"Distribution Loop: No data available"
-	Gas sensor for distro loop now has LV cable. Did that fix it?
-Camera monitors not finding camera networks
+/* "Distribution Loop: No data available" */
+/* 	Gas sensor for distro loop now has LV cable. Did that fix it? */
+/* Camera monitors not finding camera networks */
 /* Two Hamlet cages, and both fell off the table. */
 /* Captain's suit room door unpowered (and this room kinda sucks in general) */
 /* Should put something at end of maints hallway just north of Nav hall */
@@ -279,12 +288,12 @@ Camera monitors not finding camera networks
 Mice in sci mice crate no air
 Arti analyzers not connected (Am I sure I want to fix this?)
 /* Maints dart room no power */
-Disposals north door no power...?
-Coms room runs through its battery really dang quick
-	Over 10000 W
-	Replaced with High Cap. Two higher levels possible.
-Admin also runs dry on power right quick (Load: 5409 W)
-	Replaced with High Cap.
+/* Disposals north door no power...? */
+/* Coms room runs through its battery really dang quick */
+/* 	Over 10000 W */
+/* 	Replaced with High Cap. Two higher levels possible. */
+/* Admin also runs dry on power right quick (Load: 5409 W) */
+/* 	Replaced with High Cap. */
 /* HoP's personal room kinda boring */
 /* Secret door from chapel to law...? Is this a good idea? */
 /* Second chapel door shutter not connected */
@@ -295,7 +304,7 @@ Admin also runs dry on power right quick (Load: 5409 W)
 /* Disposals airlock last row of belts (under blast doors) not linked to */
 	/* execution room button */
 /* Trash in disposals airlock can get stuck under plastic flaps */
-Execution rites room telescreen also finds no cams
+/* Execution rites room telescreen also finds no cams */
 Storage NW maints door *does* have power
 	At both ends
 		Moved some LV cables from other circuits away
@@ -305,19 +314,21 @@ Storage NW maints door *does* have power
 /* Cargo conveyor belt plastic flaps missing occluder */
 Mid-cargo maints: Grilles don't actually block vision
 	What if I just added an occluder component to them...?
-	Do they block vision in the context of only PDA light?
+	/* Do they block vision in the context of only PDA light? */ Yes.
 	/* and glass walls do block fun */
-Mid electrical hallway doors: Only top one powered? This is the case in multiple places?
+/* Mid electrical hallway doors: Only top one powered? This is the case in multiple places? */
 Cargo dock conveyor belts are probably wrong
 /* Salv conveyor belt outer lever not hooked up */
 /* Salv docking bay/shuttle workshop: No power at all? */
 /* Asphalt shows cables + disposal chutes */
 Medbay wallmount nanomeds facing wrong way
 	Re-added facing south. Lights might also be blocking?
+	Currently accessible from north, not south.
 /* CMO locker right in front of the door for some reason? */
-"Surgery" in maints: Grilles still don't block LoS
+/* "Surgery" in maints: Grilles still don't block LoS */ Except PDA vision can't see past.
+	Could still make this behind a secret door or something?
 /* Librarian shutter button not hooked up */
-	Yes it is.
+	/* Yes it is. */
 /* Library rear wall (where the air alarm is) really feels like */
 	/* it could use a door or something? */
 /* Chempendium in chem just kinda sitting on the floor */
@@ -326,6 +337,7 @@ Medbay wallmount nanomeds facing wrong way
 /* 	don't want to just give to medics or w/e. */
 Brigmed wall locker empty
 	Replaced with 'medicine wall locker [Filled]'
+	Still empty
 /* Brigmed defib on top of air alarm */
 /* Brig maints door not blocked by camera, needs better protected */
 Prisoner wall closets also start empty
@@ -337,48 +349,169 @@ Armory needs more armor
 /* Check wall TV facings - the one by EVA at least is wrong. */
 	Nope. I think it was a power issue. They're very obvious when wrong.
 Bridge front window very prone to spacing
-Perma + high sec brig no eva suits for prisoners?
-Could also use a sec locker
+/* Perma + high sec brig no eva suits for prisoners? */
+/* Could also use a sec locker */
 Engineering break room also prone to spacing
 Solars prone to meteor breakages
 /* Nitrogen closet by maints chapel is empty */
 Weird color room in east service maints starts with lights on
 Musician's formal closet starts empty?
-NE solars: It'd be nice to have power monitoring
+/* NE solars: It'd be nice to have power monitoring */
 Weapons weapons have machine boards in 'em! Gotta break those, too
 Chef's closets have stuff in 'em they shouldn't? Like, crowbars and N2 tanks.
 /* Restaurant door bolt button not linked */
-	Yes it is. (Restaurant restroom.)
-	Could other bathroom stalls have these?
+	/* Yes it is. (Restaurant restroom.) */
+	/* Could other bathroom stalls have these? */
 Tider shop: Maybe rotate shutters, maybe get rid of some of the counter frames - 
-	or the disposal thingy - so it's less annoying to walk around in.
+	/* or the disposal thingy - so it's less annoying to walk around in. */
 
 /* Security upper: APC not labeled or connected to LV */
-Security hallway to brig second light on north wall is redundant
-Deleting and replacing dispos north airlock that wasn't getting power
-	seems to have fixed it...?
+/* Security hallway to brig second light on north wall is redundant */
+/* Deleting and replacing dispos north airlock that wasn't getting power */
+/* 	seems to have fixed it...? */
 /* Unutilized substation above O2: Room is blocked by table/power monitor */
 	Might be nice to place more power monitoring computers around
 	in general.
-Tree room: Blocked by grave and, uh, tree
+/* Tree room: Blocked by grave and, uh, tree */
 /* Lockers behind clown's room are positioned weird. Possibly the */
 	/* lightbulb is getting in the way? No, it was literally on top of a PACMAN somehow./*
 /* Arrivals problem: The docks are just flat-out wrong. Should be, like, 5 wall tiles in between doors or something. */
 	/* I also need to double-check if the shuttle even fits in the space. */
 
-Make the "smokin'" room door not glass. More fun not to see it until you go in.
+/* Make the "smokin'" room door not glass. More fun not to see it until you go in. */
 /* Rubbing alcohol is empty?? */
 /* 	Should be 'drink,' not 'food' */
-Make shutter over bar opening glass
-I don't like the LED lights in the cafeteria. Maybe that's okay in Arrivals, but not Caf.
-Firelocks between Arrivals and Docking Arm
-Airlocks or at least tinyfans on shutter doors. And/or lock 'em.
+/* Make shutter over bar opening glass */
+/* I don't like the LED lights in the cafeteria. Maybe that's okay in Arrivals, but not Caf. */
+/* Firelocks between Arrivals and Docking Arm */
+/* Airlocks or at least tinyfans on shutter doors. And/or lock 'em. */
 
-I still have to add fire alarms!
-I also still have to label fax machines!
+/* I still have to add fire alarms! */
+/* I also still have to label fax machines! */
 And reach a conclusion about mail chute thingies! (I could of course keep just the book return one.)
 	A mail system between Atmo and Engie might also be nice.
 	Or even... a disposal chute? Hmm.
+
+/* Orange clothes locker at arrivals: Name change didn't stick. */
+Some beacons aren't showing up at first again?
+	They did turn on eventually.
+/* Random pre-NT-floor decal on north side of command meeting. */
+/* Musician's secure closet doesn't need colorful clothes */
+/* 	and they're overflowing anyway */
+	/* What's the access on this? Theater? It does work, whatever it is. */
+/* Clown's room, Musician's room, and Mime room: Make doors not be AA. */
+/* 	They're not, they're service. */
+/* Mime's toilet: Close curtain, make the fax machine flatpak not be just sitting there. */
+	/* Curtain is closed. */
+	/* Did I flush it down the clown's toilet? Is that why it's here? */
+	/* 	Yes. */
+/* Def Lawyer's secure closet needs access set */
+/* Two "Unknown" fax machines somewhere, oh boy. */
+/* 	They are not: */
+/* 		Detective Office */
+/* 		Defense Attorney */
+/* 		RD */
+/* 		CE */
+/* 		Library */
+/* 		Prosecutor */
+/* 		Psych */
+/* 		Warden */
+/* 		Science */
+/* 		Bridge */
+/* 		CMO */
+/* 		Medbay */
+/* 		Command Meeting */
+/* 		HoS */
+/* 		Executions */
+/* 		Security */
+/* 		Captain's Office */
+		/* I guess that leaves Cargo + QM? */
+/* Chapel doors need wood tile underneath. */
+Library book return doesn't work - needs settable destination?
+	Could be a disposal chute, I guess?
+/* Tider shop still too cluttered. Manequins block movement. */
+	Should also be a light by the door. Maybe it turns off when
+		door is bolted?
+		Added one. CHECK IF IT WORKS. Make sure door's still
+			bolted at start, too.
+Janitor air alarm not powered, even when power is fixed.
+	Moved Admin cable away a bit, maybe did the trick?
+/* Bed blocked by vend and table. Could just move table. */
+/* Admin APC still runs out of batteries super fast. */
+/* Ditto coms. */
+Several unlabeled holopads, + some with confusingly identical names.
+	Differentiate:
+	/* AI - Core */
+	/* AI - Upload */
+	/* Command - HoP */
+	/* General - Arrivals */
+	Check that these worked when I didn't change to the generic
+		holopad prototype.
+	/* 7 unlabeled */
+		/* AI Upload outer hall */
+		/* AI - Approach Airlock */
+		/* Library - Story Time */
+		/* Execution - Last Rites/Final Words */
+		/* Psychology - Front */
+		/* AI - Dock */
+		/* AI - Dock to Core Walkway */
+		Check perms on these!
+	/* Security - Lawyer */
+/* Arti antechamber: O2 closet blocked by can */	
+/* Put tile under robotics door */
+/* APC - SHIELDS drains quickly. I think this is a SMES/Substation issue? */
+	/* East Hall Lower, same prob. */
+	/* Is this an issue when the SMES are full? */
+	/* SHIELDS APC connected to robotics! */
+	/* All affected APCs are connected to the same substation, and all */
+		/* APCs connected to that substation are affected. Is the */
+		/* MV cable not working? */
+		/* If by "not working" I mean "not actually connected"... */
+		/* Guess I can't run 'em under the SMES. The cable terminal isn't */
+		/* even the problem - they don't attach between adjacent SMES, either. */
+	/* Possible solution: Get rid of the middle SMES on the lower row. */
+/* Clown flashlight north of bridge hall doesn't on. */
+/* Airlock for bridge escape pod should be AA. */
+Anything I can do to give poor Atmos more room to work with...
+Storage bathrooms could have bolts?
+Execution viewing room telescreen sure seems to be oriented correctly,
+	but still only viewable from east, not south. Even without
+	the plasma wall.
+/* Execution telescreens only find sec cameras? */
+/* 	Understandable if power kills the others, but should only see */
+/* 	entertainment cams anyway? Or, can I make a new subnet? */
+Execution telescreens see mounted cam networks, not wireless.
+I should lock the execution -> disposals door.
+Cargo computer shutter button seems not to be hooked up.
+Cargo shuttle computer can't find the shuttle. Mass scanner says it's out there...
+One salv conveyor belt points the opposite direction. (Lower left.)
+Fix Wirings: I don't think I can put wire under walls when not spawning it.
+	This impacts at least the NW storage APC.
+	Also the Electrical one
+Command Meeting: Needs access to execution cameras
+Nuke Station + Engineering substations seem to be the first to drain.
+I wasn't wrong about the wall TVs! They're oriented correctly, except
+	they can still only be interacted with from the north, not south.
+	This, plus the telescreens, plus... the NanoMeds?
+	Execution rites room telescreen is correct, though. But facing east.
+Chem lockers in Med are AA
+	But not the one in actual Chem?
+Empty N2 closet in maints east of TEG
+Should be air alarms, vents + scrubbers on both sides of Service Dock firelocks.
+Maybe secure windoor in CE's office for paper door?
+Why so many lightbulbs in Reactor back hallway?
+AI scrubber vent pump starts off
+South AME inner airlock door unpowered?
+	And the mini-maints tunnel
+
+The big things:
+Set up evac shuttle (possibly shrink it, too)
+Cafeteria firelocks
+Cafeteria floor
+Mail chutes
+Possibly move Evac farther out to make room for shuttle
+	at north dock.
+Check AI vision
 
 Also: When I'm testing in Release mode, I get these exceptions in the server terminal 
 	about the no transform component thing. Can I use those to hunt it
