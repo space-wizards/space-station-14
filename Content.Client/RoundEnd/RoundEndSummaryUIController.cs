@@ -19,7 +19,7 @@ public sealed class RoundEndSummaryUIController : UIController,
 
     private RoundEndSummaryWindow? _window;
 
-    private MenuButton? SummaryButton => UIManager.GetActiveUIWidgetOrNull<UserInterface.Systems.MenuBar.Widgets.GameTopMenuBar>()?.SummaryButton;
+    private MenuButton? SummaryButton;
 
     public void UnloadButton()
     {
@@ -29,11 +29,9 @@ public sealed class RoundEndSummaryUIController : UIController,
         SummaryButton.OnPressed -= SummaryButtonPressed;
     }
 
-    public void LoadButton()
+    public void LoadButton(MenuButton summaryButton)
     {
-        if (SummaryButton == null)
-            return;
-
+        SummaryButton = summaryButton;
         SummaryButton.OnPressed += SummaryButtonPressed;
     }
 
@@ -47,7 +45,7 @@ public sealed class RoundEndSummaryUIController : UIController,
         SummaryButton?.SetClickPressed(false);
     }
 
-    private void SummaryButtonPressed(ButtonEventArgs args)
+    public void SummaryButtonPressed(ButtonEventArgs args)
     {
         ToggleScoreboardWindow();
     }

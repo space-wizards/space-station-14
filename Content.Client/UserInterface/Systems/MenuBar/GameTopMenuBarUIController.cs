@@ -1,4 +1,5 @@
 using Content.Client.RoundEnd;
+using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Actions;
 using Content.Client.UserInterface.Systems.Admin;
 using Content.Client.UserInterface.Systems.Bwoink;
@@ -63,6 +64,10 @@ public sealed class GameTopMenuBarUIController : UIController
         _action.LoadButton();
         _sandbox.LoadButton();
         _emotes.LoadButton();
-        _summary.LoadButton();
+
+        if (GameTopMenuBar == null)
+            return;
+
+        _summary.LoadButton(GameTopMenuBar.SummaryButton);
     }
 }
