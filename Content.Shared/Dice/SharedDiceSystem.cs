@@ -78,8 +78,8 @@ public abstract class SharedDiceSystem : EntitySystem
         var rand = new System.Random((int)_timing.CurTick.Value);
 
         var roll = rand.Next(1, entity.Comp.Sides + 1);
-        var rollEvent = new DiceRollEvent(_random.Next(1, die.Sides + 1), roller);
-        RaiseLocalEvent(uid, ref rollEvent);
+        var rollEvent = new DiceRollEvent(roll, user);
+        RaiseLocalEvent(entity, ref rollEvent);
 
         SetCurrentSide(entity, rollEvent.Roll);
 
@@ -89,7 +89,7 @@ public abstract class SharedDiceSystem : EntitySystem
         _popup.PopupPredicted(popupString, entity, user);
         _audio.PlayPredicted(entity.Comp.Sound, entity, user);
 
-        _popup.PopupEntity(Loc.GetString("dice-component-on-roll-land", ("die", uid), ("currentSide", die.CurrentValue)), uid);
-        _audio.PlayPvs(die.Sound, uid);
+        _popup.PopupEntity(Loc.GetString("dice-component-on-roll-land", ("die", entity), ("currentSide", entity.Comp.CurrentValue)), entity);
+        _audio.PlayPvs(entity.Comp.Sound, entity);
     }
 }
