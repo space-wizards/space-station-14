@@ -3,6 +3,7 @@ using Content.Shared.CriminalRecords.Components;
 using Content.Shared.CriminalRecords;
 using Content.Shared.Radio;
 using Content.Shared.StationRecords;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Content.Shared.Security;
 
@@ -11,7 +12,7 @@ namespace Content.Shared.CriminalRecords.Components;
 /// <summary>
 /// A component for Criminal Record Console storing an active station record key and a currently applied filter
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedCriminalRecordsConsoleSystem))]
 public sealed partial class CriminalRecordsConsoleComponent : Component
 {
@@ -25,13 +26,13 @@ public sealed partial class CriminalRecordsConsoleComponent : Component
     /// Server then sends a state with just the records, not the listing or filter, and the client updates just that.
     /// I don't know if it's possible to have multiple bui states right now.
     /// </remarks>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public uint? ActiveKey;
 
     /// <summary>
     /// Currently applied filter.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public StationRecordsFilter? Filter;
 
     /// <summary>
@@ -43,12 +44,12 @@ public sealed partial class CriminalRecordsConsoleComponent : Component
     /// <summary>
     /// Channel to send messages to when someone's status gets changed.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public ProtoId<RadioChannelPrototype> SecurityChannel = "Security";
 
     /// <summary>
     /// Max length of arrest and crime history strings.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public uint MaxStringLength = 256;
 }
