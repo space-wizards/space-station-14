@@ -33,6 +33,8 @@ public sealed class LoadedDiceBoundUserInterface : BoundUserInterface
         if (state is not LoadedDiceBoundUserInterfaceState st)
             return;
 
+        // Generate the Enumerable of concrete side values from the Offset, Sides, and Multiplier
+        // This makes it easier for the menu to display the values without having to compute them all the time
         var possibleSides = Enumerable.Range(1, st.Sides).Select(i => new DiceSide(i, ((i - st.Offset) * st.Multiplier).ToString()));
         _menu?.UpdateState(possibleSides, st.SelectedSide);
     }
