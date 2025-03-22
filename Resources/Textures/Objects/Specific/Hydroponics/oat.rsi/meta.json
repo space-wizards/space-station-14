@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation and modified by Swept at https://github.com/vgstation-coders/vgstation13/commit/1dbcf389b0ec6b2c51b002df5fef8dd1519f8068",
+  "copyright": "Taken from vgstation and modified by Swept at https://github.com/vgstation-coders/vgstation13/commit/1dbcf389b0ec6b2c51b002df5fef8dd1519f8068, Growth stages, harvest, dead, and produce created by Chaoticaa (GitHub)",
   "size": {
     "x": 32,
     "y": 32
