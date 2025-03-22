@@ -17,12 +17,6 @@ public sealed partial class LoadedDiceComponent : Component
     [AutoNetworkedField]
     [DataField]
     public int? SelectedSide = null;
-
-    /// <summary>
-    ///     Current user holding the loaded die.
-    /// </summary>
-    [ViewVariables]
-    public EntityUid? User;
 }
 
 [Serializable, NetSerializable]

@@ -3,6 +3,7 @@ using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -14,6 +15,7 @@ namespace Content.Shared.Dice;
 /// </summary>
 public abstract class SharedLoadedDiceSystem : EntitySystem
 {
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -21,32 +23,19 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<LoadedDiceComponent, GotEquippedHandEvent>(OnGotEquippedHand);
-        SubscribeLocalEvent<LoadedDiceComponent, GotUnequippedHandEvent>(OnGotUnequippedHand);
-        SubscribeLocalEvent<LoadedDiceComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<LoadedDiceComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
         SubscribeLocalEvent<LoadedDiceComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
         SubscribeLocalEvent<LoadedDiceComponent, LoadedDiceSideSelectedMessage>(OnSelected);
     }
 
-    private void OnGotEquippedHand(EntityUid uid, LoadedDiceComponent component, EquippedHandEvent args)
-    {
-        component.User = args.User;
-    }
-
-    private void OnGotUnequippedHand(EntityUid uid, LoadedDiceComponent component, UnequippedHandEvent args)
-    {
-        component.User = null;
-    }
-
-    private void OnMapInit(EntityUid uid, LoadedDiceComponent component, MapInitEvent args)
-    {
-        SetSelectedSide(uid, component, null);
-    }
-
     private void OnVerb(EntityUid uid, LoadedDiceComponent component, GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || component.User != args.User)
+        if (!_container.TryGetContainingContainer((uid, null, null), out var container))
+            return;
+
+        // TODO: Check it's in hand of args.User
+
+        if (!args.CanAccess || !args.CanInteract)
             return;
 
         args.Verbs.Add(new InteractionVerb()
@@ -60,7 +49,12 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
 
     private void OnAlternativeVerb(EntityUid uid, LoadedDiceComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || component.User != args.User)
+        if (!_container.TryGetContainingContainer((uid, null, null), out var container))
+            return;
+
+        // TODO: Check it's in hand of args.User
+
+        if (!args.CanAccess || !args.CanInteract)
             return;
 
         args.Verbs.Add(new AlternativeVerb()
@@ -111,27 +105,28 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
         if (selectedSide != null && (selectedSide < 1 || selectedSide > die.Sides))
             return;
 
-        // There may not be a user if the change is not done by a player, e.g. OnMapInit
-        if (component.User != null)
-        {
-            string message;
-            LogStringHandler adminMessage;
-            if (selectedSide == null)
-            {
-                message = Loc.GetString("loaded-dice-unset", ("die", uid));
-                adminMessage = $"{ToPrettyString(component.User):player} unset the loaded {ToPrettyString(uid):target}";
-            }
-            else
-            {
-                var sideValue = (selectedSide - die.Offset) * die.Multiplier;
+        // TODO: Reimplement
+        // There may not be a user if the change is not done by a player
+        //if (thereisauser)
+        //{
+        //    string message;
+        //    LogStringHandler adminMessage;
+        //    if (selectedSide == null)
+        //    {
+        //        message = Loc.GetString("loaded-dice-unset", ("die", uid));
+        //        adminMessage = $"{ToPrettyString(component.User):player} unset the loaded {ToPrettyString(uid):target}";
+        //    }
+        //    else
+        //    {
+        //        var sideValue = (selectedSide - die.Offset) * die.Multiplier;
 
-                message = Loc.GetString("loaded-dice-set", ("die", uid), ("value", sideValue));
-                adminMessage = $"{ToPrettyString(component.User):player} set the loaded {ToPrettyString(uid):target} to roll {sideValue}";
-            }
+        //        message = Loc.GetString("loaded-dice-set", ("die", uid), ("value", sideValue));
+        //        adminMessage = $"{ToPrettyString(component.User):player} set the loaded {ToPrettyString(uid):target} to roll {sideValue}";
+        //    }
 
-            _popup.PopupEntity(message, uid, component.User.Value, PopupType.Small);
-            _adminLogger.Add(LogType.Action, LogImpact.Low, ref adminMessage);
-        }
+        //    _popup.PopupEntity(message, uid, component.User.Value, PopupType.Small);
+        //    _adminLogger.Add(LogType.Action, LogImpact.Low, ref adminMessage);
+        //}
 
         component.SelectedSide = selectedSide;
 
