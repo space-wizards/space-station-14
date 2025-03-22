@@ -81857,36 +81857,36 @@ entities:
     - type: Transform
       pos: 1.5,10.5
       parent: 2
-    - type: WarpPoint
-      location: bar
+    - type: BombingTarget
+      location: Bar
   - uid: 12634
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,45.5
       parent: 2
-    - type: WarpPoint
-      location: AI power generators
+    - type: BombingTarget
+      location: AI Power Generators
   - uid: 12635
     components:
     - type: Transform
       pos: -1.5,30.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Command Bridge
   - uid: 12636
     components:
     - type: Transform
       pos: 24.5,-14.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Engineering SMES room
   - uid: 12637
     components:
     - type: Transform
       pos: -10.5,-1.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Science Front Desk
   - uid: 12638
     components:
@@ -81894,14 +81894,14 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 34.5,11.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Armory
   - uid: 12639
     components:
     - type: Transform
       pos: -11.5,-29.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Clowns room
 - proto: WaterCooler
   entities:

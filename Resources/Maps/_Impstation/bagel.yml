@@ -162191,70 +162191,70 @@ entities:
     - type: Transform
       pos: 37.5,-18.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Medbay
   - uid: 18255
     components:
     - type: Transform
       pos: -6.5,-4.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Captain's Office
   - uid: 19297
     components:
     - type: Transform
       pos: -10.5,-15.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Perma
   - uid: 26349
     components:
     - type: Transform
       pos: -36.5,35.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Atmos
   - uid: 26350
     components:
     - type: Transform
       pos: -26.5,1.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Armory
   - uid: 26351
     components:
     - type: Transform
       pos: 4.5,-10.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Vault
   - uid: 26352
     components:
     - type: Transform
       pos: 38.5,-7.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Morgue
   - uid: 26353
     components:
     - type: Transform
       pos: 53.5,11.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Cargo
   - uid: 26355
     components:
     - type: Transform
       pos: 0.5,-15.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Bridge Hallway
   - uid: 26356
     components:
     - type: Transform
       pos: 23.5,1.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Telecomms
   - uid: 26357
     components:

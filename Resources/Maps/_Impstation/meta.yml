@@ -179314,43 +179314,43 @@ entities:
     - type: Transform
       pos: -7.5,38.5
       parent: 5350
-    - type: WarpPoint
-      location: armory
+    - type: BombingTarget
+      location: Armory
   - uid: 2134
     components:
     - type: Transform
       pos: -27.5,-33.5
       parent: 5350
-    - type: WarpPoint
-      location: medical exam room
+    - type: BombingTarget
+      location: Medical exam room
   - uid: 21100
     components:
     - type: Transform
       pos: -2.5,-14.5
       parent: 5350
-    - type: WarpPoint
-      location: bridge showroom
+    - type: BombingTarget
+      location: Bridge showroom
   - uid: 21102
     components:
     - type: Transform
       pos: -6.5,-66.5
       parent: 5350
-    - type: WarpPoint
-      location: evac
+    - type: BombingTarget
+      location: Evac
   - uid: 21144
     components:
     - type: Transform
       pos: -2.5,2.5
       parent: 5350
-    - type: WarpPoint
-      location: bridge
+    - type: BombingTarget
+      location: Bridge
   - uid: 21235
     components:
     - type: Transform
       pos: 37.5,8.5
       parent: 5350
-    - type: WarpPoint
-      location: tech vault
+    - type: BombingTarget
+      location: Tech Vault
 - proto: WaterCooler
   entities:
   - uid: 4365

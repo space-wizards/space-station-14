@@ -167329,189 +167329,189 @@ entities:
     - type: Transform
       pos: -85.5,19.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Cargo Bay
   - uid: 26387
     components:
     - type: Transform
       pos: -61.5,-28.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Dining Area
   - uid: 26388
     components:
     - type: Transform
       pos: -61.5,-3.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Conference Room
   - uid: 26389
     components:
     - type: Transform
       pos: -50.5,0.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Captain's Office
   - uid: 26390
     components:
     - type: Transform
       pos: -50.5,-5.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: HoP's Office
   - uid: 26391
     components:
     - type: Transform
       pos: -34.5,-5.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: EVA Storage
   - uid: 26392
     components:
     - type: Transform
       pos: -36.5,-30.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Medbay
   - uid: 26393
     components:
     - type: Transform
       pos: -35.5,-41.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: CMO's Office
   - uid: 26394
     components:
     - type: Transform
       pos: -43.5,-36.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Morgue
   - uid: 26395
     components:
     - type: Transform
       pos: -22.5,-37.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Surgery
   - uid: 26397
     components:
     - type: Transform
       pos: -73.5,-2.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Vault
   - uid: 26398
     components:
     - type: Transform
       pos: -85.5,-3.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Telecomms
   - uid: 26399
     components:
     - type: Transform
       pos: -120.5,5.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Atmos
   - uid: 26400
     components:
     - type: Transform
       pos: -129.5,-22.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Grav Gen
   - uid: 26401
     components:
     - type: Transform
       pos: -124.5,-15.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: CE's Office
   - uid: 26402
     components:
     - type: Transform
       pos: -93.5,-30.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Security
   - uid: 26403
     components:
     - type: Transform
       pos: -93.5,-49.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Perma
   - uid: 26404
     components:
     - type: Transform
       pos: -82.5,-33.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: HoS's Office
   - uid: 26405
     components:
     - type: Transform
       pos: -82.5,-21.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Armory
   - uid: 26406
     components:
     - type: Transform
       pos: -70.5,-20.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: HD's Office
   - uid: 26407
     components:
     - type: Transform
       pos: -50.5,-45.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Chapel
   - uid: 26408
     components:
     - type: Transform
       pos: -120.5,-51.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Robotics
   - uid: 26409
     components:
     - type: Transform
       pos: -120.5,-39.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: R&D
   - uid: 26410
     components:
     - type: Transform
       pos: -147.5,-45.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Xenoarch
   - uid: 26412
     components:
     - type: Transform
       pos: -93.5,34.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Salvage Bay
   - uid: 26413
     components:
     - type: Transform
       pos: -86.5,29.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: QM's Office
   - uid: 26414
     components:
     - type: Transform
       pos: -94.5,9.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Mail Room
 - proto: WaterCooler
   entities:

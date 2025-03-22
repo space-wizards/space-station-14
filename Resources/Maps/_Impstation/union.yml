@@ -139670,22 +139670,22 @@ entities:
     - type: Transform
       pos: -0.5,23.5
       parent: 2
-    - type: WarpPoint
-      location: bridge
+    - type: BombingTarget
+      location: Bridge
   - uid: 21519
     components:
     - type: Transform
       pos: -6.5,-21.5
       parent: 2
-    - type: WarpPoint
-      location: boxing ring
+    - type: BombingTarget
+      location: Boxing Ring
   - uid: 21521
     components:
     - type: Transform
       pos: 62.5,-9.5
       parent: 2
-    - type: WarpPoint
-      location: bar
+    - type: BombingTarget
+      location: Bar
 - proto: WaterCooler
   entities:
   - uid: 3982

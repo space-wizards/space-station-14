@@ -146525,133 +146525,133 @@ entities:
     - type: Transform
       pos: -22.5,-2.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Morgue
   - uid: 23387
     components:
     - type: Transform
       pos: -21.5,-10.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Medbay
   - uid: 23388
     components:
     - type: Transform
       pos: 27.5,9.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: R&D
   - uid: 23389
     components:
     - type: Transform
       pos: 5.5,43.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Vault
   - uid: 23390
     components:
     - type: Transform
       pos: 10.5,43.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Grav Gen
   - uid: 23391
     components:
     - type: Transform
       pos: -20.5,35.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Captain's Office
   - uid: 23392
     components:
     - type: Transform
       pos: 33.5,-4.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Cargo Bay
   - uid: 23393
     components:
     - type: Transform
       pos: 18.5,-27.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Atmos
   - uid: 23394
     components:
     - type: Transform
       pos: -9.5,-29.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Telecomms
   - uid: 23395
     components:
     - type: Transform
       pos: 22.5,21.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Robotics
   - uid: 23396
     components:
     - type: Transform
       pos: 2.5,33.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: HoP's Office
   - uid: 23397
     components:
     - type: Transform
       pos: -0.5,22.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: EVA Storage
   - uid: 23398
     components:
     - type: Transform
       pos: -19.5,-42.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Engineering
   - uid: 23399
     components:
     - type: Transform
       pos: -2.5,9.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Bar
   - uid: 23400
     components:
     - type: Transform
       pos: -39.5,54.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Armory
   - uid: 23401
     components:
     - type: Transform
       pos: -48.5,65.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Perma
   - uid: 23402
     components:
     - type: Transform
       pos: -23.5,50.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: HoS's Office
   - uid: 23403
     components:
     - type: Transform
       pos: -42.5,31.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Detective's Office
   - uid: 23404
     components:
     - type: Transform
       pos: -14.5,15.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: HD's Office
 - proto: WaterCooler
   entities:

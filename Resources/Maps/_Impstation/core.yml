@@ -147881,63 +147881,63 @@ entities:
     - type: Transform
       pos: -18.5,1.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Bar
   - uid: 13732
     components:
     - type: Transform
       pos: -2.5,24.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Security
   - uid: 13733
     components:
     - type: Transform
       pos: -1.5,47.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Perma
   - uid: 13734
     components:
     - type: Transform
       pos: 27.5,20.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Cargo
   - uid: 13735
     components:
     - type: Transform
       pos: 44.5,8.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Medical
   - uid: 13736
     components:
     - type: Transform
       pos: -1.5,-22.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Engineering
   - uid: 13737
     components:
     - type: Transform
       pos: 40.5,-35.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Bridge
   - uid: 13738
     components:
     - type: Transform
       pos: -32.5,-13.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Dorms
   - uid: 13739
     components:
     - type: Transform
       pos: -48.5,1.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Evacuation
 - proto: WaterCooler
   entities:

@@ -119059,6 +119059,7 @@ entities:
     - type: WarpPoint
       location: 'Car 05: Chapel, Library'
     - type: BombingTarget
+      location: 'Car 05: Chapel, Library'
   - uid: 17049
     components:
     - type: Transform
@@ -119068,6 +119069,7 @@ entities:
     - type: WarpPoint
       location: 'Car 01: Arrivals, Evacuation'
     - type: BombingTarget
+      location: 'Car 01: Arrivals, Evacuation'
   - uid: 17050
     components:
     - type: Transform
@@ -119077,6 +119079,7 @@ entities:
     - type: WarpPoint
       location: 'Car 02: Bar'
     - type: BombingTarget
+      location: 'Car 02: Bar'
   - uid: 17051
     components:
     - type: Transform
@@ -119086,6 +119089,7 @@ entities:
     - type: WarpPoint
       location: 'Car 03: Kitchen, Hydroponic'
     - type: BombingTarget
+      location: 'Car 03: Kitchen, Hydroponic'
   - uid: 17052
     components:
     - type: Transform
@@ -119095,6 +119099,7 @@ entities:
     - type: WarpPoint
       location: 'Car 04: HoP, Dormatories'
     - type: BombingTarget
+      location: 'Car 04: HoP, Dormatories'
   - uid: 17053
     components:
     - type: Transform
@@ -119104,6 +119109,7 @@ entities:
     - type: WarpPoint
       location: 'Car 06: Med'
     - type: BombingTarget
+      location: 'Car 06: Med'
   - uid: 17054
     components:
     - type: Transform
@@ -119113,6 +119119,7 @@ entities:
     - type: WarpPoint
       location: 'Car 08: Solar panels'
     - type: BombingTarget
+      location: 'Car 08: Solar panels'
   - uid: 17055
     components:
     - type: Transform
@@ -119121,6 +119128,7 @@ entities:
     - type: WarpPoint
       location: 'Car 09: Engneering'
     - type: BombingTarget
+      location: 'Car 09: Engneering'
   - uid: 17056
     components:
     - type: Transform
@@ -119130,6 +119138,7 @@ entities:
     - type: WarpPoint
       location: 'Car 10: Cargo'
     - type: BombingTarget
+      location: 'Car 10: Cargo'
   - uid: 17057
     components:
     - type: Transform
@@ -119138,6 +119147,7 @@ entities:
     - type: WarpPoint
       location: 'Car 11: RnD'
     - type: BombingTarget
+      location: 'Car 11: RnD'
   - uid: 17058
     components:
     - type: Transform
@@ -119146,6 +119156,7 @@ entities:
     - type: WarpPoint
       location: 'Car 12: Brig'
     - type: BombingTarget
+      location: 'Car 12: Brig'
   - uid: 17059
     components:
     - type: Transform
@@ -119155,6 +119166,7 @@ entities:
     - type: WarpPoint
       location: 'Car 13: Permabrig'
     - type: BombingTarget
+      location: 'Car 13: Permabrig'
 - proto: WarpPointBombing
   entities:
   - uid: 18528
@@ -119162,7 +119174,7 @@ entities:
     - type: Transform
       pos: -1.5,-2.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Vault
 - proto: WashingMachine
   entities:
