@@ -143,7 +143,7 @@ namespace Content.Server.Administration.Systems
                         Category = VerbCategory.Admin,
                         Act = () =>
                         {
-                            if (!_transformSystem.TryGetMapOrGridCoordinates(args.Target, out var coords))
+                            if (!_transformSystem.TryGetGridOrMapCoordinates(args.Target, out var coords))
                             {
                                 _popup.PopupEntity(Loc.GetString("admin-player-spawn-failed"), args.User, args.User);
                                 return;
@@ -171,7 +171,7 @@ namespace Content.Server.Administration.Systems
                         Category = VerbCategory.Admin,
                         Act = () =>
                         {
-                            if (!_transformSystem.TryGetMapOrGridCoordinates(args.User, out var coords))
+                            if (!_transformSystem.TryGetGridOrMapCoordinates(args.User, out var coords))
                             {
                                 _popup.PopupEntity(Loc.GetString("admin-player-spawn-failed"), args.User, args.User);
                                 return;
