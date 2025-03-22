@@ -9,5 +9,5 @@
     - type: MachineBoard
       prototype: MailTeleporter
       stackRequirements:
-      Capacitor: 2
-      Steel: 5
+        Capacitor: 2
+        Steel: 5
