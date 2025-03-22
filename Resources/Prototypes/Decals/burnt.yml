@@ -1,5 +1,10 @@
 - type: decal
+  id: burnt
+  abstract: true
+
+- type: decal
   id: burnt1
+  parent: burnt
   tags: ["burnt"]
   defaultCleanable: true
   sprite:
@@ -8,6 +13,7 @@
 
 - type: decal
   id: burnt2
+  parent: burnt
   tags: ["burnt"]
   defaultCleanable: true
   sprite:
@@ -16,6 +22,7 @@
 
 - type: decal
   id: burnt3
+  parent: burnt
   tags: ["burnt"]
   defaultCleanable: true
   sprite:
@@ -24,8 +31,10 @@
 
 - type: decal
   id: burnt4
+  parent: burnt
   tags: ["burnt"]
   defaultCleanable: true
   sprite:
     sprite: Decals/burnt.rsi
     state: burnt4
+
