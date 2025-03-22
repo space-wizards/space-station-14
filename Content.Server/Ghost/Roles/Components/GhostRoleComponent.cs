@@ -15,7 +15,7 @@ public sealed partial class GhostRoleComponent : Component
 
     [DataField("rules")] private string _roleRules = "ghost-role-component-default-rules";
 
-    // Actually make use of / enforce this requirement?
+    // Actually make use of / enforce this requirement? //TODO:ERRANT
     // Why is this even here.
     // Move to ghost role prototype & respect CCvars.GameRoleTimerOverride
     [DataField("requirements")]

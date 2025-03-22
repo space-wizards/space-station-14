@@ -502,7 +502,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             var banned = false;
             var fallbackBanned = false;
 
-            if (_ban.IsRoleBanned(session, def.PrefRoles))
+            if (_ban.IsRoleBanned(session, def.PrefRoles)) //TODO:ERRANT move the check to IsSessionValid?
                 banned = true;
 
             if (_ban.IsRoleBanned(session, def.FallbackRoles))
@@ -526,7 +526,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// </summary>
     public bool IsSessionValid(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, EntityUid? mind = null)
     {
-        // TODO ROLE TIMERS
+        // TODO ROLE TIMERS //TODO:ERRANT move the ban checks here?
         // Check if antag role requirements are met
 
         if (session == null)

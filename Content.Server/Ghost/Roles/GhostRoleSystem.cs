@@ -648,6 +648,7 @@ public sealed class GhostRoleSystem : EntitySystem
                 Description = role.RoleDescription,
                 Rules = role.RoleRules,
                 Requirements = role.Requirements,
+                RolePrototypes = GetPrototypes((uid, role)),
                 Kind = kind,
                 RafflePlayerCount = rafflePlayerCount,
                 RaffleEndTime = raffleEndTime

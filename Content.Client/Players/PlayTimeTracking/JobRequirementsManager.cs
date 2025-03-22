@@ -29,6 +29,9 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     private readonly List<string> _roleBans = new();
     private readonly List<string> _jobWhitelists = new();
 
+    public const string JobPrefix = "Job:";
+    public const string AntagPrefix = "Antag:";
+
     private ISawmill _sawmill = default!;
 
     public event Action? Updated;
@@ -90,24 +93,63 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         Updated?.Invoke();
     }
 
+    /// <summary>
+    /// Check the job prototype against the current player, for requirements and bans
+    /// </summary>
     public bool IsAllowed(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
+        var list = new List<string>{JobPrefix + job.ID};
+        return IsAllowed(list, profile, out reason);
+    }
 
-        if (_roleBans.Contains($"Job:{job.ID}"))
+    /// <summary>
+    /// Check each  job/antag prototype against the current player, for requirements and bans
+    /// The prototypes MUST start with the job/antag prefix
+    /// </summary>
+    public bool IsAllowed(List<string> prototypes, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    {
+        reason = null;
+
+        foreach (var proto in prototypes) //TODO:ERRANT Test this loop from start to finish
         {
-            reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
-            return false;
+            // Check the player's bans
+            if (_roleBans.Contains(proto))
+            {
+                reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
+                return false;
+            }
+
+            JobPrototype? job = null;
+            AntagPrototype? antag = null;
+
+            // Slightly cursed, but the prefixes need to be removed for the next part. And at least we know the types.
+            if (proto.StartsWith(JobPrefix, StringComparison.Ordinal))
+                _prototypes.TryIndex<JobPrototype>(proto[JobPrefix.Length..], out job);
+            else if (proto.StartsWith(AntagPrefix, StringComparison.Ordinal))
+                _prototypes.TryIndex<AntagPrototype>(proto[AntagPrefix.Length..], out antag);
+
+            if (job is not null && !CheckWhitelist(job, out reason))
+                return false;
+
+            //TODO antagPrototype whitelist check?
+
+            var player = _playerManager.LocalSession;
+            if (player == null)
+                return true;
+
+            var reqs = new HashSet<JobRequirement>();
+
+            // Check other requirements
+            if (job is not null)
+                reqs = _entManager.System<SharedRoleSystem>().GetJobRequirement(job);
+            else if (antag is not null)
+                reqs = _entManager.System<SharedRoleSystem>().GetAntagRequirement(antag);
+
+            return CheckRoleRequirements(reqs, profile, out reason);
         }
 
-        if (!CheckWhitelist(job, out reason))
-            return false;
-
-        var player = _playerManager.LocalSession;
-        if (player == null)
-            return true;
-
-        return CheckRoleRequirements(job, profile, out reason);
+        return true;
     }
 
     public bool CheckRoleRequirements(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
