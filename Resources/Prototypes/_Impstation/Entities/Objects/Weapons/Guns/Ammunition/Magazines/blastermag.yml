@@ -1,0 +1,66 @@
+- type: entity
+  name: Blaster Cell
+  description: A rechargeable power cell built for blaster pistols.
+  id: PowerCellBlaster
+  suffix: Full
+  parent: [ BaseItem, BaseSecurityContraband ]
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Magazine/blastermag.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-1
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: PowerCell
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 200
+    intensitySlope: 1.5
+  - type: SolutionContainerManager
+    solutions:
+      battery:
+        maxVol: 5
+  - type: InjectableSolution
+    solution: battery
+  - type: DrawableSolution
+    solution: battery
+  - type: Extractable
+    juiceSolution:
+      reagents:
+        - ReagentId: Zinc
+          Quantity: 5
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
+  - type: Item
+    size: Small
+  - type: Battery
+    maxCharge: 600
+    startingCharge: 600
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletLaser
+    fireCost: 75
+  - type: Tag
+    tags:
+      - BlasterCell
+
+- type: entity
+  id: PowerCellBlasterPrinted
+  suffix: Empty
+  parent: PowerCellBlaster
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Magazine/blastermag.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-1
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Battery
+    maxCharge: 600
+    startingCharge: 0

@@ -171,7 +171,6 @@
 - type: entity
   name: Dog Spawner
   id: SpawnMobChemDog
-  #suffix imp edit
   suffix: Chemistry pet, steal target
   parent: MarkerBase
   components:

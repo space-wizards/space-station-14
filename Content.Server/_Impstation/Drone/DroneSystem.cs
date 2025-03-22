@@ -1,5 +1,5 @@
 using Content.Server.Body.Systems;
-using Content.Server.Drone.Components;
+using Content.Server._Impstation.Drone.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Popups;
 using Content.Server.Tools.Innate;
@@ -7,7 +7,7 @@ using Content.Server.PowerCell;
 using Content.Shared.Alert;
 using Content.Shared.UserInterface;
 using Content.Shared.Body.Components;
-using Content.Shared.Drone;
+using Content.Shared._Impstation.Drone;
 using Content.Shared.Emoting;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
@@ -28,7 +28,7 @@ using Content.Shared.PowerCell.Components;
 using Robust.Shared.Timing;
 using Robust.Server.GameObjects;
 
-namespace Content.Server.Drone
+namespace Content.Server._Impstation.Drone
 {
     public sealed class DroneSystem : SharedDroneSystem
     {
@@ -219,7 +219,7 @@ namespace Content.Server.Drone
                 return;
             }
 
-            var chargePercent = (short) MathF.Round(battery.CurrentCharge / battery.MaxCharge * 10f);
+            var chargePercent = (short)MathF.Round(battery.CurrentCharge / battery.MaxCharge * 10f);
 
             if (chargePercent == 5 && chargePercent < ent.Comp.LastChargePercent)
             {

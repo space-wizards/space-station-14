@@ -17,14 +17,15 @@
     location: beacon
 
 - type: entity
-  parent: WarpPoint
+  parent: MarkerBase # imp edit
   id: WarpPointBombing
-  name: warp point
-  suffix: ninja bombing target
+  name: ninja bombing target # imp edit
+  #suffix: ninja bombing target # imp edit
   components:
   - type: BombingTarget
-  - type: WarpPoint
-    location: bombing target
+    location: bombing target # imp edit
+  #- type: WarpPoint # imp edit
+  #  location: bombing target # imp edit
   - type: Sprite
     layers:
     - state: pink

@@ -15,8 +15,13 @@ public sealed class IlliterateSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<IlliterateComponent, UserOpenActivatableUIAttemptEvent>(OnActivateUIAttempt);
+        SubscribeLocalEvent<IlliterateComponent, MapInitEvent>(OnMapInit);
     }
 
+    private void OnMapInit(Entity<IlliterateComponent> ent, ref MapInitEvent args)
+    {
+        Dirty(ent);
+    }
     private void OnActivateUIAttempt(Entity<IlliterateComponent> ent, ref UserOpenActivatableUIAttemptEvent args)
     {
         if (HasComp<PaperComponent>(args.Target))
@@ -26,4 +31,3 @@ public sealed class IlliterateSystem : EntitySystem
         }
     }
 };
-

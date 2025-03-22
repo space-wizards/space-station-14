@@ -617,7 +617,7 @@
     - type: Lathe
       idleState: icon
       runningState: building
-      defaultProductionAmount: 10
+      defaultProductionAmount: 30 #Imp, changed from 10 to 30
       staticPacks:
       - OreSmelting
       - RGlassSmelting

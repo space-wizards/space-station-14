@@ -1,6 +1,6 @@
 using Content.Server.Objectives.Components;
 using Content.Server.Roles;
-using Content.Server.Warps;
+//using Content.Server.Warps; imp edit
 using Content.Shared.Objectives.Components;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Roles;
@@ -52,35 +52,37 @@ public sealed class NinjaConditionsSystem : EntitySystem
             return;
 
         // choose spider charge detonation point
-        var warps = new List<EntityUid>();
-        var query = EntityQueryEnumerator<BombingTargetComponent, WarpPointComponent>();
-        while (query.MoveNext(out var warpUid, out _, out var warp))
+        // imp edit start
+        var targets = new List<EntityUid>();
+        var query = EntityQueryEnumerator<BombingTargetComponent>();
+        while (query.MoveNext(out var targetUid, out var target))
         {
-            if (warp.Location != null)
+            if (target.Location != null)
             {
-                warps.Add(warpUid);
+                targets.Add(targetUid);
             }
         }
 
-        if (warps.Count <= 0)
+        if (targets.Count <= 0)
         {
             args.Cancelled = true;
             return;
         }
-        comp.Target = _random.Pick(warps);
+        comp.Target = _random.Pick(targets);
+        // imp edit end
     }
 
     private void OnSpiderChargeAfterAssign(EntityUid uid, SpiderChargeConditionComponent comp, ref ObjectiveAfterAssignEvent args)
     {
         string title;
-        if (comp.Target == null || !TryComp<WarpPointComponent>(comp.Target, out var warp) || warp.Location == null)
+        if (comp.Target == null || !TryComp<BombingTargetComponent>(comp.Target, out var target) || target.Location == null) // imp edit
         {
             // this should never really happen but eh
             title = Loc.GetString("objective-condition-spider-charge-title-no-target");
         }
         else
         {
-            title = Loc.GetString("objective-condition-spider-charge-title", ("location", warp.Location));
+            title = Loc.GetString("objective-condition-spider-charge-title", ("location", target.Location)); // imp edit
         }
         _metaData.SetEntityName(uid, title, args.Meta);
     }

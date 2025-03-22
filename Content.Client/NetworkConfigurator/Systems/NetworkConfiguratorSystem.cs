@@ -126,13 +126,19 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
             _linkModeActive = _configurator.LinkModeActive;
 
-            var modeLocString = _linkModeActive??false
+            var modeLocString = _linkModeActive ?? false // imp - fix formatting
                 ? "network-configurator-examine-mode-link"
                 : "network-configurator-examine-mode-list";
 
-            _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("network-configurator-item-status-label",
-                ("mode", Robust.Shared.Localization.Loc.GetString(modeLocString)),
-                ("keybinding", _keyBindingName)));
+            if (!_configurator.SwitchDisabled) // imp start
+            {
+                _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("network-configurator-item-status-label",
+                    ("mode", Robust.Shared.Localization.Loc.GetString(modeLocString)),
+                    ("keybinding", _keyBindingName)));
+            }
+            else
+                _label.SetMarkup(Robust.Shared.Localization.Loc.GetString("network-configurator-item-status-label-noswitch",
+                    ("mode", Robust.Shared.Localization.Loc.GetString(modeLocString)))); // end imp
         }
     }
 }

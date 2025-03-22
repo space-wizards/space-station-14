@@ -1,0 +1,40 @@
+- type: entity
+  name : heavy blaster bolt
+  id: BulletBlasterMagnum
+  parent: BulletLaser
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Ammo
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 30
+    soundHit:
+      collection: WeakHit
+    forceSound: true
+
+- type: entity
+  name : blaster cannon bolt
+  id: BulletBlasterCannon
+  parent: BulletLaser
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TriggerOnCollide
+    fixtureID: projectile
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 2
+    intensitySlope: 1
+    totalIntensity: 4
+    canCreateVacuum: false
+  - type: Ammo
+  - type: Projectile
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 10
+    soundHit:
+      collection: WeakHit
+    forceSound: true

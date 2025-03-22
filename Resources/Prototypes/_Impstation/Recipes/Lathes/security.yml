@@ -8,6 +8,34 @@
     Plastic: 200
 
 - type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: WeaponBlasterPistol
+  result: WeaponBlasterPistol
+  materials:
+    Steel: 1000
+    Glass: 400
+    Plastic: 300
+    Gold: 10
+
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: WeaponBlasterCannon
+  result: WeaponBlasterCannon
+  materials:
+    Steel: 2000
+    Plastic: 1000
+    Gold: 750
+
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: WeaponBlasterMagnum
+  result: WeaponBlasterMagnum
+  materials:
+    Steel: 1500
+    Glass: 1000
+    Gold: 850
+
+- type: latheRecipe
   parent: BaseWeaponRecipe
   id: WeaponShotgunEnforcerBeanbag
   result: WeaponShotgunEnforcerBeanbag
@@ -41,6 +69,18 @@
   materials:
     Steel: 500
     Plastic: 500
+
+- type: latheRecipe
+  id: PowerCellBlaster
+  result: PowerCellBlaster
+  categories:
+  - Ammo
+  completetime: 6
+  materials:
+    Steel: 300
+    Glass: 300
+    Plastic: 100
+    Gold: 10
 
 - type: latheRecipe
   parent: BaseEmptyAmmoRecipe

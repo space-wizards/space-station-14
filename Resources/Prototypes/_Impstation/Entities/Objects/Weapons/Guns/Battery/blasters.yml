@@ -1,0 +1,120 @@
+- type: entity
+  name: TS-99 Blaster Pistol
+  parent: [ BaseWeaponPowerCellSmall, BaseSecurityContraband ]
+  id: WeaponBlasterPistol
+  description: A cell-loaded fusion pistol, built on the smallest budget imaginable.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/blaster.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: base-unshaded
+        map: ["enum.GunVisualLayers.BaseUnshaded"]
+        shader: unshaded
+      - state: mag-0
+        map: ["enum.GunVisualLayers.Mag"]
+      - state: mag-unshaded-0
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Appearance 
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/blaster.rsi
+    quickEquip: false
+    slots:
+      - suitStorage
+      - Belt
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Gun
+    fireRate: 1.5
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/blasterweak.ogg
+  - type: MagazineAmmoProvider
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: PowerCellBlaster
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        whitelist:
+          tags:
+            - BlasterCell
+
+- type: entity
+  name: TW-07 Blaster Cannon
+  parent: [BaseWeaponBattery, BaseGunWieldable]
+  id: WeaponBlasterCannon
+  description: What once started as an overzealous gardening tool was soon picked up by military developers. Packs one hell of a punch!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/blastercannon.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-1
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Appearance
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/blastercannon.rsi
+    quickEquip: false
+    slots:
+      - Back
+      - suitStorage
+  - type: Item
+    size: Ginormous
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
+  - type: GunRequiresWield
+  - type: Gun
+    fireRate: 0.5
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/blastercannon.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletBlasterCannon
+    fireCost: 200
+
+- type: entity
+  name: TT-10 Blaster Magnum
+  parent: WeaponDisablerPractice
+  id: WeaponBlasterMagnum
+  description: A culmination of energy weapons research rolled into a single, menacing package.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/advblaster.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/advblaster.rsi
+    quickEquip: false
+    slots:
+      - suitStorage
+      - Belt
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Gun
+    fireRate: 1
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/blasterpist.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletBlasterMagnum
+    fireCost: 150
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 30

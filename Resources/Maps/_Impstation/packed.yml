@@ -95641,22 +95641,22 @@ entities:
     - type: Transform
       pos: 26.5,7.5
       parent: 2
-    - type: WarpPoint
-      location: clown room
+    - type: BombingTarget
+      location: Clown Room
   - uid: 6665
     components:
     - type: Transform
       pos: 27.5,46.5
       parent: 2
-    - type: WarpPoint
-      location: bridge
+    - type: BombingTarget
+      location: Bridge
   - uid: 15352
     components:
     - type: Transform
       pos: 39.5,26.5
       parent: 2
-    - type: WarpPoint
-      location: armory
+    - type: BombingTarget
+      location: Armory
 - proto: WaterCooler
   entities:
   - uid: 5643

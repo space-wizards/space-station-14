@@ -74853,113 +74853,113 @@ entities:
     - type: Transform
       pos: -36.5,14.5
       parent: 31
-    - type: WarpPoint
-      location: chapel
+    - type: BombingTarget
+      location: Chapel
   - uid: 1343
     components:
     - type: Transform
       pos: -4.5,-1.5
       parent: 31
-    - type: WarpPoint
-      location: bar
+    - type: BombingTarget
+      location: Bar
   - uid: 2142
     components:
     - type: Transform
       pos: 8.5,19.5
       parent: 31
-    - type: WarpPoint
-      location: hop's office
+    - type: BombingTarget
+      location: HoP's Office
   - uid: 4910
     components:
     - type: Transform
       pos: 9.5,-9.5
       parent: 31
-    - type: WarpPoint
-      location: medbay
+    - type: BombingTarget
+      location: Medbay
   - uid: 7261
     components:
     - type: Transform
       pos: 16.5,-0.5
       parent: 31
-    - type: WarpPoint
-      location: chemistry
+    - type: BombingTarget
+      location: Chemistry
   - uid: 7262
     components:
     - type: Transform
       pos: 13.5,-15.5
       parent: 31
-    - type: WarpPoint
-      location: morgue
+    - type: BombingTarget
+      location: Morgue
   - uid: 9712
     components:
     - type: Transform
       pos: -12.5,19.5
       parent: 31
-    - type: WarpPoint
-      location: armory
+    - type: BombingTarget
+      location: Armory
   - uid: 10539
     components:
     - type: Transform
       pos: -9.5,-20.5
       parent: 31
-    - type: WarpPoint
-      location: science
+    - type: BombingTarget
+      location: Science
   - uid: 11267
     components:
     - type: Transform
       pos: 8.5,25.5
       parent: 31
-    - type: WarpPoint
-      location: captain's quarters
+    - type: BombingTarget
+      location: Captain's Quarters
   - uid: 11308
     components:
     - type: Transform
       pos: 3.5,30.5
       parent: 31
-    - type: WarpPoint
-      location: bridge
+    - type: BombingTarget
+      location: Bridge
   - uid: 11309
     components:
     - type: Transform
       pos: -1.5,17.5
       parent: 31
-    - type: WarpPoint
-      location: vault
+    - type: BombingTarget
+      location: Vault
   - uid: 11310
     components:
     - type: Transform
       pos: 8.5,9.5
       parent: 31
-    - type: WarpPoint
-      location: eva room
+    - type: BombingTarget
+      location: EVA Room
   - uid: 11311
     components:
     - type: Transform
       pos: 58.5,2.5
       parent: 31
-    - type: WarpPoint
-      location: particle accelerator
+    - type: BombingTarget
+      location: Particle Accelerator
   - uid: 11313
     components:
     - type: Transform
       pos: 34.5,14.5
       parent: 31
-    - type: WarpPoint
-      location: atmospherics
+    - type: BombingTarget
+      location: Atmospherics
   - uid: 11322
     components:
     - type: Transform
       pos: 27.5,18.5
       parent: 31
-    - type: WarpPoint
-      location: salvage
+    - type: BombingTarget
+      location: Salvage
   - uid: 11359
     components:
     - type: Transform
       pos: 50.5,-5.5
       parent: 31
-    - type: WarpPoint
-      location: telecomms
+    - type: BombingTarget
+      location: Telecomms
 - proto: WaterCooler
   entities:
   - uid: 1156

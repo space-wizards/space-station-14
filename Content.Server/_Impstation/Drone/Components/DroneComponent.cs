@@ -2,7 +2,7 @@ using Content.Shared.Whitelist;
 using Content.Shared.Alert;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Drone.Components
+namespace Content.Server._Impstation.Drone.Components
 {
     [RegisterComponent]
     [AutoGenerateComponentPause]

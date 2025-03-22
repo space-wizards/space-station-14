@@ -160248,133 +160248,133 @@ entities:
     - type: Transform
       pos: 78.5,61.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Arboretum
   - uid: 24603
     components:
     - type: Transform
       pos: 8.5,-13.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Atmos
   - uid: 24604
     components:
     - type: Transform
       pos: 35.5,-4.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Telecomms
   - uid: 24605
     components:
     - type: Transform
       pos: 33.5,12.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Xenoarchaeology
   - uid: 24606
     components:
     - type: Transform
       pos: 83.5,-0.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Morgue
   - uid: 24607
     components:
     - type: Transform
       pos: 83.5,-14.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Virology
   - uid: 24608
     components:
     - type: Transform
       pos: 130.5,-19.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Vault
   - uid: 24609
     components:
     - type: Transform
       pos: 142.5,4.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Captain's Office
   - uid: 24684
     components:
     - type: Transform
       pos: 120.5,-7.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Armory
   - uid: 24685
     components:
     - type: Transform
       pos: 105.5,11.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Perma
   - uid: 24687
     components:
     - type: Transform
       pos: 44.5,5.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: R&D
   - uid: 24688
     components:
     - type: Transform
       pos: 142.5,-6.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Bridge
   - uid: 24689
     components:
     - type: Transform
       pos: 77.5,-54.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Cargo
   - uid: 24690
     components:
     - type: Transform
       pos: 74.5,28.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Dining Area
   - uid: 24691
     components:
     - type: Transform
       pos: 70.5,-8.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Medbay
   - uid: 24692
     components:
     - type: Transform
       pos: 111.5,-30.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Grav Gen
   - uid: 24693
     components:
     - type: Transform
       pos: 84.5,41.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Chapel
   - uid: 24694
     components:
     - type: Transform
       pos: 109.5,-5.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Security
   - uid: 24695
     components:
     - type: Transform
       pos: 103.5,-19.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Detective's Office
 - proto: WashingMachine
   entities:

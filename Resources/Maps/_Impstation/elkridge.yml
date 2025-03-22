@@ -109762,29 +109762,29 @@ entities:
     - type: Transform
       pos: 1.5,0.5
       parent: 2
-    - type: WarpPoint
-      location: bar
+    - type: BombingTarget
+      location: Bar
   - uid: 14964
     components:
     - type: Transform
       pos: -15.5,-6.5
       parent: 2
-    - type: WarpPoint
-      location: vault
+    - type: BombingTarget
+      location: Vault
   - uid: 14965
     components:
     - type: Transform
       pos: 1.5,-23.5
       parent: 2
-    - type: WarpPoint
-      location: armory
+    - type: BombingTarget
+      location: Armory
   - uid: 15070
     components:
     - type: Transform
       pos: -37.5,-7.5
       parent: 2
-    - type: WarpPoint
-      location: bridge
+    - type: BombingTarget
+      location: Bridge
 - proto: WaterCooler
   entities:
   - uid: 1683

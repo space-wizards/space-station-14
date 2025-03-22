@@ -4,8 +4,8 @@ meta:
   engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 03/15/2025 16:54:47
-  entityCount: 19473
+  time: 03/20/2025 06:06:23
+  entityCount: 19497
 maps:
 - 1
 grids:
@@ -8525,7 +8525,7 @@ entities:
       pos: 50.5,-64.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -1412.3828
+      secondsUntilStateChange: -3324.6057
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9615,6 +9615,13 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 3.5,-21.5
       parent: 2
+- proto: AirlockMaintReporterLocked
+  entities:
+  - uid: 689
+    components:
+    - type: Transform
+      pos: -34.5,-24.5
+      parent: 2
 - proto: AirlockMaintSecLocked
   entities:
   - uid: 582
@@ -9627,13 +9634,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 71.5,-55.5
-      parent: 2
-- proto: AirlockMaintServiceLocked
-  entities:
-  - uid: 689
-    components:
-    - type: Transform
-      pos: -34.5,-24.5
       parent: 2
 - proto: AirlockMedicalGlassLocked
   entities:
@@ -10165,6 +10165,13 @@ entities:
     - type: Transform
       pos: 34.5,-96.5
       parent: 2
+- proto: AirlockReporterLocked
+  entities:
+  - uid: 6039
+    components:
+    - type: Transform
+      pos: -31.5,-22.5
+      parent: 2
 - proto: AirlockResearchDirectorLocked
   entities:
   - uid: 2244
@@ -10353,12 +10360,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -34.5,-27.5
-      parent: 2
-  - uid: 6039
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -31.5,-22.5
       parent: 2
 - proto: AirlockShuttle
   entities:
@@ -41792,9 +41793,6 @@ entities:
     - type: Transform
       pos: 5.4202023,-22.37221
       parent: 2
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesCheapSunglasses
   entities:
   - uid: 6987
@@ -41819,9 +41817,6 @@ entities:
     - type: Transform
       pos: 79.38343,-24.34906
       parent: 2
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesThermal
   entities:
   - uid: 8216
@@ -41829,9 +41824,6 @@ entities:
     - type: Transform
       pos: -41.384144,-26.542435
       parent: 2
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingHandsGlovesBoxingBlue
   entities:
   - uid: 7687
@@ -44815,7 +44807,6 @@ entities:
     - type: Transform
       pos: -20.5,-25.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconAtmospherics
   entities:
   - uid: 16227
@@ -44844,7 +44835,6 @@ entities:
     - type: Transform
       pos: -48.5,-45.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconBrig
   entities:
   - uid: 16239
@@ -44859,7 +44849,6 @@ entities:
     - type: Transform
       pos: -42.5,-54.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconCargoBay
   entities:
   - uid: 16244
@@ -44867,7 +44856,6 @@ entities:
     - type: Transform
       pos: 24.5,-97.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconCargoReception
   entities:
   - uid: 16243
@@ -44882,7 +44870,6 @@ entities:
     - type: Transform
       pos: -30.5,-61.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconChapel
   entities:
   - uid: 16214
@@ -44897,7 +44884,6 @@ entities:
     - type: Transform
       pos: 19.5,-72.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconCMORoom
   entities:
   - uid: 16267
@@ -44905,7 +44891,6 @@ entities:
     - type: Transform
       pos: 11.5,-16.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconCryosleep
   entities:
   - uid: 16223
@@ -44920,7 +44905,6 @@ entities:
     - type: Transform
       pos: 61.5,-70.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconDisposals
   entities:
   - uid: 16259
@@ -45000,7 +44984,6 @@ entities:
     - type: Transform
       pos: 14.5,-59.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconHOSRoom
   entities:
   - uid: 16238
@@ -45008,7 +44991,6 @@ entities:
     - type: Transform
       pos: 67.5,-31.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconJanitorsCloset
   entities:
   - uid: 16253
@@ -45016,7 +44998,6 @@ entities:
     - type: Transform
       pos: -8.5,-51.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconKitchen
   entities:
   - uid: 16230
@@ -45024,7 +45005,6 @@ entities:
     - type: Transform
       pos: 40.5,-43.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconLawOffice
   entities:
   - uid: 16252
@@ -45053,7 +45033,6 @@ entities:
     - type: Transform
       pos: 14.5,-29.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconMedical
   entities:
   - uid: 7768
@@ -45063,7 +45042,6 @@ entities:
       parent: 2
     - type: NavMapBeacon
       text: Virology
-    - type: BombingTarget
 - proto: DefaultStationBeaconMorgue
   entities:
   - uid: 16250
@@ -45078,7 +45056,6 @@ entities:
     - type: Transform
       pos: 46.5,-17.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconPowerBank
   entities:
   - uid: 16248
@@ -45093,7 +45070,6 @@ entities:
     - type: Transform
       pos: 9.5,-88.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconRDRoom
   entities:
   - uid: 16242
@@ -45101,7 +45077,6 @@ entities:
     - type: Transform
       pos: -21.5,-19.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconRobotics
   entities:
   - uid: 16249
@@ -45116,7 +45091,6 @@ entities:
     - type: Transform
       pos: 50.5,-99.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconScience
   entities:
   - uid: 16215
@@ -45124,7 +45098,6 @@ entities:
     - type: Transform
       pos: -6.5,-21.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconSecurity
   entities:
   - uid: 16247
@@ -45153,7 +45126,6 @@ entities:
     - type: Transform
       pos: -23.5,-71.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconSolars
   entities:
   - uid: 16263
@@ -45184,7 +45156,6 @@ entities:
     - type: Transform
       pos: 28.5,-62.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconTEG
   entities:
   - uid: 16216
@@ -45192,7 +45163,6 @@ entities:
     - type: Transform
       pos: 38.5,-70.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconTheater
   entities:
   - uid: 16236
@@ -45223,7 +45193,6 @@ entities:
     - type: Transform
       pos: 10.5,-41.5
       parent: 2
-    - type: BombingTarget
 - proto: DefaultStationBeaconWardensOffice
   entities:
   - uid: 16240
@@ -63785,7 +63754,6 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#0055CCFF'
-    - type: BombingTarget
   - uid: 9372
     components:
     - type: Transform
@@ -123646,6 +123614,176 @@ entities:
       rot: 3.141592653589793 rad
       pos: 43.5,-62.5
       parent: 2
+- proto: WarpPointBombing
+  entities:
+  - uid: 19474
+    components:
+    - type: Transform
+      pos: 9.5,-88.5
+      parent: 2
+    - type: BombingTarget
+      location: QM's Quarters
+  - uid: 19475
+    components:
+    - type: Transform
+      pos: -19.5,-29.5
+      parent: 2
+    - type: BombingTarget
+      location: Artifact Lab
+  - uid: 19476
+    components:
+    - type: Transform
+      pos: -48.5,-45.5
+      parent: 2
+    - type: BombingTarget
+      location: Bridge
+  - uid: 19477
+    components:
+    - type: Transform
+      pos: -42.5,-54.5
+      parent: 2
+    - type: BombingTarget
+      location: Captain's Quarters
+  - uid: 19478
+    components:
+    - type: Transform
+      pos: 24.5,-97.5
+      parent: 2
+    - type: BombingTarget
+      location: Cargo Bay
+  - uid: 19479
+    components:
+    - type: Transform
+      pos: -30.5,-61.5
+      parent: 2
+    - type: BombingTarget
+      location: CE's Office
+  - uid: 19480
+    components:
+    - type: Transform
+      pos: 19.5,-73.5
+      parent: 2
+    - type: BombingTarget
+      location: Chemistry
+  - uid: 19481
+    components:
+    - type: Transform
+      pos: 11.5,-16.5
+      parent: 2
+    - type: BombingTarget
+      location: CMO's Office
+  - uid: 19482
+    components:
+    - type: Transform
+      pos: 61.5,-70.5
+      parent: 2
+    - type: BombingTarget
+      location: Detective's Office
+  - uid: 19483
+    components:
+    - type: Transform
+      pos: 14.5,-59.5
+      parent: 2
+    - type: BombingTarget
+      location: HoP's Office
+  - uid: 19484
+    components:
+    - type: Transform
+      pos: 67.5,-32.5
+      parent: 2
+    - type: BombingTarget
+      location: HoS's Office
+  - uid: 19485
+    components:
+    - type: Transform
+      pos: -8.5,-51.5
+      parent: 2
+    - type: BombingTarget
+      location: Janitor's Closet
+  - uid: 19486
+    components:
+    - type: Transform
+      pos: 41.5,-43.5
+      parent: 2
+    - type: BombingTarget
+      location: Kitchen
+  - uid: 19487
+    components:
+    - type: Transform
+      pos: 29.5,-17.5
+      parent: 2
+    - type: BombingTarget
+      location: Virology
+  - uid: 19488
+    components:
+    - type: Transform
+      pos: 14.5,-29.5
+      parent: 2
+    - type: BombingTarget
+      location: Medbay
+  - uid: 19489
+    components:
+    - type: Transform
+      pos: 49.5,-17.5
+      parent: 2
+    - type: BombingTarget
+      location: Perma
+  - uid: 19490
+    components:
+    - type: Transform
+      pos: -21.5,-20.5
+      parent: 2
+    - type: BombingTarget
+      location: RD's Quarters
+  - uid: 19491
+    components:
+    - type: Transform
+      pos: 50.5,-99.5
+      parent: 2
+    - type: BombingTarget
+      location: Salvage Bay
+  - uid: 19492
+    components:
+    - type: Transform
+      pos: -6.5,-21.5
+      parent: 2
+    - type: BombingTarget
+      location: Science Front Desk
+  - uid: 19493
+    components:
+    - type: Transform
+      pos: -23.5,-69.5
+      parent: 2
+    - type: BombingTarget
+      location: Particle Accelerator
+  - uid: 19494
+    components:
+    - type: Transform
+      pos: 28.5,-62.5
+      parent: 2
+    - type: BombingTarget
+      location: Tech Vault
+  - uid: 19495
+    components:
+    - type: Transform
+      pos: 40.5,-70.5
+      parent: 2
+    - type: BombingTarget
+      location: TEG
+  - uid: 19496
+    components:
+    - type: Transform
+      pos: 10.5,-42.5
+      parent: 2
+    - type: BombingTarget
+      location: Vault
+  - uid: 19497
+    components:
+    - type: Transform
+      pos: 66.5,-49.5
+      parent: 2
+    - type: BombingTarget
+      location: Security Front Desk
 - proto: WaterCooler
   entities:
   - uid: 3672

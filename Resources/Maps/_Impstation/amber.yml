@@ -149809,96 +149809,98 @@ entities:
     - type: Transform
       pos: -60.5,-15.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: AI Upload
   - uid: 23443
     components:
     - type: Transform
       pos: -39.5,-1.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Perma
   - uid: 23444
     components:
     - type: Transform
       pos: -21.5,4.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Armory
   - uid: 23445
     components:
     - type: Transform
       pos: -6.5,-1.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Atmos
   - uid: 23446
     components:
     - type: Transform
       pos: 4.5,24.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Cargo
   - uid: 23447
     components:
     - type: Transform
       pos: 34.5,-43.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Xenoarchaeology
   - uid: 23449
     components:
     - type: Transform
       pos: 25.5,-9.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Grav Gen
   - uid: 23450
     components:
     - type: Transform
       pos: 19.5,-40.5
       parent: 2
+    - type: BombingTarget
+      location: Library
   - uid: 23451
     components:
     - type: Transform
       pos: 9.5,-17.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Telecomms
   - uid: 23452
     components:
     - type: Transform
       pos: -29.5,-61.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Vault
   - uid: 23453
     components:
     - type: Transform
       pos: 20.5,-54.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: HD's Office
   - uid: 23454
     components:
     - type: Transform
       pos: 26.5,1.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Janitorial
   - uid: 23455
     components:
     - type: Transform
       pos: -2.5,-44.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: Bar
   - uid: 23456
     components:
     - type: Transform
       pos: -54.5,-22.5
       parent: 2
-    - type: WarpPoint
+    - type: BombingTarget
       location: CMO's Office
 - proto: WaterCooler
   entities:

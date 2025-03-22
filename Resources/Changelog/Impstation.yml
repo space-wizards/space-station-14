@@ -1,85 +1,4 @@
 ﻿Entries:
-- author: Sleiphros
-  changes:
-  - message: Several new shuttles have been added to the Shipyard!
-    type: Add
-  - message: The Bargain Bin has been added to the Shipyard, along with shuttles exclusive
-      to it!
-    type: Add
-  id: 859
-  time: '2025-01-06T22:23:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1195
-- author: hivehum, crocodilecarousel
-  changes:
-  - message: Many minor bugfixes to markings.
-    type: Tweak
-  id: 860
-  time: '2025-01-06T22:40:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1204
-- author: hivehum
-  changes:
-  - message: ACME is proud to announce a brand new product for any jesters, pranksters,
-      and aspiring comedians!
-    type: Add
-  id: 861
-  time: '2025-01-06T22:54:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1218
-- author: honeyed-lemons
-  changes:
-  - message: Fixed pda notifications and attempts to fix the notification button
-    type: Fix
-  id: 862
-  time: '2025-01-06T22:55:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1220
-- author: hivehum
-  changes:
-  - message: Drones can now sing a jaunty little tune and also check a map whenever
-      they want.
-    type: Add
-  id: 863
-  time: '2025-01-06T23:02:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1228
-- author: TheGrimbeeper
-  changes:
-  - message: new artifact effect for those scientists that avoid foam
-    type: Add
-  id: 864
-  time: '2025-01-06T23:10:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1233
-- author: Sha-Seng
-  changes:
-  - message: Doll Joint arm and leg tattoos, and 'Cut Here' chest tattoo for humans,
-      dwarves, spiders, slimes, and lizards
-    type: Add
-  id: 865
-  time: '2025-01-06T23:15:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1234
-- author: aada
-  changes:
-  - message: Artistic borg module has a new action image.
-    type: Add
-  - message: Service borg module has been replaced with a bureaucracy module and bartender
-      module.
-    type: Tweak
-  id: 866
-  time: '2025-01-06T23:34:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1241
-- author: AftrLite
-  changes:
-  - message: Fixed medical wall locker sprites' open state
-    type: Fix
-  - message: Fixed a stray pixel on the Chaplain's Divine Grasp
-    type: Fix
-  id: 867
-  time: '2025-01-06T23:36:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1245
-- author: kipdotnet
-  changes:
-  - message: Removed the cyrillic text conversion from the russian accent.
-    type: Remove
-  id: 868
-  time: '2025-01-06T23:40:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1227
 - author: widgetbeck
   changes:
   - message: Apids now get sleepy when exposed to water vapor.
@@ -4106,3 +4025,90 @@
   id: 1358
   time: '2025-03-21T02:37:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2037
+- author: TheGrimbeeper
+  changes:
+  - message: Pain insensitive people will no longer notice painful radioactive effects.
+    type: Tweak
+  id: 1359
+  time: '2025-03-22T01:39:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2045
+- author: argentsunshine
+  changes:
+  - message: Edited the sprites for the cargo request and bounty computers to make
+      them easier to distinguish.
+    type: Tweak
+  id: 1360
+  time: '2025-03-22T01:38:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2052
+- author: DinnerCalzone
+  changes:
+  - message: A number of warp points on maps should no longer be duplicated.
+    type: Fix
+  - message: Whale's RD's office should no longer start vacuumed.
+    type: Fix
+  id: 1361
+  time: '2025-03-22T15:12:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2035
+- author: SivShele
+  changes:
+  - message: Convex fixes
+    type: Tweak
+  id: 1362
+  time: '2025-03-22T15:11:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2053
+- author: SixValentine
+  changes:
+  - message: Train got some new lumps! Check the PR for details
+    type: Add
+  id: 1363
+  time: '2025-03-22T15:13:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2049
+- author: DinnerCalzone
+  changes:
+  - message: Thieves will no longer receive steal objectives for steal targets that
+      they may have easy access to through their departments.
+    type: Tweak
+  id: 1364
+  time: '2025-03-22T15:14:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2054
+- author: widgetbeck
+  changes:
+  - message: Drone update.
+    type: Tweak
+  id: 1365
+  time: '2025-03-22T15:22:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2025
+- author: Tyranex
+  changes:
+  - message: Lathes now have an option to return 30 of a material.
+    type: Tweak
+  - message: The ore processor now defaults to 30, instead of 10.
+    type: Tweak
+  id: 1366
+  time: '2025-03-22T15:30:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2040
+- author: mqole, crocodilecarousel
+  changes:
+  - message: Head Revolutionaries now start with 4 revolutionary radio keys to give
+      to their comrades. Viva!
+    type: Add
+  id: 1367
+  time: '2025-03-22T15:32:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2047
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: Adjustments to the Arsenal Tech Tree for some small simplification
+    type: Tweak
+  - message: New firing sounds for the Laser Cannon and Energy Shotgun; new names
+      for laser weapons (except the Captain's)
+    type: Tweak
+  - message: Laser Cannon's stats have been dramatically changed.
+    type: Tweak
+  - message: 3 new blaster energy weapons can be researched and built
+    type: Add
+  - message: uplink and research icons for several weapons/ammo now use the new art
+      rather than the old art.
+    type: Fix
+  id: 1368
+  time: '2025-03-22T15:42:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2030
