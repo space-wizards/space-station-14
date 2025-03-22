@@ -24,10 +24,12 @@
       components:
         - FitsInDispenser
         - Pill
+        - Hypospray
       tags:
         - Document
         - PillCanister
         - Bottle
         - Syringe
         - Dropper
+        - ChemDispensable
   - type: Dumpable
