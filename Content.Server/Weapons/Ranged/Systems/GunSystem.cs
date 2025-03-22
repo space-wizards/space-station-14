@@ -85,7 +85,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
         var fromEnt = MapManager.TryFindGridAt(fromMap, out var gridUid, out var grid)
             ? fromCoordinates.WithEntityId(gridUid, EntityManager)
-            : new EntityCoordinates(MapManager.GetMapEntityId(fromMap.MapId), fromMap.Position);
+            : new EntityCoordinates(Map.GetMapOrInvalid(fromMap.MapId), fromMap.Position);
 
         // Update shot based on the recoil
         toMap = fromMap.Position + angle.ToVec() * mapDirection.Length();

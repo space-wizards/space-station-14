@@ -143,7 +143,7 @@ public abstract class SharedMagicSystem : EntitySystem
         args.Handled = true;
     }
 
-        /// <summary>
+    /// <summary>
     ///     Gets spawn positions listed on <see cref="InstantSpawnSpellEvent"/>
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
@@ -152,65 +152,65 @@ public abstract class SharedMagicSystem : EntitySystem
         switch (data)
         {
             case TargetCasterPos:
-                return new List<EntityCoordinates>(1) {casterXform.Coordinates};
+                return new List<EntityCoordinates>(1) { casterXform.Coordinates };
             case TargetInFrontSingle:
-            {
-                var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
-
-                if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
-                    return new List<EntityCoordinates>();
-                if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
-                    return new List<EntityCoordinates>();
-
-                var tileIndex = tileReference.Value.GridIndices;
-                return new List<EntityCoordinates>(1) { _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex) };
-            }
-            case TargetInFront:
-            {
-                var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
-
-                if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
-                    return new List<EntityCoordinates>();
-
-                if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
-                    return new List<EntityCoordinates>();
-
-                var tileIndex = tileReference.Value.GridIndices;
-                var coords = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex);
-                EntityCoordinates coordsPlus;
-                EntityCoordinates coordsMinus;
-
-                var dir = casterXform.LocalRotation.GetCardinalDir();
-                switch (dir)
                 {
-                    case Direction.North:
-                    case Direction.South:
-                    {
-                        coordsPlus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (1, 0));
-                        coordsMinus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (-1, 0));
-                        return new List<EntityCoordinates>(3)
-                        {
-                            coords,
-                            coordsPlus,
-                            coordsMinus,
-                        };
-                    }
-                    case Direction.East:
-                    case Direction.West:
-                    {
-                        coordsPlus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (0, 1));
-                        coordsMinus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (0, -1));
-                        return new List<EntityCoordinates>(3)
-                        {
-                            coords,
-                            coordsPlus,
-                            coordsMinus,
-                        };
-                    }
-                }
+                    var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
 
-                return new List<EntityCoordinates>();
-            }
+                    if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
+                        return new List<EntityCoordinates>();
+                    if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
+                        return new List<EntityCoordinates>();
+
+                    var tileIndex = tileReference.Value.GridIndices;
+                    return new List<EntityCoordinates>(1) { _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex) };
+                }
+            case TargetInFront:
+                {
+                    var directionPos = casterXform.Coordinates.Offset(casterXform.LocalRotation.ToWorldVec().Normalized());
+
+                    if (!TryComp<MapGridComponent>(casterXform.GridUid, out var mapGrid))
+                        return new List<EntityCoordinates>();
+
+                    if (!directionPos.TryGetTileRef(out var tileReference, EntityManager, _mapManager))
+                        return new List<EntityCoordinates>();
+
+                    var tileIndex = tileReference.Value.GridIndices;
+                    var coords = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex);
+                    EntityCoordinates coordsPlus;
+                    EntityCoordinates coordsMinus;
+
+                    var dir = casterXform.LocalRotation.GetCardinalDir();
+                    switch (dir)
+                    {
+                        case Direction.North:
+                        case Direction.South:
+                            {
+                                coordsPlus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (1, 0));
+                                coordsMinus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (-1, 0));
+                                return new List<EntityCoordinates>(3)
+                        {
+                            coords,
+                            coordsPlus,
+                            coordsMinus,
+                        };
+                            }
+                        case Direction.East:
+                        case Direction.West:
+                            {
+                                coordsPlus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (0, 1));
+                                coordsMinus = _mapSystem.GridTileToLocal(casterXform.GridUid.Value, mapGrid, tileIndex + (0, -1));
+                                return new List<EntityCoordinates>(3)
+                        {
+                            coords,
+                            coordsPlus,
+                            coordsMinus,
+                        };
+                            }
+                    }
+
+                    return new List<EntityCoordinates>();
+                }
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -280,7 +280,7 @@ public abstract class SharedMagicSystem : EntitySystem
         var fromMap = fromCoords.ToMap(EntityManager, _transform);
         var spawnCoords = _mapManager.TryFindGridAt(fromMap, out var gridUid, out _)
             ? fromCoords.WithEntityId(gridUid, EntityManager)
-            : new(_mapManager.GetMapEntityId(fromMap.MapId), fromMap.Position);
+            : new(_mapSystem.GetMapOrInvalid(fromMap.MapId), fromMap.Position);
 
         var ent = Spawn(ev.Prototype, spawnCoords);
         var direction = toCoords.ToMapPos(EntityManager, _transform) -

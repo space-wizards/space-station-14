@@ -63,8 +63,8 @@ public sealed partial class ExplosionSystem
         {
             // this is a space-based explosion that (should) not touch any grids.
             initialTile = new Vector2i(
-                    (int) Math.Floor(epicenter.Position.X / DefaultTileSize),
-                    (int) Math.Floor(epicenter.Position.Y / DefaultTileSize));
+                    (int)Math.Floor(epicenter.Position.X / DefaultTileSize),
+                    (int)Math.Floor(epicenter.Position.Y / DefaultTileSize));
         }
 
         // Main data for the exploding tiles in space and on various grids
@@ -130,7 +130,7 @@ public sealed partial class ExplosionSystem
 
         // These variables keep track of the total intensity we have distributed
         List<int> tilesInIteration = new() { 1 };
-        List<float> iterationIntensity = new() {stepSize};
+        List<float> iterationIntensity = new() { stepSize };
         var totalTiles = 1;
         var remainingIntensity = totalIntensity - stepSize;
 
@@ -276,12 +276,14 @@ public sealed partial class ExplosionSystem
         // diameter x diameter sized box, use a smaller box with radius sized sides:
         var box = Box2.CenteredAround(epicenter.Position, new Vector2(radius, radius));
 
-        foreach (var grid in _mapManager.FindGridsIntersecting(epicenter.MapId, box))
+        var intersectingGrids = new List<Entity<MapGridComponent>>();
+        _mapManager.FindGridsIntersecting(epicenter.MapId, box, ref intersectingGrids);
+        foreach (var grid in intersectingGrids)
         {
-            if (TryComp(grid.Owner, out PhysicsComponent? physics) && physics.Mass > mass)
+            if (TryComp(grid, out PhysicsComponent? physics) && physics.Mass > mass)
             {
                 mass = physics.Mass;
-                referenceGrid = grid.Owner;
+                referenceGrid = grid;
             }
         }
 
@@ -296,7 +298,9 @@ public sealed partial class ExplosionSystem
 
         radius *= 4;
         box = Box2.CenteredAround(epicenter.Position, new Vector2(radius, radius));
-        var mapGrids = _mapManager.FindGridsIntersecting(epicenter.MapId, box).ToList();
+
+        var mapGrids = new List<Entity<MapGridComponent>>();
+        _mapManager.FindGridsIntersecting(epicenter.MapId, box, ref mapGrids);
         var grids = mapGrids.Select(x => x.Owner).ToList();
 
         if (referenceGrid != null)

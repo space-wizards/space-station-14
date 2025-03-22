@@ -21,6 +21,7 @@ namespace Content.Client.Atmos.Overlays
     {
         private readonly IEntityManager _entManager;
         private readonly IMapManager _mapManager;
+        private readonly SharedMapSystem _map;
         private readonly SharedTransformSystem _xformSys;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities | OverlaySpace.WorldSpaceBelowWorld;
@@ -45,12 +46,13 @@ namespace Content.Client.Atmos.Overlays
 
         private int _gasCount;
 
-        public const int GasOverlayZIndex = (int) Shared.DrawDepth.DrawDepth.Effects; // Under ghosts, above mostly everything else
+        public const int GasOverlayZIndex = (int)Shared.DrawDepth.DrawDepth.Effects; // Under ghosts, above mostly everything else
 
-        public GasTileOverlay(GasTileOverlaySystem system, IEntityManager entManager, IResourceCache resourceCache, IPrototypeManager protoMan, SpriteSystem spriteSys, SharedTransformSystem xformSys)
+        public GasTileOverlay(GasTileOverlaySystem system, IEntityManager entManager, IResourceCache resourceCache, IPrototypeManager protoMan, SpriteSystem spriteSys, SharedMapSystem map, SharedTransformSystem xformSys)
         {
             _entManager = entManager;
             _mapManager = IoCManager.Resolve<IMapManager>();
+            _map = map;
             _xformSys = xformSys;
             _shader = protoMan.Index<ShaderPrototype>("unshaded").Instance();
             ZIndex = GasOverlayZIndex;
@@ -68,9 +70,9 @@ namespace Content.Client.Atmos.Overlays
                 SpriteSpecifier overlay;
 
                 if (!string.IsNullOrEmpty(gasPrototype.GasOverlaySprite) && !string.IsNullOrEmpty(gasPrototype.GasOverlayState))
-                    overlay = new SpriteSpecifier.Rsi(new (gasPrototype.GasOverlaySprite), gasPrototype.GasOverlayState);
+                    overlay = new SpriteSpecifier.Rsi(new(gasPrototype.GasOverlaySprite), gasPrototype.GasOverlayState);
                 else if (!string.IsNullOrEmpty(gasPrototype.GasOverlayTexture))
-                    overlay = new SpriteSpecifier.Texture(new (gasPrototype.GasOverlayTexture));
+                    overlay = new SpriteSpecifier.Texture(new(gasPrototype.GasOverlayTexture));
                 else
                     continue;
 
@@ -163,7 +165,7 @@ namespace Content.Client.Atmos.Overlays
                 xformQuery,
                 _xformSys);
 
-            var mapUid = _mapManager.GetMapEntityId(args.MapId);
+            var mapUid = _map.GetMapOrInvalid(args.MapId);
 
             if (_entManager.TryGetComponent<MapAtmosphereComponent>(mapUid, out var atmos))
                 DrawMapOverlay(drawHandle, args, mapUid, atmos);
@@ -188,18 +190,18 @@ namespace Content.Client.Atmos.Overlays
                 {
                     if (!state.overlayQuery.TryGetComponent(uid, out var comp) ||
                         !state.xformQuery.TryGetComponent(uid, out var gridXform))
-                        {
-                            return true;
-                        }
+                    {
+                        return true;
+                    }
 
                     var (_, _, worldMatrix, invMatrix) = state.xformSys.GetWorldPositionRotationMatrixWithInv(gridXform);
                     state.drawHandle.SetTransform(worldMatrix);
                     var floatBounds = invMatrix.TransformBox(state.WorldBounds).Enlarged(grid.TileSize);
                     var localBounds = new Box2i(
-                        (int) MathF.Floor(floatBounds.Left),
-                        (int) MathF.Floor(floatBounds.Bottom),
-                        (int) MathF.Ceiling(floatBounds.Right),
-                        (int) MathF.Ceiling(floatBounds.Top));
+                        (int)MathF.Floor(floatBounds.Left),
+                        (int)MathF.Floor(floatBounds.Bottom),
+                        (int)MathF.Ceiling(floatBounds.Right),
+                        (int)MathF.Ceiling(floatBounds.Top));
 
                     // Currently it would be faster to group drawing by gas rather than by chunk, but if the textures are
                     // ever moved to a single atlas, that should no longer be the case. So this is just grouping draw calls

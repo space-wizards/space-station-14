@@ -20,6 +20,7 @@ public sealed class ParallaxOverlay : Overlay
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IParallaxManager _manager = default!;
     private readonly ParallaxSystem _parallax;
+    private readonly SharedMapSystem _map;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
 
@@ -28,11 +29,12 @@ public sealed class ParallaxOverlay : Overlay
         ZIndex = ParallaxSystem.ParallaxZIndex;
         IoCManager.InjectDependencies(this);
         _parallax = _entManager.System<ParallaxSystem>();
+        _map = _entManager.System<SharedMapSystem>();
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
-        if (args.MapId == MapId.Nullspace || _entManager.HasComponent<BiomeComponent>(_mapManager.GetMapEntityId(args.MapId)))
+        if (args.MapId == MapId.Nullspace || _entManager.HasComponent<BiomeComponent>(_map.GetMapOrInvalid(args.MapId)))
             return false;
 
         return true;
@@ -50,7 +52,7 @@ public sealed class ParallaxOverlay : Overlay
         var worldHandle = args.WorldHandle;
 
         var layers = _parallax.GetParallaxLayers(args.MapId);
-        var realTime = (float) _timing.RealTime.TotalSeconds;
+        var realTime = (float)_timing.RealTime.TotalSeconds;
 
         foreach (var layer in layers)
         {
@@ -65,7 +67,7 @@ public sealed class ParallaxOverlay : Overlay
             var tex = layer.Texture;
 
             // Size of the texture in world units.
-            var size = (tex.Size / (float) EyeManager.PixelsPerMeter) * layer.Config.Scale;
+            var size = (tex.Size / (float)EyeManager.PixelsPerMeter) * layer.Config.Scale;
 
             // The "home" position is the effective origin of this layer.
             // Parallax shifting is relative to the home, and shifts away from the home and towards the Eye centre.
