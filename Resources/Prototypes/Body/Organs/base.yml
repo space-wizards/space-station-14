@@ -1,0 +1,323 @@
+- type: entity # DO NOT USE THIS ONE AS A PARENT
+  parent: BaseItem
+  id: BaseBaseOrgan
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+  - type: Organ
+  - type: Food
+  - type: Extractable
+    grindableSolutionName: organ
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Tag
+    tags:
+    - Meat
+  - type: FlavorProfile
+    flavors:
+    - people
+
+- type: entity # USE THIS ONE AS A PARENT
+  parent: BaseBaseOrgan
+  id: BaseOrgan
+  abstract: true
+  components:
+  - type: Gibbable
+
+- type: entity
+  parent: BaseBaseOrgan
+  id: BaseOrganBrain
+  name: brain
+  desctription: The source of incredible, unending intelligence. Honk.
+  abstract: true
+  components:
+  - type: Sprite
+    state: brain
+  - type: Item
+    heldPrefix: brain
+  - type: Gibbable
+  - type: Input
+    context: "ghost"
+  - type: Brain
+  - type: InputMover
+  - type: Examiner
+  - type: BlockMovement
+  - type: BadFood
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 5
+  - type: FoodSequenceElement
+    entries:
+      Burger: Brain
+      Taco: Brain
+
+# yes, these prototypes used mostly for state storing, but we are reducing yaml lines!!!
+- type: entity
+  parent: BaseOrgan
+  id: BaseOrganEyes
+  name: eyes
+  description: I see you!
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: eyeball-l
+    - state: eyeball-r
+  - type: Item
+    heldPrefix: eyeballs
+
+- type: entity
+  parent: BaseOrgan
+  id: BaseOrganTongue
+  name: tongue
+  description: A fleshy muscle mostly used for lying.
+  abstract: true
+  components:
+  - type: Sprite
+    state: tongue
+
+- type: entity
+  parent: BaseOrgan
+  id: BaseOrganAppendix
+  name: appendix
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: appendix
+    - state: appendix-inflamed
+      visible: false
+
+- type: entity
+  parent: BaseOrgan
+  id: BaseOrganEars
+  name: ears
+  description: There are three parts to the ear. Inner, middle and outer. Only one of these parts should normally be visible.
+  abstract: true
+  components:
+  - type: Sprite
+    state: ears
+
+- type: entity
+  parent: BaseOrgan
+  id: BaseOrganLungs
+  name: lungs
+  desctription: Depending on who they're from, filter different types of gases, which is then sent into the bloodstream to be used as an electron carrier.
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: lung-l
+    - state: lung-r
+  - type: Item
+    heldPrefix: lungs
+  - type: Lung
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Human ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      Lung:
+        maxVol: 100.0
+        canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+
+- type: entity
+  parent: BaseOrgan
+  id: BaseOrganHeart
+  name: heart
+  description: I feel bad for the heartless bastard who lost this.
+  abstract: true
+  components:
+  - type: Sprite
+    state: heart-on
+  - type: Item
+    heldPrefix: heart
+  # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
+  # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
+  # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes: [Human]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+
+- type: entity
+  parent: BaseOrgan
+  id: BaseOrganStomach
+  name: stomach
+  description: Gross. This is hard to stomach.
+  abstract: true
+  components:
+  - type: Sprite
+    state: stomach
+  - type: Item
+    heldPrefix: stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Stomach
+  # The stomach metabolizes stuff like foods and drinks.
+  # TODO: Have it work off of the ent's solution container, and move this
+  # to intestines instead.
+  - type: Metabolizer
+    # mm yummy
+    maxReagents: 3
+    metabolizerTypes: [Human]
+    groups:
+    - id: Food
+    - id: Drink
+
+- type: entity
+  parent: BaseOrgan
+  id: BaseOrganLiver
+  name: liver
+  description: 'Pairing suggestion: chianti and fava beans.'
+  abstract: true
+  components:
+  - type: Sprite
+    state: liver
+  - type: Item
+    heldPrefix: liver
+  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+    maxReagents: 1
+    metabolizerTypes: [Human]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink
+
+- type: entity
+  parent: BaseOrgan
+  id: BaseOrganKidneys
+  name: kidneys
+  description: Filters toxins from the bloodstream.
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+      - state: kidney-l
+      - state: kidney-r
+  - type: Item
+    heldPrefix: kidneys
+  # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes: [Human]
+    removeEmpty: true
+
+# base animal organs
+
+- type: entity
+  id: BaseAnimalOrgan
+  abstract: true
+  components:
+  - type: StaticPrice
+    price: 50
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+    - chicken # everything kinda tastes like chicken
+
+- type: entity
+  parent: [BaseOrganLungs, BaseAnimalOrgan]
+  id: OrganAnimalLungs
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Animal ]
+  - type: SolutionContainerManager
+    solutions:
+      Lung:
+        maxVol: 100.0
+        canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+
+- type: entity
+  parent: [BaseOrganStomach, BaseAnimalOrgan]
+  id: OrganAnimalStomach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Animal ]
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 40
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+
+- type: entity
+  parent: [BaseOrganLiver, BaseAnimalOrgan]
+  id: OrganAnimalLiver
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Animal ]
+
+- type: entity
+  parent: [BaseOrganHeart, BaseAnimalOrgan]
+  id: OrganAnimalHeart
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Animal ]
+
+- type: entity
+  parent: [BaseOrganKidneys, BaseAnimalOrgan]
+  id: OrganAnimalKidneys
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [ Animal ]
