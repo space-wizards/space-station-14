@@ -14,6 +14,8 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
 
     public abstract bool ResolveApc(EntityUid entity, [NotNullWhen(true)] ref SharedApcPowerReceiverComponent? component);
 
+    public abstract bool ResolveNetworkBattery(EntityUid entity, [NotNullWhen(true)] ref SharedPowerNetworkBatteryComponent? component);
+
     public void SetNeedsPower(EntityUid uid, bool value, SharedApcPowerReceiverComponent? receiver = null)
     {
         if (!ResolveApc(uid, ref receiver) || receiver.NeedsPower == value)
@@ -30,6 +32,15 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
 
         receiver.PowerDisabled = value;
         Dirty(uid, receiver);
+    }
+
+    public void SetPowerDisabled(EntityUid uid, bool value, SharedPowerNetworkBatteryComponent? battery = null)
+    {
+        if (!ResolveNetworkBattery(uid, ref battery) || battery.PowerDisabled == value)
+            return;
+
+        battery.PowerDisabled = value;
+        Dirty(uid, battery);
     }
 
     /// <summary>

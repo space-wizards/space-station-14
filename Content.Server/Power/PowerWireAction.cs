@@ -57,32 +57,26 @@ public sealed partial class PowerWireAction : BaseWireAction
     // Getting it from a dictionary is significantly more expensive.
     private void SetPower(EntityUid owner, bool pulsed)
     {
-        if (!EntityManager.TryGetComponent(owner, out ApcPowerReceiverComponent? power))
-        {
-            return;
-        }
-
         var receiverSys = EntityManager.System<PowerReceiverSystem>();
 
-        if (pulsed)
+        if (EntityManager.TryGetComponent(owner, out PowerNetworkBatteryComponent? battery))
         {
-            receiverSys.SetPowerDisabled(owner, true, power);
-            return;
-        }
-
-        if (AllWiresCut(owner))
-        {
-            receiverSys.SetPowerDisabled(owner, true, power);
-        }
-        else
-        {
-            if (WiresSystem.TryGetData<bool>(owner, PowerWireActionKey.Pulsed, out var isPulsed)
-                && isPulsed)
-            {
+            if (pulsed || AllWiresCut(owner))
+                receiverSys.SetPowerDisabled(owner, true, battery);
+            else if (WiresSystem.TryGetData<bool>(owner, PowerWireActionKey.Pulsed, out var isPulsed) && isPulsed)
                 return;
-            }
+            else
+                receiverSys.SetPowerDisabled(owner, false, battery);
+        }
 
-            receiverSys.SetPowerDisabled(owner, false, power);
+        else if (EntityManager.TryGetComponent(owner, out ApcPowerReceiverComponent? receiver))
+        {
+            if (pulsed || AllWiresCut(owner))
+                receiverSys.SetPowerDisabled(owner, true, receiver);
+            else if (WiresSystem.TryGetData<bool>(owner, PowerWireActionKey.Pulsed, out var isPulsed) && isPulsed)
+                return;
+            else
+                receiverSys.SetPowerDisabled(owner, false, receiver);
         }
     }
 
