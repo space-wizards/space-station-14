@@ -117,3 +117,27 @@
   license: "CC0-1.0"
   copyright: "mattyharm on freesound.org"
   source: "https://freesound.org/people/mattyharm/sounds/432995/"
+
+- files:
+  - male_clearsthroat_1.ogg
+  license: "CC0-1.0"
+  copyright: "DrFortyseven on freesound.org"
+  source: "https://freesound.org/people/DrFortyseven/sounds/436107/"
+
+- files:
+  - male_clearsthroat_2.ogg
+  license: "CC0-1.0"
+  copyright: "florianreichelt on freesound.org"
+  source: "https://freesound.org/people/florianreichelt/sounds/447496/"
+
+- files:
+  - female_clearsthroat_1.ogg
+  license: "CC0-1.0"
+  copyright: "Reitanna on freesound.org"
+  source: "https://freesound.org/people/Reitanna/sounds/323693/"
+
+- files:
+  - female_clearsthroat_2.ogg
+  license: "CC0-1.0"
+  copyright: "digiella on freesound.org"
+  source: "https://freesound.org/people/digiella/sounds/701432/"

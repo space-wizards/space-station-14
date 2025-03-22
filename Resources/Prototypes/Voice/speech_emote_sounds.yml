@@ -40,6 +40,8 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
+    ClearsThroat:
+      collection: MaleClearsThroat
 
 - type: emoteSounds
   id: FemaleHuman
@@ -82,6 +84,8 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+    ClearsThroat:
+      collection: FemaleClearsThroat
 
 - type: emoteSounds
   id: MaleReptilian
@@ -94,6 +98,14 @@
       path: /Audio/Animals/lizard_happy.ogg
     Honk:
       collection: BikeHorn
+    Yawn:
+      path: /Audio/Voice/Reptilian/reptilian_yawn.ogg
+    Sneeze:
+      path: /Audio/Voice/Reptilian/reptilian_sneeze.ogg
+    Cough:
+      path: /Audio/Voice/Reptilian/reptilian_cough.ogg
+    Sigh:
+      path: /Audio/Voice/Reptilian/reptilian_sigh.ogg
     Whistle:
       collection: Whistles
     Crying:
@@ -103,9 +115,11 @@
     Hew:
       collection: Hew
     Gasp:
-      collection: MaleGasp
+      path: /Audio/Voice/Reptilian/reptilian_gasp.ogg
     DefaultDeathgasp:
-      collection: DeathGasp
+      path: /Audio/Voice/Reptilian/reptilian_deathgasp.ogg
+    ClearsThroat:
+      collection: MaleClearsThroat
 
 - type: emoteSounds
   id: FemaleReptilian
@@ -116,6 +130,14 @@
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
+    Yawn:
+      path: /Audio/Voice/Reptilian/reptilian_yawn.ogg
+    Sneeze:
+      path: /Audio/Voice/Reptilian/reptilian_sneeze.ogg
+    Cough:
+      path: /Audio/Voice/Reptilian/reptilian_cough.ogg
+    Sigh:
+      path: /Audio/Voice/Reptilian/reptilian_sigh.ogg
     Honk:
       collection: BikeHorn
     Whistle:
@@ -127,9 +149,11 @@
     Hew:
       collection: Hew
     Gasp:
-      collection: FemaleGasp
+      path: /Audio/Voice/Reptilian/reptilian_gasp.ogg
     DefaultDeathgasp:
-      collection: FemaleDeathGasp
+      path: /Audio/Voice/Reptilian/reptilian_deathgasp.ogg
+    ClearsThroat:
+      collection: FemaleClearsThroat
 
 - type: emoteSounds
   id: MaleSlime
@@ -172,6 +196,8 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
+    ClearsThroat:
+      collection: MaleClearsThroat
   params:
     variation: 0.125
 
@@ -216,6 +242,8 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+    ClearsThroat:
+      collection: FemaleClearsThroat
   params:
     variation: 0.125
 
@@ -226,15 +254,34 @@
       path: /Audio/Voice/Vox/shriek1.ogg
     Laugh:
       path: /Audio/Voice/Vox/vox_laugh.ogg
+    Sneeze:
+      path: /Audio/Voice/Vox/vox_sneeze.ogg
+    Sigh:
+      path: /Audio/Voice/Vox/vox_sigh.ogg
     Honk:
       collection: BikeHorn
     Weh:
       collection: Weh
     Hew:
       collection: Hew
+    Cough:
+      path: /Audio/Voice/Vox/vox_cough.ogg
+    Whistle:
+      collection: Whistles
+    Yawn:
+      path: /Audio/Voice/Vox/vox_yawn.ogg
+    Crying:
+      path: /Audio/Voice/Vox/shriek1.ogg
+    Gasp:
+      path: /Audio/Voice/Vox/vox_gasp.ogg
+    DefaultDeathgasp:
+      path: /Audio/Voice/Vox/vox_deathgasp.ogg
+    ClearsThroat:
+      path: /Audio/Voice/Vox/vox_cleansthroat.ogg
   params:
     variation: 0.125
     # We need vox sounds for the other emotes
+    # Nevermind, i added some
 
 - type: emoteSounds
   id: UnisexDiona
@@ -251,10 +298,22 @@
       collection: Weh
     Hew:
       collection: Hew
+    Crying:
+      path: /Audio/Voice/Diona/diona_scream.ogg
+    Whistle:
+      collection: Whistles
+    Cough:
+      path: /Audio/Voice/Diona/diona_cough.ogg
+    Yawn:
+      path: /Audio/Voice/Diona/diona_rustle2.ogg
     Gasp:
-      collection: MaleGasp
+      path: /Audio/Voice/Diona/diona_gasp.ogg
     DefaultDeathgasp:
-      collection: DeathGasp
+      path: /Audio/Voice/Diona/diona_deathgasp.ogg
+    ClearsThroat:
+      path: /Audio/Voice/Diona/diona_cleanthroat.ogg
+    Sigh:
+      path: /Audio/Voice/Diona/diona_rustle1.ogg
   params:
     variation: 0.125
 
@@ -271,16 +330,28 @@
       path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
     Click:
       path: /Audio/Voice/Arachnid/arachnid_click.ogg
+    Crying:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
     Weh:
       collection: Weh
+    Whistle:
+      collection: Whistles
+    Yawn:
+      path: /Audio/Voice/Arachnid/arachnid_yawn.ogg
+    Sigh:
+      path: /Audio/Voice/Talk/arachnid_exclaim.ogg
     Hew:
       collection: Hew
     Honk:
       collection: BikeHorn
     Gasp:
-      collection: MaleGasp
+      path: /Audio/Voice/Arachnid/arachnid_gasp.ogg
     DefaultDeathgasp:
-      collection: DeathGasp
+      path: /Audio/Voice/Arachnid/arachna_deathgasp.ogg
+    ClearsThroat:
+      path: /Audio/Voice/Arachnid/arachna_cleansthroat.ogg
+    Cough:
+      path: /Audio/Voice/Arachnid/arachna_cough.ogg
 
 - type: emoteSounds
   id: UnisexDwarf
@@ -321,6 +392,8 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MaleDeathGasp
+    ClearsThroat:
+      collection: MaleClearsThroat
   params:
     variation: 0.125
     pitch: 0.75
@@ -364,6 +437,8 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
+    ClearsThroat:
+      collection: FemaleClearsThroat
   params:
     variation: 0.125
     pitch: 0.75
@@ -387,12 +462,24 @@
       collection: Weh
     Hew:
       collection: Hew
+    Yawn:
+      path: /Audio/Effects/Gasp/moth_DeathGasp.ogg
     Honk:
       collection: BikeHorn
+    Whistle:
+      path: /Audio/Voice/Moth/moth_whistle.ogg
+    Sigh:
+      path: /Audio/Voice/Moth/moth_sigh.ogg
+    Crying:
+      path: /Audio/Voice/Moth/moth_scream.ogg
     Gasp:
-      collection: MaleGasp
+      path: /Audio/Voice/Moth/moth_gasp.ogg
     DefaultDeathgasp:
       collection: MothDeathGasp
+    ClearsThroat:
+      path: /Audio/Voice/Moth/moth_cleansthroat.ogg
+    Cough:
+      path: /Audio/Voice/Moth/moth_cough.ogg
 
 - type: emoteSounds
   id: UnisexSilicon

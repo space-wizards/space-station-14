@@ -1,0 +1,28 @@
+- files:
+  - shriek1.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/goonstation/goonstation/tree/eb3e7df6292d23f6af2f18b4372d3a8ba4b0fda7/sound/misc/talk"
+  source: "https://github.com/goonstation/goonstation"
+
+- files:
+  - vox_laugh.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Errant."
+  source: "https://github.com/space-wizards/space-station-14/commit/2b0f227940d9163e06ac75e0f6af7140fb3fd11f"
+
+- files:
+  - vox_cough.ogg
+  - vox_cleansthroat.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Errant. Modified by QWERTY"
+  source: "https://github.com/space-wizards/space-station-14/commit/2b0f227940d9163e06ac75e0f6af7140fb3fd11f"
+
+- files:
+  - vox_sneeze.ogg
+  - vox_sigh.ogg
+  - vox_gasp.ogg
+  - vox_deathgasp.ogg
+  - vox_yawn.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Errant. Modified by QWERTY"
+  source: "https://github.com/space-wizards/space-station-14/commit/301fc31e694661c6a6ed8c81d4fb61b8900f93bf"
