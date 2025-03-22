@@ -5,6 +5,7 @@ using Content.Server.Store.Systems;
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
 using Content.Shared.Popups;
+using Content.Shared.Shuttles.Components;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Server.GameObjects;
@@ -15,10 +16,11 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Server.Audio;
+using Robust.Shared.Configuration;
 
 namespace Content.Server.PDA.Ringer
 {
-    public sealed class RingerSystem : SharedRingerSystem
+    public sealed partial class RingerSystem : SharedRingerSystem
     {
         [Dependency] private readonly PdaSystem _pda = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -27,6 +29,7 @@ namespace Content.Server.PDA.Ringer
         [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private readonly Dictionary<NetUserId, TimeSpan> _lastSetRingtoneAt = new();
 
@@ -40,6 +43,7 @@ namespace Content.Server.PDA.Ringer
             // RingerBoundUserInterface Subscriptions
             SubscribeLocalEvent<RingerComponent, RingerSetRingtoneMessage>(OnSetRingtone);
             SubscribeLocalEvent<RingerUplinkComponent, BeforeRingtoneSetEvent>(OnSetUplinkRingtone);
+            SubscribeLocalEvent<RingerUplinkComponent, BeforeUplinkOpenEvent>(CheckMapBeforeOpenUplink);
             SubscribeLocalEvent<RingerComponent, RingerPlayRingtoneMessage>(RingerPlayRingtone);
             SubscribeLocalEvent<RingerComponent, RingerRequestUpdateInterfaceMessage>(UpdateRingerUserInterfaceDriver);
 
@@ -104,7 +108,7 @@ namespace Content.Server.PDA.Ringer
             if (args.Ringtone.Length != RingtoneLength)
                 return;
 
-            var ev = new BeforeRingtoneSetEvent(args.Ringtone);
+            var ev = new BeforeRingtoneSetEvent(args.Ringtone, actorComp.PlayerSession);
             RaiseLocalEvent(uid, ref ev);
             if (ev.Handled)
                 return;
@@ -116,7 +120,18 @@ namespace Content.Server.PDA.Ringer
         {
             if (uplink.Code.SequenceEqual(args.Ringtone) && HasComp<StoreComponent>(uid))
             {
-                uplink.Unlocked = !uplink.Unlocked;
+                if (!uplink.Unlocked)
+                {
+                    var ev = new BeforeUplinkOpenEvent(args.AttemptingClient);
+                    RaiseLocalEvent(uid, ref ev);
+                    if (!ev.Canceled)
+                        uplink.Unlocked = true;
+                }
+                else
+                {
+                    uplink.Unlocked = false;
+                }
+
                 if (TryComp<PdaComponent>(uid, out var pda))
                     _pda.UpdatePdaUi(uid, pda);
 
@@ -240,6 +255,8 @@ namespace Content.Server.PDA.Ringer
             {
                 RemComp<ActiveRingerComponent>(ent);
             }
+
+            LockUplinksBasedOnMap();
         }
 
         private static string GetSound(Note note)
@@ -249,5 +266,8 @@ namespace Content.Server.PDA.Ringer
     }
 
     [ByRefEvent]
-    public record struct BeforeRingtoneSetEvent(Note[] Ringtone, bool Handled = false);
+    public record struct BeforeRingtoneSetEvent(Note[] Ringtone, ICommonSession AttemptingClient, bool Handled = false);
+
+    [ByRefEvent]
+    public record struct BeforeUplinkOpenEvent(ICommonSession AttemptingClient, bool Canceled = false);
 }

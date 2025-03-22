@@ -7,6 +7,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
 using Content.Server.Parallax;
+using Content.Server.PDA.Ringer;
 using Content.Server.Screens.Components;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
@@ -540,6 +541,8 @@ public sealed class ArrivalsSystem : EntitySystem
             };
             AddComp(mapUid, restricted);
         }
+
+        AddComp<LockableUplinkBlockedMapComponent>(mapUid);
 
         _mapSystem.InitializeMap(mapId);
 
