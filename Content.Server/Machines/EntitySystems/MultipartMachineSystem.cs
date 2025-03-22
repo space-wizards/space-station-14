@@ -140,6 +140,8 @@ public sealed class MultipartMachineSystem : EntitySystem
             return false;
         }
 
+        ent.Comp.Rotation = null; // Ensure we reset our expected orientation
+
         // Whichever component has the MultipartMachine component should be treated as the origin
         var machineOrigin = _mapSystem.TileIndicesFor(gridUid!.Value, grid, xform.Coordinates);
 
