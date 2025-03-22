@@ -2,6 +2,7 @@ using Content.Client.Administration.Managers;
 using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.RoundEnd;
+using Content.Client.UserInterface.Systems.RoundEnd;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using Content.Shared.Roles;
@@ -108,6 +109,8 @@ namespace Content.Client.GameTicking.Managers
 
         private void JoinLobby(TickerJoinLobbyEvent message)
         {
+            _userInterfaceManager.GetUIController<RoundEndSummaryUIController>().ResetSummaryButton();
+
             _stateManager.RequestStateChange<LobbyState>();
         }
 
