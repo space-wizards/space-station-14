@@ -124,10 +124,16 @@ internal sealed class VaporSystem : EntitySystem
 
                         var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
 
+                        // Limit the reaction amount to a minimum value to ensure no floating point funnies.
+                        // Ex: A solution with a low percentage transfer amount will slowly approach 0.01... and never get deleted
+                        var clampedAmount = Math.Max(
+                            (float)reagentQuantity.Quantity * vaporComp.TransferAmountPercentage,
+                            vaporComp.MinimumTransferAmount);
+
                         // Preform the reagent's TileReaction
                         var reaction =
                             reagent.ReactionTile(tile,
-                                reagentQuantity.Quantity * vaporComp.TransferAmountPercentage,
+                                clampedAmount,
                                 EntityManager,
                                 reagentQuantity.Reagent.Data);
 
