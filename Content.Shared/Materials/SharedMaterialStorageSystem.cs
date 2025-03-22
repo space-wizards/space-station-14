@@ -3,6 +3,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Stacks;
+using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -22,6 +23,8 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly SharedStackSystem _sharedStackSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     /// <summary>
     /// Default volume for a sheet if the material's entity prototype has no material composition.
@@ -140,7 +143,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     /// <param name="entity"></param>
     /// <param name="materials"></param>
     /// <returns>If the amount can be changed</returns>
-    public bool CanChangeMaterialAmount(Entity<MaterialStorageComponent?> entity, Dictionary<string,int> materials)
+    public bool CanChangeMaterialAmount(Entity<MaterialStorageComponent?> entity, Dictionary<string, int> materials)
     {
         if (!Resolve(entity, ref entity.Comp))
             return false;
@@ -194,7 +197,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     /// <param name="entity"></param>
     /// <param name="materials"></param>
     /// <returns>If the amount can be changed</returns>
-    public bool TryChangeMaterialAmount(Entity<MaterialStorageComponent?> entity, Dictionary<string,int> materials)
+    public bool TryChangeMaterialAmount(Entity<MaterialStorageComponent?> entity, Dictionary<string, int> materials)
     {
         if (!Resolve(entity, ref entity.Comp))
             return false;
@@ -243,7 +246,8 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         EntityUid receiver,
         MaterialStorageComponent? storage = null,
         MaterialComponent? material = null,
-        PhysicalCompositionComponent? composition = null)
+        PhysicalCompositionComponent? composition = null,
+        bool trySplitStacks = false)
     {
         if (!Resolve(receiver, ref storage))
             return false;
@@ -259,21 +263,57 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
 
         // Material Whitelist checked implicitly by CanChangeMaterialAmount();
 
+        // test if the whole stack fits
         var multiplier = TryComp<StackComponent>(toInsert, out var stackComponent) ? stackComponent.Count : 1;
         var totalVolume = 0;
+        bool partialStack = false;
         foreach (var (mat, vol) in composition.MaterialComposition)
         {
             if (!CanChangeMaterialAmount(receiver, mat, vol * multiplier, storage))
-                return false;
+                if (trySplitStacks is true)
+                {
+                    partialStack = true;
+                    break;
+                }
+                else
+                {
+                    return false;
+                }
             totalVolume += vol * multiplier;
         }
 
         if (!CanTakeVolume(receiver, totalVolume, storage))
-            return false;
+            if (trySplitStacks is true)
+            {
+                partialStack = true;
+            }
+            else
+            {
+                return false;
+            }
+
+        if (partialStack && storage.StorageLimit is not null) // try and calculate the in the maximum possible stack that would fit
+        {
+            var availableVolume = (int)storage.StorageLimit - GetTotalMaterialAmount(receiver, storage);
+            var volumePerSheet = 0;
+            foreach (var vol in composition.MaterialComposition.Values)
+            {
+                volumePerSheet += vol;
+            }
+            multiplier = availableVolume / volumePerSheet;
+
+            if (multiplier <= 0)
+                return false; // 0 sheets fit, don't do anything
+        }
 
         foreach (var (mat, vol) in composition.MaterialComposition)
         {
             TryChangeMaterialAmount(receiver, mat, vol * multiplier, storage);
+        }
+
+        if (partialStack)
+        {
+            _sharedStackSystem.Use(toInsert, multiplier);
         }
 
         var insertingComp = EnsureComp<InsertingMaterialStorageComponent>(receiver);
@@ -311,7 +351,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     {
         if (args.Handled || !component.InsertOnInteract)
             return;
-        args.Handled = TryInsertMaterialEntity(args.User, args.Used, uid, component);
+        args.Handled = TryInsertMaterialEntity(args.User, args.Used, uid, component, null, null, true);
     }
 
     private void OnDatabaseModified(Entity<MaterialStorageComponent> ent, ref TechnologyDatabaseModifiedEvent args)

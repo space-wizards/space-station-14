@@ -93,22 +93,33 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         EntityUid receiver,
         MaterialStorageComponent? storage = null,
         MaterialComponent? material = null,
-        PhysicalCompositionComponent? composition = null)
+        PhysicalCompositionComponent? composition = null,
+        bool trySplitStacks = false)
     {
         if (!Resolve(receiver, ref storage) || !Resolve(toInsert, ref material, ref composition, false))
             return false;
         if (TryComp<ApcPowerReceiverComponent>(receiver, out var power) && !power.Powered)
             return false;
-        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, storage, material, composition))
-            return false;
-        _audio.PlayPvs(storage.InsertingSound, receiver);
-        _popup.PopupEntity(Loc.GetString("machine-insert-item", ("user", user), ("machine", receiver),
-            ("item", toInsert)), receiver);
-        QueueDel(toInsert);
 
-        // Logging
         TryComp<StackComponent>(toInsert, out var stack);
         var count = stack?.Count ?? 1;
+        if (!base.TryInsertMaterialEntity(user, toInsert, receiver, storage, material, composition, trySplitStacks))
+        {
+            _popup.PopupEntity(Loc.GetString("machine-insert-fail", ("machine", receiver)), receiver, user);
+            return false;
+        }
+        var amountUsed = count - stack?.Count ?? 1;
+        if (amountUsed == 0) //count was not changed, so stack.use was not called, so full entity
+        {
+            amountUsed = count;
+            QueueDel(toInsert);
+        }
+
+        _audio.PlayPvs(storage.InsertingSound, receiver);
+        _popup.PopupEntity(Loc.GetString("machine-insert-item-amount", ("user", user), ("machine", receiver),
+            ("item", toInsert), ("amount", amountUsed)), receiver);
+
+        // Logging
         _adminLogger.Add(LogType.Action, LogImpact.Low,
             $"{ToPrettyString(user):player} inserted {count} {ToPrettyString(toInsert):inserted} into {ToPrettyString(receiver):receiver}");
         return true;
