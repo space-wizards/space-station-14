@@ -299,6 +299,9 @@ uplink-chimp-upgrade-kit-desc = Insert this chip into a standard C.H.I.M.P. hand
 uplink-proximity-mine-name = Proximity Mine
 uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
 
+uplink-heavy-cleanade-name = Heavy Duty Cleanade
+uplink-heavy-cleanade-desc = An outwardly normal cleaning grenade filled with an extremely corrosive chemical which is visually identical to regular space cleaner foam. Best used for "cleaning" crowded medical facilities.
+
 uplink-disposable-turret-name = Disposable Ballistic Turret
 uplink-disposable-turret-desc = Looks and functions like a normal electrical toolbox. Upon hitting the toolbox it will transform into a ballistic turret, theoretically shooting at anyone except members of the syndicate. Can be turned back into a toolbox using a screwdriver and repaired using a wrench.
 
