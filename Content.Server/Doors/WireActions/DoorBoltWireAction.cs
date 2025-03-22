@@ -4,7 +4,7 @@ using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Wires;
 
-namespace Content.Server.Doors;
+namespace Content.Server.Doors.WireActions;
 
 public sealed partial class DoorBoltWireAction : ComponentWireAction<DoorBoltComponent>
 {
@@ -12,9 +12,11 @@ public sealed partial class DoorBoltWireAction : ComponentWireAction<DoorBoltCom
     public override string Name { get; set; } = "wire-name-door-bolt";
 
     public override StatusLightState? GetLightState(Wire wire, DoorBoltComponent comp)
-        => comp.BoltsDown ? StatusLightState.On : StatusLightState.Off;
+    {
+        return comp.BoltsDown ? StatusLightState.On : StatusLightState.Off;
+    }
 
-    public override object StatusKey { get; } = AirlockWireStatus.BoltIndicator;
+    public override object StatusKey => AirlockWireStatus.BoltIndicator;
 
     public override bool Cut(EntityUid user, Wire wire, DoorBoltComponent airlock)
     {

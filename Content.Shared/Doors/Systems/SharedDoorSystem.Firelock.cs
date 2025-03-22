@@ -1,21 +1,13 @@
-using Content.Shared.Access.Systems;
 using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Doors.Systems;
 
-public abstract class SharedFirelockSystem : EntitySystem
+public abstract partial class SharedDoorSystem
 {
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-    public override void Initialize()
+    public void InitializeFirelocks()
     {
         base.Initialize();
 
@@ -39,13 +31,13 @@ public abstract class SharedFirelockSystem : EntitySystem
 
         if (door.State != DoorState.Open
             || firelock.EmergencyCloseCooldown != null
-            && _gameTiming.CurTime < firelock.EmergencyCloseCooldown)
+            && GameTiming.CurTime < firelock.EmergencyCloseCooldown)
             return false;
 
-        if (!_doorSystem.TryClose(uid, door))
+        if (!TryClose(uid, door))
             return false;
 
-        return _doorSystem.OnPartialClose(uid, door);
+        return OnPartialClose(uid, door);
     }
 
     #region Access/Prying
@@ -81,14 +73,14 @@ public abstract class SharedFirelockSystem : EntitySystem
     {
         if (ent.Comp.Temperature)
         {
-            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-fire-message"),
+            Popup.PopupClient(Loc.GetString("firelock-component-is-holding-fire-message"),
                 ent.Owner,
                 user,
                 PopupType.MediumCaution);
         }
         else if (ent.Comp.Pressure)
         {
-            _popupSystem.PopupClient(Loc.GetString("firelock-component-is-holding-pressure-message"),
+            Popup.PopupClient(Loc.GetString("firelock-component-is-holding-pressure-message"),
                 ent.Owner,
                 user,
                 PopupType.MediumCaution);
@@ -97,7 +89,7 @@ public abstract class SharedFirelockSystem : EntitySystem
 
     private void OnAfterPried(EntityUid uid, FirelockComponent component, ref PriedEvent args)
     {
-        component.EmergencyCloseCooldown = _gameTiming.CurTime + component.EmergencyCloseCooldownDuration;
+        component.EmergencyCloseCooldown = GameTiming.CurTime + component.EmergencyCloseCooldownDuration;
     }
 
     #endregion
@@ -119,14 +111,14 @@ public abstract class SharedFirelockSystem : EntitySystem
             && door.State != DoorState.Welded
             && door.State != DoorState.Denying)
         {
-            _appearance.SetData(uid, DoorVisuals.ClosedLights, false, appearance);
+            Appearance.SetData(uid, DoorVisuals.ClosedLights, false, appearance);
             return;
         }
 
         if (!Resolve(uid, ref firelock, ref appearance, false))
             return;
 
-        _appearance.SetData(uid, DoorVisuals.ClosedLights, firelock.IsLocked, appearance);
+        Appearance.SetData(uid, DoorVisuals.ClosedLights, firelock.IsLocked, appearance);
     }
 
     #endregion

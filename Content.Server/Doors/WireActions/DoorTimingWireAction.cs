@@ -4,7 +4,7 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Wires;
 
-namespace Content.Server.Doors;
+namespace Content.Server.Doors.WireActions;
 
 public sealed partial class DoorTimingWireAction : ComponentWireAction<AirlockComponent>
 {
@@ -16,15 +16,12 @@ public sealed partial class DoorTimingWireAction : ComponentWireAction<AirlockCo
 
     public override StatusLightState? GetLightState(Wire wire, AirlockComponent comp)
     {
-        switch (comp.AutoCloseDelayModifier)
+        return comp.AutoCloseDelayModifier switch
         {
-            case 0.01f:
-                return StatusLightState.Off;
-            case <= 0.5f:
-                return StatusLightState.BlinkingSlow;
-            default:
-                return StatusLightState.On;
-        }
+            0.01f => StatusLightState.Off,
+            <= 0.5f => StatusLightState.BlinkingSlow,
+            _ => StatusLightState.On
+        };
     }
 
     public override object StatusKey { get; } = AirlockWireStatus.TimingIndicator;
@@ -32,20 +29,23 @@ public sealed partial class DoorTimingWireAction : ComponentWireAction<AirlockCo
     public override bool Cut(EntityUid user, Wire wire, AirlockComponent door)
     {
         WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
-        EntityManager.System<SharedAirlockSystem>().SetAutoCloseDelayModifier(door, 0.01f);
+        EntityManager.System<SharedDoorSystem>().SetAutoCloseDelayModifier(door, 0.01f);
         return true;
     }
 
     public override bool Mend(EntityUid user, Wire wire, AirlockComponent door)
     {
-        EntityManager.System<SharedAirlockSystem>().SetAutoCloseDelayModifier(door, 1f);
+        EntityManager.System<SharedDoorSystem>().SetAutoCloseDelayModifier(door, 1f);
         return true;
     }
 
     public override void Pulse(EntityUid user, Wire wire, AirlockComponent door)
     {
-        EntityManager.System<SharedAirlockSystem>().SetAutoCloseDelayModifier(door, 0.5f);
-        WiresSystem.StartWireAction(wire.Owner, _timeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitTimingTimerFinish, wire));
+        EntityManager.System<SharedDoorSystem>().SetAutoCloseDelayModifier(door, 0.5f);
+        WiresSystem.StartWireAction(wire.Owner,
+            _timeout,
+            PulseTimeoutKey.Key,
+            new TimedWireEvent(AwaitTimingTimerFinish, wire));
     }
 
     public override void Update(Wire wire)
@@ -59,17 +59,17 @@ public sealed partial class DoorTimingWireAction : ComponentWireAction<AirlockCo
     // timing timer??? ???
     private void AwaitTimingTimerFinish(Wire wire)
     {
-        if (!wire.IsCut)
+        if (wire.IsCut)
+            return;
+
+        if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
-            if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
-            {
-                EntityManager.System<SharedAirlockSystem>().SetAutoCloseDelayModifier(door, 1f);
-            }
+            EntityManager.System<SharedDoorSystem>().SetAutoCloseDelayModifier(door, 1f);
         }
     }
 
     private enum PulseTimeoutKey : byte
     {
-        Key
+        Key,
     }
 }
