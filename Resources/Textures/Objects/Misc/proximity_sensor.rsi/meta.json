@@ -1,15 +1,23 @@
 {
-   "copyright" : "Taken from https://github.com/tgstation/tgstation at at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a",
-   "license" : "CC-BY-SA-3.0",
-   "size" : {
-      "x" : 32,
-      "y" : 32
-   },
-   "states" : [
-      {
-         "directions" : 1,
-         "name" : "icon"
-      }
-   ],
-   "version" : 1
+    "version": 1,
+    "copyright": "Taken from https://github.com/tgstation/tgstation at at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a. inhands by mubururu_",
+    "license": "CC-BY-SA-3.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "directions": 1,
+            "name": "icon"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
 }

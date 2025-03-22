@@ -25,6 +25,7 @@
     canCollide: false
   - type: DragInsertContainer
     containerId: storage
+    entryDelay: 2
   - type: ExitContainerOnMove
     containerId: storage
   - type: PointLight

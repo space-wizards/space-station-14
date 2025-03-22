@@ -39,7 +39,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
     private void OnInteractUsing(Entity<FoodSequenceStartPointComponent> ent, ref InteractUsingEvent args)
     {
         if (TryComp<FoodSequenceElementComponent>(args.Used, out var sequenceElement))
-            TryAddFoodElement(ent, (args.Used, sequenceElement), args.User);
+            args.Handled = TryAddFoodElement(ent, (args.Used, sequenceElement), args.User);
     }
 
     private void OnIngredientAdded(Entity<FoodMetamorphableByAddingComponent> ent, ref FoodSequenceIngredientAddedEvent args)
