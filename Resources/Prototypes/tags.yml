@@ -648,6 +648,9 @@
   id: HamsterWearable
 
 - type: Tag
+  id: CorgiWearable
+
+- type: Tag
   id: HamtrCentralControlModule
 
 - type: Tag
