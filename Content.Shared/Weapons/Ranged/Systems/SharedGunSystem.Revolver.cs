@@ -441,8 +441,8 @@ public partial class SharedGunSystem
             component.AmmoSlots.Add(null);
         }
 
-        // Set chambers to default if they are null or not equal to the capacity.
-        if (component.Chambers == null || component.Chambers.Length != component.Capacity && component.FillPrototype != null)
+        // Set chambers to default if they are not equal to the capacity.
+        if (component.Chambers.Length != component.Capacity && component.FillPrototype != null)
         {
             component.Chambers = new bool?[component.Capacity];
             for (var i = 0; i < component.Capacity; i++)
