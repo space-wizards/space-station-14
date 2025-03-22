@@ -19,7 +19,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Mind;
 
-public abstract class SharedMindSystem : EntitySystem
+public abstract partial class SharedMindSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly INetManager _net = default!;
@@ -42,6 +42,8 @@ public abstract class SharedMindSystem : EntitySystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
         SubscribeLocalEvent<MindComponent, ComponentStartup>(OnMindStartup);
         SubscribeLocalEvent<MindComponent, EntityRenamedEvent>(OnRenamed);
+
+        InitializeRelay();
     }
 
     public override void Shutdown()
