@@ -46,7 +46,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 10 # 10 default
+    weight: 10 # 10 default. Don't go lower than 1, it wont ever spawn. If you need something to be rarer than  that you need to shift all the weights. :shrug:
     reoccurrenceDelay: 30
     duration: 1
     maxOccurrences: 1 # should be the same as [copies] in shuttle_incoming_event.yml
@@ -110,7 +110,7 @@
   components:
   - type: StationEvent
     startAnnouncement: null # It should be silent.
-    weight: .5 # Hopefully this is uncommon enough, it needs to be uncommon enough that people wont waste time metaknowledging it.
+    weight: 1 # Hopefully this is uncommon enough, it needs to be uncommon enough that people wont waste time metaknowledging it.
     earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly.
     minimumPlayers: 25
   - type: LoadMapRule
