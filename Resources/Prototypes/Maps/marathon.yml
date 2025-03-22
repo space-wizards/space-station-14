@@ -30,25 +30,25 @@
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 4, 4 ]
-            TechnicalAssistant: [ 3, 3 ]
+            StationEngineer: [ 0, 0 ] # Handled in its own jobgroup
+            TechnicalAssistant: [ 0, 0 ] # Handled in its own jobgroup
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 4, 4 ]
-            MedicalIntern: [ 3, 3 ]
+            MedicalDoctor: [ 0, 0 ] # Handled in its own jobgroup
+            MedicalIntern: [ 0, 0 ] # Handled in its own jobgroup
             Psychologist: [ 1, 1 ]
             Paramedic: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
-            Scientist: [ 4, 4 ]
-            ResearchAssistant: [ 3, 3 ]
+            Scientist: [ 0, 0 ] # Handled in its own jobgroup
+            ResearchAssistant: [ 0, 0 ] # Handled in its own jobgroup
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 8, 8 ]
+            SecurityOfficer: [ 0, 0 ] # Handled in its own jobgroup
             Detective: [ 1, 1 ]
-            SecurityCadet: [ 4, 4 ]
+            SecurityCadet: [ 0, 0 ] # Handled in its own jobgroup
             Lawyer: [ 2, 2 ]
             #supply
             Quartermaster: [ 1, 1 ]
@@ -62,3 +62,28 @@
             #silicon
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]
+          jobGroups:
+            EngineeringTeam:
+              roundStart: 7
+              midRound: 7
+              members:
+                - StationEngineer
+                - TechnicalAssistant
+            MedicalTeam:
+              roundStart: 7
+              midRound: 7
+              members:
+                - MedicalIntern
+                - MedicalDoctor
+            ResearchTeam:
+              roundStart: 7
+              midRound: 7
+              members:
+                - Scientist
+                - ResearchAssistant
+            SecurityTeam:
+              roundStart: 8
+              midRound: 8
+              members:
+                - SecurityOfficer
+                - SecurityCadet
