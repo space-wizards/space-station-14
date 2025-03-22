@@ -1,12 +1,12 @@
 <Document>
   # Networking
   On the station, devices need to communicate to each other to preform their functions.
-  [textlink="Air alarms" link="AirAlarms"] need to talk to their respective devices, [textlink="doors" link="Airlocks"] need to be linked to form proper airlocks, and much more.
+  [textlink="Air alarms" link="AirAlarms"/] need to talk to their respective devices, [textlink="doors" link="Airlocks"/] need to be linked to form proper airlocks, and much more.
 
   This is done through two systems, the Link system and the List system.
 
   You can use either the Multitool or Network Configurator to interact with these systems.
-  You can switch between the different systems using [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] or by hovering your cursor over the device and using [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
+  You can switch between the different systems using [color=yellow][bold][keybind="AltActivateItemInHand"/][/bold][/color] or by hovering your cursor over the device and using [color=yellow][bold][keybind="AltActivateItemInWorld"/][/bold][/color].
 
   <Box HorizontalAlignment="Stretch">
     <Box>
@@ -18,7 +18,7 @@
   </Box>
 
   Some devices will require access to link devices to them.
-  For example, you need Atmospherics access to link devices to an [textlink="air alarm" link="AirAlarms"].
+  For example, you need Atmospherics access to link devices to an [textlink="air alarm" link="AirAlarms"/].
   For doors, you'll need the access level of the door you're linking to.
 
   ## Link System
@@ -49,9 +49,9 @@
 
   Each device has its own unique address, which is used to identify it in the list system. When you link a device to a primary device, you are adding the device's address to a list of devices that the primary device will communicate with.
 
-  You can save a device's address to your tool by interacting with the device using [color=yellow][bold][keybind="Use"][/bold][/color].
+  You can save a device's address to your tool by interacting with the device using [color=yellow][bold][keybind="Use"/][/bold][/color].
 
-  Once you have a list of devices saved to your tool, you can link them to a primary device by interacting with the primary device using [color=yellow][bold][keybind="Use"][/bold][/color], which will bring up a UI.
+  Once you have a list of devices saved to your tool, you can link them to a primary device by interacting with the primary device using [color=yellow][bold][keybind="Use"/][/bold][/color], which will bring up a UI.
 
   The UI has multiple options:
   - Set: Overwrites the current list of linked devices with the devices saved on the tool.
@@ -60,5 +60,5 @@
   - Copy: Copies the list of currently linked devices to the tool.
   - Show: Draws a line between the primary device and all linked devices. This is useful for visualizing the area the air alarm covers.
 
-  If you need to clear your tool, you can press [color=yellow][bold][keybind="Use"][/bold][/color] on the tool or use [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] to bring up a list of saved devices, and then press the "Clear" button.
+  If you need to clear your tool, you can press [color=yellow][bold][keybind="Use"/][/bold][/color] on the tool or use [color=yellow][bold][keybind="ActivateItemInHand"/][/bold][/color] to bring up a list of saved devices, and then press the "Clear" button.
 </Document>

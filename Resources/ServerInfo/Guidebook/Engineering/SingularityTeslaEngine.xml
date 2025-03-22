@@ -28,7 +28,7 @@
 
   This means that the maximum length of a containment field is 7 tiles.
 
-  You can turn on a containment field generator by interacting with it using [color=yellow][bold][keybind="Use"][/bold][/color].
+  You can turn on a containment field generator by interacting with it using [color=yellow][bold][keybind="Use"/][/bold][/color].
   Containment field generators won't work if they aren't turned on, even when struck by an emitter. Remember to turn on the field generator!
 
   The containment field generator has an internal energy level, which is filled by striking it with an emitter. When the containment field generator has enough stored energy, it will generate a containment field.
@@ -54,7 +54,7 @@
 
   The emitters connect to MV cables, and fire lasers as long as they have power and are turned on.
 
-  It is recommended to [color=#a4885c]lock the emitters[/color] with [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color], to prevent any break-in no-gooders from loosing the singularity or tesla by simply switching off the field.
+  It is recommended to [color=#a4885c]lock the emitters[/color] with [color=yellow][bold][keybind="AltActivateItemInWorld"/][/bold][/color], to prevent any break-in no-gooders from loosing the singularity or tesla by simply switching off the field.
 
   ## Particle Accelerator
   The Particle Accelerator (PA) is a multi-tile structure that launches accelerated particles from its emitters.

@@ -2,9 +2,9 @@
   # Thermo-electric Engine (TEG)
 
   The TEG generates power by exchanging heat between hot and cold gasses.
-  On the station, hot gas is usually created by burning plasma, and an array of [textlink="heat-exchanging" link="Radiators"] pipes in space radiates away heat to cool down circulated gasses.
+  On the station, hot gas is usually created by burning plasma, and an array of [textlink="heat-exchanging" link="Radiators"/] pipes in space radiates away heat to cool down circulated gasses.
 
-  The TEG relies heavily on [textlink="atmospherics" link="Atmospherics"] [textlink="piping." link="Pipes"]
+  The TEG relies heavily on [textlink="atmospherics" link="Atmospherics"/] [textlink="piping." link="Pipes"/]
   The only truly special component about it is the generator core and circulators; the rest is all off-the-shelf atmospherics equipment.
   Note that while the exact layout may vary significantly depending on the station, the general components and setup are usually the same.
 
@@ -31,8 +31,8 @@
 
   ## The Pipes
 
-  There are 2 major [textlink="pipenets" link="PipeNetworks"] to worry about here: [color=red]The Hot Loop[/color] (where gas will be burnt for heat), and [color=cyan]The Cold Loop[/color] (where circulated, heated waste gas will either be removed into space or cooled back down).
-  Make sure that [color=#a4885c][bold]both [textlink="pipenets" link="PipeNetworks"] do NOT mix[/bold][/color], as only heat should be transferred between the two through the TEG.
+  There are 2 major [textlink="pipenets" link="PipeNetworks"/] to worry about here: [color=red]The Hot Loop[/color] (where gas will be burnt for heat), and [color=cyan]The Cold Loop[/color] (where circulated, heated waste gas will either be removed into space or cooled back down).
+  Make sure that [color=#a4885c][bold]both [textlink="pipenets" link="PipeNetworks"/] do NOT mix[/bold][/color], as only heat should be transferred between the two through the TEG.
 
   # The Hot Loop
 
@@ -49,9 +49,9 @@
   The burn chamber is the preferred method for heating up gasses, and it is commonly used for other purposes too. (see: Tritium production)
 
   Most (if not all) stations have the burn chamber separated from the main atmospherics block by a 1-wide spaced grid, to prevent the flow of scalding hot gas to Atmos if there was a breach. The chambers consist of 3 important parts:
-  - The [textlink="Air Injector" link="AirInjector"]/[textlink="Passive Vent" link="PassiveVent"]
+  - The [textlink="Air Injector" link="AirInjector"/]/[textlink="Passive Vent" link="PassiveVent"/]
   - The Space Vent
-  - The [textlink="scrubber" link="AirScrubber"] Array
+  - The [textlink="scrubber" link="AirScrubber"/] Array
 
   Here is one layer of an example setup:
   <Box>
@@ -83,24 +83,24 @@
     <GuideEntityEmbed Entity="WallReinforced" Rotation="0" Caption="" Margin="0"/>
   </Box>
 
-  The [textlink="air injector" link="AirInjector"] (or [textlink="passive vent" link="PassiveVent"]) injects air (or allows air to flow) into the burn chamber.
+  The [textlink="air injector" link="AirInjector"/] (or [textlink="passive vent" link="PassiveVent"/]) injects air (or allows air to flow) into the burn chamber.
   Either should be supplemented with a pump before it, to keep pressures high.
 
-  There is a notable difference between the [textlink="passive vent" link="PassiveVent"] and the [textlink="air injector" link="AirInjector"]; the [textlink="air injector" link="AirInjector"] can only keep injecting air up to [color=#a4885c]9MPa[/color], which can be reached very easily with a good burn.
-  Ideally, switch out the [textlink="air injector" link="AirInjector"] for a [textlink="passive vent" link="PassiveVent"] connected to a volume pump.
+  There is a notable difference between the [textlink="passive vent" link="PassiveVent"/] and the [textlink="air injector" link="AirInjector"/]; the [textlink="air injector" link="AirInjector"/] can only keep injecting air up to [color=#a4885c]9MPa[/color], which can be reached very easily with a good burn.
+  Ideally, switch out the [textlink="air injector" link="AirInjector"/] for a [textlink="passive vent" link="PassiveVent"/] connected to a volume pump.
 
   The space vent (designated as a blast door to space on one side of the burn chamber) allows waste gasses to be expelled and destroyed.
   Open this occasionally to keep the pressure under control, or to space excess input gas.
   You even might find the pneumatic valve useful for occasionally spacing the gas.
 
-  The [textlink="scrubber" link="AirScrubber"] array filters out all the burnt gasses and sends them through the TEG.
-  Note that using default settings on the [textlink="scrubbers" link="AirScrubber"] is a bad idea, as valuable plasma will be filtered out too.
+  The [textlink="scrubber" link="AirScrubber"/] array filters out all the burnt gasses and sends them through the TEG.
+  Note that using default settings on the [textlink="scrubbers" link="AirScrubber"/] is a bad idea, as valuable plasma will be filtered out too.
 
-  Instead, use a network configurator to connect all the [textlink="scrubbers" link="AirScrubber"] to a nearby air alarm, and set the air alarm's [textlink="scrubber" link="AirScrubber"] settings to scrub everything except Oxygen and Plasma, and to siphon air as well.
+  Instead, use a network configurator to connect all the [textlink="scrubbers" link="AirScrubber"/] to a nearby air alarm, and set the air alarm's [textlink="scrubber" link="AirScrubber"/] settings to scrub everything except Oxygen and Plasma, and to siphon air as well.
   This ensures that as much heat as available can be collected and sent to the TEG.
 
   Note that this is just one of many ways you can setup the hot loop; [color=#a4885c]feel free to mix and match setups as needed![/color]
-  [textlink="Volume pumps" link="Pumps"] in replacement of [textlink="pressure pumps" link="Pumps"], [textlink="radiator" link="Radiators"] loops for heat collection, or even a Pyroclastic anomaly to provide said heat!
+  [textlink="Volume pumps" link="Pumps"/] in replacement of [textlink="pressure pumps" link="Pumps"/], [textlink="radiator" link="Radiators"/] loops for heat collection, or even a Pyroclastic anomaly to provide said heat!
   The stars are the limit!
 
   # The Cold Loop

@@ -12,9 +12,9 @@
   With these devices, Atmos can insert, extract, or scrub unwanted gasses from any atmosphere they would like.
   This allows the maintaining of a safe, breathable atmosphere.
 
-  Some of these devices require [textlink="power" link="Power"] to function, and can be linked to an [textlink="air alarm." link="AirAlarms"]
+  Some of these devices require [textlink="power" link="Power"/] to function, and can be linked to an [textlink="air alarm." link="AirAlarms"/]
 
-  [textlink="Linking" link="Networking"] compatible devices to an air alarm unlocks more configuration options and functionality. Otherwise, these devices follow their default behavior as defined in the subguides.
+  [textlink="Linking" link="Networking"/] compatible devices to an air alarm unlocks more configuration options and functionality. Otherwise, these devices follow their default behavior as defined in the subguides.
 
   <Box>
     <GuideEntityEmbed Entity="AirAlarm"/>

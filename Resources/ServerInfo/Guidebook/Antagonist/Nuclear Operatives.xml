@@ -38,7 +38,7 @@
   </Box>
 
   ## Preparation
-  Each member in your squad has been given an [color=cyan]uplink[/color] to purchase everything you will need for the mission, similar to [textlink="traitors." link="Traitors"]
+  Each member in your squad has been given an [color=cyan]uplink[/color] to purchase everything you will need for the mission, similar to [textlink="traitors." link="Traitors"/]
 
   <Box>
     <GuideEntityEmbed Entity="BaseUplinkRadio40TC" Caption="your uplink"/>

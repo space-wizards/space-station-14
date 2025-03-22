@@ -1,6 +1,6 @@
 <Document>
   # Cyborgs
-  Cyborgs are man-machine hybrids, purpose-built by the [textlink="robotics"  link="Robotics"] division of science for various duties across the station. Bound by strictly-followed [color=cyan]silicon laws[/color], they serve the crew unconditionally. [italic](Most of the time.)[italic]
+  Cyborgs are man-machine hybrids, purpose-built by the [textlink="robotics" link="Robotics"/] division of science for various duties across the station. Bound by strictly-followed [color=cyan]silicon laws[/color], they serve the crew unconditionally. [italic](Most of the time.)[/italic]
 
   ## Basic Components
   <Box>
@@ -59,8 +59,8 @@
     <GuideEntityEmbed Entity="BorgModuleTreatment" Caption="Treatment"/>
   </Box>
   <Box>
-    [italic]Examples of specialized modules. Note the housing and circuit board colors.
+    [italic]Examples of specialized modules. Note the housing and circuit board colors.[/italic]
   </Box>
-  Additional modules with advanced or novel capabilities can be acquired through new [textlink="technologies"  link="Technologies"] researched by scientists.
+  Additional modules with advanced or novel capabilities can be acquired through new [textlink="technologies" link="Technologies"/] researched by scientists.
 </Document>
 
