@@ -110,7 +110,7 @@
 
 - type: cargoBounty
   id: BountyCrayon
-  reward: 4000
+  reward: 1500
   description: bounty-description-crayon
   entries:
   - name: bounty-item-crayon
@@ -202,7 +202,7 @@
 
 - type: cargoBounty
   id: BountyKnife
-  reward: 6000
+  reward: 1500
   description: bounty-description-knife
   entries:
   - name: bounty-item-knife
@@ -282,7 +282,7 @@
 
 - type: cargoBounty
   id: BountyPen
-  reward: 8000
+  reward: 2000
   description: bounty-description-pen
   entries:
   - name: bounty-item-pen
@@ -293,7 +293,7 @@
 
 - type: cargoBounty
   id: BountyPercussion
-  reward: 15000
+  reward: 5000
   description: bounty-description-percussion
   entries:
   - name: bounty-item-percussion
@@ -356,7 +356,7 @@
 
 - type: cargoBounty
   id: BountySoap
-  reward: 4000
+  reward: 1680
   description: bounty-description-soap
   entries:
   - name: bounty-item-soap
@@ -389,7 +389,7 @@
 
 - type: cargoBounty
   id: BountySyringe
-  reward: 5000
+  reward: 1500
   description: bounty-description-syringe
   entries:
   - name: bounty-item-syringe
@@ -480,7 +480,7 @@
 
 - type: cargoBounty
   id: BountyLabeler
-  reward: 6660
+  reward: 4000
   description: bounty-description-labeler
   entries:
   - name: bounty-item-labeler
@@ -491,7 +491,7 @@
 
 - type: cargoBounty
   id: BountyWarmCloth
-  reward: 2000
+  reward: 1800
   description: bounty-description-warm-cloth
   idPrefix: UNTH
   entries:
@@ -508,7 +508,7 @@
 
 - type: cargoBounty
   id: BountyBattery
-  reward: 15000
+  reward: 4500
   description: bounty-description-battery
   idPrefix: UNTH
   entries:
@@ -520,7 +520,7 @@
 
 - type: cargoBounty
   id: BountyLaserGun
-  reward: 28500
+  reward: 9600
   description: bounty-description-lasergun
   idPrefix: IV
   entries:
@@ -529,10 +529,13 @@
     whitelist:
       components:
       - HitscanBatteryAmmoProvider
+    blacklist:
+      components:
+      - Battery
 
 - type: cargoBounty
   id: BountyFood
-  reward: 4000
+  reward: 1500
   description: bounty-description-food
   idPrefix: UNTH
   entries:
@@ -592,7 +595,7 @@
 
 - type: cargoBounty
   id: BountyRollerskates
-  reward: 6500
+  reward: 1800
   description: bounty-description-rollerskates
   entries:
   - name: bounty-item-rollerskates
@@ -614,7 +617,7 @@
 
 - type: cargoBounty
   id: BountyBandana
-  reward: 4000
+  reward: 1600
   description: bounty-description-bandana
   entries:
   - name: bounty-item-bandana
@@ -636,7 +639,7 @@
 
 - type: cargoBounty
   id: BountyBanana
-  reward: 6009
+  reward: 4500
   description: bounty-description-banana
   entries:
   - name: bounty-item-banana
@@ -647,7 +650,7 @@
 
 - type: cargoBounty
   id: BountyBeer
-  reward: 3100
+  reward: 3000
   description: bounty-description-beer
   entries:
   - name: bounty-item-beer
@@ -680,7 +683,7 @@
 
 - type: cargoBounty
   id: BountyMedkitBox
-  reward: 2300
+  reward: 1800
   description: bounty-description-medkit-box
   entries:
   - name: bounty-item-medkit-box
@@ -691,7 +694,7 @@
 
 - type: cargoBounty
   id: BountyCardboardBox
-  reward: 1500
+  reward: 800
   description: bounty-description-cardboard-box
   entries:
   - name: bounty-item-cardboard-box
@@ -702,7 +705,7 @@
 
 - type: cargoBounty
   id: BountyWine
-  reward: 3000
+  reward: 1500
   description: bounty-description-wine
   entries:
   - name: bounty-item-wine
