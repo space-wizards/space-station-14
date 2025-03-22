@@ -8,6 +8,12 @@
     sprite: Clothing/OuterClothing/Suits/bombsuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/bombsuit.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
@@ -27,6 +33,9 @@
     - WhitelistChameleon
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: HideLayerClothing
+    slots:
+      - Tail
 
 - type: entity
   parent: ClothingOuterSuitBomb
@@ -50,6 +59,12 @@
     sprite: Clothing/OuterClothing/Suits/fire.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/fire.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.04
   - type: TemperatureProtection
@@ -70,6 +85,9 @@
   - type: GroupExamine
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: HideLayerClothing
+    slots:
+      - Tail
 
 - type: entity
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing]
@@ -81,6 +99,12 @@
     sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
@@ -102,6 +126,9 @@
   - type: GroupExamine
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: HideLayerClothing
+    slots:
+      - Tail
 
 - type: entity
   parent: [ClothingOuterBaseLarge, GeigerCounterClothing, AllowSuitStorageClothing]
@@ -118,6 +145,12 @@
         Radiation: 0.01
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/rad.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: GroupExamine
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodRad
@@ -127,6 +160,9 @@
       toggleable-clothing: !type:ContainerSlot {}
   - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
+  - type: HideLayerClothing
+    slots:
+      - Tail
 
 - type: entity
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseToggleClothing, BaseMajorContraband]
@@ -138,6 +174,12 @@
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/spaceninja.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   # hardsuit stuff
   - type: PressureProtection
     highPressureMultiplier: 0.6
@@ -191,6 +233,9 @@
         whitelist:
           tags:
             - PowerCell
+  - type: HideLayerClothing
+    slots:
+    - Tail
 
 - type: entity
   parent: ClothingOuterBase
@@ -279,11 +324,20 @@
     size: Normal
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodCarp
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
+  - type: HideLayerClothing
+    slots:
+        - Tail
 
 - type: entity
   parent: ClothingOuterSuitCarp

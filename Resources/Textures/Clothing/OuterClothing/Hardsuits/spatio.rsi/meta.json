@@ -2,7 +2,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Original by Emisse, modified by EmoGarbage404. Vox state made by Flareguy for SS14",
+  "copyright": "Original by Emisse, modified by EmoGarbage404. Vox state made by Flareguy for SS14. Tail sprites by Tiniest Shark (github).",
 
   "size": {
     "x": 32,
@@ -19,6 +19,10 @@
     {
       "name": "equipped-OUTERCLOTHING-vox",
       "directions": 4
+    },
+    {
+       "name": "equipped-OUTERCLOTHING-tail",
+       "directions": 4
     },
     {
       "name": "inhand-left",
