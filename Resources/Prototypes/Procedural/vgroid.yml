@@ -28,63 +28,81 @@
       proto: VGRoidFill
     # Ores
     - !type:OreDunGen
-      replacement: IronRock
+      entityMask:
+      - IronRock
       entity: IronRockIron
       count: 50
       minGroupSize: 10
       maxGroupSize: 15
     - !type:OreDunGen
-      replacement: IronRock
+      entityMask:
+      - IronRock
       entity: IronRockCoal
       count: 50
       minGroupSize: 8
       maxGroupSize: 12
     - !type:OreDunGen
-      replacement: IronRock
+      entityMask:
+      - IronRock
       entity: IronRockQuartz
       count: 50
       minGroupSize: 10
       maxGroupSize: 15
     - !type:OreDunGen
-      replacement: IronRock
+      entityMask:
+      - IronRock
       entity: IronRockSalt
       count: 50
       minGroupSize: 8
       maxGroupSize: 12
     - !type:OreDunGen
-      replacement: IronRock
+      entityMask:
+      - IronRock
       entity: IronRockGold
       count: 40
       minGroupSize: 8
       maxGroupSize: 12
     - !type:OreDunGen
-      replacement: IronRock
+      entityMask:
+      - IronRock
       entity: IronRockSilver
       count: 40
       minGroupSize: 8
       maxGroupSize: 12
     - !type:OreDunGen
-      replacement: IronRock
+      entityMask:
+      - IronRock
       entity: IronRockPlasma
       count: 35
       minGroupSize: 4
       maxGroupSize: 8
     - !type:OreDunGen
-      replacement: IronRock
+      entityMask:
+      - IronRock
       entity: IronRockUranium
       count: 35
       minGroupSize: 4
       maxGroupSize: 8
     - !type:OreDunGen
-      replacement: IronRock
+      entityMask: 
+      - IronRock
       entity: IronRockArtifactFragment
       count: 25
       minGroupSize: 1
       maxGroupSize: 3
     - !type:OreDunGen
-      replacement: IronRock
+      entityMask: 
+      - IronRock
       entity: IronRockDiamond
       count: 15
+      minGroupSize: 1
+      maxGroupSize: 2
+    # Decoration
+    - !type:OreDunGen
+      tileMask:
+      - FloorAsteroidSand
+      entity: FloraRockSolid01
+      count: 20
       minGroupSize: 1
       maxGroupSize: 2
 
