@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Removed the cyrillic text conversion from the russian accent.
-    type: Remove
-  id: 868
-  time: '2025-01-06T23:40:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1227
 - author: widgetbeck
   changes:
   - message: Apids now get sleepy when exposed to water vapor.
@@ -4102,3 +4095,20 @@
   id: 1367
   time: '2025-03-22T15:32:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2047
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: Adjustments to the Arsenal Tech Tree for some small simplification
+    type: Tweak
+  - message: New firing sounds for the Laser Cannon and Energy Shotgun; new names
+      for laser weapons (except the Captain's)
+    type: Tweak
+  - message: Laser Cannon's stats have been dramatically changed.
+    type: Tweak
+  - message: 3 new blaster energy weapons can be researched and built
+    type: Add
+  - message: uplink and research icons for several weapons/ammo now use the new art
+      rather than the old art.
+    type: Fix
+  id: 1368
+  time: '2025-03-22T15:42:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2030
