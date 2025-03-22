@@ -31,6 +31,14 @@
     {
       "name": "equipped-head-light-vox",
       "directions": 4
+    },
+    {
+      "name": "equipped-head-dog",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-light-dog",
+      "directions": 4
     }
   ]
 }

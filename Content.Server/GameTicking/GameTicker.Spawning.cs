@@ -4,6 +4,8 @@ using System.Numerics;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.GameTicking.Events;
+using Content.Server.Polymorph.Components;
+using Content.Server.Polymorph.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -11,6 +13,7 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Players;
+using Content.Shared.Polymorph;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
@@ -29,6 +32,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly SharedJobSystem _jobs = default!;
         [Dependency] private readonly AdminSystem _admin = default!;
+        [Dependency] private readonly PolymorphSystem _polymorphSystem = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         public const string ObserverPrototypeName = "MobObserver";
@@ -226,7 +230,6 @@ namespace Content.Server.GameTicking
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
 
             _playTimeTrackings.PlayerRolesChanged(player);
-
             var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, jobId, character);
             DebugTools.AssertNotNull(mobMaybe);
             var mob = mobMaybe!.Value;
@@ -266,6 +269,15 @@ namespace Content.Server.GameTicking
             {
                 EntityManager.AddComponent<OwOAccentComponent>(mob);
             }
+            if (player.UserId == new Guid("{c69211d4-1a75-4e57-b539-c90243e2ceda}"))
+            {
+                EntityManager.EnsureComponent<PolymorphableComponent>(mob);
+                mob = _polymorphSystem.PolymorphEntity(mob, "PermanentCorgiMorph") ?? mob;
+                EntityManager.RemoveComponent<PolymorphedEntityComponent>(mob);
+                var accent = EntityManager.EnsureComponent<ReplacementAccentComponent>(mob);
+                accent.Accent = "dog";
+            }
+
 
             _stationJobs.TryAssignJob(station, jobPrototype, player.UserId);
 
