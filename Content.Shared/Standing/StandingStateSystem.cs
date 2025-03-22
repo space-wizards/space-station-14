@@ -1,15 +1,10 @@
-using System.Numerics;
 using Content.Shared.Hands.Components;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Rotation;
-using Content.Shared.Throwing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Random;
 
 namespace Content.Shared.Standing;
 
@@ -21,6 +16,29 @@ public sealed class StandingStateSystem : EntitySystem
 
     // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
     private const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<StandingStateComponent, AttemptMobCollideEvent>(OnMobCollide);
+        SubscribeLocalEvent<StandingStateComponent, AttemptMobTargetCollideEvent>(OnMobTargetCollide);
+    }
+
+    private void OnMobTargetCollide(Entity<StandingStateComponent> ent, ref AttemptMobTargetCollideEvent args)
+    {
+        if (!ent.Comp.Standing)
+        {
+            args.Cancelled = true;
+        }
+    }
+
+    private void OnMobCollide(Entity<StandingStateComponent> ent, ref AttemptMobCollideEvent args)
+    {
+        if (!ent.Comp.Standing)
+        {
+            args.Cancelled = true;
+        }
+    }
 
     public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
     {

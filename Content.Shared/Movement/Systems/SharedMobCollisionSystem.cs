@@ -226,6 +226,12 @@ public abstract class SharedMobCollisionSystem : EntitySystem
                 continue;
             }
 
+            var targetEv = new AttemptMobTargetCollideEvent();
+            RaiseLocalEvent(other, ref targetEv);
+
+            if (targetEv.Cancelled)
+                continue;
+
             // TODO: More robust overlap detection.
             var otherTransform = Physics.GetPhysicsTransform(other);
             var diff = ourTransform.Position - otherTransform.Position;
@@ -271,6 +277,15 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 /// </summary>
 [ByRefEvent]
 public record struct AttemptMobCollideEvent
+{
+    public bool Cancelled;
+}
+
+/// <summary>
+/// Raised on the other entity when attempting mob collisions.
+/// </summary>
+[ByRefEvent]
+public record struct AttemptMobTargetCollideEvent
 {
     public bool Cancelled;
 }
