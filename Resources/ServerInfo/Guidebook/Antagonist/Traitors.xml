@@ -10,13 +10,13 @@
   Traitors are antagonists employed by the [color=#ff0000]Syndicate.[/color] You are a sleeper agent who has access to various tools and weapons through your [bold]uplink[/bold].
   You also receive [bold]codewords[/bold] to identify other agents, and a coordinated team of traitors can have [italic]brutal results.[/italic]
 
-  Anyone besides [textlink="department heads" link="Command"] or members of [textlink="Security" link="Security"] can be a traitor.
+  Anyone besides [textlink="department heads" link="Command"/] or members of [textlink="Security" link="Security"/] can be a traitor.
 
   ## Uplink & Activation
   The [color=cyan]uplink[/color] is your most important tool as a traitor. You can exchange the 20 [color=red]telecrystals[/color] (TC) you start with for items that will help you with your objectives.
 
-  By pressing [color=yellow][bold][keybind="OpenCharacterMenu"][/bold][/color], you'll see your personal uplink code. [bold]Setting your PDA's ringtone as this code will open the uplink.[/bold]
-  Pressing [color=yellow][bold][keybind="OpenCharacterMenu"][/bold][/color] also lets you view your objectives and the codewords.
+  By pressing [color=yellow][bold][keybind="OpenCharacterMenu"/][/bold][/color], you'll see your personal uplink code. [bold]Setting your PDA's ringtone as this code will open the uplink.[/bold]
+  Pressing [color=yellow][bold][keybind="OpenCharacterMenu"/][/bold][/color] also lets you view your objectives and the codewords.
 
   If you do not have a PDA when you are activated, an [color=cyan]uplink implant[/color] is provided [bold]for the full [color=red]TC[/color] price of the implant.[/bold]
   It can be accessed from your hotbar.

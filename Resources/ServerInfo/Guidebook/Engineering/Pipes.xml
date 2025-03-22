@@ -11,8 +11,8 @@
     <GuideEntityEmbed Entity="GasPipeFourway" Caption="fourway"/>
   </Box>
 
-  Pipes will [color=#a4885c]automatically connect[/color] to other pipes when anchored (or wrenched) to the hull to form a [textlink="network of pipes." link="PipeNetworks"]
-  A network of pipes is commonly called a [textlink="pipenet" link="PipeNetworks"].
+  Pipes will [color=#a4885c]automatically connect[/color] to other pipes when anchored (or wrenched) to the hull to form a [textlink="network of pipes." link="PipeNetworks"/]
+  A network of pipes is commonly called a [textlink="pipenet" link="PipeNetworks"/].
 
   Pipes will [color=red]not connect[/color] to pipes that are already connected to a different pipe.
   For example, building a bent pipe on top of a straight pipe to form a makeshift T-junction will not work.

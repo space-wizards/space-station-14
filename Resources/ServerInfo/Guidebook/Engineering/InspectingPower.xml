@@ -13,13 +13,13 @@
   The Power Monitoring Computer has two major sections, a station map and the power statistics.
 
   The station map shows:
-  - The station layout, with [color=green]low[/color], [color=yellow]medium[/color], and [color=orange]high[/color] [textlink="voltage networks" link="VoltageNetworks"] highlighted.
-  - [textlink="All APCs, SMES, and substations." link="VoltageNetworks"]
-  - All power [textlink="producers" link="Generators"] connected to the station (note that they don't have to be connected to a power network to be shown).
+  - The station layout, with [color=green]low[/color], [color=yellow]medium[/color], and [color=orange]high[/color] [textlink="voltage networks" link="VoltageNetworks"/] highlighted.
+  - [textlink="All APCs, SMES, and substations." link="VoltageNetworks"/]
+  - All power [textlink="producers" link="Generators"/] connected to the station (note that they don't have to be connected to a power network to be shown).
 
   The power statistics show:
-  - The total [textlink="generator" link="Generators"] output, which is what the generators are currently producing to match grid demand.
-  - The total [textlink="battery" link="PowerStorage"] usage, which is the amount of power being drawn from batteries. Grids completely powered by generators will show low battery usage.
+  - The total [textlink="generator" link="Generators"/] output, which is what the generators are currently producing to match grid demand.
+  - The total [textlink="battery" link="PowerStorage"/] usage, which is the amount of power being drawn from batteries. Grids completely powered by generators will show low battery usage.
   - The total network loads, which is the amount of power being requested by the station.
 
   In an ideal situation, the total generator output should match the total network load, and the total battery usage should be low.
