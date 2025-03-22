@@ -151,7 +151,7 @@
 
 - type: entity
   name: pirate revolver
-  parent: [BaseWeaponRevolver, BaseMinorContraband]
+  parent: [BaseWeaponRevolver, BaseMajorContraband]
   id: WeaponRevolverPirate
   description: An odd, old-looking revolver, favoured by pirate crews. Uses .45 magnum ammo.
   components:
@@ -168,3 +168,17 @@
     capacity: 5
     chambers: [ True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null ]
+
+- type: entity
+  name: pirate revolver
+  parent: WeaponRevolverPirate
+  id: WeaponRevolverPirateEmpty
+  description: An odd, old-looking revolver, favoured by pirate crews. Uses .45 magnum ammo.
+  suffix: Empty
+  components:
+  - type: RevolverAmmoProvider
+    proto: null
+    capacity: 5
+    chambers: [ null, null, null, null, null ]
+    ammoSlots: [ null, null, null, null, null ]
+    
