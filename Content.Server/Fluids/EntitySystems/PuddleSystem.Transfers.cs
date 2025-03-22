@@ -2,6 +2,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
+using Content.Shared.Nutrition.Components;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -14,6 +15,12 @@ public sealed partial class PuddleSystem
 
     private void OnRefillableDragged(Entity<RefillableSolutionComponent> entity, ref DragDropDraggedEvent args)
     {
+        if (TryComp<OpenableComponent>(entity.Owner, out var openable) && !openable.Opened)
+        {
+            _popups.PopupEntity(Loc.GetString("drink-component-try-use-drink-not-open", ("owner", entity.Owner)), entity.Owner, args.User);
+            return;
+        }
+
         if (!_solutionContainerSystem.TryGetSolution(entity.Owner, entity.Comp.Solution, out var soln, out var solution) || solution.Volume == FixedPoint2.Zero)
         {
             _popups.PopupEntity(Loc.GetString("mopping-system-empty", ("used", entity.Owner)), entity, args.User);
@@ -41,6 +48,13 @@ public sealed partial class PuddleSystem
             if (success)
             {
                 _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, args.Target);
+
+                // if we are dumping something like food, we should destroy the entity as empty food is useless, bugged and can be exploited
+                if (entity.Comp.DeleteOnEmpty)
+                {
+                    _popups.PopupEntity(Loc.GetString("mopping-system-dump", ("used", entity.Owner), ("target", args.Target)), args.User, args.User);
+                    EntityManager.DeleteEntity(entity.Owner);
+                }
             }
             else
             {

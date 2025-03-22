@@ -38,6 +38,7 @@
     solution: food
   - type: RefillableSolution
     solution: food
+    deleteOnEmpty: true
 
 # usable by any food that can be opened
 # handles appearance with states "icon" and "icon-open"
