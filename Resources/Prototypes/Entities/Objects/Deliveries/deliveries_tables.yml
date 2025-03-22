@@ -125,24 +125,19 @@
   id: PackageUncommonEntityTable
   table: !type:GroupSelector
     children:
-    # Fluff
     - !type:NestedSelector
       tableId: MaintFluffTable
       weight: 0.4
       rolls: !type:RangeNumberSelector
         range: 1, 2
-    # Plushies
     - !type:NestedSelector
       tableId: AllPlushiesTable
       weight: 0.4
-    # Weapons
     - !type:NestedSelector
-      tableId: MaintWeaponTable
-      weight: 0.1
-    # Syndie Loot
-    - !type:NestedSelector
-      tableId: SyndieMaintLoot
-      weight: 0.1
+      tableId: RandomAllAlcoholTable
+      weight: 0.2
+      rolls: !type:RangeNumberSelector
+        range: 2, 3
 
 - type: entityTable # TODO: Add more variety!
   id: PackageRareEntityTable
@@ -151,3 +146,15 @@
     - id: MedkitAdvancedFilled
     - id: MobMothroach
     - id: PipeBomb
+    #- !type:NestedSelector TODO: Uncomment after all the rare bundles are done (medical, security, etc... as well as a bunch of funny and maybe harmful ones)
+    #  tableId: PackageRareBundlesTable
+    - !type:NestedSelector
+      tableId: AnimalMaskTable
+    # Weapons
+    - !type:NestedSelector
+      tableId: MaintWeaponTable
+      weight: 0.5
+    # Syndie Loot
+    - !type:NestedSelector
+      tableId: SyndieMaintLoot
+      weight: 0.5

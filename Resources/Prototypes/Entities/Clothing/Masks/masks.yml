@@ -687,3 +687,16 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+
+# Entity tables
+- type: entityTable
+  id: AnimalMaskTable
+  table: !type:GroupSelector
+    children:
+    - id: ClothingMaskFox
+    - id: ClothingMaskBat
+    - id: ClothingMaskBear
+    - id: ClothingMaskBee
+    - id: ClothingMaskRaven
+    - id: ClothingMaskRat
+    - id: ClothingMaskJackal
