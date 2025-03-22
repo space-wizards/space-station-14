@@ -58,10 +58,10 @@ public sealed class MultipartMachineSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns whether each part of the machine has a matched entity
+    /// Returns whether each non-optional part of the machine has a matched entity
     /// </summary>
     /// <param name="ent">Entity to check the assembled state of</param>
-    /// <returns>True if all parts have a match entity, false otherise</returns>
+    /// <returns>True if all non-optional parts have a match entity, false otherise</returns>
     public bool Assembled(Entity<MultipartMachineComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -69,7 +69,7 @@ public sealed class MultipartMachineSystem : EntitySystem
 
         foreach (var part in ent.Comp.Parts.Values)
         {
-            if (!part.Entity.HasValue)
+            if (!part.Entity.HasValue && !part.Optional)
                 return false;
         }
 
@@ -161,7 +161,7 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// the specified requirments for offset, rotation, and components.
     /// </summary>
     /// <param name="ent">Entity to rescan for</param>
-    /// <returns>True if all parts are found and match, false otherwise</returns>
+    /// <returns>True if all non-optional parts are found and match, false otherwise</returns>
     public bool Rescan(Entity<MultipartMachineComponent> ent)
     {
         // Get all required transform information to start looking for the other parts based on their offset
@@ -219,7 +219,7 @@ public sealed class MultipartMachineSystem : EntitySystem
                 }
             }
 
-            if (!part.Entity.HasValue)
+            if (!part.Entity.HasValue && !part.Optional)
             {
                 missingParts = true;
             }

@@ -22,6 +22,13 @@ public sealed partial class MachinePart
     public Vector2i Offset;
 
     /// <summary>
+    /// Whether this part is required for the machine to be
+    /// considered "assembled", or is considered an optional extra.
+    /// </summary>
+    [DataField]
+    public bool Optional = false;
+
+    /// <summary>
     /// Sprite to show when user examines the machine and there
     /// is no matched entity for this part.
     /// </summary>
