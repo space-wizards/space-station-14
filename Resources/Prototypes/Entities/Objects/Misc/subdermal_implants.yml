@@ -183,7 +183,6 @@
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateEmpImplant
-    - type: TriggerImplantAction
     - type: EmpOnTrigger
       range: 2.75
       energyConsumption: 50000

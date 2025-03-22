@@ -119,18 +119,20 @@
 - type: entity
   id: ActionActivateEmpImplant
   name: Activate EMP
-  description: Triggers a small EMP pulse around you
+  description: Triggers a small EMP pulse around chosen place.
   components:
-  - type: InstantAction
-    checkCanInteract: false
-    charges: 3
-    useDelay: 5
-    itemIconStyle: BigAction
-    priority: -20
+  - type: WorldTargetAction
     icon:
       sprite: Objects/Weapons/Grenades/empgrenade.rsi
       state: icon
-    event: !type:ActivateImplantEvent
+    itemIconStyle: BigAction
+    charges: 3
+    useDelay: 5
+    priority: -20
+    event: !type:UseEmpImplantEvent
+    checkCanAccess: false
+    checkCanInteract: false
+    range: 0
 
 - type: entity
   id: ActionActivateScramImplant
