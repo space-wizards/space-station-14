@@ -80,7 +80,7 @@ namespace Content.IntegrationTests.Tests
 
                 var pos = clientEntManager.System<SharedTransformSystem>().GetWorldPosition(clientEnt);
 
-                hit = clientEntManager.System<ClickableSystem>().CheckClick((clientEnt, null, sprite, null), new Vector2(clickPosX, clickPosY) + pos, eye, out _, out _, out _);
+                hit = clientEntManager.System<ClickableSystem>().CheckClick((clientEnt, null, sprite, null), new Vector2(clickPosX, clickPosY) + pos, eye, false, out _, out _, out _);
             });
 
             await server.WaitPost(() =>
