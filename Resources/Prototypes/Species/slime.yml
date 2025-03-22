@@ -19,8 +19,8 @@
     Head: MobSlimeHead
     Hair: MobSlimeMarkingFollowSkin
     FacialHair: MobSlimeMarkingFollowSkin
-    Underwear: MobHumanoidAnyMarking
-    Undershirt: MobHumanoidAnyMarking
+    UndergarmentTop: MobHumanoidAnyMarking
+    UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobSlimeTorso
     Eyes: MobHumanoidEyes
     LArm: MobSlimeLArm
@@ -60,12 +60,8 @@
 - type: humanoidBaseSprite
   id: MobSlimeMarkingFollowSkin
   markingsMatchSkin: true
-  layerAlpha: 0.75 # Impstation Special
-
-- type: humanoidBaseSprite
-  id: MobSlimeHead
+  layerAlpha: 0.72
   baseSprite:
-    sprite: Mobs/Species/Slime/parts.rsi
     state: head_m
 
 - type: humanoidBaseSprite

@@ -1,63 +1,6 @@
 # only used roundstart, names can be changed after
-- type: dataset
-  id: names_borg
+- type: localizedDataset
+  id: NamesBorg
   values:
-  - Bob
-  - Joe
-  - Beep
-  - Beep II
-  - Boombox
-  - Tour Guide-otron
-  - Taffy
-  - Boop
-  - Boop II
-  - Buzz
-  - Buzz II
-  - Toaster
-  - Head of Robots
-  - EVA 1
-  - Mr. Robist
-  - Junk
-  - R2-PO
-  - C-3-D2
-  - Robby
-  - Robobot
-  - Fixer
-  - Sonny
-  - Autobot
-  - Whitley
-  - Joshua
-  - Fraunt
-  - Xenos
-  - Echo
-  - Vector
-  - B-0-RG
-  - Megabyte
-  - Butt-Bot
-  - Deceptiborg
-  - Le Borgue
-  - Beepers
-  - Cute-Bot
-  - Makeshifter
-  - Twin
-  - S.A.U.L
-  - Honker
-  - Clanker
-  - Is-The-Robot
-  - 9 of 7
-  - Dank bot
-  - Curiosity
-  - Temporary Generalist Unit
-  - LabBuddy Pro
-  - Sterling
-  - Bit
-  - Axel
-  - Buttons
-  - Buttons II
-  - DotCom
-  - HelpGPT
-  - Sparky
-  - WorkPro
-  - WorkPro Trial Version
-  - Robot Kyle
-
+    prefix: names-borg-dataset-
+    count: 43

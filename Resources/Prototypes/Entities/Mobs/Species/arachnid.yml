@@ -82,8 +82,8 @@
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-      - map: [ "enum.HumanoidVisualLayers.Underwear" ]
-      - map: [ "enum.HumanoidVisualLayers.Undershirt" ]
+      - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
+      - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
       - map: ["jumpsuit"]
       - map: ["enum.HumanoidVisualLayers.LFoot"]
       - map: ["enum.HumanoidVisualLayers.RFoot"]
@@ -118,6 +118,7 @@
         visible: false
   - type: Inventory
     templateId: arachnid
+    speciesId: arachnid
 
 
 - type: entity
@@ -127,6 +128,8 @@
   components:
   - type: HumanoidAppearance
     species: Arachnid
+  - type: Inventory
+    speciesId: arachnid
 
 
 #>88w88<

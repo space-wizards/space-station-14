@@ -10,6 +10,8 @@ namespace Content.Shared.Humanoid
         Tail,
         Hair,
         FacialHair,
+        UndergarmentTop,
+        UndergarmentBottom,
         Chest,
         Underwear,
         Undershirt,
@@ -21,7 +23,6 @@ namespace Content.Shared.Humanoid
         RArm,
         LArm,
         RHand,
-
         LHand,
         RLeg,
         LLeg,

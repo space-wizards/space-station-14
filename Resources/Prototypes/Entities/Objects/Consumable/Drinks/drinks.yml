@@ -1675,6 +1675,9 @@
         reagents:
         - ReagentId: Sake
           Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/sakeglass.rsi
+    state: icon
 
 - type: entity
   parent: DrinkGlass
@@ -2278,6 +2281,182 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/xenobasher.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkCaipirinha
+  suffix: caipirinha
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Caipirinha
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/caipirinha.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkDaiquiri
+  suffix: daiquiri
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Daiquiri 
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/daiquiri.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkDeathInTheAfternoon
+  suffix: death in the afternoon
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: DeathInTheAfternoon
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/deathintheafternoon.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkEmpress75
+  suffix: empress 75
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Empress75
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/empress75.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkEspressoMartini
+  suffix: espresso martini
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: EspressoMartini
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/espressomartini.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkMayojito
+  suffix: mayojito
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Mayojito
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/mayojito.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkMimeosa
+  suffix: mimeosa
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Mimeosa
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/mimeosa.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkMimosa
+  suffix: mimosa
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Mimosa
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/mimosa.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkMoscowMule
+  suffix: moscow mule
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: MoscowMule
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/moscowmule.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkTheSunAlsoRises
+  suffix: the sun also rises
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: TheSunAlsoRises
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/thesunalsorises.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkWhiskeySour
+  suffix: whiskey sour
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: WhiskeySour
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/whiskeysour.rsi
     state: icon
 
 # TODO: MOVE

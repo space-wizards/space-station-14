@@ -1,63 +1,17 @@
-- type: dataset
-  id: RevenantType
+- type: localizedDataset
+  id: NamesRevenantType
   values:
-  - Bad Guy #imp
-  - essence
-  - gratiousness #imp
-  - ghost
-  - phantom
-  - poltergeist
-  - revenant
-  - soul
-  - spectre
-  - spirit
+    prefix: names-revenant-type-dataset-
+    count: 10
 
-- type: dataset
-  id: RevenantAdjective
+- type: localizedDataset
+  id: NamesRevenantAdjective
   values:
-  - abysmal
-  - abyssal
-  - brutal
-  - dark
-  - endless
-  - eternal
-  - fiery
-  - FUCKING #imp
-  - hateful
-  - hideous
-  - hilarious
-  - indescriminate #imp
-  - indifferent
-  - malevolent
-  - peaceful
-  - searing
-  - silent
-  - spiteful
-  - vicious
-  - violent
+    prefix: names-revenant-adjective-dataset-
+    count: 20
 
-- type: dataset
-  id: RevenantTheme
+- type: localizedDataset
+  id: NamesRevenantTheme
   values:
-  - agony
-  - anger
-  - death
-  - despair
-  - desperation
-  - destruction
-  - disease
-  - grief
-  - hate
-  - hellfire
-  - hill #imp
-  - homophobia #imp
-  - laughter
-  - misery
-  - ruin
-  - salt
-  - screams
-  - SHITPIGS #imp
-  - sorrow
-  - suffering
-  - tutorialization #imp
-  - vengeance
+    prefix: names-revenant-theme-dataset-
+    count: 22
