@@ -38,6 +38,7 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly StorageSystem _storageSystem = default!;
         [Dependency] private readonly LabelSystem _labelSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] protected readonly IPrototypeManager _prototypeManager = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         private const string PillPrototypeId = "Pill";
@@ -149,14 +150,14 @@ namespace Content.Server.Chemistry.EntitySystems
             if (fromBuffer) // Buffer to container
             {
                 amount = FixedPoint2.Min(amount, containerSolution.AvailableVolume);
-                amount = bufferSolution.RemoveReagent(id, amount, preserveOrder: true);
-                _solutionContainerSystem.TryAddReagent(containerSoln.Value, id, amount, out var _);
+                var split = bufferSolution.SplitSolutionWithOnly(amount, id.Prototype);
+                _solutionContainerSystem.TryAddSolution(containerSoln.Value, split);
             }
             else // Container to buffer
             {
                 amount = FixedPoint2.Min(amount, containerSolution.GetReagentQuantity(id));
-                _solutionContainerSystem.RemoveReagent(containerSoln.Value, id, amount);
-                bufferSolution.AddReagent(id, amount);
+                var split = _solutionContainerSystem.SplitSolutionWithOnly(containerSoln.Value, amount, id.Prototype);
+                bufferSolution.AddSolution(split, _prototypeManager);
             }
 
             UpdateUiState(chemMaster, updateLabel: true);
