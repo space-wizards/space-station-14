@@ -148,8 +148,7 @@ def get_discord_body(content: str):
 
     return {
         "content": content,
-        # Do not allow any mentions.
-        "allowed_mentions": {"parse": []},
+        "allowed_mentions": allowed_mentions,
         # SUPPRESS_EMBEDS
         "flags": 1 << 2,
     }
@@ -184,11 +183,17 @@ def changelog_entries_to_message_lines(entries: Iterable[ChangelogEntry]) -> lis
                     message = message[: DISCORD_SPLIT_LIMIT - 100].rstrip() + " [...]"
 
                 if url is not None:
-                    line = f"{emoji} - {message} [PR]({url}) \n"
+                    line = f"{emoji} - {message} [PR]({url})\n"
                 else:
                     line = f"{emoji} - {message}\n"
 
                 message_lines.append(line)
+
+    # add ping if role id is configured
+    # don't add it if the message is empty, in that case we want to skip send
+    if message_lines and DISCORD_ROLE_ID:
+        ping_line = f"<@&{DISCORD_ROLE_ID}>\n"
+        message_lines.insert(0, ping_line)
 
     return message_lines
 
