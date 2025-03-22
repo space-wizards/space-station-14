@@ -1,3 +1,4 @@
+using Content.Shared.Camera;
 using Content.Shared.Hands.Components;
 using Content.Shared.Movement.Systems;
 
@@ -7,6 +8,8 @@ public abstract partial class SharedHandsSystem
 {
     private void InitializeRelay()
     {
+        SubscribeLocalEvent<HandsComponent, GetEyeOffsetRelayedEvent>(RelayEvent);
+        SubscribeLocalEvent<HandsComponent, GetEyePvsScaleRelayedEvent>(RelayEvent);
         SubscribeLocalEvent<HandsComponent, RefreshMovementSpeedModifiersEvent>(RelayEvent);
     }
 

@@ -3,12 +3,12 @@
   copyright: "Created by Bolgarich"
   source: "https://www.youtube.com/watch?v=SzEp2nv6oZ4"
 
-- files: ["clearly_nuclear.ogg"]
-  license: "CC-BY-3.0"
-  copyright: "Created by mryikes"
-  source: "https://www.youtube.com/watch?v=chix8uz-oUQ"
-
 - files: ["sound_station_14.ogg"]
   license: "CC-BY-3.0"
   copyright: "Created by Donchan"
   source: "https://www.youtube.com/watch?v=4nUpeYLKUns"
+
+- files: ["countdown.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by qwertyquerty"
+  source: "https://github.com/BeeStation/BeeStation-Hornet/commit/7f48971438492805af286023a72e7609a729234a"

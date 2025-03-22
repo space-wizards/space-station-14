@@ -4,7 +4,7 @@
             SeparationOverride="4">
     <EntityPrototypeView
             Name="ItemPrototype"
-            Margin="4 4"
+            Margin="4 0 0 0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             MinSize="32 32"

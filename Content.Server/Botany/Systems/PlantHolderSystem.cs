@@ -1,8 +1,5 @@
-using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
-using Content.Server.Fluids.Components;
-using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.EntitySystems;
@@ -20,12 +17,15 @@ using Content.Shared.Popups;
 using Content.Shared.Random;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Server.Labels.Components;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Database;
 
 namespace Content.Server.Botany.Systems;
 
@@ -39,11 +39,12 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
 
     public const float HydroponicsSpeedMultiplier = 1f;
@@ -55,6 +56,7 @@ public sealed class PlantHolderSystem : EntitySystem
         SubscribeLocalEvent<PlantHolderComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<PlantHolderComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PlantHolderComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<PlantHolderComponent, SolutionTransferredEvent>(OnSolutionTransferred);
     }
 
     public override void Update(float frameTime)
@@ -79,7 +81,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed == null)
             return 0;
 
-        var result = Math.Max(1, (int) (component.Age * component.Seed.GrowthStages / component.Seed.Maturation));
+        var result = Math.Max(1, (int)(component.Age * component.Seed.GrowthStages / component.Seed.Maturation));
         return result;
     }
 
@@ -125,9 +127,9 @@ public sealed class PlantHolderSystem : EntitySystem
                 args.PushMarkup(Loc.GetString("plant-holder-component-pest-high-level-message"));
 
             args.PushMarkup(Loc.GetString($"plant-holder-component-water-level-message",
-                ("waterLevel", (int) component.WaterLevel)));
+                ("waterLevel", (int)component.WaterLevel)));
             args.PushMarkup(Loc.GetString($"plant-holder-component-nutrient-level-message",
-                ("nutritionLevel", (int) component.NutritionLevel)));
+                ("nutritionLevel", (int)component.NutritionLevel)));
 
             if (component.DrawWarnings)
             {
@@ -160,6 +162,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 if (!_botany.TryGetSeed(seeds, out var seed))
                     return;
 
+                args.Handled = true;
                 var name = Loc.GetString(seed.Name);
                 var noun = Loc.GetString(seed.Noun);
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
@@ -179,14 +182,22 @@ public sealed class PlantHolderSystem : EntitySystem
                 }
                 component.LastCycle = _gameTiming.CurTime;
 
+                if (TryComp<PaperLabelComponent>(args.Used, out var paperLabel))
+                {
+                    _itemSlots.TryEjectToHands(args.Used, paperLabel.LabelSlot, args.User);
+                }
                 QueueDel(args.Used);
 
                 CheckLevelSanity(uid, component);
                 UpdateSprite(uid, component);
 
+                if (seed.PlantLogImpact != null)
+                    _adminLogger.Add(LogType.Botany, seed.PlantLogImpact.Value, $"{ToPrettyString(args.User):player} planted  {Loc.GetString(seed.Name):seed} at Pos:{Transform(uid).Coordinates}.");
+
                 return;
             }
 
+            args.Handled = true;
             _popup.PopupCursor(Loc.GetString("plant-holder-component-already-seeded-message",
                 ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
             return;
@@ -194,6 +205,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (_tagSystem.HasTag(args.Used, "Hoe"))
         {
+            args.Handled = true;
             if (component.WeedLevel > 0)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
@@ -213,6 +225,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (HasComp<ShovelComponent>(args.Used))
         {
+            args.Handled = true;
             if (component.Seed != null)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-remove-plant-message",
@@ -230,39 +243,9 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (_solutionContainerSystem.TryGetDrainableSolution(args.Used, out var solution, out _)
-            && _solutionContainerSystem.ResolveSolution(uid, component.SoilSolutionName, ref component.SoilSolution)
-            && TryComp(args.Used, out SprayComponent? spray))
-        {
-            var amount = FixedPoint2.New(1);
-
-            var targetEntity = uid;
-            var solutionEntity = args.Used;
-
-            _audio.PlayPvs(spray.SpraySound, args.Used, AudioParams.Default.WithVariation(0.125f));
-
-            var split = _solutionContainerSystem.Drain(solutionEntity, solution.Value, amount);
-
-            if (split.Volume == 0)
-            {
-                _popup.PopupCursor(Loc.GetString("plant-holder-component-no-plant-message",
-                    ("owner", args.Used)), args.User);
-                return;
-            }
-
-            _popup.PopupCursor(Loc.GetString("plant-holder-component-spray-message",
-                ("owner", uid),
-                ("amount", split.Volume)), args.User, PopupType.Medium);
-
-            _solutionContainerSystem.TryAddSolution(component.SoilSolution.Value, split);
-
-            ForceUpdateByExternalCause(uid, component);
-
-            return;
-        }
-
         if (_tagSystem.HasTag(args.Used, "PlantSampleTaker"))
         {
+            args.Handled = true;
             if (component.Seed == null)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-nothing-to-sample-message"), args.User);
@@ -299,21 +282,12 @@ public sealed class PlantHolderSystem : EntitySystem
                 healthOverride = component.Health;
             }
             var packetSeed = component.Seed;
-            if (packetSeed.Sentient)
-            {
-                packetSeed = packetSeed.Clone(); // clone before modifying the seed
-                packetSeed.Sentient = false;
-            }
-            else
-            {
-                packetSeed.Unique = false;
-            }
             var seed = _botany.SpawnSeedPacket(packetSeed, Transform(args.User).Coordinates, args.User, healthOverride);
             _randomHelper.RandomOffset(seed, 0.25f);
             var displayName = Loc.GetString(component.Seed.DisplayName);
             _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                 ("seedName", displayName)), args.User);
-            
+
             DoScream(entity.Owner, component.Seed);
 
             if (_random.Prob(0.3f))
@@ -327,10 +301,15 @@ public sealed class PlantHolderSystem : EntitySystem
         }
 
         if (HasComp<SharpComponent>(args.Used))
+        {
+            args.Handled = true;
             DoHarvest(uid, args.User, component);
+            return;
+        }
 
         if (TryComp<ProduceComponent>(args.Used, out var produce))
         {
+            args.Handled = true;
             _popup.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
                 ("owner", uid),
                 ("usingItem", args.Used)), args.User, PopupType.Medium);
@@ -362,6 +341,10 @@ public sealed class PlantHolderSystem : EntitySystem
         }
     }
 
+    private void OnSolutionTransferred(Entity<PlantHolderComponent> ent, ref SolutionTransferredEvent args)
+    {
+        _audio.PlayPvs(ent.Comp.WateringSound, ent.Owner);
+    }
     private void OnInteractHand(Entity<PlantHolderComponent> entity, ref InteractHandEvent args)
     {
         DoHarvest(entity, args.User, entity.Comp);
@@ -459,7 +442,7 @@ public sealed class PlantHolderSystem : EntitySystem
         else
         {
             if (_random.Prob(0.8f))
-                component.Age += (int) (1 * HydroponicsSpeedMultiplier);
+                component.Age += (int)(1 * HydroponicsSpeedMultiplier);
 
             component.UpdateSpriteAfterUpdate = true;
         }
@@ -632,12 +615,6 @@ public sealed class PlantHolderSystem : EntitySystem
         else if (component.Age < 0) // Revert back to seed packet!
         {
             var packetSeed = component.Seed;
-            if (packetSeed.Sentient)
-            {
-                if (!packetSeed.Unique) // clone if necessary before modifying the seed
-                    packetSeed = packetSeed.Clone();
-                packetSeed.Sentient = false; // remove Sentient to avoid ghost role spam
-            }
             // will put it in the trays hands if it has any, please do not try doing this
             _botany.SpawnSeedPacket(packetSeed, Transform(uid).Coordinates, uid);
             RemovePlant(uid, component);
@@ -673,14 +650,6 @@ public sealed class PlantHolderSystem : EntitySystem
         }
 
         CheckLevelSanity(uid, component);
-
-        if (component.Seed.Sentient)
-        {
-            var ghostRole = EnsureComp<GhostRoleComponent>(uid);
-            EnsureComp<GhostTakeoverAvailableComponent>(uid);
-            ghostRole.RoleName = MetaData(uid).EntityName;
-            ghostRole.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", ghostRole.RoleName));
-        }
 
         if (component.UpdateSpriteAfterUpdate)
             UpdateSprite(uid, component);
@@ -724,7 +693,10 @@ public sealed class PlantHolderSystem : EntitySystem
             if (TryComp<HandsComponent>(user, out var hands))
             {
                 if (!_botany.CanHarvest(component.Seed, hands.ActiveHandEntity))
+                {
+                    _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), user);
                     return false;
+                }
             }
             else if (!_botany.CanHarvest(component.Seed))
             {
@@ -911,7 +883,7 @@ public sealed class PlantHolderSystem : EntitySystem
         if (component.Seed != null)
         {
             EnsureUniqueSeed(uid, component);
-            _mutation.MutateSeed(ref component.Seed, severity);
+            _mutation.MutateSeed(uid, ref component.Seed, severity);
         }
     }
 
@@ -921,19 +893,6 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
 
         component.UpdateSpriteAfterUpdate = false;
-
-        if (component.Seed != null && component.Seed.Bioluminescent)
-        {
-            var light = EnsureComp<PointLightComponent>(uid);
-            _pointLight.SetRadius(uid, component.Seed.BioluminescentRadius, light);
-            _pointLight.SetColor(uid, component.Seed.BioluminescentColor, light);
-            _pointLight.SetCastShadows(uid, false, light);
-            Dirty(uid, light);
-        }
-        else
-        {
-            RemComp<PointLightComponent>(uid);
-        }
 
         if (!TryComp<AppearanceComponent>(uid, out var app))
             return;
