@@ -23,6 +23,9 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 
             foreach (var role in roles)
             {
+                //TODO: Get the ghostrole entities from somewhere, ask the server for rolebans
+                // turn off the buttons when applicable
+
                 var button = new GhostRoleEntryButtons(role);
                 button.RequestButton.OnPressed += _ => OnRoleSelected?.Invoke(role);
                 button.FollowButton.OnPressed += _ => OnRoleFollow?.Invoke(role);
