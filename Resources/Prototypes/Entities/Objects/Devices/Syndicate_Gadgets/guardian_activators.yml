@@ -22,7 +22,7 @@
 - type: entity
   name: magical lamp
   id: MagicalLamp
-  parent: BaseItem
+  parent: [BaseItem, BaseMajorContraband]
   description: The wizard federation had to cut costs after the jinn merchandise scandal somehow.
   components:
   - type: Sprite
@@ -31,6 +31,18 @@
       - state: lamp
   - type: GuardianCreator
     guardianProto: MobIfritGuardian
+
+- type: entity
+  parent: [BaseItem, BaseMajorContraband]
+  id: HolocarpInjector
+  name: holocarp injector
+  description: This holocarp seems awfully tired and meek. It may die soon without a host.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: holoplush
+  - type: GuardianCreator
+    guardianProto: MobHolocarpGuardian
 
 - type: entity
   name: holoparasite box
