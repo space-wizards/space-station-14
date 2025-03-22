@@ -4,6 +4,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: ItemToggle
   - type: Anchorable
   - type: Pullable
   - type: MovedByPressure
@@ -22,7 +23,16 @@
   - type: Sprite
     drawdepth: Items
     sprite: Objects/Misc/landmine.rsi
-    state: landmine
+    layers:
+    - state: landmine-inactive
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: landmine}
+          False: {state: landmine-inactive}
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -39,23 +49,37 @@
         path: /Audio/Effects/beep_landmine.ogg
         params:
             maxDistance: 10
+  - type: Armable
   - type: StepTrigger
     requiredTriggeredSpeed: 0
     stepOn: true
 
 - type: entity
+  id: LandMineKickUnarmed
   name: kick mine
   parent: BaseLandMine
-  id: LandMineKick
   components:
   - type: GhostKickUserOnTrigger
   - type: DeleteOnTrigger
 
 - type: entity
+  id: LandMineKick
+  suffix: armed
+  parent: LandMineKickUnarmed
+  components:
+  - type: ItemToggle
+    activated: true
+    onActivate: false
+  - type: Armable
+  - type: Sprite
+    layers:
+    - state: landmine
+
+- type: entity
   name: modular mine
   description: This bad boy could be packing any number of dangers. Or a bike horn.
   parent: BaseLandMine
-  id: LandMineModular
+  id: LandMineModularUnarmed
   components:
   - type: PayloadCase
   - type: Construction
@@ -63,9 +87,22 @@
     node: emptyCase
 
 - type: entity
+  id: LandMineModular
+  suffix: armed
+  parent: LandMineModularUnarmed
+  components:
+  - type: ItemToggle
+    activated: true
+    onActivate: false
+  - type: Armable
+  - type: Sprite
+    layers:
+    - state: landmine
+
+- type: entity
   name: explosive mine
   parent: BaseLandMine
-  id: LandMineExplosive
+  id: LandMineExplosiveUnarmed
   components:
   - type: ExplodeOnTrigger
   - type: Explosive
@@ -74,3 +111,16 @@
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
     canCreateVacuum: false
+
+- type: entity
+  suffix: armed
+  parent: LandMineExplosiveUnarmed
+  id: LandMineExplosive
+  components:
+  - type: ItemToggle
+    activated: true
+    onActivate: false
+  - type: Armable
+  - type: Sprite
+    layers:
+    - state: landmine
