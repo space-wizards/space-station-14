@@ -50,9 +50,55 @@
       - tool: Welding
         doAfter: 1
 
+  - node: halfBroken
+    entity: GasPipeBroken
+    edges:
+    - to: half
+      conditions:
+      - !type:EntityAnchored
+        anchored: true
+      steps:
+      - tool: Welding
+        doAfter: 1
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
   - node: straight
     entity: GasPipeStraight
     edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: straightBroken
+    entity: GasPipeStraightBroken
+    edges:
+    - to: straight
+      conditions:
+      - !type:EntityAnchored
+        anchored: true
+      steps:
+      - tool: Welding
+        doAfter: 1
     - to: start
       conditions:
       - !type:EntityAnchored
@@ -82,6 +128,29 @@
       - tool: Welding
         doAfter: 1
 
+  - node: bendBroken
+    entity: GasPipeBendBroken
+    edges:
+    - to: bend
+      conditions:
+      - !type:EntityAnchored
+        anchored: true
+      steps:
+      - tool: Welding
+        doAfter: 1
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
   - node: tjunction
     entity: GasPipeTJunction
     edges:
@@ -98,9 +167,55 @@
       - tool: Welding
         doAfter: 1
 
+  - node: tjunctionBroken
+    entity: GasPipeBroken
+    edges:
+    - to: tjunction
+      conditions:
+      - !type:EntityAnchored
+        anchored: true
+      steps:
+      - tool: Welding
+        doAfter: 1
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
   - node: fourway
     entity: GasPipeFourway
     edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: fourwayBroken
+    entity: GasPipeBroken
+    edges:
+    - to: fourway
+      conditions:
+      - !type:EntityAnchored
+        anchored: true
+      steps:
+      - tool: Welding
+        doAfter: 1
     - to: start
       conditions:
       - !type:EntityAnchored
