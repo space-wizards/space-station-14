@@ -24,6 +24,14 @@
     uiWindowPos: 2,3
     strippingWindowPos: 1,4
     displayName: Pocket 2
+  - name: pocket3 # imp
+    slotTexture: pocket
+    fullTextureName: template_small
+    slotFlags: POCKET
+    slotGroup: MainHotbar
+    uiWindowPos: 0,4
+    strippingWindowPos: 0,3
+    displayName: Pocket 3
   - name: back
     slotTexture: back
     fullTextureName: template_small

@@ -1,0 +1,177 @@
+# Maintenance Drones
+
+- type: entity
+  name: drone
+  id: Drone
+  parent: PlayerSiliconBase
+  components:
+  - type: Drone # this system has too much going on, it should really be like three different components
+    whitelist:
+      tags:
+      - DroneUsable
+      - Trash
+      - Crayon
+    blacklist:
+      tags:
+      - Syringe
+      - HighRiskItem
+      - Sidearm
+      - Taser
+      components:
+      - Handcuff
+      - Gun
+      - EnergySword
+  - type: Illiterate # imp special component. Disables reading and writing on paper.
+  - type: ContainerContainer # imp.
+    containers:
+      cell_slot: !type:ContainerSlot { }
+  - type: PowerCellSlot # imp.
+    cellSlotId: cell_slot
+    fitsInCharger: true
+  - type: PowerCellDraw # imp
+    drawRate: 0.6
+  - type: ItemSlots # imp
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+        disableEject: true
+  - type: PAI # imp; this is added specifically for the internal station map feature but the other aspects are not especially against the identity of drones. and i dont want to put the work into ECS-ifying PAIComponent
+    mapActionId: ActionDroneOpenMap # redefining these to reflavor their descriptions.
+    midiActionId: ActionDronePlayMidi
+  - type: Instrument # imp
+    allowPercussion: false
+    handheld: false
+    bank: 1
+    program: 2
+  - type: Loadout # imp special. this replaces the InnateTool component.
+    prototypes:
+      - StartingGearDroneTools
+  - type: NameIdentifier
+    group: Drone
+  - type: Inventory
+    templateId: drone
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+      enum.InstrumentUiKey.Key: #imp
+        type: InstrumentBoundUserInterface
+        requireInputValidation: false
+      enum.StationMapUiKey.Key: #imp
+        type: StationMapBoundUserInterface
+        requireInputValidation: false
+  - type: StationMap #imp
+  - type: GhostRole
+    requirements:
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 36000 # ten hours
+    - !type:DepartmentTimeRequirement
+      department: Silicon
+      time: 18000 # five hours
+    makeSentient: true
+    name: ghost-role-information-drone-name
+    description: ghost-role-information-drone-description
+    rules: ghost-role-information-drone-rules
+    mindRoles: # imp 
+    - MindRoleGhostRoleSilicon
+  - type: GhostTakeoverAvailable
+  - type: SiliconLawBound
+  - type: SiliconLawProvider
+    laws: Drone
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+    minimumFrictionSpeed: 0
+    weightlessAcceleration: 1.2
+    weightlessFriction: 1
+    weightlessFrictionNoInput: 2 
+    offGridFriction: 1.5
+    weightlessModifier: 1
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      25: Dead
+  - type: Flash
+  - type: NoSlip
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      30: 0.7
+      50: 0.5
+  - type: Temperature
+    heatDamageThreshold: 5000
+    currentTemperature: 310.15
+    specificHeat: 42
+    heatDamage:
+      types:
+        Heat : 1 #per second, scales with temperature & other constants
+  - type: Sprite
+    drawdepth: SmallMobs
+    layers:
+    - state: shell
+      sprite: Mobs/Silicon/drone.rsi
+      map: ["base"]
+  - type: MovementAlwaysTouching
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.DroneVisuals.Status:
+        base:
+          Off: { state: shell }
+          On: { state: drone }
+  - type: ReplacementAccent
+    accent: silicon
+  - type: Repairable
+    fuelCost: 15
+    doAfterDelay: 8
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: Actions
+  - type: UnpoweredFlashlight
+  - type: PointLight
+    enabled: false
+    radius: 3.5
+    softness: 1
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+  - type: ProtectedFromStepTriggers
+  - type: InputMover
+  - type: MobMover
+  - type: ContentEye
+    maxZoom: 1.2, 1.2
+  - type: Tag
+    tags:
+      - CannotSuicide
+      - EmagImmune
+      - CanPilot
+      - VimPilot
+  - type: Access
+    tags:
+    - Engineering
+    - Maintenance

@@ -115,7 +115,7 @@ public sealed class PaperSystem : EntitySystem
                     return;
                 }
 
-                var ev = TryComp<IlliterateComponent>(args.User, out var illiterate) ? new PaperWriteAttemptEvent(entity.Owner, illiterate.FailMsg, true) : new PaperWriteAttemptEvent(entity.Owner);
+                var ev = TryComp<IlliterateComponent>(args.User, out var illiterate) ? new PaperWriteAttemptEvent(entity.Owner, illiterate.FailMsg, true) : new PaperWriteAttemptEvent(entity.Owner); // imp
                 RaiseLocalEvent(args.User, ref ev);
                 if (ev.Cancelled)
                 {

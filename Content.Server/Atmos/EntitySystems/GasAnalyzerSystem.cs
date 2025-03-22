@@ -35,6 +35,7 @@ public sealed class GasAnalyzerSystem : EntitySystem
         SubscribeLocalEvent<GasAnalyzerComponent, GasAnalyzerDisableMessage>(OnDisabledMessage);
         SubscribeLocalEvent<GasAnalyzerComponent, DroppedEvent>(OnDropped);
         SubscribeLocalEvent<GasAnalyzerComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<GasAnalyzerComponent, ActivateInWorldEvent>(OnActivateInWorld); // imp
     }
 
     public override void Update(float frameTime)
@@ -75,6 +76,21 @@ public sealed class GasAnalyzerSystem : EntitySystem
     /// Activates the analyzer with no target, so it only scans the tile the user was on when activated
     /// </summary>
     private void OnUseInHand(Entity<GasAnalyzerComponent> entity, ref UseInHandEvent args)
+    {
+        // Not checking for Handled because ActivatableUISystem already marks it as such.
+
+        if (!entity.Comp.Enabled)
+            ActivateAnalyzer(entity, args.User);
+        else
+            DisableAnalyzer(entity, args.User);
+
+        args.Handled = true;
+    }
+
+    /// <summary>
+    /// Activates the analyzer with no target, so it only scans the tile the user was on when activated
+    /// </summary>
+    private void OnActivateInWorld(Entity<GasAnalyzerComponent> entity, ref ActivateInWorldEvent args) // imp - ensures gas analyzers can be used from in your inventory or in the world
     {
         // Not checking for Handled because ActivatableUISystem already marks it as such.
 

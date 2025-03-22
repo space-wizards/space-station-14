@@ -1,4 +1,4 @@
-drone-active = A maintenance drone. It seems totally unconcerned with you.
+drone-active = A maintenance drone. It seems totally unconcerned with you. 
 drone-dormant = A dormant maintenance drone. Who knows when it will wake up?
 drone-activated = The drone whirrs to life!
 drone-too-close = Be aware of your proximity to {THE($being)}.
@@ -9,3 +9,5 @@ drone-low-battery = Seek a charging station immediately. You are in existential 
 
 alerts-drone-battery-name = Battery
 alerts-drone-battery-desc = If your battery depletes, you will self-destruct.
+
+network-configurator-item-status-label-noswitch = Mode: {$mode}
