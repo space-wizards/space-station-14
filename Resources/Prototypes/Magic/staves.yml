@@ -59,9 +59,10 @@
 - type: entity
   id: ActionRgbLight
   components:
+  - type: LimitedCharges
+    maxCharges: 25
   - type: EntityTargetAction
     whitelist: { components: [ PointLight ] }
-    charges: 25
     sound: /Audio/Magic/blink.ogg
     event: !type:ChangeComponentsSpellEvent
       toAdd:
