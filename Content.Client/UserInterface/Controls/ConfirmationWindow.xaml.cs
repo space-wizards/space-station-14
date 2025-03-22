@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.UserInterface.Controls;
 
 /// <summary>
-/// A generic confirmation window used to confirm things.
+/// A generic confirmation window for all your confirmation needs.
 /// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class ConfirmationWindow : FancyWindow

@@ -1,5 +1,4 @@
-﻿using Content.Server.EUI;
-using Content.Shared.Containers.ItemSlots;
+﻿using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
@@ -11,7 +10,7 @@ namespace Content.Server.Silicons.Borgs;
 /// <inheritdoc/>
 public sealed partial class BorgSystem
 {
-    [Dependency] private readonly EuiManager _euiManager = default!;
+
     [Dependency] private readonly SharedRoleSystem _roles = default!;
 
     public override void InitializeMMI()
@@ -52,7 +51,7 @@ public sealed partial class BorgSystem
             mind.Session is { } playerSession)
         {
             // If mind is not already in the MMI, open a confirmation window.
-            // Otherwise, add the mind role.
+            // Otherwise, transfer the mind to the MMI.
             if (mind.CurrentEntity != args.Entity)
             {
                 _euiManager.OpenEui(
@@ -108,7 +107,7 @@ public sealed partial class BorgSystem
     }
 
     /// <summary>
-    /// Directly transfer a brain into a man-machine interface.
+    /// Directly transfer a mind into a man-machine interface.
     /// </summary>
     public void DirectTransferToMMI(Entity<MMIComponent> mmi, Entity<MindComponent> mind)
     {

@@ -13,18 +13,18 @@ public sealed class AcceptBorgingEui : BaseEui
     [Dependency] private readonly BorgSystem _borgSystem = default!;
 
     private EntityUid _brain;
-    private Entity<MMIComponent> _requester;
+    private Entity<MMIComponent> _mmi;
     private readonly Entity<MindComponent> _mind;
 
     public AcceptBorgingEui(
         EntityUid brain,
-        Entity<MMIComponent> requester,
+        Entity<MMIComponent> mmi,
         Entity<MindComponent> mind,
         IDependencyCollection dependencies)
     {
         dependencies.InjectDependencies(this);
         _brain = brain;
-        _requester = requester;
+        _mmi = mmi;
         _mind = mind;
     }
 
@@ -33,7 +33,7 @@ public sealed class AcceptBorgingEui : BaseEui
         base.HandleMessage(msg);
 
         // brain was removed from the MMI.
-        if (_requester.Comp.BrainSlot.Item != _brain)
+        if (_mmi.Comp.BrainSlot.Item != _brain)
         {
             Close();
             return;
@@ -43,7 +43,7 @@ public sealed class AcceptBorgingEui : BaseEui
             !choice.Accepted)
         {
             _chatSystem.TrySendInGameICMessage(
-                _requester,
+                _mmi,
                 Loc.GetString("borg-player-denied-borging"),
                 InGameICChatType.Speak,
                 true);
@@ -51,6 +51,6 @@ public sealed class AcceptBorgingEui : BaseEui
             return;
         }
 
-        _borgSystem.DirectTransferToMMI(_requester, _mind);
+        _borgSystem.DirectTransferToMMI(_mmi, _mind);
     }
 }
