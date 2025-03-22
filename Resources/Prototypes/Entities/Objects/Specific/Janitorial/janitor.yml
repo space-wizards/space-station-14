@@ -250,6 +250,9 @@
       types:
         Blunt: 3
   - type: Plunger
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 100
 
 - type: entity
   name: golden plunger
