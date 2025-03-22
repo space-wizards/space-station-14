@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from CEV-Eris at https://github.com/discordia-space/CEV-Eris/commit/ba4ed77c2bdd05c2fd2a1d73f291dcd38ae41137, full pot icon made by SG6732",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pot"
+    },
+    {
+      "name": "pot1"
+    },
+    {
+      "name": "pot2"
+    },
+    {
+      "name": "pot3"
+    },
+    {
+      "name": "pot4"
+    },
+    {
+      "name": "pot5"
+    }
+  ]
+}
