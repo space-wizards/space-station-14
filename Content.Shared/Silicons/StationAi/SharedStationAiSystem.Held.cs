@@ -155,12 +155,19 @@ public abstract partial class SharedStationAiSystem
             return;
         }
 
+        // todo: remove ElectrifiedComponent from prototypes that should not have electrocute effect,
+        // then hide menu based on amount of actions GetStationAiRadialEvent returns
+        if (!_uiSystem.HasUi(ent.Owner, AiUi.Key)) 
+        {
+            return;
+        }
+
         var user = args.User;
 
         var target = args.Target;
 
         var isOpen = _uiSystem.IsUiOpen(target, AiUi.Key, user);
-
+        
         var verb = new AlternativeVerb
         {
             Text = isOpen ? Loc.GetString("ai-close") : Loc.GetString("ai-open"),
