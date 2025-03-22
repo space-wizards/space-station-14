@@ -21,3 +21,26 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id:         ClothingHeadHelmetHardsuitNtrep
+  categories: [ HideSpawnMenu ]
+  name: Nanotrasen representative's hardsuit helmet
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hardsuits/ntrep.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hardsuits/ntrep.rsi
+  - type: PointLight
+    color: "#adeeff"
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 10000
+  - type: Pierceable
+    level: Metal
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
