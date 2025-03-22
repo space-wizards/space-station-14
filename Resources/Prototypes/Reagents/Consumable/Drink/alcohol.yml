@@ -1436,6 +1436,7 @@
   metamorphicMaxFillLevels: 3
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
+  metabolisms:
     Drink:
       effects:
       - !type:SatiateThirst
@@ -1446,6 +1447,7 @@
 
 - type: reagent
   id: Sbiten
+  name: reagent-name-sbiten
   parent: BaseAlcohol
   desc: reagent-desc-sbiten
   physicalDesc: reagent-physical-desc-strong-smelling

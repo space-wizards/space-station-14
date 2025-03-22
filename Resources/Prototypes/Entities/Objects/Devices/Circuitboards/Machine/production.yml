@@ -1196,19 +1196,19 @@
         Capacitor: 2
         Steel: 5
 
-- type: entity
-  id: MailTeleporterMachineCircuitboard
-  parent: BaseMachineCircuitboard
-  name: mail teleporter machine board
-  description: A machine printed circuit board for a mail teleporter.
-  components:
-  - type: Sprite
-    state: supply
-  - type: MachineBoard
-    prototype: CargoMailTeleporter
-    stackRequirements:
-      Capacitor: 2
-      Steel: 5
+# - type: entity # imp edit - we're using the nyano mail system still
+#   id: MailTeleporterMachineCircuitboard
+#   parent: BaseMachineCircuitboard
+#   name: mail teleporter machine board
+#   description: A machine printed circuit board for a mail teleporter.
+#   components:
+#   - type: Sprite
+#     state: supply
+#   - type: MachineBoard
+#     prototype: CargoMailTeleporter
+#     stackRequirements:
+#       Capacitor: 2
+#       Steel: 5
 
 - type: entity
   id: SodaDispenserMachineCircuitboard

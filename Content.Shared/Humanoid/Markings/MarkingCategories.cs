@@ -36,8 +36,6 @@ namespace Content.Shared.Humanoid.Markings
                 HumanoidVisualLayers.HeadTop => MarkingCategories.HeadTop,
                 HumanoidVisualLayers.HeadSide => MarkingCategories.HeadSide,
                 HumanoidVisualLayers.Snout => MarkingCategories.Snout,
-                HumanoidVisualLayers.Undershirt => MarkingCategories.Undershirt,
-                HumanoidVisualLayers.Underwear => MarkingCategories.Underwear,
                 HumanoidVisualLayers.Chest => MarkingCategories.Chest,
                 HumanoidVisualLayers.UndergarmentTop => MarkingCategories.UndergarmentTop,
                 HumanoidVisualLayers.UndergarmentBottom => MarkingCategories.UndergarmentBottom,

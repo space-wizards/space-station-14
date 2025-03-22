@@ -459,9 +459,11 @@ public sealed partial class ChangelingSystem : EntitySystem
         var data = new TransformData
         {
             Name = metadata.EntityName,
-            DNA = dna.DNA,
             Appearance = appearance
         };
+
+        if (dna.DNA != null)
+            data.DNA = dna.DNA;
 
         if (fingerprint.Fingerprint != null)
             data.Fingerprint = fingerprint.Fingerprint;

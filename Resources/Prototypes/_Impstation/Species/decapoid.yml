@@ -50,7 +50,7 @@
     Chest:
       points: 4
       required: false
-    Undershirt:
+    UndergarmentTop:
       points: 1
       required: false
     Tail:

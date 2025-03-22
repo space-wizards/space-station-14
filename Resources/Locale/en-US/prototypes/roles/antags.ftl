@@ -58,6 +58,7 @@ AntagDragon = Space Dragon
 AntagSubvertedSilicon = Subverted Silicon
 AntagSurvivor = Survivor
 AntagWizard = Wizard
+AntagParadoxClone = Paradox Clone
 
 # non-upstream role timers
 

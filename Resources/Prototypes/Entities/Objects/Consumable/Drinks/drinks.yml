@@ -2309,7 +2309,7 @@
       drink:
         maxVol: 30
         reagents:
-        - ReagentId: Daiquiri 
+        - ReagentId: Daiquiri
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/daiquiri.rsi
@@ -2424,7 +2424,7 @@
         - ReagentId: MoscowMule
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/moscowmule.rsi
+    sprite: _Impstation/Objects/Consumable/Drinks/moscowmule.rsi
     state: icon
 
 - type: entity

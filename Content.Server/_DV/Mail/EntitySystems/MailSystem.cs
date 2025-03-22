@@ -244,7 +244,7 @@ public sealed class MailSystem : EntitySystem
             if (_station.GetOwningStation(ent) != station)
                 continue;
 
-            _cargo.UpdateBankAccount(station, account, ent.Comp.Bounty);
+            _cargo.UpdateBankAccount(station, ent.Comp.Bounty);
         }
     }
 
@@ -301,7 +301,7 @@ public sealed class MailSystem : EntitySystem
             if (_station.GetOwningStation(ent) != station)
                 continue;
 
-            _cargo.UpdateBankAccount(station, account, ent.Comp.Penalty);
+            _cargo.UpdateBankAccount(station, ent.Comp.Penalty);
             return;
         }
     }

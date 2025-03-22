@@ -13,8 +13,6 @@ namespace Content.Shared.Humanoid
         UndergarmentTop,
         UndergarmentBottom,
         Chest,
-        Underwear,
-        Undershirt,
         Head,
         Snout,
         HeadSide, // side parts (i.e., frills)

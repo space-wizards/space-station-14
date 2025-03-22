@@ -107,7 +107,7 @@ public sealed partial class AntagSelectionSystem
         // make pool non-nullable
         // Review uses and ensure that people are INTENTIONALLY including players in the lobby if this is a mid-round
         // antag selection.
-        var poolSize = playerCount ?? GetTotalPlayerCount(_player.Sessions);
+        var poolSize = playerCount ?? GetTotalPlayerCount(_playerManager.Sessions);
 
         // factor in other definitions' affect on the count.
         var countOffset = 0;
@@ -138,7 +138,7 @@ public sealed partial class AntagSelectionSystem
             if (!TryComp<MindComponent>(mind, out var mindComp) || mindComp.OriginalOwnerUserId == null)
                 continue;
 
-            if (!_player.TryGetPlayerData(mindComp.OriginalOwnerUserId.Value, out var data))
+            if (!_playerManager.TryGetPlayerData(mindComp.OriginalOwnerUserId.Value, out var data))
                 continue;
 
             output.Add((mind, data, name));

@@ -71,29 +71,6 @@
       - id: NitrogenTankFilled
 
 - type: entity
-  id: ClosetWallEmergencyN2FilledRandom
-  parent: ClosetWallEmergencyN2
-  suffix: Filled, Random
-  components:
-  - type: StorageFill
-    contents:
-      - id: ClothingMaskBreath
-      - id: EmergencyNitrogenTankFilled
-        prob: 0.80
-        orGroup: EmergencyTankOrRegularTank
-      - id: NitrogenTankFilled
-        prob: 0.20
-        orGroup: EmergencyTankOrRegularTank
-      - id: ToolboxEmergencyFilled
-        prob: 0.4
-      - id: MedkitNitrogenFilled
-        prob: 0.2
-      - id: WeaponFlareGun
-        prob: 0.05
-      - id: BoxMRE
-        prob: 0.1
-
-- type: entity
   id: ClosetEmergencyN2FilledRandom
   parent: ClosetEmergencyN2
   suffix: Filled, Random

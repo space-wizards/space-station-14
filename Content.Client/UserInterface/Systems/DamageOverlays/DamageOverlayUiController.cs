@@ -113,7 +113,7 @@ public sealed class DamageOverlayUiController : UIController
                     }
                 }
                 else
-                    _overlay.BruteLevel = 0;
+                    _overlay.PainLevel = 0;
 
                 if (thresholds.ShowAirlossOverlay && damageable.DamagePerGroup.TryGetValue("Airloss", out var oxyDamage))
                     _overlay.OxygenLevel = FixedPoint2.Min(1f, oxyDamage / critThreshold).Float();

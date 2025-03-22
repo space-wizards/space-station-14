@@ -150,7 +150,7 @@ namespace Content.Server.Forensics
             //iterate over every DNAcomponent in the server until you find one that matches the given DNA
             while (query.MoveNext(out var sourceUID, out var sourceComp))
             {
-                if (sourceComp.DNA.Equals(DNA))
+                if (sourceComp.DNA != null && sourceComp.DNA.Equals(DNA))
                 {
 
                     if (EntityManager.TryGetComponent(sourceUID, out MetaDataComponent? metaData))
@@ -334,7 +334,7 @@ namespace Content.Server.Forensics
             recipientComp.DNAs.Add(component.DNA);
             recipientComp.CanDnaBeCleaned = args.CanDnaBeCleaned;
         }
-        
+
         #region Public API
 
         /// <summary>

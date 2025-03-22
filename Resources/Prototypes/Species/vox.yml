@@ -25,7 +25,6 @@
   sprites:
     Head: MobVoxHead
     Snout: MobHumanoidAnyMarking
-    Underwear: MobHumanoidAnyMarking #imp
     HeadSide: MobHumanoidAnyMarking #imp
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
@@ -79,9 +78,6 @@
       required: false
     Chest:
       points: 2
-      required: false
-    Underwear: #imp
-      points: 1
       required: false
     Overlay:
       points: 4
