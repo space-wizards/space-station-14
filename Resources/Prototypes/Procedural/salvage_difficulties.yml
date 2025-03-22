@@ -1,12 +1,40 @@
 - type: salvageDifficulty
+  id: Low
+  desc: salvage-expedition-difficulty-low
+  lootBudget: 18
+  mobBudget: 15
+  modifierBudget: 1
+  color: "#6BE069" #heh
+  recommendedPlayers: 2
+
+- type: salvageDifficulty
   id: Moderate
+  desc: salvage-expedition-difficulty-moderate
   lootBudget: 30
   mobBudget: 25
   modifierBudget: 2
   color: "#52B4E996"
   recommendedPlayers: 2
 
-    #9FED5896
+- type: salvageDifficulty
+  id: Hazardous
+  desc: salvage-expedition-difficulty-hazardous
+  lootBudget: 60
+  mobBudget: 50
+  modifierBudget: 7
+  color: "#EFB34196"
+  recommendedPlayers: 3
+
+- type: salvageDifficulty
+  id: Extreme
+  desc: salvage-expedition-difficulty-extreme
+  lootBudget: 200
+  mobBudget: 172 #this is VERY, VERY extreme. Not as bad with xenos than it is carps
+  modifierBudget: 12
+  color: "#981BF7"
+  recommendedPlayers: 5
+
+    #ED281A
     #EFB34196
     #DE3A3A96
     #D381C996
