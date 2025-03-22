@@ -646,8 +646,7 @@
   - type: Item
     storedRotation: -90
   - type: AddAccentClothing
-    accent: ReplacementAccent
-    replacement: italian
+    accent: ItalianAccent
 
 - type: entity
   parent: ClothingMaskBase
