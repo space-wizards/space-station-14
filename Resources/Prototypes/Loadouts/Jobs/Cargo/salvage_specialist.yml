@@ -1,3 +1,27 @@
+# For Master Salvage Specialists; mining headset, cloak
+- type: loadoutEffectGroup
+  id: MasterSalvageSpecialist
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 180000 # 50 hrs
+
+# Neck
+- type: loadout
+  id: MiningCloak
+  equipment:
+    neck: ClothingNeckCloakMiner
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterSalvageSpecialist
+
+- type: startingGear
+  id: MiningCloak
+  equipment:
+    neck: ClothingNeckCloakMiner
+
 # Back
 - type: loadout
   id: SalvageSpecialistBackpack
@@ -25,3 +49,22 @@
   id: SalvageBoots
   equipment:
     shoes: ClothingShoesBootsSalvage
+
+# Ears
+- type: loadout
+  id: CargoHeadset
+  equipment:
+    ears: ClothingHeadsetCargo
+
+- type: loadout
+  id: SalvageMiningHeadset
+  equipment:
+    neck: ClothingHeadsetMining
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterSalvageSpecialist
+
+- type: startingGear
+  id: SalvageMiningHeadset
+  equipment:
+    ears: ClothingHeadsetMining
