@@ -1,3 +1,5 @@
+using System.Linq;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
@@ -6,11 +8,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using System;
-using System.Linq;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Wieldable;
-using Content.Shared.Wieldable.Components;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
@@ -429,6 +426,10 @@ public partial class SharedGunSystem
         component.CurrentIndex = (component.CurrentIndex + count) % component.Capacity;
     }
 
+    /// <summary>
+    /// Raised on entity with <see cref="RevolverAmmoProviderComponent"/> during <see cref="ComponentInit"/>.
+    /// </summary>
+    /// <param name="uid">Entity that will be used for rising event. </param>
     private void OnRevolverInit(EntityUid uid, RevolverAmmoProviderComponent component, ComponentInit args)
     {
         component.AmmoContainer = Containers.EnsureContainer<Container>(uid, RevolverContainer);
@@ -440,10 +441,10 @@ public partial class SharedGunSystem
             component.AmmoSlots.Add(null);
         }
 
-        component.Chambers = new bool?[component.Capacity];
-
-        if (component.FillPrototype != null)
+        // Set chambers to default if they are null or not equal to the capacity.
+        if (component.Chambers == null || component.Chambers.Length != component.Capacity && component.FillPrototype != null)
         {
+            component.Chambers = new bool?[component.Capacity];
             for (var i = 0; i < component.Capacity; i++)
             {
                 if (component.AmmoSlots[i] != null)
