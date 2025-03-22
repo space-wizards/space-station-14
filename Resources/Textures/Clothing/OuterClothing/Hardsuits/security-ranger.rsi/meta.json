@@ -1,0 +1,30 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Assets derived from Wizard's Den SS14 at https://github.com/space-wizards/space-station-14/commit/c9f341fcce18830803ee95942fa7a19e5857aac6 and https://github.com/space-wizards/space-station-14/commit/bd2bb65ccaaba4e3677ec77d5ed3c712e3bec521, modified by K-Dynamic.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "equipped-OUTERCLOTHING",
+            "directions": 4
+        },
+        {
+            "name": "equipped-OUTERCLOTHING-vox",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}

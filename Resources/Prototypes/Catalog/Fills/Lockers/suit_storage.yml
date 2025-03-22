@@ -144,6 +144,20 @@
   - type: AccessReader
     access: [["Security"]]
 
+#Ranger hardsuit
+- type: entity
+  id: SuitStorageRanger
+  parent: SuitStorageBase
+  suffix: Ranger
+  components:
+  - type: StorageFill
+    contents:
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitRanger
+        - id: ClothingMaskBreath
+  - type: AccessReader
+    access: [["Security"]]
+
 #CE's hardsuit
 - type: entity
   id: SuitStorageCE

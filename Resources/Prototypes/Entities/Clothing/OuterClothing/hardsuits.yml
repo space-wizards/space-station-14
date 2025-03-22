@@ -259,6 +259,37 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurity
 
+#Ranger Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseSecurityContraband]
+  id: ClothingOuterHardsuitRanger
+  name: ranger hardsuit
+  description: A striped-down version of the security hardsuit, offering extra mobility by replacing protective padding with light bullet-resistant polymers.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/security-ranger.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/security-ranger.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.6
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.70
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.85
+        Piercing: 0.75
+        # Heat: 0.9 See PR #30212
+        Caustic: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 1.00
+    sprintModifier: 0.85
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitRanger
+
 #Brigmedic Hardsuit
 - type: entity
   parent: [ClothingOuterHardsuitBase, BaseSecurityContraband]
