@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Grid
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 02/26/2025 19:50:56
+  entityCount: 926
+maps: []
+grids:
+- 2
+orphans:
+- 2
+nullspace: []
 tilemap:
   0: Space
   31: FloorDark
@@ -432,45 +443,45 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -0.5,1.5
       parent: 2
-- proto: AirlockExternalGlass
+- proto: AirlockExternalGlassCargoLocked
   entities:
   - uid: 84
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
+      rot: 1.5707963267948966 rad
       pos: 11.5,-5.5
       parent: 2
   - uid: 86
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
+      rot: 1.5707963267948966 rad
       pos: -0.5,-5.5
       parent: 2
+  - uid: 94
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 11.5,-3.5
+      parent: 2
+  - uid: 99
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,-3.5
+      parent: 2
+- proto: AirlockExternalGlassShuttleLocked
+  entities:
   - uid: 134
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 11.5,-3.5
+      pos: -2.5,-3.5
       parent: 2
   - uid: 139
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: -0.5,-3.5
-      parent: 2
-- proto: AirlockGlassShuttle
-  entities:
-  - uid: 94
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
       pos: -2.5,-5.5
-      parent: 2
-  - uid: 99
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -2.5,-3.5
       parent: 2
   - uid: 226
     components:
@@ -2750,6 +2761,116 @@ entities:
       rot: 3.141592653589793 rad
       pos: 5.5,-9.5
       parent: 2
+- proto: FireAlarm
+  entities:
+  - uid: 585
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 11.5,-8.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 569
+      - 562
+      - 558
+      - 555
+      - 583
+      - 584
+  - uid: 586
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,-8.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 562
+      - 569
+      - 558
+      - 555
+      - 572
+      - 582
+- proto: FirelockEdge
+  entities:
+  - uid: 572
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,-3.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 586
+  - uid: 582
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,-5.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 586
+  - uid: 583
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 10.5,-3.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 585
+  - uid: 584
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 10.5,-5.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 585
+- proto: FirelockGlass
+  entities:
+  - uid: 555
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 5.5,2.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 586
+      - 585
+  - uid: 558
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 5.5,1.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 586
+      - 585
+  - uid: 562
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 5.5,-10.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 586
+      - 585
+  - uid: 569
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 5.5,-11.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 586
+      - 585
 - proto: GasOutletInjector
   entities:
   - uid: 386
@@ -4331,7 +4452,7 @@ entities:
   - uid: 546
     components:
     - type: Transform
-      pos: 5.5,2.5
+      pos: 4.5,2.5
       parent: 2
 - proto: NewtonCradle
   entities:
