@@ -2543,3 +2543,37 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/bacchusblessing.rsi
     state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkWhiteGilgamesh
+  suffix: white gilgamesh
+  description: A sickening mixture of goat milk and beer. Makes you feel like you're made of wood.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: WhiteGilgamesh
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/whitegilgamesh.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkBilk
+  suffix: bilk
+  description: Beer that's 30% milk. Some say it's fruity.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Bilk
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/bilk.rsi
+    state: icon
