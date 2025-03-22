@@ -1,19 +1,25 @@
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
+using Content.Server.Destructible;
+using Content.Server.Popups;
+using Content.Shared.Charges.Components;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.SprayPainter;
 using Content.Shared.SprayPainter.Components;
+using Content.Shared.SprayPainter.Prototypes;
 
 namespace Content.Server.SprayPainter;
 
 /// <summary>
 /// Handles spraying pipes using a spray painter.
-/// Airlocks are handled in shared.
+/// Other are handled in shared.
 /// </summary>
 public sealed class SprayPainterSystem : SharedSprayPainterSystem
 {
     [Dependency] private readonly AtmosPipeColorSystem _pipeColor = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -22,6 +28,28 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         SubscribeLocalEvent<SprayPainterComponent, SprayPainterPipeDoAfterEvent>(OnPipeDoAfter);
 
         SubscribeLocalEvent<AtmosPipeColorComponent, InteractUsingEvent>(OnPipeInteract);
+
+        SubscribeLocalEvent<SprayPainterComponent, SprayPainterCanisterDoAfterEvent>(OnPaintableDoAfter);
+    }
+
+    private void OnPaintableDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterCanisterDoAfterEvent args)
+    {
+        if (args.Handled ||
+            args.Cancelled)
+            return;
+
+        if (args.Args.Target is not { } target ||
+            !TryComp<PaintableComponent>(target, out _))
+            return;
+
+        var dummy = Spawn(args.Prototype);
+
+        var destructibleComp = EnsureComp<DestructibleComponent>(dummy);
+        CopyComp(dummy, target, destructibleComp);
+
+        Del(dummy);
+
+        args.Handled = true;
     }
 
     private void OnPipeDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterPipeDoAfterEvent args)
@@ -29,14 +57,14 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (args.Handled || args.Cancelled)
             return;
 
-        if (args.Args.Target is not {} target)
+        if (args.Args.Target is not { } target)
             return;
 
         if (!TryComp<AtmosPipeColorComponent>(target, out var color))
             return;
 
         Audio.PlayPvs(ent.Comp.SpraySound, ent);
-
+        Charges.UseCharge(ent);
         _pipeColor.SetColor(target, color, args.Color);
 
         args.Handled = true;
@@ -47,8 +75,17 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         if (args.Handled)
             return;
 
-        if (!TryComp<SprayPainterComponent>(args.Used, out var painter) || painter.PickedColor is not {} colorName)
+        if (!TryComp<SprayPainterComponent>(args.Used, out var painter) ||
+            !TryComp<LimitedChargesComponent>(args.Used, out var charges) ||
+            painter.PickedColor is not { } colorName)
             return;
+
+        if (charges.Charges <= 0 || charges.Charges < 1)
+        {
+            var msg = Loc.GetString("spray-painter-interact-no-charges");
+            _popup.PopupClient(msg, args.User, args.User);
+            return;
+        }
 
         if (!painter.ColorPalette.TryGetValue(colorName, out var color))
             return;

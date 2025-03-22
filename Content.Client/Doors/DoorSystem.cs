@@ -1,9 +1,9 @@
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.SprayPainter.Prototypes;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Doors;
 
@@ -84,8 +84,8 @@ public sealed class DoorSystem : SharedDoorSystem
         if (!AppearanceSystem.TryGetData<DoorState>(entity, DoorVisuals.State, out var state, args.Component))
             state = DoorState.Closed;
 
-        if (AppearanceSystem.TryGetData<string>(entity, DoorVisuals.BaseRSI, out var baseRsi, args.Component))
-            UpdateSpriteLayers(args.Sprite, baseRsi);
+        if (AppearanceSystem.TryGetData<string>(entity, PaintableVisuals.BaseRSI, out var prototype, args.Component))
+            UpdateSpriteLayers(args.Sprite, prototype);
 
         if (_animationSystem.HasRunningAnimation(entity, DoorComponent.AnimationKey))
             _animationSystem.Stop(entity.Owner, DoorComponent.AnimationKey);
@@ -138,14 +138,15 @@ public sealed class DoorSystem : SharedDoorSystem
         }
     }
 
-    private void UpdateSpriteLayers(SpriteComponent sprite, string baseRsi)
+    private void UpdateSpriteLayers(SpriteComponent old, string prototype)
     {
-        if (!_resourceCache.TryGetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / baseRsi, out var res))
-        {
-            Log.Error("Unable to load RSI '{0}'. Trace:\n{1}", baseRsi, Environment.StackTrace);
-            return;
-        }
+        // and why did I replace it with an essence spawn? I wish I could remember....
+        var proto = Spawn(prototype);
 
-        sprite.BaseRSI = res.RSI;
+        if (TryComp<SpriteComponent>(proto, out var sprite))
+            foreach (var layer in old.AllLayers)
+                layer.Rsi = sprite.BaseRSI;
+
+        Del(proto);
     }
 }

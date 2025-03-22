@@ -1,10 +1,14 @@
+using Content.Shared.SprayPainter.Prototypes;
 using Content.Shared.Storage;
 using Robust.Client.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Storage.Visualizers;
 
 public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStorageVisualsComponent>
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -19,11 +23,12 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
         if (comp.StateBaseClosed == null)
             return;
 
-        comp.StateBaseOpen ??= comp.StateBaseClosed;
+        comp.StateBaseOpen ??= comp.StateBaseClosed ?? comp.StateDoorClosed;
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
         sprite.LayerSetState(StorageVisualLayers.Base, comp.StateBaseClosed);
+        sprite.LayerSetState(StorageVisualLayers.Door, comp.StateDoorClosed ?? comp.StateBaseClosed);
     }
 
     protected override void OnAppearanceChange(EntityUid uid, EntityStorageVisualsComponent comp, ref AppearanceChangeEvent args)
@@ -31,6 +36,34 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
         if (args.Sprite == null
         || !AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var open, args.Component))
             return;
+
+        if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.BaseRSI, out var prototype1, args.Component))
+        {
+            var proto = Spawn(prototype1);
+
+            if (TryComp<SpriteComponent>(proto, out var sprite))
+                foreach (var layer in args.Sprite.AllLayers)
+                {
+                    if (layer.RsiState.Name == "paper")
+                        continue;
+
+                    layer.Rsi = sprite.BaseRSI;
+                }
+
+            Del(proto);
+        } else if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.LockerRSI, out var prototype2, args.Component))
+        {
+            var proto = Spawn(prototype2);
+
+            if (TryComp<EntityStorageVisualsComponent>(proto, out var visuals))
+            {
+                args.Sprite.LayerSetState(StorageVisualLayers.Base, visuals.StateBaseClosed);
+                args.Sprite.LayerSetState(StorageVisualLayers.Door, visuals.StateDoorClosed);
+            }
+
+            Del(proto);
+            return;
+        }
 
         // Open/Closed state for the storage entity.
         if (args.Sprite.LayerMapTryGet(StorageVisualLayers.Door, out _))
