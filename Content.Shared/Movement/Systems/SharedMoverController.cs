@@ -120,25 +120,41 @@ public abstract partial class SharedMoverController : VirtualController
         // If we're a relay then apply all of our data to the parent instead and go next.
         if (RelayQuery.TryComp(uid, out var relay))
         {
-            // TODO: Need to fix held move buttons
-            // Probably just revert the handledirchanges entirely.
             if (!MoverQuery.TryComp(relay.RelayEntity, out var relayTargetMover))
                 return;
 
             // Always lerp rotation so relay entities aren't cooked.
             LerpRotation(uid, mover, frameTime);
+            var dirtied = false;
 
-            relayTargetMover.RelativeEntity = mover.RelativeEntity;
-            relayTargetMover.RelativeRotation = mover.RelativeRotation;
-            relayTargetMover.TargetRelativeRotation = mover.TargetRelativeRotation;
-            relayTargetMover.CanMove = mover.CanMove && relayTargetMover.CanMove;
-            // TODO: Dirty spam
-            Dirty(relay.RelayEntity, relayTargetMover);
+            if (relayTargetMover.RelativeEntity != mover.RelativeEntity)
+            {
+                relayTargetMover.RelativeEntity = mover.RelativeEntity;
+                dirtied = true;
+            }
 
-            // TODO: This doesn't work maybe just revert it.
-            // MoveInput is a combo of the target's held buttons and our held buttons.
-            var buttons = relayTargetMover.HeldMoveButtons | mover.HeldMoveButtons;
-            SetMoveInput((relay.RelayEntity, relayTargetMover), buttons);
+            if (relayTargetMover.RelativeRotation != mover.RelativeRotation)
+            {
+                relayTargetMover.RelativeRotation = mover.RelativeRotation;
+                dirtied = true;
+            }
+
+            if (relayTargetMover.TargetRelativeRotation != mover.TargetRelativeRotation)
+            {
+                relayTargetMover.TargetRelativeRotation = mover.TargetRelativeRotation;
+                dirtied = true;
+            }
+
+            if (relayTargetMover.CanMove != mover.CanMove)
+            {
+                relayTargetMover.CanMove = mover.CanMove;
+                dirtied = true;
+            }
+
+            if (dirtied)
+            {
+                Dirty(relay.RelayEntity, relayTargetMover);
+            }
 
             return;
         }
@@ -292,7 +308,9 @@ public abstract partial class SharedMoverController : VirtualController
             {
                 // TODO apparently this results in a duplicate move event because "This should have its event run during
                 // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
-                _transform.SetLocalRotation(uid, wishDir.ToAngle(), xform: xform);
+                var worldRot = _transform.GetWorldRotation(xform);
+
+                _transform.SetLocalRotation(uid, xform.LocalRotation + wishDir.ToWorldAngle() - worldRot, xform);
             }
 
             if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&

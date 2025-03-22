@@ -310,8 +310,37 @@ namespace Content.Shared.Movement.Systems
 
         private void HandleDirChange(EntityUid entity, Direction dir, ushort subTick, bool state)
         {
+            // Relayed movement just uses the same keybinds given we're moving the relayed entity
+            // the same as us.
+
+            // TODO: Should move this into HandleMobMovement itself.
+            if (TryComp<RelayInputMoverComponent>(entity, out var relayMover))
+            {
+                DebugTools.Assert(relayMover.RelayEntity != entity);
+                DebugTools.AssertNotNull(relayMover.RelayEntity);
+
+                if (MoverQuery.TryGetComponent(entity, out var mover))
+                    SetMoveInput((entity, mover), MoveButtons.None);
+
+                if (!_mobState.IsIncapacitated(entity))
+                    HandleDirChange(relayMover.RelayEntity, dir, subTick, state);
+
+                return;
+            }
+
             if (!MoverQuery.TryGetComponent(entity, out var moverComp))
                 return;
+
+            // For stuff like "Moving out of locker" or the likes
+            // We'll relay a movement input to the parent.
+            if (_container.IsEntityInContainer(entity) &&
+                TryComp(entity, out TransformComponent? xform) &&
+                xform.ParentUid.IsValid() &&
+                _mobState.IsAlive(entity))
+            {
+                var relayMoveEvent = new ContainerRelayMovementEntityEvent(entity);
+                RaiseLocalEvent(xform.ParentUid, ref relayMoveEvent);
+            }
 
             SetVelocityDirection((entity, moverComp), dir, subTick, state);
         }
