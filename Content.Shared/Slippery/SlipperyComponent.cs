@@ -37,7 +37,10 @@ namespace Content.Shared.Slippery
         /// How many seconds the mob will be paralyzed for.
         /// </summary>
         [DataField]
-        public TimeSpan ParalyzeTime = TimeSpan.FromSeconds(1.5);
+        public TimeSpan StunTime = TimeSpan.FromSeconds(0.5);
+
+        [DataField]
+        public TimeSpan KnockdownTime = TimeSpan.FromSeconds(1.5);
 
         /// <summary>
         /// The entity's speed will be multiplied by this to slip it forwards.
