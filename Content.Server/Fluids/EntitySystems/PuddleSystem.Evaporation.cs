@@ -20,7 +20,7 @@ public sealed partial class PuddleSystem
             return;
         }
 
-        if (solution.GetTotalPrototypeQuantity(EvaporationReagents) > FixedPoint2.Zero)
+        if (SolutionHasEvaporation(solution))
         {
             var evaporation = AddComp<EvaporationComponent>(uid);
             evaporation.NextTick = _timing.CurTime + EvaporationCooldown;
@@ -46,7 +46,7 @@ public sealed partial class PuddleSystem
                 continue;
 
             var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds;
-            puddleSolution.SplitSolutionWithOnly(reagentTick, EvaporationReagents);
+            puddleSolution.SplitSolutionWithOnly(reagentTick, EvaporatableProtosInSolution(puddleSolution));
 
             // Despawn if we're done
             if (puddleSolution.Volume == FixedPoint2.Zero)
