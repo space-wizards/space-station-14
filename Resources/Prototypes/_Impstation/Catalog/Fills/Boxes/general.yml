@@ -1,0 +1,20 @@
+- type: entity
+  name: revolutionary encryption key box
+  parent: [BoxEncryptionKeyPassenger, Tier2Contraband]
+  id: BoxEncryptionKeyRevolution
+  description: Contains four encryption keys to communicate with your fellow revolutionaries. Use wisely.
+  components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,0,1
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyRevolution
+        amount: 4
+  - type: Storage
+    grid:
+    - 0,0,3,1
+    whitelist:
+      tags:
+      - EncryptionKeyRevolution #no powergaming!!!!

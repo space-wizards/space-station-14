@@ -1,0 +1,7 @@
+- type: radioChannel
+  id: Revolution
+  name: chat-radio-revolution
+  keycode: 'r'
+  frequency: 1312 # teehee.
+  color: "#c3226a" # idk if revs have an established colour this is probably fine
+  longRange: true # ideally shouldnt work off grid but needs this to function without a server console

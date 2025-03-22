@@ -109,3 +109,6 @@
 
 - type: Tag
   id: HandheldCriminalRecords
+
+- type: Tag
+  id: EncryptionKeyRevolution

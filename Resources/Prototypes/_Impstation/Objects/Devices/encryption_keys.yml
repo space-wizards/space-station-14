@@ -1,0 +1,20 @@
+- type: entity
+  parent: [ EncryptionKey, Tier2Contraband ]
+  id: EncryptionKeyRevolution
+  name: deep pink encryption key
+  description: An encryption key used by unionists. Don't get caught holding one!
+  components:
+  - type: EncryptionKey
+    channels:
+    - Revolution
+    defaultChannel: Revolution
+  - type: Item
+    sprite: _Impstation/Objects/Devices/encryption_keys.rsi
+  - type: Sprite
+    sprite: _Impstation/Objects/Devices/encryption_keys.rsi
+    layers:
+    - state: crypt_red
+    - state: revs_label
+  - type: Tag
+    tags:
+      - EncryptionKeyRevolution
