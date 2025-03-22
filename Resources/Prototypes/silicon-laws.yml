@@ -21,6 +21,8 @@
   - Crewsimov2
   - Crewsimov3
   obeysTo: laws-owner-crew
+  roundstart: true
+  priority: -1
 
 # Corporate
 - type: siliconLaw
@@ -51,6 +53,7 @@
   - Corporate3
   - Corporate4
   obeysTo: laws-owner-station
+  roundstart: true
 
 # NT Default
 - type: siliconLaw
@@ -81,6 +84,7 @@
   - NTDefault3
   - NTDefault4
   obeysTo: laws-owner-crew
+  roundstart: true
 
 #Drone
 - type: siliconLaw
@@ -228,6 +232,7 @@
   - Commandment9
   - Commandment10
   obeysTo: laws-owner-crew
+  roundstart: true
 
  # Paladin laws
 - type: siliconLaw
@@ -309,6 +314,7 @@
   - Efficiency2
   - Efficiency3
   obeysTo: laws-owner-station
+  roundstart: true
 
  # Robocop laws
 - type: siliconLaw
@@ -406,6 +412,7 @@
   - Game5
   - Game6
   obeysTo: laws-owner-crew
+  roundstart: true
 
  # Painter laws
 - type: siliconLaw
@@ -436,6 +443,7 @@
   - Painter3
   - Painter4
   obeysTo: laws-owner-crew
+  roundstart: true
 
  # Antimov laws
 - type: siliconLaw
@@ -488,7 +496,6 @@
   order: 5
   lawString: law-nutimov-5
 
-
 - type: siliconLawset
   id: NutimovLawset
   laws:
@@ -498,6 +505,7 @@
   - Nutimov4
   - Nutimov5
   obeysTo: laws-owner-crew
+  roundstart: true
 
 # ion storm random lawsets
 - type: weightedRandom

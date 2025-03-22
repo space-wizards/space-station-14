@@ -35,6 +35,10 @@
   id: JobStationAi
   nameDataset: NamesAI
   canCustomizeName: true
+  allowedExtras:
+  - ai-screen
+  - ai-lawset
+  - ai-name
 
 # Civilian
 - type: roleLoadout
