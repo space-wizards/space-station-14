@@ -10,36 +10,35 @@ using Robust.Shared.Player;
 namespace Content.Client.RoundEnd;
 
 [UsedImplicitly]
-public sealed class RoundEndSummaryUIController : UIController,
-    IOnSystemLoaded<ClientGameTicker>
+public sealed class RoundEndSummaryUIController : UIController
 {
     [Dependency] private readonly IInputManager _input = default!;
 
-    private RoundEndSummaryWindow? _window;
+    public RoundEndSummaryWindow? Window;
 
-    private void ToggleScoreboardWindow(ICommonSession? session = null)
+    public void ToggleScoreboardWindow(ICommonSession? session = null)
     {
-        if (_window == null)
+        if (Window == null)
             return;
 
-        if (_window.IsOpen)
+        if (Window.IsOpen)
         {
-            _window.Close();
+            Window.Close();
         }
         else
         {
-            _window.OpenCenteredRight();
-            _window.MoveToFront();
+            Window.OpenCenteredRight();
+            Window.MoveToFront();
         }
     }
 
     public void OpenRoundEndSummaryWindow(RoundEndMessageEvent message)
     {
         // Don't open duplicate windows (mainly for replays).
-        if (_window?.RoundId == message.RoundId)
+        if (Window?.RoundId == message.RoundId)
             return;
 
-        _window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
+        Window = new RoundEndSummaryWindow(message.GamemodeTitle, message.RoundEndText,
             message.RoundDuration, message.RoundId, message.AllPlayersEndInfo, EntityManager);
     }
 
