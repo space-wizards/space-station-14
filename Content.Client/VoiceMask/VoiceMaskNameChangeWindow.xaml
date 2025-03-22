@@ -1,16 +1,17 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'voice-mask-name-change-window'}"
-               MinSize="5 30">
-    <BoxContainer Orientation="Vertical" Margin="5">
-        <Label Text="{Loc 'voice-mask-name-change-info'}" />
-        <BoxContainer Orientation="Horizontal" Margin="5">
+               MinSize="400 175">
+    <BoxContainer Orientation="Vertical" Margin="7">
+        <GridContainer Columns="2">
             <LineEdit Name="NameSelector" HorizontalExpand="True" />
             <Button Name="NameSelectorSet" Text="{Loc 'voice-mask-name-change-set'}" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal" Margin="5">
+            <Label StyleClasses="LabelSubText" Text="{Loc 'voice-mask-name-change-info'}" />
+            <Control /> <!-- GridContainer needs a padding element so it goes to the next row -->
             <Label Text="{Loc 'voice-mask-name-change-speech-style'}" />
-            <OptionButton Name="SpeechVerbSelector" /> <!-- Populated in LoadVerbs -->
-        </BoxContainer>
+            <OptionButton Name="SpeechVerbSelector" />
+            <Label Text="{Loc 'voice-mask-name-change-speech-sound'}" />
+            <OptionButton Name="SpeechSoundSelector" />
+        </GridContainer>
     </BoxContainer>
 </controls:FancyWindow>
