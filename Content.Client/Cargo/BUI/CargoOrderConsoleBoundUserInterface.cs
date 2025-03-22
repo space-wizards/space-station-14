@@ -6,6 +6,7 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
@@ -88,6 +89,7 @@ namespace Content.Client.Cargo.BUI
             };
             _menu.OnOrderApproved += ApproveOrder;
             _menu.OnOrderCanceled += RemoveOrder;
+            _menu.OnOrderRestricted += RestrictOrder;
             _orderMenu.SubmitButton.OnPressed += (_) =>
             {
                 if (AddOrder())
@@ -99,6 +101,10 @@ namespace Content.Client.Cargo.BUI
             _menu.OpenCentered();
         }
 
+        /// <summary>
+        /// Triggers the population of the dynamic elements of the cargo request UI
+        /// </summary>
+        /// <param name="orders">List of current cargo orders</param>
         private void Populate(List<CargoOrderData> orders)
         {
             if (_menu == null) return;
@@ -121,6 +127,7 @@ namespace Content.Client.Cargo.BUI
 
             AccountName = cState.Name;
 
+            _menu?.UpdateRestrictedData(cState.RestrictedOrders);
             Populate(cState.Orders);
             _menu?.UpdateCargoCapacity(OrderCount, OrderCapacity);
             _menu?.UpdateBankData(AccountName, BankBalance);
@@ -172,6 +179,23 @@ namespace Content.Client.Cargo.BUI
             SendMessage(new CargoConsoleApproveOrderMessage(row.Order.OrderId));
             // Most of the UI isn't predicted anyway so.
             // _menu?.UpdateCargoCapacity(OrderCount + row.Order.Amount, OrderCapacity);
+        }
+
+        private void RestrictOrder(ButtonEventArgs args)
+        {
+            // Better implementation courtesy of gusxyz
+            Control control = args.Button;
+
+            while (control.Parent != null)
+            {
+                if (control.Parent is CargoProductRow { Product: not null } row)
+                {
+                    SendMessage(new CargoConsoleRestrictProductMessage(row.Product.ID));
+                    return;
+                }
+
+                control = control.Parent;
+            }
         }
     }
 }
