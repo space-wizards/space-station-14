@@ -21,6 +21,7 @@ public sealed class IPIntelApi : IIPIntelApi
     private string? _contactEmail;
     private string? _baseUrl;
     private string? _flags;
+    private string? _oflags;
 
     public IPIntelApi(
         IHttpClientHolder http,
@@ -31,10 +32,11 @@ public sealed class IPIntelApi : IIPIntelApi
         cfg.OnValueChanged(CCVars.GameIPIntelEmail, b => _contactEmail = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelBase, b => _baseUrl = b, true);
         cfg.OnValueChanged(CCVars.GameIPIntelFlags, b => _flags = b, true);
+        cfg.OnValueChanged(CCVars.GameIPIntelOFlags, b => _oflags = b, true);
     }
 
     public Task<HttpResponseMessage> GetIPScore(IPAddress ip)
     {
-        return _http.Client.GetAsync($"{_baseUrl}/check.php?ip={ip}&contact={_contactEmail}&flags={_flags}");
+        return _http.Client.GetAsync($"{_baseUrl}/check.php?ip={ip}&contact={_contactEmail}&flags={_flags}&oflags={_oflags}");
     }
 }
