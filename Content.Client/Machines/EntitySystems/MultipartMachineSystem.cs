@@ -1,5 +1,4 @@
 using Content.Client.Examine;
-using Content.Client.Machines.Components;
 using Content.Shared.Machines.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
