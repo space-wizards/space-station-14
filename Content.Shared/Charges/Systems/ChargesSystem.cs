@@ -36,13 +36,13 @@ public sealed class ChargesSystem : EntitySystem
         using var _ = args.PushGroup(nameof(LimitedChargesComponent));
 
         args.PushMarkup(Loc.GetString("limited-charges-charges-remaining", ("charges", charges)));
-        if (GetCurrentCharges((uid, comp, null)) == comp.MaxCharges)
+        if (charges == comp.MaxCharges)
         {
             args.PushMarkup(Loc.GetString("limited-charges-max-charges"));
         }
 
         // only show the recharging info if it's not full
-        if (!args.IsInDetailsRange || charges == comp.MaxCharges || !TryComp<AutoRechargeComponent>(uid, out var recharge))
+        if (charges == comp.MaxCharges || !TryComp<AutoRechargeComponent>(uid, out var recharge))
             return;
 
         rechargeEnt.Comp2 = recharge;
