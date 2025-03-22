@@ -54,3 +54,32 @@
     count: 10
   - type: TimedDespawn
     lifetime: 0.25
+
+- type: entity
+  id: SeedsBombegranate
+  name: seed (shard, chemical)
+  categories: [ HideSpawnMenu ]
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/organic.rsi
+    layers:
+      - state: seed
+        shader: unshaded
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 0.1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1000
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
+  - type: SolutionInjectOnProjectileHit
+    transferAmount: 1000
+    solution: food
+  - type: InjectableSolution
+    solution: food

@@ -126,6 +126,8 @@ flavor-complex-nettles = like nettles
 flavor-complex-jungle = like jungle
 flavor-complex-vegetables = like vegetables
 flavor-complex-cherry = like cherries
+flavor-complex-pomegranate = like pomegranates
+flavor-complex-bombegranate = like bombegranates
 # use it when there multiple types of veggies
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
@@ -266,7 +268,7 @@ flavor-complex-white-gilgamesh = like lightly carbonated cream
 flavor-complex-antifreeze = warm
 flavor-complex-caipirinha = like Brazil
 flavor-complex-daiquiri = like rum, lime and sugar
-flavor-complex-deathintheafternoon = like anise and champagne 
+flavor-complex-deathintheafternoon = like anise and champagne
 flavor-complex-empress75 = like tyrian purple
 flavor-complex-espressomartini = like vodka and coffee
 flavor-complex-mayojito = like stomach turmoil
