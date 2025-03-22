@@ -345,9 +345,6 @@
   components:
    - type: SubdermalImplant
    - type: MindShieldImplant
-   - type: Tag
-     tags:
-       - MindShield
 
 # Centcomm implants
 
