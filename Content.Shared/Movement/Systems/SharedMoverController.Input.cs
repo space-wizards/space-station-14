@@ -28,6 +28,15 @@ namespace Content.Shared.Movement.Systems
 
         private void InitializeInput()
         {
+            EntityManager.ComponentFactory.RegisterNetworkedFields(
+                EntityManager.ComponentFactory.GetRegistration(typeof(InputMoverComponent)),
+                nameof(InputMoverComponent.HeldMoveButtons),
+                nameof(InputMoverComponent.CanMove),
+                nameof(InputMoverComponent.RelativeEntity),
+                nameof(InputMoverComponent.LerpTarget),
+                nameof(InputMoverComponent.RelativeRotation),
+                nameof(InputMoverComponent.TargetRelativeRotation));
+
             var moveUpCmdHandler = new MoverDirInputCmdHandler(this, Direction.North);
             var moveLeftCmdHandler = new MoverDirInputCmdHandler(this, Direction.West);
             var moveRightCmdHandler = new MoverDirInputCmdHandler(this, Direction.East);
@@ -96,7 +105,7 @@ namespace Content.Shared.Movement.Systems
             var moveEvent = new MoveInputEvent(entity, entity.Comp.HeldMoveButtons);
             entity.Comp.HeldMoveButtons = buttons;
             RaiseLocalEvent(entity, ref moveEvent);
-            Dirty(entity, entity.Comp);
+            DirtyField(entity.Owner, entity.Comp, nameof(InputMoverComponent.HeldMoveButtons));
 
             var ev = new SpriteMoveEvent(entity.Comp.HeldMoveButtons != MoveButtons.None);
             RaiseLocalEvent(entity, ref ev);
@@ -104,33 +113,54 @@ namespace Content.Shared.Movement.Systems
 
         private void OnMoverHandleState(Entity<InputMoverComponent> entity, ref ComponentHandleState args)
         {
-            if (args.Current is not InputMoverComponentState state)
-                return;
-
-            // Handle state
-            entity.Comp.LerpTarget = state.LerpTarget;
-            entity.Comp.RelativeRotation = state.RelativeRotation;
-            entity.Comp.TargetRelativeRotation = state.TargetRelativeRotation;
-            entity.Comp.CanMove = state.CanMove;
-            entity.Comp.RelativeEntity = EnsureEntity<InputMoverComponent>(state.RelativeEntity, entity.Owner);
-
             // Reset
             entity.Comp.LastInputTick = GameTick.Zero;
             entity.Comp.LastInputSubTick = 0;
 
-            if (entity.Comp.HeldMoveButtons != state.HeldMoveButtons)
+            if (args.Current is InputHeldDeltaState held && held.HeldMoveButtons != entity.Comp.HeldMoveButtons)
             {
-                var moveEvent = new MoveInputEvent(entity, entity.Comp.HeldMoveButtons);
-                entity.Comp.HeldMoveButtons = state.HeldMoveButtons;
-                RaiseLocalEvent(entity.Owner, ref moveEvent);
-
-                var ev = new SpriteMoveEvent(entity.Comp.HeldMoveButtons != MoveButtons.None);
-                RaiseLocalEvent(entity, ref ev);
+                RaiseMoveEvent(entity, held.HeldMoveButtons);
             }
+            else if (args.Current is InputMoverComponentState state)
+            {
+                // Handle state
+                entity.Comp.LerpTarget = state.LerpTarget;
+                entity.Comp.RelativeRotation = state.RelativeRotation;
+                entity.Comp.TargetRelativeRotation = state.TargetRelativeRotation;
+                entity.Comp.CanMove = state.CanMove;
+                entity.Comp.RelativeEntity = EnsureEntity<InputMoverComponent>(state.RelativeEntity, entity.Owner);
+
+                RaiseMoveEvent(entity, state.HeldMoveButtons);
+            }
+        }
+
+        private void RaiseMoveEvent(Entity<InputMoverComponent> entity, MoveButtons buttons)
+        {
+            if (entity.Comp.HeldMoveButtons == buttons)
+                return;
+
+            var moveEvent = new MoveInputEvent(entity, entity.Comp.HeldMoveButtons);
+            entity.Comp.HeldMoveButtons = buttons;
+            RaiseLocalEvent(entity.Owner, ref moveEvent);
+
+            var ev = new SpriteMoveEvent(entity.Comp.HeldMoveButtons != MoveButtons.None);
+            RaiseLocalEvent(entity, ref ev);
         }
 
         private void OnMoverGetState(Entity<InputMoverComponent> entity, ref ComponentGetState args)
         {
+            var fields = EntityManager.GetModifiedFields(entity.Comp, args.FromTick);
+
+            switch (fields)
+            {
+                case 1 << 0:
+                    args.State = new InputHeldDeltaState()
+                    {
+                        HeldMoveButtons = entity.Comp.HeldMoveButtons,
+                    };
+                    return;
+            }
+
             args.State = new InputMoverComponentState()
             {
                 CanMove = entity.Comp.CanMove,
@@ -157,7 +187,7 @@ namespace Content.Shared.Movement.Systems
                 return;
 
             mover.TargetRelativeRotation += angle;
-            Dirty(uid, mover);
+            DirtyField(uid, mover, nameof(InputMoverComponent.TargetRelativeRotation));
         }
 
         public void ResetCamera(EntityUid uid)
@@ -169,15 +199,16 @@ namespace Content.Shared.Movement.Systems
             }
 
             // If we updated parent then cancel the accumulator and force it now.
-            if (!TryUpdateRelative(mover, XformQuery.GetComponent(uid)) && mover.TargetRelativeRotation.Equals(Angle.Zero))
+            if (!TryUpdateRelative((uid, mover), XformQuery.GetComponent(uid)) && mover.TargetRelativeRotation.Equals(Angle.Zero))
                 return;
 
             mover.LerpTarget = TimeSpan.Zero;
             mover.TargetRelativeRotation = Angle.Zero;
-            Dirty(uid, mover);
+            DirtyField(uid, mover, nameof(InputMoverComponent.LerpTarget));
+            DirtyField(uid, mover, nameof(InputMoverComponent.TargetRelativeRotation));
         }
 
-        private bool TryUpdateRelative(InputMoverComponent mover, TransformComponent xform)
+        private bool TryUpdateRelative(Entity<InputMoverComponent> mover, TransformComponent xform)
         {
             var relative = xform.GridUid;
             relative ??= xform.MapUid;
@@ -187,7 +218,7 @@ namespace Content.Shared.Movement.Systems
             // 2. If we go from grid -> grid then (after lerp time) snap to nearest cardinal (probably imperceptible)
             // 3. If we go from map -> grid then (after lerp time) snap to nearest cardinal
 
-            if (mover.RelativeEntity.Equals(relative))
+            if (mover.Comp.RelativeEntity.Equals(relative))
                 return false;
 
             // Okay need to get our old relative rotation with respect to our new relative rotation
@@ -196,15 +227,16 @@ namespace Content.Shared.Movement.Systems
             var targetRotation = Angle.Zero;
 
             // Get our current relative rotation
-            if (XformQuery.TryGetComponent(mover.RelativeEntity, out var oldRelativeXform))
+            if (XformQuery.TryGetComponent(mover.Comp.RelativeEntity, out var oldRelativeXform))
             {
-                currentRotation = _transform.GetWorldRotation(oldRelativeXform, XformQuery) + mover.RelativeRotation;
+                currentRotation = _transform.GetWorldRotation(oldRelativeXform, XformQuery) + mover.Comp.RelativeRotation;
             }
 
             if (XformQuery.TryGetComponent(relative, out var relativeXform))
             {
                 // This is our current rotation relative to our new parent.
-                mover.RelativeRotation = (currentRotation - _transform.GetWorldRotation(relativeXform)).FlipPositive();
+                mover.Comp.RelativeRotation = (currentRotation - _transform.GetWorldRotation(relativeXform)).FlipPositive();
+                DirtyField(mover.Owner, mover.Comp, nameof(InputMoverComponent.RelativeRotation));
             }
 
             // If we went from grid -> map we'll preserve our worldrotation
@@ -219,11 +251,13 @@ namespace Content.Shared.Movement.Systems
                 if (CameraRotationLocked)
                     targetRotation = Angle.Zero;
                 else
-                    targetRotation = mover.RelativeRotation.GetCardinalDir().ToAngle().Reduced();
+                    targetRotation = mover.Comp.RelativeRotation.GetCardinalDir().ToAngle().Reduced();
             }
 
-            mover.RelativeEntity = relative;
-            mover.TargetRelativeRotation = targetRotation;
+            mover.Comp.RelativeEntity = relative;
+            mover.Comp.TargetRelativeRotation = targetRotation;
+            DirtyField(mover.Owner, mover.Comp, nameof(InputMoverComponent.RelativeEntity));
+            DirtyField(mover.Owner, mover.Comp, nameof(InputMoverComponent.TargetRelativeRotation));
             return true;
         }
 
@@ -258,7 +292,7 @@ namespace Content.Shared.Movement.Systems
             if (entity.Comp.LifeStage < ComponentLifeStage.Running)
             {
                 entity.Comp.RelativeEntity = relative;
-                Dirty(entity.Owner, entity.Comp);
+                DirtyField(entity.Owner, entity.Comp, nameof(InputMoverComponent.RelativeEntity));
                 return;
             }
 
@@ -272,7 +306,10 @@ namespace Content.Shared.Movement.Systems
                 entity.Comp.TargetRelativeRotation = Angle.Zero;
                 entity.Comp.RelativeRotation = Angle.Zero;
                 entity.Comp.LerpTarget = TimeSpan.Zero;
-                Dirty(entity.Owner, entity.Comp);
+                DirtyField(entity.Owner, entity.Comp, nameof(InputMoverComponent.RelativeEntity));
+                DirtyField(entity.Owner, entity.Comp, nameof(InputMoverComponent.TargetRelativeRotation));
+                DirtyField(entity.Owner, entity.Comp, nameof(InputMoverComponent.RelativeRotation));
+                DirtyField(entity.Owner, entity.Comp, nameof(InputMoverComponent.LerpTarget));
                 return;
             }
 
@@ -282,14 +319,14 @@ namespace Content.Shared.Movement.Systems
                 if (entity.Comp.LerpTarget >= Timing.CurTime)
                 {
                     entity.Comp.LerpTarget = TimeSpan.Zero;
-                    Dirty(entity.Owner, entity.Comp);
+                    DirtyField(entity.Owner, entity.Comp, nameof(InputMoverComponent.LerpTarget));
                 }
 
                 return;
             }
 
             entity.Comp.LerpTarget = TimeSpan.FromSeconds(InputMoverComponent.LerpTime) + Timing.CurTime;
-            Dirty(entity.Owner, entity.Comp);
+            DirtyField(entity.Owner, entity.Comp, nameof(InputMoverComponent.LerpTarget));
         }
 
         private void HandleDirChange(EntityUid entity, Direction dir, ushort subTick, bool state)

@@ -8,8 +8,14 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Movement.Components
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class InputMoverComponent : Component
+    public sealed partial class InputMoverComponent : Component, IComponentDelta
     {
+        /// <inheritdoc/>
+        public GameTick LastFieldUpdate { get; set; }
+
+        /// <inheritdoc/>
+        public GameTick[] LastModifiedFields { get; set; }
+
         // This class has to be able to handle server TPS being lower than client FPS.
         // While still having perfectly responsive movement client side.
         // We do this by keeping track of the exact sub-tick values that inputs are pressed on the client,
@@ -74,6 +80,30 @@ namespace Content.Shared.Movement.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanMove = true;
+    }
+
+    [Serializable, NetSerializable]
+    public record struct InputHeldDeltaState : IComponentDeltaState<InputMoverComponentState>
+    {
+        public MoveButtons HeldMoveButtons;
+
+        public void ApplyToFullState(InputMoverComponentState fullState)
+        {
+            fullState.HeldMoveButtons = HeldMoveButtons;
+        }
+
+        public InputMoverComponentState CreateNewFullState(InputMoverComponentState fullState)
+        {
+            return new InputMoverComponentState()
+            {
+                CanMove = fullState.CanMove,
+                HeldMoveButtons = HeldMoveButtons,
+                LerpTarget = fullState.LerpTarget,
+                RelativeEntity = fullState.RelativeEntity,
+                RelativeRotation = fullState.RelativeRotation,
+                TargetRelativeRotation = fullState.TargetRelativeRotation,
+            };
+        }
     }
 
     [Serializable, NetSerializable]
