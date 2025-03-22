@@ -145,3 +145,4 @@
       - id: HandheldGPSBasic
       - id: MedkitFilled
         prob: 0.3
+      - id: DefibrillatorCompact
