@@ -157,7 +157,7 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.49,-0.49,0.49,-0.36"
+          bounds: "-0.5,-0.5,0.5,-0.28125"
         density: 1500
         mask:
         - FullTileMask
@@ -254,6 +254,9 @@
     drawdepth: WallTops
     sprite: Structures/Windows/window_diagonal.rsi
     state: state0
+  - type: Tag
+    tags:
+    - Diagonal
   - type: IconSmooth
     mode: Diagonal
     key: windows

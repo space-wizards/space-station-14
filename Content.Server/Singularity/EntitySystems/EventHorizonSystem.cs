@@ -130,7 +130,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
             || _tagSystem.HasTag(morsel, "HighRiskItem")
             || HasComp<ContainmentFieldGeneratorComponent>(morsel))
         {
-            _adminLogger.Add(LogType.EntityDelete, LogImpact.Extreme, $"{ToPrettyString(morsel)} entered the event horizon of {ToPrettyString(hungry)} and was deleted");
+            _adminLogger.Add(LogType.EntityDelete, LogImpact.High, $"{ToPrettyString(morsel):player} entered the event horizon of {ToPrettyString(hungry)} and was deleted");
         }
 
         EntityManager.QueueDeleteEntity(morsel);
@@ -308,7 +308,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         foreach (var grid in grids)
         {
             // TODO: Remover grid.Owner when this iterator returns entityuids as well.
-            AttemptConsumeTiles(uid, grid.Comp.GetTilesIntersecting(circle), grid, grid, eventHorizon);
+            AttemptConsumeTiles(uid, _mapSystem.GetTilesIntersecting(grid.Owner, grid.Comp, circle), grid, grid, eventHorizon);
         }
     }
 

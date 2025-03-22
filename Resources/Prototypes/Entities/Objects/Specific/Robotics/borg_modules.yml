@@ -7,9 +7,28 @@
   components:
   - type: Item
     storedRotation: -90
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#8FCBCB"
+      - state: base-module-inhand-left
+        color: "#A1A1A1"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#7D7D7D"
+      right:
+      - state: base-icon-inhand-right
+        color: "#8FCBCB"
+      - state: base-module-inhand-right
+        color: "#A1A1A1"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+        color: "#7D7D7D"
   - type: Sprite
     sprite: Objects/Specific/Robotics/borgmodule.rsi
   - type: BorgModule
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: no-action }
   - type: StaticPrice
     price: 100
   - type: Tag
@@ -35,7 +54,7 @@
   description: Select this module, enabling you to use the tools it provides.
   components:
   - type: InstantAction
-    itemIconStyle: BigItem
+    itemIconStyle: BigAction
     useDelay: 0.5
     event: !type:BorgModuleActionSelectedEvent
 
@@ -47,6 +66,22 @@
   - type: Tag
     tags:
     - BorgModuleCargo
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#EBD8B7"
+      - state: base-module-inhand-left
+        color: "#613D1D"
+      - state: base-stripes-inhand-left
+        color: "#593718"
+      right:
+      - state: base-icon-inhand-right
+        color: "#EBD8B7"
+      - state: base-module-inhand-right
+        color: "#613D1D"
+      - state: base-stripes-inhand-right
+        color: "#593718"
 
 - type: entity
   id: BaseBorgModuleEngineering
@@ -56,6 +91,24 @@
   - type: Tag
     tags:
     - BorgModuleEngineering
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#8FCBCB"
+      - state: base-module-inhand-left
+        color: "#BA3939"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#DEC343"
+      right:
+      - state: base-icon-inhand-right
+        color: "#8FCBCB"
+      - state: base-module-inhand-right
+        color: "#BA3939"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+        color: "#DEC343"
 
 - type: entity
   id: BaseBorgModuleJanitor
@@ -65,6 +118,24 @@
   - type: Tag
     tags:
     - BorgModuleJanitor
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#CFA2E4"
+      - state: base-module-inhand-left
+        color: "#753186"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#404040"
+      right:
+      - state: base-icon-inhand-right
+        color: "#CFA2E4"
+      - state: base-module-inhand-right
+        color: "#753186"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+        color: "#404040"
 
 - type: entity
   id: BaseBorgModuleMedical
@@ -74,6 +145,51 @@
   - type: Tag
     tags:
     - BorgModuleMedical
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#EEF5F5"
+      - state: base-module-inhand-left
+        color: "#5A96BB"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#C3C3C3"
+      right:
+      - state: base-icon-inhand-right
+        color: "#EEF5F5"
+      - state: base-module-inhand-right
+        color: "#5A96BB"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+        color: "#C3C3C3"
+
+- type: entity
+  id: BaseBorgModuleScience
+  parent: BaseBorgModule
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - BorgModuleScience
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#FFAEB6"
+      - state: base-module-inhand-left
+        color: "#9C0DE1"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#C3C3C3"
+      right:
+      - state: base-icon-inhand-right
+        color: "#FFAEB6"
+      - state: base-module-inhand-right
+        color: "#9C0DE1"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+        color: "#C3C3C3"
 
 - type: entity
   id: BaseBorgModuleService
@@ -83,24 +199,79 @@
   - type: Tag
     tags:
     - BorgModuleService
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#F3F3F3"
+      - state: base-module-inhand-left
+        color: "#3A3A3A"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#313131"
+      right:
+      - state: base-icon-inhand-right
+        color: "#F3F3F3"
+      - state: base-module-inhand-right
+        color: "#3A3A3A"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+        color: "#313131"
 
 - type: entity
   id: BaseBorgModuleSyndicate
   parent: BaseBorgModule
   abstract: true
   components:
-    - type: Tag
-      tags:
-        - BorgModuleSyndicate
+  - type: Tag
+    tags:
+    - BorgModuleSyndicate
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#FF0000"
+      - state: base-module-inhand-left
+        color: "#891417"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#7B0F12"
+      right:
+      - state: base-icon-inhand-right
+        color: "#FF0000"
+      - state: base-module-inhand-right
+        color: "#891417"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+        color: "#7B0F12"
+      
 
 - type: entity
   id: BaseBorgModuleSyndicateAssault
   parent: BaseBorgModule
   abstract: true
   components:
-    - type: Tag
-      tags:
-        - BorgModuleSyndicateAssault
+  - type: Tag
+    tags:
+    - BorgModuleSyndicateAssault
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#FF0000"
+      - state: base-module-inhand-left
+        color: "#891417"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#7B0F12"
+      right:
+      - state: base-icon-inhand-right
+        color: "#FF0000"
+      - state: base-module-inhand-right
+        color: "#891417"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+        color: "#7B0F12"
 
 # generic modules
 - type: entity
@@ -119,6 +290,8 @@
     - CableHVStackLingering10
     - Wirecutter
     - trayScanner
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
 
 - type: entity
   id: BorgModuleFireExtinguisher
@@ -132,6 +305,8 @@
   - type: ItemBorgModule
     items:
     - FireExtinguisher
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: extinguisher-module }
 
 - type: entity
   id: BorgModuleGPS
@@ -147,6 +322,8 @@
     - HandheldGPSBasic
     - HandHeldMassScannerBorg
     - HandheldStationMapUnpowered
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: gps-module }
 
 - type: entity
   id: BorgModuleRadiationDetection
@@ -160,6 +337,8 @@
   - type: ItemBorgModule
     items:
     - GeigerCounter
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: geiger-module }
 
 - type: entity
   id: BorgModuleTool
@@ -178,6 +357,8 @@
     - Wirecutter
     - Multitool
     - WelderIndustrial
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
 # cargo modules
 - type: entity
@@ -192,6 +373,8 @@
   - type: ItemBorgModule
     items:
     - AppraisalTool
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: appraisal-module }
 
 - type: entity
   id: BorgModuleMining
@@ -210,6 +393,8 @@
     - OreBag
     - Crowbar
     - RadioHandheld
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: mining-module }
 
 - type: entity
   id: BorgModuleGrapplingGun
@@ -224,6 +409,8 @@
     items:
     - WeaponGrapplingGun
     - HandheldGPSBasic
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: grappling-module }
 
 # engineering modules
 - type: entity
@@ -244,6 +431,8 @@
     - RemoteSignaller
     - GasAnalyzer
     - GeigerCounter
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
 
 - type: entity
   id: BorgModuleConstruction
@@ -260,6 +449,8 @@
     - SheetGlassLingering0
     - PartRodMetalLingering0
     - FloorTileItemSteelLingering0
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: construction-module }
 
 - type: entity
   id: BorgModuleRCD
@@ -273,6 +464,8 @@
   - type: ItemBorgModule
     items:
     - RCDRecharging
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: rcd-module }
 
 # janitorial modules (this gets its own unique things because janis are epic)
 - type: entity
@@ -289,6 +482,8 @@
     - LightReplacer
     - Crowbar
     - Screwdriver
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: light-replacer-module }
 
 - type: entity
   id: BorgModuleCleaning
@@ -304,6 +499,8 @@
     - MopItem
     - Bucket
     - TrashBag
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: cleaning-module }
 
 - type: entity
   id: BorgModuleAdvancedCleaning
@@ -321,6 +518,8 @@
     - SprayBottleSpaceCleaner
     - Dropper
     - TrashBag
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-cleaning-module }
 
 # medical modules
 - type: entity
@@ -336,6 +535,8 @@
     items:
     - HandheldHealthAnalyzerUnpowered
     - ClothingNeckStethoscope
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: diagnosis-module }
 
 - type: entity
   id: BorgModuleTreatment
@@ -354,6 +555,8 @@
     - Gauze10Lingering
     - Bloodpack10Lingering
     - Syringe
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: treatment-module }
 
 - type: entity
   id: BorgModuleDefibrillator
@@ -367,6 +570,8 @@
   - type: ItemBorgModule
     items:
     - DefibrillatorOneHandedUnpowered
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: defib-module }
 
 - type: entity
   id: BorgModuleAdvancedTreatment
@@ -384,12 +589,14 @@
     - Beaker
     - BorgDropper
     - BorgHypo
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-diagnosis-module }
 
 # science modules
 # todo: if science ever gets their own custom robot, add more "sci" modules.
 - type: entity
   id: BorgModuleArtifact
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  parent: [ BaseBorgModuleScience, BaseProviderBorgModule ]
   name: artifact cyborg module
   components:
   - type: Sprite
@@ -399,10 +606,12 @@
   - type: ItemBorgModule
     items:
     - NodeScanner
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: node-scanner-module }
 
 - type: entity
   id: BorgModuleAnomaly
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  parent: [ BaseBorgModuleScience, BaseProviderBorgModule ]
   name: anomaly cyborg module
   components:
   - type: Sprite
@@ -416,6 +625,8 @@
     - AnomalyLocatorWideUnpowered
     - RemoteSignaller
     - Multitool
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: anomaly-module }
 
 # service modules
 - type: entity
@@ -435,6 +646,8 @@
     - Lighter
     - DrinkShaker
     - BorgDropper
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: service-module }
 
 - type: entity
   id: BorgModuleMusique
@@ -450,6 +663,8 @@
     - SynthesizerInstrument
     - ElectricGuitarInstrument
     - SaxophoneInstrument
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: musical-module }
 
 - type: entity
   id: BorgModuleGardening
@@ -466,6 +681,8 @@
     - HydroponicsToolSpade
     - HydroponicsToolClippers
     - Bucket
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: gardening-module }
 
 - type: entity
   id: BorgModuleHarvesting
@@ -481,6 +698,8 @@
     - HydroponicsToolScythe
     - HydroponicsToolHatchet
     - PlantBag
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: harvesting-module }
 
 - type: entity
   id: BorgModuleClowning
@@ -496,6 +715,8 @@
     - BikeHorn
     - ClownRecorder
     - BikeHornInstrument
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: clowning-module }
 
 #syndicate modules
 - type: entity
@@ -511,12 +732,32 @@
     items:
     - WeaponPistolEchis
     - EnergyDaggerLoud
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: base-icon-inhand-left
+        color: "#FF0000"
+      - state: base-module-inhand-left
+        color: "#891417"
+      - state: base-part-inhand-left
+      - state: base-stripes-inhand-left
+        color: "#7B0F12"
+      right:
+      - state: base-icon-inhand-right
+        color: "#FF0000"
+      - state: base-module-inhand-right
+        color: "#891417"
+      - state: base-part-inhand-right
+      - state: base-stripes-inhand-right
+        color: "#7B0F12"
 
 - type: entity
   id: BorgModuleOperative
-  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
   name: operative cyborg module
-  description: A module that comes with a crowbar, an Emag and a syndicate pinpointer.
+  description: A module that comes with a crowbar, an Emag, an Access Breaker and a syndicate pinpointer.
   components:
     - type: Sprite
       layers:
@@ -526,11 +767,14 @@
       items:
       - Crowbar
       - Emag
+      - AccessBreaker
       - PinpointerSyndicateNuclear
+    - type: BorgModuleIcon
+      icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-operative-module }
 
 - type: entity
   id: BorgModuleEsword
-  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule ]
+  parent: [ BaseBorgModuleSyndicate, BaseProviderBorgModule, BaseSyndicateContraband ]
   name: energy sword cyborg module
   description: A module that comes with a double energy sword.
   components:
@@ -542,10 +786,12 @@
       items:
       - CyborgEnergySwordDouble
       - PinpointerSyndicateNuclear
+    - type: BorgModuleIcon
+      icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-esword-module }
 
 - type: entity
   id: BorgModuleL6C
-  parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule ]
+  parent: [ BaseBorgModuleSyndicateAssault, BaseProviderBorgModule, BaseSyndicateContraband ]
   name: L6C ROW cyborg module
   description: A module that comes with a L6C.
   components:
@@ -557,6 +803,8 @@
       items:
         - WeaponLightMachineGunL6C
         - PinpointerSyndicateNuclear
+    - type: BorgModuleIcon
+      icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-l6c-module }
 
 - type: entity
   id: BorgModuleMartyr
@@ -571,3 +819,23 @@
     - type: ItemBorgModule
       items:
         - SelfDestructSeq
+    - type: BorgModuleIcon
+      icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-martyr-module }
+    - type: Item
+      inhandVisuals:
+        left:
+        - state: base-icon-inhand-left
+          color: "#FF0000"
+        - state: base-module-inhand-left
+          color: "#891417"
+        - state: base-part-inhand-left
+        - state: base-stripes-inhand-left
+          color: "#7B0F12"
+        right:
+        - state: base-icon-inhand-right
+          color: "#FF0000"
+        - state: base-module-inhand-right
+          color: "#891417"
+        - state: base-part-inhand-right
+        - state: base-stripes-inhand-right
+          color: "#7B0F12"

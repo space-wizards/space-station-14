@@ -78,7 +78,7 @@ public sealed class ItemToggleSystem : EntitySystem
 
         args.Verbs.Add(new ActivationVerb()
         {
-            Text = !ent.Comp.Activated ? Loc.GetString("item-toggle-activate") : Loc.GetString("item-toggle-deactivate"),
+            Text = !ent.Comp.Activated ? Loc.GetString(ent.Comp.VerbToggleOn) : Loc.GetString(ent.Comp.VerbToggleOff),
             Act = () =>
             {
                 Toggle((ent.Owner, ent.Comp), user, predicted: ent.Comp.Predictable);
