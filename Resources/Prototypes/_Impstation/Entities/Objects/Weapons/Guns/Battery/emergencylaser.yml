@@ -1,8 +1,8 @@
 - type: entity
-  name: emergency laser rifle
+  name: TD-95C Emergency Laser Carbine
   parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseMajorContraband]
   id: EmergencyWeaponLaserCarbine
-  description: An emergency laser rifle, for use when getting timely clearance isn't an option. Hand this in to security once the coast is clear.
+  description: An emergency laser carbine, for use when getting timely clearance isn't an option. Hand this in to security once the coast is clear.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Battery/emergency_laser_gun_two.rsi

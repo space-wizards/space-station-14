@@ -14,42 +14,44 @@
   - ShuttleGunKineticCircuitboard
   # These are roundstart but not replenishable for salvage
 
-- type: technology
-  id: DraconicMunitions
-  name: research-technology-draconic-munitions
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi
-    state: incendiarydisplay
-  discipline: Arsenal
-  tier: 1
-  cost: 10000
-  recipeUnlocks:
-  - BoxShotgunIncendiary
-  - MagazineDMRIncendiary
-  - MagazineRifleIncendiary
-  - MagazinePistolIncendiary
-  - MagazinePistolSubMachineGunIncendiary
-  - MagazineLightRifleIncendiary
-  - MagazineLPistolIncendiary
-  - SpeedLoaderMagnumIncendiary
-  - MagazineShotgunIncendiary
-  - MagazineBoxLPistolIncendiary
-  - MagazineBoxPistolIncendiary
-  - MagazineBoxMagnumIncendiary
-  - MagazineBoxLightRifleIncendiary
-  - MagazineBoxRifleIncendiary
+#- type: technology # imp - combining draconic and uranium munitions research
+#  id: DraconicMunitions
+#  name: research-technology-draconic-munitions
+#  icon:
+#    sprite: Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi
+#    state: incendiarydisplay
+#  discipline: Arsenal
+#  tier: 1
+#  cost: 10000
+#  recipeUnlocks:
+#  - BoxShotgunIncendiary
+#  - MagazineDMRIncendiary
+#  - MagazineRifleIncendiary
+#  - MagazinePistolIncendiary
+#  - MagazinePistolSubMachineGunIncendiary
+#  - MagazineLightRifleIncendiary
+#  - MagazineLPistolIncendiary
+#  - SpeedLoaderMagnumIncendiary
+#  - MagazineShotgunIncendiary
+#  - MagazineBoxLPistolIncendiary
+#  - MagazineBoxPistolIncendiary
+#  - MagazineBoxMagnumIncendiary
+#  - MagazineBoxLightRifleIncendiary
+#  - MagazineBoxRifleIncendiary
 
 - type: technology
   id: WeaponizedLaserManipulation
   name: research-technology-weaponized-laser-manipulation
   icon:
-    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_gun.rsi #imp
     state: icon
   discipline: Arsenal
   tier: 1
   cost: 7500
   recipeUnlocks:
   - WeaponLaserCarbine
+  - WeaponBlasterPistol #imp
+  - PowerCellBlaster #imp
 
 - type: technology
   id: NonlethalAmmunition
@@ -68,29 +70,29 @@
   - WeaponShotgunKammererBeanbag
   - WeaponShotgunEnforcerBeanbag
 
-- type: technology
-  id: UraniumMunitions
-  name: research-technology-uranium-munitions
-  icon:
-    sprite: Objects/Materials/Sheets/other.rsi
-    state: uranium
-  discipline: Arsenal
-  tier: 1
-  cost: 7500
-  recipeUnlocks:
-  - MagazineRifleUranium
-  - MagazineLPistolUranium #imp
-  - MagazinePistolUranium
-  - MagazineDMRUranium
-  - MagazinePistolSubMachineGunUranium
-  - MagazineLightRifleUranium
-  - SpeedLoaderMagnumUranium
-  - MagazineBoxLPistolUranium #imp
-  - MagazineBoxPistolUranium
-  - MagazineBoxMagnumUranium
-  - MagazineBoxLightRifleUranium
-  - MagazineBoxRifleUranium
-  - BoxShotgunUranium
+#- type: technology # imp - combining draconic and uranium munitions research
+#  id: UraniumMunitions
+#  name: research-technology-uranium-munitions
+#  icon:
+#    sprite: Objects/Materials/Sheets/other.rsi
+#    state: uranium
+#  discipline: Arsenal
+#  tier: 1
+#  cost: 7500
+#  recipeUnlocks:
+#  - MagazineRifleUranium
+#  - MagazineLPistolUranium #imp
+#  - MagazinePistolUranium
+#  - MagazineDMRUranium
+#  - MagazinePistolSubMachineGunUranium
+#  - MagazineLightRifleUranium
+#  - SpeedLoaderMagnumUranium
+#  - MagazineBoxLPistolUranium #imp
+#  - MagazineBoxPistolUranium
+#  - MagazineBoxMagnumUranium
+#  - MagazineBoxLightRifleUranium
+#  - MagazineBoxRifleUranium
+#  - BoxShotgunUranium
 
 - type: technology
   id: AdvancedRiotControl
@@ -145,19 +147,21 @@
   id: ConcentratedLaserWeaponry
   name: research-technology-concentrated-laser-weaponry
   icon:
-    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_cannon.rsi #imp
     state: icon
   discipline: Arsenal
   tier: 2
   cost: 10000
   recipeUnlocks:
   - WeaponLaserCannon
+  - WeaponBlasterCannon #imp
+  - WeaponLaserSvalinn #imp
 
 - type: technology
   id: WaveParticleHarnessing
   name: research-technology-wave-particle-harnessing
   icon:
-    sprite: Objects/Weapons/Guns/Battery/xray.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/xray.rsi #imp
     state: icon
   discipline: Arsenal
   tier: 2
@@ -193,7 +197,7 @@
   id: PortableMicrofusionWeaponry
   name: research-technology-portable-microfusion-weaponry
   icon:
-    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/advancedlasergun.rsi #imp
     state: icon
   discipline: Arsenal
   tier: 3
@@ -201,18 +205,19 @@
   recipeUnlocks:
   - WeaponAdvancedLaser
   - PortableRecharger
+  - WeaponBlasterMagnum #imp
 
-- type: technology
-  id: ExperimentalBatteryAmmo
-  name: research-technology-experimental-battery-ammo
-  icon:
-    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
-    state: icon
-  discipline: Arsenal
-  tier: 3
-  cost: 15000
-  recipeUnlocks:
-  - WeaponLaserSvalinn
+#- type: technology # imp - rolled into Concentrated Laser Weaponry
+#  id: ExperimentalBatteryAmmo
+#  name: research-technology-experimental-battery-ammo
+#  icon:
+#    sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
+#    state: icon
+#  discipline: Arsenal
+#  tier: 3
+#  cost: 15000
+#  recipeUnlocks:
+#  - WeaponLaserSvalinn
 
 - type: technology
   id: AdvancedShuttleWeapon

@@ -12,3 +12,41 @@
   recipeUnlocks:
   - FullAutoConversionKit
   - HyperBurstConversionKit
+
+- type: technology
+  id: AdvancedMunitions
+  name: research-technology-advanced-munitions
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi
+    state: incendiarydisplay
+  discipline: Arsenal
+  tier: 1
+  cost: 12000
+  recipeUnlocks:
+  - BoxShotgunIncendiary
+  - MagazineDMRIncendiary
+  - MagazineRifleIncendiary
+  - MagazinePistolIncendiary
+  - MagazinePistolSubMachineGunIncendiary
+  - MagazineLightRifleIncendiary
+  - MagazineLPistolIncendiary
+  - SpeedLoaderMagnumIncendiary
+  - MagazineShotgunIncendiary
+  - MagazineBoxLPistolIncendiary
+  - MagazineBoxPistolIncendiary
+  - MagazineBoxMagnumIncendiary
+  - MagazineBoxLightRifleIncendiary
+  - MagazineBoxRifleIncendiary
+  - MagazineRifleUranium
+  - MagazineLPistolUranium
+  - MagazinePistolUranium
+  - MagazineDMRUranium
+  - MagazinePistolSubMachineGunUranium
+  - MagazineLightRifleUranium
+  - SpeedLoaderMagnumUranium
+  - MagazineBoxLPistolUranium
+  - MagazineBoxPistolUranium
+  - MagazineBoxMagnumUranium
+  - MagazineBoxLightRifleUranium
+  - MagazineBoxRifleUranium
+  - BoxShotgunUranium

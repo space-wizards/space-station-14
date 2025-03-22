@@ -3,6 +3,9 @@
   id: BeltUtility
 
 - type: Tag
+  id: BlasterCell
+
+- type: Tag
   id: BorgModuleTckTck
 
 - type: Tag

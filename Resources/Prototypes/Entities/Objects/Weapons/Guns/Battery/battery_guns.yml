@@ -283,7 +283,7 @@
 #imp edit end
 
 - type: entity
-  name: laser rifle
+  name: TD-95 Laser Carbine #imp
   parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponLaserCarbine
   description: A laser-based energy rifle with familiar ergonomics and controls to its kinetic counterparts. Favored by Nanotrasen for security forces, as they are cheap and easy to use. #imp
@@ -427,17 +427,17 @@
 #imp edit end
 
 - type: entity
-  name: laser cannon
+  name: OL-71 Laser Rifle #imp
   parent: [BaseWeaponBattery, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponLaserCannon
-  description: A heavy-duty, high-powered laser weapon.
+  description: Modern laser technology purpose-built into a military platform-- as deadly as it is precise. #imp
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_cannon.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-unshaded-3
+    - state: mag-unshaded-4 #imp
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: MagazineVisuals
@@ -448,12 +448,15 @@
   - type: Clothing
     sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_cannon.rsi #imp
   - type: Gun
-    fireRate: 1.5
+    fireRate: 4.5 #imp
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/lasermil.ogg #imp
   - type: HitscanBatteryAmmoProvider
     proto: RedHeavyLaser
-    fireCost: 100
+    fireCost: 40 #imp
+  - type: Battery #imp
+    maxCharge: 1200 #imp
+    startingCharge: 1200 #imp
 #imp edit begin; weapon melee
   - type: MeleeWeapon
     attackRate: 0.4 #slower, but hits harder; bigger object to shove with
@@ -753,7 +756,7 @@
     # not putting a BlockMovement component here cause that's funny.
 
 - type: entity
-  name: advanced laser pistol
+  name: X-66 Advanced Laser Pistol #imp
   parent: [ BaseWeaponBatterySmall, BaseSecurityContraband]
   id: WeaponAdvancedLaser
   description: An experimental high-energy laser pistol with a self-charging nuclear battery.
@@ -877,7 +880,7 @@
     price: 750
 
 - type: entity
-  name: energy shotgun
+  name: M-1 Energy Shotgun #imp
   parent: [BaseWeaponBattery, BaseGunWieldable, BaseGrandTheftContraband]
   id: WeaponEnergyShotgun
   description: A one-of-a-kind prototype energy weapon that uses various shotgun configurations. It offers the possibility of both lethal and non-lethal shots, making it a versatile weapon.
@@ -900,7 +903,7 @@
   - type: Gun
     fireRate: 2
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/eshotgun.ogg #imp
   - type: ProjectileBatteryAmmoProvider
     proto: BulletLaserSpread
     fireCost: 150

@@ -32,12 +32,16 @@
   - MagazineDMRUranium
   - MagazineLPistolIncendiary
   - MagazineLPistolUranium
+  - PowerCellBlaster
 
 - type: latheRecipePack
   id: SecurityWeaponsImp
   recipes:
   - FullAutoConversionKit
   - HyperBurstConversionKit
+  - WeaponBlasterPistol
+  - WeaponBlasterCannon
+  - WeaponBlasterMagnum
 
 - type: latheRecipePack
   id: SecurityDisablersImp
