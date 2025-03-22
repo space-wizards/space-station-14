@@ -4271,4 +4271,11 @@ Entries:
   id: 591
   time: '2025-03-21T15:04:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/417
+- author: walksanatora
+  changes:
+  - message: Changelings can now get a fake mindshield for 2 evolution points.
+    type: Add
+  id: 592
+  time: '2025-03-22T08:42:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/415
 
