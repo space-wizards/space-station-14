@@ -181,7 +181,12 @@ public sealed class ItemGridPiece : Control, IEntityControl
 
             handle.SetTransform(pos, iconRotation);
             var box = new UIBox2(root, root + sprite.Size * scale);
-            handle.DrawTextureRect(sprite, box);
+
+            if (_entityManager.TryGetComponent<SpriteComponent>(Entity, out var spriteComp))
+                handle.DrawTextureRect(sprite, box, spriteComp.Color);
+            else
+                handle.DrawTextureRect(sprite, box);
+
             handle.SetTransform(GlobalPixelPosition, Angle.Zero);
         }
         else
