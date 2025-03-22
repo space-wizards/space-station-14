@@ -343,6 +343,13 @@ public abstract class BaseOptionCVar<TValue> : BaseOption
     {
         _cfg = cfg;
         _cVar = cVar;
+        _cfg.OnValueChanged(cVar, CVarChanged);
+    }
+
+    protected void CVarChanged(TValue value)
+    {
+        if (!IsValueEqual(Value, value))
+            Value = value;
     }
 
     public override void LoadValue()
