@@ -6,7 +6,6 @@ using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Input;
 using Robust.Client.UserInterface.Controllers;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
 using static Robust.Client.UserInterface.Controls.BaseButton;
