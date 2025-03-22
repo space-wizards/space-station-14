@@ -901,6 +901,7 @@
   description: Used to order supplies and approve requests.
   components:
   - type: Sprite
+    sprite: _Impstation/Structures/Machines/computers.rsi #Imp
     layers:
     - map: ["computerLayerBody"]
       state: computer
@@ -953,6 +954,7 @@
   description: Used to manage currently active bounties.
   components:
   - type: Sprite
+    sprite: _Impstation/Structures/Machines/computers.rsi #Imp
     layers:
     - map: ["computerLayerBody"]
       state: computer
