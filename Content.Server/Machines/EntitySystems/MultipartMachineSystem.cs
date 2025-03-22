@@ -42,6 +42,41 @@ public sealed class MultipartMachineSystem : EntitySystem
     }
 
     /// <summary>
+    /// Clears the matched entity from the specified part
+    /// </summary>
+    /// <param name="ent">Entity to clear the part for</param>
+    /// <param name="partName">Name of the part to clear</param>
+    public void ClearPartEntity(Entity<MultipartMachineComponent?> ent, string partName)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        if (ent.Comp.Parts.TryGetValue(partName, out var value))
+        {
+            value.Entity = null;
+        }
+    }
+
+    /// <summary>
+    /// Returns whether each part of the machine has a matched entity
+    /// </summary>
+    /// <param name="ent">Entity to check the assembled state of</param>
+    /// <returns>True if all parts have a match entity, false otherise</returns>
+    public bool Assembled(Entity<MultipartMachineComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        foreach (var part in ent.Comp.Parts.Values)
+        {
+            if (!part.Entity.HasValue)
+                return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
     /// Convenience method for getting a specific part of the machine by name.
     /// </summary>
     /// <param name="ent">Entity, which might have a multipart machine attached, to use for the query</param>
@@ -67,7 +102,9 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// <param name="partName">Name of the part to find, must match the name specified in YAML</param>
     /// <param name="entity">Out var which may contain the matched EntityUid for the specified part</param>
     /// <returns>True if the part is found and has an matched entity, false otherwise</returns>
-    public bool TryGetPartEntity(Entity<MultipartMachineComponent?> ent, string partName, [NotNullWhen(true)] out EntityUid? entity)
+    public bool TryGetPartEntity(Entity<MultipartMachineComponent?> ent,
+        string partName,
+        [NotNullWhen(true)] out EntityUid? entity)
     {
         entity = null;
         if (!Resolve(ent, ref ent.Comp))

@@ -17,17 +17,23 @@ public sealed partial class ParticleAcceleratorSystem
         SubscribeLocalEvent<ParticleAcceleratorPartComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
     }
 
-    public bool ValidateEmitter(string name,
+    public void ValidateEmitter(string name,
         ParticleAcceleratorEmitterType type,
         Entity<MultipartMachineComponent> machine)
     {
         var emitterEnt = _multipartMachine.GetPartEntity(machine.AsNullable(), name);
         if (!TryComp<ParticleAcceleratorEmitterComponent>(emitterEnt, out var partState))
         {
-            return false;
+            return;
         }
 
-        return partState.Type == type;
+        if (partState.Type != type)
+        {
+            _multipartMachine.ClearPartEntity(machine.AsNullable(), name);
+            return;
+        }
+
+        return;
     }
 
     public void RescanParts(EntityUid uid, EntityUid? user = null, ParticleAcceleratorControlBoxComponent? controller = null)
@@ -52,9 +58,11 @@ public sealed partial class ParticleAcceleratorSystem
         }
 
         // Determine if the proper emitters are in the proper spots
-        if (!ValidateEmitter("PortEmitter", ParticleAcceleratorEmitterType.Port, machine) ||
-            !ValidateEmitter("ForeEmitter", ParticleAcceleratorEmitterType.Fore, machine) ||
-            !ValidateEmitter("StarboardEmitter", ParticleAcceleratorEmitterType.Starboard, machine))
+        ValidateEmitter("PortEmitter", ParticleAcceleratorEmitterType.Port, machine);
+        ValidateEmitter("ForeEmitter", ParticleAcceleratorEmitterType.Fore, machine);
+        ValidateEmitter("StarboardEmitter", ParticleAcceleratorEmitterType.Starboard, machine);
+
+        if (!_multipartMachine.Assembled(machine.AsNullable()))
         {
             // One or more of the emitters are in the incorrect places
             SwitchOff(uid, user, controller);
