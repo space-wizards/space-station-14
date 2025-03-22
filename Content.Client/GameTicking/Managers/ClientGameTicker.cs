@@ -108,8 +108,6 @@ namespace Content.Client.GameTicking.Managers
 
         private void JoinLobby(TickerJoinLobbyEvent message)
         {
-            _userInterfaceManager.GetUIController<RoundEndSummaryUIController>().ResetSummaryButton();
-
             _stateManager.RequestStateChange<LobbyState>();
         }
 

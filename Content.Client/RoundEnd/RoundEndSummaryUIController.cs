@@ -21,12 +21,10 @@ public sealed class RoundEndSummaryUIController : UIController,
 
     private MenuButton? SummaryButton;
 
-    public void UnloadButton()
+    public void UnloadButton(MenuButton summaryButton)
     {
-        if (SummaryButton == null)
-            return;
-
-        SummaryButton.OnPressed -= SummaryButtonPressed;
+        summaryButton.Visible = false;
+        summaryButton.OnPressed -= SummaryButtonPressed;
     }
 
     public void LoadButton(MenuButton summaryButton)
@@ -40,12 +38,12 @@ public sealed class RoundEndSummaryUIController : UIController,
         SummaryButton?.SetClickPressed(true);
     }
 
-    public void OnWindowClosed()
+    private void OnWindowClosed()
     {
         SummaryButton?.SetClickPressed(false);
     }
 
-    public void SummaryButtonPressed(ButtonEventArgs args)
+    private void SummaryButtonPressed(ButtonEventArgs args)
     {
         ToggleScoreboardWindow();
     }
@@ -64,12 +62,6 @@ public sealed class RoundEndSummaryUIController : UIController,
             _window.OpenCenteredRight();
             _window.MoveToFront();
         }
-    }
-
-    public void ResetSummaryButton()
-    {
-        if (SummaryButton != null)
-            SummaryButton.Visible = false;
     }
 
     public void OpenRoundEndSummaryWindow(RoundEndMessageEvent message)

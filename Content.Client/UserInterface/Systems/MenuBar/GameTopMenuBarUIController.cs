@@ -50,7 +50,11 @@ public sealed class GameTopMenuBarUIController : UIController
         _action.UnloadButton();
         _sandbox.UnloadButton();
         _emotes.UnloadButton();
-        _summary.UnloadButton();
+
+        if (GameTopMenuBar == null)
+            return;
+
+        _summary.UnloadButton(GameTopMenuBar.SummaryButton);
     }
 
     public void LoadButtons()
