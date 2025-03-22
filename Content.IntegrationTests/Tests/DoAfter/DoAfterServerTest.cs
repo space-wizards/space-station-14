@@ -64,17 +64,16 @@ namespace Content.IntegrationTests.Tests.DoAfter
             var server = pair.Server;
             await server.WaitIdleAsync();
 
-            var entityManager = server.ResolveDependency<IEntityManager>();
+            var entityManager = server.EntMan;
             var timing = server.ResolveDependency<IGameTiming>();
-            var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<SharedDoAfterSystem>();
+            var doAfterSystem = entityManager.System<SharedDoAfterSystem>();
             var ev = new TestDoAfterEvent();
 
             // That it finishes successfully
             await server.WaitPost(() =>
             {
-                var tickTime = 1.0f / timing.TickRate;
                 var mob = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
-                var args = new DoAfterArgs(entityManager, mob, tickTime / 2, ev, null) { Broadcast = true };
+                var args = new DoAfterArgs(entityManager, mob, timing.TickPeriod / 2, ev, null) { Broadcast = true };
 #pragma warning disable NUnit2045 // Interdependent assertions.
                 Assert.That(doAfterSystem.TryStartDoAfter(args));
                 Assert.That(ev.Cancelled, Is.False);
@@ -92,23 +91,17 @@ namespace Content.IntegrationTests.Tests.DoAfter
         {
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
-            var entityManager = server.ResolveDependency<IEntityManager>();
+            var entityManager = server.EntMan;
             var timing = server.ResolveDependency<IGameTiming>();
-            var doAfterSystem = entityManager.EntitySysManager.GetEntitySystem<SharedDoAfterSystem>();
+            var doAfterSystem = entityManager.System<SharedDoAfterSystem>();
             var ev = new TestDoAfterEvent();
 
             await server.WaitPost(() =>
             {
-                var tickTime = 1.0f / timing.TickRate;
-
                 var mob = entityManager.SpawnEntity("DoAfterDummy", MapCoordinates.Nullspace);
-                var args = new DoAfterArgs(entityManager, mob, tickTime * 2, ev, null) { Broadcast = true };
+                var args = new DoAfterArgs(entityManager, mob, timing.TickPeriod * 2, ev, null) { Broadcast = true };
 
-                if (!doAfterSystem.TryStartDoAfter(args, out var id))
-                {
-                    Assert.Fail();
-                    return;
-                }
+                Assert.That(doAfterSystem.TryStartDoAfter(args, out var id));
 
                 Assert.That(!ev.Cancelled);
                 doAfterSystem.Cancel(id);
