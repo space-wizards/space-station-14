@@ -10,6 +10,9 @@
     size: Huge
     shape:
     - 0,0,4,3
+  - type: SpeedModifiedOnWield
+    walkModifier: 0.85
+    sprintModifier: 0.85
   - type: Clothing
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     quickEquip: false
@@ -18,13 +21,11 @@
     - suitStorage
   - type: Wieldable
     unwieldOnUse: false
-  - type: GunWieldBonus
-    minAngle: -20
-    maxAngle: -20
+  - type: GunRequiresWield # one-handed LMG would fly away and take your wrist with you
   - type: Gun
-    minAngle: 24
-    maxAngle: 45
-    angleIncrease: 4
+    minAngle: 4
+    maxAngle: 20
+    angleIncrease: 2.5
     angleDecay: 16
     fireRate: 8
     selectedMode: FullAuto
@@ -88,12 +89,16 @@
   name: L6C ROW
   id: WeaponLightMachineGunL6C
   parent: BaseItem
-  description: A L6 SAW for use by cyborgs. Creates .30 rifle ammo on the fly from an internal ammo fabricator, which slowly self-charges.
+  description: A L6 SAW for use by borgs. Creates .30 rifle ammo on the fly from a self-charging ammo fabricator.
   components:
+    - type: ClothingSpeedModifier
+      walkModifier: 0.85
+      sprintModifier: 0.85
+    - type: HeldSpeedModifier
     - type: Gun
       minAngle: 4
-      maxAngle: 25
-      angleIncrease: 4
+      maxAngle: 20
+      angleIncrease: 2.5
       angleDecay: 16
       fireRate: 8
       selectedMode: FullAuto
