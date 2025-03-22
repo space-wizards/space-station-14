@@ -133,6 +133,16 @@
     path: /Audio/Magic/Cults/ClockCult/steam_whoosh.ogg
 
 - type: reaction
+  id: ChangelingSting
+  reactants:
+    LemonLime:
+      amount: 2
+    ScrewdriverCocktail:
+      amount: 1
+  products:
+    ChangelingSting: 3
+
+- type: reaction
   id: BahamaMama
   requiredMixerCategories:
   - Shake
