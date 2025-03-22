@@ -61,8 +61,8 @@ public sealed class EmagSystem : EntitySystem
         if (_tag.HasTag(target, ent.Comp.EmagImmuneTag))
             return false;
 
-        TryComp<LimitedChargesComponent>(ent, out var charges);
-        if (_charges.IsEmpty(ent, charges))
+        Entity<LimitedChargesComponent?> chargesEnt = ent.Owner;
+        if (_charges.IsEmpty(chargesEnt))
         {
             _popup.PopupClient(Loc.GetString("emag-no-charges"), user, user);
             return false;
@@ -80,8 +80,8 @@ public sealed class EmagSystem : EntitySystem
 
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target} with flag(s): {ent.Comp.EmagType}");
 
-        if (charges != null  && emaggedEvent.Handled)
-            _charges.UseCharge(ent, charges);
+        if (emaggedEvent.Handled)
+            _charges.TryUseCharge(chargesEnt);
 
         if (!emaggedEvent.Repeatable)
         {
