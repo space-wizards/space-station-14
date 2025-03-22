@@ -15,6 +15,7 @@
     antag: true
     antagPrototype: GenericAntagonist
     roleType: SoloAntagonist
+    sortWeight: 50
 
 #Observer
 - type: entity
@@ -23,6 +24,8 @@
   name: Observer Role
   components:
   - type: ObserverRole
+  - type: MindRole
+    sortWeight: -10
 
 #Ghost Roles
 - type: entity
@@ -48,6 +51,7 @@
   - type: MindRole
     roleType: FreeAgent
     antagPrototype: GenericFreeAgent
+    sortWeight: 30
 
 - type: entity
   parent: MindRoleGhostRoleNeutral
@@ -56,6 +60,7 @@
   components:
   - type: MindRole
     roleType: FreeAgent
+    sortWeight: 0 # Maybe 10?
 
 - type: entity
   parent: MindRoleGhostRoleNeutral
@@ -73,6 +78,7 @@
   - type: MindRole
     roleType: SiliconAntagonist
     antagPrototype: GenericSiliconAntagonist
+    sortWeight: 30
 
 - type: entity
   parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
@@ -94,6 +100,9 @@
   parent: MindRoleGhostRoleTeamAntagonist
   id: MindRoleGhostRoleTeamAntagonistFlock
   name: Ghost Role (Team Antagonist)
+  components:
+  - type: MindRole
+    sortWeight: 40
 
 # The Job MindRole holds the mob's Job prototype
 - type: entity

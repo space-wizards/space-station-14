@@ -12,6 +12,7 @@ public sealed record PlayerInfo(
     string StartingJob,
     bool Antag,
     RoleTypePrototype RoleProto,
+    int SortWeight,
     NetEntity? NetEntity,
     NetUserId SessionId,
     bool Connected,

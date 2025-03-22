@@ -211,20 +211,30 @@ public abstract class SharedRoleSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    ///     Return the most recently specified role type, or Neutral
+    /// </summary>
     private ProtoId<RoleTypePrototype> GetRoleTypeByTime(MindComponent mind)
     {
-        // If any Mind Roles specify a Role Type, return the most recent. Otherwise return Neutral
+        var role = GetRoleCompByTime(mind);
+        return role?.Comp?.RoleType ?? "Neutral";
+    }
 
-        var roles = new List<ProtoId<RoleTypePrototype>>();
+    /// <summary>
+    ///     Return the most recently specified role type's mind role entity, or null
+    /// </summary>
+    public Entity<MindRoleComponent>? GetRoleCompByTime(MindComponent mind)
+    {
+        var roles = new List<Entity<MindRoleComponent>>();
 
         foreach (var role in mind.MindRoles)
         {
             var comp = Comp<MindRoleComponent>(role);
             if (comp.RoleType is not null)
-                roles.Add(comp.RoleType.Value);
+                roles.Add((role, comp));
         }
 
-        ProtoId<RoleTypePrototype> result = (roles.Count > 0) ? roles.LastOrDefault() : "Neutral";
+        Entity<MindRoleComponent>? result = roles.Count > 0 ? roles.LastOrDefault() : null;
         return (result);
     }
 
