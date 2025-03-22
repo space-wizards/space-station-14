@@ -132,7 +132,6 @@
         Piercing: 5
     # I love this
 
-
 - type: entity
   abstract: true
   id: BaseDiceLoaded
@@ -143,7 +142,6 @@
     interfaces:
       enum.LoadedDiceUiKey.Key:
         type: LoadedDiceBoundUserInterface
-
 
 - type: entity
   parent: [PercentileDie, BaseDiceLoaded]

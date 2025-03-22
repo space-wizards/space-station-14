@@ -19,6 +19,7 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
 
     public override void Initialize()
     {
@@ -28,10 +29,18 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
         SubscribeLocalEvent<LoadedDiceComponent, LoadedDiceSideSelectedMessage>(OnSelected);
     }
 
+    // TODO REMOVE
+    private ISawmill _sawmill = default!;
+
     private void OnVerb(EntityUid uid, LoadedDiceComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (!_container.TryGetContainingContainer((uid, null, null), out var container))
             return;
+
+        _sawmill = _logManager.GetSawmill("cfg");
+
+        _sawmill.Error($"OnVerb wit container {container}");
+        _sawmill.Error($"OnVerb wit container owner {ToPrettyString(container.Owner)}");
 
         // TODO: Check it's in hand of args.User
 
@@ -44,7 +53,6 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
             Act = () => TryOpenUi(uid, args.User, component)
         });
-
     }
 
     private void OnAlternativeVerb(EntityUid uid, LoadedDiceComponent component, GetVerbsEvent<AlternativeVerb> args)
