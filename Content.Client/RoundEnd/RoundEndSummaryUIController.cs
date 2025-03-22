@@ -1,5 +1,4 @@
 using Content.Client.GameTicking.Managers;
-using Content.Client.UserInterface.Controls;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
 using JetBrains.Annotations;
@@ -7,7 +6,6 @@ using Robust.Client.Input;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Player;
-using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.RoundEnd;
 
