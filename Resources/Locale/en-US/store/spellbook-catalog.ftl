@@ -47,6 +47,9 @@ spellbook-slip-desc = Learn the ancient ways of the Janitor and curse your targe
 spellbook-item-recall-name = Item Recall
 spellbook-item-recall-description = Mark a held item and summon it back at any time with just a snap of your fingers!
 
+spellbook-item-emp-name = Magnetic blast
+spellbook-item-emp-description = Disables nearby electronic equipment!
+
 # Equipment
 
 spellbook-wand-polymorph-door-name = Wand of Entrance
