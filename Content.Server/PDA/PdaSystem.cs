@@ -17,6 +17,7 @@ using Content.Shared.Light;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.PDA;
+using Content.Shared.PDA.Ringer;
 using Content.Shared.Store.Components;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
@@ -170,7 +171,7 @@ namespace Content.Server.PDA
         /// <summary>
         /// Send new UI state to clients, call if you modify something like uplink.
         /// </summary>
-        public void UpdatePdaUi(EntityUid uid, PdaComponent? pda = null)
+        public override void UpdatePdaUi(EntityUid uid, PdaComponent? pda = null)
         {
             if (!Resolve(uid, ref pda, false))
                 return;
@@ -247,7 +248,7 @@ namespace Content.Server.PDA
                 return;
 
             if (HasComp<RingerComponent>(uid))
-                _ringer.ToggleRingerUI(uid, msg.Actor);
+                _ringer.TryToggleRingerUi(uid, msg.Actor);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaShowMusicMessage msg)
@@ -276,7 +277,7 @@ namespace Content.Server.PDA
 
             if (TryComp<RingerUplinkComponent>(uid, out var uplink))
             {
-                _ringer.LockUplink(uid, uplink);
+                _ringer.LockUplink((uid, uplink));
                 UpdatePdaUi(uid, pda);
             }
         }
