@@ -1,150 +1,7 @@
 - type: reagent
-  id: Oxygen
-  name: reagent-name-oxygen
-  desc: reagent-desc-oxygen
-  physicalDesc: reagent-physical-desc-gaseous
-  flavor: bitter
-  color: "#c4f5ff"
-  boilingPoint: -183.0
-  meltingPoint: -218.4
-  metabolisms:
-    Gas:
-      effects:
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Human
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Animal
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Rat
-      - !type:Oxygenate
-        conditions:
-        - !type:OrganType
-          type: Plant
-      # Convert Oxygen into CO2.
-      - !type:ModifyLungGas
-        conditions:
-        - !type:OrganType
-          type: Vox
-          shouldHave: false
-        ratios:
-          CarbonDioxide: 1.0
-          Oxygen: -1.0
-      - !type:HealthChange
-        conditions:
-        - !type:OrganType
-          type: Vox
-        scaleByQuantity: true
-        ignoreResistances: true
-        damage:
-          types:
-            Poison:
-              7
-      - !type:AdjustAlert
-        alertType: Toxins
-        conditions:
-          - !type:ReagentThreshold
-            min: 0.5
-          - !type:OrganType
-            type: Vox
-        clear: true
-        time: 5
-
-- type: reagent
-  id: Plasma
-  name: reagent-name-plasma
-  desc: reagent-desc-plasma
-  physicalDesc: reagent-physical-desc-gaseous
-  flavor: bitter
-  color: "#7e009e"
-  recognizable: true
-  boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
-  meltingPoint: -186.4
-  tileReactions:
-  - !type:FlammableTileReaction
-    temperatureMultiplier: 1.5
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 3
-      - !type:AdjustReagent
-        reagent: Inaprovaline
-        amount: -2.0
-    Gas:
-      effects:
-      - !type:HealthChange
-        scaleByQuantity: true
-        ignoreResistances: true
-        damage:
-          types:
-            Poison:
-              1
-      # We need a metabolism effect on reagent removal
-      - !type:AdjustAlert
-        alertType: Toxins
-        conditions:
-          - !type:ReagentThreshold
-            min: 1.5
-        clear: True
-        time: 5
-  reactiveEffects:
-    Flammable:
-      methods: [ Touch ]
-      effects:
-      - !type:FlammableReaction
-
-- type: reagent
-  id: Tritium
-  name: reagent-name-tritium
-  desc: reagent-desc-tritium
-  physicalDesc: reagent-physical-desc-ionizing
-  flavor: bitter
-  color: "#66ff33"
-  tileReactions:
-  - !type:FlammableTileReaction
-    temperatureMultiplier: 2.0
-  reactiveEffects:
-    Flammable:
-      methods: [ Touch ]
-      effects:
-      - !type:FlammableReaction
-        multiplier: 0.8
-  metabolisms:
-    Poison:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Radiation: 3
-    Gas:
-      effects:
-      - !type:HealthChange
-        scaleByQuantity: true
-        ignoreResistances: true
-        damage:
-          types:
-            Radiation:
-              1
-      # We need a metabolism effect on reagent removal
-      - !type:AdjustAlert
-        alertType: Toxins
-        conditions:
-          - !type:ReagentThreshold
-            min: 1.5
-        clear: True
-        time: 5
-
-- type: reagent
   id: CarbonDioxide
   name: reagent-name-carbon-dioxide
+  group: Toxins
   desc: reagent-desc-carbon-dioxide
   physicalDesc: reagent-physical-desc-odorless
   flavor: bitter
@@ -172,8 +29,7 @@
         ignoreResistances: true
         damage:
           types:
-            Poison:
-              0.8
+            Poison: 0.8
       - !type:Oxygenate # carbon dioxide displaces oxygen from the bloodstream, causing asphyxiation
         conditions:
         - !type:OrganType
@@ -185,8 +41,66 @@
       #  alertType: CarbonDioxide
 
 - type: reagent
+  id: Frezon
+  name: reagent-name-frezon
+  group: Narcotics # Also a toxin
+  desc: reagent-desc-frezon
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#3a758c"
+  boilingPoint: -195.8
+  meltingPoint: -210.0
+  metabolisms:
+    Gas:
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Frezon
+          min: 0.5
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Cellular: 0.5
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Frezon
+          min: 1
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 500
+        refresh: false
+      - !type:Drunk
+        boozePower: 500
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Frezon
+          min: 1
+      - !type:PopupMessage
+        type: Local
+        messages: [ "frezon-lungs-cold" ]
+        probability: 0.1
+        conditions:
+          - !type:ReagentThreshold
+            reagent: Frezon
+            min: 0.5
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages: [ "frezon-euphoric" ]
+        probability: 0.1
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Frezon
+          min: 1
+
+- type: reagent
   id: Nitrogen
   name: reagent-name-nitrogen
+  group: Elements # Shouldn't really need to be said, but liquid nitrogen is a Toxin
   desc: reagent-desc-nitrogen
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
@@ -229,6 +143,7 @@
 - type: reagent
   id: NitrousOxide
   name: reagent-name-nitrous-oxide
+  group: Narcotics # Also a mild toxin. Has no effects on Slime People
   desc: reagent-desc-nitrous-oxide
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
@@ -308,57 +223,145 @@
             Poison: 0.25
 
 - type: reagent
-  id: Frezon
-  name: reagent-name-frezon
-  desc: reagent-desc-frezon
+  id: Oxygen
+  name: reagent-name-oxygen
+  group: Elements # Also a very powerful Toxin to Vox
+  desc: reagent-desc-oxygen
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
-  color: "#3a758c"
-  boilingPoint: -195.8
-  meltingPoint: -210.0
+  color: "#c4f5ff"
+  boilingPoint: -183.0
+  meltingPoint: -218.4
   metabolisms:
     Gas:
       effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Human
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Animal
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Rat
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Plant
+      # Convert Oxygen into CO2.
+      - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
+        ratios:
+          CarbonDioxide: 1.0
+          Oxygen: -1.0
       - !type:HealthChange
         conditions:
-        - !type:ReagentThreshold
-          reagent: Frezon
-          min: 0.5
+        - !type:OrganType
+          type: Vox
         scaleByQuantity: true
         ignoreResistances: true
         damage:
           types:
-            Cellular: 0.5
-      - !type:GenericStatusEffect
+            Poison: 7
+      - !type:AdjustAlert
+        alertType: Toxins
         conditions:
         - !type:ReagentThreshold
-          reagent: Frezon
-          min: 1
-        key: SeeingRainbows
-        component: SeeingRainbows
-        type: Add
-        time: 500
-        refresh: false
-      - !type:Drunk
-        boozePower: 500
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Frezon
-          min: 1
-      - !type:PopupMessage
-        type: Local
-        messages: [ "frezon-lungs-cold" ]
-        probability: 0.1
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Frezon
           min: 0.5
-      - !type:PopupMessage
-        type: Local
-        visualType: Medium
-        messages: [ "frezon-euphoric" ]
-        probability: 0.1
+        - !type:OrganType
+          type: Vox
+        clear: true
+        time: 5
+
+- type: reagent
+  id: Plasma
+  name: reagent-name-plasma
+  group: Pyrotechnic # Also a Toxin
+  desc: reagent-desc-plasma
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#7e009e"
+  recognizable: true
+  boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
+  meltingPoint: -186.4
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 1.5
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 3
+      - !type:AdjustReagent
+        reagent: Inaprovaline
+        amount: -2.0
+    Gas:
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 1
+      # We need a metabolism effect on reagent removal
+      - !type:AdjustAlert
+        alertType: Toxins
         conditions:
         - !type:ReagentThreshold
-          reagent: Frezon
-          min: 1
+          min: 1.5
+        clear: True
+        time: 5
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+
+- type: reagent
+  id: Tritium
+  name: reagent-name-tritium
+  group: Pyrotechnic # Also a Toxin
+  desc: reagent-desc-tritium
+  physicalDesc: reagent-physical-desc-ionizing
+  flavor: bitter
+  color: "#66ff33"
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 2.0
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 0.8
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Radiation: 3
+    Gas:
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: true
+        damage:
+          types:
+            Radiation: 1
+      # We need a metabolism effect on reagent removal
+      - !type:AdjustAlert
+        alertType: Toxins
+        conditions:
+        - !type:ReagentThreshold
+          min: 1.5
+        clear: True
+        time: 5
