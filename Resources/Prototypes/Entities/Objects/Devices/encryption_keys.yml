@@ -10,6 +10,9 @@
     sprite: Objects/Devices/encryption_keys.rsi
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
+  - type: Tag
+    tags:
+    - EncryptionKey
 
 - type: entity
   parent: EncryptionKey
@@ -25,6 +28,10 @@
     layers:
     - state: crypt_gray
     - state: common_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionCommon
 
 - type: entity
   parent: [ EncryptionKey, BaseCargoContraband ]
@@ -40,6 +47,10 @@
     layers:
     - state: crypt_gray
     - state: cargo_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionCargo
 
 - type: entity
   parent: [ EncryptionKey, BaseCentcommContraband ]
@@ -55,6 +66,10 @@
     layers:
     - state: crypt_blue
     - state: nano_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionElse
 
 - type: entity
   parent: [ EncryptionKey, BaseCentcommCommandContraband ]
@@ -77,6 +92,10 @@
     layers:
     - state: crypt_gold
     - state: cap_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionElse
 
 - type: entity
   parent: [ EncryptionKey, BaseCommandContraband ]
@@ -92,6 +111,10 @@
     layers:
     - state: crypt_silver
     - state: com_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionCommand
 
 - type: entity
   parent: [ EncryptionKey, BaseEngineeringContraband ]
@@ -107,6 +130,10 @@
     layers:
     - state: crypt_gray
     - state: eng_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionEngineering
 
 - type: entity
   parent: [ EncryptionKey, BaseMedicalContraband ]
@@ -122,6 +149,10 @@
     layers:
     - state: crypt_gray
     - state: med_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionMedical
 
 - type: entity
   parent: [ EncryptionKey, BaseMedicalScienceContraband ]
@@ -138,6 +169,10 @@
     layers:
     - state: crypt_gray
     - state: medsci_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionElse
 
 - type: entity
   parent: [ EncryptionKey, BaseScienceContraband ]
@@ -153,6 +188,10 @@
     layers:
     - state: crypt_gray
     - state: sci_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionScience
 
 - type: entity
   parent: [ EncryptionKey, BaseScienceContraband ]
@@ -168,6 +207,10 @@
     layers:
     - state: crypt_gray
     - state: robotics_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionElse
 
 - type: entity
   parent: [ EncryptionKey, BaseSecurityLawyerContraband ]
@@ -183,6 +226,10 @@
     layers:
     - state: crypt_gray
     - state: sec_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionSecurity
 
 - type: entity
   parent: [ EncryptionKey, BaseCivilianContraband ]
@@ -198,6 +245,10 @@
     layers:
     - state: crypt_gray
     - state: service_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionService
 
 - type: entity
   parent: [ EncryptionKey, BaseSyndicateContraband ]
@@ -213,6 +264,10 @@
     layers:
     - state: crypt_red
     - state: synd_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionElse
 
 - type: entity
   parent: [ EncryptionKey, BaseSiliconScienceContraband ]
@@ -228,6 +283,10 @@
     layers:
     - state: crypt_silver
     - state: ai_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionElse
 
 - type: entity
   parent: [ EncryptionKey, BaseSyndicateContraband ]
@@ -243,6 +302,10 @@
     layers:
     - state: crypt_red
     - state: ai_label
+  - type: Tag
+    tags:
+    - EncryptionKey
+    - EncryptionElse
 
 - type: entity
   parent: EncryptionKey
@@ -258,3 +321,7 @@
       layers:
         - state: crypt_rusted
         - state: pirate_label
+    - type: Tag
+      tags:
+      - EncryptionKey
+      - EncryptionElse
