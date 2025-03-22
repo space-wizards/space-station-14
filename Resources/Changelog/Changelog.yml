@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AndrewMontagne
-  changes:
-  - message: APEs could be powered on without local power
-    type: Fix
-  id: 7603
-  time: '2024-11-11T22:58:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32493
 - author: thetolbean
   changes:
   - message: Droppers can no longer inject or draw from closed containers.
@@ -3881,3 +3874,10 @@
   id: 8102
   time: '2025-03-22T11:41:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36004
+- author: Boaz1111
+  changes:
+  - message: Unrevivable now lets you be cloned again
+    type: Tweak
+  id: 8103
+  time: '2025-03-22T14:42:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36008
