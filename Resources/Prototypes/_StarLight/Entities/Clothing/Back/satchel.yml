@@ -16,13 +16,3 @@
   - type: Sprite
     sprite: _Starlight/Clothing/Back/Satchels/blueshield.rsi
 
-
-    
-- type: entity
-  parent: [ClothingBackpackSatchel, BaseCommandContraband]
-  id: ClothingBackpackSatchelNtrepresentative
-  name: Nanotrasen Reps satchel
-  description: An exclusive satchel for Nanotrasen reps; smells like gold.
-  components:
-  - type: Sprite
-    sprite: _Starlight/Clothing/Back/Satchels/ntrep.rsi
