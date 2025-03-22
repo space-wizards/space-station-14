@@ -2,8 +2,8 @@
   id: BoozeDispenser
   name: booze dispenser
   suffix: Filled
-  description: A booze dispenser with a single slot for a container to be filled.
   parent: ReagentDispenserBase
+  description: A booze dispenser with a single slot for a container to be filled.
   components:
   - type: Rotatable
   - type: Sprite
