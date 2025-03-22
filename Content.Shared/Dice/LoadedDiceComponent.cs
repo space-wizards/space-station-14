@@ -8,7 +8,7 @@ namespace Content.Shared.Dice;
 ///     Does nothing unless paired with a <see cref="DiceComponent"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedLoadedDiceSystem))]
-[AutoGenerateComponentState(true)]
+[AutoGenerateComponentState]
 public sealed partial class LoadedDiceComponent : Component
 {
     /// <summary>
