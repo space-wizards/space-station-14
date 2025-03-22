@@ -1883,13 +1883,6 @@ entities:
     - type: Transform
       pos: 11.5,-12.5
       parent: 407
-- proto: PlushieLamp
-  entities:
-  - uid: 330
-    components:
-    - type: Transform
-      pos: -4.4913177,-9.236341
-      parent: 407
 - proto: PortableGeneratorPacman
   entities:
   - uid: 208

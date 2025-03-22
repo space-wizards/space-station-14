@@ -284,16 +284,10 @@
     - id: PlushiePenguin
       prob: 0.01
       orGroup: Plushies
-    - id: PlushieHuman
-      prob: 0.01
-      orGroup: Plushies
     - id: PlushieLizard
       prob: 0.01
       orGroup: Plushies
     - id: PlushieRouny
-      prob: 0.01
-      orGroup: Plushies
-    - id: PlushieLamp
       prob: 0.01
       orGroup: Plushies
     - id: PlushieSharkBlue
