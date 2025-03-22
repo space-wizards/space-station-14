@@ -165,6 +165,7 @@
     containers:
       revolver-ammo: !type:Container
   - type: RevolverAmmoProvider
+    proto: CartridgeMagnum
     capacity: 5
     chambers: [ True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null ]
@@ -177,11 +178,8 @@
   suffix: Empty
   components:
   - type: RevolverAmmoProvider
-    whitelist:
-      tags:
-        - CartridgeMagnum
-        - SpeedLoaderMagnum
     proto: null
     capacity: 5
     chambers: [ True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null ]
+    
