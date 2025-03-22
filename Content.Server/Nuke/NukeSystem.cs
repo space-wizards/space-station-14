@@ -22,6 +22,8 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using static Content.Server.Geofencing.GeofencingSystem;
+
 
 namespace Content.Server.Nuke;
 
@@ -38,12 +40,15 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly ServerGlobalSoundSystem _sound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+
+    private EntityQuery<NukeComponent> _nukeQuery;
 
     /// <summary>
     ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -79,6 +84,9 @@ public sealed class NukeSystem : EntitySystem
 
         // Doafter events
         SubscribeLocalEvent<NukeComponent, NukeDisarmDoAfterEvent>(OnDoAfter);
+
+        // nuke disk events
+        SubscribeLocalEvent<NukeDiskComponent, TryGeofenceAttemptEvent>(OnGeofencing);
     }
 
     private void OnInit(EntityUid uid, NukeComponent component, ComponentInit args)
@@ -644,6 +652,16 @@ public sealed class NukeSystem : EntitySystem
             args.PushMarkup(Loc.GetString("examinable-anchored"));
         else
             args.PushMarkup(Loc.GetString("examinable-unanchored"));
+    }
+
+    private void OnGeofencing(Entity<NukeDiskComponent> ent, ref TryGeofenceAttemptEvent args)
+    {
+        _nukeQuery = GetEntityQuery<NukeComponent>();
+        var outcomp = new NukeComponent();
+        if (_containers.TryFindComponentOnEntityContainerOrParent<NukeComponent>(ent, _nukeQuery, ref outcomp))
+        {
+            args.Cancel();
+        }
     }
 }
 
