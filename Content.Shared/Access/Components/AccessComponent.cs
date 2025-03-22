@@ -57,3 +57,17 @@ public record struct GetAccessTagsEvent(HashSet<ProtoId<AccessLevelPrototype>> T
         Tags.UnionWith(groupPrototype.Tags);
     }
 }
+
+/// <summary>
+/// Event raised on an entity attempting to interact with something that is access restricted.
+/// </summary>
+[ByRefEvent]
+public sealed class AccessAttemptedEvent : CancellableEntityEventArgs
+{
+    public EntityUid? User;
+
+    public AccessAttemptedEvent(EntityUid? user)
+    {
+        User = user;
+    }
+}
