@@ -178,7 +178,8 @@
     rootTask:
       task: HonkbotCompound
   - type: Slippery
-    launchForwardsMultiplier: 2
+    slipData:
+      launchForwardsMultiplier: 2
   - type: Speech
     speechVerb: Cluwne
   - type: StepTrigger
