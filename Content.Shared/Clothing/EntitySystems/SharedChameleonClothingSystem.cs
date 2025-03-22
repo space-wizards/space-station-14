@@ -1,9 +1,12 @@
+using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Contraband;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.Light;
+using Content.Shared.Light.Components;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
@@ -17,6 +20,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ClothingSystem _clothingSystem = default!;
     [Dependency] private readonly ContrabandSystem _contraband = default!;
+    [Dependency] private readonly SharedHandheldLightSystem _handheldLight = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -84,6 +88,30 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             Dirty(uid, appearance);
         }
 
+        // toggleable clothing logic for the chameleon hardsuit
+        if (TryComp(uid, out ToggleableClothingComponent? toggleableClothing) && toggleableClothing?.ClothingUid != null &&
+            proto.TryGetComponent("ToggleableClothing", out ToggleableClothingComponent? toggleableClothingOther))
+        {
+            if (TryComp(toggleableClothing?.ClothingUid, out ChameleonClothingComponent? chamaleonClothingComponent))
+            {
+                UpdateVisuals((EntityUid)toggleableClothing!.ClothingUid!, chamaleonClothingComponent);
+            }
+        }
+
+        RemComp<HandheldLightComponent>(uid);
+        // add handheld lights
+        if (proto.TryGetComponent("HandheldLight", out HandheldLightComponent? handheldLight))
+        {
+            EnsureComp<HandheldLightComponent>(uid, out var current);
+            EnsureComp<AppearanceComponent>(uid, out var currentAppearance);
+            _handheldLight.CopyDetails(uid, handheldLight, current);
+            _handheldLight.UpdateVisuals(uid, current, currentAppearance);
+            Dirty(uid, current);
+
+            if (appearance != null)
+                Dirty(uid, appearance);
+        }
+
         // properly mark contraband
         if (proto.TryGetComponent("Contraband", out ContrabandComponent? contra))
         {
@@ -117,7 +145,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     /// <summary>
     ///     Check if this entity prototype is valid target for chameleon item.
     /// </summary>
-    public bool IsValidTarget(EntityPrototype proto, SlotFlags chameleonSlot = SlotFlags.NONE, string? requiredTag = null)
+    public bool IsValidTarget(EntityPrototype proto, SlotFlags chameleonSlot = SlotFlags.NONE, HashSet<ProtoId<TagPrototype>>? requiredTags = null)
     {
         // check if entity is valid
         if (proto.Abstract || proto.HideSpawnMenu)
@@ -127,7 +155,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         if (!proto.TryGetComponent(out TagComponent? tag, _factory) || !_tag.HasTag(tag, "WhitelistChameleon"))
             return false;
 
-        if (requiredTag != null && !_tag.HasTag(tag, requiredTag))
+        if (requiredTags != null && requiredTags.Any() && requiredTags.All(requiredTag => !_tag.HasTag(tag, requiredTag)))
             return false;
 
         // check if it's valid clothing

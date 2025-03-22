@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using Content.Client.Light.Components;
 using Content.Client.PDA;
+using Content.Client.Toggleable;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
@@ -41,6 +43,28 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void HandleState(EntityUid uid, ChameleonClothingComponent component, ref AfterAutoHandleStateEvent args)
     {
+        if (!string.IsNullOrEmpty(component.Default) &&
+        _proto.TryIndex(component.Default, out EntityPrototype? proto))
+        {
+            RemComp<PointLightComponent>(uid);
+            if (proto.TryGetComponent("PointLight", out PointLightComponent? pointLight))
+            {
+                AddComp(uid, pointLight);
+            }
+
+            RemComp<LightBehaviourComponent>(uid);
+            if (proto.TryGetComponent("LightBehaviour", out LightBehaviourComponent? lightBehaviourComponent))
+            {
+                AddComp(uid, lightBehaviourComponent);
+            }
+
+            RemComp<ToggleableLightVisualsComponent>(uid);
+            if (proto.TryGetComponent("ToggleableLightVisuals", out ToggleableLightVisualsComponent? toggleableLightVisuals))
+            {
+                AddComp(uid, toggleableLightVisuals);
+            }
+        }
+
         UpdateVisuals(uid, component);
     }
 
