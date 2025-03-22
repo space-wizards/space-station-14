@@ -132,17 +132,17 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterHardsuitVoidParamed
-      - id: ClothingOuterCoatParamedicWB
+      - id: ClothingEyesHudMedical
+      - id: ClothingHandsGlovesLatex
       - id: ClothingHeadHatParamedicsoft
+      - id: ClothingHeadsetMedical
+      - id: ClothingMaskSterile
+      - id: ClothingOuterCoatParamedicWB
+      - id: ClothingOuterHardsuitVoidParamed
       - id: ClothingOuterWinterPara
       - id: ClothingUniformJumpsuitParamedic
       - id: ClothingUniformJumpskirtParamedic
-      - id: ClothingEyesHudMedical
-      - id: ClothingHandsGlovesLatex
-      - id: ClothingHeadsetMedical
-      - id: ClothingMaskSterile
+      - id: DefibrillatorCompact
       - id: HandheldGPSBasic
       - id: MedkitFilled
         prob: 0.3
-      - id: DefibrillatorCompact
