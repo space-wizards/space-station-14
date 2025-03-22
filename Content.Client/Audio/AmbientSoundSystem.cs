@@ -15,7 +15,9 @@ using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Shared.Audio.Effects;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Audio.Mixers;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Audio;
 //TODO: This is using a incomplete version of the whole "only play nearest sounds" algo, that breaks down a bit should the ambient sound cap get hit.
@@ -45,9 +47,10 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
 
     private float _cooldown;
     private TimeSpan _targetTime = TimeSpan.Zero;
-    private float _ambienceVolume = 0.0f;
 
+    private static readonly ProtoId<AudioMixerPrototype> Mixer = "Ambience";
     private static AudioParams _params = AudioParams.Default
+        .WithMixer(Mixer)
         .WithVariation(0.01f)
         .WithLoop(true)
         .WithMaxDistance(7f);
@@ -101,7 +104,6 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
         Subs.CVar(_cfg, CCVars.AmbientCooldown, SetCooldown, true);
         Subs.CVar(_cfg, CCVars.MaxAmbientSources, SetAmbientCount, true);
         Subs.CVar(_cfg, CCVars.AmbientRange, SetAmbientRange, true);
-        Subs.CVar(_cfg, CCVars.AmbienceVolume, SetAmbienceGain, true);
         SubscribeLocalEvent<AmbientSoundComponent, ComponentShutdown>(OnShutdown);
     }
 
@@ -116,19 +118,6 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
             _playingCount.Remove(sound.Path);
     }
 
-    private void SetAmbienceGain(float value)
-    {
-        _ambienceVolume = SharedAudioSystem.GainToVolume(value);
-
-        foreach (var (ent, values) in _playingSounds)
-        {
-            if (values.Stream == null)
-                continue;
-
-            var stream = values.Stream;
-            _audio.SetVolume(stream, _params.Volume + ent.Comp.Volume + _ambienceVolume);
-        }
-    }
     private void SetCooldown(float value) => _cooldown = value;
     private void SetAmbientCount(int value) => _maxAmbientCount = value;
     private void SetAmbientRange(float value) => _maxAmbientRange = value;
@@ -300,7 +289,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
                     continue;
 
                 var audioParams = _params
-                    .AddVolume(comp.Volume + _ambienceVolume)
+                    .AddVolume(comp.Volume)
                     // Randomise start so 2 sources don't increase their volume.
                     .WithPlayOffset(_random.NextFloat(0.0f, 100.0f))
                     .WithMaxDistance(comp.Range);
