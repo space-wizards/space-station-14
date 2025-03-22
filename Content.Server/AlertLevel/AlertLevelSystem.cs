@@ -116,6 +116,16 @@ public sealed class AlertLevelSystem : EntitySystem
         return alert.CurrentDelay;
     }
 
+    public string GetDefaultLevel(EntityUid station, AlertLevelComponent? alert = null)
+    {
+        if (!Resolve(station, ref alert)
+            || alert.AlertLevels == null)
+        {
+            return string.Empty;
+        }
+        return alert.AlertLevels.DefaultLevel;
+    }
+
     /// <summary>
     /// Set the alert level based on the station's entity ID.
     /// </summary>
