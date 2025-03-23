@@ -489,6 +489,13 @@
     - type: RandomHumanoidSpawner
       settings: ClownTroupeBanana
 
+- type: entity
+  id: RandomHumanoidKnightErrant
+  name: knight errant ghost role
+  components:
+    - type: RandomHumanoidSpawner
+      settings: KnightErrant
+
 ### Visitors missing equipment for challenges
 
 # Command

@@ -550,6 +550,15 @@
 
 # Misc
 
+- type: randomHumanoidSettings
+  id: KnightErrant
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: job-name-knighterrant
+    - type: Loadout
+      prototypes: [ KnightErrant]
+
 ### Visitors missing equipment for challenges
 # CHALLENGE #
 # these are specifically missing QOL equipment and have settings to make them harder.
