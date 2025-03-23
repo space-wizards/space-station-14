@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Chat;
@@ -135,37 +134,53 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
     {
         var whitelistSystem = EntitySystemManager.GetEntitySystem<EntityWhitelistSystem>();
         var player = _playerManager.LocalSession?.AttachedEntity;
-        var models = emotePrototypes.GroupBy(x => x.Category)
-                                    .Where(x => x.Key != EmoteCategory.Invalid)
-                                    .Select(categoryGroup =>
-                                    {
-                                        var nestedEmotes = categoryGroup.Where(emote =>
-                                        {
-                                            // only valid emotes that have ways to be triggered by chat and player have access / no restriction on
-                                            if (emote.Category == EmoteCategory.Invalid
-                                                || emote.ChatTriggers.Count == 0
-                                                || !(player.HasValue && whitelistSystem.IsWhitelistPassOrNull(emote.Whitelist, player.Value))
-                                                || whitelistSystem.IsBlacklistPass(emote.Blacklist, player.Value))
-                                                return false;
 
-                                            // emotes that are available by default, and requires speech and player can speak, or it doesn't require speech
-                                            return emote.Available
-                                                   || !EntityManager.TryGetComponent<SpeechComponent>(player.Value, out var speech)
-                                                   || speech.AllowedEmotes.Contains(emote.ID);
-                                        }).Select(
-                                            emote => new RadialMenuActionOption<EmotePrototype>(HandleRadialButtonClick, emote)
-                                            {
-                                                Sprite = emote.Icon,
-                                                ToolTip = Loc.GetString(emote.Name)
-                                            }
-                                        ).ToArray();
-                                        var tuple = EmoteGroupingInfo[categoryGroup.Key];
-                                        return new RadialMenuNestedLayerOption(nestedEmotes)
-                                        {
-                                            Sprite = tuple.Sprite,
-                                            ToolTip = Loc.GetString(tuple.Tooltip)
-                                        };
-                                    });
+        Dictionary<EmoteCategory, List<RadialMenuOption>> emotesByCategory = new(); 
+        foreach (var emote in emotePrototypes)
+        {
+            if(emote.Category == EmoteCategory.Invalid)
+                continue;
+
+            // only valid emotes that have ways to be triggered by chat and player have access / no restriction on
+
+            if (emote.Category == EmoteCategory.Invalid
+                || emote.ChatTriggers.Count == 0
+                || !(player.HasValue && whitelistSystem.IsWhitelistPassOrNull(emote.Whitelist, player.Value))
+                || whitelistSystem.IsBlacklistPass(emote.Blacklist, player.Value))
+                continue;
+
+            if (!emote.Available
+                && EntityManager.TryGetComponent<SpeechComponent>(player.Value, out var speech)
+                && !speech.AllowedEmotes.Contains(emote.ID))
+                continue;
+
+            if (!emotesByCategory.TryGetValue(emote.Category, out var list))
+            {
+                list = new List<RadialMenuOption>();
+                emotesByCategory.Add(emote.Category, list);
+            }
+
+            var actionOption = new RadialMenuActionOption<EmotePrototype>(HandleRadialButtonClick, emote)
+            {
+                Sprite = emote.Icon,
+                ToolTip = Loc.GetString(emote.Name)
+            };
+            list.Add(actionOption);
+        }
+
+        List<RadialMenuOption> models = new();
+        foreach (var (key, list) in emotesByCategory)
+        {
+            var tuple = EmoteGroupingInfo[key];
+
+            var layerOptions = new RadialMenuNestedLayerOption(list)
+            {
+                Sprite = tuple.Sprite,
+                ToolTip = Loc.GetString(tuple.Tooltip)
+            };
+            models.Add(layerOptions);
+        }
+
         return models;
     }
 

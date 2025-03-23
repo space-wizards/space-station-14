@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
@@ -122,6 +121,14 @@ public abstract partial class SharedStationAiSystem
         if (ev.Actor == ev.Target)
             return;
 
+        // no need to show menu if device is not powered.
+        if (!PowerReceiver.IsPowered(ev.Target))
+        {
+            ShowDeviceNotRespondingPopup(ev.Actor);
+            ev.Cancel();
+            return;
+        }
+
         if (TryComp(ev.Actor, out StationAiHeldComponent? aiComp) &&
            (!TryComp(ev.Target, out StationAiWhitelistComponent? whitelistComponent) ||
             !ValidateAi((ev.Actor, aiComp))))
@@ -150,7 +157,8 @@ public abstract partial class SharedStationAiSystem
     private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanComplexInteract
-            || !HasComp<StationAiHeldComponent>(args.User))
+            || !HasComp<StationAiHeldComponent>(args.User)
+            || !args.CanInteract)
         {
             return;
         }
@@ -172,12 +180,6 @@ public abstract partial class SharedStationAiSystem
                 }
                 else
                 {
-                    // no need to show menu if device is not powered.
-                    if (!PowerReceiver.IsPowered(ent.Owner))
-                    {
-                        ShowDeviceNotRespondingPopup(user);
-                        return;
-                    }
                     _uiSystem.OpenUi(ent.Owner, AiUi.Key, user);
                 }
             }

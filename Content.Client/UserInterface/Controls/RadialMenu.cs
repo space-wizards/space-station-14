@@ -445,7 +445,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
     private Color _hoverBorderColorSrgb = Color.ToSrgb(new Color(87, 91, 127, 128));
 
     /// <summary>
-    /// Marker, that control should render border of segment. Is false by default.
+    /// Marker, that controls if border of segment should be rendered. Is false by default.
     /// </summary>
     /// <remarks>
     /// Default color of border is same as color of background. Use <see cref="BorderColor"/>
