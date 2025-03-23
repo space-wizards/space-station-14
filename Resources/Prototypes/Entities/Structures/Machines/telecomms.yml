@@ -81,12 +81,12 @@
       tele-server-on-multiple:
         whitelist:
           tags:
-          - EncryptionKey
+          - EncryptionKey  #Shown when multiple keys are present 
         minCount: 2
       tele-server-no-key:
         whitelist:
           tags:
-          - EncryptionKey
+          - EncryptionKey  #Shown when no keys are present 
         minCount: 0
   - type: PointLight
     enabled: false
