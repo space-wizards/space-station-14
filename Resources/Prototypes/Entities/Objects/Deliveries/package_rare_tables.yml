@@ -2,7 +2,7 @@
 
 # Loot tables
 - type: entityTable
-  id: PackageRareBundlesTable
+  id: PackageRareDepartmentBundlesTable
   table: !type:GroupSelector
     children:
     - !type:NestedSelector
