@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Apids now get sleepy when exposed to water vapor.
-    type: Add
-  - message: Apids will now spawn with randomized antennae, giving them a little individuality.
-    type: Add
-  - message: Apids now properly display an SSD indicator.
-    type: Add
-  - message: Apids now bob up and down gently.
-    type: Add
-  - message: Apids are now able to fly over tables and under plastic flaps.
-    type: Add
-  - message: God will punish you for butchering her beautiful creatures.
-    type: Add
-  id: 869
-  time: '2025-01-06T23:46:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1215
 - author: RosySaturniidae
   changes:
   - message: gas tank resprites
@@ -4112,3 +4095,10 @@
   id: 1368
   time: '2025-03-22T15:42:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2030
+- author: crocodilecarousel
+  changes:
+  - message: 'Huge buff to janitors and Reinem: headphones can show music notes again!'
+    type: Fix
+  id: 1369
+  time: '2025-03-23T23:26:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2026
