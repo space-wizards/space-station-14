@@ -29,7 +29,7 @@ public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : B
         for (int i = 0; i < actions.Count; i++)
         {
             var action = actions[i];
-            models[i] = new RadialMenuActionOption<StationAiRadial>(HandleRadialMenuClick, action)
+            models[i] = new RadialMenuActionOption<BaseStationAiAction>(HandleRadialMenuClick, action.Event)
             {
                 Sprite = action.Sprite,
                 ToolTip = action.Tooltip
@@ -39,7 +39,7 @@ public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : B
         return models;
     }
 
-    private void HandleRadialMenuClick(StationAiRadial p)
+    private void HandleRadialMenuClick(BaseStationAiAction p)
     {
         SendPredictedMessage(new StationAiRadialMessage { Event = p });
     }
