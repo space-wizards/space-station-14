@@ -105,7 +105,7 @@ public sealed class AlignRCDConstruction : PlacementMode
 
         if (currentState is not GameplayStateBase screen)
             return false;
-        
+
         var target = screen.GetClickedEntity(_transformSystem.ToMapCoordinates(_unalignedMouseCoords));
 
         // Determine if the RCD operation is valid or not

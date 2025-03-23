@@ -19,7 +19,7 @@ public sealed partial class LightningTargetComponent : Component
     public float HitProbability = 1f;
 
     /// <summary>
-    /// Priority level for selecting a lightning target. 
+    /// Priority level for selecting a lightning target.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int Priority;

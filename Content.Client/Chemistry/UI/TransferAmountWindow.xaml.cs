@@ -29,8 +29,8 @@ namespace Content.Client.Chemistry.UI
         {
             if (!int.TryParse(AmountLineEdit.Text, out var amount)  || amount > _max || amount < _min)
                 ApplyButton.Disabled = true;
-            else 
-                ApplyButton.Disabled = false; 
+            else
+                ApplyButton.Disabled = false;
         }
     }
 }

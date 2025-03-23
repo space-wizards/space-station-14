@@ -12,7 +12,7 @@ public sealed partial class CameraRecoilComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     public Vector2 LastKick { get; set; }
-    
+
     [ViewVariables(VVAccess.ReadWrite)]
     public float LastKickTime { get; set; }
 

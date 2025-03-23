@@ -110,7 +110,7 @@ public sealed partial class DialogWindow : FancyWindow
     protected override void Opened()
     {
         base.Opened();
-        
+
         // Grab keyboard focus for the first dialog entry
         _promptLines[0].Item2.GrabKeyboardFocus();
     }

@@ -25,8 +25,8 @@ public sealed partial class FaxWindow : DefaultWindow
 
         PaperButtonPressed += OnPaperButtonPressed;
 
-        FileButton.OnPressed += _ => FileButtonPressed?.Invoke(); 
-        PaperButton.OnPressed += _ => PaperButtonPressed?.Invoke(); 
+        FileButton.OnPressed += _ => FileButtonPressed?.Invoke();
+        PaperButton.OnPressed += _ => PaperButtonPressed?.Invoke();
         CopyButton.OnPressed += _ => CopyButtonPressed?.Invoke();
         SendButton.OnPressed += _ => SendButtonPressed?.Invoke();
         RefreshButton.OnPressed += _ => RefreshButtonPressed?.Invoke();

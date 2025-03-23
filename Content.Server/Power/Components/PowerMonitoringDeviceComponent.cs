@@ -82,7 +82,7 @@ public sealed partial class PowerMonitoringDeviceComponent : Component
     public string SpriteState = string.Empty;
 
     /// <summary>
-    ///    Determines what power monitoring group this entity should belong to 
+    ///    Determines what power monitoring group this entity should belong to
     /// </summary>
     [DataField("group", required: true), ViewVariables]
     public PowerMonitoringConsoleGroup Group;

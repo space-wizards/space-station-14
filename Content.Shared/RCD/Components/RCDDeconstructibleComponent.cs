@@ -15,7 +15,7 @@ public sealed partial class RCDDeconstructableComponent : Component
     public int Cost = 1;
 
     /// <summary>
-    /// The length of the deconstruction 
+    /// The length of the deconstruction
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float Delay = 1f;

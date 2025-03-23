@@ -26,7 +26,7 @@ public sealed partial class GibActionSystem : EntitySystem
 
     private void OnMobStateChanged(EntityUid uid, GibActionComponent comp, MobStateChangedEvent args)
     {
-        // When the mob changes state, check if they're dead and give them the action if so. 
+        // When the mob changes state, check if they're dead and give them the action if so.
         if (!TryComp<MobStateComponent>(uid, out var mobState))
             return;
 
@@ -47,15 +47,15 @@ public sealed partial class GibActionSystem : EntitySystem
         // If they aren't given the action, remove it.
         _actionsSystem.RemoveAction(uid, comp.ActionEntity);
     }
-    
+
     private void OnGibAction(EntityUid uid, GibActionComponent comp, GibActionEvent args)
     {
         // When they use the action, gib them.
         _popupSystem.PopupClient(Loc.GetString(comp.PopupText, ("name", uid)), uid, uid);
         _bodySystem.GibBody(uid, true);
     }
-       
 
 
-    public sealed partial class GibActionEvent : InstantActionEvent { } 
+
+    public sealed partial class GibActionEvent : InstantActionEvent { }
 }

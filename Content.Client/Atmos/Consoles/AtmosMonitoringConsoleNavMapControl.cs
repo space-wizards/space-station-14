@@ -142,7 +142,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
         if (chunks == null || grid == null)
             return decodedOutput;
 
-        // Clear stale look up table values 
+        // Clear stale look up table values
         _horizLines.Clear();
         _horizLinesReversed.Clear();
         _vertLines.Clear();
@@ -219,7 +219,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
                     var horizLineTerminus = (atmosPipeData & westMask << tileIdx * SharedNavMapSystem.Directions) > 0 ?
                         new Vector2(grid.TileSize * 0f, -grid.TileSize * 0.5f) : new Vector2(grid.TileSize * 0.5f, -grid.TileSize * 0.5f);
 
-                    // Since we can have pipe lines that have a length of a half tile, 
+                    // Since we can have pipe lines that have a length of a half tile,
                     // double the vectors and convert to vector2i so we can merge them
                     AddOrUpdateNavMapLine(ConvertVector2ToVector2i(tile + horizLineOrigin, 2), ConvertVector2ToVector2i(tile + horizLineTerminus, 2), horizLines, horizLinesReversed);
                     AddOrUpdateNavMapLine(ConvertVector2ToVector2i(tile + vertLineOrigin, 2), ConvertVector2ToVector2i(tile + vertLineTerminus, 2), vertLines, vertLinesReversed);

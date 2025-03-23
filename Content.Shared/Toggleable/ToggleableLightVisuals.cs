@@ -20,7 +20,7 @@ public enum LightLayers : byte
 
     /// <summary>
     ///     Used as a key for generic unshaded layers. Not necessarily related to an entity with an actual light source.
-    ///     Use this instead of creating a unique single-purpose "unshaded" enum for every visualizer. 
+    ///     Use this instead of creating a unique single-purpose "unshaded" enum for every visualizer.
     /// </summary>
     Unshaded,
 }

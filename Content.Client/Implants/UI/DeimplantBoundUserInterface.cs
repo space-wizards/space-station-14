@@ -23,7 +23,7 @@ public sealed class DeimplantBoundUserInterface : BoundUserInterface
 
         _window.OnImplantChange += implant => SendMessage(new DeimplantChangeVerbMessage(implant));
     }
-    
+
     public void UpdateState(Dictionary<string, string> implantList, string? implant)
     {
         if (_window != null)

@@ -43,7 +43,7 @@ public sealed class ItemCounterSystem : SharedItemCounterSystem
         if (!Resolve(uid, ref sprite)
         ||  !sprite.LayerMapTryGet(layer, out var layerKey, logError: true))
             return;
-        
+
         var activeState = ContentHelpers.RoundToEqualLevels(count, maxCount, states.Count);
         sprite.LayerSetState(layerKey, states[activeState]);
         sprite.LayerSetVisible(layerKey, !hide);
@@ -53,7 +53,7 @@ public sealed class ItemCounterSystem : SharedItemCounterSystem
     {
         if(!Resolve(uid, ref sprite))
             return;
-        
+
         var activeTill = ContentHelpers.RoundToNearestLevels(count, maxCount, layers.Count);
         for(var i = 0; i < layers.Count; ++i)
         {

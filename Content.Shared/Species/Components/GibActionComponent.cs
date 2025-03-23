@@ -13,7 +13,7 @@ public sealed partial class GibActionComponent : Component
     [DataField("actionPrototype", required: true)]
     public EntProtoId ActionPrototype;
 
-    [DataField, AutoNetworkedField] 
+    [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
 
     /// <summary>

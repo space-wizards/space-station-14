@@ -28,7 +28,7 @@ public sealed partial class Drunk : EntityEffect
         if (args is EntityEffectReagentArgs reagentArgs) {
             boozePower *= reagentArgs.Scale.Float();
         }
-        
+
         var drunkSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedDrunkSystem>();
         drunkSys.TryApplyDrunkenness(args.TargetEntity, boozePower, SlurSpeech);
     }

@@ -1,5 +1,5 @@
 using Content.Server.Temperature.Systems;
-using Content.Server.Temperature.Components; 
+using Content.Server.Temperature.Components;
 using Content.Shared.Temperature;
 
 namespace Content.Server.Temperature.Components;

@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Atmos.Components;
 
 /// <summary>
-/// Entities with this component appear on the 
+/// Entities with this component appear on the
 /// nav maps of atmos monitoring consoles
 /// </summary>
 [RegisterComponent, NetworkedComponent]

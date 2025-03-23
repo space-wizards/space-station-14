@@ -38,7 +38,7 @@ namespace Content.Client.Labels.UI
         protected override void Opened()
         {
             base.Opened();
-            
+
             // Give the editor keyboard focus, since that's the only
             // thing the user will want to be doing with this UI
             LabelLineEdit.GrabKeyboardFocus();

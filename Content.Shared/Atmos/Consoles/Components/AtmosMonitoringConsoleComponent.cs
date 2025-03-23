@@ -90,7 +90,7 @@ public struct AtmosDeviceNavMapData
     public NetCoordinates NetCoordinates;
 
     /// <summary>
-    /// The associated pipe network ID 
+    /// The associated pipe network ID
     /// </summary>
     public int NetId = -1;
 
@@ -154,7 +154,7 @@ public struct AtmosMonitoringConsoleEntry
     public NetCoordinates Coordinates;
 
     /// <summary>
-    /// The associated pipe network ID 
+    /// The associated pipe network ID
     /// </summary>
     public int NetId = -1;
 
@@ -184,7 +184,7 @@ public struct AtmosMonitoringConsoleEntry
     public float TotalMolData;
 
     /// <summary>
-    /// Mol and percentage for all detected gases 
+    /// Mol and percentage for all detected gases
     /// </summary>
     public Dictionary<Gas, float> GasData = new();
 

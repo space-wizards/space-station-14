@@ -4,7 +4,7 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Shuttles;
 
 /// <summary>
-/// Handles making a thruster visibly turn on/emit an exhaust plume according to its state. 
+/// Handles making a thruster visibly turn on/emit an exhaust plume according to its state.
 /// </summary>
 public sealed class ThrusterSystem : VisualizerSystem<ThrusterComponent>
 {
