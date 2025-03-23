@@ -16,10 +16,10 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
     layers:
-      - state: bottle-1
-      - state: bottle-1-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: bottle-1
+    - state: bottle-1-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
@@ -105,10 +105,10 @@
   components:
   - type: Sprite
     layers:
-      - state: bottle-2
-      - state: bottle-2-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: bottle-2
+    - state: bottle-2-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: SolutionContainerVisuals
     fillBaseName: bottle-2-
 
@@ -118,10 +118,10 @@
   components:
   - type: Sprite
     layers:
-      - state: bottle-3
-      - state: bottle-3-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: bottle-3
+    - state: bottle-3-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: SolutionContainerVisuals
     fillBaseName: bottle-3-
 
@@ -131,10 +131,10 @@
   components:
   - type: Sprite
     layers:
-      - state: bottle-4
-      - state: bottle-4-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: bottle-4
+    - state: bottle-4-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: SolutionContainerVisuals
     fillBaseName: bottle-4-
 
@@ -148,7 +148,7 @@
     - Bottle
 
 - type: entity
-  id: EpinephrineChemistryBottle
+  id: ChemistryBottleEpinephrine
   suffix: epinephrine
   parent: BaseChemistryBottleFilled
   components:
@@ -163,7 +163,7 @@
           Quantity: 30
 
 - type: entity
-  id: RobustHarvestChemistryBottle
+  id: ChemistryBottleRobustHarvest
   suffix: robust harvest
   parent: BaseChemistryBottleFilled
   components:
@@ -178,7 +178,7 @@
           Quantity: 30
 
 - type: entity
-  id: EZNutrientChemistryBottle
+  id: ChemistryBottleEZNutrient
   suffix: ez nutrient
   parent: BaseChemistryBottleFilled
   components:
@@ -193,7 +193,7 @@
           Quantity: 30
 
 - type: entity
-  id: Left4ZedChemistryBottle
+  id: ChemistryBottleLeft4Zed
   suffix: left-4-zed
   parent: BaseChemistryBottleFilled
   components:
@@ -208,7 +208,7 @@
           Quantity: 30
 
 - type: entity
-  id: UnstableMutagenChemistryBottle
+  id: ChemistryBottleUnstableMutagen
   suffix: unstable mutagen
   parent: BaseChemistryBottleFilled
   components:
@@ -223,7 +223,7 @@
           Quantity: 30
 
 - type: entity
-  id: NocturineChemistryBottle
+  id: ChemistryBottleNocturine
   suffix: nocturine
   parent: BaseChemistryBottleFilled
   components:
@@ -238,7 +238,7 @@
           Quantity: 30
 
 - type: entity
-  id: EphedrineChemistryBottle
+  id: ChemistryBottleEphedrine
   suffix: ephedrine
   parent: BaseChemistryBottleFilled
   components:
@@ -253,7 +253,7 @@
           Quantity: 30
 
 - type: entity
-  id: OmnizineChemistryBottle
+  id: ChemistryBottleOmnizine
   suffix: omnizine
   parent: BaseChemistryBottleFilled
   components:
@@ -269,7 +269,7 @@
 
 - type: entity
   parent: BaseChemistryBottleFilled
-  id: CognizineChemistryBottle
+  id: ChemistryBottleCognizine
   suffix: cognizine
   components:
   - type: Label
@@ -283,7 +283,7 @@
           Quantity: 30
 
 - type: entity
-  id: PaxChemistryBottle
+  id: ChemistryBottlePax
   suffix: pax
   parent: BaseChemistryBottleFilled
   components:
@@ -294,11 +294,11 @@
       drink:
         maxVol: 30
         reagents:
-          - ReagentId: Pax
-            Quantity: 30
+        - ReagentId: Pax
+          Quantity: 30
 
 - type: entity
-  id: MuteToxinChemistryBottle
+  id: ChemistryBottleMuteToxin
   suffix: mute toxin
   parent: BaseChemistryBottleFilled
   components:
@@ -309,11 +309,11 @@
       drink:
         maxVol: 30
         reagents:
-          - ReagentId: MuteToxin
-            Quantity: 30
+        - ReagentId: MuteToxin
+          Quantity: 30
 
 - type: entity
-  id: LeadChemistryBottle
+  id: ChemistryBottleLead
   suffix: lead
   parent: BaseChemistryBottleFilled
   components:
@@ -324,11 +324,11 @@
       drink:
         maxVol: 30
         reagents:
-          - ReagentId: Lead
-            Quantity: 30
+        - ReagentId: Lead
+          Quantity: 30
 
 - type: entity
-  id: ToxinChemistryBottle
+  id: ChemistryBottleToxin
   suffix: toxin
   parent: BaseChemistryBottleFilled
   components:
@@ -339,12 +339,12 @@
       drink:
         maxVol: 30
         reagents:
-          - ReagentId: Toxin
-            Quantity: 30
+        - ReagentId: Toxin
+          Quantity: 30
 
 # Base reagent bottles
 - type: entity
-  id: AluminiumChemistryBottle
+  id: ChemistryBottleAluminium
   suffix: aluminium
   parent: BaseChemistryBottleFilled
   components:
@@ -359,7 +359,7 @@
           Quantity: 30
 
 - type: entity
-  id: CarbonChemistryBottle
+  id: ChemistryBottleCarbon
   suffix: carbon
   parent: BaseChemistryBottleFilled
   components:
@@ -374,7 +374,7 @@
           Quantity: 30
 
 - type: entity
-  id: ChlorineChemistryBottle
+  id: ChemistryBottleChlorine
   suffix: chlorine
   parent: BaseChemistryBottleFilled
   components:
@@ -389,7 +389,7 @@
           Quantity: 30
 
 - type: entity
-  id: CopperChemistryBottle
+  id: ChemistryBottleCopper
   suffix: copper
   parent: BaseChemistryBottleFilled
   components:
@@ -404,7 +404,7 @@
           Quantity: 30
 
 - type: entity
-  id: EthanolChemistryBottle
+  id: ChemistryBottleEthanol
   suffix: ethanol
   parent: BaseChemistryBottleFilled
   components:
@@ -419,7 +419,7 @@
           Quantity: 30
 
 - type: entity
-  id: FluorineChemistryBottle
+  id: ChemistryBottleFluorine
   suffix: fluorine
   parent: BaseChemistryBottleFilled
   components:
@@ -434,7 +434,7 @@
           Quantity: 30
 
 - type: entity
-  id: HydrogenChemistryBottle
+  id: ChemistryBottleHydrogen
   suffix: hydrogen
   parent: BaseChemistryBottleFilled
   components:
@@ -449,7 +449,7 @@
           Quantity: 30
 
 - type: entity
-  id: IodineChemistryBottle
+  id: ChemistryBottleIodine
   suffix: iodine
   parent: BaseChemistryBottleFilled
   components:
@@ -464,7 +464,7 @@
           Quantity: 30
 
 - type: entity
-  id: IronChemistryBottle
+  id: ChemistryBottleIron
   suffix: iron
   parent: BaseChemistryBottleFilled
   components:
@@ -479,7 +479,7 @@
           Quantity: 30
 
 - type: entity
-  id: LithiumChemistryBottle
+  id: ChemistryBottleLithium
   suffix: lithium
   parent: BaseChemistryBottleFilled
   components:
@@ -494,7 +494,7 @@
           Quantity: 30
 
 - type: entity
-  id: MercuryChemistryBottle
+  id: ChemistryBottleMercury
   suffix: mercury
   parent: BaseChemistryBottleFilled
   components:
@@ -509,7 +509,7 @@
           Quantity: 30
 
 - type: entity
-  id: NitrogenChemistryBottle
+  id: ChemistryBottleNitrogen
   suffix: nitrogen
   parent: BaseChemistryBottleFilled
   components:
@@ -524,7 +524,7 @@
           Quantity: 30
 
 - type: entity
-  id: OxygenChemistryBottle
+  id: ChemistryBottleOxygen
   suffix: oxygen
   parent: BaseChemistryBottleFilled
   components:
@@ -539,7 +539,7 @@
           Quantity: 30
 
 - type: entity
-  id: PhosphorusChemistryBottle
+  id: ChemistryBottlePhosphorus
   suffix: phosphorus
   parent: BaseChemistryBottleFilled
   components:
@@ -554,7 +554,7 @@
           Quantity: 30
 
 - type: entity
-  id: PotassiumChemistryBottle
+  id: ChemistryBottlePotassium
   suffix: potassium
   parent: BaseChemistryBottleFilled
   components:
@@ -569,7 +569,7 @@
           Quantity: 30
 
 - type: entity
-  id: RadiumChemistryBottle
+  id: ChemistryBottleRadium
   suffix: radium
   parent: BaseChemistryBottleFilled
   components:
@@ -584,7 +584,7 @@
           Quantity: 30
 
 - type: entity
-  id: SiliconChemistryBottle
+  id: ChemistryBottleSilicon
   suffix: silicon
   parent: BaseChemistryBottleFilled
   components:
@@ -599,7 +599,7 @@
           Quantity: 30
 
 - type: entity
-  id: SodiumChemistryBottle
+  id: ChemistryBottleSodium
   suffix: sodium
   parent: BaseChemistryBottleFilled
   components:
@@ -614,7 +614,7 @@
           Quantity: 30
 
 - type: entity
-  id: SugarChemistryBottle
+  id: ChemistryBottleSugar
   suffix: sugar
   parent: BaseChemistryBottleFilled
   components:
@@ -629,7 +629,7 @@
           Quantity: 30
 
 - type: entity
-  id: SulfurChemistryBottle
+  id: ChemistryBottleSulfur
   suffix: sulfur
   parent: BaseChemistryBottleFilled
   components:
@@ -648,23 +648,23 @@
   id: BasicReagentBottlesTable
   table: !type:GroupSelector
     children:
-    - id: AluminiumChemistryBottle
-    - id: CarbonChemistryBottle
-    - id: ChlorineChemistryBottle
-    - id: CopperChemistryBottle
-    - id: EthanolChemistryBottle
-    - id: FluorineChemistryBottle
-    - id: HydrogenChemistryBottle
-    - id: IodineChemistryBottle
-    - id: IronChemistryBottle
-    - id: LithiumChemistryBottle
-    - id: MercuryChemistryBottle
-    - id: NitrogenChemistryBottle
-    - id: OxygenChemistryBottle
-    - id: PhosphorusChemistryBottle
-    - id: PotassiumChemistryBottle
-    - id: RadiumChemistryBottle
-    - id: SiliconChemistryBottle
-    - id: SodiumChemistryBottle
-    - id: SugarChemistryBottle
-    - id: SulfurChemistryBottle
+    - id: ChemistryBottleAluminium
+    - id: ChemistryBottleCarbon
+    - id: ChemistryBottleChlorine
+    - id: ChemistryBottleCopper
+    - id: ChemistryBottleEthanol
+    - id: ChemistryBottleFluorine
+    - id: ChemistryBottleHydrogen
+    - id: ChemistryBottleIodine
+    - id: ChemistryBottleIron
+    - id: ChemistryBottleLithium
+    - id: ChemistryBottleMercury
+    - id: ChemistryBottleNitrogen
+    - id: ChemistryBottleOxygen
+    - id: ChemistryBottlePhosphorus
+    - id: mChemistryBottlePotassiu
+    - id: ChemistryBottleRadium
+    - id: ChemistryBottleSilicon
+    - id: ChemistryBottleSodium
+    - id: ChemistryBottleSugar
+    - id: ChemistryBottleSulfur
