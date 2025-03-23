@@ -8,8 +8,8 @@
   markingLimits: MobThavenMarkingLimits
   dollPrototype: MobThavenDummy
   skinColoration: Hues
-  maleFirstNames: names_thaven
-  femaleFirstNames: names_thaven
+  maleFirstNames: NamesThaven
+  femaleFirstNames: NamesThaven
   naming: First
   sexes:
   - Male

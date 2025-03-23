@@ -1,0 +1,11 @@
+﻿- type: localizedDataset
+  id: NamesGastropoidFirst
+  values:
+    prefix: names-gastropoid-first-
+    count: 14
+
+- type: localizedDataset
+  id: NamesGastropoidLast
+  values:
+    prefix: names-gastropoid-last-
+    count: 12

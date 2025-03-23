@@ -1,43 +1,5 @@
-﻿- type: dataset
-  id: names_mouse_death_commando
+﻿- type: localizedDataset
+  id: MouseDeathCommando
   values:
-  - Operator Blue Cheese
-  - Operator AMERICAN CHEESE
-  - Operator Fromage 
-  - Operator Asiago
-  - Operator Brie
-  - Operator Camembert
-  - Operator Cheddar
-  - Operator Cotija
-  - Operator Curd
-  - Operator Chevré
-  - Operator Halloumi 
-  - Operator Cottage Cheese
-  - Operator Cream Cheese
-  - Operator Swiss
-  - Operator Wensleydale
-  - Operator Rocamadour
-  - Operator Feta
-  - Operator Mozzarella
-  - Operator Gorgonzola
-  - Operator Grilled Cheese
-  - Operator Gouda
-  - Operator Gruyere
-  - Operator Comté
-  - Operator Jarlsberg
-  - Operator Reblochon
-  - Operator Raclette
-  - Operator Tomme de Bruyère
-  - Operator Goat Cheese
-  - Operator Manchego
-  - Operator Ewenique
-  - Operator Monterey Jack
-  - Operator Muenster
-  - Operator Parmesan
-  - Operator Pepper Jack
-  - Operator Provolone
-  - Operator String Cheese
-  - Operator La Vache Qui Rit
-  - Operator Mascarpone
-  - Operator Ricotta
-  - Operator Vacherin
+    prefix: names-mouse-death-commando-
+    count: 40
