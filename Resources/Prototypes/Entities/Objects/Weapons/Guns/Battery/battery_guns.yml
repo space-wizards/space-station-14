@@ -462,12 +462,9 @@
     projectileSpeed: 35 # any higher and this causes issues in lag
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
-  - type: Battery
-    maxCharge: 980
-    startingCharge: 980
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisablerPractice
-    fireCost: 70
+    fireCost: 62.5
   - type: Tag
     tags:
     - Taser
@@ -495,7 +492,7 @@
       - Belt
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
-    fireCost: 70
+    fireCost: 62.5
   - type: GuideHelp
     guides:
     - Security
