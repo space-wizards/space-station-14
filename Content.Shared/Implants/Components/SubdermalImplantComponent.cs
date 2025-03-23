@@ -96,8 +96,3 @@ public sealed partial class UseDnaScramblerImplantEvent : InstantActionEvent
 {
 
 }
-
-public sealed partial class SelfDestructImplantEvent : InstantActionEvent
-{
-
-}
