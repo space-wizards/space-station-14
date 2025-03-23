@@ -1,0 +1,98 @@
+# Basically all different loot tables that the mail can choose from
+
+# Loot tables
+- type: entityTable
+  id: PackageRareDepartmentBundlesTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: PackageRareMedicalBundlesTable
+
+# Package Bundles
+## Basically items that should always spawn together, specific to packages
+
+### Medical
+- type: entityTable
+  id: PackageRareMedicalBundlesTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: PackageMedicalTopicalBundle
+    - !type:NestedSelector
+      tableId: PackageMedicalChemicalBundle
+    - !type:NestedSelector
+      tableId: PackageMedicalClothingBundle
+    - !type:NestedSelector
+      tableId: PackageMedicalReagentBottleBundle
+
+- type: entityTable
+  id: PackageMedicalTopicalBundle
+  table: !type:AllSelector
+    children:
+    - id: Gauze1
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: Brutepack1
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: Bloodpack1
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+    - id: Ointment1
+      amount: !type:RangeNumberSelector
+        range: 1, 4
+
+- type: entityTable
+  id: PackageMedicalChemicalBundle
+  table: !type:AllSelector
+    children:
+    - id: Beaker
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: LargeBeaker
+      amount: !type:RangeNumberSelector
+        range: 0, 1
+    - id: Syringe
+      amount: !type:RangeNumberSelector
+        range: 1, 2
+    - id: BaseChemistryEmptyVial
+      amount: !type:RangeNumberSelector
+        range: 0, 2
+
+- type: entityTable
+  id: PackageMedicalClothingBundle
+  table: !type:AllSelector
+    children:
+    - !type:GroupSelector
+      children:
+      - id: ClothingUniformJumpskirtMedicalDoctor
+      - id: ClothingUniformJumpsuitMedicalDoctor
+    - !type:GroupSelector
+      children:
+      - id: ClothingBackpackMedical
+      - id: ClothingBackpackDuffelMedical
+      - id: ClothingBackpackSatchelMedical
+    - !type:GroupSelector
+      children:
+      - id: ClothingHandsGlovesNitrile
+      - id: ClothingHandsGlovesLatex
+    - !type:AllSelector
+      prob: 0.5
+      children:
+      - id: ClothingShoesBootsWinterMed
+      - id: ClothingOuterWinterMed
+    - !type:GroupSelector
+      children:
+      - id: ClothingEyesHudMedical
+      - id: ClothingEyesEyepatchHudMedical
+    - id: ClothingBeltMedical
+    - id: ClothingShoesColorWhite
+
+- type: entityTable
+  id: PackageMedicalReagentBottleBundle
+  table: !type:AllSelector
+    children:
+    - !type:NestedSelector
+      tableId: BasicReagentBottlesTable
+      rolls: !type:RangeNumberSelector
+        range: 3, 4
