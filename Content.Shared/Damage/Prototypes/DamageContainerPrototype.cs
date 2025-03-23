@@ -12,7 +12,7 @@ namespace Content.Shared.Damage.Prototypes
     ///     and damage groups. Currently this is only used to specify what damage types a <see
     ///     cref="DamageableComponent"/> should support.
     /// </remarks>
-    [Prototype("damageContainer")]
+    [Prototype]
     [Serializable, NetSerializable]
     public sealed partial class DamageContainerPrototype : IPrototype
     {

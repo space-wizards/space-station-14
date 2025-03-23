@@ -8,7 +8,7 @@ namespace Content.Shared.Access;
 ///     Contains a list of access tags that are part of this group.
 ///     Used by <see cref="AccessComponent"/> to avoid boilerplate.
 /// </summary>
-[Prototype("accessGroup")]
+[Prototype]
 public sealed partial class AccessGroupPrototype : IPrototype
 {
     [IdDataField]
