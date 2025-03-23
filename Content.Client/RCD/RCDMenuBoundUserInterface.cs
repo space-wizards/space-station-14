@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Client.Popups;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.RCD;
@@ -51,24 +50,41 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
 
     private IEnumerable<RadialMenuNestedLayerOption> ConvertToButtons(HashSet<ProtoId<RCDPrototype>> prototypes)
     {
-        var models = prototypes.Select(x => _prototypeManager.Index(x))
-                        .GroupBy(x => x.Category)
-                        .Where(x => PrototypesGroupingInfo.ContainsKey(x.Key))
-                        .Select(x =>
-                        {
-                            var nested = x.Select(proto => new RadialMenuActionOption<RCDPrototype>(HandleMenuOptionClick, proto)
-                            {
-                                Sprite = proto.Sprite,
-                                ToolTip = GetTooltip(proto)
-                            }).ToArray();
+        Dictionary<string, List<RadialMenuActionOption>> buttonsByCategory = new();
+        foreach (var protoId in prototypes)
+        {
+            var prototype = _prototypeManager.Index(protoId);
+            if (!PrototypesGroupingInfo.TryGetValue(prototype.Category, out var groupInfo))
+                continue;
 
-                            var tuple = PrototypesGroupingInfo[x.Key];
-                            return new RadialMenuNestedLayerOption(nested)
-                            {
-                                Sprite = tuple.Sprite,
-                                ToolTip = Loc.GetString(tuple.Tooltip)
-                            };
-                        });
+            if (!buttonsByCategory.TryGetValue(prototype.Category, out var list))
+            {
+                list = new List<RadialMenuActionOption>();
+                buttonsByCategory.Add(prototype.Category, list);
+            }
+
+            var actionOption = new RadialMenuActionOption<RCDPrototype>(HandleMenuOptionClick, prototype)
+            {
+                Sprite = prototype.Sprite,
+                ToolTip = GetTooltip(prototype)
+            };
+            list.Add(actionOption);
+
+
+        }
+
+        List<RadialMenuNestedLayerOption> models = new ();
+        foreach (var (key, list) in buttonsByCategory)
+        {
+            var groupInfo = PrototypesGroupingInfo[key];
+            var layerOption = new RadialMenuNestedLayerOption(list)
+            {
+                Sprite = groupInfo.Sprite,
+                ToolTip = Loc.GetString(groupInfo.Tooltip)
+            };
+            models.Add(layerOption);
+        }
+
         return models;
     }
 
