@@ -29,7 +29,7 @@
     - type: EntityTableSpawner
       table: !type:NestedSelector
         tableId: RandomAllSupplementaryMaterialsTable
-        prob: 0.9
+        prob: 0.8
 
 # High-value materials spawners
 # Maybe these should use the 10-in-stack variants?
