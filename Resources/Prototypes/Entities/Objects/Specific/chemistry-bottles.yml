@@ -662,7 +662,7 @@
     - id: ChemistryBottleNitrogen
     - id: ChemistryBottleOxygen
     - id: ChemistryBottlePhosphorus
-    - id: mChemistryBottlePotassiu
+    - id: ChemistryBottlePotassium
     - id: ChemistryBottleRadium
     - id: ChemistryBottleSilicon
     - id: ChemistryBottleSodium
