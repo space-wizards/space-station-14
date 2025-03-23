@@ -540,10 +540,13 @@ public sealed class NukeSystem : EntitySystem
         component.Status = NukeStatus.COOLDOWN;
         component.CooldownTime = component.Cooldown;
 
-        if (component.ShouldResetDiskBypass == true)
+        if (component.ShouldResetAfterDiskBypass == true)
+        {
             component.DiskBypassEnabled = false;
+            component.RemainingTime = component.Timer;
+        }
 
-        component.ShouldResetDiskBypass = false;
+        component.ShouldResetAfterDiskBypass = false;
 
         UpdateUserInterface(uid, component);
         UpdateAppearance(uid, component);
@@ -607,14 +610,14 @@ public sealed class NukeSystem : EntitySystem
     /// <summary>
     ///     Sets whether we can bypass the disk when arming/disarming, and if it should be reset later.
     /// </summary>
-    /// <param name="shouldResetDiskBypassLater">Whether DiskBypassEnabled should be reset to false after nuke is disarmed.</param>
-    public void SetDiskBypassEnabled(EntityUid uid, bool diskBypass, bool shouldResetDiskBypassLater = true, NukeComponent? component = null)
+    /// <param name="shouldResetLater">Whether DiskBypassEnabled, and the nuke timer, should be reset to default after nuke is disarmed.</param>
+    public void SetDiskBypassEnabled(EntityUid uid, bool diskBypass, bool shouldResetLater = true, NukeComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
         component.DiskBypassEnabled = diskBypass;
-        component.ShouldResetDiskBypass = shouldResetDiskBypassLater;
+        component.ShouldResetAfterDiskBypass = shouldResetLater;
         UpdateUserInterface(uid, component);
     }
 

@@ -182,10 +182,10 @@ namespace Content.Server.Nuke
         public bool DiskBypassEnabled = false;
 
         /// <summary>
-        ///     Should we reset the disk bypass value to false when the nuke is disarmed?
+        ///     Should we reset the disk bypass value, and the nuke timer, to their defaults when the nuke is disarmed?
         /// </summary>
         [ViewVariables]
-        public bool ShouldResetDiskBypass = false;
+        public bool ShouldResetAfterDiskBypass = false;
 
         /// <summary>
         ///     Check if nuke has already played the nuke song so we don't do it again
