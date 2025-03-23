@@ -8,6 +8,8 @@ namespace Content.Server.Power.EntitySystems
 {
     public sealed class ExtensionCableSystem : EntitySystem
     {
+        [Dependency] private readonly SharedMapSystem _map = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -126,7 +128,7 @@ namespace Content.Server.Power.EntitySystems
             if (!TryComp(xform.GridUid, out MapGridComponent? grid))
                 yield break;
 
-            var nearbyEntities = grid.GetCellsInSquareArea(coordinates, (int) Math.Ceiling(range / grid.TileSize));
+            var nearbyEntities = _map.GetCellsInSquareArea(xform.GridUid.Value, grid, coordinates, (int)Math.Ceiling(range / grid.TileSize));
 
             foreach (var entity in nearbyEntities)
             {
@@ -252,7 +254,7 @@ namespace Content.Server.Power.EntitySystems
             }
 
             var coordinates = xform.Coordinates;
-            var nearbyEntities = grid.GetCellsInSquareArea(coordinates, (int) Math.Ceiling(range / grid.TileSize));
+            var nearbyEntities = _map.GetCellsInSquareArea(xform.GridUid.Value, grid, coordinates, (int)Math.Ceiling(range / grid.TileSize));
             var cableQuery = GetEntityQuery<ExtensionCableProviderComponent>();
             var metaQuery = GetEntityQuery<MetaDataComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
