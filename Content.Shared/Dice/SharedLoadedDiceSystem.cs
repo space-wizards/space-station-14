@@ -83,18 +83,19 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
         {
             Text = Loc.GetString("loaded-dice-set-verb-text"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
-            Act = () => TryOpenUi(entity.Owner, user, entity.Comp)
+            Act = () => TryOpenUi(entity.Owner, entity.Comp, user)
         });
     }
 
-    private void OnAlternativeVerb(EntityUid uid, LoadedDiceComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void OnAlternativeVerb(Entity<LoadedDiceComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!_container.TryGetContainingContainer((uid, null, null), out var container))
+        if (!args.CanAccess || !args.CanInteract)
             return;
 
-        // TODO: Check it's in hand of args.User
+        if (!GetCapableUser(entity, out var user))
+            return;
 
-        if (!args.CanAccess || !args.CanInteract)
+        if (user != args.User)
             return;
 
         args.Verbs.Add(new AlternativeVerb()
@@ -102,75 +103,72 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
             Priority = 1, // Make this the alt-click verb
             Text = Loc.GetString("loaded-dice-unset-verb-text"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/die.svg.192dpi.png")),
-            Act = () => SetSelectedSide(uid, component, null)
+            Act = () => SetSelectedSide(entity.Owner, null, null, entity.Comp)
         });
     }
 
-    private void OnSelected(EntityUid uid, LoadedDiceComponent component, LoadedDiceSideSelectedMessage args)
+    private void OnSelected(Entity<LoadedDiceComponent> entity, ref LoadedDiceSideSelectedMessage args)
     {
-        SetSelectedSide(uid, component, args.SelectedSide);
+        SetSelectedSide(entity.Owner, args.SelectedSide, null, entity.Comp);
     }
 
-    private void TryOpenUi(EntityUid uid, EntityUid user, LoadedDiceComponent? component = null)
+    private void TryOpenUi(EntityUid uid, LoadedDiceComponent loadedDie, EntityUid user)
     {
-        if (!Resolve(uid, ref component))
-            return;
         if (!TryComp(user, out ActorComponent? actor))
             return;
+
         _uiSystem.TryToggleUi(uid, LoadedDiceUiKey.Key, actor.PlayerSession);
     }
 
-    private void UpdateUi(EntityUid uid, DiceComponent? die = null, LoadedDiceComponent? component = null)
+    private void UpdateUi(EntityUid uid, DiceComponent die, LoadedDiceComponent loadedDie)
     {
-        if (!Resolve(uid, ref die))
-            return;
-
-        if (!Resolve(uid, ref component))
-            return;
-
-        var state = new LoadedDiceBoundUserInterfaceState(die, component.SelectedSide);
+        var state = new LoadedDiceBoundUserInterfaceState(die, loadedDie.SelectedSide);
 
         _uiSystem.SetUiState(uid, LoadedDiceUiKey.Key, state);
     }
 
-    public void SetSelectedSide(EntityUid uid, LoadedDiceComponent? component = null, int? selectedSide = null)
+    /// <summary>
+    ///     Sets the selected side on the loaded die, ensuring the change is valid.
+    ///     If selectedSide is null, this unsets the die, and makes it behave like a normal die.
+    /// </summary>
+    public void SetSelectedSide(EntityUid uid, int? selectedSide, DiceComponent? die = null, LoadedDiceComponent? loadedDie = null)
     {
-        if (!Resolve(uid, ref component, false))
+        if (!Resolve(uid, ref die, false))
             return;
 
-        if (!TryComp<DiceComponent>(uid, out var die))
+        if (!Resolve(uid, ref loadedDie, false))
             return;
 
         // Make sure that it is valid change
         if (selectedSide != null && (selectedSide < 1 || selectedSide > die.Sides))
             return;
 
-        // TODO: Reimplement
         // There may not be a user if the change is not done by a player
-        //if (thereisauser)
-        //{
-        //    string message;
-        //    LogStringHandler adminMessage;
-        //    if (selectedSide == null)
-        //    {
-        //        message = Loc.GetString("loaded-dice-unset", ("die", uid));
-        //        adminMessage = $"{ToPrettyString(component.User):player} unset the loaded {ToPrettyString(uid):target}";
-        //    }
-        //    else
-        //    {
-        //        var sideValue = (selectedSide - die.Offset) * die.Multiplier;
+        // TODO: This should be checked that it's the same as the user who is interacting with the UI! How do I do that?
+        if (GetCapableUser((uid, loadedDie), out var user))
+        {
+            string message;
+            LogStringHandler adminMessage;
+            if (selectedSide == null)
+            {
+                message = Loc.GetString("loaded-dice-unset", ("die", uid));
+                adminMessage = $"{ToPrettyString(user):player} unset the loaded {ToPrettyString(uid):target}";
+            }
+            else
+            {
+                var sideValue = (selectedSide - die.Offset) * die.Multiplier;
 
-        //        message = Loc.GetString("loaded-dice-set", ("die", uid), ("value", sideValue));
-        //        adminMessage = $"{ToPrettyString(component.User):player} set the loaded {ToPrettyString(uid):target} to roll {sideValue}";
-        //    }
+                message = Loc.GetString("loaded-dice-set", ("die", uid), ("value", sideValue));
+                adminMessage = $"{ToPrettyString(user):player} set the loaded {ToPrettyString(uid):target} to roll {sideValue}";
+            }
 
-        //    _popup.PopupEntity(message, uid, component.User.Value, PopupType.Small);
-        //    _adminLogger.Add(LogType.Action, LogImpact.Low, ref adminMessage);
-        //}
+            _popup.PopupEntity(message, uid, user, PopupType.Small);
+            _adminLogger.Add(LogType.Action, LogImpact.Low, ref adminMessage);
+        }
 
-        component.SelectedSide = selectedSide;
+        loadedDie.SelectedSide = selectedSide;
 
-        UpdateUi(uid, die, component);
-        Dirty(uid, component);
+        UpdateUi(uid, die, loadedDie);
+        Dirty(uid, loadedDie);
     }
 }
