@@ -4,8 +4,8 @@ meta:
   engineVersion: 248.0.2
   forkId: ""
   forkVersion: ""
-  time: 03/22/2025 22:43:05
-  entityCount: 29362
+  time: 03/23/2025 03:46:26
+  entityCount: 29370
 maps:
 - 1
 grids:
@@ -376,7 +376,7 @@ entities:
           version: 6
         -6,1:
           ind: -6,1
-          tiles: BgAAAAAAFQAAAAAAAAAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAAAAAAAAAAAAAAAAAFgAAAAAAAAAAAAAAAAAAAAAARAAAAAAARAAAAAAABgAAAAAABgAAAAAAAAAAAAAAAAAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAAAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAAAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFQAAAAAARAAAAAAARAAAAAAAFAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAFQAAAAAAFQAAAAAAFQAAAAAARAAAAAAARAAAAAAAAAAAAAAAFAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAAAAAAAAAFAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAHAAAAAAAHAAAAAAAHAAAAAAAHAAAAAAARAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAAAAAAAAARAAAAAAARAAAAAAAHAAAAAAAHAAAAAAAHAAAAAAAHAAAAAAARAAAAAAARAAAAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAAQAAAAAAAQAAAAAADQAAAAAADQAAAAAADQAAAAAAAAAAAAAAAAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAFQAAAAAAFQAAAAAAFQAAAAAARAAAAAAARAAAAAAAAQAAAAAAAQAAAAAAAQAAAAAADQAAAAAADQAAAAAADQAAAAAAAAAAAAAAAAAAAAAARAAAAAAARAAAAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAABgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAADQAAAAAADQAAAAAADQAAAAAAAAAAAAAAAAAAAAAARAAAAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAABgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAAAAAAAAAAAAAAAAAAFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAABgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAABgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAAAAAAAAFAAAAAAAFAAAAAAAFAAAAAAAFAAAAAAAFAAAAAAAFAAAAAAABgAAAAAABgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAAAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFAAAAAAAFAAAAAAAFAAAAAAABgAAAAAABgAAAAAA
+          tiles: BgAAAAAAFQAAAAAAAAAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAAAAAAAAAAAAAAAAAFgAAAAAAAAAAAAAAAAAAAAAARAAAAAAARAAAAAAABgAAAAAABgAAAAAAAAAAAAAAAAAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAAAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAAAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFQAAAAAARAAAAAAARAAAAAAAFAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAFQAAAAAAFQAAAAAAFQAAAAAARAAAAAAARAAAAAAAAAAAAAAAFAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAAAAAAAAAFAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAHAAAAAAAHAAAAAAAHAAAAAAAHAAAAAAARAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAAAAAAAAARAAAAAAARAAAAAAAHAAAAAAAHAAAAAAAHAAAAAAAHAAAAAAARAAAAAAARAAAAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAAQAAAAAAAQAAAAAADQAAAAAADQAAAAAADQAAAAAAAAAAAAAAAAAAAAAARAAAAAAARAAAAAAARAAAAAAARAAAAAAAFQAAAAAAFQAAAAAAFQAAAAAARAAAAAAARAAAAAAAAQAAAAAAAQAAAAAAAQAAAAAADQAAAAAADQAAAAAADQAAAAAAAAAAAAAAAAAAAAAARAAAAAAARAAAAAAARAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAABgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAADQAAAAAADQAAAAAADQAAAAAAAAAAAAAAAAAAAAAARAAAAAAARAAAAAAAAAAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAADQAAAAAADQAAAAAADQAAAAAADQAAAAAAAAAAAAAAAAAAAAAAFQAAAAAAAAAAAAAABgAAAAAABgAAAAAABgAAAAAABgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAADQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAABgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAAAAAAAAFAAAAAAAFAAAAAAAFAAAAAAAFAAAAAAAFAAAAAAAFAAAAAAABgAAAAAABgAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAAAAAAAAFgAAAAAAFgAAAAAAFgAAAAAAFAAAAAAAFAAAAAAAFAAAAAAABgAAAAAABgAAAAAA
           version: 6
         -7,0:
           ind: -7,0
@@ -17208,7 +17208,7 @@ entities:
       pos: 8.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -169417.2
+      secondsUntilStateChange: -182665.55
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -24535,6 +24535,13 @@ entities:
     - type: Transform
       pos: 51.451653,-28.481113
       parent: 2
+- proto: BookChemicalCompendium
+  entities:
+  - uid: 29369
+    components:
+    - type: Transform
+      pos: -40.987057,34.572247
+      parent: 2
 - proto: BookEngineersHandbook
   entities:
   - uid: 9054
@@ -25359,6 +25366,17 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -55.533684,19.208471
+      parent: 2
+  - uid: 29363
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -42.51642,26.547953
+      parent: 2
+  - uid: 29364
+    components:
+    - type: Transform
+      pos: -40.92267,34.53944
       parent: 2
 - proto: BoxFolderGreen
   entities:
@@ -73602,6 +73620,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -66.616745,3.606235
       parent: 2
+  - uid: 29367
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -83.5,27.5
+      parent: 2
 - proto: ChairPilotSeat
   entities:
   - uid: 2541
@@ -91454,6 +91478,13 @@ entities:
       parent: 2
     - type: FaxMachine
       name: Security
+  - uid: 29365
+    components:
+    - type: Transform
+      pos: -82.5,28.5
+      parent: 2
+    - type: FaxMachine
+      name: Engineering
 - proto: FaxMachineCaptain
   entities:
   - uid: 4749
@@ -145125,14 +145156,112 @@ entities:
       parent: 2
   - uid: 8057
     components:
+    - type: MetaData
+      name: paper (Sus Form)
     - type: Transform
       pos: -68.58964,11.433096
       parent: 2
+    - type: Paper
+      content: >-
+        [color=#b81d00][head=3]
+                █         ███████████  █ 
+                ██   ██      █     █        █  ██
+                █   █   █      █     █████  █   █
+                █         █      █     █     █    ████
+                █         ███████        █  █        █
+        [/head][/color]
+
+                               [head=2][bold]Official Sus Form[/bold][/head]
+        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+        [bold]Crewmember Name:[/bold]
+
+        [bold]Crewmember Color:[/bold]
+
+        [bold]Crewmember Blood Type:[/bold]
+
+
+        [bold]Degree of Susness:[/bold]
+
+        Less Sus - 1 2 3 4 5 6 7 8 9 10 - More Sus
+
+
+        [bold]Reason For Suspicion:[/bold] 
+
+        [italic]Circle all that apply[/italic]
+
+        [bullet/] Vented
+
+        [bullet/] Faked a Task (___)
+
+        [bullet/] Walked Away from a Body
+
+        [bullet/] Didn't Fix Lights
+
+        [bullet/] I Just Don't Like Them
+
+
+        [bold]Desired Action:[/bold]
+
+        [bullet/] Eject Them
+
+        [bullet/] Hold A Vote, Then Eject Them
+
+        [bullet/] All Of The Above
   - uid: 8058
     components:
+    - type: MetaData
+      name: paper (Sus Form)
     - type: Transform
       pos: -68.46464,11.589454
       parent: 2
+    - type: Paper
+      content: >-
+        [color=#b81d00][head=3]
+                █         ███████████  █ 
+                ██   ██      █     █        █  ██
+                █   █   █      █     █████  █   █
+                █         █      █     █     █    ████
+                █         ███████        █  █        █
+        [/head][/color]
+
+                               [head=2][bold]Official Sus Form[/bold][/head]
+        ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+        [bold]Crewmember Name:[/bold]
+
+        [bold]Crewmember Color:[/bold]
+
+        [bold]Crewmember Blood Type:[/bold]
+
+
+        [bold]Degree of Susness:[/bold]
+
+        Less Sus - 1 2 3 4 5 6 7 8 9 10 - More Sus
+
+
+        [bold]Reason For Suspicion:[/bold] 
+
+        [italic]Circle all that apply[/italic]
+
+        [bullet/] Vented
+
+        [bullet/] Faked a Task (___)
+
+        [bullet/] Walked Away from a Body
+
+        [bullet/] Didn't Fix Lights
+
+        [bullet/] I Just Don't Like Them
+
+
+        [bold]Desired Action:[/bold]
+
+        [bullet/] Eject Them
+
+        [bullet/] Hold A Vote, Then Eject Them
+
+        [bullet/] All Of The Above
   - uid: 10693
     components:
     - type: Transform
@@ -145221,6 +145350,11 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -9.5,-26.5
+      parent: 2
+  - uid: 8394
+    components:
+    - type: Transform
+      pos: -83.5,28.5
       parent: 2
   - uid: 10663
     components:
@@ -145369,23 +145503,23 @@ entities:
       parent: 2
     - type: Paper
       content: >-
-        Tasks
+        [bold]Tasks:[/bold]
 
 
-        Admin: Fix Wiring
+        [bullet/] Admin: Fix Wiring
 
-        Security: Fix Wiring
+        [bullet/] Security: Fix Wiring
 
-        Electrical: Fix Wiring
+        [bullet/] Electrical: Fix Wiring
 
-        Storage: Fix Wiring
+        [bullet/] Storage: Fix Wiring
 
-        Cafeteria: Fix Wiring
+        [bullet/] Cafeteria: Fix Wiring
 
-        Navigation: Fix Wiring
+        [bullet/] Navigation: Fix Wiring
 
 
-        Reactor: Start Reactor
+        [bullet/] Reactor: Start Reactor
   - uid: 12141
     components:
     - type: Transform
@@ -145409,6 +145543,147 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 41.56958,-28.525455
       parent: 2
+  - uid: 29370
+    components:
+    - type: MetaData
+      name: office paper (List of Useful Drugs)
+    - type: Transform
+      pos: -40.987057,34.42631
+      parent: 2
+    - type: Paper
+      content: >
+        Remember that as the station's psychologist, your duties can include the writing of medicinal prescriptions - or if you have the correct medicines at hand, the filling of them.
+
+
+        You might wish to review a basic chemistry text for a full list of possibilities, but here are some medicines you may wish to prescribe:
+
+
+        [bold]For drowsiness or narcolepsy:[/bold]
+
+        [bullet/][color=#d5d5e4]Ethyloxyephedrine[/color] 
+
+        [italic]Minimum effective dose: 10u[/italic]
+
+        [italic]Side effects: Jittering, stuttering[/italic]
+
+
+        [bullet/][color=#b0abaa]Diphenylmethylamine[/color]
+
+        [italic]Minimum effective dose: 5u[/italic]
+
+
+        [bold]For insomnia or other sleeping problems:[/bold]
+
+        [bullet/][color=#07E79E]Chloral Hydrate[/color]
+
+        [italic]Maximum safe dose: 20u[/italic]
+
+        [italic]Side effects: Slow movement[/italic]
+
+
+        [bullet/][color=#128e80]Nocturine[/color]
+
+        [italic][color=red]Controlled Substance[/color][/italic]
+
+        [italic]Minimum effective dose: 8u[/italic]
+
+
+        [bold]For suppressing hallucinations:[/bold]
+
+        [bullet/][color=#b0abaa]Haloperidol[/color]
+
+        [italic]Side effects: Drowsiness[/italic]
+
+
+        [bold]General stimulants, for problems staying attentive:[/bold]
+
+        [bullet/][color=#731024]Inaprovaline[/color]
+
+        [italic]Weak stimulant safe for general-purpose use[/italic]
+
+
+        [bullet/][color=#128e80]Ephedrine[/color]
+
+        [italic]Maximum safe dose: 20u[/italic]
+
+        [italic]Side effects: Jittering, overenergetic movements[/italic]
+
+
+        [bullet/][color=#FAFAFA]Desoxyephedrine[/color]
+
+        [italic]Maximum safe dose: 30u[/italic]
+
+        [italic]Side effects: Jittering, stuttering, general twitchiness[/italic]
+
+
+        [bold]To increase appetite:[/bold]
+
+        [bullet/][color=#2690b5]Lipozine[/color]
+
+        [italic]Recommended starting dose: 5u[/italic]
+
+
+        [bold]To restore chemically damaged brains:[/bold]
+
+        [bullet/][color=#A0A0A0]Mannitol[/color]
+
+        [italic]Recommended starting dose: 5u[/italic]
+
+
+        [bold]To suppress anxiety and mental distress:[/bold]
+
+        [bullet/][color=#07E79E]Psicodine[/color]
+
+        [italic]Maximum safe dose: 30u[/italic]
+
+
+        [bold]Antidepressants:[/bold]
+
+        [bullet/][color=#FF4DD2]Laughter[/color]
+
+        [italic]Recommended starting dose: 5u[/italic]
+
+
+        [bullet/][color=#EE35FF]Happiness[/color]
+
+        [italic]Recommended starting dose: 5u[/italic]
+
+        [italic]Side effects: Numbness, hallucinations, brain damage[/italic]
+
+        [italic][color=red]Caution:[/color] This substance is known to have addictive properties[/italic]
+
+
+        [bold]For racing, overwhelming, or uncontrollable thoughts:[/bold]
+
+        [bullet/][color=#215263]Impedrezene[/color]
+
+        [italic]Recommended starting dose: 1u[/italic]
+
+        [italic]Side effects: Hallucinations, vomiting, drunkness[/italic]
+
+
+        [bold]For overtalkativeness:[/bold]
+
+        [bullet/][color=#000000]Mute Toxin[/color]
+
+        [italic]Recommended starting dose: 5u[/italic]
+
+
+        [bold]For handling anger management problems:[/bold]
+
+        [bullet/][color=#AAAAAA]Pax[/color]
+
+        [italic]Recommended starting dose: 5u[/italic]
+
+
+        [bold]For patients who generally just need to chill out:[/bold]
+
+        [bullet/][color=#808080]THC[/color]
+
+        [italic]Recommended starting dose: 1 joint of minimum-to-moderate dankness[/italic]
+
+
+        Remember to stamp your prescriptions with your official psychologist stamp of approval, and consider giving a copy to your client, faxing a copy to the chemistry department or to the CMO, and/or keeping a copy for your personal files.
 - proto: PaperScrap
   entities:
   - uid: 478
@@ -145706,6 +145981,11 @@ entities:
     components:
     - type: Transform
       pos: -46.853745,-9.34058
+      parent: 2
+  - uid: 29366
+    components:
+    - type: Transform
+      pos: -83.25841,28.629667
       parent: 2
 - proto: PenCap
   entities:
@@ -152225,6 +152505,11 @@ entities:
     - type: Transform
       pos: -27.5,56.5
       parent: 2
+  - uid: 29368
+    components:
+    - type: Transform
+      pos: -83.5,28.5
+      parent: 2
 - proto: PoweredSmallLightEmpty
   entities:
   - uid: 13199
@@ -158449,10 +158734,10 @@ entities:
           position: 3,4
           _rotation: South
         10671:
-          position: 0,3
+          position: 0,4
           _rotation: South
         10672:
-          position: 0,4
+          position: 0,3
           _rotation: South
         10676:
           position: 0,1
@@ -158482,16 +158767,16 @@ entities:
           occludes: True
           ents:
           - 10670
-          - 10671
-          - 10672
-          - 10669
-          - 10676
           - 10675
           - 10674
           - 10687
           - 10690
           - 10692
           - 10697
+          - 10671
+          - 10672
+          - 10669
+          - 10676
     - type: AccessReader
       access:
       - - Medical
@@ -160637,12 +160922,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -65.5,32.5
-      parent: 2
-  - uid: 9195
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -82.5,27.5
       parent: 2
   - uid: 9196
     components:
@@ -166444,6 +166723,11 @@ entities:
     - type: Transform
       pos: -80.5,36.5
       parent: 2
+  - uid: 9001
+    components:
+    - type: Transform
+      pos: -83.5,28.5
+      parent: 2
   - uid: 9057
     components:
     - type: Transform
@@ -166478,6 +166762,11 @@ entities:
     components:
     - type: Transform
       pos: -86.5,25.5
+      parent: 2
+  - uid: 9195
+    components:
+    - type: Transform
+      pos: -82.5,28.5
       parent: 2
   - uid: 9603
     components:
@@ -181293,11 +181582,6 @@ entities:
     - type: Transform
       pos: -84.5,27.5
       parent: 2
-  - uid: 8747
-    components:
-    - type: Transform
-      pos: -83.5,28.5
-      parent: 2
   - uid: 8749
     components:
     - type: Transform
@@ -181450,11 +181734,6 @@ entities:
     components:
     - type: Transform
       pos: -77.5,33.5
-      parent: 2
-  - uid: 9001
-    components:
-    - type: Transform
-      pos: -73.5,33.5
       parent: 2
   - uid: 9002
     components:
@@ -190521,16 +190800,6 @@ entities:
     - type: Transform
       pos: -97.5,-5.5
       parent: 2
-  - uid: 8394
-    components:
-    - type: Transform
-      pos: -82.5,28.5
-      parent: 2
-  - uid: 8395
-    components:
-    - type: Transform
-      pos: -82.5,27.5
-      parent: 2
   - uid: 8468
     components:
     - type: Transform
@@ -190540,11 +190809,6 @@ entities:
     components:
     - type: Transform
       pos: -96.5,18.5
-      parent: 2
-  - uid: 8746
-    components:
-    - type: Transform
-      pos: -83.5,27.5
       parent: 2
   - uid: 9014
     components:
@@ -191505,6 +191769,11 @@ entities:
       parent: 2
 - proto: WallWood
   entities:
+  - uid: 8746
+    components:
+    - type: Transform
+      pos: -73.5,33.5
+      parent: 2
   - uid: 9018
     components:
     - type: Transform
@@ -192334,6 +192603,12 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -74.5,-18.5
+      parent: 2
+  - uid: 8395
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -82.5,27.5
       parent: 2
   - uid: 9129
     components:
@@ -193851,6 +194126,12 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -97.5,-2.5
+      parent: 2
+  - uid: 8747
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -82.5,28.5
       parent: 2
   - uid: 8751
     components:
