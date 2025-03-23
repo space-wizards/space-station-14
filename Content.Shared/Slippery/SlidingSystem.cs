@@ -13,26 +13,16 @@ public sealed class SlidingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SlidingComponent, TileFrictionEvent>(OnSlideAttempt);
         SubscribeLocalEvent<SlidingComponent, StoodEvent>(OnStand);
         SubscribeLocalEvent<SlidingComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<SlidingComponent, EndCollideEvent>(OnEndCollide);
     }
 
-    /// <summary>
-    ///     Modify the friction by the frictionModifier stored on the component.
-    /// </summary>
-    private void OnSlideAttempt(Entity<SlidingComponent> entity, ref TileFrictionEvent args)
-    {
-        args.Modifier = entity.Comp.FrictionModifier;
-        if (!TryComp<MovementSpeedModifierComponent>(entity, out var component))
-            return;
-        _speedModifierSystem.ChangeFriction(entity,
-            entity.Comp.FrictionModifier,
-            entity.Comp.FrictionModifier,
-            entity.Comp.FrictionModifier,
-            component);
-    }
+    //TODO: Check if you can make the movementSpeedModifier shit event based
+    //TODO: Test if entering knockdown without touching a puddle breaks this
+    //TODO: Ensure friction for items and crawling players matches
+    //TODO: Test with Ice_Crust and see if shit breaks, fix Ice_Crust
+    //TODO: Why the fuck does slipping prediction suck ass?
 
     /// <summary>
     ///     Remove the component when the entity stands up again, and reset friction.
