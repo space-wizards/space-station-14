@@ -8,9 +8,9 @@
   markingLimits: MobApidMarkingLimits
   dollPrototype: MobApidDummy
   skinColoration: TintedHues # this prevents RandomHumanoidAppearance from fucking with their colorscheme too much
-  maleFirstNames: apid_worker
-  femaleFirstNames: apid_worker
-  lastNames: names_apid
+  maleFirstNames: ApidWorker
+  femaleFirstNames: ApidWorker
+  lastNames: ApidNames
   sexes:
   - Male
   - Female

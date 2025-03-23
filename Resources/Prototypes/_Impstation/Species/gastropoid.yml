@@ -8,9 +8,9 @@
   markingLimits: MobGastropoidMarkingLimits
   dollPrototype: MobGastropoidDummy
   skinColoration: Hues
-  maleFirstNames: names_snail_first
-  femaleFirstNames: names_snail_first
-  lastNames: names_snail_last
+  maleFirstNames: NamesGastropoidFirst
+  femaleFirstNames: NamesGastropoidFirst
+  lastNames: NamesGastropoidLast
   sexes:
   - Unsexed
 

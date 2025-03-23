@@ -1,0 +1,27 @@
+﻿names-gastropoid-first-1 = Angugna
+names-gastropoid-first-2 = Esse
+names-gastropoid-first-3 = Heliileh
+names-gastropoid-first-4 = Iyayi
+names-gastropoid-first-5 = Keek
+names-gastropoid-first-6 = Littil
+names-gastropoid-first-7 = Minim
+names-gastropoid-first-8 = Murdrum
+names-gastropoid-first-9 = Nerriren
+names-gastropoid-first-10 = Neven
+names-gastropoid-first-11 = Otto
+names-gastropoid-first-12 = Podadop
+names-gastropoid-first-13 = Solos
+names-gastropoid-first-14 = Vyv
+
+names-gastropoid-last-1 = Acmaea
+names-gastropoid-last-2 = Cochleus
+names-gastropoid-last-3 = Conchins
+names-gastropoid-last-4 = Cowrie
+names-gastropoid-last-5 = Glossa
+names-gastropoid-last-6 = Lottii
+names-gastropoid-last-7 = Mol
+names-gastropoid-last-8 = Natici
+names-gastropoid-last-9 = Neolep
+names-gastropoid-last-10 = Periwinkle
+names-gastropoid-last-11 = Whelk
+names-gastropoid-last-12 = Zonata

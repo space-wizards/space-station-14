@@ -1,0 +1,11 @@
+﻿- type: localizedDataset
+  id: NamesGrayFirst
+  values:
+    prefix: names-gray-first-
+    count: 50
+
+- type: localizedDataset
+  id: NamesGrayLast
+  values:
+    prefix: names-gray-last-
+    count: 44
