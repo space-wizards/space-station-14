@@ -1575,7 +1575,7 @@
 
 # Misc
 - type: startingGear
-  id: KnightErrant
+  id: KnightErrantLoadout
   equipment:
     jumpsuit: ClothingUniformJumpsuitGrey
     shoes: ClothingShoesColorBrown

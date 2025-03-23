@@ -557,7 +557,7 @@
     - type: GhostRole
       name: job-name-knighterrant
     - type: Loadout
-      prototypes: [ KnightErrant]
+      prototypes: [ KnightErrantLoadout]
 
 ### Visitors missing equipment for challenges
 # CHALLENGE #
