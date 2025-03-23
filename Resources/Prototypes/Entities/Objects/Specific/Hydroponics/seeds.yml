@@ -293,8 +293,8 @@
 
 - type: entity
   parent: KillerTomatoSeeds
-  name: packet of killer juicy tomato seeds
   id: KillerJuicyTomatoSeeds
+  name: packet of killer juicy tomato seeds
   components:
     - type: Seed
       seedId: killerJuicyTomato
