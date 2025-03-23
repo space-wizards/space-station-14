@@ -279,7 +279,6 @@
           volume: 5
       initialBeepDelay: 0
 
-
 - type: entity
   parent: BaseSubdermalImplant
   id: MacroBombImplant

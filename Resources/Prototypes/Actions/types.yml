@@ -86,13 +86,8 @@
     icon:
       sprite: Objects/Weapons/Bombs/c4.rsi
       state: icon
-    iconOn:
-      sprite: Actions/Implants/implants.rsi
-      state: primed
     startDelay: true
-    useDelay: 10
-    sound: !type:SoundPathSpecifier
-      path: /Audio/Machines/Nuke/angry_beep.ogg
+    useDelay: 600 # at least 10 minutes into a round
     event: !type:ActivateImplantEvent
 
 - type: entity

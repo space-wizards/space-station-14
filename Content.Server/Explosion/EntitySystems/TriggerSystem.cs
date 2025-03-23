@@ -250,7 +250,19 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnImplantTrigger(EntityUid uid, TriggerImplantActionComponent component, ActivateImplantEvent args)
         {
-            args.Handled = Trigger(uid);
+            if (TryComp<OnUseTimerTriggerComponent>(uid, out var timerTrigger))
+            {
+                HandleTimerTrigger(
+                    uid,
+                    args.Performer,
+                    timerTrigger.Delay,
+                    timerTrigger.BeepInterval,
+                    timerTrigger.InitialBeepDelay,
+                    timerTrigger.BeepSound);
+                args.Handled = true;
+            }
+            else
+                args.Handled = Trigger(uid);
         }
 
         private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredOffEvent args)

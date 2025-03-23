@@ -1,7 +1,6 @@
 using Content.Server.Explosion.Components;
 using Content.Shared.Examine;
 using Content.Shared.Explosion.Components;
-using Content.Shared.Implants.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Sticky;
@@ -20,7 +19,6 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<OnUseTimerTriggerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
         SubscribeLocalEvent<OnUseTimerTriggerComponent, EntityStuckEvent>(OnStuck);
         SubscribeLocalEvent<RandomTimerTriggerComponent, MapInitEvent>(OnRandomTimerTriggerMapInit);
-        SubscribeLocalEvent<OnUseTimerTriggerComponent, SelfDestructImplantEvent>(OnSelfDestruct);
     }
 
     private void OnStuck(EntityUid uid, OnUseTimerTriggerComponent component, ref EntityStuckEvent args)
@@ -164,16 +162,6 @@ public sealed partial class TriggerSystem
             _popupSystem.PopupEntity(Loc.GetString("trigger-activated", ("device", uid)), args.User, args.User);
 
         StartTimer((uid, component), args.User);
-
-        args.Handled = true;
-    }
-
-    private void OnSelfDestruct(EntityUid uid, OnUseTimerTriggerComponent component, SelfDestructImplantEvent args)
-    {
-        if (args.Handled || HasComp<AutomatedTimerComponent>(uid) || component.UseVerbInstead)
-            return;
-
-        StartTimer((uid, component), null);
 
         args.Handled = true;
     }
