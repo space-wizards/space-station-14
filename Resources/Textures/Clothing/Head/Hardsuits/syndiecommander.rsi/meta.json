@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vg at commit https://github.com/vgstation-coders/vgstation13/commit/a16e41020a93479e9a7e2af343b1b74f7f2a61bd. Vox states by Flareguy for Space Station 14",
+  "copyright": "Taken from vg at commit https://github.com/vgstation-coders/vgstation13/commit/a16e41020a93479e9a7e2af343b1b74f7f2a61bd. Vox states by Flareguy for Space Station 14. Vulp sprites taken from https://github.com/DeltaV-Station/Delta-v/commit/87c70a89a67d0521a56388e6b1c3f2cb947943e4, edited by MilonPL",
 
   "size": {
     "x": 32,
@@ -28,6 +28,14 @@
     },
     {
       "name": "on-equipped-HELMET-vox",
+      "directions": 4
+    },
+    {
+      "name": "off-equipped-HELMET-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-HELMET-vulpkanin",
       "directions": 4
     }
   ]

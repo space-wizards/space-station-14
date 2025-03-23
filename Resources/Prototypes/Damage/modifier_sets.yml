@@ -161,7 +161,6 @@
     Piercing: 1.2
     Cold: 1.5
     Poison: 0.8
-    Cellular: 0.2
 
 - type: damageModifierSet
   id: Infernal
@@ -312,3 +311,9 @@
   id: ManifestedSpirit
   coefficients:
     Holy: 2
+
+# Vulps get more heat damage because fur
+- type: damageModifierSet
+  id: Vulpkanin
+  coefficients:
+    Heat: 1.15

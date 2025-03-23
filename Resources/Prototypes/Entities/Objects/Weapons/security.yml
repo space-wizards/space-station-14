@@ -1,6 +1,6 @@
 - type: entity
   name: stun baton
-  parent: [BaseItem, BaseRestrictedContraband]
+  parent: [BaseItem, BaseSecurityContraband]
   id: Stunbaton
   description: A stun baton for incapacitating people with. Actively harming with this is considered bad tone.
   components:
@@ -88,10 +88,13 @@
     guides:
     - Security
     - Antagonists
+  - type: Tag
+    tags:
+    - Stunbaton
 
 - type: entity
   name: truncheon
-  parent: [BaseItem, BaseRestrictedContraband]
+  parent: [BaseItem, BaseSecurityContraband]
   id: Truncheon
   description: A rigid, steel-studded baton, meant to harm.
   components:
@@ -184,7 +187,7 @@
 
 - type: entity
   name: portable flasher
-  parent: [BaseMachine, BaseRestrictedContraband]
+  parent: [BaseMachine, BaseSecurityContraband]
   id: PortableFlasher
   description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
   components:
@@ -227,3 +230,37 @@
       guides:
       - Security
       - Antagonists
+
+- type: entity
+  name: sun baton
+  parent: Stunbaton
+  id: Sunbaton
+  description: A sun baton for incapacitating people with. Actively harming with this is considered bad tone. It is very bright.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/stunbaton.rsi
+    layers:
+    - state: stunbaton_off
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: stunbaton_on_sun}
+          False: {state: stunbaton_off}
+  - type: ToggleableLightVisuals
+    spriteLayer: light
+    inhandVisuals:
+      left:
+      - state: on-inhand-left-sun
+        shader: unshaded
+      right:
+      - state: on-inhand-right-sun
+        shader: unshaded
+  - type: PointLight
+    enabled: false
+    radius: 8
+    energy: 10
+    color: "#FFAF38"
+    netsync: false
+  - type: ItemTogglePointLight

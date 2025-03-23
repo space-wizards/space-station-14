@@ -22,6 +22,17 @@
     rules:
     - id: Thief
       prob: 0.5
+    - id: SubWizard
+      prob: 0.05
+
+- type: entity
+  parent: BaseGameRule
+  id: SubGamemodesRuleNoWizard
+  components:
+  - type: SubGamemodes
+    rules:
+    - id: Thief
+      prob: 0.5
 
 - type: entity
   id: DeathMatch31
@@ -75,8 +86,8 @@
   components:
   - type: RandomMetadata #this generates the random operation name cuz it's cool.
     nameSegments:
-    - operationPrefix
-    - operationSuffix
+    - NamesOperationPrefix
+    - NamesOperationSuffix
   - type: NukeopsRule
   - type: RuleGrids
   - type: AntagSelection
@@ -110,7 +121,7 @@
       - type: RandomMetadata
         nameSegments:
         - nukeops-role-commander
-        - SyndicateNamesElite
+        - NamesSyndicateElite
       - type: NpcFactionMember
         factions:
         - Syndicate
@@ -127,7 +138,7 @@
       - type: RandomMetadata
         nameSegments:
         - nukeops-role-agent
-        - SyndicateNamesNormal
+        - NamesSyndicateNormal
       - type: NpcFactionMember
         factions:
         - Syndicate
@@ -146,7 +157,7 @@
       - type: RandomMetadata
         nameSegments:
         - nukeops-role-operator
-        - SyndicateNamesNormal
+        - NamesSyndicateNormal
       - type: NpcFactionMember
         factions:
         - Syndicate
@@ -237,6 +248,56 @@
   parent: BaseGameRule
   components:
   - type: SecretRule
+
+- type: entity
+  abstract: true
+  parent: BaseGameRule
+  id: BaseWizardRule
+  components:
+  - type: AntagObjectives
+    objectives:
+    - WizardSurviveObjective
+    - WizardDemonstrateObjective
+  - type: LoadMapRule
+    gridPath: /Maps/Shuttles/wizard.yml
+  - type: RuleGrids
+  - type: AntagSelection
+  - type: AntagLoadProfileRule
+    speciesOverride: Human
+
+- type: entity
+  parent: BaseWizardRule
+  id: Wizard
+  components:
+  - type: GameRule
+    minPlayers: 10
+  - type: AntagSelection
+    agentName: wizard-round-end-name
+    selectionTime: PrePlayerSpawn
+    definitions:
+    - prefRoles: [ Wizard ]
+      max: 1
+      playerRatio: 1
+      spawnerPrototype: SpawnPointGhostWizard
+      roleLoadout:
+       - RoleSurvivalExtended
+      briefing:
+        text: wizard-role-greeting
+        color: Turquoise
+        # TODO: Need Wizard Start sound
+        #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
+      startingGear: WizardBlueGear
+      # TODO: WizardComp as needed
+      components:
+      - type: NpcFactionMember
+        factions:
+        - Wizard
+      - type: RandomMetadata
+        nameSegments:
+        - NamesWizardFirst
+        - NamesWizardLast
+      mindRoles:
+      - MindRoleWizard
 
 - type: entity
   id: Zombie

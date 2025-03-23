@@ -32,6 +32,12 @@ chat-emote-name-monkeyscreeches = Monkey Screeches
 chat-emote-name-robotbeep = Robot
 chat-emote-name-yawn = Yawn
 chat-emote-name-snore = Snore
+chat-emote-name-flip = Flip
+chat-emote-name-bark = Bark
+chat-emote-name-snarl = Snarl
+chat-emote-name-whine = Whine
+chat-emote-name-howl = Howl
+chat-emote-name-growl = Growl
 
 # Message
 chat-emote-msg-scream = screams!
@@ -46,7 +52,7 @@ chat-emote-msg-squeak = squeaks.
 chat-emote-msg-thump = thumps {POSS-ADJ($entity)} tail.
 chat-emote-msg-click = clicks.
 chat-emote-msg-clap = claps!
-chat-emote-msg-clap-single = claps their hands together.
+chat-emote-msg-clap-single = claps {POSS-ADJ($entity)} hands together.
 chat-emote-msg-snap = snaps {POSS-ADJ($entity)} fingers.
 chat-emote-msg-salute = salutes.
 chat-emote-msg-gasp = gasps.
@@ -67,3 +73,4 @@ chat-emote-msg-cathisses = hisses!
 chat-emote-msg-monkeyscreeches = screeches!
 chat-emote-msg-yawn = yawns.
 chat-emote-msg-snore = snores.
+chat-emote-msg-flip = flips.

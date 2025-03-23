@@ -1,0 +1,65 @@
+- type: entity
+  parent: BaseGameRule
+  id: Thief
+  components:
+  - type: ThiefRule
+  - type: AntagObjectives
+    objectives:
+    - EscapeThiefShuttleObjective
+  - type: AntagRandomObjectives
+    sets:
+    - groups: ThiefBigObjectiveGroups
+      prob: 0.7
+      maxPicks: 1
+    - groups: ThiefObjectiveGroups
+      maxPicks: 10
+    maxDifficulty: 2.5
+  - type: AntagSelection
+    agentName: thief-round-end-agent-name
+    definitions:
+    - prefRoles: [ Thief ]
+      max: 3
+      playerRatio: 15
+      lateJoinAdditional: true
+      allowNonHumans: true
+      multiAntagSetting: NotExclusive
+      startingGear: ThiefGear
+      components:
+      - type: Pacified
+      mindRoles:
+      - MindRoleThief
+      briefing:
+        sound: "/Audio/Misc/thief_greeting.ogg"
+
+# Needs testing
+- type: entity
+  parent: BaseWizardRule
+  id: SubWizard
+  components:
+  - type: AntagSelection
+    agentName: wizard-round-end-name
+    selectionTime: PrePlayerSpawn
+    definitions:
+    - prefRoles: [ Wizard ]
+      max: 1
+      playerRatio: 1
+      spawnerPrototype: SpawnPointGhostWizard
+      roleLoadout:
+      - RoleSurvivalExtended
+      briefing:
+        text: wizard-role-greeting
+        color: Turquoise
+        # TODO: Need Wizard Start sound
+        #sound: "/Audio/Ambience/Antag/wizard_start.ogg"
+      startingGear: WizardBlueGear
+      # TODO: WizardComp as needed
+      components:
+      - type: NpcFactionMember
+        factions:
+        - Wizard
+      - type: RandomMetadata
+        nameSegments:
+        - NamesWizardFirst
+        - NamesWizardLast
+      mindRoles:
+      - MindRoleWizard
