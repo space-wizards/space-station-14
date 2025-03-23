@@ -8,6 +8,18 @@
     "license": "CC-BY-SA-3.0",
     "states": [
         {
+            "name": "generic"
+        },
+        {
+            "name": "generic_door"
+        },
+        {
+            "name": "generic_icon"
+        },
+        {
+            "name": "generic_open"
+        },
+        {
             "name": "bssecure_door"
         },
         {
