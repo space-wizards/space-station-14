@@ -26409,7 +26409,7 @@ entities:
     - type: Transform
       pos: 13.91264,32.80469
       parent: 1668
-- proto: ChemistryBottleEpinephrine
+- proto: EpinephrineChemistryBottle
   entities:
   - uid: 6859
     components:
