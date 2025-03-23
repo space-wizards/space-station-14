@@ -23,7 +23,7 @@
         Piercing: 0.8
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
-  id:         ClothingHeadHelmetHardsuitNtrep
+  id: ClothingHeadHelmetHardsuitNtrep
   categories: [ HideSpawnMenu ]
   name: Nanotrasen representative's hardsuit helmet
   components:
