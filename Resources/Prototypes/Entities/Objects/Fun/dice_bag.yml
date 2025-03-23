@@ -42,6 +42,9 @@
   id: LoadedDiceBag
   suffix: Loaded
   components:
+  - type: Tag
+    tags:
+    - LoadedDiceActivator
   - type: StorageFill
     contents:
       - id: d4DiceLoaded

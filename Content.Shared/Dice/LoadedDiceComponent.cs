@@ -1,3 +1,4 @@
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -17,6 +18,12 @@ public sealed partial class LoadedDiceComponent : Component
     [AutoNetworkedField]
     [DataField]
     public int? SelectedSide = null;
+
+    /// <summary>
+    ///     If not null, an item passing this whitelist must be held in hand or in the pocket to set the die.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? ActivatorWhitelist;
 }
 
 [Serializable, NetSerializable]

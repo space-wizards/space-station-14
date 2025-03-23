@@ -138,6 +138,9 @@
   suffix: Loaded
   components:
   - type: LoadedDice
+    activatorWhitelist:
+      tags:
+      - LoadedDiceActivator
   - type: UserInterface
     interfaces:
       enum.LoadedDiceUiKey.Key:
