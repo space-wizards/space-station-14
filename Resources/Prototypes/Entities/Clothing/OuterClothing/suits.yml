@@ -328,3 +328,6 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
+  - type: TemperatureProtection
+    heatingCoefficient: 0.005
+    coolingCoefficient: 0.05
