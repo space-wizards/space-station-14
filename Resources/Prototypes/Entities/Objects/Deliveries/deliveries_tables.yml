@@ -144,17 +144,16 @@
   table: !type:GroupSelector
     children:
     - id: MedkitAdvancedFilled # TODO: Replace with PackageRareGeneralBundlesTable for when something doesn't fit with a department. (Like a bundle of bed sheets, dunno)
-    - id: MobMothroach # TODO: Replace with SmallCritterTable so you can get mice and snails and similiar
     - id: PipeBomb # TODO: PackageRarePunishmentTable, including things like pipebombs and other potentially harmful things (the pipebomb should also get primed when unpacked)
-    #- !type:NestedSelector TODO: Uncomment after all the rare department bundles are done (medical, security, etc...)
+    - !type:NestedSelector
+      tableId: SmallCritterEntityTable
+    #- !type:NestedSelector # TODO: Uncomment after all the rare department bundles are done (medical, security, etc...)
     #  tableId: PackageRareDepartmentBundlesTable
     - !type:NestedSelector
       tableId: AnimalMaskTable
-    # Weapons
     - !type:NestedSelector
       tableId: MaintWeaponTable
       weight: 0.5
-    # Syndie Loot
     - !type:NestedSelector
       tableId: SyndieMaintLoot
       weight: 0.5
