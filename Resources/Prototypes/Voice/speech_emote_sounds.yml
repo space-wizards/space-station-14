@@ -267,7 +267,7 @@
     Cough:
       path: /Audio/Voice/Vox/vox_cough.ogg
     Whistle:
-      collection: Whistles
+      collection: VoxWhistles
     Yawn:
       path: /Audio/Voice/Vox/vox_yawn.ogg
     Crying:

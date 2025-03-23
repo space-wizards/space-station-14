@@ -68,4 +68,4 @@ chat-emote-msg-cathisses = hisses!
 chat-emote-msg-monkeyscreeches = screeches!
 chat-emote-msg-yawn = yawns.
 chat-emote-msg-snore = snores.
-chat-emote-msg-clearsthroat = clears throat.
+chat-emote-msg-clearsthroat = clears their throat.
