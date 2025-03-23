@@ -4,7 +4,7 @@
   icon: { sprite: /Textures/Objects/Materials/ore.rsi, state: gold }
   spawn: GoldOre1
   maxCount: 30
-  
+
 - type: stack
   id: DiamondOre
   name: rough diamond

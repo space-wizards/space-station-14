@@ -149,7 +149,7 @@
         reagents:
           - ReagentId: Chlorine
             Quantity: 5
-            
+
 - type: entity
   id: PlasmaChemistryVial
   parent: BaseChemistryEmptyVial

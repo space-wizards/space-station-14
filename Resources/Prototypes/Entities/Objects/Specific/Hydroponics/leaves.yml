@@ -65,7 +65,7 @@
       - Smokable
   - type: Item
     size: Tiny
-    
+
 - type: entity
   name: rainbow cannabis leaves
   parent: LeavesCannabis

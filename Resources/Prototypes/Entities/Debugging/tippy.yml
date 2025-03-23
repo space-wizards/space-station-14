@@ -17,7 +17,7 @@
       state: down
       visible: false
       map: [ "speaking" ]
-  # footstep sounds wile waddling onto the screen. 
+  # footstep sounds wile waddling onto the screen.
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown

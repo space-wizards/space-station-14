@@ -8,7 +8,7 @@
   description: "A roll of dried plant matter wrapped in thin paper."
   icon: { sprite: Objects/Consumable/Smokeables/Cannabis/joint.rsi, state: unlit-icon }
   objectType: Item
-  
+
 - type: construction
   name: rainbow joint
   id: smokeableJointRainbow

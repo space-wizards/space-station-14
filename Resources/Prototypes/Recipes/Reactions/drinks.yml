@@ -1219,7 +1219,7 @@
       amount: 1
   products:
     Cola: 4
-    
+
 - type: reaction
   id: Caipirinha
   requiredMixerCategories:

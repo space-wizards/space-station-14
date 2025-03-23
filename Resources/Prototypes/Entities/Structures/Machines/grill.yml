@@ -17,7 +17,7 @@
   - type: ApcPowerReceiver
     powerLoad: 0 # off by default
   - type: EntityHeater
-    settingSound: 
+    settingSound:
       path: /Audio/Weapons/click.ogg
       params:
         volume: -6

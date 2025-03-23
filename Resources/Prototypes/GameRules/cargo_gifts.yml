@@ -16,7 +16,7 @@
     - id: GiftsVendingRestock
 
 # Game Rules
-    
+
 - type: entity
   id: CargoGiftsBase
   parent: BaseGameRule

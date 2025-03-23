@@ -2309,7 +2309,7 @@
       drink:
         maxVol: 30
         reagents:
-        - ReagentId: Daiquiri 
+        - ReagentId: Daiquiri
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/daiquiri.rsi

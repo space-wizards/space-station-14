@@ -97,7 +97,7 @@
   - type: BallisticAmmoProvider
     proto: CartridgeCaselessRifle
     capacity: 500
-      
+
 - type: entity
   parent: BaseWeaponTurret
   id: BaseWeaponEnergyTurret

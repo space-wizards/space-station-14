@@ -6,7 +6,7 @@
 - files: ["strobeepsilon.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Made by dj-34 (https://github.com/dj-34). Modified by Ko4erga"
-  source: "https://github.com/ss220-space/Paradise/blob/05043bcfb35c2e7bcf1efbdbfbf976e1a2504bc2/sound/effects/epsilon.ogg" 
+  source: "https://github.com/ss220-space/Paradise/blob/05043bcfb35c2e7bcf1efbdbfbf976e1a2504bc2/sound/effects/epsilon.ogg"
 
 - files: ["strobe.ogg"]
   source: "https://freesound.org/people/blukotek/sounds/431651/"

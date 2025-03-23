@@ -1,4 +1,4 @@
-# Security 
+# Security
 - type: entity
   name: security loot spawner
   suffix: Gear, Simple
@@ -52,7 +52,7 @@
         - SecurityWhistle
         - Tourniquet
       chance: 0.85
- 
+
 # Armory loot spawner
 # Automatics are a complete mess right now, so the AK-MS And WT-550 have been commented out for consistency's sake. I have no idea what role these guns are supposed to fufill.
 - type: entity

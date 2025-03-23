@@ -22,7 +22,7 @@
     - type: Sprite
       sprite: Mobs/Species/Slime/parts.rsi
       state: "head_m"
-  
+
 - type: entity
   id: LeftArmSlime
   name: "left slime arm"

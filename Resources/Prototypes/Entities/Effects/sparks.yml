@@ -38,7 +38,7 @@
     - HideContextMenu
   - type: AnimationPlayer
   - type: EmitSoundOnSpawn
-    sound: 
+    sound:
       path: /Audio/Effects/tesla_consume.ogg
       params:
         variation: 0.3

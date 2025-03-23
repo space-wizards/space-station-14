@@ -9,7 +9,7 @@
             - material: WoodPlank
               amount: 5
               doAfter: 4
-        
+
     - node: incompleteBat
       entity: IncompleteBaseBallBat
       edges:
@@ -30,6 +30,6 @@
           steps:
             - tool: Slicing
               doAfter: 4
-        
+
     - node: bat
       entity: BaseBallBat

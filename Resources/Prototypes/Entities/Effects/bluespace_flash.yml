@@ -9,5 +9,5 @@
   - type: TimedDespawn
     lifetime: 1
   - type: EmitSoundOnSpawn
-    sound: 
+    sound:
       path: /Audio/Effects/Lightning/lightningbolt.ogg

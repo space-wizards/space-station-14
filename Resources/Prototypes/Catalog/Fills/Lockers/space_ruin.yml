@@ -29,7 +29,7 @@
         prob: 0.2
       - id: ClothingBeltMilitaryWebbing
         prob: 0.2
-        
+
 #Garunteed chameleon kit spawn, for the syndicate dropship
 - type: entity
   id: LockerSyndicateShipGearBasicChameleonKit

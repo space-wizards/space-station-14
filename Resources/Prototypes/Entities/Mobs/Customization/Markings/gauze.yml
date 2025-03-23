@@ -81,7 +81,7 @@
   sprites:
   - sprite: Mobs/Customization/gauze.rsi
     state: gauze_shoulder
-    
+
 - type: marking
   id: GauzeStomach
   bodyPart: Chest
@@ -179,7 +179,7 @@
   sprites:
   - sprite: Mobs/Customization/gauze.rsi
     state: gauze_upperleg_r
-    
+
 - type: marking
   id: GauzeLowerLegRight
   bodyPart: RFoot
@@ -193,7 +193,7 @@
   sprites:
   - sprite: Mobs/Customization/gauze.rsi
     state: gauze_lowerleg_r
-    
+
 - type: marking
   id: GauzeBoxerWrapRight
   bodyPart: RHand
@@ -207,7 +207,7 @@
   sprites:
   - sprite: Mobs/Customization/gauze.rsi
     state: gauze_boxerwrap_r
-    
+
 - type: marking
   id: GauzeBoxerWrapLeft
   bodyPart: LHand

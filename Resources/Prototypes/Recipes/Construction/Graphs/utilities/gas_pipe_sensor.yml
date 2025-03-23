@@ -10,7 +10,7 @@
         amount: 2
         doAfter: 1
 
-  - node: sensor   
+  - node: sensor
     entity: GasPipeSensor
     actions:
     - !type:SetAnchor

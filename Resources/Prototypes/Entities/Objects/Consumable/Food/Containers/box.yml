@@ -274,7 +274,7 @@
       prob: 0.10
       orGroup: Pizza
     - id: KnifePlastic
-  
+
 - type: entity
   name: pizza box
   parent: FoodBoxPizzaFilled

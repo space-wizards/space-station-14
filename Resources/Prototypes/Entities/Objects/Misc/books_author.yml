@@ -17,7 +17,7 @@
       - state: icon_pentagramm
         color: "#911129"
       - state: detail_bookmark
-        color: red 
+        color: red
     - type: Paper
       content: book-text-narsielegend
 
@@ -449,9 +449,9 @@
       - state: cover_base
         color: "#0f204f"
       - state: decor_vertical_middle
-        color: "#3c6ab0" 
+        color: "#3c6ab0"
       - state: decor_spine
-        color: "#3c6ab0" 
+        color: "#3c6ab0"
       - state: icon_stars2
       - state: icon_aurora
       - state: detail_bookmark
@@ -641,7 +641,7 @@
   parent: BookBase
   id: BookJanitorTale
   name: the tales of a tired janitor
-  description: A clean looking book, smelling vaguely of soap and bleach. 
+  description: A clean looking book, smelling vaguely of soap and bleach.
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi

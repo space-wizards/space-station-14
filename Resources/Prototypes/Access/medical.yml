@@ -9,7 +9,7 @@
 - type: accessLevel
   id: Chemistry
   name: id-card-access-level-chemistry
-  
+
 - type: accessLevel
   id: Paramedic
   name: id-card-access-level-paramedic

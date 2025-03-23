@@ -35,7 +35,7 @@
   components:
   - type: Sprite
     state: syndie_flag
-    
+
 - type: entity
   parent: BaseFlag
   id: LGBTQFlag
@@ -44,7 +44,7 @@
   components:
   - type: Sprite
     state: lgbtq_flag
-    
+
 - type: entity
   parent: BaseFlag
   id: PirateFlag

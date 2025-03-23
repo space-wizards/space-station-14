@@ -21,7 +21,7 @@
   description: "Four pieces of wooden station flooring."
   icon: { sprite: Objects/Tiles/tile.rsi, state: wood }
   objectType: Item
-  
+
 - type: construction
   name: filled brass plate
   id: TileBrassFilled
@@ -32,7 +32,7 @@
   description: "Four pieces of brass station flooring, only compatible with brass plating."
   icon: { sprite: Objects/Tiles/tile.rsi, state: brass-filled }
   objectType: Item
-  
+
 - type: construction
   name: smooth brass plate
   id: TileBrassReebe

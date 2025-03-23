@@ -83,7 +83,7 @@
   targetNode: foodboxpizza
   category: construction-category-storage
   description: A box for pizza.
-  icon: 
+  icon:
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     state: box
   objectType: Item

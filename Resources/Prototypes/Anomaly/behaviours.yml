@@ -62,7 +62,7 @@
   description: anomaly-behavior-delayed-force
   pulseFrequencyModifier: 2
   pulsePowerModifier: 2
-  
+
 - type: anomalyBehavior
   id: Rapid
   earnPointModifier: 1.15
@@ -95,7 +95,7 @@
   earnPointModifier: 0.8
   particleSensivity: 0.5
   description: anomaly-behavior-nonsensivity
-  
+
 - type: anomalyBehavior
   id: Sensivity
   earnPointModifier: 1.2

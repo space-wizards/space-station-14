@@ -118,7 +118,7 @@
         state: "creampie_moth"
         visible: false
   - type: Inventory
-    speciesId: moth 
+    speciesId: moth
     femaleDisplacements:
       jumpsuit:
         sizeMaps:
@@ -135,7 +135,7 @@
   - type: HumanoidAppearance
     species: Moth
   - type: Inventory
-    speciesId: moth 
+    speciesId: moth
     femaleDisplacements:
       jumpsuit:
         sizeMaps:

@@ -12,7 +12,7 @@
   id: StationAi
   name: id-card-access-level-station-ai
   canAddToIdCard: false
-  
+
 - type: accessGroup
   id: Silicon
   tags:

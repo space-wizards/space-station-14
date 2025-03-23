@@ -103,7 +103,7 @@
     containers:
       storagebase: !type:Container
         ents: []
-        
+
 - type: entity
   name: syringe gun
   parent: BaseStorageItem

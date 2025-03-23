@@ -51,10 +51,10 @@
           steps:
             - material: Brass
               amount: 1
-    
+
     - node: filledPlate
       entity: FloorTileItemBrassFilled
-      
+
     - node: reebe
       entity: FloorTileItemBrassReebe
 

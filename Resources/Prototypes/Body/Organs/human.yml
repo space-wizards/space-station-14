@@ -74,7 +74,7 @@
   - type: Item
     size: Small
     heldPrefix: brain
-  
+
 - type: entity
   id: OrganHumanEyes
   parent: BaseHumanOrgan

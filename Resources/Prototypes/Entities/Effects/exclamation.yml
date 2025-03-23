@@ -17,8 +17,8 @@
     - type: Tag
       tags:
         - HideContextMenu
-        
-        
+
+
 - type: entity
   id: WhistleExclamation
   name: exclamation

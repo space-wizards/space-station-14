@@ -27,7 +27,7 @@
 - type: entity
   id: PaperAgrichemManual
   name: NT "AgriChem Is Fun" manual
-  description: The single sheet of instructions that came in the kit. 
+  description: The single sheet of instructions that came in the kit.
   parent: Paper
   components:
   - type: Paper

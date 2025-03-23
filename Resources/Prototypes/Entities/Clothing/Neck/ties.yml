@@ -24,7 +24,7 @@
     sprite: Clothing/Neck/Ties/dettie.rsi
   - type: Clothing
     sprite: Clothing/Neck/Ties/dettie.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckTieSci

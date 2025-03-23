@@ -194,7 +194,7 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/oatmilk.rsi
-    
+
 - type: entity
   parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
   id: DrinkJuiceLemonCarton

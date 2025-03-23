@@ -82,7 +82,7 @@
         prob: 0.25
       - id: OxygenTankFilled
         prob: 0.05
-        
+
 - type: entity
   id: CratePermaEscapeGun
   parent: CrateGenericSteel

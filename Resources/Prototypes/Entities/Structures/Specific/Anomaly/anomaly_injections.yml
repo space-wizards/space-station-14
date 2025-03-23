@@ -257,7 +257,7 @@
   - type: PointLight
     color: "#56c1e8"
   - type: TechAnomaly
-    linkRadius: 
+    linkRadius:
       min: 2
       max: 5
     linkCountPerPulse:
