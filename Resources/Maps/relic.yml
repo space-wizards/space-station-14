@@ -4,8 +4,8 @@ meta:
   engineVersion: 249.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/23/2025 21:54:30
-  entityCount: 8260
+  time: 03/23/2025 22:52:00
+  entityCount: 8264
 maps:
 - 1
 grids:
@@ -2213,28 +2213,22 @@ entities:
     - type: Transform
       pos: 24.5,-0.5
       parent: 2
-- proto: AirlockCargo
+- proto: AirlockCargoLocked
   entities:
   - uid: 88
     components:
     - type: Transform
-      pos: 16.5,25.5
+      pos: 16.5,21.5
       parent: 2
-    - type: Door
-      secondsUntilStateChange: -133143.17
-      state: Opening
-    - type: DeviceLinkSource
-      lastSignals:
-        DoorStatus: True
-  - uid: 759
+  - uid: 205
     components:
     - type: Transform
       pos: 16.5,22.5
       parent: 2
-  - uid: 760
+  - uid: 759
     components:
     - type: Transform
-      pos: 16.5,21.5
+      pos: 16.5,25.5
       parent: 2
 - proto: AirlockChapelLocked
   entities:
@@ -2267,30 +2261,15 @@ entities:
       parent: 2
 - proto: AirlockEngineering
   entities:
-  - uid: 1570
-    components:
-    - type: Transform
-      pos: 16.5,18.5
-      parent: 2
   - uid: 2788
     components:
     - type: Transform
       pos: 60.5,56.5
       parent: 2
-  - uid: 3588
-    components:
-    - type: Transform
-      pos: 23.5,-13.5
-      parent: 2
   - uid: 4564
     components:
     - type: Transform
       pos: 33.5,49.5
-      parent: 2
-  - uid: 5219
-    components:
-    - type: Transform
-      pos: 53.5,20.5
       parent: 2
 - proto: AirlockEngineeringLocked
   entities:
@@ -2305,6 +2284,21 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,-11.5
+      parent: 2
+  - uid: 760
+    components:
+    - type: Transform
+      pos: 16.5,18.5
+      parent: 2
+  - uid: 1081
+    components:
+    - type: Transform
+      pos: 23.5,-13.5
+      parent: 2
+  - uid: 1164
+    components:
+    - type: Transform
+      pos: 53.5,20.5
       parent: 2
   - uid: 1744
     components:
@@ -2344,11 +2338,23 @@ entities:
     - type: Transform
       pos: 20.5,39.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        1512:
+        - DoorStatus: DoorBolt
   - uid: 1512
     components:
     - type: Transform
       pos: 18.5,39.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        1438:
+        - DoorStatus: DoorBolt
   - uid: 1831
     components:
     - type: Transform
@@ -2378,12 +2384,17 @@ entities:
     - type: Transform
       pos: -1.5,-10.5
       parent: 2
+    - type: Door
+      secondsUntilStateChange: -879.615
+      state: Opening
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
     - type: DeviceLinkSource
       linkedPorts:
         6731:
         - DoorStatus: DoorBolt
+      lastSignals:
+        DoorStatus: True
   - uid: 2744
     components:
     - type: Transform
@@ -2499,12 +2510,17 @@ entities:
     - type: Transform
       pos: 0.5,-10.5
       parent: 2
+    - type: Door
+      secondsUntilStateChange: -882.6817
+      state: Opening
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
     - type: DeviceLinkSource
       linkedPorts:
         843:
         - DoorStatus: DoorBolt
+      lastSignals:
+        DoorStatus: True
 - proto: AirlockExternalGlassAtmosphericsLocked
   entities:
   - uid: 621
@@ -2664,9 +2680,9 @@ entities:
     - type: Transform
       pos: 42.5,26.5
       parent: 2
-- proto: AirlockHydroponics
+- proto: AirlockHydroponicsLocked
   entities:
-  - uid: 2672
+  - uid: 1570
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
@@ -2692,7 +2708,7 @@ entities:
       pos: 51.5,22.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -49769.4
+      secondsUntilStateChange: -50769.207
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -2701,6 +2717,26 @@ entities:
     components:
     - type: Transform
       pos: 51.5,18.5
+      parent: 2
+  - uid: 2672
+    components:
+    - type: Transform
+      pos: 3.5,-8.5
+      parent: 2
+  - uid: 3588
+    components:
+    - type: Transform
+      pos: 32.5,-10.5
+      parent: 2
+  - uid: 5219
+    components:
+    - type: Transform
+      pos: 43.5,-14.5
+      parent: 2
+  - uid: 7181
+    components:
+    - type: Transform
+      pos: 61.5,55.5
       parent: 2
 - proto: AirlockMaintHydroLocked
   entities:
@@ -2716,32 +2752,6 @@ entities:
     components:
     - type: Transform
       pos: 2.5,6.5
-      parent: 2
-  - uid: 205
-    components:
-    - type: Transform
-      pos: 3.5,-8.5
-      parent: 2
-  - uid: 1081
-    components:
-    - type: Transform
-      pos: 32.5,-10.5
-      parent: 2
-  - uid: 1164
-    components:
-    - type: Transform
-      pos: 43.5,-14.5
-      parent: 2
-    - type: Door
-      secondsUntilStateChange: -201612.6
-      state: Opening
-    - type: DeviceLinkSource
-      lastSignals:
-        DoorStatus: True
-  - uid: 7181
-    components:
-    - type: Transform
-      pos: 61.5,55.5
       parent: 2
 - proto: AirlockMaintSecLocked
   entities:
@@ -8652,6 +8662,11 @@ entities:
     components:
     - type: Transform
       pos: 1.5,34.5
+      parent: 2
+  - uid: 8261
+    components:
+    - type: Transform
+      pos: 30.5,20.5
       parent: 2
 - proto: CableApcStack10
   entities:
@@ -37987,6 +38002,12 @@ entities:
     - type: Transform
       pos: 24.5,42.5
       parent: 2
+  - uid: 8264
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 37.5,26.5
+      parent: 2
 - proto: PoweredWarmSmallLight
   entities:
   - uid: 1962
@@ -40607,6 +40628,9 @@ entities:
         2474:
         - On: On
         - Off: Off
+        2479:
+        - On: On
+        - Off: Off
   - uid: 7491
     components:
     - type: Transform
@@ -41130,6 +41154,30 @@ entities:
         2318:
         - On: On
         - Off: Off
+  - uid: 8262
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 8.5,1.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        28:
+        - On: Open
+        - Off: Close
+        - Off: DoorBolt
+  - uid: 8263
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 12.5,1.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29:
+        - On: Open
+        - Off: Close
+        - Off: DoorBolt
 - proto: SignArmory
   entities:
   - uid: 1430
@@ -41561,7 +41609,7 @@ entities:
       desc: A relaxing grenade that releases a large, long-lasting cloud of fun when used.
       name: party grenade
     - type: Transform
-      pos: 23.621323,-1.5811341
+      pos: 23.5,-1.5
       parent: 2
     - type: SmokeOnTrigger
       solution:
@@ -41574,13 +41622,15 @@ entities:
           ReagentId: Happiness
           Quantity: 30
       smokePrototype: Foam
+    missingComponents:
+    - Contraband
   - uid: 213
     components:
     - type: MetaData
       desc: A relaxing grenade that releases a large, long-lasting cloud of fun when used.
       name: party grenade
     - type: Transform
-      pos: 23.668198,-1.2217591
+      pos: 23.5,-1.5
       parent: 2
     - type: SmokeOnTrigger
       solution:
@@ -41593,13 +41643,15 @@ entities:
           ReagentId: THC
           Quantity: 30
       smokePrototype: Foam
+    missingComponents:
+    - Contraband
   - uid: 215
     components:
     - type: MetaData
       desc: A relaxing grenade that releases a large, long-lasting cloud of fun when used.
       name: party grenade
     - type: Transform
-      pos: 29.454515,-11.6191025
+      pos: 29.5,-11.5
       parent: 2
     - type: SmokeOnTrigger
       solution:
@@ -41612,13 +41664,15 @@ entities:
           ReagentId: JuiceThatMakesYouWeh
           Quantity: 30
       smokePrototype: Foam
+    missingComponents:
+    - Contraband
   - uid: 230
     components:
     - type: MetaData
       desc: A relaxing grenade that releases a large, long-lasting cloud of fun when used.
       name: party grenade
     - type: Transform
-      pos: 29.75139,-11.3066025
+      pos: 29.5,-11.5
       parent: 2
     - type: SmokeOnTrigger
       solution:
@@ -41631,13 +41685,15 @@ entities:
           ReagentId: BuzzochloricBees
           Quantity: 30
       smokePrototype: Foam
+    missingComponents:
+    - Contraband
   - uid: 367
     components:
     - type: MetaData
       desc: A relaxing grenade that releases a large, long-lasting cloud of fun when used.
       name: party grenade
     - type: Transform
-      pos: 23.371323,-1.4561341
+      pos: 23.5,-1.5
       parent: 2
     - type: SmokeOnTrigger
       solution:
@@ -41650,6 +41706,8 @@ entities:
           ReagentId: JuiceThatMakesYouHew
           Quantity: 30
       smokePrototype: Foam
+    missingComponents:
+    - Contraband
 - proto: SoapNT
   entities:
   - uid: 7661
@@ -51845,7 +51903,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -116276.15
+      secondsUntilStateChange: -117275.95
       state: Opening
     - type: Airlock
       autoClose: False
