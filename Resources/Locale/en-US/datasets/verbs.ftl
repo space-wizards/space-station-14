@@ -1,4 +1,4 @@
-verbs-dataset-001 = accept
+verbs-dataset-1 = accept
 verbs-dataset-2 = add
 verbs-dataset-3 = admire
 verbs-dataset-4 = admit
