@@ -9,9 +9,9 @@
   markingLimits: MobGoblinMarkingLimits
   dollPrototype: MobGoblinDummy
   skinColoration: Hues #Possible values: TintedHues, Hues, HumanToned
-  maleFirstNames: names_goblin_male
-  femaleFirstNames: names_goblin_female
-  lastNames: names_goblin_last
+  maleFirstNames: NamesGoblinMale # imp
+  femaleFirstNames: NamesGoblinFemale # imp
+  lastNames: NamesGoblinLast # imp
 
 - type: speciesBaseSprites
   id: MobGoblinSprites
@@ -71,13 +71,13 @@
   baseSprite:
     sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
     state: head
-    
+
 - type: humanoidBaseSprite
   id: MobGoblinHeadMale
   baseSprite:
     sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
     state: head
-    
+
 - type: humanoidBaseSprite
   id: MobGoblinHeadFemale
   baseSprite:
@@ -89,13 +89,13 @@
   baseSprite:
     sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
     state: torso
-    
+
 - type: humanoidBaseSprite
   id: MobGoblinTorsoMale
   baseSprite:
     sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
     state: torso
-    
+
 - type: humanoidBaseSprite
   id: MobGoblinTorsoFemale
   baseSprite:

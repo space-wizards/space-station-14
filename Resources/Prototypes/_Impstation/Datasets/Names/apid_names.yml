@@ -1,96 +1,77 @@
-- type: dataset
-  id: apid_worker
+- type: localizedDataset
+  id: ApidWorker
   values:
-  - Worker
+    prefix: names-apid-worker-dataset-
+    count: 1
 
-- type: dataset
-  id: apid_botanist
+- type: localizedDataset
+  id: ApidBotanist
   values:
-  - Worker
-  - Forager
+    prefix: names-apid-botanist-dataset-
+    count: 2
 
-- type: dataset
-  id: apid_doctor
+- type: localizedDataset
+  id: ApidDoctor
   values:
-  - Mender
-  - Nurse
+    prefix: names-apid-doctor-dataset-
+    count: 2
 
-- type: dataset
-  id: apid_engineer
+- type: localizedDataset
+  id: ApidEngineer
   values:
-  - Builder
-  - Carpenter
-  - Mason
-  - Leafcutter
+    prefix: names-apid-engineer-dataset-
+    count: 4
 
-- type: dataset
-  id: apid_emergency
+- type: localizedDataset
+  id: ApidEmergency
   values:
-  - Watcher
-  - Guardian
+    prefix: names-apid-emergency-dataset-
+    count: 2
 
-- type: dataset
-  id: apid_chef
+- type: localizedDataset
+  id: ApidChef
   values:
-  - Baker
-  - Butcher
+    prefix: names-apid-chef-dataset-
+    count: 2
 
-- type: dataset
-  id: apid_courier
+- type: localizedDataset
+  id: ApidCourier
   values:
-  - Messenger
-  - Carrier
+    prefix: names-apid-courier-dataset-
+    count: 2
 
-- type: dataset
-  id: apid_scientist
+- type: localizedDataset
+  id: ApidScientist
   values:
-  - Researcher
-  - Notekeeper
+    prefix: names-apid-scientist-dataset-
+    count: 2
 
-- type: dataset
-  id: apid_janitor
+- type: localizedDataset
+  id: ApidJanitor
   values:
-  - Scrubber
-  - Housekeeper
+    prefix: names-apid-janitor-dataset-
+    count: 2
 
-- type: dataset
-  id: apid_adminassistant
+- type: localizedDataset
+  id: ApidAdminAssistant
   values:
-  - Attendant
-  - Secretary
+    prefix: names-apid-aa-dataset-
+    count: 2
 
-- type: dataset
-  id: apid_chaplain
+- type: localizedDataset
+  id: ApidChaplain
   values:
-  - Herald
-  - Witness
+    prefix: names-apid-chaplain-dataset-
+    count: 2
 
-- type: dataset
-  id: apid_salvager
+- type: localizedDataset
+  id: ApidSalvager
   values:
-  - Forager
-  - Breaker
+    prefix: names-apid-salvager-dataset-
+    count: 2
 
-- type: dataset #ANGRY BEE NOISES
-  id: names_apid
+- type: localizedDataset
+  id: ApidNames
   values:
-  - B'zrz
-  - Zzb'rz
-  - Zzr'z
-  - Zz'zrz
-  - Z'bzz
-  - R'zzb'z
-  - zz'bzz'z
-  - B'zz'zzb
-  - R'bzz'zz
-  - Zzrz'rzz
-  - Zz'zsz
-  - B'zzb'z
-  - R'zz'bzzbzz
-  - Zs'bzz'zz
-  - Zz'bzr'z
-  - Zs'bzsz'z
-  - Zzzz'bz
-  - B'bzz'bzz
-  - Zrzz'sbzz
-  - B'bzzz
+    prefix: names-apid-dataset-
+    count: 20

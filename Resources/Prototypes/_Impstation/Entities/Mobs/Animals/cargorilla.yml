@@ -31,7 +31,7 @@
   - type: Loadout
     prototypes: [ MobCargorillaGear ]
   - type: RandomMetadata
-    nameSegments: [names_cargorilla]
+    nameSegments: [CargorillaNames]
   - type: Grammar
     attributes:
       proper: true

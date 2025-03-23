@@ -6,8 +6,8 @@
   components:
   - type: RandomMetadata
     nameSegments:
-    - apid_worker
-    - names_apid
+    - ApidWorker
+    - ApidNames
   - type: RandomHumanoidAppearance
     randomizeName: false
 
@@ -22,8 +22,8 @@
       - StartingGearApidBotanist
   - type: RandomMetadata
     nameSegments:
-    - apid_botanist
-    - names_apid
+    - ApidBotanist
+    - ApidNames
 
 - type: entity
   name: apid doctor
@@ -36,8 +36,8 @@
       - StartingGearApidDoctor
   - type: RandomMetadata
     nameSegments:
-    - apid_doctor
-    - names_apid
+    - ApidDoctor
+    - ApidNames
 
 - type: entity
   name: apid engineer
@@ -50,8 +50,8 @@
       - StartingGearApidEngineer
   - type: RandomMetadata
     nameSegments:
-    - apid_engineer
-    - names_apid
+    - ApidEngineer
+    - ApidNames
 
 - type: entity
   name: apid emergency responder
@@ -64,8 +64,8 @@
       - StartingGearApidEmergency
   - type: RandomMetadata
     nameSegments:
-    - apid_emergency
-    - names_apid
+    - ApidEmergency
+    - ApidNames
 
 - type: entity
   name: apid chef
@@ -78,8 +78,8 @@
       - StartingGearApidChef
   - type: RandomMetadata
     nameSegments:
-    - apid_chef
-    - names_apid
+    - ApidChef
+    - ApidNames
 
 - type: entity
   name: apid courier
@@ -92,8 +92,8 @@
       - StartingGearApidCourier
   - type: RandomMetadata
     nameSegments:
-    - apid_courier
-    - names_apid
+    - ApidCourier
+    - ApidNames
 
 - type: entity
   name: apid scientist
@@ -106,8 +106,8 @@
       - StartingGearApidScientist
   - type: RandomMetadata
     nameSegments:
-    - apid_scientist
-    - names_apid
+    - ApidScientist
+    - ApidNames
 
 - type: entity
   name: apid janitor
@@ -120,8 +120,8 @@
       - StartingGearApidJanitor
   - type: RandomMetadata
     nameSegments:
-    - apid_janitor
-    - names_apid
+    - ApidJanitor
+    - ApidNames
 
 - type: entity
   name: apid administrative assistant
@@ -134,8 +134,8 @@
       - StartingGearApidAdministrativeAssistant
   - type: RandomMetadata
     nameSegments:
-    - apid_adminassistant
-    - names_apid
+    - ApidAdminAssistant
+    - ApidNames
 
 - type: entity
   name: apid chaplain
@@ -148,8 +148,8 @@
       - StartingGearApidChaplain
   - type: RandomMetadata
     nameSegments:
-    - apid_chaplain
-    - names_apid
+    - ApidChaplain
+    - ApidNames
   - type: BibleUser #thusd beeble
 
 - type: entity
@@ -163,5 +163,5 @@
       - StartingGearApidSalvageSpecialist
   - type: RandomMetadata
     nameSegments:
-    - apid_salvager
-    - names_apid
+    - ApidSalvager
+    - ApidNames
