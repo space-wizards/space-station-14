@@ -442,7 +442,7 @@ public partial class SharedGunSystem
         }
 
         // Set chambers to default if they are not equal to the capacity.
-        if (component.Chambers.Length != component.Capacity && component.FillPrototype != null)
+        if (component.Chambers.Length != component.Capacity)
         {
             component.Chambers = new bool?[component.Capacity];
             for (var i = 0; i < component.Capacity; i++)
@@ -454,6 +454,15 @@ public partial class SharedGunSystem
                 }
 
                 component.Chambers[i] = true;
+            }
+        }
+
+        // Empty chambers if protoId is null.
+        if (component.FillPrototype == null)
+        {
+            for (var i = 0; i < component.Chambers.Length; i++)
+            {
+                component.Chambers[i] = null;
             }
         }
 

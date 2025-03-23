@@ -34,9 +34,18 @@ public sealed partial class RevolverAmmoProviderComponent : AmmoProviderComponen
     [DataField]
     public List<EntityUid?> AmmoSlots;
 
+    /// <summary>
+    /// Bool array for chambers. Every bool can be null, true or false.
+    /// Null will create empty chamber.
+    /// True will create chamber with <see cref="FillPrototype"/>.
+    /// False will create chamber with used ammo.
+    /// </summary>
     [DataField]
     public bool?[] Chambers = [];
 
+    /// <summary>
+    /// Prototype id that will be used as started ammo. Null will create entity with empty magazine.
+    /// </summary>
     [DataField("proto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? FillPrototype = "CartridgeMagnum";
 
