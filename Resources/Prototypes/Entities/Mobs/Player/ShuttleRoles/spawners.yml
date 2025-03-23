@@ -767,6 +767,22 @@
     prototypes:
     - RandomHumanoidVisitorZookeeper
 
+# Misc
+
+- type: entity
+  name: knight errant spawner
+  id: KnightErrantSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects\Weapons\Melee\claymore.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidKnightErrant
+
 ### Visitors missing equipment for challenges
 
 # Command

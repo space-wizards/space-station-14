@@ -299,3 +299,32 @@
     coolingCoefficient: 0.01
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCarp
+
+#Knight Armor
+
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterSuitKnight
+  name: Knight Armor
+  description: Forged by master blacksmiths to resist the mightiest of swords. To Battle !
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/knightsuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/knightsuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5 #To survive a dragon's flames.
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.5
+        Heat: 0.5 #To survive a dragon's flames.
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
