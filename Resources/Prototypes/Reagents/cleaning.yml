@@ -77,6 +77,7 @@
   recognizable: true
   boilingPoint: 290.0 # Glycerin
   meltingPoint: 18.2
+  friction: 0.0
 
 - type: reagent
   id: SpaceGlue

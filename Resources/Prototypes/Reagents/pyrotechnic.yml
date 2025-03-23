@@ -157,6 +157,7 @@
   recognizable: true
   boilingPoint: -84.7 # Acetylene. Close enough.
   meltingPoint: -80.7
+  friction: 0.4
   tileReactions:
   - !type:FlammableTileReaction {}
   metabolisms:

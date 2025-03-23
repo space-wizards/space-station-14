@@ -394,6 +394,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         // These three values will be averaged later and all start at zero so the calculations work
         // A cumulative weighted amount of minimum speed to slip values
+        var puddleFriction = FixedPoint2.Zero;
+        // A cumulative weighted amount of minimum speed to slip values
         var slipStepTrigger = FixedPoint2.Zero;
         // A cumulative weighted amount of launch multipliers from slippery reagents
         var launchMult = FixedPoint2.Zero;
@@ -418,6 +420,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             // Calculate the minimum speed needed to slip in the puddle. Average the overall slip thresholds for all reagents
             var deltaSlipTrigger = reagentProto.SlipData?.RequiredSlipSpeed ?? entity.Comp.DefaultSlippery;
             slipStepTrigger += quantity * deltaSlipTrigger;
+
+            // Aggregate Friction based on quantity
+            puddleFriction += reagentProto.Friction * quantity;
 
             if (reagentProto.SlipData == null)
                 continue;
@@ -452,17 +457,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         slipComp.SlipData.SuperSlippery = superSlipperyUnits >= smallPuddleThreshold;
 
         // Lower tile friction based on how slippery it is, lets items slide across a puddle of lube
-        if (slipComp.SlipData.SuperSlippery)
-            // If it's superSlippery, it has no friction
-            slipComp.SlipData.SlipFriction = 0;
-        else
-        {
-            // We square the value because it ends up feeling better with lube being very slippery
-            var slipRatio = slipComp.SlipData.RequiredSlipSpeed / entity.Comp.DefaultSlippery;
-            slipComp.SlipData.SlipFriction = TileFrictionController.DefaultFriction * slipRatio * slipRatio;
-        }
-        //Apply the value here
-        _tile.SetModifier(entity, slipComp.SlipData.SlipFriction);
+        slipComp.SlipData.SlipFriction = (float)(puddleFriction/solution.Volume);
+        _tile.SetModifier(entity, TileFrictionController.DefaultFriction * slipComp.SlipData.SlipFriction);
 
         Dirty(entity, slipComp);
     }

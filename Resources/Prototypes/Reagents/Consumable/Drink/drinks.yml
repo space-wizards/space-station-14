@@ -441,6 +441,7 @@
   recognizable: true
   boilingPoint: 100.0
   meltingPoint: 0.0
+  friction: 0.4
   metabolisms:
     Drink:
       effects:
@@ -459,6 +460,7 @@
   recognizable: true
   meltingPoint: 0.0
   boilingPoint: 100.0
+  friction: 0.05 #Copied from Ice Crust
   plantMetabolism:
   - !type:PlantAdjustWater
     amount: 1

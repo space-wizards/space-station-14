@@ -123,6 +123,13 @@ namespace Content.Shared.Chemistry.Reagent
         public float Viscosity;
 
         /// <summary>
+        /// Linear Friction Multiplier for a reagent
+        /// 0 - frictionless, 1 - no effect on friction
+        /// </summary>
+        [DataField]
+        public float Friction = 1.0f;
+
+        /// <summary>
         /// Should this reagent work on the dead?
         /// </summary>
         [DataField]

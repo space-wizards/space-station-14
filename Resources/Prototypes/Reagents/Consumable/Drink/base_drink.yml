@@ -48,6 +48,7 @@
   abstract: true
   slipData:
     requiredSlipSpeed: 3.5
+  friction: 0.4
   metabolisms:
     Drink:
       effects:
