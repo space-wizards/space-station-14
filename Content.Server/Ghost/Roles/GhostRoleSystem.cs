@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
+using Content.Server.GameTicking.Events;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Shared.Ghost.Roles.Raffles;
@@ -469,19 +470,11 @@ public sealed class GhostRoleSystem : EntitySystem
 
         // Check role bans
         if (_ban.IsRoleBanned(player, prototypes))
-        {
-            // TODO Popup window? Audio cue
-            // Disable the buttons in the first place in the client's GhostRoleButtonsBox.xaml.cs ?
+            return;
 
-            if (player.AttachedEntity is not null)
-            {
-                _popupSystem.PopupEntity(Loc.GetString("role-ban"),
-                    player.AttachedEntity.Value,
-                    player.AttachedEntity.Value,
-                    PopupType.LargeCaution);
-                return;
-            }
-        }
+        // Check role requirements
+        if (!IsRoleAllowed(player, prototypes))
+            return;
 
         // Decide to do a raffle or not
         if (roleEnt.Comp.RaffleConfig is not null)
@@ -539,6 +532,35 @@ public sealed class GhostRoleSystem : EntitySystem
         }
 
         return list;
+    }
+
+    private bool IsRoleAllowed(ICommonSession player, List<string> roles)
+    {
+        //TODO:ERRANT GameRoleTimerOverride
+
+        // Check each role for playtime requirements
+        foreach (var proto in roles)
+        {
+            var ev = new IsRoleAllowedEvent(player, RemovePrefix(proto));
+            RaiseLocalEvent(ref ev);
+
+            if (ev.Cancelled)
+                return false;
+        }
+
+        return true;
+    }
+
+    private string RemovePrefix(string input) //TODO:ERRANT move this somewhere else? SharedRoleSystem maybe?
+    {
+        // TODO Having to manually add every new prefix that may appear is not great, but what can you do
+        if (input.StartsWith(JobPrefix, StringComparison.Ordinal))
+            return input[JobPrefix.Length..];
+
+        if (input.StartsWith(AntagPrefix, StringComparison.Ordinal))
+            return input[AntagPrefix.Length..];
+
+        return input;
     }
 
     /// <summary>

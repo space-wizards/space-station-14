@@ -12,10 +12,10 @@ namespace Content.Shared.Ghost.Roles
         public string Description { get; set; }
         public string Rules { get; set; }
 
-        // TODO ROLE TIMERS //TODO:ERRANT
+        // TODO ROLE TIMERS
         // Actually make use of / enforce this requirement?
         // Why is this even here.
-        // Move to ghost role prototype & respect CCvars.GameRoleTimerOverride
+        // Move to ghost role prototype & respect CCvars.GameRoleTimerOverride //TODO:ERRANT GameRoleTimerOverride
         //
         // This is now partially obsolete since the requirements are read from all job and antagprototypes from the ghost role proto
         // However, leaving this here for now for legacy reasons and so requirements can be specified directly on ghostrolecomp if needed

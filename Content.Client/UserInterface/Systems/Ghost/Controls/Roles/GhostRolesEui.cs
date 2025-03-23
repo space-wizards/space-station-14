@@ -94,6 +94,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             // Grouping roles
             var groupedRoles = ghostState.GhostRoles.GroupBy(
                 role => (role.Name, role.Description, role.RolePrototypes, role.Requirements));
+            //TODO:ERRANT Revenants don't get grouped. Is this a thing on master? Why?
 
             // Add a new entry for each role group
             foreach (var group in groupedRoles)

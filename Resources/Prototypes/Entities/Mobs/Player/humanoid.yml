@@ -40,6 +40,10 @@
       name: ghost-role-information-Death-Squad-name
       description: ghost-role-information-Death-Squad-description
       rules: ghost-role-information-Death-Squad-rules
+      requirements:
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 54000 # 15 hours
       raffle:
         settings: short
       mindRoles:

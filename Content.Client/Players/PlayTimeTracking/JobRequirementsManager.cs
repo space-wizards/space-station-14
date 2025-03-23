@@ -111,7 +111,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     {
         reason = null;
 
-        foreach (var proto in prototypes) //TODO:ERRANT Test this loop from start to finish
+        foreach (var proto in prototypes)
         {
             // Check the player's bans
             if (_roleBans.Contains(proto))
@@ -119,9 +119,10 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
                 reason = FormattedMessage.FromUnformatted(Loc.GetString("role-ban"));
                 return false;
             }
-
             JobPrototype? job = null;
             AntagPrototype? antag = null;
+
+            // use RemovePrefix?
 
             // Slightly cursed, but the prefixes need to be removed for the next part. And at least we know the types.
             if (proto.StartsWith(JobPrefix, StringComparison.Ordinal))

@@ -18,6 +18,18 @@ public static class JobRequirements
     {
         var sys = entManager.System<SharedRoleSystem>();
         var requirements = sys.GetJobRequirement(job);
+        return TryRequirementsMet(requirements, playTimes, out reason, entManager, protoManager, profile);
+    }
+
+    public static bool TryRequirementsMet(
+        HashSet<JobRequirement>? requirements,
+        IReadOnlyDictionary<string, TimeSpan> playTimes,
+        [NotNullWhen(false)] out FormattedMessage? reason,
+        IEntityManager entManager,
+        IPrototypeManager protoManager,
+        HumanoidCharacterProfile? profile)
+    {
+        var sys = entManager.System<SharedRoleSystem>();
         reason = null;
         if (requirements == null)
             return true;
