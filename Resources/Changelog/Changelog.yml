@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: thetolbean
-  changes:
-  - message: Droppers can no longer inject or draw from closed containers.
-    type: Fix
-  id: 7604
-  time: '2024-11-12T12:06:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33011
 - author: august-sun
   changes:
   - message: The inert flesh anomaly core can now be microwaved to turn into an anomalous
@@ -3881,3 +3874,10 @@
   id: 8103
   time: '2025-03-22T14:42:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36008
+- author: RedBookcase
+  changes:
+  - message: Fixed some unintended changes to Salvage gear.
+    type: Fix
+  id: 8104
+  time: '2025-03-23T00:21:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36013
