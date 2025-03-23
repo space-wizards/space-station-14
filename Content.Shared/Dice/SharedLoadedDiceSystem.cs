@@ -79,11 +79,14 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
         if (user != args.User)
             return;
 
+        if (!TryComp(entity.Owner, out DiceComponent? die))
+            return;
+
         args.Verbs.Add(new InteractionVerb()
         {
             Text = Loc.GetString("loaded-dice-set-verb-text"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
-            Act = () => TryOpenUi(entity.Owner, entity.Comp, user)
+            Act = () => TryOpenUi(entity.Owner, die, entity.Comp, user)
         });
     }
 
@@ -103,21 +106,22 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
             Priority = 1, // Make this the alt-click verb
             Text = Loc.GetString("loaded-dice-unset-verb-text"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/die.svg.192dpi.png")),
-            Act = () => SetSelectedSide(entity.Owner, null, null, entity.Comp)
+            Act = () => SetSelectedSide(entity.Owner, null, user, null, entity.Comp)
         });
     }
 
     private void OnSelected(Entity<LoadedDiceComponent> entity, ref LoadedDiceSideSelectedMessage args)
     {
-        SetSelectedSide(entity.Owner, args.SelectedSide, null, entity.Comp);
+        SetSelectedSide(entity.Owner, args.SelectedSide, args.Actor, null, entity.Comp);
     }
 
-    private void TryOpenUi(EntityUid uid, LoadedDiceComponent loadedDie, EntityUid user)
+    private void TryOpenUi(EntityUid uid, DiceComponent die, LoadedDiceComponent loadedDie, EntityUid user)
     {
         if (!TryComp(user, out ActorComponent? actor))
             return;
 
         _uiSystem.TryToggleUi(uid, LoadedDiceUiKey.Key, actor.PlayerSession);
+        UpdateUi(uid, die, loadedDie);
     }
 
     private void UpdateUi(EntityUid uid, DiceComponent die, LoadedDiceComponent loadedDie)
@@ -130,8 +134,14 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
     /// <summary>
     ///     Sets the selected side on the loaded die, ensuring the change is valid.
     ///     If selectedSide is null, this unsets the die, and makes it behave like a normal die.
+    ///     If user is not null, this will also display a popup and log an admin message.
     /// </summary>
-    public void SetSelectedSide(EntityUid uid, int? selectedSide, DiceComponent? die = null, LoadedDiceComponent? loadedDie = null)
+    public void SetSelectedSide(
+            EntityUid uid,
+            int? selectedSide,
+            EntityUid? user = null,
+            DiceComponent? die = null,
+            LoadedDiceComponent? loadedDie = null)
     {
         if (!Resolve(uid, ref die, false))
             return;
@@ -144,9 +154,14 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
             return;
 
         // There may not be a user if the change is not done by a player
-        // TODO: This should be checked that it's the same as the user who is interacting with the UI! How do I do that?
-        if (GetCapableUser((uid, loadedDie), out var user))
+        if (user != null)
         {
+            if (!GetCapableUser((uid, loadedDie), out var capableUser))
+                return;
+
+            if (capableUser != user)
+                return;
+
             string message;
             LogStringHandler adminMessage;
             if (selectedSide == null)
@@ -162,7 +177,7 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
                 adminMessage = $"{ToPrettyString(user):player} set the loaded {ToPrettyString(uid):target} to roll {sideValue}";
             }
 
-            _popup.PopupEntity(message, uid, user, PopupType.Small);
+            _popup.PopupEntity(message, uid, user.Value, PopupType.Small);
             _adminLogger.Add(LogType.Action, LogImpact.Low, ref adminMessage);
         }
 
