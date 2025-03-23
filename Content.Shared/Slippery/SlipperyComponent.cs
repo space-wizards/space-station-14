@@ -58,5 +58,11 @@ namespace Content.Shared.Slippery
         /// </summary>
         [DataField]
         public bool SuperSlippery;
+
+        /// <summary>
+        /// This is used to store the friction modifier that is used on a sliding entity.
+        /// </summary>
+        [DataField]
+        public float SlipFriction;
     }
 }
