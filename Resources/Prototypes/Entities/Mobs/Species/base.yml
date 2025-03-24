@@ -261,11 +261,11 @@
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
-    implicitHeatRegulation: 500
+    implicitHeatRegulation: 800
     sweatHeatRegulation: 2000
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 10
+    thermalRegulationTemperatureThreshold: 2
   - type: Perishable
   - type: Butcherable
     butcheringType: Spike # TODO human.
