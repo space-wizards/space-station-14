@@ -22,7 +22,6 @@ public sealed class EmbedTest : InteractionTest
     /// occur due to reparenting during cleanup.
     /// </summary>
     [Test]
-    [Explicit]
     public async Task TestDisconnectWhileEmbedded()
     {
         // Spawn the target we're going to throw at
