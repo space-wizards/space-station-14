@@ -17,6 +17,7 @@
     hideLayersOnEquip: #imp
     - HeadSide
     - Hair
+    - Tail
     #- type: VoxAccent # Not yet coded
   - type: Speech
     speechVerb: Vox

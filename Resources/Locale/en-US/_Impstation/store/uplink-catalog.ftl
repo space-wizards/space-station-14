@@ -16,6 +16,9 @@ uplink-bulletcatcher-desc = Security aiming guns at you? Worse, your audience? P
 uplink-spaceblade-name = weaponized space blade
 uplink-spaceblade-desc = One of those hot new 'space blade' toys that kids love, except with the edges sharpened for maximum ankle shredding.
 
+uplink-kaijucloak-name = Kaiju Cloak
+uplink-kaijucloak-desc = Are you too recognizable, even in a hardsuit? Simply hide your loose parts with this large cloak! It'll cover wings, tails, and extra limbs!
+
 uplink-juggernautcloak-name = Juggernaut cloak
 uplink-juggernautcloak-desc = Decorate your armor with your old cloak. Show them who you are. Unfortunately, it'll cost to have it sent.
 

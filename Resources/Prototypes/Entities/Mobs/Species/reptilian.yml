@@ -12,6 +12,7 @@
     - Snout
     - HeadTop
     - HeadSide
+    - Tail #imp
   - type: Hunger
   - type: Puller
     needsHands: false
@@ -91,6 +92,7 @@
     - Snout
     - HeadTop
     - HeadSide
+    - Tail #imp
   - type: Inventory
     speciesId: reptilian
     femaleDisplacements:
