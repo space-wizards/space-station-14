@@ -136,7 +136,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     private void Respawn(EntityUid oldEntity, string prototype, EntityCoordinates coords)
     {
         var entity = Spawn(prototype, coords);
-        _adminLog.Add(LogType.Respawn, LogImpact.High, $"{ToPrettyString(oldEntity)} was deleted and was respawned at {coords.ToMap(EntityManager, _transform)} as {ToPrettyString(entity)}");
+        _adminLog.Add(LogType.Respawn, LogImpact.Extreme, $"{ToPrettyString(oldEntity)} was deleted and was respawned at {coords.ToMap(EntityManager, _transform)} as {ToPrettyString(entity)}");
         _chat.SendAdminAlert($"{MetaData(oldEntity).EntityName} was deleted and was respawned as {ToPrettyString(entity)}");
     }
 

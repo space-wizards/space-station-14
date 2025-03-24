@@ -80,7 +80,7 @@
 
 - type: entity
   name: Inspector
-  parent: [BaseWeaponRevolver, BaseRestrictedContraband]
+  parent: [BaseWeaponRevolver, BaseSecurityContraband]
   id: WeaponRevolverInspector
   description: A detective's best friend. Uses .45 magnum ammo.
   components:
