@@ -31,5 +31,3 @@ hud-chatbox-channel-Server = Server
 hud-chatbox-channel-Visual = Actions
 hud-chatbox-channel-Damage = Damage
 hud-chatbox-channel-Unspecified = Unspecified
-
-hud-output-scroll-down = Scroll Down
