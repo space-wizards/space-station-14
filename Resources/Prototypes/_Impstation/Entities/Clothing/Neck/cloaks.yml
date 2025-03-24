@@ -98,3 +98,12 @@
     sprite: _Impstation/Clothing/Neck/Cloaks/hd.rsi
   - type: StealTarget
     stealGroup: HeadCloak
+
+- type: entity
+  parent: [ClothingNeckBase, Tier1Contraband]
+  id: ClothingNeckCloakJuggernaut
+  name: juggernaut cloak
+  description: Originally designed to keep debris out of the joints of juggernaut armor, this ragged cloak now only serves to flaunt how many battles its owner has survived.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/juggernautcloak.rsi

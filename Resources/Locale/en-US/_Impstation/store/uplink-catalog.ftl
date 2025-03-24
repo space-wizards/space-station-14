@@ -15,3 +15,9 @@ uplink-bulletcatcher-desc = Security aiming guns at you? Worse, your audience? P
 
 uplink-spaceblade-name = weaponized space blade
 uplink-spaceblade-desc = One of those hot new 'space blade' toys that kids love, except with the edges sharpened for maximum ankle shredding.
+
+uplink-juggernautcloak-name = Juggernaut cloak
+uplink-juggernautcloak-desc = Decorate your armor with your old cloak. Show them who you are. Unfortunately, it'll cost to have it sent.
+
+uplink-satchel-syndicate-name = Syndicate satchel
+uplink-satchel-syndicate-desc = A lightweight explosion-proof satchel for when speed matters.

@@ -85,3 +85,24 @@
     Telecrystal: 1
   categories:
   - UplinkPointless
+
+- type: listing
+  id: UplinkJuggernautCloak
+  name: uplink-juggernautcloak-name
+  description: uplink-juggernautcloak-desc
+  icon: { sprite: _Impstation/Clothing/Neck/Cloaks/juggernautcloak.rsi, state: icon }
+  productEntity: ClothingNeckCloakJuggernaut
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkPointless
+
+- type: listing
+  id: UplinkSatchelSyndicate
+  name: uplink-satchel-syndicate-name
+  description: uplink-satchel-syndicate-desc
+  productEntity: ClothingBackpackSatchelSyndicate
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkWearables
