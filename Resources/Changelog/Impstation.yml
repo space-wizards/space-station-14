@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Most stamps now look fancier on paper.
-    type: Add
-  id: 875
-  time: '2025-01-08T14:13:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1255
 - author: DinnerCalzone
   changes:
   - message: Bagel has been updated for a more pleasurable gaming experience, including
@@ -4097,3 +4090,12 @@
   id: 1374
   time: '2025-03-24T03:05:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2034
+- author: Sha-Seng
+  changes:
+  - message: Decapoid clowns and mimes now have special vaporizers
+    type: Add
+  - message: Decapoids have special huge puffer coat sprites and circus clown sprites
+    type: Tweak
+  id: 1375
+  time: '2025-03-24T03:34:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2002
