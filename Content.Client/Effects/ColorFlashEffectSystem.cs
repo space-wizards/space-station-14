@@ -29,7 +29,7 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
         SubscribeLocalEvent<ColorFlashEffectComponent, AnimationCompletedEvent>(OnEffectAnimationCompleted);
     }
 
-    protected override void RaiseEffect(EffectSource source, Color color, List<EntityUid> entities, Filter filter)
+    protected override void RaiseEffect(string source, Color color, List<EntityUid> entities, Filter filter)
     {
         if (!_timing.IsFirstTimePredicted)
             return;

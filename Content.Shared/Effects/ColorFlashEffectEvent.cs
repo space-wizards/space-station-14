@@ -15,9 +15,13 @@ public sealed class ColorFlashEffectEvent : EntityEventArgs
 
     public List<NetEntity> Entities;
 
-    public EffectSource EffectSource;
+    /// <summary>
+    /// A string representing where the event came from.
+    /// The color can be overridden per EffectSource on an entity using the ColorFlashEffectOverrideComponent
+    /// </summary>
+    public string EffectSource;
 
-    public ColorFlashEffectEvent(EffectSource source, Color color, List<NetEntity> entities)
+    public ColorFlashEffectEvent(string source, Color color, List<NetEntity> entities)
     {
         Color = color;
         Entities = entities;
