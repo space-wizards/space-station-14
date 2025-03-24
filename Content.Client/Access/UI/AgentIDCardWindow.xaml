@@ -10,8 +10,8 @@
         <!-- Header: ID status -->
         <BoxContainer Orientation="Horizontal" Margin="0 12 0 4" MinHeight="80" >
             <PanelContainer> <!-- Inset aesthetics -->
-                <PanelContainer.PanelOverride> <!-- TODO Are these colors right? -->
-                    <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#444444" BackgroundColor="#1E1E22" />
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#444444" BackgroundColor="{x:Static s:StyleNano.PanelDark}" />
                 </PanelContainer.PanelOverride>
                     <TextureRect Margin="4" Name="CurrentJobIcon" Stretch="KeepAspectCentered"
                         VerticalAlignment="Center" HorizontalAlignment="Center" SetSize="64 64" />
@@ -25,10 +25,12 @@
 
         <!-- Tabs -->
         <PanelContainer MinHeight="220" VerticalExpand="True" > <!-- Inset aesthetics -->
-            <PanelContainer.PanelOverride> <!-- TODO Are these colors right? -->
-                <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#444444" BackgroundColor="#1E1E22" />
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BorderThickness="1" BorderColor="#444444" BackgroundColor="{x:Static s:StyleNano.PanelDark}" />
             </PanelContainer.PanelOverride>
             <BoxContainer Orientation="Vertical" >
+                <BoxContainer Orientation="Horizontal" >
+                </BoxContainer>
                 <TabContainer Name="CTabContainer" Margin="4 4 4 0" VerticalExpand="True" MinHeight="180" >
 
                     <!-- Settings tab -->
