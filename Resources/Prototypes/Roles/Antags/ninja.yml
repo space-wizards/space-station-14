@@ -5,6 +5,9 @@
   setPreference: false
   objective: roles-antag-space-ninja-objective
   guides: [ SpaceNinja ]
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 360000 #10 hrs
 
 #Ninja Gear
 - type: startingGear

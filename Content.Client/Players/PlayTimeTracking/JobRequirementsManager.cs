@@ -130,10 +130,9 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
             else if (proto.StartsWith(AntagPrefix, StringComparison.Ordinal))
                 _prototypes.TryIndex<AntagPrototype>(proto[AntagPrefix.Length..], out antag);
 
+            //TODO antagPrototype whitelist check?
             if (job is not null && !CheckWhitelist(job, out reason))
                 return false;
-
-            //TODO antagPrototype whitelist check?
 
             var player = _playerManager.LocalSession;
             if (player == null)
@@ -141,7 +140,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
 
             var reqs = new HashSet<JobRequirement>();
 
-            // Check other requirements
+            // Check other role requirements
             if (job is not null)
                 reqs = _entManager.System<SharedRoleSystem>().GetJobRequirement(job);
             else if (antag is not null)
@@ -153,13 +152,8 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
         return true;
     }
 
-    public bool CheckRoleRequirements(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
-    {
-        var reqs = _entManager.System<SharedRoleSystem>().GetJobRequirement(job);
-        return CheckRoleRequirements(reqs, profile, out reason);
-    }
-
-    public bool CheckRoleRequirements(HashSet<JobRequirement>? requirements, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
+    // This must be private so code paths can't accidentally skip requirement overrides. Call this through IsAllowed()
+    private bool CheckRoleRequirements(HashSet<JobRequirement>? requirements, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
         reason = null;
 

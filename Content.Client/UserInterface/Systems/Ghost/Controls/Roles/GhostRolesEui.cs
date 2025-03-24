@@ -91,10 +91,11 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             var requirementsManager = IoCManager.Resolve<JobRequirementsManager>();
 
             // TODO: role.Requirements value doesn't work at all as an equality key, this must be fixed
+            //TODO:ERRANT things aren't grouped (zombies, reventants, etc.) Figure out why
             // Grouping roles
             var groupedRoles = ghostState.GhostRoles.GroupBy(
-                role => (role.Name, role.Description, role.RolePrototypes, role.Requirements));
-            //TODO:ERRANT Revenants don't get grouped. Is this a thing on master? Why?
+                role => (role.Name, role.Description, role.RolePrototypes));
+
 
             // Add a new entry for each role group
             foreach (var group in groupedRoles)
@@ -107,15 +108,10 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                     group.Key.RolePrototypes,
                     null,
                     out var reason);
-
-                // Check requirmements directly specified on the GhostRoleComponent
-                var directRequirements = requirementsManager.CheckRoleRequirements(
-                    group.Key.Requirements,
-                    null,
-                    out var reason2);
+                // prototypesAllowed = true; //TODO:ERRANT TESTING ONLY!!
 
                 // Adding a new role
-                _window.AddEntry(name, description, prototypesAllowed && directRequirements, reason2 ?? reason, group, spriteSystem);
+                _window.AddEntry(name, description, prototypesAllowed, reason, group, spriteSystem);
             }
 
             // Restore the Collapsible box state if it is saved

@@ -9,6 +9,7 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
@@ -48,6 +49,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly LoadoutSystem _loadout = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly PlayTimeTrackingSystem _playTime = default!;
     [Dependency] private readonly IServerPreferencesManager _pref = default!;
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
@@ -499,20 +501,38 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (ent.Comp.PreSelectedSessions.TryGetValue(def, out var preSelected) && preSelected.Contains(session))
                 continue;
 
-            var banned = false;
-            var fallbackBanned = false;
+            var blocked = false;
+            var fallbackBlocked = false;
 
-            if (_ban.IsRoleBanned(session, def.PrefRoles)) //TODO:ERRANT move the check to IsSessionValid?
-                banned = true;
-
+            // Check for role bans
+            // These are not in IsSessionValid so that we can have a Preferred role ban not block a Fallback role
+            if (_ban.IsRoleBanned(session, def.PrefRoles) )
+                blocked = true;
             if (_ban.IsRoleBanned(session, def.FallbackRoles))
-                fallbackBanned = true;
+                fallbackBlocked = true;
 
-            if (HasPrimaryAntagPreference(session, def) && !banned)
+            if (blocked && fallbackBlocked) //Is it even worth it to have this, to skip the further checks?
+                continue;
+
+            // Check if the player meets all requirements for the roles
+            foreach (var antag in def.PrefRoles)
+            {
+                if (!_playTime.IsAllowed(session, antag))
+                    blocked = true;
+            }
+
+            foreach (var antag in def.FallbackRoles)
+            {
+                if (!_playTime.IsAllowed(session, antag))
+                    fallbackBlocked = true;
+            }
+
+            // Add player to the appropriate antag pool
+            if (HasPrimaryAntagPreference(session, def) && !blocked)
             {
                 preferredList.Add(session);
             }
-            else if (HasFallbackAntagPreference(session, def) && !fallbackBanned)
+            else if (HasFallbackAntagPreference(session, def) && !fallbackBlocked)
             {
                 fallbackList.Add(session);
             }
@@ -526,7 +546,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     /// </summary>
     public bool IsSessionValid(Entity<AntagSelectionComponent> ent, ICommonSession? session, AntagSelectionDefinition def, EntityUid? mind = null)
     {
-        // TODO ROLE TIMERS //TODO:ERRANT move the ban checks here?
+        // TODO ROLE TIMERS
         // Check if antag role requirements are met
 
         if (session == null)

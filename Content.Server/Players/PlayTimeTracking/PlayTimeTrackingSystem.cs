@@ -221,9 +221,6 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             requirements = _roles.GetJobRequirement(job);
         else if (antag is not null)
             requirements = _roles.GetAntagRequirement(antag);
-        // Check if requirements are collected from the ghostrole
-        // Check if requirements are collected from the JobProt
-        // Check if requirements are collected from the AntagProto
 
         return JobRequirements.TryRequirementsMet(requirements, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
     }

@@ -305,7 +305,7 @@ namespace Content.Server.Zombies
         }
 
         // Make sure players that enter a zombie (for example via a ghost role or the mind swap spell) count as an antagonist.
-        //TODO:ERRANT wait why isn't this simply on the GhostRoleComponent?
+        //TODO:ERRANT this is now added on zombification, check if this can be removed
         private void OnMindAdded(Entity<ZombieComponent> ent, ref MindAddedMessage args)
         {
             if (!_role.MindHasRole<ZombieRoleComponent>(args.Mind))

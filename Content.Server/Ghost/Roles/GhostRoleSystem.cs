@@ -470,11 +470,18 @@ public sealed class GhostRoleSystem : EntitySystem
 
         // Check role bans
         if (_ban.IsRoleBanned(player, prototypes))
+        {
+            Log.Warning($"Server rejected ghost role request '{roleEnt.Comp.RoleName}' for '{player.Name}' - client missed ban?");
             return;
+        }
 
         // Check role requirements
         if (!IsRoleAllowed(player, prototypes))
+        {
+            Log.Warning($"Server rejected ghost role request '{roleEnt.Comp.RoleName}' for '{player.Name}' - client missed requirement check?");
             return;
+        }
+
 
         // Decide to do a raffle or not
         if (roleEnt.Comp.RaffleConfig is not null)
@@ -536,8 +543,6 @@ public sealed class GhostRoleSystem : EntitySystem
 
     private bool IsRoleAllowed(ICommonSession player, List<string> roles)
     {
-        //TODO:ERRANT GameRoleTimerOverride
-
         // Check each role for playtime requirements
         foreach (var proto in roles)
         {
@@ -669,7 +674,6 @@ public sealed class GhostRoleSystem : EntitySystem
                 Name = role.RoleName,
                 Description = role.RoleDescription,
                 Rules = role.RoleRules,
-                Requirements = role.Requirements,
                 RolePrototypes = GetPrototypes((uid, role)),
                 Kind = kind,
                 RafflePlayerCount = rafflePlayerCount,
