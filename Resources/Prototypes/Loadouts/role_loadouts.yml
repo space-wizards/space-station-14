@@ -225,7 +225,7 @@
   - SurvivalClown
   - Trinkets
   - GroupTankHarnessWithOuterwear
-  - GroupBreathToolDecapoidInventory # imp special
+  - GroupBreathToolDecapoidInventoryClown # imp special
   - GroupTankHarnessWithOuterwearAquatic # imp special
 
 - type: roleLoadout
@@ -243,7 +243,7 @@
   - SurvivalMime
   - Trinkets
   - GroupTankHarnessWithOuterwear
-  - GroupBreathToolDecapoidInventory # imp special
+  - GroupBreathToolDecapoidInventoryMime # imp special
   - GroupTankHarnessWithOuterwearAquatic # imp special
 
 - type: roleLoadout

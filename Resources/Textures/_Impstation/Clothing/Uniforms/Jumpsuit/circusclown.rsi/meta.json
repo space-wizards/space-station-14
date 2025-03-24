@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Made by Doop",
+    "copyright": "Made by Doop, decapoid sprite edited by Sha-Seng (github)",
     "size": {
       "x": 32,
       "y": 32
@@ -16,6 +16,10 @@
       },
       {
         "name": "equipped-INNERCLOTHING-monkey",
+        "directions": 4
+      },
+      {
+        "name": "equipped-INNERCLOTHING-decapoid",
         "directions": 4
       }
     ]
