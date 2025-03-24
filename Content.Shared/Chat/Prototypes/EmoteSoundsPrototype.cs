@@ -11,7 +11,7 @@ namespace Content.Shared.Chat.Prototypes;
 ///     Different entities may use different sounds collections.
 /// </summary>
 [Prototype, Serializable, NetSerializable]
-public sealed class EmoteSoundsPrototype : IPrototype
+public sealed class EmoteSoundsPrototype : IPrototype, IInheritingPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
