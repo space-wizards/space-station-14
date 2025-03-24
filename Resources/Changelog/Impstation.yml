@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5
-  changes:
-  - message: Detectives now start the round with white forensic chalk.
-    type: Add
-  - message: Evidence marker boxes have been made small enough to fit in a pocket,
-      and will only carry the markers.
-    type: Tweak
-  id: 878
-  time: '2025-01-08T14:19:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1262
 - author: kipdotnet
   changes:
   - message: Added a chef Apid, for kitchen bounties.
@@ -4102,3 +4092,15 @@
   id: 1377
   time: '2025-03-24T03:54:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2033
+- author: Sha-Seng
+  changes:
+  - message: Simple tee, simple tank, and black flip flops added to the Clothesmate
+    type: Add
+  - message: Black and white wrapped scarves added to the Winterdrobe and passenger
+      loadout
+    type: Add
+  - message: Tailor's Knife (a legal shiv) for mappers
+    type: Add
+  id: 1378
+  time: '2025-03-24T04:59:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2046
