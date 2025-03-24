@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Bagel has been updated for a more pleasurable gaming experience, including
-      support for Psychologist.
-    type: Tweak
-  id: 876
-  time: '2025-01-08T14:15:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1264
 - author: widgetbeck, mqole
   changes:
   - message: gray & goblin sprite cleanup
@@ -4099,3 +4091,14 @@
   id: 1375
   time: '2025-03-24T03:34:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2002
+- author: AvianMaiden
+  changes:
+  - message: You no longer have to contemplate the idea of using corporate-sanctioned
+      or unsanctioned violence to end another's life when wielding a gun. You can
+      now shoot for free with no thoughts or hesitation!!
+    type: Fix
+  - message: Uplink items should be CORRECT.
+    type: Fix
+  id: 1376
+  time: '2025-03-24T03:42:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2055
