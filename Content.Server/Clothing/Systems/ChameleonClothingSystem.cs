@@ -88,51 +88,11 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void UpdateHelmetLights(EntityUid uid, ChameleonClothingComponent component, EntityPrototype proto)
     {
-        if (!proto.TryGetComponent(out PointLightComponent? pointLight, _factory)) RemComp<PointLightComponent>(uid);
-        else
-        {
-            if (HasComp<PointLightComponent>(uid))
-                RemComp<PointLightComponent>(uid);
-
-            AddComp(uid, pointLight);
-            Dirty(uid, pointLight);
-        }
-
-        if (!proto.TryGetComponent(out LightBehaviourComponent? lightBehaviour, _factory)) RemComp<LightBehaviourComponent>(uid);
-        else
-        {
-            if (HasComp<LightBehaviourComponent>(uid))
-                RemComp<LightBehaviourComponent>(uid);
-
-            AddComp(uid, lightBehaviour);
-        }
-
-        if (!proto.TryGetComponent(out BatteryComponent? battery, _factory)) RemComp<BatteryComponent>(uid);
-        else
-        {
-            if (HasComp<BatteryComponent>(uid))
-                RemComp<BatteryComponent>(uid);
-
-            AddComp(uid, battery);
-        }
-
-        if (!proto.TryGetComponent(out BatterySelfRechargerComponent? batterySelfRecharger, _factory)) RemComp<BatterySelfRechargerComponent>(uid);
-        else
-        {
-            if (HasComp<BatterySelfRechargerComponent>(uid))
-                RemComp<BatterySelfRechargerComponent>(uid);
-
-            AddComp(uid, batterySelfRecharger);
-        }
-
-        if (!proto.TryGetComponent(out AutoRechargeComponent? autoRecharge, _factory)) RemComp<AutoRechargeComponent>(uid);
-        else
-        {
-            if (HasComp<AutoRechargeComponent>(uid))
-                RemComp<AutoRechargeComponent>(uid);
-
-            AddComp(uid, autoRecharge);
-        }
+        RemoveAndAddComponent<PointLightComponent>(uid, proto, true);
+        RemoveAndAddComponent<LightBehaviourComponent>(uid, proto, false);
+        RemoveAndAddComponent<BatteryComponent>(uid, proto, false);
+        RemoveAndAddComponent<BatterySelfRechargerComponent>(uid, proto, false);
+        RemoveAndAddComponent<AutoRechargeComponent>(uid, proto, false);
     }
 
     private void UpdateToggleableChameleonComponent(EntityUid uid, EntityPrototype proto)
@@ -153,5 +113,17 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
                 return;
             }
         }
+    }
+
+    private void RemoveAndAddComponent<T>(EntityUid uid, EntityPrototype proto, bool dirty) where T : IComponent, new()
+    {
+        RemComp<T>(uid);
+        if (!proto.TryGetComponent(out T? component, _factory))
+            return;
+
+        AddComp(uid, component);
+
+        if (dirty)
+            Dirty(uid, component);
     }
 }

@@ -46,23 +46,9 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (!string.IsNullOrEmpty(component.Default) &&
         _proto.TryIndex(component.Default, out EntityPrototype? proto))
         {
-            RemComp<PointLightComponent>(uid);
-            if (proto.TryGetComponent("PointLight", out PointLightComponent? pointLight))
-            {
-                AddComp(uid, pointLight);
-            }
-
-            RemComp<LightBehaviourComponent>(uid);
-            if (proto.TryGetComponent("LightBehaviour", out LightBehaviourComponent? lightBehaviourComponent))
-            {
-                AddComp(uid, lightBehaviourComponent);
-            }
-
-            RemComp<ToggleableLightVisualsComponent>(uid);
-            if (proto.TryGetComponent("ToggleableLightVisuals", out ToggleableLightVisualsComponent? toggleableLightVisuals))
-            {
-                AddComp(uid, toggleableLightVisuals);
-            }
+            RemoveAndAddComponent<PointLightComponent>(uid, proto);
+            RemoveAndAddComponent<LightBehaviourComponent>(uid, proto);
+            RemoveAndAddComponent<ToggleableLightVisualsComponent>(uid, proto);
         }
 
         UpdateVisuals(uid, component);
@@ -130,5 +116,17 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
                 _data[slot].Add(proto.ID);
             }
         }
+    }
+
+    private void RemoveAndAddComponent<T>(EntityUid uid, EntityPrototype proto, Action<T>? afterAddAction = null) where T : IComponent, new()
+    {
+        RemComp<T>(uid);
+        if (!proto.TryGetComponent(out T? component, _factory))
+            return;
+
+        AddComp(uid, component);
+
+        if (afterAddAction != null)
+            afterAddAction(component);
     }
 }
