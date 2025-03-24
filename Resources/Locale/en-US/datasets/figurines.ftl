@@ -112,7 +112,7 @@ figurines-salvage-2 = We're lost. Anyone bring a GPS?
 figurines-salvage-3 = Anyone have oxygen?
 figurines-salvage-4 = I found a blood-red and e-sword!
 figurines-salvage-5 = There's bears in space?
-figurines-salvage-6 = Crusher? I barely know her! <#-- im so sorry -->
+figurines-salvage-6 = Crusher? I barely know her!
 
 figurines-qm-1 = Who stole the shuttle?
 figurines-qm-2 = I won't approve the guns.
@@ -260,6 +260,9 @@ figurines-nukie-commander-5 = Whoops.
 
 figurines-footsoldier-1 = I'm an evil boy. Less boy every day, more evil every day.
 figurines-footsoldier-2 = Who will you choose? Them or us? Us or them?
+figurines-footsoldier-3 = Glory to the syndicate!
+figurines-footsoldier-4 = Down with Nanotrasen!
+figurines-footsoldier-5 = I'd rather die than join Nanotrasen.
 
 figurines-wizard-1 = Ei Nath!!
 figurines-wizard-2 = Wehgardium Leviosa!
