@@ -469,6 +469,12 @@
         type: Add
         time: 5
         refresh: false
+      - !type:GenericStatusEffect # imp
+        key: RelentlessPositivity
+        component: RelentlessPositivity
+        conditions:
+        - !type:ReagentThreshold
+          max: 20
 
 - type: reagent
   id: Methadone

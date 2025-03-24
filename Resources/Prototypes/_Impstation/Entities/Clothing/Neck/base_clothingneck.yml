@@ -1,0 +1,16 @@
+﻿- type: entity
+  abstract: true
+  parent: ClothingNeckBase
+  id: ClothingNeckPullableBase
+  components:
+  - type: Neck
+
+- type: entity
+  id: ActionToggleNeck
+  name: Toggle Neck
+  description: Something changes...
+  components:
+  - type: InstantAction
+    icon: Interface/Default/blocked.png
+    iconOn: { sprite: Clothing/Neck/Misc/headphones.rsi, state: icon-on } # this should probably be somewhere else
+    event: !type:ToggleNeckEvent

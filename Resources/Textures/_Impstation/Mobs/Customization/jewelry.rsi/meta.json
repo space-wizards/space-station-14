@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "By Sha-Seng (Github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "chest_necklace",
+      "directions": 4
+    },
+    {
+      "name": "head_earrings1",
+      "directions": 4
+    },
+    {
+      "name": "head_earrings2",
+      "directions": 4
+    },
+    {
+      "name": "head_earrings_drop1",
+      "directions": 4
+    },
+    {
+      "name": "head_earrings_drop2",
+      "directions": 4
+    },
+    {
+      "name": "head_earrings_weights1",
+      "directions": 4
+    },
+    {
+      "name": "head_earrings_weights2",
+      "directions": 4
+    },
+    {
+      "name": "head_septum",
+      "directions": 4
+    },
+    {
+      "name": "l_hand_bracelet",
+      "directions": 4
+    },
+    {
+      "name": "l_hand_rings1",
+      "directions": 4
+    },
+    {
+      "name": "l_hand_rings2",
+      "directions": 4
+    },
+    {
+      "name": "r_hand_bracelet",
+      "directions": 4
+    },
+    {
+      "name": "r_hand_rings1",
+      "directions": 4
+    },
+    {
+      "name": "r_hand_rings2",
+      "directions": 4
+    }
+  ]
+}

@@ -252,7 +252,7 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hd_bartender.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hd_bartender.rsi
-    
+
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitHospitalityDirectorBotany
@@ -279,9 +279,20 @@
   parent: [ClothingUniformBase]
   id: ClothingUniformPositivityForce
   name: positivity force jumpsuit
-  description: An outfit that signals to the world you're like the death squads but for being nice. 
+  description: An outfit that signals to the world you're like the death squads but for being nice.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/positivityforce.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/positivityforce.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMimeCropped
+  name: cropped mime suit
+  description: ...?
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/mimecropped.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/mimecropped.rsi

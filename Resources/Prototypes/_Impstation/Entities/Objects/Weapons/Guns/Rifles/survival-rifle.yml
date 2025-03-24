@@ -1,8 +1,8 @@
 - type: entity
-  name: survival rifle
+  name: survival rifle-pistol
   parent: [BaseWeaponRifle, BaseMajorContraband]
   id: WeaponRifleSurvivalPistol
-  description: A surprisingly robust improvised rifle for survival environments. Only uses .35 pistol rounds, but can be customized.
+  description: A robust improvised rifle for suriving harsh environments. Uses .35 auto ammo and only accepts pistol magazines, but can be modified.
   components:
   - type: Sprite
     sprite: _Impstation/Prospectors/Weapons/survival_rifle.rsi
@@ -48,13 +48,36 @@
     graph: UpgradeWeaponSurvivalRifle
     node: start
   - type: Appearance
-
+  - type: MeleeWeapon
+    range: 0.8
+    attackRate: 0.6
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+    resetOnHandSelected: false
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 10
+    damage:
+      types:
+        Blunt: 8
+  - type: StaminaDamageOnHit
+    damage: 10 #slight stagger, but still like 10 hits to stun completely
+  - type: MeleeRequiresWield
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
 
 - type: entity
-  name: survival rifle
+  name: survival rifle dual-caliber
   parent: WeaponRifleSurvivalPistol
   id: WeaponRifleSurvivalRifle
-  description: A surprisingly robust improvised rifle for survival environments. It accepts .20 rifle rounds and .35 pistol rounds.
+  description: A robust improvised rifle for suriving harsh environments. Accepts both .20 rifle and .35 auto ammo in either pistol or rifle magazines.
   components:
   - type: Gun
     fireRate: 4
@@ -81,10 +104,10 @@
             - CartridgeRifle
 
 - type: entity
-  name: survival rifle
+  name: survival rifle-SMG
   parent: WeaponRifleSurvivalPistol
   id: WeaponRifleSurvivalSMG
-  description: A surprisingly robust improvised rifle for survival environments. It accepts .35 SMG rounds and .35 pistol rounds.
+  description: A robust improvised rifle for suriving harsh environments. Uses .35 auto ammo in either pistol or SMG magazines.
   components:
   - type: Gun
     fireRate: 4

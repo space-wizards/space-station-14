@@ -90,6 +90,24 @@
     back:
     - DecapoidBreathingApparatus
 
+- type: loadout
+  id: LoadoutDecapoidBreathToolInventoryClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Aquatic
+  storage:
+    back:
+    - DecapoidBreathingApparatusClown
+
+- type: loadout
+  id: LoadoutDecapoidBreathToolInventoryMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Aquatic
+  storage:
+    back:
+    - DecapoidBreathingApparatusMime
+
 # Command
 - type: loadout
   id: EmergencyOxygenCommand

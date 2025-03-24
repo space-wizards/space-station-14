@@ -8,6 +8,9 @@
     ClothingBackpackSatchelLeather: 2
     ClothingRandomSpawner: 8
     ClothingRandomBusinessSpawner: 10 #imp
+    ClothingUniformRandomSimpleTeeSpawner: 6 #imp
+    ClothingUniformRandomSimpleTankSpawner: 6 #imp
+    ClothingUniformRandomSimplePantsSpawner: 6 #imp
     ClothingHeadHatBeret: 4
     ClothingHeadBandBlack: 2
     ClothingHeadBandBlue: 2
@@ -16,7 +19,6 @@
     ClothingHeadBandSkull: 2
     ClothingHeadHatGreyFlatcap: 3
     ClothingHeadHatBrownFlatcap: 3
-    ClothingOuterCoatHyenhSweater: 2 # DeltaV
     ClothingUniformJumpsuitColorGrey: 8
     ClothingUniformJumpskirtColorGrey: 8
     ClothingUniformJumpsuitColorWhite: 3
@@ -72,6 +74,7 @@
     ClothingShoesHeelsBlue: 3 # imp
     ClothingShoesHeelsGreen: 2 # imp
     ClothingShoesHeelsBrown: 2 # imp
+    ClothingShoesFlipflopsBlack: 4 #imp
     ClothingHeadHatGreysoft: 8
     ClothingHeadHatMimesoft: 3
     ClothingHeadHatBluesoft: 2
@@ -118,7 +121,7 @@
     ClothingUniformJumpsuitTacticool: 1
     ClothingUniformJumpskirtTacticool: 1
     ClothingShoesSwat: 2 # imp
-    ClothingMaskGas: 1 # imp
+    ClothingMaskGas: 1
     ToyFigurinePassenger: 1
     ToyFigurineGreytider: 1
   # DO NOT ADD MORE, USE UNIFORM DYING

@@ -1,144 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Apids now get sleepy when exposed to water vapor.
-    type: Add
-  - message: Apids will now spawn with randomized antennae, giving them a little individuality.
-    type: Add
-  - message: Apids now properly display an SSD indicator.
-    type: Add
-  - message: Apids now bob up and down gently.
-    type: Add
-  - message: Apids are now able to fly over tables and under plastic flaps.
-    type: Add
-  - message: God will punish you for butchering her beautiful creatures.
-    type: Add
-  id: 869
-  time: '2025-01-06T23:46:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1215
-- author: RosySaturniidae
-  changes:
-  - message: gas tank resprites
-    type: Tweak
-  id: 870
-  time: '2025-01-07T19:01:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1256
-- author: CrocodileCarousel
-  changes:
-  - message: 'Added nine new religious head coverings: kippahs, niqabs, hijabs, tichels
-      and more.'
-    type: Add
-  id: 871
-  time: '2025-01-07T19:28:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1248
-- author: DinnerCalzone
-  changes:
-  - message: Train has been updated for a more pleasurable gaming experience, including
-      support for psychologist.
-    type: Tweak
-  id: 872
-  time: '2025-01-07T19:31:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1250
-- author: kipdotnet
-  changes:
-  - message: The Vim and Ripley now have new sprites.
-    type: Tweak
-  - message: Goblins can now pilot a Vim.
-    type: Tweak
-  - message: the Ripley APLU now has a slightly more decent melee attack.
-    type: Tweak
-  id: 873
-  time: '2025-01-07T19:43:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1252
-- author: DinnerCalzone
-  changes:
-  - message: Thieves should no longer be assigned Fin-Fin as a steal objective if
-      he is not present on the map.
-    type: Tweak
-  - message: The evil skull on Hummingbird can now be assigned as a thief objective.
-    type: Add
-  id: 874
-  time: '2025-01-08T00:11:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1251
-- author: Darkmajia
-  changes:
-  - message: Most stamps now look fancier on paper.
-    type: Add
-  id: 875
-  time: '2025-01-08T14:13:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1255
-- author: DinnerCalzone
-  changes:
-  - message: Bagel has been updated for a more pleasurable gaming experience, including
-      support for Psychologist.
-    type: Tweak
-  id: 876
-  time: '2025-01-08T14:15:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1264
-- author: widgetbeck, mqole
-  changes:
-  - message: gray & goblin sprite cleanup
-    type: Tweak
-  id: 877
-  time: '2025-01-08T14:17:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1253
-- author: Pinkbat5
-  changes:
-  - message: Detectives now start the round with white forensic chalk.
-    type: Add
-  - message: Evidence marker boxes have been made small enough to fit in a pocket,
-      and will only carry the markers.
-    type: Tweak
-  id: 878
-  time: '2025-01-08T14:19:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1262
-- author: kipdotnet
-  changes:
-  - message: Added a chef Apid, for kitchen bounties.
-    type: Add
-  - message: Apids can no longer be taken over by ghosts after a player has claimed
-      them.
-    type: Fix
-  id: 879
-  time: '2025-01-08T14:23:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1259
-- author: Darkmajia, AftrLite
-  changes:
-  - message: The supermatter monitoring console has been added, with sprites by AftrLite.
-      For now, its board can be produced at a circuit imprinter.
-    type: Add
-  - message: Supermatters have received various adjustments and are scarier.
-    type: Tweak
-  - message: Supermatter healing is now properly capped.
-    type: Fix
-  - message: The chief engineer's hardsuit no longer disintegrates when thrown into
-      a supermatter.
-    type: Fix
-  id: 880
-  time: '2025-01-08T14:36:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1246
-- author: Darkmajia
-  changes:
-  - message: Tranquilizer shells have chloral hydrate instead of nocturine in them.
-    type: Tweak
-  id: 881
-  time: '2025-01-09T00:43:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1271
-- author: honeyed-lemons
-  changes:
-  - message: Tweaks boxes surgery and adds supermatter consoles
-    type: Tweak
-  id: 882
-  time: '2025-01-09T16:26:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1270
-- author: EpicToastTM
-  changes:
-  - message: (Barratry Station) Science is now playable, along with other miscellaneous
-      tweaks.
-    type: Tweak
-  id: 883
-  time: '2025-01-09T16:26:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1277
 - author: ruddygreat
   changes:
   - message: The shining spring now shoots cleanades as a bouncing projectile that
@@ -4112,3 +3972,127 @@
   id: 1368
   time: '2025-03-22T15:42:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2030
+- author: crocodilecarousel
+  changes:
+  - message: 'Huge buff to janitors and Reinem: headphones can show music notes again!'
+    type: Fix
+  id: 1369
+  time: '2025-03-23T23:26:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2026
+- author: SixValentine
+  changes:
+  - message: Added Hash
+    type: Add
+  id: 1370
+  time: '2025-03-24T02:27:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2029
+- author: honeyed-lemons
+  changes:
+  - message: Completely rebuild xeno's bar and kitchen
+    type: Tweak
+  id: 1371
+  time: '2025-03-24T02:29:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2064
+- author: Sha-Seng
+  changes:
+  - message: Cropped mime uniforms in loadout or from butchering
+    type: Add
+  - message: Touched up colors on mime uniforms
+    type: Tweak
+  id: 1372
+  time: '2025-03-24T03:00:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2032
+- author: Sha-Seng
+  changes:
+  - message: Juggernaut Cloak and Syndicate Satchel added to uplink
+    type: Add
+  - message: SyndieDrobes now have backpacks and satchels for nukies
+    type: Tweak
+  id: 1373
+  time: '2025-03-24T03:01:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2031
+- author: Sha-Seng
+  changes:
+  - message: Undershirt sprites adjusted slightly to not show under short sleeve tops
+    type: Tweak
+  id: 1374
+  time: '2025-03-24T03:05:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2034
+- author: Sha-Seng
+  changes:
+  - message: Decapoid clowns and mimes now have special vaporizers
+    type: Add
+  - message: Decapoids have special huge puffer coat sprites and circus clown sprites
+    type: Tweak
+  id: 1375
+  time: '2025-03-24T03:34:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2002
+- author: AvianMaiden
+  changes:
+  - message: You no longer have to contemplate the idea of using corporate-sanctioned
+      or unsanctioned violence to end another's life when wielding a gun. You can
+      now shoot for free with no thoughts or hesitation!!
+    type: Fix
+  - message: Uplink items should be CORRECT.
+    type: Fix
+  id: 1376
+  time: '2025-03-24T03:42:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2055
+- author: Sha-Seng
+  changes:
+  - message: You can now butcher your bomber jackets for a loose look
+    type: Add
+  id: 1377
+  time: '2025-03-24T03:54:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2033
+- author: Sha-Seng
+  changes:
+  - message: Simple tee, simple tank, and black flip flops added to the Clothesmate
+    type: Add
+  - message: Black and white wrapped scarves added to the Winterdrobe and passenger
+      loadout
+    type: Add
+  - message: Tailor's Knife (a legal shiv) for mappers
+    type: Add
+  id: 1378
+  time: '2025-03-24T04:59:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2046
+- author: hivehum
+  changes:
+  - message: You speak to your mother with that mouth? Go wash your mouth out with
+      soap and think about what you've done!
+    type: Tweak
+  id: 1379
+  time: '2025-03-24T05:01:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2050
+- author: Sha-Seng
+  changes:
+  - message: Ten tattoos and seven jewelry markings!
+    type: Add
+  id: 1380
+  time: '2025-03-24T05:20:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2059
+- author: DinnerCalzone
+  changes:
+  - message: The Dining Services and Station Specific departments no longer show up
+      on the crew monitoring console.
+    type: Fix
+  id: 1381
+  time: '2025-03-24T05:28:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2066
+- author: argentsunshine
+  changes:
+  - message: Added nine new hairstyles (half-up styles, middle parts, mullets, and
+      a curly undercut and side shave).
+    type: Add
+  id: 1382
+  time: '2025-03-24T05:35:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2060
+- author: Mousetrinity
+  changes:
+  - message: Introducing the Kaiju cloak, a way to hide your tails, wings, and spare
+      legs, is now in uplinks and maintenance lockers near you!
+    type: Add
+  id: 1383
+  time: '2025-03-24T05:46:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2065

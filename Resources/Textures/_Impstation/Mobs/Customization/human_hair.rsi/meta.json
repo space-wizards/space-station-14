@@ -4,7 +4,7 @@
       "x": 32,
       "y": 32
     },
-    "copyright": "gatheredlow sprited by Sha-Seng (Github), lowpigtails by Skeleskitty (Discord), frenchbraid by AftrLite (Github)",
+    "copyright": "gatheredlow sprited by Sha-Seng (Github), lowpigtails by Skeleskitty (Discord), frenchbraid by AftrLite (Github), halfup styles, midpart styles, mullet styles, undercut_curly and sideshave_curly sprited by argentsunshine (github)",
     "license": "CC-BY-SA-3.0",
     "states": [
       {
@@ -17,6 +17,42 @@
       },
       {
         "name": "frenchbraid",
+        "directions": 4
+      },
+      {
+        "name": "halfup_undercut",
+        "directions": 4
+      },
+      {
+        "name": "halfup_short",
+        "directions": 4
+      },
+      {
+        "name": "halfup_long",
+        "directions": 4
+      },
+      {
+        "name": "midpart_long",
+        "directions": 4
+      },
+      {
+        "name": "midpart_longer",
+        "directions": 4
+      },
+      {
+        "name": "mullet",
+        "directions": 4
+      },
+      {
+        "name": "mullet_sideshave",
+        "directions": 4
+      },
+      {
+        "name": "undercut_curly",
+        "directions": 4
+      },
+      {
+        "name": "sideshave_curly",
         "directions": 4
       }
     ]

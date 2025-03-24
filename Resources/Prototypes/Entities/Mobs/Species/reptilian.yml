@@ -12,6 +12,7 @@
     - Snout
     - HeadTop
     - HeadSide
+    - Tail #imp
     undergarmentBottom: UndergarmentBottomBoxersReptilian
   - type: Hunger
   - type: Puller
@@ -92,6 +93,7 @@
     - Snout
     - HeadTop
     - HeadSide
+    - Tail #imp
     undergarmentBottom: UndergarmentBottomBoxersReptilian
   - type: Inventory
     speciesId: reptilian

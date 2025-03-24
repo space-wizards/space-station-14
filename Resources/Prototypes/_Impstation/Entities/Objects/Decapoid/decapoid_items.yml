@@ -108,6 +108,35 @@
     speechVerb: Robotic
 
 - type: entity
+  name: clown vaporizer
+  parent: DecapoidBreathingApparatus
+  id: DecapoidBreathingApparatusClown
+  description: 'A neck-mounted breathing apparatus for Decapoids. Moistens your gills, if you have them. Also functions as a brain-to-voice translator. This one has been modified by a clown to complement their outfit...'
+  components:
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    hideOnToggle: true
+  - type: Sprite
+    sprite: _Impstation/Objects/Decapoid/vaporizerclown.rsi
+  - type: Clothing
+    sprite: _Impstation/Objects/Decapoid/vaporizerclown.rsi
+
+- type: entity
+  name: mime vaporizer
+  parent: DecapoidBreathingApparatus
+  id: DecapoidBreathingApparatusMime
+  description: 'A neck-mounted breathing apparatus for Decapoids. Moistens your gills, if you have them. Also functions as a brain-to-voice translator. This one has been modified by a mime to complement their outfit...'
+  components:
+  - type: HideLayerClothing
+    slots:
+    - Hair
+  - type: Sprite
+    sprite: _Impstation/Objects/Decapoid/vaporizermime.rsi
+  - type: Clothing
+    sprite: _Impstation/Objects/Decapoid/vaporizermime.rsi
+
+- type: entity
   name: vapor tank
   parent: DecapoidVaporTank
   id: DecapoidVaporTankFilled

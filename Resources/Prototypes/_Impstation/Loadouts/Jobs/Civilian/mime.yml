@@ -3,3 +3,14 @@
   id: MimePufferCoat
   equipment:
     outerClothing: ClothingOuterCoatPufferMime
+
+# Jumpsuit
+- type: loadout
+  id: MimeJumpsuitCropped
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMimeCropped
+
+- type: loadout
+  id: MimeJumpskirtCropped
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtMimeCropped

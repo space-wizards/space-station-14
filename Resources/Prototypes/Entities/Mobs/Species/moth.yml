@@ -10,6 +10,7 @@
     species: Moth
     hideLayersOnEquip:
     - HeadTop
+    - Tail #imp
   - type: Hunger
   - type: Thirst
   - type: Icon

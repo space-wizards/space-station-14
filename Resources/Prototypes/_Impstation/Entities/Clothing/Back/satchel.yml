@@ -6,3 +6,14 @@
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Back/Satchels/commandveteran.rsi
+
+- type: entity
+  parent: [ClothingBackpackSatchel, Tier1Contraband]
+  id: ClothingBackpackSatchelSyndicate
+  name: syndicate satchel
+  description:
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Back/Satchels/syndicate.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.1

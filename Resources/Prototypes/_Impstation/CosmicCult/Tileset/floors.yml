@@ -147,7 +147,7 @@
 
 - type: entity
   id: FloorCosmicDecayAlt
-  suffix: DO NOT MAP
+  categories: [ HideSpawnMenu ]
   name: "???"
   placement:
     mode: SnapgridCenter

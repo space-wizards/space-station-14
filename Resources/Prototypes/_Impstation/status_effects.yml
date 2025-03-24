@@ -1,2 +1,5 @@
 - type: statusEffect
   id: GrayLanguage # thui beego pu suggestion
+
+- type: statusEffect
+  id: RelentlessPositivity # son of a kind soul

@@ -96,8 +96,9 @@ uplink-bros-grenade-desc = A colony of angry BROS captured in a glass bottle. UN
 uplink-pistol-magazine-name = Pistol Magazine (.35 auto)
 uplink-pistol-magazine-desc = Pistol magazine with 10 catridges. Compatible with the Viper.
 
+#imp desc tweak
 uplink-pistol-magazine-c20r-name = SMG magazine (.35 auto)
-uplink-pistol-magazine-c20r-desc = Rifle magazine with 30 catridges. Compatible with C-20r.
+uplink-pistol-magazine-c20r-desc = SMG magazine with 30 catridges. Compatible with C-20R Gorgon.
 
 uplink-pistol-magazine-caseless-name = Pistol Magazine (.25 caseless)
 uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 catridges. Compatible with the Cobra.
@@ -105,11 +106,13 @@ uplink-pistol-magazine-caseless-desc = Pistol magazine with 10 catridges. Compat
 uplink-speedloader-magnum-name = Speedloader (.45 magnum AP)
 uplink-speedloader-magnu-desc = Revolver speedloader with 6 armor-piercing catridges, capable of ignoring armor entirely. Compatible with the Python.
 
-uplink-mosin-ammo-name = Ammunition box (.20 rifle)
+#imp ammo correction
+uplink-mosin-ammo-name = Ammunition box (.30 rifle)
 uplink-mosin-ammo-desc = A box of 50 cartridges for the surplus rifle.
 
+#imp desc tweak
 uplink-sniper-ammo-name = Ammunition box (.60 antimateriel)
-uplink-sniper-ammo-desc = A box of 10 cartridges for the Hristov sniper rifle.
+uplink-sniper-ammo-desc = A box of 10 cartridges for the Lyndworm sniper rifle.
 
 # Utility
 uplink-holopara-kit-name = Holoparasite Kit
@@ -243,23 +246,29 @@ uplink-knives-kit-desc = A set of 4 syndicate branded throwing knives, perfect f
 uplink-meds-bundle-name = Syndicate Medical Bundle
 uplink-meds-bundle-desc = An assortment of autoinjectors and premium medical equipment to cover for every possible situation. Contains an elite compact defibrillator that can be used as a weapon.
 
+#imp name tweaks
 uplink-ammo-bundle-name = Ammo Bundle
-uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW.
+uplink-ammo-bundle-desc = Reloading! Contains 4 magazines for the C-20R Gorgon, 4 drums for the Hydra, and 2 ammo boxes for the L6 Nidhogg SAW.
 
+#imp name tweaks
 uplink-sniper-bundle-name = Sniper Bundle
-uplink-sniper-bundle-desc = An inconspicuous briefcase that contains a Hristov, 10 spare bullets and a convenient disguise.
+uplink-sniper-bundle-desc = An inconspicuous briefcase that contains a Lyndworm, 10 spare bullets, and a convenient disguise.
 
-uplink-c20r-bundle-name = C-20r Bundle
-uplink-c20r-bundle-desc = Old faithful: The classic C-20r Submachine Gun, bundled with three magazines.
+#imp name tweak
+uplink-c20r-bundle-name = C-20R Gorgon Bundle
+uplink-c20r-bundle-desc = Old faithful: The classic C-20R Gorgon submachine gun, bundled with 3 magazines.
 
-uplink-buldog-bundle-name = Bulldog Bundle
-uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun and four 12g buckshot drums.
+#imp name tweak
+uplink-buldog-bundle-name = Hydra Bundle
+uplink-buldog-bundle-desc = Lean and mean: Contains the popular Hydra Shotgun and 4 .50 buckshot drums.
 
-uplink-grenade-launcher-bundle-name = China-Lake Bundle
-uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 11 rounds of varying destructive capability.
+#imp hyphen remove
+uplink-grenade-launcher-bundle-name = China Lake Bundle
+uplink-grenade-launcher-bundle-desc = An old China Lake grenade launcher bundled with 11 grenades of varying destructive capability.
 
-uplink-l6-saw-bundle-name = L6 Saw Bundle
-uplink-l6-saw-bundle-desc = More dakka: The iconic L6 light machine gun, bundled with 2 box magazines.
+#imp name tweak
+uplink-l6-saw-bundle-name = L6 Nidhogg Saw Bundle
+uplink-l6-saw-bundle-desc = More dakka: The iconic L6 Nidhogg light machine gun, bundled with 2 box magazines.
 
 uplink-zombie-bundle-name = Syndicate Zombie Bundle
 uplink-zombie-bundle-desc = An all-in-one kit for unleashing the undead upon a station.

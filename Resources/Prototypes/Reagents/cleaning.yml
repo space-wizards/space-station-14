@@ -50,19 +50,23 @@
   meltingPoint: 60.0
   metabolisms:
     Food:
+      metabolismRate: 0.4 # imp - accent lasts for like 15 seconds otherwise
       effects:
-      - !type:ChemVomit
-        conditions:
-        - !type:ReagentThreshold
-          min: 6
-        probability: 0.20
-    Drink:
-      effects:
-      - !type:ChemVomit
-        conditions:
-        - !type:ReagentThreshold
-          min: 6
-        probability: 0.20
+      #- !type:ChemVomit # imp - sorry i thought of something funnier
+      #  conditions:
+      #  - !type:ReagentThreshold
+      #    min: 6
+      #  probability: 0.20
+      - !type:GenericStatusEffect # imp
+        key: RelentlessPositivity
+        component: RelentlessPositivity
+    #Drink: # imp
+    #  effects:
+      #- !type:ChemVomit
+      #  conditions:
+      #  - !type:ReagentThreshold
+      #    min: 6
+      #  probability: 0.20
 
 - type: reagent
   id: SpaceLube

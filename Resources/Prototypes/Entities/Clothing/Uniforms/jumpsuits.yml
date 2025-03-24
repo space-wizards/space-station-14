@@ -73,7 +73,7 @@
   description: A sturdy jumpsuit, issued to members of the Cargo department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/cargotech.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/cargotech.rsi #imp
 
 - type: entity
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
@@ -423,9 +423,14 @@
   description: ...
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/mime.rsi #imp
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/mime.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/mime.rsi #imp
+  - type: Butcherable #imp
+    butcheringType: Knife
+    spawned:
+    - id: ClothingUniformJumpsuitMimeCropped
+      amount: 1
 
 - type: entity
   parent: [ ClothingUniformBase, ClothingUniformFoldableBase ]

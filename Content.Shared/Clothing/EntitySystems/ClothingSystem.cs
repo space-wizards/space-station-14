@@ -30,6 +30,7 @@ public abstract class ClothingSystem : EntitySystem
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
         SubscribeLocalEvent<ClothingComponent, ItemMaskToggledEvent>(OnMaskToggled);
+        SubscribeLocalEvent<ClothingComponent, ItemNeckToggledEvent>(OnNeckToggled); // imp
 
         SubscribeLocalEvent<ClothingComponent, ClothingEquipDoAfterEvent>(OnEquipDoAfter);
         SubscribeLocalEvent<ClothingComponent, ClothingUnequipDoAfterEvent>(OnUnequipDoAfter);
@@ -171,6 +172,18 @@ public abstract class ClothingSystem : EntitySystem
             }
         }
     }
+
+
+    /// imp start
+
+    private void OnNeckToggled(Entity<ClothingComponent> ent, ref ItemNeckToggledEvent args)
+    {
+        //AUGH AUGH AUGH AUGH AUGH AUGH
+        SetEquippedPrefix(ent, args.IsToggled ? args.equippedPrefix : null, ent);
+        CheckEquipmentForLayerHide(ent.Owner, args.Wearer);
+    }
+
+    /// imp end
 
     private void OnMaskToggled(Entity<ClothingComponent> ent, ref ItemMaskToggledEvent args)
     {

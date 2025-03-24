@@ -87,6 +87,9 @@
   id: ShellShotgunBeanbag
 
 - type: Tag
+  id: SpiderFood
+
+- type: Tag
   id: SprayPainter
 
 - type: Tag

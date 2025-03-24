@@ -65,6 +65,7 @@
     animation: WeaponArcThrust
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+    resetOnHandSelected: false
   - type: EmbeddableProjectile
     offset: -0.15,0.0
     sound: /Audio/Weapons/star_hit.ogg
@@ -126,6 +127,7 @@
       path: /Audio/Effects/hit_kick.ogg
     soundSwing:
       path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+    resetOnHandSelected: true
   - type: AltFireMelee
     attackType: Heavy
   - type: DamageOtherOnHit #for throwing
@@ -184,6 +186,7 @@
     animation: WeaponArcThrust
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+    resetOnHandSelected: false
   - type: EmbeddableProjectile
     offset: -0.15,0.0
     sound: /Audio/Weapons/star_hit.ogg
@@ -241,6 +244,7 @@
       path: /Audio/Effects/hit_kick.ogg
     soundSwing:
       path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+    resetOnHandSelected: false
   - type: AltFireMelee
     attackType: Heavy
   - type: DamageOtherOnHit #for throwing

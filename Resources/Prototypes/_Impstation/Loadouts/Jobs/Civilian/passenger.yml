@@ -31,8 +31,23 @@
   equipment:
     neck: ClothingNeckCloakPassenger
 
+- type: loadout
+  id: WrappedScarfBlack
+  equipment:
+    neck: ClothingNeckScarfWrappedBlack
+
+- type: loadout
+  id: WrappedScarfWhite
+  equipment:
+    neck: ClothingNeckScarfWrappedWhite
+
 # Outer Clothing
 - type: loadout
-  id: BomberLightweight
+  id: BomberBlack
   equipment:
-    outerClothing: ClothingOuterCoatBomberLightweight
+    outerClothing: ClothingOuterCoatBomberBlack
+
+- type: loadout
+  id: BomberWhite
+  equipment:
+    outerClothing: ClothingOuterCoatBomberWhite

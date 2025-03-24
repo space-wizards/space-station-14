@@ -1,6 +1,8 @@
 - type: vendingMachineInventory
   id: WinterDrobeInventory
   startingInventory:
+    ClothingOuterCoatTrench: 6
+    ClothingOuterCoatHyenhSweater: 2 # DeltaV
     ClothingNeckScarfStripedBlack: 3
     ClothingNeckScarfStripedBrown: 3
     ClothingNeckScarfStripedRed: 3
@@ -9,9 +11,10 @@
     ClothingNeckScarfStripedLightBlue: 3
     ClothingNeckScarfStripedBlue: 3
     ClothingNeckScarfStripedPurple: 3
-    ClothingOuterCoatTrench: 6
     # imp additions start
     ClothingNeckScarfStripedLimeGreen: 3
+    ClothingNeckScarfWrappedBlack: 3
+    ClothingNeckScarfWrappedWhite: 3
     ClothingOuterWinterColorBlack: 3
     ClothingOuterWinterColorGray: 3
     ClothingOuterWinterColorWhite: 3
@@ -23,7 +26,8 @@
     ClothingOuterWinterColorGreen: 3
     ClothingOuterWinterColorBlue: 3
     ClothingOuterWinterColorPurple: 3
-    ClothingOuterCoatBomberLightweight: 3
+    ClothingOuterCoatBomberBlack: 3
+    ClothingOuterCoatBomberWhite: 3
     ClothingOuterCoatBomber: 3
     ClothingShoesBootsWinterColorBlack: 3
     ClothingShoesBootsWinterColorGray: 3

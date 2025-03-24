@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Created from an amalgamate of the Syndicate-Nukeops armor found across a vast swathe of spritesheets and versions of the game.",
+  "copyright": "Created from an amalgamate of the Syndicate-Nukeops armor found across a vast swathe of spritesheets and versions of the game, gray helmet by Sha-Seng (github) for Impstation",
   "size": {
     "x": 32,
     "y": 32
@@ -44,6 +44,13 @@
     },
     {
       "name": "equipped-HELMET-vox",
+      "directions": 4
+    },
+
+
+
+    {
+      "name": "equipped-HELMET-gray",
       "directions": 4
     }
   ]

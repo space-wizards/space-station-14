@@ -17,6 +17,7 @@
     hideLayersOnEquip: #imp
     - HeadSide
     - Hair
+    - Tail
     undergarmentTop: UndergarmentTopTanktopVox
     undergarmentBottom: UndergarmentBottomBoxersVox
     #- type: VoxAccent # Not yet coded

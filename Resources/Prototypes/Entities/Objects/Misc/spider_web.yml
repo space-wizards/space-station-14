@@ -76,6 +76,24 @@
       ignoreWhitelist:
         components:
             - IgnoreSpiderWeb
+    - type: FlavorProfile #imp, consumable webs edits from here down
+      flavors:
+        - cobwebs
+    - type: Food
+      delay: 2
+      requiresSpecialDigestion: true
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          reagents:
+          - ReagentId: Protein
+            Quantity: 2
+    - type: Tag
+      tags:
+      - SpiderFood
+    - type: StaticPrice #imp, NoMaterialArbitage test
+      price: 9
+
 
 - type: entity
   id: SpiderWebClown
@@ -164,3 +182,5 @@
           reagents:
           - ReagentId: Sugar
             Quantity: 2
+    - type: StaticPrice #imp, NoMaterialArbitage test
+      price: 9

@@ -10,7 +10,8 @@
 - type: entity
   parent: [ClothingNeckCloakStraight, BaseToggleClothing]
   id: ClothingHeadCloakStraightKill
-  suffix: KILL, DO NOT MAP
+  suffix: KILL
+  categories: [ DoNotMap ]
   components:
   - type: ToggleClothing
     action: ActionBecomeValid
@@ -98,3 +99,26 @@
     sprite: _Impstation/Clothing/Neck/Cloaks/hd.rsi
   - type: StealTarget
     stealGroup: HeadCloak
+
+- type: entity
+  parent: [ ClothingNeckBase, Tier1Contraband ]
+  id: ClothingNeckCloakKaijuCloak
+  name: kaiju cloak
+  description: A mantle combining wings and tail, both of which obscure items carried underneath. Inspired by a fictional creation — that is, the story of a mad scientist reptilian splicing a moth person with themself to gain the power of flight, becoming a massive uncontrollable monster in the process. The perfect gift for a shy or eccentric loved one in your life.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/kaijucloak.rsi
+  - type: TypingIndicatorClothing
+    proto: alien
+  - type: HideLayerClothing
+    slots:
+    - Tail
+
+- type: entity
+  parent: [ClothingNeckBase, Tier1Contraband]
+  id: ClothingNeckCloakJuggernaut
+  name: juggernaut cloak
+  description: Originally designed to keep debris out of the joints of juggernaut armor, this ragged cloak now only serves to flaunt how many battles its owner has survived.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/juggernautcloak.rsi

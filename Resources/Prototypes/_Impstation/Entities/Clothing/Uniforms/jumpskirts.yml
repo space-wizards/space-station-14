@@ -194,3 +194,14 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hd_janitor.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hd_janitor.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtMimeCropped
+  name: cropped mime jumpskirt
+  description: ...?
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/mimecropped.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/mimecropped.rsi
