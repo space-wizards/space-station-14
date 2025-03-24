@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from baystation at https://github.com/Baystation12/Baystation12/commit/ded74aff42136a7953c551a2a94cebc81f62f9fb",
+  "copyright": "Taken from baystation at https://github.com/Baystation12/Baystation12/commit/ded74aff42136a7953c551a2a94cebc81f62f9fb, Inhand sprites by onesch",
   "size": {
     "x": 32,
     "y": 32
@@ -9,6 +9,14 @@
   "states": [
     {
       "name": "icon"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
     },
     {
       "name": "working",

@@ -128,7 +128,7 @@ public sealed class PaperSystem : EntitySystem
                     return;
                 }
 
-                var writeEvent = new PaperWriteEvent(entity, args.User);
+                var writeEvent = new PaperWriteEvent(args.User, entity);
                 RaiseLocalEvent(args.Used, ref writeEvent);
 
                 entity.Comp.Mode = PaperAction.Write;
@@ -140,8 +140,9 @@ public sealed class PaperSystem : EntitySystem
         }
 
         // If a stamp, attempt to stamp paper
-        if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(entity, GetStampInfo(stampComp), stampComp.StampState))
+        if (TryComp<StampComponent>(args.Used, out var stampComp))
         {
+            SetContent(entity, Loc.GetString("paper-component-action-stamp-paper-paperwork-is-bad"));
             // successfully stamped, play popup
             var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other",
                     ("user", args.User),

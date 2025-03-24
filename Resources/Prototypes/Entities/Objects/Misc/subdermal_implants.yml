@@ -245,6 +245,39 @@
         - HideContextMenu
         - MicroBomb
 
+- type: entity
+  parent: BaseSubdermalImplant
+  id: MicroBombImplantPAI
+  name: self-destruct sequence
+  description: INITIATE SELF-DESTRUCT SEQUENCE
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: SubdermalImplant
+      permanent: true
+      implantAction: ActionActivateMicroBombPAI
+      whitelist:
+        components:
+          - PAI 
+    - type: TriggerImplantAction
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: MicroBomb
+      totalIntensity: 120
+      intensitySlope: 5
+      maxIntensity: 30
+      canCreateVacuum: false
+    - type: Tag
+      tags:
+        - SubdermalImplant
+        - HideContextMenu
+        - MicroBomb
+    - type: OnUseTimerTrigger
+      delay: 5
+      beepSound:
+        path: "/Audio/Effects/beep1.ogg"
+        params:
+          volume: 5
+      initialBeepDelay: 0
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -344,7 +377,7 @@
   categories: [ HideSpawnMenu ]
   components:
    - type: SubdermalImplant
-     permanent: true
+   - type: MindShieldImplant
    - type: Tag
      tags:
        - MindShield

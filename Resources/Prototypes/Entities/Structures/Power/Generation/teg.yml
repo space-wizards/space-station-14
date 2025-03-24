@@ -168,12 +168,12 @@
         inlet:
           !type:PipeNode
           nodeGroupID: Pipe
-          pipeDirection: North
+          pipeDirection: South
           volume: 100
         outlet:
           !type:PipeNode
           nodeGroupID: Pipe
-          pipeDirection: South
+          pipeDirection: North
           volume: 100
         circulator:
           !type:TegNodeCirculator
@@ -193,6 +193,7 @@
     - type: Sprite
       sprite: Markers/teg_arrow.rsi
       color: "#FFFFFFBB"
+      scale: 1, -1 # i'm a nice person, so i flipped the sprite for you. as a treat.
       layers:
         - state: arrow
           offset: 0, 0.75

@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 247.0.0
+  engineVersion: 248.0.0
   forkId: ""
   forkVersion: ""
-  time: 02/17/2025 22:19:14
-  entityCount: 17778
+  time: 03/08/2025 20:05:32
+  entityCount: 17783
 maps:
 - 1
 grids:
@@ -7277,7 +7277,7 @@ entities:
       pos: -30.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -50998.375
+      secondsUntilStateChange: -51543.746
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -34495,6 +34495,13 @@ entities:
     - type: Transform
       pos: 10.5,22.5
       parent: 2
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 17779
+    components:
+    - type: Transform
+      pos: 5.5,66.5
+      parent: 2
 - proto: Carpet
   entities:
   - uid: 15027
@@ -43747,7 +43754,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -298753.94
+      secondsUntilStateChange: -299299.3
       state: Opening
   - uid: 6747
     components:
@@ -43755,7 +43762,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -298754.66
+      secondsUntilStateChange: -299300.03
       state: Opening
   - uid: 6749
     components:
@@ -43763,7 +43770,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -298753.22
+      secondsUntilStateChange: -299298.6
       state: Opening
   - uid: 6750
     components:
@@ -43771,7 +43778,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -298752.6
+      secondsUntilStateChange: -299297.97
       state: Opening
   - uid: 9721
     components:
@@ -88890,6 +88897,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: 8.5,26.5
       parent: 2
+- proto: SignCargo
+  entities:
+  - uid: 17780
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -1.5,63.5
+      parent: 2
 - proto: SignChapel
   entities:
   - uid: 14573
@@ -89458,6 +89473,18 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -42.49682,22.305836
       parent: 2
+  - uid: 17781
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -2.5,55.5
+      parent: 2
+  - uid: 17782
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -7.4950814,60.046688
+      parent: 2
 - proto: SignDisposalSpace
   entities:
   - uid: 10125
@@ -89680,6 +89707,14 @@ entities:
     components:
     - type: Transform
       pos: -70.5,59.5
+      parent: 2
+- proto: SignMail
+  entities:
+  - uid: 17783
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 6.5,66.5
       parent: 2
 - proto: SignMaterials
   entities:
