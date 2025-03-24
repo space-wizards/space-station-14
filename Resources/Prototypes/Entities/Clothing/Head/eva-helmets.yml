@@ -105,7 +105,7 @@
   parent: ClothingHeadEVAHelmetBase
   id: ClothingHeadHelmetKnight
   name: Knight Helmet
-  description: A helmet that can withstand many a blow ! Huzzah !
+  description: A helmet that can withstand many a blow! Huzzah!
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/knighthelmet.rsi

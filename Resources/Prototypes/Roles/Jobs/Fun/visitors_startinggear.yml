@@ -1577,12 +1577,13 @@
 - type: startingGear
   id: KnightErrantLoadout
   equipment:
-    jumpsuit: ClothingUniformJumpsuitGrey
+    jumpsuit: ClothingUniformJumpsuitColorGrey
     shoes: ClothingShoesColorBrown
     head: ClothingHeadHelmetKnight
-    back: Claymore
-    suitstorage: AirTankFilled
-    outerclothing: ClothingOuterSuitKnight
+    back: ClothingBackpackSatchelLeather
+    pocket1: DoubleEmergencyOxygenTankFilled
+    suitstorage: Claymore
+    outerClothing: ClothingOuterSuitKnight
 ### Challenge Visitors
 
 # Command

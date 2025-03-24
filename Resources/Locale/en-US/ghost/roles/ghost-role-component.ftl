@@ -322,9 +322,5 @@ ghost-role-information-wizard-name = Wizard
 ghost-role-information-wizard-desc = YER A WIZARD! Show the station what your magic is made of.
 
 ghost-role-information-knight-name = Knight Errant
-ghost-role-information-knight-desc = Thee art a knight errant from The Space Kingdom of Glorgon. Thee has cometh to slay evildoers and saveth the innocent !
-ghost-role-information-knight-rules = A virtuous knight follows the code of chivalry.
-                                        1: Serve your liege in valor and faith.
-                                        2: Protect the weak and defenseless.
-                                        3: Live by honor and for glory.
-                                        4: Respect the honor of aliens.
+ghost-role-information-knight-description = Thee art a knight errant from The Space Kingdom of Glorgon. Thee has cometh to slay evildoers and saveth the innocent !
+

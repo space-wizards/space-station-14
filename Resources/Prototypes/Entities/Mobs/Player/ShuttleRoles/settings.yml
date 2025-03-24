@@ -555,11 +555,15 @@
   id: KnightErrant
   components:
     - type: GhostRole
-      name: job-name-knighterrant
+      name: ghost-role-information-knight-name
+      description: ghost-role-information-knight-description
+      rules: ghost-role-information-freeagent-rules
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ KnightErrantLoadout ]
-
+      roleLoadout: [ RoleSurvivalStandard ]
 ### Visitors missing equipment for challenges
 # CHALLENGE #
 # these are specifically missing QOL equipment and have settings to make them harder.

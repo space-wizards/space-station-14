@@ -140,6 +140,7 @@
     sprite: Objects/Weapons/Melee/claymore.rsi
     slots:
     - back
+    - suitStorage
   - type: DisarmMalus
 
 - type: entity

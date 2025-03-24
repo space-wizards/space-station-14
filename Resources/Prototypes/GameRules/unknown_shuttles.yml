@@ -114,7 +114,7 @@
     weight: 3
     maxOccurrences: 1
   - type: LoadMapRule
-    preloadedGrid: KnightErrant
+    preloadedGrid: Durandal
 
 - type: entity
   id: UnknownShuttleNTQuark

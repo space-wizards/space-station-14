@@ -306,15 +306,19 @@
   parent: ClothingOuterBaseLarge
   id: ClothingOuterSuitKnight
   name: Knight Armor
-  description: Forged by master blacksmiths to resist the mightiest of swords. To Battle !
+  description: Forged by master blacksmiths to resist the mightiest of swords. To Battle!
   components:
+  - type: AllowSuitStorage
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/knightsuit.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/knightsuit.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.5 #To survive a dragon's flames.
+    highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.01
+    coolingCoefficient: 0.01
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: Armor
@@ -328,6 +332,4 @@
     walkModifier: 0.8
     sprintModifier: 0.8
   - type: HeldSpeedModifier
-  - type: TemperatureProtection
-    heatingCoefficient: 0.005
-    coolingCoefficient: 0.05
+
