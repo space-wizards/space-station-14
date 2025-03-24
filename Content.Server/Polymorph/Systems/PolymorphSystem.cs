@@ -59,7 +59,7 @@ public sealed partial class PolymorphSystem : EntitySystem
         SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
         SubscribeLocalEvent<PolymorphedEntityComponent, BeforeFullySlicedEvent>(OnBeforeFullySliced);
         SubscribeLocalEvent<PolymorphedEntityComponent, DestructionEventArgs>(OnDestruction);
-        SubscribeLocalEvent<PolymorphedEntityComponent, ComponentRemove>(OnPolymorphedRemoved);
+        SubscribeLocalEvent<PolymorphedEntityComponent, EntityTerminatingEvent>(OnPolymorphedTerminating);
 
         InitializeMap();
         InitializeTrigger();
@@ -165,9 +165,10 @@ public sealed partial class PolymorphSystem : EntitySystem
         }
     }
 
-    private void OnPolymorphedRemoved(Entity<PolymorphedEntityComponent> ent, ref ComponentRemove args)
+    private void OnPolymorphedTerminating(Entity<PolymorphedEntityComponent> ent, ref EntityTerminatingEvent args)
     {
         // Remove our original entity too
+        // Note that Revert will set Parent to null, so reverted entities will not be deleted
         QueueDel(ent.Comp.Parent);
     }
 
