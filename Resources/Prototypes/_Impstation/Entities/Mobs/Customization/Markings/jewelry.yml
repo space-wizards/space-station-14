@@ -1,0 +1,153 @@
+- type: marking
+  id: ChestNecklace
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/jewelry.rsi
+    state: chest_necklace
+
+- type: marking
+  id: HeadEarrings
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human, Dwarf, SlimePerson]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/jewelry.rsi
+    state: head_earrings1
+  - sprite: _Impstation/Mobs/Customization/jewelry.rsi
+    state: head_earrings2
+
+- type: marking
+  id: HeadEarringsDrop
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human, Dwarf, SlimePerson]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/jewelry.rsi
+    state: head_earrings_drop1
+  - sprite: _Impstation/Mobs/Customization/jewelry.rsi
+    state: head_earrings_drop2
+
+- type: marking
+  id: HeadEarringsWeights
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human, Dwarf, SlimePerson]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/jewelry.rsi
+    state: head_earrings_weights1
+  - sprite: _Impstation/Mobs/Customization/jewelry.rsi
+    state: head_earrings_weights2
+
+- type: marking
+  id: HeadSeptum
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Human, Dwarf]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/jewelry.rsi
+    state: head_septum
+
+- type: marking
+  id: HandBraceletLeft
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/jewelry.rsi
+    state: l_hand_bracelet
+
+- type: marking
+  id: HandBraceletRight
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/jewelry.rsi
+    state: r_hand_bracelet
+
+- type: marking
+  id: HandRingsLeft
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/jewelry.rsi
+    state: l_hand_rings1
+  - sprite: _Impstation/Mobs/Customization/jewelry.rsi
+    state: l_hand_rings2
+
+- type: marking
+  id: HandRingsRight
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  forcedColoring: false
+  followSkinColor: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#ffc833"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/jewelry.rsi
+    state: r_hand_rings1
+  - sprite: _Impstation/Mobs/Customization/jewelry.rsi
+    state: r_hand_rings2

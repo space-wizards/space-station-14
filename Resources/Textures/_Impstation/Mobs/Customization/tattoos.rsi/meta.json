@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Doll and incision tattoos by Sha-Seng (Github)",
+  "copyright": "By Sha-Seng (Github)",
   "size": {
     "x": 32,
     "y": 32
@@ -41,6 +41,90 @@
     },
     {
       "name": "chest_cuthere",
+      "directions": 4
+    },
+    {
+      "name": "chest_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "chest_heavy2",
+      "directions": 4
+    },
+    {
+      "name": "chest_heavy3",
+      "directions": 4
+    },
+    {
+      "name": "head_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "head_heavy2",
+      "directions": 4
+    },
+    {
+      "name": "l_arm_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "l_arm_heavy2",
+      "directions": 4
+    },
+    {
+      "name": "l_foot_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "l_foot_heavy2",
+      "directions": 4
+    },
+    {
+      "name": "l_hand_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "l_hand_heavy2",
+      "directions": 4
+    },
+    {
+      "name": "l_leg_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "l_leg_heavy2",
+      "directions": 4
+    },
+    {
+      "name": "r_arm_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "r_arm_heavy2",
+      "directions": 4
+    },
+    {
+      "name": "r_foot_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "r_foot_heavy2",
+      "directions": 4
+    },
+    {
+      "name": "r_hand_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "r_hand_heavy2",
+      "directions": 4
+    },
+    {
+      "name": "r_leg_heavy1",
+      "directions": 4
+    },
+    {
+      "name": "r_leg_heavy2",
       "directions": 4
     }
   ]

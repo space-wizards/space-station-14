@@ -123,3 +123,165 @@
   sprites:
   - sprite: _Impstation/Mobs/Customization/tattoos.rsi
     state: r_foot_doll
+
+- type: marking
+  id: HeadHeavyTattoos
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: head_heavy1
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: head_heavy2
+
+- type: marking
+  id: ChestHeavyTattoos
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: chest_heavy1
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: chest_heavy2
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: chest_heavy3
+
+- type: marking
+  id: ArmHeavyTattoosLeft
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: l_arm_heavy1
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: l_arm_heavy2
+
+- type: marking
+  id: ArmHeavyTattoosRight
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: r_arm_heavy1
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: r_arm_heavy2
+
+- type: marking
+  id: HandHeavyTattoosLeft
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: l_hand_heavy1
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: l_hand_heavy2
+
+- type: marking
+  id: HandHeavyTattoosRight
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: r_hand_heavy1
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: r_hand_heavy2
+
+- type: marking
+  id: LegHeavyTattoosLeft
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: l_leg_heavy1
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: l_leg_heavy2
+
+- type: marking
+  id: LegHeavyTattoosRight
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: r_leg_heavy1
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: r_leg_heavy2
+
+- type: marking
+  id: FootHeavyTattoosLeft
+  bodyPart: LFoot
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: l_foot_heavy1
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: l_foot_heavy2
+
+- type: marking
+  id: FootHeavyTattoosRight
+  bodyPart: RFoot
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf, Arachnid, SlimePerson]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: r_foot_heavy1
+  - sprite: _Impstation/Mobs/Customization/tattoos.rsi
+    state: r_foot_heavy2
