@@ -13,6 +13,3 @@
   setPreference: false
   objective: roles-antag-zombie-objective
   guides: [ Zombies ]
-  requirements:
-  - !type:OverallPlaytimeRequirement
-    time: 360000 #10 hrs

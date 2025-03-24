@@ -185,10 +185,6 @@
   - AllAccess
   access:
   - CentralCommand
-  requirements:
-  - !type:DepartmentTimeRequirement
-    department: Engineering
-    time: 54000 # 15 hours
 
 - type: startingGear
   id: ERTEngineerGear
