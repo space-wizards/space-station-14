@@ -259,7 +259,7 @@
       280: 0.6
       260: 0.4
   - type: ThermalRegulator
-    metabolismHeat: 800
+    metabolismHeat: 500
     radiatedHeat: 100
     implicitHeatRegulation: 800
     sweatHeatRegulation: 2000
