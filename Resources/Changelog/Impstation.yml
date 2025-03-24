@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Darkmajia, AftrLite
-  changes:
-  - message: The supermatter monitoring console has been added, with sprites by AftrLite.
-      For now, its board can be produced at a circuit imprinter.
-    type: Add
-  - message: Supermatters have received various adjustments and are scarier.
-    type: Tweak
-  - message: Supermatter healing is now properly capped.
-    type: Fix
-  - message: The chief engineer's hardsuit no longer disintegrates when thrown into
-      a supermatter.
-    type: Fix
-  id: 880
-  time: '2025-01-08T14:36:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1246
 - author: Darkmajia
   changes:
   - message: Tranquilizer shells have chloral hydrate instead of nocturine in them.
@@ -4102,3 +4087,10 @@
   id: 1379
   time: '2025-03-24T05:01:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2050
+- author: Sha-Seng
+  changes:
+  - message: Ten tattoos and seven jewelry markings!
+    type: Add
+  id: 1380
+  time: '2025-03-24T05:20:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2059
