@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck, mqole
-  changes:
-  - message: gray & goblin sprite cleanup
-    type: Tweak
-  id: 877
-  time: '2025-01-08T14:17:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1253
 - author: Pinkbat5
   changes:
   - message: Detectives now start the round with white forensic chalk.
@@ -4102,3 +4095,10 @@
   id: 1376
   time: '2025-03-24T03:42:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2055
+- author: Sha-Seng
+  changes:
+  - message: You can now butcher your bomber jackets for a loose look
+    type: Add
+  id: 1377
+  time: '2025-03-24T03:54:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2033
