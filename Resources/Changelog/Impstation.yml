@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Thieves should no longer be assigned Fin-Fin as a steal objective if
-      he is not present on the map.
-    type: Tweak
-  - message: The evil skull on Hummingbird can now be assigned as a thief objective.
-    type: Add
-  id: 874
-  time: '2025-01-08T00:11:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1251
 - author: Darkmajia
   changes:
   - message: Most stamps now look fancier on paper.
@@ -4100,3 +4090,10 @@
   id: 1373
   time: '2025-03-24T03:01:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2031
+- author: Sha-Seng
+  changes:
+  - message: Undershirt sprites adjusted slightly to not show under short sleeve tops
+    type: Tweak
+  id: 1374
+  time: '2025-03-24T03:05:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2034
