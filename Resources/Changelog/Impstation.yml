@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EpicToastTM
-  changes:
-  - message: (Barratry Station) Science is now playable, along with other miscellaneous
-      tweaks.
-    type: Tweak
-  id: 883
-  time: '2025-01-09T16:26:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1277
 - author: ruddygreat
   changes:
   - message: The shining spring now shoots cleanades as a bouncing projectile that
@@ -4096,3 +4088,11 @@
   id: 1382
   time: '2025-03-24T05:35:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2060
+- author: Mousetrinity
+  changes:
+  - message: Introducing the Kaiju cloak, a way to hide your tails, wings, and spare
+      legs, is now in uplinks and maintenance lockers near you!
+    type: Add
+  id: 1383
+  time: '2025-03-24T05:46:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2065
