@@ -224,6 +224,8 @@
   - type: ChameleonControllerImplant
   - type: SubdermalImplant
     implantAction: ActionChameleonController
+  - type: UseDelay
+    delay: 1
   - type: UserInterface
     interfaces:
       enum.ChameleonControllerKey.Key:

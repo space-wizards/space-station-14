@@ -4,11 +4,13 @@ using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Station;
+using Content.Shared.Timing;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -21,6 +23,7 @@ public sealed class ChameleonControllerSystem : EntitySystem
     [Dependency] private readonly SharedStationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly ChameleonClothingSystem _chameleonClothingSystem = default!;
     [Dependency] private readonly IServerPreferencesManager _preferences = default!;
+    [Dependency] private readonly UseDelaySystem _delay = default!;
 
     public override void Initialize()
     {
@@ -29,10 +32,11 @@ public sealed class ChameleonControllerSystem : EntitySystem
 
     private void OnSelected(Entity<SubdermalImplantComponent> ent, ref ChameleonControllerSelectedJobMessage args)
     {
-        if (ent.Comp.ImplantedEntity == null || !HasComp<ChameleonControllerImplantComponent>(ent))
+        if (_delay.IsDelayed(ent.Owner) || ent.Comp.ImplantedEntity == null || !HasComp<ChameleonControllerImplantComponent>(ent))
             return;
 
         ChangeChameleonClothingToJob(ent.Comp.ImplantedEntity.Value, args.SelectedJob);
+        _delay.TryResetDelay(ent.Owner);
     }
 
     /// <summary>

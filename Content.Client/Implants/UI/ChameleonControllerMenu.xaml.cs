@@ -66,9 +66,14 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
             boxContainer.AddChild(jobIconTexture);
             boxContainer.AddChild(button);
 
-            button.OnPressed += _ => OnIdSelected?.Invoke(job);
+            button.OnPressed += _ => JobButtonPressed(job);
 
             Grid.AddChild(boxContainer);
         }
+    }
+
+    private void JobButtonPressed(ProtoId<JobPrototype> job)
+    {
+        OnIdSelected?.Invoke(job);
     }
 }

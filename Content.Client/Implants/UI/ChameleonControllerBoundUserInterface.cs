@@ -3,6 +3,7 @@ using Content.Shared.Clothing;
 using Content.Shared.Implants;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
+using Content.Shared.Timing;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
@@ -14,11 +15,14 @@ public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+    private readonly UseDelaySystem _delay;
+
     [ViewVariables]
     private ChameleonControllerMenu? _menu;
 
     public ChameleonControllerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
+        _delay = EntMan.System<UseDelaySystem>();
     }
 
     protected override void Open()
