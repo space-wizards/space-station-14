@@ -17,11 +17,10 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
     [Dependency] private readonly IEntityManager _entityManager = default!;
     private readonly SpriteSystem _sprite;
 
+    // List of all the job protos that you can select!
     private IEnumerable<JobPrototype> _jobPrototypes = [];
 
     public event Action<ProtoId<JobPrototype>>? OnIdSelected;
-
-    // List of all the job protos that you can select!
 
     public ChameleonControllerMenu()
     {

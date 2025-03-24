@@ -20,6 +20,7 @@ public sealed class ChameleonControllerSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedStationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly ChameleonClothingSystem _chameleonClothingSystem = default!;
+    [Dependency] private readonly IServerPreferencesManager _preferences = default!;
 
     public override void Initialize()
     {
@@ -35,7 +36,7 @@ public sealed class ChameleonControllerSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Switches all the chamelean clothing that the implant user is wearing to look like the selected job.
+    ///     Switches all the chameleon clothing that the implant user is wearing to look like the selected job.
     /// </summary>
     private void ChangeChameleonClothingToJob(EntityUid user, ProtoId<JobPrototype> job)
     {
@@ -50,13 +51,9 @@ public sealed class ChameleonControllerSystem : EntitySystem
 
         var session = actorComponent.PlayerSession;
         var userId = actorComponent.PlayerSession.UserId;
-        var preferencesManager = IoCManager.Resolve<IServerPreferencesManager>();
-        var prefs = preferencesManager.GetPreferences(userId);
+        var prefs = _preferences.GetPreferences(userId);
 
         if (prefs.SelectedCharacter is not HumanoidCharacterProfile profile)
-            return;
-
-        if (!_inventorySystem.TryGetSlots(user, out var slots))
             return;
 
         // Does the job even exist?
@@ -69,6 +66,9 @@ public sealed class ChameleonControllerSystem : EntitySystem
         loadout.SetDefault(profile, session, _proto); // only sets the default if the player has no loadout
 
         if (!_proto.HasIndex(loadout.Role))
+            return;
+
+        if (!_inventorySystem.TryGetSlots(user, out var slots))
             return;
 
         // Go through all the slots on the player
