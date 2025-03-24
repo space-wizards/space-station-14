@@ -261,9 +261,14 @@
   description: ...
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/mime.rsi #imp
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/mime.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/mime.rsi #imp
+  - type: Butcherable #imp
+    butcheringType: Knife
+    spawned:
+    - id: ClothingUniformJumpskirtMimeCropped
+      amount: 1
 
 - type: entity
   parent: ClothingUniformSkirtBase

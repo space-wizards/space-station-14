@@ -602,7 +602,9 @@
   name: loadout-group-mime-jumpsuit
   loadouts:
   - MimeJumpsuit
+  - MimeJumpsuitCropped #imp
   - MimeJumpskirt
+  - MimeJumpskirtCropped #imp
 
 - type: loadoutGroup
   id: MimeBackpack
