@@ -29,7 +29,7 @@
   id: OrganSlimesLungs
   parent: BaseHumanOrgan
   name: slimes gas sacs
-  description: "Collects nitrogen, which slime cells use for maintenance."
+  description: "Collects oxygen, which slime cells use for maintenance."
   components:
     - type: Sprite
       sprite: Mobs/Species/Slime/organs.rsi

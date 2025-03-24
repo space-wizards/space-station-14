@@ -23,10 +23,10 @@ reagent-name-dermaline = juice that heals your burns
 reagent-desc-dermaline = An advanced chemical that is more effective at treating burn damage than kelotane.
 
 reagent-name-dexalin = juice that breathes for you
-reagent-desc-dexalin = Used for treating minor oxygen deprivation and bloodloss. A required reagent for dexalin plus.
+reagent-desc-dexalin = Used for treating minor nitrogen deprivation and bloodloss. A required reagent for dexalin plus.
 
 reagent-name-dexalin-plus = juice that breathes for you but stronger
-reagent-desc-dexalin-plus = Used in treatment of extreme cases of oxygen deprivation and bloodloss. Flushes heartbreaker toxin out of the blood stream.
+reagent-desc-dexalin-plus = Used in treatment of extreme cases of nitrogen deprivation and bloodloss. Flushes heartbreaker toxin out of the blood stream.
 
 reagent-name-epinephrine = juice that makes you stable
 reagent-desc-epinephrine = An effective stabilizing chemical used to keep a critical person from dying to asphyxiation while patching up minor damage during crit. Flushes heartbreaker toxin out the blood stream at the cost of more epinephrine, but may add histamine. Helps reduce stun time. Commonly found in the form of emergency medipens.

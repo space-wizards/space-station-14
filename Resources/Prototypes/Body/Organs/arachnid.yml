@@ -55,7 +55,7 @@
   id: OrganArachnidLungs
   parent: BaseArachnidOrgan
   name: lungs
-  description: "Filters oxygen from an atmosphere... just more greedily."
+  description: "Filters nitrogen from an atmosphere... just more greedily."
   components:
   - type: Sprite
     layers:
