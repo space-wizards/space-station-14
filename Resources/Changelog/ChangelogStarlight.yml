@@ -4278,4 +4278,39 @@ Entries:
   id: 592
   time: '2025-03-22T08:42:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/415
+- author: BORTBORTBORT
+  changes:
+  - message: Added NTREP hardsuit
+    type: Add
+  id: 593
+  time: '2025-03-24T08:59:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/422
+- author: BORTBORTBORT
+  changes:
+  - message: Added NTREP satchel
+    type: Add
+  id: 594
+  time: '2025-03-24T08:59:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/422
+- author: B1773rm4n
+  changes:
+  - message: Implement searchbox for the Round End Summary  search at Round End
+    type: Add
+  id: 595
+  time: '2025-03-24T09:09:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/421
+- author: Happyrobot33
+  changes:
+  - message: Added new sounds to Resomi.
+    type: Add
+  id: 596
+  time: '2025-03-24T14:41:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/425
+- author: PubliclyExecutedPig
+  changes:
+  - message: Changed the warden's hardsuit. Defenders of the brig rejoice!
+    type: Tweak
+  id: 597
+  time: '2025-03-24T16:23:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/424
 
