@@ -32,7 +32,7 @@ public sealed partial class RevolverAmmoProviderComponent : AmmoProviderComponen
 
     // TODO: Using an array would be better but this throws!
     [DataField]
-    public List<EntityUid?> AmmoSlots;
+    public List<EntityUid?> AmmoSlots = [];
 
     /// <summary>
     /// Bool array for chambers. Every bool can be null, true or false.
