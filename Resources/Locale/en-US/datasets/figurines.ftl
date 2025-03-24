@@ -26,11 +26,11 @@ figurines-clown-6 = Can I have AA? Please?
 figurines-clown-7 = I'm a clown, but you're the whole circus!
 
 figurines-holoclown-1 = I'm helping my older brother.
-figurines-holoclown-2 = Hello officer!
+figurines-holoclown-2 = Hello, officer!
 figurines-holoclown-3 = Who are you calling blue?
 figurines-holoclown-4 = Bleeding on the ground is a good look for you.
 figurines-holoclown-5 = Pathetic.
-figurines-holoclown-6 = It's not them you need to worry about; It's me.
+figurines-holoclown-6 = It's not them you need to worry about; it's me.
 figurines-holoclown-7 = What's so funny?
 
 figurines-mime-1 = ...
@@ -47,13 +47,13 @@ figurines-musician-1 = Never gonna give you up!
 figurines-musician-2 = Never gonna let you down!
 figurines-musician-3 = Music is an art.
 figurines-musician-4 = Thank you, I'll be here all night.
-figurines-musician-5 = Im a one man band.
+figurines-musician-5 = I'm a one man band.
 
 figurines-boxer-1 = The first rule of Fight Club is...
 figurines-boxer-2 = We settle this in the ring, alright?
 figurines-boxer-3 = I. AM. THE. CHAMPION!!
 figurines-boxer-4 = Don't look at me; he was shot, not punched.
-figurines-boxer-5 = 1v1 me captain.
+figurines-boxer-5 = 1v1 me, captain.
 
 figurines-captain-1 = Glory to NT!
 figurines-captain-2 = How did I get hired? Yes.
@@ -79,7 +79,7 @@ figurines-warden-6 = You're going away for a long time, buddy.
 
 figurines-detective-1 = The butler did it.
 figurines-detective-2 = I need some whiskey after this.
-figurines-detective-3 = Chemeleon fibers? How did a chemeleon get in here?
+figurines-detective-3 = Chameleon fibers? How did a chameleon get in here?
 figurines-detective-4 = Go go gadget!
 figurines-detective-5 = Of course I checked the door logs!
 
@@ -137,7 +137,7 @@ figurines-engineer-3 = What is AME?
 figurines-engineer-4 = Free insuls at engineering
 figurines-engineer-5 = Where'd the power go?
 figurines-engineer-6 = Someone bombed medbay... again...
-figurines-engineer-7 = Well why don't you come and fix it?
+figurines-engineer-7 = Well, why don't you come and fix it?
 
 figurines-atmostech-1 = I put plasma in distro.
 figurines-atmostech-2 = I will burn you in a burn chamber.
@@ -172,7 +172,7 @@ figurines-chemist-2 = We need to cook.
 figurines-chemist-3 = I am the one who knocks!
 figurines-chemist-4 = Say my name.
 figurines-chemist-5 = 99.8% purity.
-figurines-chemist-6 = Bicordizine? Don't you mean methamphetamine?
+figurines-chemist-6 = Epinephrine? Didn't you say methamphetamine?
 
 figurines-paramedic-1 = Insuls and tools!
 figurines-paramedic-2 = I need AA for saving people!
@@ -195,7 +195,7 @@ figurines-librarian-6 = Long, long ago...
 figurines-librarian-7 = As the story goes...
 figurines-librarian-8 = Imagine, if you will...
 figurines-librarian-9 = Long before time had a name...
-figurines-librarian-10 = In a galaxy far far away...
+figurines-librarian-10 = In a galaxy far, far away...
 figurines-librarian-11 = As the old saying goes...
 figurines-librarian-12 = Gather round...
 figurines-librarian-13 = ...It's a tale as old as time...
@@ -211,9 +211,9 @@ figurines-chaplain-6 = Vampires aren't real.
 figurines-chef-1 = I swear it's not human meat.
 figurines-chef-2 = More banana cream pies?
 figurines-chef-3 = How does rotary sushi sound?
-figurines-chef-4 = That'll be $14.99
+figurines-chef-4 = That'll be 1000 spesos
 figurines-chef-5 = For here or to go?
-figurines-chef-6 = Where'd Pun pun go? No idea...
+figurines-chef-6 = Where'd Pun Pun go? No idea...
 
 figurines-bartender-1 = Where's my monkey?
 figurines-bartender-2 = Sec won't drink.
@@ -250,11 +250,11 @@ figurines-nukie-elite-2 = THAT'S A KEG!
 figurines-nukie-elite-3 = Guys are you alive?
 figurines-nukie-elite-4 = Breach and clear!
 figurines-nukie-elite-5 = Leave no survivors.
-figurines-nukie-elite-6 = Good work team.
+figurines-nukie-elite-6 = Good work, team.
 
 figurines-nukie-commander-1 = GET DAT FUKKEN DISK!
 figurines-nukie-commander-2 = Fuckin' flukies.
-figurines-nukie-commander-3 = The syndicate sends it's regards.
+figurines-nukie-commander-3 = The syndicate sends its regards.
 figurines-nukie-commander-4 = Failure is not an option.
 figurines-nukie-commander-5 = Whoops.
 
@@ -273,11 +273,11 @@ figurines-space-dragon-1 = Fish will consume the station.
 figurines-space-dragon-2 = Dragon de- Actually, nevermind.
 figurines-space-dragon-3 = Crew is delicious.
 figurines-space-dragon-4 = Don't you dare make sushi.
-figurines-space-dragon-5 = This station aint' big enough for the two of us.
+figurines-space-dragon-5 = This station ain't big enough for the two of us.
 
 figurines-queen-1 = Our domain must grow.
 figurines-queen-2 = The hive hungers.
-figurines-queen-3 = We comsume all.
+figurines-queen-3 = We consume all.
 figurines-queen-4 = We are the apex.
 figurines-queen-5 = You're just biomass.
 figurines-queen-6 = We must evolve.
