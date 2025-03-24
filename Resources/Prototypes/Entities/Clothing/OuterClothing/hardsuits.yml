@@ -353,7 +353,7 @@
     modifiers:
       coefficients:
         Blunt: 0.4
-        Slash: 0.4
+        Slash: 0.45
         Piercing: 0.45
         Caustic: 0.7
     staminaModifier: 0.1
