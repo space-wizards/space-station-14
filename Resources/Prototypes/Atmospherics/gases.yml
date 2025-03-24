@@ -4,7 +4,7 @@
   specificHeat: 20
   heatCapacityRatio: 1.4
   molarMass: 32
-  color: 2887E8
+  color: DA1010
   reagent: Oxygen
   pricePerMole: 0
 
@@ -14,7 +14,7 @@
   specificHeat: 30
   heatCapacityRatio: 1.4
   molarMass: 28
-  color: DA1010
+  color: 2887E8
   reagent: Nitrogen
   pricePerMole: 0
 

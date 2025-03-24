@@ -4,7 +4,7 @@
   desc: reagent-desc-oxygen
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
-  color: "#c4f5ff"
+  color: "#a1e1ff"
   boilingPoint: -183.0
   meltingPoint: -218.4
   metabolisms:
@@ -190,7 +190,7 @@
   desc: reagent-desc-nitrogen
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
-  color: "#a1e1ff"
+  color: "#c4f5ff"
   boilingPoint: -195.8
   meltingPoint: -210.0
   metabolisms:

@@ -1,5 +1,5 @@
-gases-oxygen = Oxygen
-gases-nitrogen = Nitrogen
+gases-oxygen = Nitrogen
+gases-nitrogen = Oxygen
 gases-co2 = Carbon Dioxide
 gases-plasma = Plasma
 gases-tritium = Tritium

@@ -16,7 +16,9 @@
   - type: Sprite
     layers:
     - state: internals
-    - state: emergencytank
+    - state: nitrogentank
+  - type: Label
+    currentLabel: reagent-name-nitrogen
 
 - type: entity
   parent: BoxSurvival
@@ -34,9 +36,7 @@
   - type: Sprite
     layers:
     - state: internals
-    - state: nitrogentank
-  - type: Label
-    currentLabel: reagent-name-nitrogen
+    - state: emergencytank
 
 - type: entity
   parent: BoxCardboard
@@ -56,7 +56,9 @@
   - type: Sprite
     layers:
     - state: internals
-    - state: extendedtank
+    - state: nitrogentank
+  - type: Label
+    currentLabel: reagent-name-nitrogen
 
 - type: entity
   parent: BoxSurvivalEngineering
@@ -74,9 +76,7 @@
   - type: Sprite
     layers:
     - state: internals
-    - state: nitrogentank
-  - type: Label
-    currentLabel: reagent-name-nitrogen
+    - state: extendedtank
 
 - type: entity
 
@@ -97,7 +97,9 @@
   - type: Sprite
     layers:
     - state: internals
-    - state: emergencytank
+    - state: nitrogentank
+  - type: Label
+    currentLabel: reagent-name-nitrogen
 
 - type: entity
   parent: BoxSurvivalSecurity
@@ -115,9 +117,7 @@
   - type: Sprite
     layers:
     - state: internals
-    - state: nitrogentank
-  - type: Label
-    currentLabel: reagent-name-nitrogen
+    - state: emergencytank
 
 - type: entity
 
@@ -138,7 +138,9 @@
   - type: Sprite
     layers:
     - state: internals
-    - state: emergencytank
+    - state: nitrogentank
+  - type: Label
+    currentLabel: reagent-name-nitrogen
 
 - type: entity
   parent: BoxSurvivalMedical
@@ -156,9 +158,7 @@
   - type: Sprite
     layers:
     - state: internals
-    - state: nitrogentank
-  - type: Label
-    currentLabel: reagent-name-nitrogen
+    - state: emergencytank
 
 - type: entity
   parent: BoxCardboard
@@ -184,6 +184,8 @@
   - type: Tag
     tags:
     - BoxHug
+  - type: Label
+    currentLabel: reagent-name-nitrogen
 
 - type: entity
   parent: BoxHug
@@ -198,8 +200,6 @@
     - id: Flare
     - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
-  - type: Label
-    currentLabel: reagent-name-nitrogen
 
 - type: entity
   parent: BoxSurvival
@@ -214,6 +214,12 @@
     - id: Flare
     - id: FoodBreadBaguette
     - id: DrinkWaterBottleFull
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: nitrogentank
+  - type: Label
+    currentLabel: reagent-name-nitrogen
 
 - type: entity
   parent: BoxSurvivalNitrogen
@@ -228,12 +234,6 @@
     - id: Flare
     - id: FoodBreadBaguette
     - id: DrinkWaterBottleFull
-  - type: Sprite
-    layers:
-    - state: internals
-    - state: nitrogentank
-  - type: Label
-    currentLabel: reagent-name-nitrogen
 
 - type: entity
   parent: BoxCardboard
@@ -252,7 +252,9 @@
   - type: Sprite
     layers:
     - state: internals
-    - state: extendedtank
+    - state: nitrogentank
+  - type: Label
+    currentLabel: reagent-name-nitrogen
 
 - type: entity
   parent: BoxSurvivalSyndicate
@@ -269,6 +271,4 @@
   - type: Sprite
     layers:
     - state: internals
-    - state: nitrogentank
-  - type: Label
-    currentLabel: reagent-name-nitrogen
+    - state: extendedtank

@@ -1,4 +1,4 @@
-reagent-name-oxygen = juice that makes you breathe
+reagent-name-oxygen = juice that is everywhere
 reagent-desc-oxygen = An oxidizing, colorless gas.
 
 reagent-name-plasma = juice that makes you burn
@@ -10,7 +10,7 @@ reagent-desc-tritium = Radioactive space-magic pixie dust.
 reagent-name-carbon-dioxide = juice that makes you suffocate
 reagent-desc-carbon-dioxide = You have genuinely no idea what this is.
 
-reagent-name-nitrogen = juice that is everywhere
+reagent-name-nitrogen = juice that makes you breathe
 reagent-desc-nitrogen = A colorless, odorless unreactive gas. Highly stable.
 
 reagent-name-nitrous-oxide = juice that makes you sleepy
