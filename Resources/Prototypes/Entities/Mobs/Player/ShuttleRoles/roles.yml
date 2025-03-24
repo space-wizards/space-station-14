@@ -493,8 +493,11 @@
   id: RandomHumanoidKnightErrant
   name: knight errant ghost role
   components:
-    - type: RandomHumanoidSpawner
-      settings: KnightErrant
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/claymore.rsi
+    state: knight
+  - type: RandomHumanoidSpawner
+    settings: KnightErrant
 
 ### Visitors missing equipment for challenges
 
