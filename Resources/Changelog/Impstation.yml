@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Added a chef Apid, for kitchen bounties.
-    type: Add
-  - message: Apids can no longer be taken over by ghosts after a player has claimed
-      them.
-    type: Fix
-  id: 879
-  time: '2025-01-08T14:23:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1259
 - author: Darkmajia, AftrLite
   changes:
   - message: The supermatter monitoring console has been added, with sprites by AftrLite.
@@ -4104,3 +4094,11 @@
   id: 1378
   time: '2025-03-24T04:59:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2046
+- author: hivehum
+  changes:
+  - message: You speak to your mother with that mouth? Go wash your mouth out with
+      soap and think about what you've done!
+    type: Tweak
+  id: 1379
+  time: '2025-03-24T05:01:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2050
