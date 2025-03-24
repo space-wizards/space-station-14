@@ -74,7 +74,6 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
 
     private void JobButtonPressed(ProtoId<JobPrototype> job)
     {
-        if (_)
         OnJobSelected?.Invoke(job);
     }
 }
