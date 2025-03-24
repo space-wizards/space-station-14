@@ -51,4 +51,42 @@ public sealed class EmbedTest : InteractionTest
         await Client.WaitPost(Client.EntMan.FlushEntities);
         await Pair.RunTicksSync(1);
     }
+
+    /// <summary>
+    /// Embeds an entity with a <see cref="EmbeddableProjectileComponent"/> into a target,
+    /// then deletes the target and makes sure the embeddable is not deleted.
+    /// </summary>
+    [Test]
+    public async Task TestEmbedDetach()
+    {
+        // Spawn the target we're going to throw at
+        await SpawnTarget(TargetProtoId);
+
+        // Give the player the embeddable to throw
+        var projectile = await PlaceInHands(EmbeddableProtoId);
+        Assert.That(TryComp<EmbeddableProjectileComponent>(projectile, out var embedComp),
+            $"{EmbeddableProtoId} does not have EmbeddableProjectileComponent");
+        // Make sure the projectile isn't already embedded into anything
+        Assert.That(embedComp.EmbeddedIntoUid, Is.Null,
+            $"Projectile already embedded into {SEntMan.ToPrettyString(embedComp.EmbeddedIntoUid)}");
+
+        // Have the player throw the embeddable at the target
+        await ThrowItem();
+
+        // Wait a moment for the item to hit and embed
+        await RunSeconds(0.5f);
+
+        // Make sure the projectile is embedded into the target
+        Assert.That(embedComp.EmbeddedIntoUid, Is.EqualTo(ToServer(Target)),
+            "Projectile not embedded into target");
+
+        // Delete the target
+        await Delete(Target.Value);
+
+        await RunTicks(1);
+
+        // Make sure the embeddable wasn't deleted with the target
+        AssertExists(projectile);
+        await AssertEntityLookup(EmbeddableProtoId);
+    }
 }
