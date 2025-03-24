@@ -21,3 +21,75 @@
   sprites:
     - sprite: _Impstation/Mobs/Customization/human_hair.rsi
       state: frenchbraid
+
+- type: marking
+  id: HumanHairHalfUpUndercut
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/human_hair.rsi
+      state: halfup_undercut
+
+- type: marking
+  id: HumanHairHalfUpShort
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/human_hair.rsi
+      state: halfup_short
+
+- type: marking
+  id: HumanHairHalfUpLong
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/human_hair.rsi
+      state: halfup_long
+
+- type: marking
+  id: HumanHairMidPartLong
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/human_hair.rsi
+      state: midpart_long
+
+- type: marking
+  id: HumanHairMidPartLonger
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/human_hair.rsi
+      state: midpart_longer
+
+- type: marking
+  id: HumanHairMullet
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/human_hair.rsi
+      state: mullet
+
+- type: marking
+  id: HumanHairMulletSideshave
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/human_hair.rsi
+      state: mullet_sideshave
+
+- type: marking
+  id: HumanHairUndercutCurly
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/human_hair.rsi
+      state: undercut_curly
+
+- type: marking
+  id: HumanHairSideshaveCurly
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/human_hair.rsi
+      state: sideshave_curly

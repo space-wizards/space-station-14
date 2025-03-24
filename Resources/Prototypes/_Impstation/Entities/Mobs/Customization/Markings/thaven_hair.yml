@@ -1494,3 +1494,84 @@
   sprites:
     - sprite: _Impstation/Mobs/Customization/thaven/thaven_hair.rsi
       state: frenchbraid
+
+- type: marking
+  id: ThavenHairHalfUpUndercut
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Thaven]
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/thaven/thaven_hair.rsi
+      state: halfup_undercut
+
+- type: marking
+  id: ThavenHairHalfUpShort
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Thaven]
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/thaven/thaven_hair.rsi
+      state: halfup_short
+
+- type: marking
+  id: ThavenHairHalfUpLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Thaven]
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/thaven/thaven_hair.rsi
+      state: halfup_long
+
+- type: marking
+  id: ThavenHairMidPartLong
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Thaven]
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/thaven/thaven_hair.rsi
+      state: midpart_long
+
+- type: marking
+  id: ThavenHairMidPartLonger
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Thaven]
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/thaven/thaven_hair.rsi
+      state: midpart_longer
+
+- type: marking
+  id: ThavenHairMullet
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Thaven]
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/thaven/thaven_hair.rsi
+      state: mullet
+
+- type: marking
+  id: ThavenHairMulletSideshave
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Thaven]
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/thaven/thaven_hair.rsi
+      state: mullet_sideshave
+
+- type: marking
+  id: ThavenHairUndercutCurly
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Thaven]
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/thaven/thaven_hair.rsi
+      state: undercut_curly
+
+- type: marking
+  id: ThavenHairSideshaveCurly
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Thaven]
+  sprites:
+    - sprite: _Impstation/Mobs/Customization/thaven/thaven_hair.rsi
+      state: sideshave_curly
