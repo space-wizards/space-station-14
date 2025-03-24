@@ -60,7 +60,7 @@
 - type: humanoidBaseSprite
   id: MobSlimeMarkingFollowSkin
   markingsMatchSkin: true
-  layerAlpha: 0.72
+  layerAlpha: 0.75 # Impstation Special
 
 - type: humanoidBaseSprite
   id: MobSlimeHeadMale

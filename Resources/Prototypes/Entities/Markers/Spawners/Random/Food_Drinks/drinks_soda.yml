@@ -60,6 +60,7 @@
     - id: DrinkWaterBottleFull
     - id: DrinkWaterCup
     - id: DrinkWineCan
+    - id: DrinkOrangeAsteradeBottleFull # imp
 
 - type: entityTable
   id: RandomRareSodaTable
