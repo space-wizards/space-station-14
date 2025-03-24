@@ -171,6 +171,8 @@
           Quantity: 5
         - ReagentId: Phosphorus
           Quantity: 5
+        - ReagentId: Microplastics
+          Quantity: 0.2
         canReact: false
 
 - type: entity
