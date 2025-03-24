@@ -1149,11 +1149,11 @@
 - type: entity
   parent: BaseSign
   id: WarningN2
-  name: N2 warning sign
-  description: WARNING! N2 flow tube. Ensure the flow is disengaged before working.
+  name: O2 warning sign
+  description: WARNING! O2 flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Sprite
-    state: atmos_n2
+    state: atmos_o2
 
 - type: entity
   parent: BaseSign
@@ -1167,11 +1167,11 @@
 - type: entity
   parent: BaseSign
   id: WarningO2
-  name: O2 warning sign
-  description: WARNING! O2 flow tube. Ensure the flow is disengaged before working.
+  name: N2 warning sign
+  description: WARNING! N2 flow tube. Ensure the flow is disengaged before working.
   components:
   - type: Sprite
-    state: atmos_o2
+    state: atmos_n2
 
 - type: entity
   parent: BaseSign
