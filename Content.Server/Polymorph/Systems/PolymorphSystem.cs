@@ -314,6 +314,10 @@ public sealed partial class PolymorphSystem : EntitySystem
         var uidXform = Transform(uid);
         var parentXform = Transform(parent.Value);
 
+        // Don't swap back onto a terminating grid
+        if (TerminatingOrDeleted(uidXform.ParentUid))
+            return null;
+
         if (component.Configuration.ExitPolymorphSound != null)
             _audio.PlayPvs(component.Configuration.ExitPolymorphSound, uidXform.Coordinates);
 
