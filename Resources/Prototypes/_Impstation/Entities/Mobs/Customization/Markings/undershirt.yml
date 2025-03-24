@@ -10,7 +10,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: undershirt
 
 - type: marking
@@ -25,7 +25,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: rolled_undershirt
 
 - type: marking
@@ -40,7 +40,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: sleeveless
 
 - type: marking
@@ -55,7 +55,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: rolled_undershirt_sleeveless
 
 - type: marking
@@ -70,7 +70,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: gross_sleeveless
 
 - type: marking
@@ -85,7 +85,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: nanotrasen
 
 - type: marking
@@ -100,7 +100,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: binder
 
 - type: marking
@@ -114,7 +114,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: classic
 
 - type: marking
@@ -129,7 +129,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: sports
 
 - type: marking
@@ -144,7 +144,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: strapless
 
 # Female sex versions
@@ -161,7 +161,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: undershirt_f
 
 - type: marking
@@ -176,7 +176,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: rolled_undershirt_f
 
 - type: marking
@@ -191,7 +191,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: sleeveless_f
 
 - type: marking
@@ -206,7 +206,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: rolled_undershirt_sleeveless_f
 
 - type: marking
@@ -221,7 +221,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: gross_sleeveless_f
 
 - type: marking
@@ -236,7 +236,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: nanotrasen_f
 
 - type: marking
@@ -251,7 +251,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: binder_f
 
 - type: marking
@@ -266,7 +266,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: sports_f
 
 - type: marking
@@ -281,7 +281,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: strapless_f
 
 # Really dumb way of making it work for arachnids, who are unsexed. sexRestriction doesn't seem to support two sexes at once
@@ -297,7 +297,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: undershirt
 
 - type: marking
@@ -311,7 +311,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: rolled_undershirt
 
 - type: marking
@@ -325,7 +325,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: sleeveless
 
 - type: marking
@@ -339,7 +339,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: rolled_undershirt_sleeveless
 
 - type: marking
@@ -353,7 +353,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: gross_sleeveless
 
 - type: marking
@@ -367,7 +367,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: nanotrasen
 
 - type: marking
@@ -381,7 +381,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: binder
 
 - type: marking
@@ -395,7 +395,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: sports
 
 - type: marking
@@ -409,7 +409,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: strapless
 
 #Unisex versions, as sexRestriction seems to not support more than one sex. Unisex body uses same body as male.
@@ -426,7 +426,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: undershirt
 
 - type: marking
@@ -441,7 +441,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: rolled_undershirt
 
 - type: marking
@@ -456,7 +456,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: sleeveless
 
 - type: marking
@@ -471,7 +471,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: rolled_undershirt_sleeveless
 
 - type: marking
@@ -486,7 +486,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: gross_sleeveless
 
 - type: marking
@@ -501,7 +501,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: nanotrasen
 
 - type: marking
@@ -516,7 +516,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: binder
 
 - type: marking
@@ -531,7 +531,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: sports
 
 - type: marking
@@ -546,7 +546,7 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/undershirt.rsi
+  - sprite: _Impstation/Mobs/Customization/undershirt.rsi #imp
     state: strapless
 
 # Thaven-specific sprites, all unisex
