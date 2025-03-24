@@ -9,6 +9,8 @@
   id: BaseMobSpecies
   abstract: true
   components:
+  - type: ReplacementAccent
+    accent: liar
   - type: Sprite
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
@@ -213,8 +215,6 @@
     - FootstepSound
     - DoorBumpOpener
     - AnomalyHost
-  - type: ReplacementAccent
-    accent: liar
 
 - type: entity
   save: false
