@@ -7,5 +7,9 @@ namespace Content.Shared.SubFloor;
 [RegisterComponent]
 public sealed partial class TrayScannerUserComponent : Component
 {
+    /// <summary>
+    /// How many t-rays the user is currently using.
+    /// </summary>
+    [DataField]
     public int Count;
 }
