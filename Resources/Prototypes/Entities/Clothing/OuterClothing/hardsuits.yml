@@ -323,7 +323,7 @@
         Slash: 0.6
         Piercing: 0.6
         Caustic: 0.7
-    staminaModifier: 0.7
+    staminaModifier: 0.3
   - type: ClothingSpeedModifier
     walkModifier: 0.80
     sprintModifier: 0.80
@@ -356,7 +356,7 @@
         Slash: 0.45
         Piercing: 0.45
         Caustic: 0.7
-    staminaModifier: 0.1
+    staminaModifier: 0.7
   - type: ClothingSpeedModifier
     walkModifier: 0.6
     sprintModifier: 0.6
