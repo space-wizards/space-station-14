@@ -492,6 +492,7 @@
         - DoorRemote
         - Whistle
         - BalloonPopper
+        - ScatteringGrenade
   - type: ItemMapper
     mapLayers:
       flashbang:
