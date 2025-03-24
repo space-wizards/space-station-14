@@ -1,7 +1,5 @@
 using Content.Shared.Eui;
-using Content.Shared.Roles;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Ghost.Roles
 {

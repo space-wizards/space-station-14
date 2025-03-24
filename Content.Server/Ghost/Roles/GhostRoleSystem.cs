@@ -35,7 +35,6 @@ using Content.Server.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Collections;
 using Content.Shared.Ghost.Roles.Components;
-using Content.Shared.Popups;
 
 namespace Content.Server.Ghost.Roles;
 
@@ -501,7 +500,8 @@ public sealed class GhostRoleSystem : EntitySystem
     {
         var list = new List<string>();
 
-        // If there is a mind already, check its mind roles. I don't think this can ever actually happen.
+        // If there is a mind already, check its mind roles.
+        // Not sure if this can ever actually happen.
         if (TryComp<MindContainerComponent>(roleEnt, out var mindCont)
             && TryComp<MindComponent>(mindCont.Mind, out var mind))
         {

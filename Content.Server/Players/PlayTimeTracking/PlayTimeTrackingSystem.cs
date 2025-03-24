@@ -206,10 +206,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
         // Yes, it's a bit ironic that we remove the prefixes right before blindly sorting them into the categories
         // the prefixes specify, but not every code path that calls this function will send them WITH prefixes
-        if (role.StartsWith(JobPrefix, StringComparison.Ordinal))
-            role = role[JobPrefix.Length..];
-        else if (role.StartsWith(AntagPrefix, StringComparison.Ordinal))
-            role = role[AntagPrefix.Length..];
+        role = _roles.RemoveRolePrefix(role); //TODO:ERRANT move this back if this is the only codepath that chops like this
 
         var cvar = _cfg.GetCVar(CCVars.GameRoleTimers);
         _prototypes.TryIndex<JobPrototype>(role, out job);

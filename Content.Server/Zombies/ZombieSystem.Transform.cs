@@ -36,7 +36,6 @@ using Content.Shared.Traits.Assorted;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Tag;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Zombies;
 
@@ -257,7 +256,6 @@ public sealed partial class ZombieSystem
             ghostRole.RoleName = Loc.GetString("zombie-generic");
             ghostRole.RoleDescription = Loc.GetString("zombie-role-desc");
             ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
-            ghostRole.MindRoles = new List<EntProtoId>{"MindRoleZombie"}; //TODO:ERRANT make this a different PR
         }
 
         if (TryComp<HandsComponent>(target, out var handsComp))

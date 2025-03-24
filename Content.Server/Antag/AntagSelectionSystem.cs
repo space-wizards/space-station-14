@@ -14,7 +14,6 @@ using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Components;
-using Content.Server.Station.Events;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Antag;
 using Content.Shared.Clothing;
@@ -511,9 +510,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (_ban.IsRoleBanned(session, def.FallbackRoles))
                 fallbackBlocked = true;
 
-            if (blocked && fallbackBlocked) //Is it even worth it to have this, to skip the further checks?
-                continue;
-
             // Check if the player meets all requirements for the roles
             foreach (var antag in def.PrefRoles)
             {
@@ -528,7 +524,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             }
 
             // Add player to the appropriate antag pool
-            if (HasPrimaryAntagPreference(session, def) && !blocked)
+            if (HasPrimaryAntagPreference(session, def) && !blocked) //TODO:ERRANT add logging for server-catches?
             {
                 preferredList.Add(session);
             }

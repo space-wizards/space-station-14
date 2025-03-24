@@ -102,7 +102,7 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     }
 
     /// <summary>
-    /// Check each  job/antag prototype against the current player, for requirements and bans
+    /// Check each job/antag prototype against the current player, for requirements and bans
     /// The prototypes MUST start with the job/antag prefix
     /// </summary>
     public bool IsAllowed(List<string> prototypes, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
@@ -119,8 +119,6 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
             }
             JobPrototype? job = null;
             AntagPrototype? antag = null;
-
-            // use RemovePrefix?
 
             // Slightly cursed, but the prefixes need to be removed for the next part. And at least we know the types.
             if (proto.StartsWith(JobPrefix, StringComparison.Ordinal))

@@ -28,6 +28,9 @@ public abstract class SharedRoleSystem : EntitySystem
 
     private JobRequirementOverridePrototype? _requirementOverride;
 
+    public const string JobPrefix = "Job:"; //TODO make all the other systems inherit these from here?
+    public const string AntagPrefix = "Antag:";
+
     public override void Initialize()
     {
         Subs.CVar(_cfg, CCVars.GameRoleTimerOverride, SetRequirementOverride, true);
@@ -54,6 +57,16 @@ public abstract class SharedRoleSystem : EntitySystem
 
         if (!_prototypes.TryIndex(value, out _requirementOverride ))
             Log.Error($"Unknown JobRequirementOverridePrototype: {value}");
+    }
+
+    public string RemoveRolePrefix(string role)
+    {
+        if (role.StartsWith(JobPrefix, StringComparison.Ordinal))
+            role = role[JobPrefix.Length..];
+        else if (role.StartsWith(AntagPrefix, StringComparison.Ordinal))
+            role = role[AntagPrefix.Length..];
+
+        return role;
     }
 
     /// <summary>

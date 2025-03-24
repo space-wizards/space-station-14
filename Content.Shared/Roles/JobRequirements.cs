@@ -29,7 +29,6 @@ public static class JobRequirements
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile)
     {
-        var sys = entManager.System<SharedRoleSystem>();
         reason = null;
         if (requirements == null)
             return true;

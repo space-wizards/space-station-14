@@ -38,6 +38,8 @@ public interface IBanManager
     /// <summary>
     /// Check if the player is currently banned from any of the listed roles
     /// </summary>
+    /// <param name="player">The player</param>
+    /// <param name="prototypes">A list of valid antagprototype IDs</param>
     /// <returns>Returns True if an active role ban is found for this player for any of the provided roles</returns>
     public bool IsRoleBanned(ICommonSession player, List<ProtoId<AntagPrototype>> prototypes);
     public HashSet<ProtoId<JobPrototype>>? GetJobBans(NetUserId playerUserId);
