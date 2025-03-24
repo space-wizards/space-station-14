@@ -228,6 +228,15 @@
 
 - type: entity
   parent: Bloodpack
+  id: Bloodpack1
+  suffix: Single
+  components:
+  - type: Stack
+    stackType: Bloodpack
+    count: 1
+
+- type: entity
+  parent: Bloodpack
   id: Bloodpack10Lingering
   suffix: 10, Lingering
   components:
