@@ -7,10 +7,6 @@
   parent: MobBaseAncestor
   abstract: true
   components:
-  # Agile, so can backflip as an ability.
-  - type: CanBackflip
-    soundEffect: /Audio/Weapons/punchmiss.ogg
-    backflipOnFailedInteract: true
   # Custom names
   - type: ReplacementAccent
     accent: scurret
