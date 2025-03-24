@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesFlipflopsBlack
+  name: black flip flops
+  description: A pair of black flip flops
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Misc/flipflopsblack.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Misc/flipflopsblack.rsi

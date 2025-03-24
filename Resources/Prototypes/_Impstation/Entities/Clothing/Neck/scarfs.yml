@@ -8,3 +8,25 @@
     sprite: _Impstation/Clothing/Neck/Scarfs/limegreen.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Neck/Scarfs/limegreen.rsi
+
+- type: entity
+  parent: ClothingScarfBase
+  id: ClothingNeckScarfWrappedBlack
+  name: wrapped black scarf
+  description: An extra long black scarf that bundles around your neck to keep you warm.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Scarfs/wrappedscarfblack.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Scarfs/wrappedscarfblack.rsi
+
+- type: entity
+  parent: ClothingScarfBase
+  id: ClothingNeckScarfWrappedWhite
+  name: wrapped white scarf
+  description: An extra long white scarf that bundles around your neck to keep you warm.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Scarfs/wrappedscarfwhite.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Scarfs/wrappedscarfwhite.rsi

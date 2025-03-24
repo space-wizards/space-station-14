@@ -262,6 +262,8 @@
   name: loadout-group-passenger-neck
   minLimit: 0
   loadouts:
+  - WrappedScarfBlack #imp
+  - WrappedScarfWhite #imp
   - Mantle
   - GreyCloak #imp
 

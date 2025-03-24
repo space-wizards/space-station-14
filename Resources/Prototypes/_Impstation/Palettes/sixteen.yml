@@ -36,3 +36,34 @@
   colors:
     brown: "#4a3a2a"
     black: "#212020"
+
+- type: palette
+  id: SimpleTop
+  name: SimpleTop
+  colors:
+    red: "#810e0e"
+    orange: "#c45414"
+    yellow: "#cfab08"
+    green: "#065a09"
+    blue: "#113b6b"
+    purple: "#52107e"
+    magenta: "#921265"
+    white: "#ffffff"
+    black: "#222222"
+
+- type: palette
+  id: SimpleBottom
+  name: SimpleBottom
+  colors:
+    white: "#d4d4d4"
+    jeans: "#1d3b55"
+    grey: "#818181"
+    khaki: "#b08e45"
+    black: "#303030"
+
+- type: palette
+  id: SimpleBeltbuckle
+  name: SimpleBeltbuckle
+  colors:
+    gold: "#ffc833"
+    silver: "#bdbdbd"

@@ -1,0 +1,327 @@
+# Pants version
+- type: entity
+  parent: [ClothingUniformRandom]
+  id: ClothingUniformRandomSimpleTee
+  name: simple tee outfit
+  description: A lightweight outfit with a simple tee and soft pants. You can make them into shorts with a knife if you're feeling inspired, though damaging the metamorphic fabric will cause unpredictable color shifts.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    layers:
+    - state: base_leg_simple_pants
+      map: [ "leg" ]
+    - state: decor_leg_simple_belt
+      map: [ "decor" ]
+    - state: base_torso_simple_tee
+      map: [ "torso" ]
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: base_leg_simple_pants
+        map: [ "leg" ]
+      - state: decor_leg_simple_belt
+        map: [ "decor" ]
+      - state: base_torso_simple_tee
+        map: [ "torso" ]
+  - type: RandomSprite
+    available:
+      - torso:
+          base_torso_simple_tee: SimpleTop
+        decor:
+          decor_leg_simple_belt: SimpleBeltbuckle
+        leg:
+          base_leg_simple_pants: SimpleBottom
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingUniformRandomSimpleTeeShorts
+      amount: 1
+
+# Shorts version
+- type: entity
+  parent: [ClothingUniformRandom]
+  id: ClothingUniformRandomSimpleTeeShorts
+  name: simple tee outfit
+  suffix: shorts
+  description: A lightweight outfit with a simple tee and soft shorts. You could probably crop the tee, too, if you want...
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    layers:
+    - state: base_leg_simple_shorts
+      map: [ "leg" ]
+    - state: decor_leg_simple_belt
+      map: [ "decor" ]
+    - state: base_torso_simple_tee
+      map: [ "torso" ]
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: base_leg_simple_shorts
+        map: [ "leg" ]
+      - state: decor_leg_simple_belt
+        map: [ "decor" ]
+      - state: base_torso_simple_tee
+        map: [ "torso" ]
+  - type: RandomSprite
+    available:
+      - torso:
+          base_torso_simple_tee: SimpleTop
+        decor:
+          decor_leg_simple_belt: SimpleBeltbuckle
+        leg:
+          base_leg_simple_shorts: SimpleBottom
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingUniformRandomSimpleTeeCropped
+      amount: 1
+
+# Crop top version
+- type: entity
+  parent: [ClothingUniformRandom]
+  id: ClothingUniformRandomSimpleTeeCropped
+  name: simple tee outfit
+  suffix: cropped
+  description: A lightweight outfit with a simple cropped tee and soft shorts. If you cut any more you'll ruin it.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    layers:
+    - state: base_leg_simple_shorts
+      map: [ "leg" ]
+    - state: decor_leg_simple_belt
+      map: [ "decor" ]
+    - state: base_torso_simple_tee_cropped
+      map: [ "torso" ]
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: base_leg_simple_shorts
+        map: [ "leg" ]
+      - state: decor_leg_simple_belt
+        map: [ "decor" ]
+      - state: base_torso_simple_tee_cropped
+        map: [ "torso" ]
+  - type: RandomSprite
+    available:
+      - torso:
+          base_torso_simple_tee_cropped: SimpleTop
+        decor:
+          decor_leg_simple_belt: SimpleBeltbuckle
+        leg:
+          base_leg_simple_shorts: SimpleBottom
+
+# Pants version
+- type: entity
+  parent: [ClothingUniformRandom]
+  id: ClothingUniformRandomSimpleTank
+  name: simple tank outfit
+  description: A lightweight outfit with a simple tank and soft pants. You can make them into shorts with a knife if you're feeling inspired, though damaging the metamorphic fabric will cause unpredictable color shifts.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    layers:
+    - state: base_leg_simple_pants
+      map: [ "leg" ]
+    - state: decor_leg_simple_belt
+      map: [ "decor" ]
+    - state: base_torso_simple_tank
+      map: [ "torso" ]
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: base_leg_simple_pants
+        map: [ "leg" ]
+      - state: decor_leg_simple_belt
+        map: [ "decor" ]
+      - state: base_torso_simple_tank
+        map: [ "torso" ]
+  - type: RandomSprite
+    available:
+      - torso:
+          base_torso_simple_tank: SimpleTop
+        decor:
+          decor_leg_simple_belt: SimpleBeltbuckle
+        leg:
+          base_leg_simple_pants: SimpleBottom
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingUniformRandomSimpleTankShorts
+      amount: 1
+
+# Shorts version
+- type: entity
+  parent: [ClothingUniformRandom]
+  id: ClothingUniformRandomSimpleTankShorts
+  name: simple tank outfit
+  suffix: shorts
+  description: A lightweight outfit with a simple tank and soft shorts. You could probably crop the tank, too, if you want...
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    layers:
+    - state: base_leg_simple_shorts
+      map: [ "leg" ]
+    - state: decor_leg_simple_belt
+      map: [ "decor" ]
+    - state: base_torso_simple_tank
+      map: [ "torso" ]
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: base_leg_simple_shorts
+        map: [ "leg" ]
+      - state: decor_leg_simple_belt
+        map: [ "decor" ]
+      - state: base_torso_simple_tank
+        map: [ "torso" ]
+  - type: RandomSprite
+    available:
+      - torso:
+          base_torso_simple_tank: SimpleTop
+        decor:
+          decor_leg_simple_belt: SimpleBeltbuckle
+        leg:
+          base_leg_simple_shorts: SimpleBottom
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingUniformRandomSimpleTankCropped
+      amount: 1
+
+# Crop top version
+- type: entity
+  parent: [ClothingUniformRandom]
+  id: ClothingUniformRandomSimpleTankCropped
+  name: simple tank outfit
+  suffix: cropped
+  description: A lightweight outfit with a simple cropped tank and soft shorts. If you cut any more you'll ruin it.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    layers:
+    - state: base_leg_simple_shorts
+      map: [ "leg" ]
+    - state: decor_leg_simple_belt
+      map: [ "decor" ]
+    - state: base_torso_simple_tank_cropped
+      map: [ "torso" ]
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: base_leg_simple_shorts
+        map: [ "leg" ]
+      - state: decor_leg_simple_belt
+        map: [ "decor" ]
+      - state: base_torso_simple_tank_cropped
+        map: [ "torso" ]
+  - type: RandomSprite
+    available:
+      - torso:
+          base_torso_simple_tank_cropped: SimpleTop
+        decor:
+          decor_leg_simple_belt: SimpleBeltbuckle
+        leg:
+          base_leg_simple_shorts: SimpleBottom
+
+# Just the pants
+- type: entity
+  parent: [ClothingUniformRandom]
+  id: ClothingUniformRandomSimplePants
+  name: simple pants
+  description: Just a pair of soft pants. You can make them into shorts with a knife if you're feeling inspired, though damaging the metamorphic fabric will cause unpredictable color shifts.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    layers:
+    - state: base_leg_simple_pants
+      map: [ "leg" ]
+    - state: decor_leg_simple_belt
+      map: [ "decor" ]
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: base_leg_simple_pants
+        map: [ "leg" ]
+      - state: decor_leg_simple_belt
+        map: [ "decor" ]
+  - type: RandomSprite
+    available:
+      - decor:
+          decor_leg_simple_belt: SimpleBeltbuckle
+        leg:
+          base_leg_simple_pants: SimpleBottom
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: ClothingUniformRandomSimpleShorts
+      amount: 1
+
+# Just the shorts
+- type: entity
+  parent: [ClothingUniformRandom]
+  id: ClothingUniformRandomSimpleShorts
+  name: simple shorts
+  description: Just a pair of soft shorts. Perfect.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    layers:
+    - state: base_leg_simple_shorts
+      map: [ "leg" ]
+    - state: decor_leg_simple_belt
+      map: [ "decor" ]
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/procedural.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: base_leg_simple_shorts
+        map: [ "leg" ]
+      - state: decor_leg_simple_belt
+        map: [ "decor" ]
+  - type: RandomSprite
+    available:
+      - decor:
+          decor_leg_simple_belt: SimpleBeltbuckle
+        leg:
+          base_leg_simple_shorts: SimpleBottom
+
+- type: entity
+  parent: [ClothingUniformRandom]
+  id: ClothingUniformRandomSimpleTeeSpawner
+  name: random simple tee outfit
+  components:
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+    - ClothingUniformRandomSimpleTee
+
+- type: entity
+  parent: [ClothingUniformRandom]
+  id: ClothingUniformRandomSimpleTankSpawner
+  name: random simple tank outfit
+  components:
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+    - ClothingUniformRandomSimpleTank
+
+- type: entity
+  parent: [ClothingUniformRandom]
+  id: ClothingUniformRandomSimplePantsSpawner
+  name: random simple pants outfit
+  components:
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+    - ClothingUniformRandomSimplePants
+
