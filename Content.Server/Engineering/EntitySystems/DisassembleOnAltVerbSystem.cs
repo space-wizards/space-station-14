@@ -3,6 +3,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Content.Shared.Engineering.EntitySystems;
 
 namespace Content.Server.Engineering.EntitySystems
 {
@@ -16,6 +17,7 @@ namespace Content.Server.Engineering.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<DisassembleOnAltVerbComponent, GetVerbsEvent<AlternativeVerb>>(AddDisassembleVerb);
+            SubscribeLocalEvent<DisassembleOnAltVerbComponent, DisassembleOnAltVerbDoAfterEvent>(OnDisassembleOnAltVerb);
         }
         private void AddDisassembleVerb(EntityUid uid, DisassembleOnAltVerbComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
@@ -41,18 +43,24 @@ namespace Content.Server.Engineering.EntitySystems
             if (string.IsNullOrEmpty(component.Prototype))
                 return;
 
-            if (component.DoAfterTime > 0 && TryGet<SharedDoAfterSystem>(out var doAfterSystem))
+            if (component.DoAfterTime > 0)
             {
-                var doAfterArgs = new DoAfterArgs(EntityManager, user, component.DoAfterTime, new AwaitedDoAfterEvent(), null)
+                var doAfterArgs = new DoAfterArgs(EntityManager, user, component.DoAfterTime, new DisassembleOnAltVerbDoAfterEvent(), target)
                 {
                     BreakOnMove = true,
                 };
-                var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
 
-                if (result != DoAfterStatus.Finished)
+                if (!EntityManager.System<SharedDoAfterSystem>().TryStartDoAfter(doAfterArgs))
+                {
                     return;
+                }
+
             }
 
+        }
+
+        private void OnDisassembleOnAltVerb(EntityUid uid, DisassembleOnAltVerbComponent component, DisassembleOnAltVerbDoAfterEvent args)
+        {
             if (component.Deleted || Deleted(uid))
                 return;
 
@@ -61,7 +69,7 @@ namespace Content.Server.Engineering.EntitySystems
 
             var entity = EntityManager.SpawnEntity(component.Prototype, transformComp.Coordinates);
 
-            _handsSystem.TryPickup(user, entity);
+            _handsSystem.TryPickup(args.User, entity);
 
             EntityManager.DeleteEntity(uid);
         }
