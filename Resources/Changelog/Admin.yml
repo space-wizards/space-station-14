@@ -912,7 +912,7 @@ Entries:
   url: https://github.com/space-wizards/space-station-14/pull/35961
 - author: SlamBamActionman
   changes:
-  - message: 'Any adminlog chat alert that includes an antag now has "[ANTAG: entityName]"
+  - message: 'Any adminlog chat alert that includes an antag now has "\[ANTAG: entityName\]"
       appended to the end.'
     type: Tweak
   id: 113
