@@ -229,8 +229,8 @@
 - type: localizedDataset
   id: FigurinesQueen
   values:
-  prefix: figurines-queen-
-  count: 6
+    prefix: figurines-queen-
+    count: 6
 
 - type: localizedDataset
   id: FigurinesRatKing
