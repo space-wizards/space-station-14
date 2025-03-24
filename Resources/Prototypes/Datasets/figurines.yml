@@ -74,7 +74,7 @@
   id: FigurinesSecurity
   values:
     prefix: figurines-security-
-    count: 9
+    count: 10
 
 - type: localizedDataset
   id: FigurinesLawyer
@@ -226,11 +226,11 @@
     prefix: figurines-space-dragon-
     count: 5
 
-- type: localizedDataset # TODO add something
+- type: localizedDataset
   id: FigurinesQueen
   values:
   prefix: figurines-queen-
-  count: 0
+  count: 6
 
 - type: localizedDataset
   id: FigurinesRatKing
