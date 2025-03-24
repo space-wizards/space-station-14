@@ -125,7 +125,7 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
     ///     If selectedSide is null, this unsets the die, and makes it behave like a normal die.
     ///     If user is not null, this will also display a popup and log an admin message.
     /// </summary>
-    public void SetSelectedSide( Entity<DiceComponent?, LoadedDiceComponent?> entity, int? selectedSide, EntityUid? user = null)
+    public void SetSelectedSide(Entity<DiceComponent?, LoadedDiceComponent?> entity, int? selectedSide, EntityUid? user = null)
     {
         entity.Deconstruct(out var uid, out var die, out var loadedDie);
 
@@ -135,7 +135,7 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
         if (!Resolve(uid, ref loadedDie, false))
             return;
 
-        // Make sure that it is valid change
+        // Make sure that it's a valid change
         if (selectedSide != null && (selectedSide < 1 || selectedSide > die.Sides))
             return;
 
