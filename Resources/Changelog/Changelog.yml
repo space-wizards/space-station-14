@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Window sprites are now slightly more transparent.
-    type: Tweak
-  id: 7606
-  time: '2024-11-13T12:30:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33282
 - author: keronshb
   changes:
   - message: Added Ethereal Jaunt! A Wizard Spell that turns you invisible and into
@@ -3880,3 +3873,10 @@
   id: 8105
   time: '2025-03-24T16:36:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35507
+- author: slarticodefast
+  changes:
+  - message: Adjusted thermal regulation again so you no longer overheat in hardsuits.
+    type: Fix
+  id: 8106
+  time: '2025-03-24T23:55:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36062
