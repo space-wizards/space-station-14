@@ -271,7 +271,7 @@
   minLimit: 0
   loadouts:
   - PassengerWintercoat
-  - BomberLightweight #imp
+  - BomberBlack #imp
 
 - type: loadoutGroup
   id: PassengerShoes
