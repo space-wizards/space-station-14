@@ -1,0 +1,25 @@
+#The Synth
+# Timers
+- type: loadoutEffectGroup
+  id: SuperSynthTimerAndWhitelist
+  effects:
+    - !type:AnyFlagLoadoutEffect
+      flags:
+        - Staff
+        - Mentor
+        - ExtRoles
+        - Retiree
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobMusician
+        time: 36000 # 1 hour of being the biggest nerd on the station
+
+- type: loadout
+  id: SuperSynthesizerInstrument
+  effects:
+    - !type:GroupLoadoutEffect
+      proto: SuperSynthTimerAndWhitelist
+  storage:
+    back:
+      - SuperSynthesizerInstrument
