@@ -10,7 +10,8 @@
 - type: entity
   parent: [ClothingNeckCloakStraight, BaseToggleClothing]
   id: ClothingHeadCloakStraightKill
-  suffix: KILL, DO NOT MAP
+  suffix: KILL
+  categories: [ DoNotMap ]
   components:
   - type: ToggleClothing
     action: ActionBecomeValid

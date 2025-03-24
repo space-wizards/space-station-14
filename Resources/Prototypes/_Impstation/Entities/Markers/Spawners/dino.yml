@@ -2,7 +2,7 @@
   name: random dinosaur spawner
   id: DinosaurSpawnerRandom
   parent: MarkerBase
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
     - type: Sprite
       layers:

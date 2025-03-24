@@ -2,7 +2,7 @@
   parent: RubberStampBase
   id: RubberStampAdminAssistant
   name: administrative assistant rubber stamp
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ] # imp
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-admin-assistant

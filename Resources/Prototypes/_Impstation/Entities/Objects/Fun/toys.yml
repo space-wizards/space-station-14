@@ -180,7 +180,7 @@
   parent: BasePlushie
   id: PlushieEvilBug
   name: evil bug plushie
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   description: Heh...
   components:
   - type: Sprite

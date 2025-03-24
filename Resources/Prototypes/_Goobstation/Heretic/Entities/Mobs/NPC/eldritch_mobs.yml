@@ -132,7 +132,7 @@
   id: MobGhoulRustWalker
   name: rust walker
   description: A grinding, clanking construct which leaches life from its surroundings with every armoured step.
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ] # imp
   components:
   - type: Ghoul
     totalHealth: 100

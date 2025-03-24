@@ -7,7 +7,7 @@
   parent: MarkerBase
   id: SpawnPointPlayerCharacter
   name: ghost role spawn point
-  suffix: player character, DO NOT MAP
+  suffix: player character
   components:
     - type: GhostRole
       name: Roleplay Ghost Role
