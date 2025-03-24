@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: RosySaturniidae
-  changes:
-  - message: gas tank resprites
-    type: Tweak
-  id: 870
-  time: '2025-01-07T19:01:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1256
 - author: CrocodileCarousel
   changes:
   - message: 'Added nine new religious head coverings: kippahs, niqabs, hijabs, tichels
@@ -4102,3 +4095,10 @@
   id: 1369
   time: '2025-03-23T23:26:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2026
+- author: SixValentine
+  changes:
+  - message: Added Hash
+    type: Add
+  id: 1370
+  time: '2025-03-24T02:27:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2029
