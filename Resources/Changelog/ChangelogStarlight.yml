@@ -4292,4 +4292,11 @@ Entries:
   id: 594
   time: '2025-03-24T08:59:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/422
+- author: B1773rm4n
+  changes:
+  - message: Implement searchbox for the Round End Summary  search at Round End
+    type: Add
+  id: 595
+  time: '2025-03-24T09:09:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/421
 
