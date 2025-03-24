@@ -20,7 +20,7 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
     // List of all the job protos that you can select!
     private IEnumerable<JobPrototype> _jobPrototypes = [];
 
-    public event Action<ProtoId<JobPrototype>>? OnIdSelected;
+    public event Action<ProtoId<JobPrototype>>? OnJobSelected;
 
     public ChameleonControllerMenu()
     {
@@ -74,6 +74,7 @@ public sealed partial class ChameleonControllerMenu : FancyWindow
 
     private void JobButtonPressed(ProtoId<JobPrototype> job)
     {
-        OnIdSelected?.Invoke(job);
+        if (_)
+        OnJobSelected?.Invoke(job);
     }
 }

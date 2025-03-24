@@ -30,7 +30,7 @@ public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = this.CreateWindow<ChameleonControllerMenu>();
-        _menu.OnIdSelected += OnIdSelected;
+        _menu.OnJobSelected += OnJobSelected;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -55,8 +55,12 @@ public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
         _menu?.UpdateState(validList);
     }
 
-    private void OnIdSelected(ProtoId<JobPrototype> selectedJob)
+    private void OnJobSelected(ProtoId<JobPrototype> selectedJob)
     {
+        if (_delay.IsDelayed(Owner))
+            return;
+
         SendMessage(new ChameleonControllerSelectedJobMessage(selectedJob));
+        _delay.TryResetDelay(Owner);
     }
 }
