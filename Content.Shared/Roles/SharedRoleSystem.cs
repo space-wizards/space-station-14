@@ -6,7 +6,6 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
-using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
@@ -27,9 +26,6 @@ public abstract class SharedRoleSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     private JobRequirementOverridePrototype? _requirementOverride;
-
-    public const string JobPrefix = "Job:"; //TODO make all the other systems inherit these from here?
-    public const string AntagPrefix = "Antag:";
 
     public override void Initialize()
     {
@@ -57,16 +53,6 @@ public abstract class SharedRoleSystem : EntitySystem
 
         if (!_prototypes.TryIndex(value, out _requirementOverride ))
             Log.Error($"Unknown JobRequirementOverridePrototype: {value}");
-    }
-
-    public string RemoveRolePrefix(string role)
-    {
-        if (role.StartsWith(JobPrefix, StringComparison.Ordinal))
-            role = role[JobPrefix.Length..];
-        else if (role.StartsWith(AntagPrefix, StringComparison.Ordinal))
-            role = role[AntagPrefix.Length..];
-
-        return role;
     }
 
     /// <summary>

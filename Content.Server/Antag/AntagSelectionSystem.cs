@@ -524,7 +524,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             }
 
             // Add player to the appropriate antag pool
-            if (HasPrimaryAntagPreference(session, def) && !blocked) //TODO:ERRANT add logging for server-catches?
+            if (HasPrimaryAntagPreference(session, def) && !blocked)
             {
                 preferredList.Add(session);
             }
