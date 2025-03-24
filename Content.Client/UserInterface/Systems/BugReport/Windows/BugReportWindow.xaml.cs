@@ -82,6 +82,8 @@ public sealed partial class BugReportWindow : DefaultWindow
         DescriptionCharacterCounter.FontColorOverride = invalidDescriptionLen ? Color.Red : Color.Green;
 
         SubmitButton.Disabled = invalidTitleLen || invalidDescriptionLen;
+
+        PlaceholderCenter.Visible = descriptionLen == 0;
     }
 
     // Checks if the bug report window should be enabled for this client.
