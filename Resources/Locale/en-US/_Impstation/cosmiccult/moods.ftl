@@ -17,25 +17,28 @@ thaven-mood-cosmic-livingnightmare-name = Only You
 thaven-mood-cosmic-livingnightmare-desc = The knowledge that fills your mind is a blinding, panicked light through the dark forest of the cosmos. This isn't reality, it's a waking nightmare. And only you have broken out; everyone else is stuck in the haze. The thought that you could awaken anyone here is as impossible as your own realization. Every person for themself.
 
 thaven-mood-cosmic-grotesqueworld-name = Grotesquerie
-thaven-mood-cosmic-grotesqueworld-desc = The knowledge that fills your mind is of the shape of a man that is not a man, its body half-past the event horizon. The world around you is disgusting and vile. The sights of the station nauseate you, and your coworkers have been replaced with horrific monsters. They WANT you to hurt yourself. Find somewhere far from anyone you've spoken to recently, and fast.
+thaven-mood-cosmic-grotesqueworld-desc = The knowledge that fills your mind is of the shape of a man that is not a man, its body half-past the event horizon. The world around you is disgusting and vile. The sights of the station nauseate you, and your coworkers have been replaced with horrific monsters. They WANT you to hurt. Find somewhere far from anyone you've seen recently, and fast.
 
 thaven-mood-cosmic-voiceoftheend-name = Make Your Peace
 thaven-mood-cosmic-voiceoftheend-desc = The knowledge that fills your mind speaks of a chant across the stars. The end of all things is coming! Make sure as many people as possible (yourself included) are mentally and emotionally prepared, have said their goodbyes to their loved ones. There is nothing to fear in the future, for there is nothing at all!
 
 thaven-mood-cosmic-worshipoftheend-name = Praise the Squid!
-thaven-mood-cosmic-worshipoftheend-desc = The knowledge that fills your mind feels like the caress of a tendriled beast. It ought to be worshipped! By you, and as many as you can convince to join you. You must spread the word and ensure as many people as possible are prepared for the end's embrace. Tell them: Everything everyone's worried about is about to be over.
+thaven-mood-cosmic-worshipoftheend-desc = The knowledge that fills your mind feels like the caress of a tendriled beast. It ought to be worshipped by you, and as many as you can convince to join you. You must spread the word and ensure as many people as possible are prepared for the end's embrace. Tell them: Everything everyone's worried about is about to be over.
 
 thaven-mood-cosmic-disregardoftheliving-name = Locked-In Syndrome
-thaven-mood-cosmic-disregardoftheliving-desc = The knowledge that fills your mind has told you to seek an impossible comfort. The space you awaken in is your home now. Your entire world. If you left, if you were made to leave, you would be as powerless as a mote of dust in a storm. Collect comforts, collect friends, and don't let anyone evict you.
+thaven-mood-cosmic-disregardoftheliving-desc = The knowledge that fills your mind has told you to seek an impossible comfort. The space you awaken in is your home now. Your entire world. Doors are paths to the terrifying unknown. If you left, if you were made to leave, you would be as powerless as a mote of dust in a storm. Collect comforts, collect friends, and don't let anyone evict you.
 
-thaven-mood-cosmic-disregardoftheself-name = The Worst Mood In The Game
-thaven-mood-cosmic-disregardoftheself-desc = The knowledge that fills your mind is of a man and a woman embracing, a light deigned to consume their forms and leave nothing behind. This horror has rendered your mind scarred -- you are now straight! You must find comfort in a partner of the opposite gender before the end of your shift. (If you're nonbinary, find anyone you can!)
+thaven-mood-cosmic-disregardoftheself-name = Short Fuse
+thaven-mood-cosmic-disregardoftheself-desc = The knowledge that fills your mind turns your hands into fists, turns your inner frustrations outward. Anyone that wrongs you must know that they are jeopardizing your future: what little of it there is. Teach them your pain by drawing blood in the crucible of combat, or by calling on others to draw their blood for you.
 
 thaven-mood-cosmic-fearofbeingforgotten-name = Lethophobia
-thaven-mood-cosmic-fearofbeingforgotten-desc = The knowledge that fills your mind is a scene on a winding river, a moth whose mind is gone, bowing before the stars. You have an intense and irrational fear of forgetting: Being forgotten, forgetting something, and forgetting someone. You must do everything you can to be remembered.
+thaven-mood-cosmic-fearofbeingforgotten-desc = The knowledge that fills your mind is a scene on a winding river, a moth whose mind is gone, bowing before the setting of binary stars. You have an intense and irrational fear of forgetting: Being forgotten, forgetting something, and forgetting someone. You must do everything you can to be remembered.
 
 thaven-mood-cosmic-fearofendings-name = All Good Things...
-thaven-mood-cosmic-fearofendings-desc = The knowledge that fills your mind leaves a terrifying imprint of an ever-infinite nothingness. You have developed an intense and irrational fear of eternities: the afterworld, space, oblivion, the unknown. You must close all accounts before the inevitable arrives. If you're romantically taken, you must break up with any current partner[s].
+thaven-mood-cosmic-fearofendings-desc = The knowledge that fills your mind leaves a terrifying imprint of an ever-infinite nothingness. You have developed an intense and irrational fear of eternities: the afterworld, space, oblivion, the unknown. You must close all accounts, pay all debts, before the inevitable arrives. If you're romantically taken or dating, you must break up with any current partner[s].
 
 thaven-mood-cosmic-painlessendings-name = Spare the Little Ones
 thaven-mood-cosmic-painlessendings-desc = The knowledge that fills your mind resembles the smell of a rotten corpse -- maybe a memory from your past? -- that feeling across your entire world. It would be a kindness to keep creatures of lesser intelligence from living to see it. You don't want animals to suffer; keep your methods as painless as you can.
+
+# The knowledge that fills your mind is of a man and a woman embracing, a light deigned to consume their forms and leave nothing behind. This horror has rendered your mind scarred -- you are now straight! You must find comfort in a partner of the opposite gender before the end of your shift. (If you're nonbinary, find anyone you can!)
+# cut feature ^ due to not wanting to cause bad trauma responses, leaving it here for possible reuse
