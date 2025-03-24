@@ -1,5 +1,6 @@
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
@@ -85,7 +86,7 @@ public sealed class RotatingLightSystem : SharedRotatingLightSystem
 
         if (!_animations.HasRunningAnimation(uid, player, AnimKey))
         {
-            _animations.Play(uid, player, GetAnimation(comp.Speed), AnimKey);
+            _animations.Play(new Entity<AnimationPlayerComponent>(uid, player), GetAnimation(comp.Speed), AnimKey);
         }
     }
 }
