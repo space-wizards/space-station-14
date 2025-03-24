@@ -7,7 +7,7 @@ namespace Content.Server.Github.Requests;
 /// <summary>
 ///     <see href="https://docs.github.com/en/rest/issues/issues?apiVersion=2022-11-28#create-an-issue"/>>
 /// </summary>
-public sealed class CreateIssueRequest : IGithubRequest
+public sealed class CreateIssue : IGithubRequest
 {
     [JsonIgnore]
     public HttpMethod RequestMethod => HttpMethod.Post;

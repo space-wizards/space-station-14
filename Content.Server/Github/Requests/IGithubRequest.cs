@@ -11,7 +11,7 @@ namespace Content.Server.Github.Requests;
 ///     WARNING: You must add this JsonDerivedType for all requests that have json otherwise they will not parse properly!
 /// </remarks>
 [JsonDerivedType(typeof(GetRateLimit))]
-[JsonDerivedType(typeof(CreateIssueRequest))]
+[JsonDerivedType(typeof(CreateIssue))]
 public interface IGithubRequest
 {
     /// <summary>

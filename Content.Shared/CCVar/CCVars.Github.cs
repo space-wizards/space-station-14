@@ -5,8 +5,8 @@ namespace Content.Shared.CCVar;
 public sealed partial class CCVars
 {
     /// <summary>
-    ///     Is the API enabled? Requests can still be queued up if its false but nothing will actually be sent
-    ///     to the api unless it's true.
+    ///     Is the API enabled?
+    ///     Requests can still be queued up if its false but nothing will actually be sent to the api unless it's true.
     /// </summary>
     public static readonly CVarDef<bool> GithubEnabled =
         CVarDef.Create("github.github_enabled", true, CVar.SERVERONLY | CVar.CONFIDENTIAL);

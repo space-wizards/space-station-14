@@ -6,7 +6,6 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Content.Server.BugReports;
 using Content.Server.Github.Requests;
 using Content.Server.Github.Responses;
 using Content.Shared.CCVar;
@@ -29,7 +28,6 @@ public sealed class GithubApiManager : IPostInjectInit
 {
     [Dependency] private readonly ILogManager _log = default!;
     [Dependency] private readonly IHttpClientHolder _http = default!;
-    [Dependency] private readonly IBugReportManager _bug = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private ISawmill _sawmill = default!;

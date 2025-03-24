@@ -49,13 +49,13 @@ public sealed class TestGithubApiCommand : LocalizedEntityCommands
             return;
         }
 
-        var request1 = new CreateIssueRequest
+        var request1 = new CreateIssue
         {
             Title = Loc.GetString("github-command-issue-title-one"),
             Body = Loc.GetString("github-command-issue-description-one"),
         };
 
-        var request2 = new CreateIssueRequest
+        var request2 = new CreateIssue
         {
             Title = Loc.GetString("github-command-issue-title-two"),
             Body = Loc.GetString("github-command-issue-description-two"),
