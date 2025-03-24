@@ -213,6 +213,8 @@
     - FootstepSound
     - DoorBumpOpener
     - AnomalyHost
+  - type: ReplacementAccent
+    accent: liar
 
 - type: entity
   save: false
