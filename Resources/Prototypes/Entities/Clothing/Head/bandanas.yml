@@ -5,6 +5,7 @@
   components:
   - type: Foldable
     folded: true
+    canFoldInsideContainer: true
   - type: Mask
     isToggled: true
     enabled: false
