@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: CrocodileCarousel
-  changes:
-  - message: 'Added nine new religious head coverings: kippahs, niqabs, hijabs, tichels
-      and more.'
-    type: Add
-  id: 871
-  time: '2025-01-07T19:28:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1248
 - author: DinnerCalzone
   changes:
   - message: Train has been updated for a more pleasurable gaming experience, including
@@ -4102,3 +4094,10 @@
   id: 1370
   time: '2025-03-24T02:27:02.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2029
+- author: honeyed-lemons
+  changes:
+  - message: Completely rebuild xeno's bar and kitchen
+    type: Tweak
+  id: 1371
+  time: '2025-03-24T02:29:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2064
