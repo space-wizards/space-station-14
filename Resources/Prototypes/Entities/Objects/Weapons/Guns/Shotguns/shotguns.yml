@@ -55,6 +55,7 @@
       path: /Audio/Effects/hit_kick.ogg
     soundSwing:
       path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+    resetOnHandSelected: false
   - type: AltFireMelee
     attackType: Heavy
   - type: DamageOtherOnHit #for throwing
@@ -132,6 +133,7 @@
       path: /Audio/Effects/hit_kick.ogg
     soundSwing:
       path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+    resetOnHandSelected: false
   - type: AltFireMelee
     attackType: Heavy
   - type: DamageOtherOnHit #for throwing
@@ -253,7 +255,7 @@
   - type: Gun
     fireRate: 1
     soundGunshot:
-      path: /Audio/_Impstation/Weapons/Guns/Gunshots/kammerer.ogg
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/kammerer.ogg #imp
   - type: Tag
     tags:
     - WeaponShotgunKammerer
