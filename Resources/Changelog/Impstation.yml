@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Tweaks boxes surgery and adds supermatter consoles
-    type: Tweak
-  id: 882
-  time: '2025-01-09T16:26:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1270
 - author: EpicToastTM
   changes:
   - message: (Barratry Station) Science is now playable, along with other miscellaneous
@@ -4095,3 +4088,11 @@
   id: 1381
   time: '2025-03-24T05:28:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2066
+- author: argentsunshine
+  changes:
+  - message: Added nine new hairstyles (half-up styles, middle parts, mullets, and
+      a curly undercut and side shave).
+    type: Add
+  id: 1382
+  time: '2025-03-24T05:35:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2060
