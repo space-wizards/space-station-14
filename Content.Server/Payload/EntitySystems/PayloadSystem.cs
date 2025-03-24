@@ -86,9 +86,14 @@ public sealed class PayloadSystem : EntitySystem
         if (trigger.Components == null)
             return;
 
+        // Create a set of components that the entity has before the operation
+        var componentSetBefore = new HashSet<Type>();
+        foreach (var component in EntityManager.GetComponents(uid))
+        {
+            componentSetBefore.Add(component.GetType());
+        }
+
         // ANY payload trigger that gets inserted can grant components. It is up to the construction graphs to determine trigger capacity.
-        // Create a list of components to grant before adding them
-        var componentsToAdd = new List<(ComponentRegistration, object?)>();
         foreach (var (name, data) in trigger.Components)
         {
             if (!_componentFactory.TryGetRegistration(name, out var registration))
@@ -102,19 +107,17 @@ public sealed class PayloadSystem : EntitySystem
 
             var temp = (object) component;
             _serializationManager.CopyTo(data.Component, ref temp);
-            componentsToAdd.Add((registration, temp));
+            EntityManager.AddComponent(uid, (Component) temp!);
         }
-        // Some components (like TriggerOnSignalComponent) will automatically add other components
-        // (DeviceLinkSignalSink for the previous example). We still need to track them to "GrantedComponents" even if
-        // they have been automatically added
-        // NOTE: This is still not a perfect solution, perhaps saving a set of components before any add operations and
-        //       then placing the set difference into GrantedComponents is the better solution.
-        foreach (var (registration, obj) in componentsToAdd)
+
+        // Ensure that any components that were added during the operation are tracked in GrantedComponents
+        //   so that they can be removed when the trigger component is removed.
+        foreach (var component in EntityManager.GetComponents(uid))
         {
-            trigger.GrantedComponents.Add(registration.Type);
-            if (!HasComp(uid, registration.Type))
+            var type = component.GetType();
+            if (!componentSetBefore.Contains(type))
             {
-                EntityManager.AddComponent(uid, (Component)obj!);
+                trigger.GrantedComponents.Add(type);
             }
         }
     }
