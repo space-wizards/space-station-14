@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Tranquilizer shells have chloral hydrate instead of nocturine in them.
-    type: Tweak
-  id: 881
-  time: '2025-01-09T00:43:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1271
 - author: honeyed-lemons
   changes:
   - message: Tweaks boxes surgery and adds supermatter consoles
@@ -4094,3 +4087,11 @@
   id: 1380
   time: '2025-03-24T05:20:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2059
+- author: DinnerCalzone
+  changes:
+  - message: The Dining Services and Station Specific departments no longer show up
+      on the crew monitoring console.
+    type: Fix
+  id: 1381
+  time: '2025-03-24T05:28:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2066
