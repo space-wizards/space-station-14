@@ -456,7 +456,17 @@ public enum LogType
     AdminCommands = 98,
 
     /// <summary>
+    /// A player was selected or assigned antag status
+    /// </summary>
+    AntagSelection = 99,
+
+    /// <summary>
+    /// Logs related to botany, such as planting and harvesting crops
+    /// </summary>
+    Botany = 100,
+
+    /// <summary>
     ///     For anything relating to bug reports.
     /// </summary>
-    BugReport = 99,
+    BugReport = 101,
 }
