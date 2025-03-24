@@ -2672,6 +2672,8 @@
     damage:
       types:
         Piercing: 6
+  - type: Body    #imp edit
+    prototype: AnimalHemocyaninSpider
 
 - type: entity
   parent:

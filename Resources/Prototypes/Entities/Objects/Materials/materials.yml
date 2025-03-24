@@ -752,23 +752,24 @@
     flavors:
       - cobwebs
     ignoreReagents:
-      - Fiber
+      - Protein   #imp
   - type: Extractable
     juiceSolution:
       reagents:
-      - ReagentId: Fiber
+      - ReagentId: Protein  #imp
         Quantity: 3
   - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 3
         reagents:
-        - ReagentId: Fiber
+        - ReagentId: Protein  #imp
           Quantity: 3
   - type: Tag
     tags:
-      - ClothMade
-      - RawMaterial
+    - ClothMade
+    - RawMaterial
+    - SpiderFood  #imp edit
   - type: Item
     sprite: Objects/Materials/silk.rsi
     heldPrefix: silk

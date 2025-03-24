@@ -19,3 +19,26 @@
       - feet
     feet:
       part: FeetAnimal
+
+- type: body    #imp edit for edible spider silk
+  name: "hemocyaninspider"
+  parent: AnimalHemocyanin
+  id: AnimalHemocyaninSpider
+  root: torso
+  slots:
+    torso:
+      part: TorsoAnimal
+      connections:
+      - legs
+      organs:
+        lungs: OrganAnimalLungs
+        stomach: OrganArachnidStomach
+        liver: OrganAnimalLiver
+        heart: OrganArachnidHeart
+        kidneys: OrganAnimalKidneys
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal
