@@ -3,6 +3,7 @@
   mapName: Empty
   mapPath: /Maps/Test/empty.yml
   minPlayers: 0
+  maxPlayers: 80
   stations:
     Empty:
       stationProto: StandardNanotrasenStation
