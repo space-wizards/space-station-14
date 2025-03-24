@@ -1,25 +1,6 @@
 ﻿Entries:
 - author: DinnerCalzone
   changes:
-  - message: Train has been updated for a more pleasurable gaming experience, including
-      support for psychologist.
-    type: Tweak
-  id: 872
-  time: '2025-01-07T19:31:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1250
-- author: kipdotnet
-  changes:
-  - message: The Vim and Ripley now have new sprites.
-    type: Tweak
-  - message: Goblins can now pilot a Vim.
-    type: Tweak
-  - message: the Ripley APLU now has a slightly more decent melee attack.
-    type: Tweak
-  id: 873
-  time: '2025-01-07T19:43:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1252
-- author: DinnerCalzone
-  changes:
   - message: Thieves should no longer be assigned Fin-Fin as a steal objective if
       he is not present on the map.
     type: Tweak
@@ -4101,3 +4082,21 @@
   id: 1371
   time: '2025-03-24T02:29:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2064
+- author: Sha-Seng
+  changes:
+  - message: Cropped mime uniforms in loadout or from butchering
+    type: Add
+  - message: Touched up colors on mime uniforms
+    type: Tweak
+  id: 1372
+  time: '2025-03-24T03:00:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2032
+- author: Sha-Seng
+  changes:
+  - message: Juggernaut Cloak and Syndicate Satchel added to uplink
+    type: Add
+  - message: SyndieDrobes now have backpacks and satchels for nukies
+    type: Tweak
+  id: 1373
+  time: '2025-03-24T03:01:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2031
