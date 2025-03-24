@@ -546,7 +546,7 @@ public sealed class GhostRoleSystem : EntitySystem
         // Check each role for playtime requirements
         foreach (var proto in roles)
         {
-            var ev = new IsRoleAllowedEvent(player, RemovePrefix(proto));
+            var ev = new IsRoleAllowedEvent(player, proto);
             RaiseLocalEvent(ref ev);
 
             if (ev.Cancelled)
@@ -554,18 +554,6 @@ public sealed class GhostRoleSystem : EntitySystem
         }
 
         return true;
-    }
-
-    private string RemovePrefix(string input) //TODO:ERRANT move this somewhere else? SharedRoleSystem maybe?
-    {
-        // TODO Having to manually add every new prefix that may appear is not great, but what can you do
-        if (input.StartsWith(JobPrefix, StringComparison.Ordinal))
-            return input[JobPrefix.Length..];
-
-        if (input.StartsWith(AntagPrefix, StringComparison.Ordinal))
-            return input[AntagPrefix.Length..];
-
-        return input;
     }
 
     /// <summary>

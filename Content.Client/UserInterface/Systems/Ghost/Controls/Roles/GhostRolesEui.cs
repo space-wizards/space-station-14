@@ -5,6 +5,7 @@ using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 {
@@ -90,25 +91,24 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             var spriteSystem = sysManager.GetEntitySystem<SpriteSystem>();
             var requirementsManager = IoCManager.Resolve<JobRequirementsManager>();
 
-            // TODO: role.Requirements value doesn't work at all as an equality key, this must be fixed
-            //TODO:ERRANT things aren't grouped (zombies, reventants, etc.) Figure out why
             // Grouping roles
             var groupedRoles = ghostState.GhostRoles.GroupBy(
-                role => (role.Name, role.Description, role.RolePrototypes));
-
+                role => (
+                    role.Name,
+                    role.Description,
+                    //  Check the prototypes for role requirements and bans
+                    requirementsManager.IsAllowed(role.RolePrototypes, null, out var reason)));
+                    //  TODO find a way to pass "reason" or the prototypeIDs into groupedRoles without breaking the grouping
+                    //  so we can show the player why they can't take a ghost role
 
             // Add a new entry for each role group
             foreach (var group in groupedRoles)
             {
+                // var reason = group.Key.reason; TODO show the player the reason the ghostrole is blocked
+                var reason = new FormattedMessage();
                 var name = group.Key.Name;
                 var description = group.Key.Description;
-
-                // Check all role prototypes of the ghost role for bans and requirements
-                var prototypesAllowed = requirementsManager.IsAllowed(
-                    group.Key.RolePrototypes,
-                    null,
-                    out var reason);
-                // prototypesAllowed = true; //TODO:ERRANT TESTING ONLY!!
+                var prototypesAllowed = group.Key.Item3;
 
                 // Adding a new role
                 _window.AddEntry(name, description, prototypesAllowed, reason, group, spriteSystem);

@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Client.Lobby;
 using Content.Shared.CCVar;
 using Content.Shared.Players;
 using Content.Shared.Players.JobWhitelist;
@@ -98,7 +97,6 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     /// </summary>
     public bool IsAllowed(JobPrototype job, HumanoidCharacterProfile? profile, [NotNullWhen(false)] out FormattedMessage? reason)
     {
-        reason = null;
         var list = new List<string>{JobPrefix + job.ID};
         return IsAllowed(list, profile, out reason);
     }
