@@ -5,6 +5,7 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Character.Controls;
 using Content.Client.UserInterface.Systems.Character.Windows;
+using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Client.UserInterface.Systems.Objectives.Controls;
 using Content.Shared.Input;
 using Content.Shared.Mind;
@@ -47,7 +48,6 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     }
 
     private CharacterWindow? _window;
-    private MenuButton? CharacterButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.CharacterButton;
 
     public void OnStateEntered(GameplayState state)
     {
@@ -56,8 +56,9 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         _window = UIManager.CreateWindow<CharacterWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
 
-        _window.OnClose += DeactivateButton;
-        _window.OnOpen += ActivateButton;
+        var button = UIManager.GetActiveUIWidget<GameTopMenuBar>().CharacterButton;
+        _window.OnClose += () => button.SetClickPressed(false);
+        _window.OnOpen += () => button.SetClickPressed(true);
 
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenCharacterMenu,
@@ -67,12 +68,8 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
     public void OnStateExited(GameplayState state)
     {
-        if (_window != null)
-        {
-            _window.Close();
-            _window = null;
-        }
-
+        _window = null;
+        
         CommandBinds.Unregister<CharacterUIController>();
     }
 
@@ -88,44 +85,9 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         _player.LocalPlayerDetached -= CharacterDetached;
     }
 
-    public void UnloadButton()
+    private void CharacterDetached(EntityUid uid)
     {
-        if (CharacterButton == null)
-        {
-            return;
-        }
-
-        CharacterButton.OnPressed -= CharacterButtonPressed;
-    }
-
-    public void LoadButton()
-    {
-        if (CharacterButton == null)
-        {
-            return;
-        }
-
-        CharacterButton.OnPressed += CharacterButtonPressed;
-    }
-
-    private void DeactivateButton()
-    {
-        if (CharacterButton == null)
-        {
-            return;
-        }
-
-        CharacterButton.Pressed = false;
-    }
-
-    private void ActivateButton()
-    {
-        if (CharacterButton == null)
-        {
-            return;
-        }
-
-        CharacterButton.Pressed = true;
+        _window?.Close();
     }
 
     private void CharacterUpdated(CharacterData data)
@@ -235,32 +197,14 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         _window.RoleType.FontColorOverride = color;
     }
 
-    private void CharacterDetached(EntityUid uid)
-    {
-        CloseWindow();
-    }
-
-    private void CharacterButtonPressed(ButtonEventArgs args)
-    {
-        ToggleWindow();
-    }
-
-    private void CloseWindow()
-    {
-        _window?.Close();
-    }
-
-    private void ToggleWindow()
+    public void ToggleWindow()
     {
         if (_window == null)
             return;
 
-        CharacterButton?.SetClickPressed(!_window.IsOpen);
-
         if (_window.IsOpen)
-        {
-            CloseWindow();
-        }
+            _window.Close();
+
         else
         {
             _characterInfo.RequestCharacterInfo();
