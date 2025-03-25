@@ -114,11 +114,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 
     public void OnStateExited(GameplayState state)
     {
-        if (_escapeWindow != null)
-        {
-            _escapeWindow.Dispose();
-            _escapeWindow = null;
-        }
+        _window = null;
 
         CommandBinds.Unregister<EscapeUIController>();
     }
