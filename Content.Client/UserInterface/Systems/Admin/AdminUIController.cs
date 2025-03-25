@@ -88,6 +88,10 @@ public sealed class AdminUIController : UIController,
         _window = UIManager.CreateWindow<AdminMenuWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.Center);
 
+        var button = UIManager.GetActiveUIWidget<GameTopMenuBar>().AdminButton;
+        _window.OnClose += () => button.SetClickPressed(false);
+        _window.OnOpen += () => button.SetClickPressed(true);
+
         if (_panicBunker != null)
             _window.PanicBunkerControl.UpdateStatus(_panicBunker);
 
