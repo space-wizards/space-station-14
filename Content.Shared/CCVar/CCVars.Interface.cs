@@ -78,4 +78,29 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<bool> AdminOverlaySymbols =
         CVarDef.Create("ui.admin_overlay_symbols", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// The range (in tiles) around the cursor within which the admin overlays of ghosts start to fade out
+    /// </summary>
+    public static readonly CVarDef<int> AdminOverlayGhostFadeDistance =
+        CVarDef.Create("ui.admin_overlay_ghost_fade_distance", 6, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// The range (in tiles) around the cursor within which the admin overlays of ghosts disappear
+    /// </summary>
+    public static readonly CVarDef<int> AdminOverlayGhostHideDistance =
+        CVarDef.Create("ui.admin_overlay_ghost_hide_distance", 2, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// The maximum range (in tiles) at which admin overlay entries still merge to form a stack
+    /// Recommended to keep under 1, otherwise the overlays of people sitting next to each other will stack
+    /// </summary>
+    public static readonly CVarDef<float> AdminOverlayMergeDistance =
+        CVarDef.Create("ui.admin_overlay_merge_distance", 0.33f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// The maximum size that an overlay stack can reach. Additional overlays will be superimposed over the last one.
+    /// </summary>
+    public static readonly CVarDef<int> AdminOverlayStackMax =
+        CVarDef.Create("ui.admin_overlay_stack_max", 3, CVar.CLIENTONLY | CVar.ARCHIVE);
 }
