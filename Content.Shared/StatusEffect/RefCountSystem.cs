@@ -1,3 +1,4 @@
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -11,6 +12,7 @@ public sealed class RefCountSystem : EntitySystem
 {
     [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     #region Public API
 
@@ -30,6 +32,10 @@ public sealed class RefCountSystem : EntitySystem
         return Increment((ent, ent), typeof(T));
     }
 
+    /// <summary>
+    /// Add a ref-counted from a reflected component type.
+    /// Same rules apply from the generic version.
+    /// </summary>
     public bool Add(Entity<RefCountComponent?> ent, Type type, bool force = false)
     {
         if (!_timing.IsFirstTimePredicted)
@@ -45,7 +51,8 @@ public sealed class RefCountSystem : EntitySystem
     }
 
     /// <summary>
-    /// If a component already exists it will be overriden with the new value, this doesn't matter for empty marker components.
+    /// Try to add all components from a <see cref="ComponentRegistry"/>.
+    /// Same rules from <see cref="Add"/> apply, but you must call <see cref="RemoveComponents"/> instead.
     /// </summary>
     public void AddComponents(Entity<RefCountComponent?> ent, ComponentRegistry components, bool force = false)
     {
@@ -89,6 +96,10 @@ public sealed class RefCountSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Calls <see cref="Remove"/> for all components in a <see cref="ComponentRegistry"/>.
+    /// Use this with <see cref="AddComponents"/> with the same components.
+    /// </summary>
     public void RemoveComponents(Entity<RefCountComponent?> ent, ComponentRegistry components)
     {
         if (!_timing.IsFirstTimePredicted)
@@ -125,7 +136,8 @@ public sealed class RefCountSystem : EntitySystem
     private bool Decrement(Entity<RefCountComponent> ent, Type type)
     {
         var count = GetCount(ent.Comp, type);
-        DebugTools.Assert(count > 0, $"Tried to remove component {type} from {ToPrettyString(ent)} which was not added!");
+        if (_net.IsServer) // client isnt authoritative don't care
+            DebugTools.Assert(count > 0, $"Tried to remove component {type} from {ToPrettyString(ent)} which was not added!");
         if (count == 0) // don't underflow
             return false;
 
