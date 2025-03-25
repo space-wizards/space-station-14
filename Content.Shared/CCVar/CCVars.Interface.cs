@@ -82,14 +82,14 @@ public sealed partial class CCVars
     /// <summary>
     /// The range (in tiles) around the cursor within which the admin overlays of ghosts start to fade out
     /// </summary>
-    public static readonly CVarDef<float> AdminOverlayGhostFadeDistance =
-        CVarDef.Create("ui.admin_overlay_ghost_fade_distance", 6f, CVar.CLIENTONLY | CVar.ARCHIVE);
+    public static readonly CVarDef<int> AdminOverlayGhostFadeDistance =
+        CVarDef.Create("ui.admin_overlay_ghost_fade_distance", 6, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// The range (in tiles) around the cursor within which the admin overlays of ghosts disappear
     /// </summary>
-    public static readonly CVarDef<float> AdminOverlayGhostHideDistance =
-        CVarDef.Create("ui.admin_overlay_ghost_hide_distance", 2f, CVar.CLIENTONLY | CVar.ARCHIVE);
+    public static readonly CVarDef<int> AdminOverlayGhostHideDistance =
+        CVarDef.Create("ui.admin_overlay_ghost_hide_distance", 2, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// The maximum range (in tiles) at which admin overlay entries still merge to form a stack
