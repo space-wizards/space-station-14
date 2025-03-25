@@ -937,5 +937,13 @@ Entries:
   id: 114
   time: '2025-03-25T16:03:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35538
+- author: ScarKy0
+  changes:
+  - message: The "Spawn here" verb now reliably transfers mind of the target to their
+      new body.
+    type: Fix
+  id: 115
+  time: '2025-03-25T18:40:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36080
 Name: Admin
 Order: 1
