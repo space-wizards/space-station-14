@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: ruddygreat
-  changes:
-  - message: The shining spring now shoots cleanades as a bouncing projectile that
-      spreads space cleaner as it moves.
-    type: Tweak
-  id: 884
-  time: '2025-01-09T16:48:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1203
-- author: aada
-  changes:
-  - message: Ninja sword can now stamp papers.
-    type: Add
-  - message: Ninja gloves now have a much weaker stun.
-    type: Tweak
-  id: 885
-  time: '2025-01-09T16:50:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1230
 - author: DinnerCalzone
   changes:
   - message: The improvised grappling gun's crafting recipe has been modified to be
@@ -4096,3 +4079,18 @@
   id: 1383
   time: '2025-03-24T05:46:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2065
+- author: hivehum
+  changes:
+  - message: The wrapper on a nutribrick is no longer one of the most calorie-dense
+      substances known to mothkind.
+    type: Tweak
+  id: 1384
+  time: '2025-03-25T01:41:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2067
+- author: DinnerCalzone
+  changes:
+  - message: E1M1 can no longer be spaced.
+    type: Tweak
+  id: 1385
+  time: '2025-03-25T01:41:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2076
