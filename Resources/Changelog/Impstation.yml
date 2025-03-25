@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lyndomen
-  changes:
-  - message: ports fugitive from Delta-V. Watch out for escaped criminals!
-    type: Add
-  id: 893
-  time: '2025-01-10T21:24:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1283
 - author: mousesweater
   changes:
   - message: added a salvage jumpskirt for all your salvaging needs
@@ -4101,3 +4094,16 @@
   id: 1392
   time: '2025-03-25T02:12:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2042
+- author: Kandiyaki
+  changes:
+  - message: Added the Infinite Archives, the source of all mansus knowledge.
+    type: Add
+  - message: Removed Hell (and replaced it with the archives).
+    type: Remove
+  - message: A new book, "On the Nature of the Mansus"!
+    type: Add
+  - message: Some text has been altered to give heretics more consistent theming.
+    type: Tweak
+  id: 1393
+  time: '2025-03-25T02:19:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2038
