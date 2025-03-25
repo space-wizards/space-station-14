@@ -155,10 +155,9 @@ namespace Content.Server.Administration.Systems
                             var mobUid = _spawning.SpawnPlayerMob(coords.Value, null, profile, stationUid);
                             var targetMind = _mindSystem.GetMind(args.Target);
 
-                            if (targetMind != null)
-                            {
-                                _mindSystem.TransferTo(targetMind.Value, mobUid, true);
-                            }
+                            if (_mindSystem.TryGetMind(args.Target, out var mindId, out var _))
+                                _mindSystem.TransferTo(mindId, mobUid, true);
+
                         },
                         ConfirmationPopup = true,
                         Impact = LogImpact.High,
