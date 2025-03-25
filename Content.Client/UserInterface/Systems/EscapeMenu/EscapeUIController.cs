@@ -16,7 +16,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.UserInterface.Systems.EscapeMenu;
 
 [UsedImplicitly]
-public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
+public sealed class EscapeUIController : UIController, IOnStateChanged<GameplayState>
 {
     [Dependency] private readonly IClientConsoleHost _console = default!;
     [Dependency] private readonly IUriOpener _uri = default!;
