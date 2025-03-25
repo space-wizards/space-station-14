@@ -657,3 +657,22 @@
   - type: Paper
     content: book-text-janitor
 
+- type: entity
+  parent: BookBase
+  id: BookCodeChivalry
+  name: The Code of Chivalry
+  description: A reminder of how a knight must behave.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_old
+      color: red
+    - state: decor_wingette
+    - state: icon_skull
+    - state: detail_bookmark
+      color: "#61363d"
+  - type: Paper
+    content: book-text-chivalry
+
