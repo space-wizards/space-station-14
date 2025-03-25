@@ -1,0 +1,140 @@
+﻿- type: emoteSounds
+  id: MaleThaven
+  sounds:
+    Scream:
+      collection: MaleScreams
+    Laugh:
+      collection: MaleLaugh
+    Sneeze:
+      collection: MaleSneezes
+    Cough:
+      collection: MaleCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: MaleYawn
+    Snore:
+      collection: Snores
+    Sigh:
+      collection: MaleSigh
+    Honk:
+      collection: BikeHorn
+    Crying:
+      collection: MaleCry
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
+    Ungh:
+      collection: Ungh
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
+  params:
+    variation: 0.05
+    pitch: 1.25
+
+- type: emoteSounds
+  id: FemaleThaven
+  sounds:
+    Scream:
+      collection: FemaleScreams
+    Laugh:
+      collection: FemaleLaugh
+    Sneeze:
+      collection: FemaleSneezes
+    Cough:
+      collection: FemaleCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: FemaleYawn
+    Snore:
+      collection: Snores
+    Sigh:
+      collection: FemaleSigh
+    Honk:
+      collection: BikeHorn
+    Crying:
+      collection: FemaleCry
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
+    Ungh:
+      collection: Ungh
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
+  params:
+    variation: 0.05
+    pitch: 1.25
+
+- type: emoteSounds
+  id: UnisexThaven
+  sounds:
+    Scream:
+      collection: UnisexScreams
+    Laugh:
+      collection: UnisexLaugh
+    Sneeze:
+      collection: UnisexSneezes
+    Cough:
+      collection: UnisexCoughs
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      collection: UnisexYawn
+    Snore:
+      collection: Snores
+    Sigh:
+      collection: UnisexSigh
+    Honk:
+      collection: BikeHorn
+    Crying:
+      collection: UnisexCry
+    Whistle:
+      collection: Whistles
+    Hew:
+      collection: Hew
+    Weh:
+      collection: Weh
+    Wuhey:
+      collection: Wuhey
+    Ungh:
+      collection: Ungh
+    Gasp:
+      collection: UnisexGasp
+    DefaultDeathgasp:
+      collection: UnisexDeathGasp
+  params:
+    variation: 0.05
+    pitch: 1.25

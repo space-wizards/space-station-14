@@ -36,9 +36,7 @@
   - type: Speech
     speechSounds: Alto
     speechVerb: Goblin
-    allowedEmotes:
-    - GoblinMutter
-    - GoblinThroatSinging
+    allowedEmotes: ['GoblinMutter','GoblinThroatSinging','Hiss'] # imp
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -289,5 +287,5 @@
     - !type:GroupSelector # RARE WEIGHT
       weight: 5
       children:
-      - id: IngotGold1 
+      - id: IngotGold1
       - id: MaintenanceWeaponSpawner # machetes, baseball bats, spears, etc

@@ -4,7 +4,7 @@ meta:
   engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 03/20/2025 06:36:58
+  time: 03/24/2025 15:43:03
   entityCount: 27139
 maps:
 - 1
@@ -11260,6 +11260,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 65.5,83.5
       parent: 2
+  - uid: 26915
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 8.5,42.5
+      parent: 2
 - proto: AtmosDeviceFanTiny
   entities:
   - uid: 2199
@@ -11458,6 +11464,38 @@ entities:
       rot: 3.141592653589793 rad
       pos: -33.5,-29.5
       parent: 2
+- proto: AtmosFixDecapoidMarker
+  entities:
+  - uid: 13619
+    components:
+    - type: Transform
+      pos: 7.5,44.5
+      parent: 2
+  - uid: 18658
+    components:
+    - type: Transform
+      pos: 7.5,43.5
+      parent: 2
+  - uid: 18713
+    components:
+    - type: Transform
+      pos: 8.5,42.5
+      parent: 2
+  - uid: 18715
+    components:
+    - type: Transform
+      pos: 8.5,44.5
+      parent: 2
+  - uid: 19898
+    components:
+    - type: Transform
+      pos: 7.5,42.5
+      parent: 2
+  - uid: 26912
+    components:
+    - type: Transform
+      pos: 8.5,43.5
+      parent: 2
 - proto: AtmosFixFreezerMarker
   entities:
   - uid: 26771
@@ -11619,36 +11657,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -25.5,-29.5
-      parent: 2
-  - uid: 19898
-    components:
-    - type: Transform
-      pos: 8.5,43.5
-      parent: 2
-  - uid: 26910
-    components:
-    - type: Transform
-      pos: 8.5,44.5
-      parent: 2
-  - uid: 26912
-    components:
-    - type: Transform
-      pos: 7.5,42.5
-      parent: 2
-  - uid: 26913
-    components:
-    - type: Transform
-      pos: 7.5,43.5
-      parent: 2
-  - uid: 26914
-    components:
-    - type: Transform
-      pos: 7.5,44.5
-      parent: 2
-  - uid: 26915
-    components:
-    - type: Transform
-      pos: 8.5,42.5
       parent: 2
 - proto: Autolathe
   entities:
@@ -18282,11 +18290,6 @@ entities:
     components:
     - type: Transform
       pos: 7.5,42.5
-      parent: 2
-  - uid: 13619
-    components:
-    - type: Transform
-      pos: 8.5,42.5
       parent: 2
   - uid: 13620
     components:
@@ -27252,6 +27255,11 @@ entities:
     components:
     - type: Transform
       pos: 9.5,-61.5
+      parent: 2
+  - uid: 26910
+    components:
+    - type: Transform
+      pos: 8.5,42.5
       parent: 2
   - uid: 26916
     components:
@@ -44455,6 +44463,13 @@ entities:
     components:
     - type: Transform
       pos: 18.600937,88.79221
+      parent: 2
+- proto: CandleBlack
+  entities:
+  - uid: 26914
+    components:
+    - type: Transform
+      pos: -25.029259,-14.488019
       parent: 2
 - proto: CandleBlackSmallInfinite
   entities:
@@ -75629,14 +75644,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -23.5,-29.5
       parent: 2
-- proto: GasMinerNitrousOxide
-  entities:
-  - uid: 18715
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -31.5,-29.5
-      parent: 2
 - proto: GasMinerOxygenStation
   entities:
   - uid: 18656
@@ -75644,22 +75651,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -21.5,-29.5
-      parent: 2
-- proto: GasMinerPlasma
-  entities:
-  - uid: 18713
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -27.5,-29.5
-      parent: 2
-- proto: GasMinerWaterVapor
-  entities:
-  - uid: 18658
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -25.5,-29.5
       parent: 2
 - proto: GasMixer
   entities:
@@ -120979,6 +120970,14 @@ entities:
     - type: Transform
       pos: -13.475275,-29.365458
       parent: 2
+  - uid: 26913
+    components:
+    - type: MetaData
+      desc: Best leave her to it.
+      name: Johan
+    - type: Transform
+      pos: -6.408621,125.49585
+      parent: 2
 - proto: PlushieBug
   entities:
   - uid: 19133
@@ -136697,7 +136696,7 @@ entities:
       pos: 0.5,-46.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -76.18261
+      secondsUntilStateChange: -307.67987
       state: Opening
   - uid: 7274
     components:
