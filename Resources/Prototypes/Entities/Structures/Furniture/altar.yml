@@ -9,8 +9,8 @@
   - type: Transform
   - type: Prayable
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: Wood
   - type: PlaceableSurface
   - type: Fixtures
     fixtures:

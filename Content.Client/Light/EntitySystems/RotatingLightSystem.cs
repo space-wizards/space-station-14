@@ -69,6 +69,9 @@ public sealed class RotatingLightSystem : SharedRotatingLightSystem
 
     private void OnAnimationComplete(EntityUid uid, RotatingLightComponent comp, AnimationCompletedEvent args)
     {
+        if (!args.Finished)
+            return;
+
         PlayAnimation(uid, comp);
     }
 

@@ -16,7 +16,7 @@ namespace Content.Server.Administration.Commands
         {
             if (shell.Player == null)
             {
-                shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
+                shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
                 return;
             }
 

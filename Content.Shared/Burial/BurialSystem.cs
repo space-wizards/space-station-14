@@ -1,3 +1,4 @@
+using Content.Shared.ActionBlocker;
 using Content.Shared.Burial;
 using Content.Shared.Burial.Components;
 using Content.Shared.DoAfter;
@@ -8,7 +9,6 @@ using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 
 namespace Content.Server.Burial.Systems;
 
@@ -18,6 +18,7 @@ public sealed class BurialSystem : EntitySystem
     [Dependency] private readonly SharedEntityStorageSystem _storageSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {
@@ -48,7 +49,6 @@ public sealed class BurialSystem : EntitySystem
                 BreakOnMove = true,
                 BreakOnDamage = true,
                 NeedHand = true,
-                BreakOnHandChange = true
             };
 
             if (component.Stream == null)
@@ -159,7 +159,10 @@ public sealed class BurialSystem : EntitySystem
     {
         // We track a separate doAfter here, as we want someone with a shovel to
         // be able to come along and help someone trying to claw their way out
-        if (component.HandDiggingDoAfter != null)
+        if (_doAfterSystem.IsRunning(component.HandDiggingDoAfter))
+            return;
+
+        if (!_actionBlocker.CanMove(args.Entity))
             return;
 
         var doAfterEventArgs = new DoAfterArgs(EntityManager, args.Entity, component.DigDelay / component.DigOutByHandModifier, new GraveDiggingDoAfterEvent(), uid, target: uid)
@@ -174,7 +177,7 @@ public sealed class BurialSystem : EntitySystem
         if (component.Stream == null)
             component.Stream = _audioSystem.PlayPredicted(component.DigSound, uid, args.Entity)?.Entity;
 
-        if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs))
+        if (!_doAfterSystem.TryStartDoAfter(doAfterEventArgs, out component.HandDiggingDoAfter))
         {
             _audioSystem.Stop(component.Stream);
             return;

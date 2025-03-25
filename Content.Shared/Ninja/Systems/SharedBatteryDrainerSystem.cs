@@ -18,34 +18,32 @@ public abstract class SharedBatteryDrainerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Cancel any drain doafters if the battery is removed or gets filled.
+    /// Cancel any drain doafters if the battery is removed or, on the server, gets filled.
     /// </summary>
-    protected virtual void OnDoAfterAttempt(EntityUid uid, BatteryDrainerComponent comp, DoAfterAttemptEvent<DrainDoAfterEvent> args)
+    protected virtual void OnDoAfterAttempt(Entity<BatteryDrainerComponent> ent, ref DoAfterAttemptEvent<DrainDoAfterEvent> args)
     {
-        if (comp.BatteryUid == null)
-        {
+        if (ent.Comp.BatteryUid == null)
             args.Cancel();
-        }
     }
 
     /// <summary>
     /// Drain power from a power source (on server) and repeat if it succeeded.
     /// Client will predict always succeeding since power is serverside.
     /// </summary>
-    private void OnDoAfter(EntityUid uid, BatteryDrainerComponent comp, DrainDoAfterEvent args)
+    private void OnDoAfter(Entity<BatteryDrainerComponent> ent, ref DrainDoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled || args.Target == null)
+        if (args.Cancelled || args.Handled || args.Target is not {} target)
             return;
 
         // repeat if there is still power to drain
-        args.Repeat = TryDrainPower(uid, comp, args.Target.Value);
+        args.Repeat = TryDrainPower(ent, target);
     }
 
     /// <summary>
     /// Attempt to drain as much power as possible into the powercell.
     /// Client always predicts this as succeeding since power is serverside and it can only fail once, when the powercell is filled or the target is emptied.
     /// </summary>
-    protected virtual bool TryDrainPower(EntityUid uid, BatteryDrainerComponent comp, EntityUid target)
+    protected virtual bool TryDrainPower(Entity<BatteryDrainerComponent> ent, EntityUid target)
     {
         return true;
     }
@@ -53,12 +51,13 @@ public abstract class SharedBatteryDrainerSystem : EntitySystem
     /// <summary>
     /// Sets the battery field on the drainer.
     /// </summary>
-    public void SetBattery(EntityUid uid, EntityUid? battery, BatteryDrainerComponent? comp = null)
+    public void SetBattery(Entity<BatteryDrainerComponent?> ent, EntityUid? battery)
     {
-        if (!Resolve(uid, ref comp))
+        if (!Resolve(ent, ref ent.Comp) || ent.Comp.BatteryUid == battery)
             return;
 
-        comp.BatteryUid = battery;
+        ent.Comp.BatteryUid = battery;
+        Dirty(ent, ent.Comp);
     }
 }
 
@@ -66,4 +65,4 @@ public abstract class SharedBatteryDrainerSystem : EntitySystem
 /// DoAfter event for <see cref="BatteryDrainerComponent"/>.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class DrainDoAfterEvent : SimpleDoAfterEvent { }
+public sealed partial class DrainDoAfterEvent : SimpleDoAfterEvent;

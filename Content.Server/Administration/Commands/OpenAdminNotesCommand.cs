@@ -17,7 +17,7 @@ public sealed class OpenAdminNotesCommand : IConsoleCommand
     {
         if (shell.Player is not { } player)
         {
-            shell.WriteError("This does not work from the server console.");
+            shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
             return;
         }
 

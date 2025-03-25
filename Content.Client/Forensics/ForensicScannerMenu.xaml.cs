@@ -54,8 +54,14 @@ namespace Content.Client.Forensics
             }
             text.AppendLine();
             text.AppendLine(Loc.GetString("forensic-scanner-interface-dnas"));
-            foreach (var dna in msg.DNAs)
+            foreach (var dna in msg.TouchDNAs)
             {
+                text.AppendLine(dna);
+            }
+            foreach (var dna in msg.SolutionDNAs)
+            {
+                if (msg.TouchDNAs.Contains(dna))
+                    continue;
                 text.AppendLine(dna);
             }
             text.AppendLine();

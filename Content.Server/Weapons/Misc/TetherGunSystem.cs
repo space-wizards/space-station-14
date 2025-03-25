@@ -1,4 +1,5 @@
 using Content.Server.PowerCell;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.PowerCell;
 using Content.Shared.Weapons.Misc;
 using Robust.Shared.Physics.Components;
@@ -8,6 +9,7 @@ namespace Content.Server.Weapons.Misc;
 public sealed class TetherGunSystem : SharedTetherGunSystem
 {
     [Dependency] private readonly PowerCellSystem _cell = default!;
+    [Dependency] private readonly ItemToggleSystem _toggle = default!;
 
     public override void Initialize()
     {
@@ -36,12 +38,12 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         PhysicsComponent? targetPhysics = null, TransformComponent? targetXform = null)
     {
         base.StartTether(gunUid, component, target, user, targetPhysics, targetXform);
-        _cell.SetPowerCellDrawEnabled(gunUid, true);
+        _toggle.TryActivate(gunUid);
     }
 
     protected override void StopTether(EntityUid gunUid, BaseForceGunComponent component, bool land = true, bool transfer = false)
     {
         base.StopTether(gunUid, component, land, transfer);
-        _cell.SetPowerCellDrawEnabled(gunUid, false);
+        _toggle.TryDeactivate(gunUid);
     }
 }

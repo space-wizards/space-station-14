@@ -1,18 +1,10 @@
 # Head
 - type: loadout
   id: BartenderHead
-  equipment: BartenderHead
-
-- type: startingGear
-  id: BartenderHead
   equipment:
     head: ClothingHeadHatTophat
 
 - type: loadout
-  id: BartenderBowler
-  equipment: BartenderBowler
-
-- type: startingGear
   id: BartenderBowler
   equipment:
     head: ClothingHeadHatBowlerHat
@@ -20,27 +12,15 @@
 # Jumpsuit
 - type: loadout
   id: BartenderJumpsuit
-  equipment: BartenderJumpsuit
-
-- type: startingGear
-  id: BartenderJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitBartender
 
 - type: loadout
   id: BartenderJumpskirt
-  equipment: BartenderJumpskirt
-
-- type: startingGear
-  id: BartenderJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtBartender
 
 - type: loadout
-  id: BartenderJumpsuitPurple
-  equipment: BartenderJumpsuitPurple
-
-- type: startingGear
   id: BartenderJumpsuitPurple
   equipment:
     jumpsuit: ClothingUniformJumpsuitBartenderPurple
@@ -48,27 +28,15 @@
 # Outer clothing
 - type: loadout
   id: BartenderApron
-  equipment: BartenderApron
-
-- type: startingGear
-  id: BartenderApron
   equipment:
     outerClothing: ClothingOuterApronBar
 
 - type: loadout
   id: BartenderVest
-  equipment: BartenderVest
-
-- type: startingGear
-  id: BartenderVest
   equipment:
     outerClothing: ClothingOuterVest
 
 - type: loadout
-  id: BartenderWintercoat
-  equipment: BartenderWintercoat
-
-- type: startingGear
   id: BartenderWintercoat
   equipment:
     outerClothing: ClothingOuterWinterBar

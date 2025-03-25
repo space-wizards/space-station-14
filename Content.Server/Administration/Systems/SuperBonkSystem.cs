@@ -1,27 +1,27 @@
 using Content.Server.Administration.Components;
 using Content.Shared.Climbing.Components;
-using Content.Shared.Climbing.Events;
-using Content.Shared.Climbing.Systems;
-using Content.Shared.Interaction.Components;
+using Content.Shared.Clumsy;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Administration.Systems;
 
-public sealed class SuperBonkSystem: EntitySystem
+public sealed class SuperBonkSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly BonkSystem _bonkSystem = default!;
+    [Dependency] private readonly ClumsySystem _clumsySystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SuperBonkComponent, ComponentShutdown>(OnBonkShutdown);
         SubscribeLocalEvent<SuperBonkComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<SuperBonkComponent, ComponentShutdown>(OnBonkShutdown);
     }
 
-    public void StartSuperBonk(EntityUid target, float delay = 0.1f, bool stopWhenDead = false )
+    public void StartSuperBonk(EntityUid target, float delay = 0.1f, bool stopWhenDead = false)
     {
 
         //The other check in the code to stop when the target dies does not work if the target is already dead.
@@ -30,7 +30,6 @@ public sealed class SuperBonkSystem: EntitySystem
             if (mState.CurrentState == MobState.Dead)
                 return;
         }
-
 
         var hadClumsy = EnsureComp<ClumsyComponent>(target, out _);
 
@@ -79,16 +78,17 @@ public sealed class SuperBonkSystem: EntitySystem
     private void Bonk(SuperBonkComponent comp)
     {
         var uid = comp.Tables.Current.Key;
-        var bonkComp = comp.Tables.Current.Value;
 
         // It would be very weird for something without a transform component to have a bonk component
         // but just in case because I don't want to crash the server.
-        if (!HasComp<TransformComponent>(uid))
+        if (!HasComp<TransformComponent>(uid) || !TryComp<ClumsyComponent>(comp.Target, out var clumsyComp))
             return;
 
         _transformSystem.SetCoordinates(comp.Target, Transform(uid).Coordinates);
 
-        _bonkSystem.TryBonk(comp.Target, uid, bonkComp);
+        _clumsySystem.HitHeadClumsy((comp.Target, clumsyComp), uid);
+
+        _audioSystem.PlayPvs(clumsyComp.TableBonkSound, comp.Target);
     }
 
     private void OnMobStateChanged(EntityUid uid, SuperBonkComponent comp, MobStateChangedEvent args)

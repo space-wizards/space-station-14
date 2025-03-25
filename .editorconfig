@@ -129,7 +129,7 @@ csharp_indent_braces = false
 csharp_indent_switch_labels = true
 
 # Space preferences
-csharp_space_after_cast = true
+csharp_space_after_cast = false
 csharp_space_after_colon_in_inheritance_clause = true
 csharp_space_after_comma = true
 csharp_space_after_dot = false
@@ -344,6 +344,9 @@ resharper_keep_existing_attribute_arrangement = true
 resharper_wrap_chained_binary_patterns = chop_if_long
 resharper_wrap_chained_method_calls = chop_if_long
 resharper_csharp_trailing_comma_in_multiline_lists = true
+resharper_csharp_qualified_using_at_nested_scope = false
+resharper_csharp_prefer_qualified_reference = false
+resharper_csharp_allow_alias = false
 
 [*.{csproj,xml,yml,yaml,dll.config,msbuildproj,targets,props}]
 indent_size = 2

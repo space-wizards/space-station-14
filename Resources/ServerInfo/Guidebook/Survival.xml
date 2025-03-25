@@ -20,7 +20,7 @@ In the event of a serious emergency, there're a few things you can do to help en
   <GuideEntityEmbed Entity="EmergencyOxygenTankFilled"/> 
 </Box>
 
-- If actively bleeding out, or simply wishing to prepare, it's possible to slice up cloth items with a knife or other sharp object and use the resulting cloth to create gauze in the crafting menu to stem bleeding with, however cloth alone can be used to less of a degree in emergencys. 
+- If actively bleeding out, or simply wishing to prepare, it's possible to slice up cloth items with a knife or other sharp object and use the resulting cloth to create gauze in the crafting menu to stem bleeding with, however cloth alone can be used to less of a degree in emergencies. 
 
 <Box>
   <GuideEntityEmbed Entity="Gauze"/>
@@ -33,6 +33,6 @@ In the event of a serious emergency, there're a few things you can do to help en
 - Well-made meals (cooked food not from a vending machine) is generally much better for your overall health and can help heal smaller wounds more quickly. 
 - Simple bed rest can allow some wounds to close up on their own. Medical beds are best for this, providing a sterile surface and support for all damaged body parts, but any bed works. 
 - Actually sleeping on a bed boosts your healing rate even farther. 
-- Meals that contain proteins, such as meat, - will tremendously help your body's condition after severe bloodloss. It's still advised to visit a doctor and get treated though. 
+- Meals that contain proteins, such as meat, will tremendously help your body's condition after severe bloodloss. It's still advised to visit a doctor and get treated though. 
   
 </Document> 

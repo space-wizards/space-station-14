@@ -9,3 +9,8 @@
 - type: edgeSpreader
   id: Smoke
   updatesPerSecond: 8
+
+- type: edgeSpreader
+  id: MetalFoam
+  updatesPerSecond: 16
+  preventSpreadOnSpaced: false

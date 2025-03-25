@@ -70,7 +70,6 @@ namespace Content.Server.Guardian
 
             _container.Remove(uid, hostComponent.GuardianContainer);
             hostComponent.HostedGuardian = null;
-            Dirty(host.Value, hostComponent);
             QueueDel(hostComponent.ActionEntity);
             hostComponent.ActionEntity = null;
         }
@@ -79,6 +78,12 @@ namespace Content.Server.Guardian
         {
             if (args.Handled)
                 return;
+
+            if (_container.IsEntityInContainer(uid))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("guardian-inside-container"), uid, uid);
+                return;
+            }
 
             if (component.HostedGuardian != null)
                 ToggleGuardian(uid, component);
@@ -263,6 +268,7 @@ namespace Content.Server.Guardian
                 component.Host,
                 args.DamageDelta * component.DamageShare,
                 origin: args.Origin,
+                ignoreResistances: true,
                 interruptsDoAfters: false);
             _popupSystem.PopupEntity(Loc.GetString("guardian-entity-taking-damage"), component.Host.Value, component.Host.Value);
 
@@ -325,7 +331,7 @@ namespace Content.Server.Guardian
             if (!guardianComponent.GuardianLoose)
                 return;
 
-            if (!guardianXform.Coordinates.InRange(EntityManager, _transform, hostXform.Coordinates, guardianComponent.DistanceAllowed))
+            if (!_transform.InRange(guardianXform.Coordinates, hostXform.Coordinates, guardianComponent.DistanceAllowed))
                 RetractGuardian(hostUid, hostComponent, guardianUid, guardianComponent);
         }
 

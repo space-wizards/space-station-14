@@ -25,7 +25,7 @@ public sealed partial class LogWireAction : ComponentWireAction<AccessReaderComp
         return comp.LoggingDisabled ? StatusLightState.Off : StatusLightState.On;
     }
 
-    public override object StatusKey => AccessWireActionKey.Status;
+    public override object StatusKey => LogWireActionKey.Status;
 
     public override void Initialize()
     {

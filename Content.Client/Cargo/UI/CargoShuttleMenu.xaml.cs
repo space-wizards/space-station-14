@@ -12,14 +12,9 @@ namespace Content.Client.Cargo.UI
     [GenerateTypedNameReferences]
     public sealed partial class CargoShuttleMenu : FancyWindow
     {
-        private readonly IPrototypeManager _protoManager;
-        private readonly SpriteSystem _spriteSystem;
-
-        public CargoShuttleMenu(IPrototypeManager protoManager, SpriteSystem spriteSystem)
+        public CargoShuttleMenu()
         {
             RobustXamlLoader.Load(this);
-            _protoManager = protoManager;
-            _spriteSystem = spriteSystem;
             Title = Loc.GetString("cargo-shuttle-console-menu-title");
         }
 
@@ -33,19 +28,19 @@ namespace Content.Client.Cargo.UI
             ShuttleNameLabel.Text = name;
         }
 
-        public void SetOrders(List<CargoOrderData> orders)
+        public void SetOrders(SpriteSystem sprites, IPrototypeManager protoManager, List<CargoOrderData> orders)
         {
             Orders.DisposeAllChildren();
 
             foreach (var order in orders)
             {
-                 var product = _protoManager.Index<EntityPrototype>(order.ProductId);
+                 var product = protoManager.Index<EntityPrototype>(order.ProductId);
                  var productName = product.Name;
 
                  var row = new CargoOrderRow
                  {
                      Order = order,
-                     Icon = { Texture = _spriteSystem.Frame0(product) },
+                     Icon = { Texture = sprites.Frame0(product) },
                      ProductName =
                      {
                          Text = Loc.GetString(

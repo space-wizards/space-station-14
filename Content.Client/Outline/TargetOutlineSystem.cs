@@ -23,6 +23,7 @@ public sealed class TargetOutlineSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     private bool _enabled = false;
 
@@ -30,6 +31,11 @@ public sealed class TargetOutlineSystem : EntitySystem
     ///     Whitelist that the target must satisfy.
     /// </summary>
     public EntityWhitelist? Whitelist = null;
+
+    /// <summary>
+    ///     Blacklist that the target must satisfy.
+    /// </summary>
+    public EntityWhitelist? Blacklist = null;
 
     /// <summary>
     ///     Predicate the target must satisfy.
@@ -92,15 +98,16 @@ public sealed class TargetOutlineSystem : EntitySystem
         RemoveHighlights();
     }
 
-    public void Enable(float range, bool checkObstructions, Func<EntityUid, bool>? predicate, EntityWhitelist? whitelist, CancellableEntityEventArgs? validationEvent)
+    public void Enable(float range, bool checkObstructions, Func<EntityUid, bool>? predicate, EntityWhitelist? whitelist, EntityWhitelist? blacklist, CancellableEntityEventArgs? validationEvent)
     {
         Range = range;
         CheckObstruction = checkObstructions;
         Predicate = predicate;
         Whitelist = whitelist;
+        Blacklist = blacklist;
         ValidationEvent = validationEvent;
 
-        _enabled = Predicate != null || Whitelist != null || ValidationEvent != null;
+        _enabled = Predicate != null || Whitelist != null || Blacklist != null || ValidationEvent != null;
     }
 
     public override void Update(float frameTime)
@@ -165,8 +172,8 @@ public sealed class TargetOutlineSystem : EntitySystem
                 valid = _interactionSystem.InRangeUnobstructed(player, entity, Range);
             else if (Range >= 0)
             {
-                var origin = Transform(player).WorldPosition;
-                var target = Transform(entity).WorldPosition;
+                var origin = _transformSystem.GetWorldPosition(player);
+                var target = _transformSystem.GetWorldPosition(entity);
                 valid = (origin - target).LengthSquared() <= Range;
             }
 

@@ -1,7 +1,7 @@
 - type: entity
   id: PartGingerbread
   parent: [BaseItem, BasePart]
-  name: "gingerbead body part"
+  name: "gingerbread body part"
   abstract: true
   components:
   - type: Extractable

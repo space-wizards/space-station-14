@@ -101,7 +101,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (_whitelistSystem.IsWhitelistFail(component.RequiredItems, args.Using ?? default))
             return false;
 
-        if (component.RequireHands)
+        if (component.RequiresComplex)
         {
             if (args.Hands == null)
                 return false;
@@ -191,19 +191,22 @@ public sealed partial class ActivatableUISystem : EntitySystem
         if (!_blockerSystem.CanInteract(user, uiEntity) && (!HasComp<GhostComponent>(user) || aui.BlockSpectators))
             return false;
 
-        if (aui.RequireHands)
+        if (aui.RequiresComplex)
+        {
+            if (!_blockerSystem.CanComplexInteract(user))
+                return false;
+        }
+
+        if (aui.InHandsOnly)
         {
             if (!TryComp(user, out HandsComponent? hands))
                 return false;
 
-            if (aui.InHandsOnly)
-            {
-                if (!_hands.IsHolding(user, uiEntity, out var hand, hands))
-                    return false;
+            if (!_hands.IsHolding(user, uiEntity, out var hand, hands))
+                return false;
 
-                if (aui.RequireActiveHand && hands.ActiveHand != hand)
-                    return false;
-            }
+            if (aui.RequireActiveHand && hands.ActiveHand != hand)
+                return false;
         }
 
         if (aui.AdminOnly && !_adminManager.IsAdmin(user))
@@ -274,13 +277,13 @@ public sealed partial class ActivatableUISystem : EntitySystem
 
     private void OnHandDeselected(Entity<ActivatableUIComponent> ent, ref HandDeselectedEvent args)
     {
-        if (ent.Comp.RequireHands && ent.Comp.InHandsOnly && ent.Comp.RequireActiveHand)
+        if (ent.Comp.InHandsOnly && ent.Comp.RequireActiveHand)
             CloseAll(ent, ent);
     }
 
     private void OnHandUnequipped(Entity<ActivatableUIComponent> ent, ref GotUnequippedHandEvent args)
     {
-        if (ent.Comp.RequireHands && ent.Comp.InHandsOnly)
+        if (ent.Comp.InHandsOnly)
             CloseAll(ent, ent);
     }
 }

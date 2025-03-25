@@ -1,36 +1,30 @@
+# For mantles
+- type: loadoutEffectGroup
+  id: MasterCE
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefEngineer
+      time: 72000 #20 hrs
+
 # Jumpsuit
 - type: loadout
-  id: ChiefEngineerJumpsuit
-  equipment: ChiefEngineerJumpsuit
-
-- type: startingGear
   id: ChiefEngineerJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitChiefEngineer
 
 - type: loadout
   id: ChiefEngineerJumpskirt
-  equipment: ChiefEngineerJumpskirt
-
-- type: startingGear
-  id: ChiefEngineerJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtChiefEngineer
 
 - type: loadout
   id: ChiefEngineerTurtleneck
-  equipment: ChiefEngineerTurtleneck
-
-- type: startingGear
-  id: ChiefEngineerTurtleneck
   equipment:
     jumpsuit: ClothingUniformJumpsuitChiefEngineerTurtle
 
 - type: loadout
-  id: ChiefEngineerTurtleneckSkirt
-  equipment: ChiefEngineerTurtleneckSkirt
-
-- type: startingGear
   id: ChiefEngineerTurtleneckSkirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtChiefEngineerTurtle
@@ -38,30 +32,26 @@
 # Head
 - type: loadout
   id: ChiefEngineerHead
-  equipment: ChiefEngineerHead
-
-- type: startingGear
-  id: ChiefEngineerHead
   equipment:
     head: ClothingHeadHatHardhatWhite
 
 - type: loadout
   id: ChiefEngineerBeret
-  equipment: EngineeringBeret
+  startingGear: EngineeringBeret
 
 # Neck
 - type: loadout
-  id: ChiefEngineerCloak
-  equipment: ChiefEngineerCloak
-
-- type: startingGear
   id: ChiefEngineerCloak
   equipment:
     neck: ClothingNeckCloakCe
 
 - type: loadout
   id: ChiefEngineerMantle
-  equipment: ChiefEngineerMantle
+  equipment:
+    neck: ClothingNeckMantleCE
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterCE
 
 - type: startingGear
   id: ChiefEngineerMantle
@@ -71,19 +61,11 @@
 # OuterClothing
 - type: loadout
   id: ChiefEngineerWintercoat
-  equipment: ChiefEngineerWintercoat
-
-- type: startingGear
-  id: ChiefEngineerWintercoat
   equipment:
     outerClothing: ClothingOuterWinterCE
 
 # Shoes
 - type: loadout
-  id: BrownShoes
-  equipment: BrownShoes
-
-- type: startingGear
   id: BrownShoes
   equipment:
     shoes: ClothingShoesColorBrown
