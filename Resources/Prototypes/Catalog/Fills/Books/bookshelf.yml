@@ -68,6 +68,7 @@
       - id: BookGatsby
       - id: BookCosmicCult
       - id: BookTenebraeConspiracy
+      - id: BookMansus
       - !type:GroupSelector
         children:
         - id: BookKeelBay

@@ -1,0 +1,11 @@
+- type: typingIndicator
+  id: gray
+  spritePath: /Textures/_Impstation/Effects/speech.rsi
+  typingState: gray0
+  offset: 0.01, 0.01
+
+- type: typingIndicator
+  id: Gastropoid
+  spritePath: /Textures/_Impstation/Effects/speech.rsi
+  typingState: snail
+  offset: -0.1, 0.1

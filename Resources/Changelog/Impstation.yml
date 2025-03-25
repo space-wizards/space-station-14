@@ -1,81 +1,4 @@
 ﻿Entries:
-- author: ruddygreat
-  changes:
-  - message: The shining spring now shoots cleanades as a bouncing projectile that
-      spreads space cleaner as it moves.
-    type: Tweak
-  id: 884
-  time: '2025-01-09T16:48:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1203
-- author: aada
-  changes:
-  - message: Ninja sword can now stamp papers.
-    type: Add
-  - message: Ninja gloves now have a much weaker stun.
-    type: Tweak
-  id: 885
-  time: '2025-01-09T16:50:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1230
-- author: DinnerCalzone
-  changes:
-  - message: The improvised grappling gun's crafting recipe has been modified to be
-      multi-step, allowing you to manually choose what plunger and what gas tank to
-      use.
-    type: Tweak
-  id: 886
-  time: '2025-01-09T18:08:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1274
-- author: DinnerCalzone
-  changes:
-  - message: 'Repairing a broken recycler now unbloodies it if it has been used to
-      gib someone. (Tip: Destroying a recycler un-emags it!)'
-    type: Add
-  id: 887
-  time: '2025-01-09T18:15:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1280
-- author: Lyndomen
-  changes:
-  - message: Ports the Synthesis Specialist ghost role from Delta-V
-    type: Add
-  id: 888
-  time: '2025-01-09T18:36:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1266
-- author: honeyed-lemons
-  changes:
-  - message: Your favorite maps should roll more often, if you liked maps with high
-      letters, like train, or xeno
-    type: Fix
-  id: 889
-  time: '2025-01-09T22:38:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1284
-- author: TheGrimbeeper
-  changes:
-  - message: Multitools now act as defibrillators to cockroaches
-    type: Add
-  id: 890
-  time: '2025-01-10T07:11:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1290
-- author: mqole
-  changes:
-  - message: A few small changes to the server rules.
-    type: Tweak
-  id: 891
-  time: '2025-01-10T07:14:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1294
-- author: AvianMaiden
-  changes:
-  - message: 37 new AI names, some from community suggestions!
-    type: Add
-  id: 892
-  time: '2025-01-10T18:14:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1287
-- author: Lyndomen
-  changes:
-  - message: ports fugitive from Delta-V. Watch out for escaped criminals!
-    type: Add
-  id: 893
-  time: '2025-01-10T21:24:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1283
 - author: mousesweater
   changes:
   - message: added a salvage jumpskirt for all your salvaging needs
@@ -4096,3 +4019,91 @@
   id: 1383
   time: '2025-03-24T05:46:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2065
+- author: hivehum
+  changes:
+  - message: The wrapper on a nutribrick is no longer one of the most calorie-dense
+      substances known to mothkind.
+    type: Tweak
+  id: 1384
+  time: '2025-03-25T01:41:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2067
+- author: DinnerCalzone
+  changes:
+  - message: E1M1 can no longer be spaced.
+    type: Tweak
+  id: 1385
+  time: '2025-03-25T01:41:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2076
+- author: SixValentine
+  changes:
+  - message: Slimes need to put in some more hutzpah to kill themselves via vapebomb
+      on Luna
+    type: Fix
+  id: 1386
+  time: '2025-03-25T01:43:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2069
+- author: SixValentine
+  changes:
+  - message: The Drunken Carp on Train is no longer a death trap
+    type: Fix
+  id: 1387
+  time: '2025-03-25T01:44:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2070
+- author: bigsantino1
+  changes:
+  - message: Cluwne and monkey polymorphs now revert on crit.
+    type: Tweak
+  - message: Wizards can no longer make you a cluwne permanently.
+    type: Fix
+  id: 1388
+  time: '2025-03-25T01:45:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2071
+- author: DinnerCalzone
+  changes:
+  - message: The default supermatter radiator setup has been tweaked to allow more
+      gas to flow. Be sure to check up on the engine every once in a while to make
+      sure it has enough gas!
+    type: Tweak
+  id: 1389
+  time: '2025-03-25T01:47:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2079
+- author: FutureExalt
+  changes:
+  - message: removed racism from some italian accent substitutions
+    type: Fix
+  id: 1390
+  time: '2025-03-25T01:51:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2077
+- author: DinnerCalzone
+  changes:
+  - message: Chaplain, Clown, Mime, and Musician all now have Service access.
+    type: Add
+  - message: Security jobs no longer have Service access.
+    type: Remove
+  id: 1391
+  time: '2025-03-25T02:08:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2081
+- author: hivehum
+  changes:
+  - message: Vox can caw like a crow.
+    type: Add
+  - message: Goblins can hiss.
+    type: Add
+  - message: Vox's 'coo' and the three slime emotes have different icons.
+    type: Tweak
+  id: 1392
+  time: '2025-03-25T02:12:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2042
+- author: Kandiyaki
+  changes:
+  - message: Added the Infinite Archives, the source of all mansus knowledge.
+    type: Add
+  - message: Removed Hell (and replaced it with the archives).
+    type: Remove
+  - message: A new book, "On the Nature of the Mansus"!
+    type: Add
+  - message: Some text has been altered to give heretics more consistent theming.
+    type: Tweak
+  id: 1393
+  time: '2025-03-25T02:19:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2038

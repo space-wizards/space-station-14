@@ -1,0 +1,154 @@
+# Harpy
+- type: emote
+  id: HarpyHonk
+  name: delta-chat-emote-name-honk
+  category: Vocal
+  available: false
+  icon: _Impstation/Interface/Emotes/kodehonk.png # imp
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [honks.]
+  chatTriggers:
+    - honk
+    - honks
+    - honking
+    - honked
+
+- type: emote
+  id: HarpyRing
+  name: delta-chat-emote-name-ring
+  category: Vocal
+  available: false
+  icon: _Impstation/Interface/Emotes/ring.png # imp
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [rings.]
+  chatTriggers:
+    - ring
+    - rings
+    - ringing
+    - ringed
+    - rang
+
+- type: emote
+  id: HarpyPew
+  name: delta-chat-emote-name-pew
+  category: Vocal
+  available: false
+  icon: _Impstation/Interface/Emotes/pew.png # imp
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [pews.]
+  chatTriggers:
+    - pew
+    - pews
+    - pewpew
+
+- type: emote
+  id: HarpyBang
+  name: delta-chat-emote-name-bang
+  category: Vocal
+  available: false
+  icon: _Impstation/Interface/Emotes/bang.png # imp
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [bangs.]
+  chatTriggers:
+    - bang
+    - bangs
+    - banging
+    - banged
+
+- type: emote
+  id: HarpyBeep
+  name: delta-chat-emote-name-beep
+  category: Vocal
+  icon: _Impstation/Interface/Emotes/beep.png # imp
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [beeps.]
+  chatTriggers:
+    - beep
+    - beeps
+    - beeping
+    - beeped
+
+- type: emote
+  id: HarpyRev
+  name: delta-chat-emote-name-rev
+  category: Vocal
+  available: false
+  icon: _Impstation/Interface/Emotes/revs.png # imp
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [revs.]
+  chatTriggers:
+    - rev
+    - revs
+    - revving
+    - revved
+
+- type: emote
+  id: HarpyCaw
+  name: delta-chat-emote-name-caw
+  category: Vocal
+  available: false
+  icon: _Impstation/Interface/Emotes/caw.png # imp
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [caws.]
+  chatTriggers:
+    - caw
+    - caws
+    - cawing
+    - cawed
+
+#Vulpkanin
+
+- type: emote
+  id: Snarl
+  name: delta-chat-emote-name-snarl
+  category: Vocal
+  available: false
+  icon: _Impstation/Interface/Emotes/snarl.png # imp
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [snarls.]
+  chatTriggers:
+    - snarl
+    - snarls
+    - snarled
+    - snarling

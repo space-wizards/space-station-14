@@ -11,8 +11,3 @@
   license: "CC-BY-SA-3.0"
   copyright: "Modified goblin head_m.png and goblin_ears_default.png by ErhardSteinhauer"
   source: "https://github.com/ErhardSteinhauer"
-
-- files: ["belch.png"]
-  license: "CC-BY-SA-3.0"
-  copyright: "Modified from vocal.png by BorisTakerman (Boris Takerman)"
-  source: "https://github.com/BorisTakerman"

@@ -4,11 +4,10 @@
   name: chat-emote-name-bubble
   category: Vocal
   available: false
-  icon: _Impstation/Interface/Emotes/squish.png
+  icon: _Impstation/Interface/Emotes/bubble.png
   whitelist:
     components:
     - Vocal
-    - Slime
   blacklist:
     components:
     - BorgChassis
@@ -22,11 +21,10 @@
   name: chat-emote-name-pop
   category: Vocal
   available: false
-  icon: _Impstation/Interface/Emotes/squish.png
+  icon: _Impstation/Interface/Emotes/pop.png
   whitelist:
     components:
     - Vocal
-    - Slime
   blacklist:
     components:
     - BorgChassis
@@ -73,9 +71,71 @@
   id: Blink
   name: chat-emote-name-blink
   category: General
-  icon: _Impstation/Interface/Emotes/blink.png #imp
+  icon: _Impstation/Interface/Emotes/blink.png
   chatMessages: ["chat-emote-msg-blink"]
   chatTriggers:
     - blink
     - blinks
     - blinked
+
+- type: emote
+  id: Coo
+  name: chat-emote-name-coo
+  category: Vocal
+  available: false
+  icon: _Impstation/Interface/Emotes/coo.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-coo"]
+  chatTriggers:
+  - coo
+  - coos
+  - cooed
+
+- type: emote
+  id: Crack
+  name: chat-emote-name-crack
+  category: Hands
+  icon: _Impstation/Interface/Emotes/knucklecrack.png
+  whitelist:
+    components:
+    - Hands
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-crack"]
+  chatTriggers:
+  - crack knuckles
+  - cracks knuckles
+  - cracking knuckles
+  - cracked knuckles
+  - cracks their knuckles
+  - cracks her knuckles
+  - cracks his knuckles
+  - cracks its knuckles
+
+# Kodepiia
+
+- type: emote
+  id: Boom
+  name: chat-emote-name-boom
+  category: Vocal
+  icon: _Impstation/Interface/Emotes/boom.png
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-boom"]
+  chatTriggers:
+  - boom.
+  - booms.
+  - booms!
+  - booming.
+  - boomed.

@@ -13,7 +13,7 @@ heretic-ritual-basic-codex = Codex Cicatrix
 
 
 heretic-ritual-fail-sacrifice = There is no corpse to sacrifice.
-heretic-ritual-fail-sacrifice-ineligible = The rune refuses to accept this sacrifice.
+heretic-ritual-fail-sacrifice-ineligible = This mind is not one of the ones I need.
 heretic-ritual-fail-reagentpuddle = This ritual needs a puddle of one of these: {$reagentname}.
 heretic-ritual-fail-temperature-hot = It is too hot here.
 heretic-ritual-fail-temperature-cold = It is not cold enough here.
