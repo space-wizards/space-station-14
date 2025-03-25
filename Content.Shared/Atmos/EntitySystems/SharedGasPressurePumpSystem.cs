@@ -20,6 +20,9 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
     [Dependency] private   readonly SharedPowerReceiverSystem _receiver = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UserInterfaceSystem = default!;
 
+    private static AtmosToggleableEnabledEvent _enabledEvent = new();
+    private static AtmosToggleableDisabledEvent _disabledEvent = new();
+
     // TODO: Check enabled for activatableUI
     // TODO: Add activatableUI to it.
 
@@ -34,6 +37,9 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
 
         SubscribeLocalEvent<GasPressurePumpComponent, AtmosDeviceDisabledEvent>(OnPumpLeaveAtmosphere);
         SubscribeLocalEvent<GasPressurePumpComponent, ExaminedEvent>(OnExamined);
+
+        SubscribeLocalEvent<GasPressurePumpComponent, AtmosToggleableEnabledEvent>(OnPumpToggledEnabled);
+        SubscribeLocalEvent<GasPressurePumpComponent, AtmosToggleableDisabledEvent>(OnPumpToggledDisabled);
     }
 
     private void OnExamined(EntityUid uid, GasPressurePumpComponent pump, ExaminedEvent args)
@@ -52,6 +58,8 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
 
     private void OnInit(EntityUid uid, GasPressurePumpComponent pump, ComponentInit args)
     {
+        pump.ToggleableComponent = EnsureComp<AtmosToggleableComponent>(uid);
+        pump.ToggleableComponent.Enabled = pump.DefaultEnabled;
         UpdateAppearance(uid, pump);
     }
 
@@ -65,17 +73,19 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
         if (!Resolve(uid, ref pump, ref appearance, false))
             return;
 
-        var pumpOn = pump.Enabled && _receiver.IsPowered(uid);
+        var pumpOn = pump.ToggleableComponent.Enabled && _receiver.IsPowered(uid);
         Appearance.SetData(uid, PumpVisuals.Enabled, pumpOn, appearance);
     }
 
     private void OnToggleStatusMessage(EntityUid uid, GasPressurePumpComponent pump, GasPressurePumpToggleStatusMessage args)
     {
-        pump.Enabled = args.Enabled;
+        if (args.Enabled)
+            RaiseLocalEvent(uid, ref _enabledEvent);
+        else
+            RaiseLocalEvent(uid, ref _disabledEvent);
+
         _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
             $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
-        Dirty(uid, pump);
-        UpdateAppearance(uid, pump);
     }
 
     private void OnOutputPressureChangeMessage(EntityUid uid, GasPressurePumpComponent pump, GasPressurePumpChangeOutputPressureMessage args)
@@ -88,10 +98,21 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
 
     private void OnPumpLeaveAtmosphere(EntityUid uid, GasPressurePumpComponent pump, ref AtmosDeviceDisabledEvent args)
     {
-        pump.Enabled = false;
-        Dirty(uid, pump);
-        UpdateAppearance(uid, pump);
-
+        RaiseLocalEvent(uid, ref _disabledEvent);
         UserInterfaceSystem.CloseUi(uid, GasPressurePumpUiKey.Key);
+    }
+
+    private void OnPumpToggledEnabled(EntityUid uid, GasPressurePumpComponent pump, AtmosToggleableEnabledEvent args)
+    {
+        pump.ToggleableComponent.Enabled = true;
+        Dirty(uid, pump.ToggleableComponent);
+        UpdateAppearance(uid, pump);
+    }
+
+    private void OnPumpToggledDisabled(EntityUid uid, GasPressurePumpComponent pump, AtmosToggleableDisabledEvent args)
+    {
+        pump.ToggleableComponent.Enabled = false;
+        Dirty(uid, pump.ToggleableComponent);
+        UpdateAppearance(uid, pump);
     }
 }

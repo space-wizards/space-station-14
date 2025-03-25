@@ -35,7 +35,7 @@ public sealed class GasPressurePumpBoundUserInterface : BoundUserInterface
         Update();
     }
 
-    public void Update()
+    public override void Update()
     {
         if (_window == null)
             return;
@@ -45,7 +45,7 @@ public sealed class GasPressurePumpBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent(Owner, out GasPressurePumpComponent? pump))
             return;
 
-        _window.SetPumpStatus(pump.Enabled);
+        _window.SetPumpStatus(pump.ToggleableComponent.Enabled);
         _window.MaxPressure = pump.MaxTargetPressure;
         _window.SetOutputPressure(pump.TargetPressure);
     }

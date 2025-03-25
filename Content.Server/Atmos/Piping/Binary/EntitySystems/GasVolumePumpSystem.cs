@@ -37,6 +37,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
 
+        private static AtmosToggleableEnabledEvent _enabledEvent = new();
+        private static AtmosToggleableDisabledEvent _disabledEvent = new();
 
         public override void Initialize()
         {
@@ -52,11 +54,16 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpChangeTransferRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpToggleStatusMessage>(OnToggleStatusMessage);
 
+            SubscribeLocalEvent<GasVolumePumpComponent, AtmosToggleableEnabledEvent>(OnPumpToggledEnabled);
+            SubscribeLocalEvent<GasVolumePumpComponent, AtmosToggleableDisabledEvent>(OnPumpToggledDisabled);
+
             SubscribeLocalEvent<GasVolumePumpComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         }
 
         private void OnInit(EntityUid uid, GasVolumePumpComponent pump, ComponentInit args)
         {
+            pump.ToggleableComponent = EnsureComp<AtmosToggleableComponent>(uid);
+            pump.ToggleableComponent.Enabled = pump.DefaultEnabled;
             UpdateAppearance(uid, pump);
         }
 
@@ -79,7 +86,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnVolumePumpUpdated(EntityUid uid, GasVolumePumpComponent pump, ref AtmosDeviceUpdateEvent args)
         {
-            if (!pump.Enabled ||
+            if (!pump.ToggleableComponent.Enabled ||
                 (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered) ||
                 !_nodeContainer.TryGetNodes(uid, pump.InletName, pump.OutletName, out PipeNode? inlet, out PipeNode? outlet))
             {
@@ -133,10 +140,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnVolumePumpLeaveAtmosphere(EntityUid uid, GasVolumePumpComponent pump, ref AtmosDeviceDisabledEvent args)
         {
-            pump.Enabled = false;
-            UpdateAppearance(uid, pump);
-
-            DirtyUI(uid, pump);
+            RaiseLocalEvent(uid, ref _disabledEvent);
             _userInterfaceSystem.CloseUi(uid, GasVolumePumpUiKey.Key);
         }
 
@@ -163,11 +167,13 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnToggleStatusMessage(EntityUid uid, GasVolumePumpComponent pump, GasVolumePumpToggleStatusMessage args)
         {
-            pump.Enabled = args.Enabled;
+            if (args.Enabled)
+                RaiseLocalEvent(uid, ref _enabledEvent);
+            else
+                RaiseLocalEvent(uid, ref _disabledEvent);
+
             _adminLogger.Add(LogType.AtmosPowerChanged, LogImpact.Medium,
                 $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
-            DirtyUI(uid, pump);
-            UpdateAppearance(uid, pump);
         }
 
         private void OnTransferRateChangeMessage(EntityUid uid, GasVolumePumpComponent pump, GasVolumePumpChangeTransferRateMessage args)
@@ -184,7 +190,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                 return;
 
             _userInterfaceSystem.SetUiState(uid, GasVolumePumpUiKey.Key,
-                new GasVolumePumpBoundUserInterfaceState(Name(uid), pump.TransferRate, pump.Enabled));
+                new GasVolumePumpBoundUserInterfaceState(Name(uid), pump.TransferRate, pump.ToggleableComponent.Enabled));
         }
 
         private void UpdateAppearance(EntityUid uid, GasVolumePumpComponent? pump = null, AppearanceComponent? appearance = null)
@@ -192,7 +198,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!Resolve(uid, ref pump, ref appearance, false))
                 return;
 
-            bool pumpOn = pump.Enabled && (TryComp<ApcPowerReceiverComponent>(uid, out var power) && power.Powered);
+            bool pumpOn = pump.ToggleableComponent.Enabled && (TryComp<ApcPowerReceiverComponent>(uid, out var power) && power.Powered);
             if (!pumpOn)
                 _appearance.SetData(uid, GasVolumePumpVisuals.State, GasVolumePumpState.Off, appearance);
             else if (pump.Blocked)
@@ -218,6 +224,20 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                     _deviceNetwork.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
                     return;
             }
+        }
+
+        private void OnPumpToggledEnabled(EntityUid uid, GasVolumePumpComponent pump, AtmosToggleableEnabledEvent args)
+        {
+            pump.ToggleableComponent.Enabled = true;
+            DirtyUI(uid, pump);
+            UpdateAppearance(uid, pump);
+        }
+
+        private void OnPumpToggledDisabled(EntityUid uid, GasVolumePumpComponent pump, AtmosToggleableDisabledEvent args)
+        {
+            pump.ToggleableComponent.Enabled = false;
+            DirtyUI(uid, pump);
+            UpdateAppearance(uid, pump);
         }
     }
 }

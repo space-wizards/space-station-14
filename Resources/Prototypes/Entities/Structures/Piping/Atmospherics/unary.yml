@@ -254,7 +254,8 @@
       sendBroadcastAttemptEvent: true
       examinableAddress: true
     - type: WiredNetworkConnection
-    - type: PowerSwitch
+    - type: AtmosToggleable
+      altVerbAvailable: true
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: Thermoregulator
     - type: GuideHelp
@@ -282,14 +283,16 @@
           renderingStrategy: Default
     - type: GenericVisualizer
       visuals:
-        enum.PowerDeviceVisuals.Powered:
-          enum.PowerDeviceVisualLayers.Powered:
-            True: { state: freezerOn }
-            False: { state: freezerOff }
+        enum.ThermomachineVisuals.State:
+          enabled:
+            On: { state: freezerOn }
+            Off: { state: freezerOff }
     - type: GasThermoMachine
       coefficientOfPerformance: -3.9
     - type: ApcPowerReceiver
-      powerDisabled: true #starts off
+    - type: AtmosToggleable
+      altVerbAvailable: true
+      enabled: false #starts off
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
     - type: DeviceNetwork
@@ -303,8 +306,9 @@
   suffix: Enabled
   components:
   - type: GasThermoMachine
-  - type: ApcPowerReceiver
-    powerDisabled: false
+  - type: AtmosToggleable
+    altVerbAvailable: true
+    enabled: true
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -327,14 +331,16 @@
           renderingStrategy: Default
     - type: GenericVisualizer
       visuals:
-        enum.PowerDeviceVisuals.Powered:
-          enum.PowerDeviceVisualLayers.Powered:
-            True: { state: heaterOn }
-            False: { state: heaterOff }
+        enum.ThermomachineVisuals.State:
+          enabled:
+            On: { state: heaterOn }
+            Off: { state: heaterOff }
     - type: GasThermoMachine
       coefficientOfPerformance: 0.95
     - type: ApcPowerReceiver
-      powerDisabled: true #starts off
+    - type: AtmosToggleable
+      altVerbAvailable: true
+      enabled: false #starts off
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
     - type: DeviceNetwork
@@ -348,8 +354,9 @@
   suffix: Enabled
   components:
   - type: GasThermoMachine
-  - type: ApcPowerReceiver
-    powerDisabled: false
+  - type: AtmosToggleable
+    altVerbAvailable: true
+    enabled: true
 
 - type: entity
   parent: GasThermoMachineFreezer

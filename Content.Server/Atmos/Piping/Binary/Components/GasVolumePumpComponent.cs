@@ -1,14 +1,22 @@
+using Content.Server.Atmos.Piping.Binary.EntitySystems;
+using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Guidebook;
+using System.ComponentModel.DataAnnotations;
 
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
     public sealed partial class GasVolumePumpComponent : Component
     {
-        [ViewVariables(VVAccess.ReadWrite)]
+        [Access(typeof(GasVolumePumpSystem))]
+        public AtmosToggleableComponent ToggleableComponent;
+
+        /// <summary>
+        ///     The default Enabled value for this comp's AtmosToggleableComponent. Only used on init.
+        /// </summary>
         [DataField("enabled")]
-        public bool Enabled { get; set; } = true;
+        public bool DefaultEnabled = false;
 
         [DataField("blocked")]
         public bool Blocked { get; set; } = false;

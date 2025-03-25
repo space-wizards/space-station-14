@@ -6,7 +6,10 @@ using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Audio;
+using Content.Shared.Hands.Components;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
@@ -27,7 +30,7 @@ public sealed class GasPressurePumpSystem : SharedGasPressurePumpSystem
 
     private void OnPumpUpdated(EntityUid uid, GasPressurePumpComponent pump, ref AtmosDeviceUpdateEvent args)
     {
-        if (!pump.Enabled
+        if (!pump.ToggleableComponent.Enabled
             || (TryComp<ApcPowerReceiverComponent>(uid, out var power) && !power.Powered)
             || !_nodeContainer.TryGetNodes(uid, pump.InletName, pump.OutletName, out PipeNode? inlet, out PipeNode? outlet))
         {
