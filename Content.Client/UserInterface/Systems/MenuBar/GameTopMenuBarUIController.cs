@@ -19,7 +19,9 @@ public sealed class GameTopMenuBarUIController : UIController
 
     private void OnAdminStatusUpdated()
     {
-        var button = UIManager.GetActiveUIWidget<GameTopMenuBar>().AdminButton;
-        button.Visible = _conGroups.CanAdminMenu();
+        var button = UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.AdminButton;
+
+        if (button != null)
+            button.Visible = _conGroups.CanAdminMenu();
     }
 }
