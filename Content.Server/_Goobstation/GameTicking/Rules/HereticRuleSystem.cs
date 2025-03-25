@@ -17,6 +17,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
+using Content.Server._Goobstation.Heretic.EntitySystems;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -28,6 +29,7 @@ public sealed partial class HereticRuleSystem : GameRuleSystem<HereticRuleCompon
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly ObjectivesSystem _objective = default!;
     [Dependency] private readonly IRobustRandom _rand = default!;
+    [Dependency] private readonly HellWorldSystem _hell = default!;
 
     public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/_Goobstation/Heretic/Ambience/Antag/Heretic/heretic_gain.ogg");
 
@@ -54,6 +56,7 @@ public sealed partial class HereticRuleSystem : GameRuleSystem<HereticRuleCompon
         for (int i = 0; i < _rand.Next(6, 12); i++)
             if (TryFindRandomTile(out var _, out var _, out var _, out var coords))
                 Spawn("EldritchInfluence", coords);
+        _hell.MakeHell();
     }
 
     public bool TryMakeHeretic(EntityUid target, HereticRuleComponent rule)
