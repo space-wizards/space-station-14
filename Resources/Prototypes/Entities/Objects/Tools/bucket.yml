@@ -72,8 +72,8 @@
 - type: entity
   parent: Bucket
   id: BorgBucket
-  name: water tank
-  description: The internal reservoir of a Janitor Cyborg.
+  name: integrated water tank
+  description: The internal reservoir of a custodial cyborg, capable of holding a entire mop bucket worth of water.
   components:
   - type: SolutionContainerManager
     solutions:

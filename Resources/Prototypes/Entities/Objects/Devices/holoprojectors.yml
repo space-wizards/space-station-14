@@ -86,8 +86,8 @@
 - type: entity
   parent: HolofanProjector
   id: HolofanProjectorBorg
-  suffix: borg
-  description: Stops suicidal crew from causing more crew harm during atmos emergencies. Powered by a self-recharging power cell.
+  name: integrated holofan projector
+  description: Stops idiots from causing more crew harm during atmospheric emergencies. Installed directly into an engineering cyborg.
   components:
   - type: ItemSlots
     slots:

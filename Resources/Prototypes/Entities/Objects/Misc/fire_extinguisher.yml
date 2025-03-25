@@ -76,10 +76,10 @@
       Steel: 100
 
 - type: entity
-  name: manuvering jet
   parent: FireExtinguisher
   id: BorgFireExtinguisher
-  description: Based on fire extingusher technology, the manuvering jet is... well yes, its just a bigger fire extingusher.
+  name: maneuvering jet
+  description: Based on fire extinguisher technology, the maneuvering jet is... well yes, its just a bigger fire extinguisher.
   components:
   - type: SolutionContainerManager
     solutions:

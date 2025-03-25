@@ -116,9 +116,9 @@
     - state: icon-cables
   - type: ItemBorgModule
     items:
-    - CableApcStackLingering30
-    - CableMVStackLingering30
-    - CableHVStackLingering30
+    - CableApcStackLingering10
+    - CableMVStackLingering10
+    - CableHVStackLingering10
     - trayScanner
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
@@ -127,7 +127,7 @@
   id: BorgModuleFireExtinguisher
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: thruster cyborg module
-  description: NT assigned a team to design a jetpack for cyborg units, but they ran out of funding and just rebranded a normal fire extingusher.
+  description: NT assigned a team to design a jetpack for cyborg units, but they ran out of funding and just made a big fire extinguisher. Comes with a integrated GPS and mass scanner.
   components:
   - type: Sprite
     layers:
@@ -163,10 +163,9 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
 - type: entity
-  id: BorgModuleGPS # depreciated
+  id: BorgModuleGPS # Currently its functions are covered by the fire extinguisher module, but im leaving the prototype in case it's useful in the future.
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: GPS cyborg module
-  description: For cyborgs that keep getting lost.
   components:
   - type: Sprite
     layers:
@@ -401,10 +400,10 @@
     - state: icon-treatment
   - type: ItemBorgModule
     items:
-    - GauzeLingering10
-    - BrutepackLingering10
-    - OintmentLingering10
-    - BloodpackLingering10
+    - Gauze10Lingering
+    - Brutepack10Lingering
+    - Ointment10Lingering
+    - Bloodpack10Lingering
     - RegenerativeMeshLingering0
     - MedicatedSutureLingering0
   - type: BorgModuleIcon
@@ -544,7 +543,9 @@
     - state: icon-musique
   - type: ItemBorgModule
     items:
-    - SuperSynthesizerInstrument
+    - SynthesizerInstrument
+    - ElectricGuitarInstrument
+    - SaxophoneInstrument
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: musical-module }
 

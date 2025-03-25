@@ -104,10 +104,10 @@
   - type: DnaSubstanceTrace
 
 - type: entity
-  name: vial
   parent: BaseItem
   id: BorgVial
-  description: A internal liquid compartment built into a cyborg.
+  name: integrated chemical vessel
+  description: An internal compartment installed into a cyborg. Rated for 30 units of any liquid.
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/vial.rsi
@@ -205,7 +205,7 @@
         reagents:
           - ReagentId: Chlorine
             Quantity: 5
-            
+
 - type: entity
   id: PlasmaChemistryVial
   parent: BaseChemistryEmptyVial

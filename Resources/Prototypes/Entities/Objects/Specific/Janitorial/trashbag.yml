@@ -66,10 +66,10 @@
     areaInsertRadius: 5
 
 - type: entity
-  name: internal trash bag
-  id: BorgTrashBag
-  description: An upgraded trash bag with a massive internal volume.
   parent: TrashBag
+  id: BorgTrashBag
+  name: integrated trash bag
+  description: An upgraded trash bag with a larger internal volume, installed directly into a custodial cyborg.
   components:
   - type: Storage
     maxItemSize: Huge

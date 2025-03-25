@@ -56,7 +56,7 @@
     count: 1
 
 - type: entity
-  id: OintmentLingering10
+  id: Ointment10Lingering
   parent: Ointment
   suffix: 10, Lingering
   components:
@@ -107,8 +107,8 @@
     count: 1
 
 - type: entity
-  id: RegenerativeMeshLingering0
   parent: RegenerativeMesh
+  id: RegenerativeMeshLingering0
   suffix: 0, Lingering
   components:
   - type: Stack
@@ -153,7 +153,7 @@
     count: 1
 
 - type: entity
-  id: BrutepackLingering10
+  id: Brutepack10Lingering
   parent: Brutepack
   suffix: 10, Lingering
   components:
@@ -203,8 +203,8 @@
     count: 1
 
 - type: entity
-  id: MedicatedSutureLingering0
   parent: MedicatedSuture
+  id: MedicatedSutureLingering0
   suffix: 0, Lingering
   components:
   - type: Stack
@@ -242,7 +242,7 @@
 
 - type: entity
   parent: Bloodpack
-  id: BloodpackLingering10
+  id: Bloodpack10Lingering
   suffix: 10, Lingering
   components:
   - type: Stack
@@ -317,7 +317,7 @@
     count: 1
 
 - type: entity
-  id: GauzeLingering10
+  id: Gauze10Lingering
   parent: Gauze
   suffix: 10, Lingering
   components:
