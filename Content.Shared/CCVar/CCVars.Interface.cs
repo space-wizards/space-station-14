@@ -72,7 +72,7 @@ public sealed partial class CCVars
     /// Recommended to keep under 1, otherwise the overlays of people sitting next to each other will stack
     /// </summary>
     public static readonly CVarDef<float> AdminOverlayMergeDistance =
-        CVarDef.Create("ui.admin_overlay_merge_distance", 0.95f, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("ui.admin_overlay_merge_distance", 0.33f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// The maximum size that an overlay stack can reach. Additional overlays will be superimposed over the last one.

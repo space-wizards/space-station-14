@@ -338,3 +338,4 @@ ui-options-censor-nudity = Censor character nudity
 ## Admin menu
 
 ui-options-enable-classic-overlay = Revert antag overlay to classic mode
+ui-options-overlay-merge-distance = Stack merge distance
