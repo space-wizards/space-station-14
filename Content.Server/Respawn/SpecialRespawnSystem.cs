@@ -173,7 +173,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
             var randomY = _random.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
             tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-            var mapPos = grid.GridTileToWorldPos(tile);
+            var mapPos = _map.GridTileToWorldPos(targetGrid, grid, tile);
             var mapTarget = grid.WorldToTile(mapPos);
             var circle = new Circle(mapPos, 2);
 
