@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Made gastropoids moderately less vulnerable to temperature damage.
-    type: Tweak
-  id: 895
-  time: '2025-01-10T22:22:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1297
 - author: Sha-Seng
   changes:
   - message: Prosthetic legs/feet now show the marking on the back leg/foot when facing
@@ -4107,3 +4100,11 @@
   id: 1394
   time: '2025-03-25T09:49:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1891
+- author: jtfg-dev
+  changes:
+  - message: Made 100 more words and concepts relentlessly positive. Do let your metal
+      friends interact with the tickler!
+    type: Tweak
+  id: 1395
+  time: '2025-03-25T09:54:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2039
