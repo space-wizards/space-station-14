@@ -58,13 +58,11 @@ public sealed class AdminUIController : UIController,
     public void OnStateEntered(GameplayState state)
     {
         EnsureWindow();
-        AdminStatusUpdated();
     }
 
     public void OnStateEntered(LobbyState state)
     {
         EnsureWindow();
-        AdminStatusUpdated();
     }
 
     public void OnSystemLoaded(AdminSystem system)
@@ -81,7 +79,6 @@ public sealed class AdminUIController : UIController,
         if (_window != null)
             _window.Dispose();
 
-        _admin.AdminStatusUpdated -= AdminStatusUpdated;
 
         CommandBinds.Unregister<AdminUIController>();
     }
