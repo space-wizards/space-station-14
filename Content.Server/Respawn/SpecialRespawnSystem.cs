@@ -183,7 +183,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
                     continue;
 
                 found = true;
-                targetCoords = grid.GridTileToLocal(tile);
+                targetCoords = _map.GridTileToLocal(targetGrid, grid, tile);
                 break;
             }
 
