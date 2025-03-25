@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Grid
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/20/2025 04:24:27
+  entityCount: 2535
+maps: []
+grids:
+- 1
+orphans:
+- 1
+nullspace: []
 tilemap:
   0: Space
   29: FloorDark
@@ -7240,6 +7251,7 @@ entities:
   - uid: 2457
     components:
     - type: Transform
+      rot: -1.5707963267948966 rad
       pos: 14.5,-25.5
       parent: 1
   - uid: 2458
@@ -7899,19 +7911,17 @@ entities:
       parent: 1
     - type: Fixtures
       fixtures: {}
-- proto: FloraTree03
-  entities:
-  - uid: 2211
-    components:
-    - type: Transform
-      pos: 4.492442,0.04305768
-      parent: 1
-- proto: FloraTree04
+- proto: FloraTree
   entities:
   - uid: 2210
     components:
     - type: Transform
       pos: 18.567924,0.18368268
+      parent: 1
+  - uid: 2211
+    components:
+    - type: Transform
+      pos: 4.492442,0.04305768
       parent: 1
 - proto: FoodBoxDonut
   entities:
@@ -12615,6 +12625,56 @@ entities:
     components:
     - type: Transform
       pos: 14.5,9.5
+      parent: 1
+- proto: Screen
+  entities:
+  - uid: 2528
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 0.5,0.5
+      parent: 1
+  - uid: 2529
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 22.5,0.5
+      parent: 1
+  - uid: 2530
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 11.5,22.5
+      parent: 1
+  - uid: 2531
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 17.5,15.5
+      parent: 1
+  - uid: 2532
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 9.5,-15.5
+      parent: 1
+  - uid: 2533
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 5.5,15.5
+      parent: 1
+  - uid: 2534
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 11.5,-7.5
+      parent: 1
+  - uid: 2535
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 12.5,-22.5
       parent: 1
 - proto: SheetPlasma1
   entities:

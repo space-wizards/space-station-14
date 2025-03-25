@@ -4,9 +4,12 @@
   description: job-description-warden
   playTimeTracker: JobWarden
   requirements:
+# Harmony Change
     - !type:DepartmentTimeRequirement
       department: Security
       time: 14400 # 4 hrs
+# End Harmony
+  weight: 5
   startingGear: WardenGear
   icon: "JobIconWarden"
   supervisors: job-supervisors-hos

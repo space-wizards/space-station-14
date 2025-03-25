@@ -71,7 +71,7 @@ public sealed partial class MaterialDisplay : PanelContainer
         if (!_canEject)
             return;
 
-        int[] sheetsToEjectArray = { 1, 5, 10 };
+        int[] sheetsToEjectArray = { 1, 5, 10, 30 }; //Harmony change: Added 30
 
         for (var i = 0; i < sheetsToEjectArray.Length; i++)
         {

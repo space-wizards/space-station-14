@@ -12,14 +12,15 @@
 - type: entity
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, ClothingOuterArmorBase]
   id: ClothingOuterCoatDetective
-  name: detective trenchcoat
+  name: detective's trenchcoat # Harmony Change - Updates name.
   description: An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business.
   components:
-  # Harmony Change: Sprites updated for use in detective clothing update
+# Harmony Change: Updated sprite pathing.
   - type: Sprite
     sprite: _Harmony/Clothing/OuterClothing/Coats/detective.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/OuterClothing/Coats/detective.rsi
+# End of Harmony changes.
   - type: StorageFill
     contents:
     - id: SmokingPipeFilledTobacco
@@ -30,15 +31,15 @@
 - type: entity
   parent: [ClothingOuterCoatDetectiveLoadout]
   id: ClothingOuterCoatDetectiveLoadoutGrey
-  name: noir trenchcoat
+  name: detective's noir trenchcoat # Harmony Change - Updates name for consistency.
   description: Ah, your trusty coat. There's a few tears here and there, giving it a more timely look. Or at least, that's what you told yourself when you found out gettin' it repaired would set you back 200 spesos.
   components:
-  # Harmony Change: Sprites updated for use in detective clothing update
+# Harmony Change: Updated sprite pathing.
   - type: Sprite
     sprite: _Harmony/Clothing/OuterClothing/Coats/detective_grey.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/OuterClothing/Coats/detective_grey.rsi
-
+# End of Harmony changes.
 
 - type: entity
   parent: ClothingOuterCoatDetective
