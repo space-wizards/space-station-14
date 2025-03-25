@@ -14,6 +14,8 @@ namespace Content.Shared.StatusEffect
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+        [Dependency] private readonly RefCountSystem _refCount = default!;
+
         private List<EntityUid> _toRemove = new();
 
         public override void Initialize()
@@ -118,7 +120,7 @@ namespace Content.Shared.StatusEffect
             if (HasComp<T>(uid))
                 return true;
 
-            EntityManager.AddComponent<T>(uid);
+            _refCount.Add<T>(uid);
             status.ActiveEffects[key].RelevantComponent = _componentFactory.GetComponentName<T>();
             return true;
 
@@ -132,13 +134,9 @@ namespace Content.Shared.StatusEffect
 
             if (TryAddStatusEffect(uid, key, time, refresh, status))
             {
-                // If they already have the comp, we just won't bother updating anything.
-                if (!EntityManager.HasComponent(uid, _componentFactory.GetRegistration(component).Type))
-                {
-                    var newComponent = (Component) _componentFactory.GetComponent(component);
-                    EntityManager.AddComponent(uid, newComponent);
-                    status.ActiveEffects[key].RelevantComponent = component;
-                }
+                var type = _componentFactory.GetRegistration(component).Type;
+                _refCount.Add(uid, type);
+                status.ActiveEffects[key].RelevantComponent = component;
                 return true;
             }
 
@@ -273,8 +271,7 @@ namespace Content.Shared.StatusEffect
                 && state.RelevantComponent != null
                 && _componentFactory.TryGetRegistration(state.RelevantComponent, out var registration))
             {
-                var type = registration.Type;
-                EntityManager.RemoveComponent(uid, type);
+                _refCount.Remove(uid, registration.Type);
             }
 
             if (proto.Alert != null)

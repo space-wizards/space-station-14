@@ -41,7 +41,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
             }
 
             if (!_objectives.IsCompleted(obj.Value, (mindId, mind)))
-                EntityManager.AddComponents(user, ability.Components);
+                RefCount.AddComponents(user.Owner, ability.Components);
         }
 
         // let abilities that use battery power work
