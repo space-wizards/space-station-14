@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: DinnerCalzone
   changes:
-  - message: The improvised grappling gun's crafting recipe has been modified to be
-      multi-step, allowing you to manually choose what plunger and what gas tank to
-      use.
-    type: Tweak
-  id: 886
-  time: '2025-01-09T18:08:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1274
-- author: DinnerCalzone
-  changes:
   - message: 'Repairing a broken recycler now unbloodies it if it has been used to
       gib someone. (Tip: Destroying a recycler un-emags it!)'
     type: Add
@@ -4094,3 +4085,11 @@
   id: 1385
   time: '2025-03-25T01:41:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2076
+- author: SixValentine
+  changes:
+  - message: Slimes need to put in some more hutzpah to kill themselves via vapebomb
+      on Luna
+    type: Fix
+  id: 1386
+  time: '2025-03-25T01:43:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2069
