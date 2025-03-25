@@ -111,7 +111,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
                 if (tile.IsSpace(_tileDefinitionManager)
                     || _turf.IsTileBlocked(tile, CollisionGroup.MobMask)
                     || !_atmosphere.IsTileMixtureProbablySafe(entityGridUid, entityMapUid.Value,
-                        grid.TileIndicesFor(mapPos)))
+                        _map.TileIndicesFor((entityGridUid.Value, grid), mapPos)))
                 {
                     continue;
                 }
