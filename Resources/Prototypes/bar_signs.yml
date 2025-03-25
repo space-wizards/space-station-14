@@ -175,28 +175,12 @@
   description: barsign-prototype-description-emprah
 
 - type: barSign
-  id: imp
-  name: barsign-prototype-name-imp
-  icon:
-    sprite: Structures/Wallmounts/barsign.rsi
-    state: imp
-  description: barsign-prototype-description-imp
-
-- type: barSign
   id: Spacebucks
   name: barsign-prototype-name-spacebucks
   icon:
     sprite: Structures/Wallmounts/barsign.rsi
     state: spacebucks
   description: barsign-prototype-description-spacebucks
-
-- type: barSign
-  id: Maltroach
-  name: barsign-prototype-name-maltroach
-  icon:
-    sprite: Structures/Wallmounts/barsign.rsi
-    state: maltroach
-  description: barsign-prototype-description-maltroach
 
 - type: barSign
   id: WhiskeyEchoes

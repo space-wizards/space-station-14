@@ -281,15 +281,6 @@
 
 - type: entity
   parent: BaseBarSign
-  id: BarSignMaltroach
-  name: The Maltroach
-  description: Squeak!
-  components:
-  - type: BarSign
-    current: Maltroach
-
-- type: entity
-  parent: BaseBarSign
   id: BarSignWhiskeyEchoes
   name: Whiskey Echoes
   description: An elite bar for elite oper-wait, this is a Nanotrasen station. Why's this sign in the database?
