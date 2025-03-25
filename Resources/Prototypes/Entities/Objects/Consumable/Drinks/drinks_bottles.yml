@@ -993,7 +993,7 @@
     currentLabel: reagent-name-energy-drink
 
 - type: entity
-  parent: [DrinkBottleVisualsOpenable,DrinkBottlePlasticBaseFull]
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: CustomDrinkJug
   name: beverage jug
   description: A jug for storing custom made drinks.
