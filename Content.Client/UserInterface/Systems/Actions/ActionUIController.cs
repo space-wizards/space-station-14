@@ -85,10 +85,14 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
 
         var button = UIManager.GetActiveUIWidget<GameTopMenuBar>().ActionButton;
-        _window.OnOpen += () => button.SetClickPressed(true);
-        _window.OnOpen += () => button.SetClickPressed(false);
 
-        _window.OnOpen += OnWindowOpened;
+        _window.OnClose += () => button.SetClickPressed(false);
+        _window.OnOpen += () =>
+        {
+            button.SetClickPressed(true);
+            SearchAndDisplay();
+        };
+
         _window.ClearButton.OnPressed += OnClearPressed;
         _window.SearchBar.OnTextChanged += OnSearchChanged;
         _window.FilterButton.OnItemSelected += OnFilterSelected;
@@ -302,11 +306,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             StopTargeting();
 
         return true;
-    }
-
-    private void OnWindowOpened()
-    {
-        SearchAndDisplay();
     }
 
     public void OnStateExited(GameplayState state)
