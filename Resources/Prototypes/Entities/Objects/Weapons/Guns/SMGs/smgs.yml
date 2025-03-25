@@ -62,7 +62,7 @@
   name: Atreides
   parent: [BaseWeaponSubMachineGun, BaseMajorContraband]
   id: WeaponSubMachineGunAtreides
-  description: Pla-ket-ket-ket-ket! Uses .35 auto ammo.
+  description: A very rare ‘machine pistol’ or PDW dating back to the corporate wars. Despite its age, it is in remarkably good condition. Feeds from .35 SMG magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
@@ -85,7 +85,7 @@
   name: C-20r submachine gun
   parent: [BaseWeaponSubMachineGun, BaseSyndicateContraband]
   id: WeaponSubMachineGunC20r
-  description: A firearm that is often used by the infamous nuclear operatives. Uses .35 auto ammo.
+  description: A Classic and widespread submachine gun, infamous for its use by The Gorlex Marauders. One of the first homegrown Waffle Corp. designs, the modernized ‘R’ variant remains in service today. Feeds from .35 SMG magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
@@ -123,7 +123,7 @@
   name: Drozd
   parent: [BaseWeaponSubMachineGun, BaseSecurityContraband]
   id: WeaponSubMachineGunDrozd
-  description: An excellent fully automatic Heavy SMG.
+  description: A modern and versatile SMG manufactured by Nanotrasen subsidiary Fenrir Arms. It features a special 3-round ‘hyperburst’ setting, useful for holding angles or engaging hostiles at longer ranges. Feeds from standard .35 SMG magazines.
   components:
     - type: Sprite
       sprite: Objects/Weapons/Guns/SMGs/drozd.rsi
@@ -181,7 +181,7 @@
   name: WT550
   parent: [ BaseWeaponSubMachineGun, BaseSecurityContraband ]
   id: WeaponSubMachineGunWt550
-  description: An excellent SMG, produced by NanoTrasen's Small Arms Division. Uses .35 auto ammo.
+  description: A truly unique firearm, the WT550 is the result of an Nanotrasen program to create a compact submachine gun fully controllable with one hand. It contains an exotic internal recoil buffer and feeds from special top-mounted .35 magazines. Manufacturing setbacks and a high unit cost make it rarely seen outside the hands of special forces.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
