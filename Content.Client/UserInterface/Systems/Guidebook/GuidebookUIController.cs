@@ -4,7 +4,7 @@ using Content.Client.Guidebook;
 using Content.Client.Guidebook.Controls;
 using Content.Client.Lobby;
 using Content.Client.Players.PlayTimeTracking;
-using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.CCVar;
 using Content.Shared.Guidebook;
 using Content.Shared.Input;
@@ -12,14 +12,13 @@ using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Configuration;
-using static Robust.Client.UserInterface.Controls.BaseButton;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Guidebook;
 
-public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyState>, IOnStateEntered<GameplayState>, IOnStateExited<LobbyState>, IOnStateExited<GameplayState>, IOnSystemChanged<GuidebookSystem>
+public sealed class GuidebookUIController : UIController, IOnStateChanged<LobbyState>, IOnStateChanged<GameplayState>, IOnSystemChanged<GuidebookSystem>
 {
     [UISystemDependency] private readonly GuidebookSystem _guidebookSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -28,8 +27,8 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
     private const int PlaytimeOpenGuidebook = 60;
 
-    private GuidebookWindow? _guideWindow;
-    private MenuButton? GuidebookButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.GuidebookButton;
+    private GuidebookWindow? _window;
+
     private ProtoId<GuideEntryPrototype>? _lastEntry;
 
     public void OnStateEntered(LobbyState state)
@@ -44,19 +43,27 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
     private void HandleStateEntered(State state)
     {
-        DebugTools.Assert(_guideWindow == null);
+        DebugTools.Assert(_window == null);
 
         // setup window
-        _guideWindow = UIManager.CreateWindow<GuidebookWindow>();
-        _guideWindow.OnClose += OnWindowClosed;
-        _guideWindow.OnOpen += OnWindowOpen;
+        _window = UIManager.CreateWindow<GuidebookWindow>();
+
+        var button = UIManager.GetActiveUIWidget<GameTopMenuBar>().GuidebookButton;
+        _window.OnClose += () =>
+        {
+            UIManager.ClickSound();
+            _window.ReturnContainer.Visible = false;
+            _lastEntry = _window.LastEntry;
+            button.SetClickPressed(false);
+        };
+        _window.OnOpen += () => button.SetClickPressed(true);
 
         if (state is LobbyState &&
             _jobRequirements.FetchOverallPlaytime() < TimeSpan.FromMinutes(PlaytimeOpenGuidebook))
         {
             OpenGuidebook();
-            _guideWindow.RecenterWindow(new(0.5f, 0.5f));
-            _guideWindow.SetPositionFirst();
+            _window.RecenterWindow(new(0.5f, 0.5f));
+            _window.SetPositionFirst();
         }
 
         // setup keybinding
@@ -78,15 +85,8 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
     private void HandleStateExited()
     {
-        if (_guideWindow == null)
-            return;
+        _window = null;
 
-        _guideWindow.OnClose -= OnWindowClosed;
-        _guideWindow.OnOpen -= OnWindowOpen;
-
-        // shutdown
-        _guideWindow.Dispose();
-        _guideWindow = null;
         CommandBinds.Unregister<GuidebookUIController>();
     }
 
@@ -100,59 +100,16 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         _guidebookSystem.OnGuidebookOpen -= OpenGuidebook;
     }
 
-    internal void UnloadButton()
-    {
-        if (GuidebookButton == null)
-            return;
-
-        GuidebookButton.OnPressed -= GuidebookButtonOnPressed;
-    }
-
-    internal void LoadButton()
-    {
-        if (GuidebookButton == null)
-            return;
-
-        GuidebookButton.OnPressed += GuidebookButtonOnPressed;
-    }
-
-    private void GuidebookButtonOnPressed(ButtonEventArgs obj)
-    {
-        ToggleWindow();
-    }
-
     public void ToggleWindow()
     {
-        if (_guideWindow == null)
+        if (_window == null)
             return;
 
-        if (_guideWindow.IsOpen)
-        {
-            UIManager.ClickSound();
-            _guideWindow.Close();
-        }
+        if (_window.IsOpen)
+            _window.Close();
+
         else
-        {
             OpenGuidebook();
-        }
-    }
-
-    private void OnWindowClosed()
-    {
-        if (GuidebookButton != null)
-            GuidebookButton.Pressed = false;
-
-        if (_guideWindow != null)
-        {
-            _guideWindow.ReturnContainer.Visible = false;
-            _lastEntry = _guideWindow.LastEntry;
-        }
-    }
-
-    private void OnWindowOpen()
-    {
-        if (GuidebookButton != null)
-            GuidebookButton.Pressed = true;
     }
 
     /// <summary>
@@ -174,11 +131,8 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         bool includeChildren = true,
         ProtoId<GuideEntryPrototype>? selected = null)
     {
-        if (_guideWindow == null)
+        if (_window == null)
             return;
-
-        if (GuidebookButton != null)
-            GuidebookButton.SetClickPressed(!_guideWindow.IsOpen);
 
         if (guides == null)
         {
@@ -206,13 +160,13 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
                 selected = _configuration.GetCVar(CCVars.DefaultGuide);
             }
         }
-        _guideWindow.UpdateGuides(guides, rootEntries, forceRoot, selected);
+        _window.UpdateGuides(guides, rootEntries, forceRoot, selected);
 
         // Expand up to depth-2.
-        _guideWindow.Tree.SetAllExpanded(false);
-        _guideWindow.Tree.SetAllExpanded(true, 1);
+        _window.Tree.SetAllExpanded(false);
+        _window.Tree.SetAllExpanded(true, 1);
 
-        _guideWindow.OpenCenteredRight();
+        _window.OpenCenteredRight();
     }
 
     public void OpenGuidebook(
@@ -234,18 +188,6 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         }
 
         OpenGuidebook(guides, rootEntries, forceRoot, includeChildren, selected);
-    }
-
-    public void CloseGuidebook()
-    {
-        if (_guideWindow == null)
-            return;
-
-        if (_guideWindow.IsOpen)
-        {
-            UIManager.ClickSound();
-            _guideWindow.Close();
-        }
     }
 
     private void RecursivelyAddChildren(GuideEntry guide, Dictionary<ProtoId<GuideEntryPrototype>, GuideEntry> guides)
