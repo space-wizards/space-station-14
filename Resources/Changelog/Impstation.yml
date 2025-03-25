@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Prosthetic legs/feet now show the marking on the back leg/foot when facing
-      the side (marking display bug aside)
-    type: Tweak
-  id: 896
-  time: '2025-01-11T02:01:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1240
 - author: Darkmajia
   changes:
   - message: Standing up from prone no longer has a do-after, but standing up after
@@ -4108,3 +4100,11 @@
   id: 1395
   time: '2025-03-25T09:54:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2039
+- author: kipdotnet
+  changes:
+  - message: Fixed up some of the apid displacements. Hopefully no more stray pixels
+      on the buzsi bibiis
+    type: Fix
+  id: 1396
+  time: '2025-03-25T11:04:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2088
