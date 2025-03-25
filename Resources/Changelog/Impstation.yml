@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Multitools now act as defibrillators to cockroaches
-    type: Add
-  id: 890
-  time: '2025-01-10T07:11:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1290
 - author: mqole
   changes:
   - message: A few small changes to the server rules.
@@ -4095,3 +4088,10 @@
   id: 1389
   time: '2025-03-25T01:47:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2079
+- author: FutureExalt
+  changes:
+  - message: removed racism from some italian accent substitutions
+    type: Fix
+  id: 1390
+  time: '2025-03-25T01:51:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2077
