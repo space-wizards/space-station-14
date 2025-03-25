@@ -122,7 +122,11 @@ internal sealed class AdminNameOverlay : Overlay
             if (_overlayClassic && playerInfo.Antag)
             {
                 var symbol = _overlaySymbols ? Loc.GetString("player-tab-antag-prefix") : string.Empty;
-                var label = Loc.GetString("player-tab-character-name-antag-symbol", ("symbol", symbol), ("name",  _antagLabelClassic));
+                var label = _overlaySymbols
+                    ? Loc.GetString("player-tab-character-name-antag-symbol",
+                        ("symbol", symbol),
+                        ("name", _antagLabelClassic))
+                    : _antagLabelClassic;
                 args.ScreenHandle.DrawString(_fontBold, screenCoordinates + currentOffset, label, uiScale, _antagColorClassic);
                 currentOffset += lineoffset;
             }
@@ -131,7 +135,9 @@ internal sealed class AdminNameOverlay : Overlay
             {
                 var symbol = _overlaySymbols && playerInfo.Antag ? playerInfo.RoleProto.Symbol : string.Empty;
                 var role = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
-                var label = Loc.GetString("player-tab-character-name-antag-symbol", ("symbol", symbol), ("name", role));
+                var label = _overlaySymbols
+                ? Loc.GetString("player-tab-character-name-antag-symbol", ("symbol", symbol), ("name", role))
+                : role;
                 var color = playerInfo.RoleProto.Color;
 
                 args.ScreenHandle.DrawString(_fontBold, screenCoordinates + currentOffset, label, uiScale, color);
