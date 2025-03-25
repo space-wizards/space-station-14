@@ -167,6 +167,10 @@
       collection: FootstepBounce
   - type: ReplacementAccent
     accent: kangaroo
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
 
 - type: entity
   id: MobKangarooSpaceSalvage
