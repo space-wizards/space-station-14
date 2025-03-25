@@ -918,5 +918,32 @@ Entries:
   id: 113
   time: '2025-03-21T23:21:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35994
+- author: Errant
+  changes:
+  - message: The Antag column on the player list has been removed, and it's functionality
+      folded into the Character and Role Type columns.
+    type: Remove
+  - message: The Role Type column now sorts entries in a revised order. All antagonist
+      types are grouped at the end.
+    type: Tweak
+  - message: On the player list, the names of antagonist players are now prefixed
+      with an antag symbol, and (optionally) shown in the color of their current role
+      type. The default setting is to show the "standard antag dagger" symbol for
+      any type of antag, same as the ahelp relay. Optionally a distinct icon can be
+      shown for each role type for easier identification.
+    type: Tweak
+  - message: More playerlist/overlay settings can now be changed in Admin Options.
+    type: Tweak
+  id: 114
+  time: '2025-03-25T16:03:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35538
+- author: ScarKy0
+  changes:
+  - message: The "Spawn here" verb now reliably transfers mind of the target to their
+      new body.
+    type: Fix
+  id: 115
+  time: '2025-03-25T18:40:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36080
 Name: Admin
 Order: 1
