@@ -35,7 +35,6 @@ public sealed class AdminUIController : UIController,
     [Dependency] private readonly VerbMenuUIController _verb = default!;
 
     private AdminMenuWindow? _window;
-    private MenuButton? AdminButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AdminButton;
     private PanicBunkerStatus? _panicBunker;
 
     public override void Initialize()
@@ -103,46 +102,10 @@ public sealed class AdminUIController : UIController,
 
         _window.PlayerTabControl.OnEntryKeyBindDown += PlayerTabEntryKeyBindDown;
         _window.ObjectsTabControl.OnEntryKeyBindDown += ObjectsTabEntryKeyBindDown;
-        _window.OnOpen += OnWindowOpen;
-        _window.OnClose += OnWindowClosed;
-        _window.OnDisposed += OnWindowDisposed;
-    }
-
-    public void UnloadButton()
-    {
-        if (AdminButton == null)
-        {
-            return;
-        }
-
-        AdminButton.OnPressed -= AdminButtonPressed;
-    }
-
-    public void LoadButton()
-    {
-        if (AdminButton == null)
-        {
-            return;
-        }
-
-        AdminButton.OnPressed += AdminButtonPressed;
-    }
-
-    private void OnWindowOpen()
-    {
-        AdminButton?.SetClickPressed(true);
-    }
-
-    private void OnWindowClosed()
-    {
-        AdminButton?.SetClickPressed(false);
     }
 
     private void OnWindowDisposed()
     {
-        if (AdminButton != null)
-            AdminButton.Pressed = false;
-
         if (_window == null)
             return;
 
@@ -152,17 +115,6 @@ public sealed class AdminUIController : UIController,
         _window.OnClose -= OnWindowClosed;
         _window.OnDisposed -= OnWindowDisposed;
         _window = null;
-    }
-
-    private void AdminStatusUpdated()
-    {
-        if (AdminButton != null)
-            AdminButton.Visible = _conGroups.CanAdminMenu();
-    }
-
-    private void AdminButtonPressed(ButtonEventArgs args)
-    {
-        Toggle();
     }
 
     private void Toggle()
