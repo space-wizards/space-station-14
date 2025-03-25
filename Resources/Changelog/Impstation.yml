@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Standing up from prone no longer has a do-after, but standing up after
-      falling over on purpose has a cooldown.
-    type: Add
-  - message: Crawling no longer lets you go under tables, plastic flaps, and other
-      similar objects.
-    type: Remove
-  - message: Shutters and firelocks can close over tables once again.
-    type: Fix
-  - message: Ranged AI now targets crawling people properly.
-    type: Fix
-  - message: Projectile grenades, such as stinger grenades, can now hit downed and
-      crawling people.
-    type: Fix
-  id: 897
-  time: '2025-01-11T02:26:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1265
 - author: Janet
   changes:
   - message: HRT now functions.
@@ -4108,3 +4090,10 @@
   id: 1396
   time: '2025-03-25T11:04:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2088
+- author: SixValentine
+  changes:
+  - message: Fixed Hash based on first playtest feedback
+    type: Fix
+  id: 1397
+  time: '2025-03-25T11:14:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2091
