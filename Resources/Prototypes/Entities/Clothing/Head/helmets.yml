@@ -6,13 +6,6 @@
   id: ClothingHeadHelmetBase
   abstract: true
   components:
-  - type: Armor #Values seem to let the user survive one extra hit if attacked consistently.
-    modifiers:
-      coefficients:
-        Blunt: 0.9
-        Slash: 0.9
-        Piercing: 0.9
-        Heat: 0.9
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -32,6 +25,13 @@
     sprite: Clothing/Head/Helmets/security.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/security.rsi
+  - type: Armor #Values seem to let the user survive one extra hit if attacked consistently.
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -48,10 +48,17 @@
     sprite: Clothing/Head/Helmets/merc_helmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/merc_helmet.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
 
 #SWAT Helmet
 - type: entity
-  parent: [ClothingHeadBase, BaseSecurityContraband]
+  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
   id: ClothingHeadHelmetSwat
   name: SWAT helmet
   description: An extremely robust helmet, commonly used by paramilitary forces. This one has the Nanotrasen logo emblazoned on the top.
@@ -87,7 +94,7 @@
 
 #Light Riot Helmet
 - type: entity
-  parent: [ClothingHeadBase, BaseSecurityContraband]
+  parent: [ClothingHeadHelmetBase, BaseSecurityContraband]
   id: ClothingHeadHelmetRiot
   name: light riot helmet
   description: It's a helmet specifically designed to protect against close range attacks.
@@ -146,7 +153,7 @@
 
 #Cult Helmet
 - type: entity
-  parent: [ClothingHeadBase, BaseMajorContraband]
+  parent: [ClothingHeadHelmetBase, BaseMajorContraband]
   id: ClothingHeadHelmetCult
   name: cult helmet
   description: A robust, evil-looking cult helmet.
@@ -189,7 +196,7 @@
 
 #Templar Helmet
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadHelmetBase
   id: ClothingHeadHelmetTemplar
   name: templar helmet
   description: DEUS VULT!
@@ -203,7 +210,7 @@
 
 #Thunderdome Helmet
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadHelmetBase
   id: ClothingHeadHelmetThunderdome
   name: thunderdome helmet
   description: Let the battle commence!
@@ -215,7 +222,7 @@
 
 #Wizard Helmet
 - type: entity
-  parent: ClothingHeadBase
+  parent: ClothingHeadHelmetBase
   id: ClothingHeadHelmetWizardHelm
   name: wizard helm
   description: Strange-looking helmet that most certainly belongs to a real magic user.
@@ -293,7 +300,7 @@
 
 #Chitinous Helmet
 - type: entity
-  parent: [ ClothingHeadBase, BaseMajorContraband]
+  parent: [ ClothingHeadHelmetBase, BaseMajorContraband]
   id: ClothingHeadHelmetLing
   name: chitinous helmet
   description: An all-consuming chitinous mass of armor.
@@ -322,10 +329,17 @@
     sprite: Clothing/Head/Helmets/ert_leader.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_leader.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
 
 #ERT Security Helmet
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingHeadHelmetBase ]
+  parent: ClothingHeadHelmetERTLeader
   id: ClothingHeadHelmetERTSecurity
   name: ERT security helmet
   description: An in-atmosphere helmet worn by security members of the Nanotrasen Emergency Response Team. Has red highlights.
@@ -337,7 +351,7 @@
 
 #ERT Medic Helmet
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingHeadHelmetBase ]
+  parent: ClothingHeadHelmetERTLeader
   id: ClothingHeadHelmetERTMedic
   name: ERT medic helmet
   description: An in-atmosphere helmet worn by medical members of the Nanotrasen Emergency Response Team. Has white highlights.
@@ -349,7 +363,7 @@
 
 #ERT Engineer Helmet
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingHeadHelmetBase ]
+  parent: ClothingHeadHelmetERTLeader
   id: ClothingHeadHelmetERTEngineer
   name: ERT engineer helmet
   description: An in-atmosphere helmet worn by engineering members of the Nanotrasen Emergency Response Team. Has orange highlights.
@@ -361,7 +375,7 @@
 
 #ERT Janitor Helmet
 - type: entity
-  parent: [ BaseCentcommContraband, ClothingHeadHelmetBase ]
+  parent: ClothingHeadHelmetERTLeader
   id: ClothingHeadHelmetERTJanitor
   name: ERT janitor helmet
   description: An in-atmosphere helmet worn by janitorial members of the Nanotrasen Emergency Response Team. Has dark purple highlights.
@@ -403,6 +417,13 @@
   - type: Construction
     graph: BoneHelmet
     node: helmet
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
 
 - type: entity
   parent: [ ClothingHeadHelmetBase, BaseMinorContraband ]
@@ -414,10 +435,17 @@
     sprite: Clothing/Head/Helmets/podwars_helmet.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/podwars_helmet.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
 
 #Justice Helmet
 - type: entity
-  parent: [ ClothingHeadHelmetBase, BaseSecurityContraband ]
+  parent: ClothingHeadHelmetBasic
   id: ClothingHeadHelmetJustice
   name: justice helm
   description: Advanced security gear. Protects the station from ne'er-do-wells.
