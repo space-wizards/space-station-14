@@ -289,6 +289,25 @@
     - thumps its tail
 
 - type: emote
+  id: Chirp
+  name: chat-emote-name-chirp
+  category: Vocal
+  available: false
+  icon: Interface/Emotes/chirp.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-chirp"]
+  chatTriggers:
+    - chirp
+    - chirps
+    - chirping
+    - chirped
+
+- type: emote
   id: Salute
   name: chat-emote-name-salute
   category: Hands

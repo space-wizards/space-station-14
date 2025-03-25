@@ -439,6 +439,22 @@
   sounds:
     Scream:
       path: /Audio/Voice/Resomi/resomi_scream.ogg
+    Laugh:
+      collection: ResomiLaugh
+    Honk:
+      collection: BikeHorn
+    Whistle:
+      path: /Audio/Voice/Resomi/resomi_whistle.ogg
+    Chirp:
+      collection: ResomiChirp
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: DeathGasp
 
 # body emotes
 - type: emoteSounds
