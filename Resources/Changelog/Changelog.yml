@@ -1,40 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: The Flare Gun & Security Shell Gun now start in their open/unbolted state.
-    type: Tweak
-  id: 7602
-  time: '2024-11-11T16:12:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33248
-- author: AndrewMontagne
-  changes:
-  - message: APEs could be powered on without local power
-    type: Fix
-  id: 7603
-  time: '2024-11-11T22:58:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32493
-- author: thetolbean
-  changes:
-  - message: Droppers can no longer inject or draw from closed containers.
-    type: Fix
-  id: 7604
-  time: '2024-11-12T12:06:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33011
-- author: august-sun
-  changes:
-  - message: The inert flesh anomaly core can now be microwaved to turn into an anomalous
-      meat mass.
-    type: Tweak
-  id: 7605
-  time: '2024-11-13T02:59:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33223
-- author: Ubaser
-  changes:
-  - message: Window sprites are now slightly more transparent.
-    type: Tweak
-  id: 7606
-  time: '2024-11-13T12:30:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33282
 - author: keronshb
   changes:
   - message: Added Ethereal Jaunt! A Wizard Spell that turns you invisible and into
@@ -3881,3 +3845,38 @@
   id: 8101
   time: '2025-03-21T09:40:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35715
+- author: metalgearsloth
+  changes:
+  - message: Fix pulling alert being goofy.
+    type: Fix
+  id: 8102
+  time: '2025-03-22T11:41:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36004
+- author: Boaz1111
+  changes:
+  - message: Unrevivable now lets you be cloned again
+    type: Tweak
+  id: 8103
+  time: '2025-03-22T14:42:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36008
+- author: RedBookcase
+  changes:
+  - message: Fixed some unintended changes to Salvage gear.
+    type: Fix
+  id: 8104
+  time: '2025-03-23T00:21:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36013
+- author: Vortebo
+  changes:
+  - message: Relic station revamped
+    type: Tweak
+  id: 8105
+  time: '2025-03-24T16:36:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35507
+- author: slarticodefast
+  changes:
+  - message: Adjusted thermal regulation again so you no longer overheat in hardsuits.
+    type: Fix
+  id: 8106
+  time: '2025-03-24T23:55:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36062
