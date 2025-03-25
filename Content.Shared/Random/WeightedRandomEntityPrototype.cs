@@ -6,7 +6,7 @@ namespace Content.Shared.Random;
 /// <summary>
 /// Linter-friendly version of weightedRandom for Entity prototypes.
 /// </summary>
-[Prototype("weightedRandomEntity")]
+[Prototype]
 public sealed partial class WeightedRandomEntityPrototype : IWeightedRandomPrototype
 {
     [IdDataField]
