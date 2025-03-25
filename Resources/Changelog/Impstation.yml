@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: 'Repairing a broken recycler now unbloodies it if it has been used to
-      gib someone. (Tip: Destroying a recycler un-emags it!)'
-    type: Add
-  id: 887
-  time: '2025-01-09T18:15:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1280
 - author: Lyndomen
   changes:
   - message: Ports the Synthesis Specialist ghost role from Delta-V
@@ -4093,3 +4085,10 @@
   id: 1386
   time: '2025-03-25T01:43:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2069
+- author: SixValentine
+  changes:
+  - message: The Drunken Carp on Train is no longer a death trap
+    type: Fix
+  id: 1387
+  time: '2025-03-25T01:44:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2070
