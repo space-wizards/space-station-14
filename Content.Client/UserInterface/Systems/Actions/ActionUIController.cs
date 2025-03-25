@@ -379,18 +379,15 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         ToggleWindow();
     }
 
-    private void ToggleWindow()
+    public void ToggleWindow()
     {
         if (_window == null)
             return;
 
         if (_window.IsOpen)
-        {
             _window.Close();
-            return;
-        }
-
-        _window.Open();
+        else
+            _window.Open();
     }
 
     private void UpdateFilterLabel()
