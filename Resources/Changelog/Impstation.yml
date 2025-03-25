@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Lyndomen
-  changes:
-  - message: Ports the Synthesis Specialist ghost role from Delta-V
-    type: Add
-  id: 888
-  time: '2025-01-09T18:36:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1266
 - author: honeyed-lemons
   changes:
   - message: Your favorite maps should roll more often, if you liked maps with high
@@ -4092,3 +4085,12 @@
   id: 1387
   time: '2025-03-25T01:44:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2070
+- author: bigsantino1
+  changes:
+  - message: Cluwne and monkey polymorphs now revert on crit.
+    type: Tweak
+  - message: Wizards can no longer make you a cluwne permanently.
+    type: Fix
+  id: 1388
+  time: '2025-03-25T01:45:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2071
