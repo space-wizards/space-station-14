@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Client.Administration.Systems;
+using Content.Client.Stylesheets;
 using Content.Shared.CCVar;
 using Content.Shared.Mind;
 using Robust.Client.Graphics;
@@ -14,14 +15,17 @@ namespace Content.Client.Administration;
 
 internal sealed class AdminNameOverlay : Overlay
 {
-    [Dependency] private readonly IConfigurationManager _config = default!;
-
     private readonly AdminSystem _system;
     private readonly IEntityManager _entityManager;
     private readonly IEyeManager _eyeManager;
     private readonly EntityLookupSystem _entityLookup;
     private readonly IUserInterfaceManager _userInterfaceManager;
     private readonly Font _font;
+    private readonly Font _fontBold;
+    private bool _overlayClassic;
+    private bool _overlaySymbols;
+    private bool _overlayPlaytime;
+    private bool _overlayStartingJob;
 
     //TODO make this adjustable via GUI
     private readonly ProtoId<RoleTypePrototype>[] _filter =
@@ -29,17 +33,29 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly string _antagLabelClassic = Loc.GetString("admin-overlay-antag-classic");
     private readonly Color _antagColorClassic = Color.OrangeRed;
 
-    public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, EntityLookupSystem entityLookup, IUserInterfaceManager userInterfaceManager)
+    public AdminNameOverlay(
+        AdminSystem system,
+        IEntityManager entityManager,
+        IEyeManager eyeManager,
+        IResourceCache resourceCache,
+        EntityLookupSystem entityLookup,
+        IUserInterfaceManager userInterfaceManager,
+        IConfigurationManager config)
     {
-        IoCManager.InjectDependencies(this);
-
         _system = system;
         _entityManager = entityManager;
         _eyeManager = eyeManager;
         _entityLookup = entityLookup;
         _userInterfaceManager = userInterfaceManager;
         ZIndex = 200;
-        _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
+        // Setting this to a specific font would break the antag symbols
+        _font = resourceCache.NotoStack();
+        _fontBold = resourceCache.NotoStack(variation: "Bold");
+
+        config.OnValueChanged(CCVars.AdminOverlayClassic, (show) => { _overlayClassic = show; }, true);
+        config.OnValueChanged(CCVars.AdminOverlaySymbols, (show) => { _overlaySymbols = show; }, true);
+        config.OnValueChanged(CCVars.AdminOverlayPlaytime, (show) => { _overlayPlaytime = show; }, true);
+        config.OnValueChanged(CCVars.AdminOverlayStartingJob, (show) => { _overlayStartingJob = show; }, true);
     }
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -47,11 +63,6 @@ internal sealed class AdminNameOverlay : Overlay
     protected override void Draw(in OverlayDrawArgs args)
     {
         var viewport = args.WorldAABB;
-
-        //TODO make this adjustable via GUI
-        var classic = _config.GetCVar(CCVars.AdminOverlayClassic);
-        var playTime = _config.GetCVar(CCVars.AdminOverlayPlaytime);
-        var startingJob = _config.GetCVar(CCVars.AdminOverlayStartingJob);
 
         foreach (var playerInfo in _system.PlayerList)
         {
@@ -85,35 +96,51 @@ internal sealed class AdminNameOverlay : Overlay
 
             var currentOffset = Vector2.Zero;
 
+            // Character name
             args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.CharacterName, uiScale, playerInfo.Connected ? Color.Aquamarine : Color.White);
             currentOffset += lineoffset;
 
+            // Username
             args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
             currentOffset += lineoffset;
 
-            if (!string.IsNullOrEmpty(playerInfo.PlaytimeString) && playTime)
+            // Playtime
+            if (!string.IsNullOrEmpty(playerInfo.PlaytimeString) && _overlayPlaytime)
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, playerInfo.PlaytimeString, uiScale, playerInfo.Connected ? Color.Orange : Color.White);
                 currentOffset += lineoffset;
             }
 
-            if (!string.IsNullOrEmpty(playerInfo.StartingJob) && startingJob)
+            // Job
+            if (!string.IsNullOrEmpty(playerInfo.StartingJob) && _overlayStartingJob)
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, Loc.GetString(playerInfo.StartingJob), uiScale, playerInfo.Connected ? Color.GreenYellow : Color.White);
                 currentOffset += lineoffset;
             }
 
-            if (classic && playerInfo.Antag)
+            // Classic Antag Label
+            if (_overlayClassic && playerInfo.Antag)
             {
-                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, _antagLabelClassic, uiScale, Color.OrangeRed);
+                var symbol = _overlaySymbols ? Loc.GetString("player-tab-antag-prefix") : string.Empty;
+                var label = _overlaySymbols
+                    ? Loc.GetString("player-tab-character-name-antag-symbol",
+                        ("symbol", symbol),
+                        ("name", _antagLabelClassic))
+                    : _antagLabelClassic;
+                args.ScreenHandle.DrawString(_fontBold, screenCoordinates + currentOffset, label, uiScale, _antagColorClassic);
                 currentOffset += lineoffset;
             }
-            else if (!classic && _filter.Contains(playerInfo.RoleProto))
+            // Role Type
+            else if (!_overlayClassic && _filter.Contains(playerInfo.RoleProto))
             {
-                var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
+                var symbol = _overlaySymbols && playerInfo.Antag ? playerInfo.RoleProto.Symbol : string.Empty;
+                var role = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
+                var label = _overlaySymbols
+                ? Loc.GetString("player-tab-character-name-antag-symbol", ("symbol", symbol), ("name", role))
+                : role;
                 var color = playerInfo.RoleProto.Color;
 
-                args.ScreenHandle.DrawString(_font, screenCoordinates + currentOffset, label, uiScale, color);
+                args.ScreenHandle.DrawString(_fontBold, screenCoordinates + currentOffset, label, uiScale, color);
                 currentOffset += lineoffset;
             }
         }
