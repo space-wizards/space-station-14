@@ -62,7 +62,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         // setup keybinding
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenGuidebook,
-                InputCmdHandler.FromDelegate(_ => ToggleGuidebook()))
+                InputCmdHandler.FromDelegate(_ => ToggleWindow()))
             .Register<GuidebookUIController>();
     }
 
@@ -118,10 +118,10 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
     private void GuidebookButtonOnPressed(ButtonEventArgs obj)
     {
-        ToggleGuidebook();
+        ToggleWindow();
     }
 
-    public void ToggleGuidebook()
+    public void ToggleWindow()
     {
         if (_guideWindow == null)
             return;
