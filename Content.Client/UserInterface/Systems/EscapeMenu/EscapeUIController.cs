@@ -93,11 +93,6 @@ public sealed class EscapeUIController : UIController, IOnStateChanged<GameplayS
         CommandBinds.Unregister<EscapeUIController>();
     }
 
-    private void EscapeButtonOnOnPressed(ButtonEventArgs obj)
-    {
-        ToggleWindow();
-    }
-
     private void CloseEscapeWindow()
     {
         _escapeWindow?.Close();
