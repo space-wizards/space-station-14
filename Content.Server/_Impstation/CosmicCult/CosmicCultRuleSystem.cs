@@ -839,7 +839,7 @@ public sealed class CosmicCultRuleSystem : GameRuleSystem<CosmicCultRuleComponen
             _role.MindTryRemoveRole<RoleBriefingComponent>(mindId);
             if (_mind.TryGetSession(mindId, out var session))
             {
-                _euiMan.OpenEui(new CosmicDeconvertedEui(), session);
+                _euiMan.OpenEui(new DeconvertedCultistEui(), session); //renamed because ReflectionManager.LooseGetType uses a wierd search criteria
             }
             _eye.SetVisibilityMask(uid, 1);
             TotalCult--;
