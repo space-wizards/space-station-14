@@ -494,7 +494,8 @@
   name: knight errant ghost role
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Melee/claymore.rsi
+    sprite: Mobs/Species/Skeleton/parts.rsi
+    state: skull_icon
   - type: RandomHumanoidSpawner
     settings: KnightErrant
 

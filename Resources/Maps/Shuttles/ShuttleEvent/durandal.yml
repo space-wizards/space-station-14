@@ -4,8 +4,8 @@ meta:
   engineVersion: 249.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/22/2025 04:09:27
-  entityCount: 409
+  time: 03/25/2025 02:22:27
+  entityCount: 414
 maps: []
 grids:
 - 1
@@ -364,6 +364,17 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
+- proto: ActionToggleBlock
+  entities:
+  - uid: 410
+    mapInit: true
+    paused: true
+    components:
+    - type: Transform
+      parent: 220
+    - type: InstantAction
+      originalIconColor: '#FFFFFFFF'
+      container: 220
 - proto: AirlockGlassShuttle
   entities:
   - uid: 111
@@ -1207,6 +1218,13 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,1.5
       parent: 1
+- proto: BookCodeChivalry
+  entities:
+  - uid: 411
+    components:
+    - type: Transform
+      pos: 6.1716833,-3.4227853
+      parent: 1
 - proto: BowImprovised
   entities:
   - uid: 254
@@ -1614,6 +1632,13 @@ entities:
     components:
     - type: Transform
       pos: 0.5,-1.5
+      parent: 1
+- proto: ClothingBeltQuiver
+  entities:
+  - uid: 414
+    components:
+    - type: Transform
+      pos: 1.2405529,-2.4547296
       parent: 1
 - proto: ComfyChair
   entities:
@@ -2058,6 +2083,20 @@ entities:
     components:
     - type: Transform
       pos: 8.5,-0.5
+      parent: 1
+- proto: KnightErrantSpawner
+  entities:
+  - uid: 413
+    components:
+    - type: Transform
+      pos: 7.5,-3.5
+      parent: 1
+- proto: Mannequin
+  entities:
+  - uid: 412
+    components:
+    - type: Transform
+      pos: 7.5,1.5
       parent: 1
 - proto: PaintingOldGuitarist
   entities:
@@ -2560,8 +2599,16 @@ entities:
   - uid: 220
     components:
     - type: Transform
-      pos: 1.5,-2.5
+      pos: 1.6624279,-2.4703546
       parent: 1
+    - type: Blocking
+      blockingToggleActionEntity: 410
+    - type: ActionsContainer
+    - type: ContainerContainer
+      containers:
+        actions: !type:Container
+          ents:
+          - 410
 - proto: WoodenSupportWall
   entities:
   - uid: 34

@@ -775,7 +775,9 @@
   parent: MarkerBase
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Melee/claymore.rsi
+    layers:
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
   - type: RandomSpawner
     prototypes:
     - RandomHumanoidKnightErrant

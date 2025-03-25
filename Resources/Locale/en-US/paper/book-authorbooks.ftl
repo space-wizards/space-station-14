@@ -261,3 +261,10 @@ book-text-janitor = [bold][color=black][head=3]The Tales of a Tired Janitor[/hea
       Speaking of jumpsuits, the lack of respect is astronomical. The scientists and astronauts zoom past in their sleek suits, utterly oblivious to the fact that I'm the unsung hero keeping this place from turning into a cosmic trash heap. I bet they don't even know my name. "Hey, Space Janitor!" That's what I get. No appreciation for the elbow grease I put into keeping their precious station spick and span.
       And let's remember the hazards. Cleaning up alien slime? Yeah, that's a regular Tuesday for me. One wrong move and I'm dealing with an intergalactic biohazard. It's like playing Russian roulette with space critters that could burst out of some hidden nook and cranny. I signed up to mop floors, not play host to extraterrestrial invaders.
       Being a janitor on this so-called Space Station 14 is a cosmic joke. Where did the other 13 stations go? It's not all spacewalks and futuristic gadgets; it's scrubbing toilets and battling alien goo. If anyone thinks space is glamorous, they clearly haven't seen the mess we space janitors deal with every single day. It's time they appreciate the unsung heroes of the space station – the custodians of the cosmos.
+
+book-text-chivalry = [bold][color=black][head=3]The Code of Chivalry[/head][/bold]
+                        A virtuous knight obeys the code of chivalry !
+                        1: Serve the liege lord in valor and faith
+                        2: Protect the weak and defenseless
+                        3: Live by honor and for glory
+                        4: Respect the honor of aliens
