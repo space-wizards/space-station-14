@@ -29,7 +29,7 @@ public sealed class RefCountSystem : EntitySystem
 
         ent.Comp ??= EnsureComp<RefCountComponent>(ent);
         EnsureComp<T>(ent);
-        return Increment((ent, ent), typeof(T));
+        return Increment((ent, ent.Comp), typeof(T));
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ public sealed class RefCountSystem : EntitySystem
             return false;
 
         ent.Comp ??= EnsureComp<RefCountComponent>(ent);
-        if (!Increment((ent, ent), type))
+        if (!Increment((ent, ent.Comp), type))
             return false;
 
         var comp = (Component) _factory.GetComponent(type);
@@ -63,7 +63,7 @@ public sealed class RefCountSystem : EntitySystem
         EntityManager.AddComponents(ent, components, force);
         foreach (var reg in components.Values)
         {
-            Increment((ent, ent), reg.Component.GetType());
+            Increment((ent, ent.Comp), reg.Component.GetType());
         }
     }
 
@@ -89,7 +89,7 @@ public sealed class RefCountSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        if (!Decrement((ent, ent), type))
+        if (!Decrement((ent, ent.Comp), type))
             return false;
 
         RemComp(ent, type);
@@ -110,7 +110,7 @@ public sealed class RefCountSystem : EntitySystem
 
         foreach (var reg in components.Values)
         {
-            Remove((ent, ent), reg.Component.GetType());
+            Remove((ent, ent.Comp), reg.Component.GetType());
         }
     }
 
