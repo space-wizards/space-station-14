@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Dice;
 
 /// <summary>
-///     Handles initializing loaded dice, and the UI to select a roll.
+///     Handles loaded dice, including UI to select a roll, and overriding the roll when set.
 /// </summary>
 public abstract class SharedLoadedDiceSystem : EntitySystem
 {
@@ -28,6 +28,15 @@ public abstract class SharedLoadedDiceSystem : EntitySystem
         SubscribeLocalEvent<LoadedDiceComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
         SubscribeLocalEvent<LoadedDiceComponent, GetVerbsEvent<AlternativeVerb>>(OnAlternativeVerb);
         SubscribeLocalEvent<LoadedDiceComponent, LoadedDiceSideSelectedMessage>(OnSelected);
+        SubscribeLocalEvent<LoadedDiceComponent, DiceRollEvent>(OnDiceRoll);
+    }
+
+    private void OnDiceRoll(Entity<LoadedDiceComponent> entity, ref DiceRollEvent roll)
+    {
+        if (entity.Comp.SelectedSide == null)
+            return;
+
+        roll.Roll = entity.Comp.SelectedSide.Value;
     }
 
     /// <summary>

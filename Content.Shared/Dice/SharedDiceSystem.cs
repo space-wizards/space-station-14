@@ -77,8 +77,7 @@ public abstract class SharedDiceSystem : EntitySystem
     {
         var rand = new System.Random((int)_timing.CurTick.Value);
 
-        var roll = rand.Next(1, entity.Comp.Sides + 1);
-        var rollEvent = new DiceRollEvent(roll, user);
+        var rollEvent = new DiceRollEvent(rand.Next(1, entity.Comp.Sides + 1), user);
         RaiseLocalEvent(entity, ref rollEvent);
 
         SetCurrentSide(entity, rollEvent.Roll);
