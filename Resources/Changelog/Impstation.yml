@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mousesweater
-  changes:
-  - message: added a salvage jumpskirt for all your salvaging needs
-    type: Add
-  id: 894
-  time: '2025-01-10T21:36:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1298
 - author: widgetbeck
   changes:
   - message: Made gastropoids moderately less vulnerable to temperature damage.
@@ -4107,3 +4100,10 @@
   id: 1393
   time: '2025-03-25T02:19:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2038
+- author: FlippenPage
+  changes:
+  - message: Added THIRTY FUCKING BARSIGNS. ENJOY.
+    type: Add
+  id: 1394
+  time: '2025-03-25T09:49:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1891
