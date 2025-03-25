@@ -289,19 +289,19 @@
   - type: Speech
     speechSounds: Kodepiia
     speechVerb: Kodepiia
-    allowedEmotes: ['Scream', 'Hiss', 'Squish', 'Bubble', 'Pop', 'Coo', 'Click', 'Chitter', 'Squeak']
+    allowedEmotes: ['Scream', 'Whistle', 'Hiss', 'Boom', 'HarpyRing', 'HarpyHonk', 'HarpyPew', 'HarpyBeep', 'HarpyRev', 'Click', 'Chitter', 'Squeak', 'HarpyCaw', 'Chirp', 'Squish', 'Bubble', 'Pop', 'Coo']
   - type: Vocal
     sounds:
-      Male: Kodepiia
-      Female: Kodepiia
-      Unsexed: Kodepiia
+      Male: YoungKodepiia
+      Female: YoungKodepiia
+      Unsexed: YoungKodepiia
     wilhelmProbability: 0.001
   - type: TriggerOnMobstateChange
     mobState:
     - Dead
   - type: EmitSoundOnTrigger
     sound:
-      collection: KodepiiaDeath
+      collection: KodepiiaDeathgasp
       params:
         variation: 0.125
   - type: NoSlip

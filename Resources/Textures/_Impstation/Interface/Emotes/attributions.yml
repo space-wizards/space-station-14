@@ -39,8 +39,28 @@
   copyright: "Barry, 63"
   source: "https://en.wikipedia.org/wiki/Pub"
 
-- files:
-  - blink.png
+- files: ["blink.png"]
   license: "CC0-1.0"
   copyright: "Created by Rarenth for Impstation"
+  source: "https://github.com/impstation/imp-station-14"
+
+- files:
+  - caw.png
+  - pop.png
+  - revs.png
+  - ring.png
+  license: "CC-BY-SA-4.0"
+  copyright: "Created by LazyRiverfolk for Impstation"
+  source: "https://github.com/impstation/imp-station-14"
+
+- files:
+  - bang.png
+  - boom.png
+  - bubble.png
+  - coo.png
+  - kodehonk.png
+  - pew.png
+  - snarl.png
+  license: "CC-BY-SA-4.0"
+  copyright: "Created by UndertaleSex for Impstation"
   source: "https://github.com/impstation/imp-station-14"

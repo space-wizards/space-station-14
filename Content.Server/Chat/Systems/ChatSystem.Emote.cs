@@ -1,4 +1,5 @@
 using System.Collections.Frozen;
+using System.Collections.Immutable;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
@@ -9,7 +10,7 @@ namespace Content.Server.Chat.Systems;
 // emotes using emote prototype
 public partial class ChatSystem
 {
-    private FrozenDictionary<string, EmotePrototype> _wordEmoteDict = FrozenDictionary<string, EmotePrototype>.Empty;
+    private FrozenDictionary<string, ImmutableList<EmotePrototype>> _wordEmoteDict = FrozenDictionary<string, ImmutableList<EmotePrototype>>.Empty; // DeltaV - Multiple emotes
 
     protected override void OnPrototypeReload(PrototypesReloadedEventArgs obj)
     {
@@ -20,7 +21,7 @@ public partial class ChatSystem
 
     private void CacheEmotes()
     {
-        var dict = new Dictionary<string, EmotePrototype>();
+        var dict = new Dictionary<string, ImmutableList<EmotePrototype>>(); // DeltaV - Multiple triggers for the same emote
         var emotes = _prototypeManager.EnumeratePrototypes<EmotePrototype>();
         foreach (var emote in emotes)
         {
@@ -29,12 +30,16 @@ public partial class ChatSystem
                 var lowerWord = word.ToLower();
                 if (dict.TryGetValue(lowerWord, out var value))
                 {
-                    var errMsg = $"Duplicate of emote word {lowerWord} in emotes {emote.ID} and {value.ID}";
-                    Log.Error(errMsg);
+                    // Begin DeltaV modification - Multiple emotes for the same words
+                    dict[lowerWord] = value.Add(emote);
+
+                    var errMsg = $"Duplicate of emote word {lowerWord}";
+                    Log.Warning(errMsg);
+
                     continue;
                 }
 
-                dict.Add(lowerWord, emote);
+                dict.Add(lowerWord, ImmutableList.Create(emote)); // End DeltaV modification
             }
         }
 
@@ -162,14 +167,21 @@ public partial class ChatSystem
     private void TryEmoteChatInput(EntityUid uid, string textInput)
     {
         var actionTrimmedLower = TrimPunctuation(textInput.ToLower());
-        if (!_wordEmoteDict.TryGetValue(actionTrimmedLower, out var emote))
+        if (!_wordEmoteDict.TryGetValue(actionTrimmedLower, out var emotes)) // DeltaV, renames to emotes
             return;
 
-        if (!AllowedToUseEmote(uid, emote))
-            return;
+        bool validEmote = false; // DeltaV - Multiple emotes for the same trigger
+        foreach (var emote in emotes)
+        {
+            if (!AllowedToUseEmote(uid, emote))
+                continue;
 
-        InvokeEmoteEvent(uid, emote);
-        return;
+            InvokeEmoteEvent(uid, emote);
+            validEmote = true; // DeltaV
+        }
+
+        if (!validEmote) // DeltaV
+            return;
 
         static string TrimPunctuation(string textInput)
         {

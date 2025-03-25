@@ -59,6 +59,7 @@
     - chortle
     - chortles
     - chortling
+    - chortled # Frontier
 
 - type: emote
   id: Honk
@@ -93,6 +94,7 @@
     - sigh
     - sighs
     - sighed
+    - sighing # Frontier
 
 - type: emote
   id: Whistle
@@ -110,6 +112,7 @@
     - whistle
     - whistles
     - whistleblowing
+    - whistled # Frontier
 
 - type: emote
   id: Crying
@@ -130,6 +133,8 @@
     - sob
     - sobs
     - sobbing
+    - sobbed # Frontier
+    - cried # Frontier
 
 - type: emote
   id: Squish
@@ -148,6 +153,7 @@
     - squish
     - squishing
     - squishes
+    - squished # Frontier
 
 - type: emote
   id: Chitter
@@ -167,24 +173,6 @@
    - chitters
    - chittered
 
-- type: emote #imp
-  id: Coo
-  name: chat-emote-name-coo
-  category: Vocal
-  available: false
-  icon: _Impstation/Interface/Emotes/chirp.png #placeholder
-  whitelist:
-    components:
-    - Vocal
-  blacklist:
-    components:
-    - BorgChassis
-  chatMessages: ["chat-emote-msg-coo"]
-  chatTriggers:
-   - coo
-   - coos
-   - cooed
-
 - type: emote
   id: Squeak
   name: chat-emote-name-squeak
@@ -202,6 +190,7 @@
    - squeak
    - squeaks
    - squeaked
+   - squeaking # Frontier
 
 - type: emote
   id: Click
@@ -219,6 +208,8 @@
   chatTriggers:
    - click
    - clicks
+   - clicked # Frontier
+   - clicking # Frontier
 
 # hand emotes
 - type: emote
@@ -323,28 +314,8 @@
   chatTriggers:
     - salute
     - salutes
-
-- type: emote
-  id: Crack
-  name: chat-emote-name-crack
-  category: Hands
-  icon: _Impstation/Interface/Emotes/knucklecrack.png #imp
-  whitelist:
-    components:
-    - Hands
-  blacklist:
-    components:
-    - BorgChassis
-  chatMessages: ["chat-emote-msg-crack"]
-  chatTriggers:
-    - crack knuckles
-    - cracks knuckles
-    - cracking knuckles
-    - cracked knuckles
-    - cracks their knuckles
-    - cracks her knuckles
-    - cracks his knuckles
-    - cracks its knuckles
+    - saluted # Frontier
+    - saluting # Frontier
 
 - type: emote
   id: Gasp
@@ -357,6 +328,7 @@
    - gasp
    - gasps
    - gasped
+   - gasping # Frontier
 
 - type: emote
   id: DefaultDeathgasp
@@ -483,6 +455,7 @@
     - buzzes twice
     - buzzing twice
     - buzzed twice
+    - buzzedtwice # Frontier
 
 - type: emote
   id: Ping
