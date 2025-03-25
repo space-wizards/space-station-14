@@ -31,7 +31,7 @@ public sealed partial class BiomeSystem
         var mapId = new MapId(mapInt);
         var mapUid = _mapSystem.GetMapOrInvalid(mapId);
 
-        if (_mapManager.MapExists(mapId) ||
+        if (_mapSystem.MapExists(mapId) ||
             !TryComp<BiomeComponent>(mapUid, out var biome))
         {
             return;
@@ -66,7 +66,7 @@ public sealed partial class BiomeSystem
         var mapId = new MapId(mapInt);
         var mapUid = _mapSystem.GetMapOrInvalid(mapId);
 
-        if (!_mapManager.MapExists(mapId) || !TryComp<BiomeComponent>(mapUid, out var biome))
+        if (!_mapSystem.MapExists(mapId) || !TryComp<BiomeComponent>(mapUid, out var biome))
         {
             return;
         }
@@ -145,7 +145,7 @@ public sealed partial class BiomeSystem
 
         var mapId = new MapId(mapInt);
 
-        if (!_mapManager.MapExists(mapId) || !TryComp<BiomeComponent>(_mapSystem.GetMapOrInvalid(mapId), out var biome))
+        if (!_mapSystem.MapExists(mapId) || !TryComp<BiomeComponent>(_mapSystem.GetMapOrInvalid(mapId), out var biome))
         {
             return;
         }
