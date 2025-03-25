@@ -174,7 +174,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 
             tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
             var mapPos = _map.GridTileToWorldPos(targetGrid, grid, tile);
-            var mapTarget = grid.WorldToTile(mapPos);
+            var mapTarget = _map.WorldToTile(targetGrid, grid, mapPos);
             var circle = new Circle(mapPos, 2);
 
             foreach (var newTileRef in _map.GetTilesIntersecting(targetGrid, grid, circle))
