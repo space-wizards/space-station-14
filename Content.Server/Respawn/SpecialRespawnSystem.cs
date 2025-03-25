@@ -169,10 +169,10 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
         //Obviously don't put anything ridiculous in here
         for (var i = 0; i < maxAttempts; i++)
         {
-            var randomX = _random.Next((int) gridBounds.Left, (int) gridBounds.Right);
-            var randomY = _random.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
+            var randomX = _random.Next((int)gridBounds.Left, (int)gridBounds.Right);
+            var randomY = _random.Next((int)gridBounds.Bottom, (int)gridBounds.Top);
 
-            tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
+            tile = new Vector2i(randomX - (int)gridPos.X, randomY - (int)gridPos.Y);
             var mapPos = _map.GridTileToWorldPos(targetGrid, grid, tile);
             var mapTarget = _map.WorldToTile(targetGrid, grid, mapPos);
             var circle = new Circle(mapPos, 2);
