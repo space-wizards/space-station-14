@@ -1,4 +1,3 @@
-Psych: Prescription form template, case notes template?
 -	Make flare spent
 --			Give: Passenger PDA/ID (name?), Ancient jumpsuit, gas mask, budget insuls,
 				shoes, bling, ID computer board in pocket
@@ -6,16 +5,12 @@ Psych: Prescription form template, case notes template?
 Evac:
 -	Rename + fill ore crates
 -	Decals, of course
-- Make sure the contraband component on the fez of security has the right details for HoS.
 - Maints "Bar": Two papers - one explaining the maints bar contest, the second responding to the tiny little maints bar and encouraging people to do better.
 	"Yes, I suppose that water does technically count as a drink, but you know that's not what we meant when we said 'able to serve drinks'!"
-Mice in sci mice crate no air
-- Put 'white' bandana into grave under tree
 - Name buttons and levers(?) for clarity
 - Mailing units
 - Make the station move forward!
 - Job numbers in the prototype file
-Cargo dock conveyor belts are probably wrong
 Brigmed wall locker empty
 	Replaced with 'medicine wall locker [Filled]'
 	Still empty
@@ -34,8 +29,19 @@ Tider shop: Maybe rotate shutters
 Cargo computer shutter button seems not to be hooked up.
 	It is, though...? Does the directional window block it?
 Cargo shuttle computer can't find the shuttle. Mass scanner says it's out there...
-Re-replace asphalt?
 Forms for things like borging, department access, psych prescriptions...
+	Make lots of forms for HoP, too
+		Hall/Bathroom Pass
+		Official requisition form requisition form
+		Complaints
+		Opinion Registration
+		Tattle Form
+		ID Card Alteration Request
+		All Access Request
+		Some Access Request
+		No Access Request
+Custom books on lawyer shelves?
+Among Us "clues" on detective notice boards
 
 The big things:
 Set up evac shuttle (possibly shrink it, too)
@@ -46,6 +52,7 @@ Possibly move Evac farther out to make room for shuttle
 	at north dock.
 Check AI vision
 Anything I can do to give poor Atmos more room to work with...
+Grime everything up a bit again.
 
 Check this stuff:
 Holopads with custom names that aren't generic holopads
@@ -103,3 +110,9 @@ DONE:
 /* 	Chloral Hydrate - Sleeping problems */
 /* 	Nocturine - Sleeping problems (Chem can't actually make this without Vestine tho) */
 /* 	Pax - Anger management problems */
+/* Psych: Prescription form template, case notes template? */
+/* - Make sure the contraband component on the fez of security has the right details for HoS. */
+/* Mice in sci mice crate no air */
+/* Cargo dock conveyor belts are probably wrong */
+/* Re-replace asphalt? */
+/* - Put 'white' bandana into grave under tree */
