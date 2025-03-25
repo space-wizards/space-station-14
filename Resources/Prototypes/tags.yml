@@ -193,6 +193,9 @@
   id: BypassInteractionRangeChecks
 
 - type: Tag
+  id: Cable
+
+- type: Tag
   id: CableCoil
 
 - type: Tag
@@ -378,6 +381,9 @@
   id: Corn
 
 - type: Tag
+  id: Construction
+
+- type: Tag
   id: CottonBoll
 
 - type: Tag
@@ -463,6 +469,9 @@
 
 - type: Tag
   id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
+
+- type: Tag
+  id: DisposalTube
 
 - type: Tag
   id: DNASolutionScannable
@@ -754,6 +763,9 @@
 
 - type: Tag
   id: Ingot
+
+- type: Tag
+  id: Item
 
 - type: Tag
   id: InstantDoAfters
@@ -1338,6 +1350,9 @@
 
 - type: Tag
   id: Wall
+
+- type: Tag
+  id: WallMount
 
 - type: Tag
   id: WallmountGeneratorAPUElectronics

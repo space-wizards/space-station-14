@@ -130,6 +130,23 @@
   fireStates: 6
   fireStacks: 2
 
+- type: explosion
+  id: Nuclear
+  deleteTags: ["DisposalTube", "Item", "Cable", "WallMount","SpreaderIgnore"]
+  blacklistedTags: ["HighRiskItem"]
+  damagePerIntensity:
+    types:
+      Heat: 5
+      Blunt: 5
+      Piercing: 5
+      Radiation: 1
+  tileBreakChance: [0, 0.5, 1]
+  tileBreakIntensity: [0, 30, 50]
+  tileBreakRerollReduction: 20
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 3
+
 # STOP
 # BEFORE YOU ADD MORE EXPLOSION TYPES CONSIDER IF AN EXISTING ONE IS SUITABLE
 # ADDING NEW ONES IS PROHIBITIVELY EXPENSIVE
