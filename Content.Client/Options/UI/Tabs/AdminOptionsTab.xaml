@@ -3,8 +3,19 @@
          xmlns:ui="clr-namespace:Content.Client.Options.UI">
     <BoxContainer Orientation="Vertical">
         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
+
             <BoxContainer Orientation="Vertical" Margin="8">
+                <Label Text="{Loc 'ui-options-admin-player-panel'}"
+                       StyleClasses="LabelKeyText"/>
+                <CheckBox Name="PlayerlistSeparateSymbolsCheckBox" Text="{Loc 'ui-options-admin-playerlist-separate-symbols'}" />
+                <CheckBox Name="PlayerlistCharacterColorCheckBox" Text="{Loc 'ui-options-admin-playerlist-character-color'}" />
+                <CheckBox Name="PlayerlistRoleTypeColorCheckBox" Text="{Loc 'ui-options-admin-playerlist-roletype-color'}" />
+                <Label Text="{Loc 'ui-options-admin-overlay-title'}"
+                       StyleClasses="LabelKeyText"/>
                 <CheckBox Name="EnableClassicOverlayCheckBox" Text="{Loc 'ui-options-enable-classic-overlay'}" />
+                <CheckBox Name="EnableOverlaySymbolsCheckBox" Text="{Loc 'ui-options-enable-overlay-symbols'}" />
+                <CheckBox Name="EnableOverlayPlaytimeCheckBox" Text="{Loc 'ui-options-enable-overlay-playtime'}" />
+                <CheckBox Name="EnableOverlayStartingJobCheckBox" Text="{Loc 'ui-options-enable-overlay-starting-job'}" />
             </BoxContainer>
         </ScrollContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />
