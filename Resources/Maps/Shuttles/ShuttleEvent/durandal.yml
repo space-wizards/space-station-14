@@ -5,7 +5,7 @@ meta:
   engineVersion: 249.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/25/2025 05:59:50
+  time: 03/25/2025 07:08:22
   entityCount: 415
 maps: []
 grids:
@@ -2093,7 +2093,7 @@ entities:
   - uid: 413
     components:
     - type: Transform
-      pos: 7.5,-3.5
+      pos: 4.5,1.5
       parent: 1
 - proto: Mannequin
   entities:
