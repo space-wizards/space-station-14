@@ -1,44 +1,55 @@
-thaven-mood-cosmic-nihilism-name = Astral Nihilism
-thaven-mood-cosmic-nihilism-desc = Your mind's eye envisions the future: a dark, cold, and very gentle place. It's coming, and there's nothing to be done about it. As a result, you don't care much about anything others do.
+# imp mood edit done 25/03
 
-thaven-mood-cosmic-insignificance-name = Tiny Speck
-thaven-mood-cosmic-insignificance-desc = Your mind's eye envisions yourself, a single speck: your insignificance within the great scope of the universe. This needn't bring you despair; in fact, to know at all might be the greatest relief!
+ascendant-mood-tabularasa-name = Tabula Rasa
+ascendant-mood-tabularasa-desc = My mind is clear. I've lost my memory of who I am. My information recall and reflexes are intact, but as far as my personality goes, I am a blank slate.
 
-thaven-mood-cosmic-unfamiliarity-name = Stranger and Stranger
-thaven-mood-cosmic-unfamiliarity-desc = Your mind's eye melds the station into a strange, eccentric, and unfamiliar space, and everyone you meet is unrecognizable to you. Don't trust them. They're out to get you.
+ascendant-mood-incoherency-name = Incoherency
+ascendant-mood-incoherency-desc = Hello? Hello? Can anyone understand what I'm saying?!
 
-thaven-mood-cosmic-fakemonument-name = Idolater
-thaven-mood-cosmic-fakemonument-desc = Your mind's eye envisions a looming, perfect shape. It fills your brain with inspiration, the silhouette of something yet to be. A Monument. You must find it or make one yourself, at all costs.
+ascendant-mood-hunger-name = Hunger
+ascendant-mood-hunger-desc = There is a yawning emptiness inside me. No matter how much I eat, no matter how much I possess, I am starving.
 
-thaven-mood-cosmic-wakingdream-name = Drink Full and Descend
-thaven-mood-cosmic-wakingdream-desc = Your mind's eye seeks beauteous revelry, a song to the beat of the yawping heart of the cosmos. This reality is an illusion, a great dream, for all things have long since ended. Make more festive this dance of the void!
+ascendant-mood-fasting-name = Fasting
+ascendant-mood-fasting-desc = I don't need food, water, or medical attention. I can go on just fine without them. Keep them away from me!
 
-thaven-mood-cosmic-livingnightmare-name = Only You
-thaven-mood-cosmic-livingnightmare-desc = Your mind's eye envisions a blinding, panicked light through the dark cosmos, a nightmare only you have broken out of. Saving anyone else is as impossible as your own survival. Only you can speak the truth, if only you make it out.
+ascendant-mood-phobia-name = Phobia
+ascendant-mood-phobia-desc = {$fear} has gripped my mind. It's all I can think about...
 
-thaven-mood-cosmic-grotesqueworld-name = Grotesquerie
-thaven-mood-cosmic-grotesqueworld-desc = Your mind's eye melds the station into something indescribably disgusting and vile. Your senses nauseate you, and your coworkers have been replaced with horrific monsters. Seek immediate refuge; trespass if you must.
+ascendant-mood-mania-name = Mania
+ascendant-mood-mania-desc = My eyes have been opened - I have {$mania}. These are more important than life itself!
 
-thaven-mood-cosmic-voiceoftheend-name = Make Your Peace
-thaven-mood-cosmic-voiceoftheend-desc = Your mind's eye hears a chant across the stars. The end of all things is coming! Make sure as many people as possible (yourself included) are mentally and emotionally prepared for the end of all things.
+ascendant-mood-quixotism-name = Quixotism
+ascendant-mood-quixotism-desc = Who cares about living? Other people are more important than me. Maybe by sacrificing myself for them, I'll finally be worth something.
 
-thaven-mood-cosmic-worshipoftheend-name = Praise the Squid!
-thaven-mood-cosmic-worshipoftheend-desc = Your mind is caressed gently by a tendriled entity. It ought to be worshipped! You must spread the word of the coming collapse, and protect (with your life) the Thing that enlightened you. Tell them all: There is nothing to fear in the future, for there is nothing at all!
+ascendant-mood-temerity-name = Temerity
+ascendant-mood-temerity-desc = I've been insulted for the last time. If anyone or anything on this station does wrong by me again, they'll pay... in blood.
 
-thaven-mood-cosmic-disregardoftheliving-name = Locked-In Syndrome
-thaven-mood-cosmic-disregardoftheliving-desc = Your mind envisions an impossible comfort. The space you awaken in is your home now: your entire world. Doors are paths to the terrifying unknown. Collect comforts, collect friends, and don't let anyone evict you.
+ascendant-mood-denial-name = Denial
+ascendant-mood-denial-desc = Everything is fine. I'm fine. If I say it enough, will it be true?
 
-thaven-mood-cosmic-disregardoftheself-name = Short Fuse
-thaven-mood-cosmic-disregardoftheself-desc = Your mind's eye turns your hands to fists, turns your inner frustrations outward. Harm upon you jeopardizes your future: what little of it there remains. Seek immediate and bloody retribution for any wrong done upon you, seeking help to do so if needed.
+ascendant-mood-vainglory-name = Vainglory
+ascendant-mood-vainglory-desc = I'm beautiful... aren't I? My arms, my face, my body, aren't they beautiful? Won't someone tell me that I'm beautiful?!
 
-thaven-mood-cosmic-fearofbeingforgotten-name = Lethophobia
-thaven-mood-cosmic-fearofbeingforgotten-desc = Your mind's eye envisions a winding river, a nameless moth bowing before the setting of binary stars. You have an intense and irrational fear of both being forgotten and forgetting others. You must do everything you can to be remembered.
+ascendant-mood-fixation-name = Fixation
+ascendant-mood-fixation-desc = Have you heard about {$fixation}? Because I have. This is the only thing I can live for anymore!
 
-thaven-mood-cosmic-fearofendings-name = All Good Things...
-thaven-mood-cosmic-fearofendings-desc = Your mind's eye has the terrifying imprint of an ever-infinite nothingness: what awaits all. You must close all accounts, pay all debts, before the inevitable arrives, at any cost. If you're romantically taken or dating, you must break up with any current partner[s].
+ascendant-mood-fascination-name = Fascination
+ascendant-mood-fascination-desc = What was that strange, squid-like creature...? I must know more... at any cost.
 
-thaven-mood-cosmic-painlessendings-name = Spare the Little Ones
-thaven-mood-cosmic-painlessendings-desc = Your mind's eye harbors the smell of a rotten, familiar corpse. It would be a kindness to keep the pets and critters of the station from bearing the pain of reality. You don't want animals to suffer; keep your methods as painless as you can.
+ascendant-mood-mistrust-name = Mistrust
+ascendant-mood-mistrust-desc = Can't look at them. Can't meet their eyes. Hide my face, so they don't know what I'm thinking. They're just waiting for me to slip up. Then they'll pounce.
 
-# The knowledge that fills your mind is of a man and a woman embracing, a light deigned to consume their forms and leave nothing behind. This horror has rendered your mind scarred -- you are now straight! You must find comfort in a partner of the opposite gender before the end of your shift. (If you're nonbinary, find anyone you can!)
-# cut feature ^ due to not wanting to cause bad trauma responses, leaving it here for possible reuse
+ascendant-mood-weareallgoingtodie-name = WE ARE ALL GOING TO DIE.
+ascendant-mood-weareallgoingtodie-desc = WE ARE ALL GOING TO DIE.
+
+ascendant-mood-communion-name = Communion
+ascendant-mood-communion-desc = Nobody else knows that the end is coming. I have to tell them... Maybe then we'll at least be able to watch it end together.
+
+ascendant-mood-labyrinth-name = Labyrinth
+ascendant-mood-labyrinth-desc = Where am I? I don't recognise these hallways. This place is a maze, and behind every door could be a new danger...
+
+ascendant-mood-unburdening-name = Unburdening
+ascendant-mood-unburdening-desc = I have so many regrets. So many loose ends. The things I've done, the people I know... I have to cut them off, and let go.
+
+# Menstruation
+# are you fucking proud of yourself?
