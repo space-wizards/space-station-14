@@ -114,16 +114,9 @@ public sealed class AdminUIController : UIController,
         _window = null;
     }
 
-    private void Toggle()
-    {
-        if (_window is {IsOpen: true})
-        {
             _window.Close();
-        }
         else if (_conGroups.CanAdminMenu())
-        {
             _window?.Open();
-        }
     }
 
     private void PlayerTabEntryKeyBindDown(GUIBoundKeyEventArgs args, ListData? data)
