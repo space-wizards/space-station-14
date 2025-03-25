@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: A few small changes to the server rules.
-    type: Tweak
-  id: 891
-  time: '2025-01-10T07:14:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1294
 - author: AvianMaiden
   changes:
   - message: 37 new AI names, some from community suggestions!
@@ -4095,3 +4088,12 @@
   id: 1390
   time: '2025-03-25T01:51:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2077
+- author: DinnerCalzone
+  changes:
+  - message: Chaplain, Clown, Mime, and Musician all now have Service access.
+    type: Add
+  - message: Security jobs no longer have Service access.
+    type: Remove
+  id: 1391
+  time: '2025-03-25T02:08:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2081
