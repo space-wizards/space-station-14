@@ -129,6 +129,8 @@ construction-graph-tag-pink-crystal-shard = pink crystal shard
 construction-graph-tag-orange-crystal-shard = orange crystal shard
 construction-graph-tag-red-crystal-shard = red crystal shard
 construction-graph-tag-green-crystal-shard = green crystal shard
+construction-graph-tag-yellow-crystal-shard = yellow crystal shard
+construction-graph-tag-black-crystal-shard = black crystal shard
 
 # unknown
 construction-graph-tag-weapon-pistol-chimp-upgrade-kit = pistol CHIMP upgrade kit

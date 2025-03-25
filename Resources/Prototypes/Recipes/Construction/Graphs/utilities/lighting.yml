@@ -51,7 +51,7 @@
               amount: 1
               doAfter: 1
             - tag: CrystalYellow
-              name: yellow crystal shard
+              name: construction-graph-tag-yellow-crystal-shard
               icon:
                 sprite: Objects/Materials/Shards/crystal.rsi
                 state: shard1
@@ -111,7 +111,7 @@
               amount: 1
               doAfter: 1
             - tag: CrystalBlack
-              name: black crystal shard
+              name: construction-graph-tag-black-crystal-shard
               icon:
                 sprite: Objects/Materials/Shards/crystal.rsi
                 state: shard1
@@ -212,7 +212,7 @@
         amount: 1
         doAfter: 1
       - tag: CrystalYellow
-        name: yellow crystal shard
+        name: construction-graph-tag-yellow-crystal-shard
         icon:
           sprite: Objects/Materials/Shards/crystal.rsi
           state: shard1
@@ -272,7 +272,7 @@
         amount: 1
         doAfter: 1
       - tag: CrystalBlack
-        name: black crystal shard
+        name: construction-graph-tag-black-crystal-shard
         icon:
           sprite: Objects/Materials/Shards/crystal.rsi
           state: shard1
