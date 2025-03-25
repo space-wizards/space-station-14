@@ -157,7 +157,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 
         var xform = Transform(targetGrid);
 
-        if (!grid.TryGetTileRef(xform.Coordinates, out var tileRef))
+        if (!_map.TryGetTileRef(targetGrid, grid, xform.Coordinates, out var tileRef))
             return false;
 
         var tile = tileRef.GridIndices;
