@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Your favorite maps should roll more often, if you liked maps with high
-      letters, like train, or xeno
-    type: Fix
-  id: 889
-  time: '2025-01-09T22:38:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1284
 - author: TheGrimbeeper
   changes:
   - message: Multitools now act as defibrillators to cockroaches
@@ -4094,3 +4086,12 @@
   id: 1388
   time: '2025-03-25T01:45:35.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2071
+- author: DinnerCalzone
+  changes:
+  - message: The default supermatter radiator setup has been tweaked to allow more
+      gas to flow. Be sure to check up on the engine every once in a while to make
+      sure it has enough gas!
+    type: Tweak
+  id: 1389
+  time: '2025-03-25T01:47:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2079
