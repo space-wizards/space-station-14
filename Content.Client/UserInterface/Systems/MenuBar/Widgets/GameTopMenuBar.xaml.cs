@@ -1,4 +1,5 @@
 ﻿using Content.Client.UserInterface.Systems.Actions;
+using Content.Client.UserInterface.Systems.Admin;
 using Content.Client.UserInterface.Systems.Character;
 using Content.Client.UserInterface.Systems.Emotes;
 using Content.Client.UserInterface.Systems.EscapeMenu;
@@ -16,6 +17,7 @@ namespace Content.Client.UserInterface.Systems.MenuBar.Widgets
         {
             RobustXamlLoader.Load(this);
 
+            AdminButton.OnPressed += _ => UserInterfaceManager.GetUIController<AdminUIController>().ToggleWindow();
             ActionButton.OnPressed += _ => UserInterfaceManager.GetUIController<ActionUIController>().ToggleWindow();
             CharacterButton.OnPressed += _ => UserInterfaceManager.GetUIController<CharacterUIController>().ToggleWindow();
             EmotesButton.OnPressed += _ => UserInterfaceManager.GetUIController<EmotesUIController>().ToggleWindow(true);
