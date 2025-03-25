@@ -561,6 +561,10 @@
       raffle:
         settings: default
     - type: GhostTakeoverAvailable
+    - type: RandomMetadata
+      nameSegments:
+      - NameKnight
+      - TitleKnight
     - type: Loadout
       prototypes: [ KnightErrantLoadout ]
       roleLoadout: [ RoleSurvivalStandard ]

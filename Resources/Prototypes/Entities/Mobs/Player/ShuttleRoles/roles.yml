@@ -495,7 +495,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/claymore.rsi
-    state: knight
   - type: RandomHumanoidSpawner
     settings: KnightErrant
 

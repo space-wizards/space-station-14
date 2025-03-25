@@ -2,10 +2,10 @@
   id: NameKnight
   values:
     prefix: knight-names-dataset-
-    count: 1336
+    count: 100
 
 - type: localizedDataset
   id: TitleKnight
   values:
     prefix: knight-titles-dataset-
-    count: 1336
+    count: 71
