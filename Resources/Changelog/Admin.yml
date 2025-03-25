@@ -945,5 +945,21 @@ Entries:
   id: 115
   time: '2025-03-25T18:40:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36080
+- author: Errant
+  changes:
+  - message: Admin overlays of mobs/players in very close proximity no longer overlap
+      each other. They now form stacks of up to 3. If more than 3 overlay entries
+      are stacked, any additional entries will be drawn over the 3rd element of the
+      stack. These names are ordered by vertical position, but when the coordinates
+      match exactly (such as someone carrying a mothroach/pAI, or ghosts orbiting),
+      the top member of the stack is NOT guaranteed to be the most visible/interesting
+      element in the stack.
+    type: Add
+  - message: Ghosts near the mouse cursor no longer show up on the admin overlay,
+      including any ghosts in stacks near the mouse cursor.
+    type: Add
+  id: 116
+  time: '2025-03-25T20:15:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35622
 Name: Admin
 Order: 1
