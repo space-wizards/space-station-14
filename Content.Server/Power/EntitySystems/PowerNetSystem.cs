@@ -519,6 +519,14 @@ namespace Content.Server.Power.EntitySystems
                 supplier.NetworkSupply.LinkedNetwork = netNode.Id;
             }
         }
+
+        /// <summary>
+        /// Validate integrity of the power state data. Throws if an error is found.
+        /// </summary>
+        public void Validate()
+        {
+            _solver.Validate(_powerState);
+        }
     }
 
     /// <summary>
