@@ -97,8 +97,7 @@ internal sealed class AdminNameOverlay : Overlay
             sortable.Add((info, aabb, entity.Value, screenCoordinates));
         }
 
-        // Draw overlays for visible players
-        // starting from the top of the screen, so stacks are more logical (where applicable)
+        // Draw overlays for visible players, starting from the top of the screen
         foreach (var info in sortable.OrderBy(s => s.Item4.Y).ToList())
         {
             var playerInfo = info.Item1;
@@ -137,6 +136,9 @@ internal sealed class AdminNameOverlay : Overlay
             if (stack.Count > 0)
             {
                 screenCoordinates = stack.First().Item1 + centerOffset;
+                // Replacing this overlay's coordinates for the later save with the stack root's coordinates
+                // so that other overlays don't try to stack to these coordinates
+                screenCoordinatesCenter = stack.First().Item1;
 
                 var i = 1;
                 foreach (var s in stack)
