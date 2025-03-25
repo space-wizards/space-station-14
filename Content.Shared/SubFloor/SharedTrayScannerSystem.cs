@@ -2,6 +2,7 @@ using Content.Shared.Eye;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
+using Content.Shared.StatusEffect;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -9,6 +10,7 @@ namespace Content.Shared.SubFloor;
 
 public abstract class SharedTrayScannerSystem : EntitySystem
 {
+    [Dependency] private readonly RefCountSystem _refCount = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
 
@@ -37,14 +39,14 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 
     private void OnEquip(EntityUid user)
     {
-        EnsureComp<TrayScannerUserComponent>(user);
-        _eye.RefreshVisibilityMask(user);
+        if (_refCount.Add<TrayScannerUserComponent>(user))
+            _eye.RefreshVisibilityMask(user);
     }
 
     private void OnUnequip(EntityUid user)
     {
-        RemComp<TrayScannerUserComponent>(user);
-        _eye.RefreshVisibilityMask(user);
+        if (_refCount.Remove<TrayScannerUserComponent>(user))
+            _eye.RefreshVisibilityMask(user);
     }
 
     private void OnTrayHandUnequipped(Entity<TrayScannerComponent> ent, ref GotUnequippedHandEvent args)
