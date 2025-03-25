@@ -13,7 +13,7 @@
       requirement:
         !type:RoleTimeRequirement
         role: JobMusician
-        time: 36000 # 1 hour of being the biggest nerd on the station
+        time: 72000 # 20 hours of being the biggest musician on the station
 
 - type: loadout
   id: SuperSynthesizerInstrument
