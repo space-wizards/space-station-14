@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: 37 new AI names, some from community suggestions!
-    type: Add
-  id: 892
-  time: '2025-01-10T18:14:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1287
 - author: Lyndomen
   changes:
   - message: ports fugitive from Delta-V. Watch out for escaped criminals!
@@ -4097,3 +4090,14 @@
   id: 1391
   time: '2025-03-25T02:08:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2081
+- author: hivehum
+  changes:
+  - message: Vox can caw like a crow.
+    type: Add
+  - message: Goblins can hiss.
+    type: Add
+  - message: Vox's 'coo' and the three slime emotes have different icons.
+    type: Tweak
+  id: 1392
+  time: '2025-03-25T02:12:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2042
