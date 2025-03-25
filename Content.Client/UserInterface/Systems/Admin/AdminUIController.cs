@@ -69,27 +69,21 @@ public sealed class AdminUIController : UIController,
     {
         EnsureWindow();
 
-        _admin.AdminStatusUpdated += AdminStatusUpdated;
         _input.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
             InputCmdHandler.FromDelegate(_ => Toggle()));
     }
 
     public void OnSystemUnloaded(AdminSystem system)
     {
-        if (_window != null)
-            _window.Dispose();
-
+        _window = null;
 
         CommandBinds.Unregister<AdminUIController>();
     }
 
     private void EnsureWindow()
     {
-        if (_window is { Disposed: false })
+        if (_window != null)
             return;
-
-        if (_window?.Disposed ?? false)
-            OnWindowDisposed();
 
         _window = UIManager.CreateWindow<AdminMenuWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.Center);
@@ -101,19 +95,12 @@ public sealed class AdminUIController : UIController,
         _window.ObjectsTabControl.OnEntryKeyBindDown += ObjectsTabEntryKeyBindDown;
     }
 
-    private void OnWindowDisposed()
+    public void ToggleWindow()
     {
         if (_window == null)
             return;
 
-        _window.PlayerTabControl.OnEntryKeyBindDown -= PlayerTabEntryKeyBindDown;
-        _window.ObjectsTabControl.OnEntryKeyBindDown -= ObjectsTabEntryKeyBindDown;
-        _window.OnOpen -= OnWindowOpen;
-        _window.OnClose -= OnWindowClosed;
-        _window.OnDisposed -= OnWindowDisposed;
-        _window = null;
-    }
-
+        if (_window.IsOpen)
             _window.Close();
         else if (_conGroups.CanAdminMenu())
             _window?.Open();
