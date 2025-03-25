@@ -132,11 +132,11 @@
     layers:
     - map: [ "enum.PdaVisualLayers.Base" ]
       state: "pda"
-    - state: "light_overlay"
+    - state: "light_overlay_wide"
       map: [ "enum.PdaVisualLayers.Flashlight" ]
       shader: "unshaded"
       visible: false
-    - state: "id_overlay_wide" # the important part
+    - state: "id_overlay_wide"
       map: [ "enum.PdaVisualLayers.IdLight" ]
       shader: "unshaded"
       visible: false
