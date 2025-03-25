@@ -1,5 +1,4 @@
 ﻿using Content.Client.Gameplay;
-using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Client.UserInterface.Systems.Info;
 using Content.Shared.CCVar;
@@ -11,7 +10,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Utility;
-using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.EscapeMenu;
 
@@ -26,59 +24,56 @@ public sealed class EscapeUIController : UIController, IOnStateChanged<GameplayS
     [Dependency] private readonly OptionsUIController _options = default!;
     [Dependency] private readonly GuidebookUIController _guidebook = default!;
 
-    private Options.UI.EscapeMenu? _escapeWindow;
+    private Options.UI.EscapeMenu? _window;
 
     public void OnStateEntered(GameplayState state)
     {
-        DebugTools.Assert(_escapeWindow == null);
+        DebugTools.Assert(_window == null);
 
-        _escapeWindow = UIManager.CreateWindow<Options.UI.EscapeMenu>();
+        _window = UIManager.CreateWindow<Options.UI.EscapeMenu>();
 
-        _escapeWindow.OnClose += DeactivateButton;
-        _escapeWindow.OnOpen += ActivateButton;
-
-        _escapeWindow.ChangelogButton.OnPressed += _ =>
+        _window.ChangelogButton.OnPressed += _ =>
         {
-            CloseEscapeWindow();
+            _window.Close();
             _changelog.ToggleWindow();
         };
 
-        _escapeWindow.RulesButton.OnPressed += _ =>
+        _window.RulesButton.OnPressed += _ =>
         {
-            CloseEscapeWindow();
+            _window.Close();
             _info.OpenWindow();
         };
 
-        _escapeWindow.DisconnectButton.OnPressed += _ =>
+        _window.DisconnectButton.OnPressed += _ =>
         {
-            CloseEscapeWindow();
+            _window.Close();
             _console.ExecuteCommand("disconnect");
         };
 
-        _escapeWindow.OptionsButton.OnPressed += _ =>
+        _window.OptionsButton.OnPressed += _ =>
         {
-            CloseEscapeWindow();
+            _window.Close();
             _options.OpenWindow();
         };
 
-        _escapeWindow.QuitButton.OnPressed += _ =>
+        _window.QuitButton.OnPressed += _ =>
         {
-            CloseEscapeWindow();
+            _window.Close();
             _console.ExecuteCommand("quit");
         };
 
-        _escapeWindow.WikiButton.OnPressed += _ =>
+        _window.WikiButton.OnPressed += _ =>
         {
             _uri.OpenUri(_cfg.GetCVar(CCVars.InfoLinksWiki));
         };
 
-        _escapeWindow.GuidebookButton.OnPressed += _ =>
+        _window.GuidebookButton.OnPressed += _ =>
         {
-            _guidebook.ToggleGuidebook();
+            _guidebook.ToggleWindow();
         };
 
         // Hide wiki button if we don't have a link for it.
-        _escapeWindow.WikiButton.Visible = _cfg.GetCVar(CCVars.InfoLinksWiki) != "";
+        _window.WikiButton.Visible = _cfg.GetCVar(CCVars.InfoLinksWiki) != "";
 
         CommandBinds.Builder
             .Bind(EngineKeyFunctions.EscapeMenu,
@@ -93,28 +88,17 @@ public sealed class EscapeUIController : UIController, IOnStateChanged<GameplayS
         CommandBinds.Unregister<EscapeUIController>();
     }
 
-    private void CloseEscapeWindow()
-    {
-        _escapeWindow?.Close();
-    }
-
     /// <summary>
     /// Toggles the game menu.
     /// </summary>
     public void ToggleWindow()
     {
-        if (_escapeWindow == null)
+        if (_window == null)
             return;
 
-        if (_escapeWindow.IsOpen)
-        {
-            CloseEscapeWindow();
-            EscapeButton!.Pressed = false;
-        }
+        if (_window.IsOpen)
+            _window.Close();
         else
-        {
-            _escapeWindow.OpenCentered();
-            EscapeButton!.Pressed = true;
-        }
+            _window.OpenCentered();
     }
 }
