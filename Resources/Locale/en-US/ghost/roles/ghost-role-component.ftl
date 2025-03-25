@@ -322,5 +322,5 @@ ghost-role-information-wizard-name = Wizard
 ghost-role-information-wizard-desc = YER A WIZARD! Show the station what your magic is made of.
 
 ghost-role-information-knight-name = Knight Errant
-ghost-role-information-knight-description = Thee art a knight errant from The Space Kingdom of Glorgon. Thee has cometh to slay evildoers and saveth the innocent !
+ghost-role-information-knight-description = Thee art a knight errant from The Space Kingdom of Glorgon. Thee has cometh to slay evildoers and saveth the innocent!
 

@@ -263,7 +263,7 @@ book-text-janitor = [bold][color=black][head=3]The Tales of a Tired Janitor[/hea
       Being a janitor on this so-called Space Station 14 is a cosmic joke. Where did the other 13 stations go? It's not all spacewalks and futuristic gadgets; it's scrubbing toilets and battling alien goo. If anyone thinks space is glamorous, they clearly haven't seen the mess we space janitors deal with every single day. It's time they appreciate the unsung heroes of the space station – the custodians of the cosmos.
 
 book-text-chivalry = [bold][color=black][head=3]The Code of Chivalry[/head][/bold]
-                        A virtuous knight obeys the code of chivalry !
+                        A virtuous knight obeys the code of chivalry!
                         1: Serve the liege lord in valor and faith
                         2: Protect the weak and defenseless
                         3: Live by honor and for glory

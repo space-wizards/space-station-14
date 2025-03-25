@@ -1,11 +1,12 @@
 meta:
-  format: 7
+  format: 6
+  postmapinit: false
   category: Grid
   engineVersion: 249.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/25/2025 02:22:27
-  entityCount: 414
+  time: 03/25/2025 05:59:50
+  entityCount: 415
 maps: []
 grids:
 - 1
@@ -367,8 +368,6 @@ entities:
 - proto: ActionToggleBlock
   entities:
   - uid: 410
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 220
@@ -1468,6 +1467,11 @@ entities:
     components:
     - type: Transform
       pos: 0.5,7.5
+      parent: 1
+  - uid: 415
+    components:
+    - type: Transform
+      pos: -4.5,-2.5
       parent: 1
 - proto: CableHV
   entities:
