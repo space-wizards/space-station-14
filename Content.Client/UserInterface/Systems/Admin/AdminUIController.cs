@@ -1,5 +1,4 @@
-﻿using Content.Client.Administration.Managers;
-using Content.Client.Administration.Systems;
+﻿using Content.Client.Administration.Systems;
 using Content.Client.Administration.UI;
 using Content.Client.Administration.UI.Tabs.ObjectsTab;
 using Content.Client.Administration.UI.Tabs.PanicBunkerTab;
@@ -7,6 +6,7 @@ using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.Gameplay;
 using Content.Client.Lobby;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Client.Verbs.UI;
 using Content.Shared.Administration.Events;
 using Content.Shared.Input;
@@ -18,7 +18,6 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Admin;
 
@@ -28,7 +27,6 @@ public sealed class AdminUIController : UIController,
     IOnStateEntered<LobbyState>,
     IOnSystemChanged<AdminSystem>
 {
-    [Dependency] private readonly IClientAdminManager _admin = default!;
     [Dependency] private readonly IClientConGroupController _conGroups = default!;
     [Dependency] private readonly IClientConsoleHost _conHost = default!;
     [Dependency] private readonly IInputManager _input = default!;
@@ -70,7 +68,7 @@ public sealed class AdminUIController : UIController,
         EnsureWindow();
 
         _input.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
-            InputCmdHandler.FromDelegate(_ => Toggle()));
+            InputCmdHandler.FromDelegate(_ => ToggleWindow()));
     }
 
     public void OnSystemUnloaded(AdminSystem system)
@@ -106,6 +104,7 @@ public sealed class AdminUIController : UIController,
 
         if (_window.IsOpen)
             _window.Close();
+
         else if (_conGroups.CanAdminMenu())
             _window?.Open();
     }
