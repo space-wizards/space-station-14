@@ -119,9 +119,8 @@ namespace Content.Server.Administration.Commands
                     return;
                 }
 
-                var xform = _entManager.GetComponent<TransformComponent>(playerEntity);
                 xformSystem.SetCoordinates(playerEntity, coords);
-                xformSystem.AttachToGridOrMap(playerEntity, xform);
+                xformSystem.AttachToGridOrMap(playerEntity);
                 if (_entManager.TryGetComponent(playerEntity, out PhysicsComponent? physics))
                 {
                     _entManager.System<SharedPhysicsSystem>().SetLinearVelocity(playerEntity, Vector2.Zero, body: physics);
