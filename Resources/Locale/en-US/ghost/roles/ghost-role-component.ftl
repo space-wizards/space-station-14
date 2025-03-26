@@ -7,7 +7,7 @@ ghost-role-information-nonantagonist-rules = You are [color={role-type-crew-alig
                                              You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                              You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
                                              You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
-ghost-role-information-freeagent-rules = You are a [color={role-type-free-agent-color}w][bold]{role-type-free-agent-name}[/bold][/color]. You are free to act as either an antagonist or a non-antagonist.
+ghost-role-information-freeagent-rules = You are a [color={role-type-free-agent-color}][bold]{role-type-free-agent-name}[/bold][/color]. You are free to act as either an antagonist or a non-antagonist.
                                          You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                          You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
                                          You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
@@ -135,7 +135,7 @@ ghost-role-information-ifrit-description = Listen to your owner. Don't tank dama
 ghost-role-information-space-dragon-name = Space Dragon
 ghost-role-information-space-dragon-description = Call in 3 carp rifts and take over this quadrant! You have only 5 minutes in between each rift before you will disappear.
 ghost-role-information-space-dragon-rules = You are a [color={role-type-team-antagonist-color}][bold]{role-type-team-antagonist-name}[/bold][/color] with all your summoned carp.
-ghost-role-information-space-dragon-summoned-carp-rules = You are a [color={role-type-team-antagonist-color}d][bold]{role-type-team-antagonist-name}[/bold][/color] with your dragon and its allies.
+ghost-role-information-space-dragon-summoned-carp-rules = You are a [color={role-type-team-antagonist-color}][bold]{role-type-team-antagonist-name}[/bold][/color] with your dragon and its allies.
 
 ghost-role-information-space-dragon-dungeon-description = Defend the expedition dungeon with your fishy comrades!
 ghost-role-information-space-dragon-dungeon-rules = You are a [color={role-type-team-antagonist-color}][bold]{role-type-team-antagonist-name}[/bold][/color] with all dungeon mobs.
