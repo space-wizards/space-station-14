@@ -9,8 +9,7 @@
     issuer: objective-issuer-paradox
   - type: RoleRequirement
     roles:
-      mindRoles:
-      - ParadoxCloneRole
+    - ParadoxCloneRole
   - type: Tag
     tags:
     - ParadoxCloneObjectiveBlacklist # don't copy the objectives from other clones
