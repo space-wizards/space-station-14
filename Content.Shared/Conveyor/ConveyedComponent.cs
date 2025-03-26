@@ -7,4 +7,11 @@ namespace Content.Shared.Conveyor;
 /// For entities actively being conveyed see <see cref="ActiveConveyedComponent"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ConveyedComponent : Component;
+public sealed partial class ConveyedComponent : Component
+{
+    // TODO: Delete if pulling gets fixed.
+    /// <summary>
+    /// True if currently conveying.
+    /// </summary>
+    public bool Conveying;
+}
