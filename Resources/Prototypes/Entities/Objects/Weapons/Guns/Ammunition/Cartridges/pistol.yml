@@ -20,8 +20,8 @@
 
 - type: entity
   id: CartridgePistol
-  name: cartridge (.35 auto)
-  description: 9x19mm. Arguably the most popular caliber on the market, used by all manner of pistols and submachine guns. Standard FMJ ammunition for most situations.
+  name: cartridge (.35 auto kinetic)
+  description: .35x.75 inches. Arguably the most popular caliber on the market, used by all manner of pistols and submachine guns. Standard kinetic ammunition is common and useful in most situations.
   parent: BaseCartridgePistol
   components:
   - type: CartridgeAmmo
@@ -30,7 +30,7 @@
 - type: entity
   id: CartridgePistolPractice
   name: cartridge (.35 auto practice)
-  description: 9x19mm. Arguably the most popular caliber on the market, used by all manner of pistols and submachine guns. Non-harmful chalk ammunition for training purposes.
+  description: .35x.75 inches. Arguably the most popular caliber on the market, used by all manner of pistols and submachine guns. Chalk ammunition is generally non-harmful, used for practice.
   parent: BaseCartridgePistol
   components:
   - type: CartridgeAmmo
@@ -46,7 +46,7 @@
 - type: entity
   id: CartridgePistolIncendiary
   name: cartridge (.35 auto incendiary)
-  description: 9x19mm. Arguably the most popular caliber on the market, used by all manner of pistols and submachine guns. Incendiary ammunition contains a self-igniting compound that sets the target ablaze.
+  description: .35x.75 inches. Arguably the most popular caliber on the market, used by all manner of pistols and submachine guns. Incendiary ammunition containing a self-igniting compound that sets the target ablaze.
   parent: BaseCartridgePistol
   components:
   - type: CartridgeAmmo

@@ -99,9 +99,9 @@
 
 - type: entity
   id: MagazinePistolSubMachineGunTopMounted
-  name: WT550 magazine (.35 auto top-mounted)
+  name: WT550 magazine (.35 auto top-mounted kinetic)
   parent: [ BaseItem, BaseSecurityContraband ]
-  description: Unconventional 30-round top feeding magazine for the WT550 SMG. Intended to hold general-purpose FMJ ammunition.
+  description: Unconventional 30-round top feeding magazine for the WT550 SMG. Intended to hold general-purpose kinetic ammunition.
   components:
   - type: Tag
     tags:
@@ -140,9 +140,9 @@
 
 - type: entity
   id: MagazinePistol
-  name: pistol magazine (.35 auto)
+  name: pistol magazine (.35 auto kinetic)
   parent: BaseMagazinePistol
-  description: Universal 10-round single-stack magazine for pistols. Intended to hold general-purpose FMJ ammunition.
+  description: 10-round single-stack magazine for pistols. Intended to hold general-purpose kinetic ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistol
@@ -158,7 +158,7 @@
   name: pistol magazine (.35 auto any)
   suffix: empty
   parent: MagazinePistol
-  description: Universal 10-round single-stack magazine for pistols.
+  description: 10-round single-stack magazine for pistols.
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -174,7 +174,7 @@
   id: MagazinePistolIncendiary
   name: pistol magazine (.35 auto incendiary)
   parent: MagazinePistol
-  description: Universal 10-round single-stack magazine for pistols. Intended to hold self-igniting incendiary ammunition.
+  description: 10-round single-stack magazine for pistols. Intended to hold self-igniting incendiary ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolIncendiary
@@ -183,7 +183,7 @@
   id: MagazinePistolPractice
   name: pistol magazine (.35 auto practice)
   parent: BaseMagazinePistol
-  description: Universal 10-round single-stack magazine for pistols. Intended to hold non-harmful chalk ammunition.
+  description: 10-round single-stack magazine for pistols. Intended to hold non-harmful chalk ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolPractice
@@ -198,7 +198,7 @@
   id: MagazinePistolUranium
   name: pistol magazine (.35 auto uranium)
   parent: BaseMagazinePistol
-  description: Universal 10-round single-stack magazine for pistols. Intended to hold exotic uranium-core ammunition.
+  description: 10-round single-stack magazine for pistols. Intended to hold exotic uranium-core ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgePistolUranium
@@ -226,7 +226,7 @@
 
 - type: entity
   id: MagazinePistolHighCapacity
-  name: machine pistol magazine (.35 auto)
+  name: machine pistol magazine (.35 auto kinetic)
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
@@ -254,9 +254,9 @@
 
 - type: entity
   id: MagazinePistolSubMachineGun
-  name: SMG magazine (.35 auto)
+  name: SMG magazine (.35 auto kinetic)
   parent: BaseMagazinePistolSubMachineGun
-  description: 30-round double-stack magazine for submachine guns. Intended to hold general-purpose FMJ ammunition.
+  description: 30-round double-stack magazine for submachine guns. Intended to hold general-purpose kinetic ammunition.
   components:
   - type: BallisticAmmoProvider
     capacity: 30

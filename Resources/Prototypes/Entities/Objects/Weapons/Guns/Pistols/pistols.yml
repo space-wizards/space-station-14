@@ -189,7 +189,7 @@
   name: mk 58
   parent: [BaseWeaponPistol, BaseSecurityContraband]
   id: WeaponPistolMk58
-  description: Designed by NT subsidiary Fenrir Arms, the Mk58 was adopted as the standard sidearm of most Nanotrasen forces, including ERT and station security. Feeds from .35 pistol magazines.
+  description: Designed by Nanotrasen’s Small Arms Division, the Mk58 was adopted as the standard sidearm for most Nanotrasen forces, including ERT and station security. Feeds from .35 pistol magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
