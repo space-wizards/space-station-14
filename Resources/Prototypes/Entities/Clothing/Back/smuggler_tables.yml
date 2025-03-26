@@ -270,8 +270,6 @@
     - id: ToyFigurineSpaceDragon
     - id: ToyFigurineQueen
     - id: ToyFigurineRatKing
-    - id: PresentRandomUnsafe
-      weight: 0.001
 
 - type: entityTable
   id: RandomSatchelCashTable
