@@ -281,6 +281,7 @@ public sealed partial class ExplosionSystem
         // diameter x diameter sized box, use a smaller box with radius sized sides:
         var box = Box2.CenteredAround(epicenter.Position, new Vector2(radius, radius));
 
+        _grids.Clear();
         _mapManager.FindGridsIntersecting(epicenter.MapId, box, ref _grids);
         foreach (var grid in _grids)
         {
@@ -302,6 +303,7 @@ public sealed partial class ExplosionSystem
 
         radius *= 4;
         box = Box2.CenteredAround(epicenter.Position, new Vector2(radius, radius));
+        _grids.Clear();
         _mapManager.FindGridsIntersecting(epicenter.MapId, box, ref _grids);
         var grids = _grids.Select(x => x.Owner).ToList();
 
