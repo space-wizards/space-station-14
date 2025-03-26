@@ -52,18 +52,27 @@ namespace Content.Server.GameTicking
             var readyCount = _playerGameStatuses.Values.Count(x => x == PlayerGameStatus.ReadyToPlay);
 
             var stationNames = new StringBuilder();
+            var alertLevels = new StringBuilder();
             var query =
                 EntityQueryEnumerator<StationJobsComponent, StationSpawningComponent, MetaDataComponent>();
 
             var foundOne = false;
 
-            while (query.MoveNext(out _, out _, out var meta))
+            while (query.MoveNext(out var stationUid, out _, out _, out var meta))
             {
                 foundOne = true;
                 if (stationNames.Length > 0)
                         stationNames.Append('\n');
-
                 stationNames.Append(meta.EntityName);
+
+                var level = _alertLevel.GetLevel(stationUid);
+                if (level != string.Empty)
+                {
+                    if (alertLevels.Length > 0)
+                        alertLevels.Append('\n');
+
+                    alertLevels.Append(level);
+                }
             }
 
             if (!foundOne)
@@ -82,6 +91,7 @@ namespace Content.Server.GameTicking
                 ("playerCount", playerCount),
                 ("readyCount", readyCount),
                 ("mapName", stationNames.ToString()),
+                ("alertLevel", alertLevels.ToString()),
                 ("gmTitle", gmTitle),
                 ("desc", desc));
         }
