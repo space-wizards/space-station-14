@@ -23,6 +23,9 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
     public void OnStateEntered(GameplayState state)
     {
+        _menu = UIManager.CreateWindow<EmotesMenu>();
+        _menu.OnPlayEmote += OnPlayEmote;
+
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenEmotesMenu,
                 InputCmdHandler.FromDelegate(_ => ToggleWindow(false)))
@@ -32,17 +35,17 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
     public void OnStateExited(GameplayState state)
     {
         _menu = null;
-        
+
         CommandBinds.Unregister<EmotesUIController>();
     }
 
     public void ToggleWindow(bool centered)
     {
         if (_menu == null)
-        {
-            _menu = UIManager.CreateWindow<EmotesMenu>();
-            _menu.OnPlayEmote += OnPlayEmote;
+            return;
 
+        if (!_menu.IsOpen)
+        {
             if (centered)
                 _menu.OpenCentered();
 
@@ -54,11 +57,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
             }
         }
         else
-        {
             _menu.Close();
-
-            _menu = null;
-        }
     }
 
     private void OnPlayEmote(ProtoId<EmotePrototype> protoId)
