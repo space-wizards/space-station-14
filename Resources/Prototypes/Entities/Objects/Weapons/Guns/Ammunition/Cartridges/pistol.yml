@@ -20,7 +20,7 @@
 
 - type: entity
   id: CartridgePistol
-  name: cartridge (.35 auto kinetic)
+  name: cartridge (.35 auto)
   description: .35x.75 inches. Arguably the most popular caliber on the market, used by all manner of pistols and submachine guns. Standard kinetic ammunition is common and useful in most situations.
   parent: BaseCartridgePistol
   components:

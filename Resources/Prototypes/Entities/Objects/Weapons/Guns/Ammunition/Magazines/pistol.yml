@@ -140,7 +140,7 @@
 
 - type: entity
   id: MagazinePistol
-  name: pistol magazine (.35 auto kinetic)
+  name: pistol magazine (.35 auto)
   parent: BaseMagazinePistol
   description: 10-round single-stack magazine for pistols. Intended to hold general-purpose kinetic ammunition.
   components:
@@ -226,7 +226,7 @@
 
 - type: entity
   id: MagazinePistolHighCapacity
-  name: machine pistol magazine (.35 auto kinetic)
+  name: machine pistol magazine (.35 auto)
   parent: BaseMagazinePistolHighCapacity
   components:
   - type: BallisticAmmoProvider
@@ -254,7 +254,7 @@
 
 - type: entity
   id: MagazinePistolSubMachineGun
-  name: SMG magazine (.35 auto kinetic)
+  name: SMG magazine (.35 auto)
   parent: BaseMagazinePistolSubMachineGun
   description: 30-round double-stack magazine for submachine guns. Intended to hold general-purpose kinetic ammunition.
   components:
