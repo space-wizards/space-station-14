@@ -1,14 +1,14 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "icon modified from EVA and rainbow suit sprites by Scyarah (GitHub)",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "icon"
-    }
-  ]
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "icon modified from EVA and rainbow suit sprites by Scyarah (GitHub)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        }
+    ]
 }
