@@ -17,6 +17,8 @@ namespace Content.Server.Administration.Commands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+
         public string Command => "warp";
         public string Description => "Teleports you to predefined areas on the map.";
 
@@ -63,8 +65,8 @@ namespace Content.Server.Administration.Commands
                         // Sort so that warp points on the same grid/map are first.
                         // So if you have two maps loaded with the same warp points,
                         // it will prefer the warp points on the map you're currently on.
-                        var aGrid = a.GetGridUid(_entManager);
-                        var bGrid = b.GetGridUid(_entManager);
+                        var aGrid = _transform.GetGrid(a);
+                        var bGrid = _transform.GetGrid(b);
 
                         if (aGrid == bGrid)
                         {
