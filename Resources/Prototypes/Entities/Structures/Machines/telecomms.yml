@@ -16,6 +16,8 @@
       map: ["tele-server-on"]
     - state: tele-server-no-key
       map: ["tele-server-no-key"]
+    - state: tele-server-on-default
+      map: ["tele-server-on-default"]
     - state: tele-server-on-common
       map: ["tele-server-on-common"]
     - state: tele-server-on-cargo
@@ -34,13 +36,21 @@
       map: ["tele-server-on-command"]
     - state: tele-server-on-multiple
       map: ["tele-server-on-multiple"]
-    - state: tele-server-on-default
-      map: ["tele-server-on-default"]
     - state: tele_o
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ItemMapper
     sprite: Structures/Machines/telecomms.rsi
     mapLayers:
+      tele-server-no-key:
+        whitelist:
+          components: 
+          - EncryptionKey  #Shown when no keys are present 
+        minCount: 0
+      tele-server-on-default:
+        whitelist:
+          components:
+          - EncryptionKey
+        minCount: 1
       tele-server-on-common:
         whitelist:
           tags:
@@ -73,21 +83,11 @@
         whitelist:
           tags:
           - EncryptionCommand
-      tele-server-on-default:
-        whitelist:
-          tags:
-          - EncryptionElse
-        minCount: 1
       tele-server-on-multiple:
         whitelist:
-          tags:
+          components:
           - EncryptionKey  #Shown when multiple keys are present 
         minCount: 2
-      tele-server-no-key:
-        whitelist:
-          tags:
-          - EncryptionKey  #Shown when no keys are present 
-        minCount: 0
   - type: PointLight
     enabled: false
     castShadows: false

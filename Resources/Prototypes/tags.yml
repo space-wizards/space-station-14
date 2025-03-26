@@ -538,10 +538,7 @@
   
 - type: Tag
   id: EncryptionEngineering
-
-- type: Tag
-  id: EncryptionKey
-  
+ 
 - type: Tag
   id: EncryptionMedical
   

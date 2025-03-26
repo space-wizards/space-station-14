@@ -10,9 +10,6 @@
     sprite: Objects/Devices/encryption_keys.rsi
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
-  - type: Tag
-    tags:
-    - EncryptionKey
 
 - type: entity
   parent: EncryptionKey
@@ -30,7 +27,6 @@
     - state: common_label
   - type: Tag
     tags:
-    - EncryptionKey
     - EncryptionCommon
 
 - type: entity
@@ -49,7 +45,6 @@
     - state: cargo_label
   - type: Tag
     tags:
-    - EncryptionKey
     - EncryptionCargo
 
 - type: entity
@@ -66,10 +61,6 @@
     layers:
     - state: crypt_blue
     - state: nano_label
-  - type: Tag
-    tags:
-    - EncryptionKey
-    - EncryptionElse
 
 - type: entity
   parent: [ EncryptionKey, BaseCentcommCommandContraband ]
@@ -92,10 +83,6 @@
     layers:
     - state: crypt_gold
     - state: cap_label
-  - type: Tag
-    tags:
-    - EncryptionKey
-    - EncryptionElse
 
 - type: entity
   parent: [ EncryptionKey, BaseCommandContraband ]
@@ -113,7 +100,6 @@
     - state: com_label
   - type: Tag
     tags:
-    - EncryptionKey
     - EncryptionCommand
 
 - type: entity
@@ -132,7 +118,6 @@
     - state: eng_label
   - type: Tag
     tags:
-    - EncryptionKey
     - EncryptionEngineering
 
 - type: entity
@@ -151,7 +136,6 @@
     - state: med_label
   - type: Tag
     tags:
-    - EncryptionKey
     - EncryptionMedical
 
 - type: entity
@@ -169,10 +153,6 @@
     layers:
     - state: crypt_gray
     - state: medsci_label
-  - type: Tag
-    tags:
-    - EncryptionKey
-    - EncryptionElse
 
 - type: entity
   parent: [ EncryptionKey, BaseScienceContraband ]
@@ -190,7 +170,6 @@
     - state: sci_label
   - type: Tag
     tags:
-    - EncryptionKey
     - EncryptionScience
 
 - type: entity
@@ -207,10 +186,6 @@
     layers:
     - state: crypt_gray
     - state: robotics_label
-  - type: Tag
-    tags:
-    - EncryptionKey
-    - EncryptionElse
 
 - type: entity
   parent: [ EncryptionKey, BaseSecurityLawyerContraband ]
@@ -228,7 +203,6 @@
     - state: sec_label
   - type: Tag
     tags:
-    - EncryptionKey
     - EncryptionSecurity
 
 - type: entity
@@ -247,7 +221,6 @@
     - state: service_label
   - type: Tag
     tags:
-    - EncryptionKey
     - EncryptionService
 
 - type: entity
@@ -264,10 +237,6 @@
     layers:
     - state: crypt_red
     - state: synd_label
-  - type: Tag
-    tags:
-    - EncryptionKey
-    - EncryptionElse
 
 - type: entity
   parent: [ EncryptionKey, BaseSiliconScienceContraband ]
@@ -283,10 +252,6 @@
     layers:
     - state: crypt_silver
     - state: ai_label
-  - type: Tag
-    tags:
-    - EncryptionKey
-    - EncryptionElse
 
 - type: entity
   parent: [ EncryptionKey, BaseSyndicateContraband ]
@@ -302,10 +267,6 @@
     layers:
     - state: crypt_red
     - state: ai_label
-  - type: Tag
-    tags:
-    - EncryptionKey
-    - EncryptionElse
 
 - type: entity
   parent: EncryptionKey
@@ -321,7 +282,3 @@
       layers:
         - state: crypt_rusted
         - state: pirate_label
-    - type: Tag
-      tags:
-      - EncryptionKey
-      - EncryptionElse
