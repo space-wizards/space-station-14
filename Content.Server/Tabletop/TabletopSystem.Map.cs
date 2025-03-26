@@ -93,7 +93,7 @@ namespace Content.Server.Tabletop
                 return;
 
             // This will usually *not* be the case, but better make sure.
-            _mapManager.DeleteMap(TabletopMap);
+            _map.DeleteMap(TabletopMap);
 
             // Reset tabletop count.
             _tabletops = 0;
