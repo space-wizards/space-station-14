@@ -7,7 +7,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -24,7 +23,6 @@ public abstract class SharedRingerSystem : EntitySystem
 
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPdaSystem _pda = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -36,11 +34,7 @@ public abstract class SharedRingerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RingerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<RingerUplinkComponent, ComponentInit>(OnUplinkInit);
-
         // RingerBoundUserInterface Subscriptions
-        SubscribeLocalEvent<RingerUplinkComponent, BeforeRingtoneSetEvent>(OnSetUplinkRingtone);
         SubscribeLocalEvent<RingerComponent, RingerSetRingtoneMessage>(OnSetRingtone);
         SubscribeLocalEvent<RingerComponent, RingerPlayRingtoneMessage>(OnPlayRingtone);
     }
@@ -139,6 +133,7 @@ public abstract class SharedRingerSystem : EntitySystem
     /// </remarks>
     public void LockUplink(Entity<RingerUplinkComponent?> ent)
     {
+        // TODO: This will fail on the client since the component isn't networked
         if (!Resolve(ent, ref ent.Comp))
             return;
 
@@ -146,23 +141,39 @@ public abstract class SharedRingerSystem : EntitySystem
         UI.CloseUi(ent.Owner, StoreUiKey.Key);
     }
 
+    /// <summary>
+    /// Attempts to unlock or lock the uplink by checking the provided ringtone against the uplink code.
+    /// </summary>
+    /// <param name="uid">The entity with the RingerUplinkComponent.</param>
+    /// <param name="ringtone">The ringtone to check against the uplink code.</param>
+    /// <returns>True if the ringtone matched the uplink code and the uplink state was toggled, false otherwise.</returns>
+    public bool TryToggleUplink(EntityUid uid, Note[] ringtone)
+    {
+        // TODO: This will fail on the client since the component isn't networked
+        if (!TryComp<RingerUplinkComponent>(uid, out var uplink))
+            return false;
+
+        if (!HasComp<StoreComponent>(uid))
+            return false;
+
+        if (!uplink.Code.SequenceEqual(ringtone))
+            return false;
+
+        // Toggle the unlock state
+        uplink.Unlocked = !uplink.Unlocked;
+
+        // Update PDA UI if needed
+        if (TryComp<PdaComponent>(uid, out var pda))
+            _pda.UpdatePdaUi(uid, pda);
+
+        // Close store UI if we're locking
+        if (!uplink.Unlocked)
+            UI.CloseUi(uid, StoreUiKey.Key);
+
+        return true;
+    }
+
     #endregion
-
-    /// <summary>
-    /// Randomizes a ringtone for <see cref="RingerComponent"/> on <see cref="MapInitEvent"/>.
-    /// </summary>
-    private void OnMapInit(Entity<RingerComponent> ent, ref MapInitEvent args)
-    {
-        UpdateRingerRingtone(ent, GenerateRingtone());
-    }
-
-    /// <summary>
-    /// Randomizes a ringtone code for <see cref="RingerUplinkComponent"/> on <see cref="ComponentInit"/>.
-    /// </summary>
-    private void OnUplinkInit(Entity<RingerUplinkComponent> ent, ref ComponentInit args)
-    {
-        ent.Comp.Code = GenerateRingtone();
-    }
 
     // UI Message event handlers
 
@@ -177,17 +188,16 @@ public abstract class SharedRingerSystem : EntitySystem
             return;
 
         ent.Comp.LastRingtoneSetTime = curTime;
+        DirtyField(ent.AsNullable(), nameof(RingerComponent.LastRingtoneSetTime));
 
         // Client sent us an updated ringtone so set it to that.
         if (args.Ringtone.Length != RingtoneLength)
             return;
 
-        var ev = new BeforeRingtoneSetEvent(args.Ringtone);
-        RaiseLocalEvent(ent, ref ev);
-        if (ev.Handled)
-            return;
+        // Try to toggle the uplink first
+        if (TryToggleUplink(ent, args.Ringtone))
+            return; // Don't save the uplink code as the ringtone
 
-        DirtyField(ent.AsNullable(), nameof(RingerComponent.LastRingtoneSetTime));
         UpdateRingerRingtone(ent, args.Ringtone);
     }
 
@@ -197,26 +207,6 @@ public abstract class SharedRingerSystem : EntitySystem
     private void OnPlayRingtone(Entity<RingerComponent> ent, ref RingerPlayRingtoneMessage args)
     {
         StartRingtone(ent);
-    }
-
-    /// <summary>
-    /// Handles the uplink code verification when a ringtone is set.
-    /// </summary>
-    private void OnSetUplinkRingtone(Entity<RingerUplinkComponent> ent, ref BeforeRingtoneSetEvent args)
-    {
-        if (ent.Comp.Code.SequenceEqual(args.Ringtone) && HasComp<StoreComponent>(ent))
-        {
-            ent.Comp.Unlocked = !ent.Comp.Unlocked;
-            if (TryComp<PdaComponent>(ent, out var pda))
-                _pda.UpdatePdaUi(ent, pda);
-
-            // can't keep store open after locking it
-            if (!ent.Comp.Unlocked)
-                UI.CloseUi(ent.Owner, StoreUiKey.Key);
-
-            // no saving the code to prevent meta click set on sus guys pda -> wewlad
-            args.Handled = true;
-        }
     }
 
     // Helper methods
@@ -254,45 +244,11 @@ public abstract class SharedRingerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Generates a random ringtone using the C pentatonic scale.
-    /// </summary>
-    /// <returns>An array of Notes representing the ringtone.</returns>
-    private Note[] GenerateRingtone()
-    {
-        // Default to using C pentatonic so it at least sounds not terrible.
-        return GenerateRingtone(new[]
-        {
-            Note.C,
-            Note.D,
-            Note.E,
-            Note.G,
-            Note.A
-        });
-    }
-
-    /// <summary>
-    /// Generates a random ringtone using the specified notes.
-    /// </summary>
-    /// <param name="notes">The notes to choose from when generating the ringtone.</param>
-    /// <returns>An array of Notes representing the ringtone.</returns>
-    private Note[] GenerateRingtone(Note[] notes)
-    {
-        var ringtone = new Note[RingtoneLength];
-
-        for (var i = 0; i < RingtoneLength; i++)
-        {
-            ringtone[i] = _random.Pick(notes);
-        }
-
-        return ringtone;
-    }
-
-    /// <summary>
     /// Updates the ringer's ringtone and notifies clients.
     /// </summary>
     /// <param name="ent">Entity with RingerComponent to update.</param>
     /// <param name="ringtone">The new ringtone to set.</param>
-    private void UpdateRingerRingtone(Entity<RingerComponent> ent, Note[] ringtone)
+    protected void UpdateRingerRingtone(Entity<RingerComponent> ent, Note[] ringtone)
     {
         // Assume validation has already happened.
         ent.Comp.Ringtone = ringtone;
@@ -317,11 +273,6 @@ public abstract class SharedRingerSystem : EntitySystem
     {
     }
 }
-/// <summary>
-/// Event raised before a ringtone is set.
-/// </summary>
-[ByRefEvent]
-public record struct BeforeRingtoneSetEvent(Note[] Ringtone, bool Handled = false);
 
 /// <summary>
 /// Enum representing musical notes for ringtones.
