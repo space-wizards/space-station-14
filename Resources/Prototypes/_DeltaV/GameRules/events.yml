@@ -9,7 +9,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    earliestStart: 20 # Harmony change: Make listening post spawn earlier. 60 -> 20
+    earliestStart: 20
     weight: 2
     minimumPlayers: 40
     maxOccurrences: 1
