@@ -332,7 +332,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     private Explosion? SpawnExplosion(QueuedExplosion queued)
     {
         var pos = queued.Epicenter;
-        if (!_mapManager.MapExists(pos.MapId))
+        if (!_mapSystem.MapExists(pos.MapId))
             return null;
 
         var results = GetExplosionTiles(pos, queued.Proto.ID, queued.TotalIntensity, queued.Slope, queued.MaxTileIntensity);
