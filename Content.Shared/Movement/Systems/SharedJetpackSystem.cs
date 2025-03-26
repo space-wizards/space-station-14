@@ -16,7 +16,6 @@ public abstract class SharedJetpackSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
-    [Dependency] private readonly SharedMoverController _mover = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
@@ -28,7 +27,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         SubscribeLocalEvent<JetpackComponent, DroppedEvent>(OnJetpackDropped);
         SubscribeLocalEvent<JetpackComponent, ToggleJetpackEvent>(OnJetpackToggle);
 
-        SubscribeLocalEvent<JetpackUserComponent, RefreshWeightlessModifiersEvent>(OnJetpackUserMovement);
+        SubscribeLocalEvent<JetpackUserComponent, RefreshWeightlessModifiersEvent>(OnJetpackUserWeightlessMovement);
         SubscribeLocalEvent<JetpackUserComponent, CanWeightlessMoveEvent>(OnJetpackUserCanWeightless);
         SubscribeLocalEvent<JetpackUserComponent, EntParentChangedMessage>(OnJetpackUserEntParentChanged);
 
@@ -36,7 +35,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         SubscribeLocalEvent<JetpackComponent, MapInitEvent>(OnMapInit);
     }
 
-    private void OnJetpackUserMovement(Entity<JetpackUserComponent> ent, ref RefreshWeightlessModifiersEvent args)
+    private void OnJetpackUserWeightlessMovement(Entity<JetpackUserComponent> ent, ref RefreshWeightlessModifiersEvent args)
     {
         // Yes this bulldozes the values but primarily for backwards compat atm.
         args.WeightlessAcceleration = ent.Comp.WeightlessAcceleration;
