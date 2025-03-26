@@ -83,8 +83,8 @@ namespace Content.Server.Administration.Commands
                             return 1;
                         }
 
-                        var mapA = a.GetMapId(_entManager);
-                        var mapB = a.GetMapId(_entManager);
+                        var mapA = _transform.GetMapId(a);
+                        var mapB = _transform.GetMapId(a);
 
                         if (mapA == mapB)
                         {
