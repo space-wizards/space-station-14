@@ -44,6 +44,17 @@
     state: icon
 
 - type: entity
+  parent: [ BaseSubfloorAnchorStorage, ClothingBackpackSatchel, BaseMinorContraband ]
+  id: ClothingBackpackSatchelSmugglerUnanchored
+  name: smuggler's satchel
+  suffix: Empty, Unanchored
+  description: A dingy, suspicious looking satchel.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/smuggler.rsi
+    state: icon
+
+- type: entity
   parent: [ BaseSubfloorAnchorStorageAnchored, BriefcaseSyndie, BaseMinorContraband ]
   id: BriefcaseSmugglerCash
   name: smuggler's briefcase
