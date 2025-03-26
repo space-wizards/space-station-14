@@ -48,7 +48,7 @@ namespace Content.Server.Administration.Commands
             }
             else
             {
-                if (player.Status != SessionStatus.InGame || player.AttachedEntity is not {Valid: true} playerEntity)
+                if (player.Status != SessionStatus.InGame || player.AttachedEntity is not { Valid: true } playerEntity)
                 {
                     shell.WriteLine("You are not in-game!");
                     return;
