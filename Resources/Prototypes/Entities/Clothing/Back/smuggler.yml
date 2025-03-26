@@ -33,9 +33,9 @@
     bodyType: Static
 
 - type: entity
-  parent: [ BaseSubfloorAnchorStorageAnchored, ClothingBackpackSatchel ]
+  parent: [ BaseSubfloorAnchorStorageAnchored, ClothingBackpackSatchel, BaseMinorContraband ]
   id: ClothingBackpackSatchelSmuggler
-  name: Smuggler's Satchel
+  name: smuggler's satchel
   suffix: Empty
   description: A dingy, suspicious looking satchel.
   components:
@@ -44,8 +44,9 @@
     state: icon
 
 - type: entity
-  parent: [ BaseSubfloorAnchorStorageAnchored, BriefcaseSyndie ]
+  parent: [ BaseSubfloorAnchorStorageAnchored, BriefcaseSyndie, BaseMinorContraband ]
   id: BriefcaseSmugglerCash
+  name: smuggler's briefcase
   suffix: Smuggler, Do Not Map
   components:
   - type: EntityTableContainerFill
@@ -57,8 +58,9 @@
             range: 1, 11
 
 - type: entity
-  parent: [ BaseSubfloorAnchorStorageAnchored, ClothingBackpackDuffelClown ]
+  parent: [ BaseSubfloorAnchorStorageAnchored, ClothingBackpackDuffelClown, BaseMinorContraband ]
   id: ClothingBackpackDuffelClownSmuggler
+  name: smuggler's clown duffel bag
   suffix: Smuggler, Do Not Map
   components:
   - type: EntityTableContainerFill
