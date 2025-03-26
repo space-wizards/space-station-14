@@ -45,7 +45,7 @@ namespace Content.Server.Tabletop
         /// </summary>
         private void EnsureTabletopMap()
         {
-            if (TabletopMap != MapId.Nullspace && _mapManager.MapExists(TabletopMap))
+            if (TabletopMap != MapId.Nullspace && _map.MapExists(TabletopMap))
                 return;
 
             TabletopMap = _mapManager.CreateMap();
@@ -89,7 +89,7 @@ namespace Content.Server.Tabletop
 
         private void OnRoundRestart(RoundRestartCleanupEvent _)
         {
-            if (TabletopMap == MapId.Nullspace || !_mapManager.MapExists(TabletopMap))
+            if (TabletopMap == MapId.Nullspace || !_map.MapExists(TabletopMap))
                 return;
 
             // This will usually *not* be the case, but better make sure.
