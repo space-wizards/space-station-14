@@ -84,7 +84,7 @@ namespace Content.Server.Administration.Commands
                         }
 
                         var mapA = _transform.GetMapId(a);
-                        var mapB = _transform.GetMapId(a);
+                        var mapB = _transform.GetMapId(b);
 
                         if (mapA == mapB)
                         {
