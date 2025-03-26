@@ -1,6 +1,8 @@
 # For use by Role Types
 # Do not touch these
 
+# Ghost role descriptions that use role type colors read it from role-types.ftl, not here.
+
 - type: roleType
   id: Neutral
   name: role-type-crew-aligned-name
