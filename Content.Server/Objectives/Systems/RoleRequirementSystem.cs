@@ -9,7 +9,6 @@ namespace Content.Server.Objectives.Systems;
 /// </summary>
 public sealed class RoleRequirementSystem : EntitySystem
 {
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     public override void Initialize()
     {
@@ -25,7 +24,7 @@ public sealed class RoleRequirementSystem : EntitySystem
 
         foreach (var role in comp.Roles)
         {
-            if (!_componentFactory.TryGetRegistration(role, out var roleReg))
+            if (!EntityManager.ComponentFactory.TryGetRegistration(role, out var roleReg))
             {
                 Log.Error($"Role component not found for RoleRequirementComponent: {role}");
                 continue;
