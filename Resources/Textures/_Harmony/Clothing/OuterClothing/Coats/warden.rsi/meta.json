@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC0-1.0",
-  "copyright": "Made by CrimsonJupiter for use in Harmony",
+  "copyright": "Originally made by Shiftyeyesshady at commit https://github.com/Imaginos16/tgstation/commit/e444ce8fc2c51a168b54ee247dcaf10d9a0294b1. Armor design inspired by DieselMohawk's armor at commit https://github.com/space-wizards/space-station-14/commit/6759d6a6142c411ac445a56d9623042383d034a9. Resprited by CrimsonJupiter",
   "size": {
     "x": 32,
     "y": 32
