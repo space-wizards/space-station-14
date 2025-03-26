@@ -1,81 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: WT550 and C20-r's "burst" firemodes are now actual bursts.
-    type: Tweak
-  - message: Drozd is now a burst-only weapon (DPS remains unchanged!).
-    type: Tweak
-  id: 7597
-  time: '2024-11-06T14:39:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31292
-- author: PopGamer46
-  changes:
-  - message: Fixed Lambordeere (botany shuttle) bolt buttons not being connected
-    type: Fix
-  id: 7598
-  time: '2024-11-07T22:02:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33065
-- author: Boaz1111
-  changes:
-  - message: Added casual green jumpsuits and skirts to the clothesmate.
-    type: Add
-  id: 7599
-  time: '2024-11-08T14:50:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31710
-- author: ScarKy0
-  changes:
-  - message: Intellicarding the AI is now a doAfter.
-    type: Tweak
-  - message: AI now gets notified when someone tries to intellicard it.
-    type: Add
-  - message: You can no longer exchange the AI between intellicards.
-    type: Fix
-  id: 7600
-  time: '2024-11-09T19:29:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33198
-- author: IProduceWidgets
-  changes:
-  - message: weather now has a completion result for how to unset the weather.
-    type: Tweak
-  id: 7601
-  time: '2024-11-10T04:26:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33130
-- author: BramvanZijp
-  changes:
-  - message: The Flare Gun & Security Shell Gun now start in their open/unbolted state.
-    type: Tweak
-  id: 7602
-  time: '2024-11-11T16:12:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33248
-- author: AndrewMontagne
-  changes:
-  - message: APEs could be powered on without local power
-    type: Fix
-  id: 7603
-  time: '2024-11-11T22:58:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32493
-- author: thetolbean
-  changes:
-  - message: Droppers can no longer inject or draw from closed containers.
-    type: Fix
-  id: 7604
-  time: '2024-11-12T12:06:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33011
-- author: august-sun
-  changes:
-  - message: The inert flesh anomaly core can now be microwaved to turn into an anomalous
-      meat mass.
-    type: Tweak
-  id: 7605
-  time: '2024-11-13T02:59:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33223
-- author: Ubaser
-  changes:
-  - message: Window sprites are now slightly more transparent.
-    type: Tweak
-  id: 7606
-  time: '2024-11-13T12:30:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33282
 - author: keronshb
   changes:
   - message: Added Ethereal Jaunt! A Wizard Spell that turns you invisible and into
@@ -3886,3 +3809,74 @@
   id: 8096
   time: '2025-03-21T00:13:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35578
+- author: Moomoobeef
+  changes:
+  - message: New sprite for Singularity Generator.
+    type: Tweak
+  id: 8097
+  time: '2025-03-21T08:48:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31500
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed organic thermoregulation. Humans, arachnids, moths, etc. will maintain
+      their desired body temperature better.
+    type: Fix
+  id: 8098
+  time: '2025-03-21T09:36:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35981
+- author: TiniestShark
+  changes:
+  - message: Added inhand sprites to Grenades, Bolas and Throwing Stars
+    type: Add
+  id: 8099
+  time: '2025-03-21T09:37:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35974
+- author: TeenSarlacc
+  changes:
+  - message: You can now buy Foam Force weapons through Cargo.
+    type: Add
+  id: 8100
+  time: '2025-03-21T09:39:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35824
+- author: aada
+  changes:
+  - message: 17 machine boards have been recolored.
+    type: Tweak
+  id: 8101
+  time: '2025-03-21T09:40:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35715
+- author: metalgearsloth
+  changes:
+  - message: Fix pulling alert being goofy.
+    type: Fix
+  id: 8102
+  time: '2025-03-22T11:41:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36004
+- author: Boaz1111
+  changes:
+  - message: Unrevivable now lets you be cloned again
+    type: Tweak
+  id: 8103
+  time: '2025-03-22T14:42:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36008
+- author: RedBookcase
+  changes:
+  - message: Fixed some unintended changes to Salvage gear.
+    type: Fix
+  id: 8104
+  time: '2025-03-23T00:21:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36013
+- author: Vortebo
+  changes:
+  - message: Relic station revamped
+    type: Tweak
+  id: 8105
+  time: '2025-03-24T16:36:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35507
+- author: slarticodefast
+  changes:
+  - message: Adjusted thermal regulation again so you no longer overheat in hardsuits.
+    type: Fix
+  id: 8106
+  time: '2025-03-24T23:55:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36062

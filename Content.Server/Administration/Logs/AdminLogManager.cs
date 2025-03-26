@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.Systems;
 using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Shared.Administration.Logs;
@@ -310,6 +311,10 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             Players = new List<AdminLogPlayer>(players.Count)
         };
 
+        var adminLog = false;
+        var adminSys = _entityManager.SystemOrNull<AdminSystem>();
+        var logMessage = message;
+
         foreach (var id in players)
         {
             var player = new AdminLogPlayer
@@ -319,8 +324,21 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             };
 
             log.Players.Add(player);
+
+            if (adminSys != null)
+            {
+                var cachedInfo = adminSys.GetCachedPlayerInfo(new NetUserId(id));
+                if (cachedInfo != null && cachedInfo.Antag)
+                {
+                    logMessage += " [ANTAG: " + cachedInfo.CharacterName + "]";
+                }
+            }
+
+            if (adminLog)
+                continue;
+
             if (impact == LogImpact.Extreme) // Always chat-notify Extreme logs
-                _chat.SendAdminAlert(message);
+                adminLog = true;
 
             if (impact == LogImpact.High) // Only chat-notify High logs if the player is below a threshold playtime
             {
@@ -330,11 +348,14 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                     if (playtimes.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out var overallTime) &&
                         overallTime <= TimeSpan.FromHours(_highImpactLogPlaytime))
                     {
-                        _chat.SendAdminAlert(message);
+                        adminLog = true;
                     }
                 }
             }
         }
+
+        if (adminLog)
+            _chat.SendAdminAlert(logMessage);
 
         if (preRound)
         {
