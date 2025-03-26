@@ -651,7 +651,7 @@
     maxOccurrences: 2
     weight: 10
   - type: RandomSpawnRule
-    prototype: RandomSatchel
+    prototype: RandomSatchelSpawner
 
 - type: entity
   parent: BaseGameRule

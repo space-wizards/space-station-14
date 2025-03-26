@@ -81,7 +81,7 @@
 
 - type: entity
   parent: ClothingBackpackSatchelSmuggler
-  id: ClothingBackpackSatchelSmugglerFillled
+  id: ClothingBackpackSatchelSmugglerFilled
   suffix: Smuggler, Do Not Map
   components:
   - type: Sprite
