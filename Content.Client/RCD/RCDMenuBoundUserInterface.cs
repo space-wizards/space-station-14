@@ -69,20 +69,19 @@ public sealed class RCDMenuBoundUserInterface : BoundUserInterface
                 ToolTip = GetTooltip(prototype)
             };
             list.Add(actionOption);
-
-
         }
 
-        List<RadialMenuNestedLayerOption> models = new ();
+        var models = new RadialMenuNestedLayerOption[buttonsByCategory.Count];
+        var i = 0;
         foreach (var (key, list) in buttonsByCategory)
         {
             var groupInfo = PrototypesGroupingInfo[key];
-            var layerOption = new RadialMenuNestedLayerOption(list)
+            models[i] = new RadialMenuNestedLayerOption(list)
             {
                 Sprite = groupInfo.Sprite,
                 ToolTip = Loc.GetString(groupInfo.Tooltip)
             };
-            models.Add(layerOption);
+            i++;
         }
 
         return models;
