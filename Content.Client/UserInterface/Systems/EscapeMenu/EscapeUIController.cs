@@ -33,10 +33,6 @@ public sealed class EscapeUIController : UIController, IOnStateChanged<GameplayS
 
         _window = UIManager.CreateWindow<Options.UI.EscapeMenu>();
 
-        var button = UIManager.GetActiveUIWidget<GameTopMenuBar>().EscapeButton;
-        _window.OnOpen += () => button.SetClickPressed(true);
-        _window.OnClose += () => button.SetClickPressed(false);
-
         _window.ChangelogButton.OnPressed += _ =>
         {
             _window.Close();

@@ -56,10 +56,6 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         _window = UIManager.CreateWindow<CharacterWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
 
-        var button = UIManager.GetActiveUIWidget<GameTopMenuBar>().CharacterButton;
-        _window.OnClose += () => button.SetClickPressed(false);
-        _window.OnOpen += () => button.SetClickPressed(true);
-
         CommandBinds.Builder
             .Bind(ContentKeyFunctions.OpenCharacterMenu,
                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
@@ -69,7 +65,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     public void OnStateExited(GameplayState state)
     {
         _window = null;
-        
+
         CommandBinds.Unregister<CharacterUIController>();
     }
 

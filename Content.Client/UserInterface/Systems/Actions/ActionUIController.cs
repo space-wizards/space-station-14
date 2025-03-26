@@ -82,15 +82,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _window = UIManager.CreateWindow<ActionsWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
 
-        var button = UIManager.GetActiveUIWidget<GameTopMenuBar>().ActionButton;
-
-        _window.OnClose += () => button.SetClickPressed(false);
-        _window.OnOpen += () =>
-        {
-            button.SetClickPressed(true);
-            SearchAndDisplay();
-        };
-
+        _window.OnOpen += SearchAndDisplay;
         _window.ClearButton.OnPressed += OnClearPressed;
         _window.SearchBar.OnTextChanged += OnSearchChanged;
         _window.FilterButton.OnItemSelected += OnFilterSelected;

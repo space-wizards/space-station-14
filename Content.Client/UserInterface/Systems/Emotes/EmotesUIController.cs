@@ -1,6 +1,5 @@
 ﻿using Content.Client.Chat.UI;
 using Content.Client.Gameplay;
-using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Chat;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Input;
@@ -10,6 +9,7 @@ using Robust.Client.Input;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Emotes;
 
@@ -24,12 +24,9 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
     public void OnStateEntered(GameplayState state)
     {
+        DebugTools.Assert(_menu == null);
+
         _menu = UIManager.CreateWindow<EmotesMenu>();
-
-        var button = UIManager.GetActiveUIWidget<GameTopMenuBar>().EmotesButton;
-
-        _menu.OnClose += () => button.SetClickPressed(false);
-        _menu.OnOpen += () => button.SetClickPressed(true);
         _menu.OnPlayEmote += OnPlayEmote;
 
         CommandBinds.Builder

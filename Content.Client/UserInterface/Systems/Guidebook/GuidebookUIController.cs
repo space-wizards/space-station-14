@@ -48,15 +48,12 @@ public sealed class GuidebookUIController : UIController, IOnStateChanged<LobbyS
         // setup window
         _window = UIManager.CreateWindow<GuidebookWindow>();
 
-        var button = UIManager.GetActiveUIWidget<GameTopMenuBar>().GuidebookButton;
         _window.OnClose += () =>
         {
             UIManager.ClickSound();
             _window.ReturnContainer.Visible = false;
             _lastEntry = _window.LastEntry;
-            button.SetClickPressed(false);
         };
-        _window.OnOpen += () => button.SetClickPressed(true);
 
         if (state is LobbyState &&
             _jobRequirements.FetchOverallPlaytime() < TimeSpan.FromMinutes(PlaytimeOpenGuidebook))
