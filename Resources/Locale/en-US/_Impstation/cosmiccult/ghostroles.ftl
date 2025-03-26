@@ -21,7 +21,7 @@ rogue-ascended-infection-notification = {CAPITALIZE(THE($user))} extends its ten
 
 rogue-ascended-infection-briefing =
      Malign energy soaks into your psyche. You've been infected by an Astral Ascendant!
-     You must act on your moods to the best of your ability, regardless of wether or not you are an antagonist.
+     You must act on your moods to the best of your ability, regardless of whether or not you are an antagonist.
 
 rogue-ascended-shatter-fail = You can't do that right now.
 

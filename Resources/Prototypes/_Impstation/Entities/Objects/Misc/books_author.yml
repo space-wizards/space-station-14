@@ -141,6 +141,26 @@
 
 - type: entity
   parent: BookBase
+  id: BookMansus
+  name: On the Nature of the Mansus
+  description: It's adorned with an image of a ritual circle, which your eyes seem to instinctively try to avoid.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_base
+      color: "#4f2e0b"
+    - state: decor_spine
+      color: "#9e0b0b"
+    - state: icon_pentagramm
+      color: "#2b0000"
+  - type: Paper
+    content: book-text-mansus
+    
+
+- type: entity
+  parent: BookBase
   id: BookTenebraeConspiracy
   name: the silence of tenebrae
   description: The book is bound in faded leather, its surface embossed with intricate, faintly iridescent patterns resembling stellar gyroscopes and shifting constellations. Its pages are thick and rough-edged, exuding the faint scent of aged paper, with text that seems to shimmer subtly under dim light.

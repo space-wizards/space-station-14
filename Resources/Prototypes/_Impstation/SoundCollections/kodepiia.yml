@@ -1,0 +1,434 @@
+﻿- type: soundCollection
+  id: KodepiiaScreams
+  files:
+  - /Audio/_EE/Supermatter/status/ohfuck.ogg # sorry i think this is funny
+  - /Audio/_Goobstation/Changeling/Effects/changeling_shriek.ogg
+  - /Audio/_Impstation/Effects/gon.ogg # sorry.
+  - /Audio/_Impstation/Voice/Decapoid/decapoid_scream.ogg
+  - /Audio/_Impstation/Voice/Gray/gray_scream.ogg
+  - /Audio/_Impstation/Voice/Silicon/silicon_scream.ogg
+  - /Audio/_Impstation/Voice/Slime/s_femalescream_1.ogg
+  - /Audio/_Impstation/Voice/Slime/s_femalescream_2.ogg
+  - /Audio/_Impstation/Voice/Slime/s_femalescream_3.ogg
+  - /Audio/_Impstation/Voice/Slime/s_femalescream_4.ogg
+  - /Audio/_Impstation/Voice/Slime/s_femalescream_5.ogg
+  - /Audio/_Impstation/Voice/Slime/s_malescream_1.ogg
+  - /Audio/_Impstation/Voice/Slime/s_malescream_2.ogg
+  - /Audio/_Impstation/Voice/Slime/s_malescream_3.ogg
+  - /Audio/_Impstation/Voice/Slime/s_malescream_4.ogg
+  - /Audio/_Impstation/Voice/Slime/s_malescream_5.ogg
+  - /Audio/_Impstation/Voice/Slime/s_malescream_6.ogg
+  - /Audio/_Impstation/Voice/Slime/s_wilhelm_scream.ogg
+  - /Audio/_Impstation/Voice/Snail/snail_scream.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-scream-01.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-scream-02.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-scream-03.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-scream-04.ogg
+  - /Audio/_Nyanotrasen/Voice/Felinid/cat_scream1.ogg
+  - /Audio/_Nyanotrasen/Voice/Felinid/cat_scream2.ogg
+  - /Audio/_Nyanotrasen/Voice/Felinid/cat_scream3.ogg
+  - /Audio/Animals/monkey_scream.ogg
+  - /Audio/Animals/space_dragon_roar.ogg
+  - /Audio/Voice/Arachnid/arachnid_scream.ogg
+  - /Audio/Voice/Diona/diona_scream.ogg
+  - /Audio/Voice/Human/femalescream_1.ogg
+  - /Audio/Voice/Human/femalescream_2.ogg
+  - /Audio/Voice/Human/femalescream_3.ogg
+  - /Audio/Voice/Human/femalescream_4.ogg
+  - /Audio/Voice/Human/femalescream_5.ogg
+  - /Audio/Voice/Human/malescream_1.ogg
+  - /Audio/Voice/Human/malescream_2.ogg
+  - /Audio/Voice/Human/malescream_3.ogg
+  - /Audio/Voice/Human/malescream_4.ogg
+  - /Audio/Voice/Human/malescream_5.ogg
+  - /Audio/Voice/Human/malescream_6.ogg
+  - /Audio/Voice/Human/malescream_guardian.ogg
+  - /Audio/Voice/Moth/moth_scream.ogg
+  - /Audio/Voice/Reptilian/reptilian_scream.ogg
+  - /Audio/Voice/Skeleton/skeleton_scream.ogg
+  - /Audio/Voice/Vox/shriek1.ogg
+
+- type: soundCollection
+  id: KodepiiaLaugh
+  files:
+  - /Audio/_Impstation/Animals/Gorilla_Laugh.ogg
+  - /Audio/_Impstation/Animals/spooky_horse.ogg
+  - /Audio/_Impstation/Voice/Decapoid/decapoid_laugh.ogg
+  - /Audio/_Impstation/Voice/Gray/gray_laugh.ogg
+  - /Audio/_Impstation/Voice/Slime/s_manlaugh1.ogg
+  - /Audio/_Impstation/Voice/Slime/s_manlaugh2.ogg
+  - /Audio/_Impstation/Voice/Slime/s_womanlaugh.ogg
+  - /Audio/_Impstation/Voice/Snail/snail_laugh.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-cackle-01.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-cackle-02.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-cackle-03.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-cackle-04.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-cackle-05.ogg
+  - /Audio/Animals/ferret_happy.ogg
+  - /Audio/Animals/lizard_happy.ogg
+  - /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - /Audio/Voice/Cluwne/cluwnelaugh1.ogg
+  - /Audio/Voice/Cluwne/cluwnelaugh2.ogg
+  - /Audio/Voice/Cluwne/cluwnelaugh3.ogg
+  - /Audio/Voice/Diona/diona_rustle1.ogg
+  - /Audio/Voice/Diona/diona_rustle2.ogg
+  - /Audio/Voice/Diona/diona_rustle3.ogg
+  - /Audio/Voice/Human/manlaugh1.ogg
+  - /Audio/Voice/Human/manlaugh2.ogg
+  - /Audio/Voice/Human/womanlaugh.ogg
+  - /Audio/Voice/Moth/moth_laugh.ogg
+  - /Audio/Voice/Silicon/syndieborg_laugh.ogg
+  - /Audio/Voice/Vox/vox_laugh.ogg
+
+- type: soundCollection
+  id: KodepiiaSigh
+  files:
+  - /Audio/_Impstation/Animals/Gorilla_Chuff.ogg
+  - /Audio/_Impstation/Voice/Decapoid/decapoid_sigh.ogg
+  - /Audio/_Impstation/Voice/Gray/gray_sigh.ogg
+  - /Audio/_Impstation/Voice/Slime/s_female_sigh.ogg
+  - /Audio/_Impstation/Voice/Slime/s_male_sigh.ogg
+  - /Audio/_Impstation/Voice/Snail/snail_sigh.ogg
+  - /Audio/Voice/Human/female_sigh.ogg
+  - /Audio/Voice/Human/male_sigh.ogg
+
+- type: soundCollection
+  id: KodepiiaCry
+  files:
+  - /Audio/_Impstation/Voice/Decapoid/decapoid_cry.ogg
+  - /Audio/_Impstation/Voice/Slime/s_cry_female_1.ogg
+  - /Audio/_Impstation/Voice/Slime/s_cry_female_2.ogg
+  - /Audio/_Impstation/Voice/Slime/s_cry_female_3.ogg
+  - /Audio/_Impstation/Voice/Slime/s_cry_female_4.ogg
+  - /Audio/_Impstation/Voice/Slime/s_cry_male_1.ogg
+  - /Audio/_Impstation/Voice/Slime/s_cry_male_2.ogg
+  - /Audio/_Impstation/Voice/Slime/s_cry_male_3.ogg
+  - /Audio/_Impstation/Voice/Slime/s_cry_male_4.ogg
+  - /Audio/_Impstation/Voice/Snail/snail_cry.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-cry-01.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-cry-02.ogg
+  - /Audio/Voice/Human/cry_female_1.ogg
+  - /Audio/Voice/Human/cry_female_2.ogg
+  - /Audio/Voice/Human/cry_female_3.ogg
+  - /Audio/Voice/Human/cry_female_4.ogg
+  - /Audio/Voice/Human/cry_male_1.ogg
+  - /Audio/Voice/Human/cry_male_2.ogg
+  - /Audio/Voice/Human/cry_male_3.ogg
+  - /Audio/Voice/Human/cry_male_4.ogg
+
+- type: soundCollection
+  id: KodepiiaHisses
+  files:
+  - /Audio/_Impstation/Items/bros_grenade_smoke.ogg
+  - /Audio/_Impstation/Voice/Reptillian/reptillian_hiss1.ogg # sorry its spelled what.
+  - /Audio/_Impstation/Voice/Vox/voxhiss.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-hiss-01.ogg
+  - /Audio/_Nyanotrasen/Machines/deepfryer_basket_add_item.ogg
+  - /Audio/_Nyanotrasen/Voice/Felinid/cat_hiss1.ogg
+  - /Audio/_Nyanotrasen/Voice/Felinid/cat_hiss2.ogg
+  - /Audio/Animals/snake_hiss.ogg
+  - /Audio/Effects/spray.ogg
+  - /Audio/Effects/spray2.ogg
+  - /Audio/Effects/spray3.ogg
+  - /Audio/Items/hiss.ogg
+  - /Audio/Items/hypospray.ogg
+  - /Audio/Items/ratchet.ogg
+  - /Audio/Items/welder.ogg
+  - /Audio/Machines/airlock_close.ogg
+  - /Audio/Machines/windoor_open.ogg
+  - /Audio/Weapons/ebladeon.ogg
+
+- type: soundCollection
+  id: KodepiiaMeows
+  files:
+  - /Audio/_Nyanotrasen/Voice/Felinid/cat_meow1.ogg
+  - /Audio/_Nyanotrasen/Voice/Felinid/cat_meow2.ogg
+  - /Audio/_Nyanotrasen/Voice/Felinid/cat_meow3.ogg
+  - /Audio/Animals/cat_meow.ogg
+  - /Audio/Items/Toys/meow1.ogg
+
+- type: soundCollection
+  id: KodepiiaGrowls
+  files:
+  - /Audio/_DV/Voice/Vulpkanin/dog_growl1.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_growl2.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_growl3.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_growl4.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_growl5.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_growl6.ogg
+  - /Audio/_Nyanotrasen/Voice/Felinid/cat_growl1.ogg
+  - /Audio/Animals/bear.ogg
+
+- type: soundCollection
+  id: KodepiiaRings
+  files:
+  - /Audio/_Impstation/Effects/doorbell.ogg
+  - /Audio/Items/desk_bell_ring.ogg
+  - /Audio/Items/ring.ogg
+  - /Audio/Machines/ding.ogg
+  - /Audio/Machines/double_ring.ogg
+  - /Audio/Machines/warning_buzzer.ogg
+
+- type: soundCollection
+  id: KodepiiaHonks
+  files:
+  - /Audio/_Impstation/Effects/tinycarhorn.ogg
+  - /Audio/_Impstation/Weapons/Guns/Gunshots/clowndisabler.ogg
+  - /Audio/Animals/goose_honk.ogg
+  - /Audio/Items/bikehorn.ogg
+  - /Audio/Items/brokenbikehorn.ogg
+
+- type: soundCollection
+  id: KodepiiaPews
+  files:
+  - /Audio/_Impstation/CosmicCult/ability_nova_cast.ogg
+  - /Audio/_Impstation/CosmicCult/cosmic_wield.ogg
+  - /Audio/_Impstation/Weapons/Guns/Gunshots/autodisabler.ogg
+  - /Audio/_Impstation/Weapons/Guns/Gunshots/goldlaser.ogg
+  - /Audio/_Impstation/Weapons/Guns/Gunshots/raygun.ogg
+  - /Audio/_Impstation/Weapons/Guns/Gunshots/stunlauncher.ogg
+  - /Audio/_Impstation/Weapons/Guns/Gunshots/stunprojector.ogg
+  - /Audio/_Impstation/Weapons/pvc.ogg
+  - /Audio/Effects/Arcade/player_attack.ogg
+  - /Audio/Effects/Arcade/player_charge.ogg
+  - /Audio/Effects/Arcade/player_heal.ogg
+  - /Audio/Magic/blink.ogg
+  - /Audio/Magic/staff_healing.ogg
+  - /Audio/Weapons/emitter.ogg
+  - /Audio/Weapons/Guns/Gunshots/laser.ogg
+  - /Audio/Weapons/Guns/Gunshots/laser3.ogg
+  - /Audio/Weapons/Guns/Gunshots/silenced.ogg
+  - /Audio/Weapons/Guns/Gunshots/taser.ogg
+  - /Audio/Weapons/Guns/Gunshots/taser2.ogg
+
+- type: soundCollection
+  id: KodepiiaBangs
+  files:
+  - /Audio/_Impstation/Weapons/Guns/Gunshots/daito.ogg
+  - /Audio/_Impstation/Weapons/Guns/Gunshots/kammerer.ogg
+  - /Audio/_Impstation/Weapons/Guns/Gunshots/light-pistol.ogg
+  - /Audio/_Impstation/Weapons/Guns/Gunshots/light-pistol2.ogg
+  - /Audio/_Impstation/Weapons/Guns/Gunshots/nemesis.ogg
+  - /Audio/_Impstation/Weapons/Guns/Gunshots/zipper.ogg
+  - /Audio/Items/snap.ogg
+  - /Audio/Machines/blastdoor.ogg
+  - /Audio/Machines/machine_vend.ogg
+  - /Audio/Magic/forcewall.ogg
+  - /Audio/Magic/knock.ogg
+  - /Audio/Weapons/Guns/Gunshots/atreides.ogg
+  - /Audio/Weapons/Guns/Gunshots/bang.ogg
+  - /Audio/Weapons/Guns/Gunshots/c-20r.ogg
+  - /Audio/Weapons/Guns/Gunshots/mk58.ogg
+  - /Audio/Weapons/Guns/Gunshots/pistol.ogg
+
+- type: soundCollection
+  id: KodepiiaBeeps
+  files:
+  - /Audio/_Impstation/CosmicCult/cleanse_deconversion.ogg
+  - /Audio/Effects/Arcade/win.ogg
+  - /Audio/Effects/RingtoneNotes/a.ogg
+  - /Audio/Effects/RingtoneNotes/asharp.ogg
+  - /Audio/Effects/RingtoneNotes/b.ogg
+  - /Audio/Effects/RingtoneNotes/c.ogg
+  - /Audio/Effects/RingtoneNotes/csharp.ogg
+  - /Audio/Effects/RingtoneNotes/d.ogg
+  - /Audio/Effects/RingtoneNotes/dsharp.ogg
+  - /Audio/Effects/RingtoneNotes/e.ogg
+  - /Audio/Effects/RingtoneNotes/f.ogg
+  - /Audio/Effects/RingtoneNotes/fsharp.ogg
+  - /Audio/Effects/RingtoneNotes/g.ogg
+  - /Audio/Effects/RingtoneNotes/gsharp.ogg
+  - /Audio/Items/beep.ogg
+  - /Audio/Items/Defib/defib_ready.ogg
+  - /Audio/Items/Defib/defib_safety_off.ogg
+  - /Audio/Items/Defib/defib_safety_on.ogg
+  - /Audio/Items/locator_beep.ogg
+  - /Audio/Items/Medical/healthscanner.ogg
+  - /Audio/Machines/airlock_deny.ogg
+  - /Audio/Machines/beep.ogg
+  - /Audio/Machines/boltsdown.ogg
+  - /Audio/Machines/boltsup.ogg
+  - /Audio/Machines/custom_deny.ogg
+  - /Audio/Machines/high_tech_confirm.ogg
+  - /Audio/Machines/microwave_done_beep.ogg
+  - /Audio/Machines/scan_finish.ogg
+  - /Audio/Machines/vending_jingle.ogg
+  - /Audio/Weapons/Guns/EmptyAlarm/lmg_empty_alarm.ogg
+  - /Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg
+
+- type: soundCollection
+  id: KodepiiaRevs
+  files:
+  - /Audio/Machines/reclaimer_startup.ogg
+  - /Audio/Weapons/chainsawwield.ogg
+
+- type: soundCollection
+  id: KodepiiaBooms
+  files:
+  - /Audio/_Impstation/Weapons/Guns/Hits/gamemaker-explosion.ogg
+  - /Audio/Effects/explosion_small1.ogg
+  - /Audio/Effects/explosion_small2.ogg
+  - /Audio/Effects/explosion_small3.ogg
+  - /Audio/Effects/explosionsmallfar.ogg
+  - /Audio/Effects/flash_bang.ogg
+  - /Audio/Magic/disintegrate.ogg
+  - /Audio/Magic/fireball.ogg
+
+- type: soundCollection
+  id: KodepiiaClicks
+  files:
+  - /Audio/_DV/Items/TapeRecorder/play.ogg
+  - /Audio/_Impstation/Effects/hollow_plastic1.ogg
+  - /Audio/_Impstation/Effects/hollow_plastic2.ogg
+  - /Audio/_Impstation/Effects/hollow_plastic3.ogg
+  - /Audio/_Impstation/Effects/hollow_plastic4.ogg
+  - /Audio/_Impstation/Effects/hollow_plastic5.ogg
+  - /Audio/_Impstation/Items/Decapoid/claw_cutting.ogg
+  - /Audio/_Impstation/Weapons/Guns/Cock/basic_cock.ogg
+  - /Audio/_Impstation/Weapons/Guns/Cock/shotgun_cock.ogg
+  - /Audio/_Impstation/Weapons/Guns/Empty/dry_fire.ogg
+  - /Audio/Items/deconstruct.ogg
+  - /Audio/Items/flashlight_off.ogg
+  - /Audio/Items/flashlight_on.ogg
+  - /Audio/Items/flashlight_pda.ogg
+  - /Audio/Items/pistol_cock.ogg
+  - /Audio/Items/pistol_magin.ogg
+  - /Audio/Items/pistol_magout.ogg
+  - /Audio/Machines/door_lock_off.ogg
+  - /Audio/Machines/door_lock_on.ogg
+  - /Audio/Machines/id_insert.ogg
+  - /Audio/Machines/id_swipe.ogg
+  - /Audio/Machines/machine_switch.ogg
+  - /Audio/Machines/screwdriverclose.ogg
+  - /Audio/Machines/screwdriveropen.ogg
+
+- type: soundCollection
+  id: KodepiiaChitter
+  files:
+  - /Audio/_Impstation/Voice/Vox/voxchitter1.ogg
+  - /Audio/_Impstation/Voice/Vox/voxchitter2.ogg
+  - /Audio/Voice/Moth/moth_chitter.ogg
+
+- type: soundCollection
+  id: KodepiiaSqueak
+  files:
+  - /Audio/Animals/mouse_squeak.ogg
+  - /Audio/Voice/Moth/moth_squeak.ogg
+
+
+- type: soundCollection
+  id: KodepiiaCaws
+  files:
+  - /Audio/_DV/Voice/Harpy/caw1.ogg
+
+- type: soundCollection
+  id: KodepiiaChirps
+  files:
+  - /Audio/_DV/Voice/Harpy/chirp1.ogg
+  - /Audio/_Impstation/Animals/finfin1.ogg
+  - /Audio/_Impstation/Animals/finfin2.ogg
+  - /Audio/_Impstation/Animals/finfin3.ogg
+  - /Audio/Animals/nymph_chirp.ogg
+  - /Audio/Voice/Talk/pai_ask.ogg
+  - /Audio/Voice/Talk/pai_exclaim.ogg
+  - /Audio/Voice/Talk/pai.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-01.ogg # not certain about placing them here but i dont really want to give kode straight up goblin singing
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-02.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-03.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-04.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-05.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-06.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-07.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-08.ogg
+  - /Audio/Effects/falling.ogg
+
+- type: soundCollection
+  id: KodepiiaDeathgasp
+  files:
+  - /Audio/_Impstation/Kodepiia/kodedeath1.ogg
+  - /Audio/_Impstation/Kodepiia/kodedeath2.ogg
+
+- type: soundCollection
+  id: KodepiiaSnarls
+  files:
+  - /Audio/_DV/Voice/Vulpkanin/dog_snarl1.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_snarl2.ogg
+  - /Audio/_DV/Voice/Vulpkanin/dog_snarl3.ogg
+
+- type: soundCollection
+  id: KodepiiaGasp
+  files:
+  - /Audio/_Impstation/Effects/Gasp/s_gasp_female_1.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_gasp_female_2.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_gasp_female_3.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_gasp_male_1.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_gasp_male_2.ogg
+  - /Audio/_Impstation/Kodepiia/kodegasp.ogg
+  - /Audio/_Impstation/Voice/Decapoid/decapoid_gasp.ogg
+  - /Audio/_Impstation/Voice/Dino/dino_gasp.ogg
+  - /Audio/_Impstation/Voice/Gray/gray_gasp.ogg
+  - /Audio/_Impstation/Voice/Snail/snail_gasp.ogg
+  - /Audio/_Impstation/Voice/Vox/voxgasp1.ogg
+  - /Audio/_Impstation/Voice/Vox/voxgasp2.ogg
+  - /Audio/_Impstation/Voice/Vox/voxgasp3.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-gasp-01.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-gasp-02.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-gasp-03.ogg
+  - /Audio/Effects/Gasp/gasp_female1.ogg
+  - /Audio/Effects/Gasp/gasp_female2.ogg
+  - /Audio/Effects/Gasp/gasp_female3.ogg
+  - /Audio/Effects/Gasp/gasp_male1.ogg
+  - /Audio/Effects/Gasp/gasp_male2.ogg
+
+- type: soundCollection
+  id: KodepiiaCoughs
+  files:
+  - /Audio/_Impstation/Voice/Decapoid/decapoid_cough.ogg
+  - /Audio/_Impstation/Voice/Gray/gray_cough.ogg
+  - /Audio/_Impstation/Voice/Slime/s_female_cough_1.ogg
+  - /Audio/_Impstation/Voice/Slime/s_female_cough_2.ogg
+  - /Audio/_Impstation/Voice/Slime/s_male_cough_1.ogg
+  - /Audio/_Impstation/Voice/Slime/s_male_cough_2.ogg
+  - /Audio/_Impstation/Voice/Snail/snail_cough.ogg
+  - /Audio/Voice/Human/female_cough_1.ogg
+  - /Audio/Voice/Human/female_cough_2.ogg
+  - /Audio/Voice/Human/male_cough_1.ogg
+  - /Audio/Voice/Human/male_cough_2.ogg
+
+- type: soundCollection
+  id: KodepiiaYawn
+  files:
+  - /Audio/_Impstation/Voice/Decapoid/decapoid_yawn.ogg
+  - /Audio/_Impstation/Voice/Gray/gray_yawn.ogg
+  - /Audio/_Impstation/Voice/Slime/s_female_yawn_1.ogg
+  - /Audio/_Impstation/Voice/Slime/s_male_yawn_1.ogg
+  - /Audio/_Impstation/Voice/Snail/snail_yawn.ogg
+  - /Audio/Voice/Human/female_yawn_1.ogg
+  - /Audio/Voice/Human/male_yawn_1.ogg
+
+- type: soundCollection
+  id: KodepiiaSneezes
+  files:
+  - /Audio/_Impstation/Voice/Slime/s_female_sneeze_1.ogg
+  - /Audio/_Impstation/Voice/Slime/s_male_sneeze_1.ogg
+  - /Audio/Voice/Human/female_sneeze_1.ogg
+  - /Audio/Voice/Human/male_sneeze_1.ogg
+
+- type: soundCollection
+  id: KodepiiaSnores
+  files:
+  - /Audio/_Impstation/Voice/Slime/s_snore1.ogg
+  - /Audio/_Impstation/Voice/Slime/s_snore2.ogg
+  - /Audio/_Impstation/Voice/Slime/s_snore3.ogg
+  - /Audio/Voice/Human/snore1.ogg
+  - /Audio/Voice/Human/snore2.ogg
+  - /Audio/Voice/Human/snore3.ogg
+
+- type: soundCollection
+  id: KodepiiaWhistles
+  files:
+  - /Audio/_Impstation/Voice/Slime/slimewhistle.ogg
+  - /Audio/Voice/Human/whistle_1.ogg
+  - /Audio/Voice/Human/whistle_2.ogg
+  - /Audio/Voice/Human/whistle_3.ogg
+  - /Audio/Voice/Human/whistle_4.ogg

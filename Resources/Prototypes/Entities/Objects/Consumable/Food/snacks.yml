@@ -789,10 +789,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 45
+        maxVol: 10 # imp
         reagents:
         - ReagentId: Fiber
-          Quantity: 40
+          Quantity: 5 # imp - matching the nutribrick nerf
   - type: Tag
     tags:
     - ClothMade

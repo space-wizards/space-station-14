@@ -141,14 +141,3 @@
   id: Blinks
   files:
     - /Audio/_Impstation/Effects/Emotes/blink.ogg
-
-- type: soundCollection
-  id: KodepiiaGasp
-  files:
-    - /Audio/_Impstation/Kodepiia/kodegasp.ogg
-
-- type: soundCollection
-  id: KodepiiaDeath
-  files:
-    - /Audio/_Impstation/Kodepiia/kodedeath1.ogg
-    - /Audio/_Impstation/Kodepiia/kodedeath2.ogg

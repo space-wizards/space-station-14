@@ -16,21 +16,39 @@
       path: /Audio/_Impstation/Voice/Decapoid/decapoid_scream.ogg
     Laugh:
       path: /Audio/_Impstation/Voice/Decapoid/decapoid_laugh.ogg
-    Honk:
-      collection: BikeHorn
-    Yawn:
-      path: /Audio/_Impstation/Voice/Decapoid/decapoid_yawn.ogg
-    Whistle:
-      collection: Whistles
-    Crying:
-      path: /Audio/_Impstation/Voice/Decapoid/decapoid_cry.ogg
-    Sigh:
-      path: /Audio/_Impstation/Voice/Decapoid/decapoid_sigh.ogg
-    Gasp:
-      path: /Audio/_Impstation/Voice/Decapoid/decapoid_gasp.ogg
+    Sneeze:
+      collection: UnisexSneezes
     Cough:
       path: /Audio/_Impstation/Voice/Decapoid/decapoid_cough.ogg
-    DefaultDeathgasp:
-      path: /Audio/_Impstation/Voice/Decapoid/decapoid_deathgasp.ogg
+    CatMeow:
+      collection: CatMeows
+    CatHisses:
+      collection: CatHisses
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    RobotBeep:
+      collection: RobotBeeps
+    Yawn:
+      path: /Audio/_Impstation/Voice/Decapoid/decapoid_yawn.ogg
+    Snore:
+      collection: Snores
+    Sigh:
+      path: /Audio/_Impstation/Voice/Decapoid/decapoid_sigh.ogg
+    Honk:
+      collection: BikeHorn
+    Crying:
+      path: /Audio/_Impstation/Voice/Decapoid/decapoid_cry.ogg
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
+    Gasp:
+      path: /Audio/_Impstation/Voice/Decapoid/decapoid_gasp.ogg
+    DefaultDeathgasp:
+      path: /Audio/_Impstation/Voice/Decapoid/decapoid_deathgasp.ogg

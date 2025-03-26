@@ -4,7 +4,7 @@ meta:
   engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 03/23/2025 18:20:04
+  time: 03/24/2025 15:12:17
   entityCount: 187
 maps: []
 grids:
@@ -109,6 +109,62 @@ entities:
     - type: GridAtmosphere
       version: 2
       data:
+        tiles:
+          -1,-1:
+            0: 33856
+          0,-1:
+            0: 65440
+          -1,0:
+            0: 35016
+          0,0:
+            0: 65535
+          1,-1:
+            0: 13632
+          1,0:
+            0: 13171
+          0,1:
+            0: 65535
+          -1,1:
+            0: 2184
+          -1,2:
+            0: 12
+            1: 128
+          1,1:
+            0: 4915
+          1,2:
+            0: 6
+            1: 32
+        uniqueMixes:
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.824879
+          - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          immutable: True
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
         chunkSize: 4
     - type: GasTileOverlay
     - type: CargoShuttle

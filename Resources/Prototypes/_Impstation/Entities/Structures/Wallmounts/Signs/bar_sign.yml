@@ -1,0 +1,278 @@
+- type: entity
+  parent: BaseBarSign
+  id: BarSignImp
+  name: Imp
+  description: Looking at this sign gives you the peculiar feeling of being an ant in a bug farm.
+  components:
+  - type: BarSign
+    current: Imp
+
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheGreytide
+  name: The Grey Tide
+  description: Abandon your toolboxing ways and enjoy a lazy beer!
+  components:
+  - type: BarSign
+    current: TheGreytide
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignScotchServinWillys
+  name: Scotch Servin Willy's
+  description: Willy sure moved up in the world from clown to bartender.
+  components:
+  - type: BarSign
+    current: ScotchServinWillys
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignSlipperyShots
+  name: Slippery Shots
+  description: Slippery slope to drunkeness with our shots!
+  components:
+  - type: BarSign
+    current: SlipperyShots
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignHonkedNLoaded
+  name: Honked 'n' Loaded
+  description: Honk.
+  components:
+  - type: BarSign
+    current: HonkedNLoaded
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheBark
+  name: The Bark
+  description: Ian's bar of choice.
+  components:
+  - type: BarSign
+    current: TheBark
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheCavern
+  name: The Cavern
+  description: Fine drinks while listening to some fine tunes.
+  components:
+  - type: BarSign
+    current: TheCavern
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheSyndicat
+  name: The Syndicat
+  description: Syndicate or die.
+  components:
+  - type: BarSign
+    current: TheSyndicat
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheNest
+  name: The Nest
+  description: A good place to retire for a drink after a long night of crime fighting.
+  components:
+  - type: BarSign
+    current: TheNest
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheAdminBus
+  name: The Admin Bus
+  description: An establishment visited mainly by space-judges. It isn't bombed nearly as much as court hearings.
+  components:
+  - type: BarSign
+    current: TheAdminBus
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheOldCock
+  name: The Old Cock
+  description: Something about this sign fills you with despair.
+  components:
+  - type: BarSign
+    current: TheOldCock
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheWrechedHive
+  name: The Wreched Hive
+  description: Legally obligated to instruct you to check your drinks for acid before consumption.
+  components:
+  - type: BarSign
+    current: TheWrechedHive
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignVladsSaladBar
+  name: Vlad's Salad Bar
+  description: Under new management. Vlad was always a bit too trigger happy with that shotgun.
+  components:
+  - type: BarSign
+    current: VladsSaladBar
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheShaken
+  name: The Shaken
+  description: This establishment does not serve stirred drinks.
+  components:
+  - type: BarSign
+    current: TheShaken
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignAlohaSnackBar
+  name: Aloha Snack Bar
+  description: A tasteful, inoffensive tiki bar sign.
+  components:
+  - type: BarSign
+    current: AlohaSnackBar
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignCoffeeMenu
+  name: Coffee Menu
+  description: The best part of waking up.
+  components:
+  - type: BarSign
+    current: CoffeeMenu
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignMaltroach
+  name: Maltroach
+  description: Mothroaches politely greet you into the bar, or are they greeting each other?
+  components:
+  - type: BarSign
+    current: Maltroach
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignJuice
+  name: Orange's Juice
+  description: For those who wish to be optimally tactful to the non-alcoholic population.
+  components:
+  - type: BarSign
+    current: Juice
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignLeCafeSilencieux
+  name: Le Cafe Silencieux
+  description: "..."
+  components:
+  - type: BarSign
+    current: LeCafeSilencieux
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignRockBottom
+  name: Rock Bottom
+  description: When it feels like you're stuck in a pit, might as well have a drink.
+  components:
+  - type: BarSign
+    current: RockBottom
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheAssemblyLine
+  name: The Assembly Line
+  description: Where every drink is masterfully crafted with industrial efficiency!
+  components:
+  - type: BarSign
+    current: TheAssemblyLine
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignLittleTreatsTeaRoom
+  name: Little Treats Tea Room
+  description: A delightfully relaxing tearoom for all the fancy lads in the cosmos.
+  components:
+  - type: BarSign
+    current: LittleTreatsTeaRoom
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignBargonia
+  name: Bargonia
+  description: The warehouse yearns for a higher calling... so Supply has declared BARGONIA!
+  components:
+  - type: BarSign
+    current: Bargonia
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheCultCove
+  name: The Cult Cove
+  description: Nar'Sie's favourite retreat
+  components:
+  - type: BarSign
+    current: TheCultCove
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignNeonFlamingos
+  name: Neon Flamingos
+  description: A bus for all but the flamboyantly challenged.
+  components:
+  - type: BarSign
+    current: NeonFlamingos
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignSlowdive
+  name: Slowdive
+  description: First stop out of hell, last stop before heaven.
+  components:
+  - type: BarSign
+    current: Slowdive
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheRune
+  name: The Rune
+  description: Reality Shifting drinks.
+  components:
+  - type: BarSign
+    current: TheRune
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheRedMons
+  name: The Red Mons
+  description: Drinks from the Red Planet.
+  components:
+  - type: BarSign
+    current: TheRedMons
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheWizard
+  name: The Wizard
+  description: Magical mixes.
+  components:
+  - type: BarSign
+    current: TheWizard
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignMothsMothsMoths
+  name: Moths Moths Moths
+  description: LIVE MOTHS!
+  components:
+  - type: BarSign
+    current: MothsMothsMoths
+    
+- type: entity
+  parent: BaseBarSign
+  id: BarSignTheeInvasiveRounyInn
+  name: Thee Invasive Rouny Inn
+  description: Rouny.
+  components:
+  - type: BarSign
+    current: TheeInvasiveRounyInn

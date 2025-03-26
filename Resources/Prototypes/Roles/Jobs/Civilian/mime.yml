@@ -12,7 +12,10 @@
   access:
   - Theatre
   - Maintenance
-  - Mime #Imp
+  #imp edit start
+  - Mime
+  - Service
+  #imp edit end
   special:
   - !type:AddComponentSpecial
     components:

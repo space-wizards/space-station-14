@@ -2,11 +2,11 @@
 
 namespace Content.Client._Impstation.CosmicCult.UI;
 
-public sealed class CosmicDeconvertedEui : BaseEui
+public sealed class DeconvertedCultistEui : BaseEui
 {
     private readonly CosmicDeconvertedMenu _menu;
 
-    public CosmicDeconvertedEui()
+    public DeconvertedCultistEui()
     {
         _menu = new CosmicDeconvertedMenu();
     }

@@ -1,41 +1,55 @@
-thaven-mood-cosmic-nihilism-name = Astral Nihilism
-thaven-mood-cosmic-nihilism-desc = Life doesn't mean anything to you anymore. Nothing does. Nothing brings you joy, and nothing matters.
+# imp mood edit done 25/03
 
-thaven-mood-cosmic-insignificance-name = Astral insignificance
-thaven-mood-cosmic-insignificance-desc = You are at all times painfully aware of your insignificance within the great scope of the universe.
+ascendant-mood-tabularasa-name = Tabula Rasa
+ascendant-mood-tabularasa-desc = My mind is clear. I've lost my memory of who I am. My information recall and reflexes are intact, but as far as my personality goes, I am a blank slate.
 
-thaven-mood-cosmic-unfamiliarity-name = Vacuous Unfamiliarity
-thaven-mood-cosmic-unfamiliarity-desc = The world around you is strange and unfamiliar, and everyone you meet is unrecognizable to you. You can't bring yourself to trust anything they say.
+ascendant-mood-incoherency-name = Incoherency
+ascendant-mood-incoherency-desc = Hello? Hello? Can anyone understand what I'm saying?!
 
-thaven-mood-cosmic-fakemonument-name = Malign Monument
-thaven-mood-cosmic-fakemonument-desc = A great shadow fills your minds' eye, the silhouette of a looming structure. A Monument. You must find it or make one yourself, at all costs.
+ascendant-mood-hunger-name = Hunger
+ascendant-mood-hunger-desc = There is a yawning emptiness inside me. No matter how much I eat, no matter how much I possess, I am starving.
 
-thaven-mood-cosmic-wakingdream-name = Cosmic Dream
-thaven-mood-cosmic-wakingdream-desc = This reality is an illusion, a great dream that you share from beyond the veil of nothing, for all things have long since ended. Rejoice!
+ascendant-mood-fasting-name = Fasting
+ascendant-mood-fasting-desc = I don't need food, water, or medical attention. I can go on just fine without them. Keep them away from me!
 
-thaven-mood-cosmic-livingnightmare-name = Entropic Nightmare
-thaven-mood-cosmic-livingnightmare-desc = This isn't reality, it's a waking nightmare that you and everyone around you is trapped in. You need to survive this nightmare at all costs.
+ascendant-mood-phobia-name = Phobia
+ascendant-mood-phobia-desc = {$fear} has gripped my mind. It's all I can think about...
 
-thaven-mood-cosmic-grotesqueworld-name = Grotesquerie
-thaven-mood-cosmic-grotesqueworld-desc = The world around you is disgusting and vile. The sights of the station nauseate you, and your coworkers have been replaced with grotesque monsters.
+ascendant-mood-mania-name = Mania
+ascendant-mood-mania-desc = My eyes have been opened - I have {$mania}. These are more important than life itself!
 
-thaven-mood-cosmic-voiceoftheend-name = Cosmic Harbinger
-thaven-mood-cosmic-voiceoftheend-desc = The end of all things is coming! You must spread the word and ensure as many people as possible are prepared for the end.
+ascendant-mood-quixotism-name = Quixotism
+ascendant-mood-quixotism-desc = Who cares about living? Other people are more important than me. Maybe by sacrificing myself for them, I'll finally be worth something.
 
-thaven-mood-cosmic-worshipoftheend-name = Cosmic Faith
-thaven-mood-cosmic-worshipoftheend-desc = You are infatuated with the notion of the end of all things. It ought to be worshipped! By you, and as many as you can convince to join you.
+ascendant-mood-temerity-name = Temerity
+ascendant-mood-temerity-desc = I've been insulted for the last time. If anyone or anything on this station does wrong by me again, they'll pay... in blood.
 
-thaven-mood-cosmic-disregardoftheliving-name = Disregard Of The Living
-thaven-mood-cosmic-disregardoftheliving-desc = You have no care for the needs of the living around you, no matter how dire. They're all going to die anyway.
+ascendant-mood-denial-name = Denial
+ascendant-mood-denial-desc = Everything is fine. I'm fine. If I say it enough, will it be true?
 
-thaven-mood-cosmic-disregardoftheself-name = Disregard Of The Self
-thaven-mood-cosmic-disregardoftheself-desc = You have no care for your own needs, no matter how dire. You're going to die, anyway.
+ascendant-mood-vainglory-name = Vainglory
+ascendant-mood-vainglory-desc = I'm beautiful... aren't I? My arms, my face, my body, aren't they beautiful? Won't someone tell me that I'm beautiful?!
 
-thaven-mood-cosmic-fearofbeingforgotten-name = Lethophobia
-thaven-mood-cosmic-fearofbeingforgotten-desc = You have an intense and irrational fear of forgetting: Being forgotten, forgetting something, and forgetting someone. You must do everything you can to be remembered.
+ascendant-mood-fixation-name = Fixation
+ascendant-mood-fixation-desc = Have you heard about {$fixation}? Because I have. This is the only thing I can live for anymore!
 
-thaven-mood-cosmic-fearofendings-name = Apeirophobia
-thaven-mood-cosmic-fearofendings-desc = You have an intense and irrational fear of eternities: Afterlives, oblivion, and infinity.
+ascendant-mood-fascination-name = Fascination
+ascendant-mood-fascination-desc = What was that strange, squid-like creature...? I must know more... at any cost.
 
-thaven-mood-cosmic-painlessendings-name = Euthanasia
-thaven-mood-cosmic-painlessendings-desc = You have seen the imminent end, and it is far worse than you could ever imagine. It would be a kindness to keep creatures of lesser intelligence from living to see it. You don't want animals to suffer; keep your methods as painless as you can.
+ascendant-mood-mistrust-name = Mistrust
+ascendant-mood-mistrust-desc = Can't look at them. Can't meet their eyes. Hide my face, so they don't know what I'm thinking. They're just waiting for me to slip up. Then they'll pounce.
+
+ascendant-mood-weareallgoingtodie-name = WE ARE ALL GOING TO DIE.
+ascendant-mood-weareallgoingtodie-desc = WE ARE ALL GOING TO DIE.
+
+ascendant-mood-communion-name = Communion
+ascendant-mood-communion-desc = Nobody else knows that the end is coming. I have to tell them... Maybe then we'll at least be able to watch it end together.
+
+ascendant-mood-labyrinth-name = Labyrinth
+ascendant-mood-labyrinth-desc = Where am I? I don't recognise these hallways. This place is a maze, and behind every door could be a new danger...
+
+ascendant-mood-unburdening-name = Unburdening
+ascendant-mood-unburdening-desc = I have so many regrets. So many loose ends. The things I've done, the people I know... I have to cut them off, and let go.
+
+# Menstruation
+# are you fucking proud of yourself?

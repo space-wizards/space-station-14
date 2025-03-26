@@ -42,7 +42,7 @@ ghostrole-ghoul-rules = You are a [color=red][bold]Team Antagonist[/bold][/color
 ##hell memory loss notification
 hell-memory-title = Memory Loss
 hell-memory-text =
-    Your soul has been harvested by the mansus!
+    Your mind has been harvested by a Heretic, driving you to madness!
 
     You have lost all memory of who did this to you and how.
 hell-memory-confirm = Confirm

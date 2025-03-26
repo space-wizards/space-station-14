@@ -59,7 +59,7 @@
     inventory: None
     transferName: true
     transferDamage: true
-    revertOnCrit: false
+    revertOnCrit: true
     revertOnDeath: true
     polymorphSound: !type:SoundPathSpecifier
       path: /Audio/Magic/forcewall.ogg
@@ -88,7 +88,8 @@
     forced: true
     transferName: true
     transferHumanoidAppearance: true
-    inventory: Transfer
+    inventory: None
+    revertOnCrit: true
     revertOnDeath: true
     polymorphSound: !type:SoundPathSpecifier
       path: /Audio/Magic/forcewall.ogg
