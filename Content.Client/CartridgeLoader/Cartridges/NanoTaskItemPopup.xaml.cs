@@ -14,10 +14,10 @@ namespace Content.Client.CartridgeLoader.Cartridges;
 public sealed partial class NanoTaskItemPopup : DefaultWindow
 {
     private readonly ButtonGroup _priorityGroup = new();
-    private int? _editingTaskId = null;
+    private uint? _editingTaskId = null;
 
-    public Action<int, NanoTaskItem>? TaskSaved;
-    public Action<int>? TaskDeleted;
+    public Action<uint, NanoTaskItem>? TaskSaved;
+    public Action<uint>? TaskDeleted;
     public Action<NanoTaskItem>? TaskCreated;
     public Action<NanoTaskItem>? TaskPrinted;
 
@@ -26,8 +26,9 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
         return new(
             description: DescriptionInput.Text,
             taskIsFor: RequesterInput.Text,
-            isTaskDone: false,
-            priority: _priorityGroup.Pressed switch {
+            status: NanoTaskItemStatus.NotStarted,
+            priority: _priorityGroup.Pressed switch
+            {
                 var item when item == LowButton => NanoTaskPriority.Low,
                 var item when item == MediumButton => NanoTaskPriority.Medium,
                 var item when item == HighButton => NanoTaskPriority.High,
@@ -47,7 +48,7 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
         CancelButton.OnPressed += _ => Close();
         DeleteButton.OnPressed += _ =>
         {
-            if (_editingTaskId is int id)
+            if (_editingTaskId is uint id)
             {
                 TaskDeleted?.Invoke(id);
             }
@@ -58,7 +59,7 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
         };
         SaveButton.OnPressed += _ =>
         {
-            if (_editingTaskId is int id)
+            if (_editingTaskId is uint id)
             {
                 TaskSaved?.Invoke(id, MakeItem());
             }
@@ -80,7 +81,7 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
         };
     }
 
-    public void SetEditingTaskId(int? id)
+    public void SetEditingTaskId(uint? id)
     {
         _editingTaskId = id;
         DeleteButton.Visible = id is not null;
@@ -90,10 +91,12 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
     {
         if (item is NanoTaskItem task)
         {
-            var button = task.Priority switch {
+            var button = task.Priority switch
+            {
                 NanoTaskPriority.High => HighButton,
                 NanoTaskPriority.Medium => MediumButton,
                 NanoTaskPriority.Low => LowButton,
+                _ => throw new NotImplementedException(),
             };
             button.Pressed = true;
             DescriptionInput.Text = task.Description;

@@ -112,3 +112,13 @@
   id: BasicDevice
   name: device-frequency-prototype-name-basic-device
   frequency: 1280
+
+- type: deviceFrequency
+  id: NanoTaskServer
+  name: device-frequency-prototype-name-nano-task-server
+  frequency: 1281
+
+- type: deviceFrequency
+  id: NanoTaskClient
+  name: device-frequency-prototype-name-nano-task-client
+  frequency: 1282

@@ -13,6 +13,14 @@ public enum NanoTaskPriority : byte
     Low,
 };
 
+[Serializable, NetSerializable]
+public enum NanoTaskItemStatus : byte
+{
+    NotStarted,
+    InProgress,
+    Completed
+}
+
 /// <summary>
 ///     The data relating to a single NanoTask item, but not its identifier
 /// </summary>
@@ -37,20 +45,21 @@ public sealed class NanoTaskItem
     /// <summary>
     ///     If the task is marked as done or not
     /// </summary>
-    public readonly bool IsTaskDone;
+    public readonly NanoTaskItemStatus Status;
 
     /// <summary>
     ///     The task's marked priority
     /// </summary>
     public readonly NanoTaskPriority Priority;
 
-    public NanoTaskItem(string description, string taskIsFor, bool isTaskDone, NanoTaskPriority priority)
+    public NanoTaskItem(string description, string taskIsFor, NanoTaskItemStatus status, NanoTaskPriority priority)
     {
         Description = description;
         TaskIsFor = taskIsFor;
-        IsTaskDone = isTaskDone;
+        Status = status;
         Priority = priority;
     }
+
     public bool Validate()
     {
         return Description.Length <= MaximumStringLength && TaskIsFor.Length <= MaximumStringLength;
@@ -63,10 +72,10 @@ public sealed class NanoTaskItem
 [Serializable, NetSerializable, DataRecord]
 public sealed class NanoTaskItemAndId
 {
-    public readonly int Id;
+    public readonly uint Id;
     public readonly NanoTaskItem Data;
 
-    public NanoTaskItemAndId(int id, NanoTaskItem data)
+    public NanoTaskItemAndId(uint id, NanoTaskItem data)
     {
         Id = id;
         Data = data;
@@ -77,12 +86,11 @@ public sealed class NanoTaskItemAndId
 ///     The UI state of the NanoTask
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class NanoTaskUiState : BoundUserInterfaceState
+public sealed class NanoTaskUiState(List<(string, NanoTaskItemAndId)> departamentTasks, List<NanoTaskItemAndId> stationTasks) : BoundUserInterfaceState
 {
-    public List<NanoTaskItemAndId> Tasks;
-
-    public NanoTaskUiState(List<NanoTaskItemAndId> tasks)
-    {
-        Tasks = tasks;
-    }
+    public List<NanoTaskItemAndId> StationTasks = stationTasks;
+    public List<(string, NanoTaskItemAndId)> DepartamentTasks = departamentTasks;
 }
+
+[Serializable, NetSerializable]
+public sealed class NanoTaskServerOfflineUiState : BoundUserInterfaceState;

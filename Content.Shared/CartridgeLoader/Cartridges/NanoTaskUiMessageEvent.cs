@@ -52,9 +52,9 @@ public sealed class NanoTaskDeleteTask : INanoTaskUiMessagePayload
     /// <summary>
     ///     The ID of the task to delete
     /// </summary>
-    public readonly int Id;
+    public readonly uint Id;
 
-    public NanoTaskDeleteTask(int id)
+    public NanoTaskDeleteTask(uint id)
     {
         Id = id;
     }

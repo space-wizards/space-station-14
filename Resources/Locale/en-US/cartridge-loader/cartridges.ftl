@@ -49,6 +49,15 @@ nano-task-ui-heading-low-priority-tasks =
         [one] 1 Low Priority Task
        *[other] {$amount} Low Priority Tasks
     }
+
+nano-task-ui-department-cargo = Cargo
+nano-task-ui-department-command = Command
+nano-task-ui-department-engineering = Engineering
+nano-task-ui-department-medical = Medical
+nano-task-ui-department-research = Research
+nano-task-ui-department-service = Service
+nano-task-ui-connection = Trying to connect to the server...
+nano-task-ui-offline = No servers available
 nano-task-ui-done = Done
 nano-task-ui-revert-done = Undo
 nano-task-ui-priority-low = Low
@@ -64,6 +73,7 @@ nano-task-ui-description-placeholder = Get something important
 nano-task-ui-requester-label = Requester:
 nano-task-ui-requester-placeholder = John Nanotrasen
 nano-task-ui-item-title = Edit Task
+
 nano-task-printed-description = Description: {$description}
 nano-task-printed-requester = Requester: {$requester}
 nano-task-printed-high-priority = Priority: High

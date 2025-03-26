@@ -1320,3 +1320,15 @@
       Capacitor: 1
       Manipulator: 1
       Cable: 1
+
+- type: entity
+  id: NanoTaskServerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: NanoTask server machine board
+  description: A machine printed circuit board for the NanoTask server.
+  components:
+    - type: MachineBoard
+      prototype: NanoTaskServer
+      stackRequirements:
+        Steel: 1
+        Cable: 2

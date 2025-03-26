@@ -1,5 +1,3 @@
-using Content.Shared.CartridgeLoader.Cartridges;
-
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 /// <summary>
@@ -12,13 +10,10 @@ public sealed partial class NanoTaskCartridgeComponent : Component
     /// The list of tasks
     /// </summary>
     [DataField]
-    public List<NanoTaskItemAndId> Tasks = new();
+    public List<NanoTaskItemAndId> StationTasks = [];
 
-    /// <summary>
-    /// counter for generating task IDs
-    /// </summary>
     [DataField]
-    public int Counter = 1;
+    public Dictionary<string, List<NanoTaskItemAndId>> DepartmentTasks = [];
 
     /// <summary>
     /// When the user can print again

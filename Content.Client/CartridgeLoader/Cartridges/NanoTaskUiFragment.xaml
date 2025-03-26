@@ -3,7 +3,7 @@
                                xmlns="https://spacestation14.io" Margin="1 0 2 0">
 
     <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
+    <BoxContainer Name="ContentBox" Visible="False" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
             <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical" Margin="8" SeparationOverride="8">
                 <!-- Heading for High Priority Items -->
@@ -54,5 +54,15 @@
                 <Button Name="NewTaskButton" Text="{Loc 'nano-task-ui-new-task'}" HorizontalAlignment="Right"/>
             </BoxContainer>
         </ScrollContainer>
+    </BoxContainer>
+
+    <BoxContainer Name="ConnectionBox" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Align="Center">
+        <Label Text="{Loc 'nano-task-ui-connection'}" />
+    </BoxContainer>
+
+    <BoxContainer Visible="False" Name="OfflineBox" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Align="Center">
+        <PanelContainer HorizontalExpand="True" Name="OfflinePanel">
+            <Label Name="OfflineLabel" Text="{Loc 'nano-task-ui-offline'}" HorizontalAlignment="Center" Align="Center"/>
+        </PanelContainer>
     </BoxContainer>
 </cartridges:NanoTaskUiFragment>

@@ -47,7 +47,7 @@ public sealed partial class NanoTaskUi : UIFragment
             userInterface.SendMessage(new CartridgeUiMessage(new NanoTaskUiMessageEvent(new NanoTaskUpdateTask(new(id, new(
                 description: task.Data.Description,
                 taskIsFor: task.Data.TaskIsFor,
-                isTaskDone: !task.Data.IsTaskDone,
+                status: NanoTaskItemStatus.NotStarted,
                 priority: task.Data.Priority
             ))))));
         };
@@ -74,9 +74,12 @@ public sealed partial class NanoTaskUi : UIFragment
 
     public override void UpdateState(BoundUserInterfaceState state)
     {
+        if (state is NanoTaskServerOfflineUiState)
+            _fragment?.UpdateStateNoServers();
+
         if (state is not NanoTaskUiState nanoTaskState)
             return;
 
-        _fragment?.UpdateState(nanoTaskState.Tasks);
+        _fragment?.UpdateState(nanoTaskState.StationTasks);
     }
 }
