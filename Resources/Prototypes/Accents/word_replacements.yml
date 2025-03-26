@@ -451,7 +451,7 @@
 
 - type: accent
   id: liar
-  replacementChance: 0.02
+  replacementChance: 0.01
   wordReplacements:
     liar-word-1: liar-word-replacement-1
     liar-word-2: liar-word-replacement-2
