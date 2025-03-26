@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: CheddaCheez
-  changes:
-  - message: Fixed mimes being unable to break their vow more than once. Despicable!
-    type: Fix
-  id: 7608
-  time: '2024-11-14T16:56:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33303
 - author: PJB3005
   changes:
   - message: Borgs can now select their chassis type upon creation (construction or
@@ -3882,3 +3875,11 @@
   id: 8107
   time: '2025-03-26T15:20:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/19460
+- author: slarticodefast
+  changes:
+  - message: Ghosts of paradox clones now have a name modifier so they can be distinguished
+      by other ghosts.
+    type: Tweak
+  id: 8108
+  time: '2025-03-26T15:30:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35940
