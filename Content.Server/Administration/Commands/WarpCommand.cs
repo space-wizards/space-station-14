@@ -17,8 +17,6 @@ namespace Content.Server.Administration.Commands
     {
         [Dependency] private readonly IEntityManager _entManager = default!;
 
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-
         public string Command => "warp";
         public string Description => "Teleports you to predefined areas on the map.";
 
@@ -59,14 +57,16 @@ namespace Content.Server.Administration.Commands
                 var currentMap = _entManager.GetComponent<TransformComponent>(playerEntity).MapID;
                 var currentGrid = _entManager.GetComponent<TransformComponent>(playerEntity).GridUid;
 
+                var xformSystem = _entManager.System<SharedTransformSystem>();
+
                 var found = GetWarpPointByName(location)
                     .OrderBy(p => p.Item1, Comparer<EntityCoordinates>.Create((a, b) =>
                     {
                         // Sort so that warp points on the same grid/map are first.
                         // So if you have two maps loaded with the same warp points,
                         // it will prefer the warp points on the map you're currently on.
-                        var aGrid = _transform.GetGrid(a);
-                        var bGrid = _transform.GetGrid(b);
+                        var aGrid = xformSystem.GetGrid(a);
+                        var bGrid = xformSystem.GetGrid(b);
 
                         if (aGrid == bGrid)
                         {
@@ -83,8 +83,8 @@ namespace Content.Server.Administration.Commands
                             return 1;
                         }
 
-                        var mapA = _transform.GetMapId(a);
-                        var mapB = _transform.GetMapId(b);
+                        var mapA = xformSystem.GetMapId(a);
+                        var mapB = xformSystem.GetMapId(b);
 
                         if (mapA == mapB)
                         {
@@ -120,8 +120,8 @@ namespace Content.Server.Administration.Commands
                 }
 
                 var xform = _entManager.GetComponent<TransformComponent>(playerEntity);
-                _transform.SetCoordinates(playerEntity, coords);
-                _transform.AttachToGridOrMap(playerEntity, xform);
+                xformSystem.SetCoordinates(playerEntity, coords);
+                xformSystem.AttachToGridOrMap(playerEntity, xform);
                 if (_entManager.TryGetComponent(playerEntity, out PhysicsComponent? physics))
                 {
                     _entManager.System<SharedPhysicsSystem>().SetLinearVelocity(playerEntity, Vector2.Zero, body: physics);
