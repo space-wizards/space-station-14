@@ -1,7 +1,7 @@
 # For use by Role Types
 # Do not touch these
 
-# Ghost role descriptions that use role type colors read it from role-types.ftl, not here.
+# If you change/add a color here, also change it in role-types.ftl!
 
 - type: roleType
   id: Neutral

@@ -8,7 +8,7 @@ role-type-silicon-antagonist-name = Altered Silicon
 
 role-type-update-message = Your role is [color = {$color}]{$role}[/color]
 
-# Actual game systems read the colors from role_types.yml, not here.
+# If you change a color here, you might want to also change it in role_types.yml
 role-type-crew-aligned-color = #eeeeee
 role-type-crew-aligned-alternate-color = #008000
 role-type-solo-antagonist-color = #d82000
