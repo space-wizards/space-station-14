@@ -21,6 +21,7 @@ public sealed class ParallaxControl : Control
 
     private string _parallaxPrototype = "FastSpace";
 
+    [ViewVariables(VVAccess.ReadWrite)] public Vector2 Offset { get; set; }
     [ViewVariables(VVAccess.ReadWrite)] public float SpeedX { get; set; } = 0.0f;
     [ViewVariables(VVAccess.ReadWrite)] public float SpeedY { get; set; } = 0.0f;
     [ViewVariables(VVAccess.ReadWrite)] public float ScaleX { get; set; } = 1.0f;
@@ -30,7 +31,6 @@ public sealed class ParallaxControl : Control
         get => _parallaxPrototype;
         set
         {
-            _parallaxManager.UnloadParallax(_parallaxPrototype);
             _parallaxPrototype = value;
             _parallaxManager.LoadParallaxByName(value);
         }
@@ -40,6 +40,8 @@ public sealed class ParallaxControl : Control
     {
         IoCManager.InjectDependencies(this);
 
+        Offset = new Vector2(_random.Next(0, 1000), _random.Next(0, 1000));
+
         RectClipContent = true;
         _parallaxManager.LoadParallaxByName(_parallaxPrototype);
     }
@@ -47,7 +49,7 @@ public sealed class ParallaxControl : Control
     protected override void Draw(DrawingHandleScreen handle)
     {
         var currentTime = (float) _timing.RealTime.TotalSeconds;
-        var offset = new Vector2(currentTime * SpeedX, currentTime * SpeedY);
+        var offset = Offset + new Vector2(currentTime * SpeedX, currentTime * SpeedY);
 
         foreach (var layer in _parallaxManager.GetParallaxLayers(_parallaxPrototype))
         {
