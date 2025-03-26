@@ -72,7 +72,7 @@
   name: viper
   parent: [BaseWeaponPistol, BaseSyndicateContraband]
   id: WeaponPistolViper
-  description: Bought in bulk by Donk Co. and retrofitted with fully automatic receivers, this is a common sidearm for any soldier who fights under the three serpents. Feeds from .35 pistol magazines.
+  description: A pistol manufactured by Donk Co. and capable of semi or fully automatic fire, this is a common sidearm for any soldier who fights under the three serpents. Feeds from .35 pistol magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
@@ -105,7 +105,7 @@
   name: echis
   parent: [ BaseItem, BaseSyndicateContraband ]
   id: WeaponPistolEchis
-  description: Modified Viper pistol for use in cyborgs. Creates ammunition on the fly from an internal fabricator, which slowly self-charges.
+  description: A cyborg-mounted weapon system based on the Viper pistol. Creates ammunition on the fly from an internal fabricator, which slowly self-charges.
   components:
   - type: Gun
     fireRate: 5
