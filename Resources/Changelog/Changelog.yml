@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Borgs can now select their chassis type upon creation (construction or
-      job spawn), immediately giving borgs access to all chassis types.
-    type: Add
-  - message: Borg chassis types now come with built-in modules depending on the type,
-      so you can immediately do your job without help from science. Some upgrade modules
-      must still be installed later however.
-    type: Add
-  - message: Specialized chassis types have been removed from construction, as they
-      are no longer necessary.
-    type: Remove
-  - message: Borg unlock access is no longer determined by their chassis, it's always
-      science or command. This means the janitor can't unlock jani borgs anymore.
-    type: Remove
-  id: 7609
-  time: '2024-11-14T17:08:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32586
 - author: thetolbean
   changes:
   - message: The Quartermaster's requisition digi-board can no longer be recycled.
@@ -3883,3 +3865,11 @@
   id: 8108
   time: '2025-03-26T15:30:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35940
+- author: slarticodefast
+  changes:
+  - message: Paradox clones of nuclear operatives and head revolutionaries now have
+      the corresponding faction icon and need to be killed for a crew major victory.
+    type: Fix
+  id: 8109
+  time: '2025-03-26T15:34:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35910
