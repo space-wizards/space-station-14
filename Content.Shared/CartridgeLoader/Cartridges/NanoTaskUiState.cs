@@ -86,10 +86,10 @@ public sealed class NanoTaskItemAndId
 ///     The UI state of the NanoTask
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class NanoTaskUiState(List<(string, NanoTaskItemAndId)> departamentTasks, List<NanoTaskItemAndId> stationTasks) : BoundUserInterfaceState
+public sealed class NanoTaskUiState(Dictionary<string, List<NanoTaskItemAndId>> departamentTasks, List<NanoTaskItemAndId> stationTasks) : BoundUserInterfaceState
 {
     public List<NanoTaskItemAndId> StationTasks = stationTasks;
-    public List<(string, NanoTaskItemAndId)> DepartamentTasks = departamentTasks;
+    public Dictionary<string, List<NanoTaskItemAndId>> DepartamentTasks = departamentTasks;
 }
 
 [Serializable, NetSerializable]

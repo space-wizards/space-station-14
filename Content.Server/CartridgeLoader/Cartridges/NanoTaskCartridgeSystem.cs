@@ -15,6 +15,7 @@ using Content.Server.Station.Systems;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
 using Robust.Shared.Prototypes;
+using Content.Shared.NanoTask.Prototypes;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
@@ -272,7 +273,14 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
 
     private void UpdateUiState(Entity<NanoTaskCartridgeComponent> ent, EntityUid loaderUid)
     {
-        var state = new NanoTaskUiState([], ent.Comp.StationTasks);
-        _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);
+        var query = EntityQueryEnumerator<NanoTaskServerComponent, SingletonDeviceNetServerComponent>();
+        while (query.MoveNext(out var uid, out var server, out var singletonServer))
+        {
+            if (!_singletonDeviceNetServer.IsActiveServer(uid, singletonServer))
+                continue;
+
+            var state = new NanoTaskUiState(server.DepartamentTasks, server.StationTasks);
+            _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);
+        }
     }
 }

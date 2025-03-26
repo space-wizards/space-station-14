@@ -15,7 +15,7 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
 {
     public Action<uint>? OpenTask;
     public Action<uint>? ToggleTaskCompletion;
-    public Action? NewTask;
+    public Action<NanoTaskTable>? NewTask;
     public List<NanoTaskItemAndId> Tasks = new();
 
     public NanoTaskUiFragment()
@@ -24,42 +24,64 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
         Orientation = LayoutOrientation.Vertical;
         HorizontalExpand = true;
         VerticalExpand = true;
-        NewTaskButton.OnPressed += _ => NewTask?.Invoke();
+
+        StationTaskTable.NewTaskButton.OnPressed += _ => NewTask?.Invoke(StationTaskTable);
     }
 
-    public void UpdateState(List<NanoTaskItemAndId> tasks)
+    public void UpdateState(List<NanoTaskItemAndId> stationTasks, Dictionary<string, List<NanoTaskItemAndId>> departmentTasks)
     {
-        ContentBox.Visible = true;
+        TabsCategory.Visible = true;
         ConnectionBox.Visible = false;
         OfflineBox.Visible = false;
 
-        Tasks = tasks;
-        HighContainer.RemoveAllChildren();
-        MediumContainer.RemoveAllChildren();
-        LowContainer.RemoveAllChildren();
+        StationTaskTable.Clear();
 
-        HighPriority.Text = Loc.GetString("nano-task-ui-heading-high-priority-tasks", ("amount", tasks.Count(task => task.Data.Priority == NanoTaskPriority.High)));
-        MediumPriority.Text = Loc.GetString("nano-task-ui-heading-medium-priority-tasks", ("amount", tasks.Count(task => task.Data.Priority == NanoTaskPriority.Medium)));
-        LowPriority.Text = Loc.GetString("nano-task-ui-heading-low-priority-tasks", ("amount", tasks.Count(task => task.Data.Priority == NanoTaskPriority.Low)));
+        StationTaskTable.HighPriority.Text = Loc.GetString("nano-task-ui-heading-high-priority-tasks", ("amount", stationTasks.Count(task => task.Data.Priority == NanoTaskPriority.High)));
+        StationTaskTable.MediumPriority.Text = Loc.GetString("nano-task-ui-heading-medium-priority-tasks", ("amount", stationTasks.Count(task => task.Data.Priority == NanoTaskPriority.Medium)));
+        StationTaskTable.LowPriority.Text = Loc.GetString("nano-task-ui-heading-low-priority-tasks", ("amount", stationTasks.Count(task => task.Data.Priority == NanoTaskPriority.Low)));
 
-        foreach (var task in tasks)
+        foreach (var task in stationTasks)
         {
             var container = task.Data.Priority switch
             {
-                NanoTaskPriority.High => HighContainer,
-                NanoTaskPriority.Medium => MediumContainer,
-                NanoTaskPriority.Low => LowContainer,
+                NanoTaskPriority.High => StationTaskTable.HighContainer,
+                NanoTaskPriority.Medium => StationTaskTable.MediumContainer,
+                NanoTaskPriority.Low => StationTaskTable.LowContainer,
             };
             var control = new NanoTaskItemControl(task);
             container.AddChild(control);
             control.OnMainPressed += id => OpenTask?.Invoke(id);
             control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(id);
         }
+
+        TabsDepartmentTask.RemoveAllChildren();
+
+        foreach (var (department, tasks, index) in departmentTasks.OrderBy(x => x.Key).Select((x, i) => (x.Key, x.Value, i)))
+        {
+            var table = new NanoTaskTable();
+
+            foreach (var task in tasks)
+            {
+                var container = task.Data.Priority switch
+                {
+                    NanoTaskPriority.High => table.HighContainer,
+                    NanoTaskPriority.Medium => table.MediumContainer,
+                    NanoTaskPriority.Low => table.LowContainer,
+                };
+                var control = new NanoTaskItemControl(task);
+                container.AddChild(control);
+                control.OnMainPressed += id => OpenTask?.Invoke(id);
+                control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(id);
+            }
+
+            TabsDepartmentTask.AddChild(table);
+            TabsDepartmentTask.SetTabTitle(index, Loc.GetString(department));
+        }
     }
 
     public void UpdateStateNoServers()
     {
-        ContentBox.Visible = false;
+        TabsCategory.Visible = false;
         ConnectionBox.Visible = false;
         OfflineBox.Visible = true;
 

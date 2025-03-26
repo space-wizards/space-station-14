@@ -21,8 +21,17 @@ public sealed class NanoTaskServerSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<NanoTaskServerComponent, ComponentInit>(OnComponentInit);
+
         SubscribeLocalEvent<NanoTaskServerComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<NanoTaskServerComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+    }
+
+    private void OnComponentInit(Entity<NanoTaskServerComponent> ent, ref ComponentInit args)
+    {
+        var departmentProtos = _prototypeManager.EnumeratePrototypes<NanoTaskDepartmentPrototype>();
+        foreach (var department in departmentProtos)
+            ent.Comp.DepartamentTasks.Add(department.Name, []);
     }
 
     private void OnPacketReceived(Entity<NanoTaskServerComponent> ent, ref DeviceNetworkPacketEvent args)

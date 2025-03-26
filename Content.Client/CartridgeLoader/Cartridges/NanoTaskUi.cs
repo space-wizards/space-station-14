@@ -24,7 +24,7 @@ public sealed partial class NanoTaskUi : UIFragment
     {
         _fragment = new NanoTaskUiFragment();
         _popup = new NanoTaskItemPopup();
-        _fragment.NewTask += () =>
+        _fragment.NewTask += table =>
         {
             _popup.ResetInputs(null);
             _popup.SetEditingTaskId(null);
@@ -80,6 +80,6 @@ public sealed partial class NanoTaskUi : UIFragment
         if (state is not NanoTaskUiState nanoTaskState)
             return;
 
-        _fragment?.UpdateState(nanoTaskState.StationTasks);
+        _fragment?.UpdateState(nanoTaskState.StationTasks, nanoTaskState.DepartamentTasks);
     }
 }
