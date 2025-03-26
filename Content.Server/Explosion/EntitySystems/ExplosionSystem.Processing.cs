@@ -715,7 +715,7 @@ sealed class Explosion
 
         if (spaceData != null)
         {
-            var mapUid = mapMan.GetMapEntityId(epicenter.MapId);
+            var mapUid = mapSystem.GetMap(epicenter.MapId);
 
             _explosionData.Add(new()
             {
