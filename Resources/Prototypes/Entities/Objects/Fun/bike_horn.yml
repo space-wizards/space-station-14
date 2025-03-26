@@ -222,4 +222,5 @@
       components:
       - MobMover
       - Item
-  - type: PushHorn
+  - type: PushPullOnTrigger
+  - type: TriggerOnUse
