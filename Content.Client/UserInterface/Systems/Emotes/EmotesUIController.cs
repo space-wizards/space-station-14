@@ -31,6 +31,8 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
 
     public void OnStateExited(GameplayState state)
     {
+        _menu = null;
+        
         CommandBinds.Unregister<EmotesUIController>();
     }
 
