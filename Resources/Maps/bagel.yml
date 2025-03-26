@@ -4,8 +4,8 @@ meta:
   engineVersion: 249.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/21/2025 06:51:14
-  entityCount: 25709
+  time: 03/23/2025 08:00:27
+  entityCount: 25710
 maps:
 - 943
 grids:
@@ -44163,6 +44163,26 @@ entities:
     - type: Transform
       pos: -4.5,61.5
       parent: 60
+  - uid: 22110
+    components:
+    - type: Transform
+      pos: 1.5,19.5
+      parent: 60
+  - uid: 22111
+    components:
+    - type: Transform
+      pos: 2.5,19.5
+      parent: 60
+  - uid: 22114
+    components:
+    - type: Transform
+      pos: 3.5,19.5
+      parent: 60
+  - uid: 22115
+    components:
+    - type: Transform
+      pos: 8.5,23.5
+      parent: 60
   - uid: 22449
     components:
     - type: Transform
@@ -44847,21 +44867,6 @@ entities:
     components:
     - type: Transform
       pos: 1.5,22.5
-      parent: 60
-  - uid: 24771
-    components:
-    - type: Transform
-      pos: 4.5,20.5
-      parent: 60
-  - uid: 24772
-    components:
-    - type: Transform
-      pos: 3.5,20.5
-      parent: 60
-  - uid: 24773
-    components:
-    - type: Transform
-      pos: 2.5,20.5
       parent: 60
   - uid: 24774
     components:
@@ -75878,9 +75883,6 @@ entities:
     - type: Transform
       pos: -14.52124,-43.447884
       parent: 60
-    - type: CollisionWake
-      enabled: False
-    - type: Conveyed
 - proto: FoodBoxDonkpocketPizza
   entities:
   - uid: 15714

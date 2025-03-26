@@ -42,6 +42,7 @@
   category: Disabilities
   components:
     - type: Unrevivable
+      cloneable: true
 
 - type: trait
   id: Muted
