@@ -8,7 +8,7 @@ jobs:
   docfx:
    runs-on: ubuntu-latest
    steps:
-    - uses: actions/checkout@v3.6.0
+    - uses: actions/checkout@v4.2.2
     - name: Setup submodule
       run: |
         git submodule update --init --recursive
@@ -19,7 +19,7 @@ jobs:
         cd RobustToolbox/
         git submodule update --init --recursive
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3.2.0
+      uses: actions/setup-dotnet@v4.1.0
       with:
         dotnet-version: 9.0.x
 
