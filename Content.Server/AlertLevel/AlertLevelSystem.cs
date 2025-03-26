@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Chat.Systems;
+using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Robust.Shared.Audio;
@@ -13,6 +14,8 @@ public sealed class AlertLevelSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystems = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
@@ -193,6 +196,8 @@ public sealed class AlertLevelSystem : EntitySystem
         }
 
         RaiseLocalEvent(new AlertLevelChangedEvent(station, level));
+        var ticker = _entitySystems.GetEntitySystem<GameTicker>();
+        ticker.UpdateInfoText();
     }
 }
 
