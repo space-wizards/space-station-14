@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: LazyRiverfolk
-  changes:
-  - message: E1M1 has been added to the Deathmatch pool!
-    type: Add
-  id: 900
-  time: '2025-01-11T03:18:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1288
 - author: DinnerCalzone
   changes:
   - message: Amber, Bagel, Train, and Hummingbird have received some adjustments to
@@ -4091,3 +4084,12 @@
   id: 1399
   time: '2025-03-25T11:54:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2092
+- author: jtfg-dev & mqole
+  changes:
+  - message: Rogue Ascendants' moods are mood-ier.
+    type: Tweak
+  - message: Rogue Ascendants have been temporarily taken back to the garage for bugfixes.
+    type: Remove
+  id: 1400
+  time: '2025-03-26T07:19:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2084
