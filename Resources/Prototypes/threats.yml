@@ -34,7 +34,7 @@
   announcement: terror-finfin
   rule: ImmovableFriendSpawn
 
-- type: ninjaHackingThreat
-  id: RogueAscended
-  announcement: terror-rogueascended
-  rule: RogueAscendedSpawn
+#- type: ninjaHackingThreat #COMMENTED OUT FOR BUGGED REASON
+#  id: RogueAscended
+#  announcement: terror-rogueascended
+#  rule: RogueAscendedSpawn

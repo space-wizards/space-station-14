@@ -1,128 +1,223 @@
+# imp mood edit done 25/03
+
 - type: dataset
   id: ThavenMoodsAscendantInfection
   values:
-    - Nihilism
-    - Insignificance
-    - Unfamiliarity
-    - FakeMonument
-    - WakingDream
-    - LivingNightmare
-    - GrotesqueWorld
-    - VoiceOfTheEnd
-    - WorshipOfTheEnd
-    - HollowSoul
-    - DisregardOfTheLiving
-    - DisregardOfTheSelf
-    - FearOfBeingForgotten
-    - FearOfEndings
-    - PainlessEndings
+    - TabulaRasa
+    - Incoherency
+    - Hunger
+    - Fasting
+    - Phobia
+    - Mania
+    - Quixotism
+    - Temerity
+    - Denial
+    - Vainglory
+    - Fixation
+    - Fascination
+    - Mistrust
+    - WeAreAllGoingToDie
+    - Labyrinth
+    - Unburdening
 
-# You reject all religious and moral principles, and believe that all life is inherently meaningless.
+# My mind is clear. I've lost my memory of who I am. My information recall and reflexes are intact, but as far as my personality goes, I am a blank slate.
 - type: thavenMood
-  id: Nihilism
-  moodName: thaven-mood-cosmic-nihilism-name
-  moodDesc: thaven-mood-cosmic-nihilism-desc
+  id: TabulaRasa
+  moodName: ascendant-mood-tabularasa-name
+  moodDesc: ascendant-mood-tabularasa-desc
 
-# You are at all times painfully aware of your insignificance within the great scope of the universe.
+# Hello? Hello? Can anyone understand what I'm saying?!
 - type: thavenMood
-  id: Insignificance
-  moodName: thaven-mood-cosmic-insignificance-name
-  moodDesc: thaven-mood-cosmic-insignificance-desc
+  id: Incoherency
+  moodName: ascendant-mood-incoherency-name
+  moodDesc: ascendant-mood-incoherency-desc
 
-#
+# There is a yawning emptiness inside me. No matter how much I eat, no matter how much I possess, I am starving.
 - type: thavenMood
-  id: Unfamiliarity
-  moodName: thaven-mood-cosmic-unfamiliarity-name
-  moodDesc: thaven-mood-cosmic-unfamiliarity-desc
-  conflicts:
-    - GrotesqueWorld
-#
-- type: thavenMood
-  id: FakeMonument
-  moodName: thaven-mood-cosmic-fakemonument-name
-  moodDesc: thaven-mood-cosmic-fakemonument-desc
+  id: Hunger
+  moodName: ascendant-mood-hunger-name
+  moodDesc: ascendant-mood-hunger-desc
 
-#
+# I don't need food, water, or medical attention. I can go on just fine without them. Keep them away from me!
 - type: thavenMood
-  id: WakingDream
-  moodName: thaven-mood-cosmic-wakingdream-name
-  moodDesc: thaven-mood-cosmic-wakingdream-desc
-  conflicts:
-    - LivingNightmare
-    - FearOfEndings
+  id: Fasting
+  moodName: ascendant-mood-fasting-name
+  moodDesc: ascendant-mood-fasting-desc
 
-#
+# {$fear} has gripped my mind. It's all I can think about...
 - type: thavenMood
-  id: LivingNightmare
-  moodName: thaven-mood-cosmic-livingnightmare-name
-  moodDesc: thaven-mood-cosmic-livingnightmare-desc
-  conflicts:
-    - WakingDream
+  id: Phobia
+  moodName: ascendant-mood-phobia-name
+  moodDesc: ascendant-mood-phobia-desc
+  moodVars:
+    fear: Fears
 
-#
-- type: thavenMood
-  id: GrotesqueWorld
-  moodName: thaven-mood-cosmic-grotesqueworld-name
-  moodDesc: thaven-mood-cosmic-grotesqueworld-desc
-  conflicts:
-    - Unfamiliarity
+# POSSIBLE FEARS: ADD HERE!
+- type: dataset
+  id: Fears
+  values:
+    - Acrophobia, the fear of heights,
+    - Arachnophobia, the fear of spiders,
+    - Bibliophobia, the fear of books,
+    - Eisoptrophobia, the fear of mirrors,
+    - Hemaphobia, the fear of blood,
+    - Necrophobia, the fear of dead things,
+    - Odontophobia, the fear of teeth,
+    - Pyrophobia, the fear of fire,
+    - Agoraphobia, the fear of open places,
+    - Astrophobia, the fear of stars,
+    - Ballistophobia, the fear of bullets,
+    - Heliophobia, the fear of sunlight,
+    - Hydrophobia, the fear of water,
+    - Musophobia, the fear of rodents,
+    - Scotophobia, the fear of darkness,
+    - Tomophobia, the fear of surgery,
+    - Hypnophobia, the fear of sleep,
+    - Haphephobia, the fear of being touched,
+    - Confodiophobia, the fear of being stabbed,
+    - Dracophobia, the fear of dragons,
+    - Phantasmaphobia, the fear of ghosts,
+    - Astraphobia, the fear of lightning,
+    - Botanophobia, the fear of plants,
+    - Caligynephobia, the fear of beautiful women,
+    - Xanthophobia, the fear of the colour yellow,
+    - Pediophobia, the fear of dolls,
+    - Mechanophobia, the fear of machinery,
 
-#
+# My eyes have been opened - I have {$mania}. I just can't help it!
 - type: thavenMood
-  id: VoiceOfTheEnd
-  moodName: thaven-mood-cosmic-voiceoftheend-name
-  moodDesc: thaven-mood-cosmic-voiceoftheend-desc
-  conflicts:
-    - WorshipOfTheEnd
-    - FearOfEndings
+  id: Mania
+  moodName: ascendant-mood-mania-name
+  moodDesc: ascendant-mood-mania-desc
+  moodVars:
+    mania: Manias
 
-#
-- type: thavenMood
-  id: WorshipOfTheEnd
-  moodName: thaven-mood-cosmic-worshipoftheend-name
-  moodDesc: thaven-mood-cosmic-worshipoftheend-desc
-  conflicts:
-    - VoiceOfTheEnd
-    - FearOfEndings
+# POSSIBLE MANIAS: ADD HERE!
+- type: dataset
+  id: Manias
+  values:
+    - Agathomania, a compulsion for pathological kindness
+    - Algomania, an obsession with pain
+    - Amenomania, an irrational cheerfulness
+    - Bibliokleptomania, a compulsion for stealing books
+    - Dikemania, an obsession to see justice done
+    - Geliomania, an uncontrollable compulsion to laugh
+    - Klazomania, an irrational compulsion to shout
+    - Kleptomania, an irrational compulsion to steal
+    - Pseudomania, an irrational compulsion for lying
+    - Achluomania, an excessive liking for darkness
+    - Alchmomania, an obsession with sharp objects
+    - Chelmatomania, an irrational desire for coldness
+    - Coulromania, an obsession with clowns
+    - Doromania, an obsession with giving gifts
+    - Drapetomania, a compulsion for running away
+    - Gamomania, an obsession with proposing marriage
+    - Linonomania, an obsession with string
+    - Onomamania, an obsession with names
+    - Pyromania, a compulsion for starting fires
+    - Zoomania, an obsession with animals
 
-#
+# Who cares about living? Other people are more important than me. Maybe by sacrificing myself for them, I'll finally be worth something.
 - type: thavenMood
-  id: DisregardOfTheLiving
-  moodName: thaven-mood-cosmic-disregardoftheliving-name
-  moodDesc: thaven-mood-cosmic-disregardoftheliving-desc
-  conflicts:
-    - DisregardOfTheSelf
-#
-- type: thavenMood
-  id: DisregardOfTheSelf
-  moodName: thaven-mood-cosmic-disregardoftheself-name
-  moodDesc: thaven-mood-cosmic-disregardoftheself-desc
-  conflicts:
-    - DisregardOfTheLiving
-#
-- type: thavenMood
-  id: FearOfBeingForgotten
-  moodName: thaven-mood-cosmic-fearofbeingforgotten-name
-  moodDesc: thaven-mood-cosmic-fearofbeingforgotten-desc
+  id: Quixotism
+  moodName: ascendant-mood-quixotism-name
+  moodDesc: ascendant-mood-quixotism-desc
 
-#
+# I've been insulted for the last time. If anyone or anything on this station does wrong by me again, they'll pay... in blood.
 - type: thavenMood
-  id: FearOfEndings
-  moodName: thaven-mood-cosmic-fearofendings-name
-  moodDesc: thaven-mood-cosmic-fearofendings-desc
-  conflicts:
-    - VoiceOfTheEnd
-    - WorshipOfTheEnd
-    - WakingDream
-    - PainlessEndings
+  id: Temerity
+  moodName: ascendant-mood-temerity-name
+  moodDesc: ascendant-mood-temerity-desc
 
-#
+# Everything is fine. I'm fine. If I say it enough, will it be true?
 - type: thavenMood
-  id: PainlessEndings
-  moodName: thaven-mood-cosmic-painlessendings-name
-  moodDesc: thaven-mood-cosmic-painlessendings-desc
-  conflicts:
-    - FearOfEndings
-    - WakingDream
-    - DisregardOfTheLiving
-    - WorshipOfTheEnd
+  id: Denial
+  moodName: ascendant-mood-denial-name
+  moodDesc: ascendant-mood-denial-desc
+
+# I'm beautiful... aren't I? My arms, my face, my body, aren't they beautiful? Won't someone tell me that I'm beautiful?!
+- type: thavenMood
+  id: Vainglory
+  moodName: ascendant-mood-vainglory-name
+  moodDesc: ascendant-mood-vainglory-desc
+
+# Have you heard about {$fixation}? Because I have. This is the only thing I can live for anymore!
+- type: thavenMood
+  id: Fixation
+  moodName: ascendant-mood-fixation-name
+  moodDesc: ascendant-mood-fixation-desc
+  moodVars:
+    fixation: Fixations
+
+# POSSIBLE FIXATIONS: ADD HERE!
+- type: dataset
+  id: Fixations
+  values:
+    - Pun Pun the Monkey
+    - Hamlet the Hamster
+    - Renault the Fox
+    - Smile the Slime
+    - Disposals
+    - The Library
+    - The Station Anchor
+    - Solar Panels
+    - The Morgue
+    - Multitools
+    - Plushies
+    - Spray bottles
+    - Trains
+    - The Supermatter
+    - Bottomless Pits
+    - Immovable Rods
+    - Gondals
+    - Space Dragons
+    - Books
+    - Heterosexuality #idk man im just saying words.
+    - Time Travel
+    - Nuclear Bombs
+    - Ponchos
+    - Flowers
+    - Meat
+    - Cars
+    - Mice
+    - Vent Slimes
+    - Plasma Gas
+    - The Great Gatsby
+    - Monkeys
+    - The Seven Wonders of the World
+
+# What was that strange, squid-like creature...? I must know more... at any cost.
+- type: thavenMood
+  id: Fascination
+  moodName: ascendant-mood-fascination-name
+  moodDesc: ascendant-mood-fascination-desc
+
+# Can't look at them. Can't meet their eyes. Hide my face, so they don't know what I'm thinking. They're just waiting for me to slip up. Then they'll pounce.
+- type: thavenMood
+  id: Mistrust
+  moodName: ascendant-mood-mistrust-name
+  moodDesc: ascendant-mood-mistrust-desc
+
+# WE ARE ALL GOING TO DIE.
+- type: thavenMood
+  id: WeAreAllGoingToDie
+  moodName: ascendant-mood-weareallgoingtodie-name
+  moodDesc: ascendant-mood-weareallgoingtodie-desc
+
+# Nobody else knows that the end is coming. I have to tell them... Maybe then we'll at least be able to watch it end together.
+- type: thavenMood
+  id: Communion
+  moodName: ascendant-mood-communion-name
+  moodDesc: ascendant-mood-communion-desc
+
+# Where am I? I don't recognise these hallways. This place is a maze, and behind every door could be a new danger...
+- type: thavenMood
+  id: Labyrinth
+  moodName: ascendant-mood-labyrinth-name
+  moodDesc: ascendant-mood-labyrinth-desc
+
+# I have so many regrets. So many loose ends. The things I've done, the people I know... I have to cut them off, and let go.
+- type: thavenMood
+  id: Unburdening
+  moodName: ascendant-mood-unburdening-name
+  moodDesc: ascendant-mood-unburdening-desc

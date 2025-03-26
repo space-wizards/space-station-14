@@ -3,7 +3,7 @@
   id: RogueAscendedSpawn
   components:
   - type: StationEvent
-    weight: 6.5
+    weight: 0 # EMERGENCY DISABLE > was 5.5
     earliestStart: 30
     reoccurrenceDelay: 20
     minimumPlayers: 30
