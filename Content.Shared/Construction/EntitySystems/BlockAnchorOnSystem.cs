@@ -5,13 +5,18 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Construction.EntitySystems;
 
+/// <summary>
+/// Prevents anchoring an item in the same tile as an item matching the <see cref="EntityWhitelist"/>.
+/// <seealso cref="BlockAnchorOnComponent"/>
+/// </summary>
 public sealed class BlockAnchorOnSystem : EntitySystem
 {
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
@@ -20,6 +25,9 @@ public sealed class BlockAnchorOnSystem : EntitySystem
         SubscribeLocalEvent<BlockAnchorOnComponent, AnchorAttemptEvent>(OnAnchorAttempt);
     }
 
+    /// <summary>
+    /// Handles the <see cref="AnchorStateChangedEvent"/>.
+    /// </summary>
     private void OnAnchorStateChanged(Entity<BlockAnchorOnComponent> ent, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
@@ -32,6 +40,9 @@ public sealed class BlockAnchorOnSystem : EntitySystem
         _xform.Unanchor(ent, Transform(ent));
     }
 
+    /// <summary>
+    /// Handles the <see cref="AnchorAttemptEvent"/>.
+    /// </summary>
     private void OnAnchorAttempt(Entity<BlockAnchorOnComponent> ent, ref AnchorAttemptEvent args)
     {
         if (args.Cancelled)
@@ -45,7 +56,7 @@ public sealed class BlockAnchorOnSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Check if there is any anchored overlap with non whitelisted or blacklisted entities.
+    /// Check if there is any anchored overlap with non whitelisted or blacklisted entities.
     /// </summary>
     /// <returns>True if there is, false if there isn't</returns>
     private bool HasOverlap(Entity<BlockAnchorOnComponent, TransformComponent> ent)
@@ -59,7 +70,7 @@ public sealed class BlockAnchorOnSystem : EntitySystem
         while (enumerator.MoveNext(out var otherEnt))
         {
             // Don't match yourself.
-            if (otherEnt == ent.Owner)
+            if (otherEnt == ent)
                 continue;
 
             if (!_whitelist.CheckBoth(otherEnt, ent.Comp1.Blacklist, ent.Comp1.Whitelist))

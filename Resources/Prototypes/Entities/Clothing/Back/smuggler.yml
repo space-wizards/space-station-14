@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  id: SubfloorAnchorStorageBase
+  id: BaseSubfloorAnchorStorage
   components:
   - type: Appearance
   - type: SubFloorHide
@@ -21,8 +21,8 @@
 
 - type: entity
   abstract: true
-  parent: SubfloorAnchorStorageBase
-  id: AnchoredSubfloorAnchorStorageBase
+  parent: BaseSubfloorAnchorStorage
+  id: BaseSubfloorAnchorStorageAnchored
   placement:
     mode: SnapgridCenter
   components:
@@ -33,18 +33,18 @@
     bodyType: Static
 
 - type: entity
-  parent: [ClothingBackpackSatchel, SubfloorAnchorStorageBase]
+  parent: [ BaseSubfloorAnchorStorageAnchored, ClothingBackpackSatchel ]
   id: ClothingBackpackSatchelSmuggler
   name: Smuggler's Satchel
-  description: A dingy, suspicious looking satchel.
   suffix: Empty
+  description: A dingy, suspicious looking satchel.
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/smuggler.rsi
     state: icon
 
 - type: entity
-  parent: [AnchoredSubfloorAnchorStorageBase, BriefcaseSyndie]
+  parent: [ BaseSubfloorAnchorStorageAnchored, BriefcaseSyndie ]
   id: BriefcaseSmugglerCash
   suffix: Smuggler, Do Not Map
   components:
@@ -57,7 +57,7 @@
             range: 1, 11
 
 - type: entity
-  parent: [AnchoredSubfloorAnchorStorageBase, ClothingBackpackDuffelClown]
+  parent: [ BaseSubfloorAnchorStorageAnchored, ClothingBackpackDuffelClown ]
   id: ClothingBackpackDuffelClownSmuggler
   suffix: Smuggler, Do Not Map
   components:
@@ -80,8 +80,8 @@
             weight: 5
 
 - type: entity
-  parent: [AnchoredSubfloorAnchorStorageBase, ClothingBackpackSatchelSmuggler]
-  id: ClothingBackpackSatchelSmugglerFilled
+  parent: ClothingBackpackSatchelSmuggler
+  id: ClothingBackpackSatchelSmugglerFillled
   suffix: Smuggler, Do Not Map
   components:
   - type: Sprite
@@ -94,7 +94,7 @@
 
 - type: entity
   parent: MarkerBase
-  id: RandomSatchel
+  id: RandomSatchelSpawner
   name: random smuggler's satchel spawner
   suffix: Do Not Map
   components:

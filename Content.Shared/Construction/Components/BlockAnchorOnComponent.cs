@@ -5,19 +5,19 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Construction.Components;
 
 /// <summary>
-///     Will not allow anchoring if there is an anchored item in the same tile that fails the whitelist checks.
+/// Will not allow anchoring if there is an anchored item in the same tile that fails the <see cref="EntityWhitelist"/>.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(BlockAnchorOnSystem))]
 public sealed partial class BlockAnchorOnComponent : Component
 {
     /// <summary>
-    ///     Entities that match this whitelist are allowed (If null, ignore)
+    /// If not null, entities that match this whitelist are allowed.
     /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist;
 
     /// <summary>
-    ///     Entities that match this blacklist are not allowed (If null, ignore)
+    /// If not null, entities that match this blacklist are not allowed.
     /// </summary>
     [DataField]
     public EntityWhitelist? Blacklist;
