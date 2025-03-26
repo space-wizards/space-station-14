@@ -95,7 +95,7 @@ internal sealed class AdminNameOverlay : Overlay
                 continue;
 
             // Get on-screen coordinates of player
-            var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center);
+            var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center).Rounded();
 
             sortable.Add((info, aabb, entity.Value, screenCoordinates));
         }
@@ -109,7 +109,7 @@ internal sealed class AdminNameOverlay : Overlay
             var screenCoordinatesCenter = info.Item4;
             //the center position is kept separately, for simpler position comparison later
             var centerOffset = new Vector2(28f, -18f) * uiScale;
-            var screenCoordinates = screenCoordinatesCenter + centerOffset;
+            var screenCoordinates = screenCoordinatesCenter + centerOffset.Rounded();
             var alpha = 1f;
 
             //TODO make a smarter system where the starting offset can be modified by the predicted position and size of already-drawn overlays/stacks?
