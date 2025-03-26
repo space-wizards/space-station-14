@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/tgstation/tgstation/raw/c545428822f1ee0d402b812221518632dbe198cb/icons/effects/effects.dmi with offsets modified",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/raw/c545428822f1ee0d402b812221518632dbe198cb/icons/effects/effects.dmi with offsets modified, 'box' sprite hacked with <3 by FairlySadPanda, sourced from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e",
     "states": [
         {
             "name": "bite",
@@ -79,6 +79,9 @@
         },
         {
             "name": "fist"
+        },
+        {
+            "name": "box"
         }
     ]
 }
