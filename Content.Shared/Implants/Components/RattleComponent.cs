@@ -8,7 +8,7 @@ namespace Content.Shared.Implants.Components;
 public sealed partial class RattleComponent : Component
 {
     // The radio channel the message will be sent to
-    [DataField]
+    [DataField("radioChannel")]
     public ProtoId<RadioChannelPrototype> RadioChannel = "Syndicate";
 
     // The message that the implant will send when crit
