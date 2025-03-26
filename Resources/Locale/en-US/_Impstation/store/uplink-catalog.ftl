@@ -24,3 +24,7 @@ uplink-juggernautcloak-desc = Decorate your armor with your old cloak. Show them
 
 uplink-satchel-syndicate-name = Syndicate satchel
 uplink-satchel-syndicate-desc = A lightweight explosion-proof satchel for when speed matters.
+
+
+uplink-fugitivecloak-name = Monochrome Cloak
+uplink-fugitivecloak-desc = While this cloak hides your extra appendages, it also will reveal who you REALLY want to kiss under the moonlight.
