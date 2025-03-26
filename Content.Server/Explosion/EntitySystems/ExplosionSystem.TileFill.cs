@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Numerics;
 using Content.Shared.Administration;
-using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -69,8 +68,8 @@ public sealed partial class ExplosionSystem
         {
             // this is a space-based explosion that (should) not touch any grids.
             initialTile = new Vector2i(
-                    (int) Math.Floor(epicenter.Position.X / DefaultTileSize),
-                    (int) Math.Floor(epicenter.Position.Y / DefaultTileSize));
+                    (int)Math.Floor(epicenter.Position.X / DefaultTileSize),
+                    (int)Math.Floor(epicenter.Position.Y / DefaultTileSize));
         }
 
         // Main data for the exploding tiles in space and on various grids
@@ -136,7 +135,7 @@ public sealed partial class ExplosionSystem
 
         // These variables keep track of the total intensity we have distributed
         List<int> tilesInIteration = new() { 1 };
-        List<float> iterationIntensity = new() {stepSize};
+        List<float> iterationIntensity = new() { stepSize };
         var totalTiles = 1;
         var remainingIntensity = totalIntensity - stepSize;
 
