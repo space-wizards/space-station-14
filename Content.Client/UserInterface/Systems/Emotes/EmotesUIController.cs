@@ -142,7 +142,6 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
                 continue;
 
             // only valid emotes that have ways to be triggered by chat and player have access / no restriction on
-
             if (emote.Category == EmoteCategory.Invalid
                 || emote.ChatTriggers.Count == 0
                 || !(player.HasValue && whitelistSystem.IsWhitelistPassOrNull(emote.Whitelist, player.Value))
@@ -168,17 +167,18 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
             list.Add(actionOption);
         }
 
-        List<RadialMenuOption> models = new();
+        var models = new RadialMenuOption[emotesByCategory.Count];
+        var i = 0;
         foreach (var (key, list) in emotesByCategory)
         {
             var tuple = EmoteGroupingInfo[key];
 
-            var layerOptions = new RadialMenuNestedLayerOption(list)
+            models[i] = new RadialMenuNestedLayerOption(list)
             {
                 Sprite = tuple.Sprite,
                 ToolTip = Loc.GetString(tuple.Tooltip)
             };
-            models.Add(layerOptions);
+            i++;
         }
 
         return models;
