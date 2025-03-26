@@ -118,6 +118,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
             QueueCapReached.Set(0);
             LogsSent.Set(0);
         }
+
+        InitializeWebhook();
     }
 
     public async Task Shutdown()
@@ -130,6 +132,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
 
     public async void Update()
     {
+        UpdateWebhook();
+
         if (_runLevel == GameRunLevel.PreRoundLobby)
         {
             await PreRoundUpdate();
@@ -287,6 +291,8 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
                 LogsSent.Set(0);
             }
         }
+
+        WebhookOnGameRunLevelChanged();
     }
 
     private void Add(LogType type, LogImpact impact, string message, JsonDocument json, HashSet<Guid> players)
@@ -355,7 +361,10 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
         }
 
         if (adminLog)
+        {
             _chat.SendAdminAlert(logMessage);
+            SendAdminLogWebhook(logMessage, impact);
+        }
 
         if (preRound)
         {
