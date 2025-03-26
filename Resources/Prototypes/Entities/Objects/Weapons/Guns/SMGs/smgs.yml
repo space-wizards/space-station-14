@@ -62,7 +62,7 @@
   name: Atreides
   parent: [BaseWeaponSubMachineGun, BaseMajorContraband]
   id: WeaponSubMachineGunAtreides
-  description: A very rare ‘machine pistol’ or PDW dating back to the corporate wars. Despite its age, it is in remarkably good condition. Feeds from .35 SMG magazines.
+  description: A discontinued and very rare ‘machine pistol’ dating back to the corporate wars. It's extremely high fire rate and compact profile made it useful in close quarters combat. Despite its age, it is in remarkably good condition. Feeds from .35 SMG magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/SMGs/atreides.rsi
