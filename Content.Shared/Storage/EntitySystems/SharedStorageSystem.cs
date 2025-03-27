@@ -908,8 +908,10 @@ public abstract class SharedStorageSystem : EntitySystem
         {
             Insert(target, entity, out _, user: user, targetComp, playSound: false);
         }
-
-        Audio.PlayPredicted(sourceComp.StorageInsertSound, target, user, _audioParams);
+        if (user != null
+            && (!_tag.HasTag(user.Value, sourceComp.SilentStorageUserTag)
+                || !_tag.HasTag(user.Value, targetComp.SilentStorageUserTag)))
+            Audio.PlayPredicted(sourceComp.StorageInsertSound, target, user, _audioParams);
     }
 
     /// <summary>
@@ -1082,12 +1084,14 @@ public abstract class SharedStorageSystem : EntitySystem
          * For now we just treat items as always being the same size regardless of stack count.
          */
 
+        var canPlaySound = playSound && user != null && !_tag.HasTag(user.Value, storageComp.SilentStorageUserTag);
+
         if (!stackAutomatically || !_stackQuery.TryGetComponent(insertEnt, out var insertStack))
         {
             if (!ContainerSystem.Insert(insertEnt, storageComp.Container))
                 return false;
 
-            if (playSound)
+            if (canPlaySound)
                 Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user, _audioParams);
 
             return true;
@@ -1117,7 +1121,7 @@ public abstract class SharedStorageSystem : EntitySystem
             return false;
         }
 
-        if (playSound)
+        if (canPlaySound)
             Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user, _audioParams);
 
         return true;
