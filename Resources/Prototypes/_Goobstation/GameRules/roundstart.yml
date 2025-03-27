@@ -14,7 +14,7 @@
     - EscapeIdentityObjective
     - ChangelingSurviveObjective
   - type: AntagSelection
-    electionTime: IntraPlayerSpawn # Imp Edit
+    selectionTime: IntraPlayerSpawn # Imp Edit
     agentName: changeling-roundend-name
     definitions:
     - prefRoles: [ Changeling ]

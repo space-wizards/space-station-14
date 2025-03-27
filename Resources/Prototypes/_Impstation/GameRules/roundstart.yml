@@ -83,12 +83,12 @@
       min: 240
       max: 420
   - type: AntagObjectives
-    selectionTime: IntraPlayerSpawn
     objectives:
     - KillRandomTraitorSvSObjective
     - RandomTraitorAliveSvSObjective
     - EscapeShuttleObjective
   - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ Traitor ]
       fallbackRoles: [ TraitorSleeper ]

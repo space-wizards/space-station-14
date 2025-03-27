@@ -17,8 +17,8 @@
   - type: Sprite
     sprite: _EE/Structures/Power/Generation/Supermatter/supermatter_sliver.rsi
     state: icon
-  - type: StealTarget
-    stealGroup: SupermatterSliver
+  # - type: StealTarget
+  #  stealGroup: SupermatterSliver
   - type: Tag
     tags:
       - HighRiskItem
