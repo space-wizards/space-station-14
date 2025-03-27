@@ -132,6 +132,9 @@ public abstract class SharedConveyorController : VirtualController
 
         foreach (var ent in _job.Conveyed)
         {
+            if (!ent.Entity.Comp3.Predict && prediction)
+                continue;
+
             var physics = ent.Entity.Comp3;
             var velocity = physics.LinearVelocity;
             var targetDir = ent.Direction;
