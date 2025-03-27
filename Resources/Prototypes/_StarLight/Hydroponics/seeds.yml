@@ -9,7 +9,7 @@
     - FoodOrganTree
   lifespan: 10 # organs rot fast
   maturation: 12
-  production: 1 # organ growing takes a while
+  production: 15 # organ growing takes a while
   yield: 1
   potency: 10
   growthStages: 2
