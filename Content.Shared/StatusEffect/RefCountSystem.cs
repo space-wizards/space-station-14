@@ -10,9 +10,9 @@ namespace Content.Shared.StatusEffect;
 /// </summary>
 public sealed class RefCountSystem : EntitySystem
 {
-    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
+    private IComponentFactory _factory => EntityManager.ComponentFactory;
 
     #region Public API
 
@@ -29,7 +29,8 @@ public sealed class RefCountSystem : EntitySystem
 
         ent.Comp ??= EnsureComp<RefCountComponent>(ent);
         EnsureComp<T>(ent);
-        return Increment((ent, ent.Comp), typeof(T));
+        var name = _factory.GetComponentName<T>();
+        return Increment((ent, ent.Comp), name);
     }
 
     /// <summary>
@@ -42,7 +43,8 @@ public sealed class RefCountSystem : EntitySystem
             return false;
 
         ent.Comp ??= EnsureComp<RefCountComponent>(ent);
-        if (!Increment((ent, ent.Comp), type))
+        var name = _factory.GetComponentName(type);
+        if (!Increment((ent, ent.Comp), name))
             return false;
 
         var comp = (Component) _factory.GetComponent(type);
@@ -63,7 +65,9 @@ public sealed class RefCountSystem : EntitySystem
         EntityManager.AddComponents(ent, components, force);
         foreach (var reg in components.Values)
         {
-            Increment((ent, ent.Comp), reg.Component.GetType());
+            var type = reg.Component.GetType();
+            var name = _factory.GetComponentName(type);
+            Increment((ent, ent.Comp), name);
         }
     }
 
@@ -89,7 +93,8 @@ public sealed class RefCountSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false))
             return false;
 
-        if (!Decrement((ent, ent.Comp), type))
+        var name = _factory.GetComponentName(type);
+        if (!Decrement((ent, ent.Comp), name))
             return false;
 
         RemComp(ent, type);
@@ -116,32 +121,36 @@ public sealed class RefCountSystem : EntitySystem
 
     #endregion
 
-    private uint GetCount(RefCountComponent comp, Type type)
+    private uint GetCount(RefCountComponent comp, string name)
     {
-        return comp.Counts.GetValueOrDefault(type);
+        return comp.Counts.GetValueOrDefault(name);
     }
 
-    private void SetCount(Entity<RefCountComponent> ent, Type type, uint count)
+    private void SetCount(Entity<RefCountComponent> ent, string name, uint count)
     {
-        ent.Comp.Counts[type] = count;
+        if (count == 0)
+            ent.Comp.Counts.Remove(name);
+        else
+            ent.Comp.Counts[name] = count;
+        Dirty(ent);
     }
 
-    private bool Increment(Entity<RefCountComponent> ent, Type type)
+    private bool Increment(Entity<RefCountComponent> ent, string name)
     {
-        var count = GetCount(ent.Comp, type) + 1;
-        SetCount(ent, type, count);
+        var count = GetCount(ent.Comp, name) + 1;
+        SetCount(ent, name, count);
         return count == 1;
     }
 
-    private bool Decrement(Entity<RefCountComponent> ent, Type type)
+    private bool Decrement(Entity<RefCountComponent> ent, string name)
     {
-        var count = GetCount(ent.Comp, type);
+        var count = GetCount(ent.Comp, name);
         if (_net.IsServer) // client isnt authoritative don't care
-            DebugTools.Assert(count > 0, $"Tried to remove component {type} from {ToPrettyString(ent)} which was not added!");
+            DebugTools.Assert(count > 0, $"Tried to remove component {name} from {ToPrettyString(ent)} which was not added!");
         if (count == 0) // don't underflow
             return false;
 
-        SetCount(ent, type, --count);
+        SetCount(ent, name, --count);
         return count == 0;
     }
 }
