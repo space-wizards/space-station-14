@@ -194,12 +194,6 @@ public sealed class DefibrillatorSystem : EntitySystem
             _electrocution.TryDoElectrocution(other, null, component.ZapDamage, component.WritheDuration, true);
         }
 
-        /*
-        // If someone is currently pulling the target they get zapped too
-        if (TryComp<PullableComponent>(target, out var pullable) && pullable.Puller != null)
-            _electrocution.TryDoElectrocution(pullable.Puller.Value, null, component.ZapDamage, component.WritheDuration, true);
-        */
-
         if (!TryComp<UseDelayComponent>(uid, out var useDelay))
             return;
         _useDelay.SetLength((uid, useDelay), component.ZapDelay, component.DelayId);
