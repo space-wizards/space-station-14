@@ -123,4 +123,17 @@ public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLi
             args.Layers.Add((key, layer));
         }
     }
+
+    /// <summary>
+    ///     Copy all item specific visuals from another item.
+    /// </summary>
+    public void CopyVisuals(EntityUid uid, ToggleableLightVisualsComponent otherToggleableLights, ToggleableLightVisualsComponent? toggleableLights = null)
+    {
+        if (!Resolve(uid, ref toggleableLights))
+            return;
+
+        toggleableLights.ClothingVisuals = otherToggleableLights.ClothingVisuals;
+        toggleableLights.InhandVisuals = otherToggleableLights.InhandVisuals;
+        toggleableLights.SpriteLayer = otherToggleableLights.SpriteLayer;
+    }
 }
