@@ -4,7 +4,14 @@ namespace Content.Shared.Conveyor;
 
 /// <summary>
 /// Indicates this entity is currently contacting a conveyor and will subscribe to events as appropriate.
-/// For entities actively being conveyed see <see cref="ActiveConveyedComponent"/>.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
-public sealed partial class ConveyedComponent : Component;
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class ConveyedComponent : Component
+{
+    // TODO: Delete if pulling gets fixed.
+    /// <summary>
+    /// True if currently conveying.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool Conveying;
+}

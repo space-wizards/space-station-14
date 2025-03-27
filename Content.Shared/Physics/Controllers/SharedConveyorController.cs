@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
+using Content.Shared.Magic;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
@@ -145,6 +146,8 @@ public abstract class SharedConveyorController : VirtualController
 
             if (ent.Result)
             {
+                SetConveying(ent.Entity.Owner, ent.Entity.Comp1, targetDir.LengthSquared() > 0f);
+
                 // We apply friction here so when we push items towards the center of the conveyor they don't go overspeed.
                 // We also don't want this to apply to mobs as they apply their own friction and otherwise
                 // they'll go too slow.
@@ -169,6 +172,15 @@ public abstract class SharedConveyorController : VirtualController
                 RemComp<ConveyedComponent>(ent.Entity.Owner);
             }
         }
+    }
+
+    private void SetConveying(EntityUid uid, ConveyedComponent conveyed, bool value)
+    {
+        if (conveyed.Conveying == value)
+            return;
+
+        conveyed.Conveying = value;
+        Dirty(uid, conveyed);
     }
 
     /// <summary>
@@ -219,6 +231,12 @@ public abstract class SharedConveyorController : VirtualController
             Transform? otherTransform;
             if (contact.Hard)
             {
+                var otherBody = contact.OtherBody(entity.Owner);
+
+                // If the blocking body is dynamic then don't ignore it for this.
+                if (otherBody.BodyType != BodyType.Static)
+                    continue;
+
                 otherTransform = PhysicsSystem.GetPhysicsTransform(other);
                 var aTransform = contact.EntityA == entity.Owner ? transform : otherTransform.Value;
                 var bTransform = contact.EntityB == entity.Owner ? transform : otherTransform.Value;
@@ -228,6 +246,9 @@ public abstract class SharedConveyorController : VirtualController
                 {
                     return false;
                 }
+
+                // Conveyors aren't hard no point continuing.
+                continue;
             }
 
             if (!_conveyorQuery.TryComp(other, out var conveyor))
