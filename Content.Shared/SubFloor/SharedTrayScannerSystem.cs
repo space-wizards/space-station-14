@@ -20,8 +20,6 @@ public abstract class SharedTrayScannerSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TrayScannerComponent, ComponentGetState>(OnTrayScannerGetState);
-        SubscribeLocalEvent<TrayScannerComponent, ComponentHandleState>(OnTrayScannerHandleState);
         SubscribeLocalEvent<TrayScannerComponent, ActivateInWorldEvent>(OnTrayScannerActivate);
 
         SubscribeLocalEvent<TrayScannerComponent, GotEquippedHandEvent>(OnTrayHandEquipped);
@@ -69,44 +67,33 @@ public abstract class SharedTrayScannerSystem : EntitySystem
         OnEquip(args.Equipee);
     }
 
-    private void OnTrayScannerActivate(EntityUid uid, TrayScannerComponent scanner, ActivateInWorldEvent args)
+    private void OnTrayScannerActivate(Entity<TrayScannerComponent> ent, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)
             return;
 
-        SetScannerEnabled(uid, !scanner.Enabled, scanner);
+        SetScannerEnabled(ent, !ent.Comp.Enabled, args.User);
         args.Handled = true;
     }
 
-    private void SetScannerEnabled(EntityUid uid, bool enabled, TrayScannerComponent? scanner = null)
+    private void SetScannerEnabled(Entity<TrayScannerComponent> ent, bool enabled, EntityUid user)
     {
-        if (!Resolve(uid, ref scanner) || scanner.Enabled == enabled)
+        if (ent.Comp.Enabled == enabled)
             return;
 
-        scanner.Enabled = enabled;
-        Dirty(uid, scanner);
+        ent.Comp.Enabled = enabled;
+        Dirty(ent);
+
+        if (enabled)
+            _refCount.Add<TrayScannerUserComponent>(user);
+        else
+            _refCount.Remove<TrayScannerUserComponent>(user);
 
         // We don't remove from _activeScanners on disabled, because the update function will handle that, as well as
         // managing the revealed subfloor entities
 
-        if (TryComp<AppearanceComponent>(uid, out var appearance))
-        {
-            _appearance.SetData(uid, TrayScannerVisual.Visual, scanner.Enabled ? TrayScannerVisual.On : TrayScannerVisual.Off, appearance);
-        }
-    }
-
-    private void OnTrayScannerGetState(EntityUid uid, TrayScannerComponent scanner, ref ComponentGetState args)
-    {
-        args.State = new TrayScannerState(scanner.Enabled, scanner.Range);
-    }
-
-    private void OnTrayScannerHandleState(EntityUid uid, TrayScannerComponent scanner, ref ComponentHandleState args)
-    {
-        if (args.Current is not TrayScannerState state)
-            return;
-
-        scanner.Range = state.Range;
-        SetScannerEnabled(uid, state.Enabled, scanner);
+        // TODO: make this a bool and pass enabled directly On/Off vs true/false
+        _appearance.SetData(ent, TrayScannerVisual.Visual, ent.Comp.Enabled ? TrayScannerVisual.On : TrayScannerVisual.Off);
     }
 }
 
