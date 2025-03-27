@@ -34,29 +34,20 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// Assumes that there is an entry for each pipe layer (from 0 to <see cref="MaxPipeLayer"/>).
     /// </remarks>
     [DataField]
-    public string[] LayerVisualStates = new string[MaxPipeLayer + 1];
+    public string[]? SpriteRsiPaths = null;
 
     /// <summary>
     /// A hashset of sprite layers which be automatically offset by a 
     /// pre-specified Vector2 when the pipe layer changes.
     /// </summary>
     [DataField]
-    public HashSet<string> LayersToOffset = new();
+    public Dictionary<string, string[]> SpriteLayersRsiPaths = new();
 
     /// <summary>
     /// The pipe layers of this entity cannot be changed when this value is true. 
     /// </summary>
     [DataField]
     public bool PipeLayersLocked = false;
-
-    /// <summary>
-    /// An array containing the state names of the connectors for the different pipe layers.
-    /// </summary>
-    /// /// <remarks>
-    /// Assumes that there is an entry for each pipe layer (from 0 to <see cref="MaxPipeLayer"/>).
-    /// </remarks>
-    [DataField]
-    public string[] ConnectorVisualStates = { "pipeConnector", "pipeConnector1", "pipeConnector2" };
 
     /// <summary>
     /// Tool quality required to cause a pipe to change layers
@@ -89,4 +80,11 @@ public sealed partial class TrySettingPipeLayerCompletedEvent : SimpleDoAfterEve
     {
         PipeLayer = pipeLayer;
     }
+}
+
+[Serializable, NetSerializable]
+public enum AtmosPipeLayerVisuals
+{
+    Sprite,
+    SpriteLayers,
 }

@@ -72,6 +72,27 @@
   id: GasPipeBase
   components:  
   - type: AtmosPipeLayers
+    spriteLayersRsiPaths:
+      enum.PipeVisualLayers.Pipe:
+        - Structures/Piping/Atmospherics/pipe.rsi
+        - Structures/Piping/Atmospherics/pipe_alt1.rsi
+        - Structures/Piping/Atmospherics/pipe_alt2.rsi
+      enum.PipeConnectionLayer.NorthConnection:
+        - Structures/Piping/Atmospherics/pipe.rsi
+        - Structures/Piping/Atmospherics/pipe_alt1.rsi
+        - Structures/Piping/Atmospherics/pipe_alt2.rsi
+      enum.PipeConnectionLayer.SouthConnection:
+        - Structures/Piping/Atmospherics/pipe.rsi
+        - Structures/Piping/Atmospherics/pipe_alt1.rsi
+        - Structures/Piping/Atmospherics/pipe_alt2.rsi
+      enum.PipeConnectionLayer.EastConnection:
+        - Structures/Piping/Atmospherics/pipe.rsi
+        - Structures/Piping/Atmospherics/pipe_alt1.rsi
+        - Structures/Piping/Atmospherics/pipe_alt2.rsi
+      enum.PipeConnectionLayer.WestConnection:
+        - Structures/Piping/Atmospherics/pipe.rsi
+        - Structures/Piping/Atmospherics/pipe_alt1.rsi
+        - Structures/Piping/Atmospherics/pipe_alt2.rsi
   
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 
@@ -91,10 +112,6 @@
       - state: pipeHalf
         map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
-    layerVisualStates:
-    - pipeHalf
-    - pipeHalf1
-    - pipeHalf2
   - type: Construction
     graph: GasPipe
     node: half
@@ -119,10 +136,6 @@
       - state: pipeStraight
         map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
-    layerVisualStates:
-    - pipeStraight
-    - pipeStraight1
-    - pipeStraight2
   - type: Construction
     graph: GasPipe
     node: straight
@@ -161,10 +174,6 @@
       - state: pipeBend
         map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
-    layerVisualStates:
-    - pipeBend
-    - pipeBend1
-    - pipeBend2
   - type: Construction
     graph: GasPipe
     node: bend
@@ -210,10 +219,6 @@
       - state: pipeTJunction
         map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
-    layerVisualStates:
-    - pipeTJunction
-    - pipeTJunction1
-    - pipeTJunction2
   - type: Construction
     graph: GasPipe
     node: tjunction
@@ -257,10 +262,6 @@
       - state: pipeFourway
         map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
-    layerVisualStates:
-    - pipeFourway
-    - pipeFourway1
-    - pipeFourway2
   - type: Construction
     graph: GasPipe
     node: fourway
@@ -298,10 +299,6 @@
         map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
     pipeLayersLocked: true
-    layerVisualStates:
-    - pipeBroken
-    - pipeBroken
-    - pipeBroken
   - type: Construction
     graph: GasPipe
     node: broken

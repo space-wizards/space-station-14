@@ -1,5 +1,4 @@
 using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.Piping;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
@@ -11,7 +10,6 @@ using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
@@ -25,9 +23,6 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-
-    // Used to offset the layer sprites listed in AtmosPipeLayersComponent.LayersToOffset
-    private readonly Vector2[] _layerOffsets = { new Vector2(0f, 0f), new Vector2(0.21875f, 0f), new Vector2(-0.21875f, 0f) };
 
     public override void Initialize()
     {
@@ -182,14 +177,22 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
         if (TryComp<AppearanceComponent>(ent, out var appearance))
         {
-            if (ent.Comp.CurrentPipeLayer < ent.Comp.LayerVisualStates.Length)
-                _appearance.SetData(ent, PipeVisualLayers.Pipe, ent.Comp.LayerVisualStates[ent.Comp.CurrentPipeLayer], appearance);
+            if (ent.Comp.SpriteRsiPaths != null && ent.Comp.CurrentPipeLayer < ent.Comp.SpriteRsiPaths.Length)
+                _appearance.SetData(ent, AtmosPipeLayerVisuals.Sprite, ent.Comp.SpriteRsiPaths[ent.Comp.CurrentPipeLayer], appearance);
 
-            if (ent.Comp.CurrentPipeLayer < ent.Comp.ConnectorVisualStates.Length)
-                _appearance.SetData(ent, PipeVisualLayers.Connector, ent.Comp.ConnectorVisualStates[ent.Comp.CurrentPipeLayer], appearance);
 
-            if (ent.Comp.CurrentPipeLayer < _layerOffsets.Length)
-                _appearance.SetData(ent, PipeVisualLayers.Device, _layerOffsets[ent.Comp.CurrentPipeLayer], appearance);
+            if (ent.Comp.SpriteLayersRsiPaths.Count > 0)
+            {
+                var data = new Dictionary<string, string>();
+
+                foreach (var (layerKey, rsiPaths) in ent.Comp.SpriteLayersRsiPaths)
+                {
+                    if (ent.Comp.CurrentPipeLayer < rsiPaths.Length)
+                        data.TryAdd(layerKey, rsiPaths[ent.Comp.CurrentPipeLayer]);
+                }
+
+                _appearance.SetData(ent, AtmosPipeLayerVisuals.SpriteLayers, data, appearance);
+            }
         }
     }
 

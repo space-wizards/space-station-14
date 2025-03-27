@@ -19,9 +19,10 @@
       state: lights
       shader: unshaded
   - type: AtmosPipeLayers
-    layersToOffset:
-    - "base"
-    - "enum.PowerDeviceVisualLayers.Powered"
+    spriteRsiPaths:
+    - Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
+    - Structures/Piping/Atmospherics/gas_pipe_sensor_alt1.rsi
+    - Structures/Piping/Atmospherics/gas_pipe_sensor_alt2.rsi
   - type: Appearance
   - type: GenericVisualizer
     visuals:

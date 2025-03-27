@@ -7,11 +7,3 @@ public enum PipeColorVisuals
 {
     Color,
 }
-
-[Serializable, NetSerializable]
-public enum PipeVisualLayers : byte
-{
-    Pipe,
-    Connector,
-    Device,
-}

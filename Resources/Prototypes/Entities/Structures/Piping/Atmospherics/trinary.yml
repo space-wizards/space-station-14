@@ -26,11 +26,6 @@
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
-    - type: AtmosPipeLayers
-      layerVisualStates:
-      - pipeTrinaryConnectors
-      - pipeTrinaryConnectors1
-      - pipeTrinaryConnectors2
 
 - type: entity
   parent: GasTrinaryBase

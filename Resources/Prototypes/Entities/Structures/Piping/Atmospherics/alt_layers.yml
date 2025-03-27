@@ -26,9 +26,7 @@
   suffix: Straight, alt 1
   components:
   - type: Sprite
-    layers:
-    - state: pipeStraight1
-      map: [ "enum.PipeVisualLayers.Pipe" ] 
+    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
 
 - type: entity
   parent: [GasPipeStraight, GasPipeLayer2]
@@ -36,9 +34,7 @@
   suffix: Straight, alt 2
   components:
   - type: Sprite
-    layers:
-    - state: pipeStraight2
-      map: [ "enum.PipeVisualLayers.Pipe" ] 
+    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
 
 # GasPipeHalf
 - type: entity
@@ -47,9 +43,7 @@
   suffix: Half, alt 1
   components:
   - type: Sprite
-    layers:
-    - state: pipeHalf1
-      map: [ "enum.PipeVisualLayers.Pipe" ] 
+    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
       
 - type: entity
   parent: [GasPipeHalf, GasPipeLayer2]
@@ -57,9 +51,7 @@
   suffix: Half, alt 2  
   components:
   - type: Sprite
-    layers:
-    - state: pipeHalf2
-      map: [ "enum.PipeVisualLayers.Pipe" ] 
+    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
 
 # GasPipeBend
 - type: entity
@@ -68,9 +60,7 @@
   suffix: Bend, alt 1
   components:
   - type: Sprite
-    layers:
-    - state: pipeBend1
-      map: [ "enum.PipeVisualLayers.Pipe" ]
+    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
       
 - type: entity
   parent: [GasPipeBend, GasPipeLayer2]
@@ -78,9 +68,7 @@
   suffix: Bend, alt 2
   components:
   - type: Sprite
-    layers:
-    - state: pipeBend2
-      map: [ "enum.PipeVisualLayers.Pipe" ]
+    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
 
 # GasPipeTJunction
 - type: entity
@@ -89,9 +77,7 @@
   suffix: TJunction, alt 1
   components:
   - type: Sprite
-    layers:
-    - state: pipeTJunction1
-      map: [ "enum.PipeVisualLayers.Pipe" ] 
+    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
       
 - type: entity
   parent: [GasPipeTJunction, GasPipeLayer2]
@@ -99,9 +85,7 @@
   suffix: TJunction, alt 2
   components:
   - type: Sprite
-    layers:
-    - state: pipeTJunction2
-      map: [ "enum.PipeVisualLayers.Pipe" ] 
+    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
       
 # GasPipeFourway
 - type: entity
@@ -110,9 +94,7 @@
   suffix: Fourway, alt 1
   components:
   - type: Sprite
-    layers:
-    - state: pipeFourway1
-      map: [ "enum.PipeVisualLayers.Pipe" ] 
+    sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
       
 - type: entity
   parent: [GasPipeFourway, GasPipeLayer2]
@@ -120,9 +102,7 @@
   suffix: Fourway, alt 2
   components:
   - type: Sprite
-    layers:
-    - state: pipeFourway2
-      map: [ "enum.PipeVisualLayers.Pipe" ]  
+    sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
 
 # GasVentPump
 - type: entity
@@ -131,8 +111,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeUnaryConnectors1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeUnaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: vent_off
       map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
@@ -143,8 +123,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeUnaryConnectors2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeUnaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: vent_off
       map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
@@ -156,8 +136,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeUnaryConnectors1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeUnaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: vent_passive
       map: [ "enum.SubfloorLayers.FirstLayer" ]
@@ -168,8 +148,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeUnaryConnectors2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeUnaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: vent_passive
       map: [ "enum.SubfloorLayers.FirstLayer" ]
@@ -181,8 +161,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeUnaryConnectors1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeUnaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: scrub_off
       map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
@@ -193,8 +173,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeUnaryConnectors2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeUnaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: scrub_off
       map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
@@ -206,8 +186,8 @@
   components:
   - type: Sprite
     layers:
-    - state: pipeUnaryConnectors1
-      sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - state: pipeUnaryConnectors
+      sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: injector
       map: [ "enum.SubfloorLayers.FirstLayer" ]
@@ -222,8 +202,8 @@
   components:
   - type: Sprite
     layers:
-    - state: pipeUnaryConnectors2
-      sprite: Structures/Piping/Atmospherics/pipe.rsi
+    - state: pipeUnaryConnectors
+      sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: injector
       map: [ "enum.SubfloorLayers.FirstLayer" ]
@@ -391,12 +371,12 @@
   id: GasPressurePump1
   components:
   - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeStraight1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpPressure
-      offset: 0.21875, 0
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
       
 - type: entity
@@ -404,12 +384,12 @@
   id: GasPressurePump2
   components:
   - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeStraight2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpPressure
-      offset: -0.21875, 0
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
       
 # GasVolumePump
@@ -418,12 +398,12 @@
   id: GasVolumePump1
   components:
   - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeStraight1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpVolume
-      offset: 0.21875, 0
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
       
 - type: entity
@@ -431,12 +411,12 @@
   id: GasVolumePump2
   components:
   - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeStraight2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpVolume
-      offset: -0.21875, 0
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
       
 # GasPassiveGate
@@ -445,12 +425,12 @@
   id: GasPassiveGate1
   components:
   - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeStraight1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpPassiveGate
-      offset: 0.21875, 0
       map: [ "enum.SubfloorLayers.FirstLayer" ]
 
 - type: entity
@@ -458,12 +438,12 @@
   id: GasPassiveGate2
   components:
   - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeStraight2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpPassiveGate
-      offset: -0.21875, 0
       map: [ "enum.SubfloorLayers.FirstLayer" ]
 
 # GasValve
@@ -472,12 +452,12 @@
   id: GasValve1
   components:
   - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeStraight1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpManualValve
-      offset: 0.21875, 0
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
       
 - type: entity
@@ -485,12 +465,12 @@
   id: GasValve2
   components:
   - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeStraight2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpManualValve
-      offset: -0.21875, 0
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
  
 # SignalControlledValve
@@ -499,12 +479,12 @@
   id: SignalControlledValve1
   components:
   - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeStraight1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpSignalValve
-      offset: 0.21875, 0
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
 
 - type: entity
@@ -512,12 +492,12 @@
   id: SignalControlledValve2
   components:
   - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeStraight2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpSignalValve
-      offset: -0.21875, 0
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
 
 # GasPort
@@ -527,8 +507,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeUnaryConnectors1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeUnaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasCanisterPort
       map: [ "enum.SubfloorLayers.FirstLayer" ] 
@@ -539,8 +519,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeUnaryConnectors2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeUnaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasCanisterPort
       map: [ "enum.SubfloorLayers.FirstLayer" ] 
@@ -552,8 +532,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeBinaryConnectors1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeBinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: vent_off
       map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
@@ -564,8 +544,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeBinaryConnectors2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeBinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: vent_off
       map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
@@ -577,8 +557,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeBinaryConnectors1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeBinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: running
     - state: unlit
@@ -590,8 +570,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeBinaryConnectors2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeBinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: running
     - state: unlit
@@ -604,8 +584,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeTrinaryConnectors1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeTrinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasFilter
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
@@ -616,8 +596,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeTrinaryConnectors2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeTrinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasFilter
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
@@ -630,8 +610,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeTrinaryConnectors1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeTrinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasFilterF
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
@@ -643,8 +623,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeTrinaryConnectors2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeTrinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasFilterF
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
@@ -656,8 +636,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeTrinaryConnectors1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeTrinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasMixer
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
@@ -668,8 +648,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeTrinaryConnectors2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeTrinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasMixer
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
@@ -682,8 +662,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeTrinaryConnectors1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeTrinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasMixerF
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
@@ -695,8 +675,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeTrinaryConnectors2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeTrinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: gasMixerF
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
@@ -708,8 +688,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeTrinaryConnectors1
+    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
+      state: pipeTrinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: off
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
@@ -720,8 +700,8 @@
   components:
   - type: Sprite
     layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      state: pipeTrinaryConnectors2
+    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
+      state: pipeTrinaryConnectors
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: off
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]

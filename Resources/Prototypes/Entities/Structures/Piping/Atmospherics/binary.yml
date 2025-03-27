@@ -23,10 +23,10 @@
         nodeGroupID: Pipe
         pipeDirection: South
   - type: AtmosPipeLayers
-    layerVisualStates:
-    - pipeStraight
-    - pipeStraight1
-    - pipeStraight2
+    spriteRsiPaths:
+    - Structures/Piping/Atmospherics/pump.rsi
+    - Structures/Piping/Atmospherics/pump_alt1.rsi
+    - Structures/Piping/Atmospherics/pump_alt2.rsi
 
 - type: entity
   parent: GasBinaryBase
@@ -55,9 +55,6 @@
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpPressure
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-  - type: AtmosPipeLayers
-    layersToOffset:
-    - "enum.SubfloorLayers.FirstLayer"
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -117,9 +114,6 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpVolume
           map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-    - type: AtmosPipeLayers
-      layersToOffset:
-      - "enum.SubfloorLayers.FirstLayer"
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -177,9 +171,6 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpPassiveGate
           map: [ "enum.SubfloorLayers.FirstLayer" ]
-    - type: AtmosPipeLayers
-      layersToOffset:
-      - "enum.SubfloorLayers.FirstLayer"
     - type: Appearance
     - type: PipeColorVisuals
     - type: GasPassiveGate
@@ -218,9 +209,6 @@
           map: [ "enum.PipeVisualLayers.Pipe" ]
         - state: pumpManualValve
           map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-    - type: AtmosPipeLayers
-      layersToOffset:
-      - "enum.SubfloorLayers.FirstLayer"
     - type: Appearance
     - type: GenericVisualizer
       visuals:
@@ -277,9 +265,6 @@
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: pumpSignalValve
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-  - type: AtmosPipeLayers
-    layersToOffset:
-    - "enum.SubfloorLayers.FirstLayer"
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -347,10 +332,7 @@
         - state: gasCanisterPort
           map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: AtmosPipeLayers
-      layerVisualStates:
-      - pipeUnaryConnectors
-      - pipeUnaryConnectors1
-      - pipeUnaryConnectors2
+      spriteRsiPaths: null
     - type: Appearance
     - type: PipeColorVisuals
     - type: GasPort
@@ -390,10 +372,7 @@
         - state: vent_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
     - type: AtmosPipeLayers
-      layerVisualStates:
-      - pipeBinaryConnectors
-      - pipeBinaryConnectors1
-      - pipeBinaryConnectors2
+      spriteRsiPaths: null
     - type: GenericVisualizer
       visuals:
         enum.VentPumpVisuals.State:
@@ -456,10 +435,7 @@
     - state: unlit
       shader: unshaded
   - type: AtmosPipeLayers
-    layerVisualStates:
-    - pipeBinaryConnectors
-    - pipeBinaryConnectors1
-    - pipeBinaryConnectors2
+    spriteRsiPaths: null
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -527,6 +503,7 @@
     - state: heStraight
       map: [ "enum.SubfloorLayers.FirstLayer" ]
   - type: AtmosPipeLayers
+    spriteRsiPaths: null
     pipeLayersLocked: true
   - type: SubFloorHide
     visibleLayers:
@@ -571,8 +548,6 @@
         map: [ "enum.PipeVisualLayers.Pipe" ]
       - state: heBend
         map: [ "enum.SubfloorLayers.FirstLayer" ]
-    - type: AtmosPipeLayers
-      pipeLayersLocked: true
     - type: NodeContainer
       nodes:
         inlet:

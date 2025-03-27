@@ -1,9 +1,9 @@
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
-using Content.Shared.Atmos.Piping;
 using Robust.Client.GameObjects;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.Reflection;
-using System.Numerics;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Atmos.EntitySystems;
 
@@ -13,8 +13,8 @@ namespace Content.Client.Atmos.EntitySystems;
 public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly AtmosPipeAppearanceSystem _pipeAppearance = default!;
     [Dependency] private readonly IReflectionManager _reflection = default!;
+    [Dependency] private readonly IResourceCache _resourceCache = default!;
 
     public override void Initialize()
     {
@@ -28,21 +28,16 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
-        if (_appearance.TryGetData<string>(ent, PipeVisualLayers.Pipe, out var pipeState))
+        if (_appearance.TryGetData<string>(ent, AtmosPipeLayerVisuals.Sprite, out var spriteRsi) &&
+            _resourceCache.TryGetResource(SpriteSpecifierSerializer.TextureRoot / spriteRsi, out RSIResource? resource))
         {
-            sprite.LayerSetState(PipeVisualLayers.Pipe, pipeState);
+            sprite.BaseRSI = resource.RSI;
         }
 
-        if (TryComp<PipeAppearanceComponent>(ent, out var pipeAppearance) &&
-            _appearance.TryGetData<string>(ent, PipeVisualLayers.Connector, out var connectorState))
+        if (_appearance.TryGetData<Dictionary<string, string>>(ent, AtmosPipeLayerVisuals.SpriteLayers, out var pipeState))
         {
-            _pipeAppearance.SetLayerState((ent, pipeAppearance), connectorState);
-        }
-
-        if (_appearance.TryGetData<Vector2>(ent, PipeVisualLayers.Device, out var offset))
-        {
-            foreach (var layer in ent.Comp.LayersToOffset)
-                sprite.LayerSetOffset(ParseKey(layer), offset);
+            foreach (var (layerKey, rsiPath) in pipeState)
+                sprite.LayerSetRSI(ParseKey(layerKey), rsiPath);
         }
     }
 
