@@ -37,6 +37,7 @@
   id: Smoke
   name: smoke
   categories: [ HideSpawnMenu ]
+  save: false
   components:
   - type: Occluder
   - type: Sprite
@@ -62,6 +63,7 @@
   id: Foam
   name: foam
   categories: [ HideSpawnMenu ]
+  save: false
   components:
   - type: Sprite
     color: "#ffffffcc"
@@ -93,6 +95,7 @@
   id: MetalFoam
   name: metal foam
   categories: [ HideSpawnMenu ]
+  save: false
   parent: Foam
   components:
   - type: Sprite
@@ -235,6 +238,7 @@
 - type: entity
   id: ReactionFlash
   categories: [ HideSpawnMenu ]
+  save: false
   components:
   - type: PointLight
     enabled: true

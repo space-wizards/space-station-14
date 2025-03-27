@@ -2,6 +2,7 @@
   name: lightning
   id: BaseLightning
   abstract: true
+  save: false
   components:
   - type: Sprite
     sprite: /Textures/Effects/lightning.rsi
