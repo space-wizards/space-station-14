@@ -7,7 +7,7 @@ guardian-no-actions-invalid-creation = You don't have the ability to host a guar
 guardian-activator-empty-invalid-creation = The injector is spent.
 guardian-activator-empty-examine = [color=#ba1919]The injector is spent.[/color]
 # TODO: Change this once other species can inject it?
-guardian-activator-invalid-target = Only humans can be injected!
+guardian-activator-invalid-target = You fail to implant (entity)!
 guardian-no-soul = Your guardian has no soul.
 guardian-available = Your guardian now has a soul.
 guardian-inside-container = There's no room to release your guardian!
