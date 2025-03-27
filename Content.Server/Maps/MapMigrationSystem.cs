@@ -66,13 +66,13 @@ public sealed class MapMigrationSystem : EntitySystem
 
         foreach (var (key, value) in mappings)
         {
-            if (key is not ValueDataNode keyNode || value is not ValueDataNode valueNode)
+            if (value is not ValueDataNode valueNode)
                 continue;
 
             if (string.IsNullOrWhiteSpace(valueNode.Value) || valueNode.Value == "null")
-                ev.DeletedPrototypes.Add(keyNode.Value);
+                ev.DeletedPrototypes.Add(key);
             else
-                ev.RenamedPrototypes.Add(keyNode.Value, valueNode.Value);
+                ev.RenamedPrototypes.Add(key, valueNode.Value);
         }
     }
 }
