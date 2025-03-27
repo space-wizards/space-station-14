@@ -1,16 +1,16 @@
 - type: gameMap
-  id: Tram
-  mapName: 'Tram'
-  mapPath: /Maps/tram.yml
+  id: Tram2
+  mapName: 'Tram2'
+  mapPath: /Maps/tram2.yml
   maxRandomOffset: 0
   minPlayers: 0
   maxPlayers: 99
   stations:
-    Tram:
+    Tram2:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Tram'
+          mapNameTemplate: 'Tram2'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
