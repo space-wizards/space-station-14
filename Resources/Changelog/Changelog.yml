@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: RedBookcase
-  changes:
-  - message: Mixing up a Snow White no longer creates extra liquid out of thin air.
-    type: Fix
-  id: 7611
-  time: '2024-11-15T20:52:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33331
-- author: lzk228
-  changes:
-  - message: Added 10 seconds delay to Succumb action
-    type: Add
-  id: 7612
-  time: '2024-11-15T21:21:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32985
-- author: Beck Thompson
-  changes:
-  - message: Minor tweaks to clumsiness. Some of the timings and or noises have been
-      changed slightly!
-    type: Tweak
-  id: 7613
-  time: '2024-11-15T23:46:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31147
 - author: SaphireLattice
   changes:
   - message: Crayon UI now has categories and queue
@@ -3873,3 +3851,28 @@
   id: 8110
   time: '2025-03-26T16:13:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35993
+- author: Centronias
+  changes:
+  - message: Raw meatballs, like steaks, can now be cooked in the microwave or on
+      a grill.
+    type: Add
+  id: 8111
+  time: '2025-03-27T06:26:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36003
+- author: SlamBamActionman
+  changes:
+  - message: Liltenhead! Thank you for over 2 years of update videos, and congrats
+      on the 100th video!
+    type: Add
+  id: 8112
+  time: '2025-03-27T17:19:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36104
+- author: metalgearsloth
+  changes:
+  - message: Rewrote how mob movement works to make movement more flexible in code.
+      While this should largely function the same (apart from conveyors now being
+      able to launch items) please report any bugs found.
+    type: Tweak
+  id: 8113
+  time: '2025-03-27T22:29:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35931

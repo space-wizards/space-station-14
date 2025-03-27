@@ -316,7 +316,7 @@ public abstract class SharedConveyorController : VirtualController
     }
     private static Vector2 Convey(Vector2 direction, float speed, Vector2 itemRelative)
     {
-        if (speed == 0 || direction.Length() == 0)
+        if (speed == 0 || direction.LengthSquared() == 0)
             return Vector2.Zero;
 
         /*
