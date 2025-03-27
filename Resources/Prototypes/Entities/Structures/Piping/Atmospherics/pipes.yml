@@ -52,7 +52,6 @@
   - type: Appearance
   - type: NodeContainer
   - type: AtmosPipeColor
-  - type: PipeAppearance
   - type: PipeColorVisuals
   - type: PipeRestrictOverlap
   - type: AtmosUnsafeUnanchor
@@ -71,6 +70,7 @@
   parent: GasPipeSansLayers
   id: GasPipeBase
   components:  
+  - type: PipeAppearance
   - type: AtmosPipeLayers
     spriteLayersRsiPaths:
       enum.PipeVisualLayers.Pipe:
