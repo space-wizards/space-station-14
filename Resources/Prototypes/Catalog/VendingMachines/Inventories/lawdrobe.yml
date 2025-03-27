@@ -12,12 +12,15 @@
     ClothingUniformJumpsuitLawyerGood: 1
     ClothingUniformJumpskirtLawyerGood: 1
     ClothingShoesBootsLaceup: 2
-    ClothingHeadsetService: 2
+    #added IAA headset for starlight
+    ClothingHeadsetIAA: 2
     ClothingNeckLawyerbadge: 2
     BriefcaseBrown: 2
     BookSpaceLaw: 3
     LuxuryPen: 2
     HandLabeler: 2
+    #added law encryption key for starlight
+    EncryptionKeyLaw: 1
   contrabandInventory:
     ClothingOuterRobesJudge: 1
     ClothingHeadHatPwig: 1
