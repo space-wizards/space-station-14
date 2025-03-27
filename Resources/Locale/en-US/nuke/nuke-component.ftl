@@ -6,6 +6,8 @@ nuke-component-announcement-unarmed = The station's self-destruct was deactivate
 nuke-component-announcement-send-codes = Attention! Self-destruction codes have been sent to designated fax machines.
 nuke-component-doafter-warning = You start fiddling with wires and knobs in order to disarm the nuke.. This may take a while.
 
+nuke-disk-component-microwave = The disk sparks and fizzles a bit, but seems mostly unharmed?
+
 # Nuke UI
 nuke-user-interface-title = Nuclear Fission Explosive
 nuke-user-interface-arm-button = ARM

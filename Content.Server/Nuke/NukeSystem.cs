@@ -138,6 +138,7 @@ public sealed class NukeSystem : EntitySystem
 
         var seconds = _random.NextGaussian(ent.Comp.MicrowaveMean.TotalSeconds, ent.Comp.MicrowaveStd.TotalSeconds);
         ent.Comp.TimeModifier = TimeSpan.FromSeconds(seconds);
+        _popups.PopupEntity(Loc.GetString("nuke-disk-component-microwave"), ent.Owner, PopupType.Medium);
     }
 
     private void OnRemove(EntityUid uid, NukeComponent component, ComponentRemove args)
