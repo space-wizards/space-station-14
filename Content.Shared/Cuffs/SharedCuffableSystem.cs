@@ -53,7 +53,7 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private   readonly StaminaSystem           _stamina         = default!;
+        [Dependency] private readonly StaminaSystem _stamina = default!;
         [Dependency] private readonly UseDelaySystem _delay = default!;
 
         public override void Initialize()
