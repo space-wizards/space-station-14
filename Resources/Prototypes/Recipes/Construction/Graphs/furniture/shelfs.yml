@@ -118,7 +118,7 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: MaterialWoodPlank1
                 amount: 4
           steps:
@@ -131,7 +131,7 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetSteel1
                 amount: 5
           steps:
@@ -144,7 +144,7 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetGlass1
                 amount: 4
           steps:
@@ -157,10 +157,10 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: MaterialWoodPlank1
                 amount: 8
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: CableApcStack1
                 amount: 2
           steps:
@@ -175,13 +175,13 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetPlasteel1
                 amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetRGlass1
                 amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: CableApcStack1
                 amount: 3
           steps:
@@ -196,13 +196,13 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetPlastic1
                 amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetRGlass1
                 amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: CableApcStack1
                 amount: 2
           steps:
@@ -218,7 +218,7 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: MaterialWoodPlank1
                 amount: 6
           steps:
@@ -231,13 +231,13 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: PartRodMetal
                 amount: 2
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetSteel1
                 amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: MaterialWoodPlank1
                 amount: 3
           steps:
@@ -254,16 +254,16 @@
         - to: start
           completed:
             - !type:EmptyAllContainers
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetPlasteel1
                 amount: 2
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetPlastic1
                 amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: SheetRGlass1
                 amount: 5
-            - !type:SpawnPrototype
+            - !type:GivePrototype
                 prototype: CableApcStack1
                 amount: 2
           steps:
