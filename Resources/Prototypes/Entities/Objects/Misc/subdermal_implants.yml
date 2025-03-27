@@ -364,20 +364,11 @@
     - CentCom
 
 - type: entity
-  parent: BaseSubdermalImplant
+  parent: DeathRattleImplant
   id: DeathRattleImplantCentcomm
   name: centcomm death rattle implant
   description: This implant will inform the Centcomm radio channel should the user fall into critical condition or die.
   categories: [ HideSpawnMenu ]
   components:
-  - type: SubdermalImplant
-    permanent: true
-    whitelist:
-      components:
-      - MobState # admeme implanting a chair with rattle implant needs to give the chair mobstate so it can die first
-  - type: TriggerOnMobstateChange
-    mobState:
-    - Critical
-    - Dead
   - type: Rattle
     radioChannel: CentCom
