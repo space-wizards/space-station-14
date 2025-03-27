@@ -36,9 +36,9 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
 
         StationTaskTable.Clear();
 
-        StationTaskTable.HighPriority.Text = Loc.GetString("nano-task-ui-heading-high-priority-tasks", ("amount", stationTasks.Count(task => task.Data.Priority == NanoTaskPriority.High)));
-        StationTaskTable.MediumPriority.Text = Loc.GetString("nano-task-ui-heading-medium-priority-tasks", ("amount", stationTasks.Count(task => task.Data.Priority == NanoTaskPriority.Medium)));
-        StationTaskTable.LowPriority.Text = Loc.GetString("nano-task-ui-heading-low-priority-tasks", ("amount", stationTasks.Count(task => task.Data.Priority == NanoTaskPriority.Low)));
+        StationTaskTable.HighPriority.HeaderLabel.Text = Loc.GetString("nano-task-ui-heading-high-priority-tasks", ("amount", stationTasks.Count(task => task.Data.Priority == NanoTaskPriority.High)));
+        StationTaskTable.MediumPriority.HeaderLabel.Text = Loc.GetString("nano-task-ui-heading-medium-priority-tasks", ("amount", stationTasks.Count(task => task.Data.Priority == NanoTaskPriority.Medium)));
+        StationTaskTable.LowPriority.HeaderLabel.Text = Loc.GetString("nano-task-ui-heading-low-priority-tasks", ("amount", stationTasks.Count(task => task.Data.Priority == NanoTaskPriority.Low)));
 
         foreach (var task in stationTasks)
         {

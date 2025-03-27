@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.NanoTask.Prototypes;
 
 [Prototype]
-public sealed class NanoTaskDepartmentPrototype : IPrototype
+public sealed class NanoTaskDepartmentPrototype : IPrototype, IAccessReader
 {
     [IdDataField]
     public string ID { get; set; } = default!;
@@ -18,4 +18,6 @@ public sealed class NanoTaskDepartmentPrototype : IPrototype
 
     [NonSerialized]
     public List<NanoTaskItemAndId> Tasks = [];
+
+    public HashSet<ProtoId<AccessLevelPrototype>> GetAccesses() => Access;
 }

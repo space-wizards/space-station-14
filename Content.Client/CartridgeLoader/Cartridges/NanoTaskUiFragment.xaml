@@ -3,9 +3,8 @@
                                xmlns="https://spacestation14.io" Margin="1 0 2 0">
 
     <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
-    <TabContainer Name="TabsCategory" Visible="False">
-        <TabContainer Name="TabsDepartmentTask">
-        </TabContainer>
+    <TabContainer Name="TabsCategory" Visible="False" VerticalExpand="True">
+        <TabContainer Name="TabsDepartmentTask" >
         <cartridges:NanoTaskTable Name="StationTaskTable" />
     </TabContainer>
 

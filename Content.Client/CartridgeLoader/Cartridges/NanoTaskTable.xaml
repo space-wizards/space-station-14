@@ -1,57 +1,37 @@
 <cartridges:NanoTaskTable xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
-                               xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                               xmlns="https://spacestation14.io">
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-        <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
-            <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical" Margin="8"
-                          SeparationOverride="8">
-                <!-- Heading for High Priority Items -->
-                <BoxContainer Orientation="Horizontal">
-                    <PanelContainer SetWidth="7" Margin="0 0 8 0">
-                        <PanelContainer.PanelOverride>
-                            <gfx:StyleBoxFlat BackgroundColor="#e93d58" />
-                        </PanelContainer.PanelOverride>
-                    </PanelContainer>
-                    <Label Name="HighPriority" StyleClasses="LabelHeading" Access="Public" />
-                </BoxContainer>
-                <!-- Location for High Priority Items -->
-                <GridContainer Name="HighContainer"
-                               HorizontalExpand="True"
-                               Access="Public"
-                               Columns="2" />
+                          xmlns="https://spacestation14.io">
+    <ScrollContainer HorizontalExpand="True">
+        <BoxContainer HorizontalExpand="True" Orientation="Vertical" Margin="8"
+                      SeparationOverride="8">
+            <!-- Heading for High Priority Items -->
+            <cartridges:NanoTaskTableHeader Name="HighPriority" Access="Public" />
 
-                <!-- Heading for Medium Priority Items -->
-                <BoxContainer Orientation="Horizontal">
-                    <PanelContainer SetWidth="7" Margin="0 0 8 0">
-                        <PanelContainer.PanelOverride>
-                            <gfx:StyleBoxFlat BackgroundColor="#ef973c" />
-                        </PanelContainer.PanelOverride>
-                    </PanelContainer>
-                    <Label Name="MediumPriority" StyleClasses="LabelHeading" Access="Public"/>
-                </BoxContainer>
-                <!-- Location for Medium Priority Items -->
-                <GridContainer Name="MediumContainer"
-                               HorizontalExpand="True"
-                               Access="Public"
-                               Columns="2" />
+            <!-- Location for High Priority Items -->
+            <GridContainer Name="HighContainer"
+                           HorizontalExpand="True"
+                           Access="Public"
+                           Columns="2" />
 
-                <!-- Location for Low Priority Items -->
-                <BoxContainer Orientation="Horizontal">
-                    <PanelContainer SetWidth="7" Margin="0 0 8 0">
-                        <PanelContainer.PanelOverride>
-                            <gfx:StyleBoxFlat BackgroundColor="#3dd425" />
-                        </PanelContainer.PanelOverride>
-                    </PanelContainer>
-                    <Label Name="LowPriority" StyleClasses="LabelHeading" Access="Public"/>
-                </BoxContainer>
-                <!-- Location for Low Priority Items -->
-                <GridContainer Name="LowContainer"
-                               HorizontalExpand="True"
-                               Access="Public"
-                               Columns="2" />
+            <!-- Heading for Medium Priority Items -->
+            <cartridges:NanoTaskTableHeader Name="MediumPriority" Access="Public" />
 
-                <Button Name="NewTaskButton" Access="Public" Text="{Loc 'nano-task-ui-new-task'}" HorizontalAlignment="Right" />
-            </BoxContainer>
-        </ScrollContainer>
-    </BoxContainer>
+            <!-- Location for Medium Priority Items -->
+            <GridContainer Name="MediumContainer"
+                           HorizontalExpand="True"
+                           Access="Public"
+                           Columns="2" />
+
+            <!-- Location for Low Priority Items -->
+            <cartridges:NanoTaskTableHeader Name="LowPriority" Access="Public" />
+
+            <!-- Location for Low Priority Items -->
+            <GridContainer Name="LowContainer"
+                           HorizontalExpand="True"
+                           Access="Public"
+                           Columns="2" />
+
+            <Button Name="NewTaskButton" Access="Public" Text="{Loc 'nano-task-ui-new-task'}"
+                    HorizontalAlignment="Right" />
+        </BoxContainer>
+    </ScrollContainer>
 </cartridges:NanoTaskTable>

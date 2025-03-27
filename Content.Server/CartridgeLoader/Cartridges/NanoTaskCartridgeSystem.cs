@@ -16,6 +16,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
 using Robust.Shared.Prototypes;
 using Content.Shared.NanoTask.Prototypes;
+using System.Linq;
+using Content.Shared.Access.Systems;
+using Content.Shared.Access;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
@@ -32,6 +35,8 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private readonly SingletonDeviceNetServerSystem _singletonDeviceNetServer = default!;
     [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -79,7 +84,7 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
             return;
         }
 
-        UpdateUiState(ent, args.Loader);
+        UpdateUiState(ent, args.Loader, args.Actor);
     }
 
     /// <summary>
@@ -154,7 +159,7 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
                 break;
         }
 
-        UpdateUiState(ent, GetEntity(args.LoaderUid));
+        UpdateUiState(ent, GetEntity(args.LoaderUid), args.Actor);
     }
 
     private void OnDeviceNetworkPacket(Entity<NanoTaskCartridgeComponent> ent, ref DeviceNetworkPacketEvent args)
@@ -271,13 +276,24 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
         _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);
     }
 
-    private void UpdateUiState(Entity<NanoTaskCartridgeComponent> ent, EntityUid loaderUid)
+    private void UpdateUiState(Entity<NanoTaskCartridgeComponent> ent, EntityUid loaderUid, EntityUid? actor = null)
     {
         var query = EntityQueryEnumerator<NanoTaskServerComponent, SingletonDeviceNetServerComponent>();
         while (query.MoveNext(out var uid, out var server, out var singletonServer))
         {
             if (!_singletonDeviceNetServer.IsActiveServer(uid, singletonServer))
                 continue;
+
+            if (actor.HasValue)
+            {
+                var departments = _prototypeManager.EnumeratePrototypes<NanoTaskDepartmentPrototype>();
+                var departmentTasks = server.DepartamentTasks.Where(task => departments.Any(department => department.Name == task.Key && _accessReader.IsAllowed(actor.Value, department))).ToDictionary();
+
+                var filteredState = new NanoTaskUiState(departmentTasks, server.StationTasks);
+                _cartridgeLoader.UpdateCartridgeUiState(loaderUid, filteredState);
+
+                return;
+            }
 
             var state = new NanoTaskUiState(server.DepartamentTasks, server.StationTasks);
             _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);
