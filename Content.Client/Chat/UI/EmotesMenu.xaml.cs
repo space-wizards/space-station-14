@@ -9,6 +9,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.UI;
 
@@ -29,7 +30,13 @@ public sealed partial class EmotesMenu : RadialMenu
         var spriteSystem = _entManager.System<SpriteSystem>();
         var whitelistSystem = _entManager.System<EntityWhitelistSystem>();
 
-        var main = FindControl<RadialContainer>("Main");
+        var generalSprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Clothing/Head/Soft/mimesoft.rsi/"), "icon");
+        GeneralIcon.SetFromSpriteSpecifier(generalSprite);
+        GeneralIcon.DisplayRect.TextureScale = new Vector2(2f, 2f);
+
+        var handsSprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Clothing/Hands/Gloves/latex.rsi/"), "icon");
+        HandsIcon.SetFromSpriteSpecifier(handsSprite);
+        HandsIcon.DisplayRect.TextureScale = new Vector2(2f, 2f);
 
         var emotes = _prototypeManager.EnumeratePrototypes<EmotePrototype>();
         foreach (var emote in emotes)
@@ -65,7 +72,7 @@ public sealed partial class EmotesMenu : RadialMenu
 
             button.AddChild(tex);
             parent.AddChild(button);
-            foreach (var child in main.Children)
+            foreach (var child in Main.Children)
             {
                 if (child is not RadialMenuTextureButton castChild)
                     continue;
