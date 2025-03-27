@@ -311,7 +311,7 @@
 
 - type: entity
   id: DeathRattleImplanterCentcomm
-  suffix: deathrattle centcomm
+  suffix: centcomm death rattle
   parent: BaseImplantOnlyImplanter
   components:
   - type: Implanter
