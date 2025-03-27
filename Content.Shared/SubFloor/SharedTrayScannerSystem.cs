@@ -35,36 +35,36 @@ public abstract class SharedTrayScannerSystem : EntitySystem
         args.VisibilityMask |= (int)VisibilityFlags.Subfloor;
     }
 
-    private void OnEquip(EntityUid user)
+    private void OnEquip(Entity<TrayScannerComponent> ent, EntityUid user)
     {
-        if (_refCount.Add<TrayScannerUserComponent>(user))
+        if (ent.Comp.Enabled && _refCount.Add<TrayScannerUserComponent>(user))
             _eye.RefreshVisibilityMask(user);
     }
 
-    private void OnUnequip(EntityUid user)
+    private void OnUnequip(Entity<TrayScannerComponent> ent, EntityUid user)
     {
-        if (_refCount.Remove<TrayScannerUserComponent>(user))
+        if (ent.Comp.Enabled && _refCount.Remove<TrayScannerUserComponent>(user))
             _eye.RefreshVisibilityMask(user);
     }
 
     private void OnTrayHandUnequipped(Entity<TrayScannerComponent> ent, ref GotUnequippedHandEvent args)
     {
-        OnUnequip(args.User);
+        OnUnequip(ent, args.User);
     }
 
     private void OnTrayHandEquipped(Entity<TrayScannerComponent> ent, ref GotEquippedHandEvent args)
     {
-        OnEquip(args.User);
+        OnEquip(ent, args.User);
     }
 
     private void OnTrayUnequipped(Entity<TrayScannerComponent> ent, ref GotUnequippedEvent args)
     {
-        OnUnequip(args.Equipee);
+        OnUnequip(ent, args.Equipee);
     }
 
     private void OnTrayEquipped(Entity<TrayScannerComponent> ent, ref GotEquippedEvent args)
     {
-        OnEquip(args.Equipee);
+        OnEquip(ent, args.Equipee);
     }
 
     private void OnTrayScannerActivate(Entity<TrayScannerComponent> ent, ref ActivateInWorldEvent args)
