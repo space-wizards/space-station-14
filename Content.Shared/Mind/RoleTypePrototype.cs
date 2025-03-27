@@ -22,4 +22,10 @@ public sealed partial class RoleTypePrototype : IPrototype
     /// </summary>
     [DataField]
     public Color Color = Color.FromHex("#eeeeee");
+
+    /// <summary>
+    ///     A symbol used to represent the role type.
+    /// </summary>
+    [DataField]
+    public string Symbol = string.Empty;
 }

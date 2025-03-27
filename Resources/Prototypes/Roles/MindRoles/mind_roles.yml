@@ -13,6 +13,9 @@
   components:
   - type: MindRole
     antag: true
+    antagPrototype: GenericAntagonist
+    roleType: SoloAntagonist
+    sortWeight: 50
 
 #Observer
 - type: entity
@@ -21,6 +24,8 @@
   name: Observer Role
   components:
   - type: ObserverRole
+  - type: MindRole
+    sortWeight: -10
 
 #Ghost Roles
 - type: entity
@@ -31,68 +36,80 @@
   - type: GhostRoleMarkerRole
 
 - type: entity
-  parent: BaseMindRole
+  parent: MindRoleGhostRoleNeutral
   id: MindRoleGhostRoleFamiliar
   name: Ghost Role (Familiar)
   components:
   - type: MindRole
     roleType: Familiar
-  - type: GhostRoleMarkerRole
 
 - type: entity
-  parent: BaseMindRole
+  parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
   id: MindRoleGhostRoleFreeAgent
   name: Ghost Role (Free Agent)
   components:
   - type: MindRole
     roleType: FreeAgent
-  - type: GhostRoleMarkerRole
+    antagPrototype: GenericFreeAgent
+    sortWeight: 30
 
 - type: entity
-  parent: BaseMindRole
+  parent: MindRoleGhostRoleNeutral
+  id: MindRoleGhostRoleFreeAgentHarmless
+  name: Ghost Role (Free Agent)
+  components:
+  - type: MindRole
+    roleType: FreeAgent
+    sortWeight: 0 # Maybe 10?
+
+- type: entity
+  parent: MindRoleGhostRoleNeutral
   id: MindRoleGhostRoleSilicon
   name: Ghost Role (Silicon)
   components:
   - type: MindRole
     roleType: Silicon
-  - type: GhostRoleMarkerRole
 
 - type: entity
-  parent: BaseMindRole
+  parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
   id: MindRoleGhostRoleSiliconAntagonist
   name: Ghost Role (Silicon Antagonist)
   components:
   - type: MindRole
     roleType: SiliconAntagonist
-  - type: GhostRoleMarkerRole
+    antagPrototype: GenericSiliconAntagonist
+    sortWeight: 30
 
 - type: entity
-  parent: BaseMindRole
+  parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
   id: MindRoleGhostRoleSoloAntagonist
   name: Ghost Role (Solo Antagonist)
-  components:
-  - type: MindRole
-    roleType: SoloAntagonist
-  - type: GhostRoleMarkerRole
 
 - type: entity
-  parent: BaseMindRole
+  parent: [ BaseMindRoleAntag, MindRoleGhostRoleNeutral ]
   id: MindRoleGhostRoleTeamAntagonist
   name: Ghost Role (Team Antagonist)
   components:
   - type: MindRole
     roleType: TeamAntagonist
-  - type: GhostRoleMarkerRole
+    antagPrototype: GenericTeamAntagonist
 
-
+# This should be used (or inherited) for team antags that are summoned or converted in large quantities, and are "secondary" to other antags
+# TODO: sort weight
+- type: entity
+  parent: MindRoleGhostRoleTeamAntagonist
+  id: MindRoleGhostRoleTeamAntagonistFlock
+  name: Ghost Role (Team Antagonist)
+  components:
+  - type: MindRole
+    sortWeight: 40
 
 # The Job MindRole holds the mob's Job prototype
 - type: entity
   parent: BaseMindRole
   id: MindRoleJob
   name: Job Role
-#  description:
-  # MindRoleComponent.JobPrototype is filled by SharedJobSystem
+  # JobPrototype is filled by SharedJobSystem
 
 # Silicon
 - type: entity
@@ -139,10 +156,19 @@
   components:
   - type: MindRole
     antagPrototype: SpaceNinja
-    roleType: SoloAntagonist
     subtype: role-subtype-ninja
     exclusiveAntag: true
   - type: NinjaRole
+
+# Paradox Clone
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleParadoxClone
+  name: Paradox Clone Role
+  components:
+  - type: MindRole
+    antagPrototype: ParadoxClone
+  - type: ParadoxCloneRole
 
 # Nukies
 - type: entity
@@ -214,7 +240,6 @@
   components:
   - type: MindRole
     antagPrototype: Thief
-    roleType: SoloAntagonist
     subtype: role-subtype-thief
   - type: ThiefRole
 
@@ -227,7 +252,6 @@
   - type: MindRole
     antagPrototype: Traitor
     exclusiveAntag: true
-    roleType: SoloAntagonist
     subtype: role-subtype-traitor
   - type: TraitorRole
 
@@ -244,9 +268,21 @@
   id: MindRoleTraitorReinforcement
   name: Syndicate Reinforcement Role
   components:
-    - type: MindRole
-      roleType: TeamAntagonist
-      subtype: role-subtype-traitor-reinforcement
+  - type: MindRole
+    roleType: TeamAntagonist
+    subtype: role-subtype-traitor-reinforcement
+    antagPrototype: GenericTeamAntagonist
+
+# Wizards
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleWizard
+  name: Wizard Role
+  components:
+  - type: MindRole
+    antagPrototype: Wizard
+    exclusiveAntag: true
+  - type: WizardRole
 
 # Zombie Squad
 - type: entity
@@ -262,13 +298,12 @@
   - type: InitialInfectedRole
 
 - type: entity
-  parent: BaseMindRoleAntag
+  parent: MindRoleGhostRoleTeamAntagonistFlock
   id: MindRoleZombie
   name: Zombie Role
   components:
   - type: MindRole
     antagPrototype: Zombie
     exclusiveAntag: true
-    roleType: TeamAntagonist
     subtype: role-subtype-zombie
   - type: ZombieRole

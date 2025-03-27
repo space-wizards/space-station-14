@@ -9,7 +9,7 @@ namespace Content.Server.NPC.Queries;
 /// Each query is run in turn to get the final available results.
 /// These results are then run through the considerations.
 /// </summary>
-[Prototype("utilityQuery")]
+[Prototype]
 public sealed partial class UtilityQueryPrototype : IPrototype
 {
     [IdDataField]

@@ -201,7 +201,7 @@ public abstract class SharedRoleSystem : EntitySystem
             return false;
 
         //get the most important/latest mind role
-        var (roleType, subtype) = GetCurrentRole(ent.Comp);
+        var (roleType, subtype) = GetRoleTypeByTime(ent.Comp);
 
         if (ent.Comp.RoleType == roleType &&  ent.Comp.Subtype == subtype)
             return false;
@@ -210,25 +210,31 @@ public abstract class SharedRoleSystem : EntitySystem
         return true;
     }
 
-    public (ProtoId<RoleTypePrototype>, LocId?) GetCurrentRole(MindComponent mind)
-    {
-        return GetRoleTypeByTime(mind);
-    }
-
+    /// <summary>
+    ///     Return the most recently specified role type and subtype, or Neutral
+    /// </summary>
     private (ProtoId<RoleTypePrototype>, LocId?) GetRoleTypeByTime(MindComponent mind)
     {
-        // If any Mind Roles specify a Role Type, return the most recent one along with the subtype. Otherwise return Neutral
+        var role = GetRoleCompByTime(mind);
+        return (role?.Comp?.RoleType ?? "Neutral", role?.Comp?.Subtype);
+    }
 
-        var roles = new List<(ProtoId<RoleTypePrototype>, LocId?)>();
+    /// <summary>
+    ///     Return the most recently specified role type's mind role entity, or null
+    /// </summary>
+    public Entity<MindRoleComponent>? GetRoleCompByTime(MindComponent mind)
+    {
+        var roles = new List<Entity<MindRoleComponent>>();
 
         foreach (var role in mind.MindRoles)
         {
             var comp = Comp<MindRoleComponent>(role);
             if (comp.RoleType is not null)
-                roles.Add((comp.RoleType.Value, comp.Subtype));
+                roles.Add((role, comp));
         }
 
-        return (roles.Count > 0) ? roles.LastOrDefault() : ("Neutral", null);
+        Entity<MindRoleComponent>? result = roles.Count > 0 ? roles.LastOrDefault() : null;
+        return (result);
     }
 
     private void SetRoleType(EntityUid mind, ProtoId<RoleTypePrototype> roleTypeId, LocId? subtype)
@@ -255,14 +261,14 @@ public abstract class SharedRoleSystem : EntitySystem
         else
         {
             var error = $"The Character Window of {_minds.MindOwnerLoggingString(comp)} potentially did not update immediately : session error";
-            _adminLogger.Add(LogType.Mind, LogImpact.High, $"{error}");
+            _adminLogger.Add(LogType.Mind, LogImpact.Medium, $"{error}");
         }
 
         if (comp.OwnedEntity is null)
         {
             Log.Error($"{ToPrettyString(mind)} does not have an OwnedEntity!");
             _adminLogger.Add(LogType.Mind,
-                LogImpact.High,
+                LogImpact.Medium,
                 $"Role Type of {ToPrettyString(mind)} changed to {roleTypeId}, {subtype}");
             return;
         }
