@@ -19,7 +19,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Mind;
 
-public abstract class SharedMindSystem : EntitySystem
+public abstract partial class SharedMindSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly INetManager _net = default!;
@@ -42,6 +42,8 @@ public abstract class SharedMindSystem : EntitySystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
         SubscribeLocalEvent<MindComponent, ComponentStartup>(OnMindStartup);
         SubscribeLocalEvent<MindComponent, EntityRenamedEvent>(OnRenamed);
+
+        InitializeRelay();
     }
 
     public override void Shutdown()
@@ -367,8 +369,8 @@ public abstract class SharedMindSystem : EntitySystem
         _adminLogger.Add(LogType.Mind, LogImpact.Low, $"Objective {objective} ({title}) removed from the mind of {MindOwnerLoggingString(mind)}");
         mind.Objectives.Remove(objective);
 
-        // garbage collection
-        // only delete the objective entity if no mind uses it anymore
+        // garbage collection - only delete the objective entity if no mind uses it anymore
+        // This comes up for stuff like paradox clones where the objectives share the same entity
         var mindQuery = new AllEntityQueryEnumerator<MindComponent>();
         while (mindQuery.MoveNext(out _, out var queryComp))
         {

@@ -14,7 +14,7 @@ public sealed partial class ParadoxCloneRuleComponent : Component
     ///     Cloning settings to be used.
     /// </summary>
     [DataField]
-    public ProtoId<CloningSettingsPrototype> Settings = "BaseClone";
+    public ProtoId<CloningSettingsPrototype> Settings = "Antag";
 
     /// <summary>
     ///     Visual effect spawned when gibbing at round end.

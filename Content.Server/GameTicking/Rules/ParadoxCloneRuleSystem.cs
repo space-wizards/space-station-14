@@ -1,9 +1,11 @@
 using Content.Server.Antag;
 using Content.Server.Cloning;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Medical.SuitSensors;
 using Content.Server.Objectives.Components;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Gibbing.Components;
+using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Mind;
 using Robust.Shared.Random;
 
@@ -15,6 +17,7 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly CloningSystem _cloning = default!;
+    [Dependency] private readonly SuitSensorSystem _sensor = default!;
 
     public override void Initialize()
     {
@@ -84,6 +87,9 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         var gibComp = EnsureComp<GibOnRoundEndComponent>(clone.Value);
         gibComp.SpawnProto = ent.Comp.GibProto;
         gibComp.PreventGibbingObjectives = new() { "ParadoxCloneKillObjective" }; // don't gib them if they killed the original.
+
+        // turn their suit sensors off so they don't immediately get noticed
+        _sensor.SetAllSensors(clone.Value, SuitSensorMode.SensorOff);
 
         args.Entity = clone;
     }
