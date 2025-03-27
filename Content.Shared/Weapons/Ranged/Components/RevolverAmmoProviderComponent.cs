@@ -31,14 +31,18 @@ public sealed partial class RevolverAmmoProviderComponent : AmmoProviderComponen
     // AmmoSlots is the instantiated ammo and Chambers is the unspawned ammo (that may or may not have been shot).
 
     // TODO: Using an array would be better but this throws!
+
+    /// <summary>
+    /// List of entities inside revolver that will be used as ammo.
+    /// </summary>
     [DataField]
     public List<EntityUid?> AmmoSlots = [];
 
     /// <summary>
-    /// Bool array for chambers. Every bool can be null, true or false.
-    /// Null will create empty chamber.
-    /// True will create chamber with <see cref="FillPrototype"/>.
-    /// False will create chamber with used ammo.
+    /// Bool array for status of AmmoSlots. Every bool can be null, true or false.
+    /// Null - empty chamber.
+    /// True - chamber with <see cref="FillPrototype"/>.
+    /// False - chamber with used ammo.
     /// </summary>
     [DataField]
     public bool?[] Chambers = [];
