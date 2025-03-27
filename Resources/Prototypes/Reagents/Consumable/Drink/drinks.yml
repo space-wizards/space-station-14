@@ -499,7 +499,7 @@
 - type: reagent
   id: ArnoldPalmer
   name: reagent-name-arnold-palmer
-  parent: BaseAlcohol
+  parent: BaseDrink
   desc: reagent-desc-arnold-palmer
   physicalDesc: reagent-physical-desc-sweet
   flavor: arnoldpalmer
