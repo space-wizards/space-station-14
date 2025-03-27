@@ -7,7 +7,6 @@ role-type-silicon-name = Silicon
 role-type-silicon-antagonist-name = Altered Silicon
 
 role-type-update-message = Your role is [color = {$color}]{$role}[/color]
-role-with-subtype-format = {$type} - {$subtype}
 
 # Ideally, subtype names should be short
 role-subtype-traitor = Traitor
