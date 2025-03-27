@@ -13,6 +13,7 @@ using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Toggleable;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -30,8 +31,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
-        private static AtmosToggleableEnabledEvent _enabledEvent = new();
-        private static AtmosToggleableDisabledEvent _disabledEvent = new();
+        private static ToggleableEnabledEvent _enabledEvent = new();
+        private static ToggleableDisabledEvent _disabledEvent = new();
 
         public override void Initialize()
         {
@@ -47,13 +48,13 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterToggleStatusMessage>(OnToggleStatusMessage);
 
-            SubscribeLocalEvent<GasFilterComponent, AtmosToggleableEnabledEvent>(OnToggledEnabled);
-            SubscribeLocalEvent<GasFilterComponent, AtmosToggleableDisabledEvent>(OnToggledDisabled);
+            SubscribeLocalEvent<GasFilterComponent, ToggleableEnabledEvent>(OnToggledEnabled);
+            SubscribeLocalEvent<GasFilterComponent, ToggleableDisabledEvent>(OnToggledDisabled);
         }
 
         private void OnInit(EntityUid uid, GasFilterComponent filter, ComponentInit args)
         {
-            filter.ToggleableComponent = EnsureComp<AtmosToggleableComponent>(uid);
+            filter.ToggleableComponent = Comp<ToggleableComponent>(uid);
             filter.ToggleableComponent.Enabled = filter.DefaultEnabled;
             UpdateAppearance(uid, filter);
         }
@@ -217,14 +218,14 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             args.DeviceFlipped = inlet != null && filterNode != null && inlet.CurrentPipeDirection.ToDirection() == filterNode.CurrentPipeDirection.ToDirection().GetClockwise90Degrees();
         }
 
-        private void OnToggledEnabled(EntityUid uid, GasFilterComponent filter, AtmosToggleableEnabledEvent args)
+        private void OnToggledEnabled(EntityUid uid, GasFilterComponent filter, ToggleableEnabledEvent args)
         {
             filter.ToggleableComponent.Enabled = true;
             DirtyUI(uid, filter);
             UpdateAppearance(uid, filter);
         }
 
-        private void OnToggledDisabled(EntityUid uid, GasFilterComponent filter, AtmosToggleableDisabledEvent args)
+        private void OnToggledDisabled(EntityUid uid, GasFilterComponent filter, ToggleableDisabledEvent args)
         {
             filter.ToggleableComponent.Enabled = false;
             DirtyUI(uid, filter);

@@ -13,6 +13,7 @@ using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Toggleable;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -30,8 +31,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-        private static AtmosToggleableEnabledEvent _enabledEvent = new();
-        private static AtmosToggleableDisabledEvent _disabledEvent = new();
+        private static ToggleableEnabledEvent _enabledEvent = new();
+        private static ToggleableDisabledEvent _disabledEvent = new();
 
         public override void Initialize()
         {
@@ -48,13 +49,13 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             SubscribeLocalEvent<GasMixerComponent, AtmosDeviceDisabledEvent>(OnMixerLeaveAtmosphere);
 
-            SubscribeLocalEvent<GasMixerComponent, AtmosToggleableEnabledEvent>(OnToggledEnabled);
-            SubscribeLocalEvent<GasMixerComponent, AtmosToggleableDisabledEvent>(OnToggledDisabled);
+            SubscribeLocalEvent<GasMixerComponent, ToggleableEnabledEvent>(OnToggledEnabled);
+            SubscribeLocalEvent<GasMixerComponent, ToggleableDisabledEvent>(OnToggledDisabled);
         }
 
         private void OnInit(EntityUid uid, GasMixerComponent mixer, ComponentInit args)
         {
-            mixer.ToggleableComponent = EnsureComp<AtmosToggleableComponent>(uid);
+            mixer.ToggleableComponent = Comp<ToggleableComponent>(uid);
             mixer.ToggleableComponent.Enabled = mixer.DefaultEnabled;
             UpdateAppearance(uid, mixer);
         }
@@ -244,14 +245,14 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             args.DeviceFlipped = inletOne != null && inletTwo != null && inletOne.CurrentPipeDirection.ToDirection() == inletTwo.CurrentPipeDirection.ToDirection().GetClockwise90Degrees();
         }
 
-        private void OnToggledEnabled(EntityUid uid, GasMixerComponent mixer, AtmosToggleableEnabledEvent args)
+        private void OnToggledEnabled(EntityUid uid, GasMixerComponent mixer, ToggleableEnabledEvent args)
         {
             mixer.ToggleableComponent.Enabled = true;
             DirtyUI(uid, mixer);
             UpdateAppearance(uid, mixer);
         }
 
-        private void OnToggledDisabled(EntityUid uid, GasMixerComponent mixer, AtmosToggleableDisabledEvent args)
+        private void OnToggledDisabled(EntityUid uid, GasMixerComponent mixer, ToggleableDisabledEvent args)
         {
             mixer.ToggleableComponent.Enabled = false;
             DirtyUI(uid, mixer);

@@ -226,6 +226,8 @@
     - type: Appearance
     - type: PipeColorVisuals
     - type: Rotatable
+    - type: Toggleable
+      altVerbAvailable: true
     - type: GasThermoMachine
     - type: AtmosPipeColor
     - type: AtmosDevice
@@ -254,8 +256,6 @@
       sendBroadcastAttemptEvent: true
       examinableAddress: true
     - type: WiredNetworkConnection
-    - type: AtmosToggleable
-      altVerbAvailable: true
     - type: AtmosMonitoringConsoleDevice
       navMapBlip: Thermoregulator
     - type: GuideHelp
@@ -287,10 +287,10 @@
           enabled:
             On: { state: freezerOn }
             Off: { state: freezerOff }
+    - type: Toggleable
+      altVerbAvailable: true
     - type: GasThermoMachine
       coefficientOfPerformance: -3.9
-    - type: ApcPowerReceiver
-    - type: AtmosToggleable
       altVerbAvailable: true
       enabled: false #starts off
     - type: Machine
@@ -305,10 +305,10 @@
   id: GasThermoMachineFreezerEnabled
   suffix: Enabled
   components:
-  - type: GasThermoMachine
-  - type: AtmosToggleable
+  - type: Toggleable
     altVerbAvailable: true
     enabled: true
+  - type: GasThermoMachine
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -335,12 +335,12 @@
           enabled:
             On: { state: heaterOn }
             Off: { state: heaterOff }
+    - type: Toggleable
+      altVerbAvailable: true
+      enabled: false #starts off
     - type: GasThermoMachine
       coefficientOfPerformance: 0.95
     - type: ApcPowerReceiver
-    - type: AtmosToggleable
-      altVerbAvailable: true
-      enabled: false #starts off
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
     - type: DeviceNetwork
@@ -353,10 +353,10 @@
   id: GasThermoMachineHeaterEnabled
   suffix: Enabled
   components:
-  - type: GasThermoMachine
-  - type: AtmosToggleable
+  - type: Toggleable
     altVerbAvailable: true
     enabled: true
+  - type: GasThermoMachine
 
 - type: entity
   parent: GasThermoMachineFreezer

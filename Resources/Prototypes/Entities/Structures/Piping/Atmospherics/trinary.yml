@@ -62,7 +62,7 @@
       enabled: false
       transferRate: 1000
       maxTransferRate: 1000
-    - type: AtmosToggleable
+    - type: Toggleable
       altVerbAvailable: true
     - type: Flippable
       mirrorEntity: GasFilterFlipped
@@ -160,7 +160,7 @@
       enabled: false
       inletOne: inlet
       inletTwo: filter
-    - type: AtmosToggleable
+    - type: Toggleable
       altVerbAvailable: true
     - type: Flippable
       mirrorEntity: GasMixerFlipped

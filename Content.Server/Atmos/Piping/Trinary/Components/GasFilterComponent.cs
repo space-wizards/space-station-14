@@ -1,6 +1,6 @@
 using Content.Server.Atmos.Piping.Trinary.EntitySystems;
 using Content.Shared.Atmos;
-using Content.Shared.Atmos.Piping.Components;
+using Content.Shared.Toggleable;
 
 namespace Content.Server.Atmos.Piping.Trinary.Components
 {
@@ -8,10 +8,10 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
     public sealed partial class GasFilterComponent : Component
     {
         [Access(typeof(GasFilterSystem))]
-        public AtmosToggleableComponent ToggleableComponent;
+        public ToggleableComponent ToggleableComponent;
 
         /// <summary>
-        ///     The default Enabled value for this comp's AtmosToggleableComponent. Only used on init.
+        ///     The default Enabled value for this comp's ToggleableComponent. Only used on init.
         /// </summary>
         [DataField("enabled")]
         public bool DefaultEnabled = false;

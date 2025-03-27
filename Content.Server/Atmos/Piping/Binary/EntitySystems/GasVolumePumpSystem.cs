@@ -22,6 +22,7 @@ using Content.Shared.Power;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Content.Shared.Toggleable;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
@@ -37,8 +38,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
 
-        private static AtmosToggleableEnabledEvent _enabledEvent = new();
-        private static AtmosToggleableDisabledEvent _disabledEvent = new();
+        private static ToggleableEnabledEvent _enabledEvent = new();
+        private static ToggleableDisabledEvent _disabledEvent = new();
 
         public override void Initialize()
         {
@@ -54,15 +55,15 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpChangeTransferRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpToggleStatusMessage>(OnToggleStatusMessage);
 
-            SubscribeLocalEvent<GasVolumePumpComponent, AtmosToggleableEnabledEvent>(OnPumpToggledEnabled);
-            SubscribeLocalEvent<GasVolumePumpComponent, AtmosToggleableDisabledEvent>(OnPumpToggledDisabled);
+            SubscribeLocalEvent<GasVolumePumpComponent, ToggleableEnabledEvent>(OnPumpToggledEnabled);
+            SubscribeLocalEvent<GasVolumePumpComponent, ToggleableDisabledEvent>(OnPumpToggledDisabled);
 
             SubscribeLocalEvent<GasVolumePumpComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         }
 
         private void OnInit(EntityUid uid, GasVolumePumpComponent pump, ComponentInit args)
         {
-            pump.ToggleableComponent = EnsureComp<AtmosToggleableComponent>(uid);
+            pump.ToggleableComponent = EnsureComp<ToggleableComponent>(uid);
             pump.ToggleableComponent.Enabled = pump.DefaultEnabled;
             UpdateAppearance(uid, pump);
         }
@@ -226,14 +227,14 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             }
         }
 
-        private void OnPumpToggledEnabled(EntityUid uid, GasVolumePumpComponent pump, AtmosToggleableEnabledEvent args)
+        private void OnPumpToggledEnabled(EntityUid uid, GasVolumePumpComponent pump, ToggleableEnabledEvent args)
         {
             pump.ToggleableComponent.Enabled = true;
             DirtyUI(uid, pump);
             UpdateAppearance(uid, pump);
         }
 
-        private void OnPumpToggledDisabled(EntityUid uid, GasVolumePumpComponent pump, AtmosToggleableDisabledEvent args)
+        private void OnPumpToggledDisabled(EntityUid uid, GasVolumePumpComponent pump, ToggleableDisabledEvent args)
         {
             pump.ToggleableComponent.Enabled = false;
             DirtyUI(uid, pump);

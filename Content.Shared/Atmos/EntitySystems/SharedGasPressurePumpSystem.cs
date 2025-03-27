@@ -9,19 +9,20 @@ using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Toggleable;
 using Content.Shared.UserInterface;
 
 namespace Content.Shared.Atmos.EntitySystems;
 
 public abstract class SharedGasPressurePumpSystem : EntitySystem
 {
-    [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-    [Dependency] private   readonly SharedPowerReceiverSystem _receiver = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem _receiver = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UserInterfaceSystem = default!;
 
-    private static AtmosToggleableEnabledEvent _enabledEvent = new();
-    private static AtmosToggleableDisabledEvent _disabledEvent = new();
+    private static ToggleableEnabledEvent _enabledEvent = new();
+    private static ToggleableDisabledEvent _disabledEvent = new();
 
     // TODO: Check enabled for activatableUI
     // TODO: Add activatableUI to it.
@@ -38,8 +39,8 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
         SubscribeLocalEvent<GasPressurePumpComponent, AtmosDeviceDisabledEvent>(OnPumpLeaveAtmosphere);
         SubscribeLocalEvent<GasPressurePumpComponent, ExaminedEvent>(OnExamined);
 
-        SubscribeLocalEvent<GasPressurePumpComponent, AtmosToggleableEnabledEvent>(OnPumpToggledEnabled);
-        SubscribeLocalEvent<GasPressurePumpComponent, AtmosToggleableDisabledEvent>(OnPumpToggledDisabled);
+        SubscribeLocalEvent<GasPressurePumpComponent, ToggleableEnabledEvent>(OnPumpToggledEnabled);
+        SubscribeLocalEvent<GasPressurePumpComponent, ToggleableDisabledEvent>(OnPumpToggledDisabled);
     }
 
     private void OnExamined(EntityUid uid, GasPressurePumpComponent pump, ExaminedEvent args)
@@ -58,7 +59,7 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
 
     private void OnInit(EntityUid uid, GasPressurePumpComponent pump, ComponentInit args)
     {
-        pump.ToggleableComponent = EnsureComp<AtmosToggleableComponent>(uid);
+        pump.ToggleableComponent = Comp<ToggleableComponent>(uid);
         pump.ToggleableComponent.Enabled = pump.DefaultEnabled;
         UpdateAppearance(uid, pump);
     }
@@ -102,14 +103,14 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
         UserInterfaceSystem.CloseUi(uid, GasPressurePumpUiKey.Key);
     }
 
-    private void OnPumpToggledEnabled(EntityUid uid, GasPressurePumpComponent pump, AtmosToggleableEnabledEvent args)
+    private void OnPumpToggledEnabled(EntityUid uid, GasPressurePumpComponent pump, ToggleableEnabledEvent args)
     {
         pump.ToggleableComponent.Enabled = true;
         Dirty(uid, pump.ToggleableComponent);
         UpdateAppearance(uid, pump);
     }
 
-    private void OnPumpToggledDisabled(EntityUid uid, GasPressurePumpComponent pump, AtmosToggleableDisabledEvent args)
+    private void OnPumpToggledDisabled(EntityUid uid, GasPressurePumpComponent pump, ToggleableDisabledEvent args)
     {
         pump.ToggleableComponent.Enabled = false;
         Dirty(uid, pump.ToggleableComponent);

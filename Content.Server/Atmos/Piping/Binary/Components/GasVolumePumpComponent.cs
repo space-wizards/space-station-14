@@ -1,5 +1,5 @@
 using Content.Server.Atmos.Piping.Binary.EntitySystems;
-using Content.Shared.Atmos.Piping.Components;
+using Content.Shared.Toggleable;
 using Content.Shared.Atmos;
 using Content.Shared.Guidebook;
 using System.ComponentModel.DataAnnotations;
@@ -10,10 +10,10 @@ namespace Content.Server.Atmos.Piping.Binary.Components
     public sealed partial class GasVolumePumpComponent : Component
     {
         [Access(typeof(GasVolumePumpSystem))]
-        public AtmosToggleableComponent ToggleableComponent;
+        public ToggleableComponent ToggleableComponent;
 
         /// <summary>
-        ///     The default Enabled value for this comp's AtmosToggleableComponent. Only used on init.
+        ///     The default Enabled value for this comp's ToggleableComponent. Only used on init.
         /// </summary>
         [DataField("enabled")]
         public bool DefaultEnabled = false;
