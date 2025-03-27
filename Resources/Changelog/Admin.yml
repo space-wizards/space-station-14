@@ -969,5 +969,12 @@ Entries:
   id: 117
   time: '2025-03-27T17:04:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36105
+- author: lzk228, ScarKy0
+  changes:
+  - message: Aghost now silently interact with storages.
+    type: Tweak
+  id: 118
+  time: '2025-03-27T17:42:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35417
 Name: Admin
 Order: 1
