@@ -2,6 +2,7 @@ using Content.Server.Charges.Components;
 using Content.Server.IdentityManagement;
 using Content.Server.Light.Components;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
@@ -16,6 +17,8 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private readonly PointLightSystem _pointLight = default!;
+    [Dependency] private readonly BatterySystem _battery = default!;
 
     public override void Initialize()
     {
@@ -65,7 +68,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         component.Default = protoId;
 
         UpdateIdentityBlocker(uid, component, proto);
-        UpdateHelmetLights(uid, component, proto);
+        UpdateLights(uid, proto);
         UpdateToggleableChameleonComponent(uid, proto);
         UpdateVisuals(uid, component);
         UpdateUi(uid, component);
@@ -85,13 +88,12 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     }
 
 
-    private void UpdateHelmetLights(EntityUid uid, ChameleonClothingComponent component, EntityPrototype proto)
+    private void UpdateLights(EntityUid uid, EntityPrototype proto)
     {
-        RemoveAndAddComponent<PointLightComponent>(uid, proto, true);
-        RemoveAndAddComponent<LightBehaviourComponent>(uid, proto, false);
-        RemoveAndAddComponent<BatteryComponent>(uid, proto, false);
-        RemoveAndAddComponent<BatterySelfRechargerComponent>(uid, proto, false);
-        RemoveAndAddComponent<AutoRechargeComponent>(uid, proto, false);
+        EnsureCompAndCopyDetails<PointLightComponent>(uid, proto, (otherComp, comp, componentAdded) => _pointLight.CopyVisuals(uid, otherComp, comp, componentAdded));
+        EnsureCompAndCopyDetails<LightBehaviourComponent>(uid, proto);
+        EnsureCompAndCopyDetails<BatteryComponent>(uid, proto, (otherComp, comp, _) => _battery.CopyDetails(uid, otherComp, comp));
+        EnsureCompAndCopyDetails<BatterySelfRechargerComponent>(uid, proto, (otherComp, comp, _) => _battery.CopyDetails(uid, otherComp, comp));
     }
 
     private void UpdateToggleableChameleonComponent(EntityUid uid, EntityPrototype proto)
@@ -112,17 +114,5 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
                 return;
             }
         }
-    }
-
-    private void RemoveAndAddComponent<T>(EntityUid uid, EntityPrototype proto, bool dirty) where T : IComponent, new()
-    {
-        RemComp<T>(uid);
-        if (!proto.TryGetComponent(out T? component, _factory))
-            return;
-
-        AddComp(uid, component);
-
-        if (dirty)
-            Dirty(uid, component);
     }
 }

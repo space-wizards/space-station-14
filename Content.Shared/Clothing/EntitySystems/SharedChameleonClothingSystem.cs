@@ -167,4 +167,18 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
         return true;
     }
+
+    protected void EnsureCompAndCopyDetails<T>(EntityUid uid, EntityPrototype proto, Action<T, T, bool>? copyVisualsFunction = null) where T : IComponent, new()
+    {
+        if (!proto.TryGetComponent(out T? otherComponent, _factory)) {
+            RemComp<T>(uid);
+            return;
+        }
+
+        bool componentAdded = !EnsureComp<T>(uid, out T ownComponent);
+
+        if (copyVisualsFunction != null)
+            copyVisualsFunction(otherComponent, ownComponent, componentAdded);
+
+    }
 }

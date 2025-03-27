@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Client.Light.Components;
+using Content.Client.Light.EntitySystems;
 using Content.Client.PDA;
 using Content.Client.Toggleable;
 using Content.Shared.Clothing.Components;
@@ -14,6 +15,9 @@ namespace Content.Client.Clothing.Systems;
 public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly PointLightSystem _pointLight = default!;
+    [Dependency] private readonly LightBehaviorSystem _lightBehavior = default!;
+    [Dependency] private readonly ToggleableLightVisualsSystem _toggleableLightVisuals = default!;
 
     private static readonly SlotFlags[] IgnoredSlots =
     {
@@ -45,9 +49,9 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (!string.IsNullOrEmpty(component.Default) &&
         _proto.TryIndex(component.Default, out EntityPrototype? proto))
         {
-            RemoveAndAddComponent<PointLightComponent>(uid, proto);
-            RemoveAndAddComponent<LightBehaviourComponent>(uid, proto);
-            RemoveAndAddComponent<ToggleableLightVisualsComponent>(uid, proto);
+            EnsureCompAndCopyDetails<PointLightComponent>(uid, proto, (otherComp, comp, componentAdded) => _pointLight.CopyVisuals(uid, otherComp, comp, componentAdded));
+            EnsureCompAndCopyDetails<LightBehaviourComponent>(uid, proto, (otherComp, comp, _) => _lightBehavior.CopyVisuals(uid, otherComp, comp));
+            EnsureCompAndCopyDetails<ToggleableLightVisualsComponent>(uid, proto, (otherComp, comp, _) => _toggleableLightVisuals.CopyVisuals(uid, otherComp, comp));
         }
 
         UpdateVisuals(uid, component);
@@ -115,17 +119,5 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
                 _data[slot].Add(proto.ID);
             }
         }
-    }
-
-    private void RemoveAndAddComponent<T>(EntityUid uid, EntityPrototype proto, Action<T>? afterAddAction = null) where T : IComponent, new()
-    {
-        RemComp<T>(uid);
-        if (!proto.TryGetComponent(out T? component, _factory))
-            return;
-
-        AddComp(uid, component);
-
-        if (afterAddAction != null)
-            afterAddAction(component);
     }
 }
