@@ -26,8 +26,8 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly SharedRoleSystem _roles;
     private readonly Font _font;
     private readonly Font _fontBold;
-    private AdminOverlayAntagFormats _overlayFormat;
-    private AdminOverlayAntagSymbolStyles _overlaySymbolStyle;
+    private AdminOverlayAntagFormat _overlayFormat;
+    private AdminOverlayAntagSymbolStyle _overlaySymbolStyle;
     private bool _overlayPlaytime;
     private bool _overlayStartingJob;
     private float _ghostFadeDistance;
@@ -72,18 +72,18 @@ internal sealed class AdminNameOverlay : Overlay
         config.OnValueChanged(CCVars.AdminOverlayMergeDistance, (f) => { _overlayMergeDistance = f; }, true);
     }
 
-    private AdminOverlayAntagFormats UpdateOverlayFormat(string formatString)
+    private AdminOverlayAntagFormat UpdateOverlayFormat(string formatString)
     {
-        if (!Enum.TryParse<AdminOverlayAntagFormats>(formatString, out var format))
-            format = AdminOverlayAntagFormats.Binary;
+        if (!Enum.TryParse<AdminOverlayAntagFormat>(formatString, out var format))
+            format = AdminOverlayAntagFormat.Binary;
 
         return format;
     }
 
-    private AdminOverlayAntagSymbolStyles UpdateOverlaySymbolStyle(string symbolString)
+    private AdminOverlayAntagSymbolStyle UpdateOverlaySymbolStyle(string symbolString)
     {
-        if (!Enum.TryParse<AdminOverlayAntagSymbolStyles>(symbolString, out var symbolStyle))
-            symbolStyle = AdminOverlayAntagSymbolStyles.Off;
+        if (!Enum.TryParse<AdminOverlayAntagSymbolStyle>(symbolString, out var symbolStyle))
+            symbolStyle = AdminOverlayAntagSymbolStyle.Off;
 
         return symbolStyle;
     }
@@ -208,14 +208,14 @@ internal sealed class AdminNameOverlay : Overlay
             string? symbol;
             switch (_overlaySymbolStyle)
             {
-                case AdminOverlayAntagSymbolStyles.Specific:
+                case AdminOverlayAntagSymbolStyle.Specific:
                     symbol = playerInfo.RoleProto.Symbol;
                     break;
-                case AdminOverlayAntagSymbolStyles.Basic:
+                case AdminOverlayAntagSymbolStyle.Basic:
                     symbol = Loc.GetString("player-tab-antag-prefix");
                     break;
                 default:
-                case AdminOverlayAntagSymbolStyles.Off:
+                case AdminOverlayAntagSymbolStyle.Off:
                     symbol = string.Empty;
                     break;
             }
@@ -224,14 +224,14 @@ internal sealed class AdminNameOverlay : Overlay
             string? text;
             switch (_overlayFormat)
             {
-                case AdminOverlayAntagFormats.Roletype:
+                case AdminOverlayAntagFormat.Roletype:
                     color = playerInfo.RoleProto.Color;
                     symbol = _filter.Contains(playerInfo.RoleProto) ? symbol : string.Empty;
                     text = _filter.Contains(playerInfo.RoleProto)
                         ? Loc.GetString(playerInfo.RoleProto.Name).ToUpper()
                         : string.Empty;
                     break;
-                case AdminOverlayAntagFormats.Subtype:
+                case AdminOverlayAntagFormat.Subtype:
                     color = playerInfo.RoleProto.Color;
                     symbol = _filter.Contains(playerInfo.RoleProto) ? symbol : string.Empty;
                     text = _filter.Contains(playerInfo.RoleProto)
@@ -239,7 +239,7 @@ internal sealed class AdminNameOverlay : Overlay
                         : string.Empty;
                     break;
                 default:
-                case AdminOverlayAntagFormats.Binary:
+                case AdminOverlayAntagFormat.Binary:
                     color = Color.OrangeRed;
                     symbol = playerInfo.Antag ? symbol : string.Empty;
                     text = playerInfo.Antag ? _antagLabelClassic : string.Empty;

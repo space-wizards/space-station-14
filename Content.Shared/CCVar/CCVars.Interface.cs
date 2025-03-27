@@ -59,22 +59,33 @@ public sealed partial class CCVars
         CVarDef.Create("ui.admin_overlay_starting_job", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
-    /// If true, the admin window player tab will show different antag symbols for each role type
+    /// Determines how antagonist status/roletype is displayed Before character names on the Player Tab
+    /// Off: No symbol is shown.
+    /// Basic: The same antag symbol is shown for anyone marked as antag.
+    /// Specific: The roletype-specific symbol is shown for anyone marked as antag.
     /// </summary>
-    public static readonly CVarDef<bool> AdminPlayerlistSeparateSymbols =
-        CVarDef.Create("ui.admin_playerlist_separate_symbols", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+    public static readonly CVarDef<string> AdminPlayerTabSymbolSetting =
+        CVarDef.Create("ui.admin_player_tab_symbols", "Specific", CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
-    /// If true, characters with antag role types will have their names colored by their role type
+    /// Determines what columns are colorized
+    /// Off: None.
+    /// Character: The character names of "roletypes-of-interest" have their role type's color.
+    /// Roletype: Role types are shown in their respective colors.
+    /// Both: Both characters and role types are colorized.
     /// </summary>
-    public static readonly CVarDef<bool> AdminPlayerlistHighlightedCharacterColor =
-        CVarDef.Create("ui.admin_playerlist_highlighted_character_color", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+    public static readonly CVarDef<string> AdminPlayerTabColorSetting =
+        CVarDef.Create("ui.admin_player_tab_color", "Both", CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
-    /// If true, the Role Types column will be colored
+    /// Determines what's displayed in the Role column - role type, subtype, or both.
+    /// RoleType
+    /// SubType
+    /// RoleTypeSubtype
+    /// SubtypeRoleType
     /// </summary>
-    public static readonly CVarDef<bool> AdminPlayerlistRoleTypeColor =
-        CVarDef.Create("ui.admin_playerlist_role_type_color", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+    public static readonly CVarDef<string> AdminPlayerTabRoleSetting =
+        CVarDef.Create("ui.admin_player_tab_role", "Subtype", CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// Determines how antagonist status/roletype is displayed. Based on AdminOverlayAntagSymbolStyles enum

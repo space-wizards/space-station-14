@@ -1,13 +1,13 @@
 namespace Content.Client.Administration;
 
-public enum AdminOverlayAntagFormats
+public enum AdminOverlayAntagFormat
 {
     Binary,
     Roletype,
     Subtype
 }
 
-public enum AdminOverlayAntagSymbolStyles
+public enum AdminOverlayAntagSymbolStyle
 {
     Off,
     Basic,

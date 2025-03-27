@@ -6,9 +6,9 @@
             <BoxContainer Orientation="Vertical" Margin="8">
                 <Label Text="{Loc 'ui-options-admin-player-panel'}"
                        StyleClasses="LabelKeyText"/>
-                <CheckBox Name="PlayerlistSeparateSymbolsCheckBox" Text="{Loc 'ui-options-admin-playerlist-separate-symbols'}" />
-                <CheckBox Name="PlayerlistCharacterColorCheckBox" Text="{Loc 'ui-options-admin-playerlist-character-color'}" />
-                <CheckBox Name="PlayerlistRoleTypeColorCheckBox" Text="{Loc 'ui-options-admin-playerlist-roletype-color'}" />
+                <ui:OptionDropDown Name="DropDownPlayerTabSymbolSetting" Title="{Loc 'ui-options-admin-player-tab-symbol-setting'}" />
+                <ui:OptionDropDown Name="DropDownPlayerTabRoleSetting" Title="{Loc 'ui-options-admin-player-tab-role-setting'}" />
+                <ui:OptionDropDown Name="DropDownPlayerTabColorSetting" Title="{Loc 'ui-options-admin-player-tab-color-setting'}" />
                 <Label Text="{Loc 'ui-options-admin-overlay-title'}"
                        StyleClasses="LabelKeyText"/>
                 <ui:OptionDropDown Name="DropDownOverlayAntagFormat" Title="{Loc 'ui-options-admin-overlay-antag-format'}" />

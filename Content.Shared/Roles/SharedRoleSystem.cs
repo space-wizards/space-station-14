@@ -632,7 +632,7 @@ public abstract class SharedRoleSystem : EntitySystem
     }
 
     /// <summary>
-    /// Returns the localized name of a role type's subtype and/or role type.
+    /// Returns the localized name of a role type's subtype and/or role type. //TODO:ERRANT update Summary
     /// </summary>
     /// <param name="roleType">The locale identifier of the role type</param>
     /// <param name="subtype">The locale identifier of the subtype</param>
@@ -642,17 +642,18 @@ public abstract class SharedRoleSystem : EntitySystem
     /// If subtypeOnly is false, returns localized role and subtype.
     /// If subtype is not provided, returns localized role type regardless of subtypeOnly setting.
     /// </returns>
-    public string GetRoleSubtypeLabel(LocId roleType, LocId? subtype, bool subtypeOnly = true)
+    public string GetRoleSubtypeLabel(LocId roleType, LocId? subtype)
     {
-        var typeLoc = Loc.GetString(roleType);
+        // var typeLoc = Loc.GetString(roleType); //TODO:ERRANT delete before push
+        //
+        // if (string.IsNullOrEmpty(subtype))
+        //     return typeLoc;
 
-        if (string.IsNullOrEmpty(subtype))
-            return typeLoc;
+        // var subLoc = Loc.GetString(subtype);
+        // var combined = Loc.GetString("role-with-subtype-format", ("type", typeLoc), ("subtype", subLoc));
 
-        var subLoc = Loc.GetString(subtype);
-        var combined = Loc.GetString("role-with-subtype-format", ("type", typeLoc), ("subtype", subLoc));
-
-        return subtypeOnly ? subLoc : combined;
+        // return subtypeOnly ? subLoc : combined;
+        return string.IsNullOrEmpty(subtype) ? Loc.GetString(roleType) : Loc.GetString(subtype);
     }
 }
 
