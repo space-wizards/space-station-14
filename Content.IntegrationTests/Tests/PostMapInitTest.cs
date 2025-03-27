@@ -67,6 +67,10 @@ namespace Content.IntegrationTests.Tests
         /// <summary>
         /// Maps listed here are given blanket freedom to contain "DoNotMap" entities. Use sparingly.
         /// </summary>
+        /// <remarks>
+        /// It is also possible to whitelist entire directories here. For example, adding
+        /// "/Maps/Shuttles/" will whitelist all shuttle maps.
+        /// </remarks>
         private static readonly string[] DoNotMapWhitelistAll =
         {
             "/Maps/centcomm.yml",
@@ -280,8 +284,11 @@ namespace Content.IntegrationTests.Tests
         /// </summary>
         private void CheckDoNotMap(ResPath map, YamlNode node, IPrototypeManager protoManager)
         {
-            if (DoNotMapWhitelistAll.Contains(map.ToString()))
-                return;
+            foreach (var mapFilter in DoNotMapWhitelistAll)
+            {
+                if (map.ToString().StartsWith(mapFilter))
+                    return;
+            }
 
             var yamlEntities = node["entities"];
             if (!protoManager.TryIndex<EntityCategoryPrototype>("DoNotMap", out var dnmCategory))
