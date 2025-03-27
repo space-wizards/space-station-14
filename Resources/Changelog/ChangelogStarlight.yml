@@ -4248,4 +4248,76 @@ Entries:
   id: 588
   time: '2025-03-20T06:18:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/410
+- author: InanimateIJK
+  changes:
+  - message: Introduction of the track "Cosmonaut" by "Artifyber" into the lobby music
+      shuffle.
+    type: Add
+  id: 589
+  time: '2025-03-20T19:40:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/416
+- author: Chim
+  changes:
+  - message: Updated the IAA/Magistrate Icons to be NT-ified.
+    type: Tweak
+  id: 590
+  time: '2025-03-21T09:12:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/414
+- author: aedler
+  changes:
+  - message: Neo CC is here w/ Maltese Falcon nightclub to drink your memories away
+      -- no cloning required.
+    type: Tweak
+  id: 591
+  time: '2025-03-21T15:04:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/417
+- author: walksanatora
+  changes:
+  - message: Changelings can now get a fake mindshield for 2 evolution points.
+    type: Add
+  id: 592
+  time: '2025-03-22T08:42:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/415
+- author: BORTBORTBORT
+  changes:
+  - message: Added NTREP hardsuit
+    type: Add
+  id: 593
+  time: '2025-03-24T08:59:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/422
+- author: BORTBORTBORT
+  changes:
+  - message: Added NTREP satchel
+    type: Add
+  id: 594
+  time: '2025-03-24T08:59:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/422
+- author: B1773rm4n
+  changes:
+  - message: Implement searchbox for the Round End Summary  search at Round End
+    type: Add
+  id: 595
+  time: '2025-03-24T09:09:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/421
+- author: Happyrobot33
+  changes:
+  - message: Added new sounds to Resomi.
+    type: Add
+  id: 596
+  time: '2025-03-24T14:41:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/425
+- author: PubliclyExecutedPig
+  changes:
+  - message: Changed the warden's hardsuit. Defenders of the brig rejoice!
+    type: Tweak
+  id: 597
+  time: '2025-03-24T16:23:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/424
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed displacement maps.
+    type: Fix
+  id: 598
+  time: '2025-03-25T16:10:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/423
 

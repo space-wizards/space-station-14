@@ -19,7 +19,7 @@ jobs:
       uses: space-wizards/submodule-dependency@v0.1.5
     - uses: PaulRitter/yaml-schema-validator@v1
       with:
-        schema: RobustToolbox/Schemas/mapfile.yml
+        schema: Tools/Schemas/mapfile.yml
         path_pattern: .*Resources/Maps/.*
         validators_path: RobustToolbox/Schemas/mapfile_validators.py
         validators_requirements: RobustToolbox/Schemas/mapfile_requirements.txt
