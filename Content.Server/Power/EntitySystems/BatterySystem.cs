@@ -221,5 +221,33 @@ namespace Content.Server.Power.EntitySystems
 
             return battery.CurrentCharge >= battery.MaxCharge;
         }
+
+        /// <summary>
+        ///    Copy all item specific details from another item.
+        /// </summary>
+        public void CopyDetails(EntityUid uid, BatteryComponent otherBattery, BatteryComponent? battery = null)
+        {
+            if (!Resolve(uid, ref battery))
+                return;
+
+            battery.MaxCharge = otherBattery.MaxCharge;
+            battery.PricePerJoule = otherBattery.PricePerJoule;
+        }
+
+
+        /// <summary>
+        ///    Copy all item specific details from another item.
+        /// </summary>
+        public void CopyDetails(EntityUid uid, BatterySelfRechargerComponent otherBattery, BatterySelfRechargerComponent? battery = null)
+        {
+            if (!Resolve(uid, ref battery))
+                return;
+
+            battery.AutoRecharge = otherBattery.AutoRecharge;
+            battery.AutoRechargePause = otherBattery.AutoRechargePause;
+            battery.AutoRechargePauseTime = otherBattery.AutoRechargePauseTime;
+            battery.AutoRechargeRate = otherBattery.AutoRechargeRate;
+
+        }
     }
 }
