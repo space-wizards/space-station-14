@@ -197,4 +197,16 @@ public sealed class LightBehaviorSystem : EntitySystem
             StartLightBehaviour(entity, behaviour.ID);
         }
     }
+
+    /// <summary>
+    ///     Copy all item specific visuals from another item.
+    /// </summary>
+    public void CopyVisuals(EntityUid uid, LightBehaviourComponent otherLightbehaviour, LightBehaviourComponent? lightBehaviour = null)
+    {
+        if (!Resolve(uid, ref lightBehaviour))
+            return;
+
+        lightBehaviour.Behaviours = otherLightbehaviour.Behaviours;
+        lightBehaviour.OriginalPropertyValues = otherLightbehaviour.OriginalPropertyValues;
+    }
 }
