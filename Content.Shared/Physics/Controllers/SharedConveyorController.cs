@@ -377,6 +377,7 @@ public abstract class SharedConveyorController : VirtualController
     /// </summary>
     private bool IsConveyed(Entity<FixturesComponent?, PhysicsComponent?> ent)
     {
+        // TODO: Move this to the parallel loop
         if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2))
             return false;
 
