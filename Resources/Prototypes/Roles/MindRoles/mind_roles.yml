@@ -129,7 +129,7 @@
   - type: MindRole
     antagPrototype: SubvertedSilicon
     roleType: SiliconAntagonist
-    subtype: rule-subtype-subverted
+    subtype: role-subtype-subverted
   - type: SubvertedSiliconRole
 
 # Dragon
@@ -167,6 +167,7 @@
   components:
   - type: MindRole
     antagPrototype: ParadoxClone
+    subtype: role-subtype-paradox-clone
   - type: ParadoxCloneRole
 
 # Nukies
@@ -229,6 +230,7 @@
   - type: MindRole
     antagPrototype: Survivor
     roleType: FreeAgent
+    subtype: role-subtype-survivor
   - type: SurvivorRole
 
 # Thief
@@ -281,6 +283,7 @@
   - type: MindRole
     antagPrototype: Wizard
     exclusiveAntag: true
+    subtype: role-subtype-wizard
   - type: WizardRole
 
 # Zombie Squad
