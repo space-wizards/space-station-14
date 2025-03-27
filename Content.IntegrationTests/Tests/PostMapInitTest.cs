@@ -52,7 +52,7 @@ namespace Content.IntegrationTests.Tests
         /// despite being categorized as "DoNotMap", while any unlisted prototypes will still
         /// cause the test to fail.
         /// </remarks>
-        private static readonly Dictionary<string, EntProtoId[]> DoNotMapWhiteList = new()
+        private static readonly Dictionary<string, EntProtoId[]> DoNotMapWhitelistSpecific = new()
         {
             {"/Maps/bagel.yml", ["RubberStampMime"]},
             {"/Maps/meta.yml", ["RubberStampWarden"]},
@@ -71,7 +71,7 @@ namespace Content.IntegrationTests.Tests
         /// It is also possible to whitelist entire directories here. For example, adding
         /// "/Maps/Shuttles/" will whitelist all shuttle maps.
         /// </remarks>
-        private static readonly string[] DoNotMapWhitelistAll =
+        private static readonly string[] DoNotMapWhitelist =
         {
             "/Maps/centcomm.yml",
         };
@@ -273,7 +273,7 @@ namespace Content.IntegrationTests.Tests
 
         private bool IsWhitelistedForMap(EntProtoId protoId, ResPath map)
         {
-            if (!DoNotMapWhiteList.TryGetValue(map.ToString(), out var allowedProtos))
+            if (!DoNotMapWhitelistSpecific.TryGetValue(map.ToString(), out var allowedProtos))
                 return false;
 
             return allowedProtos.Contains(protoId);
@@ -284,7 +284,7 @@ namespace Content.IntegrationTests.Tests
         /// </summary>
         private void CheckDoNotMap(ResPath map, YamlNode node, IPrototypeManager protoManager)
         {
-            foreach (var mapFilter in DoNotMapWhitelistAll)
+            foreach (var mapFilter in DoNotMapWhitelist)
             {
                 if (map.ToString().StartsWith(mapFilter))
                     return;
