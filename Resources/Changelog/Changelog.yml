@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: RedBookcase
-  changes:
-  - message: Mixing up a Snow White no longer creates extra liquid out of thin air.
-    type: Fix
-  id: 7611
-  time: '2024-11-15T20:52:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33331
 - author: lzk228
   changes:
   - message: Added 10 seconds delay to Succumb action
@@ -3873,3 +3866,11 @@
   id: 8110
   time: '2025-03-26T16:13:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35993
+- author: Centronias
+  changes:
+  - message: Raw meatballs, like steaks, can now be cooked in the microwave or on
+      a grill.
+    type: Add
+  id: 8111
+  time: '2025-03-27T06:26:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36003
