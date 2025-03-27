@@ -100,18 +100,6 @@ namespace Content.Shared.Movement.Systems
 
             var ev = new SpriteMoveEvent(entity.Comp.HeldMoveButtons != MoveButtons.None);
             RaiseLocalEvent(entity, ref ev);
-
-            // Run container stuff because legacy
-            // For stuff like "Moving out of locker" or the likes
-            // We'll relay a movement input to the parent.
-            if (_container.IsEntityInContainer(entity) &&
-                XformQuery.TryComp(entity, out var xform) &&
-                xform.ParentUid.IsValid() &&
-                _mobState.IsAlive(entity))
-            {
-                var relayMoveEvent = new ContainerRelayMovementEntityEvent(entity);
-                RaiseLocalEvent(xform.ParentUid, ref relayMoveEvent);
-            }
         }
 
         private void OnMoverHandleState(Entity<InputMoverComponent> entity, ref ComponentHandleState args)
