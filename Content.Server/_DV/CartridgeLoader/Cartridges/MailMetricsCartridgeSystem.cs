@@ -19,7 +19,6 @@ public sealed class MailMetricsCartridgeSystem : EntitySystem
 
         SubscribeLocalEvent<MailMetricsCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
         SubscribeLocalEvent<LogisticStatsUpdatedEvent>(OnLogisticsStatsUpdated);
-        SubscribeLocalEvent<DeliveryComponent, MapInitEvent>(OnMapInit);
     }
 
     private void OnUiReady(Entity<MailMetricsCartridgeComponent> ent, ref CartridgeUiReadyEvent args)
@@ -30,12 +29,6 @@ public sealed class MailMetricsCartridgeSystem : EntitySystem
     private void OnLogisticsStatsUpdated(LogisticStatsUpdatedEvent args)
     {
         UpdateAllCartridges(args.Station);
-    }
-
-    private void OnMapInit(Entity<DeliveryComponent> ent, ref MapInitEvent args)
-    {
-        if (_station.GetOwningStation(ent) is { } station)
-            UpdateAllCartridges(station);
     }
 
     private void UpdateAllCartridges(EntityUid station)

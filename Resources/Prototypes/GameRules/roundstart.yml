@@ -189,6 +189,7 @@
       min: 240
       max: 420
   - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ Traitor ]
       max: 8
@@ -222,6 +223,7 @@
     minPlayers: 15
   - type: RevolutionaryRule
   - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ HeadRev ]
       max: 3
@@ -310,6 +312,7 @@
       max: 900
   - type: ZombieRule
   - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ InitialInfected ]
       max: 6

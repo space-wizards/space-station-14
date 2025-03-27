@@ -19,8 +19,8 @@
     sprite: _Impstation/Structures/mailtelepad.rsi
     snapCardinals: true
     layers:
-    - state: icon
-    - state: unlit
+    - state: base
+    - state: lit
       shader: unshaded
       visible: false
       map: [ "enum.PowerDeviceVisualLayers.Powered" ]

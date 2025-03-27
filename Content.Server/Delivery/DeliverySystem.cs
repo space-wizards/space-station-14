@@ -2,6 +2,7 @@ using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords.Systems;
+using Content.Server._DV.Cargo.Systems; // Imp edit
 using Content.Shared.Delivery;
 using Content.Shared.FingerprintReader;
 using Content.Shared.Labels.EntitySystems;
@@ -62,6 +63,11 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
             _fingerprintReader.AddAllowedFingerprint((ent.Owner, reader), entry.Fingerprint);
         }
 
+        if (stationId != null) // Imp - update logistics after mapinit
+        {
+            var ev = new LogisticStatsUpdatedEvent((EntityUid)stationId);
+            RaiseLocalEvent(ev);
+        }
         Dirty(ent);
     }
 
