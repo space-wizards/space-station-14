@@ -153,18 +153,6 @@
     Mutated: "#7824a0"
     Damned: "#98e652"
 
-- type: entity
-  id: ActionBackflip
-  name: Backflip
-  description: DO A BACKFLIP!
-  noSpawn: true
-  components:
-  - type: InstantAction
-    useDelay: 3
-    icon: Interface/Actions/backflip.png
-    event: !type:BackflipActionEvent
-    checkCanInteract: false
-
 # Spawnable scurrets have a random name and colour.
 
 - type: entity
@@ -183,7 +171,6 @@
     available:
     - enum.DamageStateVisualLayers.Base:
         scurret: ScurretColors
-
 
 # Abstract ESS have a ghost role and equipment
 
