@@ -164,7 +164,7 @@ public sealed partial class AdminVerbSystem
         args.Verbs.Add(thief);
 
         var paradoxCloneName = Loc.GetString("admin-verb-text-make-paradox-clone");
-        Verb terminate = new()
+        Verb paradox = new()
         {
             Text = paradoxCloneName,
             Category = VerbCategory.Antag,
@@ -185,6 +185,6 @@ public sealed partial class AdminVerbSystem
         };
 
         if (HasComp<HumanoidAppearanceComponent>(args.Target)) // only humanoids can be cloned
-            args.Verbs.Add(terminate);
+            args.Verbs.Add(paradox);
     }
 }
