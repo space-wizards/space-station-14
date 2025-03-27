@@ -2,12 +2,9 @@ using Content.Server.Antag;
 using Content.Server.Cloning;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Objectives.Components;
-using Content.Server.Objectives.Systems;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Gibbing.Components;
 using Content.Shared.Mind;
-using Content.Shared.Whitelist;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
@@ -15,7 +12,6 @@ namespace Content.Server.GameTicking.Rules;
 public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComponent>
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly CloningSystem _cloning = default!;
@@ -48,51 +44,58 @@ public sealed class ParadoxCloneRuleSystem : GameRuleSystem<ParadoxCloneRuleComp
         if (args.Session?.AttachedEntity is not { } spawner)
             return;
 
-        if (!_prototypeManager.TryIndex(ent.Comp.Settings, out var settings))
+        if (ent.Comp.OriginalBody != null) // target was overridden, for example by admin antag control
         {
-            Log.Error($"Used invalid cloning settings {ent.Comp.Settings} for ParadoxCloneRule");
-            return;
+            if (Deleted(ent.Comp.OriginalBody.Value) || !_mind.TryGetMind(ent.Comp.OriginalBody.Value, out var originalMindId, out var _))
+            {
+                Log.Warning("Could not find mind of target player to paradox clone!");
+                return;
+            }
+            ent.Comp.OriginalMind = originalMindId;
+        }
+        else
+        {
+            // get possible targets
+            var allAliveHumanoids = _mind.GetAliveHumans();
+
+            // we already checked when starting the gamerule, but someone might have died since then.
+            if (allAliveHumanoids.Count == 0)
+            {
+                Log.Warning("Could not find any alive players to create a paradox clone from!");
+                return;
+            }
+
+            // pick a random player
+            var randomHumanoidMind = _random.Pick(allAliveHumanoids);
+            ent.Comp.OriginalMind = randomHumanoidMind;
+            ent.Comp.OriginalBody = randomHumanoidMind.Comp.OwnedEntity;
+
         }
 
-        // get possible targets
-        var allHumans = _mind.GetAliveHumans();
-
-        // we already checked when starting the gamerule, but someone might have died since then.
-        if (allHumans.Count == 0)
+        if (ent.Comp.OriginalBody == null || !_cloning.TryCloning(ent.Comp.OriginalBody.Value, _transform.GetMapCoordinates(spawner), ent.Comp.Settings, out var clone))
         {
-            Log.Warning("Could not find any alive players to create a paradox clone from!");
-            return;
-        }
-
-        // pick a random player
-        var playerToClone = _random.Pick(allHumans);
-        var bodyToClone = playerToClone.Comp.OwnedEntity;
-
-        if (bodyToClone == null || !_cloning.TryCloning(bodyToClone.Value, _transform.GetMapCoordinates(spawner), settings, out var clone))
-        {
-            Log.Error($"Unable to make a paradox clone of entity {ToPrettyString(bodyToClone)}");
+            Log.Error($"Unable to make a paradox clone of entity {ToPrettyString(ent.Comp.OriginalBody)}");
             return;
         }
 
         var targetComp = EnsureComp<TargetOverrideComponent>(clone.Value);
-        targetComp.Target = playerToClone.Owner; // set the kill target
+        targetComp.Target = ent.Comp.OriginalMind; // set the kill target
 
         var gibComp = EnsureComp<GibOnRoundEndComponent>(clone.Value);
         gibComp.SpawnProto = ent.Comp.GibProto;
         gibComp.PreventGibbingObjectives = new() { "ParadoxCloneKillObjective" }; // don't gib them if they killed the original.
 
         args.Entity = clone;
-        ent.Comp.Original = playerToClone.Owner;
     }
 
     private void AfterAntagEntitySelected(Entity<ParadoxCloneRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
     {
-        if (ent.Comp.Original == null)
+        if (ent.Comp.OriginalMind == null)
             return;
 
         if (!_mind.TryGetMind(args.EntityUid, out var cloneMindId, out var cloneMindComp))
             return;
 
-        _mind.CopyObjectives(ent.Comp.Original.Value, (cloneMindId, cloneMindComp), ent.Comp.ObjectiveWhitelist, ent.Comp.ObjectiveBlacklist);
+        _mind.CopyObjectives(ent.Comp.OriginalMind.Value, (cloneMindId, cloneMindComp), ent.Comp.ObjectiveWhitelist, ent.Comp.ObjectiveBlacklist);
     }
 }
