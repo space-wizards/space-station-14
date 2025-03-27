@@ -12,6 +12,7 @@ namespace Content.Server.Github.Requests;
 /// </remarks>
 [JsonDerivedType(typeof(GetRateLimit))]
 [JsonDerivedType(typeof(CreateIssue))]
+[JsonDerivedType(typeof(GetZen))]
 public interface IGithubRequest
 {
     /// <summary>

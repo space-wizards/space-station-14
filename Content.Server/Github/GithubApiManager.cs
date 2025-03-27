@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -141,13 +142,33 @@ public sealed class GithubApiManager : IPostInjectInit
         var response = await _http.Client.SendAsync(httpRequest);
 
         // Update rate limit
-        if (response.Headers.TryGetValues("x-ratelimit-remaining", out var remainingRequestsHeader) &&
-            long.TryParse(remainingRequestsHeader.First(), out var remainingRequests))
+        if (TryGetLongHeader(response.Headers, "x-ratelimit-remaining", out var remainingRequests))
             _remainingRequests = remainingRequests;
 
         _sawmill.Info($"Made a github api request to: {BaseUri+request.GetLocation(_owner, _repository)}");
 
         return (true, response);
+    }
+
+    /// <summary>
+    ///     A simple helper function that just tries to a header value that is a long.
+    ///     In general, there are just a lot of single value headers that are longs so this removes a lot of duplicate code.
+    /// </summary>
+    /// <param name="headers">The headers that you want to search.</param>
+    /// <param name="header">The header you want to get the long value for.</param>
+    /// <param name="value">The output from the header, if unsuccessfully found or didn't parse correctly will be 0.</param>
+    /// <returns>True if the header was found and was parsed correctly, false if not.</returns>
+    public bool TryGetLongHeader(HttpResponseHeaders? headers, string header, out long value)
+    {
+        value = 0;
+
+        if (headers == null)
+            return false;
+
+        if (!headers.TryGetValues(header, out var headerValues))
+            return false;
+
+        return long.TryParse(headerValues.First(), out value);
     }
 
     # endregion
@@ -205,7 +226,8 @@ public sealed class GithubApiManager : IPostInjectInit
     #region Helper functions
 
     /// <summary>
-    ///     This will try to initialize the api! This really just means ensuring you aren't currently rate limited
+    ///     This will try to initialize the api! This really just means ensuring you aren't currently rate limited.
+    ///     Will instantly return and do nothing if the api is already initialized.
     /// </summary>
     private async Task TryInitializeApi()
     {
@@ -295,7 +317,7 @@ public sealed class GithubApiManager : IPostInjectInit
     /// <returns>The amount of time to wait until the next request</returns>
     private TimeSpan CalculateNextRequestTime(HttpResponseMessage response, List<HttpStatusCode> expectedStatusCodes)
     {
-        var header = response.Headers;
+        var headers = response.Headers;
         var statusCode = response.StatusCode;
 
         if (_remainingRequests > _requestBuffer)
@@ -312,20 +334,17 @@ public sealed class GithubApiManager : IPostInjectInit
         if (_remainingRequests <= _requestBuffer || statusCode == HttpStatusCode.Forbidden || statusCode == HttpStatusCode.TooManyRequests)
         {
             // Retry after header
-            if (header.TryGetValues("retry-after", out var retryAfterHeader) &&
-                long.TryParse(retryAfterHeader.First(), out var retryAfterSeconds))
+            if (TryGetLongHeader(headers, "retry-after", out var retryAfterSeconds))
             {
                 return TimeSpan.FromSeconds(retryAfterSeconds + ExtraBufferTime);
             }
 
             // Reset header (Tells us when we get more api credits)
-            if (header.TryGetValues("x-ratelimit-remaining", out var remainingRequestsHeader) &&
-                header.TryGetValues("x-ratelimit-reset", out var resetTimeHeader) &&
-                long.TryParse(remainingRequestsHeader.First(), out var remainingRequests))
+            if (TryGetLongHeader(headers, "x-ratelimit-remaining", out var remainingRequests) &&
+                TryGetLongHeader(headers, "x-ratelimit-reset", out var resetTime))
             {
                 // If it's not zero, something is wrong so just do an exponential backoff.
-                if (remainingRequests == 0 &&
-                    long.TryParse(resetTimeHeader.First(), out var resetTime))
+                if (remainingRequests == 0)
                 {
                     var delayTime = resetTime - DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                     return TimeSpan.FromSeconds(delayTime + ExtraBufferTime);
