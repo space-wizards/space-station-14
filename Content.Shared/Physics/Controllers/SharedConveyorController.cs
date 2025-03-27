@@ -238,37 +238,12 @@ public abstract class SharedConveyorController : VirtualController
             // Check if our center is over their fixture otherwise ignore it.
             var other = contact.OtherEnt(entity.Owner);
 
-            // Check for blocked, if so then we can't convey at all and just try to sleep
-            // Otherwise we may just keep pushing it into the wall
-            Transform? otherTransform;
-            if (contact.Hard)
-            {
-                var otherBody = contact.OtherBody(entity.Owner);
-
-                // If the blocking body is dynamic then don't ignore it for this.
-                if (otherBody.BodyType != BodyType.Static)
-                    continue;
-
-                otherTransform = PhysicsSystem.GetPhysicsTransform(other);
-                var aTransform = contact.EntityA == entity.Owner ? transform : otherTransform.Value;
-                var bTransform = contact.EntityB == entity.Owner ? transform : otherTransform.Value;
-                contact.GetWorldManifold(aTransform, bTransform, out var normal);
-
-                if (Vector2.Dot(bTransform.Position - aTransform.Position, normal) > 0f)
-                {
-                    return false;
-                }
-
-                // Conveyors aren't hard no point continuing.
-                continue;
-            }
-
             if (!_conveyorQuery.TryComp(other, out var conveyor))
                 continue;
 
             anyConveyors = true;
             var otherFixture = contact.OtherFixture(entity.Owner);
-            otherTransform = PhysicsSystem.GetPhysicsTransform(other);
+            Transform? otherTransform = PhysicsSystem.GetPhysicsTransform(other);
 
             // Check if our center is over the conveyor, otherwise ignore it.
             if (!_fixtures.TestPoint(otherFixture.Item2.Shape, otherTransform.Value, transform.Position))
@@ -302,6 +277,33 @@ public abstract class SharedConveyorController : VirtualController
 
         var itemRelative = conveyorPos - transform.Position;
         direction = Convey(direction, bestSpeed, itemRelative);
+
+        // Do a final check for hard contacts so if we're conveying into a wall then NOOP.
+        contacts = PhysicsSystem.GetContacts((entity.Owner, fixtures));
+
+        while (contacts.MoveNext(out var contact))
+        {
+            if (!contact.Hard || !contact.IsTouching)
+                continue;
+
+            var other = contact.OtherEnt(entity.Owner);
+            var otherBody = contact.OtherBody(entity.Owner);
+
+            // If the blocking body is dynamic then don't ignore it for this.
+            if (otherBody.BodyType != BodyType.Static)
+                continue;
+
+            var otherTransform = PhysicsSystem.GetPhysicsTransform(other);
+            var dotProduct = Vector2.Dot(otherTransform.Position - transform.Position, direction);
+            
+            // TODO: This should probably be based on conveyor speed, this is mainly so we don't
+            // go to sleep when conveying and colliding with tables perpendicular to the conveyance direction.
+            if (dotProduct > 1.5f)
+            {
+                direction = Vector2.Zero;
+                return false;
+            }
+        }
 
         return true;
     }
