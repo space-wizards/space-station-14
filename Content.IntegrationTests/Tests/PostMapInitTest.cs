@@ -44,17 +44,32 @@ namespace Content.IntegrationTests.Tests
             AdminTestArenaSystem.ArenaMapPath
         };
 
-        private static readonly string[] DoNotMapWhitelist =
+        /// <summary>
+        /// A dictionary linking maps to arrays of entity prototype ids that should be exempt from "DoNotMap" restrictions.
+        /// </summary>
+        /// <remarks>
+        /// This declares that the listed entity prototypes are allowed to be present on the map
+        /// despite being categorized as "DoNotMap", while any unlisted prototypes will still
+        /// cause the test to fail.
+        /// </remarks>
+        private static readonly Dictionary<string, EntProtoId[]> DoNotMapWhiteList = new()
+        {
+            {"/Maps/bagel.yml", ["RubberStampMime"]},
+            {"/Maps/meta.yml", ["RubberStampWarden"]},
+            {"/Maps/reach.yml", ["HandheldCrewMonitor"]},
+            {"/Maps/gate.yml", ["ShuttleGunPerforator", "StationAiBrain"]},
+            {"/Maps/Shuttles/ShuttleEvent/honki.yml", ["GoldenBikeHorn", "RubberStampClown"]},
+            {"/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", ["RubberStampSyndicate"]},
+            {"/Maps/Shuttles/ShuttleEvent/cruiser.yml", ["ShuttleGunPerforator"]},
+            {"/Maps/Shuttles/ShuttleEvent/instigator.yml", ["ShuttleGunFriendship"]},
+        };
+
+        /// <summary>
+        /// Maps listed here are given blanket freedom to contain "DoNotMap" entities. Use sparingly.
+        /// </summary>
+        private static readonly string[] DoNotMapWhitelistAll =
         {
             "/Maps/centcomm.yml",
-            "/Maps/bagel.yml", // Contains mime's rubber stamp --> Either fix this, remove the category, or remove this comment if intentional.
-            "/Maps/gate.yml", // Contains positronic brain and LSE-1200c "Perforator"
-            "/Maps/meta.yml", // Contains warden's rubber stamp
-            "/Maps/reach.yml", // Contains handheld crew monitor
-            "/Maps/Shuttles/ShuttleEvent/cruiser.yml", // Contains LSE-1200c "Perforator"
-            "/Maps/Shuttles/ShuttleEvent/honki.yml", // Contains golden honker, clown's rubber stamp
-            "/Maps/Shuttles/ShuttleEvent/instigator.yml", // Contains EXP-320g "Friendship"
-            "/Maps/Shuttles/ShuttleEvent/syndie_evacpod.yml", // Contains syndicate rubber stamp
         };
 
         private static readonly string[] GameMaps =
@@ -252,12 +267,20 @@ namespace Content.IntegrationTests.Tests
             await pair.CleanReturnAsync();
         }
 
+        private bool IsWhitelistedForMap(EntProtoId protoId, ResPath map)
+        {
+            if (!DoNotMapWhiteList.TryGetValue(map.ToString(), out var allowedProtos))
+                return false;
+
+            return allowedProtos.Contains(protoId);
+        }
+
         /// <summary>
         /// Check that maps do not have any entities that belong to the DoNotMap entity category
         /// </summary>
         private void CheckDoNotMap(ResPath map, YamlNode node, IPrototypeManager protoManager)
         {
-            if (DoNotMapWhitelist.Contains(map.ToString()))
+            if (DoNotMapWhitelistAll.Contains(map.ToString()))
                 return;
 
             var yamlEntities = node["entities"];
@@ -274,7 +297,7 @@ namespace Content.IntegrationTests.Tests
                     if (!protoManager.TryIndex(protoId, out var proto, false))
                         continue;
 
-                    Assert.That(!proto.Categories.Contains(dnmCategory),
+                    Assert.That(!proto.Categories.Contains(dnmCategory) || IsWhitelistedForMap(protoId, map),
                         $"\nMap {map} contains entities in the DO NOT MAP category ({proto.Name})");
                 }
             });
