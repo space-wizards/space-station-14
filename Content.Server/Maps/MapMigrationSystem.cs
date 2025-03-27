@@ -33,7 +33,7 @@ public sealed class MapMigrationSystem : EntitySystem
             return;
 
         // Verify that all of the entries map to valid entity prototypes.
-        foreach (var node in mappings.Values)
+        foreach (var node in mappings.Children.Values)
         {
             var newId = ((ValueDataNode) node).Value;
             if (!string.IsNullOrEmpty(newId) && newId != "null")
