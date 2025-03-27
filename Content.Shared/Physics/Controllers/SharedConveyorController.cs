@@ -95,11 +95,17 @@ public abstract class SharedConveyorController : VirtualController
 
         while (contacts.MoveNext(out var contact))
         {
+            var otherBody = contact.OtherBody(conveyorUid);
+
+            if (otherBody.BodyType == BodyType.Static || !otherBody.Hard)
+                continue;
+
             var other = contact.OtherEnt(conveyorUid);
+            PhysicsSystem.WakeBody(other);
 
             if (_conveyedQuery.HasComp(other))
             {
-                PhysicsSystem.WakeBody(other);
+                AddComp<ConveyedComponent>(other);
             }
         }
     }
@@ -111,7 +117,13 @@ public abstract class SharedConveyorController : VirtualController
         if (!args.OtherFixture.Hard || args.OtherBody.BodyType == BodyType.Static)
             return;
 
-        EnsureComp<ConveyedComponent>(otherUid);
+        // Disable collisionwake so our contact doesn't get touched.
+
+        // If conveyor is on then treat this entity as conveyed
+        if (conveyor.Comp.State != ConveyorState.Off)
+        {
+            EnsureComp<ConveyedComponent>(otherUid);
+        }
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -167,7 +179,7 @@ public abstract class SharedConveyorController : VirtualController
 
             PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity);
 
-            if (!IsConveyed((ent.Entity.Owner, ent.Entity.Comp2)))
+            if (!IsConveyed((ent.Entity.Owner, ent.Entity.Comp2, ent.Entity.Comp3)))
             {
                 RemComp<ConveyedComponent>(ent.Entity.Owner);
             }
@@ -197,7 +209,7 @@ public abstract class SharedConveyorController : VirtualController
         var xform = entity.Comp4;
 
         if (!physics.Awake)
-            return true;
+            return false;
 
         // Client moment
         if (!physics.Predict && prediction)
@@ -361,9 +373,12 @@ public abstract class SharedConveyorController : VirtualController
     /// <summary>
     /// Checks an entity's contacts to see if it's still being conveyed.
     /// </summary>
-    private bool IsConveyed(Entity<FixturesComponent?> ent)
+    private bool IsConveyed(Entity<FixturesComponent?, PhysicsComponent?> ent)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2))
+            return false;
+
+        if (!ent.Comp2.Awake)
             return false;
 
         var contacts = PhysicsSystem.GetContacts(ent.Owner);
