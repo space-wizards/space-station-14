@@ -121,11 +121,11 @@ public abstract class SharedConveyorController : VirtualController
         _job.Prediction = prediction;
         _job.Conveyed.Clear();
 
-        var query = EntityQueryEnumerator<ConveyedComponent, FixturesComponent, PhysicsComponent>();
+        var query = EntityQueryEnumerator<ConveyedComponent, FixturesComponent, PhysicsComponent, TransformComponent>();
 
-        while (query.MoveNext(out var uid, out var comp, out var fixtures, out var body))
+        while (query.MoveNext(out var uid, out var comp, out var fixtures, out var physics, out var xform))
         {
-            _job.Conveyed.Add(((uid, comp, fixtures, body, Transform(uid)), Vector2.Zero, false));
+            _job.Conveyed.Add(((uid, comp, fixtures, physics, xform), Vector2.Zero, false));
         }
 
         _parallel.ProcessNow(_job, _job.Conveyed.Count);
@@ -231,17 +231,16 @@ public abstract class SharedConveyorController : VirtualController
 
             // Check for blocked, if so then we can't convey at all and just try to sleep
             // Otherwise we may just keep pushing it into the wall
-            Transform? otherTransform;
 
             if (!_conveyorQuery.TryComp(other, out var conveyor))
                 continue;
 
             anyConveyors = true;
             var otherFixture = contact.OtherFixture(entity.Owner);
-            otherTransform = PhysicsSystem.GetPhysicsTransform(other);
+            var otherTransform = PhysicsSystem.GetPhysicsTransform(other);
 
             // Check if our center is over the conveyor, otherwise ignore it.
-            if (!_fixtures.TestPoint(otherFixture.Item2.Shape, otherTransform.Value, transform.Position))
+            if (!_fixtures.TestPoint(otherFixture.Item2.Shape, otherTransform, transform.Position))
                 continue;
 
             if (conveyor.Speed > bestSpeed && CanRun(conveyor))
@@ -322,7 +321,7 @@ public abstract class SharedConveyorController : VirtualController
 
         if (r.Length() < 0.1)
         {
-            var velocity = direction.Normalized() * speed;
+            var velocity = direction * speed;
             return velocity;
         }
         else
