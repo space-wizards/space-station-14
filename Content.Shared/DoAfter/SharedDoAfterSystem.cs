@@ -4,6 +4,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -35,6 +36,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         SubscribeLocalEvent<DoAfterComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
         SubscribeLocalEvent<DoAfterComponent, ComponentHandleState>(OnDoAfterHandleState);
+        SubscribeLocalEvent<GetInteractingEntitiesEvent>(OnGetInteractingEntities);
     }
 
     private void OnUnpaused(EntityUid uid, DoAfterComponent component, ref EntityUnpausedEvent args)
@@ -129,6 +131,25 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             RemCompDeferred<ActiveDoAfterComponent>(uid);
         else
             EnsureComp<ActiveDoAfterComponent>(uid);
+    }
+
+    /// <summary>
+    /// Adds entities which have an active DoAfter matching the target.
+    /// </summary>
+    private void OnGetInteractingEntities(ref GetInteractingEntitiesEvent args)
+    {
+        var enumerator = EntityQueryEnumerator<ActiveDoAfterComponent, DoAfterComponent>();
+        while (enumerator.MoveNext(out _, out var comp))
+        {
+            foreach (var doAfter in comp.DoAfters.Values)
+            {
+                if (doAfter.Cancelled || doAfter.Completed)
+                    continue;
+
+                if (doAfter.Args.Target == args.Target)
+                    args.InteractingEntities.Add(doAfter.Args.User);
+            }
+        }
     }
 
     #region Creation
@@ -396,40 +417,6 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     public bool IsRunning(EntityUid entity, ushort id, DoAfterComponent? comp = null)
     {
         return GetStatus(entity, id, comp) == DoAfterStatus.Running;
-    }
-
-    /// <summary>
-    /// Returns a distinct list of entities which are currently interacting with the specified target entity.
-    /// This is done by finding the <see cref="DoAfterArgs.User"/> for each currently ongoing DoAfter with the given <see cref="DoAfterArgs.Target"/>.
-    /// </summary>
-    public List<EntityUid> GetEntitiesInteractingWithTarget(EntityUid target)
-    {
-        HashSet<EntityUid> result = new();
-        var doAfters = Array.Empty<DoAfter>();
-
-        var enumerator = EntityQueryEnumerator<ActiveDoAfterComponent, DoAfterComponent>();
-        while (enumerator.MoveNext(out var uid, out var active, out var comp))
-        {
-            var values = comp.DoAfters.Values;
-            var count = values.Count;
-
-            if (doAfters.Length < count)
-                doAfters = new DoAfter[count];
-
-            values.CopyTo(doAfters, 0);
-
-            for (var i = 0; i < count; i++)
-            {
-                var doAfter = doAfters[i];
-                if (doAfter.Cancelled || doAfter.Completed)
-                    continue;
-
-                if (doAfter.Args.Target == target)
-                    result.Add(doAfter.Args.User);
-            }
-        }
-
-        return new List<EntityUid>(result);
     }
     #endregion
 }

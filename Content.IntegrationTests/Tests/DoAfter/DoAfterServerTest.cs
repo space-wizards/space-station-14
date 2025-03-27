@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Content.Shared.DoAfter;
+using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Reflection;
@@ -123,6 +125,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
             var entityManager = server.EntMan;
             var timing = server.ResolveDependency<IGameTiming>();
             var doAfterSystem = entityManager.System<SharedDoAfterSystem>();
+            var interactionSystem = entityManager.System<SharedInteractionSystem>();
             var ev = new TestDoAfterEvent();
 
             EntityUid mob = default;
@@ -146,11 +149,12 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 Assert.That(doAfterSystem.TryStartDoAfter(args2));
             });
 
-            var list = doAfterSystem.GetEntitiesInteractingWithTarget(target);
+            var list = new HashSet<EntityUid>();
+            interactionSystem.GetEntitiesInteractingWithTarget(target, list);
             Assert.That(list, Is.EquivalentTo([mob]));
 
-            var list2 = doAfterSystem.GetEntitiesInteractingWithTarget(target2);
-            Assert.That(list2, Is.EquivalentTo([mob2]));
+            interactionSystem.GetEntitiesInteractingWithTarget(target2, list);
+            Assert.That(list, Is.EquivalentTo([mob2]));
 
             await pair.CleanReturnAsync();
         }

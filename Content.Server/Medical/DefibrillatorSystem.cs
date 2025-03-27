@@ -46,6 +46,7 @@ public sealed class DefibrillatorSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -182,7 +183,8 @@ public sealed class DefibrillatorSystem : EntitySystem
         _audio.PlayPvs(component.ZapSound, uid);
         _electrocution.TryDoElectrocution(target, null, component.ZapDamage, component.WritheDuration, true, ignoreInsulation: true);
 
-        var interacters = _doAfter.GetEntitiesInteractingWithTarget(target);
+        var interacters = new HashSet<EntityUid>();
+        _interactionSystem.GetEntitiesInteractingWithTarget(target, interacters);
         foreach (var other in interacters)
         {
             if (other == user)
@@ -192,9 +194,11 @@ public sealed class DefibrillatorSystem : EntitySystem
             _electrocution.TryDoElectrocution(other, null, component.ZapDamage, component.WritheDuration, true);
         }
 
+        /*
         // If someone is currently pulling the target they get zapped too
         if (TryComp<PullableComponent>(target, out var pullable) && pullable.Puller != null)
             _electrocution.TryDoElectrocution(pullable.Puller.Value, null, component.ZapDamage, component.WritheDuration, true);
+        */
 
         if (!TryComp<UseDelayComponent>(uid, out var useDelay))
             return;
