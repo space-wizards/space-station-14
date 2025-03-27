@@ -16,7 +16,7 @@
         layer:
         - MachineLayer
   - type: Sprite
-    sprite: Structures/mailbox.rsi
+    sprite: _Impstation/Structures/mailtelepad.rsi
     snapCardinals: true
     layers:
     - state: icon

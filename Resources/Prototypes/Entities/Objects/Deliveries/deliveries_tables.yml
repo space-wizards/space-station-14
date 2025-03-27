@@ -76,6 +76,9 @@
     - !type:NestedSelector
       weight: 2
       tableId: RandomAllSodaTable
+    - !type:NestedSelector
+      weight: 2
+      tableId: ImpCommonDeliveryTable
 
 - type: entityTable # TODO: Add more variety!
   id: LetterUncommonEntityTable # Some more varied things, should never be more expensive than 100 spesos
