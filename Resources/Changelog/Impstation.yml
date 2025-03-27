@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Amber, Bagel, Train, and Hummingbird have received some adjustments to
-      their max player counts and job availability.
-    type: Tweak
-  id: 901
-  time: '2025-01-11T03:19:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1292
 - author: EpicToast
   changes:
   - message: Adds tape recorders from Delta-V! Spawns in the detective's locker or
@@ -4093,3 +4085,11 @@
   id: 1400
   time: '2025-03-26T07:19:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2084
+- author: CombustibleToast
+  changes:
+  - message: Decreased Robust Harvest requirement for Dionae becoming trees from 80u
+      to 40u.
+    type: Tweak
+  id: 1401
+  time: '2025-03-27T03:11:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2101
