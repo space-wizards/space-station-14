@@ -163,7 +163,7 @@
           - !type:OrganType
             type: Plant
           - !type:ReagentThreshold
-            min: 80
+            min: 40 #imp edit (was 80)
 
 - type: reagent
   id: Sedin
