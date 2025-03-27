@@ -5,6 +5,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
@@ -52,6 +53,7 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private   readonly StaminaSystem           _stamina         = default!;
         [Dependency] private readonly UseDelaySystem _delay = default!;
 
         public override void Initialize()
@@ -128,6 +130,9 @@ namespace Content.Shared.Cuffs
 
                 cuffable.CanStillInteract = false;
                 Dirty(args.User, cuffable);
+
+                // User will take self-inflicted stamina damage if attempting to uncuff themselves. This should happen even if the uncuff attempt fails.
+                _stamina.TakeStaminaDamage(args.Target, 15f, visual: true, source: args.User);
             }
             else
             {
