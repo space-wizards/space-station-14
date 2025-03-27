@@ -12,10 +12,6 @@ public sealed partial class PlayerTabEntry : PanelContainer
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
 
-    // public NetEntity? PlayerEntity; //TODO:ERRANT delete before push
-    // private readonly bool _colorAntags;
-    // private readonly bool _colorRoleTypes;
-
     public PlayerTabEntry(
         PlayerInfo player,
         StyleBoxFlat styleBoxFlat,
@@ -25,7 +21,6 @@ public sealed partial class PlayerTabEntry : PanelContainer
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
-        // var config = IoCManager.Resolve<IConfigurationManager>(); //TODO:ERRANT delete before push
         var roles = _entMan.System<SharedRoleSystem>();
 
         UsernameLabel.Text = player.Username;
@@ -100,6 +95,5 @@ public sealed partial class PlayerTabEntry : PanelContainer
             RoleTypeLabel.FontColorOverride = player.RoleProto.Color;
         BackgroundColorPanel.PanelOverride = styleBoxFlat;
         OverallPlaytimeLabel.Text = player.PlaytimeString;
-        // PlayerEntity = player.NetEntity; //TODO:ERRANT delete before push
     }
 }
