@@ -344,10 +344,18 @@ ui-options-admin-playerlist-character-color = Color names of antagonist characte
 ui-options-admin-playerlist-roletype-color = Color role types
 
 ui-options-admin-overlay-title = Admin Overlay
-ui-options-enable-classic-overlay = Revert overlay to classic mode
-ui-options-enable-overlay-symbols = Add antag symbol to text
-ui-options-enable-overlay-playtime = Show playtime
-ui-options-enable-overlay-starting-job = Show starting job
-ui-options-overlay-merge-distance = Stack merge distance
-ui-options-overlay-ghost-fade-distance = Ghost overlay fade range from mouse
-ui-options-overlay-ghost-hide-distance = Ghost overlay hide range from mouse
+ui-options-admin-overlay-antag-format = Antag label style
+ui-options-admin-overlay-antag-symbol = Antag symbol style
+
+ui-options-admin-overlay-antag-format-binary = Show antag status
+ui-options-admin-overlay-antag-format-roletype = Show role type
+ui-options-admin-overlay-antag-format-subtype = Show subtype
+ui-options-admin-overlay-antag-symbol-off = No antag symbol
+ui-options-admin-overlay-antag-symbol-basic = Standard antag symbol
+ui-options-admin-overlay-antag-symbol-specific = Specific antag symbol
+
+ui-options-admin-enable-overlay-playtime = Show playtime
+ui-options-admin-enable-overlay-starting-job = Show starting job
+ui-options-admin-overlay-merge-distance = Stack merge distance
+ui-options-admin-overlay-ghost-fade-distance = Ghost overlay fade range from mouse
+ui-options-admin-overlay-ghost-hide-distance = Ghost overlay hide range from mouse

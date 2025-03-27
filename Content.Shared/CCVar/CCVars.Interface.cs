@@ -38,18 +38,13 @@ public sealed partial class CCVars
         CVarDef.Create("outline.enabled", true, CVar.CLIENTONLY);
 
     /// <summary>
-    /// If true, the antag overlay will show role subtype.
-    /// If false, it will show both role type and subtype.
-    /// If subtype is not set for a mob's mind then role type will be shown regardless of setting.
+    /// Determines how antagonist status/roletype is displayed. Based on AdminOverlayAntagFormats enum
+    /// Binary: Roletypes of interest get an "ANTAG" label
+    /// Roletype: Roletypes of interest will have their roletype name displayed in their specific color
+    /// Subtype: Roletypes of interest will have their subtype displayed. if subtype is not set, roletype will be shown.
     /// </summary>
-    public static readonly CVarDef<bool> AdminOverlaySubtypesOnly =
-        CVarDef.Create("ui.admin_overlay_subtypes_only", true, CVar.CLIENTONLY | CVar.ARCHIVE);
-
-    /// <summary>
-    /// If true, the admin overlay will be displayed in the old style (showing only "ANTAG")
-    /// </summary>
-    public static readonly CVarDef<bool> AdminOverlayClassic =
-        CVarDef.Create("ui.admin_overlay_classic", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+    public static readonly CVarDef<string> AdminOverlayAntagFormat =
+        CVarDef.Create("ui.admin_overlay_antag_format", "Subtype", CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// If true, the admin overlay will display the total time of the players
@@ -58,7 +53,7 @@ public sealed partial class CCVars
         CVarDef.Create("ui.admin_overlay_playtime", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
-    /// If true, the admin overlay will display the players starting position.
+    /// If true, the admin overlay will display the player's starting role.
     /// </summary>
     public static readonly CVarDef<bool> AdminOverlayStartingJob =
         CVarDef.Create("ui.admin_overlay_starting_job", true, CVar.CLIENTONLY | CVar.ARCHIVE);
@@ -82,10 +77,13 @@ public sealed partial class CCVars
         CVarDef.Create("ui.admin_playerlist_role_type_color", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
-    /// If true, the admin overlay will show antag symbols
+    /// Determines how antagonist status/roletype is displayed. Based on AdminOverlayAntagSymbolStyles enum
+    /// Off: No symbol is shown.
+    /// Basic: The same antag symbol is shown for anyone marked as antag.
+    /// Specific: The roletype-specific symbol is shown for anyone marked as antag.
     /// </summary>
-    public static readonly CVarDef<bool> AdminOverlaySymbols =
-        CVarDef.Create("ui.admin_overlay_symbols", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+    public static readonly CVarDef<string> AdminOverlaySymbolStyle =
+        CVarDef.Create("ui.admin_overlay_symbol_style", "Specific", CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// The range (in tiles) around the cursor within which the admin overlays of ghosts start to fade out
