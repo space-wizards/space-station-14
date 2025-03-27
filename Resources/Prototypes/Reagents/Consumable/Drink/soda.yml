@@ -193,7 +193,10 @@
   color: "#af2221"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/shirleytemple.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
