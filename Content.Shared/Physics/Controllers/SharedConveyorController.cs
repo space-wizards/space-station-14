@@ -295,7 +295,7 @@ public abstract class SharedConveyorController : VirtualController
 
             var otherTransform = PhysicsSystem.GetPhysicsTransform(other);
             var dotProduct = Vector2.Dot(otherTransform.Position - transform.Position, direction);
-            
+
             // TODO: This should probably be based on conveyor speed, this is mainly so we don't
             // go to sleep when conveying and colliding with tables perpendicular to the conveyance direction.
             if (dotProduct > 1.5f)
@@ -378,9 +378,6 @@ public abstract class SharedConveyorController : VirtualController
     private bool IsConveyed(Entity<FixturesComponent?, PhysicsComponent?> ent)
     {
         if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2))
-            return false;
-
-        if (!ent.Comp2.Awake)
             return false;
 
         var contacts = PhysicsSystem.GetContacts(ent.Owner);
