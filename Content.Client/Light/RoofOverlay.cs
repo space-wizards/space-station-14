@@ -43,7 +43,7 @@ public sealed class RoofOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (args.Viewport.Eye == null)
+        if (args.Viewport.Eye == null || !_entManager.HasComponent<MapLightComponent>(args.MapUid))
             return;
 
         var viewport = args.Viewport;
