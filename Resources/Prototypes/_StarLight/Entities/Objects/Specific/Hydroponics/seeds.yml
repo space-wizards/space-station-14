@@ -1,0 +1,9 @@
+- type: entity
+  parent: SeedBase
+  name: packet of organ tree
+  id: OrganTreeSeeds
+  components:
+  - type: Seed
+    seedId: organTree
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi

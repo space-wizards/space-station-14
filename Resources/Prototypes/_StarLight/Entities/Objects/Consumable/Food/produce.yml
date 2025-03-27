@@ -1,0 +1,30 @@
+- type: entity
+  name: organ tree
+  description: don't forget to add a description... Blyat.
+  parent: FoodProduceBase
+  id: FoodOrganTree
+  components:
+    - type: FlavorProfile
+      flavors:
+        - strange
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
+      state: produce
+    - type: Produce
+      seedId: organTree
+    - type: Butcherable
+      butcheringType: Knife
+      spawned:
+        - id: EffectOrganTree
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 5
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 2
+            - ReagentId: Vitamin
+              Quantity: 2
+    - type: Tag
+      tags:
+        - Fruit

@@ -1,0 +1,26 @@
+- type: seed
+  id: organTree
+  name: seeds-organ-tree-name
+  noun: seeds-noun-seeds
+  displayName: seeds-organ-tree-display-name
+  plantRsi: Objects/Specific/Hydroponics/anomaly_berry.rsi
+  packetPrototype: OrganTreeSeeds
+  productPrototypes:
+    - FoodOrganTree
+  lifespan: 10 # organs rot fast
+  maturation: 12
+  production: 1 # organ growing takes a while
+  yield: 1
+  potency: 10
+  growthStages: 2
+  waterConsumption: 0.60
+  nutrientConsumption: 0.80
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 40
+    Vitamin:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 40
