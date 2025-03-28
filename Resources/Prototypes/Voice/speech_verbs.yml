@@ -162,6 +162,8 @@
   - chat-speech-verb-parrot-1
   - chat-speech-verb-parrot-2
   - chat-speech-verb-parrot-3
+  - chat-speech-verb-echo-2
+  - chat-speech-verb-echo-3
 
 - type: speechVerb
   id: Cluwne
@@ -188,3 +190,11 @@
   - chat-speech-verb-electricity-1
   - chat-speech-verb-electricity-2
   - chat-speech-verb-electricity-3
+
+- type: speechVerb
+  id: Echo
+  name: chat-speech-verb-name-echo
+  speechVerbStrings:
+  - chat-speech-verb-echo-1
+  - chat-speech-verb-echo-2
+  - chat-speech-verb-echo-3
