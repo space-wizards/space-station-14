@@ -1,27 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: Signatures have a new and improved look. Select a style for your signatures
-      in the traits menu.
-    type: Add
-  - message: The recruiter's pen now signs in the color of its user's blood.
-    type: Add
-  - message: The luxury and Cybersun pens can sign in multiple different colors. Try
-      right-clicking them!
-    type: Add
-  - message: The Cybersun pen can forge signatures of any style. Once again, try right-clicking
-      it!
-    type: Add
-  - message: Energy weapons, like the energy sword, can sign your name on paper.
-    type: Add
-  - message: Syndicate Recruiter objectives track properly, and the pen works properly
-      too.
-    type: Fix
-  id: 920
-  time: '2025-01-13T16:36:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1313
-- author: Darkmajia
-  changes:
   - message: Monkeys and kobolds slip properly on soap now. They can lay down at will,
       too.
     type: Fix
@@ -4084,3 +4063,14 @@
   id: 1419
   time: '2025-03-28T21:58:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2107
+- author: widgetbeck
+  changes:
+  - message: The Heretic's flesh ascension now matches the skin, eye, and blood color
+      of the ascendee.
+    type: Tweak
+  - message: The Heretic's flesh ascension will now gib into a reality fracture and
+      a large amount of humanoid blood when it dies.
+    type: Tweak
+  id: 1420
+  time: '2025-03-28T22:00:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2087
