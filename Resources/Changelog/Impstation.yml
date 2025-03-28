@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: map changes to Boat
-    type: Tweak
-  id: 907
-  time: '2025-01-12T13:20:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1324
 - author: ruddygreat
   changes:
   - message: The round summary screen now features a list of everything that traitors,
@@ -4072,3 +4065,10 @@
   id: 1406
   time: '2025-03-28T21:26:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2123
+- author: Sha-Seng
+  changes:
+  - message: Fixed the Brown Puffer Coat's name (oops)
+    type: Fix
+  id: 1407
+  time: '2025-03-28T21:29:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2099
