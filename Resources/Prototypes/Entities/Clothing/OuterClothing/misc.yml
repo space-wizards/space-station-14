@@ -191,9 +191,9 @@
   description: A bizarre gem-encrusted violet robe that radiates magical energies.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/violetwizard.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Misc/violetwizard.rsi # imp edit
   - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/violetwizard.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Misc/violetwizard.rsi # imp edit
 
 - type: entity
   parent: ClothingOuterWizardBase
@@ -202,9 +202,9 @@
   description: A bizarre gem-encrusted blue robe that radiates magical energies.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/wizard.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Misc/wizard.rsi # imp edit
   - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/wizard.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Misc/wizard.rsi # imp edit
 
 - type: entity
   parent: ClothingOuterWizardBase
@@ -213,9 +213,9 @@
   description: Strange-looking, red, hat-wear that most certainly belongs to a real magic user.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/redwizard.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Misc/redwizard.rsi # imp edit
   - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/redwizard.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Misc/redwizard.rsi # imp edit
 
 - type: entity
   parent: ClothingOuterBase
