@@ -35,7 +35,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#c961c1"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -105,7 +105,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#bb2727"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]

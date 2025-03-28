@@ -27,7 +27,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#feae62"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -96,7 +96,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#505050"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -126,7 +126,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#845324"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -155,7 +155,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#b17c4a"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -183,7 +183,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#4e4e4e"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -213,7 +213,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#f3b6b6"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -243,7 +243,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#f9f3c3"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -267,7 +267,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#7aea7b"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -297,7 +297,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#ffffff"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -328,7 +328,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#f56c43"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -373,7 +373,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#dc5864"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -408,7 +408,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#f890b1"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -444,7 +444,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#fe6818"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -537,7 +537,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#464646"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -566,7 +566,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#675fe7"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -595,7 +595,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#c7c4ecaa" # slightly see-through!
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -643,7 +643,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#cccccc"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
@@ -671,7 +671,7 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
       color: "#c24738"
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]

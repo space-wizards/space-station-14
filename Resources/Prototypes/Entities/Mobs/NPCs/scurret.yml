@@ -14,7 +14,7 @@
     # drawdepth: SmallMobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      sprite: Mobs/Animals/scurret.rsi
+      sprite: Mobs/Animals/scurret/scurret.rsi
       state: scurret
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
       color: "#ffffff"
@@ -76,11 +76,54 @@
       types:
         Piercing: 10 # NOM
   - type: Inventory
+    speciesId: scurret
     templateId: scurret
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: head
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: ears
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: eyes
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: mask
+      id:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: id
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: gloves
+  - type: Hands
+    handDisplacement:
+      sizeMaps:
+        32:
+          sprite: Mobs/Animals/scurret/displacement.rsi
+          state: hand
   - type: InventorySlots
   - type: Food
   - type: Hunger
-    baseDecayRate: 0.666
+    baseDecayRate: 0.25 # They get a lil' hungy
   - type: Tag
     tags:
       - CanPilot # Inexplicably, scurrets have a natural aptitude for spaceflight
@@ -102,6 +145,13 @@
     uiWindowPos: 0,2
     strippingWindowPos: 1,2
     displayName: Ears
+  - name: eyes
+    slotTexture: glasses
+    slotFlags: EYES
+    stripTime: 3
+    uiWindowPos: 0,3
+    strippingWindowPos: 0,0
+    displayName: Eyes
   - name: mask
     slotTexture: mask
     slotFlags: MASK
@@ -116,6 +166,19 @@
     uiWindowPos: 2,1
     strippingWindowPos: 2,4
     displayName: ID
+  - name: jumpsuit
+    slotTexture: uniform
+    slotFlags: INNERCLOTHING
+    stripTime: 6
+    uiWindowPos: 0,1
+    strippingWindowPos: 0,2
+    displayName: Jumpsuit
+  - name: gloves
+    slotTexture: gloves
+    slotFlags: GLOVES
+    uiWindowPos: 2,1
+    strippingWindowPos: 2,2
+    displayName: Gloves
 
 - type: speechSounds
   id: Wawa
