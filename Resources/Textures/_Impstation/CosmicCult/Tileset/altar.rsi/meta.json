@@ -6,6 +6,7 @@
   },
   "license": "CC-BY-SA-3.0",
   "copyright": "Sprite by AftrLite(GitHub)",
+  "MetaAtlas": false,
   "states": [
     {
       "name": "cosmic"

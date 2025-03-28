@@ -2,6 +2,7 @@
   "version": 1,
   "license": "CC-BY-SA-3.0",
   "copyright": "made by blooodyspy",
+  "MetaAtlas": false,
   "size": {
     "x": 48,
     "y": 48

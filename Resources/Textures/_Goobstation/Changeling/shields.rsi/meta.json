@@ -2,6 +2,7 @@
     "version": 1,
     "license": "CC-BY-SA-3.0",
     "copyright": "Taken from https://github.com/ParadiseSS13/Paradise/blob/master/icons/obj/weapons/shield.dmi",
+    "MetaAtlas": false,
     "size": {
         "x": 32,
         "y": 32

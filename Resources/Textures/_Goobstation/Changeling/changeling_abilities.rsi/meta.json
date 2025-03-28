@@ -2,6 +2,7 @@
     "version": 1,
     "license": "CC-BY-SA-3.0",
     "copyright": "Taken and edited from Paradise Station wiki https://paradisestation.org/wiki/index.php/Changeling , sting_transform and sting_armblade retextures made by whateverusername0",
+    "MetaAtlas": false,
     "size": {
         "x": 32,
         "y": 32

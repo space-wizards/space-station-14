@@ -2,7 +2,7 @@
 "size": {"x": 32, "y": 32},
 "license": "CC-BY-SA-3.0",
 "copyright": "A custom item by AftrLite (Github).",
-
+"MetaAtlas": false,
 "states": [
 {
     "name": "cosDwindow0",

@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "MetaAtlas": false,
   "size": {
     "x": 255,
     "y": 260

@@ -6,6 +6,7 @@
   },
   "license": "CC-BY-SA-3.0",
   "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/0b3ab17dbad632ddf738b63900ef8df1926bba47/icons/obj/tables.dmi",
+  "MetaAtlas": false,
   "states": [
     {
       "name": "full",

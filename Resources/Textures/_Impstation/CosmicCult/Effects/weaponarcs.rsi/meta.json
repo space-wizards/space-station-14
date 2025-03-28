@@ -6,6 +6,7 @@
     },
     "license": "CC-BY-SA-3.0",
     "copyright": "A custom item by AftrLite (Github).",
+    "MetaAtlas": false,
     "states": [
         {
             "name": "arc_cosmic",

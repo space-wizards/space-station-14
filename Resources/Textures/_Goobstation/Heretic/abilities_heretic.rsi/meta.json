@@ -2,6 +2,7 @@
     "version": 1,
     "license": "CC-BY-SA-3.0",
     "copyright": "sprites taken from TG station, edited by whateverusername0 and blooodyspy",
+    "MetaAtlas": false,
     "size": {
         "x": 32,
         "y": 32
