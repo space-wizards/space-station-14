@@ -280,6 +280,12 @@
   - type: FlavorProfile
     flavors:
     - crabby
+  - type: Tag
+    tags:
+      - Payload
+      - ClothMade
+      - Wirecutter
+      - PlantSampleTaker
 
 - type: entity
   parent: BasePlushie
