@@ -1,3 +1,59 @@
+- type: entity
+  id: InstantEffectVeryLocalKnockdown
+  parent: AdminInstantEffectBase
+  components:
+  - type: StunOnTrigger
+    range: 4
+    entireGrid: false
+    knockdownTime: 1.5
+
+- type: entity
+  id: DelayedEffectVeryLocalKnockdown
+  categories: [ HideSpawnMenu ]
+  parent: DelayedEffectBase
+  components:
+  - type: SpawnOnDespawn
+    prototype: InstantEffectVeryLocalKnockdown
+
+- type: artifactEffect
+  id: EffectVeryLocalKnockdown
+  targetDepth: 1
+  effectHint: artifact-effect-hint-environment
+  effectProb: 0.3
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 99999
+    spawns:
+    - id: DelayedEffectVeryLocalKnockdown
+
+- type: entity
+  id: InstantEffectLocalKnockdown
+  parent: AdminInstantEffectBase
+  components:
+  - type: StunOnTrigger
+    range: 8
+    entireGrid: false
+    knockdownTime: 4
+
+- type: entity
+  id: DelayedEffectLocalKnockdown
+  categories: [ HideSpawnMenu ]
+  parent: DelayedEffectBase
+  components:
+  - type: SpawnOnDespawn
+    prototype: InstantEffectLocalKnockdown
+
+- type: artifactEffect
+  id: EffectLocalKnockdown
+  targetDepth: 3
+  effectHint: artifact-effect-hint-environment
+  effectProb: 0.7
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 99999
+    spawns:
+    - id: DelayedEffectLocalKnockdown
+
 - type: artifactEffect
   id: EffectLesserPresentSpawn
   targetDepth: 3
@@ -400,16 +456,33 @@
       prob: 1
       orGroup: magicbook
 
+- type: entity
+  id: InstantEffectGridKnockdown
+  parent: AdminInstantEffectBase
+  components:
+  - type: StunOnTrigger
+    range: 15
+    entireGrid: true
+    knockdownTime: 3
+
+- type: entity
+  id: DelayedEffectGridKnockdown
+  categories: [ HideSpawnMenu ]
+  parent: DelayedEffectBase
+  components:
+  - type: SpawnOnDespawn
+    prototype: InstantEffectGridKnockdown
+
 - type: artifactEffect
   id: EffectGridKnockdown
   targetDepth: 4
   effectHint: artifact-effect-hint-environment
   effectProb: 0.6
   components:
-  - type: KnockdownArtifact
-    entireGrid: false
-    knockdownTime: 2.5
-    range: 15
+  - type: SpawnArtifact
+    maxSpawns: 99999
+    spawns:
+    - id: DelayedEffectGridKnockdown
 
 - type: artifactEffect
   id: EffectAnimateSingle

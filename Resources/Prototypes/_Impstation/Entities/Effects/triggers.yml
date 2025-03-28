@@ -1,0 +1,11 @@
+- type: entity
+  id: DelayedEffectBase
+  abstract: true
+  name: instant effect
+  components:
+  - type: Sprite
+    sprite: /Textures/Objects/Fun/goldbikehorn.rsi
+    visible: false
+    state: icon
+  - type: TimedDespawn
+    lifetime: 0.05

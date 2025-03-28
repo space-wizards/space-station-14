@@ -3,11 +3,11 @@ using Content.Shared.Buckle.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.StatusEffect;
 using Content.Server.Stunnable;
-
+using Content.Server.Explosion.EntitySystems;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
-public sealed class KnockdownArtifactSystem : EntitySystem
+public sealed class StunOnTriggerSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly StunSystem _stuns = default!;
@@ -19,41 +19,46 @@ public sealed class KnockdownArtifactSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<KnockdownArtifactComponent, ArtifactActivatedEvent>(OnActivated);
+        SubscribeLocalEvent<StunOnTriggerComponent, TriggerEvent>(OnActivated);
         _buckleQuery = GetEntityQuery<BuckleComponent>();
         _statusQuery = GetEntityQuery<StatusEffectsComponent>();
 
     }
 
-    private void OnActivated(EntityUid uid, KnockdownArtifactComponent component, ArtifactActivatedEvent args)
+    private void OnActivated(EntityUid uid, StunOnTriggerComponent component, TriggerEvent args)
     {
         var transform = Transform(uid);
         var gridUid = transform.GridUid;
         // knock over everyone on the same grid, fall back to range if not on a grid.
         if (component.EntireGrid && gridUid != null) {
-            var gridTransform = Transform((EntityUid)gridUid);
-            var childEnumerator = gridTransform.ChildEnumerator;
-            while (childEnumerator.MoveNext(out var child))
+            HashSet<Entity<StatusEffectsComponent>> entities = new();
+            _lookup.GetGridEntities<StatusEffectsComponent>((EntityUid)gridUid, entities);
+            foreach (var ent in entities)
             {
-                if (!_buckleQuery.TryGetComponent(child, out var buckle) || buckle.Buckled)
+                if (_buckleQuery.TryGetComponent(ent, out var buckle))
+                {
+                    if (buckle.Buckled)
+                        continue;
+                }
+
+                if (!_statusQuery.TryGetComponent(ent, out var status))
                     continue;
 
-                if (!_statusQuery.TryGetComponent(child, out var status))
-                    continue;
-
-                _stuns.TryParalyze(child, TimeSpan.FromSeconds(component.KnockdownTime), true, status);
+                _stuns.TryParalyze(ent, TimeSpan.FromSeconds(component.KnockdownTime), true, status);
             }
 
         }
         else // knock over only people in range
         {
             var ents = _lookup.GetEntitiesInRange(uid, component.Range);
-            if (args.Activator != null)
-                ents.Add(args.Activator.Value);
+
             foreach (var ent in ents)
             {
-                if (!_buckleQuery.TryGetComponent(ent, out var buckle) || buckle.Buckled)
-                    continue;
+                if (_buckleQuery.TryGetComponent(ent, out var buckle))
+                {
+                    if (buckle.Buckled)
+                        continue;
+                }
 
                 if (!_statusQuery.TryGetComponent(ent, out var status))
                     continue;

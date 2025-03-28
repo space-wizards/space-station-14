@@ -560,16 +560,6 @@
     intensity: 2
     slope: 0.3
 
-- type: artifactEffect
-  id: EffectLocalKnockdown
-  targetDepth: 3
-  effectHint: artifact-effect-hint-environment
-  effectProb: 0.7
-  components:
-  - type: KnockdownArtifact
-    range: 8
-    entireGrid: false
-    knockdownTime: 4
 
 - type: artifactEffect
   id: EffectMaterialSpawn
