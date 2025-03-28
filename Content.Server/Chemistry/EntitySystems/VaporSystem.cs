@@ -39,8 +39,7 @@ internal sealed class VaporSystem : EntitySystem
 
     private void HandleCollide(Entity<VaporComponent> entity, ref StartCollideEvent args)
     {
-        if (!EntityManager.TryGetComponent(entity.Owner, out SolutionContainerManagerComponent? contents))
-            return;
+        if (!EntityManager.TryGetComponent(entity.Owner, out SolutionContainerManagerComponent? contents)) return;
 
         foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((entity.Owner, contents)))
         {
@@ -78,10 +77,13 @@ internal sealed class VaporSystem : EntitySystem
     internal bool TryAddSolution(Entity<VaporComponent> vapor, Solution solution)
     {
         if (solution.Volume == 0)
+        {
             return false;
-
+        }
         if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, VaporComponent.SolutionName, out var vaporSolution))
+        {
             return false;
+        }
 
         return _solutionContainerSystem.TryAddSolution(vaporSolution.Value, solution);
     }
@@ -96,7 +98,7 @@ internal sealed class VaporSystem : EntitySystem
         {
             // Return early if we're not active
             if (!vaporComp.Active)
-                return;
+                continue;
 
             // Get the current location of the vapor entity first
             if (TryComp(xform.GridUid, out MapGridComponent? gridComp))
@@ -106,7 +108,7 @@ internal sealed class VaporSystem : EntitySystem
                 // Check if the tile is a tile we've reacted with previously. If so, skip it.
                 // If we have no previous tile reference, we don't return so we can save one.
                 if (vaporComp.PreviousTileRef != null && tile == vaporComp.PreviousTileRef)
-                    return;
+                    continue;
 
                 // Enumerate over all the reagents in the vapor entity solution
                 foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, container)))
