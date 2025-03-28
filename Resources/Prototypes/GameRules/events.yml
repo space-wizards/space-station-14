@@ -249,7 +249,7 @@
       - MindRoleNinja
 
 - type: entity
-  parent: BaseGameRule
+  parent: BaseMidRoundAntag # Imp - uses midround antag spawners this way
   id: ParadoxCloneSpawn
   components:
   - type: StationEvent
@@ -267,7 +267,7 @@
   - type: AntagSelection
     agentName: paradox-clone-round-end-agent-name
     definitions:
-    - spawnerPrototype: SpawnPointLocationMidRoundAntag # imp edit
+    - spawnerPrototype: SpawnPointGhostParadoxClone
       min: 1
       max: 1
       pickPlayer: false
