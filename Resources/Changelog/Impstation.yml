@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Flipping while crawling no longer makes you appear to stand up.
-    type: Fix
-  id: 924
-  time: '2025-01-14T10:32:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1347
 - author: Pinkbat5
   changes:
   - message: The prestige clown gear is now available in a few more job loadouts.
@@ -4075,3 +4068,11 @@
   id: 1423
   time: '2025-03-28T22:05:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2086
+- author: TheGrimbeeper
+  changes:
+  - message: Fixed artifact grid knockdown! Now chemists can once again spill their
+      entire jug due to a scientist on the other end of the station! Yippee!
+    type: Fix
+  id: 1424
+  time: '2025-03-28T22:35:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2121
