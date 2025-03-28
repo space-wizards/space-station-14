@@ -14,7 +14,6 @@ public sealed partial class HereticComponent : Component
         "BreakOfDawn",
         "HeartbeatOfMansus",
         "AmberFocus",
-        "LivingHeart",
         "CodexCicatrix",
     };
 
@@ -22,16 +21,6 @@ public sealed partial class HereticComponent : Component
 
     [DataField, AutoNetworkedField] public List<ProtoId<HereticRitualPrototype>> KnownRituals = new();
     [DataField] public ProtoId<HereticRitualPrototype>? ChosenRitual;
-
-    /// <summary>
-    ///     Contains the list of targets that are eligible for sacrifice.
-    /// </summary>
-    [DataField, AutoNetworkedField] public List<NetEntity?> SacrificeTargets = new();
-
-    /// <summary>
-    ///     How much targets can a heretic have?
-    /// </summary>
-    [DataField, AutoNetworkedField] public int MaxTargets = 5;
 
     // hardcoded paths because i hate it
     // "Ash", "Lock", "Flesh", "Void", "Blade", "Rust"

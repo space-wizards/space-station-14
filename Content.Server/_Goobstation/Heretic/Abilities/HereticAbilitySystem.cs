@@ -96,9 +96,6 @@ public sealed partial class HereticAbilitySystem : EntitySystem
         SubscribeLocalEvent<HereticComponent, EventHereticOpenStore>(OnStore);
         SubscribeLocalEvent<HereticComponent, EventHereticMansusGrasp>(OnMansusGrasp);
 
-        SubscribeLocalEvent<HereticComponent, EventHereticLivingHeart>(OnLivingHeart);
-        SubscribeLocalEvent<HereticComponent, EventHereticLivingHeartActivate>(OnLivingHeartActivate);
-
         SubscribeLocalEvent<GhoulComponent, EventHereticMansusLink>(OnMansusLink);
         SubscribeLocalEvent<GhoulComponent, HereticMansusLinkDoAfter>(OnMansusLinkDoafter);
 
@@ -163,59 +160,6 @@ public sealed partial class HereticAbilitySystem : EntitySystem
 
         ent.Comp.MansusGraspActive = true;
         args.Handled = true;
-    }
-    private void OnLivingHeart(Entity<HereticComponent> ent, ref EventHereticLivingHeart args)
-    {
-        if (!TryUseAbility(ent, args))
-            return;
-
-        if (!TryComp<UserInterfaceComponent>(ent, out var uic))
-            return;
-
-        if (ent.Comp.SacrificeTargets.Count == 0)
-        {
-            _popup.PopupEntity(Loc.GetString("heretic-livingheart-notargets"), ent, ent);
-            args.Handled = true;
-            return;
-        }
-
-        _ui.OpenUi((ent, uic), HereticLivingHeartKey.Key, ent);
-        args.Handled = true;
-    }
-    private void OnLivingHeartActivate(Entity<HereticComponent> ent, ref EventHereticLivingHeartActivate args)
-    {
-        var loc = string.Empty;
-
-        var target = GetEntity(args.Target);
-        if (target == null)
-            return;
-
-        if (!TryComp<MobStateComponent>(target, out var mobstate))
-            return;
-        var state = mobstate.CurrentState;
-
-        var xquery = GetEntityQuery<TransformComponent>();
-        var targetStation = _station.GetOwningStation(target);
-        var ownStation = _station.GetOwningStation(ent);
-
-        var isOnStation = targetStation != null && targetStation == ownStation;
-
-        var ang = Angle.Zero;
-        if (_mapMan.TryFindGridAt(_transform.GetMapCoordinates(Transform(ent)), out var grid, out var _))
-            ang = Transform(grid).LocalRotation;
-
-        var vector = _transform.GetWorldPosition((EntityUid) target, xquery) - _transform.GetWorldPosition(ent, xquery);
-        var direction = (vector.ToWorldAngle() - ang).GetDir();
-
-        var locdir = ContentLocalizationManager.FormatDirection(direction).ToLower();
-        var locstate = state.ToString().ToLower();
-
-        if (isOnStation)
-            loc = Loc.GetString("heretic-livingheart-onstation", ("state", locstate), ("direction", locdir));
-        else loc = Loc.GetString("heretic-livingheart-offstation", ("state", locstate), ("direction", locdir));
-
-        _popup.PopupEntity(loc, ent, ent, PopupType.Medium);
-        _aud.PlayPvs(new SoundPathSpecifier("/Audio/_Goobstation/Heretic/heartbeat.ogg"), ent, AudioParams.Default.WithVolume(-3f));
     }
 
     private void OnMansusLink(Entity<GhoulComponent> ent, ref EventHereticMansusLink args)

@@ -107,8 +107,7 @@ namespace Content.Server.Heretic.Ritual;
         foreach (var look in lookup)
         {
             if (!args.EntityManager.TryGetComponent<MobStateComponent>(look, out var mobstate) // only mobs
-            || !args.EntityManager.HasComponent<HumanoidAppearanceComponent>(look) // only humans
-            || (OnlyTargets && !hereticComp.SacrificeTargets.Contains(args.EntityManager.GetNetEntity(look)))) // only targets
+            || !args.EntityManager.HasComponent<HumanoidAppearanceComponent>(look)) // only humans
                 continue;
 
             if (mobstate.CurrentState == Shared.Mobs.MobState.Dead)

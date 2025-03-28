@@ -20,13 +20,6 @@
   ritualPrototypes:
   - CodexCicatrix
 
-- type: hereticKnowledge
-  id: LivingHeart
-  ritualPrototypes:
-  - LivingHeart
-  actionPrototypes:
-  - ActionHereticLivingHeart
-
 ### ash path
 - type: hereticKnowledge
   id: NightwatcherSecret
