@@ -121578,13 +121578,6 @@ entities:
     - type: Transform
       pos: -32.5,-30.5
       parent: 2
-- proto: SpawnPointBrigmedic
-  entities:
-  - uid: 23345
-    components:
-    - type: Transform
-      pos: -8.5,32.5
-      parent: 2
 - proto: SpawnPointCaptain
   entities:
   - uid: 4578
