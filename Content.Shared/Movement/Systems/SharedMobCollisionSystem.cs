@@ -96,7 +96,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             // avoids the networking side.
             else if (direction != Vector2.Zero && PhysicsQuery.TryComp(uid, out var physics))
             {
-                DebugTools.Assert(direction.LengthSquared() > _minimumPushSquared);
+                DebugTools.Assert(direction.LengthSquared() >= _minimumPushSquared);
 
                 if (direction.Length() > _pushingCap)
                 {
@@ -159,12 +159,15 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     protected void MoveMob(Entity<MobCollisionComponent, TransformComponent> entity, Vector2 direction)
     {
         // Length too short to do anything.
+        var pushing = true;
+
         if (direction.LengthSquared() < _minimumPushSquared)
         {
+            pushing = false;
             direction = Vector2.Zero;
         }
 
-        SetColliding(entity, true);
+        SetColliding(entity, pushing);
 
         if (direction == entity.Comp1.Direction)
             return;
