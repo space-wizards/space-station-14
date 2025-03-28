@@ -1,0 +1,7 @@
+# STUPID FUCKING THING THAT NEEDS TO BE DEFINED HERE SO IT DOESNT BREAK MAPS!!!
+- type: entity
+  id: ClothingHeadHelmetTemplar
+  name: dummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
