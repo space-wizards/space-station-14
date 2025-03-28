@@ -666,6 +666,7 @@
   production: 6
   yield: 2
   potency: 20
+  growthStages: 3
   idealLight: 9
   idealHeat: 298
   chemicals:

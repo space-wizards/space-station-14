@@ -4,6 +4,8 @@
 
 # Any new primary role types must be listed in RoleTypes.xml
 
+# If you change/add a color here, also change it in role-types.ftl!
+
 - type: roleType
   id: Neutral
   name: role-type-crew-aligned-name
