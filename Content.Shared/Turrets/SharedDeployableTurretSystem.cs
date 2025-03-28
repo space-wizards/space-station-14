@@ -41,7 +41,7 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
             return;
 
-        if (TryComp<AccessReaderComponent>(ent, out var accessReader) && !_accessReader.IsAllowed(args.User, ent, accessReader))
+        if (!_accessReader.IsAllowed(args.User, ent))
             return;
 
         var user = args.User;
@@ -64,7 +64,7 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
         if (TryComp(ent, out UseDelayComponent? useDelay) && !_useDelay.TryResetDelay((ent, useDelay), true))
             return;
 
-        if (TryComp<AccessReaderComponent>(ent, out var reader) && !_accessReader.IsAllowed(args.User, ent, reader))
+        if (!_accessReader.IsAllowed(args.User, ent))
         {
             _popup.PopupClient(Loc.GetString("deployable-turret-component-access-denied"), ent, args.User);
             _audio.PlayPredicted(ent.Comp.AccessDeniedSound, ent, args.User);
@@ -130,6 +130,7 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
         var animTimeNext = enabled ? ent.Comp.DeploymentLength : ent.Comp.RetractionLength;
 
         ent.Comp.AnimationCompletionTime = _timing.CurTime + TimeSpan.FromSeconds(animTimeNext + animTimeRemaining);
+        DirtyField(ent, ent.Comp, "AnimationCompletionTime");
 
         // Change the turret's damage modifiers
         if (TryComp<DamageableComponent>(ent, out var damageable))
@@ -146,11 +147,13 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
             _physics.SetHard(ent, fixture, enabled);
         }
 
+        // Play pop up message
         var msg = enabled ? "deployable-turret-component-activating" : "deployable-turret-component-deactivating";
         _popup.PopupClient(Loc.GetString(msg), ent, user);
 
+        // Update enabled state
         ent.Comp.Enabled = enabled;
-        Dirty(ent);
+        DirtyField(ent, ent.Comp, "Enabled");
     }
 
     public bool HasAmmo(Entity<DeployableTurretComponent> ent)

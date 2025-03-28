@@ -9,7 +9,7 @@ namespace Content.Shared.Turrets;
 /// <summary>
 /// Attached to turrets that can be toggled between an inactive and active state
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
 [Access(typeof(SharedDeployableTurretSystem))]
 public sealed partial class DeployableTurretComponent : Component
 {
@@ -88,7 +88,7 @@ public sealed partial class DeployableTurretComponent : Component
     /// <summary>
     /// The time that the current animation should complete (in seconds)
     /// </summary>
-    [DataField]
+    [DataField, AutoPausedField]
     public TimeSpan AnimationCompletionTime = TimeSpan.Zero;
 
     /// <summary>
