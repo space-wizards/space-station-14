@@ -81,6 +81,7 @@
   - type: Wires
     boardName: wires-board-name-computer
     layoutId: Computer
+  - type: PowerSwitch #imp; idk thought it'd be cute and immersive to turn computers on and off - AvianMaiden
 #
 #     This is overwritten by children, so needs to be defined there
 #  - type: UserInterface

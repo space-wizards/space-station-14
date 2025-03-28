@@ -59,3 +59,4 @@
         enum.SolutionHeaterVisuals.IsOn:
           True: { visible: true }
           False: { visible: false }
+  - type: PowerSwitch #imp; you can turn it on or off ig. Thought it'd be cute and maybe helpful - AvianMaiden
