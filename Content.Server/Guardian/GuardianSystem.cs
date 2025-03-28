@@ -191,7 +191,7 @@ namespace Content.Server.Guardian
             {
                 Loc.GetString("guardian-activator-invalid-target", ("entity", Identity.Name(target, EntityManager, user)));
 
-                _popupSystem.PopupEntity(Loc.GetString("guardian-activator-invalid-target"), user, user);
+                _popupSystem.PopupEntity(msg, user, user);
                 return;
             }
 
