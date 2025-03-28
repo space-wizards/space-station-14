@@ -75,6 +75,8 @@
     - sprite: Mobs/Silicon/station_ai.rsi
       state: default
   - type: ShowJobIcons
+  - type: StealTarget #imp
+    stealGroup: AICore
 
 - type: entity
   id: AiHeldIntellicard
@@ -97,6 +99,8 @@
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
   - type: ShowJobIcons
+  - type: StealTarget #imp
+    stealGroup: AICore
 
 # Ai
 - type: entity
@@ -498,8 +502,6 @@
         unshaded:
           Empty: { state: ai_empty }
           Occupied: { state: ai }
-  - type: StealTarget #imp
-    stealGroup: AICore
   - type: Telephone
     compatibleRanges:
     - Grid
