@@ -1,10 +1,7 @@
 ﻿using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Content.Server.Discord;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
@@ -15,8 +12,8 @@ namespace Content.Server.Administration.Logs;
 
 public sealed partial class AdminLogManager
 {
-
     [Dependency] private readonly IEntitySystemManager _entSys = default!;
+    [Dependency] private readonly DiscordWebhook _webhook = default!;
 
     [GeneratedRegex(@"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$")]
     private static partial Regex DiscordRegex();
@@ -24,7 +21,7 @@ public sealed partial class AdminLogManager
     private readonly HttpClient _httpClient = new();
 
     private bool _lockProcessing;
-    private DiscordRelayInteraction? _relayMessage = null;
+    private AdminLogDiscordRelayInteraction? _relayMessage = null;
 
     private string _footerIconUrl = string.Empty;
     private string _avatarUrl = string.Empty;
@@ -34,17 +31,6 @@ public sealed partial class AdminLogManager
     private readonly Queue<string> _messageQueue = new();
     private WebhookData? _webhookData;
     private int _maxAdditionalChars;
-
-    // Max embed description length is 4096, according to https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
-    // Keep small margin, just to be safe
-    private const ushort DescriptionMax = 4000;
-
-    // Maximum length a message can be before it is cut off
-    // Should be shorter than DescriptionMax
-    private const ushort MessageLengthCap = 3000;
-
-    // Text to be used to cut off messages that are too long. Should be shorter than MessageLengthCap
-    private const string TooLongText = "... **(too long)**";
 
     public void InitializeWebhook()
     {
@@ -85,42 +71,11 @@ public sealed partial class AdminLogManager
         if (url == string.Empty)
             return;
 
-        // Basic sanity check and capturing webhook ID and token
-        var match = DiscordRegex().Match(url);
-
-        if (!match.Success)
-        {
-            // TODO: Ideally, CVar validation during setting should be better integrated
-            _sawmill.Log(LogLevel.Warning, "Webhook URL does not appear to be valid. Using anyways...");
+        if (!_webhook.TryGetWebhookIdToken(url, out var webhookId, out var webhookToken))
             return;
-        }
-
-        if (match.Groups.Count <= 2)
-        {
-            _sawmill.Log(LogLevel.Error, "Could not get webhook ID or token.");
-            return;
-        }
-
-        var webhookId = match.Groups[1].Value;
-        var webhookToken = match.Groups[2].Value;
 
         // Fire and forget
-        _webhookData = await GetWebhookData(webhookId, webhookToken);
-    }
-
-    private async Task<WebhookData?> GetWebhookData(string id, string token)
-    {
-        var response = await _httpClient.GetAsync($"https://discord.com/api/v10/webhooks/{id}/{token}");
-
-        var content = await response.Content.ReadAsStringAsync();
-        if (!response.IsSuccessStatusCode)
-        {
-            _sawmill.Log(LogLevel.Error,
-                $"Discord returned bad status code when trying to get webhook data (perhaps the webhook URL is invalid?): {response.StatusCode}\nResponse: {content}");
-            return null;
-        }
-
-        return JsonSerializer.Deserialize<WebhookData>(content);
+        _webhookData = await _webhook.GetWebhookData(webhookId, webhookToken);
     }
 
     private void OnFooterIconChanged(string url)
@@ -151,15 +106,14 @@ public sealed partial class AdminLogManager
         if (_webhookUrl != string.Empty)
         {
             // Get the current timestamp
-            var timestamp = DateTime.Now.ToString("HH:mm:ss");
             var roundTime = System.TimeSpan.Zero.ToString("hh\\:mm\\:ss");
             if (_entSys.TryGetEntitySystem<GameTicker>(out var gameTicker))
                 roundTime = gameTicker.RoundDuration().ToString("hh\\:mm\\:ss");
 
             var str = message;
-            if (str.Length + _maxAdditionalChars > DescriptionMax)
+            if (str.Length + _maxAdditionalChars > DiscordWebhook.DescriptionMax)
             {
-                str = str[..(DescriptionMax - _maxAdditionalChars)];
+                str = str[..(DiscordWebhook.DescriptionMax - _maxAdditionalChars)];
             }
 
             // Create the message parameters for Discord
@@ -181,8 +135,8 @@ public sealed partial class AdminLogManager
         var exists = _relayMessage != null;
 
         // Whether the message will become too long after adding these new messages
-        var tooLong = exists && messages.Sum(msg => Math.Min(msg.Length, MessageLengthCap) + "\n".Length)
-            + _relayMessage?.Description.Length > DescriptionMax;
+        var tooLong = exists && messages.Sum(msg => Math.Min(msg.Length, DiscordWebhook.MessageLengthCap) + "\n".Length)
+            + _relayMessage?.Description.Length > DiscordWebhook.DescriptionMax;
 
         // If there is no existing embed, or it is getting too long, we create a new embed
         if (!exists || tooLong)
@@ -199,7 +153,7 @@ public sealed partial class AdminLogManager
                 }
             }
 
-            _relayMessage = new DiscordRelayInteraction()
+            _relayMessage = new AdminLogDiscordRelayInteraction()
             {
                 Id = null,
                 Description = linkToPrevious,
@@ -225,60 +179,15 @@ public sealed partial class AdminLogManager
         // Add available messages to the embed description
         while (messages.TryDequeue(out var message))
         {
-            string text;
-
-            // In case someone thinks they're funny
-            if (message.Length > MessageLengthCap)
-                text = message[..(MessageLengthCap - TooLongText.Length)] + TooLongText;
-            else
-                text = message;
-
-            _relayMessage.Description += $"\n{text}";
+            _relayMessage.Description += $"\n{_webhook.TrimMessage(message)}";
         }
 
         var payload = GeneratePayload(_relayMessage.Description);
 
-        // If there is no existing embed, create a new one
-        // Otherwise patch (edit) it
-        if (_relayMessage.Id == null)
-        {
-            var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true",
-                new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
-
-            var content = await request.Content.ReadAsStringAsync();
-            if (!request.IsSuccessStatusCode)
-            {
-                _sawmill.Log(LogLevel.Error,
-                    $"Discord returned bad status code when posting message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}");
-                _relayMessage = null;
-                return;
-            }
-
-            var id = JsonNode.Parse(content)?["id"];
-            if (id == null)
-            {
-                _sawmill.Log(LogLevel.Error,
-                    $"Could not find id in json-content returned from discord webhook: {content}");
-                _relayMessage = null;
-                return;
-            }
-
-            _relayMessage.Id = id.ToString();
-        }
-        else
-        {
-            var request = await _httpClient.PatchAsync($"{_webhookUrl}/messages/{_relayMessage.Id}",
-                new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
-
-            if (!request.IsSuccessStatusCode)
-            {
-                var content = await request.Content.ReadAsStringAsync();
-                _sawmill.Log(LogLevel.Error,
-                    $"Discord returned bad status code when patching message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}");
-                _relayMessage = null;
-                return;
-            }
-        }
+        // Attempt to post the payload; if failed, wipe the relay message since it could not be posted/found.
+        var success = await _webhook.PostPayload(_relayMessage, _webhookUrl, payload);
+        if (!success)
+            _relayMessage = null;
 
         _lockProcessing = false;
     }
@@ -365,15 +274,8 @@ public sealed class AdminLogMessageParams
     }
 }
 
-internal sealed class DiscordRelayInteraction
+internal sealed class AdminLogDiscordRelayInteraction : DiscordRelayInteraction
 {
-    public string? Id;
-
-    /// <summary>
-    /// Contents for the discord message.
-    /// </summary>
-    public string Description = string.Empty;
-
     /// <summary>
     /// Run level of the last interaction. If different we'll link to the last Id.
     /// </summary>
