@@ -136,7 +136,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.DeleteOnRemove)
+        if (component.DeleteOnRemove && _net.IsServer)
         {
             QueueDel(uid);
             return;
