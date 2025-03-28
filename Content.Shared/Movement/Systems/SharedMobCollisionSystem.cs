@@ -6,6 +6,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -14,6 +15,7 @@ namespace Content.Shared.Movement.Systems;
 public abstract class SharedMobCollisionSystem : EntitySystem
 {
     [Dependency] protected readonly IConfigurationManager CfgManager = default!;
+    [Dependency] private   readonly IRobustRandom _random = default!;
     [Dependency] private   readonly MovementSpeedModifierSystem _moveMod = default!;
     [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] private   readonly SharedTransformSystem _xformSystem = default!;
@@ -166,6 +168,10 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             pushing = false;
             direction = Vector2.Zero;
         }
+        else if (float.IsNaN(direction.X) || float.IsNaN(direction.Y))
+        {
+            direction = Vector2.Zero;
+        }
 
         SetColliding(entity, pushing);
 
@@ -238,6 +244,11 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             // TODO: More robust overlap detection.
             var otherTransform = Physics.GetPhysicsTransform(other);
             var diff = ourTransform.Position - otherTransform.Position;
+
+            if (diff == Vector2.Zero)
+            {
+                diff = _random.NextVector2(0.01f);
+            }
 
             // 0.7 for 0.35 + 0.35 for mob bounds (see TODO above).
             // Clamp so we don't get a heap of penetration depth and suddenly lurch other mobs.
