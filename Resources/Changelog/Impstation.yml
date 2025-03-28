@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: JOHNNY CHAOS 5 STAR AI CANNOT BE WARNED OR BANNED
-    type: Add
-  id: 917
-  time: '2025-01-13T07:24:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1338
 - author: Darkmajia
   changes:
   - message: Standing up from crawling now has a shorter cooldown, and will start
@@ -4081,3 +4074,10 @@
   id: 1416
   time: '2025-03-28T21:48:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2124
+- author: TheGrimbeeper
+  changes:
+  - message: Fixed zombified monkeys not doing anything.
+    type: Fix
+  id: 1417
+  time: '2025-03-28T21:54:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2085
