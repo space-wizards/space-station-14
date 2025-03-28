@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: Standing up from crawling now has a shorter cooldown, and will start
-      a do-after if you are still below the cooldown instead of locking you out.
-    type: Tweak
-  id: 918
-  time: '2025-01-13T16:35:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1346
-- author: Darkmajia
-  changes:
   - message: Grays have had their accents fixed up a little.
     type: Fix
   id: 919
@@ -4081,3 +4073,14 @@
   id: 1417
   time: '2025-03-28T21:54:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2085
+- author: jtfg-dev
+  changes:
+  - message: Echolalia will now be sent to chat (for players), and has a unique speech
+      verb!
+    type: Tweak
+  - message: Soulless players, and birds *with* souls, no longer echo. (Intentional
+      game design.)
+    type: Fix
+  id: 1418
+  time: '2025-03-28T21:56:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2129
