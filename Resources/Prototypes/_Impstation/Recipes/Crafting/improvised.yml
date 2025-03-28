@@ -75,3 +75,16 @@
   icon:
     sprite: _Impstation/Objects/Fun/bouquet.rsi
     state: icon
+
+- type: construction
+  name: makeshift loader
+  id: makeshiftloader
+  graph: MakeshiftLoaderGraph
+  startNode: start
+  targetNode: loader
+  category: construction-category-weapons
+  objectType: Item
+  description: The interior parts of a magazine, used in the creation of firearms.
+  icon:
+    sprite: _Impstation/Objects/Misc/makeshift_loader.rsi
+    state: icon

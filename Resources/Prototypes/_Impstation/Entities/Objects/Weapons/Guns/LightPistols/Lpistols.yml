@@ -175,59 +175,77 @@
 
 - type: entity
   name: improvised pistol
-  parent: [ BaseWeaponPistol, BaseMajorContraband ]
+  parent: [ BaseItem, BaseMajorContraband ]
   id: WeaponPistolImprovised
-  description: A pistol made of junk-- used by the truly desperate. Its imprecise engineering allows it to use a variety of magazines and ammo. Uses .22 auto or .35 auto ammo.
+  description: A pistol made of junk-- used by the truly desperate. Its imprecise engineering allows it to use a variety of ammo. Uses .22 auto or .35 auto ammo.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Pistols/improvpistol.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-0
-      map: ["enum.GunVisualLayers.Mag"]
-  - type: MagazineVisuals
-    magState: mag
-    steps: 2
-    zeroVisible: true
+  - type: AmmoCounter
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+  - type: Tag
+    tags:
+    - Sidearm
   - type: Clothing
     sprite: _Impstation/Objects/Weapons/Guns/Pistols/improvpistol.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
   - type: Gun
-    fireRate: 3.5
+    fireRate: 2
     minAngle: 4
-    maxAngle: 20
+    maxAngle: 18
     angleIncrease: 4
     angleDecay: 10
     availableModes:
     - SemiAuto
     soundGunshot:
       path: /Audio/_Impstation/Weapons/Guns/Gunshots/zipper.ogg
-  - type: ChamberMagazineAmmoProvider
-    boltClosed: null
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: null
-        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazineZipper
-            - MagazineLPistol
-            - MagazinePistol
-        whitelistFailPopup: gun-magazine-whitelist-fail
-      gun_chamber:
-        name: Chamber
-        startingItem: null
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgeLPistol
-            - CartridgePistol
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+      - CartridgeLPistol
+      - CartridgePistol
+    capacity: 8
+    proto: null
+    soundInsert:
+      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/hpistol_cock.ogg
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
   - type: Construction
     graph: ImprovisedPistolGraph
     node: pistol
   - type: StaticPrice
     price: 20
+  - type: MeleeWeapon
+    range: 0.8
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+    resetOnHandSelected: false
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 6
+    damage:
+      types:
+        Blunt: 5

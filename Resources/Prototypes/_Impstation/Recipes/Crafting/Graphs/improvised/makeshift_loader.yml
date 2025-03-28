@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: MakeshiftLoaderGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: loader
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 4
+  - node: loader
+    entity: MakeshiftLoader

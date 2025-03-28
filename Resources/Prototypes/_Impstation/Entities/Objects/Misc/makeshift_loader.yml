@@ -1,0 +1,16 @@
+- type: entity
+  parent: BaseItem
+  id: MakeshiftLoader
+  name: Makeshift Loader
+  description: The interior parts of a magazine, used in the creation of firearms.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Misc/makeshift_loader.rsi
+      state: icon
+    - type: Construction
+      graph: MakeshiftLoaderGraph
+      node: loader
+    - type: Tag
+      tags:
+      - MakeshiftLoader
+      - Metal

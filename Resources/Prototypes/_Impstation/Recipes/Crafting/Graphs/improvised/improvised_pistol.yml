@@ -16,6 +16,11 @@
           sprite: Objects/Misc/modular_receiver.rsi
           state: icon
         name: modular receiver
+      - tag: MakeshiftLoader
+        icon:
+          sprite: _Impstation/Objects/Misc/makeshift_loader.rsi
+          state: icon
+        name: makeshift loader
       - material: Steel
         amount: 5
       - material: Cloth
