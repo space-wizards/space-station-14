@@ -39,8 +39,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void HandleCollide(Entity<VaporComponent> entity, ref StartCollideEvent args)
         {
-            if (!EntityManager.TryGetComponent(entity.Owner, out SolutionContainerManagerComponent? contents))
-                return;
+            if (!EntityManager.TryGetComponent(entity.Owner, out SolutionContainerManagerComponent? contents)) return;
 
             foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((entity.Owner, contents)))
             {
