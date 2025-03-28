@@ -8,3 +8,9 @@
   id: BomberSecurity
   equipment:
     outerClothing: ClothingOuterCoatBomberSecurity
+
+# Neck; DV poncho
+- type: loadout
+  id: SecPoncho
+  equipment:
+    neck: ClothingNeckCWPSec

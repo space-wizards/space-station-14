@@ -942,6 +942,7 @@
   minLimit: 0
   loadouts:
   - ScarfRed
+  - SecPoncho
 
 - type: loadoutGroup
   id: UpperSecurityShoes
