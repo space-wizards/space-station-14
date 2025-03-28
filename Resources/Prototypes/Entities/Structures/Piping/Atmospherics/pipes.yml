@@ -50,11 +50,11 @@
     drawdepth: ThinPipe
     visible: false
   - type: Appearance
-  - type: NodeContainer
-  - type: AtmosPipeColor
   - type: PipeColorVisuals
+  - type: NodeContainer
   - type: PipeRestrictOverlap
   - type: AtmosUnsafeUnanchor
+  - type: AtmosPipeColor
   - type: AtmosMonitoringConsoleDevice
   - type: Tag
     tags:
