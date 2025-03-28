@@ -4,7 +4,7 @@
 
     <PanelContainer StyleClasses="BackgroundDark"></PanelContainer>
     <TabContainer Name="TabsCategory" Visible="False" VerticalExpand="True">
-        <TabContainer Name="TabsDepartmentTask" >
+        <TabContainer Name="TabsDepartmentTask" />
         <cartridges:NanoTaskTable Name="StationTaskTable" />
     </TabContainer>
 

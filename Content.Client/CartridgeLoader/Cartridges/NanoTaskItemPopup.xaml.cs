@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.UserInterface.Controls;
 using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Shared.NanoTask;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
@@ -15,10 +16,12 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
 {
     private readonly ButtonGroup _priorityGroup = new();
     private uint? _editingTaskId = null;
+    private string _nanoTaskCategory = NanoTaskConstants.NET_CATEGORY_STATION_TASK;
+    private string? _nanoTaskDepartment = null;
 
     public Action<uint, NanoTaskItem>? TaskSaved;
     public Action<uint>? TaskDeleted;
-    public Action<NanoTaskItem>? TaskCreated;
+    public Action<NanoTaskCategoryAndDepartment, NanoTaskItem>? TaskCreated;
     public Action<NanoTaskItem>? TaskPrinted;
 
     private NanoTaskItem MakeItem()
@@ -65,7 +68,7 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
             }
             else
             {
-                TaskCreated?.Invoke(MakeItem());
+                TaskCreated?.Invoke(new(_nanoTaskCategory, _nanoTaskDepartment), MakeItem());
             }
         };
 
@@ -85,6 +88,12 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
     {
         _editingTaskId = id;
         DeleteButton.Visible = id is not null;
+    }
+
+    public void SetCategory(string category, string? name)
+    {
+        _nanoTaskCategory = category;
+        _nanoTaskDepartment = name;
     }
 
     public void ResetInputs(NanoTaskItem? item)
