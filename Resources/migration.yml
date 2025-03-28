@@ -555,3 +555,7 @@ MagazineBoxAntiMaterielBig: null
 MagazineBoxCaselessRifle10x24: null
 MagazineBoxCaselessRifleBig: null
 MagazinePistolHighCapacityRubber: null
+
+# 2025-03-28
+MopBucket: MopBucketSpawner
+MopBucketFull: MopBucketSpawner
