@@ -473,7 +473,7 @@
       - NotekeeperCartridge
       - NewsReaderCartridge
       - NanoChatCartridge # DV
-      - MailMetricsCartridge  # DV
+      # - MailMetricsCartridge  # DV - turning this off until i can fix it with the rest of the mail
       - StockTradingCartridge # DeltaV
       - SOSCartridge # Imp
 
@@ -990,18 +990,18 @@
   id: DeathsquadPDA
   suffix: Death Squad
   name: death squad PDA
-  description: The red helps to mask the blood. 
+  description: The red helps to mask the blood.
   components:
   - type: Pda
     id:   CentcomIDCardDeathsquad
-  - type: Appearance 
+  - type: Appearance
     appearanceDataInit:
       enum.PdaVisuals.PdaType:
         !type:String
         pda-deathsquadron
   - type: Icon
     state: pda-deathsquadron
-  - type: PdaBorderColor 
+  - type: PdaBorderColor
     borderColor: "#640202"
     accentHColor: "#06064B"
     accentVColor: "#06064B"

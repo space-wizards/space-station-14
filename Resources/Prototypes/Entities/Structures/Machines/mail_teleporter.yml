@@ -45,3 +45,4 @@
   - type: DeliverySpawner
     table: !type:NestedSelector
       tableId: RandomDeliveryBasic
+  - type: MailinatorTarget # Imp
