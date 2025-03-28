@@ -42,3 +42,8 @@
   license: "CC0-1.0"
   copyright: "Made by DexD73 freesound.org, modified by Sha-Seng (github) and kipdotnet (github)"
   source: "https://freesound.org/s/583715/"
+
+- files: ["awoogastep"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Original sound by Timbre on freesound.org, modified by DinnerCalzone (github)"
+  source: "https://freesound.org/people/Timbre/sounds/541006/"

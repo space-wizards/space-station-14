@@ -2,6 +2,7 @@
   "version": 1,
   "license": "CC-BY-4.0",
   "copyright": "nobody owns him. he is his own person.",
+  "MetaAtlas": false,
   "size": {
     "x": 200,
     "y": 450
