@@ -1,5 +1,3 @@
-# TODO: Have a seperate lid state that can be popped on and off (not as a seperate item) that changes whether the vial can be spilled or not.
-
 - type: entity
   name: vial
   parent: BaseItem
@@ -19,7 +17,8 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/vial.rsi
     layers:
-      - state: vial-1
+      - state: vial-1-closed
+        map: ["enum.OpenableVisuals.Layer"]
       - state: vial-1-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
@@ -29,6 +28,12 @@
     fillBaseName: vial-1-
     inHandsMaxFillLevels: 4
     inHandsFillBaseName: -fill-
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "vial-1-open"}
+          False: {state: "vial-1-closed"}
   - type: Drink
     solution: beaker
   - type: SolutionContainerManager
@@ -102,6 +107,47 @@
   - type: Spillable
     solution: beaker
   - type: DnaSubstanceTrace
+  - type: Openable
+    sound:
+      collection: bottleOpenSounds
+    closeable: true
+    closeSound:
+      collection: bottleCloseSounds
+
+- type: entity
+  parent: BaseChemistryEmptyVial
+  id: BaseChemistryEmptyVialSmall
+  name: mini vial
+  description: A smaller vial.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/vial.rsi
+    layers:
+      - state: vial-2-closed
+        map: ["enum.OpenableVisuals.Layer"]
+      - state: vial-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: vial-2-
+    inHandsMaxFillLevels: 4
+    inHandsFillBaseName: -fill-
+  - type: GenericVisualizer
+    visuals:
+      enum.OpenableVisuals.Opened:
+        enum.OpenableVisuals.Layer:
+          True: {state: "vial-2-open"}
+          False: {state: "vial-2-closed"}
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 10
+  - type: SolutionTransfer
+    maxTransferAmount: 10
+    canChangeTransferAmount: true
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   id: VestineChemistryVial
@@ -122,7 +168,7 @@
 
 - type: entity
   id: RadiumChemistryVial
-  parent: BaseChemistryEmptyVial
+  parent: BaseChemistryEmptyVialSmall
   suffix: radium
   components:
   - type: Label
@@ -130,14 +176,14 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 5
+        maxVol: 10
         reagents:
           - ReagentId: Radium
             Quantity: 5
 
 - type: entity
   id: ChlorineChemistryVial
-  parent: BaseChemistryEmptyVial
+  parent: BaseChemistryEmptyVialSmall
   suffix: chlorine
   components:
   - type: Label
@@ -145,14 +191,14 @@
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 5
+        maxVol: 10
         reagents:
           - ReagentId: Chlorine
             Quantity: 5
             
 - type: entity
   id: PlasmaChemistryVial
-  parent: BaseChemistryEmptyVial
+  parent: BaseChemistryEmptyVialSmall
   suffix: plasma
   components:
   - type: Label
