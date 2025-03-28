@@ -34,12 +34,14 @@
       uiWindowPos: 0,2
       strippingWindowPos: 0,1
       displayName: Neck
+      offset: 0, 0.03
     - name: mask
       slotTexture: mask
       slotFlags: MASK
       uiWindowPos: 1,2
       strippingWindowPos: 1,1
       displayName: Mask
+      offset: 0, 0.0655
     - name: eyes
       slotTexture: glasses
       slotFlags: EYES
@@ -47,6 +49,7 @@
       uiWindowPos: 0,3
       strippingWindowPos: 0,0
       displayName: Eyes
+      offset: 0, 0.0655
     - name: ears
       slotTexture: ears
       slotFlags: EARS
@@ -54,12 +57,14 @@
       uiWindowPos: 2,2
       strippingWindowPos: 2,0
       displayName: Ears
+      offset: 0, 0.0615
     - name: head
       slotTexture: head
       slotFlags: HEAD
       uiWindowPos: 1,3
       strippingWindowPos: 1,0
       displayName: Head
+      offset: 0, 0.06
     - name: pocket1
       slotTexture: pocket
       fullTextureName: template_small
