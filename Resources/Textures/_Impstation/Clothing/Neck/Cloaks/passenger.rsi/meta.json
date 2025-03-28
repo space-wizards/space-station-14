@@ -18,6 +18,14 @@
       "name": "folded-equipped-NECK",
       "directions": 4
     },
+	{
+      "name": "equipped-NECK-gray",
+      "directions": 4
+    },
+	{
+      "name": "folded-equipped-NECK-gray",
+      "directions": 4
+    },
     {
       "name": "inhand-left",
       "directions": 4

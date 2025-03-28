@@ -13,6 +13,18 @@
         {
             "name": "equipped-HELMET",
             "directions": 4
+        },
+        {
+            "name": "equipped-HELMET-thaven",
+            "directions": 4
+        },
+        {
+            "name": "equipped-HELMET-gastropoid",
+            "directions": 4
+        },
+        {
+            "name": "equipped-HELMET-gray",
+            "directions": 4
         }
     ]
 }
