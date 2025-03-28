@@ -518,12 +518,10 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: North
-        pipeLayer: 1
       outlet:
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: South
-        pipeLayer: 1
   - type: Construction
     graph: GasBinary
     node: radiator
@@ -554,12 +552,10 @@
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: South
-          pipeLayer: 1
         outlet:
           !type:PipeNode
           nodeGroupID: Pipe
           pipeDirection: West
-          pipeLayer: 1
     - type: Construction
       graph: GasBinary
       node: bendradiator
