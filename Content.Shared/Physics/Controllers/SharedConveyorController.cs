@@ -120,17 +120,20 @@ public abstract class SharedConveyorController : VirtualController
         _job.Prediction = prediction;
         _job.Conveyed.Clear();
 
-        var query = EntityQueryEnumerator<ConveyedComponent, FixturesComponent, PhysicsComponent>();
+        var query = EntityQueryEnumerator<ConveyedComponent, FixturesComponent, PhysicsComponent, TransformComponent>();
 
-        while (query.MoveNext(out var uid, out var comp, out var fixtures, out var body))
+        while (query.MoveNext(out var uid, out var comp, out var fixtures, out var physics, out var xform))
         {
-            _job.Conveyed.Add(((uid, comp, fixtures, body, Transform(uid)), Vector2.Zero, false));
+            _job.Conveyed.Add(((uid, comp, fixtures, physics, xform), Vector2.Zero, false));
         }
 
         _parallel.ProcessNow(_job, _job.Conveyed.Count);
 
         foreach (var ent in _job.Conveyed)
         {
+            if (!ent.Entity.Comp3.Predict && prediction)
+                continue;
+
             var physics = ent.Entity.Comp3;
             var velocity = physics.LinearVelocity;
             var targetDir = ent.Direction;
@@ -145,6 +148,8 @@ public abstract class SharedConveyorController : VirtualController
 
             if (ent.Result)
             {
+                SetConveying(ent.Entity.Owner, ent.Entity.Comp1, targetDir.LengthSquared() > 0f);
+
                 // We apply friction here so when we push items towards the center of the conveyor they don't go overspeed.
                 // We also don't want this to apply to mobs as they apply their own friction and otherwise
                 // they'll go too slow.
@@ -155,20 +160,29 @@ public abstract class SharedConveyorController : VirtualController
 
                 SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
             }
-            else
+            else if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
             {
                 // Need friction to outweigh the movement as it will bounce a bit against the wall.
                 // This facilitates being able to sleep entities colliding into walls.
                 _mover.Friction(0f, frameTime: frameTime, friction: 40f, ref velocity);
             }
 
-            PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity);
+            PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity, wakeBody: false);
 
             if (!IsConveyed((ent.Entity.Owner, ent.Entity.Comp2)))
             {
                 RemComp<ConveyedComponent>(ent.Entity.Owner);
             }
         }
+    }
+
+    private void SetConveying(EntityUid uid, ConveyedComponent conveyed, bool value)
+    {
+        if (conveyed.Conveying == value)
+            return;
+
+        conveyed.Conveying = value;
+        Dirty(uid, conveyed);
     }
 
     /// <summary>
@@ -216,29 +230,16 @@ public abstract class SharedConveyorController : VirtualController
 
             // Check for blocked, if so then we can't convey at all and just try to sleep
             // Otherwise we may just keep pushing it into the wall
-            Transform? otherTransform;
-            if (contact.Hard)
-            {
-                otherTransform = PhysicsSystem.GetPhysicsTransform(other);
-                var aTransform = contact.EntityA == entity.Owner ? transform : otherTransform.Value;
-                var bTransform = contact.EntityB == entity.Owner ? transform : otherTransform.Value;
-                contact.GetWorldManifold(aTransform, bTransform, out var normal);
-
-                if (Vector2.Dot(bTransform.Position - aTransform.Position, normal) > 0f)
-                {
-                    return false;
-                }
-            }
 
             if (!_conveyorQuery.TryComp(other, out var conveyor))
                 continue;
 
             anyConveyors = true;
             var otherFixture = contact.OtherFixture(entity.Owner);
-            otherTransform = PhysicsSystem.GetPhysicsTransform(other);
+            var otherTransform = PhysicsSystem.GetPhysicsTransform(other);
 
             // Check if our center is over the conveyor, otherwise ignore it.
-            if (!_fixtures.TestPoint(otherFixture.Item2.Shape, otherTransform.Value, transform.Position))
+            if (!_fixtures.TestPoint(otherFixture.Item2.Shape, otherTransform, transform.Position))
                 continue;
 
             if (conveyor.Speed > bestSpeed && CanRun(conveyor))
@@ -270,11 +271,38 @@ public abstract class SharedConveyorController : VirtualController
         var itemRelative = conveyorPos - transform.Position;
         direction = Convey(direction, bestSpeed, itemRelative);
 
+        // Do a final check for hard contacts so if we're conveying into a wall then NOOP.
+        contacts = PhysicsSystem.GetContacts((entity.Owner, fixtures));
+
+        while (contacts.MoveNext(out var contact))
+        {
+            if (!contact.Hard || !contact.IsTouching)
+                continue;
+
+            var other = contact.OtherEnt(entity.Owner);
+            var otherBody = contact.OtherBody(entity.Owner);
+
+            // If the blocking body is dynamic then don't ignore it for this.
+            if (otherBody.BodyType != BodyType.Static)
+                continue;
+
+            var otherTransform = PhysicsSystem.GetPhysicsTransform(other);
+            var dotProduct = Vector2.Dot(otherTransform.Position - transform.Position, direction);
+
+            // TODO: This should probably be based on conveyor speed, this is mainly so we don't
+            // go to sleep when conveying and colliding with tables perpendicular to the conveyance direction.
+            if (dotProduct > 1.5f)
+            {
+                direction = Vector2.Zero;
+                return false;
+            }
+        }
+
         return true;
     }
     private static Vector2 Convey(Vector2 direction, float speed, Vector2 itemRelative)
     {
-        if (speed == 0 || direction.Length() == 0)
+        if (speed == 0 || direction.LengthSquared() == 0)
             return Vector2.Zero;
 
         /*
@@ -292,7 +320,7 @@ public abstract class SharedConveyorController : VirtualController
 
         if (r.Length() < 0.1)
         {
-            var velocity = direction.Normalized() * speed;
+            var velocity = direction * speed;
             return velocity;
         }
         else

@@ -162,9 +162,6 @@ public abstract partial class SharedMoverController : VirtualController
             return;
         }
 
-        // Reset velocity every tick so we can handle mob movement.
-        //PhysicsSystem.SetLinearVelocity(physicsUid, Vector2.Zero, body: physicsComponent);
-
         UsedMobMovement[uid] = true;
         // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
         var weightless = _gravity.IsWeightless(physicsUid, physicsComponent, xform);
@@ -272,7 +269,7 @@ public abstract partial class SharedMoverController : VirtualController
                 // TODO apparently this results in a duplicate move event because "This should have its event run during
                 // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
                 var worldRot = _transform.GetWorldRotation(xform);
-                _transform.SetLocalRotation(uid, xform.LocalRotation + wishDir.ToWorldAngle() - worldRot, xform);
+                _transform.SetLocalRotation(xform, xform.LocalRotation + wishDir.ToWorldAngle() - worldRot);
             }
 
             if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&
