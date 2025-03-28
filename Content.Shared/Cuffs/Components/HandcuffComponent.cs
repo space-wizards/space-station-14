@@ -34,6 +34,12 @@ public sealed partial class HandcuffComponent : Component
     public float StunBonus = 2f;
 
     /// <summary>
+    /// Amount of Stamina Damage dealt on a self-uncuff attempt.
+    /// </summary>
+    [DataField]
+    public float SelfUncuffStamDamage = 15f;
+
+    /// <summary>
     ///     Will the cuffs break when removed?
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
@@ -99,10 +105,11 @@ public sealed partial class HandcuffComponent : Component
 /// Should generate popups on the User.
 /// </summary>
 [ByRefEvent]
-public record struct UncuffAttemptEvent(EntityUid User, EntityUid Target)
+public record struct UncuffAttemptEvent(EntityUid User, EntityUid Target, EntityUid Cuffs)
 {
     public readonly EntityUid User = User;
     public readonly EntityUid Target = Target;
+    public readonly EntityUid Cuffs = Cuffs;
     public bool Cancelled = false;
 }
 

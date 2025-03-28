@@ -132,7 +132,10 @@ namespace Content.Shared.Cuffs
                 Dirty(args.User, cuffable);
 
                 // User will take self-inflicted stamina damage if attempting to uncuff themselves. This should happen even if the uncuff attempt fails.
-                _stamina.TakeStaminaDamage(args.Target, 15f, visual: true, source: args.User);
+                if (TryComp<HandcuffComponent>(args.Cuffs, out var handcuffComp))
+                {
+                    _stamina.TakeStaminaDamage(args.Target, handcuffComp.SelfUncuffStamDamage, visual: true, source: args.User);
+                }
             }
             else
             {
@@ -609,7 +612,7 @@ namespace Content.Shared.Cuffs
             if (!Resolve(cuffsToRemove.Value, ref cuff))
                 return;
 
-            var attempt = new UncuffAttemptEvent(user, target);
+            var attempt = new UncuffAttemptEvent(user, target, cuffsToRemove.Value);
             RaiseLocalEvent(user, ref attempt, true);
 
             if (attempt.Cancelled)
@@ -695,7 +698,7 @@ namespace Content.Shared.Cuffs
 
             if (user != null)
             {
-                var attempt = new UncuffAttemptEvent(user.Value, target);
+                var attempt = new UncuffAttemptEvent(user.Value, target, cuffsToRemove);
                 RaiseLocalEvent(user.Value, ref attempt);
                 if (attempt.Cancelled)
                     return;
