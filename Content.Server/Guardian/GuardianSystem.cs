@@ -189,7 +189,7 @@ namespace Content.Server.Guardian
             // Can only inject things with the component...
             if (!HasComp<CanHostGuardianComponent>(target))
             {
-                Loc.GetString("guardian-activator-invalid-target", ("entity", Identity.Name(target, EntityManager, user)));
+                var msg = Loc.GetString("guardian-activator-invalid-target", ("entity", Identity.Entity(target, EntityManager, user)));
 
                 _popupSystem.PopupEntity(msg, user, user);
                 return;
