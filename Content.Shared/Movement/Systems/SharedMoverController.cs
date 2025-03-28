@@ -439,14 +439,14 @@ public abstract partial class SharedMoverController : VirtualController
         if (FootstepModifierQuery.TryComp(uid, out var moverModifier))
         {
             sound = moverModifier.FootstepSoundCollection;
-            return true;
+            return sound != null;
         }
 
         if (_inventory.TryGetSlotEntity(uid, "shoes", out var shoes) &&
             FootstepModifierQuery.TryComp(shoes, out var modifier))
         {
             sound = modifier.FootstepSoundCollection;
-            return true;
+            return sound != null;
         }
 
         return TryGetFootstepSound(uid, xform, shoes != null, out sound, tileDef: tileDef);
@@ -467,10 +467,9 @@ public abstract partial class SharedMoverController : VirtualController
             if (FootstepModifierQuery.TryComp(xform.MapUid, out var modifier))
             {
                 sound = modifier.FootstepSoundCollection;
-                return true;
             }
 
-            return false;
+            return sound != null;
         }
 
         var position = grid.LocalToTile(xform.Coordinates);
@@ -493,7 +492,7 @@ public abstract partial class SharedMoverController : VirtualController
             if (FootstepModifierQuery.TryComp(maybeFootstep, out var footstep))
             {
                 sound = footstep.FootstepSoundCollection;
-                return true;
+                return sound != null;
             }
         }
 

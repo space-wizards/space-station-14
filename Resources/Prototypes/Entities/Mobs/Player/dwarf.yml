@@ -1,5 +1,5 @@
 - type: entity
   save: false
-  name: Urist McHands The Dwarf
+  name: Urist McHands The Elf hoho
   parent: BaseMobDwarf
   id: MobDwarf

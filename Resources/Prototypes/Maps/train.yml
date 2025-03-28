@@ -4,8 +4,8 @@
   mapPath: /Maps/train.yml
   maxRandomOffset: 0
   randomRotation: false
-  minPlayers: 35
-  maxPlayers: 70
+  minPlayers: 0
+  maxPlayers: 80
   stations:
     Train:
       stationProto: StandardNanotrasenStation

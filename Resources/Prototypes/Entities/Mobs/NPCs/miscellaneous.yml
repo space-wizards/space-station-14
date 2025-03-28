@@ -37,6 +37,10 @@
       thresholds:
         0: Alive
         100: Dead
+    - type: Butcherable
+      spawned:
+      - id: FoodMeatChicken
+        amount: 2
     - type: MovementSpeedModifier
       baseWalkSpeed: 2
       baseSprintSpeed: 5
@@ -221,3 +225,57 @@
         Blunt: 0.11
   - type: StaticPrice
     price: 400
+
+- type: entity
+  parent: MobTomatoKiller
+  id: MobJuicyTomatoKiller
+  name: juicy tomato killer
+  description: "Looks like it's not you eating tomatoes today, it's E X T R A   T H I C C tomatoes eating you."
+  components:
+  - type: Item
+    size: Large
+    shape:
+    - 2,2,4,3 # Require 2 more grids
+    - 0,0,3,3
+  - type: Sprite
+    sprite: Mobs/Demons/juicytomatokiller.rsi
+  - type: Bloodstream
+    bloodReagent: JuiceTomato
+    bloodMaxVolume: 70 # 20 more, 10 per sauce packet
+    chemicalMaxVolume: 50
+  - type: Butcherable
+    spawned:
+    - id: FoodMeatTomato
+      amount: 4 # 2 more, 1 per sauce packet
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 50 # 10 more health, 5 per sauce packet
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodMeatTomato:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: gib
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      45: Dead
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Effects/Footsteps/timpani.ogg
+      params:
+        variation: 0.125
+  - type: Produce
+    seedId: killerJuicyTomato
+  - type: PassiveDamage
+    damageCap: 40 # Removed 10 since its more ripen
+  - type: StaticPrice
+    price: 500 # Added 100 worth

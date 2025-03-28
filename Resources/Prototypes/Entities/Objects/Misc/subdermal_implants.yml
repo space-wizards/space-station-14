@@ -143,6 +143,18 @@
         - Cuffable # useless if you cant be cuffed
 
 - type: entity
+  parent: BaseSubdermalImplant
+  id: RadioImplant
+  name: radio implant
+  description: This implant grants access to the Syndicate channel without a headset.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: RadioImplant
+    radioChannels:
+    - Syndicate
+
+- type: entity
   parent: [ BaseSubdermalImplant, StorePresetUplink ]
   id: UplinkImplant
   name: uplink implant
@@ -233,6 +245,39 @@
         - HideContextMenu
         - MicroBomb
 
+- type: entity
+  parent: BaseSubdermalImplant
+  id: MicroBombImplantPAI
+  name: self-destruct sequence
+  description: INITIATE SELF-DESTRUCT SEQUENCE
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: SubdermalImplant
+      permanent: true
+      implantAction: ActionActivateMicroBombPAI
+      whitelist:
+        components:
+          - PAI 
+    - type: TriggerImplantAction
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: MicroBomb
+      totalIntensity: 120
+      intensitySlope: 5
+      maxIntensity: 30
+      canCreateVacuum: false
+    - type: Tag
+      tags:
+        - SubdermalImplant
+        - HideContextMenu
+        - MicroBomb
+    - type: OnUseTimerTrigger
+      delay: 5
+      beepSound:
+        path: "/Audio/Effects/beep1.ogg"
+        params:
+          volume: 5
+      initialBeepDelay: 0
 
 - type: entity
   parent: BaseSubdermalImplant
@@ -311,6 +356,17 @@
       - Dead
     - type: Rattle
 
+- type: entity
+  parent: BaseSubdermalImplant
+  id: FakeMindShieldImplant
+  name: fake mindshield implant
+  description: This implant allows the implanter to produce a fake signal that NT security huds use to identify individuals implanted with a mindshield.
+  categories: [ HideSpawnMenu ]
+  components:
+      - type: SubdermalImplant
+        implantAction: FakeMindShieldToggleAction
+      - type: FakeMindShieldImplant
+
 # Sec and Command implants
 
 - type: entity
@@ -321,7 +377,21 @@
   categories: [ HideSpawnMenu ]
   components:
    - type: SubdermalImplant
-     permanent: true
+   - type: MindShieldImplant
    - type: Tag
      tags:
        - MindShield
+
+# Centcomm implants
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: RadioImplantCentcomm
+  name: radio implant
+  description: This implant grants access to the Centcomm channel without a headset. Only authorized for Centcomm employees.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: RadioImplant
+    radioChannels:
+    - CentCom

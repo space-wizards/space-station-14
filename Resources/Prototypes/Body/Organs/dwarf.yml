@@ -1,7 +1,7 @@
 ﻿- type: entity
   id: OrganDwarfHeart
   parent: OrganHumanHeart
-  name: dwarf heart
+  name: elf heart
   components:
   - type: Metabolizer
     metabolizerTypes: [Dwarf]
@@ -9,7 +9,7 @@
 - type: entity
   id: OrganDwarfLiver
   parent: OrganHumanLiver
-  name: dwarf liver
+  name: elf liver
   components:
   - type: Metabolizer
     metabolizerTypes: [Dwarf]
@@ -17,7 +17,7 @@
 - type: entity
   id: OrganDwarfStomach
   parent: OrganHumanStomach
-  name: dwarf stomach
+  name: elf stomach
   components:
   - type: Sprite
     state: stomach

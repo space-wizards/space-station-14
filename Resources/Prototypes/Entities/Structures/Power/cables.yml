@@ -52,14 +52,16 @@
   parent: CableBase
   id: CableHV
   name: HV power cable
-  description: An orange high voltage power cable.
+  description: A red high voltage power cable.
   components:
   - type: Sprite
     sprite: Structures/Power/Cables/hv_cable.rsi
+    color: Red
     state: hvcable_0
     drawdepth: ThickWire
   - type: Icon
     sprite: Structures/Power/Cables/hv_cable.rsi
+    color: Red
     state: hvcable_4
   - type: NodeContainer
     nodes:
@@ -99,17 +101,25 @@
       path: /Audio/Ambience/Objects/emf_buzz.ogg
 
 - type: entity
+  id: CableHVUncuttable
+  parent: CableHV
+  suffix: uncuttable
+  components:
+  - type: Cable
+    cuttingQuality: null
+
+- type: entity
   parent: CableBase
   id: CableMV
   name: MV power cable
   description: A medium voltage power cable.
   components:
   - type: Sprite
-    color: Yellow
+    color: Red
     sprite: Structures/Power/Cables/mv_cable.rsi
     state: mvcable_0
   - type: Icon
-    color: Yellow
+    color: Red
     sprite: Structures/Power/Cables/mv_cable.rsi
     state: mvcable_4
   - type: NodeContainer
@@ -143,17 +153,25 @@
     statePrefix: mvcable_
 
 - type: entity
+  id: CableMVUncuttable
+  parent: CableMV
+  suffix: uncuttable
+  components:
+  - type: Cable
+    cuttingQuality: null
+
+- type: entity
   parent: CableBase
   id: CableApcExtension
   name: LV power cable
   description: A cable used to connect machines to an APC. #APCs aren't area defined anymore so need this cable to connect things to the APC. This description should be dynamic in future.
   components:
   - type: Sprite
-    color: Green
+    color: Red
     sprite: Structures/Power/Cables/lv_cable.rsi
     state: lvcable_0
   - type: Icon
-    color: Green
+    color: Red
     sprite: Structures/Power/Cables/lv_cable.rsi
     state: lvcable_4
   - type: NodeContainer
@@ -188,3 +206,11 @@
         acts: [ "Destruction" ]
   - type: CableVisualizer
     statePrefix: lvcable_
+
+- type: entity
+  id: CableApcExtensionUncuttable
+  parent: CableApcExtension
+  suffix: uncuttable
+  components:
+  - type: Cable
+    cuttingQuality: null

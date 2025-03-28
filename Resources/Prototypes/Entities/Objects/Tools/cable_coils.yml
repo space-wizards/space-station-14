@@ -16,8 +16,10 @@
     stackType: Cable
   - type: Sprite
     sprite: Objects/Tools/cable-coils.rsi
+    color: Red
   - type: Item
     sprite: Objects/Tools/cable-coils.rsi
+    color: Red
     size: Small
     storedRotation: -90
   - type: CablePlacer
@@ -29,6 +31,10 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 15
+  - type: GuideHelp
+    guides:
+    - VoltageNetworks
+    - Power
 
 - type: entity
   id: CableHVStack
@@ -170,18 +176,18 @@
   suffix: Full
   components:
   - type: Sprite
-    state: coillv-30
+    state: coilmv-30
     layers:
-    - state: coillv-30
+    - state: coilmv-30
       map: ["base"]
   - type: Item
     heldPrefix: coillv
   - type: Stack
     baseLayer: base
     layerStates:
-    - coillv-10
-    - coillv-20
-    - coillv-30
+    - coilmv-10
+    - coilmv-20
+    - coilmv-30
   - type: CablePlacer
     cablePrototypeID: CableApcExtension
     blockingWireType: Apc
@@ -203,7 +209,7 @@
   suffix: 10
   components:
     - type: Sprite
-      state: coillv-10
+      state: coilmv-10
     - type: Stack
       count: 10
 
@@ -222,6 +228,6 @@
   suffix: 1
   components:
   - type: Sprite
-    state: coillv-10
+    state: coilmv-10
   - type: Stack
     count: 1

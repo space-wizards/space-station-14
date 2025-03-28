@@ -7,6 +7,7 @@
     - id: SnailMigrationLowPop
     - id: CockroachMigration
     - id: MouseMigration
+    - id: MoproachMigration
 
 - type: entityTable
   id: SpicyPestEventsTable
@@ -24,7 +25,7 @@
   - type: StationEvent
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/Intern/aliens.ogg
     earliestStart: 15
     weight: 6
     duration: 50
@@ -47,7 +48,7 @@
   - type: StationEvent
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/Intern/aliens.ogg
     earliestStart: 15
     weight: 6
     duration: 50
@@ -73,7 +74,7 @@
   - type: StationEvent
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/Intern/aliens.ogg
     weight: 6
     duration: 50
   - type: VentCrittersRule
@@ -84,13 +85,28 @@
       prob: 0.008
 
 - type: entity
-  id: SnailMigrationLowPop
+  id: MoproachMigration
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
+    weight: 6
+    duration: 50
+  - type: VentCrittersRule
+    entries:
+    - id: MobMoproachHat
+      prob: 0.03
+
+- type: entity
+  id: SnailMigrationLowPop
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/Intern/aliens.ogg
     weight: 6
     duration: 50
   - type: VentCrittersRule
@@ -109,7 +125,7 @@
   - type: StationEvent
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
-      path: /Audio/Announcements/attention.ogg
+      path: /Audio/Announcements/Intern/aliens.ogg
     earliestStart: 15
     weight: 6
     duration: 50

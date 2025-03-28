@@ -45,8 +45,8 @@
   id: Security
   name: chat-radio-security
   keycode: 's'
-  frequency: 1359
-  color: "#ff4242"
+  frequency: 5660000
+  color: "#00ff00"
 
 - type: radioChannel
   id: Service
@@ -83,7 +83,7 @@
   name: chat-radio-binary
   keycode: 'b'
   frequency: 1001
-  color: "#2ed2fd"
+  color: "#5ed7aa"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
 

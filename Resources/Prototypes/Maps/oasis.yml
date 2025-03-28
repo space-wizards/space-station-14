@@ -2,7 +2,8 @@
   id: Oasis
   mapName: 'Oasis'
   mapPath: /Maps/oasis.yml
-  minPlayers: 70
+  minPlayers: 0
+  maxPlayers: 80
   stations:
     Oasis:
       stationProto: StandardNanotrasenStation
