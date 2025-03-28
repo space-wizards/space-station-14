@@ -5,3 +5,10 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Item
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/basic.rsi
+
+- type: entity
+  id: MailTeleporter
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: mail telepad
