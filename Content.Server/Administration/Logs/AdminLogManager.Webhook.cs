@@ -20,6 +20,8 @@ public sealed partial class AdminLogManager
 
     private readonly HttpClient _httpClient = new();
 
+    private TimeSpan _nextWebhookUpdateTime = new();
+
     private bool _lockProcessing;
     private AdminLogDiscordRelayInteraction? _relayMessage = null;
 
@@ -50,6 +52,13 @@ public sealed partial class AdminLogManager
 
     public void UpdateWebhook()
     {
+        // Only try to update the webhook every x seconds.
+        if (_timing.RealTime < _nextWebhookUpdateTime)
+            return;
+
+        // We use the queue send delay, same as for the delay for when logs are stored in database.
+        _nextWebhookUpdateTime = _timing.RealTime.Add(_queueSendDelay);
+
         if (_lockProcessing)
             return;
 
