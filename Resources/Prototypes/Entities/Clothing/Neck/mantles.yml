@@ -2,7 +2,7 @@
   parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckMantleCap
   name: captain's mantle
-  description: A comfortable and chique mantle befitting of only the most experienced captain.
+  description: It's very heavy and it makes moving your arm difficult, but it's a great way to show off your position as the best of the best.
   components:
   - type: Sprite
     sprite: Clothing/Neck/mantles/capmantle.rsi
