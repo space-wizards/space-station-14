@@ -1,29 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: Monkeys and kobolds slip properly on soap now. They can lay down at will,
-      too.
-    type: Fix
-  id: 921
-  time: '2025-01-13T16:38:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1345
-- author: AftrLite, kipdotnet
-  changes:
-  - message: Resprited the cargo telepad.
-    type: Tweak
-  id: 922
-  time: '2025-01-13T16:39:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1340
-- author: DinnerCalzone
-  changes:
-  - message: Reporter support has been added to Omega and Marathon. Psychologist support
-      has been added to Omega.
-    type: Add
-  id: 923
-  time: '2025-01-14T10:26:11.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1354
-- author: Darkmajia
-  changes:
   - message: Flipping while crawling no longer makes you appear to stand up.
     type: Fix
   id: 924
@@ -4074,3 +4051,27 @@
   id: 1420
   time: '2025-03-28T22:00:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2087
+- author: argentsunshine
+  changes:
+  - message: Added conical flasks to the medical techfab.
+    type: Add
+  id: 1421
+  time: '2025-03-28T22:06:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2125
+- author: AvianMaiden
+  changes:
+  - message: The Security Poncho is now selectable in the loadout menu!
+    type: Add
+  - message: Ushankas are now more obtainable. Keep your head warm!
+    type: Add
+  id: 1422
+  time: '2025-03-28T22:04:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2119
+- author: DinnerCalzone
+  changes:
+  - message: Wall rechargers now behave more like other wall-mounted devices and can
+      be constructed through the construction menu.
+    type: Tweak
+  id: 1423
+  time: '2025-03-28T22:05:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2086
