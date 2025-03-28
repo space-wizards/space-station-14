@@ -28,6 +28,11 @@ public sealed partial class AtmosPipeLayersSystem : SharedAtmosPipeLayersSystem
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
 
+        if (_appearance.TryGetData<int>(ent, AtmosPipeLayerVisuals.DrawDepth, out var drawDepth))
+        {
+            sprite.DrawDepth = drawDepth;
+        }
+
         if (_appearance.TryGetData<string>(ent, AtmosPipeLayerVisuals.Sprite, out var spriteRsi) &&
             _resourceCache.TryGetResource(SpriteSpecifierSerializer.TextureRoot / spriteRsi, out RSIResource? resource))
         {

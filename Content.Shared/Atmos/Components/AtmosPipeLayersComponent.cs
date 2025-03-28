@@ -87,4 +87,5 @@ public enum AtmosPipeLayerVisuals
 {
     Sprite,
     SpriteLayers,
+    DrawDepth,
 }

@@ -24,6 +24,8 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
+    private readonly DrawDepth.DrawDepth[] _pipeLayerDrawDepths = { DrawDepth.DrawDepth.ThinPipe, DrawDepth.DrawDepth.ThinPipeAlt1, DrawDepth.DrawDepth.ThinPipeAlt2 };
+
     public override void Initialize()
     {
         base.Initialize();
@@ -177,9 +179,13 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
         if (TryComp<AppearanceComponent>(ent, out var appearance))
         {
+            if (ent.Comp.CurrentPipeLayer < _pipeLayerDrawDepths.Length)
+            {
+                _appearance.SetData(ent, AtmosPipeLayerVisuals.DrawDepth, (int)_pipeLayerDrawDepths[ent.Comp.CurrentPipeLayer], appearance);
+            }
+
             if (ent.Comp.SpriteRsiPaths != null && ent.Comp.CurrentPipeLayer < ent.Comp.SpriteRsiPaths.Length)
                 _appearance.SetData(ent, AtmosPipeLayerVisuals.Sprite, ent.Comp.SpriteRsiPaths[ent.Comp.CurrentPipeLayer], appearance);
-
 
             if (ent.Comp.SpriteLayersRsiPaths.Count > 0)
             {
