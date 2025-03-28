@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Ghosts can now view what reagents are inside a foam
-    type: Tweak
-  id: 915
-  time: '2025-01-13T07:05:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1317
 - author: Pinkbat5
   changes:
   - message: Paper headbags and smiling paper headbags are now selectable as trinkets.
@@ -4078,3 +4071,10 @@
   id: 1414
   time: '2025-03-28T21:39:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2117
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: Improvised Pistol and Basilisk-11 changes.
+    type: Tweak
+  id: 1415
+  time: '2025-03-28T21:44:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2095
