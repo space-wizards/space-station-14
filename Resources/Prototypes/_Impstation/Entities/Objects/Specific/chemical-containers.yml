@@ -57,3 +57,66 @@
     solutions:
       drink:
         maxVol: 30
+
+- type: entity
+  name: large conical flask
+  parent: LargeBeaker
+  description: Used to contain a large amount of chemicals or solutions.
+  id: LargeConicalFlask
+  components:
+  - type: Spillable
+    solution: beaker
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chemistry/conical_large.rsi
+    layers:
+      - state: conicallarge
+      - state: conicallarge1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Item
+    size: Normal
+    sprite: _Impstation/Objects/Specific/Chemistry/conical_large.rsi
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: conicallarge
+    inHandsMaxFillLevels: 2
+    inHandsFillBaseName: -fill-
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 100
+  - type: StaticPrice
+    price: 20
+
+- type: entity
+  name: conical flask
+  parent: BaseBeaker
+  description: Used to contain a moderate amount of chemicals and solutions.
+  id: ConicalFlask
+  components:
+  - type: Spillable
+    solution: beaker
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chemistry/conical.rsi
+    layers:
+      - state: conical
+      - state: conical1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Item
+    size: Small
+    sprite: _Impstation/Objects/Specific/Chemistry/conical.rsi
+  - type: StaticPrice
+    price: 10
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: conical
+    inHandsMaxFillLevels: 2
+    inHandsFillBaseName: -fill-

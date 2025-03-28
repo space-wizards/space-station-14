@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/740ff31a81313086cf16761f3677cf1e2ab46c93. icon and reagent icon sprites taken from tgstation from https://github.com/tgstation/tgstation/pull/854914, modified from beaker sprites by argentsunshine.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "conical"
+    },
+    {
+      "name": "lid_conical"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+	{
+      "name": "inhand-left-fill-1",
+      "directions": 4
+    },
+	{
+      "name": "inhand-left-fill-2",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "inhand-right-fill-1",
+      "directions": 4
+    },
+	{
+      "name": "inhand-right-fill-2",
+      "directions": 4
+    },
+    {
+      "name": "conical1"
+    },
+    {
+      "name": "conical2"
+    },
+    {
+      "name": "conical3"
+    },
+    {
+      "name": "conical4"
+    },
+    {
+      "name": "conical5"
+    },
+    {
+      "name": "conical6"
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
+    }
+  ]
+}

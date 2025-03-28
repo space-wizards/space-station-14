@@ -1,0 +1,13 @@
+- type: latheRecipe
+  id: ConicalFlask
+  result: ConicalFlask
+  completetime: 2
+  materials:
+    Glass: 100
+
+- type: latheRecipe
+  id: LargeConicalFlask
+  result: LargeConicalFlask
+  completetime: 2
+  materials:
+    Glass: 200
