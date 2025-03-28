@@ -23,16 +23,16 @@
     stateDoorClosed: emergency_door
 
 - type: entity
-  id: ClosetWallEmergencyNitrogen
-  name: emergency nitrogen wall closet
   parent: BaseWallCloset
-  description: It's a storage unit for emergency breath masks and N2 tanks.
+  id: ClosetWallEmergencyN2
+  name: emergency nitrogen wall closet
+  description: It's full of life-saving equipment. Assuming, that is, that you breathe nitrogen.
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBaseClosed: emergencynit
-    stateDoorOpen: emergencynit_open
-    stateDoorClosed: emergencynit_door
+    stateBaseClosed: n2
+    stateDoorOpen: n2_open
+    stateDoorClosed: n2_door
 
 - type: entity
   id: ClosetWallFire

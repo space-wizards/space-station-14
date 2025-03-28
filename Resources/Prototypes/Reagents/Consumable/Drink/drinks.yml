@@ -570,7 +570,7 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/arnoldpalmer.rsi
     state: icon_empty
-  metamorphicMaxFillLevels: 5
+  metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
   metabolisms:
@@ -644,7 +644,7 @@
   flavor: sweet
   color: "#485000"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/beerstein.rsi
+    sprite: Objects/Consumable/Drinks/rewriter.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-

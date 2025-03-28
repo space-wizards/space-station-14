@@ -1,12 +1,10 @@
 using Content.Server._DV.Cargo.Components;
 using Content.Server._DV.Cargo.Systems;
-using Content.Server._DV.Mail.Components;
 using Content.Server.CartridgeLoader;
 using Content.Server.Station.Systems;
 using Content.Shared._DV.CartridgeLoader.Cartridges;
-using Content.Shared._DV.Mail;
+using Content.Shared.Delivery;
 using Content.Shared.CartridgeLoader;
-using Content.Shared.CartridgeLoader.Cartridges;
 
 namespace Content.Server._DV.CartridgeLoader.Cartridges;
 
@@ -21,7 +19,6 @@ public sealed class MailMetricsCartridgeSystem : EntitySystem
 
         SubscribeLocalEvent<MailMetricsCartridgeComponent, CartridgeUiReadyEvent>(OnUiReady);
         SubscribeLocalEvent<LogisticStatsUpdatedEvent>(OnLogisticsStatsUpdated);
-        SubscribeLocalEvent<MailComponent, MapInitEvent>(OnMapInit);
     }
 
     private void OnUiReady(Entity<MailMetricsCartridgeComponent> ent, ref CartridgeUiReadyEvent args)
@@ -32,12 +29,6 @@ public sealed class MailMetricsCartridgeSystem : EntitySystem
     private void OnLogisticsStatsUpdated(LogisticStatsUpdatedEvent args)
     {
         UpdateAllCartridges(args.Station);
-    }
-
-    private void OnMapInit(Entity<MailComponent> ent, ref MapInitEvent args)
-    {
-        if (_station.GetOwningStation(ent) is { } station)
-            UpdateAllCartridges(station);
     }
 
     private void UpdateAllCartridges(EntityUid station)
@@ -72,7 +63,7 @@ public sealed class MailMetricsCartridgeSystem : EntitySystem
     {
         var unopenedMail = 0;
 
-        var query = EntityQueryEnumerator<MailComponent>();
+        var query = EntityQueryEnumerator<DeliveryComponent>();
 
         while (query.MoveNext(out var uid, out var comp))
         {

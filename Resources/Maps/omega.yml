@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/07/2025 18:56:09
+  entityCount: 13931
+maps:
+- 473
+grids:
+- 4812
+orphans: []
+nullspace: []
 tilemap:
   0: Space
   7: FloorAsteroidSand
@@ -48,7 +59,6 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
-    - type: LoadedMap
   - uid: 4812
     components:
     - type: MetaData
@@ -28269,6 +28279,13 @@ entities:
     - type: Transform
       pos: -46.5,18.5
       parent: 4812
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 13931
+    components:
+    - type: Transform
+      pos: 17.5,23.5
+      parent: 4812
 - proto: Carpet
   entities:
   - uid: 1739
@@ -33034,33 +33051,21 @@ entities:
     - type: Transform
       pos: 3.4675388,-14.361706
       parent: 4812
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 6337
     components:
     - type: Transform
       pos: 25.449461,-19.268694
       parent: 4812
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 11851
     components:
     - type: Transform
       pos: 10.561617,-44.322975
       parent: 4812
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 12497
     components:
     - type: Transform
       pos: 9.501655,-16.456053
       parent: 4812
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesSunglasses
   entities:
   - uid: 1655
@@ -33080,9 +33085,6 @@ entities:
     - type: Transform
       pos: -9.466419,-48.16831
       parent: 4812
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesHudDiagnostic
   entities:
   - uid: 10769
@@ -33090,9 +33092,6 @@ entities:
     - type: Transform
       pos: -43.49446,-7.521168
       parent: 4812
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesHudMedical
   entities:
   - uid: 7586
@@ -33100,17 +33099,11 @@ entities:
     - type: Transform
       pos: -14.516666,-20.606585
       parent: 4812
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 7587
     components:
     - type: Transform
       pos: -14.766666,-20.481499
       parent: 4812
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesHudSecurity
   entities:
   - uid: 8443
@@ -33118,9 +33111,6 @@ entities:
     - type: Transform
       pos: -35.493202,16.440695
       parent: 4812
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingHandsGlovesColorGray
   entities:
   - uid: 11853
@@ -33378,6 +33368,13 @@ entities:
     components:
     - type: Transform
       pos: 28.730742,-41.454163
+      parent: 4812
+- proto: ClothingHeadHelmetTemplar
+  entities:
+  - uid: 11881
+    components:
+    - type: Transform
+      pos: -1.477562,-34.543083
       parent: 4812
 - proto: ClothingHeadsetEngineering
   entities:
@@ -73875,19 +73872,12 @@ entities:
     - type: Transform
       pos: -13.5,-6.5
       parent: 4812
-- proto: SpawnPointBrigmedic
-  entities:
-  - uid: 11881
-    components:
-    - type: Transform
-      pos: -37.5,11.5
-      parent: 4812
 - proto: SpawnPointCaptain
   entities:
-  - uid: 3449
+  - uid: 2697
     components:
     - type: Transform
-      pos: -1.5,31.5
+      pos: -11.5,28.5
       parent: 4812
 - proto: SpawnPointCargoTechnician
   entities:
@@ -73929,11 +73919,6 @@ entities:
       parent: 4812
 - proto: SpawnPointChiefEngineer
   entities:
-  - uid: 2697
-    components:
-    - type: Transform
-      pos: -3.5,29.5
-      parent: 4812
   - uid: 9833
     components:
     - type: Transform
@@ -73945,11 +73930,6 @@ entities:
     components:
     - type: Transform
       pos: -25.5,-27.5
-      parent: 4812
-  - uid: 92718
-    components:
-    - type: Transform
-      pos: -4.5,28.5
       parent: 4812
 - proto: SpawnPointClown
   entities:
@@ -73967,17 +73947,17 @@ entities:
       parent: 4812
 - proto: SpawnPointHeadOfPersonnel
   entities:
-  - uid: 72027
-    components:
-    - type: Transform
-      pos: -1.5,28.5
-      parent: 4812
-- proto: SpawnPointHeadOfSecurity
-  entities:
   - uid: 2540
     components:
     - type: Transform
-      pos: -2.5,30.5
+      pos: 7.5,28.5
+      parent: 4812
+- proto: SpawnPointHeadOfSecurity
+  entities:
+  - uid: 8253
+    components:
+    - type: Transform
+      pos: -22.5,27.5
       parent: 4812
 - proto: SpawnPointJanitor
   entities:
@@ -74123,10 +74103,10 @@ entities:
       parent: 4812
 - proto: SpawnPointQuartermaster
   entities:
-  - uid: 6305
+  - uid: 3449
     components:
     - type: Transform
-      pos: -1.5,29.5
+      pos: 16.5,34.5
       parent: 4812
 - proto: SpawnPointResearchAssistant
   entities:
@@ -74137,10 +74117,10 @@ entities:
       parent: 4812
 - proto: SpawnPointResearchDirector
   entities:
-  - uid: 8253
+  - uid: 6305
     components:
     - type: Transform
-      pos: -4.5,30.5
+      pos: 27.5,-18.5
       parent: 4812
 - proto: SpawnPointSalvageSpecialist
   entities:

@@ -14,6 +14,7 @@
     - CosmicMonumentObjective
     - CosmicEntropyObjective
   - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ CosmicAntagCultist ]
       min: 2

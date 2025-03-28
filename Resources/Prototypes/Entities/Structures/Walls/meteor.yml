@@ -199,6 +199,7 @@
       intensity: 0.3
       slope: 0.1
 
+
 - type: entity
   id: MeteorRockBananium
   parent: MeteorRock

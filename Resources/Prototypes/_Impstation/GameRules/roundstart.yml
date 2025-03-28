@@ -26,6 +26,7 @@
     - RandomTraitorAliveSvSObjective
     - EscapeShuttleObjective
   - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ Traitor ]
       fallbackRoles: [ TraitorSleeper ]
@@ -56,6 +57,7 @@
     - RandomTraitorAliveSvSObjective
     - EscapeShuttleObjective
   - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ Traitor ]
       fallbackRoles: [ TraitorSleeper ]
@@ -86,6 +88,7 @@
     - RandomTraitorAliveSvSObjective
     - EscapeShuttleObjective
   - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ Traitor ]
       fallbackRoles: [ TraitorSleeper ]

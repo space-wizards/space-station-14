@@ -8,9 +8,9 @@
   markingLimits: MobApidMarkingLimits
   dollPrototype: MobApidDummy
   skinColoration: TintedHues # this prevents RandomHumanoidAppearance from fucking with their colorscheme too much
-  maleFirstNames: apid_worker
-  femaleFirstNames: apid_worker
-  lastNames: names_apid
+  maleFirstNames: ApidWorker
+  femaleFirstNames: ApidWorker
+  lastNames: ApidNames
   sexes:
   - Male
   - Female
@@ -53,11 +53,11 @@
     HeadTop:
       points: 2
       required: false
+    UndergarmentTop:
+      points: 1
+      required: false
     Chest:
       points: 4
-      required: false
-    Undershirt:
-      points: 1
       required: false
     Tail: # wings
       points: 1
@@ -113,31 +113,31 @@
     state: torso
 
 - type: humanoidBaseSprite
-  id: MobApidLLeg 
+  id: MobApidLLeg
   baseSprite:
     sprite: _Impstation/Mobs/Species/Apid/parts.rsi
     state: l_leg
 
 - type: humanoidBaseSprite
-  id: MobApidLHand 
+  id: MobApidLHand
   baseSprite:
     sprite: _Impstation/Mobs/Species/Apid/parts.rsi
     state: l_hand
 
 - type: humanoidBaseSprite
-  id: MobApidLArm 
+  id: MobApidLArm
   baseSprite:
     sprite: _Impstation/Mobs/Species/Apid/parts.rsi
     state: l_arm
 
 - type: humanoidBaseSprite
-  id: MobApidLFoot 
+  id: MobApidLFoot
   baseSprite:
     sprite: _Impstation/Mobs/Species/Apid/parts.rsi
     state: l_foot
 
 - type: humanoidBaseSprite
-  id: MobApidRLeg 
+  id: MobApidRLeg
   baseSprite:
     sprite: _Impstation/Mobs/Species/Apid/parts.rsi
     state: r_leg
@@ -155,7 +155,7 @@
     state: r_arm
 
 - type: humanoidBaseSprite
-  id: MobApidRFoot 
+  id: MobApidRFoot
   baseSprite:
     sprite: _Impstation/Mobs/Species/Apid/parts.rsi
     state: r_foot

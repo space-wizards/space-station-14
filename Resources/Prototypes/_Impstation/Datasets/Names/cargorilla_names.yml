@@ -1,12 +1,5 @@
-- type: dataset
-  id: names_cargorilla
+- type: localizedDataset
+  id: CargorillaNames
   values:
-  - Forklift
-  - Conveyor
-  - Pallet
-  - Pallet Jack
-  - Golira
-  - Business Logic
-  - Trolley
-  - Freight
-  - Long-Haul
+    prefix: names-cargorilla-dataset-
+    count: 9

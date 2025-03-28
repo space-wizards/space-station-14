@@ -12,8 +12,8 @@
   dollPrototype: MobVoxDummy
   skinColoration: Hues #imp
   defaultSkinTone: "#6c741d"
-  maleFirstNames: names_vox
-  femaleFirstNames: names_vox
+  maleFirstNames: NamesVox
+  femaleFirstNames: NamesVox
   naming: First
   sexes:
   - Male
@@ -25,10 +25,11 @@
   sprites:
     Head: MobVoxHead
     Snout: MobHumanoidAnyMarking
-    Underwear: MobHumanoidAnyMarking #imp
     HeadSide: MobHumanoidAnyMarking #imp
     Hair: MobHumanoidAnyMarking
     FacialHair: MobHumanoidAnyMarking
+    UndergarmentTop: MobHumanoidAnyMarking
+    UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobVoxTorso
     Eyes: MobVoxEyes
     LArm: MobVoxLArm
@@ -69,11 +70,14 @@
       points: 6
       required: false #imp
       #defaultMarkings: [ VoxLLegScales, VoxRLegScales, VoxRFootScales, VoxLFootScales ]
+    UndergarmentTop:
+      points: 1
+      required: false
+    UndergarmentBottom:
+      points: 1
+      required: false
     Chest:
       points: 2
-      required: false
-    Underwear: #imp
-      points: 1
       required: false
     Overlay:
       points: 4

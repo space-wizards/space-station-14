@@ -67,7 +67,7 @@ public sealed class DamageOverlayUiController : UIController
     {
         _overlay.DeadLevel = 0f;
         _overlay.CritLevel = 0f;
-        _overlay.BruteLevel = 0f;
+        _overlay.PainLevel = 0f;
         _overlay.OxygenLevel = 0f;
     }
 
@@ -95,26 +95,30 @@ public sealed class DamageOverlayUiController : UIController
         {
             case MobState.Alive:
             {
-                if (EntityManager.HasComponent<PainNumbnessComponent>(entity))
+                FixedPoint2 painLevel = 0;
+                _overlay.PainLevel = 0;
+
+                if (!EntityManager.HasComponent<PainNumbnessComponent>(entity))
                 {
-                    _overlay.BruteLevel = 0;
-                }
-                else if (damageable.DamagePerGroup.TryGetValue("Brute", out var bruteDamage))
-                {
-                    _overlay.BruteLevel = FixedPoint2.Min(1f, bruteDamage / critThreshold).Float();
+                    foreach (var painDamageType in damageable.PainDamageGroups)
+                    {
+                        damageable.DamagePerGroup.TryGetValue(painDamageType, out var painDamage);
+                        painLevel += painDamage;
+                    }
+                    _overlay.PainLevel = FixedPoint2.Min(1f, painLevel / critThreshold).Float();
+
+                    if (_overlay.PainLevel < 0.05f) // Don't show damage overlay if they're near enough to max.
+                    {
+                        _overlay.PainLevel = 0;
+                    }
                 }
                 else
-                    _overlay.BruteLevel = 0;
+                    _overlay.PainLevel = 0;
 
                 if (thresholds.ShowAirlossOverlay && damageable.DamagePerGroup.TryGetValue("Airloss", out var oxyDamage))
                     _overlay.OxygenLevel = FixedPoint2.Min(1f, oxyDamage / critThreshold).Float();
                 else
                     _overlay.OxygenLevel = 0;
-
-                if (_overlay.BruteLevel < 0.05f) // Don't show damage overlay if they're near enough to max.
-                {
-                    _overlay.BruteLevel = 0;
-                }
 
                 _overlay.CritLevel = 0;
                 _overlay.DeadLevel = 0;
@@ -130,13 +134,13 @@ public sealed class DamageOverlayUiController : UIController
                 else
                     _overlay.CritLevel = 0;
 
-                _overlay.BruteLevel = 0;
+                _overlay.PainLevel = 0;
                 _overlay.DeadLevel = 0;
                 break;
             }
             case MobState.Dead:
             {
-                _overlay.BruteLevel = 0;
+                _overlay.PainLevel = 0;
                 _overlay.CritLevel = 0;
                 break;
             }

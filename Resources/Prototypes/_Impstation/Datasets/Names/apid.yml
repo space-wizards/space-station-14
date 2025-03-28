@@ -1,0 +1,77 @@
+- type: localizedDataset
+  id: ApidWorker
+  values:
+    prefix: names-apid-worker-dataset-
+    count: 1
+
+- type: localizedDataset
+  id: ApidBotanist
+  values:
+    prefix: names-apid-botanist-dataset-
+    count: 2
+
+- type: localizedDataset
+  id: ApidDoctor
+  values:
+    prefix: names-apid-doctor-dataset-
+    count: 2
+
+- type: localizedDataset
+  id: ApidEngineer
+  values:
+    prefix: names-apid-engineer-dataset-
+    count: 4
+
+- type: localizedDataset
+  id: ApidEmergency
+  values:
+    prefix: names-apid-emergency-dataset-
+    count: 2
+
+- type: localizedDataset
+  id: ApidChef
+  values:
+    prefix: names-apid-chef-dataset-
+    count: 2
+
+- type: localizedDataset
+  id: ApidCourier
+  values:
+    prefix: names-apid-courier-dataset-
+    count: 2
+
+- type: localizedDataset
+  id: ApidScientist
+  values:
+    prefix: names-apid-scientist-dataset-
+    count: 2
+
+- type: localizedDataset
+  id: ApidJanitor
+  values:
+    prefix: names-apid-janitor-dataset-
+    count: 2
+
+- type: localizedDataset
+  id: ApidAdminAssistant
+  values:
+    prefix: names-apid-aa-dataset-
+    count: 2
+
+- type: localizedDataset
+  id: ApidChaplain
+  values:
+    prefix: names-apid-chaplain-dataset-
+    count: 2
+
+- type: localizedDataset
+  id: ApidSalvager
+  values:
+    prefix: names-apid-salvager-dataset-
+    count: 2
+
+- type: localizedDataset
+  id: ApidNames
+  values:
+    prefix: names-apid-dataset-
+    count: 20

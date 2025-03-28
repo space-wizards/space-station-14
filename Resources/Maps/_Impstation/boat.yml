@@ -60859,7 +60859,7 @@ entities:
     - type: Transform
       pos: 56.5,56.5
       parent: 2
-- proto: ClosetWallEmergencyNitrogen
+- proto: ClosetWallEmergencyN2
   entities:
   - uid: 16905
     components:

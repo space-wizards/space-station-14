@@ -15,6 +15,7 @@
       maxPicks: 10
     maxDifficulty: 2.5
   - type: AntagSelection
+    selectionTime: IntraPlayerSpawn
     agentName: thief-round-end-agent-name
     definitions:
     - prefRoles: [ Thief ]
@@ -59,7 +60,7 @@
         - Wizard
       - type: RandomMetadata
         nameSegments:
-        - names_wizard_first
-        - names_wizard_last
+        - NamesWizardFirst
+        - NamesWizardLast
       mindRoles:
       - MindRoleWizard

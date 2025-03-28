@@ -16,7 +16,7 @@
     - MindRoleGhostRoleFamiliar
   - type: GhostTakeoverAvailable
   - type: RandomMetadata
-    nameSegments: [names_mouse_death_commando]
+    nameSegments: [ MouseDeathCommando ] # imp
   - type: NpcFactionMember
     factions:
     - Syndicate

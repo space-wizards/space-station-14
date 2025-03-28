@@ -586,3 +586,7 @@ SpawnMobWalter: SpawnMobChemDog
 # impstation: make the courier hardsuit non-roundstart
 SuitStorageCourier: null
 LockerCourierFilledHardsuit: LockerCourierFilled
+
+# 2025-03-25
+# impstation: swap mail systems
+MailTeleporter: CargoMailTeleporter

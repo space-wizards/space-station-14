@@ -27,6 +27,8 @@ public sealed partial class AccessibilityTab : Control
         Control.AddOptionCheckBox(ImpCCVars.ChatAutoFillHighlights, AutoFillHighlightsCheckBox);
         Control.AddOptionColorSlider(ImpCCVars.ChatHighlightsColor, HighlightsColorSlider);
 
+        Control.AddOptionCheckBox(CCVars.AccessibilityClientCensorNudity, CensorNudityCheckBox);
+
         Control.Initialize();
     }
 }

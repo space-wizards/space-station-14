@@ -311,7 +311,7 @@
     - NotekeeperCartridge
     - NewsReaderCartridge
     - NanoChatCartridge
-    - MailMetricsCartridge
+    # - MailMetricsCartridge - turning this off to fix with the rest of the mail
     - SOSCartridge # Imp
 
 #Hospitality Director

@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: DinoCommanderFirst
+  values:
+    prefix: dino-commander-first-
+    count: 6
+
+- type: localizedDataset
+  id: DinoCommanderLast
+  values:
+    prefix: dino-commander-last-
+    count: 6

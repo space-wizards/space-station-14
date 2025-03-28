@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 450
+        maxVol: 500
         canMix: true"; // Imp - Increase maxVol to allow testing PhilosophersJuice (I have already increased this limit 3 times wtf lmao)
 
         [Test]
