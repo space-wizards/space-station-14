@@ -410,7 +410,7 @@
     - Stir
   reactants:
     ShimmeringBlood:
-      amount: 2
+      amount: 3
     Absinthe:
       amount: 1
     Champagne:
