@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Original sprites from https://github.com/discordia-space/CEV-Eris/raw/9ea3eccbe22e18d24653949067f3d7dd12194ea9/icons/obj/stationobjs.dmi, assembly, electronics, wires made by DinnerCalzone (github)",
+    "states": [
+        {
+            "name": "assembly",
+			"directions": 4
+        },
+        {
+            "name": "electronics",
+			"directions": 4
+        },
+        {
+            "name": "wires",
+			"directions": 4
+        }
+    ]
+}

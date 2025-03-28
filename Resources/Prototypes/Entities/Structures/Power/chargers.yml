@@ -193,11 +193,19 @@
           - PotatoBattery
 
 - type: entity
-  parent: BaseItemRecharger
+  #parent: BaseItemRecharger imp edit
   id: WallWeaponCapacitorRecharger
   name: wall recharger
+  #imp edit start
+  description: A wall-mounted recharger for battery-based weaponry.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+  #imp edit end
   components:
   - type: Sprite
+    snapCardinals: false #imp edit
     sprite: Structures/Power/wall_recharger.rsi
     layers:
     - map: ["enum.PowerChargerVisualLayers.Base"]
@@ -207,6 +215,7 @@
       shader: "unshaded"
   - type: WallMount
   - type: Charger
+    slotId: charger_slot #imp edit
     chargeRate: 25
   - type: ItemSlots
     slots:
@@ -217,6 +226,61 @@
           - HitscanBatteryAmmoProvider
           - ProjectileBatteryAmmoProvider
           - Stunbaton
+  #imp edit start, behold my frankenstein
+  #BaseStructure
+  - type: Clickable
+  #BaseMachine
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
+  #BaseMachinePowered
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+  - type: ExtensionCableReceiver
+  - type: LightningTarget
+    priority: 1
+  #ConstructableMachine
+  - type: Animateable
+  - type: Machine
+    board: WeaponCapacitorRechargerCircuitboard
+  - type: Construction
+    graph: WallWeaponCapacitorRecharger
+    node: wall_recharger
+    containers:
+    - machine_parts
+    - machine_board
+  #BaseRecharger
+  - type: Transform
+    anchored: true
+  - type: Appearance
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: StaticPrice
+    price: 75
+  - type: PowerChargerVisuals
+  - type: ContainerContainer
+    containers:
+      charger_slot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: RequireProjectileTarget
 
 - type: entity
   parent: BaseRecharger

@@ -1,0 +1,30 @@
+- type: entity
+  id: WallWeaponCapacitorRechargerAssembly
+  name: wall recharger assembly
+  description: An incomplete wall-mounted recharger for battery-based weaponry.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+  components:
+  - type: WallMount
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: _Impstation/Structures/Power/wall_recharger.rsi
+    layers:
+    - state: assembly
+      map: [ "enum.ConstructionVisuals.Layer" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          assembly: { state: assembly }
+          wires: { state: wires }
+          electronics: { state: electronics }
+  - type: Construction
+    graph: WallWeaponCapacitorRecharger
+    node: assembly
+  - type: Transform
+    anchored: true

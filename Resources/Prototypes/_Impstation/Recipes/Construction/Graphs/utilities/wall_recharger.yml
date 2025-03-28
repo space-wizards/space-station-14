@@ -1,0 +1,99 @@
+- type: constructionGraph
+  id: WallWeaponCapacitorRecharger
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: assembly
+      steps:
+      - material: Steel
+        amount: 5
+        doAfter: 2.0
+
+  - node: assembly
+    entity: WallWeaponCapacitorRechargerAssembly
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: wires
+      steps:
+      - material: Cable
+        amount: 2
+        doAfter: 1
+    - to: start
+      completed:
+      - !type:GivePrototype
+        prototype: SheetSteel1
+        amount: 5
+      - !type:DeleteEntity {}
+      steps:
+      - tool: Welding
+        doAfter: 2
+  
+  - node: wires
+    entity: WallWeaponCapacitorRechargerAssembly
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: wires_mv
+      steps:
+      - material: CableMV
+        amount: 5
+        doAfter: 1
+    - to: assembly
+      completed:
+      - !type:GivePrototype
+        prototype: CableApcStack1
+        amount: 2
+      steps:
+      - tool: Cutting
+        doAfter: 1  
+
+  - node: wires_mv
+    entity: WallWeaponCapacitorRechargerAssembly
+    edges:
+    - to: electronics
+      steps:
+      - material: Capacitor
+        store: machine_parts
+        amount: 2
+        doAfter: 1
+      - tag: WeaponCapacitorRechargerCircuitboard
+        store: machine_board
+        name: "recharger machine board"
+        icon:
+          sprite: "Objects/Misc/module.rsi"
+          state: "charger_APC"
+        doAfter: 1
+    - to: wires
+      completed:
+      - !type:GivePrototype
+        prototype: CableMVStack1
+        amount: 5
+      steps:
+      - tool: Cutting
+        doAfter: 1
+
+  - node: electronics
+    actions:
+    - !type:AppearanceChange
+    edges:
+    - to: wall_recharger
+      steps:
+      - tool: Screwing
+        doAfter: 2  
+
+  - node: wall_recharger
+    entity: WallWeaponCapacitorRecharger
+    edges:
+    - to: wires
+      conditions:
+      - !type:ContainerNotEmpty
+        container: machine_board
+      completed:
+      - !type:EmptyAllContainers
+        pickup: true
+        emptyAtUser: true
+      steps:
+      - tool: Prying
+        doAfter: 1

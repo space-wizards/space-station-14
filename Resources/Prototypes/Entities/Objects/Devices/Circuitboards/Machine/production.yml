@@ -747,6 +747,13 @@
         Plastic: 30
     - type: StaticPrice
       price: 15
+    #imp edit start
+    - type: Tag
+      tags:
+      - DroneUsable
+      - WeaponCapacitorRechargerCircuitboard
+    #imp edit end
+
 
 - type: entity
   id: TurboItemRechargerCircuitboard
