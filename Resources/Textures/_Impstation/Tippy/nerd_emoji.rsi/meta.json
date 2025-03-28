@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "license": "CC-BY-4.0",
+  "copyright": "Emojis from twemoji at https://github.com/twitter/twemoji/blob/master/assets/72x72/1f913.png and https://github.com/twitter/twemoji/blob/master/assets/72x72/261d.png ",
+  "MetaAtlas": false,
+  "size": {
+    "x": 150,
+    "y": 150
+  },
+  "states": [
+    {
+      "name": "icon"
+    }
+  ]
+}

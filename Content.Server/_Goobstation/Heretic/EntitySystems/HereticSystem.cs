@@ -49,14 +49,9 @@ public sealed partial class HereticSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<HereticComponent, ComponentInit>(OnCompInit);
-
-        SubscribeLocalEvent<HereticComponent, EventHereticUpdateTargets>(OnUpdateTargets);
-        SubscribeLocalEvent<HereticComponent, EventHereticRerollTargets>(OnRerollTargets);
         SubscribeLocalEvent<HereticComponent, EventHereticAscension>(OnAscension);
-
         SubscribeLocalEvent<HereticComponent, BeforeDamageChangedEvent>(OnBeforeDamage);
         SubscribeLocalEvent<HereticComponent, DamageModifyEvent>(OnDamage);
-
 
     }
 
@@ -99,77 +94,9 @@ public sealed partial class HereticSystem : EntitySystem
 
         foreach (var knowledge in ent.Comp.BaseKnowledge)
             _knowledge.AddKnowledge(ent, ent.Comp, knowledge);
-
-        RaiseLocalEvent(ent, new EventHereticRerollTargets());
     }
 
     #region Internal events (target reroll, ascension, etc.)
-
-    private void OnUpdateTargets(Entity<HereticComponent> ent, ref EventHereticUpdateTargets args)
-    {
-        ent.Comp.SacrificeTargets = ent.Comp.SacrificeTargets
-            .Where(target => TryGetEntity(target, out var tent) && Exists(tent))
-            .ToList();
-        Dirty<HereticComponent>(ent); // update client
-    }
-
-    private void OnRerollTargets(Entity<HereticComponent> ent, ref EventHereticRerollTargets args)
-    {
-        // welcome to my linq smorgasbord of doom
-        // have fun figuring that out
-
-        var targets = _antag.GetAliveConnectedPlayers(_playerMan.Sessions)
-            .Where(ics => ics.AttachedEntity.HasValue && HasComp<HumanoidAppearanceComponent>(ics.AttachedEntity));
-
-        var eligibleTargets = new List<EntityUid>();
-        foreach (var target in targets)
-            eligibleTargets.Add(target.AttachedEntity!.Value); // it can't be null because see .Where(HasValue)
-
-        // no ghouls or lings
-        eligibleTargets = eligibleTargets.Where(t => !HasComp<HellVictimComponent>(t) || !HasComp<GhoulComponent>(t) || !HasComp<ChangelingComponent>(t)).ToList();
-
-        var pickedTargets = new List<EntityUid?>();
-
-        var predicates = new List<Func<EntityUid, bool>>();
-
-        // pick one command staff
-        predicates.Add(t => HasComp<CommandStaffComponent>(t));
-
-        // pick one security staff
-        predicates.Add(t => _jobs.MindHasJobDept(t, _prot.Index(SecOffJobProtoID)));
-
-        // pick someone in your department
-        predicates.Add(t => (_jobs.MindsHaveSameJobDept(t, ent)));
-
-        // add more predicates here
-
-        foreach (var predicate in predicates)
-        {
-            var list = eligibleTargets.Where(predicate).ToList();
-
-            if (list.Count == 0)
-                continue;
-
-            // pick and take
-            var picked = _rand.PickAndTake<EntityUid>(list);
-            pickedTargets.Add(picked);
-        }
-
-        // add whatever more until satisfied
-        while (ent.Comp.MaxTargets > pickedTargets.Count)
-        {
-            if (eligibleTargets.Count <= 0)
-                break;
-            pickedTargets.Add(_rand.PickAndTake<EntityUid>(eligibleTargets));
-        }
-
-        // leave only unique entityuids
-        pickedTargets = pickedTargets.Distinct().ToList();
-
-        ent.Comp.SacrificeTargets = pickedTargets.ConvertAll(t => GetNetEntity(t)).ToList();
-        Dirty<HereticComponent>(ent); // update client
-    }
-
     // notify the crew of how good the person is and play the cool sound :godo:
     private void OnAscension(Entity<HereticComponent> ent, ref EventHereticAscension args)
     {

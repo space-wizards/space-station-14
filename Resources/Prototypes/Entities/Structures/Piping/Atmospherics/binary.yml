@@ -40,6 +40,7 @@
   - type: Transform
     noRot: false
   - type: Sprite
+    drawdepth: FloorObjects #imp
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -96,6 +97,7 @@
     - type: Transform
       noRot: false
     - type: Sprite
+      drawdepth: FloorObjects #imp
       sprite: Structures/Piping/Atmospherics/pump.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -191,6 +193,7 @@
   components:
     # TODO ATMOS: Give unique sprite.
     - type: Sprite
+      drawdepth: FloorObjects #imp
       sprite: _Impstation/Structures/Piping/Atmospherics/pump.rsi #imp
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -247,6 +250,7 @@
   components:
   - type: StationAiWhitelist
   - type: Sprite
+    drawdepth: FloorObjects #imp
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -313,6 +317,7 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
+      drawdepth: FloorObjects #imp
       sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
       layers:
         - sprite: Structures/Piping/Atmospherics/pipe.rsi

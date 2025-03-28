@@ -1,133 +1,4 @@
 ﻿Entries:
-- author: EpicToast
-  changes:
-  - message: Adds tape recorders from Delta-V! Spawns in the detective's locker or
-      in the reporter's/librarian's backpack, and can be printed from the autolathe
-      and service techfab.
-    type: Add
-  id: 902
-  time: '2025-01-11T03:51:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1293
-- author: ultramario1998
-  changes:
-  - message: Added a special tutorial pAI for new players.
-    type: Add
-  - message: A new ghost role can be taken for tutorial pAIs. Please make sure to
-      follow the rules.
-    type: Add
-  id: 903
-  time: '2025-01-11T04:43:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1282
-- author: Kandiyaki
-  changes:
-  - message: ashen passage will now play a sound and ignite the user upon exit.
-    type: Tweak
-  - message: nightwatcher's rebirth now has a smaller radius.
-    type: Tweak
-  - message: the ashen blade is now made with a welder instead of a match.
-    type: Tweak
-  - message: flesh ghouls now have a unique text identifier when inspected.
-    type: Add
-  - message: nerfed heretic multipathing. you can now only get a knowledge from another
-      tree if you have already bought the corresponding knowledge in your main tree.
-    type: Tweak
-  - message: flesh surgery rework. all old effects have been removed and replaced
-      with new ones that don't last the whole round.
-    type: Tweak
-  - message: all of the flesh heretic rituals that require blood will now accept blood
-      from all species.
-    type: Tweak
-  - message: rewrote the heretic's guidebook for easier understanding.
-    type: Tweak
-  id: 904
-  time: '2025-01-11T04:51:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1184
-- author: widgetbeck
-  changes:
-  - message: Fixed Gastropoids being unable to pilot, host anomalies, or make footstep
-      sounds.
-    type: Fix
-  id: 905
-  time: '2025-01-11T04:56:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1307
-- author: EpicToast
-  changes:
-  - message: Making curtains and fancy tables with a stack of carpet will no longer
-      eat the entire stack.
-    type: Fix
-  id: 906
-  time: '2025-01-12T09:32:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1320
-- author: starlighthowls
-  changes:
-  - message: map changes to Boat
-    type: Tweak
-  id: 907
-  time: '2025-01-12T13:20:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1324
-- author: ruddygreat
-  changes:
-  - message: The round summary screen now features a list of everything that traitors,
-      changelings & heretics bought throughout the round.
-    type: Add
-  id: 908
-  time: '2025-01-13T04:13:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1332
-- author: TheGrimbeeper
-  changes:
-  - message: ghosts can now examine damage on weapons and reagents in solutions
-    type: Tweak
-  id: 909
-  time: '2025-01-13T04:15:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1318
-- author: hivehum
-  changes:
-  - message: Added a new trinket, dogtags, from Cosmatic Drift.
-    type: Add
-  - message: Added a fun heart locket for your honey :)
-    type: Add
-  id: 910
-  time: '2025-01-13T04:18:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1329
-- author: hivehum
-  changes:
-  - message: Some vendors have a new dispensing sound.
-    type: Tweak
-  id: 911
-  time: '2025-01-13T04:19:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1326
-- author: DinnerCalzone
-  changes:
-  - message: Clown shoe waddling has been re-implemented with a fix that will prevent
-      the waddling animation from playing when it should not be. Additionally, it
-      has been changed into a toggle system, similar to magboots.
-    type: Add
-  id: 912
-  time: '2025-01-13T04:18:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1310
-- author: EpicToast
-  changes:
-  - message: Vent creatures now spawn from one vent all at once instead of being spread
-      across the station. Crew members get a 30-second warning announcement saying
-      where they will spawn.
-    type: Tweak
-  id: 913
-  time: '2025-01-13T04:17:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1308
-- author: Pinkbat5
-  changes:
-  - message: CMOs and Paramedics start with externals access.
-    type: Tweak
-  id: 914
-  time: '2025-01-13T04:19:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1330
-- author: TheGrimbeeper
-  changes:
-  - message: Ghosts can now view what reagents are inside a foam
-    type: Tweak
-  id: 915
-  time: '2025-01-13T07:05:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1317
 - author: Pinkbat5
   changes:
   - message: Paper headbags and smiling paper headbags are now selectable as trinkets.
@@ -4093,3 +3964,117 @@
   id: 1401
   time: '2025-03-27T03:11:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2101
+- author: formlessnameless
+  changes:
+  - message: New undergarments have been imported. Don't forget to get dressed before
+      you clock in!
+    type: Tweak
+  id: 1402
+  time: '2025-03-28T14:20:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2057
+- author: mqole
+  changes:
+  - message: theres a special prize hidden in the rules! you better go read them again
+      to make sure you didnt miss it!
+    type: Tweak
+  id: 1403
+  time: '2025-03-28T14:20:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2126
+- author: AvianMaiden
+  changes:
+  - message: Mirrors reflect something quite disturbing when you look closely...
+    type: Tweak
+  id: 1404
+  time: '2025-03-28T17:30:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2120
+- author: SixValentine
+  changes:
+  - message: You can now grind on Train.
+    type: Fix
+  id: 1405
+  time: '2025-03-28T21:25:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2128
+- author: DinnerCalzone
+  changes:
+  - message: The Entropic Blade no longer ignores damage resistances and no longer
+      deals bonus damage on left-click.
+    type: Tweak
+  id: 1406
+  time: '2025-03-28T21:26:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2123
+- author: Sha-Seng
+  changes:
+  - message: Fixed the Brown Puffer Coat's name (oops)
+    type: Fix
+  id: 1407
+  time: '2025-03-28T21:29:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2099
+- author: DinnerCalzone
+  changes:
+  - message: Most atmos devices will now render over catwalks. You can place floor
+      tiles underneath them if you want to hide their piping.
+    type: Tweak
+  id: 1408
+  time: '2025-03-28T21:31:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2096
+- author: horseplinko
+  changes:
+  - message: Added tags to decapoid plushie
+    type: Tweak
+  id: 1409
+  time: '2025-03-28T21:33:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2102
+- author: Kandiyaki
+  changes:
+  - message: Sacrificing someone without a mind no longer has a chance to crash the
+      server.
+    type: Fix
+  - message: People returning from the Infinite Archives will no longer have a chance
+      to spawn in space.
+    type: Tweak
+  id: 1410
+  time: '2025-03-28T21:37:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2094
+- author: Sha-Seng
+  changes:
+  - message: Proper Punctuation accent no longer adds periods after ' " and *
+    type: Tweak
+  id: 1411
+  time: '2025-03-28T21:37:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2115
+- author: Kandiyaki
+  changes:
+  - message: heretics no longer have specific targets they are restricted to.
+    type: Remove
+  - message: removed the Living Heart heretic ability and the Relentless Heartbeat
+      heretic ritual.
+    type: Remove
+  - message: edited the heretic's guidebook to reflect the above changes.
+    type: Tweak
+  id: 1412
+  time: '2025-03-28T21:37:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2072
+- author: AvianMaiden
+  changes:
+  - message: All computers and TVs and hotplates can now be turned on or off to save
+      power, you heathen.
+    type: Add
+  id: 1413
+  time: '2025-03-28T21:40:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2116
+- author: AvianMaiden
+  changes:
+  - message: More laser gun names and descriptions match now!
+    type: Add
+  - message: Melee tweaks for a few guns to match the weapons properly.
+    type: Tweak
+  id: 1414
+  time: '2025-03-28T21:39:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2117
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: Improvised Pistol and Basilisk-11 changes.
+    type: Tweak
+  id: 1415
+  time: '2025-03-28T21:44:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2095

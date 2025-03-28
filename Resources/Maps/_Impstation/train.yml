@@ -4,8 +4,8 @@ meta:
   engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 03/25/2025 11:06:41
-  entityCount: 20008
+  time: 03/28/2025 11:06:39
+  entityCount: 20007
 maps:
 - 1
 grids:
@@ -8570,12 +8570,30 @@ entities:
       parent: 2
 - proto: AirlockMaint
   entities:
+  - uid: 235
+    components:
+    - type: Transform
+      pos: -4.5,-72.5
+      parent: 2
   - uid: 921
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,-179.5
       parent: 2
+  - uid: 1952
+    components:
+    - type: Transform
+      pos: -4.5,-74.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 3
+    - type: DeviceLinkSource
+      linkedPorts:
+        17195:
+        - DoorStatus: DoorBolt
+        241:
+        - DoorStatus: DoorBolt
   - uid: 7900
     components:
     - type: Transform
@@ -8688,28 +8706,6 @@ entities:
     - type: Transform
       pos: 2.5,-116.5
       parent: 2
-- proto: AirlockMaintLawyerLocked
-  entities:
-  - uid: 235
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -4.5,-74.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        17181:
-        - DoorStatus: DoorBolt
-        17195:
-        - DoorStatus: DoorBolt
-  - uid: 15476
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -4.5,-72.5
-      parent: 2
 - proto: AirlockMaintLocked
   entities:
   - uid: 236
@@ -8770,12 +8766,14 @@ entities:
       pos: -4.5,-79.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 2
+      invokeCounter: 3
     - type: DeviceLinkSource
       linkedPorts:
         17195:
         - DoorStatus: DoorBolt
         17181:
+        - DoorStatus: DoorBolt
+        1952:
         - DoorStatus: DoorBolt
   - uid: 242
     components:
@@ -14255,18 +14253,6 @@ entities:
     components:
     - type: Transform
       pos: -6.618776,-83.395706
-      parent: 2
-  - uid: 19869
-    components:
-    - type: Transform
-      pos: 5.5270414,-169.35855
-      parent: 2
-- proto: BoxVial
-  entities:
-  - uid: 1952
-    components:
-    - type: Transform
-      pos: 5.2145414,-169.1398
       parent: 2
 - proto: BrbSign
   entities:
@@ -86745,6 +86731,11 @@ entities:
     - type: Transform
       pos: -0.5,-86.5
       parent: 2
+  - uid: 15476
+    components:
+    - type: Transform
+      pos: 5.5,-169.5
+      parent: 2
   - uid: 19441
     components:
     - type: Transform
@@ -123510,7 +123501,7 @@ entities:
       invokeCounter: 1
     - type: DeviceLinkSource
       linkedPorts:
-        235:
+        1952:
         - DoorStatus: DoorBolt
         241:
         - DoorStatus: DoorBolt
@@ -123681,10 +123672,10 @@ entities:
       pos: -5.5,-76.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 2
     - type: DeviceLinkSource
       linkedPorts:
-        235:
+        1952:
         - DoorStatus: DoorBolt
         241:
         - DoorStatus: DoorBolt

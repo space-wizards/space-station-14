@@ -25,19 +25,6 @@
     ClothingNeckAmberFocus: 1
 
 - type: hereticRitual
-  id: LivingHeart
-  locName: heretic-ritual-basic-heart
-  locDesc: heretic-ritual-basic-heart-desc
-  icon:
-    sprite: _Goobstation/Heretic/items.rsi
-    state: living_heart
-  requiredTags:
-    Heart: 1
-    Pen: 1
-    Paper: 1
-  outputEvent: !type:EventHereticRerollTargets
-
-- type: hereticRitual
   id: CodexCicatrix
   locName: heretic-ritual-basic-codex
   locDesc: heretic-ritual-basic-codex-desc

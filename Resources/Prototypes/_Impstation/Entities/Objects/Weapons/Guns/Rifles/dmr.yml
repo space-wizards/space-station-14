@@ -106,7 +106,7 @@
     fireRate: 5
     burstFireRate: 10
     shotsPerBurst: 3
-    burstCooldown: 0.50
+    burstCooldown: 0.40
     selectedMode: Burst
     availableModes:
       - SemiAuto

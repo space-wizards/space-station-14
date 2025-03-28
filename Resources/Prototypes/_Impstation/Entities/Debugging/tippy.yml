@@ -1,0 +1,27 @@
+- type: entity
+  id: HomeDepotCockHero
+  categories: [HideSpawnMenu]
+  name: Homer
+  description: SEE YOU NEXT WEEK
+  components:
+  - type: Sprite
+    sprite: _Impstation/Tippy/homer.rsi
+    state: icon
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepExplosion
+
+- type: entity
+  id: NerdEmoji
+  categories: [HideSpawnMenu]
+  name: Nerd Emoji
+  description: errmmmm ACKSHUALLY
+  components:
+  - type: Sprite
+    sprite: _Impstation/Tippy/nerd_emoji.rsi
+    state: icon
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepNerd
+      params:
+        volume: 4

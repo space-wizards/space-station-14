@@ -107,8 +107,7 @@ namespace Content.Server.Heretic.Ritual;
         foreach (var look in lookup)
         {
             if (!args.EntityManager.TryGetComponent<MobStateComponent>(look, out var mobstate) // only mobs
-            || !args.EntityManager.HasComponent<HumanoidAppearanceComponent>(look) // only humans
-            || (OnlyTargets && !hereticComp.SacrificeTargets.Contains(args.EntityManager.GetNetEntity(look)))) // only targets
+            || !args.EntityManager.HasComponent<HumanoidAppearanceComponent>(look)) // only humans
                 continue;
 
             if (mobstate.CurrentState == Shared.Mobs.MobState.Dead)
@@ -173,8 +172,21 @@ namespace Content.Server.Heretic.Ritual;
 
             //send the target to hell world
             _hellworld.AddVictimComponent(uids[i]);
+            
+
+            //teleport the body to a midround antag spawn spot so it's not just tossed into space
             _hellworld.TeleportRandomly(args, uids[i]);
-            _hellworld.SendToHell(uids[i], args, speciesPrototype);
+
+            //make sure that my shitty AddVictimComponent thing actually worked before trying to use a mind that isn't there
+            if (args.EntityManager.TryGetComponent<HellVictimComponent>(uids[i], out var hellVictim))
+            {
+                //i'm so sorry to all of my computer science professors. i've failed you
+                if(hellVictim.HasMind)
+                {
+                    _hellworld.SendToHell(uids[i], args, speciesPrototype);
+                }
+
+            }
 
             //update the heretic's knowledge
             if (args.EntityManager.TryGetComponent<HereticComponent>(args.Performer, out var hereticComp))

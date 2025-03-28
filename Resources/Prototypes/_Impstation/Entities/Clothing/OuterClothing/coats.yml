@@ -54,7 +54,7 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterCoatPufferDark
-  name: mime puffer coat
+  name: brown puffer coat
   description: An oversized puffer coat made of high-quality nylon.
   components:
   - type: Sprite

@@ -107,8 +107,8 @@ public sealed class TippyUIController : UIController
             if (EntityManager.TryGetComponent(_entity, out FootstepModifierComponent? step) && step.FootstepSoundCollection != null)
             {
                 var audioParams = step.FootstepSoundCollection.Params
-                    .AddVolume(-7f)
-                    .WithVariation(0.1f);
+                    .AddVolume(-7f);
+                    //.WithVariation(0.1f); imp edit, let tippy prototypes define their own variation
                 _audio.PlayGlobal(step.FootstepSoundCollection, EntityUid.Invalid, audioParams);
             }
         }

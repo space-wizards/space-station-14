@@ -5,10 +5,6 @@ namespace Content.Server.Speech.EntitySystems;
 
 public sealed class ProperPunctuationSystem : EntitySystem
 {
-    // @formatter:off
-    private static readonly Regex RegexEndsWithAnyPunctuation = new(@"[,:;!?\.-]+$");
-    // @formatter:on
-
     public override void Initialize()
     {
         base.Initialize();
@@ -19,13 +15,13 @@ public sealed class ProperPunctuationSystem : EntitySystem
     {
         var message = args.Message;
 
+        if (string.IsNullOrWhiteSpace(message))
+            return;
+
         // If the message doesn't end with any punctuation, we add a period
-        if (!RegexEndsWithAnyPunctuation.IsMatch(message))
-        {
+        if (!char.IsPunctuation(message[^1]))
             message += ".";
-        }
 
         args.Message = message;
-
     }
 }

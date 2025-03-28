@@ -23,11 +23,6 @@ heretic-fleshsurgery-barf = The contents of your stomach come pouring out!
 heretic-fleshsurgery-eyes = Your vision becomes dull and cloudy!
 heretic-fleshsurgery-mute = Your tongue falls limp!
 
-heretic-livingheart-notargets = No available targets, visit the rune.
-heretic-livingheart-offstation = It's {$state}, off station, {$direction}!
-heretic-livingheart-onstation = It's {$state}, {$direction}!
-heretic-livingheart-unknown = It's... not in this plane of reality.
-
 ## speech
 heretic-speech-mansusgrasp = R'CH T'H TR'TH!
 

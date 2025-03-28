@@ -60,6 +60,9 @@
   id: MagazineZipper
 
 - type: Tag
+  id: MakeshiftLoader
+
+- type: Tag
   id: MimeBeltBlack
 
 - type: Tag
