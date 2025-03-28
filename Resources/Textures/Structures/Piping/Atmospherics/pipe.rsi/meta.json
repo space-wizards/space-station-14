@@ -80,16 +80,19 @@
          "directions":4
       },
       {
-         "name":"storageStraight",
-         "directions":4
+         "name":"storageStraight"
       },
       {
-         "name":"storageBend",
-         "directions":4
+         "name":"storageHalf"
       },
       {
-         "name":"storageTJunction",
-         "directions":4
+         "name":"storageBend"
+      },
+      {
+         "name":"storageTJunction"
+      },
+      {
+         "name":"storageFourway"
       }
    ]
 }

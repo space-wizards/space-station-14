@@ -109,12 +109,17 @@
         pipeDirection: South
   - type: Sprite
     layers:
-      - state: pipeHalf
-        map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pipeHalf
+      map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
   - type: Construction
     graph: GasPipe
     node: half
+  - type: Item
+    size: Small
+    storedSprite:
+      sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: storageHalf
   - type: GuideHelp
     guides:
     - Pipes
@@ -133,14 +138,13 @@
         pipeDirection: Longitudinal
   - type: Sprite
     layers:
-      - state: pipeStraight
-        map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
   - type: Construction
     graph: GasPipe
     node: straight
   - type: Item
-    size: Normal
     storedSprite:
       sprite: Structures/Piping/Atmospherics/pipe.rsi
       state: storageStraight
@@ -178,7 +182,6 @@
     graph: GasPipe
     node: bend
   - type: Item
-    size: Small
     shape:
     - 0,0,1,0
     - 1,1,1,1
@@ -223,10 +226,6 @@
     graph: GasPipe
     node: tjunction
   - type: Item
-    size: Normal
-    shape:
-    - 0,0,2,0
-    - 1,1,1,1
     heldPrefix: TJunction
     storedSprite:
       sprite: Structures/Piping/Atmospherics/pipe.rsi
@@ -266,11 +265,10 @@
     graph: GasPipe
     node: fourway
   - type: Item
-    size: Normal
-    shape:
-    - 1,0,1,2
-    - 0,1,2,1
     heldPrefix: Fourway
+    storedSprite:
+      sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: storageFourway
   - type: MeleeWeapon
     wideAnimationRotation: 90
     attackRate: 0.75
@@ -302,6 +300,8 @@
   - type: Construction
     graph: GasPipe
     node: broken
+  - type: Item
+    size: Small
   - type: Destructible
     thresholds: # override parent to avoid recursive destruction
     - trigger:
@@ -331,6 +331,10 @@
   - type: Construction
     graph: GasPipe
     node: manifold
+  - type: Item
+    storedSprite:
+      sprite: Structures/Piping/Atmospherics/manifold.rsi
+      state: storageManifold
   - type: NodeContainer
     nodes:
       south0:

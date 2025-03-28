@@ -12,6 +12,9 @@
     {
       "name":"pipeManifold",
       "directions":4
+    },
+    {
+      "name":"storageManifold"
     }
   ]
 }
