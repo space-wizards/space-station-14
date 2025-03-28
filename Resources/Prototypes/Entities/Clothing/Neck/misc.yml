@@ -92,6 +92,7 @@
     state: icon
   - type: Item
     size: Tiny
+  - type: PoorlyAttached
   - type: Tag
     tags:
     - Trash
