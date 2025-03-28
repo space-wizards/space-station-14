@@ -136,12 +136,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.DeleteOnRemove && _net.IsServer)
-        {
-            QueueDel(uid);
-            return;
-        }
-
         if (component.EmbeddedIntoUid is not null)
         {
             if (TryComp<EmbeddedContainerComponent>(component.EmbeddedIntoUid.Value, out var embeddedContainer))
@@ -151,6 +145,12 @@ public abstract partial class SharedProjectileSystem : EntitySystem
                 if (embeddedContainer.EmbeddedObjects.Count == 0)
                     RemCompDeferred<EmbeddedContainerComponent>(component.EmbeddedIntoUid.Value);
             }
+        }
+
+        if (component.DeleteOnRemove && _net.IsServer)
+        {
+            QueueDel(uid);
+            return;
         }
 
         var xform = Transform(uid);
