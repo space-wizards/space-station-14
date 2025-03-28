@@ -1,0 +1,6 @@
+﻿# Literally just to have Something so the species prototype doesn't fault if it doesn't exist
+- type: localizedDataset
+  id: NamesMiddle
+  values:
+    prefix: names-middle-dataset-
+    count: 1

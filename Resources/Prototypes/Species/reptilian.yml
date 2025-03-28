@@ -8,8 +8,8 @@
   markingLimits: MobReptilianMarkingLimits
   dollPrototype: MobReptilianDummy
   skinColoration: Hues
-  maleFirstNames: names_reptilian_male
-  femaleFirstNames: names_reptilian_female
+  maleFirstNames: NamesReptilianMale
+  femaleFirstNames: NamesReptilianFemale
   naming: FirstDashFirst
   sexes:
   - Male
@@ -21,8 +21,8 @@
   sprites:
     Head: MobReptilianHead
     Snout: MobHumanoidAnyMarking
-    Underwear: MobHumanoidAnyMarking
-    Undershirt: MobHumanoidAnyMarking
+    UndergarmentTop: MobHumanoidAnyMarking
+    UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobReptilianTorso
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
@@ -61,14 +61,14 @@
     HeadSide:
       points: 1
       required: false
+    UndergarmentTop:
+      points: 1
+      required: false
+    UndergarmentBottom:
+      points: 1
+      required: false
     Chest:
       points: 4
-      required: false
-    Underwear:
-      points: 1
-      required: false
-    Undershirt:
-      points: 1
       required: false
     Legs:
       points: 8 #impspecial

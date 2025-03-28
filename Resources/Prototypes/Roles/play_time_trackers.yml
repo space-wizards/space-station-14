@@ -207,6 +207,9 @@
 - type: playTimeTracker
   id: AntagZombie
 
+- type: playTimeTracker
+  id: AntagParadoxClone
+
 # non-upstream antagonists:
 
 - type: playTimeTracker

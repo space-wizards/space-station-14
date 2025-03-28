@@ -8,8 +8,8 @@
   markingLimits: MobThavenMarkingLimits
   dollPrototype: MobThavenDummy
   skinColoration: Hues
-  maleFirstNames: names_thaven
-  femaleFirstNames: names_thaven
+  maleFirstNames: NamesThaven
+  femaleFirstNames: NamesThaven
   naming: First
   sexes:
   - Male
@@ -24,8 +24,8 @@
     Head: MobThavenHead
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
-    Underwear: MobHumanoidAnyMarking
-    Undershirt: MobHumanoidAnyMarking
+    UndergarmentBottom: MobHumanoidAnyMarking
+    UndergarmentTop: MobHumanoidAnyMarking
     Tail: MobHumanoidAnyMarking
     Chest: MobThavenTorso
     LArm: MobThavenLArm
@@ -54,14 +54,14 @@
     Head:
       points: 4
       required: false
+    UndergarmentTop:
+      points: 1
+      required: false
+    UndergarmentBottom:
+      points: 1
+      required: false
     Chest:
       points: 4
-      required: false
-    Undershirt:
-      points: 1
-      required: false
-    Underwear:
-      points: 1
       required: false
     Arms:
       points: 4

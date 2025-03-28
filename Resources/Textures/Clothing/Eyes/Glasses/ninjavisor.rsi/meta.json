@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from paradise station https://github.com/ParadiseSS13/Paradise/commit/ede55cc8f5b50abcd4f51d37779b56853a440a9a, vox helmet by LandsharkRAWR",
+  "copyright": "Taken from paradise station https://github.com/ParadiseSS13/Paradise/commit/ede55cc8f5b50abcd4f51d37779b56853a440a9a, vox helmet by LandsharkRAWR, equipped-EYES-arachnid modified from equipped-EYES by HTMLSystem",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-EYES",
+      "directions": 4
+    },
+    {
+      "name": "equipped-EYES-arachnid",
       "directions": 4
     },
     {

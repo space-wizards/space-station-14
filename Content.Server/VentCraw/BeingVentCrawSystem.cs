@@ -44,7 +44,7 @@ public sealed class BeingVentCrawSystem : EntitySystem
                 mind = _entities.GetComponent<MindComponent>(mindId);
             }
 
-            _entities.System<GhostSystem>().OnGhostAttempt(mindId, true, true, mind);
+            _entities.System<GhostSystem>().OnGhostAttempt(mindId, true, true, false, mind);
         }
     }
 

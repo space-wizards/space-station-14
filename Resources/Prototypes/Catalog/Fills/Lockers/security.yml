@@ -142,7 +142,7 @@
     contents:
       - id: ClothingEyesGlassesSecurity
         prob: 0.3
-      - id: ClothingHeadHatFedoraBrown
+      - id: ClothingHeadHatDetGadget
       - id: ClothingNeckTieDet
       - id: ClothingOuterVestDetective
       - id: ClothingOuterCoatDetective

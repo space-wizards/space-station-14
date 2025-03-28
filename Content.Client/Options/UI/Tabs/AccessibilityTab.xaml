@@ -4,6 +4,8 @@
     <BoxContainer Orientation="Vertical">
         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
             <BoxContainer Orientation="Vertical" Margin="8">
+                <Label Text="{Loc 'ui-options-accessability-header-visuals'}"
+                       StyleClasses="LabelKeyText"/>
                 <CheckBox Name="ReducedMotionCheckBox" Text="{Loc 'ui-options-reduced-motion'}" />
                 <CheckBox Name="DisableSinguloWarpingCheckBox" Text="{Loc 'ui-options-disable-singulo-warp'}" />
                 <CheckBox Name="EnableColorNameCheckBox" Text="{Loc 'ui-options-enable-color-name'}" />
@@ -18,6 +20,10 @@
                 <ui:OptionColorSlider Name="HighlightsColorSlider"
                     Title="{Loc 'ui-options-highlights-color'}"
                     Example="{Loc 'ui-options-highlights-color-example'}"/>
+
+                <Label Text="{Loc 'ui-options-accessability-header-content'}"
+                       StyleClasses="LabelKeyText"/>
+                <CheckBox Name="CensorNudityCheckBox" Text="{Loc 'ui-options-censor-nudity'}" />
             </BoxContainer>
         </ScrollContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />

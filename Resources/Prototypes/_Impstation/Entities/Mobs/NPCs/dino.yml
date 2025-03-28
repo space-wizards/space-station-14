@@ -819,8 +819,8 @@
     randomizeName: false
   - type: RandomMetadata
     nameSegments:
-    - dino_commander_first
-    - dino_commander_last
+    - DinoCommanderFirst
+    - DinoCommanderLast
   - type: Loadout
     prototypes:
     - DinoCommanderGear

@@ -35,8 +35,8 @@
 
 - type: marking
   id: GrayUnderwearClassic
-  bodyPart: Underwear
-  markingCategory: Underwear
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
   speciesRestriction: [ Gray ]
   forcedColoring: true
   followSkinColor: false
@@ -51,8 +51,8 @@
 
 - type: marking
   id: GrayUnderwearToga
-  bodyPart: Underwear
-  markingCategory: Underwear
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
   speciesRestriction: [ Gray ]
   forcedColoring: false
   followSkinColor: false
@@ -62,8 +62,8 @@
 
 - type: marking
   id: GrayUnderwearStriped
-  bodyPart: Underwear
-  markingCategory: Underwear
+  bodyPart: UndergarmentBottom
+  markingCategory: UndergarmentBottom
   speciesRestriction: [ Gray ]
   forcedColoring: false
   followSkinColor: false

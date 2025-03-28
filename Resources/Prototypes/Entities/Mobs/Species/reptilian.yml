@@ -13,6 +13,7 @@
     - HeadTop
     - HeadSide
     - Tail #imp
+    undergarmentBottom: UndergarmentBottomBoxersReptilian
   - type: Hunger
   - type: Puller
     needsHands: false
@@ -93,6 +94,7 @@
     - HeadTop
     - HeadSide
     - Tail #imp
+    undergarmentBottom: UndergarmentBottomBoxersReptilian
   - type: Inventory
     speciesId: reptilian
     femaleDisplacements:

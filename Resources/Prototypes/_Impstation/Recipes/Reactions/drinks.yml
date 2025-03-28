@@ -18,21 +18,9 @@
   products:
     UAP: 6
 
-- type: reaction
-  id: MoscowMule
-  requiredMixerCategories:
-  - Stir
-  reactants:
-    Vodka:
-      amount: 2
-    JuiceLime:
-      amount: 1
-    SolDry:
-      amount: 3
-  products:
-    MoscowMule: 6
 
-       # Razz whatever the fuck you did here has caused horrible things
+
+# Razz whatever the fuck you did here has caused horrible things
 - type: reaction
   id: TheeHorsepussy
   requiredMixerCategories:
@@ -422,11 +410,9 @@
     - Stir
   reactants:
     ShimmeringBlood:
+      amount: 3
+    DeathInTheAfternoon:
       amount: 2
-    Absinthe:
-      amount: 1
-    Champagne:
-      amount: 1
     Egg:
       amount: 1
   products:

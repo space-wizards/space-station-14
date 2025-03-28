@@ -473,7 +473,7 @@
       - NotekeeperCartridge
       - NewsReaderCartridge
       - NanoChatCartridge # DV
-      - MailMetricsCartridge  # DV
+      # - MailMetricsCartridge  # DV - turning this off until i can fix it with the rest of the mail
       - StockTradingCartridge # DeltaV
       - SOSCartridge # Imp
 
@@ -990,18 +990,18 @@
   id: DeathsquadPDA
   suffix: Death Squad
   name: death squad PDA
-  description: The red helps to mask the blood. 
+  description: The red helps to mask the blood.
   components:
   - type: Pda
     id:   CentcomIDCardDeathsquad
-  - type: Appearance 
+  - type: Appearance
     appearanceDataInit:
       enum.PdaVisuals.PdaType:
         !type:String
         pda-deathsquadron
   - type: Icon
     state: pda-deathsquadron
-  - type: PdaBorderColor 
+  - type: PdaBorderColor
     borderColor: "#640202"
     accentHColor: "#06064B"
     accentVColor: "#06064B"
@@ -1380,6 +1380,13 @@
   components:
   - type: Pda
     id: CluwneIDCard
+    penSlot:
+      startingItem: CrayonGreen
+      ejectSound: /Audio/Items/bikehorn.ogg
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -1389,13 +1396,6 @@
     borderColor: "#1c8f4d"
   - type: Icon
     state: pda-cluwne
-    penSlot:
-      startingItem: CrayonGreen
-      ejectSound: /Audio/Items/bikehorn.ogg
-      priority: -1
-      whitelist:
-        tags:
-        - Write
   - type: Unremoveable
 
 - type: entity
@@ -1468,3 +1468,27 @@
         type: HealthAnalyzerBoundUserInterface
       enum.ChameleonUiKey.Key:
         type: ChameleonBoundUserInterface
+
+- type: entity
+  parent: BasePDA
+  id: WizardPDA
+  name: wizard PDA
+  description: You hear faint whispers coming from it.
+  components:
+  - type: Pda
+    id: WizardIDCard
+    penSlot:
+      startingItem: PenWiz
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-wizard
+  - type: PdaBorderColor
+    borderColor: "#7F3300"
+  - type: Icon
+    state: pda-wizard

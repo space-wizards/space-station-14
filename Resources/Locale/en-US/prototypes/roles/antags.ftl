@@ -31,6 +31,9 @@ roles-antag-subverted-silicon-objective = Follow your new laws and do bad unto t
 roles-antag-space-ninja-name = Space Ninja
 roles-antag-space-ninja-objective = Use your stealth to sabotage the station, nom on electrical wires.
 
+roles-antag-paradox-clone-name = Paradox Clone
+roles-antag-paradox-clone-objective = A freak space-time anomaly has teleported you into another reality! Now you have to find your counterpart and kill and replace them.
+
 roles-antag-thief-name = Thief
 roles-antag-thief-objective = Add some NT property to your personal collection without using violence.
 
@@ -55,6 +58,7 @@ AntagDragon = Space Dragon
 AntagSubvertedSilicon = Subverted Silicon
 AntagSurvivor = Survivor
 AntagWizard = Wizard
+AntagParadoxClone = Paradox Clone
 
 # non-upstream role timers
 

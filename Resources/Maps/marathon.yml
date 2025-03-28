@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/07/2025 19:59:53
+  entityCount: 23196
+maps:
+- 5350
+grids:
+- 30
+orphans: []
+nullspace: []
 tilemap:
   0: Space
   3: FloorArcadeRed
@@ -7590,7 +7601,6 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
-    - type: LoadedMap
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 525
@@ -11548,7 +11558,7 @@ entities:
       pos: 34.5,45.5
       parent: 30
     - type: Door
-      secondsUntilStateChange: -9492.408
+      secondsUntilStateChange: -9541.195
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -44581,6 +44591,13 @@ entities:
     - type: Transform
       pos: -5.5,-50.5
       parent: 30
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 23196
+    components:
+    - type: Transform
+      pos: 27.5,-1.5
+      parent: 30
 - proto: Carpet
   entities:
   - uid: 560
@@ -52776,41 +52793,26 @@ entities:
     - type: Transform
       pos: -42.51494,-20.530993
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 8827
     components:
     - type: Transform
       pos: -31.4199,-0.5383525
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 15263
     components:
     - type: Transform
       pos: 24.515018,11.567955
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 18355
     components:
     - type: Transform
       pos: -58.808327,-65.48881
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 19696
     components:
     - type: Transform
       pos: -23.555922,-31.355957
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesGar
   entities:
   - uid: 7039
@@ -52844,9 +52846,6 @@ entities:
     - type: Transform
       pos: -42.530563,-21.468493
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesMeson
   entities:
   - uid: 9370
@@ -52854,25 +52853,16 @@ entities:
     - type: Transform
       pos: -2.4337187,-46.09784
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 9440
     components:
     - type: Transform
       pos: 5.538602,-23.326946
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 22447
     components:
     - type: Transform
       pos: 6.4995365,21.072325
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesSunglasses
   entities:
   - uid: 683
@@ -52892,17 +52882,11 @@ entities:
     - type: Transform
       pos: -2.5034692,-46.307095
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 9441
     components:
     - type: Transform
       pos: 5.522977,-23.530071
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesHudDiagnostic
   entities:
   - uid: 11115
@@ -52910,17 +52894,11 @@ entities:
     - type: Transform
       pos: -9.615068,-41.346893
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 11116
     components:
     - type: Transform
       pos: -9.388378,-41.503834
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesHudSecurity
   entities:
   - uid: 2161
@@ -52928,17 +52906,11 @@ entities:
     - type: Transform
       pos: -27.597134,60.645412
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 2162
     components:
     - type: Transform
       pos: -27.565884,60.520412
       parent: 30
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingHandsGlovesBoxingBlue
   entities:
   - uid: 6719
@@ -53326,7 +53298,7 @@ entities:
       parent: 30
 - proto: ClothingHeadHelmetTemplar
   entities:
-  - uid: 23196
+  - uid: 16772
     components:
     - type: Transform
       pos: -57.48945,10.619459
@@ -122244,13 +122216,6 @@ entities:
     components:
     - type: Transform
       pos: -24.5,16.5
-      parent: 30
-- proto: SpawnPointBrigmedic
-  entities:
-  - uid: 16772
-    components:
-    - type: Transform
-      pos: -51.5,52.5
       parent: 30
 - proto: SpawnPointCaptain
   entities:

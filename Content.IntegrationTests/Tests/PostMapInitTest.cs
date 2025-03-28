@@ -89,7 +89,9 @@ namespace Content.IntegrationTests.Tests
             ("Reach", "SecurityCadet"),
             ("Fland", "Reporter"),
             ("Loop", "Psychologist"),
-            ("Lilboat", "Paramedic")
+            ("Lilboat", "Paramedic"),
+            ("Relic", "SalvageSpecialist"),
+            ("Relic", "Clown")
         };
 
         private static readonly string[] GameMaps =

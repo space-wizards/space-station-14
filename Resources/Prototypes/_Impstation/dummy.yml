@@ -1,0 +1,15 @@
+# STUPID FUCKING THING THAT NEEDS TO BE DEFINED HERE SO IT DOESNT BREAK MAPS!!!
+- type: entity
+  id: ClothingHeadHelmetTemplar
+  name: dummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/basic.rsi
+    state: icon
+
+- type: entity
+  id: MailTeleporter
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: mail telepad

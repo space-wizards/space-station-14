@@ -13,7 +13,7 @@ head-rev-role-greeting =
 
 head-rev-briefing =
     Use flashes to convert people to your cause.
-    Get rid of all heads to take over the station.
+    Get rid of or convert all heads to take over the station.
 
 head-rev-break-mindshield = The Mindshield was destroyed!
 

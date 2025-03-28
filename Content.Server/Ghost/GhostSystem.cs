@@ -566,7 +566,7 @@ namespace Content.Server.Ghost
             return ghost;
         }
 
-        public bool OnGhostAttempt(EntityUid mindId, bool canReturnGlobal, bool viaCommand = false, MindComponent? mind = null)
+        public bool OnGhostAttempt(EntityUid mindId, bool canReturnGlobal, bool viaCommand = false, bool forced = false, MindComponent? mind = null)
         {
             if (!Resolve(mindId, ref mind))
                 return false;
@@ -574,7 +574,12 @@ namespace Content.Server.Ghost
             var playerEntity = mind.CurrentEntity;
 
             if (playerEntity != null && viaCommand)
-                _adminLog.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} is attempting to ghost via command");
+            {
+                if (forced)
+                    _adminLog.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} was forced to ghost via command");
+                else
+                    _adminLog.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} is attempting to ghost via command");
+            }
 
             var handleEv = new GhostAttemptHandleEvent(mind, canReturnGlobal);
             RaiseLocalEvent(handleEv);
@@ -583,7 +588,7 @@ namespace Content.Server.Ghost
             if (handleEv.Handled)
                 return handleEv.Result;
 
-            if (mind.PreventGhosting)
+            if (mind.PreventGhosting && !forced)
             {
                 if (mind.Session != null) // Logging is suppressed to prevent spam from ghost attempts caused by movement attempts
                 {

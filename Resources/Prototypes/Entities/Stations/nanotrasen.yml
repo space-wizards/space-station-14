@@ -25,7 +25,7 @@
     - BaseStationSiliconLawCrewsimov
     - BaseStationAllEventsEligible
     - BaseStationNanotrasen
-    - BaseStationMail # Nyano component, required for station mail to function
+    - BaseStationDeliveries
     - BaseStationStockMarket # DeltaV
   categories: [ HideSpawnMenu ]
   components:

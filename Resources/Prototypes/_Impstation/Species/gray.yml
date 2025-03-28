@@ -8,9 +8,9 @@
   markingLimits: MobGrayMarkingLimits
   dollPrototype: MobGrayDummy
   skinColoration: TintedHues
-  maleFirstNames: names_gray_first
-  femaleFirstNames: names_gray_first
-  lastNames: names_gray_last
+  maleFirstNames: NamesGrayFirst
+  femaleFirstNames: NamesGrayFirst
+  lastNames: NamesGrayLast
 
 # The lack of a layer means that
 # this person cannot have round-start anything
@@ -28,7 +28,7 @@
     RArm: MobGrayRArm
     LHand: MobGrayLHand
     RHand: MobGrayRHand
-    Underwear: MobHumanoidAnyMarking
+    UndergarmentBottom: MobHumanoidAnyMarking
     LLeg: MobGrayLLeg
     RLeg: MobGrayRLeg
     LFoot: MobGrayLFoot
@@ -48,13 +48,13 @@
     HeadSide:
       points: 1
       required: false
+    UndergarmentTop:
+      points: 1
+      required: false
+    UndergarmentBottom:
+      points: 1
+      required: false
     Chest:
-      points: 1
-      required: false
-    Undershirt:
-      points: 1
-      required: false
-    Underwear:
       points: 1
       required: false
     Legs:

@@ -1,6 +1,18 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/07/2025 19:15:23
+  entityCount: 28254
+maps:
+- 780
+grids:
+- 8364
+- 11906
+orphans: []
+nullspace: []
 tilemap:
   0: Space
   7: FloorAsteroidSand
@@ -67,7 +79,6 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
-    - type: LoadedMap
   - uid: 5691
     components:
     - type: MetaData
@@ -2365,6 +2376,7 @@ entities:
             2529: -1,-55
             2749: 5,-69
             2750: 6,-69
+            2751: 0,-70
             2901: -7,-71
             2902: -8,-71
             2903: -7,-72
@@ -2998,6 +3010,7 @@ entities:
             2523: 0,-56
             2524: 1,-57
             2525: 2,-57
+            2719: 4,-68
             2720: 8,-68
             2721: 8,-73
             2722: 8,-75
@@ -3024,8 +3037,12 @@ entities:
             2743: -10,-75
             2744: -11,-76
             2745: -13,-77
+            2746: 0,-70
+            2747: 1,-69
             2748: 7,-68
             2759: 7,-70
+            2760: 0,-69
+            2761: -1,-69
             2762: -2,-70
             2763: -7,-69
             2764: -6,-68
@@ -3721,6 +3738,7 @@ entities:
             2752: -5,-70
             2753: -6,-69
             2754: -7,-68
+            2755: -1,-70
             2756: 6,-70
             2757: 6,-68
             2758: 7,-69
@@ -4830,9 +4848,9 @@ entities:
           decals:
             347: -2,23
             2694: -2,-68
-            3689: 0,-68
-            3695: 2,-69
-            3699: 2,-68
+            2695: -2,-69
+            2706: 2,-68
+            2707: 2,-70
         - node:
             color: '#334E6D5A'
             id: HalfTileOverlayGreyscale270
@@ -5082,11 +5100,15 @@ entities:
             2585: 4,-42
             2691: -3,-70
             2692: -3,-69
+            2696: -1,-69
+            2697: -1,-70
+            2698: 0,-70
+            2699: 0,-69
+            2703: 1,-70
+            2704: 1,-69
+            2708: 3,-70
+            2709: 3,-69
             2718: 5,-69
-            3697: 1,-69
-            3702: 3,-70
-            3703: 3,-69
-            3707: 4,-70
         - node:
             angle: -1.5707963267948966 rad
             color: '#FFFFFFFF'
@@ -5694,6 +5716,12 @@ entities:
             2676: -17,-71
             2677: -18,-71
             2693: -3,-68
+            2700: -1,-68
+            2701: 0,-68
+            2705: 1,-68
+            2710: 3,-68
+            2714: 4,-70
+            2715: 4,-68
             2716: 5,-70
             2717: 5,-68
             3421: 9,-64
@@ -5701,12 +5729,6 @@ entities:
             3423: 9,-62
             3424: 9,-61
             3425: 9,-60
-            3691: -1,-70
-            3692: -1,-68
-            3693: 1,-70
-            3698: 1,-68
-            3704: 3,-68
-            3708: 4,-68
         - node:
             color: '#334E6DC8'
             id: QuarterTileOverlayGreyscale270
@@ -6027,7 +6049,8 @@ entities:
             2501: -4,-58
             2502: -3,-58
             2503: -2,-58
-            3710: 4,-69
+            2702: 0,-70
+            2711: 4,-69
         - node:
             color: '#F5DB9E96'
             id: QuarterTileOverlayGreyscale270
@@ -6367,6 +6390,8 @@ entities:
             2510: 0,-53
             2511: 0,-52
             2589: 4,-44
+            2712: 4,-69
+            2713: 4,-70
             3426: 9,-58
             3427: 9,-57
             3428: 9,-56
@@ -6379,7 +6404,6 @@ entities:
             3435: 6,-52
             3436: 5,-52
             3437: 4,-52
-            3709: 4,-69
         - node:
             color: '#F9FFFEFF'
             id: Remains
@@ -13821,7 +13845,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -93654.52
+      secondsUntilStateChange: -93688.41
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -15366,7 +15390,7 @@ entities:
       pos: 9.5,25.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -6911.021
+      secondsUntilStateChange: -6944.9043
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -60890,6 +60914,13 @@ entities:
     - type: Transform
       pos: 28.5,-55.5
       parent: 8364
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 26261
+    components:
+    - type: Transform
+      pos: -22.5,-19.5
+      parent: 8364
 - proto: Carpet
   entities:
   - uid: 370
@@ -71814,9 +71845,6 @@ entities:
     - type: Transform
       pos: 33.436237,-27.366598
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 22550
     components:
     - type: Transform
@@ -71829,25 +71857,16 @@ entities:
     - type: Transform
       pos: 60.02009,-49.311836
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 16288
     components:
     - type: Transform
       pos: -5.5,-39.5
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 19840
     components:
     - type: Transform
       pos: -3.3809297,-63.418907
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesSunglasses
   entities:
   - uid: 8478
@@ -71872,25 +71891,16 @@ entities:
     - type: Transform
       pos: 46.43567,-26.324486
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 17862
     components:
     - type: Transform
       pos: 46.607544,-26.449486
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
   - uid: 19186
     components:
     - type: Transform
       pos: 35.55403,-40.820656
       parent: 8364
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingHandsGlovesBoxingBlue
   entities:
   - uid: 449
@@ -87879,7 +87889,7 @@ entities:
       pos: 18.5,-13.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -885.5329
+      secondsUntilStateChange: -919.4161
       state: Closing
   - uid: 13388
     components:
@@ -87887,7 +87897,7 @@ entities:
       pos: 18.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -921.2329
+      secondsUntilStateChange: -955.1161
       state: Closing
   - uid: 13389
     components:
@@ -88055,7 +88065,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -87843.06
+      secondsUntilStateChange: -87876.945
       state: Closing
   - uid: 15010
     components:
@@ -144822,6 +144832,13 @@ entities:
     - type: Transform
       pos: 0.4975611,39.394394
       parent: 8364
+- proto: RobocopCircuitBoard
+  entities:
+  - uid: 22443
+    components:
+    - type: Transform
+      pos: -3.5,-23.2
+      parent: 8364
 - proto: RobustHarvestChemistryBottle
   entities:
   - uid: 13505
@@ -149890,13 +149907,6 @@ entities:
     components:
     - type: Transform
       pos: 47.5,-4.5
-      parent: 8364
-- proto: SpawnPointBrigmedic
-  entities:
-  - uid: 22443
-    components:
-    - type: Transform
-      pos: -7.5,30.5
       parent: 8364
 - proto: SpawnPointCaptain
   entities:

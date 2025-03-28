@@ -1,7 +1,7 @@
 - type: marking
   id: UndershirtDefault
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Male]
   coloring:
@@ -15,8 +15,8 @@
 
 - type: marking
   id: UndershirtRolled
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Male]
   coloring:
@@ -30,8 +30,8 @@
 
 - type: marking
   id: UndershirtSleeveless
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Male]
   coloring:
@@ -45,8 +45,8 @@
 
 - type: marking
   id: UndershirtRolledSleeveless
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Male]
   coloring:
@@ -60,8 +60,8 @@
 
 - type: marking
   id: UndershirtGrossSleeveless
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Male]
   coloring:
@@ -75,8 +75,8 @@
 
 - type: marking
   id: UndershirtNanotrasen
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Male]
   coloring:
@@ -90,8 +90,8 @@
 
 - type: marking
   id: UndershirtBinder
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Male]
   coloring:
@@ -105,8 +105,8 @@
 
 - type: marking
   id: UndershirtBraClassic
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, Arachnid, SlimePerson, Diona, Moth]
   coloring:
     default:
@@ -119,8 +119,8 @@
 
 - type: marking
   id: UndershirtBraSports
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Male]
   coloring:
@@ -134,8 +134,8 @@
 
 - type: marking
   id: UndershirtBraStrapless
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Male]
   coloring:
@@ -151,8 +151,8 @@
 
 - type: marking
   id: UndershirtDefaultF
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Female]
   coloring:
@@ -166,8 +166,8 @@
 
 - type: marking
   id: UndershirtRolledF
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Female]
   coloring:
@@ -181,8 +181,8 @@
 
 - type: marking
   id: UndershirtSleevelessF
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Female]
   coloring:
@@ -196,8 +196,8 @@
 
 - type: marking
   id: UndershirtRolledSleevelessF
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Female]
   coloring:
@@ -211,8 +211,8 @@
 
 - type: marking
   id: UndershirtGrossSleevelessF
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Female]
   coloring:
@@ -226,8 +226,8 @@
 
 - type: marking
   id: UndershirtNanotrasenF
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Female]
   coloring:
@@ -241,8 +241,8 @@
 
 - type: marking
   id: UndershirtBinderF
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Female]
   coloring:
@@ -256,8 +256,8 @@
 
 - type: marking
   id: UndershirtBraSportsF
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Female]
   coloring:
@@ -271,8 +271,8 @@
 
 - type: marking
   id: UndershirtBraStraplessF
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Female]
   coloring:
@@ -288,8 +288,8 @@
 
 - type: marking
   id: UndershirtDefaultA
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Arachnid]
   coloring:
     default:
@@ -302,8 +302,8 @@
 
 - type: marking
   id: UndershirtRolledA
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Arachnid]
   coloring:
     default:
@@ -316,8 +316,8 @@
 
 - type: marking
   id: UndershirtSleevelessA
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Arachnid]
   coloring:
     default:
@@ -330,8 +330,8 @@
 
 - type: marking
   id: UndershirtRolledSleevelessA
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Arachnid]
   coloring:
     default:
@@ -344,8 +344,8 @@
 
 - type: marking
   id: UndershirtGrossSleevelessA
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Arachnid]
   coloring:
     default:
@@ -358,8 +358,8 @@
 
 - type: marking
   id: UndershirtNanotrasenA
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Arachnid]
   coloring:
     default:
@@ -372,8 +372,8 @@
 
 - type: marking
   id: UndershirtBinderA
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Arachnid]
   coloring:
     default:
@@ -386,8 +386,8 @@
 
 - type: marking
   id: UndershirtBraSportsA
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Arachnid]
   coloring:
     default:
@@ -400,8 +400,8 @@
 
 - type: marking
   id: UndershirtBraStraplessA
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Arachnid]
   coloring:
     default:
@@ -416,8 +416,8 @@
 
 - type: marking
   id: UndershirtDefaultU
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Unsexed]
   coloring:
@@ -431,8 +431,8 @@
 
 - type: marking
   id: UndershirtRolledU
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Unsexed]
   coloring:
@@ -446,8 +446,8 @@
 
 - type: marking
   id: UndershirtSleevelessU
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Unsexed]
   coloring:
@@ -461,8 +461,8 @@
 
 - type: marking
   id: UndershirtRolledSleevelessU
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Unsexed]
   coloring:
@@ -476,8 +476,8 @@
 
 - type: marking
   id: UndershirtGrossSleevelessU
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Unsexed]
   coloring:
@@ -491,8 +491,8 @@
 
 - type: marking
   id: UndershirtNanotrasenU
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Unsexed]
   coloring:
@@ -506,8 +506,8 @@
 
 - type: marking
   id: UndershirtBinderU
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Unsexed]
   coloring:
@@ -521,8 +521,8 @@
 
 - type: marking
   id: UndershirtBraSportsU
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Unsexed]
   coloring:
@@ -536,8 +536,8 @@
 
 - type: marking
   id: UndershirtBraStraplessU
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
   sexRestriction: [Unsexed]
   coloring:
@@ -554,8 +554,8 @@
 
 - type: marking
   id: UndershirtDefaultT
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Thaven]
   coloring:
     default:
@@ -568,8 +568,8 @@
 
 - type: marking
   id: UndershirtRolledT
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Thaven]
   coloring:
     default:
@@ -582,8 +582,8 @@
 
 - type: marking
   id: UndershirtSleevelessT
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Thaven]
   coloring:
     default:
@@ -596,8 +596,8 @@
 
 - type: marking
   id: UndershirtRolledSleevelessT
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Thaven]
   coloring:
     default:
@@ -610,8 +610,8 @@
 
 - type: marking
   id: UndershirtGrossSleevelessT
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Thaven]
   coloring:
     default:
@@ -624,8 +624,8 @@
 
 - type: marking
   id: UndershirtNanotrasenT
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Thaven]
   coloring:
     default:
@@ -638,8 +638,8 @@
 
 - type: marking
   id: UndershirtBinderT
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Thaven]
   coloring:
     default:
@@ -652,8 +652,8 @@
 
 - type: marking
   id: UndershirtBraSportsT
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Thaven]
   coloring:
     default:
@@ -666,8 +666,8 @@
 
 - type: marking
   id: UndershirtBraStraplessT
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Thaven]
   coloring:
     default:
@@ -680,8 +680,8 @@
 
 - type: marking
   id: UndershirtBraClassicT
-  bodyPart: Undershirt
-  markingCategory: Undershirt
+  bodyPart: UndergarmentTop
+  markingCategory: UndergarmentTop
   speciesRestriction: [Thaven]
   coloring:
     default:
