@@ -1,81 +1,4 @@
 ﻿Entries:
-- author: august-sun
-  changes:
-  - message: The inert flesh anomaly core can now be microwaved to turn into an anomalous
-      meat mass.
-    type: Tweak
-  id: 7605
-  time: '2024-11-13T02:59:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33223
-- author: Ubaser
-  changes:
-  - message: Window sprites are now slightly more transparent.
-    type: Tweak
-  id: 7606
-  time: '2024-11-13T12:30:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33282
-- author: keronshb
-  changes:
-  - message: Added Ethereal Jaunt! A Wizard Spell that turns you invisible and into
-      a ghost-like creature for escaping!
-    type: Add
-  id: 7607
-  time: '2024-11-13T23:36:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33201
-- author: CheddaCheez
-  changes:
-  - message: Fixed mimes being unable to break their vow more than once. Despicable!
-    type: Fix
-  id: 7608
-  time: '2024-11-14T16:56:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33303
-- author: PJB3005
-  changes:
-  - message: Borgs can now select their chassis type upon creation (construction or
-      job spawn), immediately giving borgs access to all chassis types.
-    type: Add
-  - message: Borg chassis types now come with built-in modules depending on the type,
-      so you can immediately do your job without help from science. Some upgrade modules
-      must still be installed later however.
-    type: Add
-  - message: Specialized chassis types have been removed from construction, as they
-      are no longer necessary.
-    type: Remove
-  - message: Borg unlock access is no longer determined by their chassis, it's always
-      science or command. This means the janitor can't unlock jani borgs anymore.
-    type: Remove
-  id: 7609
-  time: '2024-11-14T17:08:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32586
-- author: thetolbean
-  changes:
-  - message: The Quartermaster's requisition digi-board can no longer be recycled.
-    type: Fix
-  id: 7610
-  time: '2024-11-15T06:54:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33315
-- author: RedBookcase
-  changes:
-  - message: Mixing up a Snow White no longer creates extra liquid out of thin air.
-    type: Fix
-  id: 7611
-  time: '2024-11-15T20:52:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33331
-- author: lzk228
-  changes:
-  - message: Added 10 seconds delay to Succumb action
-    type: Add
-  id: 7612
-  time: '2024-11-15T21:21:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32985
-- author: Beck Thompson
-  changes:
-  - message: Minor tweaks to clumsiness. Some of the timings and or noises have been
-      changed slightly!
-    type: Tweak
-  id: 7613
-  time: '2024-11-15T23:46:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31147
 - author: SaphireLattice
   changes:
   - message: Crayon UI now has categories and queue
@@ -3881,3 +3804,75 @@
   id: 8104
   time: '2025-03-23T00:21:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36013
+- author: Vortebo
+  changes:
+  - message: Relic station revamped
+    type: Tweak
+  id: 8105
+  time: '2025-03-24T16:36:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35507
+- author: slarticodefast
+  changes:
+  - message: Adjusted thermal regulation again so you no longer overheat in hardsuits.
+    type: Fix
+  id: 8106
+  time: '2025-03-24T23:55:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36062
+- author: Velcroboy, ErhardSteinhauer, whatston3, MilonPL, Beck, ArtisticRoomba, ScarKy0
+  changes:
+  - message: Smuggler stashes! Will get spawned as a round start event and can also
+      be found in a hacked ClothesMate. Will have loot from a large random pool.
+    type: Add
+  - message: Smuggler stashes can now be bought from the syndicate uplink for 2TC.
+    type: Add
+  id: 8107
+  time: '2025-03-26T15:20:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/19460
+- author: slarticodefast
+  changes:
+  - message: Ghosts of paradox clones now have a name modifier so they can be distinguished
+      by other ghosts.
+    type: Tweak
+  id: 8108
+  time: '2025-03-26T15:30:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35940
+- author: slarticodefast
+  changes:
+  - message: Paradox clones of nuclear operatives and head revolutionaries now have
+      the corresponding faction icon and need to be killed for a crew major victory.
+    type: Fix
+  id: 8109
+  time: '2025-03-26T15:34:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35910
+- author: slarticodefast
+  changes:
+  - message: Further improved item copying for paradox clones.
+    type: Tweak
+  id: 8110
+  time: '2025-03-26T16:13:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35993
+- author: Centronias
+  changes:
+  - message: Raw meatballs, like steaks, can now be cooked in the microwave or on
+      a grill.
+    type: Add
+  id: 8111
+  time: '2025-03-27T06:26:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36003
+- author: SlamBamActionman
+  changes:
+  - message: Liltenhead! Thank you for over 2 years of update videos, and congrats
+      on the 100th video!
+    type: Add
+  id: 8112
+  time: '2025-03-27T17:19:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36104
+- author: metalgearsloth
+  changes:
+  - message: Rewrote how mob movement works to make movement more flexible in code.
+      While this should largely function the same (apart from conveyors now being
+      able to launch items) please report any bugs found.
+    type: Tweak
+  id: 8113
+  time: '2025-03-27T22:29:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35931
