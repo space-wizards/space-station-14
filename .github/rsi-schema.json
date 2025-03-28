@@ -5,7 +5,7 @@
     "description": "JSON Schema for SS14 RSI validation.",
     "examples": [
         {
-            "version": 1,
+            "version": 2,
             "license": "CC-BY-SA-3.0",
             "copyright": "Modified from SOURCE NAME by USERNAME (GitHub/Discord)",
             "links": [
