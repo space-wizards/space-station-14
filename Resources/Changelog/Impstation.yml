@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5
-  changes:
-  - message: Paper headbags and smiling paper headbags are now selectable as trinkets.
-    type: Add
-  id: 916
-  time: '2025-01-13T07:10:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1327
 - author: mqole
   changes:
   - message: JOHNNY CHAOS 5 STAR AI CANNOT BE WARNED OR BANNED
@@ -4078,3 +4071,13 @@
   id: 1415
   time: '2025-03-28T21:44:14.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2095
+- author: DinnerCalzone
+  changes:
+  - message: 'The "Steal the AI" thief objective is now directly tied to the Station
+      AI, rather than the AI core. This means you must either steal the AI with an
+      intellicard or your thief beacon must be set up next to the AI core with the
+      AI still inside of it. (Tip: An intellicard can be found inside the RD''s locker!)'
+    type: Tweak
+  id: 1416
+  time: '2025-03-28T21:48:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2124
