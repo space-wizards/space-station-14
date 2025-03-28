@@ -4313,4 +4313,11 @@ Entries:
   id: 597
   time: '2025-03-24T16:23:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/424
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed displacement maps.
+    type: Fix
+  id: 598
+  time: '2025-03-25T16:10:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/423
 
