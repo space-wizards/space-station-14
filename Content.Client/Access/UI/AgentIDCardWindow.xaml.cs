@@ -16,13 +16,20 @@ namespace Content.Client.Access.UI
     [GenerateTypedNameReferences]
     public sealed partial class AgentIDCardWindow : FancyWindow
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfgManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         private readonly SpriteSystem _spriteSystem;
 
-        private const int JobGroupColumnCount = 2;
+        // TODO replace with cvar
         private const int NameMaxLength = 32;
         private const int JobMaxLength = 30;
+
+        /* TODO rebase
+        // CCVar.
+        private int _MaxNameLength;
+        private int _MaxIdJobLength;
+        */
 
         public event Action<string>? OnNameChanged;
         public event Action<string>? OnJobChanged;
@@ -34,6 +41,12 @@ namespace Content.Client.Access.UI
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
             _spriteSystem = _entitySystem.GetEntitySystem<SpriteSystem>();
+
+            /* TODO rebase
+            // CCVar
+            _MaxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
+            _MaxIdJobLength = _cfgManager.GetCVar(CCVars.MaxIdJobLength);
+            */
 
             // Tab Buttons
 
@@ -73,6 +86,7 @@ namespace Content.Client.Access.UI
                 CurrentJob.Text = e.Text;
             };
 
+            // TODO cvar
             NameLineEdit.IsValid = s => s.Length <= NameMaxLength;
             JobLineEdit.IsValid = s => s.Length <= JobMaxLength;
 
