@@ -148,6 +148,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             {
                 embeddedContainer.EmbeddedObjects.Remove(uid);
                 Dirty(component.EmbeddedIntoUid.Value, embeddedContainer);
+                if (embeddedContainer.EmbeddedObjects.Count == 0)
+                    RemCompDeferred<EmbeddedContainerComponent>(component.EmbeddedIntoUid.Value);
             }
         }
 
