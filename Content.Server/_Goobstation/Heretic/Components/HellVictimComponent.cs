@@ -34,6 +34,9 @@ public sealed partial class HellVictimComponent : Component
     [DataField]
     public EntityUid Mind;
 
+    [DataField]
+    public Boolean HasMind = false;
+
     [DataField, AutoNetworkedField]
     public TimeSpan HellDuration = TimeSpan.FromSeconds(15);
 
