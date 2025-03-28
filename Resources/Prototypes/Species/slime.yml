@@ -63,6 +63,12 @@
   layerAlpha: 0.75 # Impstation Special
 
 - type: humanoidBaseSprite
+  id: MobSlimeHead
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
   id: MobSlimeHeadMale
   baseSprite:
     sprite: Mobs/Species/Slime/parts.rsi
