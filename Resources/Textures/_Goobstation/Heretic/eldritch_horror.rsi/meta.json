@@ -1,14 +1,47 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "inspiration from TGstation, made by whateverusername0",
+  "copyright": "inspiration from TGstation, made by whateverusername0, modified by Widgetbeck to support color matching",
   "size": {
     "x": 64,
     "y": 64
   },
   "states": [
     {
-      "name": "alive",
+      "name": "base",
+      "delays":
+      [
+        [
+          0.083, 0.083, 0.083, 0.083, 0.083,
+          0.083, 0.083, 0.083, 0.083, 0.083,
+          0.083
+        ]
+      ]
+    },
+    {
+      "name": "flesh",
+      "delays":
+      [
+        [
+          0.083, 0.083, 0.083, 0.083, 0.083,
+          0.083, 0.083, 0.083, 0.083, 0.083,
+          0.083
+        ]
+      ]
+    },
+    {
+      "name": "blood",
+      "delays":
+      [
+        [
+          0.083, 0.083, 0.083, 0.083, 0.083,
+          0.083, 0.083, 0.083, 0.083, 0.083,
+          0.083
+        ]
+      ]
+    },
+    {
+      "name": "eyes",
       "delays":
       [
         [

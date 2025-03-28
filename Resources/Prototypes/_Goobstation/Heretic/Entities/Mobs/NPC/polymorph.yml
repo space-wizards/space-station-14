@@ -80,19 +80,61 @@
     baseWalkSpeed: 5
     baseSprintSpeed: 7.5
     weightlessModifier: 1.5
-  - type: Sprite
+  - type: Sprite # contains imp changes
     drawdepth: Mobs
     sprite: _Goobstation/Heretic/eldritch_horror.rsi
     noRot: true
     layers:
-    - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: alive
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: alive
-      Dead:
-        Base: dead
+    - map: [ "fleshMap" ]
+      state: flesh
+    - map: [ "bloodMap" ] 
+      state: blood
+    - map: [ "eyesMap" ]
+      state: eyes
+  - type: RandomSprite # imp. it's not actually random, but we do what we must with the tools we are given. this gets edited by HereticAbilitySystem.Flesh on ascention.
+    selected: 
+      fleshMap:
+        flesh: "#ffd2ba"
+      bloodMap:
+        blood: "#9e0000" 
+      eyesMap:
+        eyes: "#000000"
+  - type: Destructible # imp. replaces DamageSpriteVisuals
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior # don't want this to be more complicated than it needs to be
+        spawn:
+          EldritchInfluenceSpent:
+            min: 1
+            max: 1
+      - !type:SpillBehavior
+        solution: blood
+  - type: SolutionContainerManager # imp. Little bit o' everybody in there.
+    solutions:
+      blood:
+        maxVol: 800
+        reagents:
+        - ReagentId: ShimmeringBlood
+          Quantity: 100
+        - ReagentId: InsectBlood
+          Quantity: 100
+        - ReagentId: Slime
+          Quantity: 100
+        - ReagentId: Radium
+          Quantity: 100
+        - ReagentId: CopperBlood
+          Quantity: 100
+        - ReagentId: BloodKodepiia
+          Quantity: 100
+        - ReagentId: AmmoniaBlood
+          Quantity: 100
+        - ReagentId: Blood
+          Quantity: 100
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -153,10 +195,7 @@
     groups:
     - id: Medicine
     - id: Poison
-  - type: Butcherable
-    spawned:
-    - id: RandomAnomalySpawner
-      amount: 3 # 3 anoms on heretic butcher holy shit eh
+  # imp note - removed Butcherable because it now explodes into blood when it dies.
   - type: Tag
     tags:
     - CannotSuicide

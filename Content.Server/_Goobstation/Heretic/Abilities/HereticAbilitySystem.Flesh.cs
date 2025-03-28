@@ -1,19 +1,23 @@
 using Content.Server.Body.Components;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
+using Content.Shared.Chemistry.Reagent; // imp
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Heretic;
+using Content.Shared.Humanoid; // imp
 using Content.Shared.Popups;
 using Content.Shared.Speech.Muting;
+using Content.Shared.Sprite; // imp
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager; // imp
 
 namespace Content.Server.Heretic.Abilities;
 
 public sealed partial class HereticAbilitySystem : EntitySystem
 {
+    [Dependency] private readonly ISerializationManager _serManager = default!; // imp
+
     private void SubscribeFlesh()
     {
         SubscribeLocalEvent<HereticComponent, EventHereticFleshSurgery>(OnFleshSurgery);
@@ -101,8 +105,54 @@ public sealed partial class HereticAbilitySystem : EntitySystem
         if (urist == null)
             return;
 
+        var colors = GrabHumanoidColors(ent); // begin imp
+
+        if (colors != null) // match the colors of the ascended entity to those of the ascendee
+        {
+            (var skinColor, var eyeColor, var bloodColor) = colors.Value;
+            if (TryComp<RandomSpriteComponent>(urist, out var randomSprite)) // we have to do this using RandomSpriteComponent, otherwise I'd be making a whole species prototype just for this.
+            {
+                foreach (var entry in randomSprite.Selected)
+                {
+                    var state = randomSprite.Selected[entry.Key];
+                    switch (entry.Key)
+                    {
+                        case "fleshMap":
+                            state.Color = skinColor;
+                            break;
+                        case "eyesMap":
+                            state.Color = eyeColor;
+                            break;
+                        case "bloodMap":
+                            state.Color = bloodColor;
+                            break;
+                    }
+                    randomSprite.Selected[entry.Key] = state;
+                }
+                Dirty(urist.Value, randomSprite);
+            }
+        } // end imp
+
         _aud.PlayPvs(new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg"), (EntityUid) urist, AudioParams.Default.AddVolume(2f));
 
         args.Handled = true;
+    }
+
+    private (Color, Color, Color)? GrabHumanoidColors(EntityUid entity) // imp
+    {
+        Color skinColor;
+        Color eyeColor;
+        Color bloodColor;
+        if (TryComp<HumanoidAppearanceComponent>(entity, out var humanoid) && TryComp<BloodstreamComponent>(entity, out var bloodstream) // get the humanoidappearance and bloodstream
+        && _prot.TryIndex(bloodstream.BloodReagent, out ReagentPrototype? reagentProto) && reagentProto != null) // get the blood reagent 
+        {
+            skinColor = humanoid.SkinColor;
+            eyeColor = humanoid.EyeColor;
+            bloodColor = reagentProto.SubstanceColor;
+
+            return (skinColor, eyeColor, bloodColor);
+        }
+
+        else return null; // if (for some reason - like perhaps admin intervention) a non-humanoid or someone with no bloodstream ascends, we don't want to try to modify the colors. 
     }
 }
