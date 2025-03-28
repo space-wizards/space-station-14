@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Robust.Client.Graphics;
+using Content.Shared.NanoTask;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
@@ -13,10 +14,9 @@ namespace Content.Client.CartridgeLoader.Cartridges;
 [GenerateTypedNameReferences]
 public sealed partial class NanoTaskUiFragment : BoxContainer
 {
-    public Action<uint>? OpenTask;
-    public Action<uint>? ToggleTaskCompletion;
-    public Action<NanoTaskTable>? NewTask;
-    public List<NanoTaskItemAndId> Tasks = new();
+    public Action<NanoTaskTable, uint>? OpenTask;
+    public Action<NanoTaskTable, uint>? ToggleTaskCompletion;
+    public Action<NanoTaskTable, NanoTaskCategoryAndDepartment>? NewTask;
 
     public NanoTaskUiFragment()
     {
@@ -25,7 +25,10 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
         HorizontalExpand = true;
         VerticalExpand = true;
 
-        StationTaskTable.NewTaskButton.OnPressed += _ => NewTask?.Invoke(StationTaskTable);
+        StationTaskTable.NewTaskButton.OnPressed += _ => NewTask?.Invoke(StationTaskTable, new(NanoTaskConstants.NET_CATEGORY_STATION_TASK, null));
+
+        TabsCategory.SetTabTitle(0, Loc.GetString("nano-task-ui-department-tasks"));
+        TabsCategory.SetTabTitle(1, Loc.GetString("nano-task-ui-station-tasks"));
     }
 
     public void UpdateState(List<NanoTaskItemAndId> stationTasks, Dictionary<string, List<NanoTaskItemAndId>> departmentTasks)
@@ -50,8 +53,8 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
             };
             var control = new NanoTaskItemControl(task);
             container.AddChild(control);
-            control.OnMainPressed += id => OpenTask?.Invoke(id);
-            control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(id);
+            control.OnMainPressed += id => OpenTask?.Invoke(StationTaskTable, id);
+            control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(StationTaskTable, id);
         }
 
         TabsDepartmentTask.RemoveAllChildren();
@@ -59,6 +62,7 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
         foreach (var (department, tasks, index) in departmentTasks.OrderBy(x => x.Key).Select((x, i) => (x.Key, x.Value, i)))
         {
             var table = new NanoTaskTable();
+            table.NewTaskButton.OnPressed += _ => NewTask?.Invoke(table, new(NanoTaskConstants.NET_CATEGORY_DEPARTAMENT_TASK, department));
 
             foreach (var task in tasks)
             {
@@ -70,8 +74,8 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
                 };
                 var control = new NanoTaskItemControl(task);
                 container.AddChild(control);
-                control.OnMainPressed += id => OpenTask?.Invoke(id);
-                control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(id);
+                control.OnMainPressed += id => OpenTask?.Invoke(table, id);
+                control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(table, id);
             }
 
             TabsDepartmentTask.AddChild(table);

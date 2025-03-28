@@ -50,6 +50,8 @@ nano-task-ui-heading-low-priority-tasks =
        *[other] {$amount} Low Priority Tasks
     }
 
+nano-task-ui-station-tasks = Station
+nano-task-ui-department-tasks = Departments
 nano-task-ui-department-cargo = Cargo
 nano-task-ui-department-command = Command
 nano-task-ui-department-engineering = Engineering

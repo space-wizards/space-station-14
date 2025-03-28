@@ -5,9 +5,10 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 /// <summary>
 ///     Base UI message for NanoTask interactions
 /// </summary>
-public interface INanoTaskUiMessagePayload
-{
-}
+public interface INanoTaskUiMessagePayload;
+
+[Serializable, NetSerializable, DataRecord]
+public sealed record NanoTaskCategoryAndDepartment(string Category, string? Department);
 
 /// <summary>
 ///     Dispatched when a new task is created
@@ -19,10 +20,12 @@ public sealed class NanoTaskAddTask : INanoTaskUiMessagePayload
     ///     The newly created task
     /// </summary>
     public readonly NanoTaskItem Item;
+    public readonly NanoTaskCategoryAndDepartment Category;
 
-    public NanoTaskAddTask(NanoTaskItem item)
+    public NanoTaskAddTask(NanoTaskItem item, NanoTaskCategoryAndDepartment category)
     {
         Item = item;
+        Category = category;
     }
 }
 
