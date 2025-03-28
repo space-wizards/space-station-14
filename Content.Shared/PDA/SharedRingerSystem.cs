@@ -1,12 +1,16 @@
 using System.Linq;
+using Content.Shared.Mind;
 using Content.Shared.PDA.Ringer;
 using Content.Shared.Popups;
+using Content.Shared.Roles;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
+using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -24,8 +28,10 @@ public abstract class SharedRingerSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedPdaSystem _pda = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
 
@@ -133,7 +139,6 @@ public abstract class SharedRingerSystem : EntitySystem
     /// </remarks>
     public void LockUplink(Entity<RingerUplinkComponent?> ent)
     {
-        // TODO: This will fail on the client since the component isn't networked
         if (!Resolve(ent, ref ent.Comp))
             return;
 
@@ -143,35 +148,16 @@ public abstract class SharedRingerSystem : EntitySystem
 
     /// <summary>
     /// Attempts to unlock or lock the uplink by checking the provided ringtone against the uplink code.
+    /// On the client side, for antagonists, the code check is skipped to support prediction.
+    /// On the server side, the code is always verified.
     /// </summary>
     /// <param name="uid">The entity with the RingerUplinkComponent.</param>
     /// <param name="ringtone">The ringtone to check against the uplink code.</param>
-    /// <returns>True if the ringtone matched the uplink code and the uplink state was toggled, false otherwise.</returns>
-    public bool TryToggleUplink(EntityUid uid, Note[] ringtone)
-    {
-        // TODO: This will fail on the client since the component isn't networked
-        if (!TryComp<RingerUplinkComponent>(uid, out var uplink))
-            return false;
-
-        if (!HasComp<StoreComponent>(uid))
-            return false;
-
-        if (!uplink.Code.SequenceEqual(ringtone))
-            return false;
-
-        // Toggle the unlock state
-        uplink.Unlocked = !uplink.Unlocked;
-
-        // Update PDA UI if needed
-        if (TryComp<PdaComponent>(uid, out var pda))
-            _pda.UpdatePdaUi(uid, pda);
-
-        // Close store UI if we're locking
-        if (!uplink.Unlocked)
-            UI.CloseUi(uid, StoreUiKey.Key);
-
-        return true;
-    }
+    /// <param name="user">The entity attempting to toggle the uplink. If the user is an antagonist,
+    /// the ringtone code check will be skipped on the client to allow prediction.</param>
+    /// <returns>True if the uplink state was toggled, false otherwise.</returns>
+    [PublicAPI]
+    public abstract bool TryToggleUplink(EntityUid uid, Note[] ringtone, EntityUid? user = null);
 
     #endregion
 
@@ -226,15 +212,12 @@ public abstract class SharedRingerSystem : EntitySystem
 
         UpdateRingerUi(ent);
 
-        // No predicted popups with PVS filtering so we do this to avoid duplication
-        if (_timing.IsFirstTimePredicted)
-        {
-            _popup.PopupPredicted(Loc.GetString("comp-ringer-vibration-popup"), ent, ent.Owner, PopupType.Medium);
-        }
-        else if (!_net.IsClient)
-        {
-            _popup.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), ent, Filter.Pvs(ent, 0.05f), false, PopupType.Medium);
-        }
+        _popup.PopupPredicted(Loc.GetString("comp-ringer-vibration-popup"),
+            ent,
+            ent.Owner,
+            Filter.Pvs(ent, 0.05f),
+            false,
+            PopupType.Medium);
 
         DirtyFields(ent.AsNullable(),
             null,
@@ -254,6 +237,33 @@ public abstract class SharedRingerSystem : EntitySystem
         ent.Comp.Ringtone = ringtone;
         DirtyField(ent.AsNullable(), nameof(RingerComponent.Ringtone));
         UpdateRingerUi(ent);
+    }
+
+    /// <summary>
+    /// Base implementation for toggle uplink processing after verification.
+    /// </summary>
+    protected bool ToggleUplinkInternal(Entity<RingerUplinkComponent> ent)
+    {
+        // Toggle the unlock state
+        ent.Comp.Unlocked = !ent.Comp.Unlocked;
+
+        // Update PDA UI if needed
+        if (TryComp<PdaComponent>(ent, out var pda))
+            _pda.UpdatePdaUi(ent, pda);
+
+        // Close store UI if we're locking
+        if (!ent.Comp.Unlocked)
+            UI.CloseUi(ent.Owner, StoreUiKey.Key);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Helper method to determine if the mind is an antagonist.
+    /// </summary>
+    protected bool IsAntagonist(EntityUid? user)
+    {
+        return user != null && _mind.TryGetMind(user.Value, out var mindId, out _) && _role.MindIsAntagonist(mindId);
     }
 
     /// <summary>

@@ -1,18 +1,17 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.PDA.Ringer
+namespace Content.Shared.PDA.Ringer;
+
+[Serializable, NetSerializable]
+public sealed class RingerPlayRingtoneMessage : BoundUserInterfaceMessage;
+
+[Serializable, NetSerializable]
+public sealed class RingerSetRingtoneMessage : BoundUserInterfaceMessage
 {
-    [Serializable, NetSerializable]
-    public sealed class RingerPlayRingtoneMessage : BoundUserInterfaceMessage;
+    public Note[] Ringtone { get; }
 
-    [Serializable, NetSerializable]
-    public sealed class RingerSetRingtoneMessage : BoundUserInterfaceMessage
+    public RingerSetRingtoneMessage(Note[] ringTone)
     {
-        public Note[] Ringtone { get; }
-
-        public RingerSetRingtoneMessage(Note[] ringTone)
-        {
-            Ringtone = ringTone;
-        }
+        Ringtone = ringTone;
     }
 }

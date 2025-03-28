@@ -1,5 +1,6 @@
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
+using Content.Shared.Store.Components;
 
 namespace Content.Client.PDA.Ringer;
 
@@ -31,5 +32,25 @@ public sealed class RingerSystem : SharedRingerSystem
         {
             bui.Update();
         }
+    }
+
+    /// <inheritdoc/>
+    public override bool TryToggleUplink(EntityUid uid, Note[] ringtone, EntityUid? user = null)
+    {
+        if (!TryComp<RingerUplinkComponent>(uid, out var uplink))
+            return false;
+
+        if (!HasComp<StoreComponent>(uid))
+            return false;
+
+        // Special case for client-side prediction:
+        // Since we can't expose the uplink code to clients for security reasons,
+        // we assume if an antagonist is trying to set a ringtone, it's to unlock the uplink.
+        // The server will properly verify the code and correct if needed.
+        if (IsAntagonist(user))
+            return ToggleUplinkInternal((uid, uplink));
+
+        // Non-antagonists never get to toggle the uplink on the client
+        return false;
     }
 }

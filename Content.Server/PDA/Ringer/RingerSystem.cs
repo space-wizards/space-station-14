@@ -1,6 +1,8 @@
+using System.Linq;
 using Content.Server.Store.Systems;
 using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
+using Content.Shared.Store.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.PDA.Ringer;
@@ -18,9 +20,9 @@ public sealed class RingerSystem : SharedRingerSystem
         base.Initialize();
 
         SubscribeLocalEvent<RingerComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<RingerUplinkComponent, ComponentInit>(OnUplinkInit);
-
         SubscribeLocalEvent<RingerComponent, CurrencyInsertAttemptEvent>(OnCurrencyInsert);
+
+        SubscribeLocalEvent<RingerUplinkComponent, GenerateUplinkCodeEvent>(OnGenerateUplinkCode);
     }
 
     /// <summary>
@@ -29,14 +31,6 @@ public sealed class RingerSystem : SharedRingerSystem
     private void OnMapInit(Entity<RingerComponent> ent, ref MapInitEvent args)
     {
         UpdateRingerRingtone(ent, GenerateRingtone());
-    }
-
-    /// <summary>
-    /// Randomizes a ringtone code for <see cref="RingerUplinkComponent"/> on <see cref="ComponentInit"/>.
-    /// </summary>
-    private void OnUplinkInit(Entity<RingerUplinkComponent> ent, ref ComponentInit args)
-    {
-        ent.Comp.Code = GenerateRingtone();
     }
 
     /// <summary>
@@ -54,6 +48,37 @@ public sealed class RingerSystem : SharedRingerSystem
         // if the store can be locked, it must be unlocked first before inserting currency. Stops traitor checking.
         if (!uplink.Unlocked)
             args.Cancel();
+    }
+
+    /// <summary>
+    /// Handles the <see cref="GenerateUplinkCodeEvent"/> for generating an uplink code.
+    /// </summary>
+    private void OnGenerateUplinkCode(Entity<RingerUplinkComponent> ent, ref GenerateUplinkCodeEvent ev)
+    {
+        // Generate a new uplink code
+        var code = GenerateRingtone();
+
+        // Set the code on the component
+        ent.Comp.Code = code;
+
+        // Return the code via the event
+        ev.Code = code;
+    }
+
+    /// <inheritdoc/>
+    public override bool TryToggleUplink(EntityUid uid, Note[] ringtone, EntityUid? user = null)
+    {
+        if (!TryComp<RingerUplinkComponent>(uid, out var uplink))
+            return false;
+
+        if (!HasComp<StoreComponent>(uid))
+            return false;
+
+        // On the server, we always check if the code matches
+        if (!uplink.Code.SequenceEqual(ringtone))
+            return false;
+
+        return ToggleUplinkInternal((uid, uplink));
     }
 
     /// <summary>
@@ -91,4 +116,16 @@ public sealed class RingerSystem : SharedRingerSystem
 
         return ringtone;
     }
+}
+
+/// <summary>
+/// Event raised to generate a new uplink code for a PDA.
+/// </summary>
+[ByRefEvent]
+public record struct GenerateUplinkCodeEvent
+{
+    /// <summary>
+    /// The generated uplink code (filled in by the event handler).
+    /// </summary>
+    public Note[]? Code;
 }
