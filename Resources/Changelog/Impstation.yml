@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: EpicToast
-  changes:
-  - message: Vent creatures now spawn from one vent all at once instead of being spread
-      across the station. Crew members get a 30-second warning announcement saying
-      where they will spawn.
-    type: Tweak
-  id: 913
-  time: '2025-01-13T04:17:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1308
-- author: Pinkbat5
-  changes:
-  - message: CMOs and Paramedics start with externals access.
-    type: Tweak
-  id: 914
-  time: '2025-01-13T04:19:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1330
 - author: TheGrimbeeper
   changes:
   - message: Ghosts can now view what reagents are inside a foam
@@ -4077,3 +4061,20 @@
   id: 1412
   time: '2025-03-28T21:37:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2072
+- author: AvianMaiden
+  changes:
+  - message: All computers and TVs and hotplates can now be turned on or off to save
+      power, you heathen.
+    type: Add
+  id: 1413
+  time: '2025-03-28T21:40:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2116
+- author: AvianMaiden
+  changes:
+  - message: More laser gun names and descriptions match now!
+    type: Add
+  - message: Melee tweaks for a few guns to match the weapons properly.
+    type: Tweak
+  id: 1414
+  time: '2025-03-28T21:39:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2117
