@@ -67551,9 +67551,6 @@ entities:
     - type: Transform
       pos: -17.393402,46.07522
       parent: 5350
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingEyesGlassesSunglasses
   entities:
   - uid: 2030
@@ -67654,9 +67651,6 @@ entities:
     - type: Transform
       pos: -30.464304,-40.153366
       parent: 5350
-    - type: ContainerContainer
-      containers:
-        lens_slot: !type:ContainerSlot {}
 - proto: ClothingHandsGlovesBoxingBlue
   entities:
   - uid: 13621
@@ -151948,13 +151942,6 @@ entities:
     components:
     - type: Transform
       pos: 35.5,-22.5
-      parent: 5350
-- proto: SpawnPointBrigmedic
-  entities:
-  - uid: 28709
-    components:
-    - type: Transform
-      pos: 0.5,52.5
       parent: 5350
 - proto: SpawnPointCaptain
   entities:
