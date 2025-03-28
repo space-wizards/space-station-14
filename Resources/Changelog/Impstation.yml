@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ruddygreat
-  changes:
-  - message: The round summary screen now features a list of everything that traitors,
-      changelings & heretics bought throughout the round.
-    type: Add
-  id: 908
-  time: '2025-01-13T04:13:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1332
 - author: TheGrimbeeper
   changes:
   - message: ghosts can now examine damage on weapons and reagents in solutions
@@ -4072,3 +4064,11 @@
   id: 1407
   time: '2025-03-28T21:29:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2099
+- author: DinnerCalzone
+  changes:
+  - message: Most atmos devices will now render over catwalks. You can place floor
+      tiles underneath them if you want to hide their piping.
+    type: Tweak
+  id: 1408
+  time: '2025-03-28T21:31:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2096
