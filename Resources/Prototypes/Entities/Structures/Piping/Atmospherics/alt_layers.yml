@@ -21,92 +21,102 @@
 
 # GasPipeStraight
 - type: entity
-  parent: [GasPipeStraight, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasPipeStraight]
   id: GasPipeStraight1
   suffix: Straight, alt 1
   components:
   - type: Sprite
+    drawdepth: ThinPipeAlt1
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
 
 - type: entity
-  parent: [GasPipeStraight, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasPipeStraight]
   id: GasPipeStraight2
   suffix: Straight, alt 2
   components:
   - type: Sprite
+    drawdepth: ThinPipeAlt2
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
 
 # GasPipeHalf
 - type: entity
-  parent: [GasPipeHalf, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasPipeHalf]
   id: GasPipeHalf1
   suffix: Half, alt 1
   components:
   - type: Sprite
+    drawdepth: ThinPipeAlt1
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
       
 - type: entity
-  parent: [GasPipeHalf, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasPipeHalf]
   id: GasPipeHalf2
   suffix: Half, alt 2  
   components:
   - type: Sprite
+    drawdepth: ThinPipeAlt2
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
 
 # GasPipeBend
 - type: entity
-  parent: [GasPipeBend, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasPipeBend]
   id: GasPipeBend1
   suffix: Bend, alt 1
   components:
   - type: Sprite
+    drawdepth: ThinPipeAlt1
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
       
 - type: entity
-  parent: [GasPipeBend, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasPipeBend]
   id: GasPipeBend2
   suffix: Bend, alt 2
   components:
   - type: Sprite
+    drawdepth: ThinPipeAlt2
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
 
 # GasPipeTJunction
 - type: entity
-  parent: [GasPipeTJunction, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasPipeTJunction]
   id: GasPipeTJunction1
   suffix: TJunction, alt 1
   components:
   - type: Sprite
+    drawdepth: ThinPipeAlt1
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
       
 - type: entity
-  parent: [GasPipeTJunction, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasPipeTJunction]
   id: GasPipeTJunction2
   suffix: TJunction, alt 2
   components:
   - type: Sprite
+    drawdepth: ThinPipeAlt2
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
       
 # GasPipeFourway
 - type: entity
-  parent: [GasPipeFourway, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasPipeFourway]
   id: GasPipeFourway1
   suffix: Fourway, alt 1
   components:
   - type: Sprite
+    drawdepth: ThinPipeAlt1
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
       
 - type: entity
-  parent: [GasPipeFourway, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasPipeFourway]
   id: GasPipeFourway2
   suffix: Fourway, alt 2
   components:
   - type: Sprite
+    drawdepth: ThinPipeAlt2
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
 
 # GasVentPump
 - type: entity
-  parent: [GasVentPump, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasVentPump]
   id: GasVentPump1
   components:
   - type: Sprite
@@ -118,7 +128,7 @@
       map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
 
 - type: entity
-  parent: [GasVentPump, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasVentPump]
   id: GasVentPump2
   components:
   - type: Sprite
@@ -131,7 +141,7 @@
       
 # GasPassiveVent
 - type: entity
-  parent: [GasPassiveVent, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasPassiveVent]
   id: GasPassiveVent1
   components:
   - type: Sprite
@@ -143,7 +153,7 @@
       map: [ "enum.SubfloorLayers.FirstLayer" ]
       
 - type: entity
-  parent: [GasPassiveVent, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasPassiveVent]
   id: GasPassiveVent2
   components:
   - type: Sprite
@@ -156,7 +166,7 @@
       
 # GasVentScrubber
 - type: entity
-  parent: [GasVentScrubber, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasVentScrubber]
   id: GasVentScrubber1
   components:
   - type: Sprite
@@ -168,7 +178,7 @@
       map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
       
 - type: entity
-  parent: [GasVentScrubber, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasVentScrubber]
   id: GasVentScrubber2
   components:
   - type: Sprite
@@ -181,7 +191,7 @@
 
 # GasOutletInjector
 - type: entity
-  parent: [GasOutletInjector, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasOutletInjector]
   id: GasOutletInjector1
   components:
   - type: Sprite
@@ -197,7 +207,7 @@
       color: "#990000"
 
 - type: entity
-  parent: [GasOutletInjector, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasOutletInjector]
   id: GasOutletInjector2
   components:
   - type: Sprite
@@ -214,7 +224,7 @@
 
 # GasThermoMachineFreezer
 - type: entity
-  parent: [GasThermoMachineFreezer, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasThermoMachineFreezer]
   id: GasThermoMachineFreezer1
   components:
   - type: Sprite
@@ -228,7 +238,7 @@
       renderingStrategy: Default
 
 - type: entity
-  parent: [GasThermoMachineFreezer, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasThermoMachineFreezer]
   id: GasThermoMachineFreezer2
   components:
   - type: Sprite
@@ -243,7 +253,7 @@
 
 # GasThermoMachineHeater
 - type: entity
-  parent: [GasThermoMachineHeater, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasThermoMachineHeater]
   id: GasThermoMachineHeater1
   components:
   - type: Sprite
@@ -257,7 +267,7 @@
       renderingStrategy: Default
 
 - type: entity
-  parent: [GasThermoMachineHeater, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasThermoMachineHeater]
   id: GasThermoMachineHeater2
   components:
   - type: Sprite
@@ -272,7 +282,7 @@
 
 # GasThermoMachineHellfireFreezer
 - type: entity
-  parent: [GasThermoMachineHellfireFreezer, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasThermoMachineHellfireFreezer]
   id: GasThermoMachineHellfireFreezer1
   components:
   - type: Sprite
@@ -286,7 +296,7 @@
       renderingStrategy: Default
 
 - type: entity
-  parent: [GasThermoMachineHellfireFreezer, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasThermoMachineHellfireFreezer]
   id: GasThermoMachineHellfireFreezer2
   components:
   - type: Sprite
@@ -301,7 +311,7 @@
 
 # GasThermoMachineHellfireHeater
 - type: entity
-  parent: [GasThermoMachineHellfireHeater, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasThermoMachineHellfireHeater]
   id: GasThermoMachineHellfireHeater1
   components:
   - type: Sprite
@@ -315,7 +325,7 @@
       renderingStrategy: Default
 
 - type: entity
-  parent: [GasThermoMachineHellfireHeater, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasThermoMachineHellfireHeater]
   id: GasThermoMachineHellfireHeater2
   components:
   - type: Sprite
@@ -330,7 +340,7 @@
 
 # BaseGasCondenser
 - type: entity
-  parent: [BaseGasCondenser, GasPipeLayer1]
+  parent: [GasPipeLayer1, BaseGasCondenser]
   id: BaseGasCondenser1
   components:
   - type: Sprite
@@ -348,7 +358,7 @@
     - state: trans
 
 - type: entity
-  parent: [BaseGasCondenser, GasPipeLayer2]
+  parent: [GasPipeLayer2, BaseGasCondenser]
   id: BaseGasCondenser2
   components:
   - type: Sprite
@@ -367,7 +377,7 @@
     
 # GasPressurePump
 - type: entity
-  parent: [GasPressurePump, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasPressurePump]
   id: GasPressurePump1
   components:
   - type: Sprite
@@ -380,7 +390,7 @@
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
       
 - type: entity
-  parent: [GasPressurePump, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasPressurePump]
   id: GasPressurePump2
   components:
   - type: Sprite
@@ -394,7 +404,7 @@
       
 # GasVolumePump
 - type: entity
-  parent: [GasVolumePump, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasVolumePump]
   id: GasVolumePump1
   components:
   - type: Sprite
@@ -407,7 +417,7 @@
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
       
 - type: entity
-  parent: [GasVolumePump, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasVolumePump]
   id: GasVolumePump2
   components:
   - type: Sprite
@@ -421,7 +431,7 @@
       
 # GasPassiveGate
 - type: entity
-  parent: [GasPassiveGate, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasPassiveGate]
   id: GasPassiveGate1
   components:
   - type: Sprite
@@ -434,7 +444,7 @@
       map: [ "enum.SubfloorLayers.FirstLayer" ]
 
 - type: entity
-  parent: [GasPassiveGate, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasPassiveGate]
   id: GasPassiveGate2
   components:
   - type: Sprite
@@ -448,7 +458,7 @@
 
 # GasValve
 - type: entity
-  parent: [GasValve, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasValve]
   id: GasValve1
   components:
   - type: Sprite
@@ -461,7 +471,7 @@
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
       
 - type: entity
-  parent: [GasValve, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasValve]
   id: GasValve2
   components:
   - type: Sprite
@@ -475,7 +485,7 @@
  
 # SignalControlledValve
 - type: entity
-  parent: [SignalControlledValve, GasPipeLayer1]
+  parent: [GasPipeLayer1, SignalControlledValve]
   id: SignalControlledValve1
   components:
   - type: Sprite
@@ -488,7 +498,7 @@
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
 
 - type: entity
-  parent: [SignalControlledValve, GasPipeLayer2]
+  parent: [GasPipeLayer2, SignalControlledValve]
   id: SignalControlledValve2
   components:
   - type: Sprite
@@ -502,7 +512,7 @@
 
 # GasPort
 - type: entity
-  parent: [GasPort, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasPort]
   id: GasPort1
   components:
   - type: Sprite
@@ -514,7 +524,7 @@
       map: [ "enum.SubfloorLayers.FirstLayer" ] 
       
 - type: entity
-  parent: [GasPort, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasPort]
   id: GasPort2
   components:
   - type: Sprite
@@ -527,7 +537,7 @@
 
 # GasDualPortVentPump
 - type: entity
-  parent: [GasDualPortVentPump, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasDualPortVentPump]
   id: GasDualPortVentPump1
   components:
   - type: Sprite
@@ -539,7 +549,7 @@
       map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
 
 - type: entity
-  parent: [GasDualPortVentPump, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasDualPortVentPump]
   id: GasDualPortVentPump2
   components:
   - type: Sprite
@@ -552,7 +562,7 @@
 
 # GasRecycler
 - type: entity
-  parent: [GasRecycler, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasRecycler]
   id: GasRecycler1
   components:
   - type: Sprite
@@ -565,7 +575,7 @@
       shader: unshaded
 
 - type: entity
-  parent: [GasRecycler, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasRecycler]
   id: GasRecycler2
   components:
   - type: Sprite
@@ -579,7 +589,7 @@
 
 # GasFilter
 - type: entity
-  parent: [GasFilter, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasFilter]
   id: GasFilter1
   components:
   - type: Sprite
@@ -591,7 +601,7 @@
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
 
 - type: entity
-  parent: [GasFilter, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasFilter]
   id: GasFilter2
   components:
   - type: Sprite
@@ -604,7 +614,7 @@
 
 # GasFilterFlipped
 - type: entity
-  parent: [GasFilterFlipped, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasFilterFlipped]
   id: GasFilterFlipped1
   suffix: Flipped, alt 1
   components:
@@ -617,7 +627,7 @@
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
 
 - type: entity
-  parent: [GasFilterFlipped, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasFilterFlipped]
   id: GasFilterFlipped2
   suffix: Flipped, alt 2
   components:
@@ -631,7 +641,7 @@
 
 # GasMixer
 - type: entity
-  parent: [GasMixer, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasMixer]
   id: GasMixer1
   components:
   - type: Sprite
@@ -643,7 +653,7 @@
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
 
 - type: entity
-  parent: [GasMixer, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasMixer]
   id: GasMixer2
   components:
   - type: Sprite
@@ -656,7 +666,7 @@
 
 # GasMixerFlipped
 - type: entity
-  parent: [GasMixerFlipped, GasPipeLayer1]
+  parent: [GasPipeLayer1, GasMixerFlipped]
   id: GasMixerFlipped1
   suffix: Flipped, alt 1  
   components:
@@ -669,7 +679,7 @@
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
       
 - type: entity
-  parent: [GasMixerFlipped, GasPipeLayer2]
+  parent: [GasPipeLayer2, GasMixerFlipped]
   id: GasMixerFlipped2
   suffix: Flipped, alt 2
   components:
@@ -683,7 +693,7 @@
       
 # PressureControlledValve
 - type: entity
-  parent: [PressureControlledValve, GasPipeLayer1]
+  parent: [GasPipeLayer1, PressureControlledValve]
   id: PressureControlledValve1
   components:
   - type: Sprite
@@ -695,7 +705,7 @@
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
 
 - type: entity
-  parent: [PressureControlledValve, GasPipeLayer2]
+  parent: [GasPipeLayer2, PressureControlledValve]
   id: PressureControlledValve2
   components:
   - type: Sprite
