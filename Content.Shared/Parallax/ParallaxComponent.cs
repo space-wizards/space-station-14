@@ -18,11 +18,12 @@ public sealed partial class ParallaxComponent : Component
     public string ParallaxVV
     {
         get => Parallax;
+        // I don't think this is used. In which case can be removed
         set
         {
             if (value.Equals(Parallax)) return;
             Parallax = value;
-            IoCManager.Resolve<IEntityManager>().Dirty(this);
+            IoCManager.Resolve<IEntityManager>().Dirty(Owner, this);
         }
     }
 }
