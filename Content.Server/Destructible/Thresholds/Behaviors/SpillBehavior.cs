@@ -31,28 +31,30 @@ public sealed partial class SpillBehavior : IThresholdBehavior
         var spillableSystem = system.EntityManager.System<PuddleSystem>();
         var coordinates = system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates;
 
-        Solution targetSolution;
+        // Try to get solution from either SpillableComponent or the fallback Solution
+        string? solutionName = null;
 
-        // First try to get solution from SpillableComponent
-        if (system.EntityManager.TryGetComponent(owner, out SpillableComponent? spillableComponent) &&
-            solutionContainerSystem.TryGetSolution(owner, spillableComponent.SolutionName, out var solution, out var compSolution))
+        if (system.EntityManager.TryGetComponent(owner, out SpillableComponent? spillableComponent))
         {
-            // If entity is drainable, drain the solution. Otherwise just split it.
-            // Both methods ensure the solution is properly removed.
-            targetSolution = system.EntityManager.HasComponent<DrainableSolutionComponent>(owner)
-                ? solutionContainerSystem.Drain((owner, system.EntityManager.GetComponent<DrainableSolutionComponent>(owner)), solution.Value, compSolution.Volume)
-                : compSolution.SplitSolution(compSolution.Volume);
+            solutionName = spillableComponent.SolutionName;
         }
-        // Fallback to solution specified in behavior data
-        else if (Solution != null &&
-                 solutionContainerSystem.TryGetSolution(owner, Solution, out var solutionEnt, out var behaviorSolution))
+        else if (Solution != null)
         {
-            targetSolution = system.EntityManager.HasComponent<DrainableSolutionComponent>(owner)
-                ? solutionContainerSystem.Drain((owner, system.EntityManager.GetComponent<DrainableSolutionComponent>(owner)), solutionEnt.Value, behaviorSolution.Volume)
-                : behaviorSolution.SplitSolution(behaviorSolution.Volume);
+            solutionName = Solution;
         }
-        else
+
+        // If no solution name was found, return early
+        if (solutionName == null ||
+            !solutionContainerSystem.TryGetSolution(owner, solutionName, out var solutionEnt, out var solution))
+        {
             return;
+        }
+
+        // If entity is drainable, drain the solution. Otherwise just split it.
+        // Both methods ensure the solution is properly removed.
+        var targetSolution = system.EntityManager.HasComponent<DrainableSolutionComponent>(owner)
+            ? solutionContainerSystem.Drain((owner, system.EntityManager.GetComponent<DrainableSolutionComponent>(owner)), solutionEnt.Value, solution.Volume)
+            : solution.SplitSolution(solution.Volume);
 
         // Spill the solution that was drained/split
         spillableSystem.TrySplashSpillAt(owner, coordinates, targetSolution, out _, false, cause);
