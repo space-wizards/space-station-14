@@ -17,11 +17,11 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/vial.rsi
     layers:
-      - state: vial-1-closed
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: vial-1-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: vial-1-closed
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: vial-1-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
@@ -123,11 +123,11 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/vial.rsi
     layers:
-      - state: vial-2-closed
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: vial-2-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: vial-2-closed
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: vial-2-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     fillBaseName: vial-2-
@@ -195,7 +195,7 @@
         reagents:
           - ReagentId: Chlorine
             Quantity: 5
-            
+
 - type: entity
   id: PlasmaChemistryVial
   parent: BaseChemistryEmptyVialSmall
