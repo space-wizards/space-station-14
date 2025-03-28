@@ -225,6 +225,7 @@
   description: A stationary charger for various robotic and cyborg entities. Surprisingly spacious.
   components:
   - type: Sprite
+    drawdepth: HighFloorObjects #imp edit
     sprite: Structures/Power/borg_charger.rsi
     layers:
       - state: borgcharger-u1
