@@ -6,7 +6,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Atmos.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class GasPressurePumpComponent : Component
 {
     [Access(typeof(SharedGasPressurePumpSystem))]

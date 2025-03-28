@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/commit/b459ea3fdee965bdc3e93e7983ad7fa610d05c12 and https://github.com/tgstation/tgstation/commit/ead6d8d59753ef033efdfad17f337df268038ff3, inhands by mubururu_ (github)",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/commit/b459ea3fdee965bdc3e93e7983ad7fa610d05c12 and https://github.com/tgstation/tgstation/commit/ead6d8d59753ef033efdfad17f337df268038ff3, inhands by mubururu_ (github), slice.png modified from https://github.com/space-wizards/space-station-14/pull/14587/files#diff-3d6e5b157c429de7aa62396e8677d0a2fab073a2d6d6e796af4931cb8d979330 by Chaoticaa (GitHub), Growth stages, harvest, dead, and produce sprites Created by Chaoticaa (GitHub)",
     "size": {
         "x": 32,
         "y": 32
