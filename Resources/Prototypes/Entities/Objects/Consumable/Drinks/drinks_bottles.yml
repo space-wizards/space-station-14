@@ -531,6 +531,71 @@
     - Wine
     - DrinkBottle
 
+# Large Bottles, for Soda/Tonic Water and its Parent. TODO add Large Water Bottle Sprites
+- type: entity
+  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
+  id: DrinkWaterBottleLargeFull
+  name: New London spring water
+  description: A bo'ol o' wo'er. How does a space station have a spring?
+  components:
+  - type: Item
+    size: Normal
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: Water
+          Quantity: 150
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi
+    layers:
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: icon-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: icon-
+    inHandsMaxFillLevels: 2
+    inHandsFillBaseName: -fill-
+  - type: Sealable
+
+- type: entity
+  parent: DrinkWaterBottleLargeFull
+  id: DrinkSodaWaterBottleFull
+  name: soda water bottle
+  description: Like water, but angry!
+  components:
+  - type: Item
+    size: Normal
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: SodaWater
+          Quantity: 150
+
+- type: entity
+  parent: DrinkWaterBottleLargeFull
+  id: DrinkTonicWaterBottleFull
+  name: tonic water bottle
+  description: Like soda water, but angrier maybe? Often sweeter.
+  components:
+  - type: Item
+    size: Normal
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: TonicWater
+          Quantity: 150
+
 # Small Bottles
 
 - type: entity
@@ -658,38 +723,6 @@
     inHandsMaxFillLevels: 2
     inHandsFillBaseName: -fill-
   - type: Sealable
-
-- type: entity
-  parent: DrinkWaterBottleFull
-  id: DrinkSodaWaterBottleFull
-  name: soda water bottle
-  description: Like water, but angry!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: SodaWater
-          Quantity: 150
-  - type: Label
-    currentLabel: reagent-name-soda-water
-
-- type: entity
-  parent: DrinkWaterBottleFull
-  id: DrinkTonicWaterBottleFull
-  name: tonic water bottle
-  description: Like soda water, but angrier maybe? Often sweeter.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: TonicWater
-          Quantity: 150
-  - type: Label
-    currentLabel: reagent-name-tonic-water
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
