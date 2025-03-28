@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Fixed Gastropoids being unable to pilot, host anomalies, or make footstep
-      sounds.
-    type: Fix
-  id: 905
-  time: '2025-01-11T04:56:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1307
-- author: EpicToast
-  changes:
-  - message: Making curtains and fancy tables with a stack of carpet will no longer
-      eat the entire stack.
-    type: Fix
-  id: 906
-  time: '2025-01-12T09:32:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1320
 - author: starlighthowls
   changes:
   - message: map changes to Boat
@@ -4073,3 +4057,18 @@
   id: 1404
   time: '2025-03-28T17:30:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2120
+- author: SixValentine
+  changes:
+  - message: You can now grind on Train.
+    type: Fix
+  id: 1405
+  time: '2025-03-28T21:25:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2128
+- author: DinnerCalzone
+  changes:
+  - message: The Entropic Blade no longer ignores damage resistances and no longer
+      deals bonus damage on left-click.
+    type: Tweak
+  id: 1406
+  time: '2025-03-28T21:26:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2123
