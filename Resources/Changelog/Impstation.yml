@@ -1,29 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Added a new trinket, dogtags, from Cosmatic Drift.
-    type: Add
-  - message: Added a fun heart locket for your honey :)
-    type: Add
-  id: 910
-  time: '2025-01-13T04:18:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1329
-- author: hivehum
-  changes:
-  - message: Some vendors have a new dispensing sound.
-    type: Tweak
-  id: 911
-  time: '2025-01-13T04:19:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1326
-- author: DinnerCalzone
-  changes:
-  - message: Clown shoe waddling has been re-implemented with a fix that will prevent
-      the waddling animation from playing when it should not be. Additionally, it
-      has been changed into a toggle system, similar to magboots.
-    type: Add
-  id: 912
-  time: '2025-01-13T04:18:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1310
 - author: EpicToast
   changes:
   - message: Vent creatures now spawn from one vent all at once instead of being spread
@@ -4072,3 +4047,33 @@
   id: 1409
   time: '2025-03-28T21:33:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2102
+- author: Kandiyaki
+  changes:
+  - message: Sacrificing someone without a mind no longer has a chance to crash the
+      server.
+    type: Fix
+  - message: People returning from the Infinite Archives will no longer have a chance
+      to spawn in space.
+    type: Tweak
+  id: 1410
+  time: '2025-03-28T21:37:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2094
+- author: Sha-Seng
+  changes:
+  - message: Proper Punctuation accent no longer adds periods after ' " and *
+    type: Tweak
+  id: 1411
+  time: '2025-03-28T21:37:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2115
+- author: Kandiyaki
+  changes:
+  - message: heretics no longer have specific targets they are restricted to.
+    type: Remove
+  - message: removed the Living Heart heretic ability and the Relentless Heartbeat
+      heretic ritual.
+    type: Remove
+  - message: edited the heretic's guidebook to reflect the above changes.
+    type: Tweak
+  id: 1412
+  time: '2025-03-28T21:37:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2072
