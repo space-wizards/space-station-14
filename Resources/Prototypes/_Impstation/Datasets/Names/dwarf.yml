@@ -1,17 +1,17 @@
 - type: localizedDataset
   id: NamesDwarfFirst
   values:
-    prefix: names-dwarf-first-
+    prefix: names-dwarf-first-dataset-
     count: 41
 
 - type: localizedDataset
   id: NamesDwarfMiddle
   values:
-    prefix: names-dwarf-middle-
+    prefix: names-dwarf-middle-dataset-
     count: 91
 
 - type: localizedDataset
   id: NamesDwarfLast
   values:
-    prefix: names-dwarf-last-
+    prefix: names-dwarf-last-dataset-
     count: 134
