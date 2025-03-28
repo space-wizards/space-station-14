@@ -20,6 +20,7 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
     /// <inheritdoc />
     public override void Update(float deltaTime)
     {
+        //Ed: i think it should be in Shared to, but ApcPowerReceiver.PowerReceived in server atm...
         var query = EntityQueryEnumerator<EntityHeaterComponent, ItemPlacerComponent, ApcPowerReceiverComponent>();
         while (query.MoveNext(out _, out _, out var placer, out var power))
         {
