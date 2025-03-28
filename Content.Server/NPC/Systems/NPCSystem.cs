@@ -5,6 +5,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components; //IMP
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Systems;
@@ -144,6 +145,10 @@ namespace Content.Server.NPC.Systems
         public void OnMobStateChange(EntityUid uid, HTNComponent component, MobStateChangedEvent args)
         {
             if (HasComp<ActorComponent>(uid))
+                return;
+
+            //#IMP don't sleep/wake entities if the MobState was changed between event being raised and now (e.g by Zombie transformation)
+            if (TryComp<MobStateComponent>(uid, out var mobStateComp) && mobStateComp.CurrentState != args.NewMobState)
                 return;
 
             switch (args.NewMobState)
