@@ -147,6 +147,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             if (TryComp<EmbeddedContainerComponent>(component.EmbeddedIntoUid.Value, out var embeddedContainer))
             {
                 embeddedContainer.EmbeddedObjects.Remove(uid);
+                Dirty(component.EmbeddedIntoUid.Value, embeddedContainer);
             }
         }
 
