@@ -301,9 +301,7 @@
   - type: FireProtection
     reduction: 0.2
   - type: Tag
-    tags:
-      - RadDefenseHelmet
-      - WhitelistChameleon
+    tags: [ RadiationProtectorHelmet ]
 
 #Chief Medical Officer's Hardsuit
 - type: entity

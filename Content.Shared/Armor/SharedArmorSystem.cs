@@ -4,6 +4,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Silicons.Borgs;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
+using Content.Shared.Tag;
 
 namespace Content.Shared.Armor;
 
@@ -13,6 +14,8 @@ namespace Content.Shared.Armor;
 public abstract class SharedArmorSystem : EntitySystem
 {
     [Dependency] private readonly ExamineSystemShared _examine = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -22,6 +25,7 @@ public abstract class SharedArmorSystem : EntitySystem
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
         SubscribeLocalEvent<ArmorComponent, BorgModuleRelayedEvent<DamageModifyEvent>>(OnBorgDamageModify);
         SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
+        SubscribeLocalEvent<ComplexArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModifyComplex);
     }
 
     private void OnDamageModify(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<DamageModifyEvent> args)
@@ -79,4 +83,19 @@ public abstract class SharedArmorSystem : EntitySystem
 
         return msg;
     }
+
+    #region ComplexArmor
+    private void OnDamageModifyComplex(EntityUid uid, ComplexArmorComponent comp, InventoryRelayedEvent<DamageModifyEvent> args)
+    {
+        var clothingUidList = _inventorySystem.GetHandOrInventoryEntities(uid, comp.Slots);
+
+        var allowedTags = comp.Tags;
+
+        foreach (var clothingUid in clothingUidList)
+        {
+            if (_tag.HasAnyTag(clothingUid, allowedTags))
+                args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, comp.Modifiers);
+        }
+    }
+    #endregion
 }
