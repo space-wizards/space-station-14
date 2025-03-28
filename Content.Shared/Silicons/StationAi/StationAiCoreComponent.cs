@@ -29,4 +29,16 @@ public sealed partial class StationAiCoreComponent : Component
     public EntProtoId? RemoteEntityProto = "StationAiHolo";
 
     public const string Container = "station_ai_mind_slot";
+
+    /// <summary>
+    /// The key used to index the leggy animation.
+    /// </summary>
+    [ViewVariables]
+    public const string AnimationKey = "leggy_animation";
+
+    /// <summary>
+    /// The current visual state of the core.
+    /// </summary>
+    [ViewVariables]
+    public StationAiState CurrentState = StationAiState.Empty;
 }
