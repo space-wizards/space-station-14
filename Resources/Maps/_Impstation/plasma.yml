@@ -4,8 +4,8 @@ meta:
   engineVersion: 247.2.0
   forkId: ""
   forkVersion: ""
-  time: 03/18/2025 07:46:46
-  entityCount: 26441
+  time: 03/28/2025 03:56:39
+  entityCount: 26457
 maps:
 - 1
 grids:
@@ -13489,6 +13489,13 @@ entities:
     - type: Transform
       pos: -110.5,-28.5
       parent: 2
+- proto: AirlockMaintHDLocked
+  entities:
+  - uid: 9683
+    components:
+    - type: Transform
+      pos: -73.5,-19.5
+      parent: 2
 - proto: AirlockMaintHOPLocked
   entities:
   - uid: 2912
@@ -13663,11 +13670,6 @@ entities:
     components:
     - type: Transform
       pos: -108.5,-27.5
-      parent: 2
-  - uid: 9683
-    components:
-    - type: Transform
-      pos: -73.5,-19.5
       parent: 2
   - uid: 9721
     components:
@@ -39827,6 +39829,86 @@ entities:
     components:
     - type: Transform
       pos: -101.5,-34.5
+      parent: 2
+  - uid: 26442
+    components:
+    - type: Transform
+      pos: -28.5,-30.5
+      parent: 2
+  - uid: 26443
+    components:
+    - type: Transform
+      pos: -29.5,-30.5
+      parent: 2
+  - uid: 26444
+    components:
+    - type: Transform
+      pos: -29.5,-29.5
+      parent: 2
+  - uid: 26445
+    components:
+    - type: Transform
+      pos: -29.5,-28.5
+      parent: 2
+  - uid: 26446
+    components:
+    - type: Transform
+      pos: -29.5,-27.5
+      parent: 2
+  - uid: 26447
+    components:
+    - type: Transform
+      pos: -29.5,-25.5
+      parent: 2
+  - uid: 26448
+    components:
+    - type: Transform
+      pos: -29.5,-31.5
+      parent: 2
+  - uid: 26449
+    components:
+    - type: Transform
+      pos: -29.5,-32.5
+      parent: 2
+  - uid: 26450
+    components:
+    - type: Transform
+      pos: -29.5,-33.5
+      parent: 2
+  - uid: 26451
+    components:
+    - type: Transform
+      pos: -26.5,-37.5
+      parent: 2
+  - uid: 26452
+    components:
+    - type: Transform
+      pos: -27.5,-37.5
+      parent: 2
+  - uid: 26453
+    components:
+    - type: Transform
+      pos: -28.5,-37.5
+      parent: 2
+  - uid: 26454
+    components:
+    - type: Transform
+      pos: -29.5,-37.5
+      parent: 2
+  - uid: 26455
+    components:
+    - type: Transform
+      pos: -29.5,-36.5
+      parent: 2
+  - uid: 26456
+    components:
+    - type: Transform
+      pos: -29.5,-35.5
+      parent: 2
+  - uid: 26457
+    components:
+    - type: Transform
+      pos: -29.5,-38.5
       parent: 2
 - proto: CableApcStack
   entities:
