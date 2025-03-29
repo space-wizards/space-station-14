@@ -17,6 +17,12 @@
     id: ScurretPDA
 
 - type: startingGear
+  id: ScurretMouseGear
+  equipment:
+    head: ClothingHeadHatBeretFrench
+    id: ScurretPDA
+
+- type: startingGear
   id: ScurretCMOGear
   equipment:
     head: ClothingHeadHatBeretCmo

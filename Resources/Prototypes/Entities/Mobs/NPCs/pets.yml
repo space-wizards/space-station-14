@@ -65,6 +65,8 @@
     attributes:
       proper: true
       gender: female
+  - type: Loadout
+    prototypes: [ ScurretMouseGear ]
 
 - type: entity
   name: "\"Puppy Ian\""
