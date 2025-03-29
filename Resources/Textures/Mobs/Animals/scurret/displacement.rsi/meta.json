@@ -11,6 +11,10 @@
     },
     "states": [
         {
+            "name": "jumpsuit",
+            "directions": 4
+        },
+        {
             "name": "head",
             "directions": 4
         },
@@ -28,10 +32,6 @@
         },
         {
             "name": "id",
-            "directions": 4
-        },
-        {
-            "name": "jumpsuit",
             "directions": 4
         },
         {

@@ -11,7 +11,6 @@
   - type: ReplacementAccent
     accent: scurret
   - type: Sprite
-    # drawdepth: SmallMobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       sprite: Mobs/Animals/scurret/scurret.rsi
@@ -53,9 +52,8 @@
     speechSounds: Wawa
   - type: TypingIndicator
     proto: moth
-  # They hard to pet
   - type: InteractionPopup
-    successChance: 0.5
+    successChance: 0.99 # Imagine not being allowed to headpat a scurret, chat
     interactSuccessString: petting-success-scurret
     interactFailureString: petting-failure-scurret
     interactSuccessSpawn: EffectHearts
@@ -128,10 +126,16 @@
     tags:
       - CanPilot # Inexplicably, scurrets have a natural aptitude for spaceflight
 
-
 - type: inventoryTemplate
   id: scurret
   slots:
+  - name: jumpsuit
+    slotTexture: uniform
+    slotFlags: INNERCLOTHING
+    stripTime: 6
+    uiWindowPos: 0,1
+    strippingWindowPos: 0,2
+    displayName: Jumpsuit
   - name: head
     slotTexture: head
     slotFlags: HEAD
@@ -166,13 +170,6 @@
     uiWindowPos: 2,1
     strippingWindowPos: 2,4
     displayName: ID
-  - name: jumpsuit
-    slotTexture: uniform
-    slotFlags: INNERCLOTHING
-    stripTime: 6
-    uiWindowPos: 0,1
-    strippingWindowPos: 0,2
-    displayName: Jumpsuit
   - name: gloves
     slotTexture: gloves
     slotFlags: GLOVES
@@ -205,11 +202,11 @@
   id: ScurretColors
   name: ScurretColors
   colors:
-    Normal: "#ffffff"
-    Innocent: "#f6f439"
-    Angry: "#dc5864"
+    Normal: "#ffffff" # Sluggy
+    Innocent: "#f6f439" # Monky
+    Angry: "#dc5864" # Hunty
     Eldritch: "#dc5864"
-    Perceptive: "#222222"
+    Perceptive: "#222222" # Watchy
     Fat: "#fefcab"
     Violent: "#ab3430"
     Speedy: "#679cfe"
