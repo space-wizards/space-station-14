@@ -19,4 +19,4 @@
     penetrationDamageTypeRequirement:
     - Structural
   - type: StaminaDamageOnCollide
-    damage: 100 # catnap
+    damage: 60
