@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Added 10 seconds delay to Succumb action
-    type: Add
-  id: 7612
-  time: '2024-11-15T21:21:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32985
-- author: Beck Thompson
-  changes:
-  - message: Minor tweaks to clumsiness. Some of the timings and or noises have been
-      changed slightly!
-    type: Tweak
-  id: 7613
-  time: '2024-11-15T23:46:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31147
-- author: SaphireLattice
-  changes:
-  - message: Crayon UI now has categories and queue
-    type: Add
-  id: 7614
-  time: '2024-11-16T03:25:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33101
 - author: Southbridge
   changes:
   - message: The BRB sign is now included in the Bureaucracy Crate
@@ -3874,3 +3852,34 @@
   id: 8111
   time: '2025-03-27T06:26:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36003
+- author: SlamBamActionman
+  changes:
+  - message: Liltenhead! Thank you for over 2 years of update videos, and congrats
+      on the 100th video!
+    type: Add
+  id: 8112
+  time: '2025-03-27T17:19:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36104
+- author: metalgearsloth
+  changes:
+  - message: Rewrote how mob movement works to make movement more flexible in code.
+      While this should largely function the same (apart from conveyors now being
+      able to launch items) please report any bugs found.
+    type: Tweak
+  id: 8113
+  time: '2025-03-27T22:29:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35931
+- author: ViceEmargo
+  changes:
+  - message: Botanist's leather gloves must now be equipped in order to pick up Death
+      Nettles.
+    type: Add
+  - message: Death Nettles will now pierce hardsuits, injecting 5 units of reagent.
+    type: Tweak
+  - message: Death Nettles will now "wilt" after 5 hits.
+    type: Add
+  - message: Fly Amanita has been changed to contain less Amatoxin.
+    type: Tweak
+  id: 8114
+  time: '2025-03-29T09:35:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25253
