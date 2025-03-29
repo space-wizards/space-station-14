@@ -3,9 +3,10 @@
   name: Animate
   description: Bring an inanimate object to life!
   components:
+  - type: LimitedCharges
+    maxCharges: 5
   - type: EntityTargetAction
     useDelay: 0
-    charges: 5
     itemIconStyle: BigAction
     whitelist:
       components:

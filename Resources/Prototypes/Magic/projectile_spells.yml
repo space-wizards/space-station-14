@@ -29,9 +29,10 @@
   name: Fireball II
   description: Fires a fireball, but faster!
   components:
+  - type: LimitedCharges
+  - type: AutoRecharge
+    rechargeDuration: 10
   - type: WorldTargetAction
-    useDelay: 10
-    renewCharges: true
     itemIconStyle: BigAction
     checkCanAccess: false
     raiseOnUser: true
@@ -51,9 +52,10 @@
   name: Fireball III
   description: The fastest fireball in the west!
   components:
+    - type: LimitedCharges
+    - type: AutoRecharge
+      rechargeDuration: 8
     - type: WorldTargetAction
-      useDelay: 8
-      renewCharges: true
       itemIconStyle: BigAction
       checkCanAccess: false
       raiseOnUser: true
