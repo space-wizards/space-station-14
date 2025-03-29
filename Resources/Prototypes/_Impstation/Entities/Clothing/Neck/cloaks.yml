@@ -122,3 +122,18 @@
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Neck/Cloaks/juggernautcloak.rsi
+
+    
+- type: entity
+  parent: [ClothingNeckBase, BaseSyndicateContraband]
+  id: ClothingNeckCloakFugitiveCloak
+  name: monochrome cloak
+  description: It's a federal crime, buster.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/fugitivecloak.rsi
+  - type: TypingIndicatorClothing
+    proto: alien
+  - type: HideLayerClothing
+    slots:
+    - Tail

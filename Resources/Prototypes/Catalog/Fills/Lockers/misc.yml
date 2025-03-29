@@ -149,6 +149,7 @@
     - id: ClothingEyesNightVisionGogglesSyndie
     - id: ClothingEyesThermalVisionGogglesSyndie
     - id: ClothingNeckCloakKaijuCloak #imp
+    - id: ClothingNeckCloakFugitiveCloak #imp
       weight: 2
 
 - type: entityTable

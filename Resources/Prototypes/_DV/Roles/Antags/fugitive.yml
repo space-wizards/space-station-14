@@ -19,7 +19,7 @@
     back: ClothingBackpackSatchel
     shoes: ClothingShoesChameleonNoSlips
     id: PassengerPDA
-    neck: ClothingNeckCloakStraight
+    neck: ClothingNeckCloakFugitiveCloak #imp edit ^^
   #innerClothingSkirt: ClothingUniformJumpskirtPrisoner # FIXME doesnt work
   inhand:
   - ToolboxElectricalFilled
