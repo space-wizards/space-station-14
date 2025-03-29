@@ -76,6 +76,9 @@ public sealed partial class CargoSystem
                 if (_player.HasRunningAnimation(uid, TelepadBeamKey))
                     return;
                 _player.Stop(uid, player, TelepadIdleKey);
+                // My client will crash if this check isn't here as stopping the idle annimation will otherwise cause TelepadBeamKey to be played twice
+                if (_player.HasRunningAnimation(uid, TelepadBeamKey))
+                    return;
                 _player.Play(uid, player, CargoTelepadBeamAnimation, TelepadBeamKey);
                 break;
             case CargoTelepadState.Unpowered:

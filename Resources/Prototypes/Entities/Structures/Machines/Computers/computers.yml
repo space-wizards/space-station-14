@@ -930,6 +930,7 @@
     color: "#b89f25"
   - type: AccessReader
     access: [["Cargo"]]
+    additionalAccess: [[["Quartermaster"]]]
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice

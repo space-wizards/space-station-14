@@ -94,5 +94,8 @@ namespace Content.Shared.Cargo.Prototypes
         /// </summary>
         [DataField]
         public string Group { get; private set; } = "market";
+
+        [DataField]
+        public bool Resticted { get; set; }
     }
 }
