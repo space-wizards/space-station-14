@@ -5,8 +5,6 @@ using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 
 namespace Content.Server.Construction.Completions
 {
@@ -38,7 +36,8 @@ namespace Content.Server.Construction.Completions
             HandsComponent? hands = null;
             var pickup = Pickup && entityManager.TryGetComponent(userUid, out hands);
 
-            foreach (var container in containerManager.GetAllContainers())
+            var containerEnumerable = entityManager.EntitySysManager.GetEntitySystem<SharedContainerSystem>().GetAllContainers(uid);
+            foreach (var container in containerEnumerable)
             {
                 foreach (var ent in containerSys.EmptyContainer(container, true, reparent: !pickup))
                 {
