@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: Increased the time required to play certain command roles.
-    type: Tweak
-  id: 928
-  time: '2025-01-14T23:44:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1352
 - author: ATDoop
   changes:
   - message: Thieves now start with a special calling card! Copy it at the fax machine
@@ -4078,3 +4071,10 @@
   id: 1427
   time: '2025-03-29T12:56:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2105
+- author: Sha-Seng
+  changes:
+  - message: Fever Dream recipe adjusted for upstream merge
+    type: Tweak
+  id: 1428
+  time: '2025-03-29T12:59:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2132
