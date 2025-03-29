@@ -113,7 +113,7 @@
     gridPath: /Maps/_Starlight/Shuttles/DSshuttle.yml
 
     #Pig's RadioStation
-  - type: entity
+- type: entity
   parent: BaseGameRule
   id: RadioStationSpawn
   components:
