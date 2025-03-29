@@ -4,8 +4,8 @@ meta:
   engineVersion: 250.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/29/2025 03:25:45
-  entityCount: 28697
+  time: 03/29/2025 03:39:37
+  entityCount: 28696
 maps:
 - 951
 grids:
@@ -12395,7 +12395,7 @@ entities:
       pos: 11.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -3721.832
+      secondsUntilStateChange: -3917.2786
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14690,7 +14690,7 @@ entities:
       pos: -29.5,15.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -257651.12
+      secondsUntilStateChange: -257846.58
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14954,7 +14954,7 @@ entities:
       pos: -4.5,53.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -112304.86
+      secondsUntilStateChange: -112500.305
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -81752,17 +81752,6 @@ entities:
       parent: 5350
     - type: PowerConsumer
       drawRate: 1
-  - uid: 23973
-    components:
-    - type: Transform
-      anchored: False
-      rot: 1.5707963267948966 rad
-      pos: 61.5,13.5
-      parent: 5350
-    - type: Physics
-      bodyType: Dynamic
-    - type: PowerConsumer
-      drawRate: 1
   - uid: 24048
     components:
     - type: Transform
@@ -84497,7 +84486,7 @@ entities:
       pos: 31.5,-33.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -35143.91
+      secondsUntilStateChange: -35339.355
       state: Closing
   - uid: 9615
     components:
@@ -185146,7 +185135,7 @@ entities:
       pos: -28.5,-5.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -40855.82
+      secondsUntilStateChange: -41051.266
       state: Opening
   - uid: 17570
     components:
