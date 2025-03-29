@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Clown waddling now appears for other players. Consequently, clown shoes
-      now start toggled on.
-    type: Fix
-  id: 931
-  time: '2025-01-15T18:05:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1370
 - author: hivehum, crocodilecarousel
   changes:
   - message: Replaced the emote icons with something much more, well, emotive.
@@ -4077,3 +4069,10 @@
   id: 1430
   time: '2025-03-29T22:07:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2142
+- author: FlippenPage
+  changes:
+  - message: Added the SalvDrobe.
+    type: Add
+  id: 1431
+  time: '2025-03-29T22:27:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1862
