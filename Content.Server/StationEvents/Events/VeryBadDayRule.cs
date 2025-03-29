@@ -39,9 +39,6 @@ public sealed class VeryBadDayRule : StationEventSystem<VeryBadDayRuleComponent>
             _damageableSystem.TryChangeDamage(ent,
                 new DamageSpecifier(_protoMan.Index<DamageGroupPrototype>("Brute"), _random.Next(5, 50)));
         }
-
-        _roundEndSystem.DefaultCooldownDuration = TimeSpan.FromHours(1); // disable recalls
-        _roundEndSystem.RequestRoundEnd(TimeSpan.FromHours(1));
         _alertLevelSystem.SetLevel((EntityUid)station, "red", false, true, true);
     }
 }
