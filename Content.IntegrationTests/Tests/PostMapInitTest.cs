@@ -294,6 +294,8 @@ namespace Content.IntegrationTests.Tests
             if (!protoManager.TryIndex<EntityCategoryPrototype>("DoNotMap", out var dnmCategory))
                 return;
 
+            // Make a set containing all the specific whitelisted proto ids for this map
+            HashSet<EntProtoId> unusedExemptions = DoNotMapWhitelistSpecific.TryGetValue(map.ToString(), out var exemptions) ? new(exemptions) : [];
             Assert.Multiple(() =>
             {
                 foreach (var yamlEntity in (YamlSequenceNode)yamlEntities)
@@ -306,8 +308,15 @@ namespace Content.IntegrationTests.Tests
 
                     Assert.That(!proto.Categories.Contains(dnmCategory) || IsWhitelistedForMap(protoId, map),
                         $"\nMap {map} contains entities in the DO NOT MAP category ({proto.Name})");
+
+                    // The proto id is used on this map, so remove it from the set
+                    unusedExemptions.Remove(protoId);
                 }
             });
+
+            // If there are any proto ids left, they must not have been used in the map!
+            Assert.That(unusedExemptions, Is.Empty,
+                $"Map {map} has DO NOT MAP entities whitelisted that are not present in the map: {string.Join(", ", unusedExemptions)}");
         }
 
         private bool IsPreInit(ResPath map,
