@@ -51,3 +51,36 @@
       path: /Audio/Weapons/chainsaw.ogg
   - type: Reflect
     reflectProb: 0.2
+
+#Mantis Blade
+- type: entity
+  name: mantis blade
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: CyberMantisBlade
+  description: A sharp blade that extended from your own arm, time to burn down a corporation.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Melee/cybermantisblade.rsi
+    state: cybermantisblade
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 2.2
+    autoAttack: true
+    damage:
+      types:
+        Slash: 18
+        Structural: 55
+    soundHit:
+      path: /Audio/Weapons/block_metal1.ogg
+    soundMiss:
+      path: /Audio/Weapons/punchmiss.ogg
+    soundSwing:
+      path: /Audio/Weapons/punchmiss.ogg
+  - type: Item
+  - type: Prying
+    speedModifier: 2.0
+    pryPowered: true
+    useSound: /Audio/Items/jaws_pry.ogg
+  - type: Reflect
+    reflectProb: 0.8
+  - type: Sharp

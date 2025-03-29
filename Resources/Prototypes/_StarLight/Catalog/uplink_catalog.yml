@@ -123,3 +123,17 @@
     Telecrystal: 8
   categories:
   - UplinkCybernetics
+
+- type: listing
+  id: UplinkMantisBladeArm
+  name: uplink-mantis-blade-arms-name
+  description: uplink-mantis-blade-arms-desc
+  icon: { sprite: /Textures/_Starlight/Objects/Weapons/Melee/cybermantisblade.rsi, state: cybermantisblade }
+  productEntity: ClothingBackpackDufelSyndicateFilledMantisBladeArms
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 14
+  cost:
+    Telecrystal: 18
+  categories:
+  - UplinkCybernetics
