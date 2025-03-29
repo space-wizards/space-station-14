@@ -126,11 +126,12 @@ public abstract partial class SharedDeployableTurretSystem : EntitySystem
         }
 
         // Determine how much time is remaining in the current animation and the one next in queue
+        // We track this so that when a turret is toggled on/off, we can wait for all queued animations
+        // to end before the turret's HTN is reactivated
         var animTimeRemaining = MathF.Max((float)(ent.Comp.AnimationCompletionTime - _timing.CurTime).TotalSeconds, 0f);
         var animTimeNext = enabled ? ent.Comp.DeploymentLength : ent.Comp.RetractionLength;
 
         ent.Comp.AnimationCompletionTime = _timing.CurTime + TimeSpan.FromSeconds(animTimeNext + animTimeRemaining);
-        DirtyField(ent, ent.Comp, "AnimationCompletionTime");
 
         // Change the turret's damage modifiers
         if (TryComp<DamageableComponent>(ent, out var damageable))
