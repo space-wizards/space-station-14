@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EpicToast
-  changes:
-  - message: Add the StockTrading cartridge. Starts installed on QM and cargo tech
-      PDAs and can be found in the QM's locker.
-    type: Add
-  id: 930
-  time: '2025-01-14T23:49:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1314
 - author: DinnerCalzone
   changes:
   - message: Clown waddling now appears for other players. Consequently, clown shoes
@@ -4078,3 +4070,10 @@
   id: 1429
   time: '2025-03-29T13:03:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2118
+- author: mqole
+  changes:
+  - message: Derotated cult for the time being.
+    type: Remove
+  id: 1430
+  time: '2025-03-29T22:07:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2142
