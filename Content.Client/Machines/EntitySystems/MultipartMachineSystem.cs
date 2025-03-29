@@ -14,8 +14,7 @@ namespace Content.Client.Machines.EntitySystems;
 /// </summary>
 public sealed class MultipartMachineSystem : EntitySystem
 {
-    [ValidatePrototypeId<EntityPrototype>]
-    private const string GhostPrototype = "MultipartMachineGhost";
+    private EntProtoId _ghostPrototype = "MultipartMachineGhost";
 
     public override void Initialize()
     {
@@ -47,7 +46,7 @@ public sealed class MultipartMachineSystem : EntitySystem
             if (!part.Entity.HasValue)
             {
                 var rotation = ent.Comp.Rotation ?? Angle.Zero;
-                var ghostEnt = Spawn(GhostPrototype, new EntityCoordinates(ent.Owner, part.Offset.Rotate(rotation)));
+                var ghostEnt = Spawn(_ghostPrototype, new EntityCoordinates(ent.Owner, part.Offset.Rotate(rotation)));
                 if (!xformQuery.TryGetComponent(ghostEnt, out var xform))
                     break;
 
