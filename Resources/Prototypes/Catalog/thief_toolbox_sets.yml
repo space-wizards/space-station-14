@@ -17,6 +17,7 @@
   - ClothingShoesChameleon
   - BarberScissors
   - ChameleonProjector
+  - FakeMindShieldImplanter
   - AgentIDCard
 
 - type: thiefBackpackSet
@@ -46,7 +47,7 @@
   content:
   - StorageImplanter
   - DnaScramblerImplanter
-  - EphedrineChemistryBottle
+  - ChemistryBottleEphedrine
   - SoapOmega
   - Syringe
   - DrinkShaker
@@ -62,6 +63,7 @@
   - RadioJammer
   - TraitorCodePaper
   - Emag
+  - AccessBreaker
   - Lighter
   - CigPackSyndicate
   - Telecrystal10 #The thief cannot use them, but it may induce communication with traitors
@@ -74,8 +76,8 @@
     sprite: Objects/Tanks/anesthetic.rsi
     state: icon
   content:
-  - NocturineChemistryBottle
-  - NocturineChemistryBottle
+  - ChemistryBottleNocturine
+  - ChemistryBottleNocturine
   - HypopenBox
   - NitrousOxideTankFilled
 
