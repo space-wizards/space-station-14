@@ -1,24 +1,43 @@
+using System.Numerics;
 using Content.Shared.Clothing.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
+using Content.Shared.Standing;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
-public sealed partial class PoorlyAttachedSystem : EntitySystem
+public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] protected readonly SharedPopupSystem Popup = default!;
+
+    protected const float ThrowSpread = 30;
+    protected const float ThrowSpeedMult = 1 / 50f;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<PoorlyAttachedComponent, ClothingGotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<PoorlyAttachedComponent, InventoryRelayedEvent<FellDownEvent>>(OnWearerSlipped);
         SubscribeLocalEvent<PoorlyAttachedComponent, GetVerbsEvent<Verb>>(AddReattachVerb);
+    }
+
+    private void OnGotEquipped(Entity<PoorlyAttachedComponent> ent, ref ClothingGotEquippedEvent args)
+    {
+        ResetAttachment(ent);
+    }
+
+    private void OnWearerSlipped(Entity<PoorlyAttachedComponent> ent, ref InventoryRelayedEvent<FellDownEvent> args)
+    {
+        LoseAttachmentStrength(ent.AsNullable(), ent.Comp.LossPerFall);
     }
 
     private void AddReattachVerb(Entity<PoorlyAttachedComponent> entity, ref GetVerbsEvent<Verb> args)
@@ -31,7 +50,7 @@ public sealed partial class PoorlyAttachedSystem : EntitySystem
             return;
 
         // Make sure the item is actually equipped (and get the wearer's uid)
-        if (!_container.TryGetContainingContainer((entity, null), out var container))
+        if (!Container.TryGetContainingContainer((entity, null), out var container))
             return;
 
         // We don't care if the user can access the item itself (they can't, since it's in the wearer's inventory).
@@ -62,7 +81,7 @@ public sealed partial class PoorlyAttachedSystem : EntitySystem
             return;
 
         // Make sure the item is actually equipped (and get the wearer's uid)
-        if (!_container.TryGetContainingContainer((entity, null), out var container))
+        if (!Container.TryGetContainingContainer((entity, null), out var container))
             return;
 
         var wearer = container.Owner;
@@ -76,7 +95,7 @@ public sealed partial class PoorlyAttachedSystem : EntitySystem
             var userMessage = Loc.GetString(poorlyAttachedComp.ReattachSelfPopupUser, ("entity", entity.Owner));
             // "Urist McHands reattaches his item"
             var othersMessage = Loc.GetString(poorlyAttachedComp.ReattachSelfPopupOthers, ("entity", entity.Owner), ("user", userIdentity));
-            _popup.PopupPredicted(userMessage, othersMessage, wearer, user);
+            Popup.PopupPredicted(userMessage, othersMessage, wearer, user);
         }
         else
         {
@@ -87,9 +106,43 @@ public sealed partial class PoorlyAttachedSystem : EntitySystem
             // "Urist McHands reattaches Urist McWearer's item"
             var othersMessage = Loc.GetString(poorlyAttachedComp.ReattachOtherPopupOthers, ("entity", entity.Owner), ("user", userIdentity), ("wearer", wearerIdentity));
             var othersFilter = Filter.PvsExcept(wearer, entityManager: EntityManager).RemovePlayerByAttachedEntity(user);
-            _popup.PopupClient(userMessage, wearer, user);
-            _popup.PopupEntity(wearerMessage, wearer, wearer);
-            _popup.PopupEntity(othersMessage, wearer, othersFilter, true);
+            Popup.PopupClient(userMessage, wearer, user);
+            Popup.PopupEntity(wearerMessage, wearer, wearer);
+            Popup.PopupEntity(othersMessage, wearer, othersFilter, true);
+        }
+
+        ResetAttachment((entity, poorlyAttachedComp));
+    }
+
+    public float GetAttachmentStrength(Entity<PoorlyAttachedComponent?> entity)
+    {
+        // If it doesn't have the component, consider it fully attached
+        if (!Resolve(entity, ref entity.Comp, logMissing: false))
+            return 1;
+
+        // Start with full strength (1), then subtract the total of all events
+        return MathF.Max(0, 1f - entity.Comp.EventStrengthTotal - entity.Comp.LossPerSecond * entity.Comp.AttachmentTime.Seconds);
+    }
+
+    public void LoseAttachmentStrength(Entity<PoorlyAttachedComponent?> entity, float amount, bool canDetach = true)
+    {
+        if (!Resolve(entity, ref entity.Comp, logMissing: false))
+            return;
+
+        entity.Comp.EventStrengthTotal += amount;
+
+        if (canDetach && GetAttachmentStrength(entity) <= 0)
+        {
+            Detach((entity, entity.Comp));
         }
     }
+
+    private void ResetAttachment(Entity<PoorlyAttachedComponent> entity)
+    {
+        entity.Comp.AttachmentTime = _timing.CurTime;
+        entity.Comp.EventStrengthTotal = 0;
+        Dirty(entity);
+    }
+
+    protected virtual void Detach(Entity<PoorlyAttachedComponent> entity) { }
 }

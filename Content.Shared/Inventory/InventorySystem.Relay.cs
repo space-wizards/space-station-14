@@ -16,6 +16,7 @@ using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Overlays;
 using Content.Shared.Radio;
 using Content.Shared.Slippery;
+using Content.Shared.Standing;
 using Content.Shared.Strip.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Verbs;
@@ -49,6 +50,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, GetSpeedModifierContactCapEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetSlowedOverSlipperyModifierEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ModifySlowOnDamageSpeedEvent>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, FellDownEvent>(RefRelayInventoryEvent);
 
         // Eye/vision events
         SubscribeLocalEvent<InventoryComponent, CanSeeAttemptEvent>(RelayInventoryEvent);

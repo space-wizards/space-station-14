@@ -8,13 +8,19 @@ public sealed partial class PoorlyAttachedComponent : Component
 {
     [DataField, AutoNetworkedField]
     [AutoPausedField]
-    public TimeSpan LastReattachTime;
+    public TimeSpan AttachmentTime;
+
+    [DataField, AutoNetworkedField]
+    public float EventStrengthTotal;
 
     [DataField]
     public float LossPerSecond = 0.01f;
 
     [DataField]
-    public float LossPerEvent = 0.5f;
+    public float LossPerFall = 0.5f;
+
+    [DataField]
+    public LocId DetachPopup = "poorly-attached-detach-popup";
 
     [DataField]
     public LocId ReattachVerb = "poorly-attached-reattach-verb-default";
