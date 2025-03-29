@@ -1,28 +1,28 @@
 id-card-access-level-command = Command
-id-card-access-level-captain = Captain
-id-card-access-level-head-of-personnel = Head of Personnel
+id-card-access-level-captain = The Right Honourable Lord Mayor of Space Station 14
+id-card-access-level-head-of-personnel = The Right Honourable Manager of Personnel
 id-card-access-level-cryogenics = Cryogenics
 id-card-access-level-emergency-shuttle-repeal = E.Shuttle Repeal All
 
-id-card-access-level-head-of-security = Head of Security
+id-card-access-level-head-of-security = The Right Honourable Keeper of Peace
 id-card-access-level-security = Security
 id-card-access-level-armory = Armory
 id-card-access-level-brig = Brig
 id-card-access-level-detective = Detective
 
-id-card-access-level-chief-engineer = Chief Engineer
+id-card-access-level-chief-engineer = The Right Honourable Lord of Engitopia
 id-card-access-level-engineering = Engineering
 id-card-access-level-atmospherics = Atmospherics
 
-id-card-access-level-research-director = Research Director
+id-card-access-level-research-director = The Right Honourable Director of Scientists
 id-card-access-level-research = Research
 
-id-card-access-level-chief-medical-officer = Chief Medical Officer
+id-card-access-level-chief-medical-officer = The Right Honourable Manager of Surgeons
 id-card-access-level-medical = Medical
 id-card-access-level-chemistry = Chemistry
 id-card-access-level-paramedic = Paramedic
 
-id-card-access-level-quartermaster = Quartermaster
+id-card-access-level-quartermaster = The Right Honourable Lord of Cargonia
 id-card-access-level-cargo = Cargo
 id-card-access-level-salvage = Salvage
 

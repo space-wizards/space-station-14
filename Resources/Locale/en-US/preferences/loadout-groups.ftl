@@ -19,17 +19,17 @@ loadout-group-pocket-tank-double = Species-specific double emergency tank in poc
 loadout-group-survival-mime = Mime Survival Box
 
 # Command
-loadout-group-captain-head = Captain head
-loadout-group-captain-jumpsuit = Captain jumpsuit
-loadout-group-captain-neck = Captain neck
-loadout-group-captain-backpack = Captain backpack
-loadout-group-captain-outerclothing = Captain outer clothing
+loadout-group-captain-head = The Right Honourable Lord Mayor of Space Station 14 head
+loadout-group-captain-jumpsuit = The Right Honourable Lord Mayor of Space Station 14 jumpsuit
+loadout-group-captain-neck = The Right Honourable Lord Mayor of Space Station 14 neck
+loadout-group-captain-backpack = The Right Honourable Lord Mayor of Space Station 14 backpack
+loadout-group-captain-outerclothing = The Right Honourable Lord Mayor of Space Station 14 outer clothing
 
-loadout-group-hop-head = Head of Personnel head
-loadout-group-hop-jumpsuit = Head of Personnel jumpsuit
-loadout-group-hop-neck = Head of Personnel neck
-loadout-group-hop-backpack = Head of Personnel backpack
-loadout-group-hop-outerclothing = Head of Personnel outer clothing
+loadout-group-hop-head = The Right Honourable Manager of Personnel head
+loadout-group-hop-jumpsuit = The Right Honourable Manager of Personnel jumpsuit
+loadout-group-hop-neck = The Right Honourable Manager of Personnel neck
+loadout-group-hop-backpack = The Right Honourable Manager of Personnel backpack
+loadout-group-hop-outerclothing = The Right Honourable Manager of Personnel outer clothing
 
 # Civilian
 loadout-group-passenger-jumpsuit = Passenger jumpsuit
@@ -87,11 +87,11 @@ loadout-group-musician-jumpsuit = Musician jumpsuit
 loadout-group-musician-outerclothing = Musician outer clothing
 
 # Cargo
-loadout-group-quartermaster-head = Quartermaster head
-loadout-group-quartermaster-jumpsuit = Quartermaster jumpsuit
-loadout-group-quartermaster-neck = Quartermaster neck
-loadout-group-quartermaster-outerclothing = Quartermaster outer clothing
-loadout-group-quartermaster-shoes = Quartermaster shoes
+loadout-group-quartermaster-head = The Right Honourable Lord of Cargonia head
+loadout-group-quartermaster-jumpsuit = The Right Honourable Lord of Cargonia jumpsuit
+loadout-group-quartermaster-neck = The Right Honourable Lord of Cargonia neck
+loadout-group-quartermaster-outerclothing = The Right Honourable Lord of Cargonia outer clothing
+loadout-group-quartermaster-shoes = The Right Honourable Lord of Cargonia shoes
 
 loadout-group-cargo-technician-head = Cargo Technician head
 loadout-group-cargo-technician-jumpsuit = Cargo Technician jumpsuit
@@ -104,11 +104,11 @@ loadout-group-salvage-specialist-outerclothing = Salvage Specialist outer clothi
 loadout-group-salvage-specialist-shoes = Salvage Specialist shoes
 
 # Engineering
-loadout-group-chief-engineer-head = Chief Engineer head
-loadout-group-chief-engineer-jumpsuit = Chief Engineer jumpsuit
-loadout-group-chief-engineer-outerclothing = Chief Engineer outer clothing
-loadout-group-chief-engineer-neck = Chief Engineer neck
-loadout-group-chief-engineer-shoes = Chief Engineer shoes
+loadout-group-chief-engineer-head = The Right Honourable Lord of Engitopia head
+loadout-group-chief-engineer-jumpsuit = The Right Honourable Lord of Engitopia jumpsuit
+loadout-group-chief-engineer-outerclothing = The Right Honourable Lord of Engitopia outer clothing
+loadout-group-chief-engineer-neck = The Right Honourable Lord of Engitopia neck
+loadout-group-chief-engineer-shoes = The Right Honourable Lord of Engitopia shoes
 
 loadout-group-technical-assistant-jumpsuit = Technical Assistant jumpsuit
 
@@ -125,11 +125,11 @@ loadout-group-atmospheric-technician-outerclothing = Atmospheric Technician oute
 loadout-group-atmospheric-technician-shoes = Atmospheric Technician shoes
 
 # Science
-loadout-group-research-director-head = Research Director head
-loadout-group-research-director-neck = Research Director neck
-loadout-group-research-director-jumpsuit = Research Director jumpsuit
-loadout-group-research-director-outerclothing = Research Director outer clothing
-loadout-group-research-director-shoes = Research Director shoes
+loadout-group-research-director-head = The Right Honourable Director of Scientists head
+loadout-group-research-director-neck = The Right Honourable Director of Scientists neck
+loadout-group-research-director-jumpsuit = The Right Honourable Director of Scientists jumpsuit
+loadout-group-research-director-outerclothing = The Right Honourable Director of Scientists outer clothing
+loadout-group-research-director-shoes = The Right Honourable Director of Scientists shoes
 
 loadout-group-scientist-head = Scientist head
 loadout-group-scientist-neck = Scientist neck
@@ -143,10 +143,10 @@ loadout-group-scientist-id = Scientist ID
 loadout-group-research-assistant-jumpsuit = Research Assistant jumpsuit
 
 # Security
-loadout-group-head-of-security-head = Head of Security head
-loadout-group-head-of-security-jumpsuit = Head of Security jumpsuit
-loadout-group-head-of-security-neck = Head of Security neck
-loadout-group-head-of-security-outerclothing = Head of Security outer clothing
+loadout-group-head-of-security-head = The Right Honourable Keeper of Peace head
+loadout-group-head-of-security-jumpsuit = The Right Honourable Keeper of Peace jumpsuit
+loadout-group-head-of-security-neck = The Right Honourable Keeper of Peace neck
+loadout-group-head-of-security-outerclothing = The Right Honourable Keeper of Peace outer clothing
 
 loadout-group-warden-head = Warden head
 loadout-group-warden-jumpsuit = Warden jumpsuit
@@ -172,11 +172,11 @@ loadout-group-security-star = Security Star
 loadout-group-medical-gloves = Medical gloves
 loadout-group-medical-mask = Medical mask
 
-loadout-group-chief-medical-officer-head = Chief Medical Officer head
-loadout-group-chief-medical-officer-jumpsuit = Chief Medical Officer jumpsuit
-loadout-group-chief-medical-officer-outerclothing = Chief Medical Officer outer clothing
-loadout-group-chief-medical-officer-shoes = Chief Medical Officer shoes
-loadout-group-chief-medical-officer-neck = Chief Medical Officer neck
+loadout-group-chief-medical-officer-head = The Right Honourable Manager of Surgeons head
+loadout-group-chief-medical-officer-jumpsuit = The Right Honourable Manager of Surgeons jumpsuit
+loadout-group-chief-medical-officer-outerclothing = The Right Honourable Manager of Surgeons outer clothing
+loadout-group-chief-medical-officer-shoes = The Right Honourable Manager of Surgeons shoes
+loadout-group-chief-medical-officer-neck = The Right Honourable Manager of Surgeons neck
 
 loadout-group-medical-doctor-head = Medical Doctor head
 loadout-group-medical-doctor-jumpsuit = Medical Doctor jumpsuit
