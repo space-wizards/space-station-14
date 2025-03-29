@@ -19,7 +19,7 @@
 - type: startingGear
   id: ScurretMouseGear
   equipment:
-    head: ClothingHeadHatBeretFrench
+    head: MobMouseDead
     id: ScurretPDA
 
 - type: startingGear
