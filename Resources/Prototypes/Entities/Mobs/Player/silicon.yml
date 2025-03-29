@@ -382,6 +382,8 @@
   - type: Anchorable
     flags:
     - None
+  - type: Physics
+    bodyType: Static
   - type: Tag
     tags:
     - DoorBumpOpener
