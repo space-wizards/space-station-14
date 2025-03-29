@@ -70,7 +70,7 @@ public sealed partial class ExplosionSystem
     private void OnMapRemoved(MapRemovedEvent ev)
     {
         // If a map was deleted, check the explosion currently being processed belongs to that map.
-        if (_activeExplosion?.Epicenter.MapId != ev.Map)
+        if (_activeExplosion?.Epicenter.MapId != ev.MapId)
             return;
 
         QueueDel(_activeExplosion.VisualEnt);

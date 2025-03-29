@@ -12,13 +12,9 @@ namespace Content.Server.Construction.Completions
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
             var transform = entityManager.GetComponent<TransformComponent>(uid);
-            var transformSystem = entityManager.System<SharedTransformSystem>();
-            if (Value)
-            {
-                transformSystem.AnchorEntity(uid, transform);
-                return;
-            }
-            transformSystem.Unanchor(uid, transform);
+#pragma warning disable CS0618 // Type or member is obsolete
+            transform.Anchored = Value; // Changing this fails on startup
+#pragma warning restore CS0618 // Type or member is obsolete
         }
     }
 }
