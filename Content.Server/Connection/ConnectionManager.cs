@@ -287,8 +287,9 @@ namespace Content.Server.Connection
                     return (ConnectionDenyReason.Panic, Loc.GetString("panic-bunker-account-denied"), null);
                 }
             }
-
-            var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) &&
+            var entityManager = IoCManager.Resolve<EntityManager>();
+            var ticker = entityManager.System<GameTicker>();
+            var wasInGame = ticker != null &&
                             ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
                             status == PlayerGameStatus.JoinedGame;
             var adminBypass = _cfg.GetCVar(CCVars.AdminBypassMaxPlayers) && adminData != null;
