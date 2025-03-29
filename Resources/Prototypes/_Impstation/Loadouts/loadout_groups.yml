@@ -710,6 +710,13 @@
   - ScarfBrown
 
 - type: loadoutGroup
+  id: CargoTechnicianBelt
+  name: loadout-group-cargo-technician-belt
+  minLimit: 0
+  loadouts:
+  - SeniorCargoBelt
+
+- type: loadoutGroup
   id: CargoTechnicianPDA
   name: loadout-group-cargo-technician-id
   loadouts:

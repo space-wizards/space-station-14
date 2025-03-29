@@ -296,3 +296,23 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/mimecropped.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/mimecropped.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitCargoLong
+  name: cargo tech jumpsuit (pants)
+  description: A sturdy jumpsuit, issued to members of the Cargo department. It took Nanotrasen years to finally give in to the pressure and provide a version with long pants.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/cargotech_long.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitCargoSenior
+  name: senior cargo cable knit sweater
+  description: A comfortable sweater with a pair of rugged but classy cargo pants, issued only to experienced cargo technicians.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/cargo_cableknit.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/cargo_cableknit.rsi

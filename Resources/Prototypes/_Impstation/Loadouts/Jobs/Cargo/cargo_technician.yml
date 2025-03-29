@@ -3,3 +3,26 @@
   id: BomberCargo
   equipment:
     outerClothing: ClothingOuterCoatBomberCargo
+
+# Jumpsuit
+- type: loadout
+  id: LongCargoTechnicianJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargoLong
+
+- type: loadout
+  id: SeniorCargoTechnicianJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorCargoTech
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCargoSenior
+
+# Belt
+- type: loadout
+  id: SeniorCargoBelt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorCargoTech
+  equipment:
+    belt: ClothingBeltCargoSenior

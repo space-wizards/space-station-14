@@ -4,8 +4,9 @@
     ClothingBackpackCargo: 3
     ClothingBackpackSatchelCargo: 3
     ClothingBackpackDuffelCargo: 3
-    ClothingUniformJumpsuitCargo: 3
-    ClothingUniformJumpskirtCargo: 3
+    ClothingUniformJumpsuitCargo: 2
+    ClothingUniformJumpsuitCargoLong: 2 #imp
+    ClothingUniformJumpskirtCargo: 2
     ClothingShoesColorBlack: 3
     ClothingHandsGlovesFingerless: 3
     ClothingHeadHatCargosoft: 3

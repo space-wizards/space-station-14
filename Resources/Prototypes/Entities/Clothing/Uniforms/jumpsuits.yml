@@ -69,7 +69,7 @@
 - type: entity
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitCargo
-  name: cargo tech jumpsuit
+  name: cargo tech jumpsuit (shorts) #imp
   description: A sturdy jumpsuit, issued to members of the Cargo department.
   components:
   - type: Sprite

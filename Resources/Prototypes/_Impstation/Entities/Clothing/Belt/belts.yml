@@ -48,7 +48,6 @@
     node: utilityBlack
 
 # gob belt
-
 - type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltUtilityGoblinRandomFill
@@ -149,7 +148,6 @@
       prob: 0.3
 
 # chaplain
-
 - type: entity
   parent: ClothingBeltStorageWaistbag
   id: ClothingBeltChaplainDragon
@@ -160,3 +158,18 @@
     sprite: _Impstation/Clothing/Belt/dragonbelt.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Belt/dragonbelt.rsi
+
+
+# cargo
+- type: entity
+  parent: ClothingBeltBase
+  id: ClothingBeltCargoSenior
+  name: senior cargo suspenders
+  description: Tough suspenders for holding your pants up.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Belt/suspenders_brown.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Impstation/Clothing/Belt/suspenders_brown.rsi
+    quickEquip: true
