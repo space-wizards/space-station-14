@@ -71,7 +71,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
             var ev = new ChatNotificationEvent("TurretIsAttacking", ent);
 
             if (TryComp<DeviceNetworkComponent>(ent, out var deviceNetwork))
-                ev.SourceNameOverride = Name(ent) + " (" + deviceNetwork.Address + ")";
+                ev.SourceNameOverride = Loc.GetString("station-ai-turret-component-name", ("name", Name(ent)), ("address", deviceNetwork.Address));
 
             RaiseLocalEvent(ai, ref ev);
         }
@@ -129,7 +129,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         // than something available to the station AI by default.
         // When these systems are added, add the appropriate checks here.
 
-        return true;
+        return false;
     }
 
     public HashSet<EntityUid> GetStationAIs(EntityUid gridUid)
@@ -141,10 +141,10 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         foreach (var stationAiCore in _stationAiCores)
         {
-            if (!TryGetInsertedAI(stationAiCore, out var insertedAi))
+            if (!TryGetHeld((stationAiCore, stationAiCore.Comp), out var insertedAi))
                 continue;
 
-            hashSet.Add(insertedAi.Value);
+            hashSet.Add(insertedAi);
         }
 
         return hashSet;

@@ -7,7 +7,7 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Electrocution;
-using Content.Shared.;
+using Content.Shared.Intellicard;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
@@ -27,8 +27,6 @@ using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
-using System.Diagnostics.CodeAnalysis;
-
 
 namespace Content.Shared.Silicons.StationAi;
 
