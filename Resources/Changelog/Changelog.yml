@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SaphireLattice
-  changes:
-  - message: Utensils can finally go into disposals
-    type: Fix
-  id: 7616
-  time: '2024-11-16T03:39:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33326
 - author: K-Dynamic
   changes:
   - message: Solar assembly crate now comes with 10 flatpacks and 20 glass to make
@@ -3886,3 +3879,10 @@
   id: 8115
   time: '2025-03-29T17:55:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35123
+- author: Killerqu00
+  changes:
+  - message: Uncuffing someone with combat mode on will shove them down.
+    type: Add
+  id: 8116
+  time: '2025-03-29T20:09:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35193
