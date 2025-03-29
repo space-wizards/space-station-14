@@ -1,5 +1,15 @@
 ﻿- type: decal
+  id: BrickTile
+  abstract: true
+
+- type: decal
+  id: BrickTileDark
+  parent: BrickTile
+  abstract: true
+
+- type: decal
   id: BrickTileDarkBox
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -7,6 +17,7 @@
 
 - type: decal
   id: BrickTileDarkCornerNe
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -14,6 +25,7 @@
 
 - type: decal
   id: BrickTileDarkCornerSe
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -21,6 +33,7 @@
 
 - type: decal
   id: BrickTileDarkCornerNw
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -28,6 +41,7 @@
 
 - type: decal
   id: BrickTileDarkCornerSw
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -35,6 +49,7 @@
 
 - type: decal
   id: BrickTileDarkInnerNe
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -42,6 +57,7 @@
 
 - type: decal
   id: BrickTileDarkInnerSe
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -49,6 +65,7 @@
 
 - type: decal
   id: BrickTileDarkInnerNw
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -56,6 +73,7 @@
 
 - type: decal
   id: BrickTileDarkInnerSw
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -63,6 +81,7 @@
 
 - type: decal
   id: BrickTileDarkEndN
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -70,6 +89,7 @@
 
 - type: decal
   id: BrickTileDarkEndE
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -77,6 +97,7 @@
 
 - type: decal
   id: BrickTileDarkEndS
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -84,6 +105,7 @@
 
 - type: decal
   id: BrickTileDarkEndW
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -91,6 +113,7 @@
 
 - type: decal
   id: BrickTileDarkLineN
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -98,6 +121,7 @@
 
 - type: decal
   id: BrickTileDarkLineE
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -105,6 +129,7 @@
 
 - type: decal
   id: BrickTileDarkLineS
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
@@ -112,7 +137,9 @@
 
 - type: decal
   id: BrickTileDarkLineW
+  parent: BrickTileDark
   tags: ["station", "markings"]
   sprite:
     sprite: Decals/bricktile.rsi
     state: dark_line_w
+
