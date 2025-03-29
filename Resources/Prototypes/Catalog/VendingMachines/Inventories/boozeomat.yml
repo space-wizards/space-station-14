@@ -5,6 +5,7 @@
     DrinkShotGlass: 10
     DrinkGlassCoupeShaped: 10
     DrinkVacuumFlask: 5
+    DrinkVacuumFlaskXL: 2 #imp item
     DrinkFlaskBar: 5
     DrinkShaker: 5
     DrinkJigger: 5

@@ -1,0 +1,69 @@
+- type: latheRecipe
+  id: PrizeTicketGold
+  result: PrizeTicketGold
+  completetime: 1
+  materials:
+    Cardboard: 20
+
+- type: latheRecipe
+  id: PrizeTicketSilver
+  result: PrizeTicketSilver
+  completetime: 1
+  materials:
+    Cardboard: 20
+
+- type: latheRecipe
+  id: PrizeTicketBronze
+  result: PrizeTicketBronze
+  completetime: 1
+  materials:
+    Cardboard: 20
+
+- type: latheRecipe
+  id: PrizeTicketDiamond
+  result: PrizeTicketDiamond
+  completetime: 1
+  materials:
+    Cardboard: 20
+
+- type: latheRecipe
+  id: DrinkVacuumFlaskXL
+  result: DrinkVacuumFlaskXL
+  completetime: 1
+  materials:
+    Steel: 450
+
+- type: latheRecipe
+  id: SteelLunchbox
+  result: SteelLunchbox
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: SteelLunchboxBlue
+  result: SteelLunchboxBlue
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: SteelLunchboxPink
+  result: SteelLunchboxPink
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: SteelLunchboxOrange
+  result: SteelLunchboxOrange
+  completetime: 2
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: ClothingBeltPlushie
+  result: ClothingBeltPlushie
+  completetime: 1
+  materials:
+    Cloth: 100

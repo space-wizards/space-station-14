@@ -90,6 +90,9 @@
   id: Pribar
 
 - type: Tag
+  id: Plushie
+
+- type: Tag
   id: RubberStamp
 
 - type: Tag

@@ -11,6 +11,7 @@
     tags:
       - Payload
       - ClothMade
+      - Plushie #imp
   - type: EmitSoundOnUse
     sound:
       collection: ToySqueak

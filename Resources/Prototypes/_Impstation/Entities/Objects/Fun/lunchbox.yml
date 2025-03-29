@@ -1,0 +1,72 @@
+- type: entity
+  id: SteelLunchbox
+  name: lunchbox
+  description: A plain, steel lunchbox to keep your food safe.
+  parent: BaseStorageItem
+  components:
+  - type: Sprite
+    layers:
+      - map: [ base ]
+        state: icon
+    sprite: _Impstation/Objects/Storage/Lunchboxes/lunchbox.rsi
+    state: icon
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,2,2
+  - type: Item
+    size: Large
+    shape:
+    - 0,0,2,2
+    sprite: _Impstation/Objects/Storage/Lunchboxes/lunchbox.rsi
+  - type: Tag
+    tags:
+    - DroneUsable
+    - Toolbox
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        base:
+          True: { state: icon-open }
+          False: { state: icon }
+  - type: Appearance
+  - type: StorageFill
+    contents:
+      - id: Paper
+  - type: Engraveable
+
+- type: entity
+  id: SteelLunchboxBlue
+  name: lunchbox
+  description: A plain, steel lunchbox to keep your food safe. This one is painted blue.
+  parent: SteelLunchbox
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Storage/Lunchboxes/lunchboxblue.rsi
+    state: icon
+  - type: Item
+    sprite: _Impstation/Objects/Storage/Lunchboxes/lunchboxblue.rsi
+
+- type: entity
+  id: SteelLunchboxPink
+  name: lunchbox
+  description: A plain, steel lunchbox to keep your food safe. This one is painted pink.
+  parent: SteelLunchbox
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Storage/Lunchboxes/lunchboxpink.rsi
+    state: icon
+  - type: Item
+    sprite: _Impstation/Objects/Storage/Lunchboxes/lunchboxpink.rsi
+
+- type: entity
+  id: SteelLunchboxOrange
+  name: lunchbox
+  description: A plain, steel lunchbox to keep your food safe. This one is painted orange.
+  parent: SteelLunchbox
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Storage/Lunchboxes/lunchboxorange.rsi
+    state: icon
+  - type: Item
+    sprite: _Impstation/Objects/Storage/Lunchboxes/lunchboxorange.rsi

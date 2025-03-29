@@ -1,0 +1,18 @@
+- type: entity
+  parent: FlaskBase
+  id: DrinkVacuumFlaskXL
+  name: vacuum flask (XL)
+  description: Keeping your drinks at the perfect temperature since 1892.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Drinks/vacuumflaskbig.rsi
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 90
+  - type: Engraveable
+  - type: Item
+    size: Normal
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200 #piskun integration checks

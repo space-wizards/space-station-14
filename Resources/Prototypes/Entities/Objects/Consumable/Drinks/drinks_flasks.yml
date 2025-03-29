@@ -101,7 +101,8 @@
   description: Keeping your drinks at the perfect temperature since 1892.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/vacuumflask.rsi
+    sprite: _Impstation/Objects/Consumable/Drinks/vacuumflask.rsi #imp
+  - type: Engraveable #imp
 
 - type: entity
   parent: FlaskBase

@@ -159,6 +159,38 @@
   - type: Clothing
     sprite: _Impstation/Clothing/Belt/dragonbelt.rsi
 
+# plushie belt
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltPlushie
+  name: toy belt
+  description: A belt used to keep various toys at arms reach.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Belt/plushie.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Belt/plushie.rsi
+  - type: Storage
+    maxItemSize: Large #oh yeah
+    defaultStorageOrientation: Vertical
+    grid:
+    - 0,0,9,1 #oh baby
+    whitelist:
+      tags:
+        - Plushie
+        - Figurine
+        - BikeHorn
+        - PlushieSharkPink
+        - PlushieSharkBlue
+        - PlushieSharkGrey
+        - PlushieLizard
+        - PlushieCarp
+        #- PlushieGhost #this makes things bad
+        - ToyRubberDuck
+      components:
+        - SpaceBlade
+  - type: Appearance
 
 # cargo
 - type: entity

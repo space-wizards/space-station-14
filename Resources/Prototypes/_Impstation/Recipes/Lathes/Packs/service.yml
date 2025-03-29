@@ -42,6 +42,7 @@
     - DrinkJigger
     - DrinkFlaskBar
     - DrinkVacuumFlask
+    - DrinkVacuumFlaskXL
     - DrinkTeapotEmpty
     - DrinkTeacupEmpty
     - DrinkWaterBottleEmpty
@@ -67,6 +68,15 @@
     - ClothingHeadHatCone
     - SprayPainter
     - FlashlightLantern
+    - ClothingBeltPlushie
+
+- type: latheRecipePack
+  id: LunchboxPack
+  recipes:
+    - SteelLunchbox
+    - SteelLunchboxBlue
+    - SteelLunchboxPink
+    - SteelLunchboxOrange
 
 # Dynamic
 

@@ -27,6 +27,10 @@
     DrinkMugOne: 1
     DrinkMugRainbow: 2
     DrinkMugRed: 2
+    SteelLunchbox: 1 #imp item
+    SteelLunchboxBlue: 1 #imp item
+    SteelLunchboxPink: 1 #imp item
+    SteelLunchboxOrange: 1 #imp item
   contrabandInventory:
     CandyBowl: 1
     BarSpoon: 2
