@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: The vending machine random event has been removed.
-    type: Remove
-  id: 934
-  time: '2025-01-16T02:10:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1379
 - author: Sha-Seng
   changes:
   - message: +1 trinket slot for u :)
@@ -4076,3 +4069,13 @@
   id: 1433
   time: '2025-03-29T22:38:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2106
+- author: kipdotnet
+  changes:
+  - message: Added new items to the service fab and their respective vendors. These
+      are Lunchboxes, a bigger vacuum flask, and a special new toolbelt.
+    type: Add
+  - message: Resprited the basic vacuum flask.
+    type: Tweak
+  id: 1434
+  time: '2025-03-29T22:44:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2135
