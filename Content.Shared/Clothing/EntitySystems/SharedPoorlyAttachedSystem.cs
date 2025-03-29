@@ -1,4 +1,3 @@
-using System.Numerics;
 using Content.Shared.Clothing.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -52,10 +51,14 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
         // Make sure the item is actually equipped (and get the wearer's uid)
         if (!Container.TryGetContainingContainer((entity, null), out var container))
             return;
+        var wearer = container.Owner;
 
-        // We don't care if the user can access the item itself (they can't, since it's in the wearer's inventory).
+        if (!entity.Comp.OthersCanReattach && args.User != wearer)
+            return;
+
+        // We don't care if the user can access the item itself (they can't if they're not the wearer).
         // We DO care if the user can access the wearer.
-        if (!_interaction.InRangeAndAccessible(args.User, container.Owner))
+        if (!_interaction.InRangeAndAccessible(args.User, wearer))
             return;
 
         var user = args.User;
@@ -83,8 +86,10 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
         // Make sure the item is actually equipped (and get the wearer's uid)
         if (!Container.TryGetContainingContainer((entity, null), out var container))
             return;
-
         var wearer = container.Owner;
+
+        if (!poorlyAttachedComp.OthersCanReattach && user != wearer)
+            return;
 
         var userIdentity = Identity.Entity(user, EntityManager);
         var wearerIdentity = Identity.Entity(wearer, EntityManager);
@@ -120,8 +125,10 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
         if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return 1;
 
+        var timeSinceAttached = _timing.CurTime - entity.Comp.AttachmentTime;
+
         // Start with full strength (1), then subtract the total of all events
-        return MathF.Max(0, 1f - entity.Comp.EventStrengthTotal - entity.Comp.LossPerSecond * entity.Comp.AttachmentTime.Seconds);
+        return MathF.Max(0, 1f - entity.Comp.EventStrengthTotal - entity.Comp.LossPerSecond * (float)timeSinceAttached.TotalSeconds);
     }
 
     public void LoseAttachmentStrength(Entity<PoorlyAttachedComponent?> entity, float amount, bool canDetach = true)
