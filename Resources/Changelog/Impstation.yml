@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: The Impstation Team
-  changes:
-  - message: Thaven are currently observing Fall of the Twin Trees Day, and may seem
-      irrevocably altered.
-    type: Tweak
-  id: 933
-  time: '2025-01-15T21:40:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1302
 - author: DinnerCalzone
   changes:
   - message: The vending machine random event has been removed.
@@ -4076,3 +4068,11 @@
   id: 1432
   time: '2025-03-29T22:30:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2139
+- author: TheGrimbeeper
+  changes:
+  - message: NPC Zombies will now treat Initial Infected as fellow Zombies and not
+      attack.
+    type: Tweak
+  id: 1433
+  time: '2025-03-29T22:38:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2106
