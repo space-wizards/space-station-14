@@ -14,6 +14,6 @@ public sealed partial class RangeNumberSelector : NumberSelector
 
     public override float Get(System.Random rand, IEntityManager entMan, IPrototypeManager proto)
     {
-        return rand.NextFloat(Range.X, Range.Y);
+        return rand.NextFloat(Range.X, Range.Y + 1);
     }
 }
