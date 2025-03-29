@@ -55,7 +55,6 @@ namespace Content.IntegrationTests.Tests
         private static readonly Dictionary<string, HashSet<EntProtoId>> DoNotMapWhitelistSpecific = new()
         {
             {"/Maps/bagel.yml", ["RubberStampMime"]},
-            {"/Maps/meta.yml", ["RubberStampWarden"]},
             {"/Maps/reach.yml", ["HandheldCrewMonitor"]},
             {"/Maps/gate.yml", ["ShuttleGunPerforator", "StationAiBrain"]},
             {"/Maps/Shuttles/ShuttleEvent/honki.yml", ["GoldenBikeHorn", "RubberStampClown"]},
