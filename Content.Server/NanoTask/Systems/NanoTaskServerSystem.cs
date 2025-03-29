@@ -104,7 +104,23 @@ public sealed class NanoTaskServerSystem : EntitySystem
             if (index == -1)
                 return;
 
-            ent.Comp.StationTasks[index] = new(id, GetNanoTaskItem(args.Data));
+            var item = GetNanoTaskItem(args.Data);
+            ent.Comp.StationTasks[index] = new(id, item);
+
+            var payload = new NetworkPayload
+            {
+                [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdSetState,
+                [NanoTaskConstants.NET_COMMAND] = NanoTaskConstants.NET_UPDATE_TASK,
+                [NanoTaskConstants.NET_TASK_ID] = id,
+                [NanoTaskConstants.NET_CATEGORY_TASK] = NanoTaskConstants.NET_CATEGORY_STATION_TASK,
+                [NanoTaskConstants.NET_TASK_DESCRIPTION] = item.Description,
+                [NanoTaskConstants.NET_TASK_REQUESTER] = item.TaskIsFor,
+                [NanoTaskConstants.NET_TASK_PRIORITY] = item.Priority,
+                [NanoTaskConstants.NET_TASK_STATUS] = item.Status,
+            };
+
+            var device = Comp<DeviceNetworkComponent>(ent);
+            _deviceNetworkSystem.QueuePacket(ent, null, payload, device: device);
         }
         else if (category == NanoTaskConstants.NET_CATEGORY_DEPARTAMENT_TASK
                 && args.Data.TryGetValue(NanoTaskConstants.NET_DEPARTAMENT_TASK, out string? departamentName))
@@ -118,7 +134,24 @@ public sealed class NanoTaskServerSystem : EntitySystem
             if (itemIndex == -1)
                 return;
 
-            departament.Tasks[itemIndex] = new(itemId, GetNanoTaskItem(args.Data));
+            var item = GetNanoTaskItem(args.Data);
+            departament.Tasks[itemIndex] = new(itemId, item);
+
+            var payload = new NetworkPayload
+            {
+                [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdSetState,
+                [NanoTaskConstants.NET_COMMAND] = NanoTaskConstants.NET_UPDATE_TASK,
+                [NanoTaskConstants.NET_TASK_ID] = itemId,
+                [NanoTaskConstants.NET_CATEGORY_TASK] = NanoTaskConstants.NET_CATEGORY_DEPARTAMENT_TASK,
+                [NanoTaskConstants.NET_DEPARTAMENT_TASK] = departamentName,
+                [NanoTaskConstants.NET_TASK_DESCRIPTION] = item.Description,
+                [NanoTaskConstants.NET_TASK_REQUESTER] = item.TaskIsFor,
+                [NanoTaskConstants.NET_TASK_PRIORITY] = item.Priority,
+                [NanoTaskConstants.NET_TASK_STATUS] = item.Status,
+            };
+
+            var device = Comp<DeviceNetworkComponent>(ent);
+            _deviceNetworkSystem.QueuePacket(ent, null, payload, device: device);
         }
     }
 
@@ -131,7 +164,7 @@ public sealed class NanoTaskServerSystem : EntitySystem
         if (category == NanoTaskConstants.NET_CATEGORY_STATION_TASK)
         {
             var item = GetNanoTaskItem(args.Data);
-            ent.Comp.StationTasks.Add(new(ent.Comp.Counter++, item));
+            ent.Comp.StationTasks.Add(new(id, item));
 
             var payload = new NetworkPayload
             {
@@ -156,7 +189,7 @@ public sealed class NanoTaskServerSystem : EntitySystem
                 .First(x => x.Name == departamentName);
 
             var item = GetNanoTaskItem(args.Data);
-            departament.Tasks.Add(new(ent.Comp.Counter++, item));
+            departament.Tasks.Add(new(id, item));
 
             var payload = new NetworkPayload
             {

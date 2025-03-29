@@ -39,10 +39,12 @@ public sealed class NanoTaskUpdateTask : INanoTaskUiMessagePayload
     ///     The task that was updated and its ID
     /// </summary>
     public readonly NanoTaskItemAndId Item;
+    public readonly NanoTaskCategoryAndDepartment Category;
 
-    public NanoTaskUpdateTask(NanoTaskItemAndId item)
+    public NanoTaskUpdateTask(NanoTaskItemAndId item, NanoTaskCategoryAndDepartment category)
     {
         Item = item;
+        Category = category;
     }
 }
 

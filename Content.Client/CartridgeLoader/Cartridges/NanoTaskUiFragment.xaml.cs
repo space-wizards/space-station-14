@@ -14,8 +14,8 @@ namespace Content.Client.CartridgeLoader.Cartridges;
 [GenerateTypedNameReferences]
 public sealed partial class NanoTaskUiFragment : BoxContainer
 {
-    public Action<NanoTaskTable, uint>? OpenTask;
-    public Action<NanoTaskTable, uint>? ToggleTaskCompletion;
+    public Action<NanoTaskTable, NanoTaskCategoryAndDepartment, uint>? OpenTask;
+    public Action<NanoTaskTable, NanoTaskCategoryAndDepartment, uint>? ToggleTaskCompletion;
     public Action<NanoTaskTable, NanoTaskCategoryAndDepartment>? NewTask;
 
     public NanoTaskUiFragment()
@@ -43,6 +43,7 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
         StationTaskTable.MediumPriority.HeaderLabel.Text = Loc.GetString("nano-task-ui-heading-medium-priority-tasks", ("amount", stationTasks.Count(task => task.Data.Priority == NanoTaskPriority.Medium)));
         StationTaskTable.LowPriority.HeaderLabel.Text = Loc.GetString("nano-task-ui-heading-low-priority-tasks", ("amount", stationTasks.Count(task => task.Data.Priority == NanoTaskPriority.Low)));
 
+        StationTaskTable.Tasks = stationTasks;
         foreach (var task in stationTasks)
         {
             var container = task.Data.Priority switch
@@ -53,8 +54,8 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
             };
             var control = new NanoTaskItemControl(task);
             container.AddChild(control);
-            control.OnMainPressed += id => OpenTask?.Invoke(StationTaskTable, id);
-            control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(StationTaskTable, id);
+            control.OnMainPressed += id => OpenTask?.Invoke(StationTaskTable, new(NanoTaskConstants.NET_CATEGORY_STATION_TASK, null), id);
+            control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(StationTaskTable, new(NanoTaskConstants.NET_CATEGORY_STATION_TASK, null), id);
         }
 
         TabsDepartmentTask.RemoveAllChildren();
@@ -62,6 +63,7 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
         foreach (var (department, tasks, index) in departmentTasks.OrderBy(x => x.Key).Select((x, i) => (x.Key, x.Value, i)))
         {
             var table = new NanoTaskTable();
+            table.Tasks = tasks;
             table.NewTaskButton.OnPressed += _ => NewTask?.Invoke(table, new(NanoTaskConstants.NET_CATEGORY_DEPARTAMENT_TASK, department));
 
             foreach (var task in tasks)
@@ -74,8 +76,8 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
                 };
                 var control = new NanoTaskItemControl(task);
                 container.AddChild(control);
-                control.OnMainPressed += id => OpenTask?.Invoke(table, id);
-                control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(table, id);
+                control.OnMainPressed += id => OpenTask?.Invoke(table, new(NanoTaskConstants.NET_CATEGORY_DEPARTAMENT_TASK, department), id);
+                control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(table, new(NanoTaskConstants.NET_CATEGORY_DEPARTAMENT_TASK, department), id);
             }
 
             TabsDepartmentTask.AddChild(table);

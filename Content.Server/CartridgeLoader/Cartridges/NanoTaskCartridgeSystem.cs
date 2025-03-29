@@ -124,8 +124,8 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
                     [NanoTaskConstants.NET_TASK_STATUS] = task.Item.Status,
                 };
 
-                if (task.Category.Department is { } department)
-                    newPayload[NanoTaskConstants.NET_DEPARTAMENT_TASK] = department;
+                if (task.Category.Department is not null)
+                    newPayload[NanoTaskConstants.NET_DEPARTAMENT_TASK] = task.Category.Department;
 
                 _deviceNetwork.QueuePacket(ent, address, newPayload, device.TransmitFrequency, device.DeviceNetId, device);
 
@@ -139,12 +139,16 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
                     {
                         [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdSetState,
                         [NanoTaskConstants.NET_COMMAND] = NanoTaskConstants.NET_UPDATE_TASK,
+                        [NanoTaskConstants.NET_CATEGORY_TASK] = task.Category.Category,
                         [NanoTaskConstants.NET_TASK_ID] = task.Item.Id,
                         [NanoTaskConstants.NET_TASK_DESCRIPTION] = task.Item.Data.Description,
                         [NanoTaskConstants.NET_TASK_REQUESTER] = task.Item.Data.TaskIsFor,
                         [NanoTaskConstants.NET_TASK_PRIORITY] = task.Item.Data.Priority,
                         [NanoTaskConstants.NET_TASK_STATUS] = task.Item.Data.Status,
                     };
+
+                    if (task.Category.Department is not null)
+                        updatePayload[NanoTaskConstants.NET_DEPARTAMENT_TASK] = task.Category.Department;
 
                     _deviceNetwork.QueuePacket(ent, address, updatePayload, device.TransmitFrequency, device.DeviceNetId, device);
 
