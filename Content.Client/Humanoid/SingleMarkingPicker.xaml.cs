@@ -12,7 +12,7 @@ namespace Content.Client.Humanoid;
 public sealed partial class SingleMarkingPicker : BoxContainer
 {
     [Dependency] private readonly MarkingManager _markingManager = default!;
-    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     /// <summary>
     ///     What happens if a marking is selected.
@@ -190,7 +190,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
         foreach (var (id, marking) in sortedMarkings)
         {
-            var item = MarkingList.AddItem(Loc.GetString($"marking-{id}"), _spriteSystem.Frame0(marking.Sprites[0]));
+            var item = MarkingList.AddItem(Loc.GetString($"marking-{id}"), _entityManager.System<SpriteSystem>().Frame0(marking.Sprites[0]));
             item.Metadata = marking.ID;
 
             if (_markings[Slot].MarkingId == id)
