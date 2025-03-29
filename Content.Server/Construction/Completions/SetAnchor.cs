@@ -1,4 +1,4 @@
-﻿using Content.Shared.Construction;
+using Content.Shared.Construction;
 using JetBrains.Annotations;
 
 namespace Content.Server.Construction.Completions
@@ -12,7 +12,9 @@ namespace Content.Server.Construction.Completions
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
             var transform = entityManager.GetComponent<TransformComponent>(uid);
-            transform.Anchored = Value;
+#pragma warning disable CS0618 // Type or member is obsolete
+            transform.Anchored = Value; // Changing this fails on startup
+#pragma warning restore CS0618 // Type or member is obsolete
         }
     }
 }

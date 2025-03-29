@@ -76,7 +76,9 @@ public sealed partial class CargoSystem
                 if (_player.HasRunningAnimation(uid, TelepadBeamKey))
                     return;
                 _player.Stop(uid, player, TelepadIdleKey);
-                _player.Play(uid, player, CargoTelepadBeamAnimation, TelepadBeamKey);
+
+                player ??= EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
+                _player.Play(new Entity<AnimationPlayerComponent>(uid, player), CargoTelepadBeamAnimation, TelepadBeamKey);
                 break;
             case CargoTelepadState.Unpowered:
                 sprite.LayerSetVisible(CargoTelepadLayers.Beam, false);
@@ -90,7 +92,8 @@ public sealed partial class CargoSystem
                     _player.HasRunningAnimation(uid, player, TelepadBeamKey))
                     return;
 
-                _player.Play(uid, player, CargoTelepadIdleAnimation, TelepadIdleKey);
+                player ??= EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
+                _player.Play(new Entity<AnimationPlayerComponent>(uid, player), CargoTelepadIdleAnimation, TelepadIdleKey);
                 break;
         }
     }

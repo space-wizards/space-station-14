@@ -16,7 +16,6 @@ public sealed class TechAnomalySystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
 
     public override void Initialize()
     {

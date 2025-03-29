@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Numerics;
 using Content.Server.Worldgen.Components;
 using Content.Server.Worldgen.Components.Debris;
@@ -175,8 +175,9 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
 
             var coords = new EntityCoordinates(chunk.Map, point);
 
-            if (_mapManager
-                .FindGridsIntersecting(Comp<MapComponent>(chunk.Map).MapId, safetyBounds.Translated(point)).Any())
+            List<Entity<MapGridComponent>> mapGrids = new();
+            _mapManager.FindGridsIntersecting(Comp<MapComponent>(chunk.Map).MapId, safetyBounds.Translated(point), ref mapGrids);
+            if (mapGrids.Count > 0)
                 continue; // Oops, gonna collide.
 
             var preEv = new PrePlaceDebrisFeatureEvent(coords, args.Chunk);

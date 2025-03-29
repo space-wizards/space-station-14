@@ -88,7 +88,7 @@ namespace Content.Server.Construction
             {
                 if (near == user)
                     continue;
-                if (_interactionSystem.InRangeUnobstructed(pos, near, 2f) && _container.IsInSameOrParentContainer(user, near))
+                if (_interactionSystem.InRangeUnobstructed(pos, near, 2f) && _container.IsInSameOrParentContainer((user, null, null), (near, null, null)))
                     yield return near;
             }
         }
@@ -478,7 +478,7 @@ namespace Content.Server.Construction
                 return;
             }
 
-            var mapPos = location.ToMap(EntityManager, _transformSystem);
+            var mapPos = _transformSystem.ToMapCoordinates(location);
             var predicate = GetPredicate(constructionPrototype.CanBuildInImpassable, mapPos);
 
             if (!_interactionSystem.InRangeUnobstructed(user, mapPos, predicate: predicate))

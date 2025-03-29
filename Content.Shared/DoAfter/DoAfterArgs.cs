@@ -174,12 +174,6 @@ public sealed partial class DoAfterArgs
     public DuplicateConditions DuplicateCondition = DuplicateConditions.All;
     #endregion
 
-    /// <summary>
-    ///     Additional conditions that need to be met. Return false to cancel.
-    /// </summary>
-    [NonSerialized]
-    [Obsolete("Use checkEvent instead")]
-    public Func<bool>? ExtraCheck;
 
     #region Constructors
 

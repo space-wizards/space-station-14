@@ -72,7 +72,7 @@ namespace Content.Shared.Examine
             // Is the target hidden in a opaque locker or something? Currently this check allows players to examine
             // their organs, if they can somehow target them. Really this should be with userSeeInsideSelf: false, and a
             // separate check for if the item is in their inventory or hands.
-            if (_containerSystem.IsInSameOrTransparentContainer(examiner, entity, userSeeInsideSelf: true))
+            if (_containerSystem.IsInSameOrTransparentContainer((examiner, null, null), (entity, null, null), userSeeInsideSelf: true))
                 return true;
 
             // is it inside of an open storage (e.g., an open backpack)?
