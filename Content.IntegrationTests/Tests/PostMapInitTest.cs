@@ -45,14 +45,14 @@ namespace Content.IntegrationTests.Tests
         };
 
         /// <summary>
-        /// A dictionary linking maps to arrays of entity prototype ids that should be exempt from "DoNotMap" restrictions.
+        /// A dictionary linking maps to collections of entity prototype ids that should be exempt from "DoNotMap" restrictions.
         /// </summary>
         /// <remarks>
         /// This declares that the listed entity prototypes are allowed to be present on the map
         /// despite being categorized as "DoNotMap", while any unlisted prototypes will still
         /// cause the test to fail.
         /// </remarks>
-        private static readonly Dictionary<string, EntProtoId[]> DoNotMapWhitelistSpecific = new()
+        private static readonly Dictionary<string, HashSet<EntProtoId>> DoNotMapWhitelistSpecific = new()
         {
             {"/Maps/bagel.yml", ["RubberStampMime"]},
             {"/Maps/meta.yml", ["RubberStampWarden"]},
