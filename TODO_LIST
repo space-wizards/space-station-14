@@ -15,8 +15,6 @@ Brigmed wall locker empty
 	Replaced with 'medicine wall locker [Filled]'
 	Still empty
 Armory needs more armor
-Bridge front window very prone to spacing
-Engineering break room also prone to spacing
 Solars prone to meteor breakages
 Expand/reposition solars
 Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
@@ -59,6 +57,23 @@ Would it be too radical to totally left/right swap the Atmos
 		and the burn chamber, just for a bit of a buffer zone.
 		Ditto the public hallway, too, though...
 Fill CMO's special syringe
+Cryo piping
+Check various shuttle designs to make sure docking arms line up with at least some
+Telecoms: Change reinforced walls?
+Glass doors at sec -> hall
+Move warden's office?
+Double-check reinforced walls around substations
+Make easier to navigate in general, + add standard colors around more
+	Maybe crappy scribble decals on top of the MIRI flooring?
+Make HoP's office clearer in particular
+Reinforce canister room walls
+Take out empty trit can?
+Remove riveted walls in storage
+Deal with very long TEG pipeline somehow.
+TEG just engi doors
+Swap nuke/PA? Move nuke to vault?
+Move oxy miner to where the other gasses are?
+Liquid carbon dioxide can hooked up to condenser behind bar is wrong?
 
 The big things:
 Set up evac shuttle (possibly shrink it, too)
@@ -68,7 +83,6 @@ Mail chutes
 Possibly move Evac farther out to make room for shuttle
 	at north dock.
 Check AI vision
-Anything I can do to give poor Atmos more room to work with...
 Grime everything up a bit again.
 
 Check this stuff:
@@ -89,11 +103,8 @@ AI scrubber vent pump starts off
 	Turned it on, should check it sticks when live
 	If this works, probs turn on some other Atmos stuff, too
 Check lighting
+Make sure arrivals meteor shield didn't block the shuttle
 
-Also: When I'm testing in Release mode, I get these exceptions in the server terminal 
-	about the no transform component thing. Can I use those to hunt it
-	down live?
-On the second try I never got this exception. Maybe I just never visited that part of the station?
 
 THINGS I COULD MAKE:
 - Plastic table
@@ -144,3 +155,13 @@ DONE:
 	/* Can I give chaplain a secure locker, too? */
 /* Probably Atmos needs a bit of re-fixing as well. */
 	/* Certainly re-color the pipe networks. */
+/* Anything I can do to give poor Atmos more room to work with... */
+/* Bridge front window very prone to spacing */
+/* Engineering break room also prone to spacing */
+/* Make AI less de-grid-able */
+/* More arrivals meteor protection */
+/* Also: When I'm testing in Release mode, I get these exceptions in the server terminal */ 
+/* 	about the no transform component thing. Can I use those to hunt it */
+/* 	down live? */
+/* On the second try I never got this exception. Maybe I just never visited that part of the station? */
+/* Hook up brig timers */
