@@ -2,7 +2,6 @@ using Content.Shared.Light;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 
@@ -55,11 +54,11 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
     {
         if (args.Key != PoweredLightVisualsComponent.BlinkingAnimationKey)
             return;
-
         if(!comp.IsBlinking)
             return;
 
-        AnimationSystem.Play(uid, Comp<AnimationPlayerComponent>(uid), BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
+        AnimationSystem.Play(new Entity<AnimationPlayerComponent>(uid, Comp<AnimationPlayerComponent>(uid)),
+            BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
     }
 
     /// <summary>
@@ -76,7 +75,7 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
         var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
         if (shouldBeBlinking)
         {
-            AnimationSystem.Play(uid, animationPlayer, BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
+            AnimationSystem.Play(new Entity<AnimationPlayerComponent>(uid, animationPlayer), BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
         }
         else if (AnimationSystem.HasRunningAnimation(uid, animationPlayer, PoweredLightVisualsComponent.BlinkingAnimationKey))
         {
