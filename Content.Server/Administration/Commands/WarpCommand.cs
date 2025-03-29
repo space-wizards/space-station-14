@@ -49,7 +49,7 @@ namespace Content.Server.Administration.Commands
             }
             else
             {
-                if (player.Status != SessionStatus.InGame || player.AttachedEntity is not {Valid: true} playerEntity)
+                if (player.Status != SessionStatus.InGame || player.AttachedEntity is not { Valid: true } playerEntity)
                 {
                     shell.WriteLine("You are not in-game!");
                     return;
@@ -58,7 +58,7 @@ namespace Content.Server.Administration.Commands
                 var currentMap = _entManager.GetComponent<TransformComponent>(playerEntity).MapID;
                 var currentGrid = _entManager.GetComponent<TransformComponent>(playerEntity).GridUid;
 
-                var transformSystem = _entManager.System<SharedTransformSystem>();
+                var xformSystem = _entManager.System<SharedTransformSystem>();
 
                 var found = GetWarpPointByName(location)
                     .OrderBy(p => p.Item1, Comparer<EntityCoordinates>.Create((a, b) =>
@@ -66,8 +66,9 @@ namespace Content.Server.Administration.Commands
                         // Sort so that warp points on the same grid/map are first.
                         // So if you have two maps loaded with the same warp points,
                         // it will prefer the warp points on the map you're currently on.
-                        var aGrid = transformSystem.GetGrid(a);
-                        var bGrid = transformSystem.GetGrid(b);
+
+                        var aGrid = xformSystem.GetGrid(a);
+                        var bGrid = xformSystem.GetGrid(b);
 
                         if (aGrid == bGrid)
                         {
@@ -84,8 +85,8 @@ namespace Content.Server.Administration.Commands
                             return 1;
                         }
 
-                        var mapA = transformSystem.GetMapId(a);
-                        var mapB = transformSystem.GetMapId(b);
+                        var mapA = xformSystem.GetMapId(a);
+                        var mapB = xformSystem.GetMapId(b);
 
                         if (mapA == mapB)
                         {
@@ -120,10 +121,8 @@ namespace Content.Server.Administration.Commands
                     return;
                 }
 
-                var xform = _entManager.GetComponent<TransformComponent>(playerEntity);
-                var xformSystem = _entManager.System<SharedTransformSystem>();
                 xformSystem.SetCoordinates(playerEntity, coords);
-                xformSystem.AttachToGridOrMap(playerEntity, xform);
+                xformSystem.AttachToGridOrMap(playerEntity);
                 if (_entManager.TryGetComponent(playerEntity, out PhysicsComponent? physics))
                 {
                     _entManager.System<SharedPhysicsSystem>().SetLinearVelocity(playerEntity, Vector2.Zero, body: physics);
