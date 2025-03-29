@@ -13,8 +13,8 @@ namespace Content.Client.CartridgeLoader.Cartridges;
 [GenerateTypedNameReferences]
 public sealed partial class NanoTaskItemControl : Control
 {
-    public Action<int>? OnMainPressed;
-    public Action<int>? OnDonePressed;
+    public Action<uint>? OnMainPressed;
+    public Action<uint>? OnDonePressed;
 
     public NanoTaskItemControl(NanoTaskItemAndId item)
     {
@@ -27,7 +27,7 @@ public sealed partial class NanoTaskItemControl : Control
         MainButton.OnPressed += _ => OnMainPressed?.Invoke(item.Id);
         DoneButton.OnPressed += _ => OnDonePressed?.Invoke(item.Id);
 
-        MainButton.Disabled = item.Data.IsTaskDone;
-        DoneButton.Text = item.Data.IsTaskDone ? Loc.GetString("nano-task-ui-revert-done") : Loc.GetString("nano-task-ui-done");
+        MainButton.Disabled = item.Data.Status == NanoTaskItemStatus.Completed;
+        DoneButton.Text = item.Data.Status == NanoTaskItemStatus.Completed ? Loc.GetString("nano-task-ui-revert-done") : Loc.GetString("nano-task-ui-done");
     }
 }

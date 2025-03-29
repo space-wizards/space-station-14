@@ -117,10 +117,12 @@ public sealed class CartridgeDeactivatedEvent : EntityEventArgs
 public sealed class CartridgeUiReadyEvent : EntityEventArgs
 {
     public readonly EntityUid Loader;
+    public readonly EntityUid? Actor;
 
-    public CartridgeUiReadyEvent(EntityUid loader)
+    public CartridgeUiReadyEvent(EntityUid loader, EntityUid? actor = null)
     {
         Loader = loader;
+        Actor = actor;
     }
 }
 

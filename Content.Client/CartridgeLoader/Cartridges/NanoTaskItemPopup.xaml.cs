@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.UserInterface.Controls;
 using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Shared.NanoTask;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
@@ -14,11 +15,13 @@ namespace Content.Client.CartridgeLoader.Cartridges;
 public sealed partial class NanoTaskItemPopup : DefaultWindow
 {
     private readonly ButtonGroup _priorityGroup = new();
-    private int? _editingTaskId = null;
+    private uint? _editingTaskId = null;
+    private string _nanoTaskCategory = NanoTaskConstants.NET_CATEGORY_STATION_TASK;
+    private string? _nanoTaskDepartment = null;
 
-    public Action<int, NanoTaskItem>? TaskSaved;
-    public Action<int>? TaskDeleted;
-    public Action<NanoTaskItem>? TaskCreated;
+    public Action<uint, NanoTaskCategoryAndDepartment, NanoTaskItem>? TaskSaved;
+    public Action<uint>? TaskDeleted;
+    public Action<NanoTaskCategoryAndDepartment, NanoTaskItem>? TaskCreated;
     public Action<NanoTaskItem>? TaskPrinted;
 
     private NanoTaskItem MakeItem()
@@ -26,8 +29,9 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
         return new(
             description: DescriptionInput.Text,
             taskIsFor: RequesterInput.Text,
-            isTaskDone: false,
-            priority: _priorityGroup.Pressed switch {
+            status: NanoTaskItemStatus.InProgress,
+            priority: _priorityGroup.Pressed switch
+            {
                 var item when item == LowButton => NanoTaskPriority.Low,
                 var item when item == MediumButton => NanoTaskPriority.Medium,
                 var item when item == HighButton => NanoTaskPriority.High,
@@ -47,24 +51,20 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
         CancelButton.OnPressed += _ => Close();
         DeleteButton.OnPressed += _ =>
         {
-            if (_editingTaskId is int id)
+            if (_editingTaskId is uint id)
             {
                 TaskDeleted?.Invoke(id);
             }
         };
-        PrintButton.OnPressed += _ =>
-        {
-            TaskPrinted?.Invoke(MakeItem());
-        };
         SaveButton.OnPressed += _ =>
         {
-            if (_editingTaskId is int id)
+            if (_editingTaskId is uint id)
             {
-                TaskSaved?.Invoke(id, MakeItem());
+                TaskSaved?.Invoke(id, new(_nanoTaskCategory, _nanoTaskDepartment), MakeItem());
             }
             else
             {
-                TaskCreated?.Invoke(MakeItem());
+                TaskCreated?.Invoke(new(_nanoTaskCategory, _nanoTaskDepartment), MakeItem());
             }
         };
 
@@ -80,20 +80,28 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
         };
     }
 
-    public void SetEditingTaskId(int? id)
+    public void SetEditingTaskId(uint? id)
     {
         _editingTaskId = id;
         DeleteButton.Visible = id is not null;
+    }
+
+    public void SetCategory(string category, string? name)
+    {
+        _nanoTaskCategory = category;
+        _nanoTaskDepartment = name;
     }
 
     public void ResetInputs(NanoTaskItem? item)
     {
         if (item is NanoTaskItem task)
         {
-            var button = task.Priority switch {
+            var button = task.Priority switch
+            {
                 NanoTaskPriority.High => HighButton,
                 NanoTaskPriority.Medium => MediumButton,
                 NanoTaskPriority.Low => LowButton,
+                _ => throw new NotImplementedException(),
             };
             button.Pressed = true;
             DescriptionInput.Text = task.Description;
