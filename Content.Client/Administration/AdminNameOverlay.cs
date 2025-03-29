@@ -95,7 +95,7 @@ internal sealed class AdminNameOverlay : Overlay
                 continue;
 
             // Get on-screen coordinates of player
-            var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center);
+            var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center).Rounded();
 
             sortable.Add((info, aabb, entity.Value, screenCoordinates));
         }

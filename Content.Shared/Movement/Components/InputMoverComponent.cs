@@ -32,7 +32,7 @@ namespace Content.Shared.Movement.Components
         /// <summary>
         /// Should our velocity be applied to our parent?
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField("toParent")]
+        [DataField]
         public bool ToParent = false;
 
         public GameTick LastInputTick;
@@ -42,6 +42,12 @@ namespace Content.Shared.Movement.Components
         public Vector2 CurTickSprintMovement;
 
         public MoveButtons HeldMoveButtons = MoveButtons.None;
+
+        // I don't know if we even need this networked? It's mostly so conveyors can calculate properly.
+        /// <summary>
+        /// Direction to move this tick.
+        /// </summary>
+        public Vector2 WishDir;
 
         /// <summary>
         /// Entity our movement is relative to.
@@ -65,7 +71,6 @@ namespace Content.Shared.Movement.Components
         /// If we traverse on / off a grid then set a timer to update our relative inputs.
         /// </summary>
         [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
-        [ViewVariables(VVAccess.ReadWrite)]
         public TimeSpan LerpTarget;
 
         public const float LerpTime = 1.0f;
