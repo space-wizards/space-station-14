@@ -9,6 +9,7 @@ using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -474,7 +475,8 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (drop_container is null)
             _containerSystem.TryGetContainingContainer((uid, null, null), out drop_container);
 
-        foreach (var container in comp.GetAllContainers())
+        var containerEnumerable = _containerSystem.GetAllContainers(uid);
+        foreach (var container in containerEnumerable)
         {
             ConsumeEntitiesInContainer(args.EventHorizonUid, container, args.EventHorizon, drop_container);
         }

@@ -1,13 +1,11 @@
 using Content.Shared.Clothing.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Strip.Components;
-using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -15,10 +13,8 @@ namespace Content.Shared.Clothing.EntitySystems;
 public abstract class ClothingSystem : EntitySystem
 {
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSys = default!;
     [Dependency] private readonly InventorySystem _invSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly HideLayerClothingSystem _hideLayer = default!;
 
     public override void Initialize()
     {

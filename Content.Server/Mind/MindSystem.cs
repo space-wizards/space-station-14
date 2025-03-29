@@ -62,7 +62,7 @@ public sealed class MindSystem : SharedMindSystem
         {
             TransferTo(mindId, visiting, mind: mind);
             if (TryComp(visiting, out GhostComponent? ghostComp))
-                _ghosts.SetCanReturnToBody(ghostComp, false);
+                _ghosts.SetCanReturnToBody(visiting, ghostComp, false);
             return;
         }
 
@@ -215,13 +215,13 @@ public sealed class MindSystem : SharedMindSystem
             // not implicitly via optional arguments.
 
             var position = Deleted(mind.OwnedEntity)
-                ? _gameTicker.GetObserverSpawnPoint().ToMap(EntityManager, _transform)
+                ? _transform.ToMapCoordinates(_gameTicker.GetObserverSpawnPoint())
                 : _transform.GetMapCoordinates(mind.OwnedEntity.Value);
 
             entity = Spawn(GameTicker.ObserverPrototypeName, position);
             component = EnsureComp<MindContainerComponent>(entity.Value);
             var ghostComponent = Comp<GhostComponent>(entity.Value);
-            _ghosts.SetCanReturnToBody(ghostComponent, false);
+            _ghosts.SetCanReturnToBody(entity.Value, ghostComponent, false);
         }
 
         var oldEntity = mind.OwnedEntity;
@@ -336,7 +336,7 @@ public sealed class MindSystem : SharedMindSystem
         if (_players.TryGetSessionById(userId.Value, out var ret))
         {
             mind.Session = ret;
-            _pvsOverride.AddSessionOverride(netMind, ret);
+            _pvsOverride.AddSessionOverride(mindId, ret);
             _players.SetAttachedEntity(ret, mind.CurrentEntity);
         }
     }
