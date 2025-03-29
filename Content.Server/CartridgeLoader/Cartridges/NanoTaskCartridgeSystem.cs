@@ -27,17 +27,11 @@ namespace Content.Server.CartridgeLoader.Cartridges;
 public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
 {
     [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly PaperSystem _paper = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private readonly SingletonDeviceNetServerSystem _singletonDeviceNetServer = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-    private Dictionary<EntityUid, EntityUid> _loaderMap = [];
 
     public override void Initialize()
     {
@@ -167,9 +161,8 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
                 break;
         }
 
-        var loader = GetEntity(args.LoaderUid);
-        _loaderMap.TryAdd(ent, loader);
 
+        var loader = GetEntity(args.LoaderUid);
         UpdateUiState(ent, loader, args.Actor);
     }
 
@@ -194,11 +187,13 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
 
         HandleMessage(ent.Comp, category, netCommand, args.Data, taskId);
 
-        if (_loaderMap.TryGetValue(ent, out var loader))
-        {
-            UpdateUiState(ent, loader);
-            _loaderMap.Remove(ent);
-        }
+        if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
+            return;
+
+        if (netCommand == NanoTaskConstants.NET_NEW_TASK && args.Data.TryGetValue(NanoTaskConstants.NET_TASK_DESCRIPTION, out string? description))
+            _cartridgeLoader.SendNotification(loaderUid, Loc.GetString("nano-task-ui-new-task-title"), description);
+
+        UpdateUiState(ent, loaderUid);
     }
 
     private void HandleMessage(NanoTaskCartridgeComponent comp, string category, string netCommand, NetworkPayload data, uint taskId)
