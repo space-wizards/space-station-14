@@ -133,6 +133,7 @@
     BarDrobeStealObjective: 1
     PietyVendStealObjective: 1
     CargoDrobeStealObjective: 1
+    SalvDrobeStealObjective: 1
     MediDrobeStealObjective: 1
     ChemDrobeStealObjective: 1
     CuraDrobeStealObjective: 1

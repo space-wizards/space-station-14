@@ -34,6 +34,12 @@
     prefix: advertisement-cargodrobe-
     count: 3
 
+- type: localizedDataset #imp
+  id: SalvDrobeAds
+  values:
+    prefix: advertisement-salvdrobe-
+    count: 3
+
 - type: localizedDataset
   id: ChangAds
   values:

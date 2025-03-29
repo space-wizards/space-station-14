@@ -186,6 +186,13 @@
     state: broken
 
 - type: stealTargetGroup
+  id: SalvDrobe
+  name: steal-target-groups-salvdrobe
+  sprite:
+    sprite: _Impstation/Structures/Machines/VendingMachines/salvdrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
   id: MediDrobe
   name: steal-target-groups-medidrobe
   sprite:

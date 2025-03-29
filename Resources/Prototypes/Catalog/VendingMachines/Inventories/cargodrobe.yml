@@ -13,7 +13,7 @@
     ClothingHeadBandBrown: 3
     ClothingHeadsetCargo: 3
     ClothingOuterWinterCargo: 2
-    ClothingOuterWinterMiner: 2
+#    ClothingOuterWinterMiner: 2 #imp
     ClothingOuterCoatBomberCargo: 2 # imp
     ClothingNeckScarfStripedBrown: 3
     ClothingShoesBootsWinterCargo: 2

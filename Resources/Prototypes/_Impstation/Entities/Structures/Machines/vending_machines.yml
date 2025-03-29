@@ -56,3 +56,38 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineSalvDrobe
+  name: SalvDrobe
+  description: A highly advanced vending machine for buying salvager related clothing for free.
+  components:
+  - type: VendingMachine
+    pack: SalvDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    soundVend: /Audio/_Impstation/Machines/vending_drop.ogg #imp
+  - type: Advertise
+    pack: SalvDrobeAds
+  - type: SpeakOnUIClosed
+    pack: GenericVendGoodbyes
+  - type: Sprite
+    sprite: _Impstation/Structures/Machines/VendingMachines/salvdrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: AccessReader
+    access: [["Cargo"]]
+  - type: StealTarget #imp
+    stealGroup: SalvDrobe

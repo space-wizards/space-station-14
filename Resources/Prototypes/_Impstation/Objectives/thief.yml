@@ -294,6 +294,17 @@
 
 - type: entity
   parent: BaseThiefStealStructureObjective
+  id: SalvDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SalvageSpecialist
+  - type: StealCondition
+    stealGroup: SalvDrobe
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
   id: MediDrobeStealObjective
   components:
   - type: NotJobRequirement

@@ -41,6 +41,7 @@ steal-target-groups-secdrobe = SecDrobe
 steal-target-groups-bardrobe = BarDrobe
 steal-target-groups-pietyvend = PietyVend
 steal-target-groups-cargodrobe = CargoDrobe
+steal-target-groups-salvdrobe = SalvDrobe
 steal-target-groups-medidrobe = MediDrobe
 steal-target-groups-chemdrobe = ChemDrobe
 steal-target-groups-curadrobe = CuraDrobe

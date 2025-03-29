@@ -1,0 +1,21 @@
+- type: vendingMachineInventory
+  id: SalvDrobeInventory
+  startingInventory:
+    ClothingBackpackSalvage: 3
+    ClothingBackpackSatchelSalvage: 3
+    ClothingBackpackDuffelSalvage: 3
+    OreBag: 3
+    ClothingUniformJumpsuitSalvageSpecialist: 3
+    ClothingUniformJumpskirtSalvageSpecialist: 3
+    ClothingUniformJumpskirtSalvageSpecialistDV: 3
+    ClothingUniformJumpsuitSalvageSpecialistDV: 3
+    ClothingShoesBootsSalvage: 3
+    ClothingMaskGasExplorer: 3
+    ClothingHeadsetMining: 3
+    ClothingOuterCoatBomberCargo: 3
+    ClothingNeckMantle: 2
+    ClothingOuterWinterMiner: 3
+    ClothingNeckScarfStripedBrown: 3
+    ClothingShoesBootsWinterColorBrown: 3
+  contrabandInventory:
+    ClothingMaskClownCargo: 1
