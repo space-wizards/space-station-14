@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: Kandiyaki
-  changes:
-  - message: heretic store listings will now show their associated knowledge level
-      beside them.
-    type: Add
-  - message: the ghoul overlay will now show up on non-humanoid entities.
-    type: Fix
-  - message: '"Knowledge Points" are now "KP" in the heretic store (things were getting
-      cluttered).'
-    type: Tweak
-  id: 926
-  time: '2025-01-14T23:39:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1364
 - author: AftrLite
   changes:
   - message: Medkit inhands now use the correct(new) sprites!
@@ -4080,3 +4067,10 @@
   id: 1425
   time: '2025-03-29T12:44:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2108
+- author: DinnerCalzone
+  changes:
+  - message: Fixed drones not fitting inside cyborg recharging stations.
+    type: Fix
+  id: 1426
+  time: '2025-03-29T12:46:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2134
