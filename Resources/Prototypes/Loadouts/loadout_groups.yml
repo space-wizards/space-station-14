@@ -129,6 +129,7 @@
   - CaptainCloak
   - CaptainCloakFormal
   - CaptainMantle
+  - CaptainEpaulettes
 
 - type: loadoutGroup
   id: CaptainBackpack
