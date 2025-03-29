@@ -29,7 +29,7 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
         return new(
             description: DescriptionInput.Text,
             taskIsFor: RequesterInput.Text,
-            status: NanoTaskItemStatus.NotStarted,
+            status: NanoTaskItemStatus.InProgress,
             priority: _priorityGroup.Pressed switch
             {
                 var item when item == LowButton => NanoTaskPriority.Low,

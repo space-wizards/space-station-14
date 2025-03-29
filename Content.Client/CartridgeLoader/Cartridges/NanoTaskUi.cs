@@ -48,7 +48,7 @@ public sealed partial class NanoTaskUi : UIFragment
             userInterface.SendMessage(new CartridgeUiMessage(new NanoTaskUiMessageEvent(new NanoTaskUpdateTask(new(id, new(
                 description: task.Data.Description,
                 taskIsFor: task.Data.TaskIsFor,
-                status: NanoTaskItemStatus.NotStarted,
+                status: NanoTaskItemStatus.Completed,
                 priority: task.Data.Priority
             )), category))));
         };

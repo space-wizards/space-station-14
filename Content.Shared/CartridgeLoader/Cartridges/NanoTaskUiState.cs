@@ -16,7 +16,6 @@ public enum NanoTaskPriority : byte
 [Serializable, NetSerializable]
 public enum NanoTaskItemStatus : byte
 {
-    NotStarted,
     InProgress,
     Completed
 }

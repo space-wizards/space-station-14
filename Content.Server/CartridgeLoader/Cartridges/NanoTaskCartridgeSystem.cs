@@ -190,8 +190,18 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
         if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
             return;
 
-        if (netCommand == NanoTaskConstants.NET_NEW_TASK && args.Data.TryGetValue(NanoTaskConstants.NET_TASK_DESCRIPTION, out string? description))
-            _cartridgeLoader.SendNotification(loaderUid, Loc.GetString("nano-task-ui-new-task-title"), description);
+        if (args.Data.TryGetValue(NanoTaskConstants.NET_TASK_DESCRIPTION, out string? description))
+        {
+            switch (netCommand)
+            {
+                case NanoTaskConstants.NET_NEW_TASK:
+                    _cartridgeLoader.SendNotification(loaderUid, Loc.GetString("nano-task-ui-new-task-title"), description);
+                    break;
+                case NanoTaskConstants.NET_DELETE_TASK:
+                    _cartridgeLoader.SendNotification(loaderUid, Loc.GetString("nano-task-ui-task-completed-title"), description);
+                    break;
+            }
+        }
 
         UpdateUiState(ent, loaderUid);
     }
@@ -209,8 +219,9 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
                     var index = comp.StationTasks.FindIndex(x => x.Id == taskId);
                     if (index == -1)
                         return;
-                    else
-                        comp.StationTasks[index] = ShapeNanoTaskItemAndId(data);
+
+                    comp.StationTasks[index] = ShapeNanoTaskItemAndId(data);
+
                     break;
                 case NanoTaskConstants.NET_DELETE_TASK:
                     comp.StationTasks.RemoveAll(x => x.Id == taskId);
@@ -234,8 +245,9 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
                     var index = depart.FindIndex(x => x.Id == taskId);
                     if (index == -1)
                         return;
-                    else
-                        depart[index] = ShapeNanoTaskItemAndId(data);
+
+                    depart[index] = ShapeNanoTaskItemAndId(data);
+
                     break;
                 case NanoTaskConstants.NET_DELETE_TASK:
                     comp.DepartmentTasks.GetOrNew(departament).RemoveAll(x => x.Id == taskId);
@@ -298,7 +310,7 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
 
             if (actor.HasValue)
             {
-                var departments = _prototypeManager.EnumeratePrototypes<NanoTaskDepartmentPrototype>();
+                var departments = _prototypeManager.EnumeratePrototypes<NanoTaskDepartmentPrototype>().ToArray();
 
                 if (ent.Comp.DepartmentTasks.Count == 0)
                     foreach (var department in departments)

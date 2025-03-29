@@ -63,7 +63,8 @@ public sealed class NanoTaskServerSystem : EntitySystem
     {
         var payload = new NetworkPayload
         {
-            [NanoTaskConstants.NET_ALL_TASKS] = (ent.Comp.StationTasks, ent.Comp.DepartamentTasks.ToDictionary(x => x.Key, x => x.Value))
+            [NanoTaskConstants.NET_ALL_TASKS] = (ent.Comp.StationTasks,
+                ent.Comp.DepartamentTasks.ToDictionary(x => x.Key, x => x.Value))
         };
 
         var device = Comp<DeviceNetworkComponent>(ent);
@@ -81,7 +82,7 @@ public sealed class NanoTaskServerSystem : EntitySystem
             ent.Comp.StationTasks.RemoveAll(x => x.Id == itemId);
         }
         else if (category == NanoTaskConstants.NET_CATEGORY_DEPARTAMENT_TASK
-                && args.Data.TryGetValue(NanoTaskConstants.NET_DEPARTAMENT_TASK, out string? departamentName))
+                 && args.Data.TryGetValue(NanoTaskConstants.NET_DEPARTAMENT_TASK, out string? departamentName))
         {
             var departament = _prototypeManager
                 .EnumeratePrototypes<NanoTaskDepartmentPrototype>()
@@ -105,6 +106,12 @@ public sealed class NanoTaskServerSystem : EntitySystem
                 return;
 
             var item = GetNanoTaskItem(args.Data);
+            if (item.Status == NanoTaskItemStatus.Completed)
+            {
+                SendDeleteMessage(ent, new(id, item), new(NanoTaskConstants.NET_CATEGORY_STATION_TASK, null));
+                return;
+            }
+
             ent.Comp.StationTasks[index] = new(id, item);
 
             var payload = new NetworkPayload
@@ -123,7 +130,7 @@ public sealed class NanoTaskServerSystem : EntitySystem
             _deviceNetworkSystem.QueuePacket(ent, null, payload, device: device);
         }
         else if (category == NanoTaskConstants.NET_CATEGORY_DEPARTAMENT_TASK
-                && args.Data.TryGetValue(NanoTaskConstants.NET_DEPARTAMENT_TASK, out string? departamentName))
+                 && args.Data.TryGetValue(NanoTaskConstants.NET_DEPARTAMENT_TASK, out string? departamentName))
         {
             var departament = _prototypeManager
                 .EnumeratePrototypes<NanoTaskDepartmentPrototype>()
@@ -134,7 +141,14 @@ public sealed class NanoTaskServerSystem : EntitySystem
             if (itemIndex == -1)
                 return;
 
+
             var item = GetNanoTaskItem(args.Data);
+            if (item.Status == NanoTaskItemStatus.Completed)
+            {
+                SendDeleteMessage(ent, new(itemId, item), new(NanoTaskConstants.NET_CATEGORY_DEPARTAMENT_TASK, departamentName));
+                return;
+            }
+
             departament.Tasks[itemIndex] = new(itemId, item);
 
             var payload = new NetworkPayload
@@ -153,6 +167,27 @@ public sealed class NanoTaskServerSystem : EntitySystem
             var device = Comp<DeviceNetworkComponent>(ent);
             _deviceNetworkSystem.QueuePacket(ent, null, payload, device: device);
         }
+    }
+
+    private void SendDeleteMessage(EntityUid uid, NanoTaskItemAndId item, NanoTaskCategoryAndDepartment category)
+    {
+        var payload = new NetworkPayload
+        {
+            [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdSetState,
+            [NanoTaskConstants.NET_COMMAND] = NanoTaskConstants.NET_DELETE_TASK,
+            [NanoTaskConstants.NET_CATEGORY_TASK] = category.Category,
+            [NanoTaskConstants.NET_TASK_ID] = item.Id,
+            [NanoTaskConstants.NET_TASK_DESCRIPTION] = item.Data.Description,
+            [NanoTaskConstants.NET_TASK_REQUESTER] = item.Data.TaskIsFor,
+            [NanoTaskConstants.NET_TASK_PRIORITY] = item.Data.Priority,
+            [NanoTaskConstants.NET_TASK_STATUS] = item.Data.Status,
+        };
+
+        if (category.Department is { } department)
+            payload[NanoTaskConstants.NET_DEPARTAMENT_TASK] = category.Department;
+
+        var device = Comp<DeviceNetworkComponent>(uid);
+        _deviceNetworkSystem.QueuePacket(uid, null, payload, device: device);
     }
 
     private void HandleNewTask(Entity<NanoTaskServerComponent> ent, DeviceNetworkPacketEvent args)
@@ -182,7 +217,7 @@ public sealed class NanoTaskServerSystem : EntitySystem
             _deviceNetworkSystem.QueuePacket(ent, null, payload, device: device);
         }
         else if (category == NanoTaskConstants.NET_CATEGORY_DEPARTAMENT_TASK
-                && args.Data.TryGetValue(NanoTaskConstants.NET_DEPARTAMENT_TASK, out string? departamentName))
+                 && args.Data.TryGetValue(NanoTaskConstants.NET_DEPARTAMENT_TASK, out string? departamentName))
         {
             var departament = _prototypeManager
                 .EnumeratePrototypes<NanoTaskDepartmentPrototype>()
