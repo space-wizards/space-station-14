@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chasm;
+using Content.Shared.Chasm;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
@@ -46,7 +46,7 @@ public sealed class ChasmFallingVisualsSystem : EntitySystem
 
         var player = EnsureComp<AnimationPlayerComponent>(uid);
         if (_anim.HasRunningAnimation(player, _chasmFallAnimationKey))
-            _anim.Stop(player, _chasmFallAnimationKey);
+            _anim.Stop(uid, _chasmFallAnimationKey);
 
         sprite.Scale = component.OriginalScale;
     }
