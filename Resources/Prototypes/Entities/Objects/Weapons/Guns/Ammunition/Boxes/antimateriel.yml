@@ -2,7 +2,8 @@
   abstract: true
   parent: BaseItem
   id: BaseMagazineBoxAntiMateriel
-  name: ammunition box (.60 anti-materiel)
+  name: ammunition box (lightbulbets)
+  description: One shot, one opportunity
   components:
   - type: BallisticAmmoProvider
     mayTransfer: true

@@ -45,8 +45,8 @@
   id: Security
   name: chat-radio-security
   keycode: 's'
-  frequency: 1359
-  color: "#ff4242"
+  frequency: 5660000
+  color: "#00ff00"
 
 - type: radioChannel
   id: Service

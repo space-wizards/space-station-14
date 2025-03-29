@@ -9,6 +9,8 @@
   id: BaseMobSpecies
   abstract: true
   components:
+  - type: ReplacementAccent
+    accent: liar
   - type: Sprite
     layers:
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
@@ -281,6 +283,7 @@
         Asphyxiation: -1.0
   - type: FireVisuals
     alternateState: Standing
+  - type: PhoneBillable
 
 - type: entity
   save: false

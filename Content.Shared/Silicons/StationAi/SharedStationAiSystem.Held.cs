@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Serialization;
@@ -27,6 +28,8 @@ public abstract partial class SharedStationAiSystem
         SubscribeLocalEvent<StationAiHeldComponent, InteractionAttemptEvent>(OnHeldInteraction);
         SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
         SubscribeLocalEvent<StationAiHeldComponent, JumpToCoreEvent>(OnCoreJump);
+        SubscribeLocalEvent<StationAiHeldComponent, VisitCoreEvent>(OnCoreVisit);
+        SubscribeLocalEvent<VisitingMindComponent, UnVisitCoreEvent>(OnCoreUnVisit);
         SubscribeLocalEvent<TryGetIdentityShortInfoEvent>(OnTryGetIdentityShortInfo);
     }
 
@@ -50,7 +53,46 @@ public abstract partial class SharedStationAiSystem
         if (!TryGetCore(ent.Owner, out var core) || core.Comp?.RemoteEntity == null)
             return;
 
-        _xforms.DropNextTo(core.Comp.RemoteEntity.Value, core.Owner) ;
+        _xforms.DropNextTo(core.Comp.RemoteEntity.Value, core.Owner);
+    }
+
+    private void OnCoreVisit(Entity<StationAiHeldComponent> ent, ref VisitCoreEvent args)
+    {
+        if (!TryGetCore(ent.Owner, out var core) || core.Comp?.RemoteEntity == null)
+            return;
+
+        if (!_mind.TryGetMind(ent.Owner, out var mindId, out var mind))
+            return;
+
+        // move the player's mind to the core
+        _mind.Visit(mindId, core, mind);
+        _xforms.Unanchor(core);
+
+        if (!TryComp<AppearanceComponent>(core, out var app))
+            return;
+
+        _appearance.SetData(core, StationAiVisualState.Key, StationAiState.Standing, app);
+    }
+
+    private void OnCoreUnVisit(Entity<VisitingMindComponent> ent, ref UnVisitCoreEvent args)
+    {
+        if (!Transform(ent.Owner).Anchored && !_xforms.AnchorEntity(ent.Owner))
+            return;
+
+        // move the player's mind back to the camera
+        if (ent.Comp.MindId != null)
+            _mind.UnVisit(ent.Comp.MindId.Value);
+
+        if (!TryComp(ent.Owner, out StationAiCoreComponent? coreComp) || coreComp.RemoteEntity == null)
+            return;
+
+        // move the camera back to the core
+        _xforms.DropNextTo(coreComp.RemoteEntity.Value, ent.Owner);
+
+        if (!TryComp<AppearanceComponent>(ent.Owner, out var app))
+            return;
+
+        _appearance.SetData(ent.Owner, StationAiVisualState.Key, StationAiState.Occupied, app);
     }
 
     /// <summary>
@@ -164,7 +206,7 @@ public abstract partial class SharedStationAiSystem
         var verb = new AlternativeVerb
         {
             Text = isOpen ? Loc.GetString("ai-close") : Loc.GetString("ai-open"),
-            Act = () => 
+            Act = () =>
             {
                 // no need to show menu if device is not powered.
                 if (!PowerReceiver.IsPowered(ent.Owner))

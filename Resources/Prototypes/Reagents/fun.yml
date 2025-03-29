@@ -381,3 +381,121 @@
         conditions:
         - !type:ReagentThreshold
           min: 50
+
+- type: reagent
+  id: Microplastics
+  name: reagent-name-microplastics
+  group: Toxins
+  desc: reagent-desc-microplastics
+  physicalDesc: reagent-physical-desc-coarse
+  flavor: plastic
+  color: "#c6c5c4"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.1
+      effects:
+      - !type:AdjustReagent
+        reagent: Microplastics # never goes away
+        amount: 0.1
+        probability: 0.99
+      - !type:AdjustReagent
+        reagent: Microplastics # never goes away
+        amount: -555
+        probability: 0.99
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Fresium
+          min: 50
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 0.01 # i dont like you
+        probability: 0.5
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.01 # i dont like you
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Microplastics
+          min: 50 
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 0.06 # i dont like you
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Microplastics
+          min: 100
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: 1000 # I FUCKING HATE YOU AND HOPE YOU DIE
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Microplastics
+          min: 103 
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Microplastics
+          min: 20 
+          max: 30
+        walkSpeedModifier: 0.95
+        sprintSpeedModifier: 0.95
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Microplastics
+          min: 30 
+          max: 40
+        walkSpeedModifier: 0.90
+        sprintSpeedModifier: 0.90
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Microplastics
+          min: 40 
+          max: 50
+        walkSpeedModifier: 0.80
+        sprintSpeedModifier: 0.80
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Microplastics
+          min: 50 
+          max: 70
+        walkSpeedModifier: 0.60
+        sprintSpeedModifier: 0.60
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Microplastics
+          min: 70 
+          max: 80
+        walkSpeedModifier: 0.25
+        sprintSpeedModifier: 0.25
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Microplastics
+          min: 80 
+          max: 90
+        walkSpeedModifier: 0.2
+        sprintSpeedModifier: 0.2
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Microplastics
+          min: 90 
+          max: 100
+        walkSpeedModifier: 0
+        sprintSpeedModifier: 0
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Microplastics
+          min: 100 # embrace microplastics. become the plastic lord
+        walkSpeedModifier: 1
+        sprintSpeedModifier: 2
+        

@@ -170,6 +170,10 @@
     proto: EffectSpeciesVox
   equipment:
     suitstorage: NitrogenTankFilled
+# April Fools: Vox all get special boxing gloves.
+  storage:
+    back:
+    - ClothingHandsGlovesBoxingVox
 
 # Full EVA Tank, Any Species
 - type: loadout

@@ -2,8 +2,8 @@
   id: Elkridge
   mapName: 'Elkridge Depot'
   mapPath: /Maps/elkridge.yml
-  minPlayers: 15
-  maxPlayers: 45
+  minPlayers: 0
+  maxPlayers: 80
   stations:
     Elkridge:
       stationProto: StandardNanotrasenStation

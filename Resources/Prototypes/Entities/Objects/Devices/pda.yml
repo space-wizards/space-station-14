@@ -212,8 +212,8 @@
        !type:String
        pda-interncadet
   - type: PdaBorderColor
-    borderColor: "#717059"
-    accentVColor: "#A32D26"
+    borderColor: "#708E9E"
+    accentVColor: "#2FDF70"
   - type: Icon
     state: pda-interncadet
 
@@ -832,8 +832,8 @@
        !type:String
        pda-hos
   - type: PdaBorderColor
-    borderColor: "#A32D26"
-    accentHColor: "#447987"
+    borderColor: "#2FDF70"
+    accentHColor: "#D72959"
   - type: Icon
     state: pda-hos
   - type: CartridgeLoader
@@ -858,8 +858,8 @@
        !type:String
        pda-warden
   - type: PdaBorderColor
-    borderColor: "#A32D26"
-    accentVColor: "#949137"
+    borderColor: "#2FDF70"
+    accentVColor: "#0088E7"
   - type: Icon
     state: pda-warden
 
@@ -877,7 +877,7 @@
        !type:String
        pda-security
   - type: PdaBorderColor
-    borderColor: "#A32D26"
+    borderColor: "#2FDF70"
   - type: Icon
     state: pda-security
 
@@ -1279,9 +1279,9 @@
        !type:String
        pda-brigmedic
   - type: PdaBorderColor
-    borderColor: "#A32D26"
-    accentHColor: "#d7d7d0"
-    accentVColor: "#d7d7d0"
+    borderColor: "#2FDF70"
+    accentHColor: "#d7d7d7"
+    accentVColor: "#d7d7d7"
   - type: Icon
     state: pda-brigmedic
   - type: CartridgeLoader
@@ -1392,7 +1392,7 @@
        !type:String
        pda-seniorofficer
   - type: PdaBorderColor
-    borderColor: "#A32D26"
+    borderColor: "#2FDF70"
     accentVColor: "#DFDFDF"
   - type: Icon
     state: pda-seniorofficer

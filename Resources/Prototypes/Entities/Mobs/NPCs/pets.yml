@@ -437,6 +437,12 @@
     attributes:
       proper: true
       gender: female
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Weapons/flash.ogg
+  - type: FlashOnTrigger
+    range: 3
+  - type: TriggerOnVoice
   - type: Tag
     tags:
     - CannotSuicide

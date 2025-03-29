@@ -48,10 +48,9 @@
     FoodPoppy: 1
     ClothingHeadHatGladiator: 1
     ClothingUniformJumpsuitGladiator: 1
-    ClothingHeadHatCowboyBrown: 1
-    ClothingHeadHatCowboyBlack: 1
-    ClothingHeadHatCowboyWhite: 1
-    ClothingHeadHatCowboyGrey: 1
+    ClothingHeadHatNiko: 4
+    ClothingOuterCoatDetectiveLoadoutNiko: 4
+    ClothingNeckScarfStripedPurple: 4
     ClothingShoesBootsCowboyBrown: 1
     ClothingShoesBootsCowboyBlack: 1
     ClothingShoesBootsCowboyWhite: 1
@@ -66,3 +65,5 @@
     ClothingMaskBlushingClown: 1
     ClothingMaskBlushingMime: 1
     ClothingHeadHatCowboyBountyHunter: 1
+    WeaponSniperHristov: 1  # 100% balanced
+    WarmLightBulb: 10 # holy shit niko oneshot

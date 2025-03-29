@@ -26,6 +26,7 @@ You keep things clean, it's a rough job sometimes, but someone's gotta do it. Th
 </Box>
 <Box>
 <GuideEntityEmbed Entity="AdvMopItem" Caption="Advanced mop, ask in R&D"/>
+<GuideEntityEmbed Entity="MopBucketAlive" Caption="A living, breathing companion, courtesy of R&D - This represents the latest and greatest advancements in mad science house cleaning!"/>
 </Box>
 
 ## Fluid Acquisition and Disposal

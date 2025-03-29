@@ -16,6 +16,7 @@
     - id: MassHallucinations
     - id: MimicVendorRule
     - id: MouseMigration
+    - id: PhoneBillEvent
     - id: PowerGridCheck
     - id: RandomSentience
     - id: SlimesSpawn
@@ -657,3 +658,18 @@
       min: 1
       max: 1
       pickPlayer: false
+
+- type: entity
+  parent: BaseGameRule
+  id: PhoneBillEvent
+  components:
+  - type: StationEvent
+    earliestStart: 0 # All hell breaks loose.
+    reoccurrenceDelay: 0 # It's payment time, motherfucker.
+  - type: PhoneBillRule
+    delay: 150
+    price: 5
+  - type: GameRule
+    delay:
+      min: 150
+      max: 150
