@@ -1,6 +1,5 @@
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
