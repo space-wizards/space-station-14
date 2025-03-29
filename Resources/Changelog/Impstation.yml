@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ATDoop
-  changes:
-  - message: Thieves now start with a special calling card! Copy it at the fax machine
-      if you need more!
-    type: Add
-  id: 929
-  time: '2025-01-14T23:47:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1366
 - author: EpicToast
   changes:
   - message: Add the StockTrading cartridge. Starts installed on QM and cargo tech
@@ -4078,3 +4070,11 @@
   id: 1428
   time: '2025-03-29T12:59:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2132
+- author: AvianMaiden
+  changes:
+  - message: Syndie helmet is contraband. Also other SWAT tweaks. They're coming for
+      you.
+    type: Tweak
+  id: 1429
+  time: '2025-03-29T13:03:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2118
