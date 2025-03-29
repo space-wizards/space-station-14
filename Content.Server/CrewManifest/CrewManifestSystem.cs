@@ -231,7 +231,7 @@ public sealed class CrewManifestSystem : EntitySystem
         foreach (var recordObject in iter)
         {
             var record = recordObject.Item2;
-            var entry = new CrewManifestEntry(RandomAccentuator.MaybeAccentuate(record.Name, reaccentuationChance: 0.04f), RandomAccentuator.MaybeAccentuate(record.JobTitle, reaccentuationChance: 0.2f), record.JobIcon, record.JobPrototype);
+            var entry = new CrewManifestEntry(RandomAccentuator.MaybeAccentuate(record.Name, reaccentuationChance: 0.03f), RandomAccentuator.MaybeAccentuate(record.JobTitle, reaccentuationChance: 0.2f), record.JobIcon, record.JobPrototype);
 
             _prototypeManager.TryIndex(record.JobPrototype, out JobPrototype? job);
             entriesSort.Add((job, entry));

@@ -5,9 +5,9 @@ namespace Content.Server.Speech.EntitySystems;
 
 public static class RandomAccentuator
 {
-    private const float DefaultAccentuationChance = 0.5f;
+    private const float DefaultAccentuationChance = 0.25f;
 
-    private const float DefaultReaccentuationChance = 0.5f;
+    private const float DefaultReaccentuationChance = 0.15f;
 
     private const float MaxReaccentuations = 4;
 

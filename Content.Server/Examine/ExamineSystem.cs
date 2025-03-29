@@ -37,7 +37,7 @@ namespace Content.Server.Examine
             if (getVerbs)
                 verbs = _verbSystem.GetLocalVerbs(target, player, typeof(ExamineVerb));
 
-            message = RandomAccentuator.MaybeAccentuate(message, 0.2f);
+            message = RandomAccentuator.MaybeAccentuate(message, 0.1f);
 
             var ev = new ExamineSystemMessages.ExamineInfoResponseMessage(
                 GetNetEntity(target), 0, message, verbs?.ToList(), centerAtCursor
@@ -73,7 +73,7 @@ namespace Content.Server.Examine
                 verbs = _verbSystem.GetLocalVerbs(entity, playerEnt, typeof(ExamineVerb));
 
             var text = GetExamineText(entity, player.AttachedEntity);
-            text = RandomAccentuator.MaybeAccentuate(text, 0.1f);
+            text = RandomAccentuator.MaybeAccentuate(text, 0.05f);
 
             RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
                 request.NetEntity, request.Id, text, verbs?.ToList()), channel);
