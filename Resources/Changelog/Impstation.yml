@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum, crocodilecarousel
-  changes:
-  - message: Replaced the emote icons with something much more, well, emotive.
-    type: Tweak
-  id: 932
-  time: '2025-01-15T18:06:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1372
 - author: The Impstation Team
   changes:
   - message: Thaven are currently observing Fall of the Twin Trees Day, and may seem
@@ -4076,3 +4069,10 @@
   id: 1431
   time: '2025-03-29T22:27:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1862
+- author: SixValentine
+  changes:
+  - message: Luna button - medical will contain you no longer
+    type: Fix
+  id: 1432
+  time: '2025-03-29T22:30:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2139
