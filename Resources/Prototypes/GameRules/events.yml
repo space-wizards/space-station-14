@@ -444,6 +444,8 @@
       - type: InitialInfected
       mindRoles:
       - MindRoleInitialInfected
+      factionsAdd: # IMP: Initial infected should be ignored by zombies.
+        - InitialInfectedIgnore
 
 - type: entity
   parent: BaseNukeopsRule

@@ -334,6 +334,8 @@
       - type: InitialInfected
       mindRoles:
       - MindRoleInitialInfected
+      factionsAdd: # IMP: Initial infected should be ignored by zombies.
+        - InitialInfectedIgnore
 
 # event schedulers
 

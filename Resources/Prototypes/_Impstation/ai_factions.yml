@@ -20,3 +20,7 @@
   id: Penguin
   hostile:
   - Dragon
+
+# Initial infected should be ignored by zombies
+- type: npcFaction
+  id: InitialInfectedIgnore

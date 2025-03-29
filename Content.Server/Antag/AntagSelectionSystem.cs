@@ -21,6 +21,7 @@ using Content.Shared.GameTicking.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
+using Content.Shared.NPC.Systems;
 using Content.Shared.Players;
 using Content.Shared.Roles;
 using Content.Shared.Whitelist;
@@ -53,6 +54,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly NpcFactionSystem _faction = default!; //#IMP
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     // arbitrary random number to give late joining some mild interest.
@@ -487,6 +489,16 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         // The following is where we apply components, equipment, and other changes to our antagonist entity.
         EntityManager.AddComponents(player, def.Components);
+
+        // IMP: Modify factions
+        foreach (var addFaction in def.FactionsAdd)
+        {
+            _faction.AddFaction(player, addFaction);
+        }
+        foreach (var removeFaction in def.FactionsRemove)
+        {
+            _faction.RemoveFaction(player, removeFaction);
+        }
 
         // Equip the entity's RoleLoadout and LoadoutGroup
         List<ProtoId<StartingGearPrototype>> gear = new();
