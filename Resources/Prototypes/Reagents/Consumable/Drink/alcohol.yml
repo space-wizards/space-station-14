@@ -766,7 +766,10 @@
   color: "#cccbc8"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/coconutrum.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:
@@ -786,7 +789,10 @@
   color: "#f73030"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/cosmopolitan.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   metabolisms:
     Drink:
       effects:
@@ -1029,7 +1035,7 @@
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: true
+  metamorphicChangeColor: false
 
 - type: reagent
   id: HippiesDelight
