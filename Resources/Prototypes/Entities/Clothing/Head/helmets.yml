@@ -74,7 +74,7 @@
 
 #Syndicate SWAT Helmet
 - type: entity
-  parent: ClothingHeadHelmetSwat
+  parent: [ ClothingHeadHelmetSwat, Tier2Contraband ] #imp; it's Syndicate gear
   id: ClothingHeadHelmetSwatSyndicate
   name: SWAT helmet
   suffix: Syndicate

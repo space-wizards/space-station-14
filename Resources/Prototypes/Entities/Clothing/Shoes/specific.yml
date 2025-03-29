@@ -156,7 +156,7 @@
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesSwat
-  name: swat shoes
+  name: SWAT shoes #imp; capitalized like SWAT helmets
   description: When you want to turn up the heat.
   components:
   - type: Sprite
