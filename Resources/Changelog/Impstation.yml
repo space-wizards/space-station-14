@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: +1 trinket slot for u :)
-    type: Add
-  id: 935
-  time: '2025-01-16T05:41:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1375
 - author: Honeyed_Lemons_, AftrLite
   changes:
   - message: Added the Courier Job, a new role that delivers packages and letters
@@ -4079,3 +4072,10 @@
   id: 1434
   time: '2025-03-29T22:44:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2135
+- author: 12rabbits
+  changes:
+  - message: Going prone no longer prevents you from dropping items when stunned.
+    type: Tweak
+  id: 1435
+  time: '2025-03-29T22:52:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2141
