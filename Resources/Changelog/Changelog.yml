@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Southbridge
-  changes:
-  - message: The BRB sign is now included in the Bureaucracy Crate
-    type: Add
-  id: 7615
-  time: '2024-11-16T03:26:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33341
 - author: SaphireLattice
   changes:
   - message: Utensils can finally go into disposals
@@ -3883,3 +3876,13 @@
   id: 8114
   time: '2025-03-29T09:35:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/25253
+- author: chromiumboy
+  changes:
+  - message: Sentry turrets can potentially be found guarding sensitive areas of the
+      station. When deployed, they will shoot unauthorized personnel on sight with
+      either stunning or lethal laser bolts. Note that only cyborgs and robots can
+      safely pass sentry turrets that protect the station AI core
+    type: Add
+  id: 8115
+  time: '2025-03-29T17:55:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35123
