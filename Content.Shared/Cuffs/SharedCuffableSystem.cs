@@ -3,11 +3,9 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
-using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Cuffs.Components;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
@@ -736,17 +734,16 @@ namespace Content.Shared.Cuffs
                 {
                     if (shoved)
                     {
-                        _popup.PopupPredicted(Loc.GetString("cuffable-component-remove-cuffs-push-success-message",
+                        _popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-push-success-message",
                             ("otherName", Identity.Name(user.Value, EntityManager, user))),
                             user.Value,
                             user.Value);
                     }
                     else
                     {
-                        _popup.PopupPredicted(Loc.GetString("cuffable-component-remove-cuffs-success-message"), user.Value, user.Value);
+                        _popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-success-message"), user.Value, user.Value);
                     }
                 }
-                    _popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-success-message"), user.Value, user.Value);
 
                 if (target != user && user != null)
                 {
