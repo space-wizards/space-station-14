@@ -125,6 +125,87 @@
             - ReagentId: Water
               Quantity: 600
 
+- type: entity
+  parent: MopBucket
+  id: MopBucketAlive
+  name: living mop bucket
+  description: A marvel of science!
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    noRot: true
+    layers:
+    - state: mopbucket_alive
+    - state: mopbucket_water-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+    drawdepth: Objects
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - CannotSuicide
+  - type: GhostRole
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-bucket-name
+    description: ghost-role-information-bucket-description
+    rules: ghost-role-information-freeagent-rules
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
+  - type: GhostTakeoverAvailable
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+    - Service
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Service
+  - type: Physics
+    bodyType: KinematicController
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Pai
+  - type: TypingIndicator
+    proto: robot
+  - type: NoSlip
+  - type: Access
+    tags:
+    - Janitor
+    - Maintenance
+  - type: MobState
+    allowedStates:
+    - Alive
+  - type: StationMap
+  - type: UserInterface
+    interfaces:
+      enum.StationMapUiKey.Key:
+        type: StationMapBoundUserInterface
+        requireInputValidation: false
+  - type: ActionGrant
+    actions:
+    - SpillAction
+
+- type: entity
+  parent: MarkerBase
+  id: MopBucketSpawner
+  name: Mop Bucket Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Specific/Janitorial/janitorial.rsi
+      state: mopbucket
+  - type: RandomSpawner
+    rarePrototypes:
+    - MopBucketAlive
+    rareChance: 0.05
+    prototypes:
+    - MopBucket
+    - MopBucket
+    - MopBucketFull
+
 # Janicart
 - type: entity
   name: janitorial trolley

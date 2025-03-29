@@ -156,6 +156,7 @@
   recipeUnlocks:
   - AdvMopItem
   - MegaSprayBottle
+  - MopBucketAlive
 
 - type: technology
   id: HONKMech
