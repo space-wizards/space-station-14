@@ -344,7 +344,7 @@
 - type: entity
   id: FakeMindShieldToggleAction
   name: '[color=green]Toggle Fake Mindshield[/color]'
-  description: Turn the Fake Mindshield implant's transmission on/off
+  description: Turn the Fake Mindshield's transmission on/off
   components:
   - type: InstantAction
     icon: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon }

@@ -21,6 +21,8 @@ using Content.Shared.Damage.Components;
 using Content.Server.Radio.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Flash.Components;
+using Content.Shared.Mindshield.Components;
+using Content.Shared.Mindshield.FakeMindShield;
 
 namespace Content.Server.Changeling;
 
@@ -63,6 +65,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         SubscribeLocalEvent<ChangelingComponent, ActionLesserFormEvent>(OnLesserForm);
         SubscribeLocalEvent<ChangelingComponent, ActionSpacesuitEvent>(OnSpacesuit);
         SubscribeLocalEvent<ChangelingComponent, ActionHivemindAccessEvent>(OnHivemindAccess);
+        SubscribeLocalEvent<ChangelingComponent, FakeMindShieldToggleEvent>(OnFakeMindShieldToggle);
     }
 
     #region Basic Abilities
@@ -642,5 +645,10 @@ public sealed partial class ChangelingSystem : EntitySystem
         _popup.PopupEntity(Loc.GetString("changeling-hivemind-start"), uid, uid);
     }
 
+
+    public void OnFakeMindShieldToggle(EntityUid uid, ChangelingComponent comp, FakeMindShieldToggleEvent toggleEvent)
+    {
+        EnsureComp<FakeMindShieldComponent>(uid);
+    }
     #endregion
 }

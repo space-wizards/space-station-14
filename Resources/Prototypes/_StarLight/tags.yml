@@ -71,3 +71,6 @@
   
 - type: Tag
   id: PatchPack
+  
+- type: Tag
+  id: Table

@@ -7,6 +7,9 @@
   - type: Sprite
     sprite: _Starlight/Objects/Weapons/Melee/boxcutter.rsi
     state: boxcutter
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Melee/boxcutter.rsi
+    storedSprite:
   - type: ItemSwitch
     state: sheathed
     states:

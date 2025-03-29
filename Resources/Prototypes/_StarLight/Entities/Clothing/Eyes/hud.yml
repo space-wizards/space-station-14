@@ -1,0 +1,63 @@
+- type: entity
+  parent: [ClothingEyesBase, BaseCommandContraband]
+  id: ClothingEyesHudBlueShield
+  name: blueshield officer's hud
+  description: A Innovative heads-up display that scans the humanoids in view and provides accurate data about their ID status, security records, and medical information.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Hud/blueshield.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Hud/blueshield.rsi
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+  - type: ShowCriminalRecordIcons
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
+  - type: Tag
+    tags:
+    - HudMedical
+  - type: EyeProtection
+    protectionTime: 5
+
+- type: entity
+  parent: [ClothingEyesBase, ShowSecurityIcons, BaseRestrictedContraband]
+  id: ClothingEyesHudBrigmedic
+  name: brigmedic hud
+  description: Tamashi-upgraded Huds. Yes. Brigmedic ones.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Hud/brigmedichud.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Hud/brigmedichud.rsi
+  - type: EyeProtection
+    protectionTime: 5
+  - type: ShowHealthBars
+  - type: Construction
+    graph: GlassesSecHUD
+    node: glassesSec
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+  - type: IdentityBlocker
+    coverage: EYES
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesHudSkills
+  name: skills hud
+  description: Visor with a built-in skills HUD, showing the employment history of nearby NT crew members.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Hud/hudskill.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Hud/hudskill.rsi
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+  - type: ShowCriminalRecordIcons
+  - type: EyeProtection
+    protectionTime: 5

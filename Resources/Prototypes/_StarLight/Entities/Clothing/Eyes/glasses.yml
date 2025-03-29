@@ -26,7 +26,7 @@
   parent: ClothingEyesBase
   id: ClothingEyesSunGlassesHudSkill
   name: skills sunglasses
-  description: Sunglusses with a build-in skills HUD, showing the employment history of nearby NT crew members.
+  description: Sunglasses with a build-in skills HUD, showing the employment history of nearby NT crew members.
   components:
   - type: Sprite
     sprite: _Starlight/Clothing/Eyes/Glasses/sunhudskill.rsi

@@ -152868,7 +152868,7 @@ entities:
     - type: Transform
       pos: -26.5,-9.5
       parent: 2
-- proto: LockerRepresentative
+- proto: LockerRepresentativeFilled
   entities:
   - uid: 1666
     components:
@@ -165370,7 +165370,6 @@ entities:
   - uid: 24768
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -36.5,-23.5
       parent: 2
 - proto: SawElectric

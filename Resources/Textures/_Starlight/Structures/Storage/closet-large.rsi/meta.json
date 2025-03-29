@@ -1,0 +1,50 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "copyright": "Original Sec locker taken from tgstation, Doublesec done by Killer Tamashi",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "welded"
+        },
+        {
+            "name": "unlocked"
+        },
+        {
+            "name": "locked"
+        },
+        {
+            "name": "sparking"
+        },
+        {
+            "name": "generic"
+        },
+        {
+            "name": "generic_door"
+        },
+        {
+            "name": "generic_open"
+        },
+        {
+            "name": "secure"
+        },
+        {
+            "name": "secure_door"
+        },
+        {
+            "name": "secure_open"
+        },
+        {
+            "name": "sec"
+        },
+        {
+            "name": "sec_door"
+        },
+        {
+            "name": "sec_open"
+        }
+    ]
+}

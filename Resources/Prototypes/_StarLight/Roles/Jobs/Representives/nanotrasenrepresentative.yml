@@ -53,7 +53,6 @@
   id: NanoTrasenRepresentativeGear
   equipment:
     shoes: ClothingShoesBootsLaceup
-    eyes: ClothingEyesSunGlassesHudSkill
     head: ClothingHeadHatCapNtrep
     id: NanoTrasenRepresentativePDA
     ears: ClothingHeadsetAltCommand

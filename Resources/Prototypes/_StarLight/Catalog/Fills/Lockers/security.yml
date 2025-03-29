@@ -7,3 +7,41 @@
     contents:
     - id: WeaponEnergySniper
       amount: 2
+
+- type: entity
+  id: LockerSecurityLargeFilled
+  suffix: Filled
+  parent: LockerSecurityLarge
+  components:
+  - type: StorageFill
+    contents:
+      - id: FlashlightSeclite
+        amount: 2
+      - id: WeaponDisabler
+        amount: 2
+      - id: ClothingUniformJumpsuitSecGrey
+        prob: 0.6
+      - id: ClothingHeadHelmetBasic
+        amount: 2
+      - id: ClothingOuterArmorBasic
+        amount: 2
+      - id: ClothingBeltSecurityFilled
+        amount: 2
+      - id: Flash
+        amount: 2
+      - id: ClothingEyesGlassesSecurity
+        amount: 2
+      - id: ClothingEyesHudSecurity
+        amount: 2
+      - id: ClothingHeadsetSecurity
+        amount: 2
+      - id: ClothingHandsGlovesSecurityRed
+        amount: 2
+      - id: ClothingShoesBootsJack
+        amount: 2
+      - id: WeaponMeleeNeedle
+        prob: 0.5
+      - id: HoloprojectorSecurity
+        amount: 2
+      - id: BookSpaceLaw
+        amount: 2

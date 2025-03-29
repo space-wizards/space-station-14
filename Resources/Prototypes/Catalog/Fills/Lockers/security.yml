@@ -10,6 +10,7 @@
       - id: ClothingBeltSecurityFilled
       - id: Flash
       - id: ClothingEyesGlassesSecurity
+      - id: ClothingEyesHudSecurity
       - id: ClothingHandsGlovesCombat
       - id: ClothingShoesBootsJack
       - id: ClothingOuterCoatWarden
@@ -37,6 +38,7 @@
       - id: ClothingBeltSecurityFilled
       - id: Flash
       - id: ClothingEyesGlassesSecurity
+      - id: ClothingEyesHudSecurity
       - id: ClothingHandsGlovesCombat
       - id: ClothingShoesBootsJack
       - id: ClothingOuterCoatWarden
@@ -69,6 +71,7 @@
       - id: Flash
         prob: 0.5
       - id: ClothingEyesGlassesSecurity
+      - id: ClothingEyesHudSecurity
       - id: ClothingHeadsetSecurity
       - id: ClothingHandsGlovesSecurityRed #Starlight
       - id: ClothingShoesBootsJack
@@ -86,7 +89,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingEyesGlassesSecurity
+      - id: ClothingEyesGlassesBrigmedic
+      - id: ClothingEyesHudBrigmedic
       - id: WeaponDisabler
       - id: TrackingImplanter
         amount: 2
@@ -123,6 +127,8 @@
   - type: StorageFill
     contents:
       - id: ClothingEyesGlassesSecurity
+        prob: 0.3
+      - id: ClothingEyesHudSecurity
         prob: 0.3
       - id: ClothingHeadHatFedoraBrown
       - id: ClothingNeckTieDet

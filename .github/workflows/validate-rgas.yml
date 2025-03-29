@@ -19,7 +19,7 @@ jobs:
       uses: space-wizards/submodule-dependency@v0.1.5
     - uses: PaulRitter/yaml-schema-validator@v1
       with:
-        schema: RobustToolbox/Schemas/rga.yml
+        schema: Tools/Schemas/rga.yml
         path_pattern: .*attributions.ya?ml$
-        validators_path: RobustToolbox/Schemas/rga_validators.py
-        validators_requirements: RobustToolbox/Schemas/rga_requirements.txt
+        validators_path: Tools/Schemas/rga_validators.py
+        validators_requirements: Tools/Schemas/rga_requirements.txt
