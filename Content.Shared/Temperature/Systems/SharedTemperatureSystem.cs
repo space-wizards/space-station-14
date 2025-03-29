@@ -25,7 +25,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
     /// <summary>
     ///     All the components that will have their damage updated at the end of the tick.
     ///     This is done because both AtmosExposed and Flammable call ChangeHeat in the same tick, meaning
-    ///     that we need some mechanism to ensure it doesn't double dip on damage for both calls.
+    ///     that we need some mechanism to ensure it doesn't double-dip on damage for both calls.
     /// </summary>
     public HashSet<Entity<TemperatureComponent>> ShouldUpdateDamage = new();
 
@@ -48,8 +48,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
         SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
-        SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(
-            OnTemperatureChangeAttempt);
+        SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(OnTemperatureChangeAttempt);
 
         SubscribeLocalEvent<InternalTemperatureComponent, MapInitEvent>(OnInit);
 
@@ -57,10 +56,8 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
 
         // Allows overriding thresholds based on the parent's thresholds.
         SubscribeLocalEvent<TemperatureComponent, EntParentChangedMessage>(OnParentChange);
-        SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentStartup>(
-            OnParentThresholdStartup);
-        SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentShutdown>(
-            OnParentThresholdShutdown);
+        SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentStartup>(OnParentThresholdStartup);
+        SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentShutdown>(OnParentThresholdShutdown);
     }
 
     public override void Update(float frameTime)
@@ -175,8 +172,9 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
             return;
 
         comp.Temperature = temp.CurrentTemperature;
+        Dirty(uid, comp);
     }
-    
+
     private void OnRejuvenate(EntityUid uid, TemperatureComponent comp, RejuvenateEvent args)
     {
         //Set internal temperature to normal body temp if there is a thermal regulator.

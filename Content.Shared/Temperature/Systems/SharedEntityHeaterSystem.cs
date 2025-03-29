@@ -54,9 +54,7 @@ public abstract class SharedEntityHeaterSystem : EntitySystem
             return;
 
         if (!Timing.IsFirstTimePredicted)
-        {
             return;
-        }
 
         var setting = (int) comp.Setting;
         setting++;
@@ -70,7 +68,7 @@ public abstract class SharedEntityHeaterSystem : EntitySystem
             {
                 ChangeSetting((uid, comp), nextSetting);
                 Popup.PopupPredicted(Loc.GetString("entity-heater-switched-setting", ("setting", nextSetting)), uid, args.User);
-            }
+            },
         });
     }
 
@@ -87,7 +85,7 @@ public abstract class SharedEntityHeaterSystem : EntitySystem
             EntityHeaterSetting.Low => max / 3f,
             EntityHeaterSetting.Medium => max * 2f / 3f,
             EntityHeaterSetting.High => max,
-            _ => 0f
+            _ => 0f,
         };
     }
 }
