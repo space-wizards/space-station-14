@@ -47,9 +47,16 @@
     - id: FoodMeat
       amount: 4
   # They wawa
+  - type: Vocal
+    sounds:
+      Male: Scurret
+      Female: Scurret
+      Unsexed: Scurret
+    wilhelmProbability: 0.125 # AUUUGH
   - type: Speech
     speechVerb: Wawa
     speechSounds: Wawa
+    allowedEmotes: ['Thump'] # They're 80% tail
   - type: TypingIndicator
     proto: moth
   - type: InteractionPopup
@@ -122,6 +129,8 @@
   - type: Food
   - type: Hunger
     baseDecayRate: 0.25 # They get a lil' hungy
+  - type: BodyEmotes # Grants them clapping and so on.
+    soundsId: GeneralBodyEmotes
   - type: Tag
     tags:
       - CanPilot # Inexplicably, scurrets have a natural aptitude for spaceflight
@@ -262,3 +271,41 @@
   parent: [MobScurret, MobBaseEmotionalSupportScurret]
   abstract: true
   description: Commonly known as Wawas, from the wetlands of Planet Wawa, these critters make up the bulk of Arnolds's Pizza's "loyal workforce". This one is here as a temp whilst the station's pets are on a no-expenses-paid holiday to a farm upstate.
+
+- type: emoteSounds
+  id: Scurret
+  params:
+    variation: 0.125
+  sounds:
+    Laugh:
+      collection: WawaLaugh
+    Sneeze:
+      collection: WawaSneeze
+    Cough:
+      collection: MaleCoughs
+    Whistle:
+      collection: Whistles
+    Sigh:
+      collection: WawaSigh
+    Scream:
+      collection: WawaScream
+
+- type: soundCollection
+  id: WawaLaugh
+  files:
+  - /Audio/Animals/wawa_mock.ogg
+
+- type: soundCollection
+  id: WawaSneeze
+  files:
+  - /Audio/Animals/wawa_achoo.ogg
+
+- type: soundCollection
+  id: WawaSigh
+  files:
+  - /Audio/Animals/wawa_depression.ogg
+
+- type: soundCollection
+  id: WawaScream
+  files:
+  - /Audio/Animals/wawa_protest.ogg
