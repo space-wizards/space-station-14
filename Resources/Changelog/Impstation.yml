@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5
-  changes:
-  - message: The prestige clown gear is now available in a few more job loadouts.
-    type: Tweak
-  id: 925
-  time: '2025-01-14T23:39:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1336
 - author: Kandiyaki
   changes:
   - message: heretic store listings will now show their associated knowledge level
@@ -4076,3 +4069,14 @@
   id: 1424
   time: '2025-03-28T22:35:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2121
+- author: Mousetrinity
+  changes:
+  - message: The monochrome cloak! It functions the same as the kaiju cloak, but you
+      should be shamed for buying this one.
+    type: Add
+  - message: The monochrome cloak will now be provided to fugitives. Chances of moths,
+      thaven and lizards escaping officers have increased!
+    type: Tweak
+  id: 1425
+  time: '2025-03-29T12:44:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2108
