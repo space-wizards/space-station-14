@@ -35,7 +35,8 @@ public sealed class RotateEyesCommand : IConsoleCommand
                 continue;
 
             mover.TargetRelativeRotation = rotation;
-            entManager.Dirty(mover);
+
+            entManager.Dirty(mover.Owner, mover);
             count++;
         }
 
