@@ -243,7 +243,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     private void OnNukeDisarm(NukeDisarmSuccessEvent ev)
     {
-        CheckRoundShouldEnd();
+        // Do not end the round if the bomb was armed (and disarmed) as part of the nuke calibration event
+        if(ev.CheckRoundShouldEnd)
+            CheckRoundShouldEnd();
     }
 
     private void OnComponentRemove(EntityUid uid, NukeOperativeComponent component, ComponentRemove args)
@@ -419,9 +421,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         foreach (var nuke in EntityQuery<NukeComponent>())
         {
             if (nuke.Status == NukeStatus.ARMED)
-                return;
-            // If we're bypassing the requirement for a nuke disk in order to arm/disarm the nuke, don't end the round. This makes sure that disarming the nuke doesn't end the round after a nuke calibration.
-            else if (nuke.DiskBypassEnabled)
                 return;
         }
 
