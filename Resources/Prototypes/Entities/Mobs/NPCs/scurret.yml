@@ -7,6 +7,7 @@
   parent: MobBaseAncestor
   abstract: true
   components:
+  - type: GeneralScurretMayhem
   # Custom names
   - type: ReplacementAccent
     accent: scurret
@@ -133,6 +134,8 @@
     soundsId: GeneralBodyEmotes
   - type: Tag
     tags:
+      - DoorBumpOpener
+      - FootstepSound
       - CanPilot # Inexplicably, scurrets have a natural aptitude for spaceflight
 
 - type: inventoryTemplate
@@ -314,3 +317,27 @@
   - /Audio/Animals/wawa_protest.ogg
   - /Audio/Animals/wawa_protest.ogg
   - /Audio/Animals/wawa_protest.ogg
+  - /Audio/Animals/wawa_protest.ogg
+  - /Audio/Voice/Human/wilhelm_scream.ogg # Enforce a 1/8 chance
+
+- type: entity
+  id: TraitorWawa
+  parent: BaseTraitorRule
+  components:
+  - type: TraitorRule
+    giveUplink: true
+    giveCodewords: false
+    giveBriefing: true
+    greetSoundNotification: "/Audio/Ambience/Antag/traitor_wawa.ogg" # W.A.W.A.W.A
+    objectiveIssuers: WawaResistance
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      mindRoles:
+      - MindRoleTraitor
+
+- type: localizedDataset
+  id: WawaResistance
+  values:
+    prefix: wawa-resistance-dataset-
+    count: 3
