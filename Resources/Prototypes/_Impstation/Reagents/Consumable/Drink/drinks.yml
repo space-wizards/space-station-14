@@ -78,12 +78,13 @@
   desc: reagent-desc-feverdream
   physicalDesc: reagent-physical-desc-shimmering-blood
   flavor: feverdream
+  color: "#DD793E"
+  metamorphicChangeColor: false
   metamorphicSprite:
     sprite: _Impstation/Objects/Consumable/Drinks/feverdream.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 6
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: true
   metabolisms:
     Drink:
       effects:

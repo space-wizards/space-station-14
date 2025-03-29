@@ -61,5 +61,5 @@
         conditions:
         - !type:OrganType
           type: Moth
-          shouldHave: false   
+          shouldHave: false
   fizziness: 0.2

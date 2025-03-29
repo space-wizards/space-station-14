@@ -410,10 +410,10 @@
     - Stir
   reactants:
     ShimmeringBlood:
-      amount: 3
+      amount: 2
     DeathInTheAfternoon:
       amount: 2
     Egg:
       amount: 1
   products:
-    FeverDream: 6
+    FeverDream: 5
