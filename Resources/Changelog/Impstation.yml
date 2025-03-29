@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Medkit inhands now use the correct(new) sprites!
-    type: Fix
-  id: 927
-  time: '2025-01-14T23:41:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1365
 - author: mqole
   changes:
   - message: Increased the time required to play certain command roles.
@@ -4074,3 +4067,14 @@
   id: 1426
   time: '2025-03-29T12:46:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2134
+- author: pikay, sha-seng
+  changes:
+  - message: Senior cargo jumpsuit and belt added (made by Pikay!)
+    type: Add
+  - message: Long pants version of the cargo tech uniform in loadout and vendor
+    type: Add
+  - message: Cargo bomber is more yellow now so people know you're not the QM
+    type: Tweak
+  id: 1427
+  time: '2025-03-29T12:56:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2105
