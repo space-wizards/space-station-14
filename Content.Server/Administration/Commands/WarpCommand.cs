@@ -122,7 +122,7 @@ namespace Content.Server.Administration.Commands
 
                 var xform = _entManager.GetComponent<TransformComponent>(playerEntity);
                 var xformSystem = _entManager.System<SharedTransformSystem>();
-                xform.Coordinates = coords;
+                xformSystem.SetCoordinates(playerEntity, coords);
                 xformSystem.AttachToGridOrMap(playerEntity, xform);
                 if (_entManager.TryGetComponent(playerEntity, out PhysicsComponent? physics))
                 {

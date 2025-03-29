@@ -14,6 +14,7 @@ using System.Numerics;
 using Content.Shared.FixedPoint;
 using Robust.Client.Graphics;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Chemistry.UI
 {
@@ -24,6 +25,7 @@ namespace Content.Client.Chemistry.UI
     public sealed partial class ChemMasterWindow : FancyWindow
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SpriteSystem _spriteSystem = default!;
         public event Action<BaseButton.ButtonEventArgs, ReagentButton>? OnReagentButtonPressed;
         public readonly Button[] PillTypeButtons;
 
@@ -69,7 +71,7 @@ namespace Content.Client.Chemistry.UI
                 var specifier = new SpriteSpecifier.Rsi(resourcePath, "pill" + (i + 1));
                 TextureRect pillTypeTexture = new TextureRect
                 {
-                    Texture = specifier.Frame0(),
+                    Texture = _spriteSystem.Frame0(specifier),
                     TextureScale = new Vector2(1.75f, 1.75f),
                     Stretch = TextureRect.StretchMode.KeepCentered,
                 };

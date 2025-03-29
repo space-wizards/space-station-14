@@ -1,4 +1,4 @@
-﻿using Content.Shared.Construction;
+using Content.Shared.Construction;
 using JetBrains.Annotations;
 
 namespace Content.Server.Construction.Completions
@@ -12,7 +12,13 @@ namespace Content.Server.Construction.Completions
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
             var transform = entityManager.GetComponent<TransformComponent>(uid);
-            transform.Anchored = Value;
+            var transformSystem = entityManager.System<SharedTransformSystem>();
+            if (Value)
+            {
+                transformSystem.AnchorEntity(uid, transform);
+                return;
+            }
+            transformSystem.Unanchor(uid, transform);
         }
     }
 }
