@@ -124,9 +124,17 @@ public sealed partial class StationAiVisualizerSystem : VisualizerSystem<Station
         switch (targetState)
         {
             case StationAiState.Empty:
+                sprite.LayerSetVisible(StationAiVisualLayers.Core, true);
+                sprite.LayerSetVisible(StationAiVisualLayers.Screen, true);
+                sprite.LayerSetVisible(StationAiVisualLayers.CoreStanding, false);
+                sprite.LayerSetVisible(StationAiVisualLayers.ScreenStanding, false);
                 sprite.LayerSetState(StationAiVisualLayers.Screen, new RSI.StateId("ai_empty"));
                 break;
             case StationAiState.Occupied:
+                sprite.LayerSetVisible(StationAiVisualLayers.Core, true);
+                sprite.LayerSetVisible(StationAiVisualLayers.Screen, true);
+                sprite.LayerSetVisible(StationAiVisualLayers.CoreStanding, false);
+                sprite.LayerSetVisible(StationAiVisualLayers.ScreenStanding, false);
                 sprite.LayerSetState(StationAiVisualLayers.Screen, new RSI.StateId("ai"));
                 break;
             case StationAiState.Dead:
@@ -151,6 +159,10 @@ public sealed partial class StationAiVisualizerSystem : VisualizerSystem<Station
                 AnimationSystem.Play((uid, animPlayer), CoreDownAnimation, StationAiCoreComponent.AnimationKey);
                 break;
             case StationAiState.Standing:
+                sprite.LayerSetVisible(StationAiVisualLayers.Core, false);
+                sprite.LayerSetVisible(StationAiVisualLayers.Screen, false);
+                sprite.LayerSetVisible(StationAiVisualLayers.CoreStanding, true);
+                sprite.LayerSetVisible(StationAiVisualLayers.ScreenStanding, true);
                 sprite.LayerSetState(StationAiVisualLayers.CoreStanding, new RSI.StateId("base_high"));
                 sprite.LayerSetState(StationAiVisualLayers.ScreenStanding, new RSI.StateId("ai_high"));
                 break;
