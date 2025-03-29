@@ -48,17 +48,6 @@ public sealed class GithubApiManager : IPostInjectInit
 
     private const string BaseUri = "https://api.github.com/";
 
-    /// <see href="https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28#pause-between-mutative-requests"/>
-    private const long DefaultDelayTime = 1L;
-
-    /// Extra buffer time (In seconds) after getting rate limited we don't make the request exactly when we get more credits.
-    private const long ExtraBufferTime = 1L;
-
-    /// <see href="https://en.wikipedia.org/w/index.php?title=Exponential_backoff&amp;oldid=1281333304"/>
-    private const double ExponentialBackoffB = 1.5;
-    /// <inheritdoc cref="ExponentialBackoffB"/>
-    private long _exponentialBackoffC;
-
     #region CCvar values
 
     private bool _enabled;
@@ -73,10 +62,11 @@ public sealed class GithubApiManager : IPostInjectInit
     private int _initializationAttempts;
     private bool _apiInitialized;
 
-    // This assumes all requests use the same "Core" resource. If more methods are added, this will need to be updated to be more robust.
-    private long _remainingRequests;
-
     private readonly ConcurrentQueue<GithubQueueEntry> _queue = new();
+
+    // private DateTime? _nextApiCall = null;
+
+    private readonly GithubRateLimiter _rateLimiter = new();
 
     public void Initialize()
     {
@@ -87,7 +77,7 @@ public sealed class GithubApiManager : IPostInjectInit
         _cfg.OnValueChanged(CCVars.GithubMaxRetries, val => _maxRetries = val, true);
         _cfg.OnValueChanged(CCVars.GithubRequestBuffer, val => _requestBuffer = val, true);
 
-        HandleQueue();
+        // _nextApiCall = DateTime.UtcNow.AddSeconds(DefaultDelayTime);
     }
 
     #region Public functions
@@ -143,83 +133,64 @@ public sealed class GithubApiManager : IPostInjectInit
 
         // Update rate limit
         if (TryGetLongHeader(response.Headers, "x-ratelimit-remaining", out var remainingRequests))
-            _remainingRequests = remainingRequests;
+            _rateLimiter.UpdateRequests(remainingRequests);
 
         _sawmill.Info($"Made a github api request to: {BaseUri+request.GetLocation(_owner, _repository)}");
 
         return (true, response);
     }
 
-    /// <summary>
-    ///     A simple helper function that just tries to a header value that is a long.
-    ///     In general, there are just a lot of single value headers that are longs so this removes a lot of duplicate code.
-    /// </summary>
-    /// <param name="headers">The headers that you want to search.</param>
-    /// <param name="header">The header you want to get the long value for.</param>
-    /// <param name="value">The output from the header, if unsuccessfully found or didn't parse correctly will be 0.</param>
-    /// <returns>True if the header was found and was parsed correctly, false if not.</returns>
-    public bool TryGetLongHeader(HttpResponseHeaders? headers, string header, out long value)
-    {
-        value = 0;
-
-        if (headers == null)
-            return false;
-
-        if (!headers.TryGetValues(header, out var headerValues))
-            return false;
-
-        return long.TryParse(headerValues.First(), out value);
-    }
-
     # endregion
+
+    public void Update()
+    {
+        if (!ApiEnabled() || _initializationAttempts >= _maxRetries)
+            return;
+
+        var rateLimitLease = _rateLimiter.Acquire();
+
+        if (!rateLimitLease)
+            return;
+
+        if (!_apiInitialized)
+        {
+            TryInitializeApi();
+            return;
+        }
+
+        HandleQueue();
+    }
 
     /// <summary>
     ///     This deals with handling the queue of requests!
     /// </summary>
     private async void HandleQueue()
     {
-        while (true)
+        try
         {
-            try
+            if (!_queue.TryDequeue(out var entry))
             {
-                // Even if it's not enabled, still keep the queue waiting so it can start going if it turns on.
-                if (!ApiEnabled())
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(DefaultDelayTime));
-                    continue;
-                }
-
-                await TryInitializeApi();
-
-                if (_initializationAttempts >= _maxRetries)
-                {
-                    _sawmill.Error("Github API could not be initialized.");
-                    return;
-                }
-
-                if (_apiInitialized && _queue.TryDequeue(out var entry))
-                {
-                    var request = await TryMakeRequest(entry.Request);
-
-                    if (request.Item1 && !IsValidResponse(request.Item2, entry.Request.GetExpectedResponseCodes()))
-                    {
-                        entry.Failures++;
-
-                        // Don't bother putting it back if you failed too many times.
-                        if (entry.Failures < _maxRetries)
-                            _queue.Enqueue(entry);
-                    }
-
-                    await Task.Delay(CalculateNextRequestTime(request.Item2, entry.Request.GetExpectedResponseCodes()));
-                }
-
-                await Task.Delay(TimeSpan.FromSeconds(DefaultDelayTime));
-            }
-            catch (Exception e)
-            {
-                _sawmill.Error($"Github API exception: {e.Message}");
+                _rateLimiter.Release();
                 return;
             }
+
+            var request = await TryMakeRequest(entry.Request);
+
+            if (!IsValidResponse(request.Item2, entry.Request.GetExpectedResponseCodes()))
+            {
+                entry.Failures++;
+
+                // Don't bother putting it back if you failed too many times.
+                if (entry.Failures < _maxRetries)
+                    _queue.Enqueue(entry);
+            }
+
+            _rateLimiter.ReleaseWithResponse(request.Item2, entry.Request.GetExpectedResponseCodes());
+        }
+        catch (Exception e)
+        {
+            _sawmill.Error($"Github API exception: {e.Message}");
+            _rateLimiter.ReleaseNoResponse();
         }
     }
 
@@ -229,13 +200,10 @@ public sealed class GithubApiManager : IPostInjectInit
     ///     This will try to initialize the api! This really just means ensuring you aren't currently rate limited.
     ///     Will instantly return and do nothing if the api is already initialized.
     /// </summary>
-    private async Task TryInitializeApi()
+    private async void TryInitializeApi()
     {
         try
         {
-            if (_apiInitialized || !ApiEnabled())
-                return;
-
             var rateLimitRequest = new GetRateLimit();
             var request = await TryMakeRequest(rateLimitRequest);
             var response = request.Item2;
@@ -248,22 +216,26 @@ public sealed class GithubApiManager : IPostInjectInit
             if (!IsValidResponse(response, rateLimitRequest.GetExpectedResponseCodes()) || rateLimitRespJson == null)
             {
                 _initializationAttempts++;
+                _rateLimiter.ReleaseNoResponse();
                 return;
             }
 
-            _remainingRequests = rateLimitRespJson.Resources.Core.Remaining;
+            var remainingRequests = rateLimitRespJson.Resources.Core.Remaining;
+
+            _rateLimiter.UpdateRequests(remainingRequests);
             _apiInitialized = true;
 
-            _sawmill.Info($"Github api initialized with {_remainingRequests} requests");
-
-            await Task.Delay(CalculateNextRequestTime(response, rateLimitRequest.GetExpectedResponseCodes()));
+            _sawmill.Info($"Github api initialized with {remainingRequests} requests");
 
             // TODO: Probably a good idea to also check if your using the most up to date api version:
             // https://docs.github.com/en/rest/meta/meta?apiVersion=2022-11-28#get-all-api-versions
+
+            _rateLimiter.ReleaseWithResponse(response, rateLimitRequest.GetExpectedResponseCodes());
         }
         catch (Exception e)
         {
             _sawmill.Error($"Github API initialization exception: {e.Message}");
+            _rateLimiter.ReleaseNoResponse();
         }
     }
 
@@ -307,62 +279,32 @@ public sealed class GithubApiManager : IPostInjectInit
         return false;
     }
 
-    /// <summary>
-    ///     Follows these guidelines but also has a small so you should never quite hit zero:
-    ///     <br/>
-    ///     <see href="https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api?apiVersion=2022-11-28#handle-rate-limit-errors-appropriately"/>
-    /// </summary>
-    /// <param name="response">The last response from the API</param>
-    /// <param name="expectedStatusCodes">Expected status codes - will return true if the response code is one of these.</param>
-    /// <returns>The amount of time to wait until the next request</returns>
-    private TimeSpan CalculateNextRequestTime(HttpResponseMessage response, List<HttpStatusCode> expectedStatusCodes)
-    {
-        var headers = response.Headers;
-        var statusCode = response.StatusCode;
-
-        if (_remainingRequests > _requestBuffer)
-        {
-            // If the code matches one of the expected codes, just return the standard wait time.
-            foreach (var code in expectedStatusCodes)
-            {
-                if (statusCode == code)
-                    return TimeSpan.FromSeconds(DefaultDelayTime);
-            }
-        }
-
-        // Specific checks for rate limits.
-        if (_remainingRequests <= _requestBuffer || statusCode == HttpStatusCode.Forbidden || statusCode == HttpStatusCode.TooManyRequests)
-        {
-            // Retry after header
-            if (TryGetLongHeader(headers, "retry-after", out var retryAfterSeconds))
-            {
-                return TimeSpan.FromSeconds(retryAfterSeconds + ExtraBufferTime);
-            }
-
-            // Reset header (Tells us when we get more api credits)
-            if (TryGetLongHeader(headers, "x-ratelimit-remaining", out var remainingRequests) &&
-                TryGetLongHeader(headers, "x-ratelimit-reset", out var resetTime))
-            {
-                // If it's not zero, something is wrong so just do an exponential backoff.
-                if (remainingRequests == 0)
-                {
-                    var delayTime = resetTime - DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-                    return TimeSpan.FromSeconds(delayTime + ExtraBufferTime);
-                }
-            }
-
-            _sawmill.Warning("Github api is potentially being rate limited.");
-        }
-
-        // If the status code is not the expected one or the rate limit checks are failing, just do an exponential backoff.
-        return TimeSpan.FromSeconds(60 * Math.Pow(ExponentialBackoffB, _exponentialBackoffC++));
-    }
-
     #endregion
 
     public void PostInject()
     {
         _sawmill = _log.GetSawmill("GITHUB");
+    }
+
+    /// <summary>
+    ///     A simple helper function that just tries to a header value that is a long.
+    ///     In general, there are just a lot of single value headers that are longs so this removes a lot of duplicate code.
+    /// </summary>
+    /// <param name="headers">The headers that you want to search.</param>
+    /// <param name="header">The header you want to get the long value for.</param>
+    /// <param name="value">The output from the header, if unsuccessfully found or didn't parse correctly will be 0.</param>
+    /// <returns>True if the header was found and was parsed correctly, false if not.</returns>
+    public static bool TryGetLongHeader(HttpResponseHeaders? headers, string header, out long value)
+    {
+        value = 0;
+
+        if (headers == null)
+            return false;
+
+        if (!headers.TryGetValues(header, out var headerValues))
+            return false;
+
+        return long.TryParse(headerValues.First(), out value);
     }
 }
 

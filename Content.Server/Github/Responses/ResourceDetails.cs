@@ -6,13 +6,13 @@ namespace Content.Server.Github.Responses;
 public sealed class ResourceDetails
 {
     [JsonPropertyName("limit")]
-    public int Limit { get; set; }
+    public long Limit { get; set; }
     [JsonPropertyName("used")]
-    public int Used { get; set; }
+    public long Used { get; set; }
     [JsonPropertyName("remaining")]
-    public int Remaining { get; set; }
+    public long Remaining { get; set; }
     [JsonPropertyName("reset")]
-    public int Reset { get; set; }
+    public long Reset { get; set; }
 }
 
 /// <inheritdoc cref="RateLimitResponse"/>
