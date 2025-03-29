@@ -47,11 +47,60 @@ public sealed partial class CCVars
     /// If true, the admin overlay will display the total time of the players
     /// </summary>
     public static readonly CVarDef<bool> AdminOverlayPlaytime =
-        CVarDef.Create("ui.admin_overlay_playtime", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("ui.admin_overlay_playtime", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
     /// If true, the admin overlay will display the players starting position.
     /// </summary>
     public static readonly CVarDef<bool> AdminOverlayStartingJob =
-        CVarDef.Create("ui.admin_overlay_starting_job", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("ui.admin_overlay_starting_job", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// If true, the admin window player tab will show different antag symbols for each role type
+    /// </summary>
+    public static readonly CVarDef<bool> AdminPlayerlistSeparateSymbols =
+        CVarDef.Create("ui.admin_playerlist_separate_symbols", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// If true, characters with antag role types will have their names colored by their role type
+    /// </summary>
+    public static readonly CVarDef<bool> AdminPlayerlistHighlightedCharacterColor =
+        CVarDef.Create("ui.admin_playerlist_highlighted_character_color", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// If true, the Role Types column will be colored
+    /// </summary>
+    public static readonly CVarDef<bool> AdminPlayerlistRoleTypeColor =
+        CVarDef.Create("ui.admin_playerlist_role_type_color", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// If true, the admin overlay will show antag symbols
+    /// </summary>
+    public static readonly CVarDef<bool> AdminOverlaySymbols =
+        CVarDef.Create("ui.admin_overlay_symbols", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// The range (in tiles) around the cursor within which the admin overlays of ghosts start to fade out
+    /// </summary>
+    public static readonly CVarDef<int> AdminOverlayGhostFadeDistance =
+        CVarDef.Create("ui.admin_overlay_ghost_fade_distance", 6, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// The range (in tiles) around the cursor within which the admin overlays of ghosts disappear
+    /// </summary>
+    public static readonly CVarDef<int> AdminOverlayGhostHideDistance =
+        CVarDef.Create("ui.admin_overlay_ghost_hide_distance", 2, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// The maximum range (in tiles) at which admin overlay entries still merge to form a stack
+    /// Recommended to keep under 1, otherwise the overlays of people sitting next to each other will stack
+    /// </summary>
+    public static readonly CVarDef<float> AdminOverlayMergeDistance =
+        CVarDef.Create("ui.admin_overlay_merge_distance", 0.33f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    /// The maximum size that an overlay stack can reach. Additional overlays will be superimposed over the last one.
+    /// </summary>
+    public static readonly CVarDef<int> AdminOverlayStackMax =
+        CVarDef.Create("ui.admin_overlay_stack_max", 3, CVar.CLIENTONLY | CVar.ARCHIVE);
 }

@@ -412,7 +412,7 @@ namespace Content.Server.NPC.Pathfinding
                 return null;
 
             var chunkPos = new Vector2(MathHelper.Mod(localPos.X, ChunkSize), MathHelper.Mod(localPos.Y, ChunkSize));
-            var polys = chunk.Polygons[(int) chunkPos.X * ChunkSize + (int) chunkPos.Y];
+            var polys = chunk.Polygons[(int)chunkPos.X * ChunkSize + (int)chunkPos.Y];
 
             foreach (var poly in polys)
             {
