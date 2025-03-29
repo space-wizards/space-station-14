@@ -862,7 +862,7 @@
         - ReagentId: Vitamin
           Quantity: 3
 
-- type: entity         
+- type: entity
   name: cotton grilled cheese sandwich
   parent: FoodBakedBase
   id: FoodBakedGrilledCheeseSandwichCotton
