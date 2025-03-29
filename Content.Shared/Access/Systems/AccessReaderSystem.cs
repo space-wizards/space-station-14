@@ -35,7 +35,6 @@ public sealed class AccessReaderSystem : EntitySystem
 
         SubscribeLocalEvent<AccessReaderComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<AccessReaderComponent, LinkAttemptEvent>(OnLinkAttempt);
-        SubscribeLocalEvent<AccessReaderComponent, AccessAttemptedEvent>(OnAccessAttempted);
 
         SubscribeLocalEvent<AccessReaderComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<AccessReaderComponent, ComponentHandleState>(OnHandleState);
@@ -95,15 +94,6 @@ public sealed class AccessReaderSystem : EntitySystem
         accessReader.Value.Comp.AccessLists.Clear();
         accessReader.Value.Comp.AccessLog.Clear();
         Dirty(uid, reader);
-    }
-
-    private void OnAccessAttempted(Entity<AccessReaderComponent> ent, ref AccessAttemptedEvent args)
-    {
-        if (args.User == null)
-            return;
-
-        if (!IsAllowed(args.User.Value, ent, ent.Comp))
-            args.Cancel();
     }
 
     /// <summary>

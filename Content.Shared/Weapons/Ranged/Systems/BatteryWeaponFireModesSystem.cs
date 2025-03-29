@@ -53,10 +53,7 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         if (component.FireModes.Count < 2)
             return;
 
-        var ev = new AccessAttemptedEvent(args.User);
-        RaiseLocalEvent(uid, ref ev);
-
-        if (ev.Cancelled)
+        if (!_accessReaderSystem.IsAllowed(args.User, uid))
             return;
 
         for (var i = 0; i < component.FireModes.Count; i++)
@@ -71,7 +68,7 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
                 Category = VerbCategory.SelectType,
                 Text = entProto.Name,
                 Disabled = i == component.CurrentFireMode,
-                Impact = LogImpact.Low,
+                Impact = LogImpact.Medium,
                 DoContactInteraction = true,
                 Act = () =>
                 {
@@ -102,10 +99,7 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         if (index < 0 || index >= component.FireModes.Count)
             return false;
 
-        var ev = new AccessAttemptedEvent(user);
-        RaiseLocalEvent(uid, ref ev);
-
-        if (ev.Cancelled)
+        if (user != null && !_accessReaderSystem.IsAllowed(user.Value, uid))
             return false;
 
         SetFireMode(uid, component, index, user);
