@@ -14,10 +14,12 @@ public sealed partial class PoorlyAttachedComponent : Component
     public float EventStrengthTotal;
 
     [DataField]
-    public float LossPerSecond = 0.01f;
+    public TimeSpan PassiveDetachDuration = TimeSpan.FromMinutes(20);
+
+    public float LossPerSecond => 1f / PassiveDetachDuration.Seconds;
 
     [DataField]
-    public float LossPerFall = 0.5f;
+    public float LossPerFall = 0.2f;
 
     [DataField]
     public LocId DetachPopup = "poorly-attached-detach-popup";

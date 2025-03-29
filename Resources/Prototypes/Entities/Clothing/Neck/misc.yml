@@ -93,6 +93,8 @@
   - type: Item
     size: Tiny
   - type: PoorlyAttached
+    passiveDetachDuration: 600
+    lossPerFall: 0.5
   - type: Tag
     tags:
     - Trash
