@@ -143,6 +143,7 @@ public sealed partial class PlayerTab : Control
         var entry = new PlayerTabEntry(player, new StyleBoxFlat(button.Index % 2 == 0 ? _altColor : _defaultColor));
         button.AddChild(entry);
         button.ToolTip = $"{player.Username}, {player.CharacterName}, {player.IdentityName}, {player.StartingJob}";
+        button.StyleClasses.Clear();
     }
 
     /// <summary>
