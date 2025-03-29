@@ -38,6 +38,11 @@ public sealed class RespiratorSystem : EntitySystem
 
     private static readonly ProtoId<MetabolismGroupPrototype> GasId = new("Gas");
 
+    // High/Low temp alerts
+    private static readonly ProtoId<AlertPrototype> HighTempAlertId = new("AirHot");
+    private static readonly ProtoId<AlertPrototype> LowTempAlertId = new("AirCold");
+    private static readonly ProtoId<AlertCategoryPrototype> TempAlertCategory = new("AirTemperature");
+
     public override void Initialize()
     {
         base.Initialize();
@@ -142,9 +147,12 @@ public sealed class RespiratorSystem : EntitySystem
             var scaledDamage = ent.Comp1.HighTemperatureDamage * scaleFactor;
             _damageableSys.TryChangeDamage(ent, scaledDamage, true);
 
+            // Show the alert for the player
+            _alertsSystem.ShowAlert(ent, HighTempAlertId);
+
             // Log damage for admins
             _adminLogger.Add(LogType.Temperature,
-                $"{ToPrettyString(ent):entity} took {scaledDamage} breathing damage from {gasTemp:F1}K gas");
+                $"{ToPrettyString(ent):entity} took {scaledDamage.GetTotal():damage} breathing damage from {gasTemp:F1}K gas");
         }
         // Handle low temperature damage
         else if (gasTemp < ent.Comp1.LowTemperatureDamageThreshold)
@@ -159,9 +167,17 @@ public sealed class RespiratorSystem : EntitySystem
             var scaledDamage = ent.Comp1.LowTemperatureDamage * scaleFactor;
             _damageableSys.TryChangeDamage(ent, scaledDamage, true);
 
+            // Show the alert for the player
+            _alertsSystem.ShowAlert(ent, LowTempAlertId);
+
             // Log damage for admins
             _adminLogger.Add(LogType.Temperature,
-                $"{ToPrettyString(ent):entity} took {scaledDamage} breathing damage from {gasTemp:F1}K gas");
+                $"{ToPrettyString(ent):entity} took {scaledDamage.GetTotal():damage} breathing damage from {gasTemp:F1}K gas");
+        }
+        else
+        {
+            // Not taking damage, clear the alerts
+            _alertsSystem.ClearAlertCategory(ent, TempAlertCategory);
         }
 
         var actualGas = ev.Gas.RemoveVolume(Atmospherics.BreathVolume);

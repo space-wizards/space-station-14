@@ -122,6 +122,24 @@
   description: alerts-too-hot-desc
 
 - type: alert
+  id: AirHot
+  category: AirTemperature
+  icons:
+  - sprite: /Textures/Interface/Alerts/temperature.rsi # TODO custom sprites
+    state: hot2
+  name: alerts-air-too-hot-name
+  description: alerts-air-too-hot-desc
+
+- type: alert
+  id: AirCold
+  category: AirTemperature
+  icons:
+  - sprite: /Textures/Interface/Alerts/temperature.rsi # TODO custom sprites
+    state: cold2
+  name: alerts-air-too-cold-name
+  description: alerts-air-too-cold-desc
+
+- type: alert
   id: Weightless
   icons: [ /Textures/Interface/Alerts/Weightless/weightless.png ]
   name: alerts-weightless-name

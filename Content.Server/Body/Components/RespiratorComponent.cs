@@ -30,28 +30,28 @@ namespace Content.Server.Body.Components
         public float Saturation = 5.0f;
 
         /// <summary>
-        /// <see cref="DamageSpecifier"/> of damage taken when breathing in gas at a high temperature.
+        ///     <see cref="DamageSpecifier" /> of damage taken when breathing in gas at a high temperature.
         /// </summary>
-        [DataField]
+        [DataField(required: true)]
         public DamageSpecifier HighTemperatureDamage = default!;
 
         /// <summary>
-        /// <see cref="DamageSpecifier"/> of damage taken when breathing in gas at a low temperature.
+        ///     <see cref="DamageSpecifier" /> of damage taken when breathing in gas at a low temperature.
         /// </summary>
-        [DataField]
+        [DataField(required: true)]
         public DamageSpecifier LowTemperatureDamage = default!;
 
         /// <summary>
         ///     The maximum temperature of gas the entity can breathe before it starts taking damage.
         /// </summary>
         [DataField]
-        public float HighTemperatureDamageThreshold = 253.15f; // -20C
+        public float HighTemperatureDamageThreshold = 333.15f; // 60C
 
         /// <summary>
         ///     The minimum temperature of gas the entity can breathe before it starts taking damage.
         /// </summary>
         [DataField]
-        public float LowTemperatureDamageThreshold = 333.15f; // 60C
+        public float LowTemperatureDamageThreshold = 253.15f; // -20C
 
         /// <summary>
         ///     At what level of saturation will you begin to suffocate?
