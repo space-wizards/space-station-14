@@ -57,9 +57,12 @@ public sealed partial class GhostComponent : Component
         get => _canGhostInteract;
         set
         {
+            // Is the set even used?
             if (_canGhostInteract == value) return;
             _canGhostInteract = value;
-            Dirty();
+
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            entityManager.Dirty(Owner, this);
         }
     }
 
@@ -78,7 +81,6 @@ public sealed partial class GhostComponent : Component
         {
             if (_canReturnToBody == value) return;
             _canReturnToBody = value;
-            Dirty();
         }
     }
 
