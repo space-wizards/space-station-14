@@ -52,7 +52,7 @@
       Male: Scurret
       Female: Scurret
       Unsexed: Scurret
-    wilhelmProbability: 0.125 # AUUUGH
+    wilhelmProbability: 0.125 # the scug, it screams like a man
   - type: Speech
     speechVerb: Wawa
     speechSounds: Wawa
@@ -308,4 +308,9 @@
 - type: soundCollection
   id: WawaScream
   files:
+  - /Audio/Animals/wawa_protest.ogg
+  - /Audio/Animals/wawa_protest.ogg
+  - /Audio/Animals/wawa_protest.ogg
+  - /Audio/Animals/wawa_protest.ogg
+  - /Audio/Animals/wawa_protest.ogg
   - /Audio/Animals/wawa_protest.ogg
