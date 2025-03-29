@@ -1,8 +1,7 @@
-﻿using Content.Shared.Atmos;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Localizations;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
@@ -35,7 +34,7 @@ public sealed class GasPressurePumpBoundUserInterface : BoundUserInterface
         Update();
     }
 
-    public void Update()
+    public override void Update()
     {
         if (_window == null)
             return;
