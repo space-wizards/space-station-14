@@ -4,6 +4,7 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
+using Content.Shared.Power;
 
 namespace Content.Shared.Temperature.Systems;
 
@@ -26,6 +27,17 @@ public abstract class SharedEntityHeaterSystem : EntitySystem
 
         SubscribeLocalEvent<EntityHeaterComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<EntityHeaterComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<EntityHeaterComponent, PowerChangedEvent>(OnPowerChanged);
+    }
+
+    private void OnPowerChanged(EntityUid uid, EntityHeaterComponent comp, ref PowerChangedEvent args)
+    {
+        // disable heating element glowing layer if theres no power
+        // doesn't actually turn it off since that would be annoying
+        var setting = args.Powered
+            ? comp.Setting
+            : EntityHeaterSetting.Off;
+        Appearance.SetData(uid, EntityHeaterVisuals.Setting, setting);
     }
 
     private void OnExamined(EntityUid uid, EntityHeaterComponent comp, ExaminedEvent args)

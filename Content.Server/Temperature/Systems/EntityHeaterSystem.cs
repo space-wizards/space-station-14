@@ -10,13 +10,6 @@ namespace Content.Server.Temperature.Systems;
 ///<inheritdoc cref="SharedEntityHeaterSystem"/>
 public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
 {
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<EntityHeaterComponent, PowerChangedEvent>(OnPowerChanged);
-    }
-
     /// <inheritdoc />
     public override void Update(float deltaTime)
     {
@@ -36,16 +29,6 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
                 Temperature.ChangeHeat(target, energy);
             }
         }
-    }
-
-    private void OnPowerChanged(EntityUid uid, EntityHeaterComponent comp, ref PowerChangedEvent args)
-    {
-        // disable heating element glowing layer if theres no power
-        // doesn't actually turn it off since that would be annoying
-        var setting = args.Powered
-            ? comp.Setting
-            : EntityHeaterSetting.Off;
-        Appearance.SetData(uid, EntityHeaterVisuals.Setting, setting);
     }
 
     public override void ChangeSetting(Entity<EntityHeaterComponent> heater, EntityHeaterSetting setting)

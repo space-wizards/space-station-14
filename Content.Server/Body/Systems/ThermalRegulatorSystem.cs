@@ -15,7 +15,7 @@ public sealed class ThermalRegulatorSystem : SharedThermalRegulatorSystem
 
     private void OnMapInit(Entity<ThermalRegulatorComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.NextUpdate = _gameTiming.CurTime + ent.Comp.UpdateInterval;
+        ent.Comp.NextUpdate = GameTiming.CurTime + ent.Comp.UpdateInterval;
     }
 
     public override void Update(float frameTime)
@@ -23,7 +23,7 @@ public sealed class ThermalRegulatorSystem : SharedThermalRegulatorSystem
         var query = EntityQueryEnumerator<ThermalRegulatorComponent>();
         while (query.MoveNext(out var uid, out var regulator))
         {
-            if (_gameTiming.CurTime < regulator.NextUpdate)
+            if (GameTiming.CurTime < regulator.NextUpdate)
                 continue;
 
             regulator.NextUpdate += regulator.UpdateInterval;
@@ -46,7 +46,7 @@ public sealed class ThermalRegulatorSystem : SharedThermalRegulatorSystem
 
         // implicit heat regulation
         var tempDiff = Math.Abs(temperature.CurrentTemperature - thermalRegulator.NormalBodyTemperature);
-        var heatCapacity = _tempSys.GetHeatCapacity((ent, ent, null));
+        var heatCapacity = Temperature.GetHeatCapacity((ent, ent, null));
         var targetHeat = tempDiff * heatCapacity;
         if (temperature.CurrentTemperature > thermalRegulator.NormalBodyTemperature)
         {
@@ -58,7 +58,7 @@ public sealed class ThermalRegulatorSystem : SharedThermalRegulatorSystem
         }
 
         var tempEnt = (ent, temperature);
-        _tempSys.ChangeHeat(tempEnt, totalMetabolismTempChange, ignoreHeatResistance: true);
+        Temperature.ChangeHeat(tempEnt, totalMetabolismTempChange, ignoreHeatResistance: true);
 
         // recalc difference and target heat
         tempDiff = Math.Abs(temperature.CurrentTemperature - thermalRegulator.NormalBodyTemperature);
@@ -71,17 +71,17 @@ public sealed class ThermalRegulatorSystem : SharedThermalRegulatorSystem
 
         if (temperature.CurrentTemperature > thermalRegulator.NormalBodyTemperature)
         {
-            if (!_actionBlockerSys.CanSweat(ent))
+            if (!ActionBlocker.CanSweat(ent))
                 return;
 
-            _tempSys.ChangeHeat(tempEnt, -Math.Min(targetHeat, thermalRegulator.SweatHeatRegulation), ignoreHeatResistance: true);
+            Temperature.ChangeHeat(tempEnt, -Math.Min(targetHeat, thermalRegulator.SweatHeatRegulation), ignoreHeatResistance: true);
         }
         else
         {
-            if (!_actionBlockerSys.CanShiver(ent))
+            if (!ActionBlocker.CanShiver(ent))
                 return;
 
-            _tempSys.ChangeHeat(tempEnt, Math.Min(targetHeat, thermalRegulator.ShiveringHeatRegulation), ignoreHeatResistance: true);
+            Temperature.ChangeHeat(tempEnt, Math.Min(targetHeat, thermalRegulator.ShiveringHeatRegulation), ignoreHeatResistance: true);
         }
     }
 }
