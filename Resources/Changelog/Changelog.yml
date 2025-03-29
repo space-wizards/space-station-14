@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SaphireLattice
-  changes:
-  - message: Crayon UI now has categories and queue
-    type: Add
-  id: 7614
-  time: '2024-11-16T03:25:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33101
 - author: Southbridge
   changes:
   - message: The BRB sign is now included in the Bureaucracy Crate
@@ -3876,3 +3869,17 @@
   id: 8113
   time: '2025-03-27T22:29:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35931
+- author: ViceEmargo
+  changes:
+  - message: Botanist's leather gloves must now be equipped in order to pick up Death
+      Nettles.
+    type: Add
+  - message: Death Nettles will now pierce hardsuits, injecting 5 units of reagent.
+    type: Tweak
+  - message: Death Nettles will now "wilt" after 5 hits.
+    type: Add
+  - message: Fly Amanita has been changed to contain less Amatoxin.
+    type: Tweak
+  id: 8114
+  time: '2025-03-29T09:35:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25253
