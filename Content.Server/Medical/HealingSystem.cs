@@ -5,7 +5,6 @@ using Content.Server.Medical.Components;
 using Content.Server.Popups;
 using Content.Server.Stack;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -21,9 +20,6 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
-using JetBrains.FormatRipper.Elf;
-using Content.Server.Database;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Medical;
