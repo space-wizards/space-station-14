@@ -49,7 +49,8 @@ public sealed class UplinkSystem : EntitySystem
 
         uplinkEntity ??= FindUplinkTarget(user);
 
-        balance *= 1f - Math.Log2(1f - _random.NextFloat());
+        float x = MathF.Min(0.999999999f, _random.NextFloat());  // avoid the logarithm becoming infinite
+        balance *= 0.75f - Math.Log2(1f - x); // still more than twice as much on average, but you have a ~20% chance to get less. Minimum is 75% of original value
         balance = Math.Round((float)balance);
         adjustedBalance = balance;
 
