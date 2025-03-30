@@ -27,6 +27,20 @@
           weight: 0.3
         - id: Pen
           weight: 0.1
+      - !type:GroupSelector
+        children:
+        - !type:NoneSelector
+        - !type:AllSelctor
+          weight: 0.01
+          children: 
+            - id: RubberStampApproved
+            - id: RubberStampDenied
+        - id: RubberStampGreytide
+          weight: 0.005
+        - id: LuxuryPen
+          weight: 0.05
+        - id: NanoTaskCartridge
+          weight: 0.05
 
 - type: entity
   parent: [ BaseStructureDynamic, BaseBagOpenClose ]
