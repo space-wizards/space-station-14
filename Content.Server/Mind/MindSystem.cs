@@ -62,7 +62,7 @@ public sealed class MindSystem : SharedMindSystem
         {
             TransferTo(mindId, visiting, mind: mind);
             if (TryComp(visiting, out GhostComponent? ghostComp))
-                _ghosts.SetCanReturnToBody(visiting, ghostComp, false);
+                _ghosts.SetCanReturnToBody(ghostComp, false);
             return;
         }
 
@@ -221,7 +221,7 @@ public sealed class MindSystem : SharedMindSystem
             entity = Spawn(GameTicker.ObserverPrototypeName, position);
             component = EnsureComp<MindContainerComponent>(entity.Value);
             var ghostComponent = Comp<GhostComponent>(entity.Value);
-            _ghosts.SetCanReturnToBody(entity.Value, ghostComponent, false);
+            _ghosts.SetCanReturnToBody(ghostComponent, false);
         }
 
         var oldEntity = mind.OwnedEntity;

@@ -475,8 +475,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (drop_container is null)
             _containerSystem.TryGetContainingContainer((uid, null, null), out drop_container);
 
-        var containerEnumerable = _containerSystem.GetAllContainers(uid);
-        foreach (var container in containerEnumerable)
+        foreach (var container in _containerSystem.GetAllContainers(uid))
         {
             ConsumeEntitiesInContainer(args.EventHorizonUid, container, args.EventHorizon, drop_container);
         }

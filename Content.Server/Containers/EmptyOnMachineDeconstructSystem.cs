@@ -2,7 +2,6 @@ using Content.Shared.Construction;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Containers
 {
@@ -37,9 +36,11 @@ namespace Content.Server.Containers
             if (!EntityManager.TryGetComponent<ContainerManagerComponent>(uid, out var mComp))
                 return;
             var baseCoords = EntityManager.GetComponent<TransformComponent>(uid).Coordinates;
+
+            var sharedContainer = EntityManager.System<SharedContainerSystem>();
             foreach (var v in component.Containers)
             {
-                if (EntityManager.System<SharedContainerSystem>().TryGetContainer(uid, v, out var container, mComp))
+                if (sharedContainer.TryGetContainer(uid, v, out var container, mComp))
                 {
                     _container.EmptyContainer(container, true, baseCoords);
                 }
