@@ -58,6 +58,8 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         SubscribeLocalEvent<TemperatureComponent, EntParentChangedMessage>(OnParentChange);
         SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentStartup>(OnParentThresholdStartup);
         SubscribeLocalEvent<ContainerTemperatureDamageThresholdsComponent, ComponentShutdown>(OnParentThresholdShutdown);
+
+        InitializeMoveSpeed();
     }
 
     public override void Update(float frameTime)
@@ -89,6 +91,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         }
 
         UpdateDamage(frameTime);
+        UpdateMoveSpeed(frameTime);
     }
 
     private void UpdateDamage(float frameTime)

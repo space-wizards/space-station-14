@@ -18,7 +18,7 @@ public abstract partial class SharedTemperatureSystem
     /// </summary>
     private static readonly TimeSpan SlowdownApplicationDelay = TimeSpan.FromSeconds(1f);
 
-    public void InitializeMoveSpeed()
+    private void InitializeMoveSpeed()
     {
         SubscribeLocalEvent<TemperatureSpeedComponent, OnTemperatureChangeEvent>(OnTemperatureChanged);
         SubscribeLocalEvent<TemperatureSpeedComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
@@ -61,7 +61,7 @@ public abstract partial class SharedTemperatureSystem
         args.ModifySpeed(ent.Comp.CurrentSpeedModifier.Value, ent.Comp.CurrentSpeedModifier.Value);
     }
 
-    public void UpdateMoveSpeed(float frameTime)
+    private void UpdateMoveSpeed(float frameTime)
     {
         var query = EntityQueryEnumerator<TemperatureSpeedComponent, MovementSpeedModifierComponent>();
         while (query.MoveNext(out var uid, out var temp, out var movement))
