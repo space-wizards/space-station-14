@@ -56,10 +56,10 @@ public sealed class RadiationCollectorSystem : VisualizerSystem<RadiationCollect
         switch (targetState)
         {
             case RadiationCollectorVisualState.Activating:
-                AnimationSystem.Play(new Entity<AnimationPlayerComponent>(uid, animPlayer), comp.ActivateAnimation, RadiationCollectorComponent.AnimationKey);
+                AnimationSystem.Play((uid, animPlayer), comp.ActivateAnimation, RadiationCollectorComponent.AnimationKey);
                 break;
             case RadiationCollectorVisualState.Deactivating:
-                AnimationSystem.Play(new Entity<AnimationPlayerComponent>(uid, animPlayer), comp.DeactiveAnimation, RadiationCollectorComponent.AnimationKey);
+                AnimationSystem.Play((uid, animPlayer), comp.DeactiveAnimation, RadiationCollectorComponent.AnimationKey);
                 break;
 
             case RadiationCollectorVisualState.Active:
