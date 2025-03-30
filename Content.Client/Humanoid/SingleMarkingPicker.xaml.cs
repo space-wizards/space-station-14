@@ -14,6 +14,8 @@ public sealed partial class SingleMarkingPicker : BoxContainer
     [Dependency] private readonly MarkingManager _markingManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
+    private readonly SpriteSystem _sprite;
+    
     /// <summary>
     ///     What happens if a marking is selected.
     ///     It will send the 'slot' (marking index)
@@ -125,6 +127,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
+        _sprite = _entityManager.System<SpriteManager>();
         MarkingList.OnItemSelected += SelectMarking;
         AddButton.OnPressed += _ =>
         {
@@ -190,7 +193,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
 
         foreach (var (id, marking) in sortedMarkings)
         {
-            var item = MarkingList.AddItem(Loc.GetString($"marking-{id}"), _entityManager.System<SpriteSystem>().Frame0(marking.Sprites[0]));
+            var item = MarkingList.AddItem(Loc.GetString($"marking-{id}"), _sprite.Frame0(marking.Sprites[0]));
             item.Metadata = marking.ID;
 
             if (_markings[Slot].MarkingId == id)

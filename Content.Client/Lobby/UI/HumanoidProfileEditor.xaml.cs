@@ -51,7 +51,7 @@ namespace Content.Client.Lobby.UI
         private readonly JobRequirementsManager _requirements;
         private readonly LobbyUIController _controller;
 
-        private readonly SpriteSystem _spriteSystem;
+        private readonly SpriteSystem _sprite;
 
         private FlavorText.FlavorText? _flavorText;
         private TextEdit? _flavorTextEdit;
@@ -130,7 +130,7 @@ namespace Content.Client.Lobby.UI
             _resManager = resManager;
             _requirements = requirements;
             _controller = UserInterfaceManager.GetUIController<LobbyUIController>();
-            _spriteSystem = _entManager.System<SpriteSystem>();
+            _sprite = _entManager.System<SpriteSystem>();
             ImportButton.OnPressed += args =>
             {
                 ImportProfile();
@@ -909,7 +909,7 @@ namespace Content.Client.Lobby.UI
                         VerticalAlignment = VAlignment.Center
                     };
                     var jobIcon = _prototypeManager.Index(job.Icon);
-                    icon.Texture = _spriteSystem.Frame0(jobIcon.Icon);
+                    icon.Texture = _sprite.Frame0(jobIcon.Icon);
                     selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
 
                     if (!_requirements.IsAllowed(job, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))

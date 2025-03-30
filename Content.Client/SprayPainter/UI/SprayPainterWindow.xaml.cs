@@ -34,17 +34,17 @@ public sealed partial class SprayPainterWindow : DefaultWindow
         _spriteSystem = _sysMan.GetEntitySystem<SpriteSystem>();
     }
 
-    private static string GetColorLocString(string? colorKey, ILocalizationManager loc)
+    private string GetColorLocString(string? colorKey)
     {
         if (string.IsNullOrEmpty(colorKey))
             return Loc.GetString("pipe-painter-no-color-selected");
         var locKey = colorLocKeyPrefix + colorKey;
 
-        if (!loc.TryGetString(locKey, out var locString))
+        if (!_loc.TryGetString(locKey, out var locString))
             locString = colorKey;
 
         return locString;
-        }
+    }
 
     public string? IndexToColorKey(int index)
     {
@@ -69,11 +69,10 @@ public sealed partial class SprayPainterWindow : DefaultWindow
             currentPalette = palette;
             ItemColorIndex.Clear();
             ColorList.Clear();
-            var x = _loc.DefaultCulture;
 
             foreach (var color in palette)
             {
-                var locString = GetColorLocString(color.Key, _loc);
+                var locString = GetColorLocString(color.Key);
                 var item = ColorList.AddItem(locString, _spriteSystem.Frame0(_colorEntryIconTexture));
                 item.IconModulate = color.Value;
                 item.Metadata = color.Key;

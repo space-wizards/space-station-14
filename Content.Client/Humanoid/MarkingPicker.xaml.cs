@@ -20,8 +20,8 @@ public sealed partial class MarkingPicker : Control
     [Dependency] private readonly MarkingManager _markingManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    // TODO: Make an ISpriteSystem for injecting
-    private readonly SpriteSystem _spriteSystem;
+
+    private readonly SpriteSystem _sprite;
 
     public Action<MarkingSet>? OnMarkingAdded;
     public Action<MarkingSet>? OnMarkingRemoved;
@@ -128,7 +128,7 @@ public sealed partial class MarkingPicker : Control
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        _spriteSystem = _entityManager.System<SpriteSystem>();
+        _sprite = _entityManager.System<SpriteSystem>();
 
         CMarkingCategoryButton.OnItemSelected +=  OnCategoryChange;
         CMarkingsUnused.OnItemSelected += item =>
@@ -228,7 +228,7 @@ public sealed partial class MarkingPicker : Control
                 continue;
             }
 
-            var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", _spriteSystem.Frame0(marking.Sprites[0]));
+            var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", _sprite.Frame0(marking.Sprites[0]));
             item.Metadata = marking;
         }
 
@@ -262,7 +262,7 @@ public sealed partial class MarkingPicker : Control
             var _item = new ItemList.Item(CMarkingsUsed)
             {
                 Text = text,
-                Icon = _spriteSystem.Frame0(newMarking.Sprites[0]),
+                Icon = _sprite.Frame0(newMarking.Sprites[0]),
                 Selectable = true,
                 Metadata = newMarking,
                 IconModulate = marking.MarkingColors[0]
@@ -518,7 +518,7 @@ public sealed partial class MarkingPicker : Control
         var item = new ItemList.Item(CMarkingsUsed)
         {
             Text = Loc.GetString("marking-used", ("marking-name", $"{GetMarkingName(marking)}"), ("marking-category", Loc.GetString($"markings-category-{marking.MarkingCategory}"))),
-            Icon = _spriteSystem.Frame0(marking.Sprites[0]),
+            Icon = _sprite.Frame0(marking.Sprites[0]),
             Selectable = true,
             Metadata = marking,
         };
@@ -542,7 +542,7 @@ public sealed partial class MarkingPicker : Control
 
         if (marking.MarkingCategory == _selectedMarkingCategory)
         {
-            var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", _spriteSystem.Frame0(marking.Sprites[0]));
+            var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", _sprite.Frame0(marking.Sprites[0]));
             item.Metadata = marking;
         }
         _selectedMarking = null;

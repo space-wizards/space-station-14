@@ -20,6 +20,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
     [Dependency] private readonly IEntityManager _e = default!;
 
     private readonly DecalPlacementSystem _decalPlacementSystem;
+    private readonly SpriteSystem _sprite;
 
     public FloatSpinBox RotationSpinBox;
 
@@ -42,6 +43,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         IoCManager.InjectDependencies(this);
 
         _decalPlacementSystem = _e.System<DecalPlacementSystem>();
+        _sprite = _e.System<SpriteSystem>();
 
         // This needs to be done in C# so we can have custom stuff passed in the constructor
         // and thus have a proper step size
@@ -205,7 +207,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
         foreach (var decalPrototype in prototypes)
         {
             if (decalPrototype.ShowMenu)
-                _decals.Add(decalPrototype.ID, _e.System<SpriteSystem>().Frame0(decalPrototype.Sprite));
+                _decals.Add(decalPrototype.ID, _sprite.Frame0(decalPrototype.Sprite));
         }
 
         RefreshList();
