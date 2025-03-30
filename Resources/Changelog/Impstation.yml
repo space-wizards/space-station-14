@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Honeyed_Lemons_, AftrLite
-  changes:
-  - message: Added the Courier Job, a new role that delivers packages and letters
-      to people!
-    type: Add
-  - message: Mapped Courier to Xeno and Box
-    type: Add
-  id: 936
-  time: '2025-01-16T06:21:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1333
 - author: Kandiyaki
   changes:
   - message: books can now be cut open to hide small items inside!
@@ -4079,3 +4069,11 @@
   id: 1435
   time: '2025-03-29T22:52:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2141
+- author: snaviian
+  changes:
+  - message: Space spiders and tarantulas now drop raw spider legs when butchered,
+      and raw spider legs can be cooked.
+    type: Add
+  id: 1436
+  time: '2025-03-30T13:15:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2138
