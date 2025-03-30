@@ -50,11 +50,13 @@ public sealed partial class CargoBountyConsoleComponent : Component
 public sealed class CargoBountyConsoleState : BoundUserInterfaceState
 {
     public List<CargoBountyData> Bounties;
+    public List<CargoBountyHistoryData> History;
     public TimeSpan UntilNextSkip;
 
-    public CargoBountyConsoleState(List<CargoBountyData> bounties, TimeSpan untilNextSkip)
+    public CargoBountyConsoleState(List<CargoBountyData> bounties, List<CargoBountyHistoryData> history, TimeSpan untilNextSkip)
     {
         Bounties = bounties;
+        History = history;
         UntilNextSkip = untilNextSkip;
     }
 }

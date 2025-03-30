@@ -1,5 +1,6 @@
 using Content.Shared.Item;
 using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -141,10 +142,36 @@ namespace Content.Shared.Storage
         [DataField]
         public bool HideStackVisualsWhenClosed = true;
 
+        /// <summary>
+        /// Entities with this tag won't trigger storage sound.
+        /// </summary>
+        [DataField]
+        public ProtoId<TagPrototype> SilentStorageUserTag = "SilentStorageUser";
+
         [Serializable, NetSerializable]
         public enum StorageUiKey : byte
         {
             Key,
+        }
+
+        /// <summary>
+        /// Allow or disallow showing the "open/close storage" verb.
+        /// This is desired on items that we don't want to be accessed by the player directly.
+        /// </summary>
+        [DataField]
+        public bool ShowVerb = true;
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class OpenNestedStorageEvent : EntityEventArgs
+    {
+        public readonly NetEntity InteractedItemUid;
+        public readonly NetEntity StorageUid;
+
+        public OpenNestedStorageEvent(NetEntity interactedItemUid, NetEntity storageUid)
+        {
+            InteractedItemUid = interactedItemUid;
+            StorageUid = storageUid;
         }
     }
 
@@ -172,6 +199,26 @@ namespace Content.Shared.Storage
         public readonly ItemStorageLocation Location;
 
         public StorageSetItemLocationEvent(NetEntity itemEnt, NetEntity storageEnt, ItemStorageLocation location)
+        {
+            ItemEnt = itemEnt;
+            StorageEnt = storageEnt;
+            Location = location;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class StorageTransferItemEvent : EntityEventArgs
+    {
+        public readonly NetEntity ItemEnt;
+
+        /// <summary>
+        /// Target storage to receive the transfer.
+        /// </summary>
+        public readonly NetEntity StorageEnt;
+
+        public readonly ItemStorageLocation Location;
+
+        public StorageTransferItemEvent(NetEntity itemEnt, NetEntity storageEnt, ItemStorageLocation location)
         {
             ItemEnt = itemEnt;
             StorageEnt = storageEnt;

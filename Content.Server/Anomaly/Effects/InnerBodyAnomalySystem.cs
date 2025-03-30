@@ -4,7 +4,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.Jittering;
 using Content.Server.Mind;
 using Content.Server.Stunnable;
-using Content.Shared.Actions;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
@@ -24,8 +23,6 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly AnomalySystem _anomaly = default!;
-    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly BodySystem _body = default!;
     [Dependency] private readonly IChatManager _chat = default!;
@@ -119,7 +116,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
 
             _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
 
-            _adminLog.Add(LogType.Anomaly,LogImpact.Extreme,$"{ToPrettyString(ent)} became anomaly host.");
+            _adminLog.Add(LogType.Anomaly,LogImpact.Medium,$"{ToPrettyString(ent)} became anomaly host.");
         }
         Dirty(ent);
     }

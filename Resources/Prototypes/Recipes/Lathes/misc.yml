@@ -3,7 +3,8 @@
 - type: latheRecipe
   abstract: true
   id: BaseLightRecipe
-  category: Lights
+  categories:
+  - Lights
   completetime: 2
   materials:
     Steel: 50
@@ -54,6 +55,11 @@
   parent: BaseLightRecipe
   id: DimLightBulb
   result: DimLightBulb
+
+- type: latheRecipe
+  parent: BaseLightRecipe
+  id: WarmLightBulb
+  result: WarmLightBulb
 
 - type: latheRecipe
   parent: BaseLightRecipe
@@ -115,6 +121,20 @@
     Steel: 300
 
 - type: latheRecipe
+  id: DoubleEmergencyOxygenTank
+  result: DoubleEmergencyOxygenTank
+  completetime: 4
+  materials:
+    Steel: 250
+
+- type: latheRecipe
+  id: DoubleEmergencyNitrogenTank
+  result: DoubleEmergencyNitrogenTank
+  completetime: 4
+  materials:
+    Steel: 250
+
+- type: latheRecipe
   id: ClothingShoesBootsMagSci
   result: ClothingShoesBootsMagSci
   completetime: 10
@@ -170,6 +190,11 @@
   parent: BaseFauxTileRecipe
   id: FauxTileAstroSnow
   result: FloorTileItemAstroSnow
+
+- type: latheRecipe
+  parent: BaseFauxTileRecipe
+  id: FauxTileAstroAsteroidSand
+  result: FloorTileItemAstroAsteroidSand
 
 - type: latheRecipe
   id: FloorGreenCircuit
