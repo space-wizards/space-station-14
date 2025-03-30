@@ -32,8 +32,8 @@ public abstract partial class SharedExpendableLightComponent : Component
     [DataField("refuelMaterialTime")]
     public float RefuelMaterialTime { get; set; } = 15f;
 
-    [DataField("refuelMaximum")]
-    public float RefuelMaximum { get; set; } = 60 * 15f * 2;
+    [DataField("refuelMaximumDuration")]
+    public float RefuelMaximumDuration { get; set; } = 60 * 15f * 2;
 
     [DataField("litSound")]
     public SoundSpecifier? LitSound { get; set; }

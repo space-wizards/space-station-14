@@ -7,8 +7,8 @@
     - type: ExpendableLight
       spentName: expendable-light-burnt-torch-name
       refuelMaterialID: WoodPlank
-      refuelMaximum: 205
       glowDuration: 100
+      refuelMaximumDuration: 205
       fadeOutDuration: 4
       iconStateSpent: torch_spent
       turnOnBehaviourID: turn_on

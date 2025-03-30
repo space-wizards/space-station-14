@@ -118,13 +118,13 @@ namespace Content.Server.Light.EntitySystems
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.Used, out StackComponent? stack))
+            if (!TryComp(args.Used, out StackComponent? stack))
                 return;
 
             if (stack.StackTypeId != component.RefuelMaterialID)
                 return;
 
-            if (component.StateExpiryTime + component.RefuelMaterialTime >= component.RefuelMaximum)
+            if (component.StateExpiryTime + component.RefuelMaterialTime >= component.RefuelMaximumDuration)
                 return;
 
             if (component.CurrentState is ExpendableLightState.Dead)
