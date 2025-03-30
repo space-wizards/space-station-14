@@ -30,8 +30,6 @@
     delay: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.9
-  - type: ZombificationResistance
-    coefficient: 0.95
 
 - type: entity
   parent: ClothingBackpack

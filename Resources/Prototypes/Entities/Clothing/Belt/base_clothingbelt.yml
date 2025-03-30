@@ -15,8 +15,6 @@
   - type: PhysicalComposition
     materialComposition:
       Cloth: 50
-  - type: ZombificationResistance
-    coefficient: 0.95
   - type: StaticPrice
     price: 20
 
