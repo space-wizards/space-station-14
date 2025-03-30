@@ -10,13 +10,20 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     {
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
-            if (!system.EntityManager.TryGetComponent<ContainerManagerComponent>(owner, out var containerManager))
+            var entMan = system.EntityManager;
+            if (!entMan.TryGetComponent<ContainerManagerComponent>(owner, out var containerManager))
                 return;
 
-            var containerEnumerable = system.EntityManager.EntitySysManager.GetEntitySystem<SharedContainerSystem>().GetAllContainers(owner);
+            if (!entMan.TryGetComponent<TransformComponent>(owner, out var transform))
+                return;
+
+            var containerSys = system.ContainerSystem;
+            var coords = transform.Coordinates;
+
+            var containerEnumerable = containerSys.GetAllContainers(owner, containerManager);
             foreach (var container in containerEnumerable)
             {
-                system.ContainerSystem.EmptyContainer(container, true, system.EntityManager.GetComponent<TransformComponent>(owner).Coordinates);
+                containerSys.EmptyContainer(container, true, coords);
             }
         }
     }
