@@ -92,7 +92,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
 
         // Handled by ExplosionSystem.Processing.cs
-        SubscribeLocalEvent<MapRemovedEvent>(OnMapRemoved);
+        SubscribeLocalEvent<MapChangedEvent>(OnMapChanged);
 
         // handled in ExplosionSystemAirtight.cs
         SubscribeLocalEvent<AirtightComponent, DamageChangedEvent>(OnAirtightDamaged);
