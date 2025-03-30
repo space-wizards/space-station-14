@@ -57,8 +57,8 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
         if(!comp.IsBlinking)
             return;
 
-        AnimationSystem.Play(new Entity<AnimationPlayerComponent>(uid, Comp<AnimationPlayerComponent>(uid)),
-            BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
+        var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
+        AnimationSystem.Play((uid, animationPlayer), BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
     }
 
     /// <summary>
@@ -75,7 +75,7 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
         var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
         if (shouldBeBlinking)
         {
-            AnimationSystem.Play(new Entity<AnimationPlayerComponent>(uid, animationPlayer), BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
+            AnimationSystem.Play((uid, animationPlayer), BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
         }
         else if (AnimationSystem.HasRunningAnimation(uid, animationPlayer, PoweredLightVisualsComponent.BlinkingAnimationKey))
         {
