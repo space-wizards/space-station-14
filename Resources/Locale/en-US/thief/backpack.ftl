@@ -29,12 +29,6 @@ thief-backpack-category-tools-description =
     Includes: Two C4, a multitool, remote signaller, jaws of life,
     advanced welder, engineering goggles, and insulated gloves.
 
-thief-backpack-category-chemistry-name = anatomy kit
-thief-backpack-category-chemistry-description =
-    You've reached peak physical performance... with a little help.
-    Includes: Storage implanter, DNA scrambler implanter,
-    ephedrine bottle, syringe, empty shaker, and omega soap
-
 thief-backpack-category-syndie-name = syndie kit
 thief-backpack-category-syndie-description =
     Trinkets from a disavowed past, or stolen from a careless agent?

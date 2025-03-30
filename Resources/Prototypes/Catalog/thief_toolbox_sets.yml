@@ -38,21 +38,6 @@
   - C4
 
 - type: thiefBackpackSet
-  id: ChemistrySet
-  name: thief-backpack-category-chemistry-name
-  description: thief-backpack-category-chemistry-description
-  sprite:
-    sprite: Objects/Specific/Medical/implanter.rsi
-    state: implanter0
-  content:
-  - StorageImplanter
-  - DnaScramblerImplanter
-  - EphedrineChemistryBottle
-  - SoapOmega
-  - Syringe
-  - DrinkShaker
-
-- type: thiefBackpackSet
   id: SyndieSet
   name: thief-backpack-category-syndie-name
   description: thief-backpack-category-syndie-description
