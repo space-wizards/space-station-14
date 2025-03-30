@@ -6,7 +6,6 @@
   startingGear: ChaplainGear
   icon: "JobIconChaplain"
   supervisors: job-supervisors-hd
-  canBeAntag: false #imp CULT HOTFIX. #TODO: ANTAG SELECTION REFACTOR
   access:
   - Service #imp edit
   - Chapel
