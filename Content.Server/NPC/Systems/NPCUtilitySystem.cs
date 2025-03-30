@@ -229,7 +229,7 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case TargetAccessibleCon:
             {
-                if (_container.TryGetContainingContainer((targetUid, null, null), out var container))
+                if (_container.TryGetContainingContainer(targetUid, out var container))
                 {
                     if (TryComp<EntityStorageComponent>(container.Owner, out var storageComponent))
                     {

@@ -188,8 +188,8 @@ namespace Content.Server.NPC.Pathfinding
         /// </summary>
         public bool TryCreatePortal(EntityCoordinates coordsA, EntityCoordinates coordsB, out int handle)
         {
-            var mapUidA = _transform.GetMap(coordsA);
-            var mapUidB = _transform.GetMap(coordsB);
+            var mapUidA = coordsA.GetMapUid(EntityManager);
+            var mapUidB = coordsB.GetMapUid(EntityManager);
             handle = -1;
 
             if (mapUidA != mapUidB || mapUidA == null)
@@ -197,8 +197,8 @@ namespace Content.Server.NPC.Pathfinding
                 return false;
             }
 
-            var gridUidA = _transform.GetGrid(coordsA);
-            var gridUidB = _transform.GetGrid(coordsB);
+            var gridUidA = coordsA.GetGridUid(EntityManager);
+            var gridUidB = coordsB.GetGridUid(EntityManager);
 
             if (!TryComp<GridPathfindingComponent>(gridUidA, out var gridA) ||
                 !TryComp<GridPathfindingComponent>(gridUidB, out var gridB))
@@ -236,8 +236,8 @@ namespace Content.Server.NPC.Pathfinding
 
             _portals.Remove(handle);
 
-            var gridUidA = _transform.GetGrid(portal.CoordinatesA);
-            var gridUidB = _transform.GetGrid(portal.CoordinatesB);
+            var gridUidA = portal.CoordinatesA.GetGridUid(EntityManager);
+            var gridUidB = portal.CoordinatesB.GetGridUid(EntityManager);
 
             if (!TryComp<GridPathfindingComponent>(gridUidA, out var gridA) ||
                 !TryComp<GridPathfindingComponent>(gridUidB, out var gridB))
@@ -397,7 +397,7 @@ namespace Content.Server.NPC.Pathfinding
         /// </summary>
         public PathPoly? GetPoly(EntityCoordinates coordinates)
         {
-            var gridUid = _transform.GetGrid(coordinates);
+            var gridUid = coordinates.GetGridUid(EntityManager);
 
             if (!TryComp<GridPathfindingComponent>(gridUid, out var comp) ||
                 !TryComp(gridUid, out TransformComponent? xform))
