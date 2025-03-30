@@ -63,7 +63,7 @@ namespace Content.Server.Light.EntitySystems
                 {
                     case ExpendableLightState.Lit:
                         component.CurrentState = ExpendableLightState.Fading;
-                        component.StateExpiryTime = component.FadeOutDuration;
+                        component.StateExpiryTime = (float)component.FadeOutDuration.TotalSeconds;
 
                         UpdateVisualizer(ent);
 
@@ -124,13 +124,13 @@ namespace Content.Server.Light.EntitySystems
             if (stack.StackTypeId != component.RefuelMaterialID)
                 return;
 
-            if (component.StateExpiryTime + component.RefuelMaterialTime >= component.RefuelMaximumDuration)
+            if (component.StateExpiryTime + component.RefuelMaterialTime.TotalSeconds >= component.RefuelMaximumDuration.TotalSeconds)
                 return;
 
             if (component.CurrentState is ExpendableLightState.Dead)
             {
                 component.CurrentState = ExpendableLightState.BrandNew;
-                component.StateExpiryTime = component.RefuelMaterialTime;
+                component.StateExpiryTime = (float)component.RefuelMaterialTime.TotalSeconds;
 
                 _nameModifier.RefreshNameModifiers(uid);
                 _stackSystem.SetCount(args.Used, stack.Count - 1, stack);
@@ -138,15 +138,15 @@ namespace Content.Server.Light.EntitySystems
                 return;
             }
 
-            component.StateExpiryTime += component.RefuelMaterialTime;
+            component.StateExpiryTime += (float)component.RefuelMaterialTime.TotalSeconds;
             _stackSystem.SetCount(args.Used, stack.Count - 1, stack);
             args.Handled = true;
         }
 
-        private void OnRefreshNameModifiers(EntityUid uid, ExpendableLightComponent component, RefreshNameModifiersEvent args)
+        private void OnRefreshNameModifiers(Entity<ExpendableLightComponent> entity, ref RefreshNameModifiersEvent args)
         {
-            if (component.CurrentState is ExpendableLightState.Dead)
-                args.AddModifier(component.SpentName);
+            if (entity.Comp.CurrentState is ExpendableLightState.Dead)
+                args.AddModifier("expendable-light-spent-prefix");
         }
 
         private void UpdateVisualizer(Entity<ExpendableLightComponent> ent, AppearanceComponent? appearance = null)
@@ -205,7 +205,7 @@ namespace Content.Server.Light.EntitySystems
             }
 
             component.CurrentState = ExpendableLightState.BrandNew;
-            component.StateExpiryTime = component.GlowDuration;
+            component.StateExpiryTime = (float)component.GlowDuration.TotalSeconds;
             EntityManager.EnsureComponent<PointLightComponent>(uid);
         }
 
