@@ -55,7 +55,6 @@ public sealed class GithubApiManager : IPostInjectInit
     private string _repository = "";
     private string _owner = "";
     private int _maxRetries;
-    private long _requestBuffer;
 
     #endregion
 
@@ -75,7 +74,7 @@ public sealed class GithubApiManager : IPostInjectInit
         _cfg.OnValueChanged(CCVars.GithubRepositoryName, val => _repository = val, true);
         _cfg.OnValueChanged(CCVars.GithubRepositoryOwner, val => _owner = val, true);
         _cfg.OnValueChanged(CCVars.GithubMaxRetries, val => _maxRetries = val, true);
-        _cfg.OnValueChanged(CCVars.GithubRequestBuffer, val => _requestBuffer = val, true);
+        _cfg.OnValueChanged(CCVars.GithubRequestBuffer, _rateLimiter.UpdateRequestBuffer, true);
 
         // _nextApiCall = DateTime.UtcNow.AddSeconds(DefaultDelayTime);
     }
@@ -140,16 +139,41 @@ public sealed class GithubApiManager : IPostInjectInit
         return (true, response);
     }
 
+    /// <summary>
+    ///     A simple helper function that just tries to a header value that is a long.
+    ///     In general, there are just a lot of single value headers that are longs so this removes a lot of duplicate code.
+    /// </summary>
+    /// <param name="headers">The headers that you want to search.</param>
+    /// <param name="header">The header you want to get the long value for.</param>
+    /// <param name="value">The output from the header, if unsuccessfully found or didn't parse correctly will be 0.</param>
+    /// <returns>True if the header was found and was parsed correctly, false if not.</returns>
+    public static bool TryGetLongHeader(HttpResponseHeaders? headers, string header, out long value)
+    {
+        value = 0;
+
+        if (headers == null)
+            return false;
+
+        if (!headers.TryGetValues(header, out var headerValues))
+            return false;
+
+        return long.TryParse(headerValues.First(), out value);
+    }
+
     # endregion
 
+    /// <summary>
+    ///     This will try to acquire the api lock every update tick. Having to get the lock ensures that we
+    ///     only ever have one outgoing request at a time and that no requests violates the rate limits!
+    /// </summary>
     public void Update()
     {
         if (!ApiEnabled() || _initializationAttempts >= _maxRetries)
             return;
 
-        var rateLimitLease = _rateLimiter.Acquire();
+        var apiAcquired = _rateLimiter.TryAcquire();
 
-        if (!rateLimitLease)
+        if (!apiAcquired)
             return;
 
         if (!_apiInitialized)
@@ -194,8 +218,6 @@ public sealed class GithubApiManager : IPostInjectInit
         }
     }
 
-    #region Helper functions
-
     /// <summary>
     ///     This will try to initialize the api! This really just means ensuring you aren't currently rate limited.
     ///     Will instantly return and do nothing if the api is already initialized.
@@ -208,15 +230,19 @@ public sealed class GithubApiManager : IPostInjectInit
             var request = await TryMakeRequest(rateLimitRequest);
             var response = request.Item2;
 
+            // This should never happen but if it somehow does we would want to return.
             if (!request.Item1)
+            {
+                _rateLimiter.Release();
                 return;
+            }
 
             var rateLimitRespJson = await response.Content.ReadFromJsonAsync<RateLimitResponse>();
 
             if (!IsValidResponse(response, rateLimitRequest.GetExpectedResponseCodes()) || rateLimitRespJson == null)
             {
                 _initializationAttempts++;
-                _rateLimiter.ReleaseNoResponse();
+                _rateLimiter.ReleaseWithResponse(response, rateLimitRequest.GetExpectedResponseCodes());
                 return;
             }
 
@@ -238,6 +264,8 @@ public sealed class GithubApiManager : IPostInjectInit
             _rateLimiter.ReleaseNoResponse();
         }
     }
+
+    #region Helper functions
 
     private bool ApiEnabled()
     {
@@ -284,27 +312,6 @@ public sealed class GithubApiManager : IPostInjectInit
     public void PostInject()
     {
         _sawmill = _log.GetSawmill("GITHUB");
-    }
-
-    /// <summary>
-    ///     A simple helper function that just tries to a header value that is a long.
-    ///     In general, there are just a lot of single value headers that are longs so this removes a lot of duplicate code.
-    /// </summary>
-    /// <param name="headers">The headers that you want to search.</param>
-    /// <param name="header">The header you want to get the long value for.</param>
-    /// <param name="value">The output from the header, if unsuccessfully found or didn't parse correctly will be 0.</param>
-    /// <returns>True if the header was found and was parsed correctly, false if not.</returns>
-    public static bool TryGetLongHeader(HttpResponseHeaders? headers, string header, out long value)
-    {
-        value = 0;
-
-        if (headers == null)
-            return false;
-
-        if (!headers.TryGetValues(header, out var headerValues))
-            return false;
-
-        return long.TryParse(headerValues.First(), out value);
     }
 }
 
