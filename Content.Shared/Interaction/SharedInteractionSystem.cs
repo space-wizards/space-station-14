@@ -1313,7 +1313,7 @@ namespace Content.Shared.Interaction
             if (Deleted(target))
                 return false;
 
-            if (!_containerSystem.TryGetContainingContainer((target, null, null), out var container))
+            if (!_containerSystem.TryGetContainingContainer(target, out var container))
                 return false;
 
             var wearer = container.Owner;
@@ -1326,7 +1326,7 @@ namespace Content.Shared.Interaction
             if (_strippable.IsStripHidden(slotDef, user))
                 return false;
 
-            return InRangeUnobstructed(user, wearer) && _containerSystem.IsInSameOrParentContainer((user, null, null), (wearer, null, null));
+            return InRangeUnobstructed(user, wearer) && _containerSystem.IsInSameOrParentContainer(user, wearer);
         }
 
         protected bool ValidateClientInput(

@@ -95,6 +95,9 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     {
         var args = doAfter.Args;
 
+        if (args.ExtraCheck?.Invoke() == false)
+            return false;
+
         if (doAfter.AttemptEvent == null)
         {
             // I feel like this is somewhat cursed, but its the only way I can think of without having to just send

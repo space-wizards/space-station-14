@@ -50,13 +50,12 @@ namespace Content.Shared.Ghost
             if (!Resolve(uid, ref component))
                 return;
 
-            SetCanReturnToBody(uid, component, value);
+            SetCanReturnToBody(component, value);
         }
 
-        public void SetCanReturnToBody(EntityUid uid, GhostComponent component, bool value)
+        public void SetCanReturnToBody(GhostComponent component, bool value)
         {
             component.CanReturnToBody = value;
-            IoCManager.Resolve<IEntityManager>().Dirty(uid, component);
         }
     }
 
