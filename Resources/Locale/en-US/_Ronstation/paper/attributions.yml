@@ -1,0 +1,4 @@
+- files: ["paper-forms.ftl"]
+  license: "CC-BY-SA-4.0"
+  copyright: "Most taken from https://github.com/Moomoobeef/ss14-forms-txt and edited by Merrokitsune. book-text-form-general-letter, book-text-form-general-item-request, book-text-form-security-inicdent-report, book-text-form-security-criminal-record, book-text-form-medical-death-certificate by Merrokitsune. book-text-form-security-weapons-permit made by FatGorilla and edited by Merrokitsune."
+  source: "https://github.com/Moomoobeef/ss14-forms-txt"

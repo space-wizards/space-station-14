@@ -1,0 +1,102 @@
+# General
+- type: entity
+  id: PaperWrittenFormGeneralLetter
+  name: letter
+  description: It's a letter.
+  parent: PaperOffice
+  components:
+  - type: Paper
+    content: book-text-form-general-letter
+
+- type: entity
+  id: PaperWrittenFormGeneralItemRequest
+  name: item request form
+  description: For when you need to request something.
+  parent: PaperOffice
+  components:
+  - type: Paper
+    content: book-text-form-general-item-request
+
+- type: entity
+  id: PaperWrittenFormGeneralJobApplication
+  name: job application form
+  description: A form for those who wish to apply for a new job.
+  parent: PaperOffice
+  components:
+  - type: Paper
+    content: book-text-form-general-job-application
+
+- type: entity
+  id: PaperWrittenFormGeneralFormalComplaint
+  name: formal complaint form
+  description: A form for those who wish to issue a formal complaint to superiors about misconduct.
+  parent: PaperOffice
+  components:
+  - type: Paper
+    content: book-text-form-general-formal-complaint
+
+# Security
+- type: entity
+  id: PaperWrittenFormSecurityArrestWarrant
+  name: arrest warrant
+  description: Might indicate an arrest has been issued.
+  parent: PaperOffice
+  components:
+  - type: Paper
+    content: book-text-form-security-arrest-warrant
+
+- type: entity
+  id: PaperWrittenFormSecurityWeaponsPermit
+  name: weapons holder permit
+  description: A permit for carrying weapons. Might require a stamp of approval from authorized personnel.
+  parent: PaperOffice
+  components:
+  - type: Paper
+    content: book-text-form-security-weapons-permit
+
+- type: entity
+  id: PaperWrittenFormSecurityIncidentReport
+  name: incident report
+  description: A paper for record-keeping incidents.
+  parent: PaperOffice
+  components:
+  - type: Paper
+    content: book-text-form-security-incident-report
+
+- type: entity
+  id: PaperWrittenFormSecurityCriminalRecord
+  name: criminal record
+  description: A paper for record-keeping criminals. Useful if there's no power or records getting erased.
+  parent: PaperOffice
+  components:
+  - type: Paper
+    content: book-text-form-security-criminal-record
+
+- type: entity
+  id: PaperWrittenFormSecurityRestrainingOrder
+  name: restraining order form
+  description: A restraining order. Needs to be stamped by authorized personnel in order to go into effect.
+  parent: PaperOffice
+  components:
+  - type: Paper
+    content: book-text-form-security-restraining-order
+
+# Engineering
+- type: entity
+  id: PaperWrittenFormEngineeringBuildingPermit
+  name: building permit
+  description: A permit to build or construct something.
+  parent: PaperOffice
+  components:
+  - type: Paper
+    content: book-text-form-engineering-building-permit
+
+# Medical
+- type: entity
+  id: PaperWrittenFormMedicalDeathCertificate
+  name: death certificate
+  description: Someone has died.
+  parent: PaperOffice
+  components:
+  - type: Paper
+    content: book-text-form-medical-death-certificate

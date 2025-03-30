@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: EmergencyLasers
+  icon:
+    sprite: _Ronstation/Objects/Weapons/Guns/Battery/emergency_laser_gun.rsi
+    state: icon
+  product: EmergencyLaserCrate
+  cost: 5000
+  category: cargoproduct-category-name-emergency
+  group: market

@@ -1,0 +1,28 @@
+## Static
+
+- type: latheRecipePack
+  id: PrinterGeneralBasic
+  recipes:
+  - PrinterPaperWrittenFormGeneralLetter
+  - PrinterPaperWrittenFormGeneralItemRequest
+  - PrinterPaperWrittenFormGeneralJobApplication
+  - PrinterPaperWrittenFormGeneralFormalComplaint
+
+- type: latheRecipePack
+  id: PrinterSecurityBasic
+  recipes:
+  - PrinterPaperWrittenFormSecurityArrestWarrant
+  - PrinterPaperWrittenFormSecurityWeaponsPermit
+  - PrinterPaperWrittenFormSecurityIncidentReport
+  - PrinterPaperWrittenFormSecurityCriminalRecord
+  - PrinterPaperWrittenFormSecurityRestrainingOrder
+
+- type: latheRecipePack
+  id: PrinterEngineeringBasic
+  recipes:
+  - PrinterPaperWrittenFormEngineeringBuildingPermit
+
+- type: latheRecipePack
+  id: PrinterMedicalBasic
+  recipes:
+  - PrinterPaperWrittenFormMedicalDeathCertificate
