@@ -63,8 +63,6 @@ public sealed class GithubApiManager : IPostInjectInit
 
     private readonly ConcurrentQueue<GithubQueueEntry> _queue = new();
 
-    // private DateTime? _nextApiCall = null;
-
     private readonly GithubRateLimiter _rateLimiter = new();
 
     public void Initialize()
