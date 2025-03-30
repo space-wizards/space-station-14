@@ -23,11 +23,17 @@ public abstract partial class SharedExpendableLightComponent : Component
     [DataField("fadeOutDuration")]
     public float FadeOutDuration { get; set; } = 60 * 5f;
 
-    [DataField("spentDesc")]
-    public string SpentDesc { get; set; } = string.Empty;
-
     [DataField("spentName")]
     public string SpentName { get; set; } = string.Empty;
+
+    [DataField("refuelMaterialID")]
+    public string? RefuelMaterialID { get; set; } = null;
+
+    [DataField("refuelMaterialTime")]
+    public float RefuelMaterialTime { get; set; } = 15f;
+
+    [DataField("refuelMaximum")]
+    public float RefuelMaximum { get; set; } = 60 * 15f * 2;
 
     [DataField("litSound")]
     public SoundSpecifier? LitSound { get; set; }

@@ -6,7 +6,8 @@
   components:
     - type: ExpendableLight
       spentName: expendable-light-burnt-torch-name
-      spentDesc: expendable-light-burnt-torch-desc
+      refuelMaterialID: WoodPlank
+      refuelMaximum: 205
       glowDuration: 100
       fadeOutDuration: 4
       iconStateSpent: torch_spent
@@ -79,3 +80,5 @@
     - type: Tag
       tags:
       - Torch
+    - type: NameModifier
+      baseName: torch
