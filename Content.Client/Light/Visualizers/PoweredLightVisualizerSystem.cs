@@ -52,12 +52,13 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
     /// </summary>
     private void OnAnimationCompleted(EntityUid uid, PoweredLightVisualsComponent comp, AnimationCompletedEvent args)
     {
+        if (!TryComp<AnimationPlayerComponent>(uid, out var animationPlayer))
+            return;
         if (args.Key != PoweredLightVisualsComponent.BlinkingAnimationKey)
             return;
         if(!comp.IsBlinking)
             return;
 
-        var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
         AnimationSystem.Play((uid, animationPlayer), BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
     }
 
@@ -67,12 +68,14 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
     /// </summary>
     private void SetBlinkingAnimation(EntityUid uid, bool shouldBeBlinking, PoweredLightVisualsComponent comp)
     {
+        if (!TryComp<AnimationPlayerComponent>(uid, out var animationPlayer))
+            return;
+
         if (shouldBeBlinking == comp.IsBlinking)
             return;
 
         comp.IsBlinking = shouldBeBlinking;
 
-        var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
         if (shouldBeBlinking)
         {
             AnimationSystem.Play((uid, animationPlayer), BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
