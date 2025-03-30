@@ -19,28 +19,24 @@
       - id: Paper
       - id: PaperOffice
     - !type:GroupSelector
+      prob: .3
       rolls: !type:ConstantNumberSelector
         value: 2
       children:
-      - !type:NoneSelector
       - id: Pen
-        weight: 0.3
-      - id: Pen
-        weight: 0.1
     - !type:GroupSelector
+      prob: 0.15
       children:
       - !type:NoneSelector
       - !type:AllSelector
-        weight: 0.01
+        weight: 0.2
         children: 
         - id: RubberStampApproved
         - id: RubberStampDenied
       - id: RubberStampGreytide
-        weight: 0.005
+        weight: 0.1
       - id: LuxuryPen
-        weight: 0.05
       - id: NanoTaskCartridge
-        weight: 0.05
 
 - type: entity
   parent: [ BaseStructureDynamic, BaseBagOpenClose ]
