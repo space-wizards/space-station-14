@@ -41,3 +41,103 @@
       spawns:
       - MobMonkey
   - type: RadiationSource
+
+- type: entity
+  id: AnomalyClown
+  description: It's an otherwise normal car that seems to bend the very space within it. You sense that the creatures within are coming to make you laugh at all costs...
+  parent: BaseAnomaly
+  suffix: Clown
+  components:
+    - type: Anomaly
+      corePrototype: AnomalyCoreFlesh
+      coreInertPrototype: AnomalyCoreFleshInert
+      minPulseLength: 180
+      maxPulseLength: 300
+      supercriticalSoundAtAnimationStart: /Audio/_Starlight/Effects/clown_anomaly_explosion.ogg 
+    - type: Sprite
+      sprite: _Starlight/Structures/Specific/Anomalies/clown.rsi
+      layers:
+        - state: anomclown
+          map: [ "enum.AnomalyVisualLayers.Base" ]
+        - state: anomclown-pulse
+          map: [ "enum.AnomalyVisualLayers.Animated" ]
+          visible: false
+    - type: PointLight
+      radius: 2.0
+      energy: 7.5
+      color: "#cb5b7e"
+      castShadows: false
+    - type: RgbLightController
+      cycleRate: 0.25
+      layers: [ ]
+    - type: TileSpawnAnomaly
+      entries:
+        - settings:
+            spawnOnPulse: true
+            spawnOnStabilityChanged: true
+            minAmount: 3
+            maxAmount: 7
+            maxRange: 4
+          floor: FloorCarpetClown
+        - settings:
+            spawnOnSuperCritical: true
+            minAmount: 10
+            maxAmount: 30
+            maxRange: 10
+          floor: FloorCarpetClown
+    - type: EntitySpawnAnomaly
+      entries:
+# no sprite currently for blocker
+#        - settings:
+#            spawnOnPulse: true
+#            minAmount: 1
+#            maxAmount: 4
+#            minRange: 1.5
+#            maxRange: 2.5
+#          spawns:
+#            - ClownBlocker
+        - settings:
+            spawnOnPulse: true
+            maxAmount: 3
+            minRange: 3
+            maxRange: 4.5
+          spawns:
+            - MobClownJared
+            - MobClownGolem
+            - MobClownClamp
+            - MobClownLover
+#        - settings:
+#            spawnOnSuperCritical: true
+#            minAmount: 10
+#            maxAmount: 15
+#            minRange: 5
+#            maxRange: 15
+#          spawns:
+#            - ClownBlocker
+        - settings:
+            spawnOnSuperCritical: true
+            minAmount: 5
+            maxAmount: 10
+            maxRange: 8
+          spawns:
+            - MobClownJared
+            - MobClownGolem
+            - MobClownClamp
+            - MobClownLover
+        - settings:
+            spawnOnSuperCritical: true
+            minAmount: 5
+            maxAmount: 8
+            maxRange: 10
+          spawns:
+            - ClownKudzu
+        - settings:
+            spawnOnShutdown: true
+            maxAmount: 2
+            maxRange: 1
+          spawns:
+            - MobClownJared
+            - MobClownGolem
+            - MobClownClamp
+            - MobClownLover
+            - ClownKudzu
