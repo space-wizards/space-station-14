@@ -127,7 +127,7 @@ public sealed partial class SingleMarkingPicker : BoxContainer
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        _sprite = _entityManager.System<SpriteManager>();
+        _sprite = _entityManager.System<SpriteSystem>();
         MarkingList.OnItemSelected += SelectMarking;
         AddButton.OnPressed += _ =>
         {
