@@ -32,6 +32,9 @@ namespace Content.Shared.Movement.Components
         [AutoNetworkedField, ViewVariables]
         public float SprintSpeedModifier = 1.0f;
 
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float _baseWalkSpeedVV;
+
         /// <summary>
         /// Minimum speed a mob has to be moving before applying movement friction.
         /// </summary>
