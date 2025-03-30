@@ -666,6 +666,7 @@
   production: 6
   yield: 2
   potency: 20
+  growthStages: 3
   idealLight: 9
   idealHeat: 298
   chemicals:
@@ -1401,8 +1402,8 @@
   chemicals:
     Amatoxin:
       Min: 1
-      Max: 25
-      PotencyDivisor: 4
+      Max: 10
+      PotencyDivisor: 12
     Nutriment: ## yumby :)
       Min: 1
       Max: 5
