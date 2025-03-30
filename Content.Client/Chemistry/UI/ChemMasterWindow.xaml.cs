@@ -26,6 +26,8 @@ namespace Content.Client.Chemistry.UI
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
+        private readonly SpriteSystem _sprite;
+
         public event Action<BaseButton.ButtonEventArgs, ReagentButton>? OnReagentButtonPressed;
         public readonly Button[] PillTypeButtons;
 
@@ -45,7 +47,7 @@ namespace Content.Client.Chemistry.UI
             var resourcePath = new ResPath(PillsRsiPath);
             var pillTypeGroup = new ButtonGroup();
             PillTypeButtons = new Button[20];
-            var spriteSystem = _entityManager.System<SpriteSystem>();
+            _sprite = _entityManager.System<SpriteSystem>();
             for (uint i = 0; i < PillTypeButtons.Length; i++)
             {
                 // For every button decide which stylebase to have
@@ -72,7 +74,7 @@ namespace Content.Client.Chemistry.UI
                 var specifier = new SpriteSpecifier.Rsi(resourcePath, "pill" + (i + 1));
                 TextureRect pillTypeTexture = new TextureRect
                 {
-                    Texture = spriteSystem.Frame0(specifier),
+                    Texture = _sprite.Frame0(specifier),
                     TextureScale = new Vector2(1.75f, 1.75f),
                     Stretch = TextureRect.StretchMode.KeepCentered,
                 };
