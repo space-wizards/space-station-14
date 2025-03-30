@@ -18,9 +18,9 @@
   id: EventHumanoidCentcomm
   parent: EventHumanoidMindShielded
   components:
-    - type: AutoImplant
-      implants:
-      - DeathRattleImplantCentcomm
+  - type: AutoImplant
+    implants:
+    - DeathRattleImplantCentcomm
 
 ## Death Squad
 
