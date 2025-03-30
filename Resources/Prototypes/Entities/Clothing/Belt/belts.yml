@@ -588,7 +588,7 @@
     sprite: Clothing/Belt/holster.rsi
   - type: ItemSlots
     slots:
-      handgun:
+      item:
         name: clothing-holster-handgun
         whitelist:
           tags:
@@ -613,7 +613,7 @@
     sprite: Clothing/Belt/syndieholster.rsi
   - type: ItemSlots
     slots:
-      gun:
+      item:
         name: clothing-holster-gun
         whitelist:
           components:

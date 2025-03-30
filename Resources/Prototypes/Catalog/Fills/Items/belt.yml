@@ -191,7 +191,7 @@
   components:
   - type: ContainerFill
     containers:
-      handgun:
+      item:
       - WeaponRevolverInspector
   - type: StorageFill
     contents:
