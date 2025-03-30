@@ -264,9 +264,13 @@
     ports:
     - PowerCharging
     - PowerDischarging
+    - AboveThreshold
+    - BelowThreshold
     lastSignals:
       PowerCharging: false
       PowerDischarging: false
+      AboveThreshold: false
+      BelowThreshold: false
   - type: Construction
     node: power_sensor
   - type: PowerThreshold
