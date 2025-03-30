@@ -69,3 +69,9 @@ signal-port-description-power-charging = This port is invoked with HIGH when the
 
 signal-port-name-power-discharging = Discharging
 signal-port-description-power-discharging = This port is invoked with HIGH when the battery is losing charge and LOW when not.
+
+signal-port-name-above-threshold = Above Threshold
+signal-port-description-above-threshold = This port is invoked with HIGH when the charge is above the threshold and LOW when not.
+
+signal-port-name-below-threshold = Below Threshold
+signal-port-description-below-threshold = This port is invoked with HIGH when the charge is below the threshold and LOW when not.

@@ -269,6 +269,12 @@
       PowerDischarging: false
   - type: Construction
     node: power_sensor
+  - type: PowerThreshold
+    canChangeThresholdAmount: true
+  - type: UserInterface
+    interfaces:
+      enum.ThresholdAmountUiKey.Key:
+        type: ThresholdAmountBoundUserInterface
 
 - type: entity
   parent: BaseLogicItem

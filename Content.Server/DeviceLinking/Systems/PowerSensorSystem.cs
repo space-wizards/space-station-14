@@ -9,6 +9,7 @@ using Content.Shared.Popups;
 using Content.Shared.Power.Generator;
 using Content.Shared.Timing;
 using Content.Shared.Tools.Systems;
+using Content.Shared.DeviceLinking.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
@@ -56,7 +57,7 @@ public sealed class PowerSensorSystem : EntitySystem
 
     private void OnInit(EntityUid uid, PowerSensorComponent comp, ComponentInit args)
     {
-        _deviceLink.EnsureSourcePorts(uid, comp.ChargingPort, comp.DischargingPort);
+        _deviceLink.EnsureSourcePorts(uid, comp.ChargingPort, comp.DischargingPort, comp.AbovePort, comp.BelowPort);
     }
 
     private void OnExamined(EntityUid uid, PowerSensorComponent comp, ExaminedEvent args)
@@ -91,6 +92,10 @@ public sealed class PowerSensorSystem : EntitySystem
 
     private void UpdateOutputs(EntityUid uid, PowerSensorComponent comp)
     {
+        // Get current threshold
+        var threshold = Comp<PowerThresholdComponent>(uid).ThresholdAmount;
+        comp.ThresholdAmount = threshold;
+        
         // get power stats on the power network that's been switched to
         var powerSwitchable = Comp<PowerSwitchableComponent>(uid);
         var cable = powerSwitchable.Cables[powerSwitchable.ActiveIndex];
@@ -100,6 +105,8 @@ public sealed class PowerSensorSystem : EntitySystem
         var charge = 0f;
         var chargingState = false;
         var dischargingState = false;
+        var aboveState = false;
+        var belowState = false;
 
         // update state based on the power stats retrieved from the selected power network
         var xform = _xformQuery.GetComponent(uid);
@@ -117,6 +124,8 @@ public sealed class PowerSensorSystem : EntitySystem
             charge = comp.Output ? stats.OutStorageCurrent : stats.InStorageCurrent;
             chargingState = charge > comp.LastCharge;
             dischargingState = charge < comp.LastCharge;
+            aboveState = charge >= comp.ThresholdAmount;
+            belowState = charge < comp.ThresholdAmount;
             break;
         }
 
@@ -133,6 +142,24 @@ public sealed class PowerSensorSystem : EntitySystem
         {
             comp.DischargingState = dischargingState;
             _deviceLink.SendSignal(uid, comp.DischargingPort, dischargingState);
+        }
+
+        if (comp.AboveState != aboveState)
+        {
+            comp.AboveState = aboveState;
+            if (aboveState)
+            {
+                _deviceLink.SendSignal(uid, comp.AbovePort, aboveState);
+            }
+        }
+
+        if (comp.BelowState != belowState)
+        {
+            comp.BelowState = belowState;
+            if (belowState)
+            {
+                _deviceLink.SendSignal(uid, comp.BelowPort, belowState);
+            }
         }
     }
 }

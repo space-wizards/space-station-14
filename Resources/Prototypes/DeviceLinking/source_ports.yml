@@ -156,3 +156,13 @@
   id: PowerDischarging
   name: signal-port-name-power-discharging
   description: signal-port-description-power-discharging
+
+- type: sourcePort
+  id: AboveThreshold
+  name: signal-port-name-above-threshold
+  description: signal-port-description-above-threshold
+
+- type: sourcePort
+  id: BelowThreshold
+  name: signal-port-name-below-threshold
+  description: signal-port-description-below-threshold
