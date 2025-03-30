@@ -35,7 +35,6 @@
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/blue.rsi
       state: icon
-      noRot: true
     - type: Item
       sprite: Objects/Tanks/Jetpacks/blue.rsi
       size: Huge
