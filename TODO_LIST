@@ -2,12 +2,10 @@
 --			Give: Passenger PDA/ID (name?), Ancient jumpsuit, gas mask, budget insuls,
 				shoes, bling, ID computer board in pocket
 - Stuff that gets flushed down toilets, aside from the mime and clowns', goes to the QM's shower for some reason.
+	Figure out mail chutes first, though.
 Evac:
 -	Rename + fill ore crates
 -	Decals, of course
-- Maints "Bar": Two papers - one explaining the maints bar contest, the second responding to the tiny little maints bar and encouraging people to do better.
-	"Yes, I suppose that water does technically count as a drink, but you know that's not what we meant when we said 'able to serve drinks'!"
-- Name buttons and levers(?) for clarity
 - Mailing units
 - Make the station move forward!
 - Job numbers in the prototype file
@@ -74,6 +72,7 @@ TEG just engi doors
 Swap nuke/PA? Move nuke to vault?
 Move oxy miner to where the other gasses are?
 Liquid carbon dioxide can hooked up to condenser behind bar is wrong?
+Set ejection chamber button access (cap and HoS)
 
 The big things:
 Set up evac shuttle (possibly shrink it, too)
@@ -104,6 +103,7 @@ AI scrubber vent pump starts off
 	If this works, probs turn on some other Atmos stuff, too
 Check lighting
 Make sure arrivals meteor shield didn't block the shuttle
+Make sure det/prosc door switches do what they're supposed to. Especially wrt the shutter.
 
 
 THINGS I COULD MAKE:
@@ -165,3 +165,6 @@ DONE:
 /* 	down live? */
 /* On the second try I never got this exception. Maybe I just never visited that part of the station? */
 /* Hook up brig timers */
+/* - Maints "Bar": Two papers - one explaining the maints bar contest, the second responding to the tiny little maints bar and encouraging people to do better. */
+/* 	"Yes, I suppose that water does technically count as a drink, but you know that's not what we meant when we said 'able to serve drinks'!" */
+/* - Name buttons and levers(?) for clarity */

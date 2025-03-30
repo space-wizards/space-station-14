@@ -50,3 +50,12 @@ Advanced->serviceblack  - Security Hallway Writing
 191 129 63 100 - Engine Room Floor Cables
 
 10 20 79 100 (HSV) - Bartender private room wood siding
+
+Material->purple (A=65) - Chapel stained glass
+16 16 16 65 - Chapel stained glass (FullTileOverlay)
+16 16 16 65 - Chapel wood floor wash
+
+PIPES:
+#999999 - Carbon Dioxide
+#15AAFF - Oxygen
+#FF0000 - Nitrogen
