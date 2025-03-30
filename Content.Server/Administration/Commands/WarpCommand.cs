@@ -7,7 +7,6 @@ using Content.Shared.Ghost;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
@@ -58,16 +57,14 @@ namespace Content.Server.Administration.Commands
                 var currentMap = _entManager.GetComponent<TransformComponent>(playerEntity).MapID;
                 var currentGrid = _entManager.GetComponent<TransformComponent>(playerEntity).GridUid;
 
-                var transformSystem = _entManager.System<SharedTransformSystem>();
-
                 var found = GetWarpPointByName(location)
                     .OrderBy(p => p.Item1, Comparer<EntityCoordinates>.Create((a, b) =>
                     {
                         // Sort so that warp points on the same grid/map are first.
                         // So if you have two maps loaded with the same warp points,
                         // it will prefer the warp points on the map you're currently on.
-                        var aGrid = transformSystem.GetGrid(a);
-                        var bGrid = transformSystem.GetGrid(b);
+                        var aGrid = a.GetGridUid(_entManager);
+                        var bGrid = b.GetGridUid(_entManager);
 
                         if (aGrid == bGrid)
                         {
@@ -84,8 +81,8 @@ namespace Content.Server.Administration.Commands
                             return 1;
                         }
 
-                        var mapA = transformSystem.GetMapId(a);
-                        var mapB = transformSystem.GetMapId(b);
+                        var mapA = a.GetMapId(_entManager);
+                        var mapB = a.GetMapId(_entManager);
 
                         if (mapA == mapB)
                         {
@@ -122,7 +119,7 @@ namespace Content.Server.Administration.Commands
 
                 var xform = _entManager.GetComponent<TransformComponent>(playerEntity);
                 var xformSystem = _entManager.System<SharedTransformSystem>();
-                xformSystem.SetCoordinates(playerEntity, coords);
+                xform.Coordinates = coords;
                 xformSystem.AttachToGridOrMap(playerEntity, xform);
                 if (_entManager.TryGetComponent(playerEntity, out PhysicsComponent? physics))
                 {
