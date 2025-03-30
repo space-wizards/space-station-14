@@ -442,6 +442,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         RaiseLocalEvent(user, ref attackEv);
 
         weapon.Attacking = true;
+        DirtyField(weaponUid, weapon, nameof(MeleeWeaponComponent.Attacking));
         return true;
     }
 
@@ -841,7 +842,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
                 DirtyField(uid, meleeWeapon, nameof(MeleeWeaponComponent.Damage));
             }
 
-            meleeWeapon.HitSound = itemToggleMelee.ActivatedSoundOnHit;
+            if (meleeWeapon.HitSound?.Equals(itemToggleMelee.ActivatedSoundOnHit) != true)
+            {
+                meleeWeapon.HitSound = itemToggleMelee.ActivatedSoundOnHit;
+                DirtyField(uid, meleeWeapon, nameof(MeleeWeaponComponent.HitSound));
+            }
 
             if (itemToggleMelee.ActivatedSoundOnHitNoDamage != null)
             {
