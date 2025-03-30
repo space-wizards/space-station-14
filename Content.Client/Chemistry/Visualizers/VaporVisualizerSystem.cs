@@ -41,7 +41,7 @@ public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsCompone
             TryComp<AnimationPlayerComponent>(uid, out var animPlayer) &&
             !AnimationSystem.HasRunningAnimation(uid, animPlayer, VaporVisualsComponent.AnimationKey))
         {
-            AnimationSystem.Play(new Entity<AnimationPlayerComponent>(uid, animPlayer), comp.VaporFlick, VaporVisualsComponent.AnimationKey);
+            AnimationSystem.Play((uid, animPlayer), comp.VaporFlick, VaporVisualsComponent.AnimationKey);
         }
     }
 
