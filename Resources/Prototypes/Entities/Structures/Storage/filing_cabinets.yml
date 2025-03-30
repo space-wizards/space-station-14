@@ -2,45 +2,45 @@
   id: FilingCabinetFillTable
   table: !type:AllSelector
     children:
-      - !type:GroupSelector
-        rolls: !type:RangeNumberSelector
-          range: 1, 3
-        children:
-        - id: BoxFolderBlue
-        - id: BoxFolderRed
-        - id: BoxFolderYellow
-        - id: BoxFolderWhite
-        - id: BoxFolderGrey
-        - id: BoxFolderBlack
-      - !type:GroupSelector
-        rolls: !type:RangeNumberSelector
-          range: 0, 2
-        children:
-        - id: Paper
-        - id: PaperOffice
-      - !type:GroupSelector
-        rolls: !type:ConstantNumberSelector
-          value: 2
-        children:
-        - !type:NoneSelector
-        - id: Pen
-          weight: 0.3
-        - id: Pen
-          weight: 0.1
-      - !type:GroupSelector
-        children:
-        - !type:NoneSelector
-        - !type:AllSelector
-          weight: 0.01
-          children: 
-            - id: RubberStampApproved
-            - id: RubberStampDenied
-        - id: RubberStampGreytide
-          weight: 0.005
-        - id: LuxuryPen
-          weight: 0.05
-        - id: NanoTaskCartridge
-          weight: 0.05
+    - !type:GroupSelector
+      rolls: !type:RangeNumberSelector
+        range: 1, 3
+      children:
+      - id: BoxFolderBlue
+      - id: BoxFolderRed
+      - id: BoxFolderYellow
+      - id: BoxFolderWhite
+      - id: BoxFolderGrey
+      - id: BoxFolderBlack
+    - !type:GroupSelector
+      rolls: !type:RangeNumberSelector
+        range: 0, 2
+      children:
+      - id: Paper
+      - id: PaperOffice
+    - !type:GroupSelector
+      rolls: !type:ConstantNumberSelector
+        value: 2
+      children:
+      - !type:NoneSelector
+      - id: Pen
+        weight: 0.3
+      - id: Pen
+        weight: 0.1
+    - !type:GroupSelector
+      children:
+      - !type:NoneSelector
+      - !type:AllSelector
+        weight: 0.01
+        children: 
+        - id: RubberStampApproved
+        - id: RubberStampDenied
+      - id: RubberStampGreytide
+        weight: 0.005
+      - id: LuxuryPen
+        weight: 0.05
+      - id: NanoTaskCartridge
+        weight: 0.05
 
 - type: entity
   parent: [ BaseStructureDynamic, BaseBagOpenClose ]
