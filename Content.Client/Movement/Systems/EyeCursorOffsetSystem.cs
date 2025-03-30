@@ -38,7 +38,7 @@ public sealed partial class EyeCursorOffsetSystem : EntitySystem
 
     public Vector2? OffsetAfterMouse(EntityUid uid, EyeCursorOffsetComponent? component)
     {
-        var localPlayer = _player.LocalSession?.AttachedEntity;
+        var localPlayer = _player.LocalEntity;
         var mousePos = _inputManager.MouseScreenPosition;
         var screenSize = _clyde.MainWindow.Size;
         var minValue = MathF.Min(screenSize.X / 2, screenSize.Y / 2) * _edgeOffset;
