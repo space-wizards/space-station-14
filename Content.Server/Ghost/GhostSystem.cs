@@ -488,7 +488,7 @@ namespace Content.Server.Ghost
                 SetTimeOfDeath(ghost, mind.Comp.TimeOfDeath!.Value, ghostComponent);
             }
 
-            SetCanReturnToBody(ghost, ghostComponent, canReturn);
+            SetCanReturnToBody(ghostComponent, canReturn);
 
             if (canReturn)
                 _minds.Visit(mind.Owner, ghost, mind.Comp);
