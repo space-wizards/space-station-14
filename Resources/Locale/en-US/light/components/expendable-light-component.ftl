@@ -1,2 +1,2 @@
 expendable-light-start-verb = Start Light
-expendable-light-spent-prefix = spent
+expendable-light-spent-prefix = spent {$baseName}
