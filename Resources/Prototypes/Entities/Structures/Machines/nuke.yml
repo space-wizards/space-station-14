@@ -1,7 +1,7 @@
 - type: entity
   parent: [BaseStructure, StructureWheeled, BaseMajorContraband]
   id: NuclearBomb
-  name: nuclear fission explosive
+  name: unclear fission explosive
   description: You probably shouldn't stick around to see if this is armed.
   components:
   - type: Transform
@@ -125,7 +125,7 @@
 - type: entity
   parent: StorageTank
   id: NuclearBombKeg
-  name: nuclear fission explosive
+  name: unclear fission explosive
   suffix: keg
   description: You probably shouldn't stick around to see if this is armed. It has a tap on the side.
   components:
