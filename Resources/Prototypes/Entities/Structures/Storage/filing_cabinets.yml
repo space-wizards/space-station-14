@@ -27,7 +27,6 @@
     - !type:GroupSelector
       prob: 0.15
       children:
-      - !type:NoneSelector
       - !type:AllSelector
         weight: 0.2
         children: 
