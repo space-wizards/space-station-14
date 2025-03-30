@@ -81,14 +81,14 @@ public sealed class ProjectileAnomalySystem : EntitySystem
         EntityCoordinates targetCoords,
         float severity)
     {
-        var mapPos = coords.ToMap(EntityManager, _xform);
+        var mapPos = _xform.ToMapCoordinates(coords);
 
         var spawnCoords = _mapManager.TryFindGridAt(mapPos, out var gridUid, out _)
-                ? coords.WithEntityId(gridUid, EntityManager)
+                ? _xform.WithEntityId(coords, gridUid)
                 : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
 
         var ent = Spawn(component.ProjectilePrototype, spawnCoords);
-        var direction = targetCoords.ToMapPos(EntityManager, _xform) - mapPos.Position;
+        var direction = _xform.ToMapCoordinates(targetCoords).Position - mapPos.Position;
 
         if (!TryComp<ProjectileComponent>(ent, out var comp))
             return;

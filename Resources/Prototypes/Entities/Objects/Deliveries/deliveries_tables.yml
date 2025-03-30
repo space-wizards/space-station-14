@@ -1,0 +1,159 @@
+### Spawners
+- type: entityTable
+  id: RandomDeliveryBasic
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomDeliveryLetterBasic
+      weight: 0.7
+    - !type:NestedSelector
+      tableId: RandomDeliveryPackageBasic
+      weight: 0.3
+
+# Letters
+
+- type: entityTable # Used to pick between all different letter types, if there will be more
+  id: RandomDeliveryLetterBasic
+  table: !type:GroupSelector
+    children:
+    - id: LetterDelivery
+
+# Packages
+
+- type: entityTable # Used to pick between all different package types, if there will be more
+  id: RandomDeliveryPackageBasic
+  table: !type:GroupSelector
+    children:
+    - id: PackageDelivery
+
+### Reward Tables
+
+- type: entityTable
+  id: LetterDeliveryRewards
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: LetterCommonEntityTable
+      weight: 0.6
+    - !type:NestedSelector
+      tableId: LetterUncommonEntityTable
+      weight: 0.3
+    - !type:NestedSelector
+      tableId: LetterRareEntityTable
+      weight: 0.1
+
+- type: entityTable
+  id: PackageDeliveryRewards
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: PackageCommonEntityTable
+      weight: 0.6
+    - !type:NestedSelector
+      tableId: PackageUncommonEntityTable
+      weight: 0.3
+    - !type:NestedSelector
+      tableId: PackageRareEntityTable
+      weight: 0.1
+
+### Loot Tables
+# Letters
+- type: entityTable
+  id: LetterCommonEntityTable # Basically trash and spam mail, maybe something barely useful here and there
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector # Don't you love getting mailed trash?
+      tableId: GenericTrashItems
+    - !type:NestedSelector
+      weight: 4
+      tableId: SpamMailTable
+    - !type:NestedSelector
+      weight: 2
+      tableId: RandomBookTable
+    - !type:NestedSelector
+      weight: 2
+      tableId: RandomSnackTable
+    - !type:NestedSelector
+      weight: 2
+      tableId: RandomAllSodaTable
+
+- type: entityTable # TODO: Add more variety!
+  id: LetterUncommonEntityTable # Some more varied things, should never be more expensive than 100 spesos
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: RandomSafePillTable
+    - !type:NestedSelector
+      tableId: RandomSafeSyringeTable
+    - !type:NestedSelector
+      tableId: UncommonLetterBundleTable
+    - id: SpaceCash100
+    - id: Joint
+
+- type: entityTable # TODO: Add more variety!
+  id: LetterRareEntityTable # Interesting things that can actually be of use, should never be more expensive than 500 spesos
+  table: !type:GroupSelector
+    children:
+    - id: ResearchDisk5000
+    - id: JointRainbow
+    - id: StrangePill
+      amount: !type:RangeNumberSelector
+        range: 1, 3
+    - !type:GroupSelector
+      children:
+      - id: Brutepack
+      - id: Ointment
+      - id: Gauze
+      - id: Bloodpack
+
+# Packages
+# TODO: Currently mostly maints loot, should be updated in the future.
+- type: entityTable # TODO: Add more variety!
+  id: PackageCommonEntityTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: MaintToolsTable
+      rolls: !type:RangeNumberSelector
+        range: 1, 2
+    - !type:NestedSelector
+      tableId: FoodRandomCakeTable
+      weight: 2
+    - id: FoodBoxPizzaFilled
+
+- type: entityTable
+  id: PackageUncommonEntityTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: MaintFluffTable
+      weight: 0.4
+      rolls: !type:RangeNumberSelector
+        range: 1, 2
+    - !type:NestedSelector
+      tableId: AllPlushiesTable
+      weight: 0.4
+    - !type:NestedSelector
+      tableId: RandomAllAlcoholTable
+      weight: 0.2
+      rolls: !type:RangeNumberSelector
+        range: 2, 3
+
+- type: entityTable # TODO: Add more variety!
+  id: PackageRareEntityTable
+  table: !type:GroupSelector
+    children:
+    - id: MedkitAdvancedFilled # TODO: Replace with PackageRareGeneralBundlesTable for when something doesn't fit with a department. (Like a bundle of bed sheets, dunno)
+    - id: PipeBomb # TODO: PackageRarePunishmentTable, including things like pipebombs and other potentially harmful things (the pipebomb should also get primed when unpacked)
+    - !type:NestedSelector
+      tableId: SmallCritterEntityTable
+    #- !type:NestedSelector # TODO: Uncomment after all the rare department bundles are done (medical, security, etc...)
+    #  tableId: PackageRareDepartmentBundlesTable
+    - !type:NestedSelector
+      tableId: AnimalMaskTable
+    - !type:NestedSelector
+      tableId: MaintWeaponTable
+      weight: 0.5
+    - !type:NestedSelector
+      tableId: SyndieMaintLoot
+      weight: 0.5
