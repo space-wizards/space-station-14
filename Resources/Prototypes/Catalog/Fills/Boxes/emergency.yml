@@ -89,7 +89,7 @@
   - type: StorageFill
     contents:
     - id: ClothingMaskGasSecurity
-    - id: EmergencyOxygenTankFilled
+    - id: ExtendedEmergencyOxygenTankFilled
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
@@ -97,7 +97,7 @@
   - type: Sprite
     layers:
     - state: internals
-    - state: emergencytank
+    - state: extendedtank
 
 - type: entity
   parent: BoxSurvivalSecurity
@@ -107,7 +107,7 @@
   - type: StorageFill
     contents:
     - id: ClothingMaskGasSecurity
-    - id: EmergencyNitrogenTankFilled
+    - id: ExtendedEmergencyNitrogenTankFilled
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
