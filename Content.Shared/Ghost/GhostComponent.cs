@@ -59,7 +59,6 @@ public sealed partial class GhostComponent : Component
         {
             if (_canGhostInteract == value) return;
             _canGhostInteract = value;
-
             Dirty();
         }
     }
