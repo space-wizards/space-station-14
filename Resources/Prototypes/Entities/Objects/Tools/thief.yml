@@ -38,3 +38,40 @@
       layers:
         - state: extraction_point
           map: [ "foldedLayer" ]
+
+- type: entity
+  id: ToolboxThief
+  name: undetermined thieving toolbox
+  description: This is where your favorite thief's supplies lie. Try to remember which ones.
+  parent: [ BaseItem, BaseMinorContraband ]
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_thief.rsi
+    state: icon
+  - type: ThiefUndeterminedBackpack
+    possibleSets:
+    # TODO Thief pinpointer needed
+    - ChemistrySet
+    - ToolsSet
+    - ChameleonSet # TODO Chameleon stump PR needed
+    - SyndieSet
+    - SleeperSet
+    - CommunicatorSet
+    - SmugglerSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+- type: entity
+  id: SatchelThief
+  name: undetermined thieving satchel
+  parent: ToolboxThief
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/smuggler.rsi
+    state: icon
+  - type: ThiefUndeterminedBackpack
+    spawnedStoragePrototype: ClothingBackpackSatchelSmugglerUnanchored
