@@ -61,8 +61,8 @@
     sprite: Objects/Tanks/anesthetic.rsi
     state: icon
   content:
-  - NocturineChemistryBottle
-  - NocturineChemistryBottle
+  - ChemistryBottleNocturine
+  - ChemistryBottleNocturine
   - HypopenBox
   - NitrousOxideTankFilled
 
