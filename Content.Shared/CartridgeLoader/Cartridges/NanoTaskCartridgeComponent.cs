@@ -10,22 +10,7 @@ public sealed partial class NanoTaskCartridgeComponent : Component
     /// The list of tasks
     /// </summary>
     [DataField]
-    public List<NanoTaskItemAndId> StationTasks = [];
-
-    [DataField]
-    public Dictionary<string, List<NanoTaskItemAndId>> DepartmentTasks = [];
-
-    /// <summary>
-    /// When the user can print again
-    /// </summary>
-    [DataField, AutoPausedField]
-    public TimeSpan NextPrintAllowedAfter = TimeSpan.Zero;
-
-    /// <summary>
-    /// How long in between each time the user can print out a task
-    /// </summary>
-    [DataField]
-    public TimeSpan PrintDelay = TimeSpan.FromSeconds(5);
+    public List<NanoTaskItemAndDepartment> Tasks = [];
 }
 
 /// <summary>

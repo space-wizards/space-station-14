@@ -9,7 +9,7 @@ namespace Content.Client.CartridgeLoader.Cartridges;
 [GenerateTypedNameReferences]
 public sealed partial class NanoTaskTable : BoxContainer
 {
-    public List<NanoTaskItemAndId> Tasks = [];
+    public List<NanoTaskItemAndDepartment> Tasks = [];
 
     public NanoTaskTable()
     {

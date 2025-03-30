@@ -4,7 +4,9 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Robust.Client.Graphics;
-using Content.Shared.NanoTask;
+using Robust.Shared.Prototypes;
+using Content.Shared.NanoTask.Prototypes;
+using System.Diagnostics;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
@@ -25,50 +27,40 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
         HorizontalExpand = true;
         VerticalExpand = true;
 
-        StationTaskTable.NewTaskButton.OnPressed += _ => NewTask?.Invoke(StationTaskTable, new(NanoTaskConstants.NET_CATEGORY_STATION_TASK, null));
+        StationTaskTable.NewTaskButton.OnPressed += _ => NewTask?.Invoke(StationTaskTable, new(NanoTaskCategory.Station, null));
 
         TabsCategory.SetTabTitle(0, Loc.GetString("nano-task-ui-department-tasks"));
         TabsCategory.SetTabTitle(1, Loc.GetString("nano-task-ui-station-tasks"));
     }
 
-    public void UpdateState(List<NanoTaskItemAndId> stationTasks, Dictionary<string, List<NanoTaskItemAndId>> departmentTasks)
+    public void UpdateState(List<NanoTaskItemAndDepartment> tasks, List<ProtoId<NanoTaskDepartmentPrototype>> departments)
     {
-        TabsCategory.Visible = true;
-        ConnectionBox.Visible = false;
-        OfflineBox.Visible = false;
+        UpdateStationTasksState(tasks.Where(task => task.Category.Category is NanoTaskCategory.Station).ToList());
 
-        StationTaskTable.Clear();
+        UpdateDepartmentTasksState(tasks.Where(task => task.Category.Category is NanoTaskCategory.Department).ToList(), departments);
+    }
 
-        StationTaskTable.HighPriority.HeaderLabel.Text = Loc.GetString("nano-task-ui-heading-high-priority-tasks", ("amount", stationTasks.Count(task => task.Data.Priority == NanoTaskPriority.High)));
-        StationTaskTable.MediumPriority.HeaderLabel.Text = Loc.GetString("nano-task-ui-heading-medium-priority-tasks", ("amount", stationTasks.Count(task => task.Data.Priority == NanoTaskPriority.Medium)));
-        StationTaskTable.LowPriority.HeaderLabel.Text = Loc.GetString("nano-task-ui-heading-low-priority-tasks", ("amount", stationTasks.Count(task => task.Data.Priority == NanoTaskPriority.Low)));
-
-        StationTaskTable.Tasks = stationTasks;
-        foreach (var task in stationTasks)
-        {
-            var container = task.Data.Priority switch
-            {
-                NanoTaskPriority.High => StationTaskTable.HighContainer,
-                NanoTaskPriority.Medium => StationTaskTable.MediumContainer,
-                NanoTaskPriority.Low => StationTaskTable.LowContainer,
-            };
-            var control = new NanoTaskItemControl(task);
-            container.AddChild(control);
-            control.OnMainPressed += id => OpenTask?.Invoke(StationTaskTable, new(NanoTaskConstants.NET_CATEGORY_STATION_TASK, null), id);
-            control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(StationTaskTable, new(NanoTaskConstants.NET_CATEGORY_STATION_TASK, null), id);
-        }
-
+    private void UpdateDepartmentTasksState(List<NanoTaskItemAndDepartment> tasks, List<ProtoId<NanoTaskDepartmentPrototype>> departments)
+    {
         TabsDepartmentTask.RemoveAllChildren();
 
-        foreach (var (department, tasks, index) in departmentTasks.OrderBy(x => x.Key).Select((x, i) => (x.Key, x.Value, i)))
-        {
-            var table = new NanoTaskTable();
-            table.Tasks = tasks;
-            table.NewTaskButton.OnPressed += _ => NewTask?.Invoke(table, new(NanoTaskConstants.NET_CATEGORY_DEPARTAMENT_TASK, department));
+        var departmentTasks = tasks
+            .GroupBy(task => task.Category.Department)
+            .OrderBy(group => group.Key)
+            .ToList();
 
-            foreach (var task in tasks)
+        foreach (var (department, index) in departments.Select((d, i) => (d, i)))
+        {
+            var table = new NanoTaskTable
             {
-                var container = task.Data.Priority switch
+                Tasks = tasks,
+            };
+            table.NewTaskButton.OnPressed += _ => NewTask?.Invoke(table, new(NanoTaskCategory.Department, department));
+
+            var groupedTasks = departmentTasks.FirstOrDefault(group => group.Key == department) ?? Enumerable.Empty<NanoTaskItemAndDepartment>();
+            foreach (var task in groupedTasks)
+            {
+                var container = task.Item.Data.Priority switch
                 {
                     NanoTaskPriority.High => table.HighContainer,
                     NanoTaskPriority.Medium => table.MediumContainer,
@@ -76,12 +68,43 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
                 };
                 var control = new NanoTaskItemControl(task);
                 container.AddChild(control);
-                control.OnMainPressed += id => OpenTask?.Invoke(table, new(NanoTaskConstants.NET_CATEGORY_DEPARTAMENT_TASK, department), id);
-                control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(table, new(NanoTaskConstants.NET_CATEGORY_DEPARTAMENT_TASK, department), id);
+                control.OnMainPressed += id => OpenTask?.Invoke(table, new(NanoTaskCategory.Department, department), id);
+                control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(table, new(NanoTaskCategory.Department, department), id);
             }
 
+            var departmentName = IoCManager.Resolve<IPrototypeManager>().Index(department).Name;
+
             TabsDepartmentTask.AddChild(table);
-            TabsDepartmentTask.SetTabTitle(index, Loc.GetString(department));
+            TabsDepartmentTask.SetTabTitle(index, Loc.GetString(departmentName));
+        }
+    }
+
+    private void UpdateStationTasksState(List<NanoTaskItemAndDepartment> tasks)
+    {
+        TabsCategory.Visible = true;
+        ConnectionBox.Visible = false;
+        OfflineBox.Visible = false;
+
+        StationTaskTable.Clear();
+
+        StationTaskTable.Tasks = tasks;
+
+        StationTaskTable.HighPriority.HeaderLabel.Text = Loc.GetString("nano-task-ui-heading-high-priority-tasks", ("amount", StationTaskTable.Tasks.Count(task => task.Item.Data.Priority == NanoTaskPriority.High)));
+        StationTaskTable.MediumPriority.HeaderLabel.Text = Loc.GetString("nano-task-ui-heading-medium-priority-tasks", ("amount", StationTaskTable.Tasks.Count(task => task.Item.Data.Priority == NanoTaskPriority.Medium)));
+        StationTaskTable.LowPriority.HeaderLabel.Text = Loc.GetString("nano-task-ui-heading-low-priority-tasks", ("amount", StationTaskTable.Tasks.Count(task => task.Item.Data.Priority == NanoTaskPriority.Low)));
+
+        foreach (var task in StationTaskTable.Tasks)
+        {
+            var container = task.Item.Data.Priority switch
+            {
+                NanoTaskPriority.High => StationTaskTable.HighContainer,
+                NanoTaskPriority.Medium => StationTaskTable.MediumContainer,
+                NanoTaskPriority.Low => StationTaskTable.LowContainer,
+            };
+            var control = new NanoTaskItemControl(task);
+            container.AddChild(control);
+            control.OnMainPressed += id => OpenTask?.Invoke(StationTaskTable, new(NanoTaskCategory.Station, null), id);
+            control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(StationTaskTable, new(NanoTaskCategory.Station, null), id);
         }
     }
 

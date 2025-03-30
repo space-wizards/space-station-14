@@ -16,18 +16,18 @@ public sealed partial class NanoTaskItemControl : Control
     public Action<uint>? OnMainPressed;
     public Action<uint>? OnDonePressed;
 
-    public NanoTaskItemControl(NanoTaskItemAndId item)
+    public NanoTaskItemControl(NanoTaskItemAndDepartment item)
     {
         RobustXamlLoader.Load(this);
 
-        TaskLabel.Text = item.Data.Description;
+        TaskLabel.Text = item.Item.Data.Description;
         TaskLabel.FontColorOverride = Color.White;
-        TaskForLabel.Text = item.Data.TaskIsFor;
+        TaskForLabel.Text = item.Item.Data.TaskIsFor;
 
-        MainButton.OnPressed += _ => OnMainPressed?.Invoke(item.Id);
-        DoneButton.OnPressed += _ => OnDonePressed?.Invoke(item.Id);
+        MainButton.OnPressed += _ => OnMainPressed?.Invoke(item.Item.Id);
+        DoneButton.OnPressed += _ => OnDonePressed?.Invoke(item.Item.Id);
 
-        MainButton.Disabled = item.Data.Status == NanoTaskItemStatus.Completed;
-        DoneButton.Text = item.Data.Status == NanoTaskItemStatus.Completed ? Loc.GetString("nano-task-ui-revert-done") : Loc.GetString("nano-task-ui-done");
+        MainButton.Disabled = item.Item.Data.Status == NanoTaskItemStatus.Completed;
+        DoneButton.Text = item.Item.Data.Status == NanoTaskItemStatus.Completed ? Loc.GetString("nano-task-ui-revert-done") : Loc.GetString("nano-task-ui-done");
     }
 }

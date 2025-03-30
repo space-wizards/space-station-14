@@ -16,7 +16,7 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
 {
     private readonly ButtonGroup _priorityGroup = new();
     private uint? _editingTaskId = null;
-    private string _nanoTaskCategory = NanoTaskConstants.NET_CATEGORY_STATION_TASK;
+    private NanoTaskCategory _nanoTaskCategory = NanoTaskCategory.Station;
     private string? _nanoTaskDepartment = null;
 
     public Action<uint, NanoTaskCategoryAndDepartment, NanoTaskItem>? TaskSaved;
@@ -86,7 +86,7 @@ public sealed partial class NanoTaskItemPopup : DefaultWindow
         DeleteButton.Visible = id is not null;
     }
 
-    public void SetCategory(string category, string? name)
+    public void SetCategory(NanoTaskCategory category, string? name)
     {
         _nanoTaskCategory = category;
         _nanoTaskDepartment = name;

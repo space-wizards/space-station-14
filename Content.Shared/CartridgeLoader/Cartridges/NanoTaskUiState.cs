@@ -1,3 +1,5 @@
+using Content.Shared.NanoTask.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
@@ -69,26 +71,23 @@ public sealed class NanoTaskItem
 ///     Pairs a NanoTask item and its identifier
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
-public sealed class NanoTaskItemAndId
+public sealed class NanoTaskItemAndId(uint id, NanoTaskItem data)
 {
-    public readonly uint Id;
-    public readonly NanoTaskItem Data;
-
-    public NanoTaskItemAndId(uint id, NanoTaskItem data)
-    {
-        Id = id;
-        Data = data;
-    }
+    public readonly uint Id = id;
+    public readonly NanoTaskItem Data = data;
 };
+
+[Serializable, NetSerializable, DataRecord]
+public sealed record NanoTaskItemAndDepartment(NanoTaskItemAndId Item, NanoTaskCategoryAndDepartment Category);
 
 /// <summary>
 ///     The UI state of the NanoTask
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class NanoTaskUiState(Dictionary<string, List<NanoTaskItemAndId>> departamentTasks, List<NanoTaskItemAndId> stationTasks) : BoundUserInterfaceState
+public sealed class NanoTaskUiState(List<NanoTaskItemAndDepartment> tasks, List<ProtoId<NanoTaskDepartmentPrototype>> departments) : BoundUserInterfaceState
 {
-    public List<NanoTaskItemAndId> StationTasks = stationTasks;
-    public Dictionary<string, List<NanoTaskItemAndId>> DepartamentTasks = departamentTasks;
+    public readonly List<NanoTaskItemAndDepartment> Tasks = tasks;
+    public readonly List<ProtoId<NanoTaskDepartmentPrototype>> Departments = departments;
 }
 
 [Serializable, NetSerializable]

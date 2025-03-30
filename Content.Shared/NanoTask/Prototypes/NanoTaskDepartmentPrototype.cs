@@ -16,8 +16,5 @@ public sealed class NanoTaskDepartmentPrototype : IPrototype, IAccessReader
     [DataField]
     public HashSet<ProtoId<AccessLevelPrototype>> Access = [];
 
-    [NonSerialized]
-    public List<NanoTaskItemAndId> Tasks = [];
-
     public HashSet<ProtoId<AccessLevelPrototype>> GetAccesses() => Access;
 }

@@ -1,3 +1,5 @@
+using Content.Shared.NanoTask.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CartridgeLoader.Cartridges;
@@ -7,8 +9,15 @@ namespace Content.Shared.CartridgeLoader.Cartridges;
 /// </summary>
 public interface INanoTaskUiMessagePayload;
 
-[Serializable, NetSerializable, DataRecord]
-public sealed record NanoTaskCategoryAndDepartment(string Category, string? Department);
+[Serializable, NetSerializable]
+public enum NanoTaskCategory
+{
+    Station,
+    Department,
+}
+
+[Serializable, NetSerializable]
+public sealed record NanoTaskCategoryAndDepartment(NanoTaskCategory Category, ProtoId<NanoTaskDepartmentPrototype>? Department);
 
 /// <summary>
 ///     Dispatched when a new task is created
@@ -20,6 +29,7 @@ public sealed class NanoTaskAddTask : INanoTaskUiMessagePayload
     ///     The newly created task
     /// </summary>
     public readonly NanoTaskItem Item;
+
     public readonly NanoTaskCategoryAndDepartment Category;
 
     public NanoTaskAddTask(NanoTaskItem item, NanoTaskCategoryAndDepartment category)
@@ -33,19 +43,12 @@ public sealed class NanoTaskAddTask : INanoTaskUiMessagePayload
 ///     Dispatched when an existing task is modified
 /// </summary>
 [Serializable, NetSerializable, DataRecord]
-public sealed class NanoTaskUpdateTask : INanoTaskUiMessagePayload
+public sealed class NanoTaskUpdateTask(NanoTaskItemAndDepartment item) : INanoTaskUiMessagePayload
 {
     /// <summary>
     ///     The task that was updated and its ID
     /// </summary>
-    public readonly NanoTaskItemAndId Item;
-    public readonly NanoTaskCategoryAndDepartment Category;
-
-    public NanoTaskUpdateTask(NanoTaskItemAndId item, NanoTaskCategoryAndDepartment category)
-    {
-        Item = item;
-        Category = category;
-    }
+    public readonly NanoTaskItemAndDepartment Item = item;
 }
 
 /// <summary>
@@ -66,29 +69,13 @@ public sealed class NanoTaskDeleteTask : INanoTaskUiMessagePayload
 }
 
 /// <summary>
-///     Dispatched when a task is requested to be printed
-/// </summary>
-[Serializable, NetSerializable, DataRecord]
-public sealed class NanoTaskPrintTask : INanoTaskUiMessagePayload
-{
-    /// <summary>
-    ///     The NanoTask to print
-    /// </summary>
-    public readonly NanoTaskItem Item;
-
-    public NanoTaskPrintTask(NanoTaskItem item)
-    {
-        Item = item;
-    }
-}
-
-/// <summary>
 ///     Cartridge message event carrying the NanoTask UI messages
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class NanoTaskUiMessageEvent : CartridgeMessageEvent
 {
     public readonly INanoTaskUiMessagePayload Payload;
+
     public NanoTaskUiMessageEvent(INanoTaskUiMessagePayload payload)
     {
         Payload = payload;
