@@ -49,7 +49,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Cargo/mail_large.rsi
-    scale: 0.85,0.85
     layers:
     - state: icon
       map: [ "enum.DeliveryVisualLayers.Icon" ]
@@ -58,8 +57,7 @@
       visible: false
     - state: postmark
     - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
-      scale: 0.6, 0.6
-      offset: -0.23, -0.23
+      offset: -0.21875, -0.25
     - state: fragile
       map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
       visible: false
@@ -89,7 +87,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Cargo/mail.rsi
-    scale: 0.8,0.8
     layers:
     - state: icon
       map: [ "enum.DeliveryVisualLayers.Icon" ]
@@ -98,8 +95,7 @@
       visible: false
     - state: postmark
     - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
-      scale: 0.8, 0.8
-      offset: 0.225, 0.165
+      offset: -0.125, -0.0625
     - state: fragile
       map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
       visible: false

@@ -156,6 +156,7 @@
     sounds:
       Unsexed: UnisexSilicon
     screamAction: null
+  - type: DamagedSiliconAccent
   - type: UnblockableSpeech
   - type: FootstepModifier
     footstepSoundCollection:
