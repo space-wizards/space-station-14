@@ -424,3 +424,14 @@
   solids:
     FoodRainbowCannabisButter: 2
     FoodSnackChocolateBar: 2
+
+- type: microwaveMealRecipe # imp
+  id: RecipeBoiledSpiderLeg
+  name: boiled spider leg recipe
+  result: FoodMeatSpiderlegCooked
+  time: 5
+  group: Savory
+  reagents:
+    Water: 10
+  solids:
+    FoodMeatSpiderLeg: 1

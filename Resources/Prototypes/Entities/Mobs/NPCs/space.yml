@@ -223,6 +223,8 @@
     - id: EggSpider
       amount: 1
       prob: 0.5
+    - id: FoodMeatSpiderLeg # imp
+      amount: 1
   - type: Bloodstream
     bloodMaxVolume: 250
     bloodReagent: Cryoxadone
