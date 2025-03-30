@@ -609,8 +609,6 @@
   name: soda water bottle
   description: Like water, but angry!
   components:
-  - type: Item
-    size: Normal
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -625,8 +623,6 @@
   name: tonic water bottle
   description: Like soda water, but angrier maybe? Often sweeter.
   components:
-  - type: Item
-    size: Normal
   - type: SolutionContainerManager
     solutions:
       drink:
