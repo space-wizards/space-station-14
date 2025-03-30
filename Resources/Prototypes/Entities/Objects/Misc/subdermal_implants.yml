@@ -120,6 +120,8 @@
     - type: Storage
       grid:
       - 0,0,0,1
+      - 2,0,2,1
+      - 4,0,4,1
       blacklist:
         components:
         - Storage
