@@ -576,6 +576,7 @@
   id: DrinkWaterBottleLargeFull
   name: New London spring water
   description: A bo'ol o' wo'er. How does a space station have a spring?
+  suffix: Full
   components:
   - type: Item
     size: Normal
