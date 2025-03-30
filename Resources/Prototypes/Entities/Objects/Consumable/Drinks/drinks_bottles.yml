@@ -45,6 +45,45 @@
   - type: Shakeable
 
 - type: entity
+  parent: DrinkBase
+  id: DrinkBottleBaseFull
+  suffix: Full
+  components:
+  - type: Item
+    size: Small
+  - type: Tag
+    tags:
+      - DrinkCup
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: FitsInDispenser
+    solution: drink
+  - type: Openable
+    sound:
+      collection: bottleOpenSounds
+    closeable: true
+    closeSound:
+      collection: bottleCloseSounds
+  - type: Sprite
+    state: icon
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+       - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+       - !type:SpillBehavior { }
+  - type: DnaSubstanceTrace
+  - type: Sealable
+
+- type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkBottleGlassBaseFull
   abstract: true
@@ -691,23 +730,17 @@
     closeable: false
 
 - type: entity
-  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
+  parent: [DrinkBottleVisualsOpenable, DrinkBottleBaseFull]
   id: DrinkWaterBottleFull
   name: water bottle
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
   components:
-  - type: Item
-    size: Small
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 30
         reagents:
         - ReagentId: Water
           Quantity: 30
-  - type: Label
-    currentLabel: reagent-name-water
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
     layers:
@@ -716,13 +749,18 @@
       - state: icon-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
-  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 5
     fillBaseName: icon-
     inHandsMaxFillLevels: 2
     inHandsFillBaseName: -fill-
-  - type: Sealable
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 100
+  - type: PressurizedSolution
+  - type: Shakeable
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
