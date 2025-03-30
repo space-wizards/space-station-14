@@ -37,7 +37,7 @@ public sealed class FoamVisualizerSystem : VisualizerSystem<FoamVisualsComponent
             if (TryComp(uid, out AnimationPlayerComponent? animPlayer)
                 && !AnimationSystem.HasRunningAnimation(uid, animPlayer, FoamVisualsComponent.AnimationKey))
             {
-                AnimationSystem.Play(new Entity<AnimationPlayerComponent>(uid, animPlayer), comp.Animation, FoamVisualsComponent.AnimationKey);
+                AnimationSystem.Play((uid, animPlayer), comp.Animation, FoamVisualsComponent.AnimationKey);
             }
         }
     }
