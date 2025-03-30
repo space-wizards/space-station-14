@@ -68,6 +68,9 @@ public sealed class ThermalVisionSystem : SharedThermalVisionSystem
     {
         if (_player.LocalEntity != ent.Owner) return;
 
+        //only allow toggling on if not blocked by flash immunity
+        if (ent.Comp.blockedByFlashImmunity) return;
+
         if (_effect == null)
             AddNightVision(ent.Owner);
     }

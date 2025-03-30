@@ -4320,4 +4320,11 @@ Entries:
   id: 598
   time: '2025-03-25T16:10:37.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/423
+- author: Happyrobot33
+  changes:
+  - message: Fixed thermal vision toggle exploit with flash immunity system.
+    type: Fix
+  id: 599
+  time: '2025-03-30T08:47:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/428
 
