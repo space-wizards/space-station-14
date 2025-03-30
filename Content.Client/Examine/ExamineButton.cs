@@ -23,7 +23,7 @@ public sealed class ExamineButton : ContainerButton
     public TextureRect Icon;
 
     public ExamineVerb Verb;
-    private SpriteSystem _spriteSystem;
+    private SpriteSystem _sprite;
 
     public ExamineButton(ExamineVerb verb, SpriteSystem spriteSystem)
     {
@@ -32,7 +32,7 @@ public sealed class ExamineButton : ContainerButton
         SetOnlyStyleClass(StyleClassExamineButton);
 
         Verb = verb;
-        _spriteSystem = spriteSystem;
+        _sprite = spriteSystem;
 
         if (verb.Disabled)
         {
@@ -59,7 +59,7 @@ public sealed class ExamineButton : ContainerButton
 
         if (verb.Icon != null)
         {
-            Icon.Texture = _spriteSystem.Frame0(verb.Icon);
+            Icon.Texture = _sprite.Frame0(verb.Icon);
             Icon.Stretch = TextureRect.StretchMode.KeepAspectCentered;
 
             AddChild(Icon);

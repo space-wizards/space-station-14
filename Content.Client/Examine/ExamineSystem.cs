@@ -30,7 +30,7 @@ namespace Content.Client.Examine
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly VerbSystem _verbSystem = default!;
-        [Dependency] private readonly SpriteSystem _spriteSystem = default!;
+        [Dependency] private readonly SpriteSystem _sprite = default!;
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
@@ -333,7 +333,7 @@ namespace Content.Client.Examine
                 if (!examine.ShowOnExamineTooltip)
                     continue;
 
-                var button = new ExamineButton(examine, _spriteSystem);
+                var button = new ExamineButton(examine, _sprite);
 
                 if (examine.HoverVerb)
                 {
