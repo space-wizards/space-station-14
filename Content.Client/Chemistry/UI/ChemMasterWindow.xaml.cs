@@ -42,12 +42,13 @@ namespace Content.Client.Chemistry.UI
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
+            _sprite = _entityManager.System<SpriteSystem>();
+
             // Pill type selection buttons, in total there are 20 pills.
             // Pill rsi file should have states named as pill1, pill2, and so on.
             var resourcePath = new ResPath(PillsRsiPath);
             var pillTypeGroup = new ButtonGroup();
             PillTypeButtons = new Button[20];
-            _sprite = _entityManager.System<SpriteSystem>();
             for (uint i = 0; i < PillTypeButtons.Length; i++)
             {
                 // For every button decide which stylebase to have
