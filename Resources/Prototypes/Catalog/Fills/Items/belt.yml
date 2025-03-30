@@ -189,9 +189,12 @@
   parent: ClothingBeltHolster
   suffix: Filled
   components:
+  - type: ContainerFill
+    containers:
+      handgun:
+      - WeaponRevolverInspector
   - type: StorageFill
     contents:
-        - id: WeaponRevolverInspector
         - id: SpeedLoaderMagnum
 
 - type: entity
