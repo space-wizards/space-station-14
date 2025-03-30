@@ -1,5 +1,5 @@
 - type: entity
-  name: TD-95C Emergency Laser Carbine
+  name: TD-95C emergency laser carbine
   parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseMajorContraband]
   id: EmergencyWeaponLaserCarbine
   description: An emergency laser carbine, for use when getting timely clearance isn't an option. Hand this in to security once the coast is clear.
