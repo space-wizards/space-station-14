@@ -28,18 +28,24 @@ public sealed partial class AtmosPipeLayersComponent : Component
     public byte CurrentPipeLayer = 0;
 
     /// <summary>
-    /// An array containing the state names of the different pipe layers.
+    /// The RSI path that the entity sprite will use for each pipe layer.
+    /// If null, the RSI path does not differ between pipe layers.
     /// </summary>
     /// <remarks>
-    /// Assumes that there is an entry for each pipe layer (from 0 to <see cref="MaxPipeLayer"/>).
+    /// If not null, it is assumed that there will be an array entry for each pipe layer
+    /// (from 0 to <see cref="MaxPipeLayer"/>).
     /// </remarks>
     [DataField]
     public string[]? SpriteRsiPaths = null;
 
     /// <summary>
-    /// A hashset of sprite layers which be automatically offset by a 
-    /// pre-specified Vector2 when the pipe layer changes.
+    /// A dictionary of entity sprite layers that have their
+    /// RSI paths updated when the pipe layer changes.
     /// </summary>
+    /// <remarks>
+    /// It is assumed that there will be an array entry for each pipe layer
+    /// (from 0 to <see cref="MaxPipeLayer"/>).
+    /// </remarks>
     [DataField]
     public Dictionary<string, string[]> SpriteLayersRsiPaths = new();
 
