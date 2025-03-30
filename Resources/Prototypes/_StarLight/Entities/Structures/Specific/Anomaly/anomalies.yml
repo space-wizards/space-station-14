@@ -49,8 +49,8 @@
   suffix: Clown
   components:
     - type: Anomaly
-      corePrototype: AnomalyCoreFlesh
-      coreInertPrototype: AnomalyCoreFleshInert
+      corePrototype: AnomalyCoreClown
+      coreInertPrototype: AnomalyCoreClownInert
       minPulseLength: 180
       maxPulseLength: 300
       supercriticalSoundAtAnimationStart: /Audio/_Starlight/Effects/clown_anomaly_explosion.ogg 
