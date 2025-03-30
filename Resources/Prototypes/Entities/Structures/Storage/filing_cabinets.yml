@@ -4,7 +4,7 @@
     children:
     - !type:GroupSelector
       rolls: !type:RangeNumberSelector
-        range: 1, 3
+        range: 2, 4
       children:
       - id: BoxFolderBlue
       - id: BoxFolderRed
@@ -14,7 +14,7 @@
       - id: BoxFolderBlack
     - !type:GroupSelector
       rolls: !type:RangeNumberSelector
-        range: 0, 2
+        range: 0, 3
       children:
       - id: Paper
       - id: PaperOffice
