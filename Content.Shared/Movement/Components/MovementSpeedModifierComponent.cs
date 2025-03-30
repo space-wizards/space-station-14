@@ -33,7 +33,26 @@ namespace Content.Shared.Movement.Components
         public float SprintSpeedModifier = 1.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private float _baseWalkSpeedVV;
+        private float _baseWalkSpeedVV
+        {
+            get => BaseWalkSpeed;
+            set
+            {
+                BaseWalkSpeed = value;
+                Dirty();
+            }
+        }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        private float _baseSprintSpeedVV
+        {
+            get => BaseSprintSpeed;
+            set
+            {
+                BaseSprintSpeed = value;
+                Dirty();
+            }
+        }
 
         /// <summary>
         /// Minimum speed a mob has to be moving before applying movement friction.
