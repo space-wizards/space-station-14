@@ -165,7 +165,8 @@ public abstract partial class SharedDoAfterSystem
         // TODO: Re-use existing xform query for these calculations.
         if (args.BreakOnMove)
         {
-            if (!(!args.BreakOnWeightlessMove && _gravity.IsWeightless(args.User, xform: userXform)))
+            // Check the distance moved if the user is in gravity or if the doafter breaks on distance in space.
+            if (!_gravity.IsWeightless(args.User, xform: userXform) || args.BreakOnWeightlessMove)
             {
                 // Whether the user has moved too much from their original position.
                 if (!_transform.InRange(userXform.Coordinates, doAfter.UserPosition, args.MovementThreshold))
