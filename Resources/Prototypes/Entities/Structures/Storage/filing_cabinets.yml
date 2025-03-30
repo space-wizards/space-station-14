@@ -30,7 +30,7 @@
       - !type:GroupSelector
         children:
         - !type:NoneSelector
-        - !type:AllSelctor
+        - !type:AllSelector
           weight: 0.01
           children: 
             - id: RubberStampApproved
