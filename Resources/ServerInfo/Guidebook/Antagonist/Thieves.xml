@@ -1,6 +1,6 @@
 <Document>
   # Thieves
-  
+
   <Box>
     [color=#999999][italic]"Yoink! I'll be taking that! And that! Ooh, don't mind if I do!"[/italic][/color]
   </Box>
@@ -43,7 +43,6 @@
     <GuideEntityEmbed Entity="ToolboxThief"/>
   </Box>
   <Box>
-    <GuideEntityEmbed Entity="StorageImplanter" Caption="Anatomy"/>
     <GuideEntityEmbed Entity="C4" Caption="Breacher"/>
     <GuideEntityEmbed Entity="ChameleonProjector" Caption="Chameleon"/>
     <GuideEntityEmbed Entity="EncryptionKeyStationMaster" Caption="Communicator"/>
@@ -56,7 +55,7 @@
 
   ## Centerpiece of the Collection
   Your kleptomania will take you places. One day, you'll feel like stealing a few figurines. Another day, you'll feel like stealing an industrial machine.
-  
+
   No matter. They'll all be a part of your collection within a matter of time.
 
   You can steal items by [bold]having them on your person[/bold] when you get to CentComm. Failing this, you can steal larger items by [bold]leaving them by your beacon.[/bold]
@@ -64,12 +63,12 @@
   Some of the more [italic]animate[/italic] objectives may not cooperate with you. Make sure they're alive and with you or your beacon when the shift ends.
 
   Things that you may desire include but are not limited to:
-  
+
   <Box>
    <GuideEntityEmbed Entity="ToyFigurineGreytider" Caption="Figurines"/>
    <GuideEntityEmbed Entity="PassengerIDCard" Caption="ID cards"/>
    <GuideEntityEmbed Entity="ChemDispenser" Caption="Structures"/>
    <GuideEntityEmbed Entity="MobCorgiIan" Caption="Animals/Pets"/>
   </Box>
-  
+
 </Document>
