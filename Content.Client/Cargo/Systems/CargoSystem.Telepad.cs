@@ -78,7 +78,6 @@ public sealed partial class CargoSystem
                 if (_player.HasRunningAnimation(uid, TelepadBeamKey))
                     return;
                 _player.Stop(uid, player, TelepadIdleKey);
-
                 _player.Play((uid, player), CargoTelepadBeamAnimation, TelepadBeamKey);
                 break;
             case CargoTelepadState.Unpowered:
