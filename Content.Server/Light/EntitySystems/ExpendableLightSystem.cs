@@ -76,8 +76,6 @@ namespace Content.Server.Light.EntitySystems
 
                         _tagSystem.AddTag(ent, "Trash");
 
-                        _tagSystem.AddTag(ent, "Trash");
-
                         UpdateSounds(ent);
                         UpdateVisualizer(ent);
 
