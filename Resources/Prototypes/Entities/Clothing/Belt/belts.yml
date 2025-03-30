@@ -577,7 +577,7 @@
     - Kangaroo
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: [ ClothingBeltStorageBase , ClothingSlotBase ]
   id: ClothingBeltHolster
   name: shoulder holster
   description: 'A holster to carry a handgun and ammo. WARNING: Badasses only.'
@@ -602,7 +602,7 @@
         - CartridgeAmmo
 
 - type: entity
-  parent: [ClothingBeltHolster, BaseSyndicateContraband]
+  parent: [ ClothingBeltHolster , BaseSyndicateContraband ]
   id: ClothingBeltSyndieHolster
   name: syndicate shoulder holster
   description: A deep shoulder holster capable of holding many types of ballistics.
