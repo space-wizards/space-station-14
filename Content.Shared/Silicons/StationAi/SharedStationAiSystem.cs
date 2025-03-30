@@ -460,6 +460,9 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnAiRemove(Entity<StationAiCoreComponent> ent, ref EntRemovedFromContainerMessage args)
     {
+        if (args.Container.ID != StationAiCoreComponent.Container)
+            return;
+
         if (_timing.ApplyingState)
             return;
 
@@ -538,6 +541,16 @@ public sealed partial class JumpToCoreEvent : InstantActionEvent
 
 }
 
+public sealed partial class VisitCoreEvent : InstantActionEvent
+{
+
+}
+
+public sealed partial class UnVisitCoreEvent : InstantActionEvent
+{
+
+}
+
 [Serializable, NetSerializable]
 public sealed partial class IntellicardDoAfterEvent : SimpleDoAfterEvent;
 
@@ -548,10 +561,21 @@ public enum StationAiVisualState : byte
     Key,
 }
 
+public enum StationAiVisualLayers : byte
+{
+    Core,
+    Screen,
+    CoreStanding,
+    ScreenStanding,
+}
+
 [Serializable, NetSerializable]
 public enum StationAiState : byte
 {
     Empty,
     Occupied,
     Dead,
+    Up,
+    Down,
+    Standing,
 }

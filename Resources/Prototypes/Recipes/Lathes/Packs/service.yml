@@ -43,6 +43,7 @@
   - WeaponSprayNozzle
   - ClothingBackpackWaterTank
   - MegaSprayBottle
+  - MopBucketAlive
 
 - type: latheRecipePack
   id: Instruments

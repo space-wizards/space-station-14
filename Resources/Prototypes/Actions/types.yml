@@ -74,6 +74,24 @@
 
 - type: entity
   parent: BaseSuicideAction
+  id: ActionActivateMicroBombPAI
+  name: Self-destruct Sequence
+  description: INITIATE SELF-DESTRUCT SEQUENCE
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    itemIconStyle: BigAction
+    priority: -20
+    icon:
+      sprite: Objects/Weapons/Bombs/c4.rsi
+      state: icon
+    startDelay: true
+    useDelay: 600 # at least 10 minutes into a round
+    event: !type:ActivateImplantEvent
+
+- type: entity
+  parent: BaseSuicideAction
   id: ActionActivateDeathAcidifier
   name: Activate Death-Acidifier
   description: Activates your death-acidifier, completely melting you and your equipment

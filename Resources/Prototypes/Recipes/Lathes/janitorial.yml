@@ -82,6 +82,14 @@
     Glass: 100
 
 - type: latheRecipe
+  id: MopBucketAlive
+  result: MopBucketAlive
+  completetime: 4
+  materials:
+    Plastic: 300
+    Steel: 300
+
+- type: latheRecipe
   id: Plunger
   result: Plunger
   completetime: 2

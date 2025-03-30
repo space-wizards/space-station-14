@@ -92,6 +92,15 @@
     - type: Sprite
       state: fist
 
+# April Fools: a boxing effect for when Vox hit things unarmed.
+- type: entity
+  id: WeaponArcBox
+  parent: WeaponArcStatic
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      state: box
+
 - type: entity
   id: WeaponArcPunch
   parent: WeaponArcStatic

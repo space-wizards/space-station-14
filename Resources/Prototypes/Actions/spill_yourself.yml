@@ -1,0 +1,12 @@
+- type: entity
+  id: SpillAction
+  name: Spill Yourself!
+  description: Spills all your contents onto the floor.
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Objects/Specific/Janitorial/janitorial.rsi
+      state: mopbucket
+    event: !type:SpillActionEvent {}
+    checkCanInteract: false
+    checkConsciousness: false

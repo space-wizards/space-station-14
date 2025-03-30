@@ -75,6 +75,19 @@
     whitelist:
       components:
         - SecretStash
+  - type: AutoImplant
+    implants:
+    - MicroBombImplantPAI
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 120
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]

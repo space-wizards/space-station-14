@@ -1037,6 +1037,19 @@
       replacement: cowboy
 
 - type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatNiko
+  name: not a cat hat
+  description: If you had... one shot... or one opportunity... to seize every hat you've ever wanted... It smells of gyros and feta cheese.
+  components:
+    - type: Sprite
+      sprite: Clothing/Head/Hats/nikohat.rsi
+    - type: Clothing
+      sprite: Clothing/Head/Hats/nikohat.rsi
+    - type: AddAccentClothing
+      accent: OwOAccent
+
+- type: entity
   parent: ClothingHeadHatCowboyBrown
   id: ClothingHeadHatCowboyBlack
   name: black cowboy hat

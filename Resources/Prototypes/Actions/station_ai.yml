@@ -13,6 +13,36 @@
     event: !type:JumpToCoreEvent
 
 - type: entity
+  id: ActionVisitCore
+  name: Leggy
+  description: Move around using your legs.
+  components:
+  - type: InstantAction
+    priority: -20
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/actions_ai.rsi
+      state: leg
+    event: !type:VisitCoreEvent
+    useDelay: 2
+    startDelay: true
+
+- type: entity
+  id: ActionUnVisitCore
+  name: No Leggy
+  description: Return back to the remote.
+  components:
+  - type: InstantAction
+    priority: -20
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/actions_ai.rsi
+      state: leg
+    event: !type:UnVisitCoreEvent
+    useDelay: 2
+    startDelay: true
+
+- type: entity
   id: ActionSurvCameraLights
   name: Toggle camera lights
   description: Enable surveillance camera lights near wherever you're viewing.
