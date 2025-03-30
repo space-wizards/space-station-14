@@ -29,7 +29,7 @@
   # Sprites and appearance
   - type: Sprite
     sprite: Objects/Weapons/Guns/Turrets/sentry_turret.rsi
-    drawdepth: FloorObjects
+    drawdepth: HighFloorObjects
     granularLayersRendering: true
     layers:
     - state: support
