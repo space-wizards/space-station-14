@@ -121,6 +121,8 @@
     unequipSound: /Audio/Mecha/mechmove03.ogg
     equipDelay: 2
     unequipDelay: 2
+  - type: ZombificationResistance
+    coefficient: 0.85
   - type: Tag
     tags:
     - WhitelistChameleon
@@ -165,6 +167,8 @@
         Piercing: 0.95
         Heat: 0.90
         Radiation: 0.25
+  - type: ZombificationResistance
+    coefficient: 0.85
   - type: GroupExamine
   - type: IngestionBlocker
   - type: Tag
@@ -181,7 +185,7 @@
 - type: entity
   abstract: true
   # No parent since it isn't an item
-  # must parent both this and the desired helmet base when using 
+  # must parent both this and the desired helmet base when using
   id: ClothingHeadSuitWithLightBase
   name: base hardsuit helmet with light
   categories: [ HideSpawnMenu ]
@@ -249,6 +253,8 @@
   - type: TemperatureProtection
     heatingCoefficient: 1.05
     coolingCoefficient: 0.7
+  - type: ZombificationResistance
+    coefficient: 0.8
   - type: GroupExamine
   - type: HideLayerClothing
     slots:

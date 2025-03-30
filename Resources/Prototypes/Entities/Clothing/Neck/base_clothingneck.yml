@@ -35,6 +35,8 @@
   parent: ClothingNeckBase
   id: ClothingScarfBase
   components:
+  - type: ZombificationResistance
+    coefficient: 0.9
   - type: Tag
     tags:
     - Scarf

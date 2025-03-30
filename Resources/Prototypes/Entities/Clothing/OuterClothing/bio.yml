@@ -13,6 +13,8 @@
     modifiers:
       coefficients:
         Caustic: 0.5
+  - type: ZombificationResistance
+    coefficient: 0.15
 
 - type: entity
   parent: ClothingOuterBioGeneral

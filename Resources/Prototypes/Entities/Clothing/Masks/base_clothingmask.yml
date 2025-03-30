@@ -9,6 +9,8 @@
     size: Small
   - type: Clothing
     slots: [mask]
+  - type: ZombificationResistance
+    coefficient: 0.95
   - type: StaticPrice
     price: 25
 

@@ -62,6 +62,8 @@
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot
+  - type: ZombificationResistance
+    coefficient: 0.85
   - type: Tag
     tags:
     - WhitelistChameleon
