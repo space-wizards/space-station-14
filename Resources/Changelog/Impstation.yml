@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EpicToast
-  changes:
-  - message: Adds mail to Barratry, Core and Meta.
-    type: Add
-  id: 942
-  time: '2025-01-17T01:58:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1388
 - author: Lemureslayer
   changes:
   - message: Added Moscow Mule as a drink Bartenders can make, including a dimpled
@@ -4074,3 +4067,10 @@
   id: 1441
   time: '2025-03-31T12:50:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2153
+- author: Darkmajia
+  changes:
+  - message: Mail bags can store mail.
+    type: Fix
+  id: 1442
+  time: '2025-03-31T15:43:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2161
