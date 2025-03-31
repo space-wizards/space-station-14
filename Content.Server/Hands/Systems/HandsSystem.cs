@@ -241,7 +241,8 @@ namespace Content.Server.Hands.Systems
 
         private void OnDropHandItems(Entity<HandsComponent> entity, ref DropHandItemsEvent args)
         {
-            var holderVelocity = Comp<PhysicsComponent>(entity).LinearVelocity;
+            // If the holder doesn't have a physics component, they ain't moving
+            var holderVelocity = TryComp<PhysicsComponent>(entity, out var physics) ? physics.LinearVelocity : Vector2.Zero;
 
             var fellEvent = new FellDownEvent(entity);
             RaiseLocalEvent(entity, fellEvent, false);
