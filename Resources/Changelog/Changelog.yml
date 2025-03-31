@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Aquif
-  changes:
-  - message: There is now a button to view your admin remarks in the character editor,
-      right next to the stats button.
-    type: Tweak
-  id: 7618
-  time: '2024-11-16T05:09:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31761
 - author: SpaceRox1244
   changes:
   - message: Closets and lockers now have visuals for being labeled with papers.
@@ -3884,3 +3876,15 @@
   id: 8117
   time: '2025-03-30T04:06:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36093
+- author: beck-thompson
+  changes:
+  - message: Stethoscopes now automatically start doafters and also can tell if a
+      patient is losing oxygen damage or gaining it.
+    type: Add
+  - message: Moths can no longer eat stethoscopes.
+    type: Fix
+  - message: Stethoscopes action button now works properly.
+    type: Fix
+  id: 8118
+  time: '2025-03-31T02:27:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36210
