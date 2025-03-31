@@ -1031,7 +1031,7 @@
   flavor: grog
   color: "#e3e77b"
   metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/beerstein.rsi
+    sprite: Objects/Consumable/Drinks/grogglass.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
@@ -1347,7 +1347,10 @@
   color: "#e6cb47"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/painkiller.rsi
-    state: icon
+    state: icon_empty
+  metamorphicMaxFillLevels: 6
+  metamorphicFillbaseName: fill-
+  metamorphicChangeColor: false
   metabolisms:
     Drink:
       effects:

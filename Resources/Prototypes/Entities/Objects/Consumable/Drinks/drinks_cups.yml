@@ -331,9 +331,17 @@
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lean.rsi
+    layers:
+      - state: icon_empty
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: fill-4
     state: icon
   - type: Item
     sprite: Objects/Consumable/Drinks/lean.rsi
+  - type: Appearence
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: fill-
   - type: TrashOnSolutionEmpty
     solution: drink
 
