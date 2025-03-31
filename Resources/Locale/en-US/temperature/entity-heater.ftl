@@ -4,7 +4,7 @@ entity-heater-examined = It is set to {$setting ->
     [medium] [color=orange]medium[/color]
     [high] [color=red]high[/color]
    *[other] [color=purple]unknown[/color]
-}
+}.
 entity-heater-switch-setting = Switch to {$setting ->
     [off] off
     [low] low
@@ -18,4 +18,4 @@ entity-heater-switched-setting = Switched to {$setting ->
     [medium] medium
     [high] high
    *[other] unknown
-}
+}.
