@@ -50,7 +50,7 @@
       components:
       - type: RandomMetadata
         nameSegments:
-        - names_death_commando
+        - NamesDeathCommando
       - type: AutoImplant
         implants:
         - DeathAcidifierImplant
@@ -91,8 +91,8 @@
       components:
       - type: RandomMetadata
         nameSegments:
-        - fake_human_first
-        - fake_human_last
+        - FakeHumanFirst
+        - FakeHumanLast
       - type: RandomHumanoidAppearance
         randomizeName: false
       - type: EmitSoundOnSpawn # fell out of the ceiling
