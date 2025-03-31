@@ -268,8 +268,8 @@ namespace Content.Server.Hands.Systems
                 // Decrease the distance of the throw by a random amount
                 itemVelocity *= _random.NextFloat(1f);
                 // Heavier objects don't get thrown as far
-                if (TryComp<PhysicsComponent>(held, out var heldPhysics))
-                    itemVelocity *= heldPhysics.InvMass;
+                // If the item doesn't have a physics component, it isn't going to get thrown anyway, but we'll assume infinite mass
+                itemVelocity *= TryComp<PhysicsComponent>(held, out var heldPhysics) ? heldPhysics.InvMass : 0;
                 // Throw at half the holder's intentional throw speed and
                 // vary the speed a little to make it look more interesting
                 var throwSpeed = entity.Comp.BaseThrowspeed * 0.5f * _random.NextFloat(0.9f, 1.1f);
