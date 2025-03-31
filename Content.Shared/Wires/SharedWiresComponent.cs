@@ -209,22 +209,106 @@ namespace Content.Shared.Wires
     {
         public static string Name(this WireColor color)
         {
-            return Loc.GetString("Red");
+            return Loc.GetString(color switch
+            {
+                WireColor.Red => "Red",
+                WireColor.Blue => "Blue",
+                WireColor.Green => "Green",
+                WireColor.Orange => "Orange",
+                WireColor.Brown => "Brown",
+                WireColor.Gold => "Gold",
+                WireColor.Gray => "Gray",
+                WireColor.Cyan => "Cyan",
+                WireColor.Navy => "Navy",
+                WireColor.Purple => "Purple",
+                WireColor.Pink => "Pink",
+                WireColor.Fuchsia => "Fuchsia",
+                _ => throw new InvalidOperationException()
+            });
         }
 
         public static Color ColorValue(this WireColor color)
         {
-            return Color.Red;
+            return color switch
+            {
+                WireColor.Red => Color.Red,
+                WireColor.Blue => Color.Blue,
+                WireColor.Green => Color.LimeGreen,
+                WireColor.Orange => Color.Orange,
+                WireColor.Brown => Color.Brown,
+                WireColor.Gold => Color.Gold,
+                WireColor.Gray => Color.Gray,
+                WireColor.Cyan => Color.Cyan,
+                WireColor.Navy => Color.Navy,
+                WireColor.Purple => Color.Purple,
+                WireColor.Pink => Color.Pink,
+                WireColor.Fuchsia => Color.Fuchsia,
+                _ => throw new InvalidOperationException()
+            };
         }
 
         public static string Name(this WireLetter letter)
         {
-            return Loc.GetString("Sigma");
+            return Loc.GetString(letter switch
+            {
+                WireLetter.α => "Alpha",
+                WireLetter.β => "Beta",
+                WireLetter.γ => "Gamma",
+                WireLetter.δ => "Delta",
+                WireLetter.ε => "Epsilon",
+                WireLetter.ζ => "Zeta",
+                WireLetter.η => "Eta",
+                WireLetter.θ => "Theta",
+                WireLetter.ι => "Iota",
+                WireLetter.κ => "Kappa",
+                WireLetter.λ => "Lambda",
+                WireLetter.μ => "Mu",
+                WireLetter.ν => "Nu",
+                WireLetter.ξ => "Xi",
+                WireLetter.ο => "Omicron",
+                WireLetter.π => "Pi",
+                WireLetter.ρ => "Rho",
+                WireLetter.σ => "Sigma",
+                WireLetter.τ => "Tau",
+                WireLetter.υ => "Upsilon",
+                WireLetter.φ => "Phi",
+                WireLetter.χ => "Chi",
+                WireLetter.ψ => "Psi",
+                WireLetter.ω => "Omega",
+                _ => throw new InvalidOperationException()
+            });
         }
 
         public static char Letter(this WireLetter letter)
         {
-            return 'σ';
+            return letter switch
+            {
+                WireLetter.α => 'α',
+                WireLetter.β => 'β',
+                WireLetter.γ => 'γ',
+                WireLetter.δ => 'δ',
+                WireLetter.ε => 'ε',
+                WireLetter.ζ => 'ζ',
+                WireLetter.η => 'η',
+                WireLetter.θ => 'θ',
+                WireLetter.ι => 'ι',
+                WireLetter.κ => 'κ',
+                WireLetter.λ => 'λ',
+                WireLetter.μ => 'μ',
+                WireLetter.ν => 'ν',
+                WireLetter.ξ => 'ξ',
+                WireLetter.ο => 'ο',
+                WireLetter.π => 'π',
+                WireLetter.ρ => 'ρ',
+                WireLetter.σ => 'σ',
+                WireLetter.τ => 'τ',
+                WireLetter.υ => 'υ',
+                WireLetter.φ => 'φ',
+                WireLetter.χ => 'χ',
+                WireLetter.ψ => 'ψ',
+                WireLetter.ω => 'ω',
+                _ => throw new InvalidOperationException()
+            };
         }
     }
 }
