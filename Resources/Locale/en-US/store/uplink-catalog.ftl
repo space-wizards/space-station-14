@@ -463,3 +463,12 @@ uplink-business-card-desc = A business card that you can give to someone to demo
 
 uplink-fake-mindshield-name = Fake Mindshield
 uplink-fake-mindshield-desc = A togglable implant capable of mimicking the same transmissions a real mindshield puts out when on, tricking capable Heads-up displays into thinking you have a mindshield (Nanotrasen brand implanter not provided.)
+
+uplink-syndicate-borgi-name = Syndicate Borgi
+uplink-syndicate-borgi-desc = A basic syndicate borgi
+
+uplink-syndicate-borgi-kitted-name = Kitted Syndicate Borgi
+uplink-syndicate-borgi-kitted-desc = A syndicate borgi, with assault modules
+
+uplink-syndicate-borgi-speed-name = Speed Syndicate Borgi
+uplink-syndicate-borgi-speed-desc = A syndicate borgi, with dagger modules and additional speed

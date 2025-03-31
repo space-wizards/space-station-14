@@ -1264,6 +1264,56 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: UplinkSyndicateBorgi
+  name: uplink-syndicate-borgi-name
+  description: uplink-syndicate-borgi-desc
+  icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
+  productEntity: SyndiCorgi
+  cost:
+    Telecrystal: 20
+  categories:
+    - UplinkAllies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: UplinkSyndicateBorgiKitted
+  name: uplink-syndicate-borgi-kitted-name
+  description: uplink-syndicate-borgi-kitted-desc
+  icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
+  productEntity: SyndiCorgiKit1
+  cost:
+    Telecrystal: 60
+  categories:
+    - UplinkAllies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkSyndicateBorgiSpeed
+  name: uplink-syndicate-borgi-speed-name
+  description: uplink-syndicate-borgi-speed-desc
+  icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
+  productEntity: SyndiCorgiKit2
+  cost:
+    Telecrystal: 50
+  categories:
+    - UplinkAllies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
 # Implants
 
 - type: listing

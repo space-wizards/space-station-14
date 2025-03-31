@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Original by Emisse, modified by EmoGarbage404. Vox states by Flareguy for SS14 | vulpkanin version made by Floofers",
+  "copyright": "Original by Emisse, modified by EmoGarbage404. Vox states by Flareguy for SS14 | vulpkanin version made by Floofers. Dog state by Sparlight.",
 
   "size": {
     "x": 32,
@@ -54,6 +54,18 @@
     },
     {
       "name": "equipped-head-unshaded-vulpkanin",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-dog",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-light-dog",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-unshaded-dog",
       "directions": 4
     }
   ]
