@@ -90,26 +90,6 @@
           32:
             sprite: Mobs/Animals/scurret/displacement.rsi
             state: jumpsuit
-      head:
-        sizeMaps:
-          32:
-            sprite: Mobs/Animals/scurret/displacement.rsi
-            state: head
-      ears:
-        sizeMaps:
-          32:
-            sprite: Mobs/Animals/scurret/displacement.rsi
-            state: ears
-      eyes:
-        sizeMaps:
-          32:
-            sprite: Mobs/Animals/scurret/displacement.rsi
-            state: eyes
-      mask:
-        sizeMaps:
-          32:
-            sprite: Mobs/Animals/scurret/displacement.rsi
-            state: mask
       id:
         sizeMaps:
           32:
@@ -120,16 +100,10 @@
           32:
             sprite: Mobs/Animals/scurret/displacement.rsi
             state: gloves
-  - type: Hands
-    handDisplacement:
-      sizeMaps:
-        32:
-          sprite: Mobs/Animals/scurret/displacement.rsi
-          state: hand
   - type: InventorySlots
   - type: Food
   - type: Hunger
-    baseDecayRate: 0.25 # They get a lil' hungy
+    baseDecayRate: 0.05 # They get a lil' hungy
   - type: BodyEmotes # Grants them clapping and so on.
     soundsId: GeneralBodyEmotes
   - type: Tag
