@@ -49,6 +49,7 @@ public abstract class PetrifySpellSystem : EntitySystem
 
     private void OnAnimate(Entity<PetrifiedStatueComponent> ent, ref AnimateSpellEvent args)
     {
+        Log.Debug("hi golem time");
         // TODO: Stone golem
     }
 

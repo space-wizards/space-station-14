@@ -141,3 +141,4 @@
       groups:
         Brute: 20
   - type: Examiner
+  - type: Animateable
