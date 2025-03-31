@@ -18,7 +18,6 @@
       blacklist:
         components:
         - Guardian # no holoparasite macrobomb wombo combo
-        - BorgChassis # no borg macrobomb
         tags:
         - Unimplantable
       currentMode: Draw
