@@ -240,7 +240,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         var newVal = component.Severity + change;
 
         if (newVal >= 1)
-            StartSupercriticalEvent(uid, component);
+            StartSupercriticalEvent(uid, component); // Starlight-edit
 
         component.Severity = Math.Clamp(newVal, 0, 1);
         Dirty(uid, component);
