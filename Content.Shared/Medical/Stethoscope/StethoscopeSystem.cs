@@ -19,6 +19,9 @@ public sealed class StethoscopeSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
+    // The damage type to "listen" for with the stethoscope.
+    private const string DamageToListenFor = "Asphyxiation";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -67,10 +70,8 @@ public sealed class StethoscopeSystem : EntitySystem
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, container.Owner, ent.Comp.Delay, new StethoscopeDoAfterEvent(), ent, target: target, used: ent)
         {
             DuplicateCondition = DuplicateConditions.SameEvent,
-            NeedHand = true,
             BreakOnMove = true,
             Hidden = true,
-            BreakOnDropItem = false,
             BreakOnHandChange = false,
         });
     }
@@ -97,7 +98,7 @@ public sealed class StethoscopeSystem : EntitySystem
         if (!TryComp<MobStateComponent>(target, out var mobState)                        ||
             !TryComp<DamageableComponent>(target, out var damageComp) ||
             _mobState.IsDead(target, mobState)                                           ||
-            !damageComp.Damage.DamageDict.TryGetValue("Asphyxiation", out var asphyxDmg))
+            !damageComp.Damage.DamageDict.TryGetValue(DamageToListenFor, out var asphyxDmg))
         {
             _popup.PopupPredicted(Loc.GetString("stethoscope-nothing"), target, user);
             stethoscope.Comp.LastMeasuredDamage = null;
@@ -106,7 +107,7 @@ public sealed class StethoscopeSystem : EntitySystem
 
         var absString = GetAbsoluteDamageString(asphyxDmg);
 
-        // Don't show the change if this is the first time listening.d
+        // Don't show the change if this is the first time listening.
         if (stethoscope.Comp.LastMeasuredDamage == null)
         {
             _popup.PopupPredicted(absString, target, user);
@@ -138,7 +139,7 @@ public sealed class StethoscopeSystem : EntitySystem
         if (lastDamage > currentDamage)
             return Loc.GetString("stethoscope-delta-improving");
         if (lastDamage < currentDamage)
-            return Loc.GetString("stethoscope-delta-worsting");
+            return Loc.GetString("stethoscope-delta-worsening");
         return Loc.GetString("stethoscope-delta-steady");
     }
 

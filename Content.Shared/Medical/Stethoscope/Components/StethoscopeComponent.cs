@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Medical.Stethoscope.Components;
 
 /// <summary>
-///     Adds a verb and action that allows the user to listen to the entities breathing.
+///     Adds a verb and action that allows the user to listen to the entity's breathing.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class StethoscopeComponent : Component
