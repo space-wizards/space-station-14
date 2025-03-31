@@ -128,8 +128,10 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (_net.IsServer)
             Log.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(uid)}");
 
+        // Starlight-start
         if(Resolve(uid, ref component))
             Audio.PlayPvs(component.SupercriticalSoundAtAnimationStart, Transform(uid).Coordinates);
+        // Starlight-end
         
         var super = AddComp<AnomalySupercriticalComponent>(uid);
         super.EndTime = Timing.CurTime + super.SupercriticalDuration;
