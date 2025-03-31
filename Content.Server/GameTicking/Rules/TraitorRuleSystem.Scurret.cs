@@ -14,26 +14,23 @@ public partial class TraitorRuleSystem
     [Dependency] private MindSystem _mind = default!;
     [Dependency] private RoleSystem _role = default!;
 
-    private void AfterScurretSpawned(Entity<GeneralScurretMayhemComponent> ent, ref ComponentInit args)
-    {
-        ent.Comp.Scurret = ent.Owner;
-    }
-
     private void HandleMakingScurretsAntags(Entity<TraitorRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
     {
-        var query = EntityQuery<GeneralScurretMayhemComponent>().ToList();
-        foreach (var scurret in _random.GetItems(query, query.Count, false))
+        var query = EntityQueryEnumerator<GeneralScurretMayhemComponent>();
+        while (query.MoveNext(out var uid, out var mayhemComp))
         {
-            if (scurret.Scurret == null)
+            if (mayhemComp.Handled)
                 continue;
 
-            if (!_mind.TryGetMind(scurret.Scurret.Value, out EntityUid id, out var mind))
+            mayhemComp.Handled = true;
+
+            if (!_mind.TryGetMind(uid, out var id, out var mind))
                 continue;
 
             if (_role.MindIsAntagonist(id))
                 continue;
 
-            if (_random.NextFloat() > scurret.ChanceOfMayhem)
+            if (_random.NextFloat() > mayhemComp.ChanceOfMayhem)
                 continue;
 
             _antag.ForceMakeAntag<AutoTraitorComponent>(mind.Session, "TraitorWawa");
