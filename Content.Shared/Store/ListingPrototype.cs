@@ -241,7 +241,7 @@ public partial class ListingData : IEquatable<ListingData>
 /// <summary>
 ///     Defines a set item listing that is available in a store
 /// </summary>
-[Prototype("listing")]
+[Prototype]
 [Serializable, NetSerializable]
 [DataDefinition]
 public sealed partial class ListingPrototype : ListingData, IPrototype
@@ -422,7 +422,7 @@ public sealed partial class ListingDataWithCostModifiers : ListingData
 ///     Defines set of rules for category of discounts -
 ///     how <see cref="StoreDiscountComponent"/> will be filled by respective system.
 /// </summary>
-[Prototype("discountCategory")]
+[Prototype]
 [DataDefinition, Serializable, NetSerializable]
 public sealed partial class DiscountCategoryPrototype : IPrototype
 {

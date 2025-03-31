@@ -2,8 +2,10 @@
   id: PrideDrobeInventory
   startingInventory:
     ClothingNeckLGBTPin: 3
+    ClothingNeckAllyPin: 3
     ClothingNeckAromanticPin: 3
     ClothingNeckAsexualPin: 3
+    ClothingNeckAroacePin: 3
     ClothingNeckBisexualPin: 3
     ClothingNeckGayPin: 3
     ClothingNeckIntersexPin: 3
@@ -11,6 +13,7 @@
     ClothingNeckNonBinaryPin: 3
     ClothingNeckPansexualPin: 3
     ClothingNeckOmnisexualPin: 3
+    ClothingNeckGenderqueerPin: 3
     ClothingNeckTransPin: 3
     ClothingNeckAutismPin: 3
     ClothingNeckGoldAutismPin: 3
@@ -19,6 +22,7 @@
     PlushieSharkGrey: 2
     ClothingNeckScarfStripedAce: 2
     ClothingNeckScarfStripedAro: 2
+    ClothingNeckScarfStripedAroace: 2
     ClothingNeckScarfStripedBiSexual: 2
     ClothingNeckScarfStripedGay: 2
     ClothingNeckScarfStripedInter: 2
@@ -34,3 +38,5 @@
     ClothingUniformColorRainbow: 2
     ClothingUnderSocksCoder: 2
     ClothingUnderSocksBee: 2
+  contrabandInventory:
+    ClothingNeckScarfStripedLesbianLong: 2
