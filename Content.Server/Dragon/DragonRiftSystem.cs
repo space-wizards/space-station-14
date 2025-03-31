@@ -40,11 +40,11 @@ public sealed class DragonRiftSystem : EntitySystem
         SubscribeLocalEvent<DragonRiftComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnGetState(EntityUid uid, DragonRiftComponent component, ref ComponentGetState args)
+    private void OnGetState(Entity<DragonRiftComponent> ent, ref ComponentGetState args)
     {
         args.State = new DragonRiftComponentState
         {
-            State = component.State,
+            State = ent.Comp.State,
         };
     }
 
