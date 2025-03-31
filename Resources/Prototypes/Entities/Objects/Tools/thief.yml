@@ -68,10 +68,13 @@
 - type: entity
   id: SatchelThief
   name: undetermined thieving satchel
+  description: This is where your favorite thief's supplies lie. Folded for your convenience.
   parent: ToolboxThief
   components:
   - type: Sprite
     sprite: Clothing/Back/Satchels/smuggler.rsi
-    state: icon
+    state: folded
+  - type: Item
+    storedRotation: 90
   - type: ThiefUndeterminedBackpack
     spawnedStoragePrototype: ClothingBackpackSatchelSmugglerUnanchored
