@@ -74,7 +74,7 @@
 
 #Syndicate SWAT Helmet
 - type: entity
-  parent: [ ClothingHeadHelmetSwat, Tier2Contraband ] #imp; it's Syndicate gear
+  parent: [ ClothingHeadBase, Tier2Contraband ] #imp; it's Syndicate gear
   id: ClothingHeadHelmetSwatSyndicate
   name: SWAT helmet
   suffix: Syndicate
@@ -84,6 +84,17 @@
     sprite: Clothing/Head/Helmets/swat_syndicate.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/swat_syndicate.rsi
+  - type: Armor #imp for parenting reasons
+    modifiers:
+      coefficients:
+        Blunt: 0.80
+        Slash: 0.80
+        Piercing: 0.80
+        Heat: 0.80
+        Radiation: 0.80
+        Caustic: 0.95
+  - type: ExplosionResistance #imp for parenting reasons
+    damageCoefficient: 0.75
 
 #Light Riot Helmet
 - type: entity
