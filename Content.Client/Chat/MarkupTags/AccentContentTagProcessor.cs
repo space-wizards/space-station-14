@@ -10,15 +10,17 @@ namespace Content.Client.Chat.MarkupTags;
 public sealed class AccentContentTagProcessor : ContentMarkupTagProcessorBase
 {
     public const string SupportedNodeName = "Accent";
-    
+
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     private readonly string _accent;
+    private readonly Dictionary<string,MarkupParameter> _attributes;
     private readonly int _seed;
 
-    private AccentContentTagProcessor(string accentName, int seed)
+    private AccentContentTagProcessor(string accentName, Dictionary<string,MarkupParameter> attributes, int seed)
     {
         _accent = accentName;
+        _attributes = attributes;
         _seed = seed;
     }
 
@@ -29,7 +31,7 @@ public sealed class AccentContentTagProcessor : ContentMarkupTagProcessorBase
         IoCManager.InjectDependencies(this);
 
         if (_entManager.System<SharedAccentSystem>().TryGetAccent(_accent, out var accent))
-            return new [] { new MarkupNode(accent.Accentuate(node.Value.StringValue!, _seed)) };
+            return new [] { new MarkupNode(accent.Accentuate(node.Value.StringValue!, _attributes, _seed)) };
 
         return new[] { node };
     }
@@ -47,7 +49,7 @@ public sealed class AccentContentTagProcessor : ContentMarkupTagProcessorBase
             return false;
         }
 
-        processor = new AccentContentTagProcessor(accentName, seed);
+        processor = new AccentContentTagProcessor(accentName, node.Attributes, seed);
         return true;
     }
 }

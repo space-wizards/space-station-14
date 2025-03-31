@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Speech.Accents;
 
@@ -16,7 +17,7 @@ public sealed class GermanAccent : IAccent
     private static readonly Regex RegexTh = new(@"(?<=\s|^)th", RegexOptions.IgnoreCase);
     private static readonly Regex RegexThe = new(@"(?<=\s|^)the(?=\s|$)", RegexOptions.IgnoreCase);
 
-    public string Accentuate(string message, int randomSeed)
+    public string Accentuate(string message, Dictionary<string, MarkupParameter> attributes, int randomSeed)
     {
         IoCManager.InjectDependencies(this);
         _replacement = _entSys.GetEntitySystem<SharedReplacementAccentSystem>();
@@ -77,5 +78,10 @@ public sealed class GermanAccent : IAccent
         }
 
         return msgBuilder.ToString();
+    }
+
+    public void GetAccentData(ref AccentGetEvent ev, Component c)
+    {
+        ev.Accents.Add(Name, null);
     }
 }

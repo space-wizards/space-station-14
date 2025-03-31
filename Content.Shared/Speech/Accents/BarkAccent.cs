@@ -1,4 +1,6 @@
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Speech.Accents;
 
@@ -21,7 +23,7 @@ public sealed class BarkAccent : IAccent
         { "Oh", "Oof" },
     };
 
-    public string Accentuate(string message, int randomSeed)
+    public string Accentuate(string message, Dictionary<string, MarkupParameter> attributes, int randomSeed)
     {
         IoCManager.InjectDependencies(this);
 
@@ -34,6 +36,11 @@ public sealed class BarkAccent : IAccent
 
         return message.Replace("!", _random.Pick(Barks))
             .Replace("l", "r").Replace("L", "R");
+    }
+
+    public void GetAccentData(ref AccentGetEvent ev, Component c)
+    {
+        ev.Accents.Add(Name, null);
     }
 }
 

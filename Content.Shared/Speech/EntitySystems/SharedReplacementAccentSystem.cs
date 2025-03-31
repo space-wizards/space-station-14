@@ -17,7 +17,7 @@ namespace Content.Shared.Speech.EntitySystems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ILocalizationManager _loc = default!;
 
-        //CHAT-TODO: ReplacementAccent is a bit weird and needs to be fully supported.
+        //CHAT-TODO: ReplacementAccent is a bit weird and needs to be fully supported. Maybe change out of being an EntitySystem??
 
         /// <summary>
         ///     Attempts to apply a given replacement accent prototype to a message.

@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Speech.Components;
+﻿namespace Content.Shared.Speech.Accents;
 
 /// <summary>
 ///     Nyehh, my gabagool, see?

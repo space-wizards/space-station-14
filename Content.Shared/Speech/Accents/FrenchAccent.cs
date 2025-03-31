@@ -1,5 +1,6 @@
 using System.Text.RegularExpressions;
 using Content.Shared.Speech.EntitySystems;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Speech.Accents;
 
@@ -14,7 +15,7 @@ public sealed class FrenchAccent : IAccent
     private static readonly Regex RegexStartH = new(@"(?<!\w)h", RegexOptions.IgnoreCase);
     private static readonly Regex RegexSpacePunctuation = new(@"(?<=\w\w)[!?;:](?!\w)", RegexOptions.IgnoreCase);
 
-    public string Accentuate(string message, int randomSeed)
+    public string Accentuate(string message, Dictionary<string, MarkupParameter> attributes, int randomSeed)
     {
         IoCManager.InjectDependencies(this);
         _replacement = _entSys.GetEntitySystem<SharedReplacementAccentSystem>();
@@ -33,5 +34,10 @@ public sealed class FrenchAccent : IAccent
         msg = RegexSpacePunctuation.Replace(msg, " $&");
 
         return msg;
+    }
+
+    public void GetAccentData(ref AccentGetEvent ev, Component c)
+    {
+        ev.Accents.Add(Name, null);
     }
 }

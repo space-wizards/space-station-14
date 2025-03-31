@@ -1,13 +1,19 @@
 using System.Linq;
 using System.Text.RegularExpressions;
-using Content.Server.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
-namespace Content.Server.Speech.EntitySystems;
+namespace Content.Shared.Speech.Accents;
 
-public sealed class MobsterAccentSystem : EntitySystem
+public sealed class MobsterAccent : IAccent
 {
+    public string Name { get; } = "Mobster";
+
+    [Dependency] private readonly IEntitySystemManager _entSys = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    private SharedReplacementAccentSystem _replacement = default!;
+
     private static readonly Regex RegexIng = new(@"(?<=\w\w)(in)g(?!\w)", RegexOptions.IgnoreCase);
     private static readonly Regex RegexLowerOr = new(@"(?<=\w)o[Rr](?=\w)");
     private static readonly Regex RegexUpperOr = new(@"(?<=\w)O[Rr](?=\w)");
@@ -16,24 +22,20 @@ public sealed class MobsterAccentSystem : EntitySystem
     private static readonly Regex RegexFirstWord = new(@"^(\S+)");
     private static readonly Regex RegexLastWord = new(@"(\S+)$");
 
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedReplacementAccentSystem _sharedReplacement = default!;
-
-    public override void Initialize()
+    public string Accentuate(string message, Dictionary<string, MarkupParameter> attributes, int randomSeed)
     {
-        base.Initialize();
+        IoCManager.InjectDependencies(this);
+        _replacement = _entSys.GetEntitySystem<SharedReplacementAccentSystem>();
+        var isBoss = true;
+        if (attributes.TryGetValue("isBoss", out var parameter))
+            isBoss = parameter.LongValue == 1;
 
-        SubscribeLocalEvent<MobsterAccentComponent, AccentGetEvent>(OnAccentGet);
-    }
-
-    public string Accentuate(string message, MobsterAccentComponent component)
-    {
         // Order:
         // Do text manipulations first
         // Then prefix/suffix funnyies
 
         // direct word replacements
-        var msg = _sharedReplacement.ApplyReplacements(message, "mobster");
+        var msg = _replacement.ApplyReplacements(message, "mobster");
 
         // thinking -> thinkin'
         // king -> king
@@ -45,6 +47,8 @@ public sealed class MobsterAccentSystem : EntitySystem
         msg = RegexUpperOr.Replace(msg, "UH");
         msg = RegexLowerAr.Replace(msg, "ah");
         msg = RegexUpperAr.Replace(msg, "AH");
+
+        _random.SetSeed(randomSeed);
 
         // Prefix
         if (_random.Prob(0.15f))
@@ -73,7 +77,7 @@ public sealed class MobsterAccentSystem : EntitySystem
             //So the suffix can be allcapped
             var lastWordAllCaps = !RegexLastWord.Match(msg).Value.Any(char.IsLower);
             var suffix = "";
-            if (component.IsBoss)
+            if (isBoss)
             {
                 var pick = _random.Next(1, 4);
                 suffix = Loc.GetString($"accent-mobster-suffix-boss-{pick}");
@@ -83,6 +87,7 @@ public sealed class MobsterAccentSystem : EntitySystem
                 var pick = _random.Next(1, 3);
                 suffix = Loc.GetString($"accent-mobster-suffix-minion-{pick}");
             }
+
             if (lastWordAllCaps)
                 suffix = suffix.ToUpper();
             msg += suffix;
@@ -91,8 +96,13 @@ public sealed class MobsterAccentSystem : EntitySystem
         return msg;
     }
 
-    private void OnAccentGet(EntityUid uid, MobsterAccentComponent component, AccentGetEvent args)
+    public void GetAccentData(ref AccentGetEvent ev, Component c)
     {
-        args.Message = Accentuate(args.Message, component);
+        if (c is MobsterAccentComponent comp)
+        {
+            ev.Accents.Add(
+                Name,
+                new Dictionary<string, MarkupParameter>() { { "isBoss", new MarkupParameter(comp.IsBoss ? 1 : 0) } });
+        }
     }
 }

@@ -24,9 +24,9 @@ public sealed partial class AccentChatModifier : ChatModifier
         if (_entSys.TryGetEntitySystem<SharedAccentSystem>(out var accentSystem))
         {
             var accents = accentSystem.GetAccentList(senderEntity);
-            foreach (var accentName in accents)
+            foreach (var accentsDicts in accents)
             {
-                message.InsertInsideTag(new MarkupNode("Accent", new MarkupParameter(accentName), null, false), "MainMessage");
+                message.InsertInsideTag(new MarkupNode("Accent", new MarkupParameter(accentsDicts.Key), accentsDicts.Value, false), "MainMessage");
             }
         }
 

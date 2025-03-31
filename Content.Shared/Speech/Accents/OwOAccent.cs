@@ -1,4 +1,6 @@
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Speech.Accents;
 
@@ -18,7 +20,7 @@ public sealed class OwOAccent : IAccent
         { "you", "wu" },
     };
 
-    public string Accentuate(string message, int randomSeed)
+    public string Accentuate(string message, Dictionary<string, MarkupParameter> attributes, int randomSeed)
     {
         IoCManager.InjectDependencies(this);
 
@@ -32,5 +34,10 @@ public sealed class OwOAccent : IAccent
         return message.Replace("!", _random.Pick(Faces))
             .Replace("r", "w").Replace("R", "W")
             .Replace("l", "w").Replace("L", "W");
+    }
+
+    public void GetAccentData(ref AccentGetEvent ev, Component c)
+    {
+        ev.Accents.Add(Name, null);
     }
 }

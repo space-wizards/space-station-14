@@ -1,5 +1,6 @@
 using System.Text;
 using Content.Shared.Speech.EntitySystems;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Speech.Accents;
 
@@ -10,7 +11,7 @@ public sealed class RussianAccent : IAccent
     [Dependency] private readonly IEntitySystemManager _entSys = default!;
     private SharedReplacementAccentSystem _replacement = default!;
 
-    public string Accentuate(string message, int randomSeed)
+    public string Accentuate(string message, Dictionary<string, MarkupParameter> attributes, int randomSeed)
     {
         IoCManager.InjectDependencies(this);
         _replacement = _entSys.GetEntitySystem<SharedReplacementAccentSystem>();
@@ -42,5 +43,10 @@ public sealed class RussianAccent : IAccent
         }
 
         return accentedMessage.ToString();
+    }
+
+    public void GetAccentData(ref AccentGetEvent ev, Component c)
+    {
+        ev.Accents.Add(Name, null);
     }
 }
