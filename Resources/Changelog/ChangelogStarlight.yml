@@ -4327,4 +4327,11 @@ Entries:
   id: 599
   time: '2025-03-30T08:47:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/428
+- author: Conflee
+  changes:
+  - message: Added Admeme hardsuit
+    type: Add
+  id: 600
+  time: '2025-03-31T14:07:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/430
 
