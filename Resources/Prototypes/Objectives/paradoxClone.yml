@@ -11,6 +11,9 @@
     roles:
       mindRoles:
       - ParadoxCloneRole
+  - type: Tag
+    tags:
+    - ParadoxCloneObjectiveBlacklist # don't copy the objectives from other clones
 
 - type: entity
   parent: [BaseParadoxCloneObjective, BaseLivingObjective]
