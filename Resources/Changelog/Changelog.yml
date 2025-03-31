@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SpaceRox1244
-  changes:
-  - message: Closets and lockers now have visuals for being labeled with papers.
-    type: Add
-  id: 7619
-  time: '2024-11-17T03:27:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33318
 - author: Ubaser
   changes:
   - message: You can now craft dim light bulbs at an autolathe.
@@ -3888,3 +3881,11 @@
   id: 8118
   time: '2025-03-31T02:27:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36210
+- author: Tayrtahn
+  changes:
+  - message: Items thrown when someone slips now tend to scatter in the direction
+      they are moving, and respect the item's mass.
+    type: Tweak
+  id: 8119
+  time: '2025-03-31T22:00:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36232
