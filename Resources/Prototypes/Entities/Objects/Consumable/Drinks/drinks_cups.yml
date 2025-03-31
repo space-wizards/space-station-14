@@ -338,7 +338,7 @@
     state: icon
   - type: Item
     sprite: Objects/Consumable/Drinks/lean.rsi
-  - type: Appearence
+  - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 4
     fillBaseName: fill-
