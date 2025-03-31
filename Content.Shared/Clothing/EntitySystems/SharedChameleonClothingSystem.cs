@@ -99,19 +99,16 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             }
         }
 
-        RemComp<HandheldLightComponent>(uid);
-        // add handheld lights
-        if (proto.TryGetComponent("HandheldLight", out HandheldLightComponent? handheldLight))
+        EnsureCompAndCopyDetails<HandheldLightComponent>(uid, proto, (handheldLight, current, _) =>
         {
-            EnsureComp<HandheldLightComponent>(uid, out var current);
-            EnsureComp<AppearanceComponent>(uid, out var currentAppearance);
-            _handheldLight.CopyDetails(uid, handheldLight, current);
-            _handheldLight.UpdateVisuals(uid, current, currentAppearance);
-            Dirty(uid, current);
-
-            if (appearance != null)
+            EnsureCompAndCopyDetails<AppearanceComponent>(uid, proto, (_, appearance, __) =>
+            {
+                _handheldLight.CopyDetails(uid, handheldLight, current);
+                _handheldLight.UpdateVisuals(uid, current, appearance);
                 Dirty(uid, appearance);
-        }
+                Dirty(uid, current);
+            });
+        });
 
         // properly mark contraband
         if (proto.TryGetComponent("Contraband", out ContrabandComponent? contra))
@@ -171,11 +168,24 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     protected void EnsureCompAndCopyDetails<T>(EntityUid uid, EntityPrototype proto, Action<T, T, bool>? copyVisualsFunction = null) where T : IComponent, new()
     {
         if (!proto.TryGetComponent(out T? otherComponent, _factory)) {
-            RemComp<T>(uid);
+            if (HasComp<T>(uid))
+                RemComp<T>(uid);
             return;
         }
 
-        bool componentAdded = !EnsureComp<T>(uid, out T ownComponent);
+        bool componentAdded = false;
+        T ownComponent;
+
+        if (!HasComp<T>(uid))
+        {
+            AddComp<T>(uid, otherComponent);
+            componentAdded = true;
+            ownComponent = otherComponent;
+        }
+        else
+        {
+            EnsureComp<T>(uid, out ownComponent);
+        }
 
         if (copyVisualsFunction != null)
             copyVisualsFunction(otherComponent, ownComponent, componentAdded);
