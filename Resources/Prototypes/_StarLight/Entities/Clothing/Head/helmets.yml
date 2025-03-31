@@ -105,7 +105,7 @@
         Piercing: 0.95
         Heat: 0.80
   - type: Reflect
-    reflectProb: 0.4
+    reflectProb: 0.2
     reflects:
       - Energy  
   - type: Tag
@@ -171,8 +171,6 @@
         Slash: 0.93
         Piercing: 0.93
         Heat: 0.87
-  - type: Reflect
-    reflectProb: 0.2
   - type: Tag
     tags:
     - SecurityHelmet
