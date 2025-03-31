@@ -237,7 +237,7 @@ namespace Content.Server.Power.EntitySystems
             if (!TryFindAvailableProvider(uid, receiver.ReceptionRange, out var provider, xform))
                 return;
 
-            receiver.Provider = (uid, provider);
+            receiver.Provider = provider;
             provider.Comp!.LinkedReceivers.Add((uid, receiver));
             RaiseLocalEvent(uid, new ProviderConnectedEvent(provider.Comp), broadcast: false);
             RaiseLocalEvent(provider.Owner, new ReceiverConnectedEvent((uid, receiver)), broadcast: false);
