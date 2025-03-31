@@ -317,12 +317,6 @@ public class RadialMenuTextureButton : RadialMenuTextureButtonBase
     public string? TargetLayerControlName { get; set; }
 
     /// <summary>
-    /// Other way to set navigation to other container, as <see cref="TargetLayer"/>,
-    /// but using <see cref="Control.Name"/> property of target <see cref="RadialContainer"/>.
-    /// </summary>
-    public string? TargetLayerControlName { get; set; }
-
-    /// <summary>
     /// A simple texture button that can move the user to a different layer within a radial menu
     /// </summary>
     public RadialMenuTextureButton()
