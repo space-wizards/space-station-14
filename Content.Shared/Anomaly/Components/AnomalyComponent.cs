@@ -134,7 +134,7 @@ public sealed partial class AnomalyComponent : Component
     /// The sound plays at the start of the animation when an anomaly goes supercritical
     /// </summary>
     [DataField]
-    public SoundSpecifier? SupercriticalSoundAtAnimationStart = null;
+    public SoundSpecifier? SupercriticalSoundAtAnimationStart = null; // Starlight-edit
     #endregion
 
     /// <summary>
