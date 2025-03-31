@@ -320,16 +320,8 @@
   loadouts:
   - ChaplainHead
   - ChaplainNunHood
-  - ChaplainPlagueHat
   - ChaplainWitchHat
   - ChaplainWitchHatAlt
-
-- type: loadoutGroup
-  id: ChaplainMask
-  name: loadout-group-chaplain-mask
-  minLimit: 0
-  loadouts:
-  - ChaplainMask
 
 - type: loadoutGroup
   id: ChaplainJumpsuit
@@ -345,7 +337,6 @@
   name: loadout-group-chaplain-outerclothing
   minLimit: 0
   loadouts:
-  - ChaplainPlagueSuit
   - ChaplainNunRobe
   - ChaplainBlackHoodie
   - ChaplainHoodie
@@ -1113,6 +1104,7 @@
   loadouts:
   - ChiefMedicalOfficerBeret
   - CMOMedicalHeadMirror
+  - ChaplainPlagueHat
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerJumpsuit
@@ -1130,6 +1122,7 @@
   loadouts:
   - ChiefMedicalOfficerLabCoat
   - ChiefMedicalOfficerWintercoat
+  - ChaplainPlagueSuit
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerNeck
@@ -1158,6 +1151,7 @@
   - GreenSurgeryCap
   - PurpleSurgeryCap
   - NurseHat
+  - ChaplainPlagueHat
 
 - type: loadoutGroup
   id: MedicalDoctorJumpsuit
@@ -1179,6 +1173,7 @@
   - RegularLabCoat
   - MedicalDoctorWintercoat
   - SeniorPhysicianLabCoat
+  - ChaplainPlagueSuit
 
 - type: loadoutGroup
   id: MedicalBackpack
@@ -1216,6 +1211,7 @@
   minLimit: 0
   loadouts:
   - SterileMask
+  - ChaplainMask
 
 - type: loadoutGroup
   id: MedicalInternJumpsuit
@@ -1254,6 +1250,7 @@
   minLimit: 0
   loadouts:
   - ParamedicHead
+  - ChaplainPlagueHat
 
 - type: loadoutGroup
   id: ParamedicJumpsuit
@@ -1269,6 +1266,7 @@
   loadouts:
   - ParamedicWindbreaker
   - ParamedicWintercoat
+  - ChaplainPlagueSuit
 
 - type: loadoutGroup
   id: ParamedicShoes

@@ -119,7 +119,6 @@
   groups:
   - GroupTankHarness
   - ChaplainHead
-  - ChaplainMask
   - ChaplainNeck
   - ChaplainJumpsuit
   - CommonBackpack
