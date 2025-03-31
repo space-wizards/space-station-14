@@ -2,8 +2,7 @@
   id: Fland
   mapName: 'Fland Installation'
   mapPath: /Maps/fland.yml
-  minPlayers: 0
-  maxPlayers: 80
+  minPlayers: 70
   stations:
     Fland:
       stationProto: StandardNanotrasenStation

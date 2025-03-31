@@ -2,8 +2,7 @@
   id: Gate
   mapName: 'Gate Station'
   mapPath: /Maps/gate.yml
-  minPlayers: 0
-  maxPlayers: 80
+  minPlayers: 55
   stations:
     Gate:
       stationProto: StandardNanotrasenStation
