@@ -58,7 +58,7 @@
       - id: HydroponicsToolHatchet
       - id: ClothingOuterApronBotanist
       - id: ClothingHandsGlovesLeather
-      - id: EZNutrientChemistryBottle
+      - id: ChemistryBottleEZNutrient
         amount: 2
 
 - type: entity
