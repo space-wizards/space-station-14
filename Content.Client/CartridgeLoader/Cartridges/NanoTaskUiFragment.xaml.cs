@@ -51,13 +51,13 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
 
         foreach (var (department, index) in departments.Select((d, i) => (d, i)))
         {
+            var groupedTasks = departmentTasks.FirstOrDefault(group => group.Key == department) ?? Enumerable.Empty<NanoTaskItemAndDepartment>();
             var table = new NanoTaskTable
             {
-                Tasks = tasks,
+                Tasks = groupedTasks.ToList(),
             };
             table.NewTaskButton.OnPressed += _ => NewTask?.Invoke(table, new(NanoTaskCategory.Department, department));
 
-            var groupedTasks = departmentTasks.FirstOrDefault(group => group.Key == department) ?? Enumerable.Empty<NanoTaskItemAndDepartment>();
             foreach (var task in groupedTasks)
             {
                 var container = task.Item.Data.Priority switch
@@ -71,6 +71,10 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
                 control.OnMainPressed += id => OpenTask?.Invoke(table, new(NanoTaskCategory.Department, department), id);
                 control.OnDonePressed += id => ToggleTaskCompletion?.Invoke(table, new(NanoTaskCategory.Department, department), id);
             }
+
+            table.HighPriority.HeaderLabel.Text = Loc.GetString("nano-task-ui-heading-high-priority-tasks", ("amount", table.Tasks.Count(task => task.Item.Data.Priority == NanoTaskPriority.High)));
+            table.MediumPriority.HeaderLabel.Text = Loc.GetString("nano-task-ui-heading-medium-priority-tasks", ("amount", table.Tasks.Count(task => task.Item.Data.Priority == NanoTaskPriority.Medium)));
+            table.LowPriority.HeaderLabel.Text = Loc.GetString("nano-task-ui-heading-low-priority-tasks", ("amount", table.Tasks.Count(task => task.Item.Data.Priority == NanoTaskPriority.Low)));
 
             var departmentName = IoCManager.Resolve<IPrototypeManager>().Index(department).Name;
 

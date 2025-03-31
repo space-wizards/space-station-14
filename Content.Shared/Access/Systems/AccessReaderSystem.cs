@@ -100,7 +100,6 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         var accessSources = FindPotentialAccessItems(user);
         var access = FindAccessTags(user, accessSources);
-        FindStationRecordKeys(user, out var stationKeys, accessSources);
 
         return access.Any(a => target.GetAccesses().Contains(a));
     }

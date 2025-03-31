@@ -11,6 +11,8 @@ public sealed partial class NanoTaskCartridgeComponent : Component
     /// </summary>
     [DataField]
     public List<NanoTaskItemAndDepartment> Tasks = [];
+
+    public EntityUid? ActorUid = null;
 }
 
 /// <summary>

@@ -161,6 +161,7 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
                 break;
         }
 
+        ent.Comp.ActorUid = args.Actor;
 
         var loader = GetEntity(args.LoaderUid);
         UpdateUiState(ent, loader, args.Actor);
@@ -211,7 +212,10 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
                 break;
         }
 
-        UpdateUiState(ent, loaderUid);
+        var actor = ent.Comp.ActorUid;
+        ent.Comp.ActorUid = null;
+
+        UpdateUiState(ent, loaderUid, actor);
     }
 
     private static void HandleAllTasks(Entity<NanoTaskCartridgeComponent> ent, DeviceNetworkPacketEvent args)
@@ -313,11 +317,10 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
             })
             .ToList();
 
-        var departments = _prototypeManager.EnumeratePrototypes<NanoTaskDepartmentPrototype>()
-            .Where(x => actor.HasValue && _accessReader.IsAllowed(actor.Value, x) &&
-                        !tasks.Any(t => t.Category.Department == x.ID))
+        var departments = actor.HasValue ? _prototypeManager.EnumeratePrototypes<NanoTaskDepartmentPrototype>()
+            .Where(x => _accessReader.IsAllowed(actor.Value, x))
             .Select(x => new ProtoId<NanoTaskDepartmentPrototype>(x.ID))
-            .ToList();
+            .ToList() : [];
 
         var filteredState = new NanoTaskUiState(tasks, departments);
         _cartridgeLoader.UpdateCartridgeUiState(loaderUid, filteredState);
