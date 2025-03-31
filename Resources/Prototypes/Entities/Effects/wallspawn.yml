@@ -1,7 +1,6 @@
 ﻿- type: entity
   id: WallSpawnAsteroid
   categories: [ HideSpawnMenu ]
-  save: false
   components:
   - type: Transform
     anchored: True

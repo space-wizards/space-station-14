@@ -2,7 +2,6 @@
   id: MobSpawnCrabQuartz
   name: mobspawner quartzcrab
   categories: [ HideSpawnMenu, Spawner ]
-  save: false
   components:
   - type: Transform
     anchored: True
@@ -91,7 +90,6 @@
 - type: entity
   id: EffectAnomalyFloraBulb
   categories: [ HideSpawnMenu ]
-  save: false
   components:
   - type: TimedDespawn
     lifetime: 0.4
