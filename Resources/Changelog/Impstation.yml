@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: kipdotnet
   changes:
-  - message: Fixed the Courier hardsuit locker having no access reader.
-    type: Tweak
-  - message: Added a mailroom and bathroom to Banana.
-    type: Tweak
-  id: 940
-  time: '2025-01-16T10:08:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1385
-- author: kipdotnet
-  changes:
   - message: Added an Apid Courier to the cargo catalog, for when mail is piling up.
     type: Add
   id: 941
@@ -4074,3 +4065,11 @@
   id: 1439
   time: '2025-03-31T12:48:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2144
+- author: Mousetrinity
+  changes:
+  - message: Virology and genetics threads are now in a doctor's loadout! Limited
+      to jumpsuits, jumpskirts and winter coats.
+    type: Add
+  id: 1440
+  time: '2025-03-31T12:49:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2137
