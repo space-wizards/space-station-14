@@ -118,7 +118,7 @@ public abstract class SharedAnomalySystem : EntitySystem
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="component"></param>
-    public void StartSupercriticalEvent(EntityUid uid, AnomalyComponent? component = null)
+    public void StartSupercriticalEvent(EntityUid uid, AnomalyComponent? component = null) // Starlight-edit
     {
         // don't restart it if it's already begun
         if (HasComp<AnomalySupercriticalComponent>(uid))
