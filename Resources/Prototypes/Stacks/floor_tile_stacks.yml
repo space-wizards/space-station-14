@@ -729,6 +729,12 @@
   maxCount: 30
 
 - type: stack
+  id: FloorTileAstroAsteroidSand
+  name: asteroid astro-sand floor
+  spawn: FloorTileItemAstroAsteroidSand
+  maxCount: 30
+
+- type: stack
   id: FloorTileWoodLarge
   name: stack-name-large-wood-floor-tile
   icon: { sprite: /Textures/Objects/Tiles/tile.rsi, state: wood-large }

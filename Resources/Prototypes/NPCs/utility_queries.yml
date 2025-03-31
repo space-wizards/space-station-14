@@ -188,6 +188,12 @@
   considerations:
     - !type:TargetIsAliveCon
       curve: !type:BoolCurve
+    - !type:TargetIsCritCon
+      curve: !type:InverseBoolCurve
+    - !type:TargetIsStunnedCon
+      curve: !type:InverseBoolCurve  
+    - !type:TurretTargetingCon
+      curve: !type:BoolCurve
     - !type:TargetDistanceCon
       curve: !type:PresetCurve
         preset: TargetDistance

@@ -204,6 +204,7 @@ public sealed partial class AdminVerbSystem
                         var recharger = EnsureComp<BatterySelfRechargerComponent>(args.Target);
                         recharger.AutoRecharge = true;
                         recharger.AutoRechargeRate = battery.MaxCharge; // Instant refill.
+                        recharger.AutoRechargePause = false; // No delay.
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-infinite-battery-object-description"),
@@ -603,6 +604,7 @@ public sealed partial class AdminVerbSystem
 
                         recharger.AutoRecharge = true;
                         recharger.AutoRechargeRate = battery.MaxCharge; // Instant refill.
+                        recharger.AutoRechargePause = false; // No delay.
                     }
                 },
                 Impact = LogImpact.Extreme,
@@ -635,7 +637,7 @@ public sealed partial class AdminVerbSystem
         {
             if (_adminManager.HasAdminFlag(player, AdminFlags.Mapping))
             {
-                if (_mapManager.IsMapPaused(map.MapId))
+                if (_map.IsPaused(map.MapId))
                 {
                     Verb unpauseMap = new()
                     {
@@ -644,7 +646,7 @@ public sealed partial class AdminVerbSystem
                         Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/play.png")),
                         Act = () =>
                         {
-                            _mapManager.SetMapPaused(map.MapId, false);
+                            _map.SetPaused(map.MapId, false);
                         },
                         Impact = LogImpact.Extreme,
                         Message = Loc.GetString("admin-trick-unpause-map-description"),
@@ -661,7 +663,7 @@ public sealed partial class AdminVerbSystem
                         Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/pause.png")),
                         Act = () =>
                         {
-                            _mapManager.SetMapPaused(map.MapId, true);
+                            _map.SetPaused(map.MapId, true);
                         },
                         Impact = LogImpact.Extreme,
                         Message = Loc.GetString("admin-trick-pause-map-description"),

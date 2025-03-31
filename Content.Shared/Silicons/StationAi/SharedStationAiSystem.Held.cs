@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
@@ -56,7 +55,7 @@ public abstract partial class SharedStationAiSystem
     /// <summary>
     /// Tries to get the entity held in the AI core using StationAiCore.
     /// </summary>
-    private bool TryGetHeld(Entity<StationAiCoreComponent?> entity, out EntityUid held)
+    public bool TryGetHeld(Entity<StationAiCoreComponent?> entity, out EntityUid held)
     {
         held = EntityUid.Invalid;
 
@@ -74,23 +73,19 @@ public abstract partial class SharedStationAiSystem
     /// <summary>
     /// Tries to get the entity held in the AI using StationAiHolder.
     /// </summary>
-    private bool TryGetHeldFromHolder(Entity<StationAiHolderComponent?> entity, out EntityUid held)
+    public bool TryGetHeld(Entity<StationAiHolderComponent?> entity, out EntityUid held)
     {
-        held = EntityUid.Invalid;
+        TryComp<StationAiCoreComponent>(entity.Owner, out var stationAiCore);
 
-        if (!Resolve(entity.Owner, ref entity.Comp))
-            return false;
-
-        if (!_containers.TryGetContainer(entity.Owner, StationAiHolderComponent.Container, out var container) ||
-            container.ContainedEntities.Count == 0)
-            return false;
-
-        held = container.ContainedEntities[0];
-        return true;
+        return TryGetHeld((entity.Owner, stationAiCore), out held);
     }
 
-    private bool TryGetCore(EntityUid ent, out Entity<StationAiCoreComponent?> core)
+    public bool TryGetCore(EntityUid entity, out Entity<StationAiCoreComponent?> core)
     {
+        var xform = Transform(entity);
+        var meta = MetaData(entity);
+        var ent = new Entity<TransformComponent?, MetaDataComponent?>(entity, xform, meta);
+
         if (!_containers.TryGetContainingContainer(ent, out var container) ||
             container.ID != StationAiCoreComponent.Container ||
             !TryComp(container.Owner, out StationAiCoreComponent? coreComp) ||
@@ -126,6 +121,14 @@ public abstract partial class SharedStationAiSystem
         if (ev.Actor == ev.Target)
             return;
 
+        // no need to show menu if device is not powered.
+        if (!PowerReceiver.IsPowered(ev.Target))
+        {
+            ShowDeviceNotRespondingPopup(ev.Actor);
+            ev.Cancel();
+            return;
+        }
+
         if (TryComp(ev.Actor, out StationAiHeldComponent? aiComp) &&
            (!TryComp(ev.Target, out StationAiWhitelistComponent? whitelistComponent) ||
             !ValidateAi((ev.Actor, aiComp))))
@@ -154,7 +157,8 @@ public abstract partial class SharedStationAiSystem
     private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanComplexInteract
-            || !HasComp<StationAiHeldComponent>(args.User))
+            || !HasComp<StationAiHeldComponent>(args.User)
+            || !args.CanInteract)
         {
             return;
         }
@@ -170,13 +174,6 @@ public abstract partial class SharedStationAiSystem
             Text = isOpen ? Loc.GetString("ai-close") : Loc.GetString("ai-open"),
             Act = () => 
             {
-                // no need to show menu if device is not powered.
-                if (!PowerReceiver.IsPowered(ent.Owner))
-                {
-                    ShowDeviceNotRespondingPopup(user);
-                    return;
-                }
-
                 if (isOpen)
                 {
                     _uiSystem.CloseUi(ent.Owner, AiUi.Key, user);

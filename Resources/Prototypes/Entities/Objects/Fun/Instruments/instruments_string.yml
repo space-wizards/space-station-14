@@ -9,7 +9,7 @@
   - type: SwappableInstrument
     instrumentList:
       "Clean": {27: 0}
-      "Jazz": {25: 0}
+      "Jazz": {26: 0}
       "Muted": {28: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/eguitar.rsi
