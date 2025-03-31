@@ -2,9 +2,9 @@
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.Silicons.Borgs;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
-using Content.Shared.Tag;
 
 namespace Content.Shared.Armor;
 
@@ -87,7 +87,8 @@ public abstract class SharedArmorSystem : EntitySystem
     #region ComplexArmor
     private void OnDamageModifyComplex(EntityUid uid, ComplexArmorComponent comp, InventoryRelayedEvent<DamageModifyEvent> args)
     {
-        var clothingUidList = _inventorySystem.GetHandOrInventoryEntities(uid, comp.Slots);
+        var parent = Transform(uid).ParentUid;
+        var clothingUidList = _inventorySystem.GetHandOrInventoryEntities(parent, comp.Slots);
 
         var allowedTags = comp.Tags;
 

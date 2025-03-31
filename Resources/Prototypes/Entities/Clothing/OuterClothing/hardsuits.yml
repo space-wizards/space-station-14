@@ -385,8 +385,7 @@
     modifiers:
       coefficients:
         Radiation: 0
-    slots:
-    - HEAD
+    slots: HEAD
     tags: [ RadiationProtectorHelmet ]
 
 #Chief Medical Officer's Hardsuit
