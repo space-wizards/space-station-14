@@ -39,6 +39,8 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
 
+        private EntityQuery<PhysicsComponent> _physicsQuery;
+
         /// <summary>
         /// Items dropped when the holder falls down will be launched in
         /// a direction offset by up to this many degrees from the holder's
@@ -67,6 +69,8 @@ namespace Content.Server.Hands.Systems
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Register<HandsSystem>();
+
+            _physicsQuery = GetEntityQuery<PhysicsComponent>();
         }
 
         public override void Shutdown()
@@ -242,7 +246,7 @@ namespace Content.Server.Hands.Systems
         private void OnDropHandItems(Entity<HandsComponent> entity, ref DropHandItemsEvent args)
         {
             // If the holder doesn't have a physics component, they ain't moving
-            var holderVelocity = TryComp<PhysicsComponent>(entity, out var physics) ? physics.LinearVelocity : Vector2.Zero;
+            var holderVelocity = _physicsQuery.TryComp(entity, out var physics) ? physics.LinearVelocity : Vector2.Zero;
 
             var fellEvent = new FellDownEvent(entity);
             RaiseLocalEvent(entity, fellEvent, false);
@@ -269,7 +273,7 @@ namespace Content.Server.Hands.Systems
                 itemVelocity *= _random.NextFloat(1f);
                 // Heavier objects don't get thrown as far
                 // If the item doesn't have a physics component, it isn't going to get thrown anyway, but we'll assume infinite mass
-                itemVelocity *= TryComp<PhysicsComponent>(held, out var heldPhysics) ? heldPhysics.InvMass : 0;
+                itemVelocity *= _physicsQuery.TryComp(held, out var heldPhysics) ? heldPhysics.InvMass : 0;
                 // Throw at half the holder's intentional throw speed and
                 // vary the speed a little to make it look more interesting
                 var throwSpeed = entity.Comp.BaseThrowspeed * 0.5f * _random.NextFloat(0.9f, 1.1f);
