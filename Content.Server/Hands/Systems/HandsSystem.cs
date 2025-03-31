@@ -39,6 +39,13 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly PullingSystem _pullingSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
 
+        /// <summary>
+        /// Items dropped when the holder falls down will be launched in
+        /// a direction offset by up to this many degrees from the holder's
+        /// movement direction.
+        /// </summary>
+        private const float DropHeldItemsSpread = 45;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -234,13 +241,11 @@ namespace Content.Server.Hands.Systems
 
         private void OnDropHandItems(Entity<HandsComponent> entity, ref DropHandItemsEvent args)
         {
-            var direction = EntityManager.TryGetComponent(entity, out PhysicsComponent? comp) ? comp.LinearVelocity / 50 : Vector2.Zero;
-            var dropAngle = _random.NextFloat(0.8f, 1.2f);
+            var holderVelocity = Comp<PhysicsComponent>(entity).LinearVelocity;
 
             var fellEvent = new FellDownEvent(entity);
             RaiseLocalEvent(entity, fellEvent, false);
 
-            var worldRotation = TransformSystem.GetWorldRotation(entity).ToVec();
             foreach (var hand in entity.Comp.Hands.Values)
             {
                 if (hand.HeldEntity is not EntityUid held)
@@ -255,10 +260,26 @@ namespace Content.Server.Hands.Systems
                 if (!TryDrop(entity, hand, null, checkActionBlocker: false, handsComp: entity.Comp))
                     continue;
 
+                // Rotate the item's throw vector a bit for each item
+                var angleOffset = Angle.FromDegrees(_random.NextFloat(-1, 1) * DropHeldItemsSpread);
+                // Rotate the holder's velocity vector by the angle offset to get the item's velocity vector
+                var itemVelocity = angleOffset.RotateVec(holderVelocity);
+                // Decrease the distance of the throw by a random amount
+                itemVelocity *= _random.NextFloat(1f);
+                // Heavier objects don't get thrown as far
+                if (TryComp<PhysicsComponent>(held, out var heldPhysics))
+                    itemVelocity *= heldPhysics.InvMass;
+                // Throw at half the holder's intentional throw speed and
+                // vary the speed a little to make it look more interesting
+                var throwSpeed = entity.Comp.BaseThrowspeed * 0.5f * _random.NextFloat(0.9f, 1.1f);
+
                 _throwingSystem.TryThrow(held,
-                    _random.NextAngle().RotateVec(direction / dropAngle + worldRotation / 50),
-                    0.5f * dropAngle * _random.NextFloat(-0.9f, 1.1f),
-                    entity, 0);
+                    itemVelocity,
+                    throwSpeed,
+                    entity,
+                    pushbackRatio: 0,
+                    compensateFriction: false
+                );
             }
         }
 
