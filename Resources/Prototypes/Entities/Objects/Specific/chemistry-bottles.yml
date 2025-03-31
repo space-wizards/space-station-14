@@ -649,7 +649,7 @@
   suffix: essence of corgi
   components:
   - type: Label
-    currentLabel: reagent-name-corgi-juice
+    currentLabel: reagent-name-corgijuice
   - type: SolutionContainerManager
     solutions:
       drink:
