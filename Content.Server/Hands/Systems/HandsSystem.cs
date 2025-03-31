@@ -276,7 +276,7 @@ namespace Content.Server.Hands.Systems
                 itemVelocity *= _physicsQuery.TryComp(held, out var heldPhysics) ? heldPhysics.InvMass : 0;
                 // Throw at half the holder's intentional throw speed and
                 // vary the speed a little to make it look more interesting
-                var throwSpeed = entity.Comp.BaseThrowspeed * 0.5f * _random.NextFloat(0.9f, 1.1f);
+                var throwSpeed = entity.Comp.BaseThrowspeed * _random.NextFloat(0.45f, 0.55f);
 
                 _throwingSystem.TryThrow(held,
                     itemVelocity,
