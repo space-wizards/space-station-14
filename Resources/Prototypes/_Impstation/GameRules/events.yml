@@ -9,6 +9,7 @@
     - id: KingRatMigration
     - id: NinjaSpawn
     - id: RevenantSpawn
+    - id: ParadoxCloneSpawn
     - id: GoblinStowawaysEvent # imp
     - id: RogueAscendedSpawn # imp
 
