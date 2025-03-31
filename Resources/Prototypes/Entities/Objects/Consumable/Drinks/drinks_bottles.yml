@@ -570,7 +570,7 @@
     - Wine
     - DrinkBottle
 
-# Large Bottles, for Soda/Tonic Water and its Parent. TODO add Large Water Bottle Sprites
+# Large Plastic Bottles, for Soda/Tonic Water and its Parent. TODO add Large Water Bottle Sprites
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkWaterBottleLargeFull
@@ -631,6 +631,41 @@
         reagents:
         - ReagentId: TonicWater
           Quantity: 150
+
+# Small Plastic Bottles
+
+- type: entity
+  parent: [DrinkBottleVisualsOpenable, DrinkBottleBaseFull]
+  id: DrinkWaterBottleFull
+  name: water bottle
+  description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Water
+          Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi
+    layers:
+    - state: icon
+      map: ["enum.OpenableVisuals.Layer"]
+    - state: icon-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: icon-
+    inHandsMaxFillLevels: 2
+    inHandsFillBaseName: -fill-
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 100
+  - type: PressurizedSolution
+  - type: Shakeable
 
 # Small Bottles
 
@@ -725,39 +760,6 @@
     sprite: Objects/Consumable/Drinks/alebottle.rsi
   - type: Openable
     closeable: false
-
-- type: entity
-  parent: [DrinkBottleVisualsOpenable, DrinkBottleBaseFull]
-  id: DrinkWaterBottleFull
-  name: water bottle
-  description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Water
-          Quantity: 30
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/waterbottle.rsi
-    layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: icon-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: icon-
-    inHandsMaxFillLevels: 2
-    inHandsFillBaseName: -fill-
-  - type: TrashOnSolutionEmpty
-    solution: drink
-  - type: PhysicalComposition
-    materialComposition:
-      Plastic: 100
-  - type: PressurizedSolution
-  - type: Shakeable
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
