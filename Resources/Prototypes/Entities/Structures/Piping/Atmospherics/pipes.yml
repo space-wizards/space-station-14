@@ -116,8 +116,8 @@
   - type: AtmosPipeLayers
     alternativePrototypes:
     - GasPipeHalf
-    - GasPipeHalf1
-    - GasPipeHalf2
+    - GasPipeHalfAlt1
+    - GasPipeHalfAlt2
   - type: Construction
     graph: GasPipe
     node: half
@@ -151,8 +151,8 @@
   - type: AtmosPipeLayers
     alternativePrototypes:
     - GasPipeStraight
-    - GasPipeStraight1
-    - GasPipeStraight2
+    - GasPipeStraightAlt1
+    - GasPipeStraightAlt2
   - type: Construction
     graph: GasPipe
     node: straight
@@ -194,8 +194,8 @@
   - type: AtmosPipeLayers
     alternativePrototypes:
     - GasPipeBend
-    - GasPipeBend1
-    - GasPipeBend2
+    - GasPipeBendAlt1
+    - GasPipeBendAlt2
   - type: Construction
     graph: GasPipe
     node: bend
@@ -244,8 +244,8 @@
   - type: AtmosPipeLayers
     alternativePrototypes:
     - GasPipeTJunction
-    - GasPipeTJunction1
-    - GasPipeTJunction2
+    - GasPipeTJunctionAlt1
+    - GasPipeTJunctionAlt2
   - type: Construction
     graph: GasPipe
     node: tjunction
@@ -289,8 +289,8 @@
   - type: AtmosPipeLayers
     alternativePrototypes:
     - GasPipeFourway
-    - GasPipeFourway1
-    - GasPipeFourway2
+    - GasPipeFourwayAlt1
+    - GasPipeFourwayAlt2
   - type: Construction
     graph: GasPipe
     node: fourway

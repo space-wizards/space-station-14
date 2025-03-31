@@ -4,8 +4,8 @@
 # Layer 1
 - type: entity
   abstract: true
-  id: GasPipeLayer1
-  suffix: Alt 1
+  id: GasPipeLayerAlt1
+  suffix: Alt 1 
   components:
   - type: AtmosPipeLayers
     pipeLayer: 1
@@ -13,7 +13,7 @@
 # Layer 2
 - type: entity
   abstract: true
-  id: GasPipeLayer2
+  id: GasPipeLayerAlt2
   suffix: Alt 2
   components:
   - type: AtmosPipeLayers
@@ -21,18 +21,20 @@
 
 # GasPipeStraight
 - type: entity
-  parent: [GasPipeLayer1, GasPipeStraight]
-  id: GasPipeStraight1
+  parent: [GasPipeLayerAlt1, GasPipeStraight]
+  id: GasPipeStraightAlt1
   suffix: Straight, alt 1
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
 
 - type: entity
-  parent: [GasPipeLayer2, GasPipeStraight]
-  id: GasPipeStraight2
+  parent: [GasPipeLayerAlt2, GasPipeStraight]
+  id: GasPipeStraightAlt2
   suffix: Straight, alt 2
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
@@ -40,18 +42,20 @@
 
 # GasPipeHalf
 - type: entity
-  parent: [GasPipeLayer1, GasPipeHalf]
-  id: GasPipeHalf1
+  parent: [GasPipeLayerAlt1, GasPipeHalf]
+  id: GasPipeHalfAlt1
   suffix: Half, alt 1
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
       
 - type: entity
-  parent: [GasPipeLayer2, GasPipeHalf]
-  id: GasPipeHalf2
-  suffix: Half, alt 2  
+  parent: [GasPipeLayerAlt2, GasPipeHalf]
+  id: GasPipeHalfAlt2
+  suffix: Half, alt 2
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
@@ -59,18 +63,20 @@
 
 # GasPipeBend
 - type: entity
-  parent: [GasPipeLayer1, GasPipeBend]
-  id: GasPipeBend1
+  parent: [GasPipeLayerAlt1, GasPipeBend]
+  id: GasPipeBendAlt1
   suffix: Bend, alt 1
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
       
 - type: entity
-  parent: [GasPipeLayer2, GasPipeBend]
-  id: GasPipeBend2
+  parent: [GasPipeLayerAlt2, GasPipeBend]
+  id: GasPipeBendAlt2
   suffix: Bend, alt 2
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
@@ -78,18 +84,20 @@
 
 # GasPipeTJunction
 - type: entity
-  parent: [GasPipeLayer1, GasPipeTJunction]
-  id: GasPipeTJunction1
+  parent: [GasPipeLayerAlt1, GasPipeTJunction]
+  id: GasPipeTJunctionAlt1
   suffix: TJunction, alt 1
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
       
 - type: entity
-  parent: [GasPipeLayer2, GasPipeTJunction]
-  id: GasPipeTJunction2
+  parent: [GasPipeLayerAlt2, GasPipeTJunction]
+  id: GasPipeTJunctionAlt2
   suffix: TJunction, alt 2
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
@@ -97,621 +105,21 @@
       
 # GasPipeFourway
 - type: entity
-  parent: [GasPipeLayer1, GasPipeFourway]
-  id: GasPipeFourway1
+  parent: [GasPipeLayerAlt1, GasPipeFourway]
+  id: GasPipeFourwayAlt1
   suffix: Fourway, alt 1
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
       
 - type: entity
-  parent: [GasPipeLayer2, GasPipeFourway]
-  id: GasPipeFourway2
+  parent: [GasPipeLayerAlt2, GasPipeFourway]
+  id: GasPipeFourwayAlt2
   suffix: Fourway, alt 2
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-
-# GasVentPump
-- type: entity
-  parent: [GasPipeLayer1, GasVentPump]
-  id: GasVentPump1
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeUnaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: vent_off
-      map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
-
-- type: entity
-  parent: [GasPipeLayer2, GasVentPump]
-  id: GasVentPump2
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeUnaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: vent_off
-      map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
-      
-# GasPassiveVent
-- type: entity
-  parent: [GasPipeLayer1, GasPassiveVent]
-  id: GasPassiveVent1
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeUnaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: vent_passive
-      map: [ "enum.SubfloorLayers.FirstLayer" ]
-      
-- type: entity
-  parent: [GasPipeLayer2, GasPassiveVent]
-  id: GasPassiveVent2
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeUnaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: vent_passive
-      map: [ "enum.SubfloorLayers.FirstLayer" ]
-      
-# GasVentScrubber
-- type: entity
-  parent: [GasPipeLayer1, GasVentScrubber]
-  id: GasVentScrubber1
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeUnaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: scrub_off
-      map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
-      
-- type: entity
-  parent: [GasPipeLayer2, GasVentScrubber]
-  id: GasVentScrubber2
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeUnaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: scrub_off
-      map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
-
-# GasOutletInjector
-- type: entity
-  parent: [GasPipeLayer1, GasOutletInjector]
-  id: GasOutletInjector1
-  components:
-  - type: Sprite
-    layers:
-    - state: pipeUnaryConnectors
-      sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: injector
-      map: [ "enum.SubfloorLayers.FirstLayer" ]
-    - state: injector-unshaded
-      shader: unshaded
-      map: [ "enum.LightLayers.Unshaded" ]
-      color: "#990000"
-
-- type: entity
-  parent: [GasPipeLayer2, GasOutletInjector]
-  id: GasOutletInjector2
-  components:
-  - type: Sprite
-    layers:
-    - state: pipeUnaryConnectors
-      sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: injector
-      map: [ "enum.SubfloorLayers.FirstLayer" ]
-    - state: injector-unshaded
-      shader: unshaded
-      map: [ "enum.LightLayers.Unshaded" ]
-      color: "#990000"
-
-# GasThermoMachineFreezer
-- type: entity
-  parent: [GasPipeLayer1, GasThermoMachineFreezer]
-  id: GasThermoMachineFreezer1
-  components:
-  - type: Sprite
-    layers:
-    - state: freezerOff
-      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-    - state: freezerPanelOpen
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-    - state: pipe1
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-      renderingStrategy: Default
-
-- type: entity
-  parent: [GasPipeLayer2, GasThermoMachineFreezer]
-  id: GasThermoMachineFreezer2
-  components:
-  - type: Sprite
-    layers:
-    - state: freezerOff
-      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-    - state: freezerPanelOpen
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-    - state: pipe2
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-      renderingStrategy: Default
-
-# GasThermoMachineHeater
-- type: entity
-  parent: [GasPipeLayer1, GasThermoMachineHeater]
-  id: GasThermoMachineHeater1
-  components:
-  - type: Sprite
-    layers:
-    - state: heaterOff
-      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-    - state: heaterPanelOpen
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: pipe1
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-      renderingStrategy: Default
-
-- type: entity
-  parent: [GasPipeLayer2, GasThermoMachineHeater]
-  id: GasThermoMachineHeater2
-  components:
-  - type: Sprite
-    layers:
-    - state: heaterOff
-      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-    - state: heaterPanelOpen
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: pipe2
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-      renderingStrategy: Default
-
-# GasThermoMachineHellfireFreezer
-- type: entity
-  parent: [GasPipeLayer1, GasThermoMachineHellfireFreezer]
-  id: GasThermoMachineHellfireFreezer1
-  components:
-  - type: Sprite
-    layers:
-    - state: heaterOff
-      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-    - state: heaterPanelOpen
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: pipe1
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-      renderingStrategy: Default
-
-- type: entity
-  parent: [GasPipeLayer2, GasThermoMachineHellfireFreezer]
-  id: GasThermoMachineHellfireFreezer2
-  components:
-  - type: Sprite
-    layers:
-    - state: heaterOff
-      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-    - state: heaterPanelOpen
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: pipe2
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-      renderingStrategy: Default     
-
-# GasThermoMachineHellfireHeater
-- type: entity
-  parent: [GasPipeLayer1, GasThermoMachineHellfireHeater]
-  id: GasThermoMachineHellfireHeater1
-  components:
-  - type: Sprite
-    layers:
-    - state: heaterOff
-      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-    - state: heaterPanelOpen
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: pipe1
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-      renderingStrategy: Default
-
-- type: entity
-  parent: [GasPipeLayer2, GasThermoMachineHellfireHeater]
-  id: GasThermoMachineHellfireHeater2
-  components:
-  - type: Sprite
-    layers:
-    - state: heaterOff
-      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-    - state: heaterPanelOpen
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: pipe2
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-      renderingStrategy: Default     
-
-# BaseGasCondenser
-- type: entity
-  parent: [GasPipeLayer1, BaseGasCondenser]
-  id: BaseGasCondenser1
-  components:
-  - type: Sprite
-    layers:
-    - state: off
-      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: pipe1
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-      renderingStrategy: Default
-    - state: fill-1
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
-    - state: trans
-
-- type: entity
-  parent: [GasPipeLayer2, BaseGasCondenser]
-  id: BaseGasCondenser2
-  components:
-  - type: Sprite
-    layers:
-    - state: off
-      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-    - state: panel
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: pipe2
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-      renderingStrategy: Default
-    - state: fill-1
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
-    - state: trans
-    
-# GasPressurePump
-- type: entity
-  parent: [GasPipeLayer1, GasPressurePump]
-  id: GasPressurePump1
-  components:
-  - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeStraight
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: pumpPressure
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-      
-- type: entity
-  parent: [GasPipeLayer2, GasPressurePump]
-  id: GasPressurePump2
-  components:
-  - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeStraight
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: pumpPressure
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-      
-# GasVolumePump
-- type: entity
-  parent: [GasPipeLayer1, GasVolumePump]
-  id: GasVolumePump1
-  components:
-  - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeStraight
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: pumpVolume
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-      
-- type: entity
-  parent: [GasPipeLayer2, GasVolumePump]
-  id: GasVolumePump2
-  components:
-  - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeStraight
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: pumpVolume
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-      
-# GasPassiveGate
-- type: entity
-  parent: [GasPipeLayer1, GasPassiveGate]
-  id: GasPassiveGate1
-  components:
-  - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeStraight
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: pumpPassiveGate
-      map: [ "enum.SubfloorLayers.FirstLayer" ]
-
-- type: entity
-  parent: [GasPipeLayer2, GasPassiveGate]
-  id: GasPassiveGate2
-  components:
-  - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeStraight
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: pumpPassiveGate
-      map: [ "enum.SubfloorLayers.FirstLayer" ]
-
-# GasValve
-- type: entity
-  parent: [GasPipeLayer1, GasValve]
-  id: GasValve1
-  components:
-  - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeStraight
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: pumpManualValve
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-      
-- type: entity
-  parent: [GasPipeLayer2, GasValve]
-  id: GasValve2
-  components:
-  - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeStraight
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: pumpManualValve
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
- 
-# SignalControlledValve
-- type: entity
-  parent: [GasPipeLayer1, SignalControlledValve]
-  id: SignalControlledValve1
-  components:
-  - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pump_alt1.rsi
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeStraight
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: pumpSignalValve
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-
-- type: entity
-  parent: [GasPipeLayer2, SignalControlledValve]
-  id: SignalControlledValve2
-  components:
-  - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pump_alt2.rsi
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeStraight
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: pumpSignalValve
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-
-# GasPort
-- type: entity
-  parent: [GasPipeLayer1, GasPort]
-  id: GasPort1
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeUnaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: gasCanisterPort
-      map: [ "enum.SubfloorLayers.FirstLayer" ] 
-      
-- type: entity
-  parent: [GasPipeLayer2, GasPort]
-  id: GasPort2
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeUnaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: gasCanisterPort
-      map: [ "enum.SubfloorLayers.FirstLayer" ] 
-
-# GasDualPortVentPump
-- type: entity
-  parent: [GasPipeLayer1, GasDualPortVentPump]
-  id: GasDualPortVentPump1
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeBinaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: vent_off
-      map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
-
-- type: entity
-  parent: [GasPipeLayer2, GasDualPortVentPump]
-  id: GasDualPortVentPump2
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeBinaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: vent_off
-      map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
-
-# GasRecycler
-- type: entity
-  parent: [GasPipeLayer1, GasRecycler]
-  id: GasRecycler1
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeBinaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: running
-    - state: unlit
-      shader: unshaded
-
-- type: entity
-  parent: [GasPipeLayer2, GasRecycler]
-  id: GasRecycler2
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeBinaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: running
-    - state: unlit
-      shader: unshaded
-
-# GasFilter
-- type: entity
-  parent: [GasPipeLayer1, GasFilter]
-  id: GasFilter1
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeTrinaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: gasFilter
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-
-- type: entity
-  parent: [GasPipeLayer2, GasFilter]
-  id: GasFilter2
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeTrinaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: gasFilter
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-
-# GasFilterFlipped
-- type: entity
-  parent: [GasPipeLayer1, GasFilterFlipped]
-  id: GasFilterFlipped1
-  suffix: Flipped, alt 1
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeTrinaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: gasFilterF
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-
-- type: entity
-  parent: [GasPipeLayer2, GasFilterFlipped]
-  id: GasFilterFlipped2
-  suffix: Flipped, alt 2
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeTrinaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: gasFilterF
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-
-# GasMixer
-- type: entity
-  parent: [GasPipeLayer1, GasMixer]
-  id: GasMixer1
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeTrinaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: gasMixer
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-
-- type: entity
-  parent: [GasPipeLayer2, GasMixer]
-  id: GasMixer2
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeTrinaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: gasMixer
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-
-# GasMixerFlipped
-- type: entity
-  parent: [GasPipeLayer1, GasMixerFlipped]
-  id: GasMixerFlipped1
-  suffix: Flipped, alt 1  
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeTrinaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: gasMixerF
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-      
-- type: entity
-  parent: [GasPipeLayer2, GasMixerFlipped]
-  id: GasMixerFlipped2
-  suffix: Flipped, alt 2
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeTrinaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: gasMixerF
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-      
-# PressureControlledValve
-- type: entity
-  parent: [GasPipeLayer1, PressureControlledValve]
-  id: PressureControlledValve1
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
-      state: pipeTrinaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: off
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
-
-- type: entity
-  parent: [GasPipeLayer2, PressureControlledValve]
-  id: PressureControlledValve2
-  components:
-  - type: Sprite
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
-      state: pipeTrinaryConnectors
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: off
-      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
