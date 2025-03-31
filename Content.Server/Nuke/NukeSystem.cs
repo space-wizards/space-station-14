@@ -246,7 +246,7 @@ public sealed class NukeSystem : EntitySystem
 
     private void OnArmButtonPressed(EntityUid uid, NukeComponent component, NukeArmedMessage args)
     {
-        if (!component.DiskSlot.HasItem)
+        if (!component.DiskSlot.HasItem && !component.DiskBypassEnabled)
             return;
 
         if (component.Status == NukeStatus.AWAIT_ARM && Transform(uid).Anchored)
@@ -267,9 +267,10 @@ public sealed class NukeSystem : EntitySystem
         if (args.Handled || args.Cancelled)
             return;
 
+        var bypass = component.DiskBypassEnabled;
         DisarmBomb(uid, component);
 
-        var ev = new NukeDisarmSuccessEvent();
+        var ev = new NukeDisarmSuccessEvent(!bypass);
         RaiseLocalEvent(ev);
 
         args.Handled = true;
@@ -335,11 +336,11 @@ public sealed class NukeSystem : EntitySystem
         switch (component.Status)
         {
             case NukeStatus.AWAIT_DISK:
-                if (component.DiskSlot.HasItem)
+                if (component.DiskSlot.HasItem || component.DiskBypassEnabled)
                     component.Status = NukeStatus.AWAIT_CODE;
                 break;
             case NukeStatus.AWAIT_CODE:
-                if (!component.DiskSlot.HasItem)
+                if (!component.DiskSlot.HasItem && !component.DiskBypassEnabled)
                 {
                     component.Status = NukeStatus.AWAIT_DISK;
                     component.EnteredCode = "";
@@ -381,7 +382,8 @@ public sealed class NukeSystem : EntitySystem
 
         var allowArm = component.DiskSlot.HasItem &&
                        (component.Status == NukeStatus.AWAIT_ARM ||
-                        component.Status == NukeStatus.ARMED);
+                        component.Status == NukeStatus.ARMED) ||
+                        component.DiskBypassEnabled;
 
         var state = new NukeUiState
         {
@@ -539,6 +541,14 @@ public sealed class NukeSystem : EntitySystem
         component.Status = NukeStatus.COOLDOWN;
         component.CooldownTime = component.Cooldown;
 
+        if (component.ShouldResetAfterDiskBypass == true)
+        {
+            component.DiskBypassEnabled = false;
+            component.RemainingTime = component.Timer;
+        }
+
+        component.ShouldResetAfterDiskBypass = false;
+
         UpdateUserInterface(uid, component);
         UpdateAppearance(uid, component);
     }
@@ -595,6 +605,20 @@ public sealed class NukeSystem : EntitySystem
             return;
 
         component.RemainingTime = timer;
+        UpdateUserInterface(uid, component);
+    }
+
+    /// <summary>
+    ///     Sets whether we can bypass the disk when arming/disarming, and if it should be reset later.
+    /// </summary>
+    /// <param name="shouldResetLater">Whether DiskBypassEnabled, and the nuke timer, should be reset to default after nuke is disarmed.</param>
+    public void SetDiskBypassEnabled(EntityUid uid, bool diskBypass, bool shouldResetLater = true, NukeComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.DiskBypassEnabled = diskBypass;
+        component.ShouldResetAfterDiskBypass = shouldResetLater;
         UpdateUserInterface(uid, component);
     }
 
@@ -658,6 +682,13 @@ public sealed class NukeExplodedEvent : EntityEventArgs
 /// </summary>
 public sealed class NukeDisarmSuccessEvent : EntityEventArgs
 {
+    /// <summary>
+    ///     Check for NukeOps round end conditions
+    /// </summary>
+    public bool CheckRoundShouldEnd;
 
+    public NukeDisarmSuccessEvent(bool checkRoundShouldEnd)
+    {
+        CheckRoundShouldEnd = checkRoundShouldEnd;
+    }
 }
-
