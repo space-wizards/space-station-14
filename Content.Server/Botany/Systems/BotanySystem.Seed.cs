@@ -14,6 +14,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 
 namespace Content.Server.Botany.Systems;
 
@@ -27,6 +29,7 @@ public sealed partial class BotanySystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -116,7 +119,12 @@ public sealed partial class BotanySystem : EntitySystem
     {
         if (position.IsValid(EntityManager) &&
             proto.ProductPrototypes.Count > 0)
+        {
+            if (proto.HarvestLogImpact != null)
+                _adminLogger.Add(LogType.Botany, proto.HarvestLogImpact.Value, $"Auto-harvested {Loc.GetString(proto.Name):seed} at Pos:{position}.");
+
             return GenerateProduct(proto, position, yieldMod);
+        }
 
         return Enumerable.Empty<EntityUid>();
     }
@@ -131,6 +139,10 @@ public sealed partial class BotanySystem : EntitySystem
 
         var name = Loc.GetString(proto.DisplayName);
         _popupSystem.PopupCursor(Loc.GetString("botany-harvest-success-message", ("name", name)), user, PopupType.Medium);
+
+        if (proto.HarvestLogImpact != null)
+            _adminLogger.Add(LogType.Botany, proto.HarvestLogImpact.Value, $"{ToPrettyString(user):player} harvested {Loc.GetString(proto.Name):seed} at Pos:{Transform(user).Coordinates}.");
+
         return GenerateProduct(proto, Transform(user).Coordinates, yieldMod);
     }
 

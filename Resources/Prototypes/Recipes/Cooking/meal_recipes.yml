@@ -262,10 +262,11 @@
   result: FoodBurgerMcguffin
   time: 10
   group: Savory
+  reagents:
+    Egg: 12
   solids:
     FoodBreadBun: 1
     FoodCheeseSlice: 1
-    FoodEgg: 2
 
 - type: microwaveMealRecipe
   id: RecipeBurgerMcrib
@@ -348,12 +349,12 @@
   group: Savory
   reagents:
     TableSalt: 5
+    Egg: 12
   solids:
     FoodBreadBun: 1
     FoodMeat: 2
     FoodCheeseSlice: 2
     FoodTomato: 2
-    FoodEgg: 2
 
 - type: microwaveMealRecipe
   id: RecipeTofuBurger
@@ -851,6 +852,7 @@
   group: Pasta
   solids:
     FoodNoodles: 2
+    FoodPlateSmall: 2
 
 #Soups & Stew
 - type: microwaveMealRecipe
