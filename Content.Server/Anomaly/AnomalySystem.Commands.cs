@@ -47,7 +47,7 @@ public sealed partial class AnomalySystem
         if (!TryComp<AnomalyComponent>(uid, out var anomaly)) // Starlight-edit
             return;
 
-        StartSupercriticalEvent(uid.Value, anomaly);
+        StartSupercriticalEvent(uid.Value, anomaly); // Starlight-edit
     }
 
     private CompletionResult GetAnomalyCompletion(IConsoleShell shell, string[] args)
