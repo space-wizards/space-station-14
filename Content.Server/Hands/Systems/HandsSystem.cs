@@ -266,7 +266,8 @@ namespace Content.Server.Hands.Systems
                     continue;
 
                 // Rotate the item's throw vector a bit for each item
-                var angleOffset = Angle.FromDegrees(_random.NextFloat(-1, 1) * DropHeldItemsSpread);
+                var spreadMaxAngle = Angle.FromDegrees(DropHeldItemsSpread);
+                var angleOffset = _random.NextAngle(-spreadMaxAngle, spreadMaxAngle);
                 // Rotate the holder's velocity vector by the angle offset to get the item's velocity vector
                 var itemVelocity = angleOffset.RotateVec(holderVelocity);
                 // Decrease the distance of the throw by a random amount
