@@ -418,9 +418,9 @@
             Quantity: 30
 
 - type: entity
+  parent: BaseChemistryBottleFilled
   id: CorgiJuiceChemistryBottle
   suffix: essence of corgi
-  parent: BaseChemistryBottleFilled
   components:
   - type: Label
     currentLabel: "Endless Corgi Essence"

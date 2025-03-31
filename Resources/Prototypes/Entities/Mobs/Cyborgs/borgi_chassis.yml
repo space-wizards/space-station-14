@@ -1,10 +1,10 @@
 - type: entity
+  abstract: true
   parent: MobAdmemeCorgi
   id: BaseBorgiChassis
   name: Borgi
   description: A corgi-machine hybrid that assists in station activity. It loves being asked to state its laws and to chase its tail.
   save: false
-  abstract: true
   components:
   - type: ShowJobIcons
   - type: Reactive
@@ -84,11 +84,11 @@
       - !type:GibBehavior
   - type: HealthExaminable
     examinableTypes:
-      - Blunt
-      - Slash
-      - Piercing
-      - Heat
-      - Shock
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
     locPrefix: silicon
   - type: UserInterface
     interfaces:
@@ -115,7 +115,7 @@
     clickInsert: false
     openOnActivate: false
     grid:
-      - 0,0,3,3
+    - 0,0,3,3
     maxItemSize: Huge
   - type: Body
     prototype: BodySmartCorgi
@@ -136,9 +136,9 @@
     maxModules: 4
     moduleWhitelist:
       tags:
-        - BorgModuleGeneric
-        - BorgModuleCargo
-        - BorgModuleMedical
+      - BorgModuleGeneric
+      - BorgModuleCargo
+      - BorgModuleMedical
     hasMindState: corgitag
     noMindState: corgitag
   - type: LockingWhitelist
@@ -195,11 +195,11 @@
     maxDamage: 25
     damage:
       types:
-        Blunt: 0.15 
+        Blunt: 0.15
   - type: Temperature
     coldDamage:
       types:
-        Cold: 0.03 
+        Cold: 0.03
 
 # Custom action for later modification for borgi.
 - type: entity
@@ -215,24 +215,24 @@
       key: enum.InstrumentUiKey.Key
 
 - type: entity
-  name: Smart Corgi
   parent: MobAdmemeCorgi
   id: SmartCorgi
+  name: Smart Corgi
   description: An unusually smart dog.
   suffix: Default
   components:
   - type: RandomMetadata
     nameSegments:
-      - names_corgi
+    - names_corgi
   # Custom inventory template
   - type: Inventory
     speciesId: dog
     templateId: smartpetborgi
 
 - type: entity
-  name: Borgi
   parent: BaseBorgiChassis
   id: BorgiVulnerable
+  name: Borgi
   components:
   - type: SiliconLawProvider
     laws: BorgiLawset
@@ -242,7 +242,7 @@
     accent: dog
   - type: RandomMetadata
     nameSegments:
-      - names_borgi
+    - names_borgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -255,9 +255,9 @@
     - Binary
 
 - type: entity
-  name: Smart Borgi
   parent: BaseBorgiChassis
   id: SmartBorgiVulnerable
+  name: Smart Borgi
   components:
   - type: SiliconLawProvider
     laws: BorgiLawset
@@ -265,7 +265,7 @@
     stunTime: 5
   - type: RandomMetadata
     nameSegments:
-      - names_borgi
+    - names_borgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -278,9 +278,9 @@
     - Binary
 
 - type: entity
-  name: SubWoofer
   parent: BaseBorgiChassis
   id: SubWooferVulnerable
+  name: SubWoofer
   description: A smart dog, with an obsession for sick bass beats.
   components:
   - type: SiliconLawProvider
@@ -291,7 +291,7 @@
     accent: dog
   - type: RandomMetadata
     nameSegments:
-      - names_borgi
+    - names_borgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -305,9 +305,9 @@
     - Binary
 
 - type: entity
-  name: Smart SubWoofer
   parent: BaseBorgiChassis
   id: SmartSubWooferVulnerable
+  name: Smart SubWoofer
   description: An unusually smart dog, with an obsession for sick bass beats.
   components:
   - type: SiliconLawProvider
@@ -316,7 +316,7 @@
     stunTime: 5
   - type: RandomMetadata
     nameSegments:
-      - names_borgi
+    - names_borgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -332,9 +332,9 @@
 # Syndicate Borgi
 
 - type: entity
-  name: Syndi Borgi
   parent: BaseBorgiChassis
   id: SyndiCorgi
+  name: Syndi Borgi
   description: An unusually smart dog, but hell bent on MURDER.
   suffix: Antag
   components:
@@ -349,22 +349,22 @@
     maxModules: 3
     moduleWhitelist:
       tags:
-        - BorgModuleSyndicate
-        - BorgModuleSyndicateAssault
-        - BorgModuleGeneric 
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - BorgModuleGeneric
   - type: SiliconLawProvider
     laws: SyndiBorgiLawset
     subverted: true
   - type: RandomMetadata
     nameSegments:
-      - names_syndiborgi
+    - names_syndiborgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
   - type: ContainerFill
     containers:
       borg_brain:
-        - PositronicBrain
+      - PositronicBrain
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -384,14 +384,14 @@
   - type: Temperature
     coldDamage:
       types:
-        Cold: 0.01 
+        Cold: 0.01
 
 - type: entity
-  name: Syndi Borgi
   parent: BaseBorgiChassis
   id: SyndiCorgiKit1
-  description: An unusually smart dog, but hell bent on MURDER.
+  name: Syndi Borgi
   suffix: Antag, L6 Esword
+  description: An unusually smart dog, but hell bent on MURDER.
   components:
   - type: GhostRole
     name: A Syndicate Borgi.
@@ -404,26 +404,26 @@
     maxModules: 3
     moduleWhitelist:
       tags:
-        - BorgModuleSyndicate
-        - BorgModuleSyndicateAssault
-        - BorgModuleGeneric 
+      - BorgModuleSyndicate
+      - BorgModuleSyndicateAssault
+      - BorgModuleGeneric
   - type: SiliconLawProvider
     laws: SyndiBorgiLawset
     subverted: true
   - type: RandomMetadata
     nameSegments:
-      - names_syndiborgi
+    - names_syndiborgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
   - type: ContainerFill
     containers:
       borg_brain:
-        - PositronicBrain
+      - PositronicBrain
       borg_module:
-        - BorgModuleOperative
-        - BorgModuleL6C
-        - BorgModuleEsword
+      - BorgModuleOperative
+      - BorgModuleL6C
+      - BorgModuleEsword
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -439,18 +439,18 @@
     maxDamage: 10
     damage:
       types:
-        Blunt: 0.15 
+        Blunt: 0.15
   - type: Temperature
     coldDamage:
       types:
-        Cold: 0.01 
+        Cold: 0.01
 
 - type: entity
-  name: Syndi Borgi
   parent: BaseBorgiChassis
   id: SyndiCorgiKit2
-  description: An unusually smart dog, but hell bent on MURDER.
+  name: Syndi Borgi
   suffix: Antag, Quick Dagger
+  description: An unusually smart dog, but hell bent on MURDER.
   components:
   - type: GhostRole
     name: A Syndicate Borgi.
@@ -466,24 +466,24 @@
     maxModules: 3
     moduleWhitelist:
       tags:
-        - BorgModuleSyndicate
-        - BorgModuleGeneric 
+      - BorgModuleSyndicate
+      - BorgModuleGeneric
   - type: SiliconLawProvider
     laws: SyndiBorgiLawset
     subverted: true
   - type: RandomMetadata
     nameSegments:
-      - names_syndiborgi
+    - names_syndiborgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
   - type: ContainerFill
     containers:
       borg_brain:
-        - PositronicBrain
+      - PositronicBrain
       borg_module:
-        - BorgModuleOperative
-        - BorgModuleSyndicateWeapon
+      - BorgModuleOperative
+      - BorgModuleSyndicateWeapon
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -499,44 +499,44 @@
     maxDamage: 10
     damage:
       types:
-        Blunt: 0.15 
+        Blunt: 0.15
   - type: Temperature
     coldDamage:
       types:
-        Cold: 0.01 
+        Cold: 0.01
 
 - type: entity
-  name: Shadow Borgi
   parent: BaseBorgiChassis
   id: ShadowBorgi
-  description: A contributor to a menacing plot to convert the station.
+  name: Shadow Borgi
   suffix: Shadow Factory
+  description: A contributor to a menacing plot to convert the station.
   components:
   - type: BorgChassis
     maxModules: 8
     moduleWhitelist:
       tags:
-        - BorgModuleSyndicate
-        - BorgModuleGeneric 
-        - BorgModuleMedical
-        - BorgModuleEngineering
+      - BorgModuleSyndicate
+      - BorgModuleGeneric
+      - BorgModuleMedical
+      - BorgModuleEngineering
   - type: SiliconLawProvider
     laws: ShadowFactoryBorgiLawset
     subverted: true
   - type: RandomMetadata
     nameSegments:
-      - names_shadowborgi
+    - names_shadowborgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
   - type: ContainerFill
     containers:
       borg_module:
-        - BorgModuleTool
-        - BorgModuleAdvancedTool
-        - BorgModuleSyndicateWeapon
-        - BorgModuleTreatment
-        - BorgModuleFireExtinguisher
+      - BorgModuleTool
+      - BorgModuleAdvancedTool
+      - BorgModuleSyndicateWeapon
+      - BorgModuleTreatment
+      - BorgModuleFireExtinguisher
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -581,18 +581,18 @@
     maxDamage: 1
     damage:
       types:
-        Blunt: 0.01 
+        Blunt: 0.01
   - type: Temperature
     coldDamage:
       types:
-        Cold: 0.01 
+        Cold: 0.01
 
 - type: entity
-  name: Shadow Borgi
   parent: ShadowBorgi
   id: StarterShadowBorgi
-  description: A leader of a menacing plot to convert the station.
+  name: Shadow Borgi
   suffix: InitialSpawn; ShadowFactory
+  description: A leader of a menacing plot to convert the station.
   components:
   - type: GhostRole
     name: Shadow Borgi
@@ -605,10 +605,10 @@
     maxModules: 8
     moduleWhitelist:
       tags:
-        - BorgModuleSyndicate
-        - BorgModuleGeneric 
-        - BorgModuleMedical
-        - BorgModuleEngineering
+      - BorgModuleSyndicate
+      - BorgModuleGeneric
+      - BorgModuleMedical
+      - BorgModuleEngineering
   - type: SiliconLawProvider
     laws: ShadowFactoryBorgiLawset
     subverted: true
@@ -621,13 +621,13 @@
   - type: ContainerFill
     containers:
       borg_brain:
-        - PositronicBrain
+      - PositronicBrain
       borg_module:
-        - BorgModuleTool
-        - BorgModuleAdvancedTool
-        - BorgModuleSyndicateWeapon
-        - BorgModuleTreatment
-        - BorgModuleFireExtinguisher
+      - BorgModuleTool
+      - BorgModuleAdvancedTool
+      - BorgModuleSyndicateWeapon
+      - BorgModuleTreatment
+      - BorgModuleFireExtinguisher
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -672,8 +672,8 @@
     maxDamage: 1
     damage:
       types:
-        Blunt: 0.01 
+        Blunt: 0.01
   - type: Temperature
     coldDamage:
       types:
-        Cold: 0.01 
+        Cold: 0.01

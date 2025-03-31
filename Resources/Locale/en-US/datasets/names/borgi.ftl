@@ -1,0 +1,45 @@
+names-borgi-dataset-1 = Subwoofer
+names-borgi-dataset-2 = Borgi
+names-borgi-dataset-3 = Corginator
+names-borgi-dataset-4 = Receiver of Pets
+names-borgi-dataset-5 = Woofer Mk II
+names-borgi-dataset-6 = Bjork
+names-borgi-dataset-7 = YipYap
+names-borgi-dataset-8 = Head of Corgis
+names-borgi-dataset-9 = Definitely Not Robodog
+names-borgi-dataset-10 = Head of Dogurity
+names-borgi-dataset-11 = Corgi-Worgi
+names-borgi-dataset-12 = Ian but Smarter
+names-borgi-dataset-13 = Braindog
+names-borgi-dataset-14 = Speaks-In-Bork
+names-borgi-dataset-15 = Head of Pets
+names-borgi-dataset-16 = Hop's Best Friend
+names-borgi-dataset-17 = Super Corgi
+names-borgi-dataset-18 = Paws
+names-borgi-dataset-19 = Golden Rebeeper
+names-borgi-dataset-20 = D-0-G
+names-borgi-dataset-21 = Core-Gi
+
+names-corgi-dataset-1 = Ian but Smarter
+names-corgi-dataset-2 = Braindog
+names-corgi-dataset-3 = Speaks-In-Bork
+names-corgi-dataset-4 = Head of Pets
+names-corgi-dataset-5 = Hop's Best Friend
+names-corgi-dataset-6 = Super Corgi
+names-corgi-dataset-7 = Paws
+names-corgi-dataset-8 = Bingus
+names-corgi-dataset-9 = Bongus
+
+names-syndiborgi-dataset-1 = Red Rover
+names-syndiborgi-dataset-2 = Bites-The-Ankles
+names-syndiborgi-dataset-3 = Anklebiter
+names-syndiborgi-dataset-4 = Ferocious
+names-syndiborgi-dataset-5 = K-9 Attack Borg
+names-syndiborgi-dataset-6 = Bullet Borker
+
+names-shadowborgi-dataset-1 = Red Rover
+names-shadowborgi-dataset-2 = Bites-The-Ankles
+names-shadowborgi-dataset-3 = Anklebiter
+names-shadowborgi-dataset-4 = Ferocious
+names-shadowborgi-dataset-5 = K-9 Attack Borg
+names-shadowborgi-dataset-6 = Bullet Borker

@@ -422,6 +422,9 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - HamsterWearable
+    - ClothMade
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase
@@ -540,6 +543,9 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - HamsterWearable
+    - ClothMade
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBase

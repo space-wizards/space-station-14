@@ -1,57 +1,23 @@
-- type: dataset
-  id: names_borgi
+- type: localizedDataset
+  id: NamesBorgi
   values:
-  - Subwoofer
-  - Borgi
-  - Corginator
-  - Receiver of Pets
-  - Woofer Mk II
-  - Bjork
-  - YipYap
-  - Head of Corgis
-  - Definitely Not Robodog
-  - Head of Dogurity
-  - Corgi-Worgi
-  - Ian but Smarter
-  - Braindog
-  - Speaks-In-Bork
-  - Head of Pets
-  - Hop's Best Friend
-  - Super Corgi
-  - Paws
-  - Golden Rebeeper
-  - D-0-G
-  - Core-Gi
+    prefix: names-borgi-dataset-
+    count: 21
 
-- type: dataset
-  id: names_corgi
+- type: localizedDataset
+  id: NamesCorgi
   values:
-  - Ian but Smarter
-  - Braindog
-  - Speaks-In-Bork
-  - Head of Pets
-  - Hop's Best Friend
-  - Super Corgi
-  - Paws
-  - Bingus
-  - Bongus
+    prefix: names-corgi-dataset-
+    count: 9
 
-- type: dataset
-  id: names_syndiborgi
+- type: localizedDataset
+  id: NamesSyndiBorgi
   values:
-  - Red Rover
-  - Bites-The-Ankles
-  - Anklebiter
-  - Ferocious
-  - K-9 Attack Borg
-  - Bullet Borker
+    prefix: names-syndiborgi-dataset-
+    count: 6
 
-- type: dataset
-  id: names_shadowborgi
+- type: localizedDataset
+  id: NamesShadowBorgi
   values:
-  - Red Rover
-  - Bites-The-Ankles
-  - Anklebiter
-  - Ferocious
-  - K-9 Attack Borg
-  - Bullet Borker
+    prefix: names-shadowborgi-dataset-
+    count: 6

@@ -60,6 +60,8 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - SuitEVA
+    - WhitelistChameleon
 
 #Prisoner EVA
 - type: entity
@@ -159,3 +161,4 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - WhitelistChameleon

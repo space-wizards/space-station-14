@@ -1265,9 +1265,9 @@
     stock: 1
 
 - type: listing
-  id: UplinkSyndicateBorgi0
-  name: Syndicate Borgi
-  description: A syndicate borgi, with no modules
+  id: UplinkSyndicateBorgi
+  name: uplink-syndicate-borgi-name
+  description: uplink-syndicate-borgi-desc
   icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
   productEntity: SyndiCorgi
   cost:
@@ -1279,9 +1279,9 @@
     stock: 3
 
 - type: listing
-  id: UplinkSyndicateBorgi1
-  name: Kitted Syndicate Borgi
-  description: A syndicate borgi, with Assault modules
+  id: UplinkSyndicateBorgiKitted
+  name: uplink-syndicate-borgi-kitted-name
+  description: uplink-syndicate-borgi-kitted-desc
   icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
   productEntity: SyndiCorgiKit1
   cost:
@@ -1297,9 +1297,9 @@
       - NukeOpsUplink
 
 - type: listing
-  id: UplinkSyndicateBorgi2
-  name: Speed Syndicate Borgi
-  description: A syndicate borgi, with dagger modules and additional speed
+  id: UplinkSyndicateBorgiSpeed
+  name: uplink-syndicate-borgi-speed-name
+  description: uplink-syndicate-borgi-speed-desc
   icon: { sprite: /Textures/Objects/Fun/toys.rsi, state: ian }
   productEntity: SyndiCorgiKit2
   cost:

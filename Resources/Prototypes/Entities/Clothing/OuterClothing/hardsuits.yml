@@ -30,6 +30,8 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Atmospherics Hardsuit
 - type: entity
@@ -69,6 +71,8 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Engineering Hardsuit
 - type: entity
@@ -104,6 +108,8 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Spationaut Hardsuit
 - type: entity
@@ -173,6 +179,8 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Goliath Hardsuit
 - type: entity
@@ -211,6 +219,8 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Maxim Hardsuit
 - type: entity
@@ -366,6 +376,8 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Chief Engineer's Hardsuit
 - type: entity
@@ -403,6 +415,8 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Chief Medical Officer's Hardsuit
 - type: entity
@@ -431,6 +445,8 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Research Director's Hardsuit
 - type: entity
@@ -638,7 +654,9 @@
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
   - type: Tag
     tags:
-      - CorgiWearable
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Syndicate Commander Hardsuit
 - type: entity
@@ -738,6 +756,8 @@
   - type: Tag
     tags:
     - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Ling Space Suit
 - type: entity

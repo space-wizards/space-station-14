@@ -3636,9 +3636,8 @@
         Base: reindeer_doe_dead
 
 - type: entity
-  name: admemeCorgi
   abstract: true
-  parent: [SimpleMobBase, StripableInventoryBase]
+  parent: [ SimpleMobBase, StripableInventoryBase ]
   id: MobAdmemeCorgi
   description: Finally, a space corgi!
   components:
@@ -3712,7 +3711,7 @@
     clickInsert: false
     openOnActivate: false
     grid:
-      - 0,0,3,3
+    - 0,0,3,3
     maxItemSize: Huge
   - type: StatusIcon
     bounds: -0.5,-0.5,0.5,0.5

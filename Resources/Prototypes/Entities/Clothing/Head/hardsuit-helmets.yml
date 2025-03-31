@@ -24,7 +24,8 @@
     - HeadSide
   - type: Tag
     tags:
-      - CorgiWearable
+    - CorgiWearable
+    - WhitelistChameleon
 
 #Atmospherics Hardsuit
 - type: entity
@@ -90,7 +91,8 @@
     reduction: 0.2
   - type: Tag
     tags:
-      - CorgiWearable
+    - CorgiWearable
+    - WhitelistChameleon
 
 #Engineering Hardsuit
 - type: entity
@@ -110,7 +112,8 @@
     lowPressureMultiplier: 1000
   - type: Tag
     tags:
-      - CorgiWearable
+    - CorgiWearable
+    - WhitelistChameleon
 
 #Spationaut Hardsuit
 - type: entity
@@ -170,7 +173,8 @@
     lowPressureMultiplier: 1000
   - type: Tag
     tags:
-      - CorgiWearable
+    - CorgiWearable
+    - WhitelistChameleon
 
 #Salvage Hardsuit
 - type: entity
@@ -191,7 +195,8 @@
     energy: 3
   - type: Tag
     tags:
-      - CorgiWearable
+    - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
@@ -243,7 +248,8 @@
     lowPressureMultiplier: 1000
   - type: Tag
     tags:
-      - CorgiWearable
+    - CorgiWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadHardsuitBase
@@ -357,7 +363,8 @@
     lowPressureMultiplier: 1000
   - type: Tag
     tags:
-      - CorgiWearable
+    - CorgiWearable
+    - WhitelistChameleon
 
 #Chief Engineer's Hardsuit
 - type: entity
@@ -379,7 +386,8 @@
     reduction: 0.2
   - type: Tag
     tags:
-      - CorgiWearable
+    - CorgiWearable
+    - WhitelistChameleon
 
 #Chief Medical Officer's Hardsuit
 - type: entity
@@ -399,7 +407,8 @@
     lowPressureMultiplier: 1000
   - type: Tag
     tags:
-      - CorgiWearable
+    - CorgiWearable
+    - WhitelistChameleon
 
 #Research Director's Hardsuit
 - type: entity
@@ -487,7 +496,8 @@
         Heat: 0.9
   - type: Tag
     tags:
-      - CorgiWearable
+    - CorgiWearable
+    - WhitelistChameleon
 
 #Blood-red Medic Hardsuit
 - type: entity
@@ -543,7 +553,8 @@
         Heat: 0.9
   - type: Tag
     tags:
-      - CorgiWearable
+    - CorgiWearable
+    - WhitelistChameleon
 
 #Syndicate Commander Hardsuit
 - type: entity
@@ -616,7 +627,8 @@
         Heat: 0.9
   - type: Tag
     tags:
-      - CorgiWearable
+    - CorgiWearable
+    - WhitelistChameleon
 
 #Organic Space Suit
 - type: entity
