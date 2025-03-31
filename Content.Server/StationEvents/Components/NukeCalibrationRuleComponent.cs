@@ -25,7 +25,6 @@ public sealed partial class NukeCalibrationRuleComponent : Component
     /// </summary>
     [DataField]
     public EntityUid AffectedNuke;
-    public NukeComponent? ;
     [DataField]
     public float NukeTimer = 170f;
     [DataField]
