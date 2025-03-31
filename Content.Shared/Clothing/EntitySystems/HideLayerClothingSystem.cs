@@ -42,7 +42,7 @@ public sealed class HideLayerClothingSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        if (!Resolve(clothing.Owner, ref clothing.Comp1, ref clothing.Comp2))
+        if (!Resolve(clothing.Owner, ref clothing.Comp1, ref clothing.Comp2, false))
             return;
 
         if (!Resolve(user.Owner, ref user.Comp))
