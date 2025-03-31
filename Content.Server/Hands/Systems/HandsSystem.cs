@@ -247,6 +247,7 @@ namespace Content.Server.Hands.Systems
         {
             // If the holder doesn't have a physics component, they ain't moving
             var holderVelocity = _physicsQuery.TryComp(entity, out var physics) ? physics.LinearVelocity : Vector2.Zero;
+            var spreadMaxAngle = Angle.FromDegrees(DropHeldItemsSpread);
 
             var fellEvent = new FellDownEvent(entity);
             RaiseLocalEvent(entity, fellEvent, false);
@@ -266,7 +267,6 @@ namespace Content.Server.Hands.Systems
                     continue;
 
                 // Rotate the item's throw vector a bit for each item
-                var spreadMaxAngle = Angle.FromDegrees(DropHeldItemsSpread);
                 var angleOffset = _random.NextAngle(-spreadMaxAngle, spreadMaxAngle);
                 // Rotate the holder's velocity vector by the angle offset to get the item's velocity vector
                 var itemVelocity = angleOffset.RotateVec(holderVelocity);
