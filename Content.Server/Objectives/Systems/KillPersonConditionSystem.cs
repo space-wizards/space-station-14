@@ -47,17 +47,12 @@ public sealed class KillPersonConditionSystem : EntitySystem
             requireMaroon = false;
         }
 
+        if (requireDead && !targetDead)
+            return 0f;
+
         if (requireMaroon)
-        {
-            if (requireDead && !targetDead)
-                return 0f;
             return targetMarooned ? 1f : _emergencyShuttle.EmergencyShuttleArrived ? 0.5f : 0f;
-        }
-        else
-        {
-            if (requireDead)
-                return targetDead ? 1f : 0f;
-            return 1f; // Good job you did it woohoo
-        }
+
+        return 1f; // Good job you did it woohoo
     }
 }
