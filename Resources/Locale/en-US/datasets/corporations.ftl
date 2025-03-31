@@ -7,3 +7,7 @@ traitor-corporations-dataset-6 = "Animal Rights Consortium"
 traitor-corporations-dataset-7 = "Donk Corporation"
 traitor-corporations-dataset-8 = "Waffle Corporation"
 traitor-corporations-dataset-9 = "Interdyne Pharmaceutics"
+
+wawa-resistance-dataset-1 = "W.A.W.A. War Agency"
+wawa-resistance-dataset-2 = "Scurret Liberation Undercover Ground Corps Action Team"
+wawa-resistance-dataset-3 = "Arnolds's Pizza"

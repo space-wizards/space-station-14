@@ -1,0 +1,343 @@
+﻿# Defines the scurret, a small, agile sapient species intended for players who want to play as something similar to an ewok.
+# Although based on MobBaseAncestor, this species does not have a "developed" playable species it is an ancestor to.
+
+- type: entity
+  name: scurret
+  id: MobBaseScurret
+  parent: MobBaseAncestor
+  abstract: true
+  components:
+  - type: GeneralScurretMayhem
+  # Custom names
+  - type: ReplacementAccent
+    accent: scurret
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: Mobs/Animals/scurret/scurret.rsi
+      state: scurret
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+  # Custom art for dead scurrets; these don't work well given they use equipment, so consider removing these?
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: scurret
+      Critical:
+        Base: scurret_oof
+      Dead:
+        Base: scurret_rip
+  # Only about as tough as a monkey
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Critical
+      125: Dead
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 285
+    currentTemperature: 310.15
+    specificHeat: 42
+  # Good eatin', you monster.
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 4
+  # They wawa
+  - type: Vocal
+    sounds:
+      Male: Scurret
+      Female: Scurret
+      Unsexed: Scurret
+    wilhelmProbability: 0.125 # the scug, it screams like a man
+  - type: Speech
+    speechVerb: Wawa
+    speechSounds: Wawa
+    allowedEmotes: ['Thump'] # They're 80% tail
+  - type: TypingIndicator
+    proto: moth
+  - type: InteractionPopup
+    successChance: 0.99 # Imagine not being allowed to headpat a scurret, chat
+    interactSuccessString: petting-success-scurret
+    interactFailureString: petting-failure-scurret
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/wawa_chillin.ogg
+    interactFailureSound:
+      path: /Audio/Animals/wawa_chatter.ogg
+  # They nyoom
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 5 # nyoom
+    baseSprintSpeed: 7 # NYOOOOOM
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 30
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 10 # NOM
+  - type: Inventory
+    speciesId: scurret
+    templateId: scurret
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: head
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: ears
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: eyes
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: mask
+      id:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: id
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/scurret/displacement.rsi
+            state: gloves
+  - type: Hands
+    handDisplacement:
+      sizeMaps:
+        32:
+          sprite: Mobs/Animals/scurret/displacement.rsi
+          state: hand
+  - type: InventorySlots
+  - type: Food
+  - type: Hunger
+    baseDecayRate: 0.25 # They get a lil' hungy
+  - type: BodyEmotes # Grants them clapping and so on.
+    soundsId: GeneralBodyEmotes
+  - type: Tag
+    tags:
+      - DoorBumpOpener
+      - FootstepSound
+      - CanPilot # Inexplicably, scurrets have a natural aptitude for spaceflight
+
+- type: inventoryTemplate
+  id: scurret
+  slots:
+  - name: jumpsuit
+    slotTexture: uniform
+    slotFlags: INNERCLOTHING
+    stripTime: 6
+    uiWindowPos: 0,1
+    strippingWindowPos: 0,2
+    displayName: Jumpsuit
+  - name: head
+    slotTexture: head
+    slotFlags: HEAD
+    uiWindowPos: 1,2
+    strippingWindowPos: 0,0
+    displayName: Head
+  - name: ears
+    slotTexture: ears
+    slotFlags: EARS
+    stripTime: 3
+    uiWindowPos: 0,2
+    strippingWindowPos: 1,2
+    displayName: Ears
+  - name: eyes
+    slotTexture: glasses
+    slotFlags: EYES
+    stripTime: 3
+    uiWindowPos: 0,3
+    strippingWindowPos: 0,0
+    displayName: Eyes
+  - name: mask
+    slotTexture: mask
+    slotFlags: MASK
+    uiWindowPos: 0,1
+    strippingWindowPos: 1,1
+    displayName: Mask
+  - name: id
+    slotTexture: id
+    slotFlags: IDCARD
+    slotGroup: SecondHotbar
+    stripTime: 6
+    uiWindowPos: 2,1
+    strippingWindowPos: 2,4
+    displayName: ID
+  - name: gloves
+    slotTexture: gloves
+    slotFlags: GLOVES
+    uiWindowPos: 2,1
+    strippingWindowPos: 2,2
+    displayName: Gloves
+
+- type: speechSounds
+  id: Wawa
+  saySound:
+    path: /Audio/Animals/wawa_statement.ogg
+  askSound:
+    path: /Audio/Animals/wawa_question.ogg
+  exclaimSound:
+    path: /Audio/Animals/wawa_exclaim.ogg
+
+- type: accent
+  id: scurret
+  fullReplacements:
+  - accent-words-scurret-1
+  - accent-words-scurret-2
+  - accent-words-scurret-3
+  - accent-words-scurret-4
+  - accent-words-scurret-5
+  - accent-words-scurret-6
+  - accent-words-scurret-7
+  - accent-words-scurret-8
+
+- type: palette
+  id: ScurretColors
+  name: ScurretColors
+  colors:
+    Normal: "#ffffff" # Sluggy
+    Innocent: "#f6f439" # Monky
+    Angry: "#dc5864" # Hunty
+    Eldritch: "#dc5864"
+    Perceptive: "#222222" # Watchy
+    Fat: "#fefcab"
+    Violent: "#ab3430"
+    Speedy: "#679cfe"
+    Mutated: "#7824a0"
+    Damned: "#98e652"
+
+# Spawnable scurrets have a random name and colour.
+
+- type: entity
+  name: scurret
+  description: Commonly known as Wawas, from the wetlands of Planet Wawa, these critters make up the bulk of Arnolds' Pizza's "loyal workforce".
+  id: MobScurret
+  parent: MobBaseScurret
+  components:
+  # The have a rich culture
+  - type: RandomMetadata
+    nameSegments:
+      - NamesFirstScurret
+      - NamesLastScurret
+  # They come in a variety of colours
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        scurret: ScurretColors
+
+# Abstract ESS have a ghost role and equipment
+
+- type: entity
+  name: Emotional Support Scurret
+  id: MobBaseEmotionalSupportScurret
+  parent: MobBaseScurret
+  abstract: true
+  components:
+    - type: Loadout
+      prototypes: [ EmotionalSupportScurretGear ]
+    - type: NpcFactionMember
+      factions:
+      - Passive
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-emotional-support-scurret-name
+      description: ghost-role-information-emotional-support-scurret-description
+      rules: ghost-role-information-emotional-support-scurret-rules
+      raffle:
+        settings: default
+    - type: GhostTakeoverAvailable
+
+# Spawnable ESS have a ghost role, equipment, a random name and a random colour.
+
+- type: entity
+  name: Emotional Support Scurret
+  id: MobEmotionalSupportScurret
+  parent: [MobScurret, MobBaseEmotionalSupportScurret]
+  abstract: true
+  description: Commonly known as Wawas, from the wetlands of Planet Wawa, these critters make up the bulk of Arnolds's Pizza's "loyal workforce". This one is here as a temp whilst the station's pets are on a no-expenses-paid holiday to a farm upstate.
+
+- type: emoteSounds
+  id: Scurret
+  params:
+    variation: 0.125
+  sounds:
+    Laugh:
+      collection: WawaLaugh
+    Sneeze:
+      collection: WawaSneeze
+    Cough:
+      collection: MaleCoughs
+    Whistle:
+      collection: Whistles
+    Sigh:
+      collection: WawaSigh
+    Scream:
+      collection: WawaScream
+
+- type: soundCollection
+  id: WawaLaugh
+  files:
+  - /Audio/Animals/wawa_mock.ogg
+
+- type: soundCollection
+  id: WawaSneeze
+  files:
+  - /Audio/Animals/wawa_achoo.ogg
+
+- type: soundCollection
+  id: WawaSigh
+  files:
+  - /Audio/Animals/wawa_depression.ogg
+
+- type: soundCollection
+  id: WawaScream
+  files:
+  - /Audio/Animals/wawa_protest.ogg
+  - /Audio/Animals/wawa_protest.ogg
+  - /Audio/Animals/wawa_protest.ogg
+  - /Audio/Animals/wawa_protest.ogg
+  - /Audio/Animals/wawa_protest.ogg
+  - /Audio/Animals/wawa_protest.ogg
+  - /Audio/Animals/wawa_protest.ogg
+  - /Audio/Voice/Human/wilhelm_scream.ogg # Enforce a 1/8 chance
+
+- type: entity
+  id: TraitorWawa
+  parent: BaseTraitorRule
+  components:
+  - type: TraitorRule
+    giveUplink: true
+    giveCodewords: false
+    giveBriefing: true
+    greetSoundNotification: "/Audio/Ambience/Antag/traitor_wawa.ogg" # W.A.W.A.W.A
+    objectiveIssuers: WawaResistance
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      mindRoles:
+      - MindRoleTraitor
+
+- type: localizedDataset
+  id: WawaResistance
+  values:
+    prefix: wawa-resistance-dataset-
+    count: 3
