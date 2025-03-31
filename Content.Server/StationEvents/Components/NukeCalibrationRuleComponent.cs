@@ -18,14 +18,20 @@ public sealed partial class NukeCalibrationRuleComponent : Component
     [DataField]
     public SoundSpecifier AutoDisarmSuccessSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
 
+    [DataField]
     public EntityUid AffectedStation;
     /// <summary>
     /// The nuke that was '''calibrated'''.
     /// </summary>
+    [DataField]
     public EntityUid AffectedNuke;
-    public NukeComponent? AffectedNukeComponent;
+    public NukeComponent? ;
+    [DataField]
     public float NukeTimer = 170f;
+    [DataField]
     public float AutoDisarmChance = 0.5f;
+    [DataField]
     public float TimeUntilFirstAnnouncement = 15f;
+    [DataField]
     public bool FirstAnnouncementMade = false;
 }

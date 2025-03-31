@@ -48,7 +48,6 @@ namespace Content.Server.StationEvents.Events
                 _nukeSystem.SetRemainingTime(nuke, component.NukeTimer);
                 _nukeSystem.ArmBomb(nuke, nukeComponent);
                 component.AffectedNuke = nuke;
-                component.AffectedNukeComponent = nukeComponent;
 
                 if (!nukeComponent.DiskSlot.HasItem)
                     _popups.PopupEntity(Loc.GetString("station-event-nuke-calibration-arm-popup"), nuke, PopupType.LargeCaution);
@@ -66,29 +65,29 @@ namespace Content.Server.StationEvents.Events
         {
             base.Ended(uid, component, gameRule, args);
 
-            if (component.AffectedNukeComponent == null)
+            if (!TryComp<NukeComponent>(component.AffectedNuke, out var nukeComp))
                 return;
 
             // Lucky enough, so nuke gets disarmed for you :D
             if (RobustRandom.NextFloat() <= component.AutoDisarmChance)
             {
                 // 220
-                _nukeSystem.SetRemainingTime(component.AffectedNuke, component.AffectedNukeComponent.Timer);
-                if (component.AffectedNukeComponent.Status != NukeStatus.ARMED)
+                _nukeSystem.SetRemainingTime(component.AffectedNuke, nukeComp.Timer);
+                if (nukeComp.Status != NukeStatus.ARMED)
                     return;
 
-                _nukeSystem.DisarmBomb(component.AffectedNuke, component.AffectedNukeComponent);
+                _nukeSystem.DisarmBomb(component.AffectedNuke, nukeComp);
                 _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("station-event-nuke-calibration-disarm-success-announcement"), playSound: false, colorOverride: Color.Green);
                 _audioSystem.PlayGlobal(component.AutoDisarmSuccessSound, Filter.Broadcast(), true);
 
                 return;
             }
 
-            if (component.AffectedNukeComponent.Status != NukeStatus.ARMED)
+            if (nukeComp.Status != NukeStatus.ARMED)
                 return;
 
             // Ooops.....
-            _nukeSystem.SetDiskBypassEnabled(component.AffectedNuke, true, true, component.AffectedNukeComponent);
+            _nukeSystem.SetDiskBypassEnabled(component.AffectedNuke, true, true, nukeComp);
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("station-event-nuke-calibration-disarm-fail-announcement"), playSound: false, colorOverride: Color.Crimson);
             _audioSystem.PlayGlobal(component.AutoDisarmFailedSound, Filter.Broadcast(), true);
         }
@@ -96,12 +95,6 @@ namespace Content.Server.StationEvents.Events
         protected override void ActiveTick(EntityUid uid, NukeCalibrationRuleComponent component, GameRuleComponent gameRule, float frameTime)
         {
             base.ActiveTick(uid, component, gameRule, frameTime);
-
-            if (component.AffectedNukeComponent == null)
-            {
-                ForceEndSelf(uid, gameRule);
-                return;
-            }
 
             if (component.FirstAnnouncementMade == true)
                 return;
