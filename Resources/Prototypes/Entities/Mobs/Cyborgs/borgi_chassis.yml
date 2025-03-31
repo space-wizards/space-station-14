@@ -223,7 +223,7 @@
   components:
   - type: RandomMetadata
     nameSegments:
-    - names_corgi
+    - NamesCorgi
   # Custom inventory template
   - type: Inventory
     speciesId: dog
@@ -242,7 +242,7 @@
     accent: dog
   - type: RandomMetadata
     nameSegments:
-    - names_borgi
+    - NamesBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -265,7 +265,7 @@
     stunTime: 5
   - type: RandomMetadata
     nameSegments:
-    - names_borgi
+    - NamesBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -291,7 +291,7 @@
     accent: dog
   - type: RandomMetadata
     nameSegments:
-    - names_borgi
+    - NamesBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -316,7 +316,7 @@
     stunTime: 5
   - type: RandomMetadata
     nameSegments:
-    - names_borgi
+    - NamesBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -357,7 +357,7 @@
     subverted: true
   - type: RandomMetadata
     nameSegments:
-    - names_syndiborgi
+    - NamesSyndiBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -412,7 +412,7 @@
     subverted: true
   - type: RandomMetadata
     nameSegments:
-    - names_syndiborgi
+    - NamesSyndiBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -473,7 +473,7 @@
     subverted: true
   - type: RandomMetadata
     nameSegments:
-    - names_syndiborgi
+    - NamesSyndiBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -525,7 +525,7 @@
     subverted: true
   - type: RandomMetadata
     nameSegments:
-    - names_shadowborgi
+    - NamesShadowBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -614,7 +614,7 @@
     subverted: true
   - type: RandomMetadata
     nameSegments:
-      - names_shadowborgi
+    - NamesShadowBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
