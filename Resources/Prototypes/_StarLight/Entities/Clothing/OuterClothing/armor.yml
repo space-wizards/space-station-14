@@ -143,7 +143,3 @@
         Slash: 0.85
         Piercing: 0.85
         Heat: 0.55
-  - type: Reflect
-    reflectProb: 0.5
-    reflects:
-      - Energy  
