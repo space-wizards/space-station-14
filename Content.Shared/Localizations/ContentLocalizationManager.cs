@@ -116,7 +116,7 @@ namespace Content.Shared.Localizations
                                  ("count", list.Count),
                                  ("item1", list.ElementAtOrDefault(0) ?? ""),
                                  ("item2", list.ElementAtOrDefault(1) ?? ""),
-                                 ("items", string.Join(", ", list.Take(list.Count - 1))),
+                                 ("items", string.Join(Loc.GetString("zzzz-fmt-list-delimiter"), list.Take(list.Count - 1))),
                                  ("last", list.LastOrDefault() ?? ""));
         }
 
@@ -128,7 +128,7 @@ namespace Content.Shared.Localizations
                                  ("count", list.Count),
                                  ("item1", list.ElementAtOrDefault(0) ?? ""),
                                  ("item2", list.ElementAtOrDefault(1) ?? ""),
-                                 ("items", string.Join(" or ", list.Take(list.Count - 1))),
+                                 ("items", string.Join(Loc.GetString("zzzz-fmt-list-delimiter"), list.Take(list.Count - 1))),
                                  ("last", list.LastOrDefault() ?? ""));
         }
 

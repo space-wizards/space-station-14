@@ -51,3 +51,5 @@ zzzz-fmt-list-or =
         [2] { $item1 } or { $item2 }
        *[other] { $items } or { $last }
     }
+
+zzzz-fmt-list-delimiter = ", "
