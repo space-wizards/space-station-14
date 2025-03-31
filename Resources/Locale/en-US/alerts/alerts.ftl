@@ -22,11 +22,11 @@ alerts-too-cold-desc = You're [color=cyan]freezing cold![/color] Get somewhere w
 alerts-too-hot-name = [color=red]Too Hot[/color]
 alerts-too-hot-desc = It's [color=red]too hot![/color] Get somewhere colder, take off any insulating clothing like a space suit, or at least get away from the flames.
 
-alerts-too-cold-name = [color=cyan]Too Cold Air[/color]
-alerts-too-cold-desc = The air you're inhaling is [color=cyan]too cold cold![/color]
+alerts-air-too-cold-name = [color=cyan]Too Cold Air[/color]
+alerts-air-too-cold-desc = The air you're inhaling is [color=cyan]too cold cold![/color]
 
-alerts-too-hot-name = [color=red]Too Hot Air[/color]
-alerts-too-hot-desc = The air you're inhaling is [color=red]too hot![/color]
+alerts-air-too-hot-name = [color=red]Too Hot Air[/color]
+alerts-air-too-hot-desc = The air you're inhaling is [color=red]too hot![/color]
 
 alerts-weightless-name = Weightless
 alerts-weightless-desc =

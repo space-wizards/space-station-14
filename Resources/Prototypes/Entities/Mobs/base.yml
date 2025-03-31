@@ -220,13 +220,13 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
-    highTemperatureDamage:
+    highTemperatureDamage: # Damage per breath of hot gas
       types:
-        Heat: 1  # Deals 1 heat damage per breath of hot gas
-        Caustic: 0.25 # Deals 0.25 caustic damage per breath of hot gas
-    lowTemperatureDamage:
+        Heat: 1
+        Caustic: 0.25
+    lowTemperatureDamage: # Damage per breath of cold gas
       types:
-        Cold: 1.25  # Deals 1.2 cold damage per breath of cold gas
+        Cold: 1.25
 
 # Used for mobs that have a bloodstream
 - type: entity

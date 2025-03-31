@@ -529,6 +529,13 @@
     damageRecovery:
       types:
         Asphyxiation: -0.5
+    highTemperatureDamage: # Damage per breath of hot gas
+      types:
+        Heat: 0.5
+        Caustic: 0.25
+    lowTemperatureDamage: # Damage per breath of cold gas
+      types:
+        Cold: 0.75
   - type: CombatMode
   - type: Butcherable
     spawned:
@@ -1770,6 +1777,13 @@
     damageRecovery:
       types:
         Asphyxiation: -0.25
+    highTemperatureDamage: # Damage per breath of hot gas
+      types:
+        Heat: 0.5
+        Caustic: 0.25
+    lowTemperatureDamage: # Damage per breath of cold gas
+      types:
+        Cold: 0.75
   - type: Barotrauma
     damage:
       types:
@@ -3349,6 +3363,13 @@
     damageRecovery:
       types:
         Asphyxiation: -0.25
+    highTemperatureDamage: # Damage per breath of hot gas
+      types:
+        Heat: 0.5
+        Caustic: 0.25
+    lowTemperatureDamage: # Damage per breath of cold gas
+      types:
+        Cold: 0.75
   - type: Barotrauma
     damage:
       types:
