@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Added an Apid Courier to the cargo catalog, for when mail is piling up.
-    type: Add
-  id: 941
-  time: '2025-01-16T10:49:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1387
 - author: EpicToast
   changes:
   - message: Adds mail to Barratry, Core and Meta.
@@ -4073,3 +4066,11 @@
   id: 1440
   time: '2025-03-31T12:49:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2137
+- author: mqole
+  changes:
+  - message: Removed errant pixels from lots of clothes. Please continue to report
+      any stragglers!
+    type: Fix
+  id: 1441
+  time: '2025-03-31T12:50:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2153
