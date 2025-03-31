@@ -100,6 +100,17 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
             return;
         }
 
+        var isAllowed = message.Payload switch
+        {
+            NanoTaskAddTask task => task.Category.Department,
+            NanoTaskUpdateTask task => task.Item.Category.Department,
+            NanoTaskDeleteTask task => ent.Comp.Tasks.FirstOrDefault(x => x.Item.Id == task.Id)?.Category.Department,
+            _ => null
+        } is { } department && _accessReader.IsAllowed(args.Actor, _prototypeManager.Index(department));
+
+        if (!isAllowed)
+            return;
+
         var device = Comp<DeviceNetworkComponent>(ent);
 
         switch (message.Payload)
