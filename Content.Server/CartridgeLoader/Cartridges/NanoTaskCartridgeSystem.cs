@@ -1,10 +1,5 @@
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.CartridgeLoader;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Paper;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Timing;
-using Robust.Shared.Utility;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Shared.DeviceNetwork;
 using Content.Server.DeviceNetwork;
@@ -13,7 +8,6 @@ using Content.Server.NanoTask.Components;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.Station.Systems;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics;
 using Robust.Shared.Prototypes;
 using Content.Shared.NanoTask.Prototypes;
 using System.Linq;
