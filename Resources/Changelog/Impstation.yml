@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5
-  changes:
-  - message: Doubled the pill count in the HoS pill canister.
-    type: Tweak
-  id: 939
-  time: '2025-01-16T09:40:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1384
 - author: kipdotnet
   changes:
   - message: Fixed the Courier hardsuit locker having no access reader.
@@ -4074,3 +4067,10 @@
   id: 1438
   time: '2025-03-31T12:47:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2158
+- author: hivehum
+  changes:
+  - message: Fake_Human_First Fake_Human_Last has been finally brought to justice.
+    type: Fix
+  id: 1439
+  time: '2025-03-31T12:48:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2144
