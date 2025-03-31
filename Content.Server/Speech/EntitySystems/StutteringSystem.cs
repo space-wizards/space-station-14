@@ -70,5 +70,10 @@ namespace Content.Server.Speech.EntitySystems
 
             return finalMessage.ToString();
         }
+
+        public string Accentuate(string message)
+        {
+            return Accentuate(message, new StutteringAccentComponent());
+        }
     }
 }

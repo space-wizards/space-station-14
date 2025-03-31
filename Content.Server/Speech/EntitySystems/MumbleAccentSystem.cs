@@ -13,7 +13,12 @@ public sealed class MumbleAccentSystem : EntitySystem
         SubscribeLocalEvent<MumbleAccentComponent, AccentGetEvent>(OnAccentGet);
     }
 
-    public string Accentuate(string message, MumbleAccentComponent component)
+    private string Accentuate(string message, MumbleAccentComponent _)
+    {
+        return Accentuate(message);
+    }
+
+    public string Accentuate(string message)
     {
         return _replacement.ApplyReplacements(message, "mumble");
     }

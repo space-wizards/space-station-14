@@ -21,7 +21,12 @@ public sealed class FrenchAccentSystem : EntitySystem
         SubscribeLocalEvent<FrenchAccentComponent, AccentGetEvent>(OnAccentGet);
     }
 
-    public string Accentuate(string message, FrenchAccentComponent component)
+    public string Accentuate(string message, FrenchAccentComponent _)
+    {
+        return Accentuate(message);
+    }
+
+    public string Accentuate(string message)
     {
         var msg = message;
 
