@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Courier is now in the ID Computer
-    type: Fix
-  id: 947
-  time: '2025-01-17T04:47:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1394
 - author: Sha-Seng
   changes:
   - message: Compact Armor Vest (identical stats as other ones) in sec loadouts and
@@ -4070,3 +4063,10 @@
   id: 1446
   time: '2025-04-01T11:15:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2083
+- author: ATDoop
+  changes:
+  - message: Thaven glasses should rest on their heads a little better now.
+    type: Fix
+  id: 1447
+  time: '2025-04-01T11:32:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2143
