@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Courier job has been added to Fland and Oasis
-    type: Add
-  - message: Fugitive spawners have been added to Box, Xeno, Fland, and Oasis
-    type: Add
-  - message: Tweaked Xeno Mailroom
-    type: Tweak
-  id: 945
-  time: '2025-01-17T04:36:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1392
 - author: TheGrimbeeper
   changes:
   - message: Multitools should work as defibs for small critters once more.
@@ -4073,3 +4062,10 @@
   id: 1444
   time: '2025-04-01T10:16:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2051
+- author: Sha-Seng
+  changes:
+  - message: Bomber jackets have pockets again
+    type: Fix
+  id: 1445
+  time: '2025-04-01T11:10:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2080
