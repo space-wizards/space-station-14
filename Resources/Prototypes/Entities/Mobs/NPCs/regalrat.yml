@@ -54,10 +54,11 @@
         path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     angle: 0
     animation: WeaponArcClaw
-    damage: # IMP: Significant nerf to this damage. Formerly 12 slash 8 pierce
+    damage: # IMP: Significant nerf to this damage, but added structural. Formerly 12 slash 8 pierce 0 structural
       types:
         Slash: 4
         Piercing: 2
+        Structural: 2
   - type: Body
     prototype: Rat
     requiredLegs: 1 # TODO: More than 1 leg
