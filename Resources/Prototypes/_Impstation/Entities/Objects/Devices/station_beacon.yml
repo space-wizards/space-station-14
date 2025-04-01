@@ -34,6 +34,136 @@
   - type: NavMapBeacon
     defaultText: station-beacon-smengine
 
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsNorth
+  suffix: Solars, North
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-north
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsEast
+  suffix: Solars, East
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-east
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsSouth
+  suffix: Solars, South
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-south
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconWest
+  suffix: Solars, West
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-west
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsNorthEast
+  suffix: Solars, North-East
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-north-east
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsSouthEast
+  suffix: Solars, South-East
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-south-east
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsNorthWest
+  suffix: Solars, North-West
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-north-west
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsSouthWest
+  suffix: Solars, South-West
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-south-west
+
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsForward
+  suffix: Solars, Forward
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-forward
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsStarboard
+  suffix: Solars, Starboard
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-starboard
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsAft
+  suffix: Solars, Aft
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-aft
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsPort
+  suffix: Solars, Port
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-port
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsStarboardBow
+  suffix: Solars, Starboard Bow
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-starboard-bow
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsStarboardQuarter
+  suffix: Solars, Starboard Quarter
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-starboard-quarter
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsPortBow
+  suffix: Solars, Port Bow
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-port-bow
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconSolarsPortQuarter
+  suffix: Solars, Port Quarter
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-solars-port-quarter
+
+
 #Service
 - type: entity
   parent: DefaultStationBeaconService
@@ -51,7 +181,7 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-hd
-    
+
 - type: entity
   parent: DefaultStationBeaconService
   id: DefaultStationBeaconMime
