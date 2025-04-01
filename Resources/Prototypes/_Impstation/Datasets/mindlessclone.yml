@@ -1,0 +1,17 @@
+- type: localizedDataset
+  id: MindlessCloneConfusion
+  values:
+    prefix: mindlessclone-confusion-
+    count: 13
+
+- type: localizedDataset
+  id: MindlessCloneHostile
+  values:
+    prefix: mindlessclone-hostile-
+    count: 7
+
+- type: localizedDataset
+  id: MindlessCloneSinister
+  values:
+    prefix: mindlessclone-sinister-
+    count: 6

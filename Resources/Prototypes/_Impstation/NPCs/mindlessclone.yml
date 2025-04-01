@@ -1,0 +1,70 @@
+# HTN compounds (for AI)
+
+- type: htnCompound
+  id: MindlessCloneHostileCompound
+  branches:
+    - preconditions:
+      - !type:KeyNotExistsPrecondition
+        key: Handled
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:SetFloatOperator
+            targetKey: IdleTime
+            amount: 21
+
+        - !type:HTNCompoundTask
+          task: IdleCompound
+        
+        - !type:HTNPrimitiveTask
+          operator: !type:SetBoolOperator
+            targetKey: Handled
+            value: true
+    - tasks: 
+        - !type:HTNCompoundTask
+          task: SimpleHostileCompound
+
+- type: htnCompound
+  id: MindlessCloneHostileMindswapCompound # same as the other hostile one, but shorter cooldown.
+  branches:
+    - preconditions:
+      - !type:KeyNotExistsPrecondition
+        key: Handled
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:SetFloatOperator
+            targetKey: IdleTime
+            amount: 7
+
+        - !type:HTNCompoundTask
+          task: IdleCompound
+        
+        - !type:HTNPrimitiveTask
+          operator: !type:SetBoolOperator
+            targetKey: Handled
+            value: true
+    - tasks: 
+        - !type:HTNCompoundTask
+          task: SimpleHostileCompound
+
+- type: htnCompound
+  id: MindlessClonePassiveCompound
+  branches:
+    - preconditions:
+      - !type:KeyNotExistsPrecondition
+        key: Handled
+      tasks:
+        - !type:HTNPrimitiveTask
+          operator: !type:SetFloatOperator
+            targetKey: IdleTime
+            amount: 21
+
+        - !type:HTNCompoundTask
+          task: IdleCompound
+        
+        - !type:HTNPrimitiveTask
+          operator: !type:SetBoolOperator
+            targetKey: Handled
+            value: true
+    - tasks: 
+        - !type:HTNCompoundTask
+          task: KisserTomatoCompound # idle, but they pick someone to follow around

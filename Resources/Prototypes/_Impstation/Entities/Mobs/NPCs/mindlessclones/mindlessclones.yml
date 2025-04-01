@@ -1,0 +1,130 @@
+# Mindless Clones
+- type: entity
+  id: BaseMindlessClone
+  parent: BaseMobMindlessClone
+  name: mindless clone
+  suffix: No AI
+  categories: [ DoNotMap ]
+  components:
+  - type: MindlessClone
+  - type: MindContainer
+    showExamineInfo: false # have to make sure they're not all catatonic
+  - type: ActiveListener
+    range: 6
+  - type: ParrotSpeech
+    maximumPhraseLength: 1000 # will repeat anything, even long sentences.
+    minimumWait: 10
+    maximumWait: 120 # between 10 seconds and 2 minutes.
+    learnChance: 1 # will repeat *anything* it hears.
+    hideMessagesInChat: false
+    requiresMind: false
+    blacklist:
+      components:
+      - ParrotSpeech # if you get a bunch of these guys, you don't want them copying each other infinitely.
+
+- type: entity
+  id: MobMindlessClone
+  parent: BaseMindlessClone
+  name: mindless clone
+  suffix: Passive 
+  categories: [ DoNotMap ]
+  components:
+  - type: MindlessClone
+    speakOnSpawn: true
+  - type: HTN
+    rootTask:
+      task: MindlessClonePassiveCompound
+  - type: NPCImprintingOnSpawnBehaviour
+    spawnFriendsSearchRadius: 5
+    whitelist:
+      components:
+      - HumanoidAppearance
+
+- type: entity
+  id: MobMindlessCloneHostile
+  parent: BaseMindlessClone
+  name: mindless clone
+  suffix: Hostile 
+  categories: [ DoNotMap ]
+  components:
+  - type: MindlessClone
+    speakOnSpawn: true
+    phrasesToPick: MindlessCloneHostile
+  - type: HTN
+    rootTask:
+      task: MindlessCloneHostileCompound
+  - type: NpcFactionMember
+    factions:
+      - SimpleHostile
+
+- type: entity
+  id: MobMindlessCloneMindswapHostile
+  parent: BaseMindlessClone
+  name: mindless clone
+  suffix: Mind-swap
+  categories: [ DoNotMap ]
+  components: 
+  - type: MindlessClone
+    speakOnSpawn: true
+    phrasesToPick: MindlessCloneSinister
+    mindSwap: true
+    componentsToSwap:
+    - ActiveListener
+    - ParrotSpeech
+    - HTN
+    - NpcFactionMember
+    - MindContainer
+  - type: HTN
+    rootTask:
+      task: MindlessCloneHostileMindswapCompound
+  - type: NpcFactionMember
+    factions:
+      - SimpleHostile
+
+# Spawner stuff
+
+# this spawner isn't actually used for anything in game, it's just a fun little toy for admins to initiate chaos with
+- type: entity
+  parent: MarkerBase
+  id: RandomMindlessCloneSpawner
+  name: random mindless clone spawner
+  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: RandomMindlessCloneTable
+
+- type: entityTable
+  id: RandomMindlessCloneTable
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 61 # ~2 in 3 chance for a passive clone
+      children:
+      - id: MobMindlessClone
+    - !type:GroupSelector
+      weight: 30 # ~1 in 3 chance for a hostile clone
+      children:
+      - id: MobMindlessCloneHostile
+    - !type:GroupSelector
+      weight: 5 # ~1 in 20 chance for a mindswap clone
+      children:
+      - id: MobMindlessCloneMindswapHostile
+
+# CloningSettings
+
+- type: cloningSettings
+  id: MindlessClone
+  parent: CloningPod
+  forceCloning: true
+  components:
+  - Vocal
+  - Speech
+  - TypingIndicator # not sure why this doesn't work. Think it has something to do with BeforeShowTypingIndicatorEvent
+  - Bloodstream
