@@ -10,6 +10,7 @@
     - !type:RoleTimeRequirement
       role: JobDetective
       time: 3600 # 1 hr
+  weight: 5
   startingGear: WardenGear
   icon: "JobIconWarden"
   supervisors: job-supervisors-hos

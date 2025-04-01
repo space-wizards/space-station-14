@@ -45,6 +45,12 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     /// </summary>
     [DataField]
     public ProtoId<JobPrototype>? JobPrototype { get; set; }
+
+    /// <summary>
+    ///     Used to order the characters on by role/antag status. Highest numbers are shown first.
+    /// </summary>
+    [DataField]
+    public int SortWeight;
 }
 
 // Why does this base component actually exist? It does make auto-categorization easy, but before that it was useless?

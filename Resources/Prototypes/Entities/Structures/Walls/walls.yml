@@ -51,6 +51,7 @@
   - type: RadiationBlocker
     resistance: 2
   - type: BlockWeather
+  - type: SunShadowCast
   - type: Ricochetable
     chance: 0.4
 
@@ -89,7 +90,7 @@
         acts: [ "Destruction" ]
 
   - type: IconSmooth
-    key: bricks
+    key: walls
     base: brick
 
 - type: entity
