@@ -79,13 +79,6 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
 
     protected float SettingPower(EntityHeaterSetting setting, float max)
     {
-        return setting switch
-        {
-            EntityHeaterSetting.Low => max / 3f,
-            EntityHeaterSetting.Medium => max * 2f / 3f,
-            EntityHeaterSetting.High => max,
-            _ => 0.01f,
-        };
         // Power use while off needs to be non-zero so powernet doesn't consider the device powered
         // by an unpowered network while in the off state. Otherwise, when we increase the load,
         // the clientside APC receiver will think the device is powered until it gets the next
@@ -93,5 +86,12 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         // I spent several hours trying to figure out a better way to do this using PowerDisabled
         // or something, but nothing worked as well as this.
         // Just think of the load as a little LED, or bad wiring, or something.
+        return setting switch
+        {
+            EntityHeaterSetting.Low => max / 3f,
+            EntityHeaterSetting.Medium => max * 2f / 3f,
+            EntityHeaterSetting.High => max,
+            _ => 0.01f,
+        };
     }
 }
