@@ -30,7 +30,7 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
     public override void Update(float deltaTime)
     {
         var query = EntityQueryEnumerator<EntityHeaterComponent, ItemPlacerComponent, ApcPowerReceiverComponent>();
-        while (query.MoveNext(out var _, out var _, out var placer, out var power))
+        while (query.MoveNext(out _, out _, out var placer, out var power))
         {
             if (!power.Powered)
                 continue;
