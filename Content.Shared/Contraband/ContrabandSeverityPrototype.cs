@@ -19,8 +19,8 @@ public sealed partial class ContrabandSeverityPrototype : IPrototype
     public LocId ExamineText;
 
     /// <summary>
-    /// When examining the contraband, should this take into account the viewer's departments?
+    /// When examining the contraband, should this take into account the viewer's departments and job?
     /// </summary>
     [DataField]
-    public bool ShowDepartments;
+    public bool ShowDepartmentsAndJobs;
 }

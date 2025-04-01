@@ -1,0 +1,127 @@
+## Static
+
+- type: latheRecipePack
+  id: ScienceBoardsStatic
+  recipes:
+  - ProtolatheMachineCircuitboard
+  - AutolatheMachineCircuitboard
+  - CircuitImprinterMachineCircuitboard
+  - ExosuitFabricatorMachineCircuitboard
+  - CutterMachineCircuitboard
+  - BorgChargerCircuitboard
+
+- type: latheRecipePack
+  id: CircuitFloorsStatic
+  recipes:
+  - FloorGreenCircuit
+  - FloorBlueCircuit
+  - FloorRedCircuit
+
+## Dynamic
+
+- type: latheRecipePack
+  id: ScienceEquipment
+  recipes:
+  - AnomalyScanner
+  - NodeScanner
+  - AnomalyLocator
+  - AnomalyLocatorWide
+  - HoloprojectorField
+  - SignallerAdvanced
+  - DeviceQuantumSpinInverter
+
+- type: latheRecipePack
+  id: ScienceClothing
+  recipes:
+  - ClothingShoesBootsMagSci
+  - ClothingShoesBootsMoon
+  - ClothingShoesBootsSpeed
+  - ClothingBackpackHolding
+  - ClothingBackpackSatchelHolding
+  - ClothingBackpackDuffelHolding
+
+- type: latheRecipePack
+  id: PowerCells
+  recipes:
+  - PowerCellMicroreactor
+  - PowerCellHigh
+
+- type: latheRecipePack
+  id: ScienceWeapons
+  recipes:
+  - WeaponPistolCHIMP
+  - WeaponForceGun
+  - WeaponLaserSvalinn
+  - WeaponProtoKineticAccelerator
+  - WeaponTetherGun
+  - WeaponGauntletGorilla
+
+- type: latheRecipePack
+  id: FauxTiles
+  recipes:
+  - FauxTileAstroGrass
+  - FauxTileMowedAstroGrass
+  - FauxTileJungleAstroGrass
+  - FauxTileAstroIce
+  - FauxTileAstroSnow
+  - FauxTileAstroAsteroidSand
+
+# Only contains parts for making basic modular grenades, no actual explosives
+- type: latheRecipePack
+  id: ScienceExplosives
+  recipes:
+  - ChemicalPayload
+  - FlashPayload
+  - TimerTrigger
+  - SignalTrigger
+  - VoiceTrigger
+
+- type: latheRecipePack
+  id: ScienceBoards
+  recipes:
+  - TurboItemRechargerCircuitboard
+  - AutolatheHyperConvectionMachineCircuitboard
+  - ProtolatheHyperConvectionMachineCircuitboard
+  - CircuitImprinterHyperConvectionMachineCircuitboard
+  - TechDiskComputerCircuitboard
+  - FlatpackerMachineCircuitboard
+  - SheetifierMachineCircuitboard
+  - PowerCageRechargerCircuitboard
+  - AnalysisComputerCircuitboard
+  - AnomalyVesselCircuitboard
+  - AnomalyVesselExperimentalCircuitboard
+  - AnomalySynchronizerCircuitboard
+  - APECircuitboard
+  - ArtifactAnalyzerMachineCircuitboard
+  - ArtifactCrusherMachineCircuitboard
+
+- type: latheRecipePack
+  id: CameraBoards
+  recipes:
+  - SurveillanceCameraRouterCircuitboard
+  - SurveillanceCameraMonitorCircuitboard
+  - SurveillanceWirelessCameraMonitorCircuitboard
+  - SurveillanceCameraWirelessRouterCircuitboard
+  - ComputerTelevisionCircuitboard
+  - SurveillanceWirelessCameraMovableCircuitboard
+  - SurveillanceWirelessCameraAnchoredCircuitboard
+
+- type: latheRecipePack
+  id: MechBoards
+  recipes:
+  - RipleyCentralElectronics
+  - RipleyPeripheralsElectronics
+  - HonkerCentralElectronics
+  - HonkerPeripheralsElectronics
+  - HonkerTargetingElectronics
+  - HamtrCentralElectronics
+  - HamtrPeripheralsElectronics
+
+- type: latheRecipePack
+  id: ShuttleBoards
+  recipes:
+  - ShuttleConsoleCircuitboard
+  - RadarConsoleCircuitboard
+  - ThrusterMachineCircuitboard
+  - GyroscopeMachineCircuitboard
+  - MiniGravityGeneratorCircuitboard

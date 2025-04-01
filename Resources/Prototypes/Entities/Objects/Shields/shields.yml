@@ -84,10 +84,10 @@
           Slash: 1
 
 - type: entity
-  name: riot laser shield
+  name: laser shield
   parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotLaserShield
-  description: A riot shield built for withstanding lasers, but not much else.
+  description: A shield built for withstanding lasers, but not much else.
   components:
     - type: Sprite
       state: riot_laser-icon
@@ -104,10 +104,10 @@
           Heat: 1
 
 - type: entity
-  name: riot bullet shield
+  name: ballistic shield
   parent: [ BaseShield, BaseRestrictedContraband ]
   id: RiotBulletShield
-  description: A ballistic riot shield built for withstanding bullets, but not much else.
+  description: A shield built for protecting against ballistics, but not much else.
   components:
     - type: Sprite
       state: riot_bullet-icon

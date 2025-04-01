@@ -5,8 +5,6 @@
   components:
   - type: Contraband
     severity: Syndicate
-    # no one should be carrying this around visibly!
-    allowedDepartments: null
 
 # minor contraband not departmentally restricted -- improvised weapons etc
 - type: entity
@@ -15,8 +13,6 @@
   components:
   - type: Contraband
     severity: Minor
-    # according to space law no dept is authorized to have
-    allowedDepartments: null
 
 # major contraband, for things like guns or weaponry that don't belong to any department and aren't syndicate specific
 - type: entity
@@ -25,7 +21,6 @@
   components:
   - type: Contraband
     severity: Major
-    allowedDepartments: null
 
 # minor contraband by default restricted to security only
 - type: entity
@@ -34,6 +29,7 @@
   components:
   - type: Contraband
     severity: Restricted
+    allowedDepartments: [ Security ]
 
 # one department restricted contraband
 - type: entity
@@ -156,6 +152,33 @@
   components:
   - type: Contraband
     allowedDepartments: [ Medical, Science ]
+
+# contraband restricted by job by some degree
+- type: entity
+  id: BaseSecurityBartenderContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security ]
+    allowedJobs: [ Bartender ]
+
+- type: entity
+  id: BaseSecurityLawyerContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security ]
+    allowedJobs: [ Lawyer ]
+
+- type: entity
+  id: BaseJanitorContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedJobs: [ Janitor ]
 
 # for ~objective items
 - type: entity

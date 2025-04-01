@@ -1,6 +1,9 @@
 # PUT YOUR TAGS IN ALPHABETICAL ORDER
 
 - type: Tag
+  id: AccessBreakerImmune
+
+- type: Tag
   id: AirAlarm
 
 - type: Tag
@@ -11,6 +14,9 @@
 
 - type: Tag
   id: AirSensor
+
+- type: Tag
+  id: AllowGhostShownByEvent
 
 - type: Tag
   id: Ambrosia
@@ -441,6 +447,9 @@
   id: Debug
 
 - type: Tag
+  id: Diagonal
+
+- type: Tag
   id: Dice
 
 - type: Tag
@@ -657,6 +666,9 @@
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
 
 - type: Tag
+  id: HardsuitSpatio
+
+- type: Tag
   id: Haunted
 
 - type: Tag
@@ -836,6 +848,9 @@
 
 - type: Tag
   id: MailingUnitElectronics
+
+- type: Tag
+  id: Maints
 
 - type: Tag
   id: Matchstick
@@ -1182,6 +1197,9 @@
 
 - type: Tag
   id: Spray
+
+- type: Tag
+  id: SprayNozzle
 
 - type: Tag
   id: SpreaderIgnore

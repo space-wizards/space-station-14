@@ -22,13 +22,69 @@
   components:
   - type: ObserverRole
 
-#Ghostrole Marker
+#Ghost Roles
 - type: entity
   parent: BaseMindRole
-  id: MindRoleGhostMarker
+  id: MindRoleGhostRoleNeutral
   name: Ghost Role
   components:
   - type: GhostRoleMarkerRole
+
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleFamiliar
+  name: Ghost Role (Familiar)
+  components:
+  - type: MindRole
+    roleType: Familiar
+  - type: GhostRoleMarkerRole
+
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleFreeAgent
+  name: Ghost Role (Free Agent)
+  components:
+  - type: MindRole
+    roleType: FreeAgent
+  - type: GhostRoleMarkerRole
+
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleSilicon
+  name: Ghost Role (Silicon)
+  components:
+  - type: MindRole
+    roleType: Silicon
+  - type: GhostRoleMarkerRole
+
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleSiliconAntagonist
+  name: Ghost Role (Silicon Antagonist)
+  components:
+  - type: MindRole
+    roleType: SiliconAntagonist
+  - type: GhostRoleMarkerRole
+
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleSoloAntagonist
+  name: Ghost Role (Solo Antagonist)
+  components:
+  - type: MindRole
+    roleType: SoloAntagonist
+  - type: GhostRoleMarkerRole
+
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleTeamAntagonist
+  name: Ghost Role (Team Antagonist)
+  components:
+  - type: MindRole
+    roleType: TeamAntagonist
+  - type: GhostRoleMarkerRole
+
+
 
 # The Job MindRole holds the mob's Job prototype
 - type: entity
@@ -38,16 +94,26 @@
 #  description:
   # MindRoleComponent.JobPrototype is filled by SharedJobSystem
 
-# Subverted Silicon
+# Silicon
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleSiliconBrain
+  name: Borg Brain Role
+  components:
+  - type: MindRole
+    roleType: Silicon
+  - type: SiliconBrainRole
+
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleSubvertedSilicon
   name: Subverted Silicon Role
   description:
   components:
-  - type: SubvertedSiliconRole
   - type: MindRole
     antagPrototype: SubvertedSilicon
+    roleType: SiliconAntagonist
+  - type: SubvertedSiliconRole
 
 # Dragon
 - type: entity
@@ -58,6 +124,7 @@
   components:
   - type: MindRole
     antagPrototype: Dragon
+    roleType: TeamAntagonist
     exclusiveAntag: true
   - type: DragonRole
   - type: RoleBriefing
@@ -72,6 +139,7 @@
   components:
   - type: MindRole
     antagPrototype: SpaceNinja
+    roleType: SoloAntagonist
     exclusiveAntag: true
   - type: NinjaRole
 
@@ -83,6 +151,7 @@
 #  description: mind-role-nukeops-description
   components:
   - type: MindRole
+    roleType: TeamAntagonist
     exclusiveAntag: true
     antagPrototype: Nukeops
   - type: NukeopsRole
@@ -115,6 +184,7 @@
   - type: MindRole
     antagPrototype: HeadRev
     exclusiveAntag: true
+    roleType: TeamAntagonist
   - type: RevolutionaryRole
 
 - type: entity
@@ -135,6 +205,7 @@
   components:
   - type: MindRole
     antagPrototype: Thief
+    roleType: SoloAntagonist
   - type: ThiefRole
 
 # Traitors
@@ -147,6 +218,7 @@
   - type: MindRole
     antagPrototype: Traitor
     exclusiveAntag: true
+    roleType: SoloAntagonist
   - type: TraitorRole
 
 - type: entity
@@ -158,6 +230,15 @@
   - type: MindRole
     antagPrototype: TraitorSleeper
 
+- type: entity
+  parent: MindRoleTraitor
+  id: MindRoleTraitorReinforcement
+  name: Syndicate Reinforcement Role
+  #  description: mind-role-syndicate-reinforcement-description
+  components:
+    - type: MindRole
+      roleType: TeamAntagonist
+
 # Zombie Squad
 - type: entity
   parent: BaseMindRoleAntag
@@ -168,6 +249,7 @@
   - type: MindRole
     antagPrototype: InitialInfected
     exclusiveAntag: true
+    roleType: TeamAntagonist
   - type: InitialInfectedRole
 
 - type: entity
@@ -179,4 +261,5 @@
   - type: MindRole
     antagPrototype: Zombie
     exclusiveAntag: true
+    roleType: TeamAntagonist
   - type: ZombieRole

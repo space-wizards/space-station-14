@@ -1,28 +1,36 @@
 using Content.Shared.Maps;
 using Robust.Shared.Noise;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Parallax.Biomes.Layers;
 
 [Serializable, NetSerializable]
 public sealed partial class BiomeTileLayer : IBiomeLayer
 {
-    [DataField("noise")] public FastNoiseLite Noise { get; private set; } = new(0);
+    [DataField] public FastNoiseLite Noise { get; private set; } = new(0);
 
     /// <inheritdoc/>
-    [DataField("threshold")]
+    [DataField]
     public float Threshold { get; private set; } = 0.5f;
 
     /// <inheritdoc/>
-    [DataField("invert")] public bool Invert { get; private set; } = false;
+    [DataField] public bool Invert { get; private set; } = false;
 
     /// <summary>
     /// Which tile variants to use for this layer. Uses all of the tile's variants if none specified
     /// </summary>
-    [DataField("variants")]
+    [DataField]
     public List<byte>? Variants = null;
 
-    [DataField("tile", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>))]
-    public string Tile = string.Empty;
+    [DataField(required: true)]
+    public ProtoId<ContentTileDefinition> Tile = string.Empty;
+
+    // TODO: Need some good engine solution to this, see FlagSerializer for what needs changing.
+    /// <summary>
+    /// Flags to set on the tile when placed.
+    /// </summary>
+    [DataField]
+    public byte Flags = 0;
 }

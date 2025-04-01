@@ -131,7 +131,7 @@
 - type: entity
   name: interrogator lamp
   id: LampInterrogator
-  parent: BaseLamp
+  parent: [ BaseLamp, BaseRestrictedContraband ]
   description: Ultra-bright lamp for the bad cop.
   components:
   - type: Sprite

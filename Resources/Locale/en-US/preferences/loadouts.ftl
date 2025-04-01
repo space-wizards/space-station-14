@@ -1,6 +1,6 @@
 # Name
 loadout-name-edit-label = Custom name
-loadout-name-edit-tooltip = 32 characters max. If no name is specified a random one may be chosen for you.
+loadout-name-edit-tooltip = {$max} characters max. If no name is specified a random one may be chosen for you.
 
 # Restrictions
 loadout-restrictions = Restrictions
