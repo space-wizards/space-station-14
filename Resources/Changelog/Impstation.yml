@@ -1,39 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Compact Armor Vest (identical stats as other ones) in sec loadouts and
-      one in the SecTech
-    type: Add
-  - message: Wardens can now spawn with armor vests instead of coats like HoS can
-      (warden armor is stronger though!)
-    type: Add
-  id: 948
-  time: '2025-01-17T05:20:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1396
-- author: AftrLite
-  changes:
-  - message: The Cargoporter and Mailporter pads now have unique and improved VFX
-      for activation.
-    type: Add
-  id: 949
-  time: '2025-01-17T05:50:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1399
-- author: Sha-Seng
-  changes:
-  - message: No-Ro lobby art
-    type: Add
-  - message: Kaasi lobby art (there's only one chair)
-    type: Remove
-  id: 950
-  time: '2025-01-17T06:00:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1400
-- author: EpicToast
-  changes:
-  - message: Vent critters will spawn across the station like usual again.
-    type: Remove
-  id: 951
-  time: '2025-01-17T06:01:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1401
 - author: crocodilecarousel
   changes:
   - message: Adds one new food available through the cargo request console. The perfect
@@ -4070,3 +4035,35 @@
   id: 1447
   time: '2025-04-01T11:32:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2143
+- author: widgetbeck
+  changes:
+  - message: The Cargorilla cargo gift event will now only roll during the first 30
+      minutes of the round.
+    type: Tweak
+  id: 1448
+  time: '2025-04-01T11:39:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2159
+- author: Darkmajia
+  changes:
+  - message: Drains properly clog again.
+    type: Fix
+  id: 1449
+  time: '2025-04-01T11:39:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2163
+- author: TheGrimbeeper
+  changes:
+  - message: Rat Kings now deal 2 structural damage
+    type: Tweak
+  id: 1450
+  time: '2025-04-01T11:50:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2157
+- author: widgetbeck
+  changes:
+  - message: Added a new depth 4 artifact node.
+    type: Add
+  - message: People with the Echolalia trait will now display fake typing indicators
+      before echoing a message.
+    type: Tweak
+  id: 1451
+  time: '2025-04-01T11:50:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2150
