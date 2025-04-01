@@ -1754,7 +1754,7 @@
   graph: Soil
   startNode: start
   targetNode: fungalSoil
-  category: construction-category-furniture
+  category: construction-category-structures
   description: A mix of organic matter and fungal root creating a soil to grow your plant in space. Seems to be dry.
   icon:
     sprite: Structures/Hydroponics/misc.rsi
