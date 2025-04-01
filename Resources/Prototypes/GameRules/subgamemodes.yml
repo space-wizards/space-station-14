@@ -17,7 +17,6 @@
   - type: AntagSelection
     selectionTime: IntraPlayerSpawn
     agentName: thief-round-end-agent-name
-    selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ Thief ]
       max: 3

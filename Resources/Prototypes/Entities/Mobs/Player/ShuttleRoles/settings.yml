@@ -890,8 +890,6 @@
       - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: default
-      mindRoles: # imp
-      - MindRoleGhostRoleTeamAntagonist
     - type: Loadout
       prototypes: [ SyndicateFootsoldierTeamLeaderGear ]
       roleLoadout: [ RoleSurvivalSyndicate ]
@@ -912,8 +910,6 @@
       - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: default
-      mindRoles: # imp
-      - MindRoleGhostRoleTeamAntagonist
     - type: Loadout
       prototypes: [ SyndicateFootsoldierGear ]
       roleLoadout: [ RoleSurvivalSyndicate ]
@@ -952,8 +948,6 @@
       - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: default
-      mindRoles: # imp
-      - MindRoleGhostRoleTeamAntagonist
     - type: Loadout
       prototypes: [ PirateScoonerAltA, PirateScoonerAltB, PirateScoonerAltC, PirateScoonerAltD ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -973,8 +967,6 @@
       - MindRoleGhostRoleTeamAntagonist
       raffle:
         settings: default
-      mindRoles: # imp
-      - MindRoleGhostRoleTeamAntagonist
     - type: Loadout
       prototypes: [ PirateCaptainScooner ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -993,8 +985,6 @@
       - MindRoleGhostRoleFreeAgent
       raffle:
         settings: default
-      mindRoles: # imp
-      - MindRoleGhostRoleFreeAgent
     - type: Loadout
       prototypes: [ VisitorBlackmarketeer, VisitorBlackmarketeer ]
       roleLoadout: [ RoleSurvivalStandard ]
@@ -1015,8 +1005,6 @@
       - MindRoleGhostRoleFreeAgent
       raffle:
         settings: default
-      mindRoles: # imp
-      - MindRoleGhostRoleFreeAgent
     - type: Loadout
       prototypes: [ CossackGear ]
       roleLoadout: [ RoleSurvivalEVA ]

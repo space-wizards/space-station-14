@@ -19,6 +19,7 @@ public abstract class ClothingSystem : EntitySystem
     [Dependency] private readonly InventorySystem _invSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly HideLayerClothingSystem _hideLayer = default!;
+    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!; // imp
 
     public override void Initialize()
     {
@@ -29,13 +30,9 @@ public abstract class ClothingSystem : EntitySystem
         SubscribeLocalEvent<ClothingComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<ClothingComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<ClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
-        SubscribeLocalEvent<ClothingComponent, ItemMaskToggledEvent>(OnMaskToggled);
         SubscribeLocalEvent<ClothingComponent, ItemNeckToggledEvent>(OnNeckToggled); // imp
-
-
         SubscribeLocalEvent<ClothingComponent, ClothingEquipDoAfterEvent>(OnEquipDoAfter);
         SubscribeLocalEvent<ClothingComponent, ClothingUnequipDoAfterEvent>(OnUnequipDoAfter);
-
         SubscribeLocalEvent<ClothingComponent, BeforeItemStrippedEvent>(OnItemStripped);
     }
 
@@ -54,9 +51,7 @@ public abstract class ClothingSystem : EntitySystem
         args.ApplyDelay = false;
     }
 
-    private void QuickEquip(
-        Entity<ClothingComponent> toEquipEnt,
-        Entity<InventoryComponent, HandsComponent> userEnt)
+    private void QuickEquip(Entity<ClothingComponent> toEquipEnt, Entity<InventoryComponent, HandsComponent> userEnt)
     {
         foreach (var slotDef in userEnt.Comp1.Slots)
         {
@@ -126,21 +121,16 @@ public abstract class ClothingSystem : EntitySystem
     {
         if (args.Current is not ClothingComponentState state)
             return;
-
+    }
 
     /// imp start
     private void OnNeckToggled(Entity<ClothingComponent> ent, ref ItemNeckToggledEvent args)
     {
         //AUGH AUGH AUGH AUGH AUGH AUGH
         SetEquippedPrefix(ent, args.IsToggled ? args.equippedPrefix : null, ent);
-        CheckEquipmentForLayerHide(ent.Owner, args.Wearer);
+        //CheckEquipmentForLayerHide(ent.Owner, args.Wearer);
     }
     /// imp end
-
-    private void OnMaskToggled(Entity<ClothingComponent> ent, ref ItemMaskToggledEvent args)
-    {
-        SetEquippedPrefix(uid, state.EquippedPrefix, component);
-    }
 
     private void OnEquipDoAfter(Entity<ClothingComponent> ent, ref ClothingEquipDoAfterEvent args)
     {
