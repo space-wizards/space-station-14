@@ -4,8 +4,8 @@ meta:
   engineVersion: 248.0.2
   forkId: ""
   forkVersion: ""
-  time: 03/28/2025 21:57:12
-  entityCount: 19485
+  time: 03/31/2025 18:56:03
+  entityCount: 19480
 maps:
 - 1
 grids:
@@ -321,7 +321,7 @@ entities:
           version: 6
         2,-3:
           ind: 2,-3
-          tiles: LAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAAMQAAAAAALAAAAAAALAAAAAAALAAAAAAAMQAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAAMQAAAAAAQwAAAAAAQwAAAAAAQwAAAAAAQwAAAAAAQwAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAQwAAAAAAQwAAAAAAQwAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAAgAAAAAAAgAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAABMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAALAAAAAAAAgAAAAAAAgAAAAAAMQAAAAAAMQAAAAAAMQAAAAADMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAALAAAAAAAAgAAAAAAAgAAAAAAMQAAAAAAMQAAAAABMQAAAAACMQAAAAACMQAAAAAAMQAAAAAAMQAAAAABMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAALAAAAAAAAgAAAAAAAgAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAMQAAAAAAMQAAAAAALAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAALAAAAAAAAwAAAAAALAAAAAAAAgAAAAAAAgAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAALAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAMQAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAALAAAAAAALAAAAAAALAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAALAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAALAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAALAAAAAAALAAAAAAALAAAAAAAMQAAAAADMQAAAAABMQAAAAACLAAAAAAAMQAAAAAAMQAAAAAAMQAAAAAALAAAAAAAAwAAAAAASAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAALAAAAAAALAAAAAAALAAAAAAAMQAAAAAAMQAAAAABMQAAAAABMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAASAAAAAAASAAAAAAASAAAAAAASAAAAAAASAAAAAAALAAAAAAALAAAAAAALAAAAAAAMQAAAAADMQAAAAACMQAAAAAALAAAAAAAMQAAAAAAMQAAAAAAMQAAAAAALAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAALAAAAAAANgAAAAAANgAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAANgAAAAAALAAAAAAA
+          tiles: LAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAAMQAAAAAALAAAAAAALAAAAAAALAAAAAAAMQAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAAMQAAAAAAQwAAAAAAQwAAAAAAQwAAAAAAQwAAAAAAQwAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAQwAAAAAAQwAAAAAAQwAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAAgAAAAAAAgAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAABMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAALAAAAAAAAgAAAAAAAgAAAAAAMQAAAAAAMQAAAAAAMQAAAAADMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAALAAAAAAAAgAAAAAAAgAAAAAAMQAAAAAAMQAAAAABMQAAAAACMQAAAAACMQAAAAAAMQAAAAAAMQAAAAABMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAAMQAAAAAALAAAAAAAAgAAAAAAAgAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAMQAAAAAAMQAAAAAALAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAALAAAAAAAAwAAAAAALAAAAAAAAgAAAAAAAgAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAALAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAgAAAAAAAgAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAMQAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAALAAAAAAALAAAAAAALAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAALAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAAOAAAAAAALAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAALAAAAAAALAAAAAAALAAAAAAAMQAAAAADMQAAAAABMQAAAAACLAAAAAAAMQAAAAAAMQAAAAAAMQAAAAAALAAAAAAAAwAAAAAASAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAALAAAAAAALAAAAAAALAAAAAAAPQAAAAAAPQAAAAAAMQAAAAABMQAAAAAAMQAAAAAAPQAAAAAAMQAAAAAAMQAAAAAASAAAAAAASAAAAAAASAAAAAAASAAAAAAASAAAAAAALAAAAAAALAAAAAAALAAAAAAAMQAAAAADMQAAAAACMQAAAAAALAAAAAAAMQAAAAAAMQAAAAAAMQAAAAAALAAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAAAwAAAAAALAAAAAAANgAAAAAANgAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAALAAAAAAANgAAAAAALAAAAAAA
           version: 6
         5,-2:
           ind: 5,-2
@@ -6681,8 +6681,6 @@ entities:
       - 8699
       - 14753
       - 14754
-      - 14756
-      - 14755
       - 18868
       - 18867
       - 18846
@@ -8053,6 +8051,14 @@ entities:
     - type: Transform
       pos: 53.5,-57.5
       parent: 2
+- proto: AirlockBarGlassLocked
+  entities:
+  - uid: 3533
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 36.5,-41.5
+      parent: 2
 - proto: AirlockBarLocked
   entities:
   - uid: 6672
@@ -8479,6 +8485,44 @@ entities:
       linkedPorts:
         1200:
         - DoorStatus: DoorBolt
+- proto: AirlockExternalCargoLocked
+  entities:
+  - uid: 312
+    components:
+    - type: Transform
+      pos: 36.5,-99.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+  - uid: 323
+    components:
+    - type: Transform
+      pos: 36.5,-98.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+  - uid: 6979
+    components:
+    - type: Transform
+      pos: 32.5,-98.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        323:
+        - DoorStatus: DoorBolt
+        312:
+        - DoorStatus: DoorBolt
+  - uid: 6980
+    components:
+    - type: Transform
+      pos: 32.5,-99.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        312:
+        - DoorStatus: DoorBolt
+        323:
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalGlass
   entities:
   - uid: 543
@@ -8517,30 +8561,6 @@ entities:
       parent: 2
 - proto: AirlockExternalGlassCargoLocked
   entities:
-  - uid: 312
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 36.5,-98.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        18353:
-        - DoorStatus: InputA
-  - uid: 323
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 36.5,-99.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        18353:
-        - DoorStatus: InputB
   - uid: 2455
     components:
     - type: Transform
@@ -8566,8 +8586,10 @@ entities:
       invokeCounter: 1
     - type: DeviceLinkSource
       linkedPorts:
-        18350:
-        - DoorStatus: InputA
+        6885:
+        - DoorStatus: DoorBolt
+        6886:
+        - DoorStatus: DoorBolt
   - uid: 6884
     components:
     - type: Transform
@@ -8577,30 +8599,24 @@ entities:
       invokeCounter: 1
     - type: DeviceLinkSource
       linkedPorts:
-        18350:
-        - DoorStatus: InputB
+        6886:
+        - DoorStatus: DoorBolt
+        6885:
+        - DoorStatus: DoorBolt
   - uid: 6885
     components:
     - type: Transform
       pos: 48.5,-98.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        18351:
-        - DoorStatus: InputA
+      invokeCounter: 3
   - uid: 6886
     components:
     - type: Transform
       pos: 48.5,-99.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        18351:
-        - DoorStatus: InputB
+      invokeCounter: 3
   - uid: 6887
     components:
     - type: Transform
@@ -8622,30 +8638,6 @@ entities:
     - type: Transform
       pos: 25.5,-102.5
       parent: 2
-  - uid: 6979
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 32.5,-98.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        18352:
-        - DoorStatus: InputA
-  - uid: 6980
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 32.5,-99.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        18352:
-        - DoorStatus: InputB
 - proto: AirlockExternalGlassEngineeringLocked
   entities:
   - uid: 1878
@@ -13570,7 +13562,7 @@ entities:
   - uid: 9039
     components:
     - type: Transform
-      pos: 36.44923,-33.305218
+      pos: 36.376324,-33.289303
       parent: 2
 - proto: ButtonFrameCaution
   entities:
@@ -52554,8 +52546,6 @@ entities:
       - 14754
       - 18866
       - 18865
-      - 14756
-      - 14755
       - 18844
       - 18843
       - 1698
@@ -53487,12 +53477,6 @@ entities:
       deviceLists:
       - 9240
       - 6349
-  - uid: 5461
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 33.5,-98.5
-      parent: 2
   - uid: 5575
     components:
     - type: Transform
@@ -54851,26 +54835,6 @@ entities:
       deviceLists:
       - 18600
       - 18598
-  - uid: 14755
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 31.5,-99.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 14757
-      - 14758
-  - uid: 14756
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 31.5,-98.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 14757
-      - 14758
   - uid: 14798
     components:
     - type: Transform
@@ -54960,12 +54924,6 @@ entities:
     components:
     - type: Transform
       pos: -59.5,-63.5
-      parent: 2
-  - uid: 18269
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 33.5,-99.5
       parent: 2
   - uid: 18857
     components:
@@ -57144,6 +57102,14 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+  - uid: 14756
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 43.5,-40.5
+      parent: 2
+    - type: Fixtures
+      fixtures: {}
   - uid: 17878
     components:
     - type: Transform
@@ -57553,11 +57519,11 @@ entities:
       parent: 2
 - proto: FoodCartHot
   entities:
-  - uid: 16363
+  - uid: 5461
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: 43.5,-40.5
+      pos: 46.5,-44.5
       parent: 2
 - proto: FoodCondimentBottleColdsauce
   entities:
@@ -84161,6 +84127,13 @@ entities:
     - type: Transform
       pos: 21.337229,-65.19823
       parent: 2
+- proto: KitchenElectricGrill
+  entities:
+  - uid: 6999
+    components:
+    - type: Transform
+      pos: 41.5,-38.5
+      parent: 2
 - proto: KitchenMicrowave
   entities:
   - uid: 5855
@@ -84209,6 +84182,11 @@ entities:
     components:
     - type: Transform
       pos: -1.5,-53.5
+      parent: 2
+  - uid: 15259
+    components:
+    - type: Transform
+      pos: 40.5,-35.5
       parent: 2
   - uid: 16386
     components:
@@ -84311,7 +84289,7 @@ entities:
   - uid: 15271
     components:
     - type: Transform
-      pos: 41.234875,-38.373833
+      pos: 40.47874,-38.28412
       parent: 2
   - uid: 17018
     components:
@@ -84875,78 +84853,6 @@ entities:
     - type: Transform
       pos: -8.5,-74.5
       parent: 2
-- proto: LogicGateOr
-  entities:
-  - uid: 18350
-    components:
-    - type: Transform
-      anchored: True
-      pos: 47.5,-98.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        6885:
-        - Output: DoorBolt
-        6886:
-        - Output: DoorBolt
-    - type: Physics
-      canCollide: False
-      bodyType: Static
-  - uid: 18351
-    components:
-    - type: Transform
-      anchored: True
-      rot: 3.141592653589793 rad
-      pos: 47.5,-99.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        6883:
-        - Output: DoorBolt
-        6884:
-        - Output: DoorBolt
-    - type: Physics
-      canCollide: False
-      bodyType: Static
-  - uid: 18352
-    components:
-    - type: Transform
-      anchored: True
-      pos: 34.5,-98.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        312:
-        - Output: DoorBolt
-        323:
-        - Output: DoorBolt
-    - type: Physics
-      canCollide: False
-      bodyType: Static
-  - uid: 18353
-    components:
-    - type: Transform
-      anchored: True
-      rot: 3.141592653589793 rad
-      pos: 34.5,-99.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        6979:
-        - Output: DoorBolt
-        6980:
-        - Output: DoorBolt
-    - type: Physics
-      canCollide: False
-      bodyType: Static
 - proto: LuxuryPen
   entities:
   - uid: 15422
@@ -96491,7 +96397,7 @@ entities:
   - uid: 15303
     components:
     - type: Transform
-      pos: 41.871376,-38.41419
+      pos: 40.60374,-37.357033
       parent: 2
 - proto: RubberStampApproved
   entities:
@@ -97380,11 +97286,6 @@ entities:
     components:
     - type: Transform
       pos: 35.5,-41.5
-      parent: 2
-  - uid: 15259
-    components:
-    - type: Transform
-      pos: 36.5,-41.5
       parent: 2
   - uid: 15260
     components:
@@ -98802,8 +98703,6 @@ entities:
         15246:
         - Pressed: Toggle
         15245:
-        - Pressed: Toggle
-        15259:
         - Pressed: Toggle
         15258:
         - Pressed: Toggle
@@ -100400,6 +100299,12 @@ entities:
     components:
     - type: Transform
       pos: 35.5,-37.5
+      parent: 2
+  - uid: 14755
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 43.5,-40.5
       parent: 2
 - proto: SMESAdvanced
   entities:
@@ -102107,12 +102012,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 35.5,-42.5
-      parent: 2
-  - uid: 6999
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 36.5,-42.5
       parent: 2
   - uid: 7003
     components:
@@ -105185,12 +105084,6 @@ entities:
     - type: Transform
       pos: 37.5,-37.5
       parent: 2
-  - uid: 3533
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 36.5,-41.5
-      parent: 2
   - uid: 3686
     components:
     - type: Transform
@@ -106983,6 +106876,13 @@ entities:
     components:
     - type: Transform
       pos: -4.485445,-28.30795
+      parent: 2
+- proto: VendingBarDrobe
+  entities:
+  - uid: 16363
+    components:
+    - type: Transform
+      pos: 33.5,-35.5
       parent: 2
 - proto: VendingMachineAtmosDrobe
   entities:
