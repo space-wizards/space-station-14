@@ -77,6 +77,9 @@ public partial class StatusIconData : IComparable<StatusIconData>
     {
         return Priority.CompareTo(other?.Priority ?? int.MaxValue);
     }
+
+    [DataField]
+    public float? Scale;
 }
 
 /// <summary>

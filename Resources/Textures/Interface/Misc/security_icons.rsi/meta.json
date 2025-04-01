@@ -1,10 +1,10 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation/blob/7f654b6e8e59021607a9e888dfeb79920401c372/icons/mob/huds/hud.dmi",
+  "copyright": "Original sprites from https://github.com/tgstation/tgstation/blob/7f654b6e8e59021607a9e888dfeb79920401c372/icons/mob/huds/hud.dmi. Modified, scaled and extended with new status sprites by B_Kirill",
   "size": {
-    "x": 8,
-    "y": 8
+    "x": 16,
+    "y": 16
   },
   "states": [
     {
@@ -21,6 +21,12 @@
     },
     {
       "name": "hud_wanted"
+    },
+    {
+      "name": "hud_hostile"
+    },
+    {
+      "name": "hud_eliminated"
     }
   ]
 }
