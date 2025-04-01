@@ -1,0 +1,128 @@
+- type: startingGear
+  id: OddballGearBase
+  equipment:
+    ears: ClothingHeadsetGrey
+    pocket1: PinpointerOddball
+    id: CaptainIDCard
+
+- type: startingGear
+  parent: OddballGearBase
+  id: OddballGearAk
+  equipment:
+    head: ClothingHeadHatBeretQM
+    jumpsuit: ClothingUniformJumpsuitQMTurtleneck
+    outerClothing: ClothingOuterCoatSpaceAsshole
+    shoes: ClothingShoesBootsSalvage
+  inhand:
+  - WeaponRifleAk
+
+- type: startingGear
+  parent: OddballGearBase
+  id: OddballGearBlaster
+  equipment:
+    eyes: ClothingEyesGlassesColorfulRed
+    jumpsuit: ClothingUniformJumpsuitColorWhite
+    outerClothing: ClothingOuterCoatBomberSecurityLoose
+    shoes: ClothingShoesColorRed
+  inhand:
+  - WeaponBlasterMagnum
+  - WeaponBlasterMagnum
+
+- type: startingGear
+  parent: OddballGearBase
+  id: OddballGearC20r
+  equipment:
+    head: ClothingHeadPyjamaSyndicateRed
+    neck: BedsheetSyndie
+    jumpsuit: ClothingUniformJumpsuitPyjamaSyndicateRed
+    shoes: ClothingShoesSlippers
+  inhand:
+  - WeaponSubMachineGunC20r
+
+- type: startingGear
+  parent: OddballGearBase
+  id: OddballGearDualies
+  equipment:
+    eyes: ClothingEyesGlassesCheapSunglasses
+    jumpsuit: ClothingUniformNightclubSuit
+    shoes: ClothingShoesBootsLaceup
+  inhand:
+  - WeaponPistolViper
+  - WeaponPistolViper
+
+- type: startingGear
+  parent: OddballGearBase
+  id: OddballGearGray
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAncient
+    outerClothing: ClothingOuterHardsuitGray
+    shoes: ClothingShoesColorBlack
+  inhand:
+  - WeaponRaygun
+
+- type: startingGear
+  parent: OddballGearBase
+  id: OddballGearMerc
+  equipment:
+    head: ClothingHeadHelmetMerc
+    eyes: ClothingEyesGlassesMercenary
+    mask: ClothingMaskBandMerc
+    jumpsuit: ClothingUniformJumpsuitMercenary
+    gloves: ClothingHandsGlovesMercFingerless
+    shoes: ClothingShoesBootsMerc
+  inhand:
+  - WeaponRifleLecter
+
+- type: startingGear
+  parent: OddballGearBase
+  id: OddballGearPirate
+  equipment:
+    head: ClothingHeadHatPirate
+    jumpsuit: ClothingUniformJumpsuitPirate
+    outerClothing: ClothingOuterCoatPirate
+    shoes: ClothingShoesBootsLaceup
+  inhand:
+  - WeaponRevolverPirate
+
+- type: startingGear
+  parent: OddballGearBase
+  id: OddballGearSafari
+  equipment:
+    head: ClothingHeadSafari
+    jumpsuit: ClothingUniformJumpsuitSafari
+    shoes: ClothingShoesColorWhite
+  inhand:
+  - WeaponRifleDaito
+
+- type: startingGear
+  parent: OddballGearBase
+  id: OddballGearShotgun
+  equipment:
+    head: ClothingHeadHelmetSwatSyndicate
+    jumpsuit: ClothingUniformJumpsuitTacticool
+    gloves: ClothingHandsGlovesFingerless
+    shoes: ClothingShoesSwat
+  inhand:
+  - WeaponShotgunBulldog
+
+- type: startingGear
+  parent: OddballGearBase
+  id: OddballGearWizard
+  equipment:
+    head: ClothingHeadHatWizard
+    jumpsuit: ClothingUniformJumpsuitCasualBlue
+    outerClothing: ClothingOuterWizard
+    shoes: ClothingShoesWizard
+  inhand:
+  - WeaponWandFireball
+
+- type: startingGear
+  parent: OddballGearBase
+  id: OddballGearXray
+  equipment:
+    eyes: ClothingEyesGlassesJamjar
+    jumpsuit: ClothingUniformJumpsuitCMOTurtle
+    outerClothing: ClothingOuterCoatCMO
+    shoes: ClothingShoesColorWhite
+  inhand:
+  - WeaponXrayCannon

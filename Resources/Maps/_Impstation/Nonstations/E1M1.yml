@@ -59,7 +59,6 @@ entities:
     - type: Broadphase
     - type: OccluderTree
     - type: MapAtmosphere
-      space: False
       mixture:
         volume: 2500
         temperature: 293.15

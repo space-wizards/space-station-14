@@ -48,6 +48,8 @@
   - BaseStationJobsSpawning
   - BaseStationRecords
   - BaseStationNanotrasen
+  - BaseStationAllEventsEligible # imp
+  - BaseStationAlertLevels # imp
   categories: [ HideSpawnMenu ]
   components:
     - type: Transform

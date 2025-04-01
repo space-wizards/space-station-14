@@ -157,7 +157,7 @@
       color: "#2b0000"
   - type: Paper
     content: book-text-mansus
-    
+
 
 - type: entity
   parent: BookBase
@@ -188,3 +188,21 @@
     tags:
     - Book
     - Guidebook
+
+- type: entity
+  parent: BookBase
+  id: BookEvilcraft
+  name: Evilcraft - The Origins of Darkness
+  description: Craft a Darkened Apple. Find a meaningless animal. Feed it the Darkened Apple and watch it die. Quickly throw the Book into the resulting anomaly. Feast on the knowledge, and animal leftovers.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: paper
+    - state: cover_old
+      color: "#100b1a"
+    - state: decor_spine
+      color: "#300707"
+    - state: icon_skull
+  - type: Paper
+    content: book-text-evilcraft

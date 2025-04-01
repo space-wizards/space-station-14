@@ -25,7 +25,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+      path: /Audio/Items/Toys/toysqueak1.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
@@ -95,7 +95,7 @@
     availableModes:
     - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
+      path: /Audio/Items/Toys/toysqueak1.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: ItemSlots
@@ -255,7 +255,7 @@
   - type: Gun
     fireRate: 1
     soundGunshot:
-      path: /Audio/_Impstation/Weapons/Guns/Gunshots/kammerer.ogg #imp
+      path: /Audio/Items/Toys/toysqueak1.ogg #imp
   - type: Tag
     tags:
     - WeaponShotgunKammerer
