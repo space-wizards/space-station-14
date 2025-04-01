@@ -25,7 +25,7 @@
   </Box>
 
   ## Tools of the Trade
-  You've got two more aces up your stolen sleeves: your [color=cyan]beacon[/color] and your [color=cyan]toolbox.[/color]
+  You've got two more aces up your stolen sleeves: your [color=cyan]beacon[/color] and your [color=cyan]satchel.[/color]
 
   Your [color=cyan]beacon[/color] provides safe passage home for trinkets that may not be easy to carry with you on the evac shuttle. Simply find a secluded part of the station to unfold the beacon, then set its coordinates to your hideout.
   Any shinies near it will be [bold]teleported to your vault when the shift ends,[/bold] fulfilling your objectives.
@@ -36,11 +36,10 @@
     <GuideEntityEmbed Entity="ThiefBeacon"/>
   </Box>
 
-  Your [color=cyan]toolbox[/color] contains... well, whatever you remembered to pack. [bold]You can select two pre-made kits[/bold] to help you complete grander heists.
-  Approve your choices in a safe place, as the toolbox will dissolve and the gear will drop at your feet.
+  Your [color=cyan]satchel[/color] contains... well, whatever you remembered to pack. [bold]You can select two pre-made kits[/bold] to help you complete grander heists.
 
   <Box>
-    <GuideEntityEmbed Entity="ToolboxThief"/>
+    <GuideEntityEmbed Entity="SatchelThief"/>
   </Box>
   <Box>
     <GuideEntityEmbed Entity="C4" Caption="Breacher"/>
