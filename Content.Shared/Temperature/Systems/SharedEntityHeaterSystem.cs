@@ -50,7 +50,6 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
             Act = () =>
             {
                 ChangeSetting(ent, nextSetting, user);
-                _popup.PopupClient(Loc.GetString("entity-heater-switched-setting", ("setting", nextSetting)), ent, user);
             }
         });
     }
@@ -69,6 +68,7 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         Dirty(ent, ent.Comp);
         _appearance.SetData(ent, EntityHeaterVisuals.Setting, setting);
         _audio.PlayPredicted(ent.Comp.SettingSound, ent, user);
+        _popup.PopupClient(Loc.GetString("entity-heater-switched-setting", ("setting", setting)), ent, user);
     }
 
     protected float SettingPower(EntityHeaterSetting setting, float max)
