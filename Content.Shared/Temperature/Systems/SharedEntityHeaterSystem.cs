@@ -40,9 +40,8 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        var setting = (int)ent.Comp.Setting + 1;
-        setting %= _settingCount;
-        var nextSetting = (EntityHeaterSetting)setting;
+        var nextSettingIndex = ((int)ent.Comp.Setting + 1) % _settingCount;
+        var nextSetting = (EntityHeaterSetting)nextSettingIndex;
 
         var user = args.User;
         args.Verbs.Add(new AlternativeVerb()
