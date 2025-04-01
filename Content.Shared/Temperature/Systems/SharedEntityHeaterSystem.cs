@@ -27,40 +27,41 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         SubscribeLocalEvent<EntityHeaterComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
-    private void OnExamined(EntityUid uid, EntityHeaterComponent comp, ExaminedEvent args)
+    private void OnExamined(Entity<EntityHeaterComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
-        args.PushMarkup(Loc.GetString("entity-heater-examined", ("setting", comp.Setting)));
+        args.PushMarkup(Loc.GetString("entity-heater-examined", ("setting", ent.Comp.Setting)));
     }
 
-    private void OnGetVerbs(EntityUid uid, EntityHeaterComponent comp, GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetVerbs(Entity<EntityHeaterComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        var setting = (int)comp.Setting + 1;
+        var setting = (int)ent.Comp.Setting + 1;
         setting %= _settingCount;
         var nextSetting = (EntityHeaterSetting)setting;
 
+        var user = args.User;
         args.Verbs.Add(new AlternativeVerb()
         {
             Text = Loc.GetString("entity-heater-switch-setting", ("setting", nextSetting)),
             Act = () =>
             {
-                ChangeSetting((uid, comp), nextSetting, args.User);
-                _popup.PopupClient(Loc.GetString("entity-heater-switched-setting", ("setting", nextSetting)), uid, args.User);
+                ChangeSetting(ent, nextSetting, user);
+                _popup.PopupClient(Loc.GetString("entity-heater-switched-setting", ("setting", nextSetting)), ent, user);
             }
         });
     }
 
-    private void OnPowerChanged(EntityUid uid, EntityHeaterComponent comp, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<EntityHeaterComponent> ent, ref PowerChangedEvent args)
     {
         // disable heating element glowing layer if theres no power
         // doesn't actually turn it off since that would be annoying
-        var setting = args.Powered ? comp.Setting : EntityHeaterSetting.Off;
-        _appearance.SetData(uid, EntityHeaterVisuals.Setting, setting);
+        var setting = args.Powered ? ent.Comp.Setting : EntityHeaterSetting.Off;
+        _appearance.SetData(ent, EntityHeaterVisuals.Setting, setting);
     }
 
     protected virtual void ChangeSetting(Entity<EntityHeaterComponent> ent, EntityHeaterSetting setting, EntityUid? user = null)
