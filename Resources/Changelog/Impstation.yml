@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Lemureslayer
-  changes:
-  - message: Added Moscow Mule as a drink Bartenders can make, including a dimpled
-      copper mug for the metamorphic glass.
-    type: Add
-  id: 943
-  time: '2025-01-17T02:24:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1380
 - author: crocodilecarousel
   changes:
   - message: Lillies have received a visual refresh!
@@ -4074,3 +4066,10 @@
   id: 1442
   time: '2025-03-31T15:43:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2161
+- author: honeyed-lemons
+  changes:
+  - message: Xeno has had its missing sink in the kitchen added!
+    type: Tweak
+  id: 1443
+  time: '2025-04-01T04:18:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2166
