@@ -64,10 +64,14 @@
 
 - type: entity
   name: RPG-7
-  parent: [ BaseWeaponLauncher, BaseMajorContraband ]
+  parent: [ BaseWeaponLauncher, BaseMajorContraband]
   id: WeaponLauncherRocket
   description: A modified ancient rocket-propelled grenade launcher.
   components:
+  - type: KnockbackByUserTag
+    doestContain:
+    - Resomi
+    knockback: -5
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
     layers:
@@ -97,10 +101,14 @@
 
 - type: entity
   name: multiple rocket launcher
-  parent: BaseWeaponLauncher
+  parent: [BaseWeaponLauncher]
   id: WeaponLauncherMultipleRocket
   description: A modified ancient rocket-propelled grenade launcher.
   components:
+  - type: KnockbackByUserTag
+    doestContain:
+    - Resomi
+    knockback: -5
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/rocket.rsi
     layers:
