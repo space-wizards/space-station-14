@@ -49,7 +49,7 @@
       uiWindowPos: 0,3
       strippingWindowPos: 0,0
       displayName: Eyes
-      offset: 0, 0.0655
+      offset: 0, 0.08
     - name: ears
       slotTexture: ears
       slotFlags: EARS
