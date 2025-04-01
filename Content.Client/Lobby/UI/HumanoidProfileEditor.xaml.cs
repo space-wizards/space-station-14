@@ -164,6 +164,7 @@ namespace Content.Client.Lobby.UI
 
             NameEdit.OnTextChanged += args => { SetName(args.Text); };
             NameRandomize.OnPressed += args => RandomizeName();
+            AppearanceRandomize.OnPressed += args => { RandomizeAppearance(); }; // IMP
             RandomizeEverythingButton.OnPressed += args => { RandomizeEverything(); };
             WarningLabel.SetMarkup($"[color=red]{Loc.GetString("humanoid-profile-editor-naming-rules-warning")}[/color]");
 
@@ -1540,6 +1541,27 @@ namespace Content.Client.Lobby.UI
             SetProfile(Profile, CharacterSlot);
             SetDirty();
         }
+
+        // IMP EDIT START: randomize appearance without touching species
+        private void RandomizeAppearance()
+        {
+            if (Profile == null)
+            {
+                return;
+            }
+            HumanoidCharacterAppearance.Random(Profile.Species, Profile.Sex);
+            Profile = new HumanoidCharacterProfile()
+            {
+                Name = Profile.Name,
+                Sex = Profile.Sex,
+                Age = Profile.Age,
+                Gender = Profile.Gender,
+                Species = Profile.Species,
+                Appearance = HumanoidCharacterAppearance.Random(Profile.Species, Profile.Sex),
+            };
+            SetProfile(Profile, CharacterSlot);
+        }
+        // IMP EDIT END
 
         private void RandomizeName()
         {
