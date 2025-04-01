@@ -70,13 +70,17 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
                     knockback *= 0.5f;
                 }
 
-                if (knockback <= 0.0f)
+                if (knockback == 0.0f)
                     return;
 
                 //make a clone, not a reference
                 Vector2 modifiedCoords = toCoordinates.Value.Position;
                 //flip the direction
-                modifiedCoords = -modifiedCoords;
+                if(knockback > 0)
+                    modifiedCoords = -modifiedCoords;
+                
+                //absolute knockback now
+                knockback = Math.Abs(knockback);
                 //normalize them
                 modifiedCoords = Vector2.Normalize(modifiedCoords);
                 //multiply by the knockback value
