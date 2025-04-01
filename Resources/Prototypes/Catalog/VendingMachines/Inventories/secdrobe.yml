@@ -22,6 +22,10 @@
     ClothingOuterArmorBasicSlim: 2
     ClothingOuterArmorPlate: 2
     ClothingOuterArmorStab: 2
+    ClothingOuterArmorHeatAbsorb: 2
+    ClothingHeadHelmetPlate: 2
+    ClothingHeadHelmetStabproof: 2
+    ClothingHeadHelmetHeatAbsorbent: 2
     ClothingNeckScarfStripedRed: 3
     ClothingEyesBlindfold: 1
     ClothingShoesBootsCombat: 1

@@ -1074,6 +1074,9 @@
   minLimit: 0
   loadouts:
   - SecurityHelmet
+  - SecurityHelmetPlate
+  - SecurityHelmetStabproof
+  - SecurityHelmetHeatAbsorbent
   - SecurityBeret
   - SecurityHat
   - TrooperHat
@@ -1113,6 +1116,7 @@
   - ArmorVestSlim
   - ArmorVestPlate
   - ArmorVestStab
+  - ArmorVestHeatAbsorb
   - SecurityOfficerWintercoat
 
 - type: loadoutGroup
