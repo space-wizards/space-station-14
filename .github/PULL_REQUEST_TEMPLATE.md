@@ -11,17 +11,16 @@
 This will not affect game balance.
 
 ## Technical details
-<!-- Summarize what code you changed, if any. This will speed up your review time. -->
+<!-- High level technical details that would help reviewers understand the code changes you made. Explain the strategy of your changes and how they work at a high level. Required for all but the most blindingly obvious changes. -->
 
 ## Media
-<!-- Attach media if the PR makes changes that affect the in-game experience, such as new clothing, items, features, or important bug fixes.
-Use screenshots or recorded videos as appropriate. Small fixes and refactors are exempt. Media may be used in progress reports with credit. -->
+<!-- Attach screenshots or screen recordings demonstrating that new features or fixes work as intended according to the test steps (see below).
+Media attached here may also be used in progress reports with credit. -->
 
 ## Requirements
 <!-- Confirm the following by placing an X in the brackets [X]: -->
 - [ ] I have read and am following the [Pull Request and Changelog Guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
-- [ ] I have added media to this PR or it does not require an ingame showcase.
-- [ ] I have added test steps to this PR, or it does not require testing.
+- [ ] I have added test steps to this PR, or sufficient testing is shown in media.
 <!-- IMPORTANT: Not following the above will get your PR closed at the discretion of the maintainers. -->
 
 ## Breaking changes
