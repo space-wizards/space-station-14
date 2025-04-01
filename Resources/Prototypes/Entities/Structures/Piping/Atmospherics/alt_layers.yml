@@ -24,7 +24,6 @@
   parent: [GasPipeLayerAlt1, GasPipeStraight]
   id: GasPipeStraightAlt1
   suffix: Straight, alt 1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
@@ -34,7 +33,6 @@
   parent: [GasPipeLayerAlt2, GasPipeStraight]
   id: GasPipeStraightAlt2
   suffix: Straight, alt 2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
@@ -45,7 +43,6 @@
   parent: [GasPipeLayerAlt1, GasPipeHalf]
   id: GasPipeHalfAlt1
   suffix: Half, alt 1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
@@ -55,7 +52,6 @@
   parent: [GasPipeLayerAlt2, GasPipeHalf]
   id: GasPipeHalfAlt2
   suffix: Half, alt 2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
@@ -66,7 +62,6 @@
   parent: [GasPipeLayerAlt1, GasPipeBend]
   id: GasPipeBendAlt1
   suffix: Bend, alt 1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
@@ -76,7 +71,6 @@
   parent: [GasPipeLayerAlt2, GasPipeBend]
   id: GasPipeBendAlt2
   suffix: Bend, alt 2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
@@ -87,7 +81,6 @@
   parent: [GasPipeLayerAlt1, GasPipeTJunction]
   id: GasPipeTJunctionAlt1
   suffix: TJunction, alt 1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
@@ -97,7 +90,6 @@
   parent: [GasPipeLayerAlt2, GasPipeTJunction]
   id: GasPipeTJunctionAlt2
   suffix: TJunction, alt 2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
@@ -108,7 +100,6 @@
   parent: [GasPipeLayerAlt1, GasPipeFourway]
   id: GasPipeFourwayAlt1
   suffix: Fourway, alt 1
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt1
@@ -118,7 +109,6 @@
   parent: [GasPipeLayerAlt2, GasPipeFourway]
   id: GasPipeFourwayAlt2
   suffix: Fourway, alt 2
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: ThinPipeAlt2
