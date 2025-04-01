@@ -405,12 +405,12 @@
         conditions:
         - !type:ReagentThreshold
           reagent: Fresium
-          min: 50
+          min: 48
       - !type:HealthChange
         damage:
           types:
             Cellular: 0.01 # i dont like you
-        probability: 0.5
+        probability: 0.49
       - !type:HealthChange
         damage:
           types:
