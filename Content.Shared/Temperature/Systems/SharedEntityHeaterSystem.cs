@@ -90,6 +90,8 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
         // by an unpowered network while in the off state. Otherwise, when we increase the load,
         // the clientside APC receiver will think the device is powered until it gets the next
         // update from the server, which will cause the heating element to glow for a moment.
+        // I spent several hours trying to figure out a better way to do this using PowerDisabled
+        // or something, but nothing worked as well as this.
         // Just think of the load as a little LED, or bad wiring, or something.
     }
 }
