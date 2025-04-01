@@ -106,6 +106,8 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, GetVisMaskEvent>(OnGhostVis);
         }
 
+        //TODO: Rework medium system
+
         private void OnGhostVis(Entity<GhostComponent> ent, ref GetVisMaskEvent args)
         {
             // If component not deleting they can see ghosts.
