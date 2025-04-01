@@ -6,12 +6,12 @@
   components:
   - type: StorageFill
     contents:
-      - id: Handcuffs
-        amount: 4
+    - id: Handcuffs
+      amount: 4
   - type: Sprite
     layers:
-      - state: box_security
-      - state: handcuff
+    - state: box_security
+    - state: handcuff
 
 - type: entity
   name: ziptie box
@@ -21,12 +21,12 @@
   components:
   - type: StorageFill
     contents:
-      - id: Zipties
-        amount: 9
+    - id: Zipties
+      amount: 9
   - type: Sprite
     layers:
-      - state: box_security
-      - state: ziptie
+    - state: box_security
+    - state: ziptie
 
 - type: entity
   name: flashbang box
@@ -36,12 +36,12 @@
   components:
   - type: StorageFill
     contents:
-      - id: GrenadeFlashBang
-        amount: 4
+    - id: GrenadeFlashBang
+      amount: 4
   - type: Sprite
     layers:
-      - state: box_security
-      - state: flashbang
+    - state: box_security
+    - state: flashbang
 
 - type: entity
   name: stinger grenade box
@@ -51,12 +51,12 @@
   components:
   - type: StorageFill
     contents:
-      - id: GrenadeStinger
-        amount: 4
+    - id: GrenadeStinger
+      amount: 4
   - type: Sprite
     layers:
-      - state: box_security
-      - state: flashbang
+    - state: box_security
+    - state: flashbang
 
 - type: entity
   name: tear gas grenade box
@@ -66,12 +66,12 @@
   components:
   - type: StorageFill
     contents:
-      - id: TearGasGrenade
-        amount: 4
+    - id: TearGasGrenade
+      amount: 4
   - type: Sprite
     layers:
-      - state: box_security
-      - state: flashbang
+    - state: box_security
+    - state: flashbang
 
 - type: entity
   name: sechud box
@@ -81,12 +81,12 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingEyesHudSecurity
-        amount: 4
+    - id: ClothingEyesHudSecurity
+      amount: 4
   - type: Sprite
     layers:
-      - state: box_security
-      - state: sechud
+    - state: box_security
+    - state: sechud
 
 - type: entity
   name: secglasses box
@@ -96,12 +96,12 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingEyesGlassesSecurity
-        amount: 4
+    - id: ClothingEyesGlassesSecurity
+      amount: 4
   - type: Sprite
     layers:
-      - state: box_security
-      - state: secglasses
+    - state: box_security
+    - state: secglasses
 
 - type: entity
   name: sunglasses box
@@ -111,12 +111,12 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingEyesGlassesSunglasses
-        amount: 4
+    - id: ClothingEyesGlassesSunglasses
+      amount: 4
   - type: Sprite
     layers:
-      - state: box_security
-      - state: sunglasses
+    - state: box_security
+    - state: sunglasses
 
 - type: entity
   name: forensic pad box
@@ -133,5 +133,5 @@
       amount: 9
   - type: Sprite
     layers:
-      - state: box_security
-      - state: forensic
+    - state: box_security
+    - state: forensic
