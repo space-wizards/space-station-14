@@ -16,6 +16,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
@@ -36,6 +37,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly SharedMindSystem _minds = default!;
@@ -208,15 +210,39 @@ namespace Content.Server.Pointing.EntitySystems
             {
                 var pointedName = Identity.Entity(pointed, EntityManager);
 
-                selfMessage = player == pointed
-                    ? Loc.GetString("pointing-system-point-at-self")
-                    : Loc.GetString("pointing-system-point-at-other", ("other", pointedName));
+                if (_container.TryGetOuterContainer(pointed, Transform(pointed), out var container))
+                {
+                    var item = pointed;
+                    var itemName = Identity.Entity(item, EntityManager);
 
-                viewerMessage = player == pointed
-                    ? Loc.GetString("pointing-system-point-at-self-others", ("otherName", playerName), ("other", playerName))
-                    : Loc.GetString("pointing-system-point-at-other-others", ("otherName", playerName), ("other", pointedName));
+                    // Target the pointing at the item's holder
+                    pointed = container.Owner;
+                    pointedName = Identity.Entity(pointed, EntityManager);
 
-                viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", playerName));
+                    if (player == pointed)
+                    {
+                        selfMessage = Loc.GetString("pointing-system-point-in-your-inventory-self", ("item", itemName));
+                        viewerMessage = Loc.GetString("pointing-system-point-in-your-inventory-others", ("item", itemName), ("pointer", playerName));
+                    }
+                    else
+                    {
+                        selfMessage = Loc.GetString("pointing-system-point-in-other-inventory-self", ("item", itemName), ("wearer", pointedName));
+                        viewerMessage = Loc.GetString("pointing-system-point-in-other-inventory-others", ("item", itemName), ("pointer", playerName), ("wearer", pointedName));
+                        viewerPointedAtMessage = Loc.GetString("pointing-system-point-in-other-inventory-target", ("item", itemName), ("pointer", playerName));
+                    }
+                }
+                else
+                {
+                    selfMessage = player == pointed
+                        ? Loc.GetString("pointing-system-point-at-self")
+                        : Loc.GetString("pointing-system-point-at-other", ("other", pointedName));
+
+                    viewerMessage = player == pointed
+                        ? Loc.GetString("pointing-system-point-at-self-others", ("otherName", playerName), ("other", playerName))
+                        : Loc.GetString("pointing-system-point-at-other-others", ("otherName", playerName), ("other", pointedName));
+
+                    viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", playerName));
+                }
 
                 var ev = new AfterPointedAtEvent(pointed);
                 RaiseLocalEvent(player, ref ev);
