@@ -50,6 +50,12 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     public ProtoId<JobPrototype>? JobPrototype { get; set; }
 
     /// <summary>
+    ///     Used to order the characters on by role/antag status. Highest numbers are shown first.
+    /// </summary>
+    [DataField]
+    public int SortWeight;
+
+    /// <summary>
     /// imp edit - the primary currency used by this role. if null, do not track purchases at all.
     /// </summary>
     [DataField]
@@ -73,6 +79,7 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     [ViewVariables]
     [DataField]
     public int PurchasePriority = 0;
+
 }
 
 // Why does this base component actually exist? It does make auto-categorization easy, but before that it was useless?

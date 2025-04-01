@@ -148,6 +148,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             return;
 
         var xform = Transform(uid);
+        if (TerminatingOrDeleted(xform.GridUid) && TerminatingOrDeleted(xform.MapUid))
+            return;
         _physics.SetBodyType(uid, BodyType.Dynamic, body: physics, xform: xform);
         _transform.AttachToGridOrMap(uid, xform);
         component.EmbeddedIntoUid = null;

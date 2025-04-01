@@ -17,6 +17,7 @@
     ClothingOuterCoatBomberCargo: 2 # imp
     ClothingNeckScarfStripedBrown: 3
     ClothingShoesBootsWinterCargo: 2
+    MailBag: 2
   contrabandInventory:
     ToyFigurineCargoTech: 1
     ToyFigurineSalvage: 1

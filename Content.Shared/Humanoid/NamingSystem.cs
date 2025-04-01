@@ -51,14 +51,14 @@ namespace Content.Shared.Humanoid
             switch (gender)
             {
                 case Gender.Male:
-                    return _random.Pick(_prototypeManager.Index<LocalizedDatasetPrototype>(speciesProto.MaleFirstNames));
+                    return _random.Pick(_prototypeManager.Index(speciesProto.MaleFirstNames));
                 case Gender.Female:
-                    return _random.Pick(_prototypeManager.Index<LocalizedDatasetPrototype>(speciesProto.FemaleFirstNames));
+                    return _random.Pick(_prototypeManager.Index(speciesProto.FemaleFirstNames));
                 default:
                     if (_random.Prob(0.5f))
-                        return _random.Pick(_prototypeManager.Index<LocalizedDatasetPrototype>(speciesProto.MaleFirstNames));
+                        return _random.Pick(_prototypeManager.Index(speciesProto.MaleFirstNames));
                     else
-                        return _random.Pick(_prototypeManager.Index<LocalizedDatasetPrototype>(speciesProto.FemaleFirstNames));
+                        return _random.Pick(_prototypeManager.Index(speciesProto.FemaleFirstNames));
             }
         }
 
@@ -69,7 +69,7 @@ namespace Content.Shared.Humanoid
 
         public string GetLastName(SpeciesPrototype speciesProto)
         {
-            return _random.Pick(_prototypeManager.Index<LocalizedDatasetPrototype>(speciesProto.LastNames));
+            return _random.Pick(_prototypeManager.Index(speciesProto.LastNames));
         }
     }
 }

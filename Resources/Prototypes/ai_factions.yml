@@ -49,6 +49,7 @@
   - AllHostile
   - Wizard
   - Dino # imp
+  - Dragon
 
 - type: npcFaction
   id: SimpleHostile
@@ -65,6 +66,7 @@
   - Heretic # imp
   - Dino # imp
   - Penguin # imp
+  - Dragon
 
 - type: npcFaction
   id: SimpleNeutral
@@ -100,6 +102,7 @@
   - Heretic # imp
   - Dino # imp
   - Penguin # imp
+  - Dragon
 
 - type: npcFaction
   id: Zombie
@@ -117,6 +120,7 @@
   - Heretic # imp
   - Dino # imp
   - Penguin # imp
+  - Dragon
 
 - type: npcFaction
   id: Revolutionary

@@ -546,6 +546,9 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
 
+#Antifreeze as a drink is a bright blue color while it is an orangish red otherwise.
+#As a result this sprite doesn't need changing.
+
 - type: reagent
   id: Antifreeze
   name: reagent-name-antifreeze
@@ -2310,3 +2313,58 @@
         - !type:AdjustReagent
           reagent: Ethanol
           amount: 0.25
+
+- type: reagent
+  id: BacchusBlessing
+  name: reagent-name-bacchus-blessing
+  parent: BaseAlcohol
+  desc: reagent-desc-bacchus-blessing
+  physicalDesc: reagent-physical-desc-unidentifiable
+  flavor: bacchusblessing
+  color: "#331303"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bacchusblessing.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 2
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.45 # TODO: Figure out why setting this to 0 means this does more damage... WHAT BUG IS THIS?!!
+    Alcohol:
+      effects:
+      - !type:Drunk
+        boozePower: 10
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
+        - !type:OrganType
+          type: Dwarf
+          shouldHave: false
+        damage:
+          types:
+            Poison: 2 # TODO: Figure out poison amount. Ethanol does 1, this does 2 but also metabolises almost 3 to 4 times as fast as ethanol. This would be more Liver damage when that time arrives.
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 6
+        - !type:OrganType
+          type: Dwarf
+        damage:
+          types:
+            Poison: 0.4 # TODO: Might increase this, even though it's just double of ethanol from 0.2 to 0.4
+      - !type:ChemVomit
+        probability: 0.1 #TODO: Tweak vomit probability, maybe make this more violent and poisonous but the body aggressively purges it...
+        conditions:
+        - !type:ReagentThreshold
+          reagent: BacchusBlessing
+          min: 8
+        - !type:OrganType
+          type: Dwarf
+          shouldHave: false

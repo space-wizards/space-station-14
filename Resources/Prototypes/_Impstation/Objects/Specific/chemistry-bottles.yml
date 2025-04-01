@@ -1,0 +1,13 @@
+# the legend itself
+- type: entity
+  id: MethadoneChemistryBottle
+  name: methadone bottle
+  parent: BaseChemistryBottleFilled
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        drink:
+          maxVol: 100
+          reagents:
+            - ReagentId: Methadone
+              Quantity: 100

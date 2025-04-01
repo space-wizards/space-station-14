@@ -622,6 +622,8 @@
   noun: seeds-noun-seeds
   displayName: seeds-killertomato-display-name
   plantRsi: Objects/Specific/Hydroponics/tomatokiller.rsi
+  plantLogImpact: High
+  harvestLogImpact: High
   packetPrototype: KillerTomatoSeeds
   productPrototypes:
     - MobTomatoKiller
@@ -666,6 +668,7 @@
   production: 6
   yield: 2
   potency: 20
+  growthStages: 3
   idealLight: 9
   idealHeat: 298
   chemicals:
@@ -1096,6 +1099,8 @@
   displayName: seeds-deathnettle-display-name
   plantRsi: Objects/Specific/Hydroponics/death_nettle.rsi
   packetPrototype: DeathNettleSeeds
+  plantLogImpact: High
+  harvestLogImpact: High
   productPrototypes:
     - DeathNettle
   lifespan: 25

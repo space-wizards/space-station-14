@@ -188,7 +188,7 @@
   description: A computer printed circuit board for a surveillance wireless camera monitor.
   components:
   - type: Sprite
-    state: cpu_security
+    state: cpu_service
   - type: ComputerBoard
     prototype: ComputerSurveillanceWirelessCameraMonitor
 
