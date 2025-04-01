@@ -1,0 +1,74 @@
+- type: entity
+  name: Miami Hotshot
+  id: WeaponMiamiHotshot
+  parent: BaseItem
+  description: An ornate and prestigious weapon. You can feel the might behind every kill marked in its impeccable engravings.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/miamihotshot.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Item
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/miamihotshot.rsi
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+  - type: Gun
+    fireRate: 4
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/hollywood_shot.ogg
+    soundEmpty:
+      path: /Audio/_Impstation/Weapons/Guns/Empty/dry_fire.ogg
+  - type: AmmoCounter
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AmmoVisuals.HasAmmo:
+        empty-icon:
+          True: { visible: False }
+          False: { visible: True }
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: .4
+    rechargeSound:
+      path: /Audio/_Impstation/Weapons/Guns/Cock/hollywood_cock.ogg
+  - type: BasicEntityAmmoProvider
+    proto: BulletAntiMateriel
+    capacity: 1
+    count: 1
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/miamihotshot.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: UseDelay
+    delay: 1
+  - type: MeleeWeapon
+    range: 0.8
+    attackRate: 0.6
+    damage:
+      types:
+        Blunt: 50
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+    soundSwing:
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+    resetOnHandSelected: false
+  - type: AltFireMelee
+    attackType: Heavy
+  - type: DamageOtherOnHit #for throwing
+    staminaCost: 10
+    damage:
+      types:
+        Blunt: 8
+  - type: StaminaDamageOnHit
+    damage: 100 #what if I pistol-whipped you as hard as humanly possible
+  - type: MeleeThrowOnHit
+    distance: 0.8
+    speed: 5
+
