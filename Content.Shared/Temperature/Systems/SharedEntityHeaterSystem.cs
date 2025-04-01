@@ -1,6 +1,7 @@
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Power;
+using Content.Shared.Power.EntitySystems;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
@@ -14,6 +15,7 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedPowerReceiverSystem _receiver = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     private readonly int _settingCount = Enum.GetValues<EntityHeaterSetting>().Length;
@@ -57,18 +59,22 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
     private void OnPowerChanged(Entity<EntityHeaterComponent> ent, ref PowerChangedEvent args)
     {
         // disable heating element glowing layer if theres no power
-        // doesn't actually turn it off since that would be annoying
+        // doesn't actually change the setting since that would be annoying
         var setting = args.Powered ? ent.Comp.Setting : EntityHeaterSetting.Off;
         _appearance.SetData(ent, EntityHeaterVisuals.Setting, setting);
     }
 
     protected virtual void ChangeSetting(Entity<EntityHeaterComponent> ent, EntityHeaterSetting setting, EntityUid? user = null)
     {
+        // Still allow changing the setting without power
         ent.Comp.Setting = setting;
-        Dirty(ent, ent.Comp);
-        _appearance.SetData(ent, EntityHeaterVisuals.Setting, setting);
         _audio.PlayPredicted(ent.Comp.SettingSound, ent, user);
         _popup.PopupClient(Loc.GetString("entity-heater-switched-setting", ("setting", setting)), ent, user);
+        Dirty(ent);
+
+        // Only show the glowing heating element layer if there's power
+        if (_receiver.IsPowered(ent.Owner))
+            _appearance.SetData(ent, EntityHeaterVisuals.Setting, setting);
     }
 
     protected float SettingPower(EntityHeaterSetting setting, float max)
@@ -78,7 +84,12 @@ public abstract partial class SharedEntityHeaterSystem : EntitySystem
             EntityHeaterSetting.Low => max / 3f,
             EntityHeaterSetting.Medium => max * 2f / 3f,
             EntityHeaterSetting.High => max,
-            _ => 0f,
+            _ => 0.01f,
         };
+        // Power use while off needs to be non-zero so powernet doesn't consider the device powered
+        // by an unpowered network while in the off state. Otherwise, when we increase the load,
+        // the clientside APC receiver will think the device is powered until it gets the next
+        // update from the server, which will cause the heating element to glow for a moment.
+        // Just think of the load as a little LED, or bad wiring, or something.
     }
 }

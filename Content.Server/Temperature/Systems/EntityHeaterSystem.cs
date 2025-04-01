@@ -1,6 +1,5 @@
 using Content.Server.Power.Components;
 using Content.Shared.Placeable;
-using Content.Shared.Power.Components;
 using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
@@ -14,6 +13,20 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
 {
     [Dependency] private readonly TemperatureSystem _temperature = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<EntityHeaterComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(Entity<EntityHeaterComponent> ent, ref MapInitEvent args)
+    {
+        // Set initial power level
+        if (TryComp<ApcPowerReceiverComponent>(ent, out var power))
+            power.Load = SettingPower(ent.Comp.Setting, ent.Comp.Power);
+    }
+
     public override void Update(float deltaTime)
     {
         var query = EntityQueryEnumerator<EntityHeaterComponent, ItemPlacerComponent, ApcPowerReceiverComponent>();
@@ -22,7 +35,7 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
             if (!power.Powered)
                 continue;
 
-            // don't divide by total entities since its a big grill
+            // don't divide by total entities since it's a big grill
             // excess would just be wasted in the air but that's not worth simulating
             // if you want a heater thermomachine just use that...
             var energy = power.PowerReceived * deltaTime;
@@ -34,8 +47,8 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
     }
 
     /// <remarks>
-    /// <see cref="SharedApcPowerReceiverComponent"/> doesn't have a Load property, so we need
-    /// this server-only override to handle setting it.
+    /// <see cref="ApcPowerReceiverComponent"/> doesn't exist on the client, so we need
+    /// this server-only override to handle setting the network load.
     /// </remarks>
     protected override void ChangeSetting(Entity<EntityHeaterComponent> ent, EntityHeaterSetting setting, EntityUid? user = null)
     {
