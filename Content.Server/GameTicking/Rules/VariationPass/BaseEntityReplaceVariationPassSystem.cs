@@ -19,6 +19,8 @@ public abstract class BaseEntityReplaceVariationPassSystem<TEntComp, TGameRuleCo
     where TEntComp: IComponent
     where TGameRuleComp: IComponent
 {
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+
     /// <summary>
     ///     Used so we don't modify while enumerating
     ///     if the replaced entity also has <see cref="TEntComp"/>.
@@ -55,7 +57,7 @@ public abstract class BaseEntityReplaceVariationPassSystem<TEntComp, TGameRuleCo
         {
             var (spawn, coords, rot) = tup;
             var newEnt = Spawn(spawn, coords);
-            Transform(newEnt).LocalRotation = rot;
+            _transformSystem.SetLocalRotationNoLerp(newEnt, rot);
         }
 
         Log.Debug($"Entity replacement took {stopwatch.Elapsed} with {Stations.GetTileCount(args.Station)} tiles");
