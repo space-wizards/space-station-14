@@ -1,6 +1,6 @@
 - type: entity
   name: BaseWeaponRifle
-  parent: [BaseItem, BaseGunWieldable]
+  parent: [ BaseItem, BaseGunWieldable ]
   id: BaseWeaponRifle
   description: A rooty tooty point and shooty.
   abstract: true
@@ -8,9 +8,12 @@
   - type: RestrictByUserTag
     doestContain:
     - Abductor
-    - Resomi
     messages:
     - abductor-gun-restricted-1
+  - type: KnockbackByUserTag
+    doestContain:
+    - Resomi
+    knockback: 0.1
   - type: Sprite
   - type: Item
     size: Huge
@@ -25,7 +28,7 @@
     fireRate: 5
     selectedMode: FullAuto
     availableModes:
-      - FullAuto
+    - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
   - type: ChamberMagazineAmmoProvider
@@ -41,7 +44,7 @@
         priority: 2
         whitelist:
           tags:
-            - MagazineLightRifle
+          - MagazineLightRifle
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
@@ -49,27 +52,27 @@
         priority: 1
         whitelist:
           tags:
-            - CartridgeLightRifle
+          - CartridgeLightRifle
   - type: ContainerContainer
     containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot ""
+      gun_chamber: !type:ContainerSlot ""
   - type: StaticPrice
     price: 500
 
 - type: entity
   name: AKMS
-  parent: [BaseWeaponRifle, BaseSecurityContraband]
+  parent: [ BaseWeaponRifle, BaseSecurityContraband ]
   id: WeaponRifleAk
   description: An iconic weapon of war. Uses .30 rifle ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-0
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: Gun
     fireRate: 5
     soundGunshot:
@@ -87,7 +90,7 @@
         priority: 2
         whitelist:
           tags:
-            - MagazineLightRifle
+          - MagazineLightRifle
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
@@ -95,11 +98,11 @@
         priority: 1
         whitelist:
           tags:
-            - CartridgeLightRifle
+          - CartridgeLightRifle
   - type: ContainerContainer
     containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot ""
+      gun_chamber: !type:ContainerSlot ""
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -108,17 +111,17 @@
 
 - type: entity
   name: M-90gl
-  parent: [BaseWeaponRifle, BaseSyndicateContraband]
+  parent: [ BaseWeaponRifle, BaseSyndicateContraband ]
   id: WeaponRifleM90GrenadeLauncher
   description: An older bullpup carbine model, with an attached underbarrel grenade launcher. Uses .20 rifle ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
     layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-0
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
   - type: ItemSlots
@@ -131,7 +134,7 @@
         priority: 2
         whitelist:
           tags:
-            - MagazineRifle
+          - MagazineRifle
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
@@ -139,11 +142,11 @@
         priority: 1
         whitelist:
           tags:
-            - CartridgeRifle
+          - CartridgeRifle
   - type: ContainerContainer
     containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot ""
+      gun_chamber: !type:ContainerSlot ""
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -152,17 +155,17 @@
 
 - type: entity
   name: Lecter
-  parent: [BaseWeaponRifle, BaseSecurityContraband]
+  parent: [ BaseWeaponRifle, BaseSecurityContraband ]
   id: WeaponRifleLecter
   description: A high end military grade assault rifle. Uses .20 rifle ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
     layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
+    - state: base
+      map: [ "enum.GunVisualLayers.Base" ]
+    - state: mag-0
+      map: [ "enum.GunVisualLayers.Mag" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
   - type: Gun
@@ -178,7 +181,7 @@
         priority: 2
         whitelist:
           tags:
-            - MagazineRifle
+          - MagazineRifle
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
@@ -186,11 +189,11 @@
         priority: 1
         whitelist:
           tags:
-            - CartridgeRifle
+          - CartridgeRifle
   - type: ContainerContainer
     containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
+      gun_magazine: !type:ContainerSlot ""
+      gun_chamber: !type:ContainerSlot ""
   - type: MagazineVisuals
     magState: mag
     steps: 1
@@ -199,10 +202,14 @@
 
 - type: entity
   name: Foam Force Astro Ace
-  parent: [BaseWeaponShotgun, BaseGunWieldable]
+  parent: [ BaseWeaponShotgun, BaseGunWieldable ]
   id: WeaponRifleFoam
   description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy.
   components:
+  - type: KnockbackByUserTag
+    doestContain:
+    - Resomi
+    knockback: 0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/foam_rifle.rsi
   - type: Clothing

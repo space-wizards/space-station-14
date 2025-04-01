@@ -8,9 +8,12 @@
   - type: RestrictByUserTag
     doestContain:
     - Abductor
-    - Resomi
     messages:
     - abductor-gun-restricted-1
+  - type: KnockbackByUserTag
+    doestContain:
+    - Resomi
+    knockback: 4
   - type: Sprite
     layers:
     - state: base
@@ -50,6 +53,10 @@
   id: WeaponSniperMosin
   description: A weapon for hunting, or endless trench warfare. Uses .30 rifle ammo.
   components:
+  - type: KnockbackByUserTag
+    doestContain:
+    - Resomi
+    knockback: 2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
 

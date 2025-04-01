@@ -391,6 +391,9 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
         }
 
+        var NonEmptyGunShotEvent = new OnNonEmptyGunShotEvent(user, ev.Ammo);
+        RaiseLocalEvent(gunUid, ref NonEmptyGunShotEvent);
+
         // Handle burstfire
         if (gun.SelectedMode == SelectiveFire.Burst)
         {
@@ -679,6 +682,9 @@ public record struct AttemptShootEvent(EntityUid User, string? Message, bool Can
 /// <param name="User">The user that fired this gun.</param>
 [ByRefEvent]
 public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
+
+[ByRefEvent]
+public record struct OnNonEmptyGunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
 
 public enum EffectLayers : byte
 {

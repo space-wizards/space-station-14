@@ -8,9 +8,12 @@
   - type: RestrictByUserTag
     doestContain:
     - Abductor
-    - Resomi
     messages:
     - abductor-gun-restricted-1
+  - type: KnockbackByUserTag
+    doestContain:
+    - Resomi
+    knockback: 0.02
   - type: Sprite
   - type: Item
     size: Huge
