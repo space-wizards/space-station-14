@@ -13,7 +13,7 @@ namespace Content.Shared.Roles;
 [Serializable, NetSerializable]
 public sealed partial class AntagPrototype : IPrototype
 {
-    [DataField("playTimeTracker", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
+    [DataField("playTimeTracker", customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
     public string PlayTimeTracker { get; private set; } = string.Empty; // imp
 
     [ViewVariables]
