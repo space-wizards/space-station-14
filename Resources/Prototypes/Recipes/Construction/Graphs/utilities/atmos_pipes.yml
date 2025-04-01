@@ -9,31 +9,91 @@
       - material: Steel
         amount: 1
         doAfter: 1
-
-    - to: straight
+    
+    - to: halfAlt1
       steps:
       - material: Steel
         amount: 1
         doAfter: 1
-
-    - to: bend
-      steps:
-      - material: Steel
-        amount: 1
-        doAfter: 1
-
-    - to: tjunction
-      steps:
-      - material: Steel
-        amount: 1
-        doAfter: 1
-
-    - to: fourway
+    
+    - to: halfAlt2
       steps:
       - material: Steel
         amount: 1
         doAfter: 1
         
+    - to: straight
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+    
+    - to: straightAlt1
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+    
+    - to: straightAlt2
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+    
+    - to: bend
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+    
+    - to: bendAlt1
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+    
+    - to: bendAlt2
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+    
+    - to: tjunction
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+    
+    - to: tjunctionAlt1
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+    
+    - to: tjunctionAlt2
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+        
+    - to: fourway
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+    
+    - to: fourwayAlt1
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1       
+    
+    - to: fourwayAlt2
+      steps:
+      - material: Steel
+        amount: 1
+        doAfter: 1
+    
     - to: manifold
       steps:
       - material: Steel
@@ -55,7 +115,39 @@
       steps:
       - tool: Welding
         doAfter: 1
-
+  
+  - node: halfAlt1
+    entity: GasPipeHalfAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  
+  - node: halfAlt2
+    entity: GasPipeHalfAlt2
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+        
   - node: straight
     entity: GasPipeStraight
     edges:
@@ -71,7 +163,39 @@
       steps:
       - tool: Welding
         doAfter: 1
-
+  
+  - node: straightAlt1
+    entity: GasPipeStraightAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  
+  - node: straightAlt2
+    entity: GasPipeStraightAlt2
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  
   - node: bend
     entity: GasPipeBend
     edges:
@@ -87,7 +211,39 @@
       steps:
       - tool: Welding
         doAfter: 1
-
+  
+  - node: bendAlt1
+    entity: GasPipeBendAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  
+  - node: bendAlt2
+    entity: GasPipeBendAlt2
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1  
+  
   - node: tjunction
     entity: GasPipeTJunction
     edges:
@@ -103,7 +259,39 @@
       steps:
       - tool: Welding
         doAfter: 1
-
+  
+  - node: tjunctionAlt1
+    entity: GasPipeTJunctionAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  
+  - node: tjunctionAlt2
+    entity: GasPipeTJunctionAlt2
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  
   - node: fourway
     entity: GasPipeFourway
     edges:
@@ -119,7 +307,39 @@
       steps:
       - tool: Welding
         doAfter: 1
-
+  
+  - node: fourwayAlt1
+    entity: GasPipeFourwayAlt1
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  
+  - node: fourwayAlt2
+    entity: GasPipeFourwayAlt2
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 1
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+  
   - node: broken
     entity: GasPipeBroken
     edges:
