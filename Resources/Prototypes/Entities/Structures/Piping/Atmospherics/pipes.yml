@@ -100,8 +100,6 @@
   parent: GasPipeBase
   id: GasPipeHalf
   suffix: Half
-  placement:
-    mode: AlignAtmosPipeLayers  
   components:
   - type: NodeContainer
     nodes:
@@ -113,11 +111,6 @@
     layers:
     - state: pipeHalf
       map: [ "enum.PipeVisualLayers.Pipe" ]
-  - type: AtmosPipeLayers
-    alternativePrototypes:
-    - GasPipeHalf
-    - GasPipeHalfAlt1
-    - GasPipeHalfAlt2
   - type: Construction
     graph: GasPipe
     node: half
@@ -135,8 +128,6 @@
   parent: GasPipeBase
   id: GasPipeStraight
   suffix: Straight
-  placement:
-    mode: AlignAtmosPipeLayers
   components:
   - type: NodeContainer
     nodes:
@@ -148,11 +139,6 @@
     layers:
     - state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
-  - type: AtmosPipeLayers
-    alternativePrototypes:
-    - GasPipeStraight
-    - GasPipeStraightAlt1
-    - GasPipeStraightAlt2
   - type: Construction
     graph: GasPipe
     node: straight
@@ -178,8 +164,6 @@
   parent: GasPipeBase
   id: GasPipeBend
   suffix: Bend
-  placement:
-    mode: AlignAtmosPipeLayers
   components:
   - type: NodeContainer
     nodes:
@@ -191,11 +175,6 @@
     layers:
       - state: pipeBend
         map: [ "enum.PipeVisualLayers.Pipe" ]
-  - type: AtmosPipeLayers
-    alternativePrototypes:
-    - GasPipeBend
-    - GasPipeBendAlt1
-    - GasPipeBendAlt2
   - type: Construction
     graph: GasPipe
     node: bend
@@ -228,8 +207,6 @@
   parent: GasPipeBase
   id: GasPipeTJunction
   suffix: TJunction
-  placement:
-    mode: AlignAtmosPipeLayers
   components:
   - type: NodeContainer
     nodes:
@@ -241,11 +218,6 @@
     layers:
       - state: pipeTJunction
         map: [ "enum.PipeVisualLayers.Pipe" ]
-  - type: AtmosPipeLayers
-    alternativePrototypes:
-    - GasPipeTJunction
-    - GasPipeTJunctionAlt1
-    - GasPipeTJunctionAlt2
   - type: Construction
     graph: GasPipe
     node: tjunction
@@ -271,8 +243,6 @@
   parent: GasPipeBase
   id: GasPipeFourway
   suffix: Fourway
-  placement:
-    mode: AlignAtmosPipeLayers  
   components:
   - type: Transform
     noRot: true
@@ -286,11 +256,6 @@
     layers:
       - state: pipeFourway
         map: [ "enum.PipeVisualLayers.Pipe" ]
-  - type: AtmosPipeLayers
-    alternativePrototypes:
-    - GasPipeFourway
-    - GasPipeFourwayAlt1
-    - GasPipeFourwayAlt2
   - type: Construction
     graph: GasPipe
     node: fourway

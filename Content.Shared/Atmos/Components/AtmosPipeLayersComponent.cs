@@ -50,17 +50,6 @@ public sealed partial class AtmosPipeLayersComponent : Component
     public Dictionary<string, string[]> SpriteLayersRsiPaths = new();
 
     /// <summary>
-    /// Entity prototypes with alternative layers; will replace the current
-    /// one when using position dependent entity placement via AlignAtmosPipeLayers. 
-    /// </summary>
-    /// <remarks>
-    /// It is assumed that there will be an array entry for each pipe layer
-    /// (from 0 to <see cref="MaxPipeLayer"/>).
-    /// </remarks>
-    [DataField]
-    public EntProtoId[]? AlternativePrototypes = null;
-
-    /// <summary>
     /// The pipe layers of this entity cannot be changed when this value is true. 
     /// </summary>
     [DataField]
