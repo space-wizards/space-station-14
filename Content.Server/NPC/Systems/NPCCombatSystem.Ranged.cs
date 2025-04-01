@@ -142,15 +142,16 @@ public sealed partial class NPCCombatSystem
             if (comp.LOSAccumulator < 0f)
             {
                 comp.LOSAccumulator += UnoccludedCooldown;
+
                 // For consistency with NPC steering.
+                var collisionGroup = comp.UseOpaqueForLOSChecks ? CollisionGroup.Opaque : (CollisionGroup.Impassable | CollisionGroup.InteractImpassable);
 
                 //🌟Starlight🌟 start
-                var collision = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
                 if(TryComp<HitscanBatteryAmmoProviderComponent>(gunUid, out _))
-                    collision = CollisionGroup.Opaque;
+                    collisionGroup = CollisionGroup.Opaque;
                 //🌟Starlight🌟 end
-
-                comp.TargetInLOS = _interaction.InRangeUnobstructed(uid, comp.Target, distance + 0.1f, collisionMask: collision);
+                
+                comp.TargetInLOS = _interaction.InRangeUnobstructed(uid, comp.Target, distance + 0.1f, collisionGroup);
             }
 
             if (!comp.TargetInLOS)

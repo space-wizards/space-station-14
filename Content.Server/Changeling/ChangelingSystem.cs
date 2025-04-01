@@ -426,7 +426,8 @@ public sealed partial class ChangelingSystem : EntitySystem
     {
         if (!TryComp<HumanoidAppearanceComponent>(target, out var appearance)
         || !TryComp<MetaDataComponent>(target, out var metadata)
-        || !TryComp<DnaComponent>(target, out var dna)
+        || !TryComp<DnaComponent>(target, out var dna) 
+        || dna.DNA == null
         || !TryComp<FingerprintComponent>(target, out var fingerprint))
             return false;
 
