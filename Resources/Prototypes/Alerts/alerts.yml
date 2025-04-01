@@ -125,8 +125,8 @@
   id: AirHot
   category: AirTemperature
   icons:
-  - sprite: /Textures/Interface/Alerts/temperature.rsi # TODO custom sprites
-    state: hot2
+  - sprite: /Textures/Interface/Alerts/air_temperature.rsi # TODO custom sprites
+    state: hot
   name: alerts-air-too-hot-name
   description: alerts-air-too-hot-desc
 
@@ -134,8 +134,8 @@
   id: AirCold
   category: AirTemperature
   icons:
-  - sprite: /Textures/Interface/Alerts/temperature.rsi # TODO custom sprites
-    state: cold2
+  - sprite: /Textures/Interface/Alerts/air_temperature.rsi # TODO custom sprites
+    state: cold
   name: alerts-air-too-cold-name
   description: alerts-air-too-cold-desc
 
