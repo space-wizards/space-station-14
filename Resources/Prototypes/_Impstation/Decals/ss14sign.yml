@@ -1,0 +1,6 @@
+﻿- type: decal
+  id: SpaceStationSign1IC
+  tags: ["station"]
+  sprite:
+    sprite: _Impstation/Decals/ss14sign.rsi
+    state: ss14sign1IC

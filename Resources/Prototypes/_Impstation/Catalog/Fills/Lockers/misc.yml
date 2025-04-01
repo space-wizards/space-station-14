@@ -22,3 +22,80 @@
           prob: 0.5
   - type: AccessReader
     access: [["SyndicateAgent"]]
+
+- type: entityTable
+  id: FillLockerEmergencyWinter
+  table: !type:AllSelector
+    children:
+    - id: ClothingMaskBreath
+    - id: ClothingOuterSuitEmergencyWinter
+    - !type:GroupSelector
+      children:
+      - id: EmergencyOxygenTankFilled
+      - id: OxygenTankFilled
+    - id: ToolboxEmergencyFilled
+      prob: 0.5
+    - id: MedkitOxygenFilled
+      prob: 0.2
+    - id: WeaponFlareGun
+      prob: 0.1
+    - id: BoxMRE
+      prob: 0.1
+
+- type: entityTable
+  id: FillLockerEmergencyN2Winter
+  table: !type:AllSelector
+    children:
+    - id: ClothingMaskBreath
+    - id: ClothingOuterSuitEmergencyWinter
+    - id: BoxMRE
+      prob: 0.1
+    - id: ToolboxEmergencyFilled
+      prob: 0.05
+    - id: WeaponFlareGun
+      prob: 0.1
+    - !type:GroupSelector
+      children:
+      - id: EmergencyNitrogenTankFilled
+        weight: 4
+      - id: NitrogenTankFilled
+
+- type: entity
+  id: ClosetEmergencyFilledWinter
+  parent: ClosetEmergency
+  suffix: Filled, Winter
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEmergencyWinter
+
+- type: entity
+  id: ClosetWallEmergencyFilledWinter
+  parent: ClosetWallEmergency
+  suffix: Filled, Winter
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEmergencyWinter
+
+- type: entity
+  id: ClosetEmergencyN2FilledWinter
+  parent: ClosetEmergencyN2
+  suffix: Filled, Winter
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEmergencyN2Winter
+
+- type: entity
+  parent: ClosetWallEmergencyN2
+  id: ClosetWallEmergencyN2FilledWinter
+  suffix: Filled, Winter
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEmergencyN2Winter
