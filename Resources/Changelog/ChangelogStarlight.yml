@@ -4376,4 +4376,11 @@ Entries:
   id: 606
   time: '2025-03-31T20:00:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/418
+- author: PubliclyExecutedPig
+  changes:
+  - message: Changed Manor Station. People who like evac docking properly rejoice!
+    type: Tweak
+  id: 607
+  time: '2025-04-01T12:25:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/409
 
