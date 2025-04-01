@@ -8,7 +8,7 @@
     - type: Sprite
       layers:
         - state: red
-        - sprite: Objects/Specific/Medical/medical.rsi
+        - sprite: _Impstation/Objects/Specific/Medical/medical.rsi # imp
           state: brutepack
     - type: RandomSpawner
       rarePrototypes:

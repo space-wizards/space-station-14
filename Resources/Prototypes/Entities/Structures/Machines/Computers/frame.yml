@@ -48,7 +48,7 @@
   description: A computer under construction.
   components:
   - type: Sprite
-    sprite: Structures/Machines/parts.rsi
+    sprite: _Impstation/Structures/Machines/parts.rsi # imp
     layers:
     - state: 0
       map: [ "enum.ConstructionVisuals.Layer" ]
@@ -73,7 +73,7 @@
     graph: Computer
     node: monitorBroken
   - type: Sprite
-    sprite: Structures/Machines/computers.rsi
+    sprite: _Impstation/Structures/Machines/computers.rsi # imp
     drawdepth: Objects
     state: broken
   - type: Destructible

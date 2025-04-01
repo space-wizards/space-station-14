@@ -138,7 +138,7 @@
     - FoodBakedBunHotX
     - FoodBakedBunHotX
     - Lighter
-    - NullRodDefault
+    - NullRodDefault # imp
 
 - type: startingGear
   id: ERTChaplainGearEVA
@@ -170,7 +170,7 @@
     - FoodBakedBunHotX
     - FoodBakedBunHotX
     - Lighter
-    - NullRodDefault
+    - NullRodDefault # imp
 
 # Engineer
 - type: job

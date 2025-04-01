@@ -136,7 +136,7 @@
   components:
     - type: Sprite
       noRot: true
-      sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
+      sprite: _Impstation/Objects/Specific/Janitorial/janitorial_cart.rsi # imp
       layers:
         - state: cart
         - state: cart_water-1
@@ -320,7 +320,7 @@
           whitelist:
             tags:
               - Bucket
-      sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
+      sprite: _Impstation/Objects/Specific/Janitorial/janitorial_cart.rsi # imp
     - type: Appearance
     - type: SolutionContainerVisuals
       maxFillLevels: 3

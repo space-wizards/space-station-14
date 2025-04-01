@@ -76,7 +76,7 @@
   category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _Impstation/Structures/Furniture/chairs.rsi # imp
     state: office-white
   objectType: Structure
   placementMode: SnapgridCenter
@@ -93,7 +93,7 @@
   category: construction-category-furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _Impstation/Structures/Furniture/chairs.rsi # imp
     state: office-dark
   objectType: Structure
   placementMode: SnapgridCenter
@@ -110,7 +110,7 @@
   category: construction-category-furniture
   description: It looks comfy.
   icon:
-    sprite: Structures/Furniture/chairs.rsi
+    sprite: _Impstation/Structures/Furniture/chairs.rsi # imp
     state: comfy
   objectType: Structure
   placementMode: SnapgridCenter
@@ -732,7 +732,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsBlack
   name: black curtains
@@ -762,7 +762,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsCyan
   name: cyan curtains
@@ -777,7 +777,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsGreen
   name: green curtains
@@ -792,7 +792,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsOrange
   name: orange curtains
@@ -807,7 +807,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsPink
   name: pink curtains
@@ -822,7 +822,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsPurple
   name: purple curtains
@@ -837,7 +837,7 @@
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: true
-    
+
 - type: construction
   id: CurtainsRed
   name: red curtains

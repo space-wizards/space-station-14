@@ -6,7 +6,7 @@
   targetNode: done
   category: construction-category-storage
   description: A tall steel box that cannot be locked.
-  icon: { sprite: Structures/Storage/closet.rsi, state: generic_icon }
+  icon: { sprite: _Impstation/Structures/Storage/closet.rsi, state: generic_icon } # imp
   objectType: Structure
 
 - type: construction
@@ -17,7 +17,7 @@
   targetNode: done
   category: construction-category-storage
   description: A tall steel box that can be locked.
-  icon: { sprite: Structures/Storage/closet.rsi, state: secure_icon }
+  icon: { sprite: _Impstation/Structures/Storage/closet.rsi, state: secure_icon } # imp
   objectType: Structure
 
 - type: construction
@@ -28,7 +28,7 @@
   targetNode: done
   category: construction-category-storage
   description: A tall steel box with freezing abilities.
-  icon: { sprite: Structures/Storage/closet.rsi, state: freezer_icon }
+  icon: { sprite: _Impstation/Structures/Storage/closet.rsi, state: freezer_icon } # imp
   objectType: Structure
 
 - type: construction
@@ -39,7 +39,7 @@
   targetNode: done
   category: construction-category-storage
   description: A durable gun safe that can be locked.
-  icon: { sprite: Structures/Storage/closet.rsi, state: shotguncase }
+  icon: { sprite: _Impstation/Structures/Storage/closet.rsi, state: shotguncase } # imp
   objectType: Structure
 
 - type: construction
@@ -50,7 +50,7 @@
   targetNode: done
   category: construction-category-storage
   description: A standard-issue Nanotrasen storage unit, now on walls.
-  icon: { sprite: Structures/Storage/wall_locker.rsi, state: generic_icon }
+  icon: { sprite: _Impstation/Structures/Storage/wall_locker.rsi, state: generic_icon } # imp
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: true

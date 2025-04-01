@@ -7,7 +7,7 @@
     - type: Sprite
       layers:
         - state: red
-        - sprite: Objects/Tools/flashlight.rsi
+        - sprite: _Impstation/Objects/Tools/flashlight.rsi # imp
           state: flashlight
     - type: RandomSpawner
       rarePrototypes:

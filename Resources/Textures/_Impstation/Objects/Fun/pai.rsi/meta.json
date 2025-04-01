@@ -1,0 +1,86 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/9ddb8cf084e292571d4e9c79745db25befbd82fe. Gold pAI edit by AftrLite (GitHub).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "gold-icon-pai-off"
+        },
+        {
+            "name": "gold-pai-base"
+        },
+        {
+            "name": "gold-pai-off-overlay"
+        },
+
+        {
+            "name": "gold-pai-on-overlay",
+            "delays": [
+                [
+                    0.8,
+                    0.8
+                ]
+            ]
+        },
+
+        {
+            "name": "gold-pai-searching-overlay",
+            "delays": [
+                [
+                    0.8,
+                    0.8
+                ]
+            ]
+        },
+        {
+            "name": "gold-pai-shimmer-overlay",
+            "delays": [
+                [
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    4,
+                    0.075
+                ]
+            ]
+        },
+        {
+            "name": "gold-pai-swish-overlay",
+            "delays": [
+                [
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    0.075,
+                    21
+                ]
+            ]
+        }
+    ]
+}

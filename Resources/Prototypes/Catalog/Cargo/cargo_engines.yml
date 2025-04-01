@@ -43,7 +43,7 @@
 - type: cargoProduct
   id: EngineSingularityCollector
   icon:
-    sprite: Structures/Power/Generation/Singularity/collector.rsi
+    sprite: _Impstation/Structures/Power/Generation/Singularity/collector.rsi # imp
     state: ca_on
   product: CrateEngineeringSingularityCollector
   cost: 1000

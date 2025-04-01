@@ -1,0 +1,443 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "copyright": "Taken from tgstation from https://github.com/tgstation/tgstation/pull/85491. Resprited for 32x32 dimensions. janitor_bomb_door and bio_jan_door modified by DinnerCalzone(github), edited by DinnerCalzone(github) for Administrative Assistant, job icon by noctyrnal (github). Business Door resprite by MintyTheBinty",
+  "license": "CC-BY-SA-3.0",
+  "states": [
+      {
+          "name": "aa"
+      },
+      {
+
+          "name": "aa_door"
+      },
+      {
+          "name": "aa_open"
+      },
+      {
+          "name": "armory"
+      },
+      {
+          "name": "armory_door"
+      },
+      {
+          "name": "armory_open"
+      },
+      {
+          "name": "atmos"
+      },
+      {
+          "name": "atmos_door"
+      },
+      {
+          "name": "atmos_open"
+      },
+      {
+          "name": "atmos_wardrobe_door"
+      },
+      {
+          "name": "bio"
+      },
+      {
+          "name": "bio_door"
+      },
+      {
+          "name": "bio_jan"
+      },
+      {
+          "name": "bio_jan_door"
+      },
+      {
+          "name": "bio_jan_open"
+      },
+      {
+          "name": "bio_open"
+      },
+      {
+          "name": "bio_sec"
+      },
+      {
+          "name": "bio_sec_door"
+      },
+      {
+          "name": "bio_sec_open"
+      },
+      {
+          "name": "bio_viro"
+      },
+      {
+          "name": "bio_viro_door"
+      },
+      {
+          "name": "bio_viro_open"
+      },
+      {
+          "name": "black_door"
+      },
+      {
+          "name": "blue_door"
+      },
+      {
+          "name": "bomb"
+      },
+      {
+          "name": "bomb_door"
+      },
+      {
+          "name": "bomb_open"
+      },
+      {
+          "name": "brigmedic"
+      },
+      {
+          "name": "brigmedic_door"
+      },
+      {
+          "name": "business_door"
+      },
+      {
+          "name": "cabinet"
+      },
+      {
+          "name": "cabinet_door"
+      },
+      {
+          "name": "cabinet_open"
+      },
+      {
+          "name": "cap"
+      },
+      {
+          "name": "cap_door"
+      },
+      {
+          "name": "cap_open"
+      },
+      {
+          "name": "cargo"
+      },
+      {
+          "name": "cargo_door"
+      },
+      {
+          "name": "cargo_open"
+      },
+      {
+          "name": "ce"
+      },
+      {
+          "name": "ce_door"
+      },
+      {
+          "name": "ce_open"
+      },
+      {
+          "name": "chemical_door"
+      },
+      {
+          "name": "clown"
+      },
+      {
+          "name": "clown_door"
+      },
+      {
+          "name": "clown_open"
+      },
+      {
+          "name": "cmo"
+      },
+      {
+          "name": "cmo_door"
+      },
+      {
+          "name": "cmo_open"
+      },
+      {
+          "name": "emergency"
+      },
+      {
+          "name": "emergency_door"
+      },
+      {
+          "name": "emergency_open"
+      },
+      {
+          "name": "eng"
+      },
+      {
+          "name": "eng_elec_door"
+      },
+      {
+          "name": "eng_open"
+      },
+      {
+          "name": "eng_rad_door"
+      },
+      {
+          "name": "eng_secure"
+      },
+      {
+          "name": "eng_secure_door"
+      },
+      {
+          "name": "eng_secure_open"
+      },
+      {
+          "name": "eng_tool_door"
+      },
+      {
+          "name": "eng_weld_door"
+      },
+      {
+          "name": "fire"
+      },
+      {
+          "name": "fire_door"
+      },
+      {
+          "name": "fire_open"
+      },
+      {
+          "name": "freezer"
+      },
+      {
+          "name": "freezer_icon"
+      },
+      {
+          "name": "freezer_door"
+      },
+      {
+          "name": "freezer_open"
+      },
+      {
+          "name": "generic"
+      },
+      {
+          "name": "generic_door"
+      },
+      {
+          "name": "generic_icon"
+      },
+      {
+          "name": "generic_open"
+      },
+      {
+          "name": "green_door"
+      },
+      {
+          "name": "grey_door"
+      },
+      {
+          "name": "hop"
+      },
+      {
+          "name": "hop_door"
+      },
+      {
+          "name": "hop_open"
+      },
+      {
+          "name": "hos"
+      },
+      {
+          "name": "hos_door"
+      },
+      {
+          "name": "hos_open"
+      },
+      {
+          "name": "hydro"
+      },
+      {
+          "name": "hydro_door"
+      },
+      {
+          "name": "hydro_open"
+      },
+      {
+          "name": "janitor_bomb"
+      },
+      {
+          "name": "janitor_bomb_door"
+      },
+      {
+          "name": "janitor_bomb_open"
+      },
+      {
+          "name": "locked"
+      },
+      {
+          "name": "med"
+      },
+      {
+          "name": "med_door"
+      },
+      {
+          "name": "med_open"
+      },
+      {
+          "name": "med_secure"
+      },
+      {
+          "name": "med_secure_door"
+      },
+      {
+          "name": "med_secure_open"
+      },
+      {
+          "name": "mime"
+      },
+      {
+          "name": "mime_door"
+      },
+      {
+          "name": "mime_open"
+      },
+      {
+          "name": "mining"
+      },
+      {
+          "name": "mining_door"
+      },
+      {
+          "name": "mining_open"
+      },
+      {
+          "name": "mixed_door"
+      },
+      {
+          "name": "n2"
+      },
+      {
+          "name": "n2_open"
+      },
+      {
+          "name": "n2_door"
+      },
+      {
+          "name": "orange_door"
+      },
+      {
+          "name": "paramed"
+      },
+      {
+          "name": "paramed_door"
+      },
+      {
+          "name": "paramed_open"
+      },
+      {
+          "name": "pink_door"
+      },
+      {
+          "name": "qm"
+      },
+      {
+          "name": "qm_door"
+      },
+      {
+          "name": "qm_open"
+      },
+      {
+          "name": "rd"
+      },
+      {
+          "name": "rd_door"
+      },
+      {
+          "name": "rd_open"
+      },
+      {
+          "name": "red_door"
+      },
+      {
+          "name": "representative_door"
+      },
+      {
+          "name": "science"
+      },
+      {
+          "name": "science_door"
+      },
+      {
+          "name": "science_open"
+      },
+      {
+          "name": "sec"
+      },
+      {
+          "name": "sec_door"
+      },
+      {
+          "name": "sec_open"
+      },
+      {
+          "name": "secure"
+      },
+      {
+          "name": "secure_door"
+      },
+      {
+          "name": "secure_icon"
+      },
+      {
+          "name": "secure_open"
+      },
+      {
+          "name": "shotgun"
+      },
+      {
+          "name": "shotguncase"
+      },
+      {
+          "name": "shotguncase_door"
+      },
+      {
+          "name": "shotguncase_open"
+      },
+      {
+          "name": "sparking",
+          "delays": [
+              [
+                  0.1,
+                  0.1,
+                  0.1,
+                  0.1
+              ]
+          ]
+      },
+      {
+          "name": "syndicate"
+      },
+      {
+          "name": "syndicate_door"
+      },
+      {
+          "name": "syndicate_open"
+      },
+      {
+          "name": "unlocked"
+      },
+      {
+          "name": "warden"
+      },
+      {
+          "name": "warden_door"
+      },
+      {
+          "name": "warden_open"
+      },
+      {
+          "name": "welded"
+      },
+      {
+          "name": "white_door"
+      },
+      {
+          "name": "yellow_door"
+      }
+  ]
+}

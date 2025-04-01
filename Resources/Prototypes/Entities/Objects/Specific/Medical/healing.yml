@@ -4,10 +4,10 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/medical.rsi
+    sprite: _Impstation/Objects/Specific/Medical/medical.rsi # imp
   - type: Item
     size: Small
-    sprite: Objects/Specific/Medical/medical.rsi
+    sprite: _Impstation/Objects/Specific/Medical/medical.rsi # imp
     heldPrefix: ointment
   # Inherited
   - type: StaticPrice
@@ -77,6 +77,7 @@
     - Ointment
     - RegenerativeMesh
   - type: Sprite
+    sprite: Objects/Specific/Medical/medical.rsi # imp
     state: regenerative-mesh
   - type: Item
     heldPrefix: regenerative-mesh
@@ -167,6 +168,7 @@
     tags:
     - Brutepack
   - type: Sprite
+    sprite: Objects/Specific/Medical/medical.rsi # imp
     state: medicated-suture
   - type: Item
     heldPrefix: medicated-suture
@@ -246,6 +248,7 @@
       tags:
         - SecBeltEquip
     - type: Sprite
+      sprite: Objects/Specific/Medical/medical.rsi # imp
       state: tourniquet
     - type: Healing
       damageContainers:

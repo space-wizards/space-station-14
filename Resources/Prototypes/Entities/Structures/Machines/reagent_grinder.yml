@@ -31,7 +31,7 @@
         layer:
         - TabletopMachineLayer
   - type: Sprite
-    sprite: Structures/Machines/grinder.rsi
+    sprite: _Impstation/Structures/Machines/grinder.rsi # imp
     drawdepth: SmallObjects
     snapCardinals: true
     offset: "0.0,0.4"

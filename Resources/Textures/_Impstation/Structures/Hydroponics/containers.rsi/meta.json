@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "hydrotray taken from Eris at https://github.com/discordia-space/CEV-Eris/blob/master/icons/obj/hydroponics_machines.dmi, and resprited by AftrLite(GitHub).",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "hydrotray"
+    }
+  ]
+}

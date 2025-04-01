@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+	"copyright": "taken from wallening at https://github.com/wall-nerds/wallening/commit/cff5df2e3d45a18afe5619a8c130e1ba50ab4ef5.",
+	"size": { "x": 32, "y": 32 },
+	"states": [
+		{ "name": "tray-on" , "delays": [[0.1, 1.0]]},
+		{ "name": "tray-off" }
+	]
+}

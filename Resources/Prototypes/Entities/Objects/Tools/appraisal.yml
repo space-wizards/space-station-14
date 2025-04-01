@@ -5,15 +5,15 @@
   description: A beancounter's best friend, with a quantum connection to the galactic market and the ability to appraise even the toughest items. It will also tell you if a crate contains a completed bounty.
   components:
   - type: Sprite
-    sprite: Objects/Tools/appraisal-tool.rsi
+    sprite: _Impstation/Objects/Tools/appraisal-tool.rsi # imp
     state: icon
   - type: Item
-    sprite: Objects/Tools/appraisal-tool.rsi
+    sprite: _Impstation/Objects/Tools/appraisal-tool.rsi # imp
   - type: PriceGun
   - type: UseDelay
     delay: 3
   - type: Clothing
-    sprite: Objects/Tools/appraisal-tool.rsi
+    sprite: _Impstation/Objects/Tools/appraisal-tool.rsi # imp
     quickEquip: false
     slots:
     - Belt

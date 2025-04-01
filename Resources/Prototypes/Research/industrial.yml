@@ -20,7 +20,7 @@
   id: SpaceScanning
   name: research-technology-space-scanning
   icon:
-    sprite: Objects/Tools/handheld_mass_scanner.rsi
+    sprite: _Impstation/Objects/Tools/handheld_mass_scanner.rsi # imp
     state: icon
   discipline: Industrial
   tier: 1
@@ -92,7 +92,7 @@
   id: AtmosphericTech
   name: research-technology-atmospheric-tech
   icon:
-    sprite: _Impstation/Structures/Piping/Atmospherics/thermomachine.rsi
+    sprite: _Impstation/Structures/Piping/Atmospherics/thermomachine.rsi # imp
     state: freezerOff
   discipline: Industrial
   tier: 1

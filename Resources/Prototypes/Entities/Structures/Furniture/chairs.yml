@@ -158,6 +158,7 @@
   parent: OfficeChairBase
   components:
   - type: Sprite
+    sprite: _Impstation/Structures/Furniture/chairs.rsi # imp
     state: office-white
   - type: Construction
     graph: Seat
@@ -169,6 +170,7 @@
   parent: ChairOfficeLight
   components:
   - type: Sprite
+    sprite: _Impstation/Structures/Furniture/chairs.rsi # imp
     state: office-dark
   - type: Construction
     graph: Seat
@@ -181,6 +183,7 @@
   description: It looks comfy.
   components:
   - type: Sprite
+    sprite: _Impstation/Structures/Furniture/chairs.rsi # imp
     state: comfy
   - type: Construction
     graph: Seat

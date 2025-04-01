@@ -8,7 +8,7 @@
   - type: Appearance
   - type: Sprite
     noRot: true
-    sprite: _Impstation/Structures/Storage/businesscloset.rsi
+    sprite: _Impstation/Structures/Storage/closet.rsi
     layers:
     - state: generic
       map: ["enum.StorageVisualLayers.Base"]

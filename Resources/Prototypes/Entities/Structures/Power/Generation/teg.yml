@@ -9,7 +9,7 @@
     - type: Transform
       noRot: false
     - type: Sprite
-      sprite: Structures/Power/Generation/teg.rsi
+      sprite: _Impstation/Structures/Power/Generation/teg.rsi # imp
       layers:
         - state: teg
         - state: teg_mid
@@ -54,7 +54,7 @@
     - type: PowerMonitoringDevice
       group: Generator
       loadNode: output
-      sprite: Structures/Power/Generation/teg.rsi
+      sprite: _Impstation/Structures/Power/Generation/teg.rsi # imp
       state: static
     - type: Rotatable
 
@@ -88,7 +88,7 @@
       enabled: false
       castShadows: false
       radius: 1.5
-      color: "#ffa600"
+      color: "#ffa600" # imp
 
     - type: AmbientSound
       volume: -4
@@ -116,7 +116,7 @@
 
     # visuals
     - type: Sprite
-      sprite: Structures/Power/Generation/teg.rsi
+      sprite: _Impstation/Structures/Power/Generation/teg.rsi # imp
       layers:
         - state: circ-0
           map: [ "enum.TegVisualLayers.CirculatorBase" ]

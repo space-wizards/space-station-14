@@ -1,7 +1,7 @@
 - type: cargoProduct
   id: AtmosphericsAir
   icon:
-    sprite: Structures/Storage/canister.rsi
+    sprite: _Impstation/Structures/Storage/canister.rsi # imp
     state: grey
   product: AirCanister
   cost: 1100
@@ -11,7 +11,7 @@
 - type: cargoProduct
   id: AtmosphericsOxygen
   icon:
-    sprite: Structures/Storage/canister.rsi
+    sprite: _Impstation/Structures/Storage/canister.rsi # imp
     state: blue
   product: OxygenCanister
   cost: 1100
@@ -21,7 +21,7 @@
 - type: cargoProduct
   id: AtmosphericsLiquidOxygen
   icon:
-    sprite: Structures/Storage/canister.rsi
+    sprite: _Impstation/Structures/Storage/canister.rsi # imp
     state: blue
   product: LiquidOxygenCanister
   cost: 2500
@@ -31,7 +31,7 @@
 - type: cargoProduct
   id: AtmosphericsNitrogen
   icon:
-    sprite: Structures/Storage/canister.rsi
+    sprite: _Impstation/Structures/Storage/canister.rsi # imp
     state: red
   product: NitrogenCanister
   cost: 1100
@@ -41,7 +41,7 @@
 - type: cargoProduct
   id: AtmosphericsLiquidNitrogen
   icon:
-    sprite: Structures/Storage/canister.rsi
+    sprite: _Impstation/Structures/Storage/canister.rsi # imp
     state: red
   product: LiquidNitrogenCanister
   cost: 2500
@@ -51,7 +51,7 @@
 - type: cargoProduct
   id: AtmosphericsCarbonDioxide
   icon:
-    sprite: Structures/Storage/canister.rsi
+    sprite: _Impstation/Structures/Storage/canister.rsi # imp
     state: black
   product: CarbonDioxideCanister
   cost: 2200 # Until someone fixes it co2 can be used to oneshot people so it's more expensive
@@ -61,7 +61,7 @@
 - type: cargoProduct
   id: AtmosphericsLiquidCarbonDioxide
   icon:
-    sprite: Structures/Storage/canister.rsi
+    sprite: _Impstation/Structures/Storage/canister.rsi # imp
     state: black
   product: LiquidCarbonDioxideCanister
   cost: 4000
@@ -71,7 +71,7 @@
 - type: cargoProduct
   id: AtmosphericsStorage
   icon:
-    sprite: Structures/Storage/canister.rsi
+    sprite: _Impstation/Structures/Storage/canister.rsi # imp
     state: yellow
   product: StorageCanister
   cost: 1010 # No gases in it so it's cheaper
@@ -93,7 +93,7 @@
 - type: cargoProduct
   id: AtmosphericsPlasma
   icon:
-    sprite: Structures/Storage/canister.rsi
+    sprite: _Impstation/Structures/Storage/canister.rsi # imp
     state: orange
   product: PlasmaCanister
   cost: 4000

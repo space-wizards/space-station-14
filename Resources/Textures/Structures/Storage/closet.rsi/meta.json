@@ -4,7 +4,7 @@
     "x": 32,
     "y": 32
   },
-  "copyright": "Taken from tgstation from https://github.com/tgstation/tgstation/pull/85491. Resprited for 32x32 dimensions. janitor_bomb_door and bio_jan_door modified by DinnerCalzone(github)",
+  "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), n2 sprites based on fire and emergency sprites",
   "license": "CC-BY-SA-3.0",
   "states": [
     {

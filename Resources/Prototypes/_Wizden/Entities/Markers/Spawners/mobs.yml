@@ -6,7 +6,7 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: Mobs/Silicon/drone.rsi
+      - sprite: _Impstation/Mobs/Silicon/drone.rsi
         state: shell
   - type: ConditionalSpawner
     prototypes:

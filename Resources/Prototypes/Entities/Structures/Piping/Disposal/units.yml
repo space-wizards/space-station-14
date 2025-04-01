@@ -9,7 +9,7 @@
     - Disposal
   components:
   - type: Sprite
-    sprite: Structures/Piping/disposal.rsi
+    sprite: _Impstation/Structures/Piping/disposal.rsi # imp
     layers:
     - state: condisposal
       map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
@@ -94,7 +94,7 @@
   description: A pneumatic mail delivery unit.
   components:
   - type: Sprite
-    sprite: Structures/Piping/disposal.rsi
+    sprite: _Impstation/Structures/Piping/disposal.rsi # imp
     snapCardinals: true
     layers:
       - state: conmailing
@@ -105,9 +105,9 @@
         map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
       - state: mailing-flush
         map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
-      - state: mailover-charge
+      - state: mailover-charge # imp
         map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
-      - state: mailover-ready
+      - state: mailover-ready # imp
         map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
       - state: dispover-full
         map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]

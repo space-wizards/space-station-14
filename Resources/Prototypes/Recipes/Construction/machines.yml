@@ -9,7 +9,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Machines/parts.rsi
+    sprite: _Impstation/Structures/Machines/parts.rsi # imp
     state: 4
 
 - type: construction
@@ -38,7 +38,7 @@
   objectType: Structure
   canBuildInImpassable: false
   icon:
-    sprite: Structures/conveyor.rsi
+    sprite: _Impstation/Structures/conveyor.rsi # imp
     state: switch-off
   conditions:
     - !type:TileNotBlocked

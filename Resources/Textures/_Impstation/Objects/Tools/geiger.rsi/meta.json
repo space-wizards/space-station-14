@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from wallening at https://github.com/wall-nerds/wallening/commit/cff5df2e3d45a18afe5619a8c130e1ba50ab4ef5.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "geiger_base"
+    },
+    {
+      "name": "geiger_on_idle"
+    },
+    {
+      "name": "geiger_on_low"
+    },
+    {
+      "name": "geiger_on_med"
+    },
+    {
+      "name": "geiger_on_high"
+    },
+    {
+      "name": "geiger_on_ext",
+      "delays": [
+        [
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

@@ -6,7 +6,7 @@
   - type: Sprite
     layers:
     - state: red
-    - sprite: Structures/Storage/Crates/generic.rsi
+    - sprite: _Impstation/Structures/Storage/Crates/generic.rsi # imp
       state: icon
   - type: RandomSpawner
     prototypes:
@@ -33,7 +33,7 @@
   - type: Sprite
     layers:
     - state: red
-    - sprite: Structures/Storage/Crates/o2.rsi
+    - sprite: _Impstation/Structures/Storage/Crates/o2.rsi # imp
       state: icon
   - type: RandomSpawner
     prototypes:
@@ -73,7 +73,7 @@
     - type: Sprite
       layers:
         - state: red
-        - sprite: Structures/Storage/Crates/engineering.rsi
+        - sprite: _Impstation/Structures/Storage/Crates/engineering.rsi # imp
           state: icon
     - type: RandomSpawner
       rarePrototypes:
@@ -117,7 +117,7 @@
     - type: Sprite
       layers:
         - state: red
-        - sprite: Structures/Storage/Crates/sec_gear.rsi
+        - sprite: _Impstation/Structures/Storage/Crates/sec_gear.rsi # imp
           state: icon
     - type: RandomSpawner
       rarePrototypes: #Very useful stuff we probably don't want random people getting on space ruins often, even if there are hurdles to open it

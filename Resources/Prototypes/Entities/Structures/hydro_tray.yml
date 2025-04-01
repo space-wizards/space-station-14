@@ -20,31 +20,31 @@
   - type: Pullable
   - type: Sprite
     layers:
-      - sprite: Structures/Hydroponics/containers.rsi
-        state: hydrotray4
-      - sprite: Structures/Hydroponics/overlays.rsi
-        state: lowhealth3
-#        shader: unshaded
+      - sprite: _Impstation/Structures/Hydroponics/containers.rsi # imp
+        state: hydrotray
+      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # imp
+        state: lowhealth # imp
+#        shader: unshaded # imp
         map: [ "health_alert" ]
         visible: false
-      - sprite: Structures/Hydroponics/overlays.rsi
-        state: lowwater3
-        shader: unshaded
+      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # imp
+        state: lowwater # imp
+        shader: unshaded # imp
         map: [ "water_alert" ]
         visible: false
-      - sprite: Structures/Hydroponics/overlays.rsi
-        state: lownutri3
-#        shader: unshaded
+      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # imp
+        state: lownutri # imp
+#        shader: unshaded # imp
         map: [ "nutri_alert" ]
         visible: false
-      - sprite: Structures/Hydroponics/overlays.rsi
-        state: alert3
-#        shader: unshaded
+      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # imp
+        state: alert # imp
+#        shader: unshaded # imp
         map: [ "undefined_alert" ]
         visible: false
-      - sprite: Structures/Hydroponics/overlays.rsi
-        state: harvest3
-#        shader: unshaded
+      - sprite: _Impstation/Structures/Hydroponics/overlays.rsi # imp
+        state: harvest # imp
+#        shader: unshaded # imp
         map: [ "harvest_alert" ]
         visible: false
   - type: Appearance
@@ -76,7 +76,7 @@
       path: /Audio/Effects/Fluids/slosh.ogg
       params:
         volume: -6
-        variation: 0.10 #making a note so this is in the commit if we want to change this later - ruddygreat
+        variation: 0.10 # imp - making a note so this is in the commit if we want to change this later - ruddygreat
   - type: Destructible
     thresholds:
     - trigger:

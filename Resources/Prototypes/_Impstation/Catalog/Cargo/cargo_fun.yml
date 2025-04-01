@@ -1,0 +1,19 @@
+﻿- type: cargoProduct
+  id: Fun500Cigarettes
+  icon:
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/500cigarettes.rsi
+    state: 500-cigarettes
+  product: CrateFun500Cigarettes
+  cost: 5000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
+  id: FunLittleTykesCar
+  icon:
+    sprite: _Impstation/Objects/Storage/littlecar.rsi
+    state: littletykescar
+  product: BaseLittleTykesCar
+  cost: 1500
+  category: cargoproduct-category-name-fun
+  group: market

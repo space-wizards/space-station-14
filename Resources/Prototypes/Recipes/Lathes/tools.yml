@@ -25,7 +25,7 @@
   id: Wirecutter
   result: Wirecutter
   icon:
-    sprite: Objects/Tools/wirecutters.rsi
+    sprite: _Impstation/Objects/Tools/wirecutters.rsi # imp
     state: cutters-map
 
 - type: latheRecipe
@@ -33,7 +33,7 @@
   id: Screwdriver
   result: Screwdriver
   icon:
-    sprite: Objects/Tools/screwdriver.rsi
+    sprite: _Impstation/Objects/Tools/screwdriver.rsi # imp
     state: screwdriver-map
 
 - type: latheRecipe

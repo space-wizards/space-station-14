@@ -9,7 +9,7 @@
     - type: Item
       size: Normal
     - type: Sprite
-      sprite: Structures/Furniture/rollerbeds.rsi
+      sprite: _Impstation/Structures/Furniture/rollerbeds.rsi # imp
       noRot: true
       layers:
       - state: rollerbed

@@ -14,7 +14,7 @@
       Glass: 25
   - type: SpaceGarbage
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/bottle.rsi
+    sprite: _Impstation/Objects/Specific/Chemistry/bottle.rsi # imp
     layers:
       - state: bottle-1
       - state: bottle-1-1
@@ -50,7 +50,7 @@
         type: TransferAmountBoundUserInterface
   - type: Item
     size: Small #imp
-    sprite: Objects/Specific/Chemistry/beaker.rsi
+    sprite: _Impstation/Objects/Specific/Chemistry/beaker.rsi # imp
     shape: #imp
     - 0,0,0,0
   - type: Spillable
@@ -106,6 +106,7 @@
   id: ChemistryEmptyBottle02
   components:
   - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi # imp
     layers:
       - state: bottle-2
       - state: bottle-2-1
@@ -119,6 +120,7 @@
   id: ChemistryEmptyBottle03
   components:
   - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi # imp
     layers:
       - state: bottle-3
       - state: bottle-3-1
@@ -132,6 +134,7 @@
   id: ChemistryEmptyBottle04
   components:
   - type: Sprite
+    sprite: Objects/Specific/Chemistry/bottle.rsi # imp
     layers:
       - state: bottle-4
       - state: bottle-4-1

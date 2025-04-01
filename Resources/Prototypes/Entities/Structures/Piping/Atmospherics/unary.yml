@@ -74,9 +74,9 @@
       guides:
       - AirVent
       - DeviceMonitoringAndControl
-    - type: VentCrawTube
+    - type: VentCrawTube # imp
       containerId: VentCrawTube
-    - type: VentCrawEntry
+    - type: VentCrawEntry # imp
 
 - type: entity
   parent: GasUnaryBase
@@ -106,9 +106,9 @@
     - type: GuideHelp
       guides:
       - PassiveVent
-    - type: VentCrawTube
+    - type: VentCrawTube # imp
       containerId: VentCrawTube
-    - type: VentCrawEntry
+    - type: VentCrawEntry # imp
 
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
@@ -164,9 +164,9 @@
       guides:
       - AirScrubber
       - DeviceMonitoringAndControl
-    - type: VentCrawTube
+    - type: VentCrawTube # imp
       containerId: VentCrawTube
-    - type: VentCrawEntry
+    - type: VentCrawEntry # imp
 
 - type: entity
   parent: GasUnaryBase
@@ -211,9 +211,9 @@
     - type: GuideHelp
       guides:
       - AirInjector
-    - type: VentCrawTube
+    - type: VentCrawTube # imp
       containerId: VentCrawTube
-    - type: VentCrawEntry
+    - type: VentCrawEntry # imp
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
@@ -224,7 +224,7 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
-      sprite: _Impstation/Structures/Piping/Atmospherics/thermomachine.rsi
+      sprite: _Impstation/Structures/Piping/Atmospherics/thermomachine.rsi # imp
       snapCardinals: true
     - type: Appearance
     - type: PipeColorVisuals
@@ -277,13 +277,13 @@
     granularLayersRendering: true
     layers:
       - state: freezerOff
-      - state: freezerOn
+      - state: freezerOn # imp
         map: ["enum.PowerDeviceVisualLayers.Powered"]
         visible: false #imp edit
-      - state: freezer-Unshaded
+      - state: freezer-Unshaded # imp
         shader: unshaded
         map: ["freezing"]
-        visible: false #imp edit
+        visible: false
       - state: freezerPanelOpen
         map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       - state: pipe
@@ -293,9 +293,9 @@
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
-          True: { visible: true }
-          False: { visible: false }
-        freezing:
+          True: { visible: true } # imp
+          False: { visible: false } # imp
+        freezing: # imp
           True: { visible: true }
           False: { visible: false }
   - type: GasThermoMachine
@@ -331,13 +331,13 @@
     granularLayersRendering : true
     layers:
       - state: heaterOff
-      - state: heaterOn
+      - state: heaterOn # imp
         map: ["enum.PowerDeviceVisualLayers.Powered"]
         visible: false #imp edit
-      - state: heater-Unshaded
+      - state: heater-Unshaded # imp
         shader: unshaded
         map: ["heating"]
-        visible: false #imp edit
+        visible: false
       - state: heaterPanelOpen
         map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       - state: pipe
@@ -347,9 +347,9 @@
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
-          True: { visible: true }
-          False: { visible: false }
-        heating:
+          True: { visible: true } # imp
+          False: { visible: false } # imp
+        heating: # imp
           True: { visible: true }
           False: { visible: false }
   - type: GasThermoMachine
@@ -379,7 +379,7 @@
   description: An advanced machine that cools gas in connected pipes. Has the side effect of chilling the surrounding area. Cold as Hell!
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Piping/Atmospherics/hellfirethermomachine.rsi
+    sprite: _Impstation/Structures/Piping/Atmospherics/hellfirethermomachine.rsi # imp
   - type: GasThermoMachine
     minTemperature: 23.15
     heatCapacity: 40000
@@ -394,7 +394,7 @@
   description: An advanced machine that heats gas in connected pipes. Has the side effect of leaking heat into the surrounding area. Hot as Hell!
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Piping/Atmospherics/hellfirethermomachine.rsi
+    sprite: _Impstation/Structures/Piping/Atmospherics/hellfirethermomachine.rsi # imp
   - type: GasThermoMachine
     maxTemperature: 1193.15
     heatCapacity: 40000

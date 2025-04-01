@@ -276,14 +276,14 @@
   id: NuclearBomb
   name: steal-target-groups-nuclear-bomb
   sprite:
-    sprite: Objects/Devices/nuke.rsi
+    sprite: _Impstation/Objects/Devices/nuke.rsi # imp
     state: nuclearbomb_base
 
 - type: stealTargetGroup
   id: FaxMachineCaptain
   name: steal-target-groups-fax-machine-captain
   sprite:
-    sprite: Structures/Machines/fax_machine.rsi
+    sprite: _Impstation/Structures/Machines/fax_machine.rsi # imp
     state: icon
 
 - type: stealTargetGroup
@@ -304,14 +304,14 @@
   id: FreezerHeater
   name: steal-target-groups-freezer-heater
   sprite:
-    sprite: _Impstation/Structures/Piping/Atmospherics/thermomachine.rsi
+    sprite: _Impstation/Structures/Piping/Atmospherics/thermomachine.rsi # imp
     state: heaterOff
 
 - type: stealTargetGroup
   id: Teg
   name: steal-target-groups-teg
   sprite:
-    sprite: Structures/Power/Generation/teg.rsi
+    sprite: _Impstation/Structures/Power/Generation/teg.rsi # imp
     state: teg
 
 - type: stealTargetGroup

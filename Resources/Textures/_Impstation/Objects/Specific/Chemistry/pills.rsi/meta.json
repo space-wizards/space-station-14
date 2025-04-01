@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from /tg/ at https://github.com/tgstation/tgstation/blob/master/icons/obj/medical/chemical.dmi on 01/12/2024.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pill"
+    },
+    {
+      "name": "pill1"
+    },
+    {
+      "name": "pill2"
+    },
+    {
+      "name": "pill3"
+    },
+    {
+      "name": "pill4"
+    },
+    {
+      "name": "pill5"
+    },
+    {
+      "name": "pill6"
+    },
+    {
+      "name": "pill18"
+    },
+    {
+      "name": "pill19"
+    },
+    {
+      "name": "pill20"
+    },
+    {
+      "name": "pill21"
+    },
+    {
+      "name": "pill7"
+    },
+    {
+      "name": "pill8"
+    },
+    {
+      "name": "pill9"
+    },
+    {
+      "name": "pill10"
+    },
+    {
+      "name": "pill11"
+    },
+    {
+      "name": "pill12"
+    },
+    {
+      "name": "pill13"
+    },
+    {
+      "name": "pill14"
+    },
+    {
+      "name": "pill15"
+    },
+    {
+      "name": "pill16"
+    },
+    {
+      "name": "pill17"
+    },
+    {
+      "name": "pill22"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

@@ -38,7 +38,7 @@
       steps:
       - tag: Multitool
         icon:
-          sprite: Objects/Tools/multitool.rsi
+          sprite: _Impstation/Objects/Tools/multitool.rsi # imp
           state: icon
         name: a multitool
       - material: Cable

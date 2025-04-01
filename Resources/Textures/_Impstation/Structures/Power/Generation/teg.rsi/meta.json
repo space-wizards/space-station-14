@@ -1,0 +1,262 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Eris at https://github.com/discordia-space/CEV-Eris/blob/master/icons/obj/machines/thermoelectric.dmi and resprited by AftrLite(GitHub).",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+	{
+      "name": "teg",
+      "directions": 4
+    },
+	{
+      "name": "static"
+    },
+    {
+      "name": "teg-op1",
+      "directions": 4
+    },
+    {
+      "name": "teg-op2",
+      "directions": 4
+    },
+    {
+      "name": "teg-op3",
+      "directions": 4
+    },
+    {
+      "name": "teg-op4",
+      "directions": 4
+    },
+    {
+      "name": "teg-op5",
+      "directions": 4
+    },
+    {
+      "name": "teg-op6",
+      "directions": 4
+    },
+    {
+      "name": "teg-op7",
+      "directions": 4
+    },
+    {
+      "name": "teg-op8",
+      "directions": 4
+    },
+    {
+      "name": "teg-op9",
+      "directions": 4
+    },
+    {
+      "name": "teg-op10",
+      "directions": 4
+    },
+    {
+      "name": "teg-op11",
+      "directions": 4
+    },
+    {
+      "name": "teg_mid",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "teg-oc00"
+    },
+    {
+      "name": "teg-oc10",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "teg-oc01",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "teg-oc11",
+      "delays": [
+        [
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "circ-2",
+      "directions": 4
+    },
+    {
+      "name": "circ-2-light",
+      "directions": 4,
+      "delays": [
+        [
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05
+        ],
+        [
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05
+        ],
+        [
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05
+        ],
+        [
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05,
+          0.05
+        ]
+      ]
+    },
+    {
+      "name": "circ-1",
+      "directions": 4
+    },
+    {
+      "name": "circ-1-light",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "circ-0",
+      "directions": 4
+    },
+    {
+      "name": "circ-0-light",
+      "directions": 4
+    }
+  ]
+}

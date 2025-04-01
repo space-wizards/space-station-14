@@ -7,29 +7,37 @@
     "y": 32
   },
   "states": [
-    {
-      "name": "bag"
-    },
-    {
-      "name": "bag_overlay"
-    },
-    {
-      "name": "bag_folded"
-    },
-    {
-      "name": "paper"
-    },
-    {
-      "name": "open_overlay"
-    },
-    {
-      "name": "bounty"
-    },
-    {
-      "name": "captains_paper"
-    },
-    {
-      "name": "invoice"
-    }
+      {
+          "name": "bag"
+      },
+      {
+          "name": "bag-inhand-left",
+          "directions": 4
+      },
+      {
+          "name": "bag-inhand-right",
+          "directions": 4
+      },
+      {
+          "name": "bag_overlay"
+      },
+      {
+          "name": "bag_folded"
+      },
+      {
+          "name": "paper"
+      },
+      {
+          "name": "open_overlay"
+      },
+      {
+          "name": "bounty"
+      },
+      {
+          "name": "captains_paper"
+      },
+      {
+          "name": "invoice"
+      }
   ]
 }

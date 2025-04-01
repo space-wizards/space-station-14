@@ -11,7 +11,7 @@
 - type: cargoProduct
   id: ServiceJanitorialHardsuit
   icon:
-    sprite: Structures/Storage/Crates/trashcart_jani.rsi
+    sprite: _Impstation/Structures/Storage/Crates/trashcart_jani.rsi
     state: icon
   product: CrateServiceJanitorialHardsuit
   cost: 5000

@@ -13,7 +13,7 @@
     - Wirecutter
     - DroneUsable
   - type: Sprite
-    sprite: Objects/Tools/wirecutters.rsi
+    sprite: _Impstation/Objects/Tools/wirecutters.rsi # imp
     layers:
     - state: cutters
       map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -36,7 +36,7 @@
       - enum.DamageStateVisualLayers.Base:
           cutters: Rainbow
   - type: Item
-    sprite: Objects/Tools/wirecutters.rsi
+    sprite: _Impstation/Objects/Tools/wirecutters.rsi # imp
     storedRotation: -90
   - type: ToolTileCompatible
   - type: PhysicalComposition
@@ -60,13 +60,13 @@
     - Screwdriver
     - DroneUsable
   - type: Sprite
-    sprite: Objects/Tools/screwdriver.rsi
+    sprite: _Impstation/Objects/Tools/screwdriver.rsi # imp
     layers:
       - state: screwdriver
         map: [ "enum.DamageStateVisualLayers.Base" ]
       - state: screwdriver-screwybits
   - type: Item
-    sprite: Objects/Tools/screwdriver.rsi
+    sprite: _Impstation/Objects/Tools/screwdriver.rsi # imp
     storedRotation: -90
   - type: MeleeWeapon
     wideAnimationRotation: -90
@@ -155,7 +155,7 @@
     sound:
       path: /Audio/Items/multitool_drop.ogg
   - type: Sprite
-    sprite: Objects/Tools/multitool.rsi
+    sprite: _Impstation/Objects/Tools/multitool.rsi # imp
     layers:
     - state: icon
     - state: green-unlit
@@ -163,7 +163,7 @@
   - type: Item
     size: Small
   - type: Clothing
-    sprite: Objects/Tools/multitool.rsi
+    sprite: _Impstation/Objects/Tools/multitool.rsi # imp
     quickEquip: false
     slots:
     - Belt
@@ -288,10 +288,10 @@
     tags:
     - Powerdrill
   - type: Sprite
-    sprite: Objects/Tools/drill.rsi
+    sprite: _Impstation/Objects/Tools/drill.rsi # imp
     state: drill_screw
   - type: Item
-    sprite: Objects/Tools/drill.rsi
+    sprite: _Impstation/Objects/Tools/drill.rsi # imp
     size: Small
   - type: Tool
     qualities:
@@ -303,7 +303,7 @@
     entries:
       - behavior: Screwing
         sprite:
-          sprite: Objects/Tools/drill.rsi
+          sprite: _Impstation/Objects/Tools/drill.rsi # imp
           state: drill_screw
         useSound:
           path: /Audio/Items/drill_use.ogg
@@ -311,7 +311,7 @@
           path: /Audio/Items/change_drill.ogg
       - behavior: Anchoring
         sprite:
-          sprite: Objects/Tools/drill.rsi
+          sprite: _Impstation/Objects/Tools/drill.rsi # imp
           state: drill_bolt
         useSound:
           path: /Audio/Items/drill_use.ogg
@@ -370,12 +370,12 @@
     maxCharges: 30
     charges: 30
   - type: Sprite
-    sprite: Objects/Tools/rcd.rsi
+    sprite: _Impstation/Objects/Tools/rcd.rsi # imp
     state: icon
   - type: Item
     size: Normal
   - type: Clothing
-    sprite: Objects/Tools/rcd.rsi
+    sprite: _Impstation/Objects/Tools/rcd.rsi # imp
     quickEquip: false
     slots:
     - Belt
