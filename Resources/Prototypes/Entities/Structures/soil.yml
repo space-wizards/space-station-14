@@ -1,6 +1,7 @@
 - type: entity
   name: soil
   id: hydroponicsSoil
+  suffix: Wet
   placement:
     mode: SnapgridCenter
   components:
@@ -55,3 +56,18 @@
         solution: soil
   - type: Appearance
   - type: PlantHolderVisuals
+
+- type: entity
+  name: soil
+  id: dryHydroponicsSoil
+  parent: hydroponicsSoil
+  suffix: Empty
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Construction
+      graph: Soil
+      node: hydroponicsSoil
+    - type: PlantHolder
+      waterLevel: 0
+      nutritionLevel: 0
