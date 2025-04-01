@@ -28,7 +28,7 @@ public sealed partial class LimbSystem : SharedLimbSystem
                 _humanoidAppearanceSystem.SetBaseLayerColor(body, layer.Value, @base.MatchSkin ? body.Comp.SkinColor : Color.White, true, body.Comp);
             }
         }
-        _humanoidAppearanceSystem.SetLayersVisibility(body, layers, true, true, body.Comp);
+        _humanoidAppearanceSystem.SetLayersVisibility(body!, layers, true);
     }
     private void RemoveLimbVisual(Entity<TransformComponent, HumanoidAppearanceComponent, BodyComponent> body, Entity<TransformComponent, MetaDataComponent, BodyPartComponent> limb)
     {
@@ -57,7 +57,7 @@ public sealed partial class LimbSystem : SharedLimbSystem
             }
         }
 
-        _humanoidAppearanceSystem.SetLayersVisibility(body, layers, false, true, body.Comp2);
+        _humanoidAppearanceSystem.SetLayersVisibility(new Entity<HumanoidAppearanceComponent>(body.Owner, body.Comp2)!, layers, false);
     }
     public void ToggleLimbVisual(Entity<HumanoidAppearanceComponent> body, Entity<BaseLayerIdComponent, BaseLayerIdToggledComponent, BodyPartComponent> limb, bool toggled)
     {
