@@ -117,7 +117,8 @@ public abstract class SharedAnomalySystem : EntitySystem
     /// Begins the animation for going supercritical
     /// </summary>
     /// <param name="uid"></param>
-    public void StartSupercriticalEvent(EntityUid uid)
+    /// <param name="component"></param>
+    public void StartSupercriticalEvent(EntityUid uid, AnomalyComponent? component = null)
     {
         // don't restart it if it's already begun
         if (HasComp<AnomalySupercriticalComponent>(uid))
@@ -126,6 +127,9 @@ public abstract class SharedAnomalySystem : EntitySystem
         AdminLog.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(uid)} began to go supercritical.");
         if (_net.IsServer)
             Log.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(uid)}");
+
+        if(Resolve(uid, ref component))
+            Audio.PlayPvs(component.SupercriticalSoundAtAnimationStart, Transform(uid).Coordinates);
 
         var super = AddComp<AnomalySupercriticalComponent>(uid);
         super.EndTime = Timing.CurTime + super.SupercriticalDuration;
@@ -240,7 +244,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         var newVal = component.Severity + change;
 
         if (newVal >= 1)
-            StartSupercriticalEvent(uid);
+            StartSupercriticalEvent(uid, component);
 
         component.Severity = Math.Clamp(newVal, 0, 1);
         Dirty(uid, component);
