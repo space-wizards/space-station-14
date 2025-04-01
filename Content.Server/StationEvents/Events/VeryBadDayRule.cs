@@ -31,14 +31,6 @@ public sealed class VeryBadDayRule : StationEventSystem<VeryBadDayRuleComponent>
         if (!TryGetRandomStation(out var station))
             return;
 
-        var query = EntityQueryEnumerator<MindContainerComponent, HumanoidAppearanceComponent>();
-
-        while (query.MoveNext(out var ent, out _, out _))
-        {
-            _drunkSystem.TryApplyDrunkenness(ent, 1000);
-            _damageableSystem.TryChangeDamage(ent,
-                new DamageSpecifier(_protoMan.Index<DamageGroupPrototype>("Brute"), _random.Next(5, 50)));
-        }
         _alertLevelSystem.SetLevel((EntityUid)station, "red", false, true, true);
     }
 }
