@@ -291,7 +291,7 @@
       - state: pipeBroken
         map: [ "enum.PipeVisualLayers.Pipe" ]
   - type: AtmosPipeLayers
-    pipeLayersLocked: true
+    numberOfPipeLayers: 1
   - type: Construction
     graph: GasPipe
     node: broken

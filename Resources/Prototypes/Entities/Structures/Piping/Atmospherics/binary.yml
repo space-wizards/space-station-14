@@ -504,7 +504,7 @@
       map: [ "enum.SubfloorLayers.FirstLayer" ]
   - type: AtmosPipeLayers
     spriteRsiPaths: null
-    pipeLayersLocked: true
+    numberOfPipeLayers: 1
   - type: SubFloorHide
     visibleLayers:
     - enum.SubfloorLayers.FirstLayer

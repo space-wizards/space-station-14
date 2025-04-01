@@ -16,9 +16,10 @@ namespace Content.Shared.Atmos.Components;
 public sealed partial class AtmosPipeLayersComponent : Component
 {
     /// <summary>
-    /// The maximum pipe layer assignable.
+    /// The number of pipe layers this entity supports.
     /// </summary>
-    public const byte MaxPipeLayer = 2;
+    [DataField]
+    public byte NumberOfPipeLayers = 3;
 
     /// <summary>
     /// Determines which layer the pipe is currently assigned.
@@ -33,7 +34,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// </summary>
     /// <remarks>
     /// If not null, it is assumed that there will be an array entry for each pipe layer
-    /// (from 0 to <see cref="MaxPipeLayer"/>).
+    /// (from 0 to <see cref="NumberOfPipeLayers"/> - 1).
     /// </remarks>
     [DataField]
     public string[]? SpriteRsiPaths = null;
@@ -44,7 +45,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// </summary>
     /// <remarks>
     /// It is assumed that there will be an array entry for each pipe layer
-    /// (from 0 to <see cref="MaxPipeLayer"/>).
+    /// (from 0 to <see cref="NumberOfPipeLayers"/> - 1).
     /// </remarks>
     [DataField]
     public Dictionary<string, string[]> SpriteLayersRsiPaths = new();

@@ -48,7 +48,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
-        if (ent.Comp.PipeLayersLocked)
+        if (ent.Comp.NumberOfPipeLayers <= 1 || ent.Comp.PipeLayersLocked)
             return;
 
         if (!_protoManager.TryIndex(ent.Comp.Tool, out var toolProto))
@@ -77,7 +77,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         }
 
         // List all the layers that the pipe can be shifted to
-        for (var i = 0; i < AtmosPipeLayersComponent.MaxPipeLayer + 1; i++)
+        for (var i = 0; i < ent.Comp.NumberOfPipeLayers; i++)
         {
             var index = i;
             var layerName = Loc.GetString("atmos-pipe-layers-component-layer-" + index);
@@ -106,6 +106,9 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
     private void OnUseInHandEvent(Entity<AtmosPipeLayersComponent> ent, ref UseInHandEvent args)
     {
+        if (ent.Comp.NumberOfPipeLayers <= 1 || ent.Comp.PipeLayersLocked)
+            return;
+
         if (!TryGetHeldTool(args.User, ent.Comp.Tool, out var tool))
         {
             if (_protoManager.TryIndex(ent.Comp.Tool, out var toolProto))
@@ -155,11 +158,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
     /// <param name="user">The player entity who adjusting the pipe layer</param>
     public void CyclePipeLayer(Entity<AtmosPipeLayersComponent> ent, EntityUid? user = null)
     {
-        var newLayer = ent.Comp.CurrentPipeLayer + 1;
-
-        if (newLayer > AtmosPipeLayersComponent.MaxPipeLayer)
-            newLayer = 0;
-
+        var newLayer = (ent.Comp.CurrentPipeLayer + 1) % ent.Comp.NumberOfPipeLayers;
         SetPipeLayer(ent, (byte)newLayer, user);
     }
 
@@ -174,7 +173,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         if (ent.Comp.PipeLayersLocked)
             return;
 
-        ent.Comp.CurrentPipeLayer = (byte)Math.Clamp(layer, 0, AtmosPipeLayersComponent.MaxPipeLayer);
+        ent.Comp.CurrentPipeLayer = (byte)Math.Clamp(layer, 0, ent.Comp.NumberOfPipeLayers - 1);
         Dirty(ent);
 
         if (TryComp<AppearanceComponent>(ent, out var appearance))
