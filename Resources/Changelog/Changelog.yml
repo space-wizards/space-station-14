@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Secret doors no longer tell you if they're welded shut on examine.
-    type: Tweak
-  id: 7622
-  time: '2024-11-19T05:07:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33365
 - author: ArZarLordOfMango
   changes:
   - message: Most toggleable clothing must now be equipped to toggle their actions.
@@ -3900,3 +3893,10 @@
   id: 8121
   time: '2025-04-01T16:43:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36241
+- author: MisterImp
+  changes:
+  - message: A new recipe has been added for pizza made with world peas, world peazza.
+    type: Add
+  id: 8122
+  time: '2025-04-01T23:26:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35191
