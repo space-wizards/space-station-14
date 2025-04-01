@@ -48,7 +48,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// </summary>
         [DataField, ViewVariables(VVAccess.ReadWrite)]
         [GuidebookData]
-        public float MinTemperature = 73.15f;
+        public float MinTemperature = 155.15f;
 
         /// <summary>
         ///     Current maximum temperature

@@ -246,8 +246,8 @@
     gasMixture:
       volume: 1000
       moles:
-        - 18710.71051 # oxygen
-      temperature: 72
+        - 7000.00 # oxygen
+      temperature: 155.15
   - type: AccessReader
     access: [["Atmospherics"]]
 
@@ -302,8 +302,8 @@
       volume: 1000
       moles:
         - 0 # oxygen
-        - 18710.71051 # nitrogen
-      temperature: 72
+        - 7000.00 # nitrogen
+      temperature: 155.15
   - type: AccessReader
     access: [["Atmospherics"]]
 
