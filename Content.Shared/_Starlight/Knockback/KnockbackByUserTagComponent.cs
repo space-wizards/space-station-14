@@ -14,4 +14,6 @@ public sealed partial class KnockbackByUserTagComponent : Component
 
     [DataField, AutoNetworkedField]
     public float Knockback = 0;
+    [DataField, AutoNetworkedField]
+    public float StaminaMultiplier = 10;
 }

@@ -1,5 +1,7 @@
 using System.Numerics;
 using Content.Shared._Starlight.Weapon.Components;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Slippery;
@@ -23,6 +25,7 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly StaminaSystem _stamina = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<KnockbackByUserTagComponent, OnNonEmptyGunShotEvent>(OnGunShot);
@@ -59,7 +62,7 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
             if (TryComp<GunComponent>(ent, out var gunComponent))
             {
                 var toCoordinates = gunComponent.ShootCoordinates;
-                
+
                 if (toCoordinates == null)
                     return;
 
@@ -76,9 +79,9 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
                 //make a clone, not a reference
                 Vector2 modifiedCoords = toCoordinates.Value.Position;
                 //flip the direction
-                if(knockback > 0)
+                if (knockback > 0)
                     modifiedCoords = -modifiedCoords;
-                
+
                 //absolute knockback now
                 knockback = Math.Abs(knockback);
                 //normalize them
@@ -89,6 +92,12 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
                 var flippedDirection = new EntityCoordinates(args.User, modifiedCoords);
 
                 _throwing.TryThrow(args.User, flippedDirection, knockback * 5, args.User, 0, doSpin: false, compensateFriction: true);
+
+                //deal stamina damage
+                if (TryComp<StaminaComponent>(args.User, out var stamina))
+                {
+                    _stamina.TakeStaminaDamage(args.User, knockback * ent.Comp.StaminaMultiplier, component: stamina);
+                }
             }
         }
     }

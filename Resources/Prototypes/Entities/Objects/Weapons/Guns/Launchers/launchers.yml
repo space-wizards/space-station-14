@@ -14,6 +14,7 @@
     doestContain:
     - Resomi
     knockback: 10
+    staminaMultiplier: 8
   - type: Sprite
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/china_lake.rsi
