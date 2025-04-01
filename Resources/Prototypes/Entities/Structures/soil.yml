@@ -1,7 +1,6 @@
 - type: entity
   name: soil
   id: hydroponicsSoil
-  suffix: Wet
   placement:
     mode: SnapgridCenter
   components:
@@ -58,10 +57,9 @@
   - type: PlantHolderVisuals
 
 - type: entity
-  name: soil
+  name: fungal soil
   id: dryHydroponicsSoil
   parent: hydroponicsSoil
-  suffix: Empty
   placement:
     mode: SnapgridCenter
   components:
