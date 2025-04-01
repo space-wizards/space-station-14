@@ -141,7 +141,8 @@ public sealed class DrainSystem : SharedDrainSystem
             if (!_solutionContainerSystem.ResolveSolution((uid, manager), DrainComponent.SolutionName, ref drain.Solution, out var drainSolution))
                 continue;
 
-            if (drainSolution.Volume <= 0 && !drain.AutoDrain)
+            if (drainSolution.AvailableVolume <= 0 || // imp edit - re-added the old AvailableVolume check to allow drains to clog when full
+                drainSolution.Volume <= 0 && !drain.AutoDrain)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 continue;
