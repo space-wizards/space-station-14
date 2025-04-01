@@ -11,5 +11,5 @@
   id: short
   settings:
     initialDuration: 10
-    joinExtendsDurationBy: 5
-    maxDuration: 30
+    joinExtendsDurationBy: 2
+    maxDuration: 15

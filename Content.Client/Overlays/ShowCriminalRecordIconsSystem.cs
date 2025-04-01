@@ -19,10 +19,10 @@ public sealed class ShowCriminalRecordIconsSystem : EquipmentHudSystem<ShowCrimi
 
     private void OnGetStatusIconsEvent(EntityUid uid, CriminalRecordComponent component, ref GetStatusIconsEvent ev)
     {
-        if (!IsActive || ev.InContainer)
+        if (!IsActive)
             return;
 
-        if (_prototype.TryIndex<StatusIconPrototype>(component.StatusIcon.Id, out var iconPrototype))
+        if (_prototype.TryIndex(component.StatusIcon, out var iconPrototype))
             ev.StatusIcons.Add(iconPrototype);
     }
 }

@@ -12,15 +12,15 @@
   id: DummyGrind
   verbText: mixing-verb-default-grind
   icon:
-    sprite: Structures/Machines/juicer.rsi
-    state: juicer0
+    sprite: Structures/Machines/grinder.rsi
+    state: grinder_empty
 
 - type: mixingCategory
   id: DummyJuice
   verbText: mixing-verb-default-juice
   icon:
-    sprite: Structures/Machines/juicer.rsi
-    state: juicer0
+    sprite: Structures/Machines/grinder.rsi
+    state: grinder_empty
 
 - type: mixingCategory
   id: DummyCondense
@@ -51,3 +51,17 @@
   icon:
     sprite: Objects/Specific/Chapel/bible.rsi
     state: icon
+
+- type: mixingCategory
+  id: Shake
+  verbText: mixing-verb-shake
+  icon:
+    sprite: Objects/Consumable/Drinks/shaker.rsi
+    state: icon
+
+- type: mixingCategory
+  id: Stir
+  verbText: mixing-verb-stir
+  icon:
+    sprite: Objects/Misc/utensils.rsi
+    state: spoon

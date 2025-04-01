@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Server.Movement.Components;
 using Content.Server.Physics.Controllers;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
 using Content.Shared.Input;
 using Content.Shared.Movement.Pulling.Components;
@@ -18,6 +19,7 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Movement.Systems;
 
@@ -57,6 +59,7 @@ public sealed class PullController : VirtualController
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     /// <summary>
     ///     If distance between puller and pulled entity lower that this threshold,
@@ -91,7 +94,7 @@ public sealed class PullController : VirtualController
 
         UpdatesAfter.Add(typeof(MoverController));
         SubscribeLocalEvent<PullMovingComponent, PullStoppedMessage>(OnPullStop);
-        SubscribeLocalEvent<PullMoverComponent, MoveEvent>(OnPullerMove);
+        SubscribeLocalEvent<ActivePullerComponent, MoveEvent>(OnPullerMove);
 
         base.Initialize();
     }
@@ -120,24 +123,26 @@ public sealed class PullController : VirtualController
 
         var pulled = pullerComp.Pulling;
 
+        // See update statement; this thing overwrites so many systems, DOESN'T EVEN LERP PROPERLY.
+        // We had a throwing version but it occasionally had issues.
+        // We really need the throwing version back.
+        if (TryComp(pulled, out ConveyedComponent? conveyed) && conveyed.Conveying)
+            return false;
+
         if (!_pullableQuery.TryComp(pulled, out var pullable))
             return false;
 
         if (_container.IsEntityInContainer(player))
             return false;
 
-        // Cooldown buddy
-        if (_timing.CurTime < pullerComp.NextThrow)
-            return false;
-
         pullerComp.NextThrow = _timing.CurTime + pullerComp.ThrowCooldown;
 
         // Cap the distance
         var range = 2f;
-        var fromUserCoords = coords.WithEntityId(player, EntityManager);
+        var fromUserCoords = _transformSystem.WithEntityId(coords, player);
         var userCoords = new EntityCoordinates(player, Vector2.Zero);
 
-        if (!coords.InRange(EntityManager, TransformSystem, userCoords, range))
+        if (!_transformSystem.InRange(coords, userCoords, range))
         {
             var direction = fromUserCoords.Position - userCoords.Position;
 
@@ -152,22 +157,25 @@ public sealed class PullController : VirtualController
             }
 
             fromUserCoords = new EntityCoordinates(player, direction.Normalized() * (range - 0.01f));
-            coords = fromUserCoords.WithEntityId(coords.EntityId);
+            coords = _transformSystem.WithEntityId(fromUserCoords, coords.EntityId);
         }
 
-        EnsureComp<PullMoverComponent>(player);
         var moving = EnsureComp<PullMovingComponent>(pulled!.Value);
         moving.MovingTo = coords;
         return false;
     }
 
-    private void OnPullerMove(EntityUid uid, PullMoverComponent component, ref MoveEvent args)
+    private void OnPullerMove(EntityUid uid, ActivePullerComponent component, ref MoveEvent args)
     {
         if (!_pullerQuery.TryComp(uid, out var puller))
             return;
 
         if (puller.Pulling is not { } pullable)
+        {
+            DebugTools.Assert($"Failed to clean up puller: {ToPrettyString(uid)}");
+            RemCompDeferred(uid, component);
             return;
+        }
 
         UpdatePulledRotation(uid, pullable);
 
@@ -182,13 +190,7 @@ public sealed class PullController : VirtualController
         if (_physicsQuery.TryComp(uid, out var physics))
             PhysicsSystem.WakeBody(uid, body: physics);
 
-        StopMove(uid, pullable);
-    }
-
-    private void StopMove(Entity<PullMoverComponent?> mover, Entity<PullMovingComponent?> moving)
-    {
-        RemCompDeferred<PullMoverComponent>(mover.Owner);
-        RemCompDeferred<PullMovingComponent>(moving.Owner);
+        RemCompDeferred<PullMovingComponent>(pullable);
     }
 
     private void UpdatePulledRotation(EntityUid puller, EntityUid pulled)
@@ -246,7 +248,7 @@ public sealed class PullController : VirtualController
             var pullerXform = _xformQuery.Get(puller);
             var pullerPosition = TransformSystem.GetMapCoordinates(pullerXform);
 
-            var movingTo = mover.MovingTo.ToMap(EntityManager, TransformSystem);
+            var movingTo = TransformSystem.ToMapCoordinates(mover.MovingTo);
 
             if (movingTo.MapId != pullerPosition.MapId)
             {
@@ -257,6 +259,13 @@ public sealed class PullController : VirtualController
             if (!TryComp<PhysicsComponent>(pullableEnt, out var physics) ||
                 physics.BodyType == BodyType.Static ||
                 movingTo.MapId != pullableXform.MapID)
+            {
+                RemCompDeferred<PullMovingComponent>(pullableEnt);
+                continue;
+            }
+
+            // TODO: This whole thing is slop and really needs to be throwing again
+            if (TryComp(pullableEnt, out ConveyedComponent? conveyed) && conveyed.Conveying)
             {
                 RemCompDeferred<PullMovingComponent>(pullableEnt);
                 continue;
@@ -300,18 +309,6 @@ public sealed class PullController : VirtualController
             {
                 PhysicsSystem.WakeBody(puller);
                 PhysicsSystem.ApplyLinearImpulse(puller, -impulse);
-            }
-        }
-
-        // Cleanup PullMover
-        var moverQuery = EntityQueryEnumerator<PullMoverComponent, PullerComponent>();
-
-        while (moverQuery.MoveNext(out var uid, out _, out var puller))
-        {
-            if (!HasComp<PullMovingComponent>(puller.Pulling))
-            {
-                RemCompDeferred<PullMoverComponent>(uid);
-                continue;
             }
         }
     }

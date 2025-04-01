@@ -23,8 +23,8 @@
   - type: ExaminableBattery
   - type: PointLight
     radius: 1.5
-    energy: 1.6
-    color: "#3db83b"
+    energy: 1
+    color: "#ff6900"
     castShadows: false
   - type: NodeContainer
     examinable: true
@@ -52,8 +52,8 @@
     supplyRampTolerance: 5000
     supplyRampRate: 1000
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
@@ -108,11 +108,15 @@
     requirePower: true
     highVoltageNode: input
     mediumVoltageNode: output
+  - type: GuideHelp
+    guides:
+    - VoltageNetworks
+    - Power
 
 # Compact Wall Substation Base
 - type: entity
   id: BaseSubstationWall
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: wallmount substation
   description: A substation designed for compact shuttles and spaces.
   placement:
@@ -126,10 +130,11 @@
       path: /Audio/Ambience/Objects/buzzing.ogg
   - type: PointLight
     radius: 1.5
-    energy: 1.6
-    color: "#3db83b"
+    energy: 1
+    color: "#ff6900"
     netsync: false
     castShadows: false
+    offset: 0, -0.2
   - type: Clickable
   - type: AccessReader
     access: [["Engineering"]]
@@ -151,7 +156,7 @@
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation_wall
-    - state: screen
+    - state: screen_wall
       shader: unshaded
   - type: Battery
     maxCharge: 2000000
@@ -182,8 +187,8 @@
     supplyRampTolerance: 5000
     supplyRampRate: 1000
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: PacifismDangerousAttack
   - type: Destructible
     thresholds:
@@ -213,6 +218,10 @@
     totalIntensity: 100
   - type: StationInfiniteBatteryTarget
   - type: WallMount
+  - type: GuideHelp
+    guides:
+    - VoltageNetworks
+    - Power
 
 # Substations in use
 
@@ -255,9 +264,9 @@
 # Construction Frame
 - type: entity
   id: BaseSubstationWallFrame
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: wallmount substation frame
-  description: A substation frame for construction
+  description: A substation frame for construction.
   placement:
     mode: SnapgridCenter
   components:

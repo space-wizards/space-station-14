@@ -144,7 +144,7 @@ namespace Content.Client.Viewport
             _inputManager.ViewportKeyEvent(this, args);
         }
 
-        protected override void Draw(DrawingHandleScreen handle)
+        protected override void Draw(IRenderHandle handle)
         {
             EnsureViewportCreated();
 
@@ -170,7 +170,7 @@ namespace Content.Client.Viewport
             var drawBox = GetDrawBox();
             var drawBoxGlobal = drawBox.Translated(GlobalPixelPosition);
             _viewport.RenderScreenOverlaysBelow(handle, this, drawBoxGlobal);
-            handle.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
+            handle.DrawingHandleScreen.DrawTextureRect(_viewport.RenderTarget.Texture, drawBox);
             _viewport.RenderScreenOverlaysAbove(handle, this, drawBoxGlobal);
         }
 
@@ -277,8 +277,8 @@ namespace Content.Client.Viewport
 
             EnsureViewportCreated();
 
-            var matrix = Matrix3.Invert(GetLocalToScreenMatrix());
-            coords = matrix.Transform(coords);
+            Matrix3x2.Invert(GetLocalToScreenMatrix(), out var matrix);
+            coords = Vector2.Transform(coords, matrix);
 
             return _viewport!.LocalToWorld(coords);
         }
@@ -291,8 +291,8 @@ namespace Content.Client.Viewport
 
             EnsureViewportCreated();
 
-            var matrix = Matrix3.Invert(GetLocalToScreenMatrix());
-            coords = matrix.Transform(coords);
+            Matrix3x2.Invert(GetLocalToScreenMatrix(), out var matrix);
+            coords = Vector2.Transform(coords, matrix);
 
             var ev = new PixelToMapEvent(coords, this, _viewport!);
             _entityManager.EventBus.RaiseEvent(EventSource.Local, ref ev);
@@ -311,16 +311,16 @@ namespace Content.Client.Viewport
 
             var matrix = GetLocalToScreenMatrix();
 
-            return matrix.Transform(vpLocal);
+            return Vector2.Transform(vpLocal, matrix);
         }
 
-        public Matrix3 GetWorldToScreenMatrix()
+        public Matrix3x2 GetWorldToScreenMatrix()
         {
             EnsureViewportCreated();
             return _viewport!.GetWorldToLocalMatrix() * GetLocalToScreenMatrix();
         }
 
-        public Matrix3 GetLocalToScreenMatrix()
+        public Matrix3x2 GetLocalToScreenMatrix()
         {
             EnsureViewportCreated();
 
@@ -329,9 +329,9 @@ namespace Content.Client.Viewport
 
             if (scaleFactor.X == 0 || scaleFactor.Y == 0)
                 // Basically a nonsense scenario, at least make sure to return something that can be inverted.
-                return Matrix3.Identity;
+                return Matrix3x2.Identity;
 
-            return Matrix3.CreateTransform(GlobalPixelPosition + drawBox.TopLeft, 0, scaleFactor);
+            return Matrix3Helpers.CreateTransform(GlobalPixelPosition + drawBox.TopLeft, 0, scaleFactor);
         }
 
         private void EnsureViewportCreated()

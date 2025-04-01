@@ -1,23 +1,23 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
-namespace Content.Shared.BarSign
+namespace Content.Shared.BarSign;
+
+[Prototype]
+public sealed partial class BarSignPrototype : IPrototype
 {
-    [Prototype("barSign")]
-    public sealed partial class BarSignPrototype : IPrototype
-    {
-        [ViewVariables]
-        [IdDataField]
-        public string ID { get; private set; } = default!;
+    [IdDataField, ViewVariables]
+    public string ID { get; private set; } = default!;
 
+    [DataField(required: true)]
+    public SpriteSpecifier Icon { get; private set; } = default!;
 
-        [DataField("icon")] public string Icon { get; private set; } = string.Empty;
+    [DataField]
+    public LocId Name { get; private set; } = "barsign-component-name";
 
-        [DataField("name")] public string Name { get; set; } = "";
-        [DataField("description")] public string Description { get; set; } = "";
+    [DataField]
+    public LocId Description { get; private set; }
 
-        [DataField("renameArea")]
-        public bool RenameArea { get; private set; } = true;
-        [DataField("hidden")]
-        public bool Hidden { get; private set; }
-    }
+    [DataField]
+    public bool Hidden { get; private set; }
 }

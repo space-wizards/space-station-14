@@ -1,0 +1,32 @@
+- type: constructionGraph
+  id: Mannequin
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: mannequin
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: WoodPlank
+              amount: 5
+            - material: MetalRod
+              amount: 2
+              doAfter: 2
+    - node: mannequin
+      entity: Mannequin
+      edges:
+        - to: start
+          completed:
+            - !type:EmptyAllContainers
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank
+              amount: 5
+            - !type:SpawnPrototype
+              prototype: PartRodMetal
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 3

@@ -18,6 +18,8 @@
     equippedPrefix: unlit
   - type: Item
     size: Tiny
+    sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
+    heldPrefix: unlit
   - type: Construction
     graph: smokeableCigarette
     node: cigarette
@@ -130,7 +132,7 @@
 - type: entity
   id: CigaretteDylovene
   parent: SoakedCigarette
-  name: Urinal Cake Disolver
+  name: Urinal Cake Dissolver
   components:
   - type: SolutionContainerManager
     solutions:

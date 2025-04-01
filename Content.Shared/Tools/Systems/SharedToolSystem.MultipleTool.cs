@@ -28,7 +28,7 @@ public abstract partial class SharedToolSystem
 
     private void OnMultipleToolActivated(EntityUid uid, MultipleToolComponent multiple, ActivateInWorldEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !args.Complex)
             return;
 
         args.Handled = CycleMultipleTool(uid, multiple, args.User);
@@ -70,16 +70,9 @@ public abstract partial class SharedToolSystem
         tool.Qualities = current.Behavior;
 
         // TODO: Replace this with a better solution later
-        if (TryComp<PryingComponent>(uid, out var pcomp))
+        if (TryComp<PryingComponent>(uid, out var pryComp))
         {
-            if (current.Behavior.Contains("Prying"))
-            {
-                pcomp.Enabled = true;
-            }
-            else
-            {
-                pcomp.Enabled = false;
-            }
+            pryComp.Enabled = current.Behavior.Contains("Prying");
         }
 
         if (playSound && current.ChangeSound != null)

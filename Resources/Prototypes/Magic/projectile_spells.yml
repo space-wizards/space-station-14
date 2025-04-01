@@ -2,7 +2,6 @@
   id: ActionFireball
   name: Fireball
   description: Fires an explosive fireball towards the clicked location.
-  noSpawn: true
   components:
   - type: Magic
   - type: WorldTargetAction
@@ -29,7 +28,6 @@
   parent: ActionFireball
   name: Fireball II
   description: Fires a fireball, but faster!
-  noSpawn: true
   components:
   - type: WorldTargetAction
     useDelay: 10
@@ -52,7 +50,6 @@
   parent: ActionFireball
   name: Fireball III
   description: The fastest fireball in the west!
-  noSpawn: true
   components:
     - type: WorldTargetAction
       useDelay: 8

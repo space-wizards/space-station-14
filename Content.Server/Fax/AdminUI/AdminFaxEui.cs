@@ -1,3 +1,4 @@
+using Content.Server.Construction.Conditions;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.EUI;
 using Content.Shared.Eui;
@@ -56,7 +57,8 @@ public sealed class AdminFaxEui : BaseEui
             case AdminFaxEuiMsg.Send sendData:
             {
                 var printout = new FaxPrintout(sendData.Content, sendData.Title, null, null, sendData.StampState,
-                        new() { new StampDisplayInfo { StampedName = sendData.From, StampedColor = sendData.StampColor } });
+                        new() { new StampDisplayInfo { StampedName = sendData.From, StampedColor = sendData.StampColor } },
+                        locked: sendData.Locked);
                 _faxSystem.Receive(_entityManager.GetEntity(sendData.Target), printout);
                 break;
             }

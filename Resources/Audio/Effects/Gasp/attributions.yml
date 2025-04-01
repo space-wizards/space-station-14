@@ -24,3 +24,9 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation at https://github.com/tgstation/tgstation/commit/f7a49c4068f1277e6857baf0892d355f1c055974"
   source: "https://github.com/tgstation/tgstation/tree/f7a49c4068f1277e6857baf0892d355f1c055974/sound/voice/human"
+
+- files:
+  - moth_DeathGasp.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation at https://github.com/tgstation/tgstation/commit/948ad3dd5b22803a01cd74c27f37e509dc61395b"
+  source: "https://github.com/tgstation/tgstation/blob/948ad3dd5b22803a01cd74c27f37e509dc61395b/sound/voice/moth/moth_death.ogg"

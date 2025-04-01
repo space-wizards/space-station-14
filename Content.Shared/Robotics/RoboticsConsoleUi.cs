@@ -58,7 +58,7 @@ public sealed class RoboticsConsoleDestroyMessage : BoundUserInterfaceMessage
 /// Created by <c>BorgTransponderComponent</c> and sent to clients by <c>RoboticsConsoleComponent</c>.
 /// </summary>
 [DataRecord, Serializable, NetSerializable]
-public record struct CyborgControlData
+public partial record struct CyborgControlData
 {
     /// <summary>
     /// Texture of the borg chassis.
@@ -98,13 +98,20 @@ public record struct CyborgControlData
     public bool HasBrain;
 
     /// <summary>
+    /// Whether the borg can currently be disabled if the brain is installed,
+    /// if on cooldown then can't queue up multiple disables.
+    /// </summary>
+    [DataField]
+    public bool CanDisable;
+
+    /// <summary>
     /// When this cyborg's data will be deleted.
     /// Set by the console when receiving the packet.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan Timeout = TimeSpan.Zero;
 
-    public CyborgControlData(SpriteSpecifier? chassisSprite, string chassisName, string name, float charge, int moduleCount, bool hasBrain)
+    public CyborgControlData(SpriteSpecifier? chassisSprite, string chassisName, string name, float charge, int moduleCount, bool hasBrain, bool canDisable)
     {
         ChassisSprite = chassisSprite;
         ChassisName = chassisName;
@@ -112,6 +119,7 @@ public record struct CyborgControlData
         Charge = charge;
         ModuleCount = moduleCount;
         HasBrain = hasBrain;
+        CanDisable = canDisable;
     }
 }
 

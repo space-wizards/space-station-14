@@ -1,3 +1,4 @@
+using Content.Server.Access.Systems;
 using Content.Server.AlertLevel;
 using Content.Server.CartridgeLoader;
 using Content.Server.Chat.Managers;
@@ -8,6 +9,7 @@ using Content.Server.PDA.Ringer;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
+using Content.Server.Traitor.Uplink;
 using Content.Shared.Access.Components;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Chat;
@@ -15,6 +17,7 @@ using Content.Shared.Light;
 using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Content.Shared.PDA;
+using Content.Shared.Store.Components;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -34,6 +37,7 @@ namespace Content.Server.PDA
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
+        [Dependency] private readonly IdCardSystem _idCard = default!;
 
         public override void Initialize()
         {
@@ -53,7 +57,27 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PdaComponent, CartridgeLoaderNotificationSentEvent>(OnNotification);
 
             SubscribeLocalEvent<StationRenamedEvent>(OnStationRenamed);
+            SubscribeLocalEvent<EntityRenamedEvent>(OnEntityRenamed, after: new[] { typeof(IdCardSystem) });
             SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
+        }
+
+        private void OnEntityRenamed(ref EntityRenamedEvent ev)
+        {
+            if (HasComp<IdCardComponent>(ev.Uid))
+                return;
+
+            if (_idCard.TryFindIdCard(ev.Uid, out var idCard))
+            {
+                var query = EntityQueryEnumerator<PdaComponent>();
+
+                while (query.MoveNext(out var uid, out var comp))
+                {
+                    if (comp.ContainedId == idCard)
+                    {
+                        SetOwner(uid, comp, ev.Uid, ev.NewName);
+                    }
+                }
+            }
         }
 
         protected override void OnComponentInit(EntityUid uid, PdaComponent pda, ComponentInit args)
@@ -70,6 +94,9 @@ namespace Content.Server.PDA
         protected override void OnItemInserted(EntityUid uid, PdaComponent pda, EntInsertedIntoContainerMessage args)
         {
             base.OnItemInserted(uid, pda, args);
+            var id = CompOrNull<IdCardComponent>(pda.ContainedId);
+            if (id != null)
+                pda.OwnerName = id.FullName;
             UpdatePdaUi(uid, pda);
         }
 
@@ -92,9 +119,10 @@ namespace Content.Server.PDA
             UpdatePdaUi(uid, pda);
         }
 
-        public void SetOwner(EntityUid uid, PdaComponent pda, string ownerName)
+        public void SetOwner(EntityUid uid, PdaComponent pda, EntityUid owner, string ownerName)
         {
             pda.OwnerName = ownerName;
+            pda.PdaOwner = owner;
             UpdatePdaUi(uid, pda);
         }
 
@@ -110,7 +138,7 @@ namespace Content.Server.PDA
 
         private void UpdateAllPdaUisOnStation()
         {
-            var query = EntityQueryEnumerator<PdaComponent>();
+            var query = AllEntityQuery<PdaComponent>();
             while (query.MoveNext(out var ent, out var comp))
             {
                 UpdatePdaUi(ent, comp);
@@ -121,7 +149,7 @@ namespace Content.Server.PDA
         {
             _ringer.RingerPlayRingtone(ent.Owner);
 
-            if (!_containerSystem.TryGetContainingContainer(ent, out var container)
+            if (!_containerSystem.TryGetContainingContainer((ent, null, null), out var container)
                 || !TryComp<ActorComponent>(container.Owner, out var actor))
                 return;
 
@@ -152,7 +180,7 @@ namespace Content.Server.PDA
 
             var address = GetDeviceNetAddress(uid);
             var hasInstrument = HasComp<InstrumentComponent>(uid);
-            var showUplink = HasComp<StoreComponent>(uid) && IsUnlocked(uid);
+            var showUplink = HasComp<UplinkComponent>(uid) && IsUnlocked(uid);
 
             UpdateStationName(uid, pda);
             UpdateAlertLevel(uid, pda);
@@ -175,7 +203,7 @@ namespace Content.Server.PDA
                 {
                     ActualOwnerName = pda.OwnerName,
                     IdOwner = id?.FullName,
-                    JobTitle = id?.JobTitle,
+                    JobTitle = id?.LocalizedJobTitle,
                     StationAlertLevel = pda.StationAlertLevel,
                     StationAlertColor = pda.StationAlertColor
                 },
@@ -237,8 +265,8 @@ namespace Content.Server.PDA
                 return;
 
             // check if its locked again to prevent malicious clients opening locked uplinks
-            if (TryComp<StoreComponent>(uid, out var store) && IsUnlocked(uid))
-                _store.ToggleUi(msg.Actor, uid, store);
+            if (HasComp<UplinkComponent>(uid) && IsUnlocked(uid))
+                _store.ToggleUi(msg.Actor, uid);
         }
 
         private void OnUiMessage(EntityUid uid, PdaComponent pda, PdaLockUplinkMessage msg)

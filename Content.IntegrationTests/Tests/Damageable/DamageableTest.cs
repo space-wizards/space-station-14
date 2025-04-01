@@ -107,10 +107,11 @@ namespace Content.IntegrationTests.Tests.Damageable
 
             FixedPoint2 typeDamage;
 
+            var map = await pair.CreateTestMap();
+
             await server.WaitPost(() =>
             {
-                var map = sMapManager.CreateMap();
-                var coordinates = new MapCoordinates(0, 0, map);
+                var coordinates = map.MapCoords;
 
                 sDamageableEntity = sEntityManager.SpawnEntity("TestDamageableEntityId", coordinates);
                 sDamageableComponent = sEntityManager.GetComponent<DamageableComponent>(sDamageableEntity);

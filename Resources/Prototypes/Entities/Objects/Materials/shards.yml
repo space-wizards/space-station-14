@@ -5,6 +5,8 @@
   description: It's a shard of some unknown material.
   components:
   - type: Sharp
+  - type: Execution
+    doAfterDuration: 4.0
   - type: Sprite
     layers:
       - sprite: Objects/Materials/Shards/shard.rsi
@@ -63,7 +65,7 @@
         acts: [ "Destruction" ]
   - type: StepTrigger
     intersectRatio: 0.2
-  - type: ClothingRequiredStepTrigger
+  - type: PreventableStepTrigger
   - type: Slippery
     slipSound:
       path: /Audio/Effects/glass_step.ogg
@@ -85,7 +87,7 @@
   components:
   - type: Sprite
     color: "#bbeeff"
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
   - type: DamageUserOnTrigger
@@ -120,7 +122,7 @@
     damage:
       types:
         Slash: 4.5
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
     - id: PartRodMetal1
@@ -156,7 +158,7 @@
     damage:
       types:
         Slash: 5.5
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
     - id: SheetPlasma1
@@ -195,7 +197,7 @@
       types:
         Slash: 4.5
         Radiation: 2
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
     - id: SheetUranium1
@@ -230,7 +232,7 @@
   components:
   - type: Sprite
     color: "#e0aa36"
-  - type: WelderRefinable
+  - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
     - id: SheetBrass1

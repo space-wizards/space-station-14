@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/0f9ef5962f4422836c0a42f289fb24d018918cbc/icons/mob/sprite_accessories/vox/vox_facial_hair.dmi and greyscaled",
+  "copyright": "Taken from Paradise at https://github.com/ParadiseSS13/Paradise/blob/0f9ef5962f4422836c0a42f289fb24d018918cbc/icons/mob/sprite_accessories/vox/vox_facial_hair.dmi and greyscaled. manesmall_s modified by Flareguy from mane_s, tuft_s made by Flareguy",
   "size": {
     "x": 32,
     "y": 32
@@ -25,6 +25,14 @@
     },
     {
       "name": "mane_s",
+      "directions": 4
+    },
+    {
+      "name": "manesmall_s",
+      "directions": 4
+    },
+    {
+      "name": "tuft_s",
       "directions": 4
     }
   ]

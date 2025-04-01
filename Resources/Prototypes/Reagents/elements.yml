@@ -85,7 +85,7 @@
   desc: reagent-desc-fluorine
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
-  color: "#808080"
+  color: "#ba85cc"
   boilingPoint: -188.11
   meltingPoint: -219.67
   plantMetabolism:
@@ -123,7 +123,7 @@
   desc: reagent-desc-hydrogen
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
-  color: "#808080"
+  color: "#cccccc"
   boilingPoint: -253.0
   meltingPoint: -259.2
 
@@ -176,7 +176,7 @@
   desc: reagent-desc-lithium
   physicalDesc: reagent-physical-desc-shiny
   flavor: metallic
-  color: "#c6c8cc"
+  color: "#d6c0a7"
   meltingPoint: 180.5
   boilingPoint: 1330.0
   metabolisms:
@@ -235,7 +235,7 @@
   desc: reagent-desc-phosphorus
   physicalDesc: reagent-physical-desc-powdery
   flavor: metallic
-  color: "#ede4e4"
+  color: "#f5da9a"
   meltingPoint: 44.2
   boilingPoint: 280.5
   plantMetabolism:
@@ -312,7 +312,7 @@
   desc: reagent-desc-sodium
   physicalDesc: reagent-physical-desc-metallic
   flavor: bitter
-  color: "#c6c8cc"
+  color: "#a7b3d6"
   meltingPoint: 97.8
   boilingPoint: 883.0
 
@@ -334,7 +334,7 @@
   - !type:PlantAdjustHealth
     amount: -1.5
   - !type:PlantAdjustMutationMod
-    prob: 0.2
+    probability: 0.2
     amount: 0.1
   metabolisms:
     Poison:

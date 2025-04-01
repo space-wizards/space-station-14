@@ -16,18 +16,22 @@ namespace Content.Client.Administration.UI.Bwoink
 
             Bwoink.ChannelSelector.OnSelectionChanged += sel =>
             {
-                if (sel is not null)
+                if (sel is null)
                 {
-                    Title = $"{sel.CharacterName} / {sel.Username}";
-
-                    if (sel.OverallPlaytime != null)
-                    {
-                        Title += $" | {Loc.GetString("generic-playtime-title")}: {sel.PlaytimeString}";
-                    }
+                    Title = Loc.GetString("bwoink-title-none-selected");
+                    return;
                 }
+
+                Title = $"{sel.CharacterName} / {sel.Username} | {Loc.GetString("generic-playtime-title")}: ";
+
+                Title += sel.OverallPlaytime != null ? sel.PlaytimeString : Loc.GetString("generic-unknown-title");
             };
 
-            OnOpen += () => Bwoink.PopulateList();
+            OnOpen += () =>
+            {
+                Bwoink.ChannelSelector.StopFiltering();
+                Bwoink.PopulateList();
+            };
         }
     }
 }

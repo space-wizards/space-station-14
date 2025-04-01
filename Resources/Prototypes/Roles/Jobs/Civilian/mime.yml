@@ -16,24 +16,25 @@
   - !type:AddComponentSpecial
     components:
     - type: MimePowers
+      preventWriting: true
     - type: FrenchAccent
 
 - type: startingGear
   id: MimeGear
   equipment:
-    belt: ClothingBeltSuspenders
     gloves: ClothingHandsGlovesColorWhite
     shoes: ClothingShoesColorWhite
-    pocket1: CrayonMime
-    pocket2: Paper
     id: MimePDA
+    pocket1: CrayonMime
     ears: ClothingHeadsetService
+  storage:
+    back:
+    - RubberStampMime
 
 - type: entity
   id: ActionMimeInvisibleWall
   name: Create Invisible Wall
   description: Create an invisible wall in front of you, if placeable there.
-  noSpawn: true
   components:
   - type: InstantAction
     priority: -1

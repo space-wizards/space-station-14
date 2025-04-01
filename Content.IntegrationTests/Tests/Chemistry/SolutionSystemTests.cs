@@ -1,5 +1,5 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -11,7 +11,7 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 // To ensure volume(A) + volume(B) = volume(A+B)
 // reactions can change this assumption
 [TestFixture]
-[TestOf(typeof(SolutionContainerSystem))]
+[TestOf(typeof(SharedSolutionContainerSystem))]
 public sealed class SolutionSystemTests
 {
     [TestPrototypes]
@@ -51,7 +51,7 @@ public sealed class SolutionSystemTests
 
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
-        var containerSystem = entityManager.System<SolutionContainerSystem>();
+        var containerSystem = entityManager.System<SharedSolutionContainerSystem>();
         var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
 
@@ -97,7 +97,7 @@ public sealed class SolutionSystemTests
 
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
-        var containerSystem = entityManager.System<SolutionContainerSystem>();
+        var containerSystem = entityManager.System<SharedSolutionContainerSystem>();
         var coordinates = testMap.GridCoords;
 
         EntityUid beaker;
@@ -141,7 +141,7 @@ public sealed class SolutionSystemTests
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         var testMap = await pair.CreateTestMap();
-        var containerSystem = entityManager.System<SolutionContainerSystem>();
+        var containerSystem = entityManager.System<SharedSolutionContainerSystem>();
         var coordinates = testMap.GridCoords;
 
         EntityUid beaker;
@@ -194,7 +194,7 @@ public sealed class SolutionSystemTests
 
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
-        var containerSystem = entityManager.System<SolutionContainerSystem>();
+        var containerSystem = entityManager.System<SharedSolutionContainerSystem>();
         var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
 

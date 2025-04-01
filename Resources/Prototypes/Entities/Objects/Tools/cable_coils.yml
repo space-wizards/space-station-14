@@ -25,10 +25,14 @@
   - type: StaticPrice
     price: 0
   - type: StackPrice
-    price: 1
+    price: 2.25
   - type: PhysicalComposition
     materialComposition:
       Steel: 15
+  - type: GuideHelp
+    guides:
+    - VoltageNetworks
+    - Power
 
 - type: entity
   id: CableHVStack

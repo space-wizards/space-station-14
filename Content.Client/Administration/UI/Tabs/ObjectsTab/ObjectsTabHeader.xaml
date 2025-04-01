@@ -1,0 +1,27 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls">
+    <PanelContainer Name="BackgroundColorPanel" Access="Public"/>
+    <BoxContainer Orientation="Horizontal"
+                  HorizontalExpand="True"
+                  SeparationOverride="4">
+        <Label Name="ObjectNameLabel"
+               SizeFlagsStretchRatio="5"
+               HorizontalExpand="True"
+               ClipText="True"
+               Text="{Loc object-tab-object-name}"
+               MouseFilter="Pass"/>
+        <cc:VSeparator/>
+        <Label Name="EntityIDLabel"
+               SizeFlagsStretchRatio="5"
+               HorizontalExpand="True"
+               ClipText="True"
+               Text="{Loc object-tab-entity-id}"
+               MouseFilter="Pass"/>
+        <Label Name="EntityTeleportLabel"
+               SizeFlagsStretchRatio="3"
+               HorizontalExpand="True"/>
+        <Label Name="EntityDeleteLabel"
+               SizeFlagsStretchRatio="3"
+               HorizontalExpand="True"/>
+    </BoxContainer>
+</Control>

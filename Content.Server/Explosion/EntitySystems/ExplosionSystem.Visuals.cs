@@ -1,5 +1,7 @@
+using System.Numerics;
 using Content.Shared.Explosion;
 using Content.Shared.Explosion.Components;
+using Content.Shared.Explosion.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -7,7 +9,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Explosion.EntitySystems;
 
 // This part of the system handled send visual / overlay data to clients.
-public sealed partial class ExplosionSystem : EntitySystem
+public sealed partial class ExplosionSystem
 {
     public void InitVisuals()
     {
@@ -35,7 +37,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     /// <summary>
     ///     Constructor for the shared <see cref="ExplosionEvent"/> using the server-exclusive explosion classes.
     /// </summary>
-    private EntityUid CreateExplosionVisualEntity(MapCoordinates epicenter, string prototype, Matrix3 spaceMatrix, ExplosionSpaceTileFlood? spaceData, IEnumerable<ExplosionGridTileFlood> gridData, List<float> iterationIntensity)
+    private EntityUid CreateExplosionVisualEntity(MapCoordinates epicenter, string prototype, Matrix3x2 spaceMatrix, ExplosionSpaceTileFlood? spaceData, IEnumerable<ExplosionGridTileFlood> gridData, List<float> iterationIntensity)
     {
         var explosionEntity = Spawn(null, MapCoordinates.Nullspace);
         var comp = AddComp<ExplosionVisualsComponent>(explosionEntity);

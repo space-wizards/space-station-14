@@ -1,0 +1,17 @@
+# Configuration preset layer for LRP temporary Wizard's Den servers.
+# Intended to be loaded after wizardsDen.toml
+
+# hostname is a placeholder
+# needs region tag
+
+[game]
+soft_max_players = 50
+hostname = "[EN] Wizard's Den Granite Flea [US East]"
+desc = "Official English Space Station 14 servers. Vanilla, roleplay ruleset."
+panic_bunker.enabled = false
+panic_bunker.disable_with_admins = false
+panic_bunker.enable_without_admins = false
+panic_bunker.custom_reason = ""
+
+[hub]
+tags = "lang:en,region:am_n_e,rp:low"

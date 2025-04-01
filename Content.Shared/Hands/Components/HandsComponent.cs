@@ -1,3 +1,4 @@
+using Content.Shared.DisplacementMap;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -38,11 +39,11 @@ public sealed partial class HandsComponent : Component
     public bool DisableExplosionRecursion = false;
 
     /// <summary>
-    ///     The amount of throw impulse per distance the player is from the throw target.
+    ///     Modifies the speed at which items are thrown.
     /// </summary>
-    [DataField("throwForceMultiplier")]
+    [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float ThrowForceMultiplier { get; set; } = 10f; //should be tuned so that a thrown item lands about under the player's cursor
+    public float BaseThrowspeed { get; set; } = 11f;
 
     /// <summary>
     ///     Distance after which longer throw targets stop increasing throw impulse.
@@ -76,6 +77,30 @@ public sealed partial class HandsComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan ThrowCooldown = TimeSpan.FromSeconds(0.5f);
+
+    /// <summary>
+    ///     Fallback displacement map applied to all sprites in the hand, unless otherwise specified
+    /// </summary>
+    [DataField]
+    public DisplacementData? HandDisplacement;
+
+    /// <summary>
+    ///     If defined, applies to all sprites in the left hand, ignoring <see cref="HandDisplacement"/>
+    /// </summary>
+    [DataField]
+    public DisplacementData? LeftHandDisplacement;
+
+    /// <summary>
+    ///     If defined, applies to all sprites in the right hand, ignoring <see cref="HandDisplacement"/>
+    /// </summary>
+    [DataField]
+    public DisplacementData? RightHandDisplacement;
+
+    /// <summary>
+    /// If false, hands cannot be stripped, and they do not show up in the stripping menu.
+    /// </summary>
+    [DataField]
+    public bool CanBeStripped = true;
 }
 
 [Serializable, NetSerializable]

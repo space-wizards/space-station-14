@@ -1,5 +1,7 @@
 ﻿using Content.Shared.Database;
+using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Mobs.Systems;
 
@@ -16,7 +18,8 @@ public partial class MobStateSystem
     /// <returns>If the entity can be set to that MobState</returns>
     public bool HasState(EntityUid entity, MobState mobState, MobStateComponent? component = null)
     {
-        return Resolve(entity, ref component, false) && component.AllowedStates.Contains(mobState);
+        return _mobStateQuery.Resolve(entity, ref component, false) &&
+               component.AllowedStates.Contains(mobState);
     }
 
     /// <summary>
@@ -27,7 +30,7 @@ public partial class MobStateSystem
     /// <param name="origin">Entity that caused the state update (if applicable)</param>
     public void UpdateMobState(EntityUid entity, MobStateComponent? component = null, EntityUid? origin = null)
     {
-        if (!Resolve(entity, ref component))
+        if (!_mobStateQuery.Resolve(entity, ref component))
             return;
 
         var ev = new UpdateMobStateEvent {Target = entity, Component = component, Origin = origin};
@@ -46,7 +49,7 @@ public partial class MobStateSystem
     public void ChangeMobState(EntityUid entity, MobState mobState, MobStateComponent? component = null,
         EntityUid? origin = null)
     {
-        if (!Resolve(entity, ref component))
+        if (!_mobStateQuery.Resolve(entity, ref component))
             return;
 
         ChangeState(entity, component, mobState, origin: origin);
@@ -109,8 +112,10 @@ public partial class MobStateSystem
         var ev = new MobStateChangedEvent(target, component, oldState, newState, origin);
         OnStateChanged(target, component, oldState, newState);
         RaiseLocalEvent(target, ev, true);
-        _adminLogger.Add(LogType.Damaged, oldState == MobState.Alive ? LogImpact.Low : LogImpact.Medium,
-            $"{ToPrettyString(target):user} state changed from {oldState} to {newState}");
+        if (origin != null && HasComp<ActorComponent>(origin) && HasComp<ActorComponent>(target) && oldState < newState)
+            _adminLogger.Add(LogType.Damaged, LogImpact.High, $"{ToPrettyString(origin):player} caused {ToPrettyString(target):player} state to change from {oldState} to {newState}");
+        else
+            _adminLogger.Add(LogType.Damaged, oldState == MobState.Alive ? LogImpact.Low : LogImpact.Medium, $"{ToPrettyString(target):user} state changed from {oldState} to {newState}");
         Dirty(target, component);
     }
 

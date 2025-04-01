@@ -18,15 +18,15 @@
     slots:
       - Belt
   - type: ToolTileCompatible
+    delay: 0.5
   - type: Tool
     qualities:
       - Prying
-    speed: 1.5
     useSound: /Audio/Items/jaws_pry.ogg
   - type: Prying
+    speedModifier: 1.5
     pryPowered: true
     useSound: /Audio/Items/jaws_pry.ogg
-  - type: ToolForcePowered
   - type: MultipleTool
     statusShowBehavior: true
     entries:
@@ -52,7 +52,7 @@
 
 - type: entity
   name: syndicate jaws of life
-  parent: JawsOfLife
+  parent: [JawsOfLife, BaseSyndicateContraband]
   id: SyndicateJawsOfLife
   description: Useful for entering the station or its departments.
   components:
@@ -66,10 +66,8 @@
       right:
       - state: syn_inhand-right
     size: Normal
-  - type: Tool
-    qualities:
-      - Prying
-    speed: 3.0
+  - type: Prying
+    speedModifier: 3.0
   - type: MultipleTool
     entries:
       - behavior: Prying

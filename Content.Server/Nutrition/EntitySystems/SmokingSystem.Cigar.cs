@@ -18,7 +18,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnCigarActivatedEvent(Entity<CigarComponent> entity, ref ActivateInWorldEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !args.Complex)
                 return;
 
             if (!EntityManager.TryGetComponent(entity, out SmokableComponent? smokable))

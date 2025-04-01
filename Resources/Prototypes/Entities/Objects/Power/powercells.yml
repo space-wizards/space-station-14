@@ -73,9 +73,6 @@
   - type: Battery
     maxCharge: 360
     startingCharge: 360
-  - type: MachinePart
-    part: PowerCell
-    rating: 1
   - type: Tag
     tags:
       - PowerCellSmall
@@ -114,9 +111,6 @@
   - type: Battery
     maxCharge: 720
     startingCharge: 720
-  - type: MachinePart
-    part: PowerCell
-    rating: 2
 
 - type: entity
   id: PowerCellMediumPrinted
@@ -152,9 +146,6 @@
   - type: Battery
     maxCharge: 1080
     startingCharge: 1080
-  - type: MachinePart
-    part: PowerCell
-    rating: 3
 
 - type: entity
   id: PowerCellHighPrinted
@@ -190,9 +181,6 @@
   - type: Battery
     maxCharge: 1800
     startingCharge: 1800
-  - type: MachinePart
-    part: PowerCell
-    rating: 4
 
 - type: entity
   id: PowerCellHyperPrinted

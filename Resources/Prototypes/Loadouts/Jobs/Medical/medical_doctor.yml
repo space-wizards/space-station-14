@@ -33,69 +33,41 @@
 
 - type: loadout
   id: SeniorPhysicianBeret
-  equipment: SeniorPhysicianBeret
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorPhysician
-
-- type: startingGear
-  id: SeniorPhysicianBeret
   equipment:
     head: ClothingHeadHatBeretSeniorPhysician
 
 - type: loadout
   id: MedicalHeadMirror
-  equipment: MedicalHeadMirror
   effects:
   - !type:GroupLoadoutEffect
     proto: MedicalHeadMirrorTimer
-
-- type: startingGear
-  id: MedicalHeadMirror
   equipment:
     head: ClothingHeadMirror
 
 - type: loadout
-  id: MedicalBeret
-  equipment: MedicalBeret
-
-- type: startingGear
   id: MedicalBeret
   equipment:
     head: ClothingHeadHatBeretMedic
 
 - type: loadout
   id: BlueSurgeryCap
-  equipment: BlueSurgeryCap
-
-- type: startingGear
-  id: BlueSurgeryCap
   equipment:
     head: ClothingHeadHatSurgcapBlue
 
 - type: loadout
-  id: GreenSurgeryCap
-  equipment: GreenSurgeryCap
-
-- type: startingGear
   id: GreenSurgeryCap
   equipment:
     head: ClothingHeadHatSurgcapGreen
 
 - type: loadout
   id: PurpleSurgeryCap
-  equipment: PurpleSurgeryCap
-
-- type: startingGear
-  id: PurpleSurgeryCap
   equipment:
     head: ClothingHeadHatSurgcapPurple
 
 - type: loadout
-  id: NurseHat
-  equipment: NurseHat
-
-- type: startingGear
   id: NurseHat
   equipment:
     head: ClothingHeadNurseHat
@@ -103,69 +75,41 @@
 # Jumpsuit
 - type: loadout
   id: MedicalDoctorJumpsuit
-  equipment: MedicalDoctorJumpsuit
-
-- type: startingGear
-  id: MedicalDoctorJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitMedicalDoctor
 
 - type: loadout
-  id: MedicalDoctorJumpskirt
-  equipment: MedicalDoctorJumpskirt
-
-- type: startingGear
   id: MedicalDoctorJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtMedicalDoctor
 
 - type: loadout
   id: SeniorPhysicianJumpsuit
-  equipment: SeniorPhysicianJumpsuit
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorPhysician
-
-- type: startingGear
-  id: SeniorPhysicianJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorPhysician
 
 - type: loadout
   id: SeniorPhysicianJumpskirt
-  equipment: SeniorPhysicianJumpskirt
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorPhysician
-
-- type: startingGear
-  id: SeniorPhysicianJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorPhysician
 
 - type: loadout
-  id: MedicalBlueScrubs
-  equipment: MedicalBlueScrubs
-
-- type: startingGear
   id: MedicalBlueScrubs
   equipment:
     jumpsuit: UniformScrubsColorBlue
 
 - type: loadout
   id: MedicalGreenScrubs
-  equipment: MedicalGreenScrubs
-
-- type: startingGear
-  id: MedicalGreenScrubs
   equipment:
     jumpsuit: UniformScrubsColorGreen
 
 - type: loadout
-  id: MedicalPurpleScrubs
-  equipment: MedicalPurpleScrubs
-
-- type: startingGear
   id: MedicalPurpleScrubs
   equipment:
     jumpsuit: UniformScrubsColorPurple
@@ -173,59 +117,35 @@
 # Back
 - type: loadout
   id: MedicalDoctorBackpack
-  equipment: MedicalDoctorBackpack
-
-- type: startingGear
-  id: MedicalDoctorBackpack
   equipment:
-    back: ClothingBackpackMedicalFilled
+    back: ClothingBackpackMedical
 
 - type: loadout
   id: MedicalDoctorSatchel
-  equipment: MedicalDoctorSatchel
-
-- type: startingGear
-  id: MedicalDoctorSatchel
   equipment:
-    back: ClothingBackpackSatchelMedicalFilled
+    back: ClothingBackpackSatchelMedical
 
 - type: loadout
   id: MedicalDoctorDuffel
-  equipment: MedicalDoctorDuffel
-
-- type: startingGear
-  id: MedicalDoctorDuffel
   equipment:
-    back: ClothingBackpackDuffelMedicalFilled
+    back: ClothingBackpackDuffelMedical
 
 # OuterClothing
 - type: loadout
-  id: MedicalDoctorWintercoat
-  equipment: MedicalDoctorWintercoat
-
-- type: startingGear
   id: MedicalDoctorWintercoat
   equipment:
     outerClothing: ClothingOuterWinterMed
 
 - type: loadout
   id: SeniorPhysicianLabCoat
-  equipment: SeniorPhysicianLabCoat
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorPhysician
-
-- type: startingGear
-  id: SeniorPhysicianLabCoat
   equipment:
     outerClothing: ClothingOuterCoatLabSeniorPhysician
 
 # Shoes
 - type: loadout
-  id: MedicalWinterBoots
-  equipment: MedicalWinterBoots
-
-- type: startingGear
   id: MedicalWinterBoots
   equipment:
     shoes: ClothingShoesBootsWinterMed
@@ -233,41 +153,25 @@
 # ID
 - type: loadout
   id: MedicalDoctorPDA
-  equipment: MedicalDoctorPDA
-
-- type: startingGear
-  id: MedicalDoctorPDA
   equipment:
     id: MedicalPDA
 
 - type: loadout
   id: SeniorPhysicianPDA
-  equipment: SeniorPhysicianPDA
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorPhysician
-
-- type: startingGear
-  id: SeniorPhysicianPDA
   equipment:
     id: SeniorPhysicianPDA
 
 # Gloves
 - type: loadout
   id: NitrileGloves
-  equipment: NitrileGloves
-
-- type: startingGear
-  id: NitrileGloves
   equipment:
     gloves: ClothingHandsGlovesNitrile
 
 #Masks
 - type: loadout
-  id: SterileMask
-  equipment: SterileMask
-
-- type: startingGear
   id: SterileMask
   equipment:
     mask: ClothingMaskSterile

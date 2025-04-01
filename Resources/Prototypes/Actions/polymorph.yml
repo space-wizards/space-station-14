@@ -2,14 +2,12 @@
   id: ActionRevertPolymorph
   name: Revert
   description: Revert back into your original form.
-  noSpawn: true
   components:
   - type: InstantAction
     event: !type:RevertPolymorphActionEvent
 
 - type: entity
   id: ActionPolymorph
-  noSpawn: true
   components:
   - type: InstantAction
     event: !type:PolymorphActionEvent
@@ -19,7 +17,6 @@
   id: ActionPolymorphWizardSpider
   name: Spider Polymorph
   description: Polymorphs you into a Spider.
-  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 60
@@ -34,7 +31,6 @@
   id: ActionPolymorphWizardRod
   name: Rod Form
   description: CLANG!
-  noSpawn: true
   components:
   - type: InstantAction
     useDelay: 60
@@ -44,3 +40,53 @@
     icon:
       sprite: Objects/Fun/immovable_rod.rsi
       state: icon
+
+- type: entity
+  id: ActionPolymorphJaunt
+  name: Ethereal Jaunt
+  description: Melt into the Ethereal Plane for a quick getaway!
+  components:
+  - type: Magic
+  - type: InstantAction
+    useDelay: 30
+    event: !type:PolymorphActionEvent
+      protoId: Jaunt
+    itemIconStyle: NoItem
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: jaunt
+    # TODO: Effect ECS (from cardboard box)
+  - type: ActionUpgrade
+    effectedLevels:
+      2: ActionPolymorphJauntII
+      3: ActionPolymorphJauntIII
+
+- type: entity
+  id: ActionPolymorphJauntII
+  parent: ActionPolymorphJaunt
+  name: Ethereal Jaunt II
+  description: Melt into the Ethereal Plane for an even quicker getaway!
+  components:
+  - type: InstantAction
+    useDelay: 25
+    event: !type:PolymorphActionEvent
+      protoId: Jaunt
+    itemIconStyle: NoItem
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: jaunt
+
+- type: entity
+  id: ActionPolymorphJauntIII
+  parent: ActionPolymorphJaunt
+  name: Ethereal Jaunt III
+  description: Are you even tangible anymore?
+  components:
+  - type: InstantAction
+    useDelay: 20
+    event: !type:PolymorphActionEvent
+      protoId: Jaunt
+    itemIconStyle: NoItem
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: jaunt

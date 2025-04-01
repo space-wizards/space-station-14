@@ -1,108 +1,105 @@
-using Content.Server.Antag;
-using Content.Server.GameTicking.Components;
+using System.Linq;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.GridPreloader;
-using Content.Server.Spawners.Components;
+using Content.Server.StationEvents.Events;
+using Content.Shared.GameTicking.Components;
 using Robust.Server.GameObjects;
-using Robust.Server.Maps;
+using Robust.Shared.EntitySerialization;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
+public sealed class LoadMapRuleSystem : StationEventSystem<LoadMapRuleComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoader = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly GridPreloaderSystem _gridPreloader = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<LoadMapRuleComponent, AntagSelectLocationEvent>(OnSelectLocation);
-        SubscribeLocalEvent<GridSplitEvent>(OnGridSplit);
-    }
-
-    private void OnGridSplit(ref GridSplitEvent args)
-    {
-        var rule = QueryActiveRules();
-        while (rule.MoveNext(out _, out var mapComp, out _))
-        {
-            if (!mapComp.MapGrids.Contains(args.Grid))
-                continue;
-
-            mapComp.MapGrids.AddRange(args.NewGrids);
-            break;
-        }
-    }
-
     protected override void Added(EntityUid uid, LoadMapRuleComponent comp, GameRuleComponent rule, GameRuleAddedEvent args)
     {
-        if (comp.Map != null)
+        if (comp.PreloadedGrid != null && !_gridPreloader.PreloadingEnabled)
+        {
+            // Preloading will never work if it's disabled, duh
+            Log.Debug($"Immediately ending {ToPrettyString(uid):rule} as preloading grids is disabled by cvar.");
+            ForceEndSelf(uid, rule);
             return;
+        }
 
-        // grid preloading needs map to init after moving it
-        var mapUid = comp.PreloadedGrid != null ? _map.CreateMap(out var mapId, false) : _map.CreateMap(out mapId);
-        _metaData.SetEntityName(mapUid, $"LoadMapRule destination for rule {ToPrettyString(uid)}");
-        comp.Map = mapId;
-
+        MapId mapId;
+        IReadOnlyList<EntityUid> grids;
         if (comp.GameMap != null)
         {
+            // Component has one of three modes, only one of the three fields should ever be populated.
+            DebugTools.AssertNull(comp.MapPath);
+            DebugTools.AssertNull(comp.GridPath);
+            DebugTools.AssertNull(comp.PreloadedGrid);
+
             var gameMap = _prototypeManager.Index(comp.GameMap.Value);
-            comp.MapGrids.AddRange(GameTicker.LoadGameMap(gameMap, comp.Map.Value, new MapLoadOptions()));
+            grids = GameTicker.LoadGameMap(gameMap, out mapId, null);
+            Log.Info($"Created map {mapId} for {ToPrettyString(uid):rule}");
         }
-        else if (comp.MapPath != null)
+        else if (comp.MapPath is {} path)
         {
-            if (!_mapLoader.TryLoad(comp.Map.Value,
-                    comp.MapPath.Value.ToString(),
-                    out var roots,
-                    new MapLoadOptions { LoadMap = true }))
+            DebugTools.AssertNull(comp.GridPath);
+            DebugTools.AssertNull(comp.PreloadedGrid);
+
+            var opts = DeserializationOptions.Default with {InitializeMaps = true};
+            if (!_mapLoader.TryLoadMap(path, out var map, out var gridSet, opts))
             {
-                _mapManager.DeleteMap(mapId);
+                Log.Error($"Failed to load map from {path}!");
+                ForceEndSelf(uid, rule);
                 return;
             }
 
-            comp.MapGrids.AddRange(roots);
+            grids = gridSet.Select( x => x.Owner).ToList();
+            mapId = map.Value.Comp.MapId;
         }
-        else if (comp.PreloadedGrid != null)
+        else if (comp.GridPath is { } gPath)
+        {
+            DebugTools.AssertNull(comp.PreloadedGrid);
+
+            // I fucking love it when "map paths" choses to ar
+            _map.CreateMap(out mapId);
+            var opts = DeserializationOptions.Default with {InitializeMaps = true};
+            if (!_mapLoader.TryLoadGrid(mapId, gPath, out var grid, opts))
+            {
+                Log.Error($"Failed to load grid from {gPath}!");
+                ForceEndSelf(uid, rule);
+                return;
+            }
+
+            grids = new List<EntityUid> {grid.Value.Owner};
+        }
+        else if (comp.PreloadedGrid is {} preloaded)
         {
             // TODO: If there are no preloaded grids left, any rule announcements will still go off!
-            if (!_gridPreloader.TryGetPreloadedGrid(comp.PreloadedGrid.Value, out var loadedShuttle))
+            if (!_gridPreloader.TryGetPreloadedGrid(preloaded, out var loadedShuttle))
             {
-                _mapManager.DeleteMap(mapId);
+                Log.Error($"Failed to get a preloaded grid with {preloaded}!");
+                ForceEndSelf(uid, rule);
                 return;
             }
 
+            var mapUid = _map.CreateMap(out mapId, runMapInit: false);
             _transform.SetParent(loadedShuttle.Value, mapUid);
-            comp.MapGrids.Add(loadedShuttle.Value);
-            _map.InitializeMap(mapId);
+            grids = new List<EntityUid>() { loadedShuttle.Value };
+            _map.InitializeMap(mapUid);
         }
         else
         {
             Log.Error($"No valid map prototype or map path associated with the rule {ToPrettyString(uid)}");
+            ForceEndSelf(uid, rule);
+            return;
         }
-    }
 
-    private void OnSelectLocation(Entity<LoadMapRuleComponent> ent, ref AntagSelectLocationEvent args)
-    {
-        var query = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out _, out var xform))
-        {
-            if (xform.MapID != ent.Comp.Map)
-                continue;
+        var ev = new RuleLoadedGridsEvent(mapId, grids);
+        RaiseLocalEvent(uid, ref ev);
 
-            if (xform.GridUid == null || !ent.Comp.MapGrids.Contains(xform.GridUid.Value))
-                continue;
-
-            if (ent.Comp.SpawnerWhitelist != null && !ent.Comp.SpawnerWhitelist.IsValid(uid, EntityManager))
-                continue;
-
-            args.Coordinates.Add(_transform.GetMapCoordinates(xform));
-        }
+        base.Added(uid, comp, rule, args);
     }
 }

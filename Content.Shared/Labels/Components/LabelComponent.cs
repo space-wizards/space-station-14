@@ -16,9 +16,8 @@ public sealed partial class LabelComponent : Component
     public string? CurrentLabel { get; set; }
 
     /// <summary>
-    ///  The original name of the entity
-    ///  Used for reverting the modified entity name when the label is removed
+    /// Should the label show up in the examine menu?
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string? OriginalName { get; set; }
+    public bool Examinable = true;
 }

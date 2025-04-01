@@ -1,12 +1,15 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24, chinese from paradise, ticket by peptide, cnds-trash based on boritos-trash and syndicakes modified by potato1234x",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24, chinese from paradise, ticket by peptide, cnds-trash based on boritos-trash and syndicakes modified by potato1234x, ramen from https://github.com/discordia-space/CEV-Eris/raw/f7aa28fd4b4d0386c3393d829681ebca526f1d2d/icons/obj/drinks.dmi",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
+    {
+      "name": "ramen"
+    },
     {
       "name": "boritos"
     },

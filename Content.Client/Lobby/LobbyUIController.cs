@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.Guidebook;
 using Content.Client.Humanoid;
 using Content.Client.Inventory;
 using Content.Client.Lobby.UI;
@@ -22,7 +23,6 @@ using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Lobby;
@@ -42,9 +42,11 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     [UISystemDependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
     [UISystemDependency] private readonly ClientInventorySystem _inventory = default!;
     [UISystemDependency] private readonly StationSpawningSystem _spawn = default!;
+    [UISystemDependency] private readonly GuidebookSystem _guide = default!;
 
     private CharacterSetupGui? _characterSetup;
     private HumanoidProfileEditor? _profileEditor;
+    private CharacterSetupGuiSavePanel? _savePanel;
 
     /// <summary>
     /// This is the characher preview panel in the chat. This should only update if their character updates.
@@ -70,12 +72,9 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             _profileEditor?.RefreshFlavorText();
         });
 
-        _configurationManager.OnValueChanged(CCVars.GameRoleTimers, args =>
-        {
-            _profileEditor?.RefreshAntags();
-            _profileEditor?.RefreshJobs();
-            _profileEditor?.RefreshLoadouts();
-        });
+        _configurationManager.OnValueChanged(CCVars.GameRoleTimers, _ => RefreshProfileEditor());
+
+        _configurationManager.OnValueChanged(CCVars.GameRoleWhitelist, _ => RefreshProfileEditor());
     }
 
     private LobbyCharacterPreviewPanel? GetLobbyPreview()
@@ -193,6 +192,13 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         PreviewPanel.SetSummaryText(humanoid.Summary);
     }
 
+    private void RefreshProfileEditor()
+    {
+        _profileEditor?.RefreshAntags();
+        _profileEditor?.RefreshJobs();
+        _profileEditor?.RefreshLoadouts();
+    }
+
     private void SaveProfile()
     {
         DebugTools.Assert(EditedProfile != null);
@@ -207,6 +213,46 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
         _preferencesManager.UpdateCharacter(EditedProfile, EditedSlot.Value);
         ReloadCharacterSetup();
+    }
+
+    private void CloseProfileEditor()
+    {
+        if (_profileEditor == null)
+            return;
+
+        _profileEditor.SetProfile(null, null);
+        _profileEditor.Visible = false;
+
+        if (_stateManager.CurrentState is LobbyState lobbyGui)
+        {
+            lobbyGui.SwitchState(LobbyGui.LobbyGuiState.Default);
+        }
+    }
+
+    private void OpenSavePanel()
+    {
+        if (_savePanel is { IsOpen: true })
+            return;
+
+        _savePanel = new CharacterSetupGuiSavePanel();
+
+        _savePanel.SaveButton.OnPressed += _ =>
+        {
+            SaveProfile();
+
+            _savePanel.Close();
+
+            CloseProfileEditor();
+        };
+
+        _savePanel.NoSaveButton.OnPressed += _ =>
+        {
+            _savePanel.Close();
+
+            CloseProfileEditor();
+        };
+
+        _savePanel.OpenCentered();
     }
 
     private (CharacterSetupGui, HumanoidProfileEditor) EnsureGui()
@@ -226,21 +272,26 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             _logManager,
             _playerManager,
             _prototypeManager,
+            _resourceCache,
             _requirements,
             _markings);
 
-        _characterSetup = new CharacterSetupGui(EntityManager, _prototypeManager, _resourceCache, _preferencesManager, _profileEditor);
+        _profileEditor.OnOpenGuidebook += _guide.OpenHelp;
+
+        _characterSetup = new CharacterSetupGui(_profileEditor);
 
         _characterSetup.CloseButton.OnPressed += _ =>
         {
-            // Reset sliders etc.
-            _profileEditor.SetProfile(null, null);
-            _profileEditor.Visible = false;
-
-            if (_stateManager.CurrentState is LobbyState lobbyGui)
+            // Open the save panel if we have unsaved changes.
+            if (_profileEditor.Profile != null && _profileEditor.IsDirty)
             {
-                lobbyGui.SwitchState(LobbyGui.LobbyGuiState.Default);
+                OpenSavePanel();
+
+                return;
             }
+
+            // Reset sliders etc.
+            CloseProfileEditor();
         };
 
         _profileEditor.Save += SaveProfile;
@@ -287,7 +338,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
         if (_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
         {
-            var loadout = profile.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), profile.Species, EntityManager, _prototypeManager);
+            var loadout = profile.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), _playerManager.LocalSession, profile.Species, EntityManager, _prototypeManager);
             GiveDummyLoadout(dummy, loadout);
         }
     }
@@ -299,7 +350,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     {
         var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
         // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract (what is resharper smoking?)
-        return _prototypeManager.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
+        return _prototypeManager.Index<JobPrototype>(highPriorityJob.Id ?? SharedGameTicker.FallbackOverflowJob);
     }
 
     public void GiveDummyLoadout(EntityUid uid, RoleLoadout? roleLoadout)
@@ -314,7 +365,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
                 if (!_prototypeManager.TryIndex(loadout.Prototype, out var loadoutProto))
                     continue;
 
-                _spawn.EquipStartingGear(uid, _prototypeManager.Index(loadoutProto.Equipment));
+                _spawn.EquipStartingGear(uid, loadoutProto);
             }
         }
     }
@@ -337,36 +388,51 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
                     if (!_prototypeManager.TryIndex(loadout.Prototype, out var loadoutProto))
                         continue;
 
-                    // TODO: Need some way to apply starting gear to an entity coz holy fucking shit dude.
-                    var loadoutGear = _prototypeManager.Index(loadoutProto.Equipment);
-
+                    // TODO: Need some way to apply starting gear to an entity and replace existing stuff coz holy fucking shit dude.
                     foreach (var slot in slots)
                     {
-                        var itemType = loadoutGear.GetGear(slot.Name);
-
-                        if (_inventory.TryUnequip(dummy, slot.Name, out var unequippedItem, silent: true, force: true, reparent: false))
+                        // Try startinggear first
+                        if (_prototypeManager.TryIndex(loadoutProto.StartingGear, out var loadoutGear))
                         {
-                            EntityManager.DeleteEntity(unequippedItem.Value);
+                            var itemType = ((IEquipmentLoadout) loadoutGear).GetGear(slot.Name);
+
+                            if (_inventory.TryUnequip(dummy, slot.Name, out var unequippedItem, silent: true, force: true, reparent: false))
+                            {
+                                EntityManager.DeleteEntity(unequippedItem.Value);
+                            }
+
+                            if (itemType != string.Empty)
+                            {
+                                var item = EntityManager.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                                _inventory.TryEquip(dummy, item, slot.Name, true, true);
+                            }
                         }
-
-                        if (itemType != string.Empty)
+                        else
                         {
-                            var item = EntityManager.SpawnEntity(itemType, MapCoordinates.Nullspace);
-                            _inventory.TryEquip(dummy, item, slot.Name, true, true);
+                            var itemType = ((IEquipmentLoadout) loadoutProto).GetGear(slot.Name);
+
+                            if (_inventory.TryUnequip(dummy, slot.Name, out var unequippedItem, silent: true, force: true, reparent: false))
+                            {
+                                EntityManager.DeleteEntity(unequippedItem.Value);
+                            }
+
+                            if (itemType != string.Empty)
+                            {
+                                var item = EntityManager.SpawnEntity(itemType, MapCoordinates.Nullspace);
+                                _inventory.TryEquip(dummy, item, slot.Name, true, true);
+                            }
                         }
                     }
                 }
             }
         }
 
-        if (job.StartingGear == null)
+        if (!_prototypeManager.TryIndex(job.StartingGear, out var gear))
             return;
-
-        var gear = _prototypeManager.Index<StartingGearPrototype>(job.StartingGear);
 
         foreach (var slot in slots)
         {
-            var itemType = gear.GetGear(slot.Name);
+            var itemType = ((IEquipmentLoadout) gear).GetGear(slot.Name);
 
             if (_inventory.TryUnequip(dummy, slot.Name, out var unequippedItem, silent: true, force: true, reparent: false))
             {
@@ -388,7 +454,21 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     {
         EntityUid dummyEnt;
 
-        if (humanoid is not null)
+        EntProtoId? previewEntity = null;
+        if (humanoid != null && jobClothes)
+        {
+            job ??= GetPreferredJob(humanoid);
+
+            previewEntity = job.JobPreviewEntity ?? (EntProtoId?)job?.JobEntity;
+        }
+
+        if (previewEntity != null)
+        {
+            // Special type like borg or AI, do not spawn a human just spawn the entity.
+            dummyEnt = EntityManager.SpawnEntity(previewEntity, MapCoordinates.Nullspace);
+            return dummyEnt;
+        }
+        else if (humanoid is not null)
         {
             var dummy = _prototypeManager.Index<SpeciesPrototype>(humanoid.Species).DollPrototype;
             dummyEnt = EntityManager.SpawnEntity(dummy, MapCoordinates.Nullspace);
@@ -402,12 +482,13 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
         if (humanoid != null && jobClothes)
         {
-            job ??= GetPreferredJob(humanoid);
+            DebugTools.Assert(job != null);
+
             GiveDummyJobClothes(dummyEnt, humanoid, job);
 
             if (_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
             {
-                var loadout = humanoid.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), humanoid.Species, EntityManager, _prototypeManager);
+                var loadout = humanoid.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), _playerManager.LocalSession, humanoid.Species, EntityManager, _prototypeManager);
                 GiveDummyLoadout(dummyEnt, loadout);
             }
         }

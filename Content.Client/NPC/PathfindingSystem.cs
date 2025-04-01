@@ -203,7 +203,7 @@ namespace Content.Client.NPC
                     if (found || !_system.Breadcrumbs.TryGetValue(netGrid, out var crumbs) || !xformQuery.TryGetComponent(grid, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    var (_, _, worldMatrix, invWorldMatrix) = _transformSystem.GetWorldPositionRotationMatrixWithInv(gridXform);
                     var localAABB = invWorldMatrix.TransformBox(aabb.Enlarged(float.Epsilon - SharedPathfindingSystem.ChunkSize));
 
                     foreach (var chunk in crumbs)
@@ -223,7 +223,7 @@ namespace Content.Client.NPC
 
                         foreach (var crumb in chunk.Value)
                         {
-                            var crumbMapPos = worldMatrix.Transform(_system.GetCoordinate(chunk.Key, crumb.Coordinates));
+                            var crumbMapPos = Vector2.Transform(_system.GetCoordinate(chunk.Key, crumb.Coordinates), worldMatrix);
                             var distance = (crumbMapPos - mouseWorldPos.Position).Length();
 
                             if (distance < nearestDistance)
@@ -287,12 +287,12 @@ namespace Content.Client.NPC
                     return;
                 }
 
-                var invGridMatrix = gridXform.InvWorldMatrix;
+                var invGridMatrix = _transformSystem.GetInvWorldMatrix(gridXform);
                 DebugPathPoly? nearest = null;
 
                 foreach (var poly in tile)
                 {
-                    if (poly.Box.Contains(invGridMatrix.Transform(mouseWorldPos.Position)))
+                    if (poly.Box.Contains(Vector2.Transform(mouseWorldPos.Position, invGridMatrix)))
                     {
                         nearest = poly;
                         break;
@@ -359,7 +359,7 @@ namespace Content.Client.NPC
                         continue;
                     }
 
-                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    var (_, _, worldMatrix, invWorldMatrix) = _transformSystem.GetWorldPositionRotationMatrixWithInv(gridXform);
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invWorldMatrix.TransformBox(aabb);
 
@@ -419,7 +419,7 @@ namespace Content.Client.NPC
                         !xformQuery.TryGetComponent(grid, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    var (_, _, worldMatrix, invWorldMatrix) = _transformSystem.GetWorldPositionRotationMatrixWithInv(gridXform);
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invWorldMatrix.TransformBox(aabb);
 
@@ -458,7 +458,7 @@ namespace Content.Client.NPC
                         !xformQuery.TryGetComponent(grid, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    var (_, _, worldMatrix, invMatrix) = _transformSystem.GetWorldPositionRotationMatrixWithInv(gridXform);
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invMatrix.TransformBox(aabb);
 
@@ -483,12 +483,12 @@ namespace Content.Client.NPC
                                     if (neighborPoly.NetEntity != poly.GraphUid)
                                     {
                                         color = Color.Green;
-                                        var neighborMap = _entManager.GetCoordinates(neighborPoly).ToMap(_entManager, _transformSystem);
+                                        var neighborMap = _transformSystem.ToMapCoordinates(_entManager.GetCoordinates(neighborPoly));
 
                                         if (neighborMap.MapId != args.MapId)
                                             continue;
 
-                                        neighborPos = invMatrix.Transform(neighborMap.Position);
+                                        neighborPos = Vector2.Transform(neighborMap.Position, invMatrix);
                                     }
                                     else
                                     {
@@ -517,7 +517,7 @@ namespace Content.Client.NPC
                         !xformQuery.TryGetComponent(grid, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    var (_, _, worldMatrix, invWorldMatrix) = _transformSystem.GetWorldPositionRotationMatrixWithInv(gridXform);
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invWorldMatrix.TransformBox(args.WorldBounds);
 
@@ -544,7 +544,7 @@ namespace Content.Client.NPC
                         if (!_entManager.TryGetComponent<TransformComponent>(_entManager.GetEntity(node.GraphUid), out var graphXform))
                             continue;
 
-                        worldHandle.SetTransform(graphXform.WorldMatrix);
+                        worldHandle.SetTransform(_transformSystem.GetWorldMatrix(graphXform));
                         worldHandle.DrawRect(node.Box, Color.Orange.WithAlpha(0.10f));
                     }
                 }
@@ -568,7 +568,7 @@ namespace Content.Client.NPC
                                 continue;
 
                             matrix = graph;
-                            worldHandle.SetTransform(graphXform.WorldMatrix);
+                            worldHandle.SetTransform(_transformSystem.GetWorldMatrix(graphXform));
                         }
 
                         worldHandle.DrawRect(node.Box, new Color(0f, cost / highestGScore, 1f - (cost / highestGScore), 0.10f));
@@ -576,7 +576,7 @@ namespace Content.Client.NPC
                 }
             }
 
-            worldHandle.SetTransform(Matrix3.Identity);
+            worldHandle.SetTransform(Matrix3x2.Identity);
         }
     }
 }

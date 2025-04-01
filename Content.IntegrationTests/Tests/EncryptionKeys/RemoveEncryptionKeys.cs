@@ -22,7 +22,7 @@ public sealed class RemoveEncryptionKeys : InteractionTest
         });
 
         // Remove the key
-        await Interact(Screw);
+        await InteractUsing(Screw);
         Assert.Multiple(() =>
         {
             Assert.That(comp.KeyContainer.ContainedEntities, Has.Count.EqualTo(0));
@@ -34,7 +34,7 @@ public sealed class RemoveEncryptionKeys : InteractionTest
         await AssertEntityLookup(("EncryptionKeyCommon", 1));
 
         // Re-insert a key.
-        await Interact("EncryptionKeyCentCom");
+        await InteractUsing("EncryptionKeyCentCom");
         Assert.Multiple(() =>
         {
             Assert.That(comp.KeyContainer.ContainedEntities, Has.Count.EqualTo(1));
@@ -59,7 +59,7 @@ public sealed class RemoveEncryptionKeys : InteractionTest
         });
 
         // cannot remove keys without opening panel
-        await Interact(Pry);
+        await InteractUsing(Pry);
         Assert.Multiple(() =>
         {
             Assert.That(comp.KeyContainer.ContainedEntities, Has.Count.GreaterThan(0));
@@ -68,7 +68,7 @@ public sealed class RemoveEncryptionKeys : InteractionTest
         });
 
         // Open panel
-        await Interact(Screw);
+        await InteractUsing(Screw);
         Assert.Multiple(() =>
         {
             Assert.That(panel.Open, Is.True);
@@ -79,7 +79,7 @@ public sealed class RemoveEncryptionKeys : InteractionTest
         });
 
         // Now remove the keys
-        await Interact(Pry);
+        await InteractUsing(Pry);
         Assert.Multiple(() =>
         {
             Assert.That(comp.KeyContainer.ContainedEntities, Has.Count.EqualTo(0));
@@ -87,7 +87,7 @@ public sealed class RemoveEncryptionKeys : InteractionTest
         });
 
         // Reinsert a key
-        await Interact("EncryptionKeyCentCom");
+        await InteractUsing("EncryptionKeyCentCom");
         Assert.Multiple(() =>
         {
             Assert.That(comp.KeyContainer.ContainedEntities, Has.Count.EqualTo(1));
@@ -97,7 +97,7 @@ public sealed class RemoveEncryptionKeys : InteractionTest
         });
 
         // Remove it again
-        await Interact(Pry);
+        await InteractUsing(Pry);
         Assert.Multiple(() =>
         {
             Assert.That(comp.KeyContainer.ContainedEntities, Has.Count.EqualTo(0));
@@ -106,7 +106,7 @@ public sealed class RemoveEncryptionKeys : InteractionTest
 
         // Prying again will start deconstructing the machine.
         AssertPrototype("TelecomServerFilled");
-        await Interact(Pry);
+        await InteractUsing(Pry);
         AssertPrototype("MachineFrame");
     }
 }

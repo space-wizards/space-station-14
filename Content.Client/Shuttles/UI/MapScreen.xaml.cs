@@ -261,7 +261,7 @@ public sealed partial class MapScreen : BoxContainer
             ourMap = shuttleXform.MapID;
         }
 
-        while (mapComps.MoveNext(out var mapComp, out var mapXform, out var mapMetadata))
+        while (mapComps.MoveNext(out var mapUid, out var mapComp, out var mapXform, out var mapMetadata))
         {
             if (_console != null && !_shuttles.CanFTLTo(_shuttleEntity.Value, mapComp.MapId, _console.Value))
             {
@@ -311,7 +311,7 @@ public sealed partial class MapScreen : BoxContainer
             };
 
             _mapHeadings.Add(mapComp.MapId, gridContents);
-            foreach (var grid in _mapManager.GetAllMapGrids(mapComp.MapId))
+            foreach (var grid in _mapManager.GetAllGrids(mapComp.MapId))
             {
                 _entManager.TryGetComponent(grid.Owner, out IFFComponent? iffComp);
 
@@ -327,8 +327,10 @@ public sealed partial class MapScreen : BoxContainer
                 {
                     AddMapObject(mapComp.MapId, gridObj);
                 }
-                else if (!_shuttles.IsBeaconMap(_mapManager.GetMapEntityId(mapComp.MapId)) && (iffComp == null ||
-                         (iffComp.Flags & IFFFlags.Hide) == 0x0))
+                // If we can show it then add it to pending.
+                else if (!_shuttles.IsBeaconMap(mapUid) && (iffComp == null ||
+                         (iffComp.Flags & IFFFlags.Hide) == 0x0) &&
+                         !gridObj.HideButton)
                 {
                     _pendingMapObjects.Add((mapComp.MapId, gridObj));
                 }
@@ -336,11 +338,17 @@ public sealed partial class MapScreen : BoxContainer
 
             foreach (var (beacon, _) in _shuttles.GetExclusions(mapComp.MapId, _exclusions))
             {
+                if (beacon.HideButton)
+                    continue;
+
                 _pendingMapObjects.Add((mapComp.MapId, beacon));
             }
 
             foreach (var (beacon, _) in _shuttles.GetBeacons(mapComp.MapId, _beacons))
             {
+                if (beacon.HideButton)
+                    continue;
+
                 _pendingMapObjects.Add((mapComp.MapId, beacon));
             }
 
@@ -424,9 +432,6 @@ public sealed partial class MapScreen : BoxContainer
     {
         var existing = _mapObjects.GetOrNew(mapId);
         existing.Add(mapObj);
-
-        if (mapObj.HideButton)
-            return;
 
         var gridContents = _mapHeadings[mapId];
 

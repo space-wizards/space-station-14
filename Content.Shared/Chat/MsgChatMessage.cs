@@ -11,8 +11,19 @@ namespace Content.Shared.Chat
     public sealed class ChatMessage
     {
         public ChatChannel Channel;
+
+        /// <summary>
+        /// This is the text spoken by the entity, after accents and such were applied.
+        /// This should have <see cref="FormattedMessage.EscapeText"/> applied before using it in any rich text box.
+        /// </summary>
         public string Message;
+
+        /// <summary>
+        /// This is the <see cref="Message"/> but with special characters escaped and wrapped in some rich text
+        /// formatting tags.
+        /// </summary>
         public string WrappedMessage;
+
         public NetEntity SenderEntity;
 
         /// <summary>

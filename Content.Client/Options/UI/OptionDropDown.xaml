@@ -1,0 +1,6 @@
+﻿<Control xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Horizontal">
+        <Label Name="NameLabel" MinWidth="400" />
+        <OptionButton Name="Button" Access="Public" />
+    </BoxContainer>
+</Control>

@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: BlockGameGoodbyes
+  values:
+    prefix: thankyou-block-game-
+    count: 12
+
+- type: localizedDataset
+  id: SpaceVillainGoodbyes
+  values:
+    prefix: thankyou-space-villain-
+    count: 12

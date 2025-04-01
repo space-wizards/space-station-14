@@ -110,8 +110,8 @@ public abstract class SharedItemSystem : EntitySystem
 
         // if the item already in a container (that is not the same as the user's), then change the text.
         // this occurs when the item is in their inventory or in an open backpack
-        Container.TryGetContainingContainer(args.User, out var userContainer);
-        if (Container.TryGetContainingContainer(args.Target, out var container) && container != userContainer)
+        Container.TryGetContainingContainer((args.User, null, null), out var userContainer);
+        if (Container.TryGetContainingContainer((args.Target, null, null), out var container) && container != userContainer)
             verb.Text = Loc.GetString("pick-up-verb-get-data-text-inventory");
         else
             verb.Text = Loc.GetString("pick-up-verb-get-data-text");
@@ -192,7 +192,7 @@ public abstract class SharedItemSystem : EntitySystem
         var shapes = GetItemShape(entity);
         var boundingShape = shapes.GetBoundingBox();
         var boundingCenter = ((Box2) boundingShape).Center;
-        var matty = Matrix3.CreateTransform(boundingCenter, rotation);
+        var matty = Matrix3Helpers.CreateTransform(boundingCenter, rotation);
         var drift = boundingShape.BottomLeft - matty.TransformBox(boundingShape).BottomLeft;
 
         var adjustedShapes = new List<Box2i>();

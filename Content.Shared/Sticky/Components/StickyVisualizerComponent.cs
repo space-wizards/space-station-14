@@ -1,23 +1,26 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Sticky.Components;
-using DrawDepth;
 
+﻿using DrawDepth;
+
+/// <summary>
+/// Sets the sprite's draw depth depending on whether it's stuck.
+/// </summary>
 [RegisterComponent]
 public sealed partial class StickyVisualizerComponent : Component
 {
     /// <summary>
-    ///     What sprite draw depth set when entity stuck.
+    /// What sprite draw depth gets set to when stuck to something.
     /// </summary>
-    [DataField("stuckDrawDepth")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int StuckDrawDepth = (int) DrawDepth.Overdoors;
 
     /// <summary>
-    ///     What sprite draw depth set when entity unstuck.
+    /// The sprite's original draw depth before being stuck.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public int DefaultDrawDepth;
+    [DataField]
+    public int OriginalDrawDepth;
 }
 
 [Serializable, NetSerializable]

@@ -69,5 +69,10 @@ namespace Content.Shared.Movement.Systems
             WalkSpeedModifier *= walk;
             SprintSpeedModifier *= sprint;
         }
+
+        public void ModifySpeed(float mod)
+        {
+            ModifySpeed(mod, mod);
+        }
     }
 }

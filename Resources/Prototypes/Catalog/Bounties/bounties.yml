@@ -1,4 +1,4 @@
-﻿- type: cargoBounty
+- type: cargoBounty
   id: BountyArtifact
   reward: 2500
   description: bounty-description-artifact
@@ -42,6 +42,9 @@
     whitelist:
       tags:
       - Bread
+    blacklist:
+      tags:
+      - Slice
 
 - type: cargoBounty
   id: BountyCarrot
@@ -497,6 +500,11 @@
     whitelist:
       components:
       - TemperatureProtection
+      tags:
+      - Scarf
+    blacklist:
+      components:
+      - ToggleableClothing
 
 - type: cargoBounty
   id: BountyBattery
@@ -533,6 +541,9 @@
     whitelist:
       tags:
       - Meat
+    blacklist:
+      components:
+      - SliceableFood
 
 - type: cargoBounty
   id: BountyFruit
@@ -681,7 +692,7 @@
 - type: cargoBounty
   id: BountyCardboardBox
   reward: 1500
-  description: bounty-description-cardobard-box
+  description: bounty-description-cardboard-box
   entries:
   - name: bounty-item-cardboard-box
     amount: 12
@@ -722,3 +733,35 @@
       tags:
       - MicrowaveMachineBoard
 
+- type: cargoBounty
+  id: BountyFlashes
+  reward: 5500
+  description: bounty-description-flashes
+  entries:
+  - name: bounty-item-flash
+    amount: 6
+    whitelist:
+      components:
+      - Flash
+
+- type: cargoBounty
+  id: BountyTeethSpaceCarp
+  reward: 800
+  description: bounty-description-tooth-space-carp
+  entries:
+  - name: bounty-item-tooth-space-carp
+    amount: 8
+    whitelist:
+      tags:
+      - ToothSpaceCarp
+
+- type: cargoBounty
+  id: BountyTeethSharkminnow
+  reward: 1500
+  description: bounty-description-tooth-sharkminnow
+  entries:
+  - name: bounty-item-tooth-sharkminnow
+    amount: 5
+    whitelist:
+      tags:
+      - ToothSharkminnow

@@ -33,6 +33,12 @@ public sealed partial class EntityWhitelist
     // TODO yaml validation
 
     /// <summary>
+    ///     Mind Role Prototype names that are allowed in the whitelist.
+    /// </summary>
+    [DataField] public string[]? MindRoles;
+    // TODO yaml validation
+
+    /// <summary>
     ///     Item sizes that are allowed in the whitelist.
     /// </summary>
     [DataField]
@@ -54,14 +60,4 @@ public sealed partial class EntityWhitelist
     /// </summary>
     [DataField]
     public bool RequireAll;
-
-    [Obsolete("Use WhitelistSystem")]
-    public bool IsValid(EntityUid uid, IEntityManager? man = null)
-    {
-        var sys = man?.System<EntityWhitelistSystem>() ??
-                  IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<EntityWhitelistSystem>();
-
-        return sys.IsValid(this, uid);
-
-    }
 }

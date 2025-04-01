@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
@@ -38,7 +38,8 @@ public sealed partial class CreateEntityTileReaction : ITileReaction
     public FixedPoint2 TileReact(TileRef tile,
         ReagentPrototype reagent,
         FixedPoint2 reactVolume,
-        IEntityManager entityManager)
+        IEntityManager entityManager,
+        List<ReagentData>? data)
     {
         if (reactVolume >= Usage)
         {
@@ -47,7 +48,8 @@ public sealed partial class CreateEntityTileReaction : ITileReaction
                 int acc = 0;
                 foreach (var ent in tile.GetEntitiesInTile())
                 {
-                    if (Whitelist.IsValid(ent))
+                    var whitelistSystem = entityManager.System<EntityWhitelistSystem>();
+                    if (whitelistSystem.IsWhitelistPass(Whitelist, ent))
                         acc += 1;
 
                     if (acc >= MaxOnTile)

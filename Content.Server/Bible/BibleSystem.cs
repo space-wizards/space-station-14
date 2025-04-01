@@ -1,11 +1,11 @@
 using Content.Server.Bible.Components;
-using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Bible;
 using Content.Shared.Damage;
+using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -84,7 +84,7 @@ namespace Content.Server.Bible
                 }
                 summonableComp.AlreadySummoned = false;
                 _popupSystem.PopupEntity(Loc.GetString("bible-summon-respawn-ready", ("book", uid)), uid, PopupType.Medium);
-                _audio.PlayPvs("/Audio/Effects/radpulse9.ogg", uid, AudioParams.Default.WithVolume(-4f));
+                _audio.PlayPvs(summonableComp.SummonSound, uid);
                 // Clean up the accumulator and respawn tracking component
                 summonableComp.Accumulator = 0;
                 _remQueue.Enqueue(uid);
@@ -126,7 +126,7 @@ namespace Content.Server.Bible
                     var selfFailMessage = Loc.GetString(component.LocPrefix + "-heal-fail-self", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("bible", uid));
                     _popupSystem.PopupEntity(selfFailMessage, args.User, args.User, PopupType.MediumCaution);
 
-                    _audio.PlayPvs("/Audio/Effects/hit_kick.ogg", args.User);
+                    _audio.PlayPvs(component.BibleHitSound, args.User);
                     _damageableSystem.TryChangeDamage(args.Target.Value, component.DamageOnFail, true, origin: uid);
                     _delay.TryResetDelay((uid, useDelay));
                     return;

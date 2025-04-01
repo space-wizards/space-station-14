@@ -81,7 +81,7 @@ public sealed partial class MeleeWeaponSystem
             case WeaponArcAnimation.None:
                 var (mapPos, mapRot) = TransformSystem.GetWorldPositionRotation(userXform);
                 var worldPos = mapPos + (mapRot - userXform.LocalRotation).RotateVec(localPos);
-                var newLocalPos = TransformSystem.GetInvWorldMatrix(xform.ParentUid).Transform(worldPos);
+                var newLocalPos = Vector2.Transform(worldPos, TransformSystem.GetInvWorldMatrix(xform.ParentUid));
                 TransformSystem.SetLocalPositionNoLerp(animationUid, newLocalPos, xform);
                 if (arcComponent.Fadeout)
                     _animation.Play(animationUid, GetFadeAnimation(sprite, 0f, 0.15f), FadeAnimationKey);
@@ -138,6 +138,7 @@ public sealed partial class MeleeWeaponSystem
         const float length = 0.15f;
         var startOffset = sprite.Rotation.RotateVec(new Vector2(0f, -distance / 5f));
         var endOffset = sprite.Rotation.RotateVec(new Vector2(0f, -distance));
+        sprite.Rotation += spriteRotation;
 
         return new Animation()
         {
@@ -213,7 +214,7 @@ public sealed partial class MeleeWeaponSystem
     private void UpdateEffects()
     {
         var query = EntityQueryEnumerator<TrackUserComponent, TransformComponent>();
-        while (query.MoveNext(out var arcComponent, out var xform))
+        while (query.MoveNext(out var uid, out var arcComponent, out var xform))
         {
             if (arcComponent.User == null)
                 continue;
@@ -226,7 +227,7 @@ public sealed partial class MeleeWeaponSystem
                 targetPos += entRotation.RotateVec(arcComponent.Offset);
             }
 
-            TransformSystem.SetWorldPosition(xform, targetPos);
+            TransformSystem.SetWorldPosition(uid, targetPos);
         }
     }
 }

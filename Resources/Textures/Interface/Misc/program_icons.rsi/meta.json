@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "news_read by Misha_Unity, crew_manifest by Phill101",
+    "copyright": "news_read by Misha_Unity, crew_manifest by Phill101, nano_task by Janet Blackquill <uhhadd@gmail.com>",
     "size": {
       "x": 32,
       "y": 32
@@ -12,6 +12,9 @@
       },
       {
         "name": "crew_manifest"
+      },
+      {
+        "name": "nano_task"
       }
     ]
 }

@@ -23,3 +23,6 @@
     belt: ChemBag
     pocket1: HandLabeler
     eyes: ClothingEyesGlassesChemical
+  #storage:
+    #back:
+    #- Stuff

@@ -13,9 +13,9 @@ public sealed class PlaceableDeconstruction : InteractionTest
     {
         await StartDeconstruction("Table");
         Assert.That(Comp<PlaceableSurfaceComponent>().IsPlaceable);
-        await Interact(Wrench);
+        await InteractUsing(Wrench);
         AssertPrototype("TableFrame");
-        await Interact(Wrench);
+        await InteractUsing(Wrench);
         AssertDeleted();
         await AssertEntityLookup((Steel, 1), (Rod, 2));
     }

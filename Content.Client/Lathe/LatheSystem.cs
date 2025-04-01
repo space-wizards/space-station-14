@@ -22,21 +22,29 @@ public sealed class LatheSystem : SharedLatheSystem
         if (args.Sprite == null)
             return;
 
+        // Lathe specific stuff
+        if (_appearance.TryGetData<bool>(uid, LatheVisuals.IsRunning, out var isRunning, args.Component))
+        {
+            if (args.Sprite.LayerMapTryGet(LatheVisualLayers.IsRunning, out var runningLayer) &&
+                component.RunningState != null &&
+                component.IdleState != null)
+            {
+                var state = isRunning ? component.RunningState : component.IdleState;
+                args.Sprite.LayerSetState(runningLayer, state);
+            }
+        }
+
         if (_appearance.TryGetData<bool>(uid, PowerDeviceVisuals.Powered, out var powered, args.Component) &&
             args.Sprite.LayerMapTryGet(PowerDeviceVisualLayers.Powered, out var powerLayer))
         {
             args.Sprite.LayerSetVisible(powerLayer, powered);
-        }
 
-        // Lathe specific stuff
-        if (_appearance.TryGetData<bool>(uid, LatheVisuals.IsRunning, out var isRunning, args.Component) &&
-            args.Sprite.LayerMapTryGet(LatheVisualLayers.IsRunning, out var runningLayer) &&
-            component.RunningState != null &&
-            component.IdleState != null)
-        {
-            var state = isRunning ? component.RunningState : component.IdleState;
-            args.Sprite.LayerSetAnimationTime(runningLayer, 0f);
-            args.Sprite.LayerSetState(runningLayer, state);
+            if (component.UnlitIdleState != null &&
+                component.UnlitRunningState != null)
+            {
+                var state = isRunning ? component.UnlitRunningState : component.UnlitIdleState;
+                args.Sprite.LayerSetState(powerLayer, state);
+            }
         }
     }
 
