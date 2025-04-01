@@ -24,7 +24,7 @@ public sealed partial class GibbableComponent : Component
     /// Sound to be played when this entity is gibbed, only played when playsound is true on the gibbing function
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? GibSound = new SoundCollectionSpecifier("gib", AudioParams.Default.WithVariation(0.025f));
+    public SoundSpecifier? GibSound = new SoundCollectionSpecifier("gib", AudioParams.Default.AddVariation(0.025f));
 
     /// <summary>
     /// Max distance giblets can be dropped from an entity when NOT using physics-based scattering

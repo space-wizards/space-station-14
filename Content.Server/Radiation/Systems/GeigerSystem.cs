@@ -162,9 +162,9 @@ public sealed class GeigerSystem : SharedGeigerSystem
             return;
 
         var sound = _audio.ResolveSound(sounds);
-        var param = sounds.Params.WithLoop(true).WithVolume(-4f);
+        var audioParams = sounds.Params.WithLoop(true).AddVolume(-4f);
 
-        component.Stream = _audio.PlayGlobal(sound, session, param)?.Entity;
+        component.Stream = _audio.PlayGlobal(sound, session, audioParams)?.Entity;
     }
 
     public static GeigerDangerLevel RadsToLevel(float rads)

@@ -238,12 +238,9 @@ namespace Content.Server.Forensics
             }
 
             _paperSystem.SetContent((printed, paperComp), text.ToString());
-            _audioSystem.PlayPvs(component.SoundPrint, uid,
-                AudioParams.Default
-                .WithVariation(0.25f)
-                .WithVolume(3f)
-                .WithRolloffFactor(2.8f)
-                .WithMaxDistance(4.5f));
+            var audioParams = component.SoundPrint?.Params ?? AudioParams.Default;
+            audioParams = audioParams.AddVariation(0.25f).AddVolume(3f).WithRolloffFactor(2.8f).WithMaxDistance(4.5f);
+            _audioSystem.PlayPvs(component.SoundPrint, uid, audioParams);
 
             component.PrintReadyAt = _gameTiming.CurTime + component.PrintCooldown;
         }

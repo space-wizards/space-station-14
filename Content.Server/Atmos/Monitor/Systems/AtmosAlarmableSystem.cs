@@ -306,7 +306,9 @@ public sealed class AtmosAlarmableSystem : EntitySystem
     {
         if (alarm == AtmosAlarmType.Danger)
         {
-            _audioSystem.PlayPvs(alarmable.AlarmSound, uid, AudioParams.Default.WithVolume(alarmable.AlarmVolume));
+            var audioParams = alarmable.AlarmSound?.Params ?? AudioParams.Default;
+            audioParams = audioParams.AddVolume(alarmable.AlarmVolume);
+            _audioSystem.PlayPvs(alarmable.AlarmSound, uid, audioParams);
         }
     }
 

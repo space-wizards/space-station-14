@@ -18,8 +18,9 @@ public sealed class DeviceLinkOverloadSystem : EntitySystem
 
     private void OnOverloadSound(EntityUid uid, SoundOnOverloadComponent component, ref DeviceLinkOverloadedEvent args)
     {
-
-        _audioSystem.PlayPvs(component.OverloadSound, uid, AudioParams.Default.WithVolume(component.VolumeModifier));
+        var audioParams = component.OverloadSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(component.VolumeModifier);
+        _audioSystem.PlayPvs(component.OverloadSound, uid, audioParams);
     }
 
 

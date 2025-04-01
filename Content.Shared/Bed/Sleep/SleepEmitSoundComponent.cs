@@ -9,7 +9,7 @@ public sealed partial class SleepEmitSoundComponent : Component
     /// Sound to play when sleeping
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier Snore = new SoundCollectionSpecifier("Snores", AudioParams.Default.WithVariation(0.2f));
+    public SoundSpecifier Snore = new SoundCollectionSpecifier("Snores", AudioParams.Default.AddVariation(0.2f));
 
     /// <summary>
     /// Minimum interval between snore attempts in seconds

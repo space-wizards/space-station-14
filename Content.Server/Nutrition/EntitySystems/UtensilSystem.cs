@@ -71,7 +71,9 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (_robustRandom.Prob(component.BreakChance))
             {
-                _audio.PlayPvs(component.BreakSound, userUid, AudioParams.Default.WithVolume(-2f));
+                var audioParams = component.BreakSound?.Params ?? AudioParams.Default;
+                audioParams = audioParams.AddVolume(-2f);
+                _audio.PlayPvs(component.BreakSound, userUid, audioParams);
                 EntityManager.DeleteEntity(uid);
             }
         }

@@ -35,7 +35,7 @@ namespace Content.Shared.Flash.Components
         [DataField("sound")]
         public SoundSpecifier Sound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/flash.ogg")
         {
-            Params = AudioParams.Default.WithVolume(1f).WithMaxDistance(3f)
+            Params = AudioParams.Default.AddVolume(1f).WithMaxDistance(3f)
         };
 
         public bool Flashing;

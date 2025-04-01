@@ -357,8 +357,9 @@ namespace Content.Server.Atmos.EntitySystems
                     var environment = _atmosphereSystem.GetContainingMixture(owner, false, true);
                     if (environment != null)
                         _atmosphereSystem.Merge(environment, component.Air);
-
-                    _audioSys.PlayPvs(component.RuptureSound, Transform(owner).Coordinates, AudioParams.Default.WithVariation(0.125f));
+                    var audioParams = component.RuptureSound?.Params ?? AudioParams.Default;
+                    audioParams = audioParams.AddVariation(0.125f);
+                    _audioSys.PlayPvs(component.RuptureSound, Transform(owner).Coordinates, audioParams);
 
                     QueueDel(owner);
                     return;

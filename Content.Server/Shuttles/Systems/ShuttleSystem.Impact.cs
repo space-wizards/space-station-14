@@ -53,7 +53,7 @@ public sealed partial class ShuttleSystem
 
         var coordinates = new EntityCoordinates(ourXform.MapUid.Value, args.WorldPoint);
         var volume = MathF.Min(10f, 1f * MathF.Pow(jungleDiff, 0.5f) - 5f);
-        var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(volume);
+        var audioParams = AudioParams.Default.AddVariation(SharedContentAudioSystem.DefaultVariation).AddVariation(volume);
 
         _audio.PlayPvs(_shuttleImpactSound, coordinates, audioParams);
     }

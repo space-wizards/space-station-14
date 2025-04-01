@@ -56,7 +56,7 @@ namespace Content.Server.Dragon
         public SoundSpecifier? SoundRoar =
             new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg")
             {
-                Params = AudioParams.Default.WithVolume(3f),
+                Params = AudioParams.Default.AddVolume(3f),
             };
 
         /// <summary>

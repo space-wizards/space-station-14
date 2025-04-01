@@ -308,15 +308,19 @@ namespace Content.Server.Kitchen.EntitySystems
             active.EndTime = _timing.CurTime + reagentGrinder.WorkTime * reagentGrinder.WorkTimeMultiplier;
             active.Program = program;
 
-            reagentGrinder.AudioStream = _audioSystem.PlayPvs(sound, uid,
-                AudioParams.Default.WithPitchScale(1 / reagentGrinder.WorkTimeMultiplier))?.Entity; //slightly higher pitched
+            var audioParams = sound?.Params ?? AudioParams.Default;
+            // Slightly higher pitched
+            audioParams = audioParams.WithPitchScale(1 / reagentGrinder.WorkTimeMultiplier);
+            reagentGrinder.AudioStream = _audioSystem.PlayPvs(sound, uid, audioParams)?.Entity;
             _userInterfaceSystem.ServerSendUiMessage(uid, ReagentGrinderUiKey.Key,
                 new ReagentGrinderWorkStartedMessage(program));
         }
 
         private void ClickSound(Entity<ReagentGrinderComponent> reagentGrinder)
         {
-            _audioSystem.PlayPvs(reagentGrinder.Comp.ClickSound, reagentGrinder.Owner, AudioParams.Default.WithVolume(-2f));
+            var audioParams = reagentGrinder.Comp.ClickSound?.Params ?? AudioParams.Default;
+            audioParams = audioParams.AddVolume(-2f);
+            _audioSystem.PlayPvs(reagentGrinder.Comp.ClickSound, reagentGrinder.Owner, audioParams);
         }
 
         private Solution? GetGrindSolution(EntityUid uid)

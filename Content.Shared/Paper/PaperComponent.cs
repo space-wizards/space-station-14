@@ -30,7 +30,7 @@ public sealed partial class PaperComponent : Component
     /// Sound played after writing to the paper.
     /// </summary>
     [DataField("sound")]
-    public SoundSpecifier? Sound { get; private set; } = new SoundCollectionSpecifier("PaperScribbles", AudioParams.Default.WithVariation(0.1f));
+    public SoundSpecifier? Sound { get; private set; } = new SoundCollectionSpecifier("PaperScribbles", AudioParams.Default.AddVariation(0.1f));
 
     [Serializable, NetSerializable]
     public sealed class PaperBoundUserInterfaceState : BoundUserInterfaceState

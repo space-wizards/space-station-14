@@ -105,8 +105,10 @@ public sealed class ApcSystem : EntitySystem
         apc.MainBreakerEnabled = !apc.MainBreakerEnabled;
         battery.CanDischarge = apc.MainBreakerEnabled;
 
+        var audioParams = apc.OnReceiveMessageSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(-2f);
         UpdateUIState(uid, apc);
-        _audio.PlayPvs(apc.OnReceiveMessageSound, uid, AudioParams.Default.WithVolume(-2f));
+        _audio.PlayPvs(apc.OnReceiveMessageSound, uid, audioParams);
     }
 
     private void OnEmagged(EntityUid uid, ApcComponent comp, ref GotEmaggedEvent args)

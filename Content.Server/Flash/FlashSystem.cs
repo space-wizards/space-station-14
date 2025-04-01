@@ -177,7 +177,9 @@ namespace Content.Server.Flash
                 Flash(entity, user, source, duration, slowTo, displayPopup);
             }
 
-            _audio.PlayPvs(sound, source, AudioParams.Default.WithVolume(1f).WithMaxDistance(3f));
+            var audioParams = sound?.Params ?? AudioParams.Default;
+            audioParams = audioParams.AddVolume(1f).WithMaxDistance(3f);
+            _audio.PlayPvs(sound, source, audioParams);
         }
 
         private void OnInventoryFlashAttempt(EntityUid uid, InventoryComponent component, FlashAttemptEvent args)

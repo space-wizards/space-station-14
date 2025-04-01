@@ -320,7 +320,9 @@ public sealed class DrinkSystem : SharedDrinkSystem
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} drank {ToPrettyString(entity.Owner):drink}");
         }
 
-        _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, AudioParams.Default.WithVolume(-2f).WithVariation(0.25f));
+        var audioParams = entity.Comp.UseSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(-2f).AddVariation(0.25f);
+        _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, audioParams);
 
         _reaction.DoEntityReaction(args.Target.Value, solution, ReactionMethod.Ingestion);
         _stomach.TryTransferSolution(firstStomach.Value.Owner, drained, firstStomach.Value.Comp1);

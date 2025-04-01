@@ -92,7 +92,9 @@ namespace Content.Server.Disposal.Tube
             if (msg.Action == SharedDisposalTaggerComponent.UiAction.Ok && SharedDisposalTaggerComponent.TagRegex.IsMatch(msg.Tag))
             {
                 tagger.Tag = msg.Tag.Trim();
-                _audioSystem.PlayPvs(tagger.ClickSound, uid, AudioParams.Default.WithVolume(-2f));
+                var audioParams = tagger.ClickSound?.Params ?? AudioParams.Default;
+                audioParams = audioParams.AddVolume(-2f);
+                _audioSystem.PlayPvs(tagger.ClickSound, uid, audioParams);
             }
         }
 
@@ -123,7 +125,9 @@ namespace Content.Server.Disposal.Tube
                     router.Tags.Add(trimmed);
                 }
 
-                _audioSystem.PlayPvs(router.ClickSound, uid, AudioParams.Default.WithVolume(-2f));
+                var audioParams = router.ClickSound?.Params ?? AudioParams.Default;
+                audioParams = audioParams.AddVolume(-2f);
+                _audioSystem.PlayPvs(router.ClickSound, uid, audioParams);
             }
         }
 

@@ -19,6 +19,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 
@@ -115,7 +116,9 @@ public sealed class HealingSystem : EntitySystem
                 $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
         }
 
-        _audio.PlayPvs(healing.HealingEndSound, entity.Owner, AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
+        var audioParams = healing.HealingEndSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVariation(0.125f).AddVolume(1f);
+        _audio.PlayPvs(healing.HealingEndSound, entity.Owner, audioParams);
 
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = (HasDamage(entity, healing) && !dontRepeat);
@@ -198,8 +201,9 @@ public sealed class HealingSystem : EntitySystem
             return false;
         }
 
-        _audio.PlayPvs(component.HealingBeginSound, uid,
-                AudioHelpers.WithVariation(0.125f, _random).WithVolume(1f));
+        var audioParams = component.HealingBeginSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVariation(0.125f).AddVolume(1f);
+        _audio.PlayPvs(component.HealingBeginSound, uid, audioParams);
 
         var isNotSelf = user != target;
 

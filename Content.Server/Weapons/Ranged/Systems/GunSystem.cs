@@ -371,12 +371,16 @@ public sealed partial class GunSystem : SharedGunSystem
 
             if (type != null && rangedSound.SoundTypes?.TryGetValue(type, out var damageSoundType) == true)
             {
-                Audio.PlayPvs(damageSoundType, otherEntity, AudioParams.Default.WithVariation(DamagePitchVariation));
+                var damageSoundTypeParams = damageSoundType?.Params ?? AudioParams.Default;
+                damageSoundTypeParams = damageSoundTypeParams.AddVariation(DamagePitchVariation);
+                Audio.PlayPvs(damageSoundType, otherEntity, damageSoundTypeParams);
                 playedSound = true;
             }
             else if (type != null && rangedSound.SoundGroups?.TryGetValue(type, out var damageSoundGroup) == true)
             {
-                Audio.PlayPvs(damageSoundGroup, otherEntity, AudioParams.Default.WithVariation(DamagePitchVariation));
+                var damageSoundGroupParams = damageSoundGroup?.Params ?? AudioParams.Default;
+                damageSoundGroupParams = damageSoundGroupParams.AddVariation(DamagePitchVariation);
+                Audio.PlayPvs(damageSoundGroup, otherEntity, damageSoundGroupParams);
                 playedSound = true;
             }
         }

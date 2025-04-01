@@ -155,7 +155,9 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return false;
         }
 
-        _audio.PlayPvs(combatMode.DisarmSuccessSound, user, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
+        var audioParams = combatMode.DisarmSuccessSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVariation(0.025f).AddVolume(5f);
+        _audio.PlayPvs(combatMode.DisarmSuccessSound, user, audioParams);
         AdminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(user):user} used disarm on {ToPrettyString(target):target}");
 
         var targetEnt = Identity.Entity(target, EntityManager);
