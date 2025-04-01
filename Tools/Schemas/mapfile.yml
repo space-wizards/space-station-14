@@ -6,8 +6,8 @@ meta:
   category: enum("Unknown", "Entity", "Grid", "Map", "Save", required=False) # FileCategory enum
   engineVersion: str(required=False)
   entityCount: int(required=False)
-  forkId: int(required=False)
-  forkVersion: any(int(), str(), null(), required=False)
+  forkId: any(int(), str(), required=False)
+  forkVersion: any(int(), str(), required=False)
 tilemap: map(str(), key=int())
 orphans: list(int(), required=False)
 nullspace: list(int(), required=False)

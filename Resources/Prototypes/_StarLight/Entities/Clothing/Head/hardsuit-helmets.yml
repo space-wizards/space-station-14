@@ -1,3 +1,4 @@
+#BSO Hardsuit
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitBlueshield
@@ -21,6 +22,7 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
+#NTREP Hardsuit
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitNtrep
@@ -36,3 +38,26 @@
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 10000
+#Clown Battlesuit
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetBattlesuitClown
+  name: clown battlesuit helmet
+  description: Armored battlesuit helmet for silly needs.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hardsuits/clown_bs_helmet.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hardsuits/clown_bs_helmet.rsi
+  - type: PointLight
+    color: "#ffa1e3"
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
