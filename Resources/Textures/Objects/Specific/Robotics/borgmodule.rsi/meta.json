@@ -161,6 +161,9 @@
         },
         {
             "name": "icon-beer"
+        },
+        {
+            "name": "icon-mining-basic"
         }
     ]
 }
