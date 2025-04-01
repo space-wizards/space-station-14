@@ -141,6 +141,7 @@
   - CaptainCap
   - CaptainBeret # imp
   - CaptainCrusherCap #imp
+  - CaptainTricorne # imp
 
 - type: loadoutGroup
   id: CaptainJumpsuit
@@ -162,6 +163,7 @@
   - CaptainMantle
   - CaptainGreatcoat # imp
   - ScarfBlue # imp
+  - CaptainAdmiralCloak # imp
 
 - type: loadoutGroup
   id: CaptainBackpack

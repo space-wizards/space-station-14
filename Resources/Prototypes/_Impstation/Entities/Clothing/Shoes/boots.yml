@@ -353,3 +353,23 @@
       - state: bootbits-equipped-FEET
         color: "#EBE216"
       - state: winterbits-equipped-FEET
+
+- type: entity
+  parent: ClothingShoesMilitaryBase
+  id: ClothingShoesCaptainHighheelBoots
+  name: captain's high-heeled boots
+  description: Snazzy boots for when you want to be stylish, yet official.
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 6
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/capheeledboots.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/capheeledboots.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepHighheels
+      params:
+        variation: 0.09

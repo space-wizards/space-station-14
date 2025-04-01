@@ -260,6 +260,7 @@
   loadouts:
   - CaptainSunglasses
   - CaptainVisor
+  - CaptainEyepatch
 
 - type: loadoutGroup
   id: CaptainGloves
@@ -277,6 +278,7 @@
   - BlackCommandHeels
   - BlueCommandHeels
   - CaptainJumpBoots
+  - CaptainHeeledBoots
 
 - type: loadoutGroup
   id: CommandHeadset
