@@ -32,45 +32,11 @@
   Resomi are able to slash at others with their claws.
   These attacks deal [color=red]5[/color] points of Slash damage with a hit rate that is the same as humans fists attack.
   
-  ## Weapon Restrictions
-  Resomi have a few restrictions on what weapons they can hold due to their hands being too small.
-  [color=yellow]Due to these restrictions, the Syndicate has opted to not use Resomi for Nuclear Operatives at this time.[/color]
-  These are all the current weapons they cannot use.
-  <Box>
-    <GuideEntityEmbed Entity="WeaponMinigun"/>
-    <GuideEntityEmbed Entity="WeaponLauncherChinaLake"/>
-    <GuideEntityEmbed Entity="WeaponLauncherRocket"/>
-    <GuideEntityEmbed Entity="WeaponLauncherPirateCannon"/>
-    <GuideEntityEmbed Entity="WeaponLauncherAdmemeMeteorLarge"/>
-  </Box>
-  <Box>
-    <GuideEntityEmbed Entity="WeaponLauncherAdmemeImmovableRodSlow"/>
-    <GuideEntityEmbed Entity="WeaponLightMachineGunL6"/>
-    <GuideEntityEmbed Entity="WeaponSniperMosin"/>
-    <GuideEntityEmbed Entity="WeaponSniperHristov"/>
-    <GuideEntityEmbed Entity="Musket"/>
-  </Box>
-  <Box>
-    <GuideEntityEmbed Entity="WeaponPistolFlintlock"/>
-    <GuideEntityEmbed Entity="WeaponShotgunBulldog"/>
-    <GuideEntityEmbed Entity="WeaponShotgunDoubleBarreled"/>
-    <GuideEntityEmbed Entity="WeaponShotgunEnforcer"/>
-  </Box>
-  <Box>
-    <GuideEntityEmbed Entity="WeaponShotgunKammerer"/>
-    <GuideEntityEmbed Entity="WeaponShotgunSawn"/>
-    <GuideEntityEmbed Entity="WeaponShotgunHandmade"/>
-    <GuideEntityEmbed Entity="WeaponShotgunBlunderbuss"/>
-  </Box>
-  <Box>
-    <GuideEntityEmbed Entity="WeaponShotgunImprovised"/>
-    <GuideEntityEmbed Entity="WeaponRifleAk"/>
-    <GuideEntityEmbed Entity="WeaponRifleM90GrenadeLauncher"/>
-    <GuideEntityEmbed Entity="WeaponRifleLecter"/>
-  </Box>
-  <Box>
-    <GuideEntityEmbed Entity="WeaponRifleFoam"/>
-  </Box>
+  ## Weapon Knockback
+  Resomi have a few downsides to using large caliber weapons, and as such take so much knockback from them that they get pushed around.
+  In general, the weapons that will give you knockback are [color=yellow]Rifles, Sniper Rifles, Shotguns, LMGs, HMGs, and Grenade Launchers.[/color]
+  Look out especially on Rocket launchers, as since they are recoil-less, you will actually get [color=red]pulled forward with the rocket[/color] for a short distance.
+  The safest weapons to use that will give you no knockback are [color=green]Pistols and SMGs[/color]
 
   ## Jumping
   Resomi are able to jump, allowing them to move around station hallways quickly, and to jump ahead of others in a chase.
