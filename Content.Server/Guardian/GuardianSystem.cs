@@ -8,6 +8,7 @@ using Content.Shared.Examine;
 using Content.Shared.Guardian;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
@@ -188,7 +189,9 @@ namespace Content.Server.Guardian
             // Can only inject things with the component...
             if (!HasComp<CanHostGuardianComponent>(target))
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-activator-invalid-target"), user, user);
+                var msg = Loc.GetString("guardian-activator-invalid-target", ("entity", Identity.Entity(target, EntityManager, user)));
+
+                _popupSystem.PopupEntity(msg, user, user);
                 return;
             }
 
