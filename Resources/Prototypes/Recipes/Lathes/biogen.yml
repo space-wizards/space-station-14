@@ -113,7 +113,7 @@
   categories:
   - Chemicals
   icon:
-    sprite: Objects/Specific/Chemistry/bottle.rsi
+    sprite: _Impstation/Objects/Specific/Chemistry/bottle.rsi # imp
     state: bottle-1
   completetime: 1
   materials:
@@ -126,7 +126,7 @@
   categories:
   - Chemicals
   icon:
-    sprite: Objects/Specific/Chemistry/bottle.rsi
+    sprite: _Impstation/Objects/Specific/Chemistry/bottle.rsi # imp
     state: bottle-1
   completetime: 1
   materials:
@@ -139,7 +139,7 @@
   categories:
   - Chemicals
   icon:
-    sprite: Objects/Specific/Chemistry/bottle.rsi
+    sprite: _Impstation/Objects/Specific/Chemistry/bottle.rsi # imp
     state: bottle-1
   completetime: 1
   materials:

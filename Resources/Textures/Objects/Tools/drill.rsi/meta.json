@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "taken from wallening at https://github.com/wall-nerds/wallening/commit/cff5df2e3d45a18afe5619a8c130e1ba50ab4ef5.",
+  "copyright": "modified from https://github.com/tgstation/tgstation at commit ea59fb4b810decbb5996b36d8876614b57c3d189 by KingFroozy (Github)",
   "size": {
     "x": 32,
     "y": 32

@@ -17,14 +17,14 @@
   name: tool-quality-screwing-name
   toolName: tool-quality-screwing-tool-name
   spawn: Screwdriver
-  icon: { sprite: Objects/Tools/screwdriver.rsi, state: screwdriver-map }
+  icon: { sprite: _Impstation/Objects/Tools/screwdriver.rsi, state: screwdriver-map } # imp
 
 - type: tool
   id: Cutting
   name: tool-quality-cutting-name
   toolName: tool-quality-cutting-tool-name
   spawn: Wirecutter
-  icon: { sprite: Objects/Tools/wirecutters.rsi, state: cutters-map }
+  icon: { sprite: _Impstation/Objects/Tools/wirecutters.rsi, state: cutters-map } # imp
 
 - type: tool
   id: Welding
@@ -38,7 +38,7 @@
   name: tool-quality-pulsing-name
   toolName: tool-quality-pulsing-tool-name
   spawn: Multitool
-  icon: { sprite: Objects/Tools/multitool.rsi, state: icon }
+  icon: { sprite: _Impstation/Objects/Tools/multitool.rsi, state: icon } # imp
 
 - type: tool
   id: Slicing

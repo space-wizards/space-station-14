@@ -82,10 +82,10 @@ namespace Content.Shared.Preferences
         public int Age { get; set; } = 18;
 
         [DataField]
-        public Sex Sex { get; private set; } = Sex.Male;
+        public Sex Sex { get; set; } = Sex.Male; //IMP public set
 
         [DataField]
-        public Gender Gender { get; private set; } = Gender.Male;
+        public Gender Gender { get; set; } = Gender.Male; //IMP public set
 
         /// <summary>
         /// <see cref="Appearance"/>

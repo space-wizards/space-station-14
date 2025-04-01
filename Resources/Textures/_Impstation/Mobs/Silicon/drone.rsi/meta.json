@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/9753fa6770f036733c2c10c2c4cce0a711eeaffe/icons/mob/robots.dmi 'Blitzshell' and resprited + animated by AftrLite(Github)",
+  "states": [
+    {
+      "name": "drone",
+      "directions": 4,
+      "delays": [
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ],
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      ]
+    },
+    {
+      "name": "shell",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "l_hand",
+      "directions": 4
+    },
+    {
+      "name": "r_hand",
+      "directions": 4
+    }
+  ]
+}

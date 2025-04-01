@@ -121,7 +121,7 @@
 - type: cargoProduct
   id: EngineeringRCD
   icon:
-    sprite: Objects/Tools/rcd.rsi
+    sprite: _Impstation/Objects/Tools/rcd.rsi # imp
     state: icon
   product: CrateRCD
   cost: 800

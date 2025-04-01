@@ -188,3 +188,18 @@
     - DroneUsable
     - HamsterWearable
     - WhitelistChameleon
+    
+- type: entity
+  parent: [ClothingHeadBase, BaseCommandContraband]
+  id: ClothingHeadHatCaptainTricorne
+  name: captain's tricorne
+  description: It's good being the admiral.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/captricorne.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/captricorne.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon

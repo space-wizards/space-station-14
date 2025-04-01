@@ -11,7 +11,7 @@
 - type: cargoProduct
   id: MedicalChemistrySupplies
   icon:
-    sprite: Objects/Specific/Chemistry/beaker.rsi
+    sprite: _Impstation/Objects/Specific/Chemistry/beaker.rsi # imp
     state: beaker
   product: CrateChemistrySupplies
   cost: 750
@@ -121,7 +121,7 @@
 - type: cargoProduct
   id: ChemistryP
   icon:
-    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    sprite: _Impstation/Structures/Storage/Crates/chemcrate_secure.rsi # imp
     state: icon
   product: CrateChemistryP
   cost: 850
@@ -131,7 +131,7 @@
 - type: cargoProduct
   id: ChemistryS
   icon:
-    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    sprite: _Impstation/Structures/Storage/Crates/chemcrate_secure.rsi # imp
     state: icon
   product: CrateChemistryS
   cost: 750
@@ -141,7 +141,7 @@
 - type: cargoProduct
   id: CrateChemistryD
   icon:
-    sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    sprite: _Impstation/Structures/Storage/Crates/chemcrate_secure.rsi # imp
     state: icon
   product: CrateChemistryD
   cost: 750

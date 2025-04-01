@@ -11,12 +11,12 @@
   - type: Clothing
     slots: [back]
   - type: Icon
-    sprite: Mobs/Silicon/drone.rsi
+    sprite: _Impstation/Mobs/Silicon/drone.rsi
     state: shell
   - type: Sprite
     sprite: _Impstation/Clothing/Back/Satchels/dronesatchel.rsi
   - type: Storage
-    grid: 
+    grid:
     - 0,0,7,1
     whitelist:
       tags:
@@ -72,7 +72,7 @@
   id: RCDRechargingDroneLighting
   parent: BaseItem
   name: lighting RCD
-  description: The sleek, pared-down offspring the standard Rapid Construction Device. Only capable of producing standardized lighting solutions. 
+  description: The sleek, pared-down offspring the standard Rapid Construction Device. Only capable of producing standardized lighting solutions.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Tools/dronercd.rsi
@@ -113,9 +113,9 @@
     maxCharges: 8
     charges: 10
   - type: AutoRecharge
-    rechargeDuration: 5 # originally 10. buffing it to 5 until we get cardboard RCD 
+    rechargeDuration: 5 # originally 10. buffing it to 5 until we get cardboard RCD
   - type: RCD
-    availablePrototypes: # significantly pared down - just the essentials for quick patch-jobs. If they want to do more permanent fixes, they start with the materials to do so. 
+    availablePrototypes: # significantly pared down - just the essentials for quick patch-jobs. If they want to do more permanent fixes, they start with the materials to do so.
     - WallSolid
     - FloorSteel
     - Window

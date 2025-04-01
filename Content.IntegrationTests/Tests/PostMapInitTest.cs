@@ -134,6 +134,7 @@ namespace Content.IntegrationTests.Tests
             "E1M1",
             "Banana",
             "Boat",
+            "CoreFools",
             "Hummingbird",
             "Lilboat",
             "Luna",

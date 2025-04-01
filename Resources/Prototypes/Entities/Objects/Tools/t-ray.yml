@@ -5,13 +5,13 @@
   description: A high-tech scanning device that uses Terahertz Radiation to detect subfloor infrastructure.
   components:
   - type: Sprite
-    sprite: Objects/Tools/t-ray.rsi
+    sprite: _Impstation/Objects/Tools/t-ray.rsi # imp
     layers:
     - state: tray-off
       map: ["base"]
   - type: TrayScanner
   - type: Item
-    sprite: Objects/Tools/t-ray.rsi
+    sprite: _Impstation/Objects/Tools/t-ray.rsi # imp
   - type: Appearance
   - type: GenericVisualizer
     visuals:

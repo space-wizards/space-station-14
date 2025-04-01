@@ -260,6 +260,12 @@ public sealed class EventManagerSystem : EntitySystem
             return false;
         }
 
+        // imp. prevents stationEvents with defined LatestStart values from rolling after their lateststart has passed. obvs
+        if (currentTime != TimeSpan.Zero && currentTime.TotalMinutes > stationEvent.LatestStart)
+        {
+            return false;
+        }
+
         var lastRun = TimeSinceLastEvent(prototype);
         if (lastRun != TimeSpan.Zero && currentTime.TotalMinutes <
             stationEvent.ReoccurrenceDelay + lastRun.TotalMinutes)

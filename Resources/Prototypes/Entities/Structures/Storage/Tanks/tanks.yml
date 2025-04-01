@@ -10,16 +10,16 @@
   - type: StaticPrice
     price: 750
   - type: Sprite
-    sprite: Structures/Storage/tanks.rsi
+    sprite: _Impstation/Structures/Storage/tanks.rsi # imp
     layers:
       - state: fueltank-2
-      - state: tank-2-1
+      - state: tank-2-1 # imp
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: tank-2-
+    maxFillLevels: 5 # imp
+    fillBaseName: tank-2- # imp
   - type: ExaminableSolution
     solution: tank
   - type: ReagentTank
@@ -56,15 +56,15 @@
   - type: StaticPrice
     price: 2500
   - type: Sprite
-    sprite: Structures/Storage/tanks.rsi
+    sprite: _Impstation/Structures/Storage/tanks.rsi # imp
     layers:
       - state: highfueltank-2
-      - state: hightank-2-1
+      - state: hightank-2-1 # imp
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: hightank-2-
+    maxFillLevels: 5 # imp
+    fillBaseName: hightank-2- # imp
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -85,22 +85,22 @@
   description: A water tank. It's used to store high amounts of water.
   suffix: Empty
   components:
-  - type: Tag
+  - type: Tag # imp
     tags:
     - WaterTank
   - type: StaticPrice
     price: 500
   - type: Sprite
-    sprite: Structures/Storage/tanks.rsi
+    sprite: _Impstation/Structures/Storage/tanks.rsi # imp
     layers:
       - state: watertank-2
-      - state: tank-2-1
+      - state: tank-2-1 # imp
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 5
-    fillBaseName: tank-2-
+    fillBaseName: tank-2- # imp
   - type: ExaminableSolution
     solution: tank
 
@@ -122,7 +122,7 @@
   name: water cooler
   description: Seems like a good place to stand and waste time. It has a stock of paper cups on the side.
   components:
-  - type: Tag
+  - type: Tag # imp
     tags:
     - WaterTank
   - type: Sprite
@@ -175,22 +175,19 @@
   description: A highly pressurized water tank made to hold gargantuan amounts of water.
   suffix: Full
   components:
-  - type: Tag
-    tags:
-    - WaterTank
   - type: StaticPrice
     price: 2500
   - type: Sprite
-    sprite: Structures/Storage/tanks.rsi
+    sprite: _Impstation/Structures/Storage/tanks.rsi # imp
     layers:
       - state: highwatertank-2
-      - state: hightank-2-1
+      - state: hightank-2-1 # imp
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: hightank-2-
+    maxFillLevels: 5 # imp
+    fillBaseName: hightank-2- # imp
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -213,15 +210,15 @@
     - type: StaticPrice
       price: 500
     - type: Sprite
-      sprite: Structures/Storage/tanks.rsi
+      sprite: _Impstation/Structures/Storage/tanks.rsi # imp
       layers:
         - state: generictank-1
-        - state: tank-2-1
+        - state: tank-2-1 # imp
           map: ["enum.SolutionContainerLayers.Fill"]
           visible: false
     - type: Appearance
     - type: SolutionContainerVisuals
       maxFillLevels: 5
-      fillBaseName: tank-2-
+      fillBaseName: tank-2- # imp
     - type: ExaminableSolution
       solution: tank

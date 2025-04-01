@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/bd6873fd4dd6a61d7e46f1d75cd4d90f64c40894. comm_syndie made by Veritius, based on comm. generic_panel_open made by Errant, commit https://github.com/space-wizards/space-station-14/pull/32273, comms_wizard and wizard_key by ScarKy0. New Computer base, keyboard bases, generic wirepanel, and supermatter sprites by AftrLite(Github).",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/bd6873fd4dd6a61d7e46f1d75cd4d90f64c40894. comm_syndie made by Veritius, based on comm. generic_panel_open made by Errant, commit https://github.com/space-wizards/space-station-14/pull/32273, comms_wizard and wizard_key by ScarKy0",
   "size": {
     "x": 32,
     "y": 32
@@ -1541,56 +1541,6 @@
                 [
                     0.1,
                     0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "supermatter_keys",
-            "directions": 4
-        },
-        {
-            "name": "supermatter-0",
-            "directions": 4
-        },
-        {
-            "name": "supermatter-1",
-            "directions": 4
-        },
-        {
-            "name": "supermatter-2",
-            "directions": 4
-        },
-        {
-            "name": "supermatter-3",
-            "directions": 4
-        },
-        {
-            "name": "supermatter-4",
-            "directions": 4
-        },
-        {
-            "name": "supermatter-5",
-            "directions": 4
-        },
-        {
-            "name": "supermatter-6",
-            "directions": 4,
-            "delays": [
-                [
-                    0.1,
-                    0.1
-                ],
-                [
-                    0.1,
-                    0.1
-                ],
-                [
-                    0.1,
-                    0.1
-                ],
-                [
                     0.1,
                     0.1
                 ]

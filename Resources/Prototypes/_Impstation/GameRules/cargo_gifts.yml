@@ -12,6 +12,7 @@
     weight: 1
     duration: 120
     earliestStart: 5
+    latestStart: 30
     minimumPlayers: 10
   - type: CargoGiftsRule
     description: cargo-gift-cargorilla

@@ -1,49 +1,120 @@
 {
-    "version": 1,
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/bd6873fd4dd6a61d7e46f1d75cd4d90f64c40894. New Computer base, keyboard bases, generic wirepanel by AftrLite(Github), request and bounty edited by argentsunshine",
-    "size": {
-      "x": 32,
-      "y": 32
-    },
-      "states": [
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/bd6873fd4dd6a61d7e46f1d75cd4d90f64c40894. comm_syndie made by Veritius, based on comm. generic_panel_open made by Errant, commit https://github.com/space-wizards/space-station-14/pull/32273, comms_wizard and wizard_key by ScarKy0",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
         {
-            "name": "request",
+            "name": "aiupload",
             "directions": 4,
             "delays": [
                 [
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3
+                    0.2,
+                    0.2
                 ],
                 [
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3
+                    0.2,
+                    0.2
                 ],
                 [
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3
+                    0.2,
+                    0.2
                 ],
                 [
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3,
-                    0.3
+                    0.2,
+                    0.2
                 ]
             ]
+        },
+        {
+            "name": "aiupload_key",
+            "directions": 4
+        },
+        {
+            "name": "alert-0",
+            "directions": 4
+        },
+        {
+            "name": "alert-1",
+            "directions": 4
+        },
+        {
+            "name": "alert-2",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "artifact",
+            "directions": 4,
+            "delays": [
+                [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "atmos_key",
+            "directions": 4
+        },
+        {
+            "name": "atmos_key_off",
+            "directions": 4
+        },
+        {
+            "name": "avionics-systems"
         },
         {
             "name": "bounty",
@@ -84,7 +155,1084 @@
             ]
         },
         {
+            "name": "broken",
+            "directions": 4
+        },
+        {
+            "name": "cameras",
+            "directions": 4,
+            "delays": [
+                [
+                    1.8,
+                    0.1,
+                    1.8,
+                    0.1,
+                    1.8,
+                    0.1,
+                    1.8,
+                    0.1
+                ],
+                [
+                    1.8,
+                    0.1,
+                    1.8,
+                    0.1,
+                    1.8,
+                    0.1,
+                    1.8,
+                    0.1
+                ],
+                [
+                    1.8,
+                    0.1,
+                    1.8,
+                    0.1,
+                    1.8,
+                    0.1,
+                    1.8,
+                    0.1
+                ],
+                [
+                    1.8,
+                    0.1,
+                    1.8,
+                    0.1,
+                    1.8,
+                    0.1,
+                    1.8,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "comm",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "comm_logs",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2
+                ],
+                [
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2,
+                    0.1,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "comm_syndie",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "comm_wizard",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
             "name": "computer",
+            "directions": 4
+        },
+        {
+            "name": "crew",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "detective_television"
+        },
+        {
+            "name": "dna",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.8,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.8,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.8,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.8,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "engine",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "error",
+            "directions": 4
+        },
+        {
+            "name": "explosive",
+            "directions": 4,
+            "delays": [
+                [
+                    1,
+                    0.1,
+                    0.1,
+                    1,
+                    0.1,
+                    0.1,
+                    1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    0.1,
+                    1,
+                    0.1,
+                    0.1,
+                    1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    0.1,
+                    1,
+                    0.1,
+                    0.1,
+                    1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    0.1,
+                    1,
+                    0.1,
+                    0.1,
+                    1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "forensic",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "generic",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "generic_keyboard",
+            "directions": 4
+        },
+        {
+            "name": "generic_keys",
+            "directions": 4
+        },
+        {
+            "name": "generic_panel_open",
+            "directions": 4
+        },
+        {
+            "name": "holocontrol",
+            "directions": 4,
+            "delays": [
+                [
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "id",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "id_key",
+            "directions": 4
+        },
+        {
+            "name": "id_key_off",
+            "directions": 4
+        },
+        {
+            "name": "med_key",
+            "directions": 4
+        },
+        {
+            "name": "med_key_off",
+            "directions": 4
+        },
+        {
+            "name": "medcomp",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "mining",
+            "directions": 4,
+            "delays": [
+                [
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1
+                ],
+                [
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1,
+                    1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "power_key",
+            "directions": 4
+        },
+        {
+            "name": "power_key_off",
+            "directions": 4
+        },
+        {
+            "name": "power_monitor",
+            "directions": 4,
+            "delays": [
+                [
+                    0.6,
+                    0.6,
+                    0.6,
+                    0.6
+                ],
+                [
+                    0.6,
+                    0.6,
+                    0.6,
+                    0.6
+                ],
+                [
+                    0.6,
+                    0.6,
+                    0.6,
+                    0.6
+                ],
+                [
+                    0.6,
+                    0.6,
+                    0.6,
+                    0.6
+                ]
+            ]
+        },
+        {
+            "name": "power_monitor_warn",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "rd_key",
+            "directions": 4
+        },
+        {
+            "name": "rd_key_off",
+            "directions": 4
+        },
+        {
+            "name": "rdcomp",
+            "directions": 4
+        },
+        {
+            "name": "request",
+            "directions": 4,
+            "delays": [
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                [
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3,
+                    0.3
+                ]
+            ]
+        },
+        {
+            "name": "robot",
+            "directions": 4
+        },
+        {
+            "name": "security",
+            "directions": 4,
+            "delays": [
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ],
+                [
+                    0.2,
+                    0.2
+                ]
+            ]
+        },
+        {
+            "name": "security_key",
+            "directions": 4
+        },
+        {
+            "name": "security_key_off",
+            "directions": 4
+        },
+        {
+            "name": "sensors",
+            "directions": 4
+        },
+        {
+            "directions": 4,
+            "name": "service",
+            "delays": [
+                [
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                [
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                [
+                    0.5,
+                    0.5,
+                    0.5
+                ],
+                [
+                    0.5,
+                    0.5,
+                    0.5
+                ]
+            ]
+        },
+        {
+            "name": "service_keys",
+            "directions": 4
+        },
+        {
+            "name": "shuttle",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "solar_screen",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "supermatter-0",
+            "directions": 4
+        },
+        {
+            "name": "supermatter-1",
+            "directions": 4
+        },
+        {
+            "name": "supermatter-2",
+            "directions": 4
+        },
+        {
+            "name": "supermatter-3",
+            "directions": 4
+        },
+        {
+            "name": "supermatter-4",
+            "directions": 4
+        },
+        {
+            "name": "supermatter-5",
+            "directions": 4
+        },
+        {
+            "name": "supermatter-6",
+            "directions": 4,
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "supermatter_keys",
+            "directions": 4
+        },
+        {
+            "name": "supply",
+            "directions": 4
+        },
+        {
+            "name": "syndie_key",
+            "directions": 4
+        },
+        {
+            "name": "syndie_key_off",
+            "directions": 4
+        },
+        {
+            "name": "syndishuttle",
+            "directions": 4
+        },
+        {
+            "name": "tank",
             "directions": 4
         },
         {
@@ -92,13 +1240,34 @@
             "directions": 4
         },
         {
-            "name": "generic_keyboard",
+            "name": "tech_key_off",
             "directions": 4
         },
         {
-            "name": "generic_panel_open",
+            "name": "telescreen",
+            "directions": 4
+        },
+        {
+            "name": "telescreen_frame",
+            "directions": 4
+        },
+        {
+            "name": "telescreen_broken",
+            "directions": 4
+        },
+        {
+            "name": "turbinecomp",
+            "directions": 4
+        },
+        {
+            "name": "television"
+        },
+        {
+            "name": "television_broken"
+        },
+        {
+            "name": "wizard_key",
             "directions": 4
         }
-      ]
-  }
-  
+    ]
+}

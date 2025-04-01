@@ -216,5 +216,5 @@
   id: PillBurger
   name: food-sequence-burger-content-pill
   sprites:
-  - sprite: Objects/Specific/Chemistry/pills.rsi
+  - sprite: _Impstation/Objects/Specific/Chemistry/pills.rsi # imp
     state: pill

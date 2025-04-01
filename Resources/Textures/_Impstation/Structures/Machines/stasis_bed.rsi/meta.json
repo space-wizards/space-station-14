@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation from https://github.com/tgstation/tgstation/pull/85491.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "broken"
+    },
+    {
+      "name": "panel",
+      "directions": 4
+    },
+    {
+      "name": "unlit",
+      "directions": 4
+    },
+    {
+      "name": "icon",
+      "directions": 4
+    }
+  ]
+}

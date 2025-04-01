@@ -22,7 +22,7 @@
         layer:
         - MachineLayer
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/Portable/portable_scrubber.rsi
+    sprite: _Impstation/Structures/Piping/Atmospherics/Portable/portable_scrubber.rsi # imp
     noRot: true
     layers:
     - state: icon

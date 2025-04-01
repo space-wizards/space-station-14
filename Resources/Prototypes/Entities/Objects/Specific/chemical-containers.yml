@@ -9,7 +9,7 @@
         beaker:
           maxVol: 200
     - type: Sprite
-      sprite: Objects/Specific/Chemistry/jug.rsi
+      sprite: _Impstation/Objects/Specific/Chemistry/jug.rsi # imp
       layers:
         - state: jug
         - state: jug1
@@ -17,7 +17,7 @@
           visible: false
     - type: Item
       size: Normal
-      sprite: Objects/Specific/Chemistry/jug.rsi
+      sprite: _Impstation/Objects/Specific/Chemistry/jug.rsi # imp
     - type: MixableSolution
       solution: beaker
     - type: RefillableSolution
@@ -44,7 +44,7 @@
       solution: beaker
     - type: Appearance
     - type: SolutionContainerVisuals
-      maxFillLevels: 8
+      maxFillLevels: 8 # imp
       fillBaseName: jug
       inHandsMaxFillLevels: 5
       inHandsFillBaseName: -fill-

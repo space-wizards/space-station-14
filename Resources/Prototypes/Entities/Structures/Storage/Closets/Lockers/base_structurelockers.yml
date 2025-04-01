@@ -7,7 +7,7 @@
   - type: Lock
   - type: LockVisuals
   - type: Sprite
-    sprite: Structures/Storage/closet.rsi
+    sprite: _Impstation/Structures/Storage/closet.rsi # imp
     noRot: true
     layers:
     - state: generic

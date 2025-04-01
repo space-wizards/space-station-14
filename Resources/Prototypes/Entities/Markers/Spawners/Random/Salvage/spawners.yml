@@ -388,7 +388,7 @@
   - type: Sprite
     layers:
     - state: pink
-    - sprite: Structures/Storage/canister.rsi
+    - sprite: _Impstation/Structures/Storage/canister.rsi # imp
       state: blue
   - type: EntityTableSpawner
     table: !type:GroupSelector

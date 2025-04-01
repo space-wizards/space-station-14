@@ -37,6 +37,12 @@ public sealed partial class StationEventComponent : Component
     public int EarliestStart = 5;
 
     /// <summary>
+    /// imp. In minutes, the *last* round time this event can start. if null, does nothing.
+    /// </summary>
+    [DataField]
+    public int? LatestStart = null;
+
+    /// <summary>
     ///     In minutes, the amount of time before the same event can occur again
     /// </summary>
     [DataField]

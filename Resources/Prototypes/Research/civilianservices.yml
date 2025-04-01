@@ -60,7 +60,7 @@
   id: AdvancedEntertainment
   name: research-technology-advanced-entertainment
   icon:
-    sprite: Structures/Machines/computers.rsi
+    sprite: _Impstation/Structures/Machines/computers.rsi # imp
     state: television
   discipline: CivilianServices
   tier: 1
@@ -122,7 +122,7 @@
   id: BiochemicalStasis
   name: research-technology-biochemical-stasis
   icon:
-    sprite: Structures/Machines/stasis_bed.rsi
+    sprite: _Impstation/Structures/Machines/stasis_bed.rsi # imp
     state: icon
   discipline: CivilianServices
   tier: 2
@@ -223,7 +223,7 @@
   id: BluespaceChemistry
   name: research-technology-bluespace-chemistry
   icon:
-    sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
+    sprite: _Impstation/Objects/Specific/Chemistry/beaker_bluespace.rsi # imp
     state: beakerbluespace
   discipline: CivilianServices
   tier: 3

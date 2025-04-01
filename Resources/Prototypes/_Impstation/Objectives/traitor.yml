@@ -99,7 +99,7 @@
     unique: true
     difficulty: 1.25
     icon:
-      sprite: Objects/Specific/Medical/medical.rsi
+      sprite: _Impstation/Objects/Specific/Medical/medical.rsi
       state: gauze
   - type: AutoCompleteCondition
 

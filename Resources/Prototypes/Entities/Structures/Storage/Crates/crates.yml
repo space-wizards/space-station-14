@@ -4,9 +4,9 @@
   name: crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/generic.rsi
+    sprite: _Impstation/Structures/Storage/Crates/generic.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/generic.rsi
+    sprite: _Impstation/Structures/Storage/Crates/generic.rsi # imp
   - type: Reflect
     reflects:
     - Energy
@@ -26,9 +26,9 @@
   name: plastic crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/plastic.rsi
+    sprite: _Impstation/Structures/Storage/Crates/plastic.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/plastic.rsi
+    sprite: _Impstation/Structures/Storage/Crates/plastic.rsi # imp
   - type: Construction
     graph: CratePlastic
     node: crateplastic
@@ -48,9 +48,9 @@
   name: freezer
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/freezer.rsi
+    sprite: _Impstation/Structures/Storage/Crates/freezer.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/freezer.rsi
+    sprite: _Impstation/Structures/Storage/Crates/freezer.rsi # imp
   - type: AntiRottingContainer
   - type: ExplosionResistance
     damageCoefficient: 0.50
@@ -66,9 +66,9 @@
   name: hydroponics crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/hydroponics.rsi
+    sprite: _Impstation/Structures/Storage/Crates/hydroponics.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/hydroponics.rsi
+    sprite: _Impstation/Structures/Storage/Crates/hydroponics.rsi # imp
 
 - type: entity
   parent: CratePlastic
@@ -76,9 +76,9 @@
   name: medical crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/medical.rsi
+    sprite: _Impstation/Structures/Storage/Crates/medical.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/medical.rsi
+    sprite: _Impstation/Structures/Storage/Crates/medical.rsi # imp
 
 - type: entity
   parent: CrateGenericSteel
@@ -87,9 +87,9 @@
   description: Is not actually lead lined. Do not store your plutonium in this.
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/radiation.rsi
+    sprite: _Impstation/Structures/Storage/Crates/radiation.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/radiation.rsi
+    sprite: _Impstation/Structures/Storage/Crates/radiation.rsi # imp
 
 - type: entity
   parent: CratePlastic
@@ -97,9 +97,9 @@
   name: oxygen crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/o2.rsi
+    sprite: _Impstation/Structures/Storage/Crates/o2.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/o2.rsi
+    sprite: _Impstation/Structures/Storage/Crates/o2.rsi # imp
 
 - type: entity
   parent: CrateGenericSteel
@@ -107,9 +107,9 @@
   name: electrical crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/electrical.rsi
+    sprite: _Impstation/Structures/Storage/Crates/electrical.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/electrical.rsi
+    sprite: _Impstation/Structures/Storage/Crates/electrical.rsi # imp
 
 - type: entity
   parent: CrateGenericSteel
@@ -117,9 +117,9 @@
   name: engineering crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/engineering.rsi
+    sprite: _Impstation/Structures/Storage/Crates/engineering.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/engineering.rsi
+    sprite: _Impstation/Structures/Storage/Crates/engineering.rsi # imp
 
 - type: entity
   parent: CrateGenericSteel
@@ -127,9 +127,9 @@
   name: science crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/science.rsi
+    sprite: _Impstation/Structures/Storage/Crates/science.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/science.rsi
+    sprite: _Impstation/Structures/Storage/Crates/science.rsi # imp
 
 - type: entity
   parent: CrateGenericSteel
@@ -137,9 +137,9 @@
   name: surgery crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/surgery.rsi
+    sprite: _Impstation/Structures/Storage/Crates/surgery.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/surgery.rsi
+    sprite: _Impstation/Structures/Storage/Crates/surgery.rsi # imp
 
 - type: entity
   parent: CrateGeneric
@@ -147,9 +147,9 @@
   name: web crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/web.rsi
+    sprite: _Impstation/Structures/Storage/Crates/web.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/web.rsi
+    sprite: _Impstation/Structures/Storage/Crates/web.rsi # imp
     layers:
     - state: base
       map: ["enum.StorageVisualLayers.Base"]
@@ -193,9 +193,9 @@
   name: secgear crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/sec_gear.rsi
+    sprite: _Impstation/Structures/Storage/Crates/sec_gear.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/sec_gear.rsi
+    sprite: _Impstation/Structures/Storage/Crates/sec_gear.rsi # imp
   - type: AccessReader
     access: [["Security"]]
 
@@ -205,9 +205,9 @@
   name: secure engineering crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/engicrate_secure.rsi
+    sprite: _Impstation/Structures/Storage/Crates/engicrate_secure.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/engicrate_secure.rsi
+    sprite: _Impstation/Structures/Storage/Crates/engicrate_secure.rsi # imp
   - type: AccessReader
     access: [["Engineering"]]
 
@@ -217,9 +217,9 @@
   name: secure medical crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/medicalcrate_secure.rsi
+    sprite: _Impstation/Structures/Storage/Crates/medicalcrate_secure.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/medicalcrate_secure.rsi
+    sprite: _Impstation/Structures/Storage/Crates/medicalcrate_secure.rsi # imp
   - type: AccessReader
     access: [["Medical"]]
 
@@ -229,9 +229,9 @@
   name: secure chemistry crate
   components:
     - type: Icon
-      sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+      sprite: _Impstation/Structures/Storage/Crates/chemcrate_secure.rsi # imp
     - type: Sprite
-      sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+      sprite: _Impstation/Structures/Storage/Crates/chemcrate_secure.rsi # imp
     - type: AccessReader
       access: [["Chemistry"]]
 
@@ -241,9 +241,9 @@
   name: private crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/privatecrate_secure.rsi
+    sprite: _Impstation/Structures/Storage/Crates/privatecrate_secure.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/privatecrate_secure.rsi
+    sprite: _Impstation/Structures/Storage/Crates/privatecrate_secure.rsi # imp
 
 - type: entity
   parent: CrateBaseSecure
@@ -251,9 +251,9 @@
   name: secure science crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/scicrate_secure.rsi
+    sprite: _Impstation/Structures/Storage/Crates/scicrate_secure.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/scicrate_secure.rsi
+    sprite: _Impstation/Structures/Storage/Crates/scicrate_secure.rsi # imp
   - type: AccessReader
     access: [["Research"]]
 
@@ -263,9 +263,9 @@
   name: plasma crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/plasma.rsi
+    sprite: _Impstation/Structures/Storage/Crates/plasma.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/plasma.rsi
+    sprite: _Impstation/Structures/Storage/Crates/plasma.rsi # imp
   - type: AccessReader
     access: [["Engineering"], ["Research"], ["Chemistry"]]
 
@@ -275,9 +275,9 @@
   name: secure crate
   components:
     - type: Icon
-      sprite: Structures/Storage/Crates/secure.rsi
+      sprite: _Impstation/Structures/Storage/Crates/secure.rsi # imp
     - type: Sprite
-      sprite: Structures/Storage/Crates/secure.rsi
+      sprite: _Impstation/Structures/Storage/Crates/secure.rsi # imp
 
 - type: entity
   parent: CrateBaseSecure
@@ -285,9 +285,9 @@
   name: secure hydroponics crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/hydro_secure.rsi
+    sprite: _Impstation/Structures/Storage/Crates/hydro_secure.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/hydro_secure.rsi
+    sprite: _Impstation/Structures/Storage/Crates/hydro_secure.rsi # imp
   - type: AccessReader
     access: [["Hydroponics"]]
 
@@ -297,9 +297,9 @@
   name: secure weapon crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/weapon.rsi
+    sprite: _Impstation/Structures/Storage/Crates/weapon.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/weapon.rsi
+    sprite: _Impstation/Structures/Storage/Crates/weapon.rsi # imp
   - type: AccessReader
     access: [["Armory"]]
   - type: AntiTamper # impstation edit
@@ -313,7 +313,7 @@
   description: An armory access locked crate for storing contraband confiscated from suspects or prisoners.
   components:
   - type: Sprite
-    sprite: Structures/Storage/Crates/sec_gear.rsi
+    sprite: _Impstation/Structures/Storage/Crates/sec_gear.rsi # imp
   - type: AccessReader
     access: [["Armory"]]
 
@@ -323,9 +323,9 @@
   name: command crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/command.rsi
+    sprite: _Impstation/Structures/Storage/Crates/command.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/command.rsi
+    sprite: _Impstation/Structures/Storage/Crates/command.rsi # imp
   - type: AccessReader
     access: [["Command"]]
 
@@ -337,7 +337,7 @@
   - type: EntityStorage
     airtight: false
   - type: Sprite
-    sprite: Structures/Storage/Crates/livestock.rsi
+    sprite: _Impstation/Structures/Storage/Crates/livestock.rsi # imp
     layers:
     - state: base
     - state: closed
@@ -347,7 +347,7 @@
       offset: "-0.25,0.625"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
-    sprite: Structures/Storage/Crates/livestock.rsi
+    sprite: _Impstation/Structures/Storage/Crates/livestock.rsi # imp
     state: base
   - type: Destructible
     thresholds:
@@ -604,9 +604,9 @@
   description: A dark steel crate with red bands and a letter S embossed on the front.
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/syndicate.rsi
+    sprite: _Impstation/Structures/Storage/Crates/syndicate.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/syndicate.rsi
+    sprite: _Impstation/Structures/Storage/Crates/syndicate.rsi # imp
 
 - type: entity
   parent: [StructureWheeled, CrateBaseWeldable]
@@ -614,9 +614,9 @@
   name: trash cart
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/trashcart.rsi
+    sprite: _Impstation/Structures/Storage/Crates/trashcart.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/trashcart.rsi
+    sprite: _Impstation/Structures/Storage/Crates/trashcart.rsi # imp
     layers:
     - state: base
     - state: closed
@@ -635,9 +635,9 @@
   name: janitorial trash cart
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/trashcart_jani.rsi
+    sprite: _Impstation/Structures/Storage/Crates/trashcart_jani.rsi # imp
   - type: Sprite
-    sprite: Structures/Storage/Crates/trashcart_jani.rsi
+    sprite: _Impstation/Structures/Storage/Crates/trashcart_jani.rsi # imp
     layers:
     - state: base
     - state: closed

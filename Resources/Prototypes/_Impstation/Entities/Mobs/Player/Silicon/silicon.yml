@@ -78,7 +78,7 @@
     name: ghost-role-information-drone-name
     description: ghost-role-information-drone-description
     rules: ghost-role-information-drone-rules
-    mindRoles: # imp 
+    mindRoles: # imp
     - MindRoleGhostRoleSilicon
   - type: GhostTakeoverAvailable
   - type: SiliconLawBound
@@ -90,7 +90,7 @@
     minimumFrictionSpeed: 0
     weightlessAcceleration: 1.2
     weightlessFriction: 1
-    weightlessFrictionNoInput: 2 
+    weightlessFrictionNoInput: 2
     offGridFriction: 1.5
     weightlessModifier: 1
   - type: MobState
@@ -123,7 +123,7 @@
     drawdepth: SmallMobs
     layers:
     - state: shell
-      sprite: Mobs/Silicon/drone.rsi
+      sprite: _Impstation/Mobs/Silicon/drone.rsi
       map: ["base"]
   - type: MovementAlwaysTouching
   - type: Fixtures

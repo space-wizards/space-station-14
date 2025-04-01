@@ -4,7 +4,7 @@
   name: administrative assistant's locker
   components:
   - type: Sprite
-    sprite: _Impstation/Structures/Storage/aacloset.rsi
+    sprite: _Impstation/Structures/Storage/closet.rsi # imp
     noRot: true
     layers:
     - state: aa

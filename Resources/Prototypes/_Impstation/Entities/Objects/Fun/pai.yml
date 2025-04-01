@@ -1,4 +1,45 @@
-- type: entity # imp
+- type: entity
+  parent: PersonalAI
+  id: GoldPersonalAI
+  name: gilded personal ai device
+  description: An incredibly rare, golden electronic pal. Amazing! This would be worth a fortune, but it's got no resale value.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Fun/pai.rsi
+    layers:
+    - state: gold-pai-base
+    - state: gold-pai-shimmer-overlay
+      shader: unshaded
+    - state: gold-pai-off-overlay
+      shader: unshaded
+      map: ["screen"]
+    - state: gold-pai-swish-overlay
+      shader: unshaded
+  - type: ToggleableGhostRole
+    roleName: pai-system-role-name-gilded
+    roleDescription: pai-system-role-description-gilded
+    roleRules: ghost-role-information-familiar-rules
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+  - type: ActiveRadio
+    channels:
+    - Common
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: gold-pai-off-overlay }
+          Searching: { state: gold-pai-searching-overlay }
+          On: { state: gold-pai-on-overlay }
+  - type: PointLight
+    radius: 1.2
+    energy: 1.34
+    castShadows: false
+    color: "#9b68ff"
+
+- type: entity
   parent: PersonalAI
   id: TutorialPersonalAI
   name: tutor personal ai device

@@ -153,7 +153,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         // grab the species skin coloration type.
         var skinType = IoCManager.Resolve<IPrototypeManager>().Index<SpeciesPrototype>(species).SkinColoration;
 
-        // declare some defaults. ensures that the hair and eyes on hues-colored species don't match the skin or one another. 
+        // declare some defaults. ensures that the hair and eyes on hues-colored species don't match the skin or one another.
         var newSkinColor = colorPalette[0];
         var newHairColor = colorPalette[1];
         var newEyeColor = colorPalette[2];
@@ -220,7 +220,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
                 newHairStyle = markings.Count > 0 ? random.Pick(markings) : HairStyles.DefaultHairStyle;
             }
 
-            // for every other category, 
+            // for every other category,
             else if (markings.Count > 0)
             {
                 // roll a die. currently a 1 in 3 chance per category, except Tails, which are 1 in 2 (because of the effect they have on the silhouettes of spiders and moths.)
@@ -249,7 +249,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
                         if (lastMarking != null && lastMarking == protoToAdd)
                             continue;
 
-                        // set gauze to white. 
+                        // set gauze to white.
                         // side note, I really hate that gauze isn't its own category. please fix that so that i can make this not suck as much.
                         // or, like, give it its own color rules. or something.
                         if (markingToAdd.MarkingId.Contains("gauze", StringComparison.OrdinalIgnoreCase))
@@ -291,13 +291,14 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
         {
             var hsl = Color.ToHsl(color);
 
+            // sorry about how messy these are, but to get all random values we need to reroll for positive and negative HSL
             var hVal = hsl.X + angle;
             hVal = hVal >= 0.360 ? hVal - 0.360 : hVal;
-            var positiveHSL = new Vector4((float)hVal, hsl.Y, hsl.Z, hsl.W);
+            var positiveHSL = new Vector4((float)hVal, MathHelper.Clamp01(hsl.Y + random.Next(-20, 0) / 100f), MathHelper.Clamp01(hsl.Z + random.Next(-15, 15) / 100f), hsl.W);
 
             var hVal1 = hsl.X - angle;
             hVal1 = hVal1 <= 0 ? hVal1 + 0.360 : hVal1;
-            var negativeHSL = new Vector4((float)hVal1, hsl.Y, hsl.Z, hsl.W);
+            var negativeHSL = new Vector4((float)hVal1, MathHelper.Clamp01(hsl.Y + random.Next(-20, 0) / 100f), MathHelper.Clamp01(hsl.Z + random.Next(-15, 15) / 100f), hsl.W);
 
             var c0 = Color.FromHsl(positiveHSL);
             var c1 = Color.FromHsl(negativeHSL);

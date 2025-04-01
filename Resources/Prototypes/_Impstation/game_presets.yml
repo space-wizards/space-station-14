@@ -81,3 +81,15 @@
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
     - LowpopLimiter
+
+- type: gamePreset
+  id: Oddball
+  alias:
+    - oddball
+  name: oddball-title
+  description: oddball-description
+  maxPlayers: 15
+  showInVote: true
+  supportedMaps: DeathMatchMapPool
+  rules:
+  - OddballGameRule

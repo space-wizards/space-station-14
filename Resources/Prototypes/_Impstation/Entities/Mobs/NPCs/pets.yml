@@ -265,6 +265,7 @@
     minimumWait: 60
     maximumWait: 180
     learnChance: 0.5
+    requiresMind: false
     blacklist:
       components:
       - ParrotSpeech # Stop parrots repeating their own speech

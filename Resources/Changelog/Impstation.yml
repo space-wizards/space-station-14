@@ -1,86 +1,4 @@
 ﻿Entries:
-- author: crocodilecarousel
-  changes:
-  - message: Lillies have received a visual refresh!
-    type: Tweak
-  id: 944
-  time: '2025-01-17T04:34:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1390
-- author: honeyed-lemons
-  changes:
-  - message: Courier job has been added to Fland and Oasis
-    type: Add
-  - message: Fugitive spawners have been added to Box, Xeno, Fland, and Oasis
-    type: Add
-  - message: Tweaked Xeno Mailroom
-    type: Tweak
-  id: 945
-  time: '2025-01-17T04:36:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1392
-- author: TheGrimbeeper
-  changes:
-  - message: Multitools should work as defibs for small critters once more.
-    type: Fix
-  id: 946
-  time: '2025-01-17T04:40:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1395
-- author: honeyed-lemons
-  changes:
-  - message: Courier is now in the ID Computer
-    type: Fix
-  id: 947
-  time: '2025-01-17T04:47:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1394
-- author: Sha-Seng
-  changes:
-  - message: Compact Armor Vest (identical stats as other ones) in sec loadouts and
-      one in the SecTech
-    type: Add
-  - message: Wardens can now spawn with armor vests instead of coats like HoS can
-      (warden armor is stronger though!)
-    type: Add
-  id: 948
-  time: '2025-01-17T05:20:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1396
-- author: AftrLite
-  changes:
-  - message: The Cargoporter and Mailporter pads now have unique and improved VFX
-      for activation.
-    type: Add
-  id: 949
-  time: '2025-01-17T05:50:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1399
-- author: Sha-Seng
-  changes:
-  - message: No-Ro lobby art
-    type: Add
-  - message: Kaasi lobby art (there's only one chair)
-    type: Remove
-  id: 950
-  time: '2025-01-17T06:00:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1400
-- author: EpicToast
-  changes:
-  - message: Vent critters will spawn across the station like usual again.
-    type: Remove
-  id: 951
-  time: '2025-01-17T06:01:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1401
-- author: crocodilecarousel
-  changes:
-  - message: Adds one new food available through the cargo request console. The perfect
-      treat for invisible bitches and maint dwellers.
-    type: Add
-  id: 952
-  time: '2025-01-17T06:34:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1402
-- author: EpicToast
-  changes:
-  - message: Adds mail to Packed and Reach.
-    type: Add
-  id: 953
-  time: '2025-01-17T07:19:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1403
 - author: DinnerCalzone
   changes:
   - message: Mail support has been added to Amber, Bagel, and Train.
@@ -4073,3 +3991,83 @@
   id: 1443
   time: '2025-04-01T04:18:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2166
+- author: mqole, theqwat, Darkmajia, EpicToast, hivehum, sageu, AvianMaiden
+  changes:
+  - message: ADDED JESTERS
+    type: Add
+  id: 1444
+  time: '2025-04-01T10:16:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2051
+- author: Sha-Seng
+  changes:
+  - message: Bomber jackets have pockets again
+    type: Fix
+  id: 1445
+  time: '2025-04-01T11:10:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2080
+- author: Sha-Seng
+  changes:
+  - message: Human/dwarf ears are now HeadSide markings (you'll have to readd them
+      if you had them!)
+    type: Tweak
+  id: 1446
+  time: '2025-04-01T11:15:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2083
+- author: ATDoop
+  changes:
+  - message: Thaven glasses should rest on their heads a little better now.
+    type: Fix
+  id: 1447
+  time: '2025-04-01T11:32:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2143
+- author: widgetbeck
+  changes:
+  - message: The Cargorilla cargo gift event will now only roll during the first 30
+      minutes of the round.
+    type: Tweak
+  id: 1448
+  time: '2025-04-01T11:39:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2159
+- author: Darkmajia
+  changes:
+  - message: Drains properly clog again.
+    type: Fix
+  id: 1449
+  time: '2025-04-01T11:39:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2163
+- author: TheGrimbeeper
+  changes:
+  - message: Rat Kings now deal 2 structural damage
+    type: Tweak
+  id: 1450
+  time: '2025-04-01T11:50:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2157
+- author: widgetbeck
+  changes:
+  - message: Added a new depth 4 artifact node.
+    type: Add
+  - message: People with the Echolalia trait will now display fake typing indicators
+      before echoing a message.
+    type: Tweak
+  id: 1451
+  time: '2025-04-01T11:50:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2150
+- author: mqole
+  changes:
+  - message: Your random characters might be a bit more colourful.
+    type: Tweak
+  id: 1452
+  time: '2025-04-01T12:23:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2148
+- author: mqole
+  changes:
+  - message: You can now randomise your appearance without changing your species in
+      the character menu!
+    type: Add
+  - message: As a side effect, pizza is more expensive. Somehow.
+    type: Remove
+  - message: Character previews in the customization menu will no longer be cut off.
+    type: Fix
+  id: 1453
+  time: '2025-04-01T12:24:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2149

@@ -9,7 +9,7 @@
     - type: Sprite
       layers:
         - state: red
-        - sprite: Structures/Storage/Crates/generic.rsi
+        - sprite: _Impstation/Structures/Storage/Crates/generic.rsi # imp
           state: icon
     - type: RandomSpawner
       rarePrototypes:

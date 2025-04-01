@@ -31,6 +31,7 @@
     Chest: MobHumanTorso
     Eyes: MobHumanoidEyes
     HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking #imp
     LArm: MobHumanLArm
     RArm: MobHumanRArm
     LHand: MobHumanLHand
@@ -59,6 +60,9 @@
       points: 0
       required: false
     HeadTop:
+      points: 1
+      required: false
+    HeadSide: #imp
       points: 1
       required: false
     UndergarmentTop:

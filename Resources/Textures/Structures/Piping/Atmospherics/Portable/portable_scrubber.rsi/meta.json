@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from paradise station at https://github.com/ParadiseSS13/Paradise/blob/bd91a1b962fe9bd38e346e9fafd4ebb10784fcb3/icons/obj/atmos.dmi and modified quite a bit by AftrLite.",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a, and modified a bit by Rane",
   "size": {
     "x": 32,
     "y": 32
@@ -14,37 +14,19 @@
       "name": "icon-running",
       "delays": [
         [
-          0.11,
-          0.11,
-          0.11,
-          0.11
+          0.2,
+          0.2
         ]
       ]
     },
     {
-      "name": "unlit",
-      "delays": [
-        [
-          0.11,
-          0.11,
-          0.11,
-          0.11
-        ]
-      ]
+      "name": "unlit"
     },
     {
       "name": "unlit-full"
     },
     {
-      "name": "draining",
-      "delays": [
-        [
-          0.11,
-          0.11,
-          0.11,
-          0.11
-        ]
-      ]
+      "name": "draining"
     }
   ]
 }

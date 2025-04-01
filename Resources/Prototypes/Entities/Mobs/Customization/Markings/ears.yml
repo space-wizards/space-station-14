@@ -1,7 +1,8 @@
+# upstream ears moved to HeadSide so they show with earrings
 - type: marking
   id: HumanLongEars
-  bodyPart: HeadTop
-  markingCategory: HeadTop
+  bodyPart: HeadSide #imp
+  markingCategory: HeadSide #imp
   forcedColoring: true
   followSkinColor: true
   speciesRestriction: [Human, Dwarf]
@@ -11,8 +12,8 @@
 
 - type: marking
   id: LongEarsWide
-  bodyPart: HeadTop
-  markingCategory: HeadTop
+  bodyPart: HeadSide #imp
+  markingCategory: HeadSide #imp
   forcedColoring: true
   followSkinColor: true
   speciesRestriction: [Human]
@@ -22,8 +23,8 @@
 
 - type: marking
   id: LongEarsSmall
-  bodyPart: HeadTop
-  markingCategory: HeadTop
+  bodyPart: HeadSide #imp
+  markingCategory: HeadSide #imp
   forcedColoring: true
   followSkinColor: true
   speciesRestriction: [Human, Dwarf]
@@ -33,8 +34,8 @@
 
 - type: marking
   id: LongEarsUpwards
-  bodyPart: HeadTop
-  markingCategory: HeadTop
+  bodyPart: HeadSide #imp
+  markingCategory: HeadSide #imp
   forcedColoring: true
   followSkinColor: true
   speciesRestriction: [Human]
@@ -44,8 +45,8 @@
 
 - type: marking
   id: LongEarsTall
-  bodyPart: HeadTop
-  markingCategory: HeadTop
+  bodyPart: HeadSide #imp
+  markingCategory: HeadSide #imp
   forcedColoring: true
   followSkinColor: true
   speciesRestriction: [Human]
@@ -55,8 +56,8 @@
 
 - type: marking
   id: LongEarsThin
-  bodyPart: HeadTop
-  markingCategory: HeadTop
+  bodyPart: HeadSide #imp
+  markingCategory: HeadSide #imp
   forcedColoring: true
   followSkinColor: true
   speciesRestriction: [Human, Dwarf]

@@ -38,8 +38,8 @@
   components:
   - type: InstantAction
     useDelay: 1
-    icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
-    iconOn: { sprite: Objects/Tools/flashlight.rsi, state: flashlight-on }
+    icon: { sprite: _Impstation/Objects/Tools/flashlight.rsi, state: flashlight } # imp
+    iconOn: { sprite: _Impstation/Objects/Tools/flashlight.rsi, state: flashlight-on } # imp
     event: !type:ToggleActionEvent
 
 - type: entity
@@ -248,7 +248,7 @@
     checkCanInteract: false
     checkConsciousness: false
     temporary: true
-    icon: { sprite: Objects/Tools/multitool.rsi, state: icon }
+    icon: { sprite: _Impstation/Objects/Tools/multitool.rsi, state: icon } # imp
     event: !type:ClearAllOverlaysEvent
 
 - type: entity
@@ -348,7 +348,7 @@
   name: Toggle Paramedic Siren
   description: Toggles the paramedic siren on and off.
   components:
-  - type: InstantAction 
+  - type: InstantAction
     icon:
       sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
       state: icon-siren

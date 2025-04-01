@@ -109,7 +109,7 @@
   category: construction-category-storage
   description: For containment of food and other things. Not as durable as a normal crate, and can't be welded shut.
   icon:
-    sprite: Structures/Storage/Crates/web.rsi
+    sprite: _Impstation/Structures/Storage/Crates/web.rsi # imp
     state: icon
   objectType: Structure
   placementMode: SnapgridCenter

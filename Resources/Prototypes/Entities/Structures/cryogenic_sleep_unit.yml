@@ -6,11 +6,11 @@
   components:
   - type: Sprite
     noRot: true
-    sprite: _Impstation/Structures/cryostorage.rsi
+    sprite: _Impstation/Structures/cryostorage.rsi # imp
     layers:
     - state: sleeper_0
       map: ["base"]
-    - state: sleeper_0-overlay
+    - state: sleeper_0-overlay # imp
       shader: unshaded
       map: ["overlay"]
 
@@ -47,7 +47,7 @@
         base:
           True: { state: sleeper_1 }
           False: { state: sleeper_0 }
-        overlay:
+        overlay: # imp
           True: { state: sleeper_1-overlay }
           False: { state: sleeper_0-overlay }
 

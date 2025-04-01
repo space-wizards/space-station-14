@@ -25,11 +25,21 @@
   equipment:
     head: ClothingHeadHatCaptaincrushercap
 
+- type: loadout
+  id: CaptainTricorne
+  equipment:
+    head: ClothingHeadHatCaptainTricorne
+
 # Glasses
 - type: loadout
   id: CaptainVisor
   equipment:
     eyes: ClothingEyesGlassesCaptainvisor
+
+- type: loadout
+  id: CaptainEyepatch
+  equipment:
+    eyes: ClothingEyesGlassesCaptaineyepatch
 
 # Neck
 - type: loadout
@@ -40,6 +50,13 @@
   - !type:GroupLoadoutEffect
     proto: VeteranCap
 
+- type: loadout
+  id: CaptainAdmiralCloak
+  equipment:
+    neck: ClothingNeckCloakCaptainAdmiral
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCap
 # Outer clothing
 - type: loadout
   id: CaptainRepeller
@@ -57,3 +74,8 @@
   id: CaptainJumpBoots
   equipment:
     shoes: ClothingShoesBootsCaptainjumpboots
+    
+- type: loadout
+  id: CaptainHeeledBoots
+  equipment:
+    shoes: ClothingShoesCaptainHighheelBoots

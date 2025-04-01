@@ -91,7 +91,7 @@
 - type: cargoProduct
   id: MaterialFuelTank
   icon:
-    sprite: Structures/Storage/tanks.rsi
+    sprite: _Impstation/Structures/Storage/tanks.rsi # imp
     state: fueltank
   product: WeldingFuelTankFull
   cost: 1500
@@ -101,7 +101,7 @@
 - type: cargoProduct
   id: MaterialWaterTank
   icon:
-    sprite: Structures/Storage/tanks.rsi
+    sprite: _Impstation/Structures/Storage/tanks.rsi # imp
     state: watertank
   product: WaterTankFull
   cost: 1000

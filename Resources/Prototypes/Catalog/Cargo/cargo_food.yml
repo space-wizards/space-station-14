@@ -4,7 +4,7 @@
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     state: margherita-slice
   product: CrateFoodPizza
-  cost: 450
+  cost: 500 # IMP 450 > 500
   category: cargoproduct-category-name-food
   group: market
 

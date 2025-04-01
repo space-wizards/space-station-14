@@ -8,7 +8,7 @@
           steps:
             - tag: ConveyorAssembly
               icon:
-                sprite: Structures/conveyor.rsi
+                sprite: _Impstation/Structures/conveyor.rsi # imp
                 state: conveyor_loose
               name: conveyor belt assembly
               doAfter: 2

@@ -82,7 +82,7 @@
   objectType: Item
   description: When you've really got nothing left.
   icon:
-    sprite: Objects/Specific/Medical/medical.rsi
+    sprite: _Impstation/Objects/Specific/Medical/medical.rsi # imp
     state: gauze
 
 - type: construction

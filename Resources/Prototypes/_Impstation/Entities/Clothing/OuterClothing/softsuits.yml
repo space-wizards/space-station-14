@@ -1,0 +1,24 @@
+#Emergency Winter EVA
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterSuitEmergencyWinter
+  name: emergency winter EVA suit
+  description: An emergency EVA suit with a built-in mask. It's horribly slow, but it'll keep you warm in the cold climate while letting you hold an air tank.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Suits/emergency_winter_eva.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Suits/emergency_winter_eva.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: HeldSpeedModifier
+  - type: TemperatureProtection
+    heatingCoefficient: 1.2
+    coolingCoefficient: 0.1
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetWinterEVALarge
+    slot: head
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}

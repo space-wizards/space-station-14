@@ -22,7 +22,7 @@
   category: construction-category-utilities
   description: "A surveillance camera monitor for the wall."
   icon:
-    sprite: Structures/Machines/computers.rsi
+    sprite: _Impstation/Structures/Machines/computers.rsi # imp
     state: telescreen_frame
   objectType: Structure
   placementMode: SnapgridCenter
@@ -134,7 +134,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/disposal.rsi
+    sprite: _Impstation/Structures/Piping/disposal.rsi # imp
     state: "disposal"
 
 - type: construction
@@ -148,7 +148,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Piping/disposal.rsi
+    sprite: _Impstation/Structures/Piping/disposal.rsi # imp
     state: "mailing"
 
 - type: construction
@@ -373,7 +373,7 @@
   startNode: start
   targetNode: sensor
   category: construction-category-structures
-  description: Reports on the status of the gas within the attached pipe network. 
+  description: Reports on the status of the gas within the attached pipe network.
   icon:
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
     state: icon

@@ -21,7 +21,7 @@
     availableModes:
       - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
+      path: /Audio/Items/Toys/toysqueak1.ogg
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
@@ -97,7 +97,7 @@
     angleDecay: 18 #imp
     fireRate: 3.75 #imp
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
+      path: /Audio/Items/Toys/toysqueak1.ogg
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
@@ -196,7 +196,7 @@
       - FullAuto
       - SemiAuto #imp
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
+      path: /Audio/Items/Toys/toysqueak1.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -251,7 +251,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Effects/thunk.ogg
+      path: /Audio/Items/Toys/toysqueak1.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
     clumsyProof: true

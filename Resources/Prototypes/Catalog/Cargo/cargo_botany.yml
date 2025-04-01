@@ -41,7 +41,7 @@
 - type: cargoProduct
   id: BulkPlantBGone
   icon:
-    sprite: Objects/Specific/Chemistry/jug.rsi
+    sprite: _Impstation/Objects/Specific/Chemistry/jug.rsi # imp
     state: jug
   product: CratePlantBGone
   cost: 750

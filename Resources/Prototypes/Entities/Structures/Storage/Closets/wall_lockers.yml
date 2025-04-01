@@ -30,9 +30,9 @@
   components:
   - type: Appearance
   - type: EntityStorageVisuals
-    stateBaseClosed: n2
-    stateDoorOpen: n2_open
-    stateDoorClosed: n2_door
+    stateBaseClosed: emergencynit # imp
+    stateDoorOpen: emergencynit_open # imp
+    stateDoorClosed: emergencynit_door # imp
 
 - type: entity
   id: ClosetWallFire
@@ -53,6 +53,18 @@
   description: "A wardrobe packed with stylish blue clothing."
   components:
   - type: Appearance
+  - type: Sprite # imp
+    drawdepth: WallMountedItems
+    noRot: false
+    sprite: Structures/Storage/wall_locker.rsi
+    layers:
+    - state: generic
+      map: [ "enum.StorageVisualLayers.Base" ]
+    - state: generic_door
+      map: [ "enum.StorageVisualLayers.Door" ]
+    - state: welded
+      visible: false
+      map: [ "enum.WeldableLayers.BaseWelded" ]
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -77,6 +89,18 @@
   description: "A wardrobe packed with stylish black clothing."
   components:
   - type: Appearance
+  - type: Sprite # imp
+    drawdepth: WallMountedItems
+    noRot: false
+    sprite: Structures/Storage/wall_locker.rsi
+    layers:
+    - state: generic
+      map: [ "enum.StorageVisualLayers.Base" ]
+    - state: generic_door
+      map: [ "enum.StorageVisualLayers.Door" ]
+    - state: welded
+      visible: false
+      map: [ "enum.WeldableLayers.BaseWelded" ]
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open
@@ -159,6 +183,18 @@
   name: atmospherics wall closet
   components:
   - type: Appearance
+  - type: Sprite # imp
+    drawdepth: WallMountedItems
+    noRot: false
+    sprite: Structures/Storage/wall_locker.rsi
+    layers:
+    - state: generic
+      map: [ "enum.StorageVisualLayers.Base" ]
+    - state: generic_door
+      map: [ "enum.StorageVisualLayers.Door" ]
+    - state: welded
+      visible: false
+      map: [ "enum.WeldableLayers.BaseWelded" ]
   - type: EntityStorageVisuals
     stateBaseClosed: generic
     stateDoorOpen: generic_open

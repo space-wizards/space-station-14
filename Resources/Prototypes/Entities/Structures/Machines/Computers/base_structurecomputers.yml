@@ -21,7 +21,7 @@
   - type: ExtensionCableReceiver
   - type: ActivatableUIRequiresPower
   - type: Sprite
-    sprite: Structures/Machines/computers.rsi
+    sprite: _Impstation/Structures/Machines/computers.rsi # imp
     layers:
     - map: ["computerLayerBody"]
       state: computer

@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Frezon canister modified from tgstation, some assets taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8581a636acfc1517611a680b7711a74fc7ef335. New Canisters by AftrLite(Github), inspired by CEV-Eris sprites at https://github.com/discordia-space/CEV-Eris/commit/476e374cea95ff5e8b1603c48342bf700e2cd7af. Other assets taken from paradise at https://github.com/ParadiseSS13/Paradise/commit/2fd9200036dd18a56e6887f8090d5dc0477fc6f3.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "black"
+    },
+    {
+      "name": "black-1"
+    },
+    {
+      "name": "blue"
+    },
+    {
+      "name": "blue-1"
+    },
+    {
+      "name": "can-connector"
+    },
+    {
+      "name": "locked"
+    },
+    {
+      "name": "unlocked"
+    },
+    {
+      "name": "can-o0",
+      "delays": [
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      ]
+    },
+    {
+      "name": "can-o1"
+    },
+    {
+      "name": "can-o2"
+    },
+    {
+      "name": "can-o3"
+    },
+    {
+      "name": "can-oa1"
+    },
+    {
+      "name": "can-open"
+    },
+    {
+      "name": "grey"
+    },
+    {
+      "name": "grey-1"
+    },
+    {
+      "name": "orange"
+    },
+    {
+      "name": "orange-1"
+    },
+    {
+      "name": "red"
+    },
+    {
+      "name": "red-1"
+    },
+    {
+      "name": "redws"
+    },
+    {
+      "name": "redws-1"
+    },
+    {
+      "name": "yellow"
+    },
+    {
+      "name": "yellow-1"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "green-1"
+    },
+    {
+      "name": "greenys"
+    },
+    {
+      "name": "greenys-1"
+    },
+    {
+      "name": "darkblue"
+    },
+    {
+      "name": "darkblue-1"
+    },
+    {
+      "name": "frezon"
+    },
+    {
+      "name": "frezon-1"
+    },
+    {
+      "name": "water_vapor"
+    },
+    {
+      "name": "water_vapor-1"
+    },
+    {
+      "name": "scrubber-connector"
+    },
+    {
+      "name": "scrubber-open"
+    }
+  ]
+}

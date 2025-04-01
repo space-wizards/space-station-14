@@ -41,7 +41,7 @@
     node: TelescreenFrame
   - type: Sprite
     drawdepth: WallMountedItems
-    sprite: Structures/Machines/computers.rsi
+    sprite: _Impstation/Structures/Machines/computers.rsi # imp
     layers:
       - map: ["computerLayerBody"]
         state: telescreen_frame

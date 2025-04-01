@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d, and taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/9753fa6770f036733c2c10c2c4cce0a711eeaffe.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cutters"
+    },
+    {
+      "name": "cutters-cutty-thingy"
+    },
+    {
+      "name": "cutters-map"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cutters-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "cutters-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "handle-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "handle-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cutters-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "handle-equipped-BELT",
+      "directions": 4
+    }
+  ]
+}

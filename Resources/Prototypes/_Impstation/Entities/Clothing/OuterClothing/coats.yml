@@ -131,29 +131,18 @@
 
 # Departmental bomber jackets, all parented to this basic black one
 - type: entity
-  parent: [ClothingOuterBase, BaseFoldable] # NOTE: reparent to just ClothingOuterStorageFoldableBase once we get the upstream merge that fixes crashes when butchering storage clothing
+  parent: ClothingOuterStorageFoldableBase
   id: ClothingOuterCoatBomberBlack
   name: black bomber jacket
   description: A plain black bomber jacket, worn with the sleeves pushed up. If you're feeling bold, you can loosen how it fits with a knife.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/OuterClothing/BomberJackets/bomber_black.rsi
-    layers: # NOTE: delete this line the aforementioned upstream merge happens
-    - state: icon
-      map: [ "unfoldedLayer" ]
-    - state: icon-open
-      map: ["foldedLayer"]
-      visible: false
   - type: Clothing
     sprite: _Impstation/Clothing/OuterClothing/BomberJackets/bomber_black.rsi
-  - type: Appearance # NOTE: delete this when the aforementioned upstream merge happens
   - type: Foldable
-    canFoldInsideContainer: true # NOTE: delete this when the aforementioned upstream merge happens
     unfoldVerbText: fold-unzip-verb
     foldVerbText: fold-zip-verb
-  - type: FoldableClothing # NOTE: delete this when the aforementioned upstream merge happens
-    foldedEquippedPrefix: open
-    foldedHeldPrefix: open
   - type: TemperatureProtection
     heatingCoefficient: 1.1
     coolingCoefficient: 0.1

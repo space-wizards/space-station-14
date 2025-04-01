@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/chemical.dmi. icon and reagent icon sprites taken from tgstation from https://github.com/tgstation/tgstation/pull/854914.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "beakerlarge"
+    },
+    {
+      "name": "lid_beakerlarge"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+	{
+      "name": "inhand-left-fill-1",
+      "directions": 4
+    },
+		{
+      "name": "inhand-left-fill-2",
+      "directions": 4
+    },
+		{
+      "name": "inhand-left-fill-3",
+      "directions": 4
+    },
+		{
+      "name": "inhand-left-fill-4",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "inhand-right-fill-1",
+      "directions": 4
+    },
+	{
+      "name": "inhand-right-fill-2",
+      "directions": 4
+    },
+	{
+      "name": "inhand-right-fill-3",
+      "directions": 4
+    },
+	{
+      "name": "inhand-right-fill-4",
+      "directions": 4
+    },
+    {
+      "name": "beakerlarge1"
+    },
+    {
+      "name": "beakerlarge2"
+    },
+    {
+      "name": "beakerlarge3"
+    },
+    {
+      "name": "beakerlarge4"
+    },
+    {
+      "name": "beakerlarge5"
+    },
+    {
+      "name": "beakerlarge6"
+    }
+  ]
+}

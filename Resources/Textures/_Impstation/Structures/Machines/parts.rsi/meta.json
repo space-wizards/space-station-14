@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/0d9c9a8233dfc3fc55edc538955a761a6328bee0, Computer frames by AftrLite(Github), Machine frames sprites remade by Ubaser",
+  "states": [
+    {
+      "name": "0",
+      "directions": 4
+    },
+    {
+      "name": "1",
+      "directions": 4
+    },
+    {
+      "name": "2",
+      "directions": 4
+    },
+    {
+      "name": "3",
+      "directions": 4
+    },
+    {
+      "name": "4",
+      "directions": 4
+    },
+    {
+      "name": "destroyed"
+    }
+  ]
+}
