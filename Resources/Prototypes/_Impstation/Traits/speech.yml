@@ -34,6 +34,20 @@
   components:
   - type: ProperPunctuation
 
+- type: trait
+  id: Echolalia
+  name: trait-echolalia-name
+  description: trait-echolalia-desc
+  category: Disabilities
+  components:
+  - type: ActiveListener
+    range: 5
+  - type: ParrotSpeech
+    maximumPhraseLength: 24 # higher chance of saying a full sentence
+    minimumWait: 300
+    maximumWait: 600 # triggers once every 5-10 minutes
+    learnChance: 0.1
+
 # 1 cost
 
 - type: trait
@@ -118,21 +132,6 @@
   cost: 1
   components:
   - type: RelentlessPositivity
-
-- type: trait
-  id: Echolalia
-  name: trait-echolalia-name
-  description: trait-echolalia-desc
-  category: SpeechTraits
-  cost: 1
-  components:
-  - type: ActiveListener
-    range: 5
-  - type: ParrotSpeech
-    maximumPhraseLength: 24 # higher chance of saying a full sentence
-    minimumWait: 300
-    maximumWait: 600 # triggers once every 5-10 minutes
-    learnChance: 0.1
 
 # 2 cost
 
