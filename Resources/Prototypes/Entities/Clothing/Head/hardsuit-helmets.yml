@@ -206,9 +206,6 @@
       head-dog:
       - state: equipped-head-light-dog
         shader: unshaded
-      head-dog:
-      - state: equipped-head-light-dog
-        shader: unshaded
   - type: Clothing
     clothingVisuals:
       head:
@@ -218,10 +215,6 @@
       head-vox:
       - state: equipped-head-vox
       - state: equipped-head-unshaded-vox
-        shader: unshaded
-      head-dog:
-      - state: equipped-head-dog
-      - state: equipped-head-unshaded-dog
         shader: unshaded
       head-dog:
       - state: equipped-head-dog
