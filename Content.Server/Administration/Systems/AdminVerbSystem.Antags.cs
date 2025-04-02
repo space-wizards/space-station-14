@@ -175,7 +175,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = uniName,
             Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Texture(new("/Textures/_DeadSpace/Interface/Misc/antag_icons.rsi/Unitology.png")),
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/_DeadSpace/Interface/Misc/antag_icons.rsi"), "Unitology"),
             Act = () =>
             {
                 _antag.ForceMakeAntag<UnitologyRuleComponent>(targetPlayer, UnitologyRule);
@@ -190,13 +190,13 @@ public sealed partial class AdminVerbSystem
         {
             Text = spiderTerrorName,
             Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Texture(new("/Textures/_DeadSpace/Interface/Misc/antag_icons.rsi/Egg.png")),
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/_DeadSpace/Interface/Misc/antag_icons.rsi"), "Egg"),
             Act = () =>
             {
                 _antag.ForceMakeAntag<SpiderTerrorRuleComponent>(targetPlayer, SpiderTerrorRule);
             },
             Impact = LogImpact.High,
-             
+            Message = string.Join(": ", spiderTerrorName, Loc.GetString("admin-verb-make-spider-terror")),
         };
         args.Verbs.Add(spiderTerror);
         // DS14-end
@@ -223,7 +223,7 @@ public sealed partial class AdminVerbSystem
             Priority = -1,
             Text = eventRoleName,
             Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Texture(new("/Textures/_DeadSpace/Interface/Misc/antag_icons.rsi/Event.png")),
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/_DeadSpace/Interface/Misc/antag_icons.rsi"), "Event"),
             Act = () =>
             {
                 if (HasComp<EventRoleComponent>(args.Target))
