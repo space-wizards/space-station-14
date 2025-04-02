@@ -114,7 +114,7 @@ public sealed class RespiratorSystem : EntitySystem
         }
     }
 
-    public void Inhale(Entity<RespiratorComponent?, BodyComponent?> ent)
+    public void Inhale(Entity<RespiratorComponent?, BodyComponent?, ThermalRegulatorComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2, logMissing: false))
             return;
@@ -140,8 +140,10 @@ public sealed class RespiratorSystem : EntitySystem
         if (actualGas.TotalMoles > Atmospherics.GasMinMoles)
         {
             var gasTemp = actualGas.Temperature;
-            const float normalBodyTempK = Atmospherics.T0C + Atmospherics.NormalBodyTemperature;
 
+            // Take the normal body temperature from the mob's ThermalRegulatorComponent
+            // We don't resolve this component because it shouldn't be required, so we fall back to the atmos consts
+            var normalBodyTempK = ent.Comp3?.NormalBodyTemperature ?? Atmospherics.T0C + Atmospherics.NormalBodyTemperature;
             var heatCapacity = _atmosSys.GetHeatCapacity(actualGas, false);
 
             // Calculate thermal energy difference between inhaled gas and normal body temperature
