@@ -8,13 +8,22 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Clothing.Systems;
 
+/// <inheritdoc/>
 public sealed class PoorlyAttachedSystem : SharedPoorlyAttachedSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
 
+    /// <summary>
+    /// Items that fall off will be thrown in a direction +/- this many degrees
+    /// from the wearer's velocity.
+    /// </summary>
     private const float DetachedItemSpread = 45;
+
+    /// <summary>
+    /// Items that fall off will be thrown at this speed +/- 10%
+    /// </summary>
     private const float DetachedItemBaseSpeed = 5;
 
     protected override void Throw(Entity<PoorlyAttachedComponent> entity, EntityUid wearer)

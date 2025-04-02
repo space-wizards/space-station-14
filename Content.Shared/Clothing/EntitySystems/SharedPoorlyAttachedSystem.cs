@@ -11,6 +11,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
+/// <inheritdoc cref="PoorlyAttachedComponent"/>
 public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
