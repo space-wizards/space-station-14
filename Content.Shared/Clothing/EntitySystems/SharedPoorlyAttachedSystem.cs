@@ -63,8 +63,9 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
         var user = args.User;
         var adjustVerb = new AlternativeVerb()
         {
-            Text = Loc.GetString(entity.Comp.ReattachVerb),
+            Text = Loc.GetString(entity.Comp.ReattachVerbText),
             Act = () => Reattach((entity, entity.Comp, clothing), user),
+            Icon = entity.Comp.ReattachVerbIcon,
             Priority = -1,
         };
         args.Verbs.Add(adjustVerb);

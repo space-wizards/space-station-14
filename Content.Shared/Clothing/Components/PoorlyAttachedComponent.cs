@@ -1,5 +1,6 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.Components;
 
@@ -68,7 +69,13 @@ public sealed partial class PoorlyAttachedComponent : Component
     /// LocId of the text to display on the reattach verb in the context menu.
     /// </summary>
     [DataField]
-    public LocId ReattachVerb = "poorly-attached-reattach-verb-default";
+    public LocId ReattachVerbText = "poorly-attached-reattach-verb-default";
+
+    /// <summary>
+    /// Icon to display with the reattach verb.
+    /// </summary>
+    [DataField]
+    public SpriteSpecifier? ReattachVerbIcon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/safety-pin.svg.192dpi.png"));
 
     /// <summary>
     /// LocId of the message to display to the user when they reattach this item on themself.
