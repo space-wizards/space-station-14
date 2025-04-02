@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Salvage.Expeditions.Modifiers;
 
-[Prototype("salvageDungeonMod")]
+[Prototype]
 public sealed partial class SalvageDungeonModPrototype : IPrototype, IBiomeSpecificMod
 {
     [IdDataField] public string ID { get; private set; } = default!;

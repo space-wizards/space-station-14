@@ -171,7 +171,7 @@
       description: ghost-role-information-sentient-carp-description
       rules: ghost-role-information-space-dragon-summoned-carp-rules
       mindRoles:
-      - MindRoleGhostRoleTeamAntagonist
+      - MindRoleGhostRoleTeamAntagonistFlock
       # harmony start: remove ghost role raffle from carps
       # raffle:
       #   settings: short
