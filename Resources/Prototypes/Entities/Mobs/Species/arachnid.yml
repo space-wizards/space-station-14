@@ -81,14 +81,15 @@
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-      - map: [ "underwearb" ] # Sirena
-      - map: [ "underweart" ] # Sirena
+      - map: [ "underwearb" ] # Sirena-Underwear
+      - map: [ "underweart" ] # Sirena-Underwear
       - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
       - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
-      - map: ["jumpsuit"]
+      # - map: ["jumpsuit"]
       - map: ["enum.HumanoidVisualLayers.LFoot"]
       - map: ["enum.HumanoidVisualLayers.RFoot"]
-      - map: [ "socks" ] # Sirena
+      - map: [ "socks" ] # Sirena-Underwear
+      - map: ["jumpsuit"]
       - map: ["enum.HumanoidVisualLayers.LHand"]
       - map: ["enum.HumanoidVisualLayers.RHand"]
       - map: [ "gloves" ]
