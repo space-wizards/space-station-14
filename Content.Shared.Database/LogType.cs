@@ -449,9 +449,19 @@ public enum LogType
     /// An atmos networked device (such as a vent or pump) has had its settings changed, usually through an air alarm
     /// </summary>
     AtmosDeviceSetting = 97,
-    
+
     /// <summary>
     /// Commands related to admemes. Stuff like config changes, etc.
     /// </summary>
     AdminCommands = 98,
+
+    /// <summary>
+    /// A player was selected or assigned antag status
+    /// </summary>
+    AntagSelection = 99,
+
+    /// <summary>
+    /// Logs related to botany, such as planting and harvesting crops
+    /// </summary>
+    Botany = 100,
 }

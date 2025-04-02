@@ -10,7 +10,7 @@ namespace Content.Server.Wires;
 ///     wires. Once one of these is initialized, it should be stored in the
 ///     WiresSystem as a functional wire set.
 /// </summary>
-[Prototype("wireLayout")]
+[Prototype]
 public sealed partial class WireLayoutPrototype : IPrototype, IInheritingPrototype
 {
     [IdDataField]
