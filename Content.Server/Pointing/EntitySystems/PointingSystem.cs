@@ -236,9 +236,9 @@ namespace Content.Server.Pointing.EntitySystems
                     if (player == pointed)
                     {
                         // You point at your item
-                        selfMessage = Loc.GetString("pointing-system-point-in-your-inventory-self", ("item", itemName));
+                        selfMessage = Loc.GetString("pointing-system-point-in-own-inventory-self", ("item", itemName));
                         // Urist McPointer points at his item
-                        viewerMessage = Loc.GetString("pointing-system-point-in-your-inventory-others", ("item", itemName), ("pointer", playerName));
+                        viewerMessage = Loc.GetString("pointing-system-point-in-own-inventory-others", ("item", itemName), ("pointer", playerName));
                     }
                     else
                     {
