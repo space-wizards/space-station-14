@@ -693,6 +693,17 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadWehcellentCap
+  name: wehcellent cap
+  description: It was a net hat! Tiders wear them all the time! It's got airholes in the back to keep a cross-breeze going and everything!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/wehcellentcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/wehcellentcap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadNurseHat
   name: nurse hat
   description: Somehow I feel I'm not supposed to leave this place.
@@ -894,6 +905,8 @@
     sprite: Clothing/Head/Hats/capcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/capcap.rsi
+  - type: Item
+    sprite: Clothing/Head/Hats/capcap.rsi
   - type: Tag
     tags:
     - ClothMade
@@ -913,6 +926,8 @@
   - type: Sprite
     sprite: Clothing/Head/Hats/comcap.rsi
   - type: Clothing
+    sprite: Clothing/Head/Hats/comcap.rsi
+  - type: Item
     sprite: Clothing/Head/Hats/comcap.rsi
   - type: Tag
     tags:
