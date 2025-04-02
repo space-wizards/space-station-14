@@ -117,15 +117,13 @@ public sealed class AccessReaderSystem : EntitySystem
         var access = FindAccessTags(user, accessSources);
         FindStationRecordKeys(user, out var stationKeys, accessSources);
 
-        if (IsAllowed(access, stationKeys, target, reader))
-        {
-            if (!_tag.HasTag(user, "PreventAccessLogging"))
-                LogAccess((target, reader), user);
+        if (!IsAllowed(access, stationKeys, target, reader))
+            return false;
 
-            return true;
-        }
+        if (!_tag.HasTag(user, "PreventAccessLogging"))
+            LogAccess((target, reader), user);
 
-        return false;
+        return true;
     }
 
     public bool GetMainAccessReader(EntityUid uid, [NotNullWhen(true)] out Entity<AccessReaderComponent>? ent)
