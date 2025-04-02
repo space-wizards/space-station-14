@@ -59,7 +59,7 @@
       types:
         Slash: 5
   - type: Temperature
-    heatDamageThreshold: 315
+    heatDamageThreshold: 317
     coldDamageThreshold: 230
     currentTemperature: 310.15
     specificHeat: 42
