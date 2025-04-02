@@ -26,8 +26,9 @@ You can also use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/
 
 To perform [color=cyan]basic interactions[/color], use [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
 This is like [bold]interacting with nothing in hand[/bold].
-Pressing [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] has the same effect with the currently held item.
 It's most used for performing basic interaction while holding something, such as opening a door when your hands are full.
+
+Pressing [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] uses or activates the item held in your active hand.
 
 Hovering over an entity and pressing [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] brings up the [color=cyan]context menu[/color].
 This not only allows you to sort through large piles of items, but also to perform [bold]additional interactions.[/bold]
