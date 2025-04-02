@@ -36,7 +36,7 @@
       components:
       - type: RandomMetadata
         nameSegments:
-        - names_death_commando
+        - NamesDeathCommando
       - type: AutoImplant
         implants:
         - DeathAcidifierImplant
