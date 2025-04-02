@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net;
 using Content.Shared.Access.Components;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Emag.Systems;
@@ -11,6 +12,7 @@ using Content.Shared.StationRecords;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
@@ -117,7 +119,9 @@ public sealed class AccessReaderSystem : EntitySystem
 
         if (IsAllowed(access, stationKeys, target, reader))
         {
-            LogAccess((target, reader), user);
+            if (!HasComp<GhostComponent>(user))
+                LogAccess((target, reader), user);
+
             return true;
         }
 
