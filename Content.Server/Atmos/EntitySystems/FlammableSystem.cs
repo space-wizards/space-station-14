@@ -23,6 +23,7 @@ using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.FixedPoint;
+using Content.Shared.Hands;
 using Robust.Server.Audio;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -73,6 +74,9 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFire);
             SubscribeLocalEvent<FlammableComponent, RejuvenateEvent>(OnRejuvenate);
             SubscribeLocalEvent<FlammableComponent, ResistFireAlertEvent>(OnResistFireAlert);
+            SubscribeLocalEvent<FlammableComponent, ExtinguishEvent>(OnExtinguishEvent);
+            SubscribeLocalEvent<FlammableComponent, HeldRelayedEvent<ExtinguishEvent>>(OnExtinguishHandEvent);
+            SubscribeLocalEvent<FlammableComponent, InventoryRelayedEvent<ExtinguishEvent>>(OnExtinguishInventoryEvent);
 
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
             SubscribeLocalEvent<IgniteOnCollideComponent, LandEvent>(OnIgniteLand);
@@ -82,6 +86,24 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<ExtinguishOnInteractComponent, ActivateInWorldEvent>(OnExtinguishActivateInWorld);
 
             SubscribeLocalEvent<IgniteOnHeatDamageComponent, DamageChangedEvent>(OnDamageChanged);
+        }
+
+        private void OnExtinguishInventoryEvent(Entity<FlammableComponent> ent, ref InventoryRelayedEvent<ExtinguishEvent> args)
+        {
+            OnExtinguishEvent(ent, ref args.Args);
+        }
+
+        private void OnExtinguishHandEvent(Entity<FlammableComponent> ent, ref HeldRelayedEvent<ExtinguishEvent> args)
+        {
+            OnExtinguishEvent(ent, ref args.Args);
+        }
+
+        private void OnExtinguishEvent(Entity<FlammableComponent> ent, ref ExtinguishEvent args)
+        {
+            // You know I'm really not sure if having AdjustFireStacks *after* Extinguish,
+            // but I'm just moving this code, not questioning it.
+            Extinguish(ent, ent.Comp);
+            AdjustFireStacks(ent, args.FireStacksAdjustment, ent.Comp);
         }
 
         private void OnMeleeHit(EntityUid uid, IgniteOnMeleeHitComponent component, MeleeHitEvent args)
