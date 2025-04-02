@@ -93,7 +93,7 @@
 
 - type: entity
   id: CrateArmoryDominator
-  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  parent: [ CrateWeaponSecure, BaseSecurityContraband ]
   name: dominator crate
   description: Contains three dominators. Requires Armory access to open.
   components:

@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseWeaponBattery, BaseGunWieldable, BaseRestrictedContraband]
+  parent: [BaseWeaponBattery, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponLaserRifle
   name: плазменный автомат
   description: Продвинутое плазменное оружие с автоматическим режимом стрельбы.

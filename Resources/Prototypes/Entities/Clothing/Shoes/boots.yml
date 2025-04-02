@@ -80,7 +80,7 @@
         variation: 0.09
 
 - type: entity
-  parent: [ ClothingShoesMilitaryBase, BaseRestrictedContraband ]
+  parent: [ ClothingShoesMilitaryBase, BaseSecurityContraband ]
   id: ClothingShoesHighheelBootsAlt
   name: high-heeled boots
   description: Snazy boots for when you want to be stylish, yet prepared.
