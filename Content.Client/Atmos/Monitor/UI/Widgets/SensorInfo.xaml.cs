@@ -27,7 +27,7 @@ public sealed partial class SensorInfo : BoxContainer
 
         _address = address;
 
-        SensorAddress.Title = $"{address} : {data.AlarmState}";
+        SensorAddress.Title = Loc.GetString("air-alarm-ui-window-listing-title", ("address", _address), ("state", data.AlarmState));
 
         AlarmStateLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state-indicator",
                     ("color", AirAlarmWindow.ColorForAlarm(data.AlarmState)),
@@ -90,7 +90,7 @@ public sealed partial class SensorInfo : BoxContainer
 
     public void ChangeData(AtmosSensorData data)
     {
-        SensorAddress.Title = $"{_address} : {data.AlarmState}";
+        SensorAddress.Title = Loc.GetString("air-alarm-ui-window-listing-title", ("address", _address), ("state", data.AlarmState));
 
         AlarmStateLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state-indicator",
                     ("color", AirAlarmWindow.ColorForAlarm(data.AlarmState)),
