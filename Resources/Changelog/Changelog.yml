@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: The SWAT crate from cargo now requires armory access to open.
-    type: Fix
-  id: 7624
-  time: '2024-11-20T00:57:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33415
 - author: SlamBamActionman
   changes:
   - message: It's no longer possible to drag an item out of a container's UI to drop
@@ -3900,3 +3893,10 @@
   id: 8123
   time: '2025-04-02T16:11:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36255
+- author: qwerltaz
+  changes:
+  - message: Dragon rifts now shine a different color depending on charge progress.
+    type: Add
+  id: 8124
+  time: '2025-04-02T18:37:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36216
