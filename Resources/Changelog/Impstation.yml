@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Antagonist selection now happens before job selection.
-    type: Tweak
-  id: 957
-  time: '2025-01-17T23:07:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1059
-- author: TheGrimbeeper
-  changes:
-  - message: Minimum luminosity for solution text when examining it. Should stop vent
-      crud/zombie blood/etc from blending in.
-    type: Tweak
-  id: 958
-  time: '2025-01-18T01:30:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1412
 - author: DVDPlayerOfDiscordFame
   changes:
   - message: New sprites for the Stun Baton
@@ -4072,3 +4057,17 @@
   id: 1456
   time: '2025-04-02T03:12:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2169
+- author: Impstation
+  changes:
+  - message: The Jester's Trials Have Ended
+    type: Remove
+  id: 1457
+  time: '2025-04-02T11:13:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2178
+- author: widgetbeck
+  changes:
+  - message: The dead no longer appear to speak.
+    type: Fix
+  id: 1458
+  time: '2025-04-02T11:14:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2181
