@@ -78,6 +78,11 @@ public sealed partial class ItemToggleComponent : Component
 [ByRefEvent]
 public record struct ItemToggleActivateAttemptEvent(EntityUid? User)
 {
+    /// <summary>
+    /// Should we silently fail.
+    /// </summary>
+    public bool Silent = false;
+
     public bool Cancelled = false;
     public readonly EntityUid? User = User;
 
@@ -93,6 +98,11 @@ public record struct ItemToggleActivateAttemptEvent(EntityUid? User)
 [ByRefEvent]
 public record struct ItemToggleDeactivateAttemptEvent(EntityUid? User)
 {
+    /// <summary>
+    /// Should we silently fail.
+    /// </summary>
+    public bool Silent = false;
+
     public bool Cancelled = false;
     public readonly EntityUid? User = User;
 

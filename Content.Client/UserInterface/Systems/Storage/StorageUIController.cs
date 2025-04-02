@@ -271,7 +271,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
                 if (!_storage.ItemFitsInGridLocation(dragEnt, sourceStorage, newLocation))
                 {
-                    window.Reclaim(dragLoc, control);
+                    window.Reclaim(control.Location, control);
                 }
                 else
                 {
