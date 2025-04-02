@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: kipdotnet
   changes:
-  - message: Fixed Couriers spawning without a headset.
-    type: Fix
-  id: 962
-  time: '2025-01-18T10:25:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1415
-- author: kipdotnet
-  changes:
   - message: Banana has been updated!
     type: Tweak
   id: 963
@@ -4073,3 +4066,13 @@
   id: 1461
   time: '2025-04-02T13:17:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2183
+- author: Impstation
+  changes:
+  - message: 'Added a new playable species: Kodepiiae!'
+    type: Add
+  - message: New uplink item, the Syrinx implant, which allows a Kodepiia to change
+      their voice to match anyone they desire.
+    type: Add
+  id: 1462
+  time: '2025-04-02T18:32:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1991
