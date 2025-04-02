@@ -31,7 +31,7 @@ public sealed partial class SensorInfo : BoxContainer
 
         AlarmStateLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state-indicator",
                     ("color", AirAlarmWindow.ColorForAlarm(data.AlarmState)),
-                    ("state", $"{data.AlarmState}")));
+                    ("state", data.AlarmState)));
         PressureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure-indicator",
                     ("color", AirAlarmWindow.ColorForThreshold(data.Pressure, data.PressureThreshold)),
                     ("pressure", $"{data.Pressure:0.##}")));
@@ -94,7 +94,7 @@ public sealed partial class SensorInfo : BoxContainer
 
         AlarmStateLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state-indicator",
                     ("color", AirAlarmWindow.ColorForAlarm(data.AlarmState)),
-                    ("state", $"{data.AlarmState}")));
+                    ("state", data.AlarmState)));
 
         PressureLabel.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure-indicator",
                     ("color", AirAlarmWindow.ColorForThreshold(data.Pressure, data.PressureThreshold)),
