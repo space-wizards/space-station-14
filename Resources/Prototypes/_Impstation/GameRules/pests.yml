@@ -99,3 +99,35 @@
     entries:
     - id: MobYoungKodepiia
       prob: 0.05
+
+- type: entity
+  id: SingleCritter
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    earliestStart: 20
+    minimumPlayers: 4
+    reoccurrenceDelay: 10
+    weight: 3
+    duration: 60
+  - type: VentCrittersRule
+    announce: false
+    specialEntries:
+    - id: MobBat
+      prob: 0
+    - id: MobPossum
+      prob: 0
+    - id: MobRaccoon
+      prob: 0
+    - id: MobSnake
+      prob: 0
+    - id: MobSlug
+      prob: 0
+    - id: MobBee
+      prob: 0
+    - id: MobLizard
+      prob: 0
+    - id: MobFrog
+      prob: 0
+    - id: MobButterfly
+      prob: 0
