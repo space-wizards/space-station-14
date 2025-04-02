@@ -100,8 +100,8 @@
   - type: Item
     size: Tiny
   - type: PoorlyAttached
-    passiveDetachDuration: 600
-    lossPerFall: 0.5
+    passiveDetachDuration: 600 # 10 minutes
+    lossPerFall: 0.8 # This thing is kinda terrible
   - type: Tag
     tags:
     - Trash
