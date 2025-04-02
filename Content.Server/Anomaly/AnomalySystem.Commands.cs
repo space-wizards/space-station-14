@@ -47,7 +47,7 @@ public sealed partial class AnomalySystem
         if (!TryComp<AnomalyComponent>(uid, out var anomaly))
             return;
 
-        StartSupercriticalEvent(uid.Value, anomaly);
+        StartSupercriticalEvent((uid.Value, anomaly));
     }
 
     private CompletionResult GetAnomalyCompletion(IConsoleShell shell, string[] args)

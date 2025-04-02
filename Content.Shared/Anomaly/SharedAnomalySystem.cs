@@ -116,25 +116,24 @@ public abstract class SharedAnomalySystem : EntitySystem
     /// <summary>
     /// Begins the animation for going supercritical
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
-    public void StartSupercriticalEvent(EntityUid uid, AnomalyComponent? component = null)
+    /// <param name="ent"></param>
+    public void StartSupercriticalEvent(Entity<AnomalyComponent?> ent)
     {
         // don't restart it if it's already begun
-        if (HasComp<AnomalySupercriticalComponent>(uid))
+        if (HasComp<AnomalySupercriticalComponent>(ent.Owner))
             return;
 
-        AdminLog.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(uid)} began to go supercritical.");
+        AdminLog.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(ent.Owner)} began to go supercritical.");
         if (_net.IsServer)
-            Log.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(uid)}");
+            Log.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(ent.Owner)}");
 
-        if(Resolve(uid, ref component))
-            Audio.PlayPvs(component.SupercriticalSoundAtAnimationStart, Transform(uid).Coordinates);
+        if(ent.Comp != null)
+            Audio.PlayPvs(ent.Comp.SupercriticalSoundAtAnimationStart, Transform(ent.Owner).Coordinates);
 
-        var super = AddComp<AnomalySupercriticalComponent>(uid);
+        var super = AddComp<AnomalySupercriticalComponent>(ent.Owner);
         super.EndTime = Timing.CurTime + super.SupercriticalDuration;
-        Appearance.SetData(uid, AnomalyVisuals.Supercritical, true);
-        Dirty(uid, super);
+        Appearance.SetData(ent.Owner, AnomalyVisuals.Supercritical, true);
+        Dirty(ent.Owner, super);
     }
 
     /// <summary>
@@ -244,7 +243,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         var newVal = component.Severity + change;
 
         if (newVal >= 1)
-            StartSupercriticalEvent(uid, component);
+            StartSupercriticalEvent((uid, component));
 
         component.Severity = Math.Clamp(newVal, 0, 1);
         Dirty(uid, component);
