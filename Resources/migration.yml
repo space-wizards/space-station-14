@@ -786,3 +786,8 @@ PaxChemistryBottle: ChemistryBottlePax
 MuteToxinChemistryBottle: ChemistryBottleMuteToxin
 LeadChemistryBottle: ChemistryBottleLead
 ToxinChemistryBottle: ChemistryBottleToxin
+
+# 2025-04-02 - DS14
+DrinkMoscowMuleGlass: DrinkMoscowMule
+DrinkEspressoMartiniGlass: DrinkEspressoMartini
+DrinkDaiquiriGlass: DrinkDaiquiri
