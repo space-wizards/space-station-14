@@ -14,12 +14,10 @@ namespace Content.Shared.Clothing.EntitySystems;
 public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] protected readonly SharedContainerSystem Container = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
-
-    protected const float ThrowSpread = 30;
-    protected const float ThrowSpeedMult = 1 / 50f;
 
     public override void Initialize()
     {
@@ -49,7 +47,7 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
             return;
 
         // Make sure the item is actually equipped (and get the wearer's uid)
-        if (!Container.TryGetContainingContainer((entity, null), out var container))
+        if (!_container.TryGetContainingContainer((entity, null), out var container))
             return;
         var wearer = container.Owner;
 
@@ -84,7 +82,7 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
             return;
 
         // Make sure the item is actually equipped (and get the wearer's uid)
-        if (!Container.TryGetContainingContainer((entity, null), out var container))
+        if (!_container.TryGetContainingContainer((entity, null), out var container))
             return;
         var wearer = container.Owner;
 
@@ -151,5 +149,22 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
         Dirty(entity);
     }
 
-    protected virtual void Detach(Entity<PoorlyAttachedComponent> entity) { }
+    private void Detach(Entity<PoorlyAttachedComponent> entity)
+    {
+        // Make sure the item is equipped in a valid slot (not just in a pocket)
+        if (!TryComp<ClothingComponent>(entity, out var clothing) || (clothing.InSlotFlag & clothing.Slots) == SlotFlags.NONE)
+            return;
+
+        // Make sure the item is actually equipped (and get the wearer's uid)
+        if (!_container.TryGetContainingContainer((entity, null), out var container))
+            return;
+        var wearer = container.Owner;
+
+        if (!_inventory.CanUnequip(wearer, container.ID, out _))
+            return;
+
+        Throw(entity, wearer);
+    }
+
+    protected virtual void Throw(Entity<PoorlyAttachedComponent> entity, EntityUid wearer) { }
 }
