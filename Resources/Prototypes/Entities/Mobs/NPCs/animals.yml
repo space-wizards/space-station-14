@@ -2795,7 +2795,6 @@
       state: corgi
   - type: Physics
   - type: Speech
-    speechSounds: Dog
     speechVerb: Canine
     speechSounds: Dog
   - type: Fixtures

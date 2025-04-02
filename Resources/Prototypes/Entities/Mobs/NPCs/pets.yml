@@ -340,9 +340,6 @@
     - VimPilot
   - type: StealTarget
     stealGroup: AnimalMcGriff
-  - type: Speech
-    speechSounds: Dog
-    speechVerb: SmallMob
 
 - type: entity
   name: Paperwork
