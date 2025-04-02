@@ -11,13 +11,7 @@
       "name": "icon"
     },
     {
-      "name": "primed",
-      "delays": [
-        [
-          0.1,
-          0.1
-        ]
-      ]
+      "name": "primed"
     },
     {
       "name": "equipped-BELT",
