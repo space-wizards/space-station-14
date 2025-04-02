@@ -103,7 +103,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
         _temperature.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature", ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.TemperatureAverage):0.#}"), ("temperature", $"{state.TemperatureAverage:0.##}")));
         _alarmState.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state",
                     ("color", ColorForAlarm(state.AlarmType)),
-                    ("state", $"{state.AlarmType}")));
+                    ("state", state.AlarmType)));
         UpdateModeSelector(state.Mode);
         UpdateAutoMode(state.AutoMode);
         foreach (var (addr, dev) in state.DeviceData)
