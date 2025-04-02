@@ -1,71 +1,4 @@
 ﻿Entries:
-- author: SaphireLattice
-  changes:
-  - message: Crayon UI now has categories and queue
-    type: Add
-  id: 7614
-  time: '2024-11-16T03:25:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33101
-- author: Southbridge
-  changes:
-  - message: The BRB sign is now included in the Bureaucracy Crate
-    type: Add
-  id: 7615
-  time: '2024-11-16T03:26:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33341
-- author: SaphireLattice
-  changes:
-  - message: Utensils can finally go into disposals
-    type: Fix
-  id: 7616
-  time: '2024-11-16T03:39:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33326
-- author: K-Dynamic
-  changes:
-  - message: Solar assembly crate now comes with 10 flatpacks and 20 glass to make
-      expansion and repairs easier, as well as increasing in price from 525 to 1250
-      spesos.
-    type: Tweak
-  id: 7617
-  time: '2024-11-16T04:30:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33019
-- author: Aquif
-  changes:
-  - message: There is now a button to view your admin remarks in the character editor,
-      right next to the stats button.
-    type: Tweak
-  id: 7618
-  time: '2024-11-16T05:09:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31761
-- author: SpaceRox1244
-  changes:
-  - message: Closets and lockers now have visuals for being labeled with papers.
-    type: Add
-  id: 7619
-  time: '2024-11-17T03:27:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33318
-- author: Ubaser
-  changes:
-  - message: You can now craft dim light bulbs at an autolathe.
-    type: Add
-  id: 7620
-  time: '2024-11-18T06:32:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33383
-- author: Ilya246
-  changes:
-  - message: Multiple people using one shuttle console will no longer cause the shuttle
-      to slow down.
-    type: Fix
-  id: 7621
-  time: '2024-11-19T02:59:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32381
-- author: ScarKy0
-  changes:
-  - message: Secret doors no longer tell you if they're welded shut on examine.
-    type: Tweak
-  id: 7622
-  time: '2024-11-19T05:07:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33365
 - author: ArZarLordOfMango
   changes:
   - message: Most toggleable clothing must now be equipped to toggle their actions.
@@ -3876,3 +3809,94 @@
   id: 8113
   time: '2025-03-27T22:29:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35931
+- author: ViceEmargo
+  changes:
+  - message: Botanist's leather gloves must now be equipped in order to pick up Death
+      Nettles.
+    type: Add
+  - message: Death Nettles will now pierce hardsuits, injecting 5 units of reagent.
+    type: Tweak
+  - message: Death Nettles will now "wilt" after 5 hits.
+    type: Add
+  - message: Fly Amanita has been changed to contain less Amatoxin.
+    type: Tweak
+  id: 8114
+  time: '2025-03-29T09:35:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/25253
+- author: chromiumboy
+  changes:
+  - message: Sentry turrets can potentially be found guarding sensitive areas of the
+      station. When deployed, they will shoot unauthorized personnel on sight with
+      either stunning or lethal laser bolts. Note that only cyborgs and robots can
+      safely pass sentry turrets that protect the station AI core
+    type: Add
+  id: 8115
+  time: '2025-03-29T17:55:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35123
+- author: Killerqu00
+  changes:
+  - message: Uncuffing someone with combat mode on will shove them down.
+    type: Add
+  id: 8116
+  time: '2025-03-29T20:09:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35193
+- author: metalgearsloth
+  changes:
+  - message: Jetpacks emit particles more frequently.
+    type: Tweak
+  id: 8117
+  time: '2025-03-30T04:06:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36093
+- author: beck-thompson
+  changes:
+  - message: Stethoscopes now automatically start doafters and also can tell if a
+      patient is losing oxygen damage or gaining it.
+    type: Add
+  - message: Moths can no longer eat stethoscopes.
+    type: Fix
+  - message: Stethoscopes action button now works properly.
+    type: Fix
+  id: 8118
+  time: '2025-03-31T02:27:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36210
+- author: Tayrtahn
+  changes:
+  - message: Items thrown when someone slips now tend to scatter in the direction
+      they are moving, and respect the item's mass.
+    type: Tweak
+  id: 8119
+  time: '2025-03-31T22:00:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36232
+- author: ScarKy0
+  changes:
+  - message: Thieves now start with the thieving satchel instead of their toolbox.
+      The satchel will get all the selected kits spawned inside of it.
+    type: Add
+  - message: Thief Chameleon kit now comes with a backpack and a bonus pair of chameleon
+      gloves. Be careful, they aren't thieving gloves and can be tough to tell apart!
+    type: Tweak
+  - message: Updated smuggler stachel's description to reflect what it's used for.
+    type: Tweak
+  - message: Thieving satchel and toolbox now correctly play a sound when their kits
+      are selected.
+    type: Fix
+  id: 8120
+  time: '2025-03-31T22:32:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36201
+- author: Tayrtahn
+  changes:
+  - message: Electric grills no longer appear powered when cycled while disconnected
+      from power.
+    type: Fix
+  - message: Interactions with electric grills are now predicted.
+    type: Tweak
+  id: 8121
+  time: '2025-04-01T16:43:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36241
+- author: MisterImp
+  changes:
+  - message: A new recipe has been added for pizza made with world peas, world peazza.
+    type: Add
+  id: 8122
+  time: '2025-04-01T23:26:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35191
