@@ -28,14 +28,14 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
         SubscribeLocalEvent<PoorlyAttachedComponent, GetVerbsEvent<Verb>>(AddReattachVerb);
     }
 
-    private void OnGotEquipped(Entity<PoorlyAttachedComponent> ent, ref ClothingGotEquippedEvent args)
+    private void OnGotEquipped(Entity<PoorlyAttachedComponent> entity, ref ClothingGotEquippedEvent args)
     {
-        ResetAttachmentStrength(ent);
+        ResetAttachmentStrength(entity.AsNullable());
     }
 
-    private void OnWearerSlipped(Entity<PoorlyAttachedComponent> ent, ref InventoryRelayedEvent<FellDownEvent> args)
+    private void OnWearerSlipped(Entity<PoorlyAttachedComponent> entity, ref InventoryRelayedEvent<FellDownEvent> args)
     {
-        ChangeAttachmentStrength(ent.AsNullable(), ent.Comp.LossPerFall);
+        ChangeAttachmentStrength(entity.AsNullable(), entity.Comp.LossPerFall);
     }
 
     private void AddReattachVerb(Entity<PoorlyAttachedComponent> entity, ref GetVerbsEvent<Verb> args)
@@ -61,29 +61,33 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
             return;
 
         var user = args.User;
-        var target = args.Target;
         var adjustVerb = new Verb()
         {
             Text = Loc.GetString(entity.Comp.ReattachVerb),
-            Act = () => Reattach((entity, null, clothing), user)
+            Act = () => Reattach((entity, entity.Comp, clothing), user)
         };
         args.Verbs.Add(adjustVerb);
     }
 
-    public void Reattach(Entity<PoorlyAttachedComponent?, ClothingComponent?> entity, EntityUid user)
+    /// <summary>
+    /// Resecures the item to the wearer, resetting any lost attachment strength, and displays a popup.
+    /// </summary>
+    /// <param name="item">The item being reattached</param>
+    /// <param name="user">The entity reattaching the item (may or may not be the wearer)</param>
+    public void Reattach(Entity<PoorlyAttachedComponent?, ClothingComponent?> item, EntityUid user)
     {
-        if (!Resolve(entity, ref entity.Comp1, ref entity.Comp2))
+        if (!Resolve(item, ref item.Comp1, ref item.Comp2))
             return;
 
-        var poorlyAttachedComp = entity.Comp1;
-        var clothingComp = entity.Comp2;
+        var poorlyAttachedComp = item.Comp1;
+        var clothingComp = item.Comp2;
 
         // Make sure the item is equipped in a valid slot (not just in a pocket)
         if ((clothingComp.InSlotFlag & clothingComp.Slots) == SlotFlags.NONE)
             return;
 
         // Make sure the item is actually equipped (and get the wearer's uid)
-        if (!_container.TryGetContainingContainer((entity, null), out var container))
+        if (!_container.TryGetContainingContainer((item, null), out var container))
             return;
         var wearer = container.Owner;
 
@@ -96,76 +100,114 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
         if (user == wearer)
         {
             // "You reattach your item"
-            var userMessage = Loc.GetString(poorlyAttachedComp.ReattachSelfPopupUser, ("entity", entity.Owner));
+            var userMessage = Loc.GetString(poorlyAttachedComp.ReattachSelfPopupUser, ("entity", item.Owner));
             // "Urist McHands reattaches his item"
-            var othersMessage = Loc.GetString(poorlyAttachedComp.ReattachSelfPopupOthers, ("entity", entity.Owner), ("user", userIdentity));
+            var othersMessage = Loc.GetString(poorlyAttachedComp.ReattachSelfPopupOthers, ("entity", item.Owner), ("user", userIdentity));
             Popup.PopupPredicted(userMessage, othersMessage, wearer, user);
         }
         else
         {
             // "You reattach Urist McWearer's item"
-            var userMessage = Loc.GetString(poorlyAttachedComp.ReattachOtherPopupUser, ("entity", entity.Owner), ("wearer", wearerIdentity));
+            var userMessage = Loc.GetString(poorlyAttachedComp.ReattachOtherPopupUser, ("entity", item.Owner), ("wearer", wearerIdentity));
             // "Urist McHands reattaches your item"
-            var wearerMessage = Loc.GetString(poorlyAttachedComp.ReattachOtherPopupWearer, ("entity", entity.Owner), ("user", userIdentity));
+            var wearerMessage = Loc.GetString(poorlyAttachedComp.ReattachOtherPopupWearer, ("entity", item.Owner), ("user", userIdentity));
             // "Urist McHands reattaches Urist McWearer's item"
-            var othersMessage = Loc.GetString(poorlyAttachedComp.ReattachOtherPopupOthers, ("entity", entity.Owner), ("user", userIdentity), ("wearer", wearerIdentity));
+            var othersMessage = Loc.GetString(poorlyAttachedComp.ReattachOtherPopupOthers, ("entity", item.Owner), ("user", userIdentity), ("wearer", wearerIdentity));
             var othersFilter = Filter.PvsExcept(wearer, entityManager: EntityManager).RemovePlayerByAttachedEntity(user);
             Popup.PopupClient(userMessage, wearer, user);
             Popup.PopupEntity(wearerMessage, wearer, wearer);
             Popup.PopupEntity(othersMessage, wearer, othersFilter, true);
         }
 
-        ResetAttachmentStrength((entity, poorlyAttachedComp));
+        ResetAttachmentStrength((item, poorlyAttachedComp));
     }
 
-    public float GetAttachmentStrength(Entity<PoorlyAttachedComponent?> entity)
+    /// <summary>
+    /// Returns the current attachment strength of the item, from 1.0 (fully attached) to 0 (completely loose).
+    /// </summary>
+    /// <remarks>
+    /// If the entity doesn't have a <see cref="PoorlyAttachedComponent"/>,
+    /// returns 1, indicating full strength.
+    /// </remarks>
+    public float GetAttachmentStrength(Entity<PoorlyAttachedComponent?> item)
     {
         // If it doesn't have the component, consider it fully attached
-        if (!Resolve(entity, ref entity.Comp, logMissing: false))
+        if (!Resolve(item, ref item.Comp, logMissing: false))
             return 1;
 
-        var timeSinceAttached = _timing.CurTime - entity.Comp.AttachmentTime;
+        var timeSinceAttached = _timing.CurTime - item.Comp.AttachmentTime;
 
         // Start with full strength (1), then subtract the total of all events
-        return MathF.Max(0, 1f - entity.Comp.EventStrengthTotal - entity.Comp.LossPerSecond * (float)timeSinceAttached.TotalSeconds);
+        return MathF.Max(0, 1f - item.Comp.EventStrengthTotal - item.Comp.LossPerSecond * (float)timeSinceAttached.TotalSeconds);
     }
 
-    public void ChangeAttachmentStrength(Entity<PoorlyAttachedComponent?> entity, float amount, bool canDetach = true)
+    /// <summary>
+    /// Adjusts the item's attachment strength by a specified amount.
+    /// This will cause the item to fall off if attachment strength reaches 0, unless <paramref name="canDetach"/> is false.
+    /// Used to loosen the item in response to a specific event, and should not be used for continuous change.
+    /// </summary>
+    /// <remarks>
+    /// Has no effect but does not error if the item does not have a <see cref="PoorlyAttachedComponent"/>.
+    /// </remarks>
+    /// <param name="item">The target item</param>
+    /// <param name="amount">How much to change attachment strength</param>
+    /// <param name="canDetach">Will the item fall off if this causes attachment strength to reach 0?</param>
+    public void ChangeAttachmentStrength(Entity<PoorlyAttachedComponent?> item, float amount, bool canDetach = true)
     {
-        if (!Resolve(entity, ref entity.Comp, logMissing: false))
+        if (!Resolve(item, ref item.Comp, logMissing: false))
             return;
 
-        entity.Comp.EventStrengthTotal += amount;
+        item.Comp.EventStrengthTotal += amount;
 
-        if (canDetach && GetAttachmentStrength(entity) <= 0)
+        if (canDetach && GetAttachmentStrength(item) <= 0)
         {
-            Detach((entity, entity.Comp));
+            TryThrow((item, item.Comp));
         }
     }
 
-    private void ResetAttachmentStrength(Entity<PoorlyAttachedComponent> entity)
+    /// <summary>
+    /// Resets the item's attachment strength to full.
+    /// </summary>
+    /// <remarks>
+    /// Has no effect but does not error if the item does not have a <see cref="PoorlyAttachedComponent"/>.
+    /// </remarks>
+    public void ResetAttachmentStrength(Entity<PoorlyAttachedComponent?> item)
     {
-        entity.Comp.AttachmentTime = _timing.CurTime;
-        entity.Comp.EventStrengthTotal = 0;
-        Dirty(entity);
+        if (!Resolve(item, ref item.Comp, logMissing: false))
+            return;
+
+        item.Comp.AttachmentTime = _timing.CurTime;
+        item.Comp.EventStrengthTotal = 0;
+        Dirty(item);
     }
 
-    private void Detach(Entity<PoorlyAttachedComponent> entity)
+    /// <summary>
+    /// Makes sure that various requirement are met, then throws the item out of the wearer's inventory.
+    /// </summary>
+    private bool TryThrow(Entity<PoorlyAttachedComponent> item)
     {
         // Make sure the item is equipped in a valid slot (not just in a pocket)
-        if (!TryComp<ClothingComponent>(entity, out var clothing) || (clothing.InSlotFlag & clothing.Slots) == SlotFlags.NONE)
-            return;
+        if (!TryComp<ClothingComponent>(item, out var clothing) || (clothing.InSlotFlag & clothing.Slots) == SlotFlags.NONE)
+            return false;
 
         // Make sure the item is actually equipped (and get the wearer's uid)
-        if (!_container.TryGetContainingContainer((entity, null), out var container))
-            return;
+        if (!_container.TryGetContainingContainer((item, null), out var container))
+            return false;
         var wearer = container.Owner;
 
+        // Make sure the item is allowed to be unequipped
         if (!_inventory.CanUnequip(wearer, container.ID, out _))
-            return;
+            return false;
 
-        Throw(entity, wearer);
+        Throw(item, wearer);
+        return true;
     }
 
-    protected virtual void Throw(Entity<PoorlyAttachedComponent> entity, EntityUid wearer) { }
+    /// <summary>
+    /// Handles actually throwing the item out of the wearer's inventory.
+    /// </summary>
+    /// <remarks>
+    /// Virtual because this currently can only run on the server.
+    /// </remarks>
+    protected virtual void Throw(Entity<PoorlyAttachedComponent> item, EntityUid wearer) { }
 }

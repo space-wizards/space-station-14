@@ -26,7 +26,7 @@ public sealed class PoorlyAttachedSystem : SharedPoorlyAttachedSystem
     /// </summary>
     private const float DetachedItemBaseSpeed = 5;
 
-    protected override void Throw(Entity<PoorlyAttachedComponent> entity, EntityUid wearer)
+    protected override void Throw(Entity<PoorlyAttachedComponent> item, EntityUid wearer)
     {
         var wearerVelocity = TryComp<PhysicsComponent>(wearer, out var wearerPhysics) ? wearerPhysics.LinearVelocity : Vector2.Zero;
         var spreadMaxAngle = Angle.FromDegrees(DetachedItemSpread);
@@ -39,19 +39,19 @@ public sealed class PoorlyAttachedSystem : SharedPoorlyAttachedSystem
         itemVelocity *= _random.NextFloat(1f);
         // Heavier objects don't get thrown as far
         // If the item doesn't have a physics component, it isn't going to get thrown anyway, but we'll assume infinite mass
-        itemVelocity *= TryComp<PhysicsComponent>(entity, out var itemPhysics) ? itemPhysics.InvMass : 0;
+        itemVelocity *= TryComp<PhysicsComponent>(item, out var itemPhysics) ? itemPhysics.InvMass : 0;
         // Vary the speed a little to make it look more interesting
         var throwSpeed = DetachedItemBaseSpeed * _random.NextFloat(0.9f, 1.1f);
 
-        var message = Loc.GetString(entity.Comp.DetachPopup, ("entity", entity.Owner));
-        Popup.PopupEntity(message, entity, wearer, PopupType.SmallCaution);
+        var message = Loc.GetString(item.Comp.DetachPopup, ("entity", item.Owner));
+        Popup.PopupEntity(message, item, wearer, PopupType.SmallCaution);
 
-        _transform.DropNextTo(entity.Owner, wearer);
+        _transform.DropNextTo(item.Owner, wearer);
 
-        _throwing.TryThrow(entity,
+        _throwing.TryThrow(item,
             itemVelocity,
             throwSpeed,
-            entity,
+            item,
             pushbackRatio: 0,
             compensateFriction: false
         );
