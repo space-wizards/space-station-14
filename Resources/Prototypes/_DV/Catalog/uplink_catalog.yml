@@ -13,6 +13,27 @@
   - UplinkAllies
 
 - type: listing
+  id: UplinkBionicSyrinxImplanter
+  name: uplink-bionic-syrinx-implanter-name
+  description: uplink-bionic-syrinx-implanter-desc
+  productEntity: BionicSyrinxImplanter
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 1
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkImplants
+  conditions:
+  - !type:BuyerSpeciesCondition
+    whitelist:
+    - Kodepiia
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
+
+- type: listing
   id: Observationkit
   name: uplink-observation-kit-name
   description: uplink-observation-kit-desc

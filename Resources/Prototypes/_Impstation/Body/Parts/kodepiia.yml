@@ -1,4 +1,3 @@
-# ALL SPRITES PLACEHOLDER FOR NOW
 - type: entity
   id: PartKodepiia
   parent: [BaseItem, BasePart]
@@ -19,8 +18,11 @@
   parent: [PartKodepiia, BaseTorso]
   components:
   - type: Sprite
-    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
-    state: "torso"
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: "torso_f"
+  - type: Icon
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: "torso_f"
   - type: Extractable
     juiceSolution:
       reagents:
@@ -35,8 +37,12 @@
   parent: [PartKodepiia, BaseHead]
   components:
   - type: Sprite
-    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
-    state: "head"
+    netsync: false
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: "head_f"
+  - type: Icon
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: "head_f"
   - type: Extractable
     juiceSolution:
       reagents:
@@ -51,7 +57,11 @@
   parent: [PartKodepiia, BaseLeftArm]
   components:
   - type: Sprite
-    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    netsync: false
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: "l_arm"
+  - type: Icon
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
     state: "l_arm"
 
 - type: entity
@@ -60,7 +70,11 @@
   parent: [PartKodepiia, BaseRightArm]
   components:
   - type: Sprite
-    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    netsync: false
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: "r_arm"
+  - type: Icon
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
     state: "r_arm"
 
 - type: entity
@@ -69,7 +83,11 @@
   parent: [PartKodepiia, BaseLeftHand]
   components:
   - type: Sprite
-    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    netsync: false
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: "l_hand"
+  - type: Icon
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
     state: "l_hand"
 
 - type: entity
@@ -78,7 +96,11 @@
   parent: [PartKodepiia, BaseRightHand]
   components:
   - type: Sprite
-    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    netsync: false
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: "r_hand"
+  - type: Icon
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
     state: "r_hand"
 
 - type: entity
@@ -87,7 +109,11 @@
   parent: [PartKodepiia, BaseLeftLeg]
   components:
   - type: Sprite
-    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    netsync: false
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: "l_leg"
+  - type: Icon
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
     state: "l_leg"
 
 - type: entity
@@ -96,7 +122,11 @@
   parent: [PartKodepiia, BaseRightLeg]
   components:
   - type: Sprite
-    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    netsync: false
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: "r_leg"
+  - type: Icon
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
     state: "r_leg"
 
 - type: entity
@@ -105,7 +135,11 @@
   parent: [PartKodepiia, BaseLeftFoot]
   components:
   - type: Sprite
-    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    netsync: false
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: "l_foot"
+  - type: Icon
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
     state: "l_foot"
 
 - type: entity
@@ -114,5 +148,9 @@
   parent: [PartKodepiia, BaseRightFoot]
   components:
   - type: Sprite
-    sprite: _Impstation/Mobs/Species/Thaven/parts.rsi
+    netsync: false
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: "r_foot"
+  - type: Icon
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
     state: "r_foot"

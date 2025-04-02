@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites by undertalesex, carousel",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+      {
+          "name": "barlleg",
+          "directions": 4
+      },
+      {
+          "name": "barrleg",
+          "directions": 4
+      },
+      {
+          "name": "clawlfoot",
+          "directions": 4
+      },
+      {
+          "name": "clawrfoot",
+          "directions": 4
+      },
+      {
+          "name": "pinstripelleg",
+          "directions": 4
+      },
+      {
+          "name": "pinstriperleg",
+          "directions": 4
+      },
+      {
+          "name": "socklfoot",
+          "directions": 4
+      },
+      {
+          "name": "socklleg",
+          "directions": 4
+      },
+      {
+          "name": "sockrfoot",
+          "directions": 4
+      },
+      {
+          "name": "sockrleg",
+          "directions": 4
+      }
+  ]
+}

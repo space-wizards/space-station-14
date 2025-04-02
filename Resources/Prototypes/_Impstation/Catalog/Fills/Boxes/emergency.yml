@@ -126,3 +126,174 @@
     - state: emergencytankcommandnitrogen
   - type: Label
     currentLabel: reagent-name-nitrogen
+
+# kodepiia
+
+- type: entity
+  parent: BoxCardboard
+  id: BoxSurvivalKodepiia
+  name: survival box
+  description: It's a box with basic internals inside. Something smells funny...
+  suffix: Meat
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodMeatBacon
+    - id: Bloodpack
+  - type: Sprite
+    sprite: _Impstation/Objects/Storage/boxes.rsi
+    layers:
+    - state: box2
+    - state: label
+
+- type: entity
+  parent: BoxSurvivalKodepiia
+  id: BoxSurvivalCommandKodepiia
+  name: command survival box
+  description: It's a box with ornate but otherwise basic internals inside. Something smells funny...
+  suffix: Meat
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathCommand
+    - id: EmergencyOxygenTankCommandFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodMeatBacon
+    - id: Bloodpack
+
+- type: entity
+  parent: BoxSurvivalKodepiia
+  id: BoxHugKodepiia
+  name: box of hugs
+  description: A special box for sensitive people. Something smells funny...
+  suffix: Meat
+  components:
+  - type: Sprite
+    layers:
+    - state: boxofyuckyhugs
+    - state: label
+  - type: Item
+    heldPrefix: hug
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyFunnyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodMeatBacon
+    - id: Bloodpack
+  - type: Tag
+    tags:
+    - BoxHug
+
+- type: entity
+  parent: BoxSurvivalKodepiia
+  id: BoxSurvivalSyndicateKodepiia
+  name: extended-capacity survival box
+  description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank. Something smells funny...
+  suffix: Syndicate, Meat
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskGasSyndicate
+    - id: ExtendedEmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodMeatBacon
+
+- type: entity
+  parent: BoxSurvivalKodepiia
+  id: BoxSurvivalEngineeringKodepiia
+  name: extended-capacity survival box
+  description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank. Something smells funny...
+  suffix: Extended, Meat
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: ExtendedEmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodMeatBacon
+    - id: Bloodpack
+
+- type: entity
+  parent: BoxSurvivalKodepiia
+  id: BoxSurvivalSecurityKodepiia
+  name: survival box
+  suffix: Security, Meat
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskGasSecurity
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodMeatBacon
+    - id: Bloodpack
+
+- type: entity
+  parent: BoxSurvivalKodepiia
+  id: BoxSurvivalMedicalKodepiia
+  name: survival box
+  suffix: Medical, Meat
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathMedical
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodMeatBacon
+    - id: Bloodpack
+
+- type: entity
+  parent: BoxSurvivalKodepiia
+  id: BoxSurvivalBrigmedicKodepiia
+  suffix: MedSec, Meat
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathMedicalSecurity
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodMeatBacon
+    - id: Bloodpack
+
+- type: entity
+  parent: BoxSurvivalKodepiia
+  id: BoxSurvivalEngineeringCommandKodepiia
+  name: extended command survival box
+  description: It's a box with ornate but otherwise basic internals inside. This one is labelled to contain an extended-capacity tank. Something smells funny...
+  suffix: Extended, Meat
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathCommand
+    - id: ExtendedEmergencyOxygenTankCommandFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodMeatBacon
+    - id: Bloodpack
+
+- type: entity
+  parent: BoxSurvivalKodepiia
+  id: BoxSurvivalSecurityCommandKodepiia
+  name: command survival box
+  description: It's a box with ornate but otherwise basic internals inside. Something smells funny...
+  suffix: Meat
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskGasHOS
+    - id: EmergencyOxygenTankCommandFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodMeatBacon
+    - id: Bloodpack

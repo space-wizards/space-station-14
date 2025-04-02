@@ -25,6 +25,9 @@ public sealed class SwappableInstrumentSystem : EntitySystem
         if (!TryComp<InstrumentComponent>(uid, out var instrument))
             return;
 
+        if (component.OnlySetBySelf && uid != args.User) // Frontier: restrict instrument changes
+            return; // Frontier: restrict instrument changes
+
         var priority = 0;
         foreach (var entry in component.InstrumentList)
         {

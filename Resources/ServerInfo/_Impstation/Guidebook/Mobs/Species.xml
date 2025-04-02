@@ -1,0 +1,25 @@
+<Document>
+  # Species
+
+  Nanotrasen employs a variety of sapient species.
+
+  <Box>
+    <GuideEntityEmbed Entity="MobArachnid" Caption="Arachnid"/>
+    <GuideEntityEmbed Entity="MobDecapoid" Caption="Decapoid"/>
+    <GuideEntityEmbed Entity="MobDiona" Caption="Diona"/>
+    <GuideEntityEmbed Entity="MobDwarf" Caption="Dwarf"/>
+    <GuideEntityEmbed Entity="MobGastropoid" Caption="Gastropoid"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="MobGray" Caption="Gray"/>
+    <GuideEntityEmbed Entity="MobHuman" Caption="Human"/>
+    <GuideEntityEmbed Entity="MobKodepiia" Caption="Kodepiia"/>
+    <GuideEntityEmbed Entity="MobMoth" Caption="Moth Person"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="MobReptilian" Caption="Reptilian"/>
+    <GuideEntityEmbed Entity="MobSlimePerson" Caption="Slime Person"/>
+    <GuideEntityEmbed Entity="MobThaven" Caption="Thaven"/>
+    <GuideEntityEmbed Entity="MobVox" Caption="Vox"/>
+  </Box>
+</Document>

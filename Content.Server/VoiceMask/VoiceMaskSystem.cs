@@ -3,6 +3,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Chat;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
+using Content.Shared.Implants;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Preferences;
@@ -24,6 +25,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeakerNameEvent>>(OnTransformSpeakerName);
+        SubscribeLocalEvent<VoiceMaskComponent, ImplantRelayEvent<TransformSpeakerNameEvent>>(OnTransformSpeakerNameImplant);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeNameMessage>(OnChangeName);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeVerbMessage>(OnChangeVerb);
         SubscribeLocalEvent<VoiceMaskComponent, ClothingGotEquippedEvent>(OnEquip);
@@ -34,6 +36,13 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         args.Args.VoiceName = GetCurrentVoiceName(entity);
         args.Args.SpeechVerb = entity.Comp.VoiceMaskSpeechVerb ?? args.Args.SpeechVerb;
+    }
+
+    // Delta-v specific for implants
+    private void OnTransformSpeakerNameImplant(Entity<VoiceMaskComponent> entity, ref ImplantRelayEvent<TransformSpeakerNameEvent> args)
+    {
+        args.Event.VoiceName = GetCurrentVoiceName(entity);
+        args.Event.SpeechVerb = entity.Comp.VoiceMaskSpeechVerb ?? args.Event.SpeechVerb;
     }
 
     #region User inputs from UI

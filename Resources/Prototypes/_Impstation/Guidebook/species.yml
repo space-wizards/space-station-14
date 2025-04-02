@@ -1,0 +1,24 @@
+﻿- type: guideEntry
+  id: Gray
+  name: Gray
+  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Gray.xml"
+
+- type: guideEntry
+  id: Snail
+  name: Gastropoid
+  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Snail.xml"
+
+- type: guideEntry
+  id: Thaven
+  name: Thaven
+  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Thaven.xml"
+
+- type: guideEntry
+  id: Decapoid
+  name: Decapoid
+  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Decapoid.xml"
+
+- type: guideEntry
+  id: Kodepiia
+  name: Kodepiia
+  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Kodepiia.xml"

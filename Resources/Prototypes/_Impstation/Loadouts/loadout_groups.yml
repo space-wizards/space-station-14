@@ -296,6 +296,7 @@
   loadouts:
   - EmergencyNitrogenCommand
   - EmergencyOxygenCommand
+  - EmergencyMeatCommand
   - LoadoutSpeciesAquaticFullTank
   - LoadoutSpeciesVoxNitrogenCommand
 
@@ -307,6 +308,7 @@
   loadouts:
   - EmergencyNitrogenExtendedCommand
   - EmergencyOxygenExtendedCommand
+  - EmergencyMeatExtendedCommand
   - LoadoutSpeciesAquaticFullTank
   - LoadoutSpeciesVoxNitrogenCommand
 
@@ -318,6 +320,7 @@
   loadouts:
   - EmergencyNitrogenSecurityCommand
   - EmergencyOxygenSecurityCommand
+  - EmergencyMeatSecurityCommand
   - LoadoutSpeciesAquaticFullTank
   - LoadoutSpeciesVoxNitrogenCommand
 
@@ -1036,6 +1039,7 @@
   loadouts:
   - EmergencyNitrogenBrigmedic
   - EmergencyOxygenBrigmedic
+  - EmergencyMeatBrigmedic
   - LoadoutSpeciesAquaticFullTank
   - LoadoutSpeciesVoxNitrogen
 

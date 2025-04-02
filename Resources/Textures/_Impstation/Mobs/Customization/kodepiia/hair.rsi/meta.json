@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites by undertalesex",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+      {
+          "name": "kodabob4",
+          "directions": 4
+      },
+      {
+          "name": "kodabob5",
+          "directions": 4
+      },
+      {
+          "name": "kodacia",
+          "directions": 4
+      },
+      {
+          "name": "kodacornrowbraid",
+          "directions": 4
+      },
+      {
+          "name": "kodacurls",
+          "directions": 4
+      },
+      {
+          "name": "kodadandypompadour",
+          "directions": 4
+      },
+      {
+          "name": "kodadoublebun",
+          "directions": 4
+      },
+      {
+          "name": "kodadoublebunnoeyes",
+          "directions": 4
+      },
+      {
+          "name": "kodaemo2",
+          "directions": 4
+      },
+      {
+          "name": "kodahalfshaved",
+          "directions": 4
+      },
+      {
+          "name": "kodahimecut2",
+          "directions": 4
+      },
+      {
+          "name": "kodamessy",
+          "directions": 4
+      },
+      {
+          "name": "kodaponytail3",
+          "directions": 4
+      },
+      {
+          "name": "kodaspiky",
+          "directions": 4
+      },
+      {
+          "name": "kodaveryshortovereyealternate",
+          "directions": 4
+      },
+      {
+          "name": "kodavlongfringe",
+          "directions": 4
+      }
+  ]
+}

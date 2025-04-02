@@ -18,7 +18,7 @@
       - right_leg
       - left_leg
       organs:
-        heart: OrganHumanHeart
+        heart: OrganKodepiiaHeart
         lungs: OrganKodepiiaLungs
         stomach: OrganKodepiiaStomach
         liver: OrganHumanLiver

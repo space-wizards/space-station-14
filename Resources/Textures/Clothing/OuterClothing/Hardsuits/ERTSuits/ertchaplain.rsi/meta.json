@@ -1,26 +1,30 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Created by IProduceWidgets",
+  "copyright": "Created by IProduceWidgets, Kodepiia Variant by Adeinitas",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
-    {
-      "name": "icon"
-    },
-    {
-      "name": "equipped-OUTERCLOTHING",
-      "directions": 4
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    }
+      {
+          "name": "icon"
+      },
+      {
+          "name": "equipped-OUTERCLOTHING",
+          "directions": 4
+      },
+      {
+          "name": "equipped-OUTERCLOTHING-kodepiia",
+          "directions": 4
+      },
+      {
+          "name": "inhand-left",
+          "directions": 4
+      },
+      {
+          "name": "inhand-right",
+          "directions": 4
+      }
   ]
 }

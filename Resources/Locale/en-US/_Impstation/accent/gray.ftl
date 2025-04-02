@@ -733,7 +733,7 @@ accent-gray-words-replace-244 = dedii
 accent-gray-words-245 = undead
 accent-gray-words-replace-245 = sombii
 
-accent-gray-words-246 = kodepiiae
+accent-gray-words-246 = kodepiia
 accent-gray-words-replace-246 = birtee
 
 accent-gray-words-247 = boob
@@ -850,7 +850,7 @@ accent-gray-words-replace-283 = pedii
 accent-gray-words-284 = anomalocarids
 accent-gray-words-replace-284 = pediis
 
-accent-gray-words-285 = kodepiiaes
+accent-gray-words-285 = kodepiiae
 accent-gray-words-replace-285 = birtees
 
 accent-gray-words-286 = squid

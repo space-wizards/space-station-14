@@ -1,4 +1,6 @@
+using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Chat; // Delta-v
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -7,7 +9,6 @@ using Content.Shared.Tag;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
-using System.Linq;
 
 namespace Content.Shared.Implants;
 
@@ -30,6 +31,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(RelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, AfterInteractUsingEvent>(RelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, SuicideEvent>(RelayToImplantEvent);
+        SubscribeLocalEvent<ImplantedComponent, TransformSpeakerNameEvent>(RelayToImplantEvent); // Delta-v
     }
 
     private void OnInsert(EntityUid uid, SubdermalImplantComponent component, EntGotInsertedIntoContainerMessage args)

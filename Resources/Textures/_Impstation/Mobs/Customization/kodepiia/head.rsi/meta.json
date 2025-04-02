@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites by undertalesex, thatkidconnor, lillith, carousel",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+      {
+          "name": "antennae",
+          "directions": 4
+      },
+      {
+          "name": "basilisk1",
+          "directions": 4
+      },
+      {
+          "name": "basilisk2",
+          "directions": 4
+      },
+      {
+          "name": "basilisk3",
+          "directions": 4
+      },
+      {
+          "name": "beak",
+          "directions": 4
+      },
+      {
+          "name": "bunnyears1",
+          "directions": 4
+      },
+      {
+          "name": "bunnyears2",
+          "directions": 4
+      },
+      {
+          "name": "cheekfins",
+          "directions": 4
+      },
+      {
+          "name": "decagills",
+          "directions": 4
+      },
+      {
+          "name": "eyesplotch",
+          "directions": 4
+      },
+      {
+          "name": "fakevoxhead",
+          "directions": 4
+      },
+      {
+          "name": "foxears",
+          "directions": 4
+      },
+      {
+          "name": "grayhead",
+          "directions": 4
+      },
+      {
+          "name": "happysmiler",
+          "directions": 4
+      },
+      {
+          "name": "headfrill",
+          "directions": 4
+      },
+      {
+          "name": "headslime",
+          "directions": 4
+      },
+      {
+          "name": "hornscurly",
+          "directions": 4
+      },
+      {
+          "name": "hornsstraight",
+          "directions": 4
+      },
+      {
+          "name": "hornssweptback",
+          "directions": 4
+      },
+      {
+          "name": "mapleantennae",
+          "directions": 4
+      },
+      {
+          "name": "moustachelong",
+          "directions": 4
+      },
+      {
+          "name": "moustacheshort",
+          "directions": 4
+      },
+      {
+          "name": "scorpion1",
+          "directions": 4
+      },
+      {
+          "name": "scorpion2",
+          "directions": 4
+      },
+      {
+          "name": "scorpion3",
+          "directions": 4
+      },
+      {
+          "name": "scorpion4",
+          "directions": 4
+      },
+      {
+          "name": "scorpion5",
+          "directions": 4
+      },
+      {
+          "name": "simplesnout",
+          "directions": 4
+      },
+      {
+          "name": "smallbeak",
+          "directions": 4
+      },
+      {
+          "name": "thavenears",
+          "directions": 4
+      },
+      {
+          "name": "wolf1",
+          "directions": 4
+      },
+      {
+          "name": "wolf2",
+          "directions": 4
+      }
+  ]
+}

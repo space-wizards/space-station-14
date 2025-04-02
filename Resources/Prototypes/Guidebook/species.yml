@@ -1,20 +1,21 @@
 - type: guideEntry
   id: Species
   name: guide-entry-species
-  text: "/ServerInfo/Guidebook/Mobs/Species.xml"
+  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Species.xml" # imp
   children:
-    - Arachnid
-    - Diona
-    - Dwarf
-    - Human
-    - Moth
-    - Reptilian
-    - SlimePerson
-    - Vox
-    - Gray
-    - Snail
-    - Thaven
-    - Decapoid
+  - Arachnid
+  - Decapoid # imp
+  - Diona
+  - Dwarf
+  - Gray # imp
+  - Human
+  - Kodepiia # imp
+  - Moth
+  - Reptilian
+  - SlimePerson # imp
+  - Snail # imp
+  - Thaven # imp
+  - Vox
 
 - type: guideEntry
   id: Arachnid
@@ -55,23 +56,3 @@
   id: Vox
   name: species-name-vox
   text: "/ServerInfo/Guidebook/Mobs/Vox.xml"
-
-- type: guideEntry
-  id: Gray
-  name: Gray
-  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Gray.xml"
-
-- type: guideEntry
-  id: Snail
-  name: Gastropoid
-  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Snail.xml"
-
-- type: guideEntry
-  id: Thaven
-  name: Thaven
-  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Thaven.xml"
-
-- type: guideEntry
-  id: Decapoid
-  name: Decapoid
-  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Decapoid.xml"

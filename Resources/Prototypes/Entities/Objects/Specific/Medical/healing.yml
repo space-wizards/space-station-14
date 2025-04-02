@@ -210,6 +210,7 @@
   - type: Tag
     tags:
     - Bloodpack
+    - KodeEdible # imp
   - type: Sprite
     state: bloodpack
   - type: Healing
@@ -229,6 +230,16 @@
     count: 10
   - type: StackPrice
     price: 10
+  - type: Food # imp - kodepiia gogurt
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Blood
+          Quantity: 15
+
 
 - type: entity
   parent: Bloodpack

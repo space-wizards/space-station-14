@@ -48,6 +48,8 @@ namespace Content.Shared.Humanoid.Markings
                 HumanoidVisualLayers.LFoot => MarkingCategories.Legs,
                 HumanoidVisualLayers.RFoot => MarkingCategories.Legs,
                 HumanoidVisualLayers.Tail => MarkingCategories.Tail,
+                HumanoidVisualLayers.RArmExtension => MarkingCategories.Arms, // Frontier: species-specific layer
+                HumanoidVisualLayers.LArmExtension => MarkingCategories.Arms, // Frontier: species-specific layer
                 _ => MarkingCategories.Overlay
             };
         }

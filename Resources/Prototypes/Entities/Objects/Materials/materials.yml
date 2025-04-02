@@ -897,6 +897,11 @@
           Quantity: 3
   - type: Item
     heldPrefix: bones
+  - type: Tag # imp
+    tags:
+    - DroneUsable
+    - RawMaterial
+    - KodeEdible
 
 - type: entity
   parent: MaterialBones

@@ -87,13 +87,14 @@
     state: finecoil
   - type: Lung
   - type: Metabolizer
+    updateInterval: 2.0
     removeEmpty: true
     solutionOnBody: false
     solution: "Lung"
     metabolizerTypes: [ Human ]
     groups:
     - id: Gas
-      rateModifier: 100.0
+      rateModifier: 200.0
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -135,13 +136,20 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Stomach
+    specialDigestible:
+      tags:
+      - Raw
+      - Meat
+      - Organ
+      - Flesh
+      - KodeEdible
   # The stomach metabolizes stuff like foods and drinks.
   # TODO: Have it work off of the ent's solution container, and move this
   # to intestines instead.
   - type: Metabolizer
     # mm yummy
     maxReagents: 3
-    metabolizerTypes: [Human]
+    metabolizerTypes: [ Kodepiia ]
     groups:
     - id: Food
     - id: Drink
@@ -150,3 +158,27 @@
     - Meat
     - Organ
     - Stomach
+
+- type: entity
+  id: OrganKodepiiaHeart
+  parent: BaseKodepiiaOrgan
+  name: COAT
+  description: "Allegedly 'quirked up' with 'the sauce,' if rumors are to be believed."
+  components:
+  - type: Sprite
+    state: compartmentofallthings
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes: [ Kodepiia ]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+  - type: Tag # goob edit
+    tags:
+    - Meat
+    - Organ
+    - Heart
+  - type: Item
+    size: Small
+    heldPrefix: heart

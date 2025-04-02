@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites by Pinkbat5, carousel, mqole",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+      {
+          "name": "bars",
+          "directions": 4
+      },
+      {
+          "name": "belly",
+          "directions": 4
+      },
+      {
+          "name": "canvas1",
+          "directions": 4
+      },
+      {
+          "name": "canvas2",
+          "directions": 4
+      },
+      {
+          "name": "canvas3",
+          "directions": 4
+      },
+      {
+          "name": "canvas4",
+          "directions": 4
+      },
+      {
+          "name": "canvas5",
+          "directions": 4
+      },
+      {
+          "name": "canvas6",
+          "directions": 4
+      },
+      {
+          "name": "canvas7",
+          "directions": 4
+      },
+      {
+          "name": "canvas8",
+          "directions": 4
+      },
+      {
+          "name": "canvas9",
+          "directions": 4
+      },
+      {
+          "name": "chesteye1",
+          "directions": 4
+      },
+      {
+          "name": "chesteye2",
+          "directions": 4
+      },
+      {
+          "name": "kodechestgills",
+          "directions": 4
+      },
+      {
+          "name": "koispots1",
+          "directions": 4
+      },
+      {
+          "name": "koispots2",
+          "directions": 4
+      },
+      {
+          "name": "mantleshade1",
+          "directions": 4
+      },
+      {
+          "name": "mantleshade2",
+          "directions": 4
+      },
+      {
+          "name": "organs1",
+          "directions": 4
+      },
+      {
+          "name": "organs2",
+          "directions": 4
+      },
+      {
+          "name": "organs3",
+          "directions": 4
+      },
+      {
+          "name": "stripes",
+          "directions": 4
+      },
+      {
+          "name": "tummyteeth",
+          "directions": 4
+      }
+  ]
+}

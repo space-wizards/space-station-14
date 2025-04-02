@@ -177,7 +177,7 @@
       collection: VoxHiss
       params:
         volume: -5
-    HarpyCaw:
+    Caw:
       collection: KodepiiaCaws
   params:
     variation: 0.125
@@ -229,7 +229,7 @@
       collection: VoxHiss
       params:
         volume: -5
-    HarpyCaw:
+    Caw:
       collection: KodepiiaCaws
   params:
     variation: 0.125
@@ -655,25 +655,25 @@
       collection: KodepiiaMeows
     Boom:
       collection: KodepiiaBooms
-    HarpyRing:
+    KodeRing:
       collection: KodepiiaRings
-    HarpyHonk:
+    KodeHonk:
       collection: KodepiiaHonks
       params: # Frontier
         volume: -5 # Frontier
-    HarpyPew:
+    KodePew:
       collection: KodepiiaPews
-    HarpyBang:
+    KodeBang:
       collection: KodepiiaBangs
       params: # Frontier
         volume: -5 # Frontier
-    HarpyBeep:
+    KodeBeep:
       collection: KodepiiaBeeps
     Yawn:
       collection: KodepiiaYawn
     Snore:
       collection: KodepiiaSnores
-    HarpyRev:
+    KodeRev:
       collection: KodepiiaRevs
       params: # Frontier
         volume: -5 # Frontier
@@ -683,7 +683,7 @@
       collection: KodepiiaChitter
     Squeak:
       collection: KodepiiaSqueak
-    HarpyCaw:
+    Caw:
       collection: KodepiiaCaws
     Chirp:
       collection: KodepiiaChirps
@@ -741,23 +741,23 @@
       collection: KodepiiaMeows
     Boom:
       collection: KodepiiaBooms
-    HarpyRing:
+    KodeRing:
       collection: KodepiiaRings
-    HarpyHonk:
+    KodeHonk:
       collection: KodepiiaHonks
       params:
         volume: -5
-    HarpyPew:
+    KodePew:
       collection: KodepiiaPews
       params:
         volume: -5
-    HarpyBeep:
+    KodeBeep:
       collection: KodepiiaBeeps
     Yawn:
       collection: KodepiiaYawn
     Snore:
       collection: KodepiiaSnores
-    HarpyRev:
+    KodeRev:
       collection: KodepiiaRevs
       params:
         volume: -5
@@ -767,7 +767,7 @@
       collection: KodepiiaChitter
     Squeak:
       collection: KodepiiaSqueak
-    HarpyCaw:
+    Caw:
       collection: KodepiiaCaws
     Chirp:
       collection: KodepiiaChirps

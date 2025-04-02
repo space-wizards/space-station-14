@@ -30,6 +30,8 @@ namespace Content.Shared.Humanoid
         StencilMask,
         Ensnare,
         Fire,
+        LArmExtension, // Frontier: a species-specific extension layer, e.g. for harpy wings
+        RArmExtension, // Frontier: a species-specific extension layer, e.g. for harpy wings
 
     }
 }

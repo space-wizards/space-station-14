@@ -1,61 +1,60 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Created from an amalgamate of the Syndicate-Nukeops armor found across a vast swathe of spritesheets and versions of the game. Original helmet icon base by an unknown artist; please contact us if you know the correct accredation for it.",
+  "copyright": "Created from an amalgamate of the Syndicate-Nukeops armor found across a vast swathe of spritesheets and versions of the game. Original helmet icon base by an unknown artist; please contact us if you know the correct accredation for it. Kodepiia variant by Carousel.",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
-    {
-      "name": "icon"
-    },
-    {
-      "name": "icon-helmet"
-    },
-    {
-      "name": "icon-helmet-light"
-    },
-
-
-
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    },
-
-
-
-    {
-      "name": "equipped-OUTERCLOTHING",
-      "directions": 4
-    },
-    {
-      "name": "off-equipped-HELMET",
-      "directions": 4
-    },
-    {
-      "name": "on-equipped-HELMET",
-      "directions": 4
-    },
-
-
-
-    {
-      "name": "equipped-OUTERCLOTHING-vox",
-      "directions": 4
-    },
-    {
-      "name": "off-equipped-HELMET-vox",
-      "directions": 4
-    },
-    {
-      "name": "on-equipped-HELMET-vox",
-      "directions": 4
-    }
+      {
+          "name": "icon"
+      },
+      {
+          "name": "icon-helmet"
+      },
+      {
+          "name": "icon-helmet-light"
+      },
+      {
+          "name": "equipped-OUTERCLOTHING",
+          "directions": 4
+      },
+      {
+          "name": "equipped-OUTERCLOTHING-kodepiia",
+          "directions": 4
+      },
+      {
+          "name": "equipped-OUTERCLOTHING-vox",
+          "directions": 4
+      },
+      {
+          "name": "off-equipped-HELMET",
+          "directions": 4
+      },
+      {
+          "name": "off-equipped-HELMET-vox",
+          "directions": 4
+      },
+      {
+          "name": "on-equipped-HELMET",
+          "directions": 4
+      },
+      {
+          "name": "on-equipped-HELMET-kodepiia",
+          "directions": 4
+      },
+      {
+          "name": "on-equipped-HELMET-vox",
+          "directions": 4
+      },
+      {
+          "name": "inhand-left",
+          "directions": 4
+      },
+      {
+          "name": "inhand-right",
+          "directions": 4
+      }
   ]
 }

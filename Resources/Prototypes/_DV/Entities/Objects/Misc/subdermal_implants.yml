@@ -1,0 +1,12 @@
+﻿- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BionicVoiceMaskImplant
+  id: BionicSyrinxImplant
+  name: bionic syrinx implant
+  description: This implant lets a kodepiia adjust their voice to whoever they can think of.
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionSyrinxChangeVoiceMask
+    whitelist:
+      components:
+      - HarpySinger # Ensure this is only for harpies and if this component gets renamed, CHANGE IT TO THE NEW VALUE!!!
