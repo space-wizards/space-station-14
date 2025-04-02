@@ -25,7 +25,7 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<PoorlyAttachedComponent, ClothingGotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<PoorlyAttachedComponent, InventoryRelayedEvent<FellDownEvent>>(OnWearerSlipped);
-        SubscribeLocalEvent<PoorlyAttachedComponent, GetVerbsEvent<Verb>>(AddReattachVerb);
+        SubscribeLocalEvent<PoorlyAttachedComponent, GetVerbsEvent<AlternativeVerb>>(AddReattachVerb);
     }
 
     private void OnGotEquipped(Entity<PoorlyAttachedComponent> entity, ref ClothingGotEquippedEvent args)
@@ -38,7 +38,7 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
         ChangeAttachmentStrength(entity.AsNullable(), entity.Comp.LossPerFall);
     }
 
-    private void AddReattachVerb(Entity<PoorlyAttachedComponent> entity, ref GetVerbsEvent<Verb> args)
+    private void AddReattachVerb(Entity<PoorlyAttachedComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (args.Hands == null || !args.CanInteract)
             return;
@@ -61,10 +61,11 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
             return;
 
         var user = args.User;
-        var adjustVerb = new Verb()
+        var adjustVerb = new AlternativeVerb()
         {
             Text = Loc.GetString(entity.Comp.ReattachVerb),
-            Act = () => Reattach((entity, entity.Comp, clothing), user)
+            Act = () => Reattach((entity, entity.Comp, clothing), user),
+            Priority = -1,
         };
         args.Verbs.Add(adjustVerb);
     }
