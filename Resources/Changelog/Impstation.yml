@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: New sprites for the Stun Baton
-    type: Tweak
-  id: 959
-  time: '2025-01-18T01:33:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1391
 - author: kipdotnet
   changes:
   - message: Added a Courier locker for mapping.
@@ -4071,3 +4064,11 @@
   id: 1458
   time: '2025-04-02T11:14:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2181
+- author: Mousetrinity
+  changes:
+  - message: Wizard event spells no longer possess you with a desire to hoard guns
+      and kill people.
+    type: Remove
+  id: 1459
+  time: '2025-04-02T11:46:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2184
