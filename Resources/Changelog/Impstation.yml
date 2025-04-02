@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Added a Courier locker for mapping.
-    type: Add
-  id: 960
-  time: '2025-01-18T04:23:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1413
 - author: Saeko-44
   changes:
   - message: The ability to prop a bucket on top of doors to drop and spill its content
@@ -4072,3 +4065,11 @@
   id: 1459
   time: '2025-04-02T11:46:45.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2184
+- author: TheGrimbeeper
+  changes:
+  - message: random event - one singular basic critter can now crawl unannounced from
+      a vent.
+    type: Add
+  id: 1460
+  time: '2025-04-02T13:07:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2147
