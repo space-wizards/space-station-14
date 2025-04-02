@@ -104,7 +104,9 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
             // "You reattach your item"
             var userMessage = Loc.GetString(poorlyAttachedComp.ReattachSelfPopupUser, ("entity", item.Owner));
             // "Urist McHands reattaches his item"
-            var othersMessage = Loc.GetString(poorlyAttachedComp.ReattachSelfPopupOthers, ("entity", item.Owner), ("user", userIdentity));
+            var othersMessage = poorlyAttachedComp.ReattachSilentToOthers
+                ? null
+                : Loc.GetString(poorlyAttachedComp.ReattachSelfPopupOthers, ("entity", item.Owner), ("user", userIdentity));
             Popup.PopupPredicted(userMessage, othersMessage, wearer, user);
         }
         else
@@ -114,7 +116,9 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
             // "Urist McHands reattaches your item"
             var wearerMessage = Loc.GetString(poorlyAttachedComp.ReattachOtherPopupWearer, ("entity", item.Owner), ("user", userIdentity));
             // "Urist McHands reattaches Urist McWearer's item"
-            var othersMessage = Loc.GetString(poorlyAttachedComp.ReattachOtherPopupOthers, ("entity", item.Owner), ("user", userIdentity), ("wearer", wearerIdentity));
+            var othersMessage = poorlyAttachedComp.ReattachSilentToOthers
+                ? null
+                : Loc.GetString(poorlyAttachedComp.ReattachOtherPopupOthers, ("entity", item.Owner), ("user", userIdentity), ("wearer", wearerIdentity));
             var othersFilter = Filter.PvsExcept(wearer, entityManager: EntityManager).RemovePlayerByAttachedEntity(user);
             Popup.PopupClient(userMessage, wearer, user);
             Popup.PopupEntity(wearerMessage, wearer, wearer);

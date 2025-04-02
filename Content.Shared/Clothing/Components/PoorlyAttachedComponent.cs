@@ -60,6 +60,12 @@ public sealed partial class PoorlyAttachedComponent : Component
     public bool OthersCanReattach = true;
 
     /// <summary>
+    /// If true, only the wearer and the reattacher will see the popup when reattaching this item.
+    /// </summary>
+    [DataField]
+    public bool ReattachSilentToOthers;
+
+    /// <summary>
     /// LocId of the message to display when the item falls off.
     /// </summary>
     [DataField]
