@@ -172,7 +172,7 @@ public sealed class HardsuitIdentificationSystem : EntitySystem
         }
         else
         {
-            if (TryComp(args.Performer, out DnaComponent? dna))
+            if (TryComp(args.Performer, out DnaComponent? dna) && dna.DNA != null)
             {
                 comp.DNA = dna.DNA;
                 comp.DNAWasStored = true;
