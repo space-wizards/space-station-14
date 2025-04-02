@@ -224,6 +224,8 @@ namespace Content.Server.Pointing.EntitySystems
                     }
                 }
 
+                var pointingAtSelf = player == pointed;
+
                 // Are we in a mob's inventory?
                 if (containingInventory != null)
                 {
@@ -233,8 +235,9 @@ namespace Content.Server.Pointing.EntitySystems
                     // Target the pointing at the item's holder
                     pointed = containingInventory.Value;
                     pointedName = Identity.Entity(pointed, EntityManager);
+                    var pointingAtOwnItem = player == pointed;
 
-                    if (player == pointed)
+                    if (pointingAtOwnItem)
                     {
                         // You point at your item
                         selfMessage = Loc.GetString("pointing-system-point-in-own-inventory-self", ("item", itemName));
@@ -253,13 +256,13 @@ namespace Content.Server.Pointing.EntitySystems
                 }
                 else
                 {
-                    selfMessage = player == pointed
+                    selfMessage = pointingAtSelf
                         // You point at yourself
                         ? Loc.GetString("pointing-system-point-at-self")
                         // You point at Urist McTarget
                         : Loc.GetString("pointing-system-point-at-other", ("other", pointedName));
 
-                    viewerMessage = player == pointed
+                    viewerMessage = pointingAtSelf
                         // Urist McPointer points at himself
                         ? Loc.GetString("pointing-system-point-at-self-others", ("otherName", playerName), ("other", playerName))
                         // Urist McPointer points at Urist McTarget
