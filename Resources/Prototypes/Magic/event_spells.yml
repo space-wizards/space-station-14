@@ -26,7 +26,7 @@
       sprite: Objects/Weapons/Guns/Rifles/ak.rsi
       state: base
     event: !type:RandomGlobalSpawnSpellEvent
-      makeSurvivorAntagonist: true
+      makeSurvivorAntagonist: false #imp edit, fuck this free agent shit ^^!
       spawns:
       - id: WeaponPistolViper
         orGroup: Guns
@@ -173,7 +173,7 @@
       sprite: Objects/Magic/magicactions.rsi
       state: magicmissile
     event: !type:RandomGlobalSpawnSpellEvent
-      makeSurvivorAntagonist: true
+      makeSurvivorAntagonist: false #imp
       spawns:
       - id: SpawnSpellbook
         orGroup: Magics

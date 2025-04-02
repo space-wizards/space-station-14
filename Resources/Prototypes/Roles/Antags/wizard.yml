@@ -1,4 +1,5 @@
-- type: antag
+# I'm leaving survivor here just in case someone reworks it, but it should stop rolling on gun event
+- type: antag 
   id: Survivor
   name: roles-antag-survivor-name
   antagonist: true
