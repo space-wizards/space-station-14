@@ -267,7 +267,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             if (targetStorage == window)
             {
                 var position = targetStorage.GetMouseGridPieceLocation(dragEnt, dragLoc);
-
                 var newLocation = new ItemStorageLocation(DraggingRotation, position);
 
                 if (!_storage.ItemFitsInGridLocation(dragEnt, sourceStorage, newLocation))

@@ -16,6 +16,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Item;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Lock;
 using Content.Shared.Materials;
 using Content.Shared.Placeable;
@@ -161,6 +162,8 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeAllEvent<StorageInsertItemIntoLocationEvent>(OnInsertItemIntoLocation);
         SubscribeAllEvent<StorageSaveItemLocationEvent>(OnSaveItemLocation);
 
+        SubscribeLocalEvent<ItemToggleSizeComponent, ItemToggleActivateAttemptEvent>(OnToggleAttempt);
+        SubscribeLocalEvent<ItemToggleSizeComponent, ItemToggleDeactivateAttemptEvent>(OnToggleDeattempt);
         SubscribeLocalEvent<ItemSizeChangedEvent>(OnItemSizeChanged);
 
         CommandBinds.Builder
@@ -173,21 +176,34 @@ public abstract class SharedStorageSystem : EntitySystem
         UpdatePrototypeCache();
     }
 
+    private void OnToggleDeattempt(Entity<ItemToggleSizeComponent> ent, ref ItemToggleDeactivateAttemptEvent args)
+    {
+        if (!TryGetStorageLocation(ent.Owner, out _, out _, out _))
+            return;
+
+        args.Cancelled = true;
+    }
+
+    private void OnToggleAttempt(Entity<ItemToggleSizeComponent> ent, ref ItemToggleActivateAttemptEvent args)
+    {
+        if (!TryGetStorageLocation(ent.Owner, out _, out _, out _))
+            return;
+
+        args.Cancelled = true;
+    }
+
     private void OnItemSizeChanged(ref ItemSizeChangedEvent ev)
     {
-        if (!ContainerSystem.TryGetContainingContainer(ev.Entity, out var container) ||
-            !TryComp(container.Owner, out StorageComponent? storage) ||
-            !_itemQuery.TryComp(ev.Entity, out var itemComp))
+        var itemEnt = new Entity<ItemComponent?>(ev.Entity, null);
+
+        if (!TryGetStorageLocation(itemEnt, out var container, out var storage, out var loc))
         {
             return;
         }
 
-        // If size exceeds its spot then drop it.
-        var loc = storage.StoredItems[ev.Entity];
-
-        if (!ItemFitsInGridLocation((ev.Entity, itemComp), (container.Owner, storage), loc))
+        if (!ItemFitsInGridLocation((itemEnt.Owner, itemEnt.Comp), (container.Owner, storage), loc))
         {
-            ContainerSystem.Remove(ev.Entity, container, force: true);
+            ContainerSystem.Remove(itemEnt.Owner, container, force: true);
         }
     }
 
@@ -338,6 +354,25 @@ public abstract class SharedStorageSystem : EntitySystem
                 new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
         }
         args.Verbs.Add(verb);
+    }
+
+    /// <summary>
+    /// Tries to get the storage location of an item.
+    /// </summary>
+    public bool TryGetStorageLocation(Entity<ItemComponent?> itemEnt, [NotNullWhen(true)] out BaseContainer? container, out StorageComponent? storage, out ItemStorageLocation loc)
+    {
+        loc = default;
+        storage = null;
+
+        if (!ContainerSystem.TryGetContainingContainer(itemEnt, out container) ||
+            !TryComp(container.Owner, out storage) ||
+            !_itemQuery.Resolve(itemEnt, ref itemEnt.Comp, false))
+        {
+            return false;
+        }
+
+        loc = storage.StoredItems[itemEnt];
+        return true;
     }
 
     public void OpenStorageUI(EntityUid uid, EntityUid actor, StorageComponent? storageComp = null, bool silent = true)

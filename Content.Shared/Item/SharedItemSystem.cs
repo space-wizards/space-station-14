@@ -45,7 +45,7 @@ public abstract class SharedItemSystem : EntitySystem
         component.Size = size;
         Dirty(uid, component);
         var ev = new ItemSizeChangedEvent(uid);
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(uid, ref ev, broadcast: true);
     }
 
     public void SetShape(EntityUid uid, List<Box2i>? shape, ItemComponent? component = null)
@@ -56,7 +56,7 @@ public abstract class SharedItemSystem : EntitySystem
         component.Shape = shape;
         Dirty(uid, component);
         var ev = new ItemSizeChangedEvent(uid);
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(uid, ref ev, broadcast: true);
     }
 
     public void SetHeldPrefix(EntityUid uid, string? heldPrefix, bool force = false, ItemComponent? component = null)
