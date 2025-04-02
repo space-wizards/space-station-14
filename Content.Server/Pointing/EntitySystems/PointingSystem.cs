@@ -235,26 +235,36 @@ namespace Content.Server.Pointing.EntitySystems
 
                     if (player == pointed)
                     {
+                        // You point at your item
                         selfMessage = Loc.GetString("pointing-system-point-in-your-inventory-self", ("item", itemName));
+                        // Urist McPointer points at his item
                         viewerMessage = Loc.GetString("pointing-system-point-in-your-inventory-others", ("item", itemName), ("pointer", playerName));
                     }
                     else
                     {
+                        // You point at Urist McHands' item
                         selfMessage = Loc.GetString("pointing-system-point-in-other-inventory-self", ("item", itemName), ("wearer", pointedName));
+                        // Urist McPointer points at Urist McWearer's item
                         viewerMessage = Loc.GetString("pointing-system-point-in-other-inventory-others", ("item", itemName), ("pointer", playerName), ("wearer", pointedName));
+                        // Urist McPointer points at your item
                         viewerPointedAtMessage = Loc.GetString("pointing-system-point-in-other-inventory-target", ("item", itemName), ("pointer", playerName));
                     }
                 }
                 else
                 {
                     selfMessage = player == pointed
+                        // You point at yourself
                         ? Loc.GetString("pointing-system-point-at-self")
+                        // You point at Urist McTarget
                         : Loc.GetString("pointing-system-point-at-other", ("other", pointedName));
 
                     viewerMessage = player == pointed
+                        // Urist McPointer points at himself
                         ? Loc.GetString("pointing-system-point-at-self-others", ("otherName", playerName), ("other", playerName))
+                        // Urist McPointer points at Urist McTarget
                         : Loc.GetString("pointing-system-point-at-other-others", ("otherName", playerName), ("other", pointedName));
 
+                    // Urist McPointer points at you
                     viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", playerName));
                 }
 
