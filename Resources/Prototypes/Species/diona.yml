@@ -10,7 +10,7 @@
   skinColoration: Hues
   maleFirstNames: NamesDionaFirst
   femaleFirstNames: NamesDionaFirst
-  lastNames: NamesDionaLast
+  maleLastNames: NamesDionaLast
   femaleLastNames: NamesDionaLast
   naming: TheFirstofLast
 

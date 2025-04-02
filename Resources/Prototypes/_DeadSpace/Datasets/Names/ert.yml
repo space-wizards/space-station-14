@@ -1,70 +1,17 @@
-- type: dataset
+- type: localizedDataset
   id: NamesFirstERTLeader
   values:
-  - Лейтенант
+    prefix: names-ert-first-leader-dataset-
+    count: 1
 
-- type: dataset
+- type: localizedDataset
   id: NamesFirstERT
   values:
-  - Сержант
-  - Младший сержант
-  - Рядовой
+    prefix: names-ert-first-dataset-
+    count: 3
 
-- type: dataset
+- type: localizedDataset
   id: NamesLastERT
   values:
-  - Антарес
-  - Андромеда
-  - Бейд
-  - Бетельгейзе
-  - Вега
-  - Водолей
-  - Гинан
-  - Геркулес
-  - Денеб
-  - Дракон
-  - Зосма
-  - Йильдун
-  - Козерог
-  - Лабр
-  - Лебедь
-  - Матар
-  - Нави
-  - Нихал
-  - Окул
-  - Орион
-  - Процион
-  - Персей
-  - Ригель
-  - Регул
-  - Сириус
-  - Саргас
-  - Телец
-  - Феникс
-  - Хадар
-  - Хамелеон
-  - Целена
-  - Центавр
-  - Чау
-  - Электра
-  - Эридан
-  - Альфа
-  - Браво
-  - Чарли
-  - Эхо
-  - Фокстрот
-  - Хотел
-  - Индиа
-  - Кило
-  - Лима
-  - Майк
-  - Новембер
-  - Оскар
-  - Квебэк
-  - Ромео
-  - Танго
-  - Юниформ
-  - Виски
-  - Иксрэй
-  - Янки
-  - Зулу
+    prefix: names-ert-last-dataset-
+    count: 55

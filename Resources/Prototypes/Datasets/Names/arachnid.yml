@@ -2,10 +2,10 @@
   id: NamesArachnidFirst
   values:
     prefix: names-arachnid-first-dataset-
-    count: 73
+    count: 58 # DS14
 
 - type: localizedDataset
   id: NamesArachnidLast
   values:
     prefix: names-arachnid-last-dataset-
-    count: 68
+    count: 56 # DS14

@@ -10,11 +10,10 @@
   skinColoration: Hues
   sexes:
   - Unsexed
-  naming: FirstLast
-  maleFirstNames: firstMaleXeno
-  femaleFirstNames: firstFemaleXeno
-  maleLastNames: XenoLast
-  femaleLastNames: XenoLast
+  maleFirstNames: NamesXenoFirst
+  femaleFirstNames: NamesXenoFirst
+  maleLastNames: NamesXenoLast
+  femaleLastNames: NamesXenoLast
 
 - type: speciesBaseSprites
   id: MobXenoSprites

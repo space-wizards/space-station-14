@@ -10,7 +10,7 @@
   skinColoration: Hues
   maleFirstNames: NamesArachnidFirst
   femaleFirstNames: NamesArachnidFirst
-  lastNames: NamesArachnidLast
+  maleLastNames: NamesArachnidLast
   femaleLastNames: NamesArachnidLast
   sexes:
   - Unsexed

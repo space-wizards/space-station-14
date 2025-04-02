@@ -19,6 +19,7 @@ steal-target-groups-heads-cloaks = плащи глав
 steal-target-groups-heads-bedsheets = одеяла глав
 steal-target-groups-stamps = печати
 steal-target-groups-door-remotes = пульты от шлюзов
+steal-target-groups-mail = mail
 steal-target-groups-encryption-keys = ключи шифрования
 steal-target-groups-technology-disks = технологические диски
 steal-target-groups-id-cards = ID-карты

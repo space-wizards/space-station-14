@@ -9,11 +9,10 @@
   skinColoration: Hues
   sexes:
   - Unsexed
-  naming: FirstLast
-  maleFirstNames: names_kpb_first_male
-  femaleFirstNames: names_kpb_first_famale
-  maleLastNames: names_kpb_last_male
-  femaleLastNames: names_kpb_last_famale
+  maleFirstNames: NamesIPCFirst
+  femaleFirstNames: NamesIPCFirst
+  maleLastNames: NamesIPCLast
+  femaleLastNames: NamesIPCLast
 
 - type: speciesBaseSprites
   id: MobIPCSprites

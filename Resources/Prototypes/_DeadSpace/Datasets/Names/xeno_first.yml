@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: NamesXenoFirst
+  values:
+    prefix: names-xeno-first-dataset-
+    count: 18
