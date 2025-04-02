@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ArZarLordOfMango
-  changes:
-  - message: Most toggleable clothing must now be equipped to toggle their actions.
-    type: Fix
-  id: 7623
-  time: '2024-11-19T20:31:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32826
 - author: Plykiya
   changes:
   - message: The SWAT crate from cargo now requires armory access to open.
@@ -3900,3 +3893,10 @@
   id: 8122
   time: '2025-04-01T23:26:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35191
+- author: Fildrance
+  changes:
+  - message: fixed missing deconstruct on RCD
+    type: Fix
+  id: 8123
+  time: '2025-04-02T16:11:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36255
