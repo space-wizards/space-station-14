@@ -28,7 +28,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Items/Toys/toysqueak1.ogg
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
   - type: UseDelay
     delay: 0.66
   - type: ContainerContainer
@@ -126,7 +126,7 @@
   - type: Gun
     fireRate: 3
     soundGunshot:
-      path: /Audio/Items/Toys/toysqueak1.ogg
+      path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
 
 - type: entity
   parent: WeaponRevolverMateba
@@ -152,7 +152,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Items/Toys/toysqueak1.ogg
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
       params:
         volume: 2.25
 

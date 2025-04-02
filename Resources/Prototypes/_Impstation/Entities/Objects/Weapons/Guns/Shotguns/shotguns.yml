@@ -16,7 +16,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Items/Toys/toysqueak1.ogg
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/silenced2.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider
@@ -49,7 +49,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Items/Toys/toysqueak1.ogg
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/sil_kammerer.ogg
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: BallisticAmmoProvider

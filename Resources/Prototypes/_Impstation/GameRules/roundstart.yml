@@ -102,30 +102,6 @@
       mindRoles:
       - MindRoleTraitor
 
-- type: entity
-  parent: BaseGameRule
-  id: OddballGameRule
-  components:
-  - type: OddballRule
-    spawnGear:
-    - OddballGearAk
-    - OddballGearBlaster
-    - OddballGearC20r
-    - OddballGearDualies
-    - OddballGearGray
-    - OddballGearMerc
-    - OddballGearPirate
-    - OddballGearSafari
-    - OddballGearShotgun
-    - OddballGearWizard
-    - OddballGearXray
-  - type: PointManager
-  - type: RespawnDeadRule
-  - type: RespawnTracker
-    respawnDelay: 5
-  - type: RandomSpawnRule
-    prototype: Oddball
-
 # population limiters
 
 - type: entity

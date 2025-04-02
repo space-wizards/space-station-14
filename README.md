@@ -1,6 +1,6 @@
 <p align="center"> <img alt="Impstation" src="https://github.com/impstation/imp-station-14/blob/master/Resources/Textures/Logo/logo.png" /></p>
 
-Impstation is a fork of Space Station 69, a remake of SS13 that runs on [Robust Toolbox](https://github.com/space-wizards/RobustToolbox), a homegrown engine written in C#.
+Impstation is a fork of Space Station 14, a remake of SS13 that runs on [Robust Toolbox](https://github.com/space-wizards/RobustToolbox), a homegrown engine written in C#.
 
 While we are not a server that allows sexual content, <b>we do not allow people under the age of 20 to play on Impstation.</b>
 
@@ -18,9 +18,9 @@ We are happy to accept contributions from anybody. Get in Discord if you want to
 
 As a baseline make sure your changes and pull requests are in accordance with the upstream [contribution guidelines](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html). We're generally not as strict, but it's good practice to follow these examples.
 
-If you are adding completely custom content that would go into the normal SS14 file structure in a certain spot, add that content to the `_Impstation` folder with that same file path instead. For example, when adding the GBsay chat command for ghost bar stuff, it would have gone in `Content.Server/Chat/Commands`. Instead, the `GBsay.cs` file is in `Content.Server/_Impstation/Chat/Commands`.
+If you are adding completely custom content that would go into the normal SS14 file structure in a certain spot, add that content to the `_Impstation` folder with that same file path instead. For example, when adding the GBsay chat command for ghost bar stuff, it would have gone in `Content.Server/Chat/Commands`. Instead, the `GBsay.cs` file is in `Content.Server/_Impstation/Chat/Commands`. 
 
-The Impstation folders are located at `Content.Client/_Impstation`, `Content.Server/_Impstation`, and `Content.Shared/_Impstation`. The Resources folder is kind of its own beast, and has a lot of depth. For that reason it makes sense to have the _Impstation folder inside of the subfolder it is modifying. As another example, the main prototypes folder for our  custom content is located in `Resources/Prototypes/_Impstation`. The custom Spy vs Spy gamemode is defined in `Resources/Prototypes/_Impstation/GameRules/roundstart.yml`. This applies for recipies, clothing, everything.
+The Impstation folders are located at `Content.Client/_Impstation`, `Content.Server/_Impstation`, and `Content.Shared/_Impstation`. The Resources folder is kind of its own beast, and has a lot of depth. For that reason it makes sense to have the _Impstation folder inside of the subfolder it is modifying. As another example, the main prototypes folder for our  custom content is located in `Resources/Prototypes/_Impstation`. The custom Spy vs Spy gamemode is defined in `Resources/Prototypes/_Impstation/GameRules/roundstart.yml`. This applies for recipies, clothing, everything. 
 
 Keeping things defined like this makes the lives of the people maintaining the server much, much easier.
 

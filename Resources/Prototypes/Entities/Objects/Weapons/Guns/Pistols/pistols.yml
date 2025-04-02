@@ -32,7 +32,7 @@
       - SemiAuto
       - FullAuto
     soundGunshot:
-      path: /Audio/Items/Toys/toysqueak1.ogg
+      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
@@ -134,7 +134,7 @@
       - SemiAuto
       - FullAuto
     soundGunshot:
-      path: /Audio/Items/Toys/toysqueak1.ogg
+      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Pistols/viper.rsi #imp
     layers:
@@ -176,7 +176,7 @@
   - type: Gun
     fireRate: 4
     soundGunshot:
-      path: /Audio/Items/Toys/toysqueak1.ogg
+      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
       params:
         volume: -14
     availableModes:
@@ -225,7 +225,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Items/Toys/toysqueak1.ogg
+      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
   - type: Construction
     graph: UpgradeWeaponPistolConversion
     node: start
@@ -254,7 +254,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Items/Toys/toysqueak1.ogg
+      path: /Audio/Weapons/Guns/Gunshots/hpistol.ogg #imp; it's a damn .45 you GOTTA make it sound heavier
   - type: ItemSlots
     slots:
       gun_magazine:

@@ -325,9 +325,6 @@
     - id: BookAgony
       prob: 0.05
       orGroup: book
-    - id: BookEvilcraft
-      prob: 0.05
-      orGroup: book
     - id: BookJanitorTale
       prob: 0.05
       orGroup: book

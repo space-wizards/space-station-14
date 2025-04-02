@@ -123,7 +123,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
     }
 
-    public void OnShootRequest(RequestShootEvent msg, EntitySessionEventArgs args)//IMP PUBLIC CHANGE BACK AFTER APRIL FOOL
+    private void OnShootRequest(RequestShootEvent msg, EntitySessionEventArgs args)
     {
         var user = args.SenderSession.AttachedEntity;
 
