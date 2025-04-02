@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Saeko-44
-  changes:
-  - message: The ability to prop a bucket on top of doors to drop and spill its content
-      on unsuspecting dooropeners
-    type: Add
-  id: 961
-  time: '2025-01-18T10:24:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1406
 - author: kipdotnet
   changes:
   - message: Fixed Couriers spawning without a headset.
@@ -4073,3 +4065,11 @@
   id: 1460
   time: '2025-04-02T13:07:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2147
+- author: widgetbeck
+  changes:
+  - message: Echolalia has been moved to the Disabilities category and had its point
+      cost removed. You may need to reapply it to your characters.
+    type: Tweak
+  id: 1461
+  time: '2025-04-02T13:17:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2183
