@@ -130,6 +130,9 @@
         mask:
         - FullTileMask
         - Opaque
+        layer:
+        - FullTileMask
+        - Opaque
   - type: Appearance
   - type: VaporVisuals
 
