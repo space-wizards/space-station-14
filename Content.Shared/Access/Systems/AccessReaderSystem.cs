@@ -13,6 +13,8 @@ using Robust.Shared.GameStates;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Nutrition.FoodMetamorphRules;
+using Content.Shared.Tag;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -25,6 +27,7 @@ public sealed class AccessReaderSystem : EntitySystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedGameTicker _gameTicker = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -118,7 +121,7 @@ public sealed class AccessReaderSystem : EntitySystem
 
         if (IsAllowed(access, stationKeys, target, reader))
         {
-            if (!HasComp<GhostComponent>(user))
+            if (!_tag.HasTag(user, "PreventAccessLogging"))
                 LogAccess((target, reader), user);
 
             return true;
