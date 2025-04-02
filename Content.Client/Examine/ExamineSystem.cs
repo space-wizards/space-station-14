@@ -1,7 +1,12 @@
+using System.Linq;
+using System.Numerics;
+using System.Threading;
 using Content.Client.Verbs;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -12,13 +17,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
-using System.Linq;
-using System.Numerics;
-using System.Threading;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Item;
 using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Examine
@@ -30,12 +30,12 @@ namespace Content.Client.Examine
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly VerbSystem _verbSystem = default!;
+        [Dependency] private readonly SpriteSystem _sprite = default!;
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
         private EntityUid _examinedEntity;
         private EntityUid _lastExaminedEntity;
-        private EntityUid _playerEntity;
         private Popup? _examineTooltipOpen;
         private ScreenCoordinates _popupPos;
         private CancellationTokenSource? _requestCancelTokenSource;
@@ -74,9 +74,9 @@ namespace Content.Client.Examine
         public override void Update(float frameTime)
         {
             if (_examineTooltipOpen is not {Visible: true}) return;
-            if (!_examinedEntity.Valid || !_playerEntity.Valid) return;
+            if (!_examinedEntity.Valid || _playerManager.LocalEntity is not { } player) return;
 
-            if (!CanExamine(_playerEntity, _examinedEntity))
+            if (!CanExamine(player, _examinedEntity))
                 CloseTooltip();
         }
 
@@ -114,9 +114,8 @@ namespace Content.Client.Examine
                 return false;
             }
 
-            _playerEntity = _playerManager.LocalEntity ?? default;
-
-            if (_playerEntity == default || !CanExamine(_playerEntity, entity))
+            if (_playerManager.LocalEntity is not { } player ||
+                !CanExamine(player, entity))
             {
                 return false;
             }
@@ -300,8 +299,26 @@ namespace Content.Client.Examine
             {
                 Name = "ExamineButtonsHBox",
                 Orientation = LayoutOrientation.Horizontal,
-                HorizontalAlignment = Control.HAlignment.Right,
+                HorizontalAlignment = Control.HAlignment.Stretch,
                 VerticalAlignment = Control.VAlignment.Bottom,
+            };
+
+            var hoverExamineBox = new BoxContainer
+            {
+                Name = "HoverExamineHBox",
+                Orientation = LayoutOrientation.Horizontal,
+                HorizontalAlignment = Control.HAlignment.Left,
+                VerticalAlignment = Control.VAlignment.Center,
+                HorizontalExpand = true
+            };
+
+            var clickExamineBox = new BoxContainer
+            {
+                Name = "ClickExamineHBox",
+                Orientation = LayoutOrientation.Horizontal,
+                HorizontalAlignment = Control.HAlignment.Right,
+                VerticalAlignment = Control.VAlignment.Center,
+                HorizontalExpand = true
             };
 
             // Examine button time
@@ -316,10 +333,17 @@ namespace Content.Client.Examine
                 if (!examine.ShowOnExamineTooltip)
                     continue;
 
-                var button = new ExamineButton(examine);
+                var button = new ExamineButton(examine, _sprite);
 
-                button.OnPressed += VerbButtonPressed;
-                buttonsHBox.AddChild(button);
+                if (examine.HoverVerb)
+                {
+                    hoverExamineBox.AddChild(button);
+                }
+                else
+                {
+                    button.OnPressed += VerbButtonPressed;
+                    clickExamineBox.AddChild(button);
+                }
             }
 
             var vbox = _examineTooltipOpen?.GetChild(0).GetChild(0);
@@ -336,6 +360,8 @@ namespace Content.Client.Examine
             {
                 vbox.Children.Remove(hbox.First());
             }
+            buttonsHBox.AddChild(hoverExamineBox);
+            buttonsHBox.AddChild(clickExamineBox);
             vbox.AddChild(buttonsHBox);
         }
 

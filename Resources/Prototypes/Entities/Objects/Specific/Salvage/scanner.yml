@@ -1,0 +1,91 @@
+- type: entity
+  id: MineralScannerUnpowered
+  parent: BaseItem
+  name: mineral scanner
+  description: A scanner that checks surrounding rock for useful minerals. It must be in your hand or pocket to work.
+  suffix: Unpowered
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mining/mineral_scanner.rsi
+    layers:
+    - state: icon
+    - state: icon-o
+      shader: unshaded
+      visible: false
+      map: ["enum.ToggleVisuals.Layer"]
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Ambience/Objects/light_hum.ogg
+      params:
+        volume: -10
+        maxDistance: 1
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ItemToggle
+    soundActivate:
+      path: /Audio/Weapons/click.ogg
+      params:
+        maxDistance: 1
+  - type: MiningScanner
+
+- type: entity
+  id: MineralScanner
+  parent: [ MineralScannerUnpowered, PowerCellSlotMediumItem ]
+  suffix: Powered
+  components:
+  - type: ToggleCellDraw
+  - type: PowerCellDraw
+    drawRate: 2.4 # ~5 minutes on a medium power cell.
+    useRate: 0
+
+- type: entity
+  id: MineralScannerEmpty
+  parent: MineralScanner
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+
+- type: entity
+  id: AdvancedMineralScannerUnpowered
+  parent: MineralScannerUnpowered
+  name: advanced mineral scanner
+  description: A scanner that checks surrounding rock for useful minerals. It must be in your hand or pocket to work. This one has an extended range.
+  suffix: Unpowered
+  components:
+  - type: Sprite
+    layers:
+    - state: adv
+    - state: adv-o
+      shader: unshaded
+      visible: false
+      map: ["enum.ToggleVisuals.Layer"]
+  - type: MiningScanner
+    range: 10
+
+- type: entity
+  id: AdvancedMineralScanner
+  parent: [ AdvancedMineralScannerUnpowered, PowerCellSlotMediumItem ]
+  suffix: Powered
+  components:
+  - type: ToggleCellDraw
+  - type: PowerCellDraw
+    drawRate: 1.2 # ~10 minutes on a medium power cell.
+    useRate: 0
+
+- type: entity
+  id: AdvancedMineralScannerEmpty
+  parent: AdvancedMineralScanner
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

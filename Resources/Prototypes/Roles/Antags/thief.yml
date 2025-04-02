@@ -10,6 +10,6 @@
   id: ThiefGear
   storage:
     back:
-    - ToolboxThief
-    - ClothingHandsChameleonThief
     - ThiefBeacon
+    - SatchelThief
+    - ClothingHandsChameleonThief

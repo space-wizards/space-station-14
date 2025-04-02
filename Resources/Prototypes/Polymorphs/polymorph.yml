@@ -31,6 +31,10 @@
     transferDamage: true
     revertOnCrit: false
     revertOnDeath: true
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
 
 - type: polymorph
   id: WizardForcedSkeleton
@@ -42,6 +46,10 @@
     transferDamage: true
     revertOnCrit: false
     revertOnDeath: false
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
 
 - type: polymorph
   id: WizardForcedMonkey
@@ -53,6 +61,10 @@
     transferDamage: true
     revertOnCrit: false
     revertOnDeath: true
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
 
 - type: polymorph
   id: WizardWallDoor
@@ -64,6 +76,10 @@
     transferDamage: false
     revertOnCrit: false
     revertOnDeath: false
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
 
 - type: polymorph
   id: WizardForcedCluwne
@@ -74,6 +90,10 @@
     transferHumanoidAppearance: true
     inventory: Transfer
     revertOnDeath: true
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
 
 # this is a test for transferring some visual appearance stuff
 - type: polymorph
@@ -109,7 +129,7 @@
 - type: polymorph
   id: TreeMorph
   configuration:
-    entity: FloraTree01
+    entity: FloraTree
     forced: true
     transferName: true
     revertOnDeath: true
@@ -186,3 +206,19 @@
     forced: true
     revertOnCrit: false
     revertOnDeath: false
+
+# Temporary Jaunt
+# Don't make permanent jaunts until action system can be reworked to allow do afters and cooldown pausing
+- type: polymorph
+  id: Jaunt
+  configuration:
+    entity: EtherealJaunt
+    transferName: true
+    inventory: None
+    forced: true
+    revertOnDeath: true
+    revertOnCrit: true
+    allowRepeatedMorphs: false
+    polymorphSound: /Audio/Magic/ethereal_enter.ogg
+    exitPolymorphSound: /Audio/Magic/ethereal_exit.ogg
+    duration: 3

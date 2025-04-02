@@ -10,7 +10,7 @@ public sealed partial class ActivateArtifact : EntityEffect
     public override void Effect(EntityEffectBaseArgs args)
     {
         var artifact = args.EntityManager.EntitySysManager.GetEntitySystem<ArtifactSystem>();
-        artifact.TryActivateArtifact(args.TargetEntity);
+        artifact.TryActivateArtifact(args.TargetEntity, logMissing: false);
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>

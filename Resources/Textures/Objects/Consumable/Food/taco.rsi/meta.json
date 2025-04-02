@@ -1,17 +1,29 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Original sprite by Phunny, redrawn by TheShuEd",
+  "copyright": "Added by Phunny",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "tacoshell_back"
+      "name": "beeftaco"
     },
     {
-      "name": "tacoshell_forward"
+      "name": "beeftacosupreme"
+    },
+    {
+      "name": "chickentaco"
+    },
+    {
+      "name": "chickentacosupreme"
+    },
+    {
+      "name": "fishtaco"
+    },
+    {
+      "name": "rattaco"
     }
   ]
 }

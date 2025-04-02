@@ -590,28 +590,24 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 8.5,-16.5
       parent: 1
-    - type: DeviceLinkSink
-      invokeCounter: 1
-      links:
-      - 13
     - type: DeviceLinkSource
       linkedPorts:
         13:
         - DoorStatus: Close
+    - type: DeviceLinkSink
+      invokeCounter: 1
   - uid: 10
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -9.5,-16.5
       parent: 1
-    - type: DeviceLinkSink
-      invokeCounter: 1
-      links:
-      - 3
     - type: DeviceLinkSource
       linkedPorts:
         3:
         - DoorStatus: Close
+    - type: DeviceLinkSink
+      invokeCounter: 1
 - proto: AirlockExternalSyndicateLocked
   entities:
   - uid: 2
@@ -619,9 +615,6 @@ entities:
     - type: Transform
       pos: -0.5,-25.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 14
     - type: DeviceLinkSource
       linkedPorts:
         14:
@@ -633,8 +626,6 @@ entities:
       parent: 1
     - type: DeviceLinkSink
       invokeCounter: 1
-      links:
-      - 10
     - type: DeviceLinkSource
       linkedPorts:
         10:
@@ -644,9 +635,6 @@ entities:
     - type: Transform
       pos: -4.5,-14.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 12
     - type: DeviceLinkSource
       linkedPorts:
         12:
@@ -656,9 +644,6 @@ entities:
     - type: Transform
       pos: 3.5,-14.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 22
     - type: DeviceLinkSource
       linkedPorts:
         22:
@@ -668,9 +653,6 @@ entities:
     - type: Transform
       pos: -4.5,-10.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 7
     - type: DeviceLinkSource
       linkedPorts:
         7:
@@ -682,8 +664,6 @@ entities:
       parent: 1
     - type: DeviceLinkSink
       invokeCounter: 1
-      links:
-      - 8
     - type: DeviceLinkSource
       linkedPorts:
         8:
@@ -693,9 +673,6 @@ entities:
     - type: Transform
       pos: -0.5,-22.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 2
     - type: DeviceLinkSource
       linkedPorts:
         2:
@@ -705,9 +682,6 @@ entities:
     - type: Transform
       pos: 3.5,-10.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 9
     - type: DeviceLinkSource
       linkedPorts:
         9:
@@ -809,6 +783,13 @@ entities:
     - type: Transform
       pos: 3.5,-3.5
       parent: 1
+- proto: BorgCharger
+  entities:
+  - uid: 612
+    components:
+    - type: Transform
+      pos: -4.5,-27.5
+      parent: 1
 - proto: BoxEncryptionKeySyndie
   entities:
   - uid: 34
@@ -824,6 +805,13 @@ entities:
     components:
     - type: Transform
       pos: 0.49331844,-13.366474
+      parent: 1
+- proto: BoxFolderNuclearCodes
+  entities:
+  - uid: 510
+    components:
+    - type: Transform
+      pos: -2.5286522,-11.44479
       parent: 1
 - proto: BoxHandcuff
   entities:
@@ -2650,8 +2638,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 5.5,-27.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasMinerOxygen
   entities:
   - uid: 369
@@ -2660,8 +2646,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,-27.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasMixer
   entities:
   - uid: 370
@@ -2675,8 +2659,6 @@ entities:
     - type: GasMixer
       inletTwoConcentration: 0.78
       inletOneConcentration: 0.22
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#0335FCFF'
 - proto: GasPassiveVent
@@ -2687,24 +2669,18 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,-26.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 372
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,-26.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
   - uid: 373
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,-19.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: GasPipeBend
   entities:
   - uid: 374
@@ -3268,8 +3244,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 2.5,-23.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#0335FCFF'
 - proto: GasPressurePump
@@ -3282,8 +3256,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 4.5,-19.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#FF1212FF'
 - proto: GasVentPump
@@ -3294,8 +3266,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 0.5,-11.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 450
@@ -3304,8 +3274,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -0.5,-21.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 451
@@ -3314,8 +3282,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 4.5,-23.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 452
@@ -3324,8 +3290,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -4.5,-21.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 453
@@ -3334,8 +3298,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -4.5,-16.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 454
@@ -3344,8 +3306,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,-16.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 455
@@ -3353,8 +3313,6 @@ entities:
     - type: Transform
       pos: 0.5,-3.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#0335FCFF'
 - proto: GasVentScrubber
@@ -3365,8 +3323,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,-12.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 457
@@ -3375,8 +3331,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 3.5,-17.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 458
@@ -3385,8 +3339,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 2.5,-20.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 459
@@ -3395,8 +3347,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -4.5,-17.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 460
@@ -3405,8 +3355,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,-21.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 461
@@ -3414,8 +3362,6 @@ entities:
     - type: Transform
       pos: -0.5,-3.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
     - type: AtmosPipeColor
       color: '#FF1212FF'
 - proto: GeneratorBasic15kW
@@ -3607,13 +3553,6 @@ entities:
     - type: Transform
       pos: 3.5,-3.5
       parent: 1
-- proto: SyndicateMicrowave
-  entities:
-  - uid: 497
-    components:
-    - type: Transform
-      pos: 3.5,-19.5
-      parent: 1
 - proto: KnifePlastic
   entities:
   - uid: 498
@@ -3733,13 +3672,6 @@ entities:
     - type: Transform
       pos: -2.5,-12.5
       parent: 1
-- proto: BoxFolderNuclearCodes
-  entities:
-  - uid: 510
-    components:
-    - type: Transform
-      pos: -2.5286522,-11.44479
-      parent: 1
 - proto: Ointment
   entities:
   - uid: 511
@@ -3766,8 +3698,6 @@ entities:
     - type: Transform
       pos: -1.5,-24.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: OxygenTankFilled
   entities:
   - uid: 515
@@ -4307,97 +4237,61 @@ entities:
     - type: Transform
       pos: -6.5,-4.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 21
   - uid: 598
     components:
     - type: Transform
       pos: 5.5,-4.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 20
   - uid: 599
     components:
     - type: Transform
       pos: 1.5,-9.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 609
   - uid: 600
     components:
     - type: Transform
       pos: -2.5,-9.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 609
   - uid: 601
     components:
     - type: Transform
       pos: -4.5,-2.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 21
   - uid: 602
     components:
     - type: Transform
       pos: 3.5,-2.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 20
   - uid: 603
     components:
     - type: Transform
       pos: 1.5,-1.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 21
   - uid: 604
     components:
     - type: Transform
       pos: -0.5,-1.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 21
   - uid: 605
     components:
     - type: Transform
       pos: 5.5,-19.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 611
   - uid: 606
     components:
     - type: Transform
       pos: -1.5,-1.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 21
   - uid: 607
     components:
     - type: Transform
       pos: 0.5,-1.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 21
   - uid: 608
     components:
     - type: Transform
       pos: -2.5,-1.5
       parent: 1
-    - type: DeviceLinkSink
-      links:
-      - 21
 - proto: SignalButton
   entities:
   - uid: 609
@@ -4537,7 +4431,7 @@ entities:
     - type: Transform
       pos: 2.4424396,-17.430403
       parent: 1
-- proto: soda_dispenser
+- proto: SodaDispenser
   entities:
   - uid: 626
     components:
@@ -4551,8 +4445,6 @@ entities:
     - type: Transform
       pos: 2.5,-23.5
       parent: 1
-    - type: AtmosDevice
-      joinedGrid: 1
 - proto: SubstationBasic
   entities:
   - uid: 628
@@ -4581,6 +4473,13 @@ entities:
     components:
     - type: Transform
       pos: -4.5,-17.5
+      parent: 1
+- proto: SyndicateMicrowave
+  entities:
+  - uid: 497
+    components:
+    - type: Transform
+      pos: 3.5,-19.5
       parent: 1
 - proto: SyndieMiniBomb
   entities:
