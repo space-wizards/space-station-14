@@ -60,7 +60,7 @@ public sealed partial class BlockingComponent : Component
     [DataField("blockSound")] public SoundSpecifier BlockSound =
         new SoundPathSpecifier("/Audio/Weapons/block_metal1.ogg")
         {
-            Params = AudioParams.Default.AddVariation(0.25f)
+            Params = AudioParams.Default.WithVariation(0.25f)
         };
 
     /// <summary>

@@ -108,7 +108,7 @@ public sealed class TippyUIController : UIController
             {
                 var audioParams = step.FootstepSoundCollection.Params
                     .AddVolume(-7f)
-                    .AddVariation(0.1f);
+                    .WithVariation(0.1f);
                 _audio.PlayGlobal(step.FootstepSoundCollection, EntityUid.Invalid, audioParams);
             }
         }

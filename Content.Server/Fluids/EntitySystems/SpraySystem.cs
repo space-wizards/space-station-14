@@ -162,7 +162,7 @@ public sealed class SpraySystem : EntitySystem
         }
 
         var audioParams = entity.Comp.SpraySound?.Params ?? AudioParams.Default;
-        audioParams = audioParams.AddVariation(0.125f);
+        audioParams = audioParams.WithVariation(0.125f);
         _audio.PlayPvs(entity.Comp.SpraySound, entity, audioParams);
 
         if (useDelay != null)

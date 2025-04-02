@@ -254,7 +254,7 @@ namespace Content.Server.Guardian
             else if (args.NewMobState == MobState.Dead)
             {
                 //TODO: Replace WithVariation with datafield
-                _audio.PlayPvs("/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioParams.Default.AddVariation(0.20f));
+                _audio.PlayPvs("/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioParams.Default.WithVariation(0.20f));
                 RemComp<GuardianHostComponent>(uid);
             }
         }

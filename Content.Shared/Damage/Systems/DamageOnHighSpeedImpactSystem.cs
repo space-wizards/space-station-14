@@ -54,7 +54,7 @@ public sealed class DamageOnHighSpeedImpactSystem : EntitySystem
         if (_gameTiming.IsFirstTimePredicted)
         {
             var audioParams = component.SoundHit?.Params ?? AudioParams.Default;
-            audioParams = audioParams.AddVariation(0.125f).AddVolume(-0.125f);
+            audioParams = audioParams.WithVariation(0.125f).AddVolume(-0.125f);
             _audio.PlayPvs(component.SoundHit, uid, audioParams);
         }
         _color.RaiseEffect(Color.Red, new List<EntityUid>() { uid }, Filter.Pvs(uid, entityManager: EntityManager));

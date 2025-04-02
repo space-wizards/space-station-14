@@ -35,7 +35,7 @@ namespace Content.Server.Medical
         private const string VomitCollection = "Vomit";
 
         private readonly SoundSpecifier _vomitSound = new SoundCollectionSpecifier(VomitCollection,
-            AudioParams.Default.AddVariation(0.2f).AddVolume(-4f));
+            AudioParams.Default.WithVariation(0.2f).AddVolume(-4f));
 
         /// <summary>
         /// Make an entity vomit, if they have a stomach.

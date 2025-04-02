@@ -57,7 +57,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             Toggle(uid, component);
             var audioParams = component.ValveSound?.Params ?? AudioParams.Default;
-            audioParams = audioParams.AddVariation(0.25f);
+            audioParams = audioParams.WithVariation(0.25f);
             _audio.PlayPvs(component.ValveSound, uid, audioParams);
             args.Handled = true;
         }

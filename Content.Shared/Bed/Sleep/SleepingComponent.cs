@@ -39,7 +39,7 @@ public sealed partial class SleepingComponent : Component
     [DataField]
     public SoundSpecifier WakeAttemptSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg")
     {
-        Params = AudioParams.Default.AddVariation(0.05f)
+        Params = AudioParams.Default.WithVariation(0.05f)
     };
 
     /// <summary>

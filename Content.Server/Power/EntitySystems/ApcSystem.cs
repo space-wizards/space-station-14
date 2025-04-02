@@ -105,9 +105,9 @@ public sealed class ApcSystem : EntitySystem
         apc.MainBreakerEnabled = !apc.MainBreakerEnabled;
         battery.CanDischarge = apc.MainBreakerEnabled;
 
+        UpdateUIState(uid, apc);
         var audioParams = apc.OnReceiveMessageSound?.Params ?? AudioParams.Default;
         audioParams = audioParams.AddVolume(-2f);
-        UpdateUIState(uid, apc);
         _audio.PlayPvs(apc.OnReceiveMessageSound, uid, audioParams);
     }
 

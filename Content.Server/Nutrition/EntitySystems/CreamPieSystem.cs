@@ -45,7 +45,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var coordinates = Transform(uid).Coordinates;
             var creamPieSound = creamPie.Sound;
             var audioParams = creamPieSound?.Params ?? AudioParams.Default;
-            audioParams = audioParams.AddVariation(0.125f);
+            audioParams = audioParams.WithVariation(0.125f);
             _audio.PlayPvs(_audio.ResolveSound(creamPie.Sound), coordinates, audioParams);
 
             if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))

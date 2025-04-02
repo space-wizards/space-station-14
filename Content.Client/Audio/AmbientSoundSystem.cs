@@ -48,7 +48,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     private float _ambienceVolume = 0.0f;
 
     private static AudioParams _params = AudioParams.Default
-        .AddVariation(0.01f)
+        .WithVariation(0.01f)
         .WithLoop(true)
         .WithMaxDistance(7f);
 

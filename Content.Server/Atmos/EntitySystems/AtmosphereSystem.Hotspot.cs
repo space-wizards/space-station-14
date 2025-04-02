@@ -116,7 +116,7 @@ namespace Content.Server.Atmos.EntitySystems
                     HotspotSound,
                     coordinates,
                     AudioParams.Default
-                        .AddVariation(0.15f/tile.Hotspot.State)
+                        .WithVariation(0.15f/tile.Hotspot.State)
                         .AddVolume(-5f + 5f * tile.Hotspot.State));
             }
 

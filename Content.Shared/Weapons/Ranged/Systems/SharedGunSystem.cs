@@ -475,7 +475,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (playSound && TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
         {
             var audioParams = cartridge.EjectSound?.Params ?? AudioParams.Default;
-            audioParams = audioParams.AddVolume(-1f).AddVariation(SharedContentAudioSystem.DefaultVariation);
+            audioParams = audioParams.AddVolume(-1f).WithVariation(SharedContentAudioSystem.DefaultVariation);
             Audio.PlayPvs(cartridge.EjectSound, entity, audioParams);
         }
     }

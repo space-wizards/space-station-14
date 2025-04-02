@@ -144,7 +144,7 @@ namespace Content.Server.VendingMachines
             Popup.PopupEntity(Loc.GetString("vending-machine-restock-done", ("this", args.Args.Used), ("user", args.Args.User), ("target", uid)), args.Args.User, PopupType.Medium);
 
             var audioParams = restockComponent.SoundRestockDone?.Params ?? AudioParams.Default;
-            audioParams = audioParams.AddVolume(-2f).AddVariation(0.2f);
+            audioParams = audioParams.AddVolume(-2f).WithVariation(0.2f);
             Audio.PlayPvs(restockComponent.SoundRestockDone, uid, audioParams);
 
             Del(args.Args.Used.Value);

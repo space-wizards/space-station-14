@@ -272,7 +272,7 @@ public abstract partial class SharedMoverController : VirtualController
 
                 var audioParams = sound.Params
                     .AddVolume(sound.Params.Volume + soundModifier)
-                    .AddVariation(sound.Params.Variation ?? mobMover.FootstepVariation);
+                    .WithVariation(sound.Params.Variation ?? mobMover.FootstepVariation);
 
                 // If we're a relay target then predict the sound for all relays.
                 if (relayTarget != null)

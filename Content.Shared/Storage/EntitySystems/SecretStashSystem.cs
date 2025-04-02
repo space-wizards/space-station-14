@@ -83,7 +83,7 @@ public sealed class SecretStashSystem : EntitySystem
             return false;
 
         var audioParams = entity.Comp.TryInsertItemSound?.Params ?? AudioParams.Default;
-        audioParams = audioParams.AddVariation(0.25f);
+        audioParams = audioParams.WithVariation(0.25f);
         _audio.PlayPredicted(entity.Comp.TryInsertItemSound, entity, userUid, audioParams);
 
         // check if secret stash is already occupied
@@ -127,7 +127,7 @@ public sealed class SecretStashSystem : EntitySystem
             return false;
 
         var audioParams = entity.Comp.TryRemoveItemSound?.Params ?? AudioParams.Default;
-        audioParams = audioParams.AddVariation(0.25f);
+        audioParams = audioParams.WithVariation(0.25f);
         _audio.PlayPredicted(entity.Comp.TryRemoveItemSound, entity, userUid, audioParams);
 
         // check if secret stash has something inside

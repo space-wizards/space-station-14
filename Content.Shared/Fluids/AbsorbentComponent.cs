@@ -24,18 +24,18 @@ public sealed partial class AbsorbentComponent : Component
     [DataField("pickupSound")]
     public SoundSpecifier PickupSound = new SoundPathSpecifier("/Audio/Effects/Fluids/watersplash.ogg")
     {
-        Params = AudioParams.Default.AddVariation(SharedContentAudioSystem.DefaultVariation),
+        Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation),
     };
 
     [DataField("transferSound")] public SoundSpecifier TransferSound =
         new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg")
         {
-            Params = AudioParams.Default.AddVariation(SharedContentAudioSystem.DefaultVariation).AddVolume(-3f),
+            Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).AddVolume(-3f),
         };
 
     public static readonly SoundSpecifier DefaultTransferSound =
         new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg")
         {
-            Params = AudioParams.Default.AddVariation(SharedContentAudioSystem.DefaultVariation).AddVolume(-3f),
+            Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).AddVolume(-3f),
         };
 }

@@ -156,7 +156,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         }
 
         var audioParams = combatMode.DisarmSuccessSound?.Params ?? AudioParams.Default;
-        audioParams = audioParams.AddVariation(0.025f).AddVolume(5f);
+        audioParams = audioParams.WithVariation(0.025f).AddVolume(5f);
         _audio.PlayPvs(combatMode.DisarmSuccessSound, user, audioParams);
         AdminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(user):user} used disarm on {ToPrettyString(target):target}");
 

@@ -104,7 +104,7 @@ namespace Content.Server.Atmos.EntitySystems
                         SpaceWindSound,
                         coordinates,
                         AudioParams.Default
-                            .AddVariation(0.125f)
+                            .WithVariation(0.125f)
                             .AddVolume(MathHelper.Clamp(tile.PressureDifference / 10, 10, 100)));
                 }
             }

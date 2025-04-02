@@ -56,7 +56,7 @@ public abstract class SharedPowerReceiverSystem : EntitySystem
         if (playSwitchSound)
         {
             _audio.PlayPredicted(new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg"), uid, user: user,
-                AudioParams.Default.AddVariation(-2f));
+                AudioParams.Default.WithVariation(-2f));
         }
 
         return !receiver.PowerDisabled; // i.e. PowerEnabled

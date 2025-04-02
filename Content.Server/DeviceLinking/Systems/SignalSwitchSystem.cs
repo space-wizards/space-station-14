@@ -39,7 +39,7 @@ public sealed class SignalSwitchSystem : EntitySystem
         }
 
         var audioParams = comp.ClickSound?.Params ?? AudioParams.Default;
-        audioParams = audioParams.AddVariation(0.125f).AddVolume(8f);
+        audioParams = audioParams.WithVariation(0.125f).AddVolume(8f);
         _audio.PlayPvs(comp.ClickSound, uid, audioParams);
 
         args.Handled = true;

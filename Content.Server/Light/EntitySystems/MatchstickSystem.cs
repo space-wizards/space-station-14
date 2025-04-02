@@ -82,7 +82,7 @@ namespace Content.Server.Light.EntitySystems
 
             // Play Sound
             var audioParams = component.IgniteSound?.Params ?? AudioParams.Default;
-            audioParams = audioParams.AddVariation(0.125f).AddVolume(-0.125f);
+            audioParams = audioParams.WithVariation(0.125f).AddVolume(-0.125f);
             _audio.PlayPvs(component.IgniteSound, matchstick, audioParams);
 
             // Change state

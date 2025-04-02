@@ -73,7 +73,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
         if (component.UseSound != null)
         {
             var audioParams = component.UseSound?.Params ?? AudioParams.Default;
-            audioParams = audioParams.AddVariation(0.125f);
+            audioParams = audioParams.WithVariation(0.125f);
             _audio.PlayPvs(component.UseSound, uid, audioParams);
         }
 

@@ -48,7 +48,7 @@ public sealed partial class LockComponent : Component
     [DataField("lockingSound"), ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier LockSound = new SoundPathSpecifier("/Audio/Machines/door_lock_on.ogg")
     {
-        Params = AudioParams.Default.AddVariation(-5f)
+        Params = AudioParams.Default.WithVariation(-5f)
     };
 
     /// <summary>

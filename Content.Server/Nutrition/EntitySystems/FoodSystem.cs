@@ -297,8 +297,7 @@ public sealed class FoodSystem : EntitySystem
         }
 
         var audioParams = entity.Comp.UseSound?.Params ?? AudioParams.Default;
-        audioParams = audioParams.AddVolume(-1f).AddVariation(0.20f);
-
+        audioParams = audioParams.AddVolume(-1f).WithVariation(0.20f);
         _audio.PlayPvs(entity.Comp.UseSound, args.Target.Value, audioParams);
 
         // Try to break all used utensils
