@@ -1,9 +1,9 @@
 poorly-attached-reattach-verb-default = Reattach
 
-poorly-attached-detach-popup = Your {$entity} fell off!
+poorly-attached-reattach-self-popup-user-default = You reattach your {$entity}.
+poorly-attached-reattach-self-popup-others-default = {CAPITALIZE(THE($user))} reattaches {POSS-ADJ($user)} {$entity}.
+poorly-attached-reattach-other-popup-user-default = You reattach {THE($wearer)}'s {$entity}.
+poorly-attached-reattach-other-popup-wearer-default = {CAPITALIZE(THE($user))} reattaches your {$entity}.
+poorly-attached-reattach-other-popup-others-default = {CAPITALIZE(THE($user))} reattaches {THE($wearer)}'s {$entity}.
 
-poorly-attached-reattach-self-popup-user = You reattach your {$entity}.
-poorly-attached-reattach-self-popup-others = {CAPITALIZE(THE($user))} {CONJUGATE-BASIC($user, "reattach", "reattaches")} {POSS-ADJ($user)} {$entity}.
-poorly-attached-reattach-other-popup-user = You reattach {THE($wearer)}'s {$entity}.
-poorly-attached-reattach-other-popup-wearer = {CAPITALIZE(THE($user))} {CONJUGATE-BASIC($user, "reattach", "reattaches")} your {$entity}.
-poorly-attached-reattach-other-popup-others = {CAPITALIZE(THE($user))} {CONJUGATE-BASIC($user, "reattach", "reattaches")} {THE($wearer)}'s {$entity}.
+poorly-attached-detach-popup = Your {$entity} fell off!

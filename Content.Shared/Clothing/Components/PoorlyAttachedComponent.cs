@@ -31,17 +31,17 @@ public sealed partial class PoorlyAttachedComponent : Component
     public LocId ReattachVerb = "poorly-attached-reattach-verb-default";
 
     [DataField]
-    public LocId ReattachSelfPopupUser = "poorly-attached-reattach-self-popup-user";
+    public LocId ReattachSelfPopupUser = "poorly-attached-reattach-self-popup-user-default";
 
     [DataField]
-    public LocId ReattachSelfPopupOthers = "poorly-attached-reattach-self-popup-others";
+    public LocId ReattachSelfPopupOthers = "poorly-attached-reattach-self-popup-others-default";
 
     [DataField]
-    public LocId ReattachOtherPopupUser = "poorly-attached-reattach-other-popup-user";
+    public LocId ReattachOtherPopupUser = "poorly-attached-reattach-other-popup-user-default";
 
     [DataField]
-    public LocId ReattachOtherPopupWearer = "poorly-attached-reattach-other-popup-wearer";
+    public LocId ReattachOtherPopupWearer = "poorly-attached-reattach-other-popup-wearer-default";
 
     [DataField]
-    public LocId ReattachOtherPopupOthers = "poorly-attached-reattach-other-popup-others";
+    public LocId ReattachOtherPopupOthers = "poorly-attached-reattach-other-popup-others-default";
 }
