@@ -9,6 +9,7 @@ using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Mind;
 using Content.Shared.Pointing;
 using Content.Shared.Popups;
@@ -210,13 +211,26 @@ namespace Content.Server.Pointing.EntitySystems
             {
                 var pointedName = Identity.Entity(pointed, EntityManager);
 
-                if (_container.TryGetOuterContainer(pointed, Transform(pointed), out var container))
+                EntityUid? containingInventory = null;
+                // Search up through the target's containing containers until we find an inventory
+                var inventoryQuery = GetEntityQuery<InventoryComponent>();
+                foreach (var container in _container.GetContainingContainers(pointed))
+                {
+                    if (inventoryQuery.HasComp(container.Owner))
+                    {
+                        containingInventory = container.Owner;
+                        break;
+                    }
+                }
+
+                // Are we in a mob's inventory?
+                if (containingInventory != null)
                 {
                     var item = pointed;
                     var itemName = Identity.Entity(item, EntityManager);
 
                     // Target the pointing at the item's holder
-                    pointed = container.Owner;
+                    pointed = containingInventory.Value;
                     pointedName = Identity.Entity(pointed, EntityManager);
 
                     if (player == pointed)
