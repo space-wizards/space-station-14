@@ -267,14 +267,22 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             if (targetStorage == window)
             {
                 var position = targetStorage.GetMouseGridPieceLocation(dragEnt, dragLoc);
+
                 var newLocation = new ItemStorageLocation(DraggingRotation, position);
 
-                EntityManager.RaisePredictiveEvent(new StorageSetItemLocationEvent(
-                    EntityManager.GetNetEntity(draggingGhost.Entity),
-                    EntityManager.GetNetEntity(sourceStorage),
-                    newLocation));
+                if (!_storage.ItemFitsInGridLocation(dragEnt, sourceStorage, newLocation))
+                {
+                    window.Reclaim(dragLoc, control);
+                }
+                else
+                {
+                    EntityManager.RaisePredictiveEvent(new StorageSetItemLocationEvent(
+                        EntityManager.GetNetEntity(draggingGhost.Entity),
+                        EntityManager.GetNetEntity(sourceStorage),
+                        newLocation));
 
-                window.Reclaim(newLocation, control);
+                    window.Reclaim(newLocation, control);
+                }
             }
             // Dragging to new storage
             else if (targetStorage?.StorageEntity != null && targetStorage != window)
