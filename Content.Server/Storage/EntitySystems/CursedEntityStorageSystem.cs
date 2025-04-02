@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Storage.Components;
 using Content.Shared.Audio;
 using Content.Shared.Storage.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -50,6 +51,8 @@ public sealed class CursedEntityStorageSystem : EntitySystem
             _entityStorage.AddToContents(entity, lockerEnt);
         }
 
-        _audio.PlayPvs(component.CursedSound, uid, AudioHelpers.WithVariation(0.125f, _random));
+        var audioParams = component.CursedSound?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVariation((float)_random.NextGaussian(1, 0.125f));
+        _audio.PlayPvs(component.CursedSound, uid, audioParams);
     }
 }

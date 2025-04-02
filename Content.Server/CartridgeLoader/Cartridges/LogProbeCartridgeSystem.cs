@@ -12,6 +12,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using System.Text;
+using Robust.Shared.Audio;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
@@ -52,7 +53,9 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
             return;
 
         //Play scanning sound with slightly randomized pitch
-        _audio.PlayEntity(ent.Comp.SoundScan, args.InteractEvent.User, target, AudioHelpers.WithVariation(0.25f, _random));
+        var audioParams = ent.Comp.SoundScan?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVariation((float)_random.NextGaussian(1, 0.25f));
+        _audio.PlayEntity(ent.Comp.SoundScan, args.InteractEvent.User, target, audioParams);
         _popup.PopupCursor(Loc.GetString("log-probe-scan", ("device", target)), args.InteractEvent.User);
 
         ent.Comp.EntityName = Name(target);

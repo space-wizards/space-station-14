@@ -85,7 +85,9 @@ public sealed partial class AreaReactionEffect : EntityEffect
             smoke.StartSmoke(ent, splitSolution, _duration, spreadAmount);
 
             var audio = reagentArgs.EntityManager.System<SharedAudioSystem>();
-            audio.PlayPvs(_sound, reagentArgs.TargetEntity, AudioHelpers.WithVariation(0.125f));
+            var audioParams = _sound?.Params ?? AudioParams.Default;
+            audioParams = audioParams.AddVariation(0.125f);
+            audio.PlayPvs(_sound, reagentArgs.TargetEntity, audioParams);
             return;
         }
 
