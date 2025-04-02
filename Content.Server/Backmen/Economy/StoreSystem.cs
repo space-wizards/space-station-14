@@ -16,24 +16,25 @@ public sealed partial class StoreSystem
     [Dependency] private readonly IdCardSystem _idCardSystem = default!;
     [Dependency] private readonly VendingMachineSystem _vendingMachineSystem = default!;
 
-    private void _PlayDeny(EntityUid uid)
+    private void PlayDeny(EntityUid uid)
     {
         if (TryComp<VendingMachineComponent>(uid, out var vendingMachineComponent))
         {
-            _vendingMachineSystem.Deny(uid, vendingMachineComponent);
+            _vendingMachineSystem.Deny((uid, vendingMachineComponent));
         }
     }
-    private void _PlayEject(EntityUid uid)
+
+    private void PlayEject(EntityUid uid)
     {
         if (TryComp<VendingMachineComponent>(uid, out var vendComponent))
         {
-            vendComponent.Ejecting = true;
             vendComponent.NextItemToEject = null;
             vendComponent.ThrowNextItem = false;
-            _vendingMachineSystem.TryUpdateVisualState(uid, vendComponent);
+            _vendingMachineSystem.TryUpdateVisualState((uid, vendComponent));
             _audio.PlayPvs(vendComponent.SoundVend, uid);
         }
     }
+
     private bool HandleBankTransaction(EntityUid uid, StoreComponent component, StoreBuyListingMessage msg, ListingDataWithCostModifiers listing)
     {
         if (!TryComp<BuyStoreBankComponent>(uid, out var storeBank))
@@ -59,14 +60,14 @@ public sealed partial class StoreSystem
 
             if (!_idCardSystem.TryFindIdCard(buyer, out var idCardComponent))
             {
-                _PlayDeny(uid);
+                PlayDeny(uid);
                 _popup.PopupEntity(Loc.GetString("store-no-idcard"), uid);
                 return false;
             }
 
             if (!_bankManagerSystem.TryWithdrawFromBankAccount(idCardComponent.Owner, currency, null))
             {
-                _PlayDeny(uid);
+                PlayDeny(uid);
                 _popup.PopupEntity(Loc.GetString("store-no-money"), uid);
                 return false;
             }

@@ -183,7 +183,7 @@ public sealed partial class NecromorfSystem
             {
                 foreach (var layer in necromorf.LayersToHide)
                 {
-                    _humanoidAppearance.SetLayerVisibility(target, layer, false, humanoid: huApComp);
+                    _humanoidAppearance.SetLayerVisibility(target, layer, false);
                 }
             }
 

@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Configuration;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -41,17 +41,17 @@ public sealed partial class CCVars
     /// If true, the admin overlay will be displayed in the old style (showing only "ANTAG")
     /// </summary>
     public static readonly CVarDef<bool> AdminOverlayClassic =
-        CVarDef.Create("ui.admin_overlay_classic", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("ui.admin_overlay_classic", true, CVar.CLIENTONLY | CVar.ARCHIVE); // DS14-value
 
     /// <summary>
     /// If true, the admin overlay will display the total time of the players
     /// </summary>
     public static readonly CVarDef<bool> AdminOverlayPlaytime =
-        CVarDef.Create("ui.admin_overlay_playtime", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("ui.admin_overlay_playtime", true, CVar.CLIENTONLY | CVar.ARCHIVE); // DS14-value
 
     /// <summary>
     /// If true, the admin overlay will display the players starting position.
     /// </summary>
     public static readonly CVarDef<bool> AdminOverlayStartingJob =
-        CVarDef.Create("ui.admin_overlay_starting_job", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("ui.admin_overlay_starting_job", true, CVar.CLIENTONLY | CVar.ARCHIVE); // DS14-value
 }

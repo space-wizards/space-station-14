@@ -281,7 +281,7 @@ public sealed partial class StoreSystem
         listing.PurchaseAmount++; //track how many times something has been purchased
         _audio.PlayEntity(component.BuySuccessSound, msg.Actor, uid); //cha-ching!
 
-        _PlayEject(uid); // backmen: currency
+        PlayEject(uid); // backmen: currency
         var buyFinished = new StoreBuyFinishedEvent
         {
             PurchasedItem = listing,

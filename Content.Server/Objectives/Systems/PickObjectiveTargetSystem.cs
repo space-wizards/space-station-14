@@ -5,6 +5,7 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.Revolutionary.Components;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Server.Roles.Jobs;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -18,6 +19,7 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
+    [Dependency] private readonly JobSystem _job = default!; // DS14
 
     public override void Initialize()
     {
@@ -26,6 +28,7 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
         SubscribeLocalEvent<PickSpecificPersonComponent, ObjectiveAssignedEvent>(OnSpecificPersonAssigned);
         SubscribeLocalEvent<PickRandomPersonComponent, ObjectiveAssignedEvent>(OnRandomPersonAssigned);
         SubscribeLocalEvent<PickRandomHeadComponent, ObjectiveAssignedEvent>(OnRandomHeadAssigned);
+        SubscribeLocalEvent<PickRandomTraitorComponent, ObjectiveAssignedEvent>(OnTraitorAssigned); // DS14
 
         SubscribeLocalEvent<RandomTraitorProgressComponent, ObjectiveAssignedEvent>(OnRandomTraitorProgressAssigned);
         SubscribeLocalEvent<RandomTraitorAliveComponent, ObjectiveAssignedEvent>(OnRandomTraitorAliveAssigned);
@@ -84,6 +87,9 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
             }
         }
 
+        // filter jobs that we don't want to be kill objectives
+        allHumans.RemoveWhere(x => !_job.MindTryGetJobId(x, out var jobId) || ent.Comp.IgnoredJobs.Contains(jobId)); // DS14
+
         // no other humans to kill
         if (allHumans.Count == 0)
         {
@@ -127,6 +133,52 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
 
         _target.SetTarget(ent.Owner, _random.Pick(allHeads), target);
     }
+
+    // DS14-kill-agent-objective-start
+    private void OnTraitorAssigned(Entity<PickRandomTraitorComponent> ent, ref ObjectiveAssignedEvent args)
+    {
+        // invalid prototype
+        if (!TryComp<TargetObjectiveComponent>(ent.Owner, out var target))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind)
+            .Select(pair => pair.Item1)
+            .ToHashSet();
+
+        var removeList = new List<EntityUid>();
+
+        // cant kill anyone who is tasked with helping
+        foreach (var traitor in traitors)
+        {
+            // TODO: replace this with TryComp<ObjectivesComponent>(traitor) or something when objectives are moved out of mind
+            if (!TryComp<MindComponent>(traitor, out var mind))
+                continue;
+
+            foreach (var objective in mind.Objectives)
+            {
+                if (HasComp<HelpProgressConditionComponent>(objective)) // TODO: Almost all agents have this objective, so KillRandomTraitor is very rare
+                    removeList.Add(traitor);
+            }
+        }
+
+        foreach (var tot in removeList)
+        {
+            traitors.Remove(tot);
+        }
+
+        // no more killable traitors
+        if (traitors.Count == 0)
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        _target.SetTarget(ent.Owner, _random.Pick(traitors), target);
+    }
+    // DS14-kill-agent-objective-end
 
     private void OnRandomTraitorProgressAssigned(Entity<RandomTraitorProgressComponent> ent, ref ObjectiveAssignedEvent args)
     {
