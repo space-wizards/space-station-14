@@ -181,6 +181,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!TryGetStorageLocation(ent.Owner, out _, out _, out _))
             return;
 
+        args.Popup = Loc.GetString("item-toggle-size-fail");
         args.Cancelled = true;
     }
 
@@ -189,6 +190,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!TryGetStorageLocation(ent.Owner, out _, out _, out _))
             return;
 
+        args.Popup = Loc.GetString("item-toggle-size-fail");
         args.Cancelled = true;
     }
 

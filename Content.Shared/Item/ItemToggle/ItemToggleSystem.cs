@@ -139,7 +139,9 @@ public sealed class ItemToggleSystem : EntitySystem
         var attempt = new ItemToggleActivateAttemptEvent(user);
         RaiseLocalEvent(uid, ref attempt);
 
-        if (!comp.Predictable) predicted = false;
+        if (!comp.Predictable)
+            predicted = false;
+
         if (attempt.Cancelled)
         {
             if (predicted)
@@ -159,7 +161,6 @@ public sealed class ItemToggleSystem : EntitySystem
         }
 
         Activate((uid, comp), predicted, user);
-
         return true;
     }
 
@@ -176,16 +177,25 @@ public sealed class ItemToggleSystem : EntitySystem
         if (!comp.Activated)
             return true;
 
-        if (!comp.Predictable && _netManager.IsClient)
-            return true;
+        if (!comp.Predictable)
+            predicted = false;
 
         var attempt = new ItemToggleDeactivateAttemptEvent(user);
         RaiseLocalEvent(uid, ref attempt);
 
         if (attempt.Cancelled)
-            return false;
+        {
+            if (attempt.Popup != null && user != null)
+            {
+                if (predicted)
+                    _popup.PopupClient(attempt.Popup, uid, user.Value);
+                else
+                    _popup.PopupEntity(attempt.Popup, uid, user.Value);
+            }
 
-        if (!comp.Predictable) predicted = false;
+            return false;
+        }
+
         Deactivate((uid, comp), predicted, user);
         return true;
     }
