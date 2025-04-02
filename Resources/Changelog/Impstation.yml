@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Banana has been updated!
-    type: Tweak
-  id: 963
-  time: '2025-01-18T10:25:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1414
 - author: hivehum
   changes:
   - message: The nuke song "Clearly Nuclear" has been replaced with its remastered
@@ -4076,3 +4069,10 @@
   id: 1462
   time: '2025-04-02T18:32:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1991
+- author: hivehum
+  changes:
+  - message: Kodepiiae should no longer be constantly fucking starving.
+    type: Tweak
+  id: 1463
+  time: '2025-04-02T20:52:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2189
