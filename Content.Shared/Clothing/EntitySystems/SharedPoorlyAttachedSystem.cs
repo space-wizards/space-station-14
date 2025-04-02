@@ -31,12 +31,12 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
 
     private void OnGotEquipped(Entity<PoorlyAttachedComponent> ent, ref ClothingGotEquippedEvent args)
     {
-        ResetAttachment(ent);
+        ResetAttachmentStrength(ent);
     }
 
     private void OnWearerSlipped(Entity<PoorlyAttachedComponent> ent, ref InventoryRelayedEvent<FellDownEvent> args)
     {
-        LoseAttachmentStrength(ent.AsNullable(), ent.Comp.LossPerFall);
+        ChangeAttachmentStrength(ent.AsNullable(), ent.Comp.LossPerFall);
     }
 
     private void AddReattachVerb(Entity<PoorlyAttachedComponent> entity, ref GetVerbsEvent<Verb> args)
@@ -116,7 +116,7 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
             Popup.PopupEntity(othersMessage, wearer, othersFilter, true);
         }
 
-        ResetAttachment((entity, poorlyAttachedComp));
+        ResetAttachmentStrength((entity, poorlyAttachedComp));
     }
 
     public float GetAttachmentStrength(Entity<PoorlyAttachedComponent?> entity)
@@ -131,7 +131,7 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
         return MathF.Max(0, 1f - entity.Comp.EventStrengthTotal - entity.Comp.LossPerSecond * (float)timeSinceAttached.TotalSeconds);
     }
 
-    public void LoseAttachmentStrength(Entity<PoorlyAttachedComponent?> entity, float amount, bool canDetach = true)
+    public void ChangeAttachmentStrength(Entity<PoorlyAttachedComponent?> entity, float amount, bool canDetach = true)
     {
         if (!Resolve(entity, ref entity.Comp, logMissing: false))
             return;
@@ -144,7 +144,7 @@ public abstract partial class SharedPoorlyAttachedSystem : EntitySystem
         }
     }
 
-    private void ResetAttachment(Entity<PoorlyAttachedComponent> entity)
+    private void ResetAttachmentStrength(Entity<PoorlyAttachedComponent> entity)
     {
         entity.Comp.AttachmentTime = _timing.CurTime;
         entity.Comp.EventStrengthTotal = 0;
