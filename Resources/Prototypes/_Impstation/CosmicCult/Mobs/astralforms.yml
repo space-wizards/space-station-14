@@ -84,7 +84,7 @@
   - type: ContentEye
     maxZoom: 1.2, 1.2
   - type: Visibility
-    layer: 2 #ghost vis layer
+    layer: 1 #ghost vis layer
   - type: Speech
     enabled: false
   - type: PointLight
