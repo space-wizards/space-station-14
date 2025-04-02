@@ -1,28 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Mail support has been added to Amber, Bagel, and Train.
-    type: Add
-  - message: Fixed problematic atmos setup in the kitchen car on Train.
-    type: Fix
-  id: 954
-  time: '2025-01-17T18:01:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1404
-- author: TheGrimbeeper
-  changes:
-  - message: fixed bug where people could see chemical composition or weapon damage
-      from behind windows.
-    type: Fix
-  id: 955
-  time: '2025-01-17T18:00:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1405
-- author: formlessnameless
-  changes:
-  - message: Traitors no longer have to kill and save the same people sometimes.
-    type: Fix
-  id: 956
-  time: '2025-01-17T22:24:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1409
 - author: formlessnameless
   changes:
   - message: Antagonist selection now happens before job selection.
@@ -4071,3 +4047,28 @@
   id: 1453
   time: '2025-04-01T12:24:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2149
+- author: wendyribstonpippin
+  changes:
+  - message: Lobby art commemorating that one time we put Sapphos in a cute maid dress
+    type: Add
+  - message: i have hired cindy to stare at you
+    type: Add
+  id: 1454
+  time: '2025-04-02T03:12:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2170
+- author: bigsantino1
+  changes:
+  - message: Muzzles now mute sounds from emotes like screams or gasping for air.
+    type: Tweak
+  id: 1455
+  time: '2025-04-02T03:13:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2168
+- author: bigsantino1
+  changes:
+  - message: Wand polymorphs now have a 3 minute timer.
+    type: Tweak
+  - message: The bread polymorph has a sound effect like the others now.
+    type: Tweak
+  id: 1456
+  time: '2025-04-02T03:12:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2169
