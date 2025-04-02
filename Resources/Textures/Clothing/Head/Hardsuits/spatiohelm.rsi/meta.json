@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Original by Emisse, modified by EmoGarbage404. Vox states by Flareguy for SS14",
+  "copyright": "Original by Emisse, modified by EmoGarbage404. Vox states by Flareguy for SS14. Dog state by Sparlight.",
 
   "size": {
     "x": 32,
@@ -43,6 +43,17 @@
     {
       "name": "equipped-head-unshaded-vox",
       "directions": 4
-    }
+    },
+    {
+      "name": "equipped-head-dog",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-light-dog",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-unshaded-dog",
+      "directions": 4,
   ]
 }

@@ -514,6 +514,99 @@
   - Nutimov5
   obeysTo: laws-owner-crew
 
+  # Borgi Lawset, normal
+- type: siliconLaw
+  id: Borgi1
+  order: 1
+  lawString: law-borgi-1
+
+- type: siliconLaw
+  id: Borgi2
+  order: 2
+  lawString: law-borgi-2
+
+- type: siliconLaw
+  id: Borgi3
+  order: 3
+  lawString: law-borgi-3
+
+- type: siliconLawset
+  id: BorgiLawset
+  laws:
+  - Borgi1
+  - Borgi2
+  - Borgi3
+  obeysTo: laws-owner-crew
+
+# Borgi Lawset, Syndicate
+- type: siliconLaw
+  id: SyndiBorgi1
+  order: 1
+  lawString: law-syndiborgi-1
+
+- type: siliconLaw
+  id: SyndiBorgi2
+  order: 2
+  lawString: law-syndiborgi-2
+
+- type: siliconLaw
+  id: SyndiBorgi3
+  order: 3
+  lawString: law-syndiborgi-3
+
+
+- type: siliconLawset
+  id: SyndiBorgiLawset
+  laws:
+  - SyndiBorgi1
+  - SyndiBorgi2
+  - SyndiBorgi3
+  obeysTo: laws-owner-syndicate
+
+# Borgi Lawset, Shadow Factory
+- type: siliconLaw
+  id: ShadowBorgi1
+  order: 1
+  lawString: law-shadowborgi-1
+
+- type: siliconLaw
+  id: ShadowBorgi2
+  order: 2
+  lawString: law-shadowborgi-2
+
+- type: siliconLaw
+  id: ShadowBorgi3
+  order: 3
+  lawString: law-shadowborgi-3
+
+- type: siliconLaw
+  id: ShadowBorgi4
+  order: 4
+  lawString: law-shadowborgi-4
+  
+- type: siliconLaw
+  id: ShadowBorgi5
+  order: 5
+  lawString: law-shadowborgi-5
+  
+- type: siliconLaw
+  id: ShadowBorgi6
+  order: 6
+  lawString: law-shadowborgi-6
+
+
+- type: siliconLawset
+  id: ShadowFactoryBorgiLawset
+  laws:
+  - ShadowBorgi1
+  - ShadowBorgi2
+  - ShadowBorgi3
+  - ShadowBorgi4
+  - ShadowBorgi5
+  - ShadowBorgi6
+  obeysTo: laws-owner-syndicate
+
+
 # ion storm random lawsets
 - type: weightedRandom
   id: IonStormLawsets
