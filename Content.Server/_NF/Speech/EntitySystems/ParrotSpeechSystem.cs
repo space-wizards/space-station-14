@@ -7,7 +7,8 @@ using Content.Shared.Whitelist;
 using Content.Shared.Chat.TypingIndicator; //imp
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using Robust.Server.GameObjects; //imp
+using Robust.Server.GameObjects;
+using Content.Shared.Mobs.Systems; //imp
 
 namespace Content.Server._NF.Speech.EntitySystems;
 
@@ -18,6 +19,7 @@ public sealed class ParrotSpeechSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
@@ -37,6 +39,9 @@ public sealed class ParrotSpeechSystem : EntitySystem
                 continue;
 
             if (component.RequiresMind && !TryComp<MindContainerComponent>(uid, out var mind) | mind != null && !mind!.HasMind) // imp
+                continue;
+
+            if (_mobState.IsIncapacitated(uid))
                 continue;
 
             if (component.NextUtterance != null) // imp - changed this whole deal
