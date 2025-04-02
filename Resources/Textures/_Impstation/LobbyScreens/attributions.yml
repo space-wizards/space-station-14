@@ -62,3 +62,13 @@
   license: "CC-BY-SA-4.0"
   copyright: "Six-Valentine"
   source: "https://github.com/impstation/imp-station-14/"
+
+- files: ["sec_makeover.webp"]
+  license: "CC-BY-SA-4.0"
+  copyright: "Wendy, Pixel Curatrix"
+  source: "https://github.com/impstation/imp-station-14/"
+
+- files: ["stares_blankly.webp"]
+  license: "CC-BY-SA-4.0"
+  copyright: "Wendy, Pixel Curatrix"
+  source: "https://github.com/impstation/imp-station-14/"
