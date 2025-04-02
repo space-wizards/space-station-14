@@ -1,6 +1,18 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/07/2025 19:46:39
+  entityCount: 30125
+maps:
+- 1
+grids:
+- 2
+- 21002
+orphans: []
+nullspace: []
 tilemap:
   14: Space
   45: FloorArcadeBlue2
@@ -71,7 +83,6 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
-    - type: LoadedMap
   - uid: 2
     components:
     - type: MetaData
@@ -12629,7 +12640,7 @@ entities:
       pos: 38.5,-9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -10670.9795
+      secondsUntilStateChange: -11985.299
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14550,7 +14561,7 @@ entities:
       pos: -22.5,26.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -32723.152
+      secondsUntilStateChange: -34037.47
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -15401,7 +15412,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -131551.77
+      secondsUntilStateChange: -132866.08
       state: Opening
   - uid: 6934
     components:
@@ -15413,7 +15424,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -131554.39
+      secondsUntilStateChange: -132868.7
       state: Opening
   - uid: 6935
     components:
@@ -15425,7 +15436,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -131553.25
+      secondsUntilStateChange: -132867.56
       state: Opening
   - uid: 6936
     components:
@@ -15436,7 +15447,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -131552.47
+      secondsUntilStateChange: -132866.78
       state: Opening
 - proto: AirlockTheatreLocked
   entities:
@@ -71291,6 +71302,13 @@ entities:
     - type: Transform
       pos: -48.60224,7.6590858
       parent: 2
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 23418
+    components:
+    - type: Transform
+      pos: -52.5,1.5
+      parent: 2
 - proto: CarpetBlack
   entities:
   - uid: 786
@@ -77007,18 +77025,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -54.5,7.5
       parent: 2
-  - uid: 11826
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -45.5,3.5
-      parent: 2
-  - uid: 11827
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -45.5,2.5
-      parent: 2
   - uid: 11829
     components:
     - type: Transform
@@ -77028,18 +77034,6 @@ entities:
     components:
     - type: Transform
       pos: -43.5,1.5
-      parent: 2
-  - uid: 13133
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 62.5,0.5
-      parent: 2
-  - uid: 13134
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 62.5,-0.5
       parent: 2
   - uid: 15043
     components:
@@ -77058,18 +77052,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 59.5,-1.5
-      parent: 2
-  - uid: 15617
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 53.5,-2.5
-      parent: 2
-  - uid: 18032
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 62.5,-1.5
       parent: 2
   - uid: 18087
     components:
@@ -77144,12 +77126,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 53.5,2.5
-      parent: 2
-  - uid: 23418
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 53.5,-1.5
       parent: 2
   - uid: 26296
     components:
@@ -78202,6 +78178,16 @@ entities:
       parent: 2
 - proto: ClosetEmergencyFilledRandom
   entities:
+  - uid: 1367
+    components:
+    - type: Transform
+      pos: -46.5,3.5
+      parent: 2
+  - uid: 1371
+    components:
+    - type: Transform
+      pos: -1.5,33.5
+      parent: 2
   - uid: 3478
     components:
     - type: Transform
@@ -78246,6 +78232,26 @@ entities:
     components:
     - type: Transform
       pos: 10.5,-39.5
+      parent: 2
+  - uid: 11826
+    components:
+    - type: Transform
+      pos: 0.5,-62.5
+      parent: 2
+  - uid: 13134
+    components:
+    - type: Transform
+      pos: 59.5,5.5
+      parent: 2
+  - uid: 15617
+    components:
+    - type: Transform
+      pos: -5.5,-62.5
+      parent: 2
+  - uid: 18032
+    components:
+    - type: Transform
+      pos: 62.5,-0.5
       parent: 2
   - uid: 18917
     components:
@@ -78311,6 +78317,11 @@ entities:
     components:
     - type: Transform
       pos: 45.5,-45.5
+      parent: 2
+  - uid: 20868
+    components:
+    - type: Transform
+      pos: 53.5,-2.5
       parent: 2
   - uid: 23044
     components:
@@ -78379,6 +78390,11 @@ entities:
     - type: Transform
       pos: -11.5,-59.5
       parent: 2
+  - uid: 30121
+    components:
+    - type: Transform
+      pos: 62.5,-1.5
+      parent: 2
 - proto: ClosetFireFilled
   entities:
   - uid: 3477
@@ -78430,6 +78446,11 @@ entities:
     components:
     - type: Transform
       pos: 13.5,-33.5
+      parent: 2
+  - uid: 13133
+    components:
+    - type: Transform
+      pos: 62.5,0.5
       parent: 2
   - uid: 18965
     components:
@@ -78490,6 +78511,26 @@ entities:
     components:
     - type: Transform
       pos: 11.5,29.5
+      parent: 2
+  - uid: 30122
+    components:
+    - type: Transform
+      pos: -45.5,3.5
+      parent: 2
+  - uid: 30124
+    components:
+    - type: Transform
+      pos: 1.5,-62.5
+      parent: 2
+  - uid: 30125
+    components:
+    - type: Transform
+      pos: -6.5,-62.5
+      parent: 2
+  - uid: 30129
+    components:
+    - type: Transform
+      pos: -1.5,32.5
       parent: 2
 - proto: ClosetJanitorFilled
   entities:
@@ -96269,7 +96310,7 @@ entities:
       pos: -13.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -122875.75
+      secondsUntilStateChange: -124190.086
     - type: DeviceNetwork
       deviceLists:
       - 18275
@@ -142217,7 +142258,7 @@ entities:
       pos: 36.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -159707.58
+      secondsUntilStateChange: -161021.89
       state: Opening
   - uid: 5211
     components:
@@ -166417,11 +166458,6 @@ entities:
     - type: Transform
       pos: 33.5,-3.5
       parent: 2
-  - uid: 20868
-    components:
-    - type: Transform
-      pos: 62.5,-0.5
-      parent: 2
   - uid: 20869
     components:
     - type: Transform
@@ -167049,23 +167085,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -2.5,-39.5
       parent: 2
-  - uid: 1367
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -2.5,-33.5
-      parent: 2
   - uid: 1369
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -2.5,-38.5
-      parent: 2
-  - uid: 1371
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -2.5,-32.5
       parent: 2
   - uid: 3438
     components:
@@ -167141,6 +167165,18 @@ entities:
     components:
     - type: Transform
       pos: 44.5,-11.5
+      parent: 2
+  - uid: 9676
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -2.5,-32.5
+      parent: 2
+  - uid: 11827
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -2.5,-33.5
       parent: 2
 - proto: Stool
   entities:
@@ -193329,7 +193365,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -10673.8125
+      secondsUntilStateChange: -11988.132
       state: Opening
     - type: Airlock
       autoClose: False
@@ -194763,7 +194799,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -504912.22
+      secondsUntilStateChange: -506226.47
       state: Opening
   - uid: 28863
     components:
