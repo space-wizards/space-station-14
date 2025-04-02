@@ -218,6 +218,7 @@ namespace Content.Server.Pointing.EntitySystems
                 {
                     if (inventoryQuery.HasComp(container.Owner))
                     {
+                        // We want the innermost inventory, since that's the "owner" of the item
                         containingInventory = container.Owner;
                         break;
                     }
