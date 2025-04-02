@@ -635,7 +635,7 @@
 # Small Plastic Bottles
 
 - type: entity
-  parent: [DrinkBottleVisualsOpenable, DrinkBottleBaseFull]
+  parent: [DrinkBottleVisualsAll, DrinkBottleBaseFull]
   id: DrinkWaterBottleFull
   name: water bottle
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
@@ -648,15 +648,7 @@
           Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
-    layers:
-    - state: icon
-      map: ["enum.OpenableVisuals.Layer"]
-    - state: icon-1
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
   - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: icon-
     inHandsMaxFillLevels: 2
     inHandsFillBaseName: -fill-
   - type: TrashOnSolutionEmpty
