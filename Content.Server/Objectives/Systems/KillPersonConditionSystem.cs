@@ -1,14 +1,9 @@
-using Content.Server.GameTicking.Rules;
 using Content.Server.Objectives.Components;
-using Content.Server.Revolutionary.Components;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using Robust.Shared.Configuration;
-using Robust.Shared.Random;
-using System.Linq;
-using Content.Server.Roles.Jobs;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -19,23 +14,14 @@ public sealed class KillPersonConditionSystem : EntitySystem
 {
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
-    [Dependency] private readonly TraitorRuleSystem _traitorRule = default!; // DS14
-    [Dependency] private readonly JobSystem _job = default!; // DS14
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<KillPersonConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
-
-        SubscribeLocalEvent<PickRandomPersonComponent, ObjectiveAssignedEvent>(OnPersonAssigned);
-
-        SubscribeLocalEvent<PickRandomHeadComponent, ObjectiveAssignedEvent>(OnHeadAssigned);
-
-        SubscribeLocalEvent<PickRandomTraitorComponent, ObjectiveAssignedEvent>(OnTraitorAssigned); // DS14
     }
 
     private void OnGetProgress(EntityUid uid, KillPersonConditionComponent comp, ref ObjectiveGetProgressEvent args)
@@ -45,123 +31,6 @@ public sealed class KillPersonConditionSystem : EntitySystem
 
         args.Progress = GetProgress(target.Value, comp.RequireDead);
     }
-
-    private void OnPersonAssigned(EntityUid uid, PickRandomPersonComponent comp, ref ObjectiveAssignedEvent args)
-    {
-        // invalid objective prototype
-        if (!TryComp<TargetObjectiveComponent>(uid, out var target))
-        {
-            args.Cancelled = true;
-            return;
-        }
-
-        // target already assigned
-        if (target.Target != null)
-            return;
-
-        var allHumans = _mind.GetAliveHumans(args.MindId);
-
-        // Can't have multiple objectives to kill the same person
-        foreach (var objective in args.Mind.Objectives)
-        {
-            if (HasComp<KillPersonConditionComponent>(objective) && TryComp<TargetObjectiveComponent>(objective, out var kill))
-            {
-                allHumans.RemoveWhere(x => x.Owner == kill.Target);
-            }
-        }
-
-        // filter jobs that we don't want to be kill objectives
-        allHumans.RemoveWhere(x => !_job.MindTryGetJobId(x, out var jobId) || comp.IgnoredJobs.Contains(jobId)); // DS14
-
-        // no other humans to kill
-        if (allHumans.Count == 0)
-        {
-            args.Cancelled = true;
-            return;
-        }
-
-        _target.SetTarget(uid, _random.Pick(allHumans), target);
-    }
-
-    private void OnHeadAssigned(EntityUid uid, PickRandomHeadComponent comp, ref ObjectiveAssignedEvent args)
-    {
-        // invalid prototype
-        if (!TryComp<TargetObjectiveComponent>(uid, out var target))
-        {
-            args.Cancelled = true;
-            return;
-        }
-
-        // target already assigned
-        if (target.Target != null)
-            return;
-
-        // no other humans to kill
-        var allHumans = _mind.GetAliveHumans(args.MindId);
-        if (allHumans.Count == 0)
-        {
-            args.Cancelled = true;
-            return;
-        }
-
-        var allHeads = new HashSet<Entity<MindComponent>>();
-        foreach (var person in allHumans)
-        {
-            if (TryComp<MindComponent>(person, out var mind) && mind.OwnedEntity is { } ent && HasComp<CommandStaffComponent>(ent))
-                allHeads.Add(person);
-        }
-
-        if (allHeads.Count == 0)
-            allHeads = allHumans; // fallback to non-head target
-
-        _target.SetTarget(uid, _random.Pick(allHeads), target);
-    }
-
-    // DS14-kill-agent-objective-start
-    private void OnTraitorAssigned(EntityUid uid, PickRandomTraitorComponent comp, ref ObjectiveAssignedEvent args)
-    {
-        // invalid prototype
-        if (!TryComp<TargetObjectiveComponent>(uid, out var target))
-        {
-            args.Cancelled = true;
-            return;
-        }
-
-        var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind)
-            .Select(pair => pair.Item1)
-            .ToHashSet();
-
-        var removeList = new List<EntityUid>();
-
-        // cant kill anyone who is tasked with helping:
-        foreach (var traitor in traitors)
-        {
-            // TODO: replace this with TryComp<ObjectivesComponent>(traitor) or something when objectives are moved out of mind
-            if (!TryComp<MindComponent>(traitor, out var mind))
-                continue;
-
-            foreach (var objective in mind.Objectives)
-            {
-                if (HasComp<HelpProgressConditionComponent>(objective)) // TODO: Almost all agents have this objective, so KillRandomTraitor is very rare
-                    removeList.Add(traitor);
-            }
-        }
-
-        foreach (var tot in removeList)
-        {
-            traitors.Remove(tot);
-        }
-
-        // no more killable traitors
-        if (traitors.Count == 0)
-        {
-            args.Cancelled = true;
-            return;
-        }
-
-        _target.SetTarget(uid, _random.Pick(traitors), target);
-    }
-    // DS14-kill-agent-objective-end
 
     private float GetProgress(EntityUid target, bool requireDead)
     {

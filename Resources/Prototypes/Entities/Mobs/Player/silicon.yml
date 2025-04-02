@@ -105,6 +105,7 @@
     interfaces:
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
+  - type: ShowJobIcons
 
 # Ai
 - type: entity
@@ -438,6 +439,7 @@
   - type: Access
     groups:
     - AllAccess
+    - Silicon
   - type: Eye
     drawFov: false
   - type: Examiner
@@ -619,7 +621,7 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
   - type: RandomMetadata
-    nameSegments: [names_borg]
+    nameSegments: [NamesBorg]
 
 - type: entity
   id: PlayerBorgDerelictGhostRole

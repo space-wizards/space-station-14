@@ -6,7 +6,7 @@
   - type: StorageFill
     contents:
       - id: BoxSyringe
-      - id: EpinephrineChemistryBottle
+      - id: ChemistryBottleEpinephrine
         amount: 2
       - id: Brutepack
         amount: 2
@@ -25,7 +25,7 @@
   - type: StorageFill
     contents:
       - id: BoxSyringe
-      - id: EpinephrineChemistryBottle
+      - id: ChemistryBottleEpinephrine
         amount: 2
       - id: Brutepack
         amount: 2
@@ -137,7 +137,7 @@
       - id: ClothingUniformJumpsuitParamedic
       - id: ClothingUniformJumpskirtParamedic
       - id: ClothingEyesHudMedical
-      - id: Defibrillator
+      - id: Defibrillator # DS14
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetMedical
       - id: ClothingMaskSterile
@@ -145,6 +145,8 @@
       - id: MedkitFilled
         prob: 0.3
       - id: MedkitAdvancedFilled
+
+# DS14-start
 
 - type: entity
   id: LockerCoronerFilled

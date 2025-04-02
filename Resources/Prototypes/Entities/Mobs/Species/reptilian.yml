@@ -13,6 +13,7 @@
     - HeadSide
     - Tail # DS14
     - Hair # DS14, just in case
+    undergarmentBottom: UndergarmentBottomBoxersReptilian
   - type: Hunger
   - type: Puller
     needsHands: false
@@ -66,10 +67,9 @@
         Heat : 1.5 #per second, scales with temperature & other constants
   - type: TemperatureSpeed
     thresholds:
-      301: 0.9
-      295: 0.7
-      285: 0.5
-  - type: Sanity # DS14
+      301: 0.8
+      295: 0.6
+      285: 0.4
   - type: Wagging
   - type: Inventory
     speciesId: reptilian
@@ -79,6 +79,7 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: Sanity # DS14
 
 
 - type: entity
@@ -95,6 +96,7 @@
     - HeadSide
     - Tail # DS14
     - Hair # DS14, just in case
+    undergarmentBottom: UndergarmentBottomBoxersReptilian
   - type: Inventory
     speciesId: reptilian
     femaleDisplacements:

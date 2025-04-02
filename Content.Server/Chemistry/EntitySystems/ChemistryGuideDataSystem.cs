@@ -64,4 +64,9 @@ public sealed class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
         var ev = new ReagentGuideRegistryChangedEvent(changeset);
         RaiseNetworkEvent(ev);
     }
+
+    public override void ReloadAllReagentPrototypes()
+    {
+        InitializeServerRegistry();
+    }
 }

@@ -227,6 +227,11 @@ namespace Content.Server.Connection
 
             var modernHwid = e.UserData.ModernHWIds;
 
+            if (modernHwid.Length == 0 && e.AuthType == LoginType.LoggedIn && _cfg.GetCVar(CCVars.RequireModernHardwareId))
+            {
+                return (ConnectionDenyReason.NoHwid, Loc.GetString("hwid-required"), null);
+            }
+
             var bans = await _db.GetServerBansAsync(addr, userId, hwId, modernHwid, includeUnbanned: false);
             if (bans.Count > 0)
             {

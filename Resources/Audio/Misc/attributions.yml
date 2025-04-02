@@ -8,6 +8,11 @@
   copyright: "Created by Chillyconmor"
   source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Misc/ninja_greeting.ogg"
 
+- files: ["nparadox_clone_greeting.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by ps3moira"
+  source: "https://github.com/space-wizards/space-station-14/blob/master/Resources/Audio/Misc/ninja_greeting.ogg"
+
 - files: ["thief_greeting.ogg"]
   license: "CC-BY-NC-4.0"
   copyright: "Taken from SergeQuadrado via freesound.org, edit and mono by TheShuEd"

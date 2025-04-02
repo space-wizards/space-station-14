@@ -1,4 +1,6 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Chemistry.TileReactions;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
 using Content.Server.Spreader;
@@ -387,23 +389,36 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     private void UpdateSlip(EntityUid entityUid, PuddleComponent component, Solution solution)
     {
         var isSlippery = false;
+        var isSuperSlippery = false;
         // The base sprite is currently at 0.3 so we require at least 2nd tier to be slippery or else it's too hard to see.
         var amountRequired = FixedPoint2.New(component.OverflowVolume.Float() * LowThreshold);
         var slipperyAmount = FixedPoint2.Zero;
+
+        // Utilize the defaults from their relevant systems... this sucks, and is a bandaid
+        var launchForwardsMultiplier = SlipperyComponent.DefaultLaunchForwardsMultiplier;
+        var paralyzeTime = SlipperyComponent.DefaultParalyzeTime;
+        var requiredSlipSpeed = StepTriggerComponent.DefaultRequiredTriggeredSpeed;
 
         foreach (var (reagent, quantity) in solution.Contents)
         {
             var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
 
-            if (reagentProto.Slippery)
-            {
-                slipperyAmount += quantity;
+            if (!reagentProto.Slippery)
+                continue;
+            slipperyAmount += quantity;
 
-                if (slipperyAmount > amountRequired)
-                {
-                    isSlippery = true;
-                    break;
-                }
+            if (slipperyAmount <= amountRequired)
+                continue;
+            isSlippery = true;
+
+            foreach (var tileReaction in reagentProto.TileReactions)
+            {
+                if (tileReaction is not SpillTileReaction spillTileReaction)
+                    continue;
+                isSuperSlippery = spillTileReaction.SuperSlippery;
+                launchForwardsMultiplier = launchForwardsMultiplier < spillTileReaction.LaunchForwardsMultiplier ? spillTileReaction.LaunchForwardsMultiplier : launchForwardsMultiplier;
+                requiredSlipSpeed = requiredSlipSpeed > spillTileReaction.RequiredSlipSpeed ? spillTileReaction.RequiredSlipSpeed : requiredSlipSpeed;
+                paralyzeTime = paralyzeTime < spillTileReaction.ParalyzeTime ? spillTileReaction.ParalyzeTime : paralyzeTime;
             }
         }
 
@@ -413,6 +428,14 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             _stepTrigger.SetActive(entityUid, true, comp);
             var friction = EnsureComp<TileFrictionModifierComponent>(entityUid);
             _tile.SetModifier(entityUid, TileFrictionController.DefaultFriction * 0.5f, friction);
+
+            if (!TryComp<SlipperyComponent>(entityUid, out var slipperyComponent))
+                return;
+            slipperyComponent.SuperSlippery = isSuperSlippery;
+            _stepTrigger.SetRequiredTriggerSpeed(entityUid, requiredSlipSpeed);
+            slipperyComponent.LaunchForwardsMultiplier = launchForwardsMultiplier;
+            slipperyComponent.ParalyzeTime = paralyzeTime;
+
         }
         else if (TryComp<StepTriggerComponent>(entityUid, out var comp))
         {

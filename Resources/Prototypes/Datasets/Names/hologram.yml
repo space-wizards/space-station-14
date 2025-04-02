@@ -1,17 +1,5 @@
-﻿- type: dataset
-  id: names_hologram
+﻿- type: localizedDataset
+  id: NamesHologram
   values:
-  - Аполлон
-  - Дата
-  - ГЛИММЕР
-  - Эль Рой
-  - Гефест
-  - Голо-ИИ
-  - Голо-Друг
-  - Голограмма
-  - Одиссей
-  - Персефона
-  - Петра
-  - Процессор
-  - Прометей
-  - Тесей
+    prefix: names-hologram-dataset-
+    count: 14

@@ -367,7 +367,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 if (sender == Loc.GetString("chat-manager-sender-announcement")) announcementSound = new SoundPathSpecifier(CentComAnnouncementSound); // Corvax-Announcements: Support custom alert sound from admin panel
             }
 
-            _audio.PlayGlobal(announcementSound == null ? DefaultAnnouncementSound : _audio.GetSound(announcementSound), Filter.Broadcast(), true, announcementSound?.Params ?? AudioParams.Default.WithVolume(-2f));
+            _audio.PlayGlobal(announcementSound == null ? DefaultAnnouncementSound : _audio.ResolveSound(announcementSound), Filter.Broadcast(), true, announcementSound?.Params ?? AudioParams.Default.WithVolume(-2f));
 
             if (author != null && TryComp<TTSComponent>(author.Value, out var tts) && tts.VoicePrototypeId != null) // For comms console announcements
             {

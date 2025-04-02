@@ -19,8 +19,8 @@
     roleLoadout: [ RoleSurvivalSyndicate ]
   - type: RandomMetadata
     nameSegments:
-    - names_first_male
-    - names_last_male
+    - NamesFirstMale
+    - NamesLast
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -71,7 +71,7 @@
   - type: RandomMetadata
     nameSegments:
     - nukeops-role-operator
-    - SyndicateNamesNormal
+    - NamesSyndicateNormal
   - type: Loadout
     prototypes: [SyndicateOperativeGearFullNoUplink]
 
@@ -99,8 +99,20 @@
     roleLoadout: [ RoleSurvivalSyndicate ]
   - type: RandomMetadata
     nameSegments:
-    - SyndicateNamesPrefix
-    - SyndicateNamesNormal
+    - NamesSyndicatePrefix
+    - NamesSyndicateNormal
   - type: NpcFactionMember
     factions:
     - Syndicate
+
+# Wizard
+- type: entity
+  categories: [ HideSpawnMenu ]
+  name: Wizard
+  parent: MobHuman
+  id: MobHumanWizard
+  components:
+  - type: RandomHumanoidAppearance
+  - type: NpcFactionMember
+    factions:
+    - Wizard

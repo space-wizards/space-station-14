@@ -112,6 +112,17 @@
         Base: dead
       Dead:
         Base: dead
+  - type: Extractable
+    grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: GroundBee
+          Quantity: 1
+  - type: Butcherable
+    spawned:
+    - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
   - type: Item
     size: Tiny
   - type: Tag
@@ -119,6 +130,7 @@
     - Bee
     - Trash
   - type: Bloodstream
+    bloodReagent: InsectBlood
     bloodMaxVolume: 0.1
   - type: MobPrice
     price: 50
@@ -234,7 +246,7 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-  - type: ExamineableHunger
+  - type: ExaminableHunger
   - type: ReplacementAccent
     accent: chicken
   - type: SentienceTarget
@@ -456,7 +468,7 @@
     description: ghost-role-information-mothroach-description
     rules: ghost-role-information-freeagent-rules
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleGhostRoleFreeAgentHarmless
   - type: Fixtures
     fixtures:
       fix1:
@@ -675,7 +687,7 @@
   - type: EggLayer
     eggSpawn:
     - id: FoodEgg
-  - type: ExamineableHunger
+  - type: ExaminableHunger
   - type: ReplacementAccent
     accent: duck
   - type: SentienceTarget
@@ -782,7 +794,24 @@
         Base: dead
       Dead:
         Base: dead
+  - type: Extractable
+    grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 1
+  - type: Butcherable
+    spawned:
+    - id: null # Should give nothing when you butcher it so we set the item id it needs to spawn to null
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - Trash
   - type: Bloodstream
+    bloodReagent: InsectBlood
     bloodMaxVolume: 0.1
   - type: MobPrice
     price: 50
@@ -841,7 +870,7 @@
     reagentId: Milk
     quantityPerUpdate: 25
     growthDelay: 30
-  - type: ExamineableHunger
+  - type: ExaminableHunger
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -1003,7 +1032,7 @@
     reagentId: MilkGoat
     quantityPerUpdate: 25
     growthDelay: 20
-  - type: ExamineableHunger
+  - type: ExaminableHunger
   - type: Wooly
   - type: Food
     solution: wool
@@ -1297,8 +1326,8 @@
       state: body-overlay-2
       visible: false
     - map: [ "ears" ]
-    - map: [ "outerClothing" ]
     - map: [ "id" ]
+    - map: [ "outerClothing" ]
     - map: [ "mask" ]
     - map: [ "head" ]
     - map: [ "clownedon" ]
@@ -1639,7 +1668,7 @@
     description: ghost-role-information-mouse-description
     rules: ghost-role-information-freeagent-rules
     mindRoles:
-    - MindRoleGhostRoleFreeAgent
+    - MindRoleGhostRoleFreeAgentHarmless
   - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
@@ -2768,6 +2797,7 @@
   - type: Speech
     speechSounds: Dog
     speechVerb: Canine
+    speechSounds: Dog
   - type: Fixtures
     fixtures:
       fix1:

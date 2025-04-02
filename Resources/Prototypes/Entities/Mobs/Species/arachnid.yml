@@ -83,24 +83,24 @@
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
       - map: [ "underwearb" ] # Sirena
       - map: [ "underweart" ] # Sirena
-      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-      - map: [ "socks" ] # Sirena
+      - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
+      - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
       - map: ["jumpsuit"]
-      # - map: ["enum.HumanoidVisualLayers.LFoot"]
-      # - map: ["enum.HumanoidVisualLayers.RFoot"]
+      - map: ["enum.HumanoidVisualLayers.LFoot"]
+      - map: ["enum.HumanoidVisualLayers.RFoot"]
+      - map: [ "socks" ] # Sirena
       - map: ["enum.HumanoidVisualLayers.LHand"]
       - map: ["enum.HumanoidVisualLayers.RHand"]
       - map: [ "gloves" ]
       - map: [ "shoes" ]
       - map: [ "ears" ]
-      - map: [ "outerClothing" ]
       - map: [ "eyes" ]
       - map: [ "belt" ]
       - map: [ "id" ]
+      - map: [ "outerClothing" ]
       - map: [ "enum.HumanoidVisualLayers.Tail" ] # Mentioned in moth code: This needs renaming lol.
-      - map: [ "neck" ]
       - map: [ "back" ]
+      - map: [ "neck" ]
       - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
       - map: [ "enum.HumanoidVisualLayers.Hair" ] # Do these need to be here? (arachnid hair arachnid hair)
       - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
@@ -120,6 +120,8 @@
         visible: false
   - type: Inventory
     templateId: arachnid
+    speciesId: arachnid
+
   - type: Sanity # DS14
   - type: FootPrints # Backmen-footsteps
     leftBarePrint: "footprint-left-bare-spider"
@@ -132,6 +134,8 @@
   components:
   - type: HumanoidAppearance
     species: Arachnid
+  - type: Inventory
+    speciesId: arachnid 
 
 
 #>88w88<

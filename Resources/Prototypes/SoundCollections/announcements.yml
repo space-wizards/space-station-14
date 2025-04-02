@@ -8,3 +8,8 @@
   - /Audio/_DeadSpace/TauCeti/admin_hos_gone.ogg
   - /Audio/_DeadSpace/TauCeti/aimalf.ogg
   - /Audio/_DeadSpace/TauCeti/animes.ogg
+
+- type: soundCollection
+  id: PowerOn
+  files:
+  - /Audio/_DeadSpace/Announcements/poweron1.ogg

@@ -988,6 +988,8 @@ namespace Content.Server.Database
         BabyJail = 4,
         /// Results from rejected connections with external API checking tools
         IPChecks = 5,
+        /// Results from rejected connections who are authenticated but have no modern hwid associated with them.
+        NoHwid = 6
     }
 
     public class ServerBanHit

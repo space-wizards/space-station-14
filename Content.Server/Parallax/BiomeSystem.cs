@@ -1044,6 +1044,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
         EnsureComp<LightCycleComponent>(mapUid);
 
+        EnsureComp<SunShadowComponent>(mapUid);
+        EnsureComp<SunShadowCycleComponent>(mapUid);
+
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int) Gas.Oxygen] = 21.824779f;
         moles[(int) Gas.Nitrogen] = 82.10312f;

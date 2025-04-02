@@ -177,6 +177,7 @@
   voteType: calm # DS14
   rules:
   - WageScheduler # backmen: currency
+  - DummyNonAntagChance
   - Traitor
   - SubGamemodesRule
   - BasicStationEventScheduler
@@ -208,6 +209,7 @@
   voteType: rdm # DS14
   rules:
   - WageScheduler # backmen: currency
+  - DummyNonAntagChance
   - Nukeops
   # - SubGamemodesRule # DS14
   - BasicStationEventScheduler
@@ -226,8 +228,25 @@
   voteType: rdm # DS14
   rules:
   - WageScheduler # backmen: currency
+  - DummyNonAntagChance
   - Revolutionary
   # - SubGamemodesRule # DS14
+  - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
+  id: Wizard
+  alias:
+  - wizard
+  name: wizard-title
+  description: wizard-description
+  showInVote: false
+  rules:
+  - Wizard
+  - DummyNonAntagChance
+  - SubGamemodesRuleNoWizard #No Dual Wizards at the start, midround is fine
   - BasicStationEventScheduler
   - MeteorSwarmScheduler
   - SpaceTrafficControlEventScheduler
