@@ -4,8 +4,8 @@ meta:
   engineVersion: 250.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/01/2025 20:20:48
-  entityCount: 28713
+  time: 04/03/2025 06:30:39
+  entityCount: 28715
 maps:
 - 951
 grids:
@@ -68004,6 +68004,18 @@ entities:
     components:
     - type: Transform
       pos: -40.532333,-25.270031
+      parent: 5350
+- proto: ClothingHeadHatWizardFake
+  entities:
+  - uid: 804
+    components:
+    - type: Transform
+      pos: -50.66044,-38.362316
+      parent: 5350
+  - uid: 6128
+    components:
+    - type: Transform
+      pos: -50.344055,-38.625935
       parent: 5350
 - proto: ClothingHeadHelmetBasic
   entities:
