@@ -31,6 +31,8 @@ public sealed class AccessReaderSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedStationRecordsSystem _recordsSystem = default!;
 
+    private static readonly ProtoId<TagPrototype> PreventAccessLoggingTag = "PreventAccessLogging";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -120,7 +122,7 @@ public sealed class AccessReaderSystem : EntitySystem
         if (!IsAllowed(access, stationKeys, target, reader))
             return false;
 
-        if (!_tag.HasTag(user, "PreventAccessLogging"))
+        if (!_tag.HasTag(user, PreventAccessLoggingTag))
             LogAccess((target, reader), user);
 
         return true;
