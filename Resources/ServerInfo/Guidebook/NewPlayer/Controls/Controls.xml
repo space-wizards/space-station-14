@@ -24,15 +24,12 @@ General interactions are done by clicking [color=yellow][bold][keybind="Use"][/b
 These are context-sensitive and [bold]affected by the item in your active hand[/bold].
 Using [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] performs [bold]alternate interactions[/bold].
 
-Some items, such as bottles, require priming before use.
-To activate an item in your hand, click [color=yellow][bold][keybind="Use"][/bold][/color] on it, or just press [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] if it's in the active hand.
-Do it a second time to use the item.
+To activate or use an item in your hand, click [color=yellow][bold][keybind="Use"][/bold][/color] on it, or just press [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] if it's in the active hand.
 The alternate counterpart is [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color].
 
 To perform [color=cyan]basic interactions[/color], press [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
-These interactions are independent from held items.
-It's used for actions such as opening and closing containers, and activating items under your cursor, without picking them up.
-[color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] will perform alternate interactions, such as toggling power to machines.
+This type of interaction is independent from held items.
+It's used for toggling things, and opening and closing containers without picking them up.
 
 Hovering over an entity and pressing [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] brings up the [color=cyan]context menu[/color].
 This not only allows you to sort through large piles of items, but also to perform [bold]additional interactions.[/bold]
