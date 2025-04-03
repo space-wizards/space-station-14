@@ -87,6 +87,22 @@
         damage:
           types:
             Poison: -3
+      - !type:GenericStatusEffect
+        conditions:
+        - !type:ReagentThreshold
+          min: 30
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 40
+        damage:
+          groups:
+            Airloss: 4 # ideally this causes heart palpitations cutting bloodflow to the brain
 
 - type: reagent
   id: Ethylredoxrazine
