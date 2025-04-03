@@ -6,12 +6,12 @@
 
 ## Movement
 You can move around the game world by using [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][keybind="MoveDown"][keybind="MoveRight"][/bold][/color].
-When holding down [color=yellow][bold][keybind="Walk"][/bold][/color], you'll walk, stopping you from slipping on the ground.
+When holding down [color=yellow][bold][keybind="Walk"][/bold][/color], you'll walk, stopping you from slipping on most substances.
 
 You can switch walking to a [color=cyan]toggle[/color] in the controls menu.
 
-[color=cyan]Pulling[/color] objects is done with [color=yellow][bold][keybind="TryPullObject"][/bold][/color].
-While pulling, you can drag an object to your mouse cursor using [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
+[color=cyan]Pulling[/color] objects is done by pressing [color=yellow][bold][keybind="TryPullObject"][/bold][/color].
+While pulling, you can drag an object to your mouse cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
 Pressing [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] releases the item you are currently dragging.
 
 You may find yourself in a situation with [color=#EB2D3A][bold]low gravity.[/bold][/color]
@@ -20,22 +20,23 @@ When off-station, you will be unable to control your direction.
 [bold]Throwing objects[/bold] or [bold]spraying a fire-extinguisher[/bold] can help propel yourself while in this state.
 
 ## Interactions
-General interactions are done by clicking [color=yellow][bold][keybind="Use"][/bold][/color].
-These are context-sensitive and [bold]affected by the item in your active hand[/bold].
-Using [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] performs [bold]alternative interactions[/bold].
+General interactions are performed by clicking [color=yellow][bold][keybind="Use"][/bold][/color].
+These are context-sensitive and [bold]depend on the item in your active hand[/bold].
+To perform [bold]alternative interactions[/bold], use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
 
-To activate or use an item in your hand, click [color=yellow][bold][keybind="Use"][/bold][/color] on it, or just press [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] if it's in the active hand.
-The alternative counterpart is [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color].
+To activate or use an item in your hand, click [color=yellow][bold][keybind="Use"][/bold][/color] on it, or press [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] if it's in the active hand.
+Its alternative counterpart is [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color].
 
-To perform [color=cyan]basic interactions[/color], press [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
-This type of interaction is independent from held items.
-It's used for toggling things, and opening and closing containers without picking them up.
+For [color=cyan]basic interactions[/color], press [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
+This action is independent of held items.
+It's used for interacting with the world without picking items up.
 
-Hovering over an entity and pressing [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] brings up the [color=cyan]context menu[/color].
-This not only allows you to sort through large piles of items, but also to perform [bold]additional interactions.[/bold]
+Clicking [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on any entity opens the [color=cyan]context menu[/color].
+This not only lets sort through large piles of items, but also allows you to perform [bold]additional interactions.[/bold]
 
-[color=cyan]Examining[/color] things is done with [color=yellow][bold][keybind="ExamineEntity"][/bold][/color], which brings up a window with the object's name, a small description, and any other relevant details.
-[italic]Examining things around you can help you learn what they do and what properties they have[/italic].
+To [color=cyan]examine[/color] any entity, press [color=yellow][bold][keybind="ExamineEntity"][/bold][/color]. 
+This brings up a window displaying the object's name, a brief description, and any other relevant details.
+[italic]Examining objects around you can help you understand their functions and properties[/italic].
 
 ## Hands
 Using [color=yellow][bold][keybind="Use"][/bold][/color] on items in the world will pick them up and put them into your active hand.
@@ -55,6 +56,14 @@ Holding it down will let you [color=cyan]drag[/color] the item to a different sp
 While dragging, pressing [color=yellow][bold][keybind="RotateStoredItem"][/bold][/color] will [color=cyan]rotate[/color] the item.
 
 You can still do all regular interactions with items in your bag, including [color=cyan]examining[/color] and opening the [color=cyan]context menu[/color].
+
+There are a few additional hotkeys worth knowing:
+
+- [color=yellow][bold][keybind="OpenBackpack"][/bold][/color] and [color=yellow][bold][keybind="OpenBelt"][/bold][/color] toggle your bag and belt, respectively.
+  
+- [color=yellow][bold][keybind="SmartEquipBackpack"][/bold][/color] lets you quick-store or swap the last stored item between your active hand and your bag.
+
+- [color=yellow][bold][keybind="SmartEquipBelt"][/bold][/color] does the same for your belt.
 
 ## Camera
 The camera can [color=cyan]zoom[/color] in and out with [color=yellow][bold][keybind="ZoomIn"][/bold][/color] and [color=yellow][bold][keybind="ZoomOut"][/bold][/color] and can be reset with [color=yellow][bold][keybind="ResetZoom"][/bold][/color].
