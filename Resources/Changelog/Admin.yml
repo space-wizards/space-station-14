@@ -912,11 +912,69 @@ Entries:
   url: https://github.com/space-wizards/space-station-14/pull/35961
 - author: SlamBamActionman
   changes:
-  - message: 'Any adminlog chat alert that includes an antag now has "[ANTAG: entityName]"
+  - message: 'Any adminlog chat alert that includes an antag now has "\[ANTAG: entityName\]"
       appended to the end.'
     type: Tweak
   id: 113
   time: '2025-03-21T23:21:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35994
+- author: Errant
+  changes:
+  - message: The Antag column on the player list has been removed, and it's functionality
+      folded into the Character and Role Type columns.
+    type: Remove
+  - message: The Role Type column now sorts entries in a revised order. All antagonist
+      types are grouped at the end.
+    type: Tweak
+  - message: On the player list, the names of antagonist players are now prefixed
+      with an antag symbol, and (optionally) shown in the color of their current role
+      type. The default setting is to show the "standard antag dagger" symbol for
+      any type of antag, same as the ahelp relay. Optionally a distinct icon can be
+      shown for each role type for easier identification.
+    type: Tweak
+  - message: More playerlist/overlay settings can now be changed in Admin Options.
+    type: Tweak
+  id: 114
+  time: '2025-03-25T16:03:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35538
+- author: ScarKy0
+  changes:
+  - message: The "Spawn here" verb now reliably transfers mind of the target to their
+      new body.
+    type: Fix
+  id: 115
+  time: '2025-03-25T18:40:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36080
+- author: Errant
+  changes:
+  - message: Admin overlays of mobs/players in very close proximity no longer overlap
+      each other. They now form stacks of up to 3. If more than 3 overlay entries
+      are stacked, any additional entries will be drawn over the 3rd element of the
+      stack. These names are ordered by vertical position, but when the coordinates
+      match exactly (such as someone carrying a mothroach/pAI, or ghosts orbiting),
+      the top member of the stack is NOT guaranteed to be the most visible/interesting
+      element in the stack.
+    type: Add
+  - message: Ghosts near the mouse cursor no longer show up on the admin overlay,
+      including any ghosts in stacks near the mouse cursor.
+    type: Add
+  id: 116
+  time: '2025-03-25T20:15:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35622
+- author: slarticodefast
+  changes:
+  - message: Added an antag control verb to create a paradox clone ghost role of a
+      selected player.
+    type: Add
+  id: 117
+  time: '2025-03-27T17:04:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36105
+- author: lzk228, ScarKy0
+  changes:
+  - message: Aghost now silently interact with storages.
+    type: Tweak
+  id: 118
+  time: '2025-03-27T17:42:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35417
 Name: Admin
 Order: 1
