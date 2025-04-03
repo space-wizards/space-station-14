@@ -6,15 +6,9 @@
 Evac:
 -	Rename + fill ore crates
 -	Decals, of course
-- Mailing units
 - Make the station move forward!
 - Job numbers in the prototype file
-Brigmed wall locker empty
-	Replaced with 'medicine wall locker [Filled]'
-	Still empty
 Armory needs more armor
-Solars prone to meteor breakages
-Expand/reposition solars
 Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
 Command Meeting: Needs access to execution cameras
 Execution telescreens: Need access to execution cameras
@@ -169,3 +163,9 @@ DONE:
 /* - Maints "Bar": Two papers - one explaining the maints bar contest, the second responding to the tiny little maints bar and encouraging people to do better. */
 /* 	"Yes, I suppose that water does technically count as a drink, but you know that's not what we meant when we said 'able to serve drinks'!" */
 /* - Name buttons and levers(?) for clarity */
+/* - Mailing units */
+/* Brigmed wall locker empty */
+/* 	Replaced with 'medicine wall locker [Filled]' */
+/* 	Still empty */
+/* Solars prone to meteor breakages */
+/* Expand/reposition solars */
