@@ -108,7 +108,7 @@
 
 - type: entity
   parent: BaseHandheldInstrument
-  id: PhoneInstrument
+  id: BluePhoneInstrument
   name: blue phone [Luma]
   description: Should anything ever go wrong...
   components:
