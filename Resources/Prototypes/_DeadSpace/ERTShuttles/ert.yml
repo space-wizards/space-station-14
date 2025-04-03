@@ -9,11 +9,3 @@
 - type: ertShuttle
   id: Gamma
   path: /Maps/Shuttles/ERT/gamma.yml
-
-- type: ertShuttle
-  id: Engineers
-  path: /Maps/Shuttles/ERT/engineers.yml
-
-- type: ertShuttle
-  id: Janitors
-  path: /Maps/Shuttles/ERT/janitors.yml

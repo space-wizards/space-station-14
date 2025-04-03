@@ -791,3 +791,11 @@ ToxinChemistryBottle: ChemistryBottleToxin
 DrinkMoscowMuleGlass: DrinkMoscowMule
 DrinkEspressoMartiniGlass: DrinkEspressoMartini
 DrinkDaiquiriGlass: DrinkDaiquiri
+
+# 2025-04-04 - DS14
+CBURNSierraPDA: null
+CBURNSierraLeaderPDA: null
+CBURNSierraIDcard: null
+CBURNSierraLeaderIDcard: null
+SignERTsierra: null
+SignERTsierraDocking: null

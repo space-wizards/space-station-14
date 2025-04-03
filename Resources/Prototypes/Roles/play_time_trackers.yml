@@ -116,13 +116,7 @@
   id: JobCBURNLeader
 
 - type: playTimeTracker
-  id: JobCBURNSierraLeader
-
-- type: playTimeTracker
   id: JobCBURNAgent
-
-- type: playTimeTracker
-  id: JobCBURNSierraAgent
 
 - type: playTimeTracker
   id: JobDeathSquad

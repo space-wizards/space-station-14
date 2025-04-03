@@ -99,20 +99,3 @@
   id: SignERTcburnDocking
   suffix: Стыковка
   description: Зона стыковки шаттла отряда РХБЗЗ
-
-- type: entity
-  parent: BaseSign
-  id: SignERTsierra
-  name: отряд РХБЗЗ кода "СЬЕРРА"
-  description: Стальной знак с эмблемой отряда РХБЗЗ кода "СЬЕРРА"
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Structures/Wallmounts/ert.rsi
-    state: cburn_sierra
-    scale: 0.85, 0.85
-
-- type: entity
-  parent: SignERTsierra
-  id: SignERTsierraDocking
-  suffix: Стыковка
-  description: Зона стыковки шаттла отряда РХБЗЗ кода "СЬЕРРА"

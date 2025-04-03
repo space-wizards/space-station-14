@@ -353,46 +353,6 @@
       prototypes: [ CBURNLeaderGear ]
       roleLoadout: [ RoleSurvivalExtended ]
 
-### CBURN Sierra
-- type: entity
-  id: RandomHumanoidSpawnerCBURNSierraLeader
-  parent: RandomHumanoidSpawnerERTLeaderAmber
-  name: CBURN Sierra leader
-  components:
-    - type: Sprite
-      sprite: Markers/jobs.rsi
-      state: cburn
-    - type: RandomHumanoidSpawner
-      settings: CBURNSierraLeaderPreset
-
-- type: randomHumanoidSettings
-  id: CBURNSierraLeaderPreset
-  parent: EventHumanoidERTZombieImmune
-  components:
-    - type: GhostRole
-      name: ghost-role-information-cburn-leader-name
-      description: ghost-role-information-cburn-leader-description
-      rules: ghost-role-information-nonantagonist-rules
-      requirements:
-        - !type:DepartmentTimeRequirement
-          department: Medical
-          time: 36000 # 10 hours
-        - !type:DepartmentTimeRequirement
-          department: Security
-          time: 72000 # 20 hours
-        - !type:DepartmentTimeRequirement
-          department: Command
-          time: 36000 # 10 hours
-      raffle:
-        settings: short
-      job: CBURNLeader
-    - type: Loadout
-      prototypes: [ CBURNSierraLeaderGear ]
-    - type: RandomMetadata
-      nameSegments:
-      - NamesFirstERTLeader
-      - NamesLastERT
-
 ## Security
 ### Amber
 - type: entity
@@ -832,47 +792,6 @@
       - NamesLastERT
     - type: Loadout
       prototypes: [ CBURNAgentGear ]
-
-## CBURN Sierra Agent
-- type: entity
-  id: RandomHumanoidSpawnerCBURNSierraAgent
-  parent: RandomHumanoidSpawnerCBURNSierraLeader
-  name: CBURN Agent
-  components:
-    - type: Sprite
-      sprite: Markers/jobs.rsi
-      state: cburn
-    - type: RandomMetadata
-      nameSegments:
-      - NamesFirstERT
-      - NamesLastERT
-    - type: RandomHumanoidSpawner
-      settings: CBURNSierraAgentPreset
-
-- type: randomHumanoidSettings
-  id: CBURNSierraAgentPreset
-  parent: EventHumanoidERTZombieImmune
-  components:
-    - type: GhostRole
-      name: ghost-role-information-cburn-agent-name
-      description: ghost-role-information-cburn-agent-description
-      rules: ghost-role-information-nonantagonist-rules
-      requirements:
-        - !type:DepartmentTimeRequirement
-          department: Medical
-          time: 14400 # 4 hours
-        - !type:DepartmentTimeRequirement
-          department: Security
-          time: 50400 # 14 hours
-      raffle:
-        settings: short
-      job: CBURNAgent
-    - type: RandomMetadata
-      nameSegments:
-      - NamesFirstERT
-      - NamesLastERT
-    - type: Loadout
-      prototypes: [ CBURNSierraAgentGear ]
 
 # Central Command
 - type: entity

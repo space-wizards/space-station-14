@@ -928,20 +928,6 @@
   - type: PresetIdCard
     job: CBURNLeader
 
-- type: entity
-  parent: CBURNIDcard
-  id: CBURNSierraIDcard
-  components:
-  - type: PresetIdCard
-    job: CBURNSierraAgent
-
-- type: entity
-  parent: CBURNLeaderIDcard
-  id: CBURNSierraLeaderIDcard
-  components:
-  - type: PresetIdCard
-    job: CBURNSierraLeader
-
 # DS14-cburn-end
 
 - type: entity

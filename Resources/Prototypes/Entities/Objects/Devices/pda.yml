@@ -1266,20 +1266,6 @@
   - type: Pda
     id: CBURNLeaderIDcard
 
-- type: entity
-  parent: CBURNPDA
-  id: CBURNSierraPDA
-  components:
-  - type: Pda
-    id: CBURNSierraIDcard
-
-- type: entity
-  parent: CBURNPDA
-  id: CBURNSierraLeaderPDA
-  components:
-  - type: Pda
-    id: CBURNSierraLeaderIDcard
-
 # DS14-cburn-end
 
 - type: entity

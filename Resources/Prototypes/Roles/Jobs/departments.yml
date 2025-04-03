@@ -49,9 +49,7 @@
   - CentralCommandSpecialOperationsOfficer
   - CentralCommandOfficer
   - CBURNLeader
-  - CBURNSierraLeader
   - CBURNAgent
-  - CBURNSierraAgent
   - ERTLeaderAmber
   - ERTLeaderRed
   - ERTLeaderGamma
@@ -91,9 +89,7 @@
   - CentralCommandSpecialOperationsOfficer
   - CentralCommandOfficer
   - CBURNLeader
-  - CBURNSierraLeader
   - CBURNAgent
-  - CBURNSierraAgent
   - ERTLeaderAmber
   - ERTLeaderRed
   - ERTLeaderGamma
