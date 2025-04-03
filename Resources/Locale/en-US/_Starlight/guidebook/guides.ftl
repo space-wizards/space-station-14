@@ -30,6 +30,7 @@ guide-entry-sl-clarification-1 = Clarification 1
 
 guide-entry-sl-sop-intro = Standard Operating Procedure
 guide-entry-sl-general-sop-intro = General
+guide-entry-sl-departmental-sop-intro = Departmental
 guide-entry-sl-command-sop-intro = Command
 guide-entry-sl-alert-levels = Alert Levels
 guide-entry-sl-code-green = Code Green
@@ -75,6 +76,12 @@ guide-entry-sl-security-sop-prisonertreatment = Prisoner Treatment
 guide-entry-sl-legal-sop-intro = Legal
 
 guide-entry-sl-engineering-sop-intro = Engineering
+guide-entry-sl-engineering-sop-power-generation = Power Generation
+guide-entry-sl-engineering-sop-station-damage = Station Damage
+guide-entry-sl-engineering-sop-chief-engineer = Chief Engineer
+guide-entry-sl-engineering-sop-station-engineer = Station Engineer
+guide-entry-sl-engineering-sop-atmos-tech = Atmospheric Technician
+guide-entry-sl-engineering-sop-technical-assistant = Technical Assistant
 
 guide-entry-sl-medical-sop-intro = Medical
 
@@ -93,4 +100,9 @@ guide-entry-sl-cargo-sop-handlingorders-service = Service Orders
 guide-entry-sl-science-sop-intro = Science
 
 guide-entry-sl-nano-trasen-employee-sop-intro = NanoTrasen Employee
+guide-entry-sl-nano-trasen-employee-sop-safety-protocol = Safety Protocol
+guide-entry-sl-nano-trasen-employee-sop-nt-rep = NanoTrasen Representative
+guide-entry-sl-nano-trasen-employee-sop-bso = BlueShield Officer
+guide-entry-sl-nano-trasen-employee-sop-magistrate = Magistrate
+guide-entry-sl-nano-trasen-employee-sop-iaa = Internal Affairs Agent
 
