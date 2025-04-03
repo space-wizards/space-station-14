@@ -9,7 +9,6 @@
   - !type:OverallPlaytimeRequirement
     time: 3600 # 1h
 
-
 - type: antag
   id: Rev
   name: roles-antag-rev-name
