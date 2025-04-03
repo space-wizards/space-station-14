@@ -12,9 +12,9 @@ public sealed partial class EmotingComponent : Component
     //track the last time they emoted
     [DataField, AutoNetworkedField]
     [Access(typeof(EmoteSystem), Friend = AccessPermissions.ReadWrite, Other = AccessPermissions.Read)]
-    public TimeSpan LastEmoteTime = TimeSpan.Zero;
+    public TimeSpan LastEmoteTime = TimeSpan.Zero; //Starlight-edit
 
     [DataField, AutoNetworkedField]
     [Access(typeof(EmoteSystem), Friend = AccessPermissions.ReadWrite, Other = AccessPermissions.Read)]
-    public TimeSpan EmoteCooldown = TimeSpan.FromSeconds(0.5f);
+    public TimeSpan EmoteCooldown = TimeSpan.FromSeconds(0.5f); //Starlight-edit
 }
