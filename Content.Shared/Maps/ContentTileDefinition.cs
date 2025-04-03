@@ -44,6 +44,13 @@ namespace Content.Shared.Maps
         [DataField("baseTurf")]
         public string BaseTurf { get; private set; } = string.Empty;
 
+        /// <summary>
+        ///     A list of all the possible base turfs. doesn't have to contain <see cref="BaseTurf"/>.
+        ///     You can place a tile on BaseTurf and all the tiles listed here; if it's not placed on BaseTurf, a tilestack is created in <see cref="TileStackMapComponent"/>.
+        /// </summary>
+        [DataField]
+        public string[] PossibleBaseTurfs = [];
+
         [DataField]
         public PrototypeFlags<ToolQualityPrototype> DeconstructTools { get; set; } = new();
 

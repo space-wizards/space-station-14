@@ -44,6 +44,18 @@ public sealed class FloorTileSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<FloorTileComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
+        SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
+    }
+
+    private void OnGridInit(GridInitializeEvent ev)
+    {
+        EnsureComp<TileStackMapComponent>(ev.EntityUid);
+    }
+
+    private void OnGridRemoved(GridRemovalEvent ev)
+    {
+        RemComp<TileStackMapComponent>(ev.EntityUid);
     }
 
     private void OnAfterInteract(EntityUid uid, FloorTileComponent component, AfterInteractEvent args)
@@ -170,6 +182,11 @@ public sealed class FloorTileSystem : EntitySystem
         return tileDef.BaseTurf == baseTurf;
     }
 
+    public bool HasPossibleBaseTurf(ContentTileDefinition tileDef, string baseTurf)
+    {
+        return HasBaseTurf(tileDef, baseTurf) || tileDef.PossibleBaseTurfs.Contains(baseTurf);
+    }
+
     private void PlaceAt(EntityUid user, EntityUid gridUid, MapGridComponent mapGrid, EntityCoordinates location,
         ushort tileId, SoundSpecifier placeSound, float offset = 0)
     {
@@ -195,5 +212,33 @@ public sealed class FloorTileSystem : EntitySystem
 
         reason = null;
         return true;
+    }
+
+    public bool ResolveTileStack(TileRef tileRef, out List<ContentTileDefinition>? tilestack)
+    {
+        if (!TryComp<TileStackMapComponent>(tileRef.GridUid, out var tileStackMap))
+        {
+            tilestack = null;
+            return false;
+        }
+        tilestack = tileStackMap.Data.GetValueOrDefault(tileRef.GridIndices);
+        return tilestack is not null;
+    }
+
+    /// <summary>
+    ///     Creates a tilestack at the location of the tile ref.
+    /// </summary>
+    public void CreateTileStack(TileRef tileRef)
+    {
+        var tilestack = new List<ContentTileDefinition>();
+        var curtile = tileRef.GetContentTileDefinition();
+        while (!string.IsNullOrEmpty(curtile.BaseTurf))
+        {
+            tilestack.Insert(0, (ContentTileDefinition) _tileDefinitionManager[curtile.BaseTurf]);
+            curtile = tileRef.GetContentTileDefinition();
+        }
+        if (!TryComp<TileStackMapComponent>(tileRef.GridUid, out var tileStackMap))
+            return;
+        tileStackMap.Data.Add(tileRef.GridIndices, tilestack);
     }
 }
