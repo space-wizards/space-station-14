@@ -102,7 +102,7 @@
           min: 40
         damage:
           groups:
-            Airloss: 4 # ideally this causes heart palpitations cutting bloodflow to the brain
+            Airloss: 5 # ideally this causes heart palpitations cutting bloodflow to the brain
 
 - type: reagent
   id: Ethylredoxrazine
