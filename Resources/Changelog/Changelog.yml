@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Toggle verbs are no longer duplicated on magboots and fire extinguishers!
-    type: Fix
-  id: 7627
-  time: '2024-11-20T01:53:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32138
 - author: qwerltaz
   changes:
   - message: A new grid item view is available in the construction menu, togglable
@@ -3900,3 +3893,10 @@
   id: 8126
   time: '2025-04-03T06:58:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35863
+- author: whatston3
+  changes:
+  - message: Fancy tables and curtains now respect carpet stacks.
+    type: Fix
+  id: 8127
+  time: '2025-04-03T14:45:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33721
