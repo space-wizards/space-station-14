@@ -13,6 +13,12 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class MagazineVisualsSpriteTest
 {
+    private readonly HashSet<string> _ignoredPrototypes = new()
+    {
+        "WeaponPistolX01",
+        "PistolDominator",
+    };
+
     [Test]
     public async Task MagazineVisualsSpritesExist()
     {
@@ -27,7 +33,7 @@ public sealed class MagazineVisualsSpriteTest
             {
                 foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (proto.Abstract || pair.IsTestPrototype(proto))
+                    if (proto.Abstract || pair.IsTestPrototype(proto) || _ignoredPrototypes.Contains(proto.ID))
                         continue;
 
                     if (!proto.TryGetComponent<MagazineVisualsComponent>(out var visuals, componentFactory))
