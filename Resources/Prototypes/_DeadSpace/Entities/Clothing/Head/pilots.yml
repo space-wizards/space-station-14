@@ -24,4 +24,4 @@
   - type: Clothing
     sprite: _DeadSpace/Clothing/Head/Hardsuits/pilotsuithelmsec.rsi
   - type: PointLight
-    color: white
+    color: '#3fb594'
