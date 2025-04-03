@@ -12,4 +12,4 @@ magic-mirror-change-slot-target = Your hairstyle is being changed by {THE($user)
 magic-mirror-change-color-target = Your hair color is being changed by {THE($user)}.
 
 magic-mirror-blocked-by-hat-self = You need to take off your hat before changing your hair.
-magic-mirror-blocked-by-hat-self-target = You try to change their hair but their clothes gets in the way.
+magic-mirror-blocked-by-hat-self-target = You try to change {POSS-ADJ($target)} hair but {POSS-ADJ($target)} clothes get in the way.
