@@ -50,7 +50,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
         if (requireDead && !targetDead)
             return 0f;
 
-        if (requireMaroon)
+        if (requireMaroon) // if evac is still here and target hasn't boarded, show 50% to give you an indicator that you are doing good
             return targetMarooned ? 1f : _emergencyShuttle.EmergencyShuttleArrived ? 0.5f : 0f;
 
         return 1f; // Good job you did it woohoo
