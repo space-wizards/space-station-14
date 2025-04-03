@@ -339,8 +339,8 @@
       board: ThermomachineHeaterMachineCircuitBoard
     - type: DeviceNetwork
       prefix: device-address-prefix-heater
-    - type: StealTarget
-      stealGroup: FreezerHeater
+    # - type: StealTarget
+    #   stealGroup: FreezerHeater
 
 - type: entity
   parent: GasThermoMachineHeater
