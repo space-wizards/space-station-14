@@ -66,25 +66,26 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        Log.Warning($"MindContainerComponent {uid}: {HasComp<MindContainerComponent>(uid)}");
-        Log.Warning($"ActorComponent {uid}: {HasComp<ActorComponent>(uid)}");
-
+        // Mind is present, has a connected session
         if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind && HasComp<ActorComponent>(uid))
-        {
             args.PushMarkup(Loc.GetString(component.ExamineTextMindPresent));
-        }
+
+        // No mind present, actively waiting for Ghost Role Takeover
         else if (HasComp<GhostTakeoverAvailableComponent>(uid))
-        {
             args.PushMarkup(Loc.GetString(component.ExamineTextMindSearching));
-        }
-        else if (HasComp<MindContainerComponent>(uid) && !HasComp<ActorComponent>(uid))
-        {
+
+        // Mind is present, but no active session
+        else if (HasComp<MindContainerComponent>(uid) && !HasComp<ActorComponent>(uid) && HasComp<GhostRoleComponent>(uid))
             args.PushMarkup(Loc.GetString(component.ExamineTextMindSsd));
-        }
+
+        // Mind is present, but ghosted out of the container
+        else if (HasComp<MindContainerComponent>(uid) && !HasComp<ActorComponent>(uid) && HasComp<ToggleableGhostRoleComponent>(uid))
+            args.PushMarkup(Loc.GetString(component.ExamineTextMindGhosted));
+
+        // No mind present, not waiting for Ghost Role Takeover
         else
-        {
             args.PushMarkup(Loc.GetString(component.ExamineTextNoMind));
-        }
+
     }
 
     private void OnMindAdded(EntityUid uid, ToggleableGhostRoleComponent pai, MindAddedMessage args)

@@ -86,6 +86,7 @@
       examineTextMindSearching: positronic-brain-still-searching
       examineTextNoMind: positronic-brain-off
       examineTextMindSsd: positronic-brain-ssd
+      examineTextMindGhosted: positronic-brain-ghosted
       beginSearchingText: positronic-brain-searching
       roleName: positronic-brain-role-name
       roleDescription: positronic-brain-role-description

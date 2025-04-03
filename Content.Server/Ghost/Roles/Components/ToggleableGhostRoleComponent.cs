@@ -34,6 +34,12 @@ public sealed partial class ToggleableGhostRoleComponent : Component
     public string ExamineTextMindSsd = string.Empty;
 
     /// <summary>
+    /// The text shown on the entity's Examine when it's mind ghosted out of its container.
+    /// </summary>
+    [DataField]
+    public string ExamineTextMindGhosted = string.Empty;
+
+    /// <summary>
     /// The popup text when the entity (PAI/positronic brain) it is activated to seek a controlling player
     /// </summary>
     [DataField]
