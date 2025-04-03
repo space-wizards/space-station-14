@@ -12,9 +12,12 @@
     - abductor-gun-restricted-1
   - type: KnockbackByUserTag
     doestContain:
-    - Resomi
-    knockback: 3
-    staminaMultiplier: 20
+      Resomi:
+        knockback: 3
+        staminaMultiplier: 20
+      Felionoid:
+        knockback: 1.5 #half of what resomi take
+        staminaMultiplier: 20
   - type: Sprite
     layers:
     - state: icon

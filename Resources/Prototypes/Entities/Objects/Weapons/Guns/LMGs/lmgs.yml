@@ -12,9 +12,9 @@
     - abductor-gun-restricted-1
   - type: KnockbackByUserTag
     doestContain:
-    - Resomi
-    knockback: 0.02
-    staminaMultiplier: 100
+      Resomi:
+        knockback: 0.02
+        staminaMultiplier: 100
   - type: Sprite
   - type: Item
     size: Huge

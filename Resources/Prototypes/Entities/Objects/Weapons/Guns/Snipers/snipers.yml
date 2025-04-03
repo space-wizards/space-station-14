@@ -12,9 +12,12 @@
     - abductor-gun-restricted-1
   - type: KnockbackByUserTag
     doestContain:
-    - Resomi
-    knockback: 4
-    staminaMultiplier: 15
+      Resomi:
+        knockback: 4
+        staminaMultiplier: 15
+      Felionoid:
+        knockback: 2 #half of what resomi take
+        staminaMultiplier: 15
   - type: Sprite
     layers:
     - state: base
@@ -56,8 +59,10 @@
   components:
   - type: KnockbackByUserTag
     doestContain:
-    - Resomi
-    knockback: 2
+      Resomi:
+        knockback: 2
+      Felionoid:
+        knockback: 1 #half of what resomi take
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
 

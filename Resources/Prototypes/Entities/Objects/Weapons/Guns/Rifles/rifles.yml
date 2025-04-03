@@ -12,8 +12,8 @@
     - abductor-gun-restricted-1
   - type: KnockbackByUserTag
     doestContain:
-    - Resomi
-    knockback: 0.1
+      Resomi:
+        knockback: 0.1
   - type: Sprite
   - type: Item
     size: Huge
@@ -208,8 +208,8 @@
   components:
   - type: KnockbackByUserTag
     doestContain:
-    - Resomi
-    knockback: 0
+      Resomi:
+        knockback: 0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/foam_rifle.rsi
   - type: Clothing

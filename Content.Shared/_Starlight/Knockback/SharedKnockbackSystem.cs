@@ -14,6 +14,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
+//linq
+using System.Linq;
+
 namespace Content.Shared.Starlight.Knockback;
 public abstract partial class SharedKnockbackSystem : EntitySystem
 {
@@ -55,9 +58,13 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
             }
         }
 
+        EntityUid user = args.User;
+
         //check for tags
-        if (!_tagSystem.HasAllTags(args.User, ent.Comp.Contains) || _tagSystem.HasAnyTag(args.User, ent.Comp.DoestContain))
+        if (_tagSystem.HasAnyTag(user, ent.Comp.DoestContain.Keys))
         {
+            //get the specific knockback data for this tag
+            KnockbackData data = ent.Comp.DoestContain.FirstOrDefault(x => _tagSystem.HasTag(user, x.Key)).Value;
             //get the gun component
             if (TryComp<GunComponent>(ent, out var gunComponent))
             {
@@ -66,9 +73,9 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
                 if (toCoordinates == null)
                     return;
 
-                float knockback = ent.Comp.Knockback;
+                float knockback = data.Knockback;
                 //If we have no slips, cut the knockback in half
-                if (CheckForNoSlips(args.User))
+                if (CheckForNoSlips(user))
                 {
                     knockback *= 0.5f;
                 }
@@ -89,14 +96,14 @@ public abstract partial class SharedKnockbackSystem : EntitySystem
                 //multiply by the knockback value
                 modifiedCoords *= knockback;
                 //set the new coordinates
-                var flippedDirection = new EntityCoordinates(args.User, modifiedCoords);
+                var flippedDirection = new EntityCoordinates(user, modifiedCoords);
 
-                _throwing.TryThrow(args.User, flippedDirection, knockback * 5, args.User, 0, doSpin: false, compensateFriction: true);
+                _throwing.TryThrow(user, flippedDirection, knockback * 5, user, 0, doSpin: false, compensateFriction: true);
 
                 //deal stamina damage
-                if (TryComp<StaminaComponent>(args.User, out var stamina))
+                if (TryComp<StaminaComponent>(user, out var stamina))
                 {
-                    _stamina.TakeStaminaDamage(args.User, knockback * ent.Comp.StaminaMultiplier, component: stamina);
+                    _stamina.TakeStaminaDamage(user, knockback * data.StaminaMultiplier, component: stamina);
                 }
             }
         }
