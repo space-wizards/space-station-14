@@ -68,7 +68,7 @@ public sealed class DominatorSystem : EntitySystem
 
     private void OnGetVerb(EntityUid uid, DominatorComponent component, GetVerbsEvent<Verb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
             return;
 
         if (component.FireModes.Count < 2)

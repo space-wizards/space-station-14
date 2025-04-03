@@ -129,6 +129,8 @@
     - Brutepack
   - type: Sprite
     state: brutepack
+  - type: Item
+    heldPrefix: brutepack
   - type: Healing
     damageContainers:
       - Biological
@@ -222,6 +224,8 @@
   id: Bloodpack
   suffix: Full
   components:
+  - type: Item
+    heldPrefix: bloodpack
   - type: Tag
     tags:
     - Bloodpack
@@ -246,6 +250,15 @@
 
 - type: entity
   parent: Bloodpack
+  id: Bloodpack1
+  suffix: Single
+  components:
+  - type: Stack
+    stackType: Bloodpack
+    count: 1
+
+- type: entity
+  parent: Bloodpack
   id: Bloodpack10Lingering
   suffix: 10, Lingering
   components:
@@ -263,6 +276,8 @@
         - SecBeltEquip
     - type: Sprite
       state: tourniquet
+    - type: Item
+      heldPrefix: tourniquet
     - type: Healing
       damageContainers:
         - Biological
@@ -290,6 +305,8 @@
     - Gauze
   - type: Sprite
     state: gauze
+  - type: Item
+    heldPrefix: gauze
   - type: Construction
     graph: Gauze
     node: gauze
@@ -1077,3 +1094,37 @@
         reagents:
         - ReagentId: Stimulants
           Quantity: 15
+
+# Entity Tables
+- type: entityTable
+  id: RandomSafePillTable
+  table: !type:GroupSelector
+    children:
+    - id: PillBicaridine
+    - id: PillCharcoal
+    - id: PillCopper
+    - id: PillDermaline
+    - id: PillDexalin
+    - id: PillDylovene
+    - id: PillHyronalin
+    - id: PillIron
+    - id: PillKelotane
+    - id: PillPotassiumIodide
+    - id: PillTricordrazine
+    - id: StrangePill
+
+- type: entityTable
+  id: RandomSafeSyringeTable
+  table: !type:GroupSelector
+    children:
+    - id: SyringeBicaridine
+    - id: SyringeDermaline
+    - id: SyringeEphedrine
+    - id: SyringeEthylredoxrazine
+    - id: SyringeHyronalin
+    - id: SyringeInaprovaline
+    - id: SyringeIpecac
+    - id: SyringePhalanximine
+    - id: SyringeSaline
+    - id: SyringeSigynate
+    - id: SyringeTranexamicAcid

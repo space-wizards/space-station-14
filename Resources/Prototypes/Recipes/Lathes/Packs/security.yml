@@ -133,9 +133,13 @@
   recipes:
   - Truncheon
   - WeaponAdvancedLaser
-  - WeaponDisabler
-  - WeaponDisablerSMG
   - WeaponLaserCannon
   - WeaponLaserCarbine
   - WeaponXrayCannon
   - WeaponLaserRifle # DS14
+
+- type: latheRecipePack
+  id: SecurityDisablers
+  recipes:
+  - WeaponDisabler
+  - WeaponDisablerSMG

@@ -1,5 +1,5 @@
 ent-ShuttleGunBase = shittle gun
-    .desc = { "" }
+    .desc = { ent-BaseStructure.desc }
 ent-ShuttleGunSvalinnMachineGun = LSE-400c "Svalinn machine gun"
     .desc = Basic stationary laser unit. Effective against live targets and electronics. Uses regular power cells to fire, and has an extremely high rate of fire.
 ent-ShuttleGunPerforator = LSE-1200c "Perforator"

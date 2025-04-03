@@ -49,23 +49,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkDaiquiriGlass
-  name: daiquiri glass
-  description: Do you want to feel like a 19th century miner? The miner did not want to, and tried to forget himself in alcohol.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Daiquiri
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: _Corvax/Objects/Consumable/Drinks/daiquiri.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkNegroniGlass
   name: negroni glass
   description: Americano for alcoholics.
@@ -80,23 +63,6 @@
   - type: Drink
   - type: Sprite
     sprite: _Corvax/Objects/Consumable/Drinks/negroni.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkEspressoMartiniGlass
-  name: espresso martini glass
-  description: Wake me up, then fu... Uh-h.. Okay, just wake me up.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: EspressoMartini
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: _Corvax/Objects/Consumable/Drinks/espressoMartini.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -182,23 +148,6 @@
   - type: Drink
   - type: Sprite
     sprite: _Corvax/Objects/Consumable/Drinks/maiTai.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkMoscowMuleGlass
-  name: moscow mule glass
-  description: "Cocktail from the USA. Why Moscow? Because vodka. Moscow vodka? No. So why Moscow? VODKA!"
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: MoscowMule
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: _Corvax/Objects/Consumable/Drinks/moscowMule.rsi
 
 - type: entity
   parent: DrinkGlassBase

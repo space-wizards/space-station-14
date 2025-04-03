@@ -45,7 +45,7 @@
 - type: entity
   name: некроморфная тентакля
   description: Стреляет костяными шипами!
-  parent: BaseWeaponTurret
+  parent: BaseWeaponBallisticTurret
   id: WeaponBoneTentacleNecro
   suffix: Некроморф
   components:

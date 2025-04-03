@@ -18,6 +18,7 @@
     - id: RubberStampDenied
     - id: RubberStampQm
     - id: AstroNavCartridge
+    - id: MailTeleporterMachineCircuitboard
     - id: ADTtelescopicBaton # ADT
     - id: BoxPhotocopierToners # DS14
 

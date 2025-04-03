@@ -5,5 +5,5 @@ encryption-keys-no-keys = В этом устройстве нет ключей �
 encryption-keys-are-locked = Ячейка ключей шифрования заблокирована.
 encryption-keys-panel-locked = Сначала откройте техническую панель.
 examine-encryption-channels-prefix = Доступные частоты:
-examine-encryption-channel = [color={ $color }]{ $key } для канала { $id } ({NATURALFIXED($freq, 1)})[/color]
+examine-encryption-channel = [color={ $color }]{ $key } для канала { $id } ({ NATURALFIXED($freq, 1) })[/color]
 examine-encryption-default-channel = Каналом по умолчанию является [color={ $color }]{ $channel }[/color].

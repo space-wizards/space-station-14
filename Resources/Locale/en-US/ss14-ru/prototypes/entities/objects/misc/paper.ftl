@@ -1,3 +1,5 @@
+ent-BasePaper = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-Paper = paper
     .desc = A piece of white paper.
 ent-PaperScrap = paper scrap
@@ -10,6 +12,8 @@ ent-PaperCaptainsThoughts = captain's thoughts
     .desc = A page of the captain's journal. In luxurious lavender.
 ent-PaperCargoInvoice = cargo invoice
     .desc = A single unit of bureaucracy.
+ent-PaperNanoTaskItem = NanoTask item
+    .desc = A printed NanoTask item. Can be inserted into your PDA to add it to your tasks.
 ent-PaperCargoBountyManifest = bounty manifest
     .desc = A paper label designating a crate as containing a bounty. Selling a crate with this label will fulfill the bounty.
 ent-PaperCNCSheet = character sheet

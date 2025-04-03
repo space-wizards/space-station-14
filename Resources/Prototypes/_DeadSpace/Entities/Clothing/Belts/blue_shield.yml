@@ -8,9 +8,9 @@
   - type: StorageFill
     contents:
       - id: ADTCombatHypo
-      - id: EpinephrineChemistryBottle
-      - id: EphedrineChemistryBottle
-      - id: OmnizineChemistryBottle
+      - id: ChemistryBottleEpinephrine
+      - id: ChemistryBottleEphedrine
+      - id: ChemistryBottleOmnizine
         amount: 2
       - id: ADTObjectsSpecificBicaridineChemistryBottle
       - id: ADTObjectsSpecificDexalinPlusChemistryBottle

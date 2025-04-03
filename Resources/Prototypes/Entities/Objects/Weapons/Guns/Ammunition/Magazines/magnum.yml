@@ -1,7 +1,7 @@
 - type: entity
   id: BaseMagazineMagnum
   name: pistol magazine (.45 magnum)
-  parent: [ BaseMagazinePistol, BaseRestrictedContraband ]
+  parent: [ BaseMagazinePistol, BaseSecurityContraband ]
   abstract: true
   components:
   - type: Tag
@@ -59,6 +59,8 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineMagnum
@@ -129,6 +131,8 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazineMagnumSubMachineGun

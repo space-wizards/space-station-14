@@ -34,6 +34,7 @@
   hostile:
   - PetsNT
   - AllHostile
+  - Wizard
 
 - type: npcFaction
   id: Passive
@@ -46,6 +47,8 @@
   - Zombie
   - Xeno
   - AllHostile
+  - Wizard
+  - Dragon
 
 - type: npcFaction
   id: SimpleHostile
@@ -58,6 +61,7 @@
   - Revolutionary
   - AllHostile
   - Wizard
+  - Dragon
   - Necromorfs # DS14
   - SpiderTerror # DS14
   - SyndicateAgent # DS14-agents-faction
@@ -105,6 +109,7 @@
   - Revolutionary
   - AllHostile
   - Wizard
+  - Dragon
   - Necromorfs # DS14
   - SpiderTerror # DS14
   - Blob # DS14
@@ -122,6 +127,7 @@
   - Revolutionary
   - AllHostile
   - Wizard
+  - Dragon
   - Necromorfs # DS14
   - SpiderTerror # DS14
   - Blob # DS14
@@ -165,7 +171,11 @@
   hostile:
   - NanoTrasen
   - Dragon
+  - Mouse
+  - Passive
+  - PetsNT
   - SimpleHostile
+  - SimpleNeutral
   - Syndicate
   - Xeno
   - Zombie

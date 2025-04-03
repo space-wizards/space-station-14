@@ -197,7 +197,7 @@ namespace Content.Server.GameTicking
 
             if (ev.GameMap.IsGrid)
             {
-                var mapUid = _map.CreateMap(out mapId);
+                var mapUid = _map.CreateMap(out mapId, runMapInit: options?.InitializeMaps ?? false);
                 if (!_loader.TryLoadGrid(mapId,
                         ev.GameMap.MapPath,
                         out var grid,
@@ -559,7 +559,7 @@ namespace Content.Server.GameTicking
 
                 if (TryGetEntity(mind.OriginalOwnedEntity, out var entity) && pvsOverride)
                 {
-                    _pvsOverride.AddGlobalOverride(GetNetEntity(entity.Value), recursive: true);
+                    _pvsOverride.AddGlobalOverride(entity.Value);
                 }
 
                 var roles = _roles.MindGetAllRoleInfo(mindId);
@@ -587,7 +587,7 @@ namespace Content.Server.GameTicking
 
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
-            var sound = RoundEndSoundCollection == null ? null : _audio.GetSound(new SoundCollectionSpecifier(RoundEndSoundCollection));
+            var sound = RoundEndSoundCollection == null ? null : _audio.ResolveSound(new SoundCollectionSpecifier(RoundEndSoundCollection));
 
             var roundEndMessageEvent = new RoundEndMessageEvent(
                 gamemodeTitle,

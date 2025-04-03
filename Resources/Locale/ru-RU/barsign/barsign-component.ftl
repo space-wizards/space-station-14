@@ -121,7 +121,11 @@ barsign-prototype-description-spacebucks = От них нельзя скрыть
 
 ## EmpBarSign
 
+barsign-prototype-name-maltroach = Maltroach
+barsign-prototype-description-maltroach = Squeak!
 barsign-prototype-description-empbarsign = Что-то пошло совсем не так.
+barsign-prototype-name-whiskeyechoes = Whiskey Echoes
+barsign-prototype-description-whiskeyechoes = An elite bar for elite oper-wait, this is a Nanotrasen station. Why's this sign in the database?
 
 ## SignOff
 

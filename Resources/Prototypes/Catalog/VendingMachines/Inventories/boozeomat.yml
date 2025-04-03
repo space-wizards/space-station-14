@@ -57,7 +57,7 @@
     ADTDrinkJuiceLemonCarton: 3 # ADT
     ADTDrinkVodkaAntivirusBottleFull: 2 # ADT
   contrabandInventory:
-    EthanolChemistryBottle: 3
+    ChemistryBottleEthanol: 3
     DrinkBottleOfNothingFull: 1
   emaggedInventory:
     DrinkPoisonWinebottleFull: 2

@@ -1,41 +1,49 @@
 {
-  "version": 1,
-   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/696dfcc59c9e65e7bbe3923d1f7e880ea384783f",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "dead"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13 at 1dbcf389b0ec6b2c51b002df5fef8dd1519f8068, inhands by mubururu_ (github), Growth stages, harvest, dead, and produce sprites created by Chaoticaa (GitHub)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "harvest"
-    },
-    {
-      "name": "produce"
-    },
-    {
-      "name": "seed"
-    },
-    {
-      "name": "stage-1"
-    },
-    {
-      "name": "stage-2"
-    },
-    {
-      "name": "stage-3"
-    },
-    {
-      "name": "stage-4"
-    },
-    {
-      "name": "stage-5"
-    },
-    {
-      "name": "stage-6"
-    }
-  ]
+    "states": [
+        {
+            "name": "dead"
+        },
+        {
+            "name": "harvest"
+        },
+        {
+            "name": "produce"
+        },
+        {
+            "name": "seed"
+        },
+        {
+            "name": "stage-1"
+        },
+        {
+            "name": "stage-2"
+        },
+        {
+            "name": "stage-3"
+        },
+        {
+            "name": "stage-4"
+        },
+        {
+            "name": "stage-5"
+        },
+        {
+            "name": "stage-6"
+        },
+        {
+            "name": "produce-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "produce-inhand-right",
+            "directions": 4
+        }
+    ]
 }

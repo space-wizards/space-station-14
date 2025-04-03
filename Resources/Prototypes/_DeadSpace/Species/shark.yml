@@ -7,11 +7,10 @@
   markingLimits: MobSharkMarkingLimits
   dollPrototype: MobPlafDummy
   skinColoration: Hues
-  maleFirstNames: firstMaleVulp
-  femaleFirstNames: firstFemaleVulp
-  maleLastNames: VulpLast
-  femaleLastNames: VulpLast
-  naming: firstlast
+  maleFirstNames: NamesSharkFirstMale
+  femaleFirstNames: NamesSharkFirstFemale
+  maleLastNames: NamesSharkLast
+  femaleLastNames: NamesSharkLast
 
 - type: speciesBaseSprites
   id: MobSharkSprites

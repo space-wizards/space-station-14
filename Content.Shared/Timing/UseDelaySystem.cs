@@ -88,8 +88,11 @@ public sealed class UseDelaySystem : EntitySystem
     /// <summary>
     /// Returns true if the entity has a currently active UseDelay with the specified ID.
     /// </summary>
-    public bool IsDelayed(Entity<UseDelayComponent> ent, string id = DefaultId)
+    public bool IsDelayed(Entity<UseDelayComponent?> ent, string id = DefaultId)
     {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
         if (!ent.Comp.Delays.TryGetValue(id, out var entry))
             return false;
 
@@ -144,7 +147,7 @@ public sealed class UseDelaySystem : EntitySystem
     /// Otherwise reset it and return true.</param>
     public bool TryResetDelay(Entity<UseDelayComponent> ent, bool checkDelayed = false, string id = DefaultId)
     {
-        if (checkDelayed && IsDelayed(ent, id))
+        if (checkDelayed && IsDelayed((ent.Owner, ent.Comp), id))
             return false;
 
         if (!ent.Comp.Delays.TryGetValue(id, out var entry))

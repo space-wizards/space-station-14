@@ -2,7 +2,6 @@ using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using Robust.Shared.EntitySerialization;
 
 namespace Content.Server.Administration.Systems;
 
@@ -13,6 +12,7 @@ public sealed class AdminTestArenaSystem : EntitySystem
 {
     [Dependency] private readonly MapLoaderSystem _loader = default!;
     [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
+    [Dependency] private readonly SharedMapSystem _maps = default!;
 
     public const string ArenaMapPath = "/Maps/Test/admin_test_arena.yml";
 
@@ -34,18 +34,20 @@ public sealed class AdminTestArenaSystem : EntitySystem
         }
 
         var path = new ResPath(ArenaMapPath);
-        var opts = DeserializationOptions.Default with { InitializeMaps = true }; // DS14-fix-admin-arena-loading
-        if (!_loader.TryLoadMap(path, out var map, out var grids, opts)) // DS14-fix-admin-arena-loading
+        var mapUid = _maps.CreateMap(out var mapId);
+
+        if (!_loader.TryLoadGrid(mapId, path, out var grid))
+        {
+            QueueDel(mapUid);
             throw new Exception($"Failed to load admin arena");
+        }
 
-        ArenaMap[admin.UserId] = map.Value.Owner;
-        _metaDataSystem.SetEntityName(map.Value.Owner, $"ATAM-{admin.Name}");
+        ArenaMap[admin.UserId] = mapUid;
+        _metaDataSystem.SetEntityName(mapUid, $"ATAM-{admin.Name}");
 
-        var grid = grids.FirstOrNull();
-        ArenaGrid[admin.UserId] = grid?.Owner;
-        if (grid != null)
-            _metaDataSystem.SetEntityName(grid.Value.Owner, $"ATAG-{admin.Name}");
+        ArenaGrid[admin.UserId] = grid.Value.Owner;
+        _metaDataSystem.SetEntityName(grid.Value.Owner, $"ATAG-{admin.Name}");
 
-        return (map.Value.Owner, grid?.Owner);
+        return (mapUid, grid.Value.Owner);
     }
 }

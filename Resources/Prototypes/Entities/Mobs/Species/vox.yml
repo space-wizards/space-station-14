@@ -11,8 +11,10 @@
   - type: Body
     prototype: Vox
     requiredLegs: 2
-  - type:  HumanoidAppearance
+  - type: HumanoidAppearance
     species: Vox
+    undergarmentTop: UndergarmentTopTanktopVox
+    undergarmentBottom: UndergarmentBottomBoxersVox
     #- type: VoxAccent # Not yet coded
   - type: Speech
     speechVerb: Vox
@@ -71,25 +73,26 @@
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
     - map: [ "enum.HumanoidVisualLayers.RLeg" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-    - map: [ "underwearb" ] # Sirena
-    - map: [ "underweart" ] # Sirena
+    - map: [ "underwearb" ] # Sirena-Underwear
+    - map: [ "underweart" ] # Sirena-Underwear
+    - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
+    - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
+    # - map: [ "jumpsuit" ]
     - map: [ "enum.HumanoidVisualLayers.LFoot" ]
     - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-    - map: [ "socks" ] # Sirena
-    - map: [ "jumpsuit" ]
-    # - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-    # - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+    - map: [ "socks" ] # Sirena-Underwear
+    - map: ["jumpsuit"]
     - map: [ "enum.HumanoidVisualLayers.LHand" ]
     - map: [ "enum.HumanoidVisualLayers.RHand" ]
     - map: [ "gloves" ]
     - map: [ "shoes" ]
     - map: [ "ears" ]
-    - map: [ "outerClothing" ]
     - map: [ "eyes" ]
     - map: [ "belt" ]
     - map: [ "id" ]
-    - map: [ "neck" ]
+    - map: [ "outerClothing" ]
     - map: [ "back" ]
+    - map: [ "neck" ]
     - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
     - map: [ "enum.HumanoidVisualLayers.Hair" ]
     - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
@@ -147,6 +150,17 @@
           32:
             sprite: Mobs/Species/Vox/displacement.rsi
             state: shoes
+  - type: Hands
+    leftHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: hand_l
+    rightHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: hand_r
   - type: Sanity # DS14
   - type: FootPrints # Backmen-footsteps
     leftBarePrint: "footprint-left-bare-lizard"
@@ -160,6 +174,8 @@
   components:
   - type: HumanoidAppearance
     species: Vox
+    undergarmentTop: UndergarmentTopTanktopVox
+    undergarmentBottom: UndergarmentBottomBoxersVox
   - type: Body
     prototype: Vox
   - type: Inventory
@@ -200,3 +216,14 @@
           32:
             sprite: Mobs/Species/Vox/displacement.rsi
             state: shoes
+  - type: Hands
+    leftHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: hand_l
+    rightHandDisplacement:
+      sizeMaps:
+        32:
+          sprite: Mobs/Species/Vox/displacement.rsi
+          state: hand_r

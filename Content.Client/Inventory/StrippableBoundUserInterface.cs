@@ -64,11 +64,9 @@ namespace Content.Client.Inventory
         {
             base.Open();
 
-            _strippingMenu = this.CreateWindow<StrippingMenu>();
+            _strippingMenu = this.CreateWindowCenteredLeft<StrippingMenu>();
             _strippingMenu.OnDirty += UpdateMenu;
             _strippingMenu.Title = Loc.GetString("strippable-bound-user-interface-stripping-menu-title", ("ownerName", Identity.Name(Owner, EntMan)));
-
-            _strippingMenu?.OpenCenteredLeft();
         }
 
         protected override void Dispose(bool disposing)

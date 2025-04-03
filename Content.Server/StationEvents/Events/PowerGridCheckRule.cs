@@ -59,7 +59,7 @@ namespace Content.Server.StationEvents.Events
             component.AnnounceCancelToken = new CancellationTokenSource();
             Timer.Spawn(3000, () =>
             {
-                Audio.PlayGlobal("/Audio/_DeadSpace/Announcements/poweron1.ogg", Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f)); // DS14-Announcements
+                Audio.PlayGlobal(component.PowerOnSound, Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f)); // DS14-Announcements
             }, component.AnnounceCancelToken.Token);
             component.Unpowered.Clear();
         }

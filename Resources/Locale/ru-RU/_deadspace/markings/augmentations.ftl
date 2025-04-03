@@ -16,7 +16,6 @@ marking-AugmentsBishopFootLeft-l_foot = Аугментация, стопа ле�
 marking-AugmentsBishopFootLeft = Аугментация, стопа левой ноги (Епископ)
 marking-AugmentsBishopTorso-torso = Аугментация, корпус (Епископ)
 marking-AugmentsBishopTorso = Аугментация, корпус (Епископ)
-
 marking-AugmentsHephaestusTitanArmRight-r_arm = Аугментация, правая рука (Титан)
 marking-AugmentsHephaestusTitanArmRight = Аугментация, правая рука (Титан)
 marking-AugmentsHephaestusTitanHandRight-r_hand = Аугментация, кисть правой руки (Титан)
@@ -35,7 +34,6 @@ marking-AugmentsHephaestusTitanFootLeft-l_foot = Аугментация, сто�
 marking-AugmentsHephaestusTitanFootLeft = Аугментация, стопа левой ноги (Титан)
 marking-AugmentsHephaestusTitanTorso-torso = Аугментация, корпус (Титан)
 marking-AugmentsHephaestusTitanTorso = Аугментация, корпус (Титан)
-
 marking-AugmentsHephaestusArmRight-r_arm = Аугментация, правая рука (Гефест)
 marking-AugmentsHephaestusArmRight = Аугментация, правая рука (Гефест)
 marking-AugmentsHephaestusHandRight-r_hand = Аугментация, кисть правой руки (Гефест)
@@ -54,7 +52,6 @@ marking-AugmentsHephaestusFootLeft-l_foot = Аугментация, стопа �
 marking-AugmentsHephaestusFootLeft = Аугментация, стопа левой ноги (Гефест)
 marking-AugmentsHephaestusTorso-torso = Аугментация, корпус (Гефест)
 marking-AugmentsHephaestusTorso = Аугментация, корпус (Гефест)
-
 marking-AugmentsMorpheusArmRight-r_arm = Аугментация, правая рука (Морфеус)
 marking-AugmentsMorpheusArmRight = Аугментация, правая рука (Морфеус)
 marking-AugmentsMorpheusHandRight-r_hand = Аугментация, кисть правой руки (Морфеус)
@@ -73,7 +70,6 @@ marking-AugmentsMorpheusFootLeft-l_foot = Аугментация, стопа л�
 marking-AugmentsMorpheusFootLeft = Аугментация, стопа левой ноги (Морфеус)
 marking-AugmentsMorpheusTorso-torso = Аугментация, корпус (Морфеус)
 marking-AugmentsMorpheusTorso = Аугментация, корпус (Морфеус)
-
 marking-AugmentsNanotrasenArmRight-r_arm = Аугментация, правая рука (Нанотрейзен)
 marking-AugmentsNanotrasenArmRight = Аугментация, правая рука (Нанотрейзен)
 marking-AugmentsNanotrasenHandRight-r_hand = Аугментация, кисть правой руки (Нанотрейзен)
@@ -92,7 +88,6 @@ marking-AugmentsNanotrasenFootLeft-l_foot = Аугментация, стопа �
 marking-AugmentsNanotrasenFootLeft = Аугментация, стопа левой ноги (Нанотрейзен)
 marking-AugmentsNanotrasenTorso-torso = Аугментация, корпус (Нанотрейзен)
 marking-AugmentsNanotrasenTorso = Аугментация, корпус (Нанотрейзен)
-
 marking-AugmentsWardtakahashiArmRight-r_arm = Аугментация, правая рука (Вардтакахаши)
 marking-AugmentsWardtakahashiArmRight = Аугментация, правая рука (Вардтакахаши)
 marking-AugmentsWardtakahashiHandRight-r_hand = Аугментация, кисть правой руки (Вардтакахаши)
@@ -113,7 +108,6 @@ marking-AugmentsWardtakahashiTorsoMale-torso_m = Аугментация, муж�
 marking-AugmentsWardtakahashiTorsoMale = Аугментация, мужской корпус (Вардтакахаши)
 marking-AugmentsWardtakahashiTorsoFemale-torso_f = Аугментация, женский корпус (Вардтакахаши)
 marking-AugmentsWardtakahashiTorsoFemale = Аугментация, женский корпус (Вардтакахаши)
-
 marking-AugmentsXionArmRight-r_arm = Аугментация, правая рука (Ксион)
 marking-AugmentsXionArmRight = Аугментация, правая рука (Ксион)
 marking-AugmentsXionHandRight-r_hand = Аугментация, кисть правой руки (Ксион)
@@ -132,7 +126,6 @@ marking-AugmentsXionFootLeft-l_foot = Аугментация, стопа лев�
 marking-AugmentsXionFootLeft = Аугментация, стопа левой ноги (Ксион)
 marking-AugmentsXionTorso-torso = Аугментация, корпус (Ксион)
 marking-AugmentsXionTorso = Аугментация, корпус (Ксион)
-
 marking-AugmentsZenghuArmRight-r_arm = Аугментация, правая рука (Зенху)
 marking-AugmentsZenghuArmRight = Аугментация, правая рука (Зенху)
 marking-AugmentsZenghuHandRight-r_hand = Аугментация, кисть правой руки (Зенху)
