@@ -68,7 +68,7 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-centcom
     color: "#1d8bad"
-    delay: 10
+    delayBetweenAnnouncements: 10
     initialDelay: 0
     global: true
   - type: RadarConsole

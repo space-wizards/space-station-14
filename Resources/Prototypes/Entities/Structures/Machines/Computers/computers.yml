@@ -776,9 +776,9 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-wizard
     color: "#ff00ff"
-    # canShuttle: false
+    canCallShuttle: false
     global: true #announce to everyone they're about to fuck shit up
-    # sound: /Audio/Announcements/war.ogg
+    announcementSound: /Audio/Announcements/war.ogg
   - type: Computer
     board: WizardCommsComputerCircuitboard
   - type: PointLight
@@ -809,7 +809,7 @@
   - type: CommunicationsConsole
     title: comms-console-announcement-title-centcom
     color: "#1d8bad"
-    canShuttle: false
+    canCallShuttle: false
     global: true
   - type: Computer
     board: CentcommCommsComputerCircuitboard
