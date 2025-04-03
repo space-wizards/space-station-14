@@ -34,9 +34,9 @@ public sealed class SharedTeleportationActionSystem : EntitySystem
 
         var user = args.Performer;
         var teleportCauser = ent.Owner;
-        var origin = _transform.GetMapCoordinates(user);
-        var target = _transform.ToMapCoordinates(args.Target);
         var transform = Transform(user);
+        var origin = _transform.GetMapCoordinates(transform);
+        var target = _transform.ToMapCoordinates(args.Target);
 
         if (transform.MapID != _transform.GetMapId(args.Target))
             return;

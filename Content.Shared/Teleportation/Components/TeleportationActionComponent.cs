@@ -1,5 +1,3 @@
-using Content.Shared.Actions;
-using Content.Shared.Ninja.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Teleportation.Components;
@@ -11,7 +9,7 @@ public sealed partial class TeleportationActionComponent : Component
     public EntityUid? TeleportationActionEntity;
 
     /// <summary>
-    /// Takes pulled entities with it
+    /// If it leaves pulled entities behind or not
     /// </summary>
     [DataField]
     public bool DropsPulled = false;
