@@ -43,7 +43,7 @@
         steps:
         - tag: WallmountSubstationElectronics
           store: board
-          name: "wallmount substation circuit board"
+          name: construction-graph-tag-wallmount-substation-circuit-board
           icon:
             sprite: "Objects/Misc/module.rsi"
             state: "charger_APC"
@@ -52,7 +52,7 @@
             - PowerCell
             - PowerCellSmall
           store: powercell
-          name: a powercell
+          name: construction-graph-tag-power-cell
           icon:
             sprite: "Objects/Power/power_cells.rsi"
             state: "medium"

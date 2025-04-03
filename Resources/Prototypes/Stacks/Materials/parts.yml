@@ -1,6 +1,6 @@
 - type: stack
   id: MetalRod
-  name: rods
+  name: stack-rods
   icon: { sprite: /Textures/Objects/Materials/parts.rsi, state: rods }
   spawn: PartRodMetal1
   maxCount: 30

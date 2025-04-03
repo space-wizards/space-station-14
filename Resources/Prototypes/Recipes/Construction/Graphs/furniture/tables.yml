@@ -219,7 +219,7 @@
         - to: TableFancyBlack
           steps:
             - tag: CarpetBlack
-              name: black carpet
+              name: construction-graph-tag-black-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-black
@@ -227,7 +227,7 @@
         - to: TableFancyBlue
           steps:
             - tag: CarpetBlue
-              name: blue carpet
+              name: construction-graph-tag-blue-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-blue
@@ -235,7 +235,7 @@
         - to: TableFancyCyan
           steps:
             - tag: CarpetCyan
-              name: cyan carpet
+              name: construction-graph-tag-cyan-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-cyan
@@ -243,7 +243,7 @@
         - to: TableFancyGreen
           steps:
             - tag: CarpetGreen
-              name: green carpet
+              name: construction-graph-tag-green-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-green
@@ -251,7 +251,7 @@
         - to: TableFancyOrange
           steps:
             - tag: CarpetOrange
-              name: orange carpet
+              name: construction-graph-tag-orange-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-orange
@@ -259,7 +259,7 @@
         - to: TableFancyPurple
           steps:
             - tag: CarpetPurple
-              name: purple carpet
+              name: construction-graph-tag-purple-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-purple
@@ -267,7 +267,7 @@
         - to: TableFancyPink
           steps:
             - tag: CarpetPink
-              name: pink carpet
+              name: construction-graph-tag-pink-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-pink
@@ -275,7 +275,7 @@
         - to: TableFancyRed
           steps:
             - tag: CarpetRed
-              name: red carpet
+              name: construction-graph-tag-red-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-red
@@ -283,7 +283,7 @@
         - to: TableFancyWhite
           steps:
             - tag: CarpetWhite
-              name: white carpet
+              name: construction-graph-tag-white-carpet
               icon:
                 sprite: Objects/Tiles/tile.rsi
                 state: carpet-white
