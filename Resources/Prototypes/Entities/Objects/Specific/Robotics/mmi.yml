@@ -85,6 +85,7 @@
       examineTextMindPresent: positronic-brain-installed
       examineTextMindSearching: positronic-brain-still-searching
       examineTextNoMind: positronic-brain-off
+      examineTextMindSsd: positronic-brain-ssd
       beginSearchingText: positronic-brain-searching
       roleName: positronic-brain-role-name
       roleDescription: positronic-brain-role-description

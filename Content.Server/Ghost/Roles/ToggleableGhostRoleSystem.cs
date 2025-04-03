@@ -5,6 +5,7 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Robust.Shared.Player;
 
 namespace Content.Server.Ghost.Roles;
 
@@ -65,13 +66,20 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
+        Log.Warning($"MindContainerComponent {uid}: {HasComp<MindContainerComponent>(uid)}");
+        Log.Warning($"ActorComponent {uid}: {HasComp<ActorComponent>(uid)}");
+
+        if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind && HasComp<ActorComponent>(uid))
         {
             args.PushMarkup(Loc.GetString(component.ExamineTextMindPresent));
         }
         else if (HasComp<GhostTakeoverAvailableComponent>(uid))
         {
             args.PushMarkup(Loc.GetString(component.ExamineTextMindSearching));
+        }
+        else if (HasComp<MindContainerComponent>(uid) && !HasComp<ActorComponent>(uid))
+        {
+            args.PushMarkup(Loc.GetString(component.ExamineTextMindSsd));
         }
         else
         {
