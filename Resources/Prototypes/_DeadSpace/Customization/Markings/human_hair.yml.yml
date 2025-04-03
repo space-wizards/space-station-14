@@ -1,7 +1,0 @@
-- type: marking
-  id: HumanHairGrandeNoTail
-  bodyPart: Hair
-  markingCategory: Hair
-  sprites:
-  - sprite: _DeadSpace/Mobs/Customization/human_hair.rsi
-    state: grandenotail
