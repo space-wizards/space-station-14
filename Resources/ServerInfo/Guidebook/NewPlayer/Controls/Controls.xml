@@ -22,10 +22,10 @@ When off-station, you will be unable to control your direction.
 ## Interactions
 General interactions are done by clicking [color=yellow][bold][keybind="Use"][/bold][/color].
 These are context-sensitive and [bold]affected by the item in your active hand[/bold].
-Using [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] performs [bold]alternate interactions[/bold].
+Using [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] performs [bold]alternative interactions[/bold].
 
 To activate or use an item in your hand, click [color=yellow][bold][keybind="Use"][/bold][/color] on it, or just press [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] if it's in the active hand.
-The alternate counterpart is [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color].
+The alternative counterpart is [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color].
 
 To perform [color=cyan]basic interactions[/color], press [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
 This type of interaction is independent from held items.
