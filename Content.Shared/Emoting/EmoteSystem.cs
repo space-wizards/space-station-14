@@ -1,7 +1,10 @@
-﻿namespace Content.Shared.Emoting;
+﻿using Robust.Shared.Timing;
+
+namespace Content.Shared.Emoting;
 
 public sealed class EmoteSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -26,5 +29,18 @@ public sealed class EmoteSystem : EntitySystem
     {
         if (!TryComp(args.Uid, out EmotingComponent? emote) || !emote.Enabled)
             args.Cancel();
+
+        if (emote == null)
+            return;
+        
+        //check if they are on cooldown
+        if (_gameTiming.CurTime > emote.LastEmoteTime + emote.EmoteCooldown)
+        {
+            emote.LastEmoteTime = _gameTiming.CurTime;
+        }
+        else
+        {
+            args.Cancel();
+        }
     }
 }
