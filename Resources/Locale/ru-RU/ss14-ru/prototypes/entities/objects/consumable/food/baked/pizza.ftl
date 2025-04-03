@@ -48,3 +48,7 @@ ent-FoodPizzaCotton = хлопковая пицца
     .desc = Плоское хлопковое тесто с хлопковой начинкой. Невероятно.
 ent-FoodPizzaCottonSlice = кусок хлопковой пиццы
     .desc = Кусочек хлопковой пиццы. Хлопок присутствует.
+ent-FoodPizzaWorldpeas = world peazza
+    .desc = Modern diplomacy in the shape of a disc.
+ent-FoodPizzaWorldpeasSlice = slice of world peazza
+    .desc = Dividing the world up is a small price to pay for harmony.

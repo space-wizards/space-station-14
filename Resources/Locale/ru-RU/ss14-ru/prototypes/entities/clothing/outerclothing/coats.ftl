@@ -82,3 +82,5 @@ ent-ClothingOuterCoatSpaceAsshole = куртка космического муд
     .desc = And there he was... space asshole!!!11!11
 ent-ClothingOuterCoatExpensive = дорогая шуба
     .desc = Очень пушистая розовая шуба, сделанная из очень дорогого меха. Любимая шуба сына крон-принца основателя нанотрейзен властелина межгалактического адмирала-генерал его высочество своего имени третий мега-президент корпорации нанотрейзен император всего-сущего великий.
+ent-ClothingOuterCoatExpensiveOpened = expensive coat
+    .desc = { ent-ClothingOuterStorageFoldableBaseOpened.desc }

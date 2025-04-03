@@ -1,2 +1,2 @@
-ent-Thief = { ent-BaseGameRule }
+ent-Survivor = { ent-BaseGameRule }
     .desc = { ent-BaseGameRule.desc }

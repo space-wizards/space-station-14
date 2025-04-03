@@ -51,3 +51,4 @@ names-mushman-first-dataset-50 = Тремелла
 names-mushman-first-dataset-51 = Волвариэлла
 names-mushman-first-dataset-52 = Гифолома
 names-mushman-first-dataset-53 = Лактарий
+names-mushman-first-dataset-54 = Lactarius

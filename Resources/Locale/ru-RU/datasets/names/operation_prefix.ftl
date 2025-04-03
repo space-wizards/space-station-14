@@ -96,3 +96,7 @@ names-operation-prefix-dataset-95 = Белый
 names-operation-prefix-dataset-96 = Дикий
 names-operation-prefix-dataset-97 = Зимний
 names-operation-prefix-dataset-98 = Жёлтый
+names-operation-prefix-dataset-99 = White
+names-operation-prefix-dataset-100 = Wild
+names-operation-prefix-dataset-101 = Winter
+names-operation-prefix-dataset-102 = Yellow

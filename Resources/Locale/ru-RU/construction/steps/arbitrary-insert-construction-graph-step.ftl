@@ -7,3 +7,5 @@ construction-insert-info-examine-name-instrument-string = струнный ин�
 construction-insert-info-examine-name-instrument-woodwind = деревянный духовой инструмент
 construction-insert-info-examine-name-knife = нож
 construction-insert-info-examine-name-utensil = кухонный прибор
+construction-insert-info-examine-name-laser-cannon = high power laser weapon
+construction-insert-info-examine-name-power-cell = power cell

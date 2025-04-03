@@ -145,6 +145,9 @@ ghost-role-information-cburn-agent-description = Высококвалифици�
 ghost-role-information-centcom-official-name = Представитель ЦК
 ghost-role-information-centcom-official-description = Инспектируйте станцию, пишите служебные характеристики на руководителей, орудуйте факсом.
 ghost-role-information-behonker-name = Бехонкер
+ghost-role-information-Death-Squad-name = Death Squad Operative
+ghost-role-information-Death-Squad-description = One of Nanotrasen's top internal affairs agents. Await orders from CentComm or an official.
+ghost-role-information-Death-Squad-rules = You are required to obey orders given by your superior, you are effectively their [color={ role-type-familiar-color }][bold]{ role-type-familiar-name }[/bold][/color].
 ghost-role-information-behonker-description = Вы - антагонист, несущий смерть и хонки всем, кто не следует за хонкоматерью.
 ghost-role-information-nukeop-rules = Вы [color=red][bold]Командный антагонист[/bold][/color], в команде с другими Ядерными оперативниками. Помощь агентов на станции не гарантируется.
 ghost-role-information-loneop-name = Одинокий оперативник

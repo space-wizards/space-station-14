@@ -1,3 +1,5 @@
+ent-BasePaper = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-Paper = бумага
     .desc = Лист белой бумаги.
 ent-PaperScrap = обрывки бумаги
@@ -10,6 +12,8 @@ ent-PaperCaptainsThoughts = размышления капитана
     .desc = Страница из дневника капитана. В роскошном лавандовом цвете.
 ent-PaperCargoInvoice = грузовая накладная
     .desc = Одна единица бюрократии.
+ent-PaperNanoTaskItem = NanoTask item
+    .desc = A printed NanoTask item. Can be inserted into your PDA to add it to your tasks.
 ent-PaperCargoBountyManifest = этикетка запроса
     .desc = Бумажная этикетка, обозначающая, что ящик содержит нужный товар. Продав ящик с такой этикеткой, вы получите награду.
 ent-PaperCNCSheet = лист персонажа
