@@ -37,7 +37,7 @@
             IAA: [ 1, 1 ]
             # engineering
             ChiefEngineer: [ 1, 1 ]
-            AtmosphericTechnician: [ 2, 3 ]
+            AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 4, 5 ]
             TechnicalAssistant: [ 3, 3 ]
             # medical
