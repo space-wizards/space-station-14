@@ -10,5 +10,5 @@ namespace Content.Shared.Maps;
 public sealed partial class TileStackMapComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public Dictionary<Vector2i, List<ContentTileDefinition>> Data = new();
+    public Dictionary<Vector2i, List<string>> Data = new();
 }
