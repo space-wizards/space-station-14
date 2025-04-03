@@ -187,12 +187,12 @@
     - HeadTop
     - HeadSide
 
-#Templar Helmet
+#Knight Helmet
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHelmetTemplar
-  name: templar helmet
-  description: DEUS VULT!
+  name: knight helmet
+  description: Decorative helmet fashioned to resemble the knights of old.
   components:
   - type: Sprite
     sprite: Clothing/Head/Helmets/templar.rsi
