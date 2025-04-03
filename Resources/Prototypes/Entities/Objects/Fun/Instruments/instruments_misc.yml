@@ -65,7 +65,7 @@
 
 - type: entity
   parent: BaseHandheldInstrument
-  id: PhoneInstrument
+  id: BluePhoneInstrument
   name: Blue phone [Luma]
   description: A one-of-a-kind direct line to your bosses favorite assistant.
   components:
