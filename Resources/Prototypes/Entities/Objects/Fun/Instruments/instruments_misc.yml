@@ -59,7 +59,7 @@
 
 - type: entity
   parent: BaseHandheldInstrument
-  id: BluePhoneInstrument
+  id: PhoneInstrumentNowInBlue
   name: blue phone [Luma]
   description: Should anything ever go wrong...
   components:
