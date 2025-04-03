@@ -4411,4 +4411,11 @@ Entries:
   id: 611
   time: '2025-04-03T04:24:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/442
+- author: Happyrobot33
+  changes:
+  - message: Fixed Resomi flash immunity welding goggles exploit.
+    type: Fix
+  id: 612
+  time: '2025-04-03T04:25:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/440
 
