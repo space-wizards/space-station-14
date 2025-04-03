@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: qwerltaz
-  changes:
-  - message: A new grid item view is available in the construction menu, togglable
-      with a button.
-    type: Add
-  - message: Construction menu default window size was tweaked.
-    type: Tweak
-  id: 7628
-  time: '2024-11-20T01:54:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32577
 - author: SpaceLizard24
   changes:
   - message: Reduced crafting costs of colored light tubes.
@@ -3900,3 +3890,10 @@
   id: 8127
   time: '2025-04-03T14:45:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33721
+- author: YuNii
+  changes:
+  - message: Stop ghosts from being logged to airlocks
+    type: Fix
+  id: 8128
+  time: '2025-04-03T22:24:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36261
