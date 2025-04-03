@@ -13,7 +13,8 @@
   - type: KnockbackByUserTag
     doestContain:
     - Resomi
-    knockback: 1
+    knockback: 3
+    staminaMultiplier: 20
   - type: Sprite
     layers:
     - state: icon

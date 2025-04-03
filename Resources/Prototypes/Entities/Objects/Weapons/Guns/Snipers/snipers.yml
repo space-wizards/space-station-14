@@ -14,6 +14,7 @@
     doestContain:
     - Resomi
     knockback: 4
+    staminaMultiplier: 15
   - type: Sprite
     layers:
     - state: base
