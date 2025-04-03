@@ -122,7 +122,7 @@ public sealed class ReflectSystem : EntitySystem
         {
             _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
             var audioParams = reflect.SoundOnReflect?.Params ?? AudioParams.Default;
-            audioParams = audioParams.AddVariation((float)_random.NextGaussian(1, 0.05f));
+            audioParams = audioParams.AddVariation(0.5f);
             _audio.PlayPvs(reflect.SoundOnReflect, user, audioParams);
         }
 
@@ -177,7 +177,7 @@ public sealed class ReflectSystem : EntitySystem
         {
             _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
             var audioParams = reflect.SoundOnReflect?.Params ?? AudioParams.Default;
-            audioParams = audioParams.AddVariation((float)_random.NextGaussian(1, 0.05f));
+            audioParams = audioParams.AddVariation(0.5f);
             _audio.PlayPvs(reflect.SoundOnReflect, user, audioParams);
         }
 

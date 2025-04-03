@@ -52,7 +52,7 @@ public sealed class CursedEntityStorageSystem : EntitySystem
         }
 
         var audioParams = component.CursedSound?.Params ?? AudioParams.Default;
-        audioParams = audioParams.AddVariation((float)_random.NextGaussian(1, 0.125f));
+        audioParams = audioParams.AddVariation(1.25f);
         _audio.PlayPvs(component.CursedSound, uid, audioParams);
     }
 }

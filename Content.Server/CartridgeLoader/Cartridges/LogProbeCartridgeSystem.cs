@@ -54,7 +54,7 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
 
         //Play scanning sound with slightly randomized pitch
         var audioParams = ent.Comp.SoundScan?.Params ?? AudioParams.Default;
-        audioParams = audioParams.AddVariation((float)_random.NextGaussian(1, 0.25f));
+        audioParams = audioParams.AddVariation(2.5f);
         _audio.PlayEntity(ent.Comp.SoundScan, args.InteractEvent.User, target, audioParams);
         _popup.PopupCursor(Loc.GetString("log-probe-scan", ("device", target)), args.InteractEvent.User);
 

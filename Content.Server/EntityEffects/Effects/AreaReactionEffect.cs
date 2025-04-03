@@ -86,7 +86,7 @@ public sealed partial class AreaReactionEffect : EntityEffect
 
             var audio = reagentArgs.EntityManager.System<SharedAudioSystem>();
             var audioParams = _sound?.Params ?? AudioParams.Default;
-            audioParams = audioParams.AddVariation(0.125f);
+            audioParams = audioParams.AddVariation(1.25f);
             audio.PlayPvs(_sound, reagentArgs.TargetEntity, audioParams);
             return;
         }
