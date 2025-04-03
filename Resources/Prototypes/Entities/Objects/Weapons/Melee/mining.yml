@@ -152,6 +152,12 @@
     sprite: Objects/Weapons/Melee/crusher-inhands.rsi
   - type: DisarmMalus
   - type: Prying
+  - type: Clothing # DS14
+    sprite: Objects/Weapons/Melee/crusher.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
 
 - type: entity
   parent: [ BaseKnife, BaseWeaponCrusher, BaseSecurityCargoContraband]
@@ -204,3 +210,9 @@
   - type: Item
     size: Ginormous
     sprite: Objects/Weapons/Melee/crusher_glaive-inhands.rsi
+  - type: Clothing # DS14
+    sprite: Objects/Weapons/Melee/crusher_glaive.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
