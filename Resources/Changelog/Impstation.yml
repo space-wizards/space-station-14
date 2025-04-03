@@ -1,22 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: The nuke song "Clearly Nuclear" has been replaced with its remastered
-      version, "Blatantly Nuclear."
-    type: Tweak
-  id: 964
-  time: '2025-01-18T17:55:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1419
-- author: Darkmajia
-  changes:
-  - message: Air tanks set to low output pressure will no longer create a throwing
-      damage blender.
-    type: Fix
-  - message: Air tanks now pop out of tethers when they release gas.
-    type: Tweak
-  id: 965
-  time: '2025-01-18T19:31:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1417
 - author: kipdotnet
   changes:
   - message: Removed Loop station from the map pool.
@@ -4076,3 +4058,20 @@
   id: 1463
   time: '2025-04-02T20:52:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2189
+- author: DinnerCalzone
+  changes:
+  - message: Suppy is now referred to as a "superdense being" by the random sentience
+      random event.
+    type: Tweak
+  id: 1464
+  time: '2025-04-03T14:05:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2192
+- author: TheGrimbeeper
+  changes:
+  - message: Kodes can now use inherent stores (ling & heretic)
+    type: Fix
+  - message: Kodes can now check their moods, if they have them
+    type: Fix
+  id: 1465
+  time: '2025-04-03T14:04:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2190
