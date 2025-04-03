@@ -71,11 +71,6 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/blue_phone.rsi
     state: icon
-  - type: EmitSoundOnLand
-    sound:
-       path: /Audio/Items/ring.ogg
-  - type: Instrument
-    program: 124
   - type: Item
     size: Small
   - type: Prayable
