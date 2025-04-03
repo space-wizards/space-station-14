@@ -243,6 +243,8 @@
   - 1.0
   - 1.0
   baseTurf: Plating
+  possibleBaseTurfs:
+  - FloorSteel
   isSubfloor: false
   deconstructTools: [ Prying ]
   footstepSounds:
