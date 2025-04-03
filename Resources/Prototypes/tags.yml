@@ -118,6 +118,9 @@
   id: BorgModuleMedical
 
 - type: Tag
+  id: BorgModuleScience
+
+- type: Tag
   id: BorgModuleService
 
 - type: Tag
@@ -1163,6 +1166,9 @@
   id: SignalTrigger
 
 - type: Tag
+  id: SilentStorageUser # used in SharedStorageSystem, so the entity will do all silently
+
+- type: Tag
   id: SkeletonMotorcycleKeys
 
 - type: Tag
@@ -1311,6 +1317,12 @@
 
 - type: Tag
   id: Truncheon
+  
+- type: Tag
+  id: TurretCompatibleWeapon # Used in the construction of sentry turrets
+  
+- type: Tag
+  id: TurretControlElectronics # Used in the construction of sentry turret control panels
 
 - type: Tag
   id: Unimplantable
