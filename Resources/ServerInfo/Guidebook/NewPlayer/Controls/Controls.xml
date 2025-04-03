@@ -59,11 +59,11 @@ You can still do all regular interactions with items in your bag, including [col
 
 There are a few additional hotkeys worth knowing:
 
-- [color=yellow][bold][keybind="OpenBackpack"][/bold][/color] and [color=yellow][bold][keybind="OpenBelt"][/bold][/color] toggle your bag and belt, respectively.
+- [color=yellow][bold][keybind="OpenBackpack"][/bold][/color] and [color=yellow][bold][keybind="OpenBelt"][/bold][/color] toggle your bag and belt interfaces, respectively.
   
-- [color=yellow][bold][keybind="SmartEquipBackpack"][/bold][/color] lets you quick-store or swap the last stored item between your active hand and your bag.
+- [color=yellow][bold][keybind="SmartEquipBackpack"][/bold][/color] lets you swap items between your hands and the bag.
 
-- [color=yellow][bold][keybind="SmartEquipBelt"][/bold][/color] does the same for your belt.
+- [color=yellow][bold][keybind="SmartEquipBelt"][/bold][/color] does the same for your belt, making tool access faster.
 
 ## Camera
 The camera can [color=cyan]zoom[/color] in and out with [color=yellow][bold][keybind="ZoomIn"][/bold][/color] and [color=yellow][bold][keybind="ZoomOut"][/bold][/color] and can be reset with [color=yellow][bold][keybind="ResetZoom"][/bold][/color].
