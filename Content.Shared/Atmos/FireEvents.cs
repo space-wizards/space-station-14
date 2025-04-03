@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Inventory;
+using Content.Shared.Nutrition.Components;
 
 namespace Content.Shared.Atmos;
 
@@ -24,12 +25,18 @@ public struct ExtinguishEvent : IInventoryRelayEvent
 /// <summary>
 /// A flammable entity has been extinguished.
 /// </summary>
+/// <remarks>
+/// This can occur on both <c>Flammable</c> entities as well as <see cref="SmokableComponent"/>.
+/// </remarks>
 /// <seealso cref="ExtinguishEvent"/>
 [ByRefEvent]
-public struct FlammableExtinguished;
+public struct ExtinguishedEvent;
 
 /// <summary>
 /// A flammable entity has been ignited.
 /// </summary>
+/// <remarks>
+/// This can occur on both <c>Flammable</c> entities as well as <see cref="SmokableComponent"/>.
+/// </remarks>
 [ByRefEvent]
-public struct FlammableIgnited;
+public struct IgnitedEvent;

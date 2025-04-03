@@ -131,8 +131,7 @@
         - FullTileMask
         - Opaque
         layer:
-        - FullTileMask
-        - Opaque
+        - ItemMask
   - type: Appearance
   - type: VaporVisuals
 
