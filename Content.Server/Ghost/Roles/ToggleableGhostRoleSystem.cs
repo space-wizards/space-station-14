@@ -114,20 +114,17 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
     private void OnPlayerAttached(Entity<ToggleableGhostRoleComponent> entity, ref PlayerAttachedEvent args)
     {
         // Player was attached, change the appearance
-        Log.Warning("Player attached to {uid}", entity);
         UpdateAppearance(entity, ToggleableGhostRoleStatus.On);
     }
 
     private void OnPlayerDetached(Entity<ToggleableGhostRoleComponent> entity, ref PlayerDetachedEvent args)
     {
         // Player was detached, change the appearance
-        Log.Warning("Player detached from {uid}", entity);
         UpdateAppearance(entity, ToggleableGhostRoleStatus.Ssd);
     }
 
     private void UpdateAppearance(EntityUid uid, ToggleableGhostRoleStatus status)
     {
-        Log.Warning("Updating appearance for {uid} to {status}", uid, status);
         _appearance.SetData(uid, ToggleableGhostRoleVisuals.Status, status);
     }
 
