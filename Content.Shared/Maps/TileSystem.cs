@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Decals;
+using Content.Shared.Tiles;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
@@ -20,6 +21,7 @@ public sealed class TileSystem : EntitySystem
     [Dependency] private readonly SharedDecalSystem _decal = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly TileStackSystem _tileStack = default!;
 
     /// <summary>
     ///     Returns a weighted pick of a tile variant.
@@ -163,9 +165,19 @@ public sealed class TileSystem : EntitySystem
             _decal.RemoveDecal(tileRef.GridUid, id);
         }
 
-        var plating = _tileDefinitionManager[tileDef.BaseTurf];
-        _maps.SetTile(gridUid, mapGrid, tileRef.GridIndices, new Tile(plating.TileId));
-
+        if (_tileStack.HasTileStack(tileRef))
+        {
+            ref var tilestacks = ref Comp<TileStackMapComponent>(gridUid).Data;
+            var tileId = tilestacks[tileRef.GridIndices][tilestacks[tileRef.GridIndices].Count - 1];
+            tilestacks[tileRef.GridIndices].RemoveAt(tilestacks[tileRef.GridIndices].Count - 1);
+            var newTile = new Tile(((ContentTileDefinition)_tileDefinitionManager[tileId]).TileId);
+            _maps.SetTile(gridUid, mapGrid, tileRef.GridIndices, newTile);
+        }
+        else
+        {
+            var plating = _tileDefinitionManager[tileDef.BaseTurf];
+            _maps.SetTile(gridUid, mapGrid, tileRef.GridIndices, new Tile(plating.TileId));
+        }
         return true;
     }
 }

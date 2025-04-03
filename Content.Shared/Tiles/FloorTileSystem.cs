@@ -37,6 +37,7 @@ public sealed class FloorTileSystem : EntitySystem
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly TileStackSystem _tileStack = default!;
 
     private static readonly Vector2 CheckRange = new(1f, 1f);
 
@@ -44,18 +45,6 @@ public sealed class FloorTileSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<FloorTileComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
-        SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
-    }
-
-    private void OnGridInit(GridInitializeEvent ev)
-    {
-        EnsureComp<TileStackMapComponent>(ev.EntityUid);
-    }
-
-    private void OnGridRemoved(GridRemovalEvent ev)
-    {
-        RemComp<TileStackMapComponent>(ev.EntityUid);
     }
 
     private void OnAfterInteract(EntityUid uid, FloorTileComponent component, AfterInteractEvent args)
@@ -159,15 +148,15 @@ public sealed class FloorTileSystem : EntitySystem
                 }
                 if (HasPossibleBaseTurf(currentTileDefinition, baseTurf.ID))
                 {
-                    if (!HasTileStack(tile))
+                    if (!_tileStack.HasTileStack(tile))
                     {
-                        CreateTileStack(tile);
+                        _tileStack.CreateTileStack(tile);
                     }
                     if (!_stackSystem.Use(uid, 1, stack))
                         continue;
                     // current tile gets stored in the tilestack under the new tile
-                    ref var tilestack = ref Comp<TileStackMapComponent>(gridUid).Data;
-                    tilestack[tile.GridIndices].Add(tile.GetContentTileDefinition().ID);
+                    ref var tilestacks = ref Comp<TileStackMapComponent>(gridUid).Data;
+                    tilestacks[tile.GridIndices].Add(tile.GetContentTileDefinition().ID);
                     PlaceAt(args.User, gridUid, mapGrid, location, currentTileDefinition.TileId, component.PlaceTileSound);
                     args.Handled = true;
                     return;
@@ -227,34 +216,5 @@ public sealed class FloorTileSystem : EntitySystem
 
         reason = null;
         return true;
-    }
-
-    public bool HasTileStack(TileRef tileRef)
-    {
-        return HasTileStack(tileRef.GridIndices, tileRef.GridUid);
-    }
-
-    public bool HasTileStack(Vector2i gridIndices, EntityUid gridUid)
-    {
-        if (!TryComp<TileStackMapComponent>(gridUid, out var tileStackMap))
-            return false;
-        return tileStackMap.Data.ContainsKey(gridIndices);
-    }
-
-    /// <summary>
-    ///     Creates a tilestack at the location of the tile ref.
-    /// </summary>
-    public void CreateTileStack(TileRef tileRef)
-    {
-        var tilestack = new List<string>();
-        var curtile = tileRef.GetContentTileDefinition().ID;
-        while (!string.IsNullOrEmpty(curtile))
-        {
-            tilestack.Insert(0, _tileDefinitionManager[curtile].ID);
-            curtile = ((ContentTileDefinition) _tileDefinitionManager[curtile]).BaseTurf;
-        }
-        if (!TryComp<TileStackMapComponent>(tileRef.GridUid, out var tileStackMap))
-            return;
-        tileStackMap.Data.Add(tileRef.GridIndices, tilestack);
     }
 }
