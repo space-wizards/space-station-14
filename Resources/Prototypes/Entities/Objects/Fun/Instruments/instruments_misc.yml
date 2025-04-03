@@ -114,7 +114,7 @@
   components:
   - type: Sprite
     sprite: Objects/Fun/Instruments/otherinstruments.rsi
-    state: red_phone
+    state: blue_phone
   - type: EmitSoundOnLand
     sound:
        path: /Audio/Items/ring.ogg
