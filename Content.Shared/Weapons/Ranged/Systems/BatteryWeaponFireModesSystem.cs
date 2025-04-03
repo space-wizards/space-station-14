@@ -17,7 +17,6 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!; // DS14
 
     public override void Initialize()
     {
@@ -139,12 +138,5 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
             var updateClientAmmoEvent = new UpdateClientAmmoEvent();
             RaiseLocalEvent(uid, ref updateClientAmmoEvent);
         }
-
-        // DS14-start
-        if (TryComp(uid, out AppearanceComponent? appearance))
-        {
-            _appearance.QueueUpdate(uid, appearance);
-        }
-        // DS14-end
     }
 }
