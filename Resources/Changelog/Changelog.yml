@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: It's no longer possible to drag an item out of a container's UI to drop
-      it.
-    type: Tweak
-  id: 7625
-  time: '2024-11-20T01:00:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32706
 - author: Plykiya
   changes:
   - message: The crew monitoring crate now contains a flatpack of the server and computers,
@@ -3900,3 +3892,10 @@
   id: 8124
   time: '2025-04-02T18:37:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36216
+- author: aada
+  changes:
+  - message: Diphenhydramine now causes light drowsiness.
+    type: Tweak
+  id: 8125
+  time: '2025-04-03T06:29:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36212
