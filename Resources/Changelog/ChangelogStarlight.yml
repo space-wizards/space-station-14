@@ -4390,4 +4390,18 @@ Entries:
   id: 608
   time: '2025-04-02T13:17:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/437
+- author: Happyrobot33
+  changes:
+  - message: Fixed Centcomm.
+    type: Fix
+  id: 609
+  time: '2025-04-03T01:01:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/439
+- author: Happyrobot33
+  changes:
+  - message: Fixed Random name generation for Starlight species.
+    type: Fix
+  id: 610
+  time: '2025-04-03T01:01:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/439
 
