@@ -74,9 +74,7 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<FlammableComponent, TileFireEvent>(OnTileFire);
             SubscribeLocalEvent<FlammableComponent, RejuvenateEvent>(OnRejuvenate);
             SubscribeLocalEvent<FlammableComponent, ResistFireAlertEvent>(OnResistFireAlert);
-            SubscribeLocalEvent<FlammableComponent, ExtinguishEvent>(OnExtinguishEvent);
-            SubscribeLocalEvent<FlammableComponent, HeldRelayedEvent<ExtinguishEvent>>(OnExtinguishHandEvent);
-            SubscribeLocalEvent<FlammableComponent, InventoryRelayedEvent<ExtinguishEvent>>(OnExtinguishInventoryEvent);
+            Subs.SubscribeWithRelay<FlammableComponent, ExtinguishEvent>(OnExtinguishEvent);
 
             SubscribeLocalEvent<IgniteOnCollideComponent, StartCollideEvent>(IgniteOnCollide);
             SubscribeLocalEvent<IgniteOnCollideComponent, LandEvent>(OnIgniteLand);
@@ -86,16 +84,6 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<ExtinguishOnInteractComponent, ActivateInWorldEvent>(OnExtinguishActivateInWorld);
 
             SubscribeLocalEvent<IgniteOnHeatDamageComponent, DamageChangedEvent>(OnDamageChanged);
-        }
-
-        private void OnExtinguishInventoryEvent(Entity<FlammableComponent> ent, ref InventoryRelayedEvent<ExtinguishEvent> args)
-        {
-            OnExtinguishEvent(ent, ref args.Args);
-        }
-
-        private void OnExtinguishHandEvent(Entity<FlammableComponent> ent, ref HeldRelayedEvent<ExtinguishEvent> args)
-        {
-            OnExtinguishEvent(ent, ref args.Args);
         }
 
         private void OnExtinguishEvent(Entity<FlammableComponent> ent, ref ExtinguishEvent args)
