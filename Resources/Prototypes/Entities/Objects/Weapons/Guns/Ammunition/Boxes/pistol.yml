@@ -17,7 +17,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi # DS14-texture-localization
   - type: MagazineVisuals
     magState: mag
     steps: 3
