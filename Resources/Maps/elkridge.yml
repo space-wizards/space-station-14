@@ -14332,9 +14332,7 @@ entities:
       pos: -4.5,-47.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -11671.724
       changeAirtight: False
-      isBeingPried: True
       state: Opening
     - type: Docking
       dockJointId: docking1353150
@@ -14349,9 +14347,7 @@ entities:
       pos: 0.5,-7.5
       parent: 16685
     - type: Door
-      secondsUntilStateChange: -11671.156
       changeAirtight: False
-      isBeingPried: True
       state: Opening
     - type: Docking
       dockJointId: docking1353150
