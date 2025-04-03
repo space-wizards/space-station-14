@@ -137,39 +137,6 @@ public class ComponentQueryBenchmark
         return hashCode;
     }
 
-    // [Benchmark]
-    // [BenchmarkCategory("TryComp")]
-    public int TryCompCached()
-    {
-        var hashCode = 0;
-        for (var i = 0; i < _archItems.Length; i++)
-        {
-            ref var entity = ref _archItems[i];
-
-            if (_entMan.TryComp(ref entity, out ClothingComponent? clothing))
-                hashCode = HashCode.Combine(hashCode, clothing.GetHashCode());
-        }
-        return hashCode;
-    }
-
-    /// <summary>
-    /// TryComp for 2 different components.
-    /// </summary>
-    [Benchmark]
-    [BenchmarkCategory("TryComp")]
-    public int TryCompDoubleCached()
-    {
-        var hashCode = 0;
-        for (var i = 0; i < _archItems.Length; i++)
-        {
-            ref var entity = ref _archItems[i];
-
-            if (_entMan.TryComp(ref entity, out ClothingComponent? clothing, out ItemComponent? _))
-                hashCode = HashCode.Combine(hashCode, clothing.GetHashCode());
-        }
-        return hashCode;
-    }
-
     /// <summary>
     /// Variant of <see cref="TryComp"/> that is meant to always fail to get a component.
     /// </summary>
@@ -181,21 +148,6 @@ public class ComponentQueryBenchmark
         foreach (var uid in _items)
         {
             if (_mapQuery.TryGetComponent(uid, out var map))
-                hashCode = HashCode.Combine(hashCode, map.GetHashCode());
-        }
-        return hashCode;
-    }
-
-    // [Benchmark]
-    // [BenchmarkCategory("TryComp")]
-    public int TryCompFailCached()
-    {
-        var hashCode = 0;
-        for (var i = 0; i < _archItems.Length; i++)
-        {
-            ref var entity = ref _archItems[i];
-
-            if (_entMan.TryComp(ref entity, out MapComponent? map))
                 hashCode = HashCode.Combine(hashCode, map.GetHashCode());
         }
         return hashCode;
