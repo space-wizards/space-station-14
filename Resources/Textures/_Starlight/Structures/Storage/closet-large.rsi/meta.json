@@ -29,6 +29,15 @@
             "name": "generic_open"
         },
         {
+            "name": "secure"
+        },
+        {
+            "name": "secure_door"
+        },
+        {
+            "name": "secure_open"
+        },
+        {
             "name": "sec"
         },
         {

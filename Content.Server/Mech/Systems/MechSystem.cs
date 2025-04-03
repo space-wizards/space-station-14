@@ -400,7 +400,7 @@ public sealed partial class MechSystem : SharedMechSystem
 
     private void OnAlternativeVerb(EntityUid uid, MechComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || component.Broken)
+        if (!args.CanAccess || !args.CanInteract)
             return;
         
         var openUiVerb = new AlternativeVerb
@@ -409,6 +409,9 @@ public sealed partial class MechSystem : SharedMechSystem
             Text = Loc.GetString("mech-ui-open-verb")
          };
          args.Verbs.Add(openUiVerb);
+         
+        if (component.Broken)
+            return;
 
         if (CanInsert(uid, args.User, component))
         {

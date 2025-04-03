@@ -1,7 +1,6 @@
 using Content.Server.Body.Components;
 using Content.Server.EntityEffects.Effects;
 using Content.Server.Fluids.EntitySystems;
-using Content.Server.Forensics;
 using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Chemistry.Components;
@@ -40,7 +39,6 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
     [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-    [Dependency] private readonly ForensicsSystem _forensicsSystem = default!;
 
     public override void Initialize()
     {
@@ -193,17 +191,8 @@ public sealed class BloodstreamSystem : EntitySystem
         bloodSolution.MaxVolume = entity.Comp.BloodMaxVolume;
         tempSolution.MaxVolume = entity.Comp.BleedPuddleThreshold * 4; // give some leeway, for chemstream as well
 
-        // Ensure blood that should have DNA has it; must be run here, in case DnaComponent has not yet been initialized
-
-        if (TryComp<DnaComponent>(entity.Owner, out var donorComp) && donorComp.DNA == String.Empty)
-        {
-            donorComp.DNA = _forensicsSystem.GenerateDNA();
-
-            var ev = new GenerateDnaEvent { Owner = entity.Owner, DNA = donorComp.DNA };
-            RaiseLocalEvent(entity.Owner, ref ev);
-        }
-
         // Fill blood solution with BLOOD
+        // The DNA string might not be initialized yet, but the reagent data gets updated in the GenerateDnaEvent subscription
         bloodSolution.AddReagent(new ReagentId(entity.Comp.BloodReagent, GetEntityBloodData(entity.Owner)), entity.Comp.BloodMaxVolume - bloodSolution.Volume);
     }
 
@@ -492,6 +481,8 @@ public sealed class BloodstreamSystem : EntitySystem
                 reagentData.AddRange(GetEntityBloodData(entity.Owner));
             }
         }
+        else
+            Log.Error("Unable to set bloodstream DNA, solution entity could not be resolved");
     }
 
     /// <summary>
@@ -502,13 +493,10 @@ public sealed class BloodstreamSystem : EntitySystem
         var bloodData = new List<ReagentData>();
         var dnaData = new DnaData();
 
-        if (TryComp<DnaComponent>(uid, out var donorComp))
-        {
+        if (TryComp<DnaComponent>(uid, out var donorComp) && donorComp.DNA != null)
             dnaData.DNA = donorComp.DNA;
-        } else
-        {
+        else
             dnaData.DNA = Loc.GetString("forensics-dna-unknown");
-        }
 
         bloodData.Add(dnaData);
 

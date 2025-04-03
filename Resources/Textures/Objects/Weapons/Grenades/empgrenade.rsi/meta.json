@@ -22,6 +22,14 @@
     {
       "name": "equipped-BELT",
       "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
     }
   ]
 }

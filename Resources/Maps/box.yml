@@ -1,6 +1,18 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/07/2025 19:15:23
+  entityCount: 28254
+maps:
+- 780
+grids:
+- 8364
+- 11906
+orphans: []
+nullspace: []
 tilemap:
   0: Space
   7: FloorAsteroidSand
@@ -67,7 +79,6 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
-    - type: LoadedMap
   - uid: 5691
     components:
     - type: MetaData
@@ -13834,7 +13845,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -93654.52
+      secondsUntilStateChange: -93688.41
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -15379,7 +15390,7 @@ entities:
       pos: 9.5,25.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -6911.021
+      secondsUntilStateChange: -6944.9043
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -60903,6 +60914,13 @@ entities:
     - type: Transform
       pos: 28.5,-55.5
       parent: 8364
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 26261
+    components:
+    - type: Transform
+      pos: -22.5,-19.5
+      parent: 8364
 - proto: Carpet
   entities:
   - uid: 370
@@ -87871,7 +87889,7 @@ entities:
       pos: 18.5,-13.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -885.5329
+      secondsUntilStateChange: -919.4161
       state: Closing
   - uid: 13388
     components:
@@ -87879,7 +87897,7 @@ entities:
       pos: 18.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -921.2329
+      secondsUntilStateChange: -955.1161
       state: Closing
   - uid: 13389
     components:
@@ -88047,7 +88065,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -87843.06
+      secondsUntilStateChange: -87876.945
       state: Closing
   - uid: 15010
     components:

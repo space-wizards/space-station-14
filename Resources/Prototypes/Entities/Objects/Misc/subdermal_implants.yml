@@ -344,7 +344,7 @@
   categories: [ HideSpawnMenu ]
   components:
    - type: SubdermalImplant
-     permanent: true
+   - type: MindShieldImplant
    - type: Tag
      tags:
        - MindShield

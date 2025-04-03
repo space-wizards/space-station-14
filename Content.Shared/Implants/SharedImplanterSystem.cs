@@ -372,22 +372,6 @@ public sealed class AddImplantAttemptEvent : CancellableEntityEventArgs
     }
 }
 
-
-[Serializable, NetSerializable]
-public sealed class DeimplantBuiState : BoundUserInterfaceState
-{
-    public readonly string? Implant;
-
-    public Dictionary<string, string> ImplantList;
-
-    public DeimplantBuiState(string? implant, Dictionary<string, string> implantList)
-    {
-        Implant = implant;
-        ImplantList = implantList;
-    }
-}
-
-
 /// <summary>
 /// Change the chosen implanter in the UI.
 /// </summary>
