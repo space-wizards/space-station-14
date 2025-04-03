@@ -25,6 +25,8 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         SubscribeLocalEvent<ToggleableGhostRoleComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, MindRemovedMessage>(OnMindRemoved);
+        SubscribeLocalEvent<ToggleableGhostRoleComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<ToggleableGhostRoleComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<ToggleableGhostRoleComponent, GetVerbsEvent<ActivationVerb>>(AddWipeVerb);
     }
 
@@ -75,17 +77,24 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
             args.PushMarkup(Loc.GetString(component.ExamineTextMindSearching));
 
         // Mind is present, but no active session
-        else if (HasComp<MindContainerComponent>(uid) && !HasComp<ActorComponent>(uid) && HasComp<GhostRoleComponent>(uid))
+        else if (
+            HasComp<MindContainerComponent>(uid) &&
+            CompOrNull<MindComponent>(uid)?.Session == null &&
+            HasComp<GhostRoleComponent>(uid)
+            )
             args.PushMarkup(Loc.GetString(component.ExamineTextMindSsd));
 
         // Mind is present, but ghosted out of the container
-        else if (HasComp<MindContainerComponent>(uid) && !HasComp<ActorComponent>(uid) && HasComp<ToggleableGhostRoleComponent>(uid))
+        else if (
+            HasComp<MindContainerComponent>(uid) &&
+            CompOrNull<MindComponent>(uid)?.Session == null &&
+            HasComp<ToggleableGhostRoleComponent>(uid)
+            )
             args.PushMarkup(Loc.GetString(component.ExamineTextMindGhosted));
 
         // No mind present, not waiting for Ghost Role Takeover
         else
             args.PushMarkup(Loc.GetString(component.ExamineTextNoMind));
-
     }
 
     private void OnMindAdded(EntityUid uid, ToggleableGhostRoleComponent pai, MindAddedMessage args)
@@ -102,8 +111,23 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         UpdateAppearance(uid, ToggleableGhostRoleStatus.Off);
     }
 
+    private void OnPlayerAttached(Entity<ToggleableGhostRoleComponent> entity, ref PlayerAttachedEvent args)
+    {
+        // Player was attached, change the appearance
+        Log.Warning("Player attached to {uid}", entity);
+        UpdateAppearance(entity, ToggleableGhostRoleStatus.On);
+    }
+
+    private void OnPlayerDetached(Entity<ToggleableGhostRoleComponent> entity, ref PlayerDetachedEvent args)
+    {
+        // Player was detached, change the appearance
+        Log.Warning("Player detached from {uid}", entity);
+        UpdateAppearance(entity, ToggleableGhostRoleStatus.Ssd);
+    }
+
     private void UpdateAppearance(EntityUid uid, ToggleableGhostRoleStatus status)
     {
+        Log.Warning("Updating appearance for {uid} to {status}", uid, status);
         _appearance.SetData(uid, ToggleableGhostRoleVisuals.Status, status);
     }
 

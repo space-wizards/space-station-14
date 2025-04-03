@@ -131,6 +131,7 @@
             Off: { state: posibrain }
             Searching: { state: posibrain-searching }
             On: { state: posibrain-occupied }
+            Ssd: { state: posibrain-ssd }
     - type: GuideHelp
       guides:
       - Cyborgs
