@@ -1,6 +1,6 @@
 positronic-brain-installed = Neural activity detected.
 positronic-brain-off = No neural activity detected.
-positronic-brain-ssd = Neural activity detected, but no response.
+positronic-brain-ssd = Neural activity detected, albeit unresponsive.
 positronic-brain-ghosted = Neural activity lost.
 positronic-brain-still-searching = Synthetic neuron descrambling in progress...
 positronic-brain-searching = Beginning synthetic neuron descrambling...
