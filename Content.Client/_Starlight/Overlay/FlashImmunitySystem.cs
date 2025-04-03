@@ -1,3 +1,4 @@
+using Content.Shared.Clothing.Components;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Flash.Components;
 using Content.Shared.Inventory;
@@ -17,7 +18,7 @@ public sealed class FlashImmunitySystem : EntitySystem
         SubscribeLocalEvent<FlashImmunityComponent, GotUnequippedEvent>(OnFlashImmunityUnEquipped);
 
         SubscribeLocalEvent<FlashImmunityComponent, ComponentStartup>(OnFlashImmunityChanged);
-        SubscribeLocalEvent<FlashImmunityComponent, ComponentShutdown>(OnFlashImmunityChanged);
+        SubscribeLocalEvent<FlashImmunityComponent, ComponentRemove>(OnFlashImmunityChanged);
 
         SubscribeLocalEvent<LocalPlayerAttachedEvent>(OnPlayerAttached);
 
@@ -39,12 +40,14 @@ public sealed class FlashImmunitySystem : EntitySystem
 
     private void OnFlashImmunityChanged(EntityUid uid, FlashImmunityComponent component, EntityEventArgs args)
     {
+        uid = GetPossibleWearer(uid);
         FlashImmunityChangedEvent flashImmunityChangedEvent = new(uid, CheckForFlashImmunity(uid));
         RaiseLocalEvent(uid, flashImmunityChangedEvent);
     }
 
     private void OnVisionChanged(EntityUid uid, Component component, EntityEventArgs args)
     {
+        uid = GetPossibleWearer(uid);
         FlashImmunityChangedEvent flashImmunityChangedEvent = new(uid, CheckForFlashImmunity(uid));
         RaiseLocalEvent(uid, flashImmunityChangedEvent);
     }
@@ -59,6 +62,17 @@ public sealed class FlashImmunitySystem : EntitySystem
     {
         FlashImmunityChangedEvent flashImmunityChangedEvent = new(uid, CheckForFlashImmunity(args.Equipee));
         RaiseLocalEvent(args.Equipee, flashImmunityChangedEvent);
+    }
+
+    private EntityUid GetPossibleWearer(EntityUid uid)
+    {
+        if (TryComp<ClothingComponent>(uid, out var clothingComponent))
+        {
+            //we want to get the wearer of the clothing, not the clothing itself
+            return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<TransformComponent>(clothingComponent.Owner)?.ParentUid ?? uid;
+        }
+
+        return uid;
     }
 
     private bool CheckForFlashImmunity(EntityUid uid)
