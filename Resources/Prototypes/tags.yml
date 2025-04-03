@@ -118,6 +118,9 @@
   id: BorgModuleMedical
 
 - type: Tag
+  id: BorgModuleScience
+
+- type: Tag
   id: BorgModuleService
 
 - type: Tag
@@ -955,6 +958,9 @@
   id: Packet
 
 - type: Tag
+  id: ParadoxCloneObjectiveBlacklist # objective entities with this tag don't get copied to paradox clones
+
+- type: Tag
   id: Paper
 
 - type: Tag
@@ -1158,6 +1164,9 @@
 
 - type: Tag
   id: SignalTrigger
+
+- type: Tag
+  id: SilentStorageUser # used in SharedStorageSystem, so the entity will do all silently
 
 - type: Tag
   id: SkeletonMotorcycleKeys

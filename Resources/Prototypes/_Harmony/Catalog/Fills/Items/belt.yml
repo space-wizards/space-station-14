@@ -8,7 +8,7 @@
     - id: BicaridineChemistryBottleHarmony
     - id: BicaridineChemistryBottleHarmony
     - id: DermalineChemistryBottleHarmony
-    - id: EpinephrineChemistryBottle
+    - id: ChemistryBottleEpinephrine
     - id: RadioHandheldSecurity
 
 - type: entity

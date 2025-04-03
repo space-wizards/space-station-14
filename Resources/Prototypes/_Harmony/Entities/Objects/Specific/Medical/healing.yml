@@ -1,8 +1,0 @@
-- type: entity
-  id: Bloodpack1
-  parent: Bloodpack
-  suffix: Single
-  components:
-  - type: Stack
-    stackType: Bloodpack
-    count: 1
