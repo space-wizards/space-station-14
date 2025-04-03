@@ -1,2 +1,2 @@
-ent-BulletAntiMateriel = пуля (.60 бронебойная)
+ent-BulletAntiMateriel = пуля (.50 бронебойная)
     .desc = { ent-BaseBullet.desc }

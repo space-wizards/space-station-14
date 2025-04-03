@@ -136,7 +136,7 @@
   parent: ClothingOuterHardsuitAtmos
   id: ClothingOuterHardsuitDragonFoxEvent
   name: силовой доспех эгида
-  description:  Доспех изготавливают из самых продвинутых сплавов керамита, адамантия и некоторых других металлов. Точный состав сплава хранится в строжайшей тайне. Все элементы доспеха покрываются гексаграммными оберегами, омываются священными маслами и заклинаются древними защитными заклинаниями. 
+  description:  Доспех изготавливают из самых продвинутых сплавов керамита, адамантия и некоторых других металлов. Точный состав сплава хранится в строжайшей тайне. Все элементы доспеха покрываются гексаграммными оберегами, омываются священными маслами и заклинаются древними защитными заклинаниями.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/hardsuit.rsi
@@ -166,7 +166,7 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitDragonFoxEvent
   name: шлем эгида
-  description: Это имперский шлем типа «Аэгис», предназначенный для защиты владельца от психических атак. 
+  description: Это имперский шлем типа «Аэгис», предназначенный для защиты владельца от психических атак.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/hardsuit_helmet.rsi
@@ -274,7 +274,7 @@
   parent: BaseWeaponRifle
   id: WeaponDragonFoxBolter
   name: болтер
-  description: Вид ствольного огнестрельного оружия, стреляющего саморазгоняющимися на траектории болтами. Ввиду политики NanoTrasen калибр был изменён на .44 магнум.
+  description: Вид ствольного огнестрельного оружия, стреляющего саморазгоняющимися на траектории болтами. Ввиду политики NanoTrasen калибр был изменён на .45 магнум.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/boltgun.rsi
@@ -327,7 +327,7 @@
 - type: entity
   parent: BaseItem
   id: BaseMagazineDragonFoxBolter
-  name: магазин (.44 магнум)
+  name: магазин (.45 магнум)
   abstract: true
   components:
   - type: Tag
@@ -360,7 +360,7 @@
 - type: entity
   parent: BaseMagazineDragonFoxBolter
   id: MagazineDragonFoxBolter
-  name: магазин (.44 магнум)
+  name: магазин (.45 магнум)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
@@ -395,7 +395,7 @@
   parent: ClothingBackpack
   id: ClothingBackpackSingleStrapКhaki
   name: однолямочный  рюкзак
-  description: Однолямочный рюкзак для хранения вещей. Окрашен в зелёный хаки. 
+  description: Однолямочный рюкзак для хранения вещей. Окрашен в зелёный хаки.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/backpack.rsi
@@ -529,7 +529,7 @@
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitDragonFoxMedTech
   name: шлем скафандра Боевого Прототипа Медика
-  description: 
+  description:
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/MedTech/hardsuit/helmet.rsi
@@ -541,7 +541,7 @@
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
 
-- type: entity  
+- type: entity
   parent: ClothingBeltStorageBase
   id: ClothingBeltWebbingDragonFoxMedTech
   name: РПС МедТех-Элит

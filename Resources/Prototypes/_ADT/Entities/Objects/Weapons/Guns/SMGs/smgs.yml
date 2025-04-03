@@ -2,7 +2,7 @@
   parent: BaseWeaponSubMachineGun
   id: ADTObjectsWeaponSubMachineGunPPCH45S
   name: ППЧ-44У
-  description: Пистолет-Пулемет Чехова калибра .44 магнум. Укороченная версия ППЧ-44 был разработан в конце 2550-х - начале 2560-х годов для вооружения экипажей боевых машин, шаттлов и космического десанта. Он также используется в КГБ СССП и охранных структурах благодаря своей компактности.
+  description: Пистолет-Пулемет Чехова калибра .45 магнум. Укороченная версия ППЧ-44 был разработан в конце 2550-х - начале 2560-х годов для вооружения экипажей боевых машин, шаттлов и космического десанта. Он также используется в КГБ СССП и охранных структурах благодаря своей компактности.
   components:
   - type: Sprite
     sprite: _ADT/Objects/Weapons/Guns/SMGs/ppch_45u.rsi
@@ -47,7 +47,7 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
-  
+
 - type: entity
   parent: BaseWeaponSubMachineGun
   id: ADTObjectsWeaponSubMachineGunUmp
