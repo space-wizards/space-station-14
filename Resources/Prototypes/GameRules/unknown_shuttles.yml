@@ -20,6 +20,7 @@
     - id: UnknownShuttleMeatZone
     - id: UnknownShuttleMicroshuttle
     - id: UnknownShuttleSpacebus
+    - id: UnknownShuttlePirate # DS14
 
 - type: entityTable
   id: UnknownShuttlesFreelanceTable
@@ -243,3 +244,13 @@
   - type: LoadMapRule
     preloadedGrid: Spacebus
 
+# DS14-start
+
+- type: entity
+  id: UnknownShuttlePirate
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: null
+  - type: LoadMapRule
+    preloadedGrid: Pirate
