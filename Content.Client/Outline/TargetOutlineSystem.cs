@@ -33,6 +33,11 @@ public sealed class TargetOutlineSystem : EntitySystem
     public EntityWhitelist? Whitelist = null;
 
     /// <summary>
+    ///     Blacklist that the target must satisfy.
+    /// </summary>
+    public EntityWhitelist? Blacklist = null;
+
+    /// <summary>
     ///     Predicate the target must satisfy.
     /// </summary>
     public Func<EntityUid, bool>? Predicate = null;
@@ -93,15 +98,16 @@ public sealed class TargetOutlineSystem : EntitySystem
         RemoveHighlights();
     }
 
-    public void Enable(float range, bool checkObstructions, Func<EntityUid, bool>? predicate, EntityWhitelist? whitelist, CancellableEntityEventArgs? validationEvent)
+    public void Enable(float range, bool checkObstructions, Func<EntityUid, bool>? predicate, EntityWhitelist? whitelist, EntityWhitelist? blacklist, CancellableEntityEventArgs? validationEvent)
     {
         Range = range;
         CheckObstruction = checkObstructions;
         Predicate = predicate;
         Whitelist = whitelist;
+        Blacklist = blacklist;
         ValidationEvent = validationEvent;
 
-        _enabled = Predicate != null || Whitelist != null || ValidationEvent != null;
+        _enabled = Predicate != null || Whitelist != null || Blacklist != null || ValidationEvent != null;
     }
 
     public override void Update(float frameTime)
