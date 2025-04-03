@@ -18,6 +18,7 @@ using Robust.Shared.Analyzers;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -45,7 +46,6 @@ public class ComponentQueryBenchmark
     private EntityQuery<ClothingComponent> _clothingQuery;
     private EntityQuery<MapComponent> _mapQuery;
     private EntityUid[] _items = default!;
-    private ArchEntity[] _archItems = default!;
 
     [GlobalSetup]
     public void Setup()
@@ -70,12 +70,11 @@ public class ComponentQueryBenchmark
         }).GetAwaiter().GetResult();
 
         _items = new EntityUid[_entMan.Count<ItemComponent>()];
-        _archItems = new ArchEntity[_entMan.Count<ItemComponent>()];
+
         var i = 0;
         var enumerator = _entMan.AllEntityQueryEnumerator<ItemComponent>();
         while (enumerator.MoveNext(out var uid, out _))
         {
-            _archItems[i] = _entMan.GetArchEntity(uid);
             _items[i++] = uid;
         }
     }
@@ -115,9 +114,8 @@ public class ComponentQueryBenchmark
         var hashCode = 0;
         foreach (var uid in _items)
         {
-            var archEnt = _entMan.GetArchEntity(uid);
 
-            if (_entMan.TryComp(ref archEnt, out ClothingComponent? clothing, out ItemComponent? _))
+            if (_entMan.TryGetComponent(uid, out ClothingComponent? clothing, out ItemComponent? _))
                 hashCode = HashCode.Combine(hashCode, clothing.GetHashCode());
         }
         return hashCode;
