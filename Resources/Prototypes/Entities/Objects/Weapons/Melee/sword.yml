@@ -98,6 +98,8 @@
     - Back
     - Belt
   - type: Reflect
+  - type: TeleportationAction
+    dropsPulled: true
 
 - type: entity
   name: machete

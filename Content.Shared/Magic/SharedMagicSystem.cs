@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Coordinates.Helpers;
@@ -316,12 +317,9 @@ public abstract class SharedMagicSystem : EntitySystem
         if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
             return;
 
-        var transform = Transform(args.Performer);
-        if (transform.MapID != _transform.GetMapId(args.Target) || !_interaction.InRangeUnobstructed(args.Performer, args.Target, range: 1000F, collisionMask: CollisionGroup.Opaque, popup: true))
-            return;
+        var ev = new TeleportActionEvent(args.Performer, args.Target);
+        RaiseLocalEvent(args.Action, ref ev);
 
-        _transform.SetCoordinates(args.Performer, args.Target);
-        _transform.AttachToGridOrMap(args.Performer, transform);
         Speak(args);
         args.Handled = true;
     }
