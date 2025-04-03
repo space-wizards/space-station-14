@@ -101,8 +101,8 @@
         - !type:ReagentThreshold
           min: 40
         damage:
-          groups:
-            Airloss: 5 # ideally this causes heart palpitations cutting bloodflow to the brain
+          types:
+            Bloodloss: 5 # ideally this causes heart palpitations cutting bloodflow to the brain
 
 - type: reagent
   id: Ethylredoxrazine
