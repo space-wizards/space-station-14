@@ -37,3 +37,6 @@
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
     socks: ClothingUnderwearSocksSeniorEngineer
+  storage:
+    back:
+    - RubberStampSeniorEngineer # DS14

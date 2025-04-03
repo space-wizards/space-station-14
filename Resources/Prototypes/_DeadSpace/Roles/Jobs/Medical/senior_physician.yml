@@ -35,3 +35,6 @@
     ears: ClothingHeadsetMedical
     belt: ClothingBeltMedicalFilled
     socks: ClothingUnderwearSocksSeniorPhysician
+  storage:
+    back:
+    - RubberStampSeniorPhysician # DS14

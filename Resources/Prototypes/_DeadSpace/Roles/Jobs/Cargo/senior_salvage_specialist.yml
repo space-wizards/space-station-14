@@ -32,3 +32,6 @@
     ears: ClothingHeadsetMining
     neck: ClothingNeckCloakMiner
     socks: ClothingUnderwearSocksSeniorSalvage
+  storage:
+    back:
+    - RubberStampSeniorSalvage # DS14

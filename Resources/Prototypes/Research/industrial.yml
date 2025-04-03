@@ -119,6 +119,7 @@
   - RipleyPeripheralsElectronics
   - MechEquipmentGrabber
 
+# DS14-start
 - type: technology
   id: HUD
   name: research-technology-hud
@@ -133,6 +134,7 @@
   - ClothingEyesHudMedical
   - ClothingEyesHudSecurity
   - ClothingEyesHudAdvanced
+# DS14-end
 
 # Tier 2
 
