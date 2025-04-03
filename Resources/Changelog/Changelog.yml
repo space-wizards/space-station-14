@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: The crew monitoring crate now contains a flatpack of the server and computers,
-      and can be opened with science access instead of engineering access now.
-    type: Tweak
-  id: 7626
-  time: '2024-11-20T01:05:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33417
 - author: Beck Thompson
   changes:
   - message: Toggle verbs are no longer duplicated on magboots and fire extinguishers!
@@ -3899,3 +3891,12 @@
   id: 8125
   time: '2025-04-03T06:29:52.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36212
+- author: sowelipililimute
+  changes:
+  - message: You can now more easily interact with objects behind faded ones, and
+      you can look behind fadeable objects in your FOV by hovering them with your
+      mouse pointer
+    type: Add
+  id: 8126
+  time: '2025-04-03T06:58:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35863
