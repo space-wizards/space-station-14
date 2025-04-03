@@ -66,28 +66,6 @@
 - type: entity
   parent: BaseHandheldInstrument
   id: PhoneInstrument
-  name: red phone
-  description: Should anything ever go wrong...
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/Instruments/otherinstruments.rsi
-    state: red_phone
-  - type: EmitSoundOnLand
-    sound:
-       path: /Audio/Items/ring.ogg
-  - type: Instrument
-    program: 124
-  - type: Item
-    size: Small
-  - type: Prayable
-    sentMessage: prayer-popup-notify-centcom-sent
-    notificationPrefix: prayer-chat-notify-centcom
-    verb: prayer-verbs-call
-    verbImage: null
-
-- type: entity
-  parent: BaseHandheldInstrument
-  id: PhoneInstrument
   name: red phone [Thorn]
   description: Should anything ever go wrong...
   components:
