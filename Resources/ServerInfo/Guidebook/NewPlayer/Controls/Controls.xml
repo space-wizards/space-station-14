@@ -5,14 +5,14 @@
 <Box Orientation="Vertical"><CommandButton Text="ui-options-tab-controls" Command="options 2"/></Box>
 
 ## Movement
-You can move around the game world by using [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][keybind="MoveDown"][keybind="MoveRight"][/bold][/color].
-When holding down [color=yellow][bold][keybind="Walk"][/bold][/color], you'll walk, stopping you from slipping on most substances.
+To move, use [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][keybind="MoveDown"][keybind="MoveRight"][/bold][/color].
 
+Hold [color=yellow][bold][keybind="Walk"][/bold][/color] to walk slowly enough to prevent slipping on most surfaces.
 You can switch walking to a [color=cyan]toggle[/color] in the controls menu.
 
-[color=cyan]Pulling[/color] objects is done by pressing [color=yellow][bold][keybind="TryPullObject"][/bold][/color].
-While pulling, you can drag an object to your mouse cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
-Pressing [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] releases the item you are currently dragging.
+To [color=cyan]pull[/color] entities, press [color=yellow][bold][keybind="TryPullObject"][/bold][/color].
+While pulling, you can drag them to your mouse cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
+Pull again or press [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] to let go.
 
 You may find yourself in a situation with [color=#EB2D3A][bold]low gravity.[/bold][/color]
 This will cause your character to drift around when moving.
@@ -20,16 +20,17 @@ When off-station, you will be unable to control your direction.
 [bold]Throwing objects[/bold] or [bold]spraying a fire-extinguisher[/bold] can help propel yourself while in this state.
 
 ## Interactions
-General interactions are performed by clicking [color=yellow][bold][keybind="Use"][/bold][/color].
-These are context-sensitive and [bold]depend on the item in your active hand[/bold].
+General interactions are context-sensitive and [bold]depend on the item in your active hand[/bold]. To perform them, just click [color=yellow][bold][keybind="Use"][/bold][/color].
+Some items can be interacted with alternatively, which includes locking lockers and ejecting sub-items from other items.
 To perform [bold]alternative interactions[/bold], use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
 
-To activate or use an item in your hand, click [color=yellow][bold][keybind="Use"][/bold][/color] on it, or press [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] if it's in the active hand.
-Its alternative counterpart is [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color].
+Many items have special activations, such as reloading or switching to holding with both hands.
+To activate or use an item in your hand, click [color=yellow][bold][keybind="Use"][/bold][/color] on it, or use the [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] hotkey if it's in the active hand.
+The alternative counterpart is [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color].
 
+You can interact with items even with your hands full.
 For [color=cyan]basic interactions[/color], press [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
-This action is independent of held items.
-It's used for interacting with the world without picking items up.
+It's used for interacting with the world without picking items up and without using your held items.
 
 Clicking [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on any entity opens the [color=cyan]context menu[/color].
 This not only lets sort through large piles of items, but also allows you to perform [bold]additional interactions.[/bold]
@@ -44,6 +45,16 @@ You can swap which hand is currently active using [color=yellow][bold][keybind="
 
 You can [color=cyan]drop[/color] the item you are holding using [color=yellow][bold][keybind="Drop"][/bold][/color] or alternatively [color=cyan]throw it[/color] to your cursor with [color=yellow][bold][keybind="ThrowItemInHand"][/bold][/color].
 
+## Drag-and-drop
+While most objects can only be moved by grabbing or pulling, movable entities too big to fit into your hands require a special type of interaction.
+These are generally interactions that involve "using" players, who obviously don't fit into your hands:
+
+- Drag yourself onto a table to climb it (also doable with [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color])
+  
+- Drag another player onto yourself to open the [bold]strip menu[/bold], allowing you to take their equipment.
+  
+- Drag a mob onto a chair, a bed or the medical scanner to put them onto it
+
 ## Inventory
 You can [color=cyan]open[/color] you inventory using [color=yellow][bold][keybind="OpenInventoryMenu"][/bold][/color].
 Each slot on your HUD can be filled with an appropriate [bold]item[/bold] or [bold]piece of clothing[/bold].
@@ -56,6 +67,8 @@ Holding it down will let you [color=cyan]drag[/color] the item to a different sp
 While dragging, pressing [color=yellow][bold][keybind="RotateStoredItem"][/bold][/color] will [color=cyan]rotate[/color] the item.
 
 You can still do all regular interactions with items in your bag, including [color=cyan]examining[/color] and opening the [color=cyan]context menu[/color].
+
+To halve a stack, use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
 
 There are a few additional hotkeys worth knowing:
 
