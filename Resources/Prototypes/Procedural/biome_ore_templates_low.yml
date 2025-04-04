@@ -8,7 +8,7 @@
     WallRockChromite: WallRockChromiteTin
     WallRockSand: WallRockSandTin
     WallRockSnow: WallRockSnowTin
-  maxCount: 15
+  maxCount: 20
   minGroupSize: 4
   maxGroupSize: 8
   radius: 4
@@ -21,7 +21,7 @@
     WallRockBasalt: WallRockBasaltQuartz
     WallRockChromite: WallRockChromiteQuartz
     WallRockSnow: WallRockSnowQuartz
-  maxCount: 15
+  maxCount: 20
   minGroupSize: 4
   maxGroupSize: 8
   radius: 4
@@ -35,8 +35,8 @@
     WallRockChromite: WallRockChromiteCoal
     WallRockSand: WallRockSandCoal
     WallRockSnow: WallRockSnowCoal
-  maxCount: 15
-  minGroupSize: 3
+  maxCount: 20
+  minGroupSize: 4
   maxGroupSize: 6
   radius: 4
 
@@ -50,7 +50,7 @@
     WallRockSand: WallRockSandSalt
     WallRockSnow: WallRockSnowSalt
   maxCount: 15
-  minGroupSize: 3
+  minGroupSize: 4
   maxGroupSize: 6
   radius: 4
 
