@@ -177,10 +177,10 @@
     solutions:
       ammo:
         reagents:
-        - ReagentId: ChloralHydrate
-          Quantity: 7
+        - ReagentId: Nocturine #Starlight
+          Quantity: 5
   - type: SolutionTransfer
-    maxTransferAmount: 7
+    maxTransferAmount: 5
 
 - type: entity
   id: ShellShotgunImprovised
