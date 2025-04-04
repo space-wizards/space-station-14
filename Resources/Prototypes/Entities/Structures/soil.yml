@@ -65,7 +65,7 @@
   components:
     - type: Construction
       graph: Soil
-      node: hydroponicsSoil
+      node: fungalSoil
     - type: PlantHolder
       waterLevel: 0
       nutritionLevel: 0
