@@ -4418,4 +4418,11 @@ Entries:
   id: 612
   time: '2025-04-03T04:25:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/440
+- author: Happyrobot33
+  changes:
+  - message: Added cooldown of 0.5 seconds to all Emotes.
+    type: Add
+  id: 613
+  time: '2025-04-04T08:03:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/441
 
