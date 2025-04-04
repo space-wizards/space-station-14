@@ -57,22 +57,17 @@
     verb: prayer-verbs-call
     verbImage: null
 
+#shmeeg change chunk
 - type: entity
-  parent: BaseHandheldInstrument
-  id: PhoneInstrumentNowInBlue
+  parent: PhoneInstrument
+  id: PhoneInstrumentbloo
   name: blue phone [Luma]
-  description: Should anything ever go wrong...
+  description: For evil people to call their friends.
   components:
   - type: Sprite
     sprite: Objects/Fun/Instruments/blue_phone.rsi
     state: icon
-  - type: Item
-    size: Small
-  - type: Prayable
-    sentMessage: prayer-popup-notify-centcom-sent
-    notificationPrefix: prayer-chat-notify-centcom
-    verb: prayer-verbs-call
-    verbImage: null
+#shmeeg change chunk end
 
 - type: entity
   parent: PhoneInstrument
