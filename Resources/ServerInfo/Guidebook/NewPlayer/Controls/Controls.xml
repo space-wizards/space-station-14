@@ -11,8 +11,8 @@ Some surfaces will make you slip.
 Hold [color=yellow][bold][keybind="Walk"][/bold][/color] to walk slowly enough to prevent slipping on most of them.
 You can switch walking to a [color=cyan]toggle[/color] in the controls menu.
 
-To [color=cyan]pull[/color] entities, press [color=yellow][bold][keybind="TryPullObject"][/bold][/color].
-While pulling, you can drag them to your mouse cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
+To [color=cyan]pull[/color] an entity, use [color=yellow][bold][keybind="TryPullObject"][/bold][/color] on it.
+While pulling, you can drag it to your mouse cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
 Pull again or press [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] to let go.
 
 You may find yourself in a situation with [color=#EB2D3A][bold]low gravity.[/bold][/color]
@@ -21,25 +21,28 @@ When off-station, you will be unable to control your direction.
 [bold]Throwing objects[/bold] or [bold]spraying a fire-extinguisher[/bold] can help propel yourself while in this state.
 
 ## Interactions
-General interactions are context-sensitive and [bold]depend on the item in your active hand[/bold]. To perform them, click [color=yellow][bold][keybind="Use"][/bold][/color].
-Some items can be interacted with alternatively, which includes locking lockers and ejecting sub-items from other items.
-To perform [bold]alternative interactions[/bold], use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
+Standard interactions are context-sensitive and [bold]depend on the item in your active hand[/bold]. 
+To perform them, click [color=yellow][bold][keybind="Use"][/bold][/color].
+Some items have [bold]alternative interactions[/bold], such as locking lockers and ejecting sub-items from other items.
+To perform [color=cyan]alternative interactions[/color], use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
 
-Many items have special activations, such as reloading or switching to holding with both hands.
-To activate or use an item in your hand, click [color=yellow][bold][keybind="Use"][/bold][/color] on it, or use the [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] hotkey if it's in the active hand.
+Many items have use-in-hand interactions, such as reloading or switching to holding with both hands.
+To activate or use an item in your hand, click [color=yellow][bold][keybind="Use"][/bold][/color] on it, or press the [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] hotkey if it's in the active hand.
 The alternative counterpart is [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color].
 
 You can interact with items even with your hands full.
-For [color=cyan]basic interactions[/color], press [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
-It's used for interacting with the world without picking items up and without using your held items.
+Perform [color=cyan]activation interactions[/color] by pressing [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
+They're used for interacting with the world without picking items up and without using the items you're holding.
+They often double as standard interactions.
+The alternative counterpart is still [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
 
-To sum up, there are 
-Clicking [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on any entity opens the [color=cyan]context menu[/color].
-This not only lets sort through large piles of items, but also allows you to perform [bold]additional interactions.[/bold]
+To sum up, different entities have [bold]1-3[/bold] types of context-sensitive interactions.
+You can always use [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on an interactive entity to open the [color=cyan]context menu[/color].
+It shows shows you [bold][italic]standard[/italic][/bold], [bold]activating[/bold], [italic]alternative[/italic], and all other possible interactions in one list.
+This menu also lets you sort through large piles of items.
 
-To [color=cyan]examine[/color] any entity, press [color=yellow][bold][keybind="ExamineEntity"][/bold][/color]. 
-This brings up a window displaying the object's name, a brief description, and any other relevant details.
-[italic]Examining objects around you can help you understand their functions and properties[/italic].
+If you're ever unsure about an entity, [color=cyan]examine[/color] it by pressing [color=yellow][bold][keybind="ExamineEntity"][/bold][/color]. 
+This brings up a window displaying its name, a brief description, relevant details, and sometimes a link to the guidebook.
 
 ## Hands
 Using [color=yellow][bold][keybind="Use"][/bold][/color] on items in the world will pick them up and put them into your active hand.
