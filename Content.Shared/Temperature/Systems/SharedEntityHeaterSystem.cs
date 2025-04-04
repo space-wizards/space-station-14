@@ -1,6 +1,9 @@
 using Content.Shared.Temperature.Components;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
+using Content.Shared.Power;
+using Content.Shared.Power.EntitySystems;
+using Content.Shared.Temperature.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
@@ -11,7 +14,7 @@ namespace Content.Shared.Temperature.Systems;
 /// <summary>
 /// Handles <see cref="EntityHeaterComponent"/> updating and events.
 /// </summary>
-public abstract class SharedEntityHeaterSystem : EntitySystem
+public abstract class partial SharedEntityHeaterSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
@@ -19,7 +22,7 @@ public abstract class SharedEntityHeaterSystem : EntitySystem
     [Dependency] protected readonly SharedTemperatureSystem Temperature = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
 
-    private readonly int _settingCount = Enum.GetValues(typeof(EntityHeaterSetting)).Length;
+    private readonly int _settingCount = Enum.GetValues<EntityHeaterSetting>().Length;
 
     public override void Initialize()
     {
@@ -30,62 +33,69 @@ public abstract class SharedEntityHeaterSystem : EntitySystem
         SubscribeLocalEvent<EntityHeaterComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
-    private void OnPowerChanged(EntityUid uid, EntityHeaterComponent comp, ref PowerChangedEvent args)
-    {
-        // disable heating element glowing layer if theres no power
-        // doesn't actually turn it off since that would be annoying
-        var setting = args.Powered
-            ? comp.Setting
-            : EntityHeaterSetting.Off;
-        Appearance.SetData(uid, EntityHeaterVisuals.Setting, setting);
-    }
-
-    private void OnExamined(EntityUid uid, EntityHeaterComponent comp, ExaminedEvent args)
+    private void OnExamined(Entity<EntityHeaterComponent> ent, ref ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
-        args.PushMarkup(Loc.GetString("entity-heater-examined", ("setting", comp.Setting)));
+        args.PushMarkup(Loc.GetString("entity-heater-examined", ("setting", ent.Comp.Setting)));
     }
 
-    private void OnGetVerbs(EntityUid uid, EntityHeaterComponent comp, GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetVerbs(Entity<EntityHeaterComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (!Timing.IsFirstTimePredicted)
-            return;
+        var nextSettingIndex = ((int)ent.Comp.Setting + 1) % _settingCount;
+        var nextSetting = (EntityHeaterSetting)nextSettingIndex;
 
-        var setting = (int) comp.Setting;
-        setting++;
-        setting %= _settingCount;
-        var nextSetting = (EntityHeaterSetting) setting;
-
-        args.Verbs.Add(new AlternativeVerb
+        var user = args.User;
+        args.Verbs.Add(new AlternativeVerb()
         {
             Text = Loc.GetString("entity-heater-switch-setting", ("setting", nextSetting)),
             Act = () =>
             {
-                ChangeSetting((uid, comp), nextSetting);
-                Popup.PopupPredicted(Loc.GetString("entity-heater-switched-setting", ("setting", nextSetting)), uid, args.User);
-            },
+                ChangeSetting(ent, nextSetting, user);
+            }
         });
     }
 
-    public virtual void ChangeSetting(Entity<EntityHeaterComponent> heater, EntityHeaterSetting setting)
+    private void OnPowerChanged(Entity<EntityHeaterComponent> ent, ref PowerChangedEvent args)
     {
-        heater.Comp.Setting = setting;
-        Dirty(heater);
+        // disable heating element glowing layer if theres no power
+        // doesn't actually change the setting since that would be annoying
+        var setting = args.Powered ? ent.Comp.Setting : EntityHeaterSetting.Off;
+        _appearance.SetData(ent, EntityHeaterVisuals.Setting, setting);
+    }
+
+    protected virtual void ChangeSetting(Entity<EntityHeaterComponent> ent, EntityHeaterSetting setting, EntityUid? user = null)
+    {
+        // Still allow changing the setting without power
+        ent.Comp.Setting = setting;
+        _audio.PlayPredicted(ent.Comp.SettingSound, ent, user);
+        _popup.PopupClient(Loc.GetString("entity-heater-switched-setting", ("setting", setting)), ent, user);
+        Dirty(ent);
+
+        // Only show the glowing heating element layer if there's power
+        if (_receiver.IsPowered(ent.Owner))
+            _appearance.SetData(ent, EntityHeaterVisuals.Setting, setting);
     }
 
     protected float SettingPower(EntityHeaterSetting setting, float max)
     {
+        // Power use while off needs to be non-zero so powernet doesn't consider the device powered
+        // by an unpowered network while in the off state. Otherwise, when we increase the load,
+        // the clientside APC receiver will think the device is powered until it gets the next
+        // update from the server, which will cause the heating element to glow for a moment.
+        // I spent several hours trying to figure out a better way to do this using PowerDisabled
+        // or something, but nothing worked as well as this.
+        // Just think of the load as a little LED, or bad wiring, or something.
         return setting switch
         {
             EntityHeaterSetting.Low => max / 3f,
             EntityHeaterSetting.Medium => max * 2f / 3f,
             EntityHeaterSetting.High => max,
-            _ => 0f,
+            _ => 0.01f,
         };
     }
 }
