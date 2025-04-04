@@ -1,7 +1,7 @@
 - type: gameMap
   id: Mira
   mapName: 'Mira Station'
-  mapPath: /Maps/_Harmony/mira.yml
+  mapPath: /Maps/mira.yml
   minPlayers: 0
   maxPlayers: 25
   stations:
@@ -14,9 +14,9 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'ES'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/_Harmony/Shuttles/emergency_huyendo.yml
+          emergencyShuttlePath: /Maps/Shuttles/emergency_huyendo.yml
         - type: StationCargoShuttle
-          path: /Maps/_Harmony/Shuttles/cargo_mira.yml
+          path: /Maps/Shuttles/cargo_mira.yml
         - type: StationJobs
           availableJobs:
             #service
