@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using JetBrains.Annotations;
 using Robust.Client.Player;
@@ -40,9 +41,17 @@ namespace Content.Client.Actions
         private readonly List<EntityUid> _removed = new();
         private readonly List<(EntityUid, BaseActionComponent?)> _added = new();
 
+        private readonly HashSet<(EntityUid ActionId, BaseActionComponent Action, LimitedChargesComponent? Charges, AutoRechargeComponent? AutoRecharge)> _disabledActions = new();
+        private readonly List<(EntityUid ActionId, BaseActionComponent Action, LimitedChargesComponent? Charges, AutoRechargeComponent? AutoRecharge)> _toRemove = new();
+
+        private EntityQuery<ActionsComponent> _actionsQuery;
+
         public override void Initialize()
         {
             base.Initialize();
+
+            _actionsQuery = GetEntityQuery<ActionsComponent>();
+
             SubscribeLocalEvent<ActionsComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<ActionsComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<ActionsComponent, ComponentHandleState>(HandleComponentState);
@@ -51,6 +60,40 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<EntityTargetActionComponent, ComponentHandleState>(OnEntityTargetHandleState);
             SubscribeLocalEvent<WorldTargetActionComponent, ComponentHandleState>(OnWorldTargetHandleState);
             SubscribeLocalEvent<EntityWorldTargetActionComponent, ComponentHandleState>(OnEntityWorldTargetHandleState);
+        }
+
+        /// <inheritdoc/>
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            if (_playerManager.LocalEntity is not { } player ||
+                !_actionsQuery.TryComp(player, out var actionsComponent) ||
+                _disabledActions.Count == 0)
+                return;
+
+            foreach (var (actionId, actionComp, charges, autoRecharge) in _disabledActions)
+            {
+                if (!actionsComponent.Actions.Contains(actionId) ||
+                    actionComp.IconColor != actionComp.DisabledIconColor)
+                {
+                    _toRemove.Add((actionId, actionComp, charges, autoRecharge));
+                    continue;
+                }
+
+                var currentCharges = _charges.GetCurrentCharges((actionId, charges, autoRecharge));
+                if (currentCharges > 0)
+                {
+                    UpdateAction(actionId, actionComp);
+                    _toRemove.Add((actionId, actionComp, charges, autoRecharge));
+
+                }
+            }
+
+            foreach (var item in _toRemove)
+            {
+                _disabledActions.Remove(item);
+            }
         }
 
         private void OnInstantHandleState(EntityUid uid, InstantActionComponent component, ref ComponentHandleState args)
@@ -128,7 +171,14 @@ namespace Content.Client.Actions
             if (!ResolveActionData(actionId, ref action))
                 return;
 
-            action.IconColor = _charges.GetCurrentCharges(actionId.Value) < 1 ? action.DisabledIconColor : action.OriginalIconColor;
+            var hasNoCharges = TryComp<LimitedChargesComponent>(actionId, out var limitedChargesComponent) &&
+                               _charges.GetCurrentCharges((actionId.Value, limitedChargesComponent)) < 1;
+            action.IconColor = hasNoCharges ? action.DisabledIconColor : action.OriginalIconColor;
+
+            if (hasNoCharges)
+                _disabledActions.Add((actionId.Value, action, limitedChargesComponent, CompOrNull<AutoRechargeComponent>(actionId)));
+            else if (action.IconColor != action.DisabledIconColor)
+                _disabledActions.Remove((actionId.Value, action, limitedChargesComponent, CompOrNull<AutoRechargeComponent>(actionId)));
 
             base.UpdateAction(actionId, action);
             if (_playerManager.LocalEntity != action.AttachedEntity)
