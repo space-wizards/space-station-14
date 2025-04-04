@@ -8,7 +8,6 @@ Evac:
 -	Decals, of course
 - Make the station move forward!
 - Job numbers in the prototype file
-Armory needs more armor
 Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
 Command Meeting: Needs access to execution cameras
 Execution telescreens: Need access to execution cameras
@@ -169,3 +168,4 @@ DONE:
 /* 	Still empty */
 /* Solars prone to meteor breakages */
 /* Expand/reposition solars */
+/* Armory needs more armor */
