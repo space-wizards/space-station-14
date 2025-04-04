@@ -11,7 +11,7 @@ Some surfaces will make you slip.
 Hold [color=yellow][bold][keybind="Walk"][/bold][/color] to walk slowly enough to prevent slipping on most of them.
 You can switch walking to a [color=cyan]toggle[/color] in the controls menu.
 
-To [color=cyan]pull[/color] an entity, use [color=yellow][bold][keybind="TryPullObject"][/bold][/color] on it.
+To [color=cyan]pull[/color] a movable or mobile entity ([italic]mob[/italic]), click [color=yellow][bold][keybind="TryPullObject"][/bold][/color] on it.
 While pulling, you can drag it to your mouse cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
 Pull again or press [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] to let go.
 
@@ -21,52 +21,51 @@ When off-station, you will be unable to control your direction.
 [bold]Throwing objects[/bold] or [bold]spraying a fire-extinguisher[/bold] can help propel yourself while in this state.
 
 ## Interactions
-Standard interactions are context-sensitive and [bold]depend on the item in your active hand[/bold]. 
-To perform them, click [color=yellow][bold][keybind="Use"][/bold][/color].
+Standard, [color=yellow][bold][keybind="Use"][/bold][/color] interactions are context-sensitive and [bold]depend on the item in your active hand[/bold].
 Some items have [bold]alternative interactions[/bold], such as locking lockers and ejecting sub-items from other items.
 To perform [color=cyan]alternative interactions[/color], use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
 
 Many items have use-in-hand interactions, such as reloading or switching to holding with both hands.
-To activate or use an item in your hand, click [color=yellow][bold][keybind="Use"][/bold][/color] on it, or press the [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] hotkey if it's in the active hand.
+To activate or use a held item, click [color=yellow][bold][keybind="Use"][/bold][/color] on it, or press the [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] hotkey if it's in the active hand.
 The alternative counterpart is [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color].
 
-You can interact with items even with your hands full.
+You can interact with objects even when your hands are full.
 Perform [color=cyan]activation interactions[/color] by pressing [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
-They're used for interacting with the world without picking items up and without using the items you're holding.
-They often double as standard interactions.
+This allows you to interact with the world without picking items up and without using the items you're holding.
+Activation interactions often double as standard interactions.
 The alternative counterpart is still [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
 
-To sum up, different entities have [bold]1-3[/bold] types of context-sensitive interactions.
-You can always use [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on an interactive entity to open the [color=cyan]context menu[/color].
-It shows shows you [bold][italic]standard[/italic][/bold], [bold]activating[/bold], [italic]alternative[/italic], and all other possible interactions in one list.
-This menu also lets you sort through large piles of items.
+To sum up, there are [bold]three[/bold] types of context-sensitive interactions.
+You can always click [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on an interactive entity to open the [color=cyan]context menu[/color].
+This menu displays [bold][italic]standard[/italic][/bold], [bold]activation[/bold], [italic]alternative[/italic], and other possible interactions in one list.
+Sometimes called the [italic]entity menu[/italic], it also helps you sort through large piles of items.
 
-If you're ever unsure about an entity, [color=cyan]examine[/color] it by pressing [color=yellow][bold][keybind="ExamineEntity"][/bold][/color]. 
-This brings up a window displaying its name, a brief description, relevant details, and sometimes a link to the guidebook.
+If you're ever unsure about an entity, you can [color=cyan]examine[/color] it by pressing [color=yellow][bold][keybind="ExamineEntity"][/bold][/color]. 
+This opens a window displaying its name, a brief description, relevant details, and sometimes a link to the guidebook.
+
+For more details about interactions, please refer to the [color=cyan]Wiki[/color].
 
 ## Hands
-Using [color=yellow][bold][keybind="Use"][/bold][/color] on items in the world will pick them up and put them into your active hand.
-You can swap which hand is currently active using [color=yellow][bold][keybind="SwapHands"][/bold][/color].
+Using [color=yellow][bold][keybind="Use"][/bold][/color] on holdable items in the world will pick them up and put them into your active hand.
+You can swap which hand is currently active with [color=yellow][bold][keybind="SwapHands"][/bold][/color].
 
-You can [color=cyan]drop[/color] the item you are holding using [color=yellow][bold][keybind="Drop"][/bold][/color] or alternatively [color=cyan]throw it[/color] to your cursor with [color=yellow][bold][keybind="ThrowItemInHand"][/bold][/color].
+To [color=cyan]drop[/color] an item from your active hand, use [color=yellow][bold][keybind="Drop"][/bold][/color] or alternatively [color=cyan]throw[/color] it to your cursor with [color=yellow][bold][keybind="ThrowItemInHand"][/bold][/color].
 
 ## Drag-and-drop
-While most objects can only be used by clicking on them, mobs (mobile entities) require a special type of interaction:
+While most objects can be used by clicking on them, "using" mobs (mobile entities) requires a special type of interaction:
 
+- Drag a mob onto a chair, a bed or objects like the medical scanner to place them onto it.
+ 
 - Drag yourself onto a table to climb it (also doable with [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color]).
   
 - Drag another player onto yourself to open the [bold]strip menu[/bold], allowing you to take their equipment.
-  
-- Drag a mob onto a chair, a bed or the medical scanner do place them onto it.
-
-Mobs can also be [color=cyan]pulled[/color].
 
 ## Inventory
-You can [color=cyan]open[/color] you inventory using [color=yellow][bold][keybind="OpenInventoryMenu"][/bold][/color].
+You can open you [color=cyan]inventory[/color] using [color=yellow][bold][keybind="OpenInventoryMenu"][/bold][/color].
 Each slot on your HUD can be filled with an appropriate item.
 
 Two of the slots on the hotbar correspond to your [bold]bag and belt[/bold].
-You can open them using [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] on them or by clicking the icon in the [bold]bottom-right[/bold].
+You can open them using [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] on them or by clicking the icon in the [bold]bottom right[/bold].
 
 Pressing [color=yellow][bold][keybind="MoveStoredItem"][/bold][/color] will [color=cyan]take an item out[/color] of the bag.
 Holding it down will let you [color=cyan]drag[/color] the item to a different spot.
