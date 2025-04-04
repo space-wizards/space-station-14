@@ -12,7 +12,6 @@ Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
 Command Meeting: Needs access to execution cameras
 Execution telescreens: Need access to execution cameras
 Weird color room in east service maints starts with lights on
-Weapons weapons have machine boards in 'em! Gotta break those, too
 Chef's closets have stuff in 'em they shouldn't? Like, crowbars and N2 tanks.
 Cargo computer shutter button seems not to be hooked up.
 	It is, though...? Does the directional window block it?
@@ -33,7 +32,6 @@ Among Us "clues" on detective notice boards
 Put something in that space in the chapel's SE room
 	Something for Remilla to perch on or w/e?
 		Fruit for the fruit bat! Blood for the blood gods!
-Decals under chapel windows
 Papers on the ground? for explaining things to
 	lawyers on spawn
 	Or maybe I just put one spawn in each office and
@@ -51,9 +49,7 @@ Fill CMO's special syringe
 Cryo piping
 Check various shuttle designs to make sure docking arms line up with at least some
 Telecoms: Change reinforced walls?
-Glass doors at sec -> hall
 Move warden's office?
-Double-check reinforced walls around substations
 Make easier to navigate in general, + add standard colors around more
 	Maybe crappy scribble decals on top of the MIRI flooring?
 Make HoP's office clearer in particular
@@ -64,9 +60,39 @@ Deal with very long TEG pipeline somehow.
 TEG just engi doors
 Swap nuke/PA? Move nuke to vault?
 Move oxy miner to where the other gasses are?
-Liquid carbon dioxide can hooked up to condenser behind bar is wrong?
 Set ejection chamber button access (cap and HoS)
 Nudge wall sign transform variables to make them line up better
+Fix bridge door power (and make glass?)
+One missing Amogus camera: Admin (probably because of fix wiring)
+Probably growing anomaly berries is a no-go.
+Couple of cameras just called "camera" on security
+	Outside high-sec brig in space
+	Inside Perma
+Security camera at north sec lobby?
+Hook up bathroom vent in perma?
+Thought there was a maints loot spawner in the shower?
+Fix hole in bar windoors
+Arrivals->service corridor substations are unlabeled.
+Unnamed APC hallway outside brigs
+AI power isn't connected?
+	Double-check the internal wiring. It seems wrong.
+	Esp. how wires merge when it's all wired properly.
+	It was broken by a meteor anyway, though.
+		Needs more protection from that?
+	Also, some wires under walls in space. Not so great.
+Radiation from singulo hits AI walkway
+Maybe some railings to protect from HV grilles, too.
+	Not just on AI walk, but in general, make it a bit less easy to just bump into those
+	grilles. Outer layer should have no HV, so only if you're determined to get in
+	will it become relevant.
+	VERY MUCH especially near singulo, too!
+AI room's south side hall, when small firelock is shut, can't be traversed.
+Atmos waste system isn't set to right filters?
+Why start with N2 already hooked up to distro?
+	Maybe it's okay.
+Salvage space arm is getting sensed as part of the room by air sensors?
+Defense Lawyer station beacon uncapitalized
+Weapons north maints door stuck open
 
 The big things:
 Set up evac shuttle (possibly shrink it, too)
@@ -169,3 +195,9 @@ DONE:
 /* Solars prone to meteor breakages */
 /* Expand/reposition solars */
 /* Armory needs more armor */
+/* Weapons weapons have machine boards in 'em! Gotta break those, too */
+	/* PA emitters now */
+/* Decals under chapel windows */
+/* Glass doors at sec -> hall */
+/* Double-check reinforced walls around substations */
+/* Liquid carbon dioxide can hooked up to condenser behind bar is wrong? */
