@@ -515,6 +515,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
         if (damageResult is {Empty: false})
         {
+            // Though it really feels like this should be a part of AttackedEvent, we can't do that because AttackedEvent is used to calculate the modifiedDamage.
+            // so, to pass the information to the target about how much damage it was delt, we make a new event just to pass that afterwards.
+            var shitRockedEvent = new ShitRockedEvent(meleeUid, user, targetXform.Coordinates, damageResult);
+            RaiseLocalEvent(target.Value, shitRockedEvent);
+
             // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
             if (damageResult.DamageDict.TryGetValue("Blunt", out var bluntDamage))
             {
@@ -670,6 +675,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
             if (damageResult != null && damageResult.GetTotal() > FixedPoint2.Zero)
             {
+                // Though it really feels like this should be a part of AttackedEvent, we can't do that because AttackedEvent is used to calculate the modifiedDamage.
+                // so, to pass the information to the target about how much damage it was delt, we make a new event just to pass that afterwards.
+                var shitRockedEvent = new ShitRockedEvent(meleeUid, user, GetCoordinates(ev.Coordinates), damageResult);
+                RaiseLocalEvent(entity, shitRockedEvent);
+
                 // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
                 if (damageResult.DamageDict.TryGetValue("Blunt", out var bluntDamage))
                 {
