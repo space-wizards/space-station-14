@@ -12,7 +12,7 @@ namespace Content.Shared.Inventory.ShitRockable.Components;
 public sealed partial class ShitRockableComponent : Component
 {
     /// <summary>
-    /// key value pairs of the inventory slot as slotflag and the damage specifier as threshold for having your shit rocked.
+    /// list of the inventory slot as slotflag and the damage specifier as threshold for having your shit rocked.
     /// </summary>
     [DataField]
     public List<SlotDamageThreshold> SlotThresholds = [];
