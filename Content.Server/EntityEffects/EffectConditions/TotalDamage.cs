@@ -18,7 +18,7 @@ public sealed partial class TotalDamage : EntityEffectCondition
         if (args.EntityManager.TryGetComponent(args.TargetEntity, out DamageableComponent? damage))
         {
             var total = damage.TotalDamage;
-            if (total > Min && total < Max)
+            if (total >= Min && total <= Max)
                 return true;
         }
 
