@@ -97,15 +97,13 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                     role.Name,
                     role.Description,
                     //  Check the prototypes for role requirements and bans
-                    requirementsManager.IsAllowed(role.RolePrototypes, null, out var reason)));
-                    //  TODO find a way to pass "reason" or the prototypeIDs into groupedRoles without breaking the grouping
-                    //  so we can show the player why they can't take a ghost role
+                    requirementsManager.IsAllowed(role.RolePrototypes, null, out var reason),
+                    reason));
 
             // Add a new entry for each role group
             foreach (var group in groupedRoles)
             {
-                // var reason = group.Key.reason; TODO show the player the reason the ghostrole is blocked
-                var reason = new FormattedMessage();
+                var reason = group.Key.reason;
                 var name = group.Key.Name;
                 var description = group.Key.Description;
                 var prototypesAllowed = group.Key.Item3;
