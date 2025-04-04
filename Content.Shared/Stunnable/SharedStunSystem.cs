@@ -5,6 +5,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Mobs;
@@ -248,11 +249,46 @@ public abstract class SharedStunSystem : EntitySystem
             slowed.SprintSpeedModifier *= runSpeedMultiplier;
 
             _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
-
+            Log.Debug($"[TS] Trying to add an effect SlowedDown - walkMult: {walkSpeedMultiplier}, runMult: {runSpeedMultiplier}, walkMod: {slowed.WalkSpeedModifier}, sprintMod: {slowed.SprintSpeedModifier},  uid: {ToPrettyString(uid)}, time: {time}");
             return true;
         }
 
         return false;
+    }
+
+    public bool AdjustSpeed(EntityUid uid,
+        float walkSpeedModifier = 1f,
+        float runSpeedModifier = 1f, StaminaComponent? component = null)
+    {
+        bool Approximately(float a, float b, float epsilon = 0.0001f) =>
+            Math.Abs(a - b) < epsilon;
+
+        if (!Resolve(uid, ref component))
+            return false;
+
+        if (Approximately(walkSpeedModifier, 1f) && Approximately(runSpeedModifier, 1f) && component.StaminaDamage == 0f)
+            return RemCompDeferred<SlowedDownComponent>(uid);
+
+        if (walkSpeedModifier == 0f && runSpeedModifier == 0f)
+            return RemCompDeferred<SlowedDownComponent>(uid);
+            
+
+        EnsureComp<SlowedDownComponent>(uid, out var comp);
+
+        comp.WalkSpeedModifier = walkSpeedModifier;
+
+        comp.SprintSpeedModifier = runSpeedModifier;
+
+        Log.Debug($"[AS] Trying to modify SlowedDownComponent directly - walkMod: {comp.WalkSpeedModifier}, sprintMod: {comp.SprintSpeedModifier},  uid: {ToPrettyString(uid)}");
+
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
+
+        return true;
+    }
+
+    public bool AdjustSpeed(EntityUid uid, float speedModifier = 1f, StaminaComponent? component = null)
+    {
+        return AdjustSpeed(uid, speedModifier, speedModifier, component);
     }
 
     private void OnInteractHand(EntityUid uid, KnockedDownComponent knocked, InteractHandEvent args)

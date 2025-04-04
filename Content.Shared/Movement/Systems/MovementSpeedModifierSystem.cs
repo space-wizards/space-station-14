@@ -10,6 +10,7 @@ namespace Content.Shared.Movement.Systems
 
         public void RefreshMovementSpeedModifiers(EntityUid uid, MovementSpeedModifierComponent? move = null)
         {
+
             if (!Resolve(uid, ref move, false))
                 return;
 
@@ -25,6 +26,7 @@ namespace Content.Shared.Movement.Systems
 
             move.WalkSpeedModifier = ev.WalkSpeedModifier;
             move.SprintSpeedModifier = ev.SprintSpeedModifier;
+            Log.Debug($"[RMSM] Walk: {move.WalkSpeedModifier}, Sprint: {move.SprintSpeedModifier}, uid: {ToPrettyString(uid)}");    //, StackTrace:\n" + Environment.StackTrace);
             Dirty(uid, move);
         }
 
@@ -59,6 +61,7 @@ namespace Content.Shared.Movement.Systems
     /// </summary>
     public sealed class RefreshMovementSpeedModifiersEvent : EntityEventArgs, IInventoryRelayEvent
     {
+
         public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
 
         public float WalkSpeedModifier { get; private set; } = 1.0f;
