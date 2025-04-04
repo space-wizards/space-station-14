@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TheWaffleJesus
-  changes:
-  - message: You can now craft items with stacks of capacitors without it eating it
-      all!
-    type: Fix
-  id: 7632
-  time: '2024-11-20T07:18:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31966
 - author: ScarKy0, GoldenCan
   changes:
   - message: Ion stormed lawsets no longer persist between shifts.
@@ -3897,3 +3889,10 @@
   id: 8131
   time: '2025-04-04T15:56:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36294
+- author: Tayrtahn
+  changes:
+  - message: Fixed ninjas being unable to hack criminal records consoles.
+    type: Fix
+  id: 8132
+  time: '2025-04-04T17:46:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36299
