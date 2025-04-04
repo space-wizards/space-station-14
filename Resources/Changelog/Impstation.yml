@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Removed Loop station from the map pool.
-    type: Remove
-  id: 966
-  time: '2025-01-19T00:34:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1411
 - author: DinnerCalzone
   changes:
   - message: Added mail support to Cog, Omega, Marathon, and Hummingbird.
@@ -4075,3 +4068,11 @@
   id: 1465
   time: '2025-04-03T14:04:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2190
+- author: eviltori
+  changes:
+  - message: 'huge maintsdiver buff: you can now accessorize with a machete! open
+      carrying has never looked so good... (it goes in your belt slot now)'
+    type: Tweak
+  id: 1466
+  time: '2025-04-04T14:51:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2201
