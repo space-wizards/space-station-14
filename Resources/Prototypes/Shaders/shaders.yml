@@ -30,11 +30,6 @@
   path: "/Textures/Shaders/flashed_effect.swsl"
 
 - type: shader
-  id: FlashedEffectAccessible
-  kind: source
-  path: "/Textures/Shaders/flashed_effect_accessible.swsl"
-
-- type: shader
   id: Singularity
   kind: source
   path: "/Textures/Shaders/singularity.swsl"

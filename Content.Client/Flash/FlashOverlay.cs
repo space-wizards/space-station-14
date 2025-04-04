@@ -24,7 +24,6 @@ namespace Content.Client.Flash
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _shader;
-        private readonly ShaderInstance _reducedShader;
         public float PercentComplete = 0.0f;
         public Texture? ScreenshotTexture;
 
@@ -32,7 +31,6 @@ namespace Content.Client.Flash
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").InstanceUnique();
-            _reducedShader = _prototypeManager.Index<ShaderPrototype>("FlashedEffectAccessible").InstanceUnique();
             _flash = _entityManager.System<SharedFlashSystem>();
             _statusSys = _entityManager.System<StatusEffectsSystem>();
         }
@@ -79,16 +77,9 @@ namespace Content.Client.Flash
                 return;
 
             var worldHandle = args.WorldHandle;
-            if (_configManager.GetCVar(CCVars.ReducedMotion))
-            {
-                _reducedShader.SetParameter("percentComplete", PercentComplete);
-                worldHandle.UseShader(_reducedShader);
-            }
-            else
-            {
-                _shader.SetParameter("percentComplete", PercentComplete);
-                worldHandle.UseShader(_shader);
-            }
+            _shader.SetParameter("reduceMotion", _configManager.GetCVar(CCVars.ReducedMotion));
+            _shader.SetParameter("percentComplete", PercentComplete);
+            worldHandle.UseShader(_shader);
             worldHandle.DrawTextureRectRegion(ScreenshotTexture, args.WorldBounds);
             worldHandle.UseShader(null);
         }
