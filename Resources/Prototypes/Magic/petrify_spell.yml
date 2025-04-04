@@ -9,6 +9,9 @@
     whitelist:
       components:
       - Body
+    blacklist:
+      components:
+      - PetrifiedStatue
     canTargetSelf: false
     interactOnMiss: false
     sound: !type:SoundPathSpecifier

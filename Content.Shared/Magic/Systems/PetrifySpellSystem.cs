@@ -4,8 +4,10 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Magic.Components;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Pointing;
+using Content.Shared.Slippery;
 
 namespace Content.Shared.Magic.Systems;
 
@@ -17,7 +19,6 @@ public abstract class PetrifySpellSystem : EntitySystem
     {
         SubscribeLocalEvent<PetrifiedComponent, MapInitEvent>(OnPetrify);
         SubscribeLocalEvent<PetrifiedStatueComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<PetrifiedStatueComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<PetrifiedStatueComponent, AnimateSpellEvent>(OnAnimate);
 
         SubscribeLocalEvent<PetrifiedStatueComponent, ChangeDirectionAttemptEvent>(OnAttempt);
@@ -34,23 +35,28 @@ public abstract class PetrifySpellSystem : EntitySystem
     protected virtual void OnPetrify(Entity<PetrifiedComponent> ent, ref MapInitEvent args)
     {
         var ev = new PetrifySpellEvent();
-        RaiseLocalEvent(ref ev);
+        RaiseLocalEvent(ent, ref ev);
     }
 
     protected virtual void OnStartup(EntityUid ent, PetrifiedStatueComponent comp, ComponentStartup args)
     {
-        _blocker.UpdateCanMove(ent);
+        //_blocker.UpdateCanMove(ent);
     }
 
-    protected virtual void OnShutdown(EntityUid ent, PetrifiedStatueComponent comp, ComponentShutdown args)
+    protected virtual void OnAnimate(Entity<PetrifiedStatueComponent> ent, ref AnimateSpellEvent args)
     {
-        _blocker.UpdateCanMove(ent);
-    }
+        // Stone Golem
 
-    private void OnAnimate(Entity<PetrifiedStatueComponent> ent, ref AnimateSpellEvent args)
-    {
-        Log.Debug("hi golem time");
-        // TODO: Stone golem
+        //RemComp<PetrifiedStatueComponent>(ent);
+        //RemComp<NoSlipComponent>(ent);
+        //RemComp<CanMoveInAirComponent>(ent);
+        //RemComp<MovementAlwaysTouchingComponent>(ent);
+
+        // Other than PetrifiedStatue, the components above are added by the Animate spell - and then removed here.
+        // It would be way better to just never add them at all if the entity is a petrified statue.
+        // I don't know the best practice or method for customizing behavior of an action depending on the type of target.
+
+        //_blocker.UpdateCanMove(ent);
     }
 
     private void OnAttempt(EntityUid ent, PetrifiedStatueComponent comp, CancellableEntityEventArgs args)

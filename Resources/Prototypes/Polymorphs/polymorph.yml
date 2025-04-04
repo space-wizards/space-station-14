@@ -236,4 +236,19 @@
     revertOnCrit: false
     revertOnDeath: false
     revertOnEat: false
-    allowRepeatedMorphs: false
+    allowRepeatedMorphs: true
+
+# Stone Golem
+- type: polymorph
+  id: AnimateStoneStatue
+  configuration:
+    entity: StoneStatueAnimate
+    forced: true
+    transferDamage: true
+    transferName: true
+    transferHumanoidAppearance: true
+    inventory: Transfer
+    revertOnCrit: false
+    revertOnDeath: false
+    revertOnEat: false
+    allowRepeatedMorphs: true

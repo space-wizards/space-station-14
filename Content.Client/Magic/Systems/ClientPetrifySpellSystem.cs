@@ -26,17 +26,6 @@ public sealed class ClientPetrifySpellSystem : PetrifySpellSystem
         SetShader(ent, true);
     }
 
-    protected override void OnShutdown(EntityUid ent, PetrifiedStatueComponent comp, ComponentShutdown args)
-    {
-        base.OnShutdown(ent, comp, args);
-
-        // Need to make sure that the stone golem isn't being animated
-        if (HasComp<AnimateComponent>(ent))
-            return;
-
-        SetShader(ent, false);
-    }
-
     private void SetShader(EntityUid ent, bool enabled, SpriteComponent? sprite = null)
     {
         if (!Resolve(ent, ref sprite, false))
