@@ -31,11 +31,12 @@ public sealed class MobCollisionSystem : SharedMobCollisionSystem
         base.Update(frameTime);
     }
 
-    protected override void RaiseCollisionEvent(EntityUid uid, Vector2 direction)
+    protected override void RaiseCollisionEvent(EntityUid uid, Vector2 direction, float speedMod)
     {
         RaisePredictiveEvent(new MobCollisionMessage()
         {
             Direction = direction,
+            SpeedModifier = speedMod,
         });
     }
 }

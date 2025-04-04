@@ -26,7 +26,7 @@ public sealed partial class CCVars
     /// Cap for how much an entity can be pushed per second.
     /// </summary>
     public static readonly CVarDef<float> MovementPushingCap =
-        CVarDef.Create("movement.pushing_cap", 30f, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("movement.pushing_cap", 50f, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     /// Minimum pushing impulse per tick. If the value is below this it rounds to 0.
@@ -40,11 +40,11 @@ public sealed partial class CCVars
     /// Penetration depth cap for considering mob collisions.
     /// </summary>
     public static readonly CVarDef<float> MovementPenetrationCap =
-        CVarDef.Create("movement.penetration_cap", 0.4f, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("movement.penetration_cap", 0.3f, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     /// Based on the mass difference multiplies the push amount by this proportionally.
     /// </summary>
     public static readonly CVarDef<float> MovementPushMassCap =
-        CVarDef.Create("movement.push_mass_cap", 2f, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("movement.push_mass_cap", 1.75f, CVar.SERVER | CVar.REPLICATED);
 }

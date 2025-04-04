@@ -94,7 +94,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
             if (comp.BufferAccumulator <= 0f)
             {
-                SetColliding((uid, comp), false);
+                SetColliding((uid, comp), false, 1f);
             }
             // Apply the mob collision; if it's too low ignore it (e.g. if mob friction would overcome it).
             // This is so we don't spam velocity changes every tick. It's not that expensive for physics but
@@ -123,24 +123,30 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         args.ModifySpeed(ent.Comp.SpeedModifier);
     }
 
-    private void SetColliding(Entity<MobCollisionComponent> entity, bool value)
+    private void SetColliding(Entity<MobCollisionComponent> entity, bool value, float speedMod)
     {
         if (value)
         {
             entity.Comp.BufferAccumulator = BufferTime;
             DirtyField(entity.Owner, entity.Comp, nameof(MobCollisionComponent.BufferAccumulator));
         }
+        else
+        {
+            DebugTools.Assert(speedMod.Equals(1f));
+        }
 
-        if (entity.Comp.Colliding == value)
-            return;
+        if (entity.Comp.Colliding != value)
+        {
+            entity.Comp.Colliding = value;
+            DirtyField(entity.Owner, entity.Comp, nameof(MobCollisionComponent.Colliding));
+        }
 
-        entity.Comp.Colliding = value;
-        DirtyField(entity.Owner, entity.Comp, nameof(MobCollisionComponent.Colliding));
-
-        if (entity.Comp.SpeedModifier.Equals(1f))
-            return;
-
-        _moveMod.RefreshMovementSpeedModifiers(entity.Owner);
+        if (!entity.Comp.SpeedModifier.Equals(speedMod))
+        {
+            entity.Comp.SpeedModifier = speedMod;
+            _moveMod.RefreshMovementSpeedModifiers(entity.Owner);
+            DirtyField(entity.Owner, entity.Comp, nameof(MobCollisionComponent.SpeedModifier));
+        }
     }
 
     private void OnCollision(MobCollisionMessage msg, EntitySessionEventArgs args)
@@ -158,10 +164,10 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
         var direction = msg.Direction;
 
-        MoveMob((player.Value, comp, xform), direction);
+        MoveMob((player.Value, comp, xform), direction, msg.SpeedModifier);
     }
 
-    protected void MoveMob(Entity<MobCollisionComponent, TransformComponent> entity, Vector2 direction)
+    protected void MoveMob(Entity<MobCollisionComponent, TransformComponent> entity, Vector2 direction, float speedMod)
     {
         // Length too short to do anything.
         var pushing = true;
@@ -170,13 +176,16 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         {
             pushing = false;
             direction = Vector2.Zero;
+            speedMod = 1f;
         }
         else if (float.IsNaN(direction.X) || float.IsNaN(direction.Y))
         {
             direction = Vector2.Zero;
         }
 
-        SetColliding(entity, pushing);
+        speedMod = Math.Clamp(speedMod, 0f, 1f);
+
+        SetColliding(entity, pushing, speedMod);
 
         if (direction == entity.Comp1.Direction)
             return;
@@ -215,6 +224,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         var direction = Vector2.Zero;
         var contactCount = 0;
         var ourMass = physics.FixturesMass;
+        var speedMod = 1f;
 
         while (contacts.MoveNext(out var contact))
         {
@@ -266,10 +276,19 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             // Big mob push smaller mob, needs fine-tuning and potentially another co-efficient.
             if (_massDiffCap > 0f)
             {
-                mobMovement *= Math.Clamp(
+                var modifier = Math.Clamp(
                     otherPhysics.FixturesMass / ourMass,
                     1f / _massDiffCap,
                     _massDiffCap);
+
+                mobMovement *= modifier;
+
+                var speedReduction = 1f - entity.Comp1.MinimumSpeedModifier;
+                var speedModifier = Math.Clamp(
+                    1f - speedReduction * modifier,
+                    entity.Comp1.MinimumSpeedModifier, 1f);
+
+                speedMod = MathF.Min(speedModifier, 1f);
             }
 
             // Need the push strength proportional to penetration depth.
@@ -283,11 +302,11 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         }
 
         direction *= frameTime;
-        RaiseCollisionEvent(entity.Owner, direction);
+        RaiseCollisionEvent(entity.Owner, direction, speedMod);
         return true;
     }
 
-    protected abstract void RaiseCollisionEvent(EntityUid uid, Vector2 direction);
+    protected abstract void RaiseCollisionEvent(EntityUid uid, Vector2 direction, float speedmodifier);
 
     /// <summary>
     /// Raised from client -> server indicating mob push direction OR server -> server for NPC mob pushes.
@@ -296,6 +315,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     protected sealed class MobCollisionMessage : EntityEventArgs
     {
         public Vector2 Direction;
+        public float SpeedModifier;
     }
 }
 

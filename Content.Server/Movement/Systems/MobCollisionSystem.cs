@@ -19,7 +19,7 @@ public sealed class MobCollisionSystem : SharedMobCollisionSystem
 
     private void OnServerMobCollision(Entity<MobCollisionComponent> ent, ref MobCollisionMessage args)
     {
-        MoveMob((ent.Owner, ent.Comp, Transform(ent.Owner)), args.Direction);
+        MoveMob((ent.Owner, ent.Comp, Transform(ent.Owner)), args.Direction, args.SpeedModifier);
     }
 
     public override void Update(float frameTime)
@@ -40,11 +40,12 @@ public sealed class MobCollisionSystem : SharedMobCollisionSystem
         base.Update(frameTime);
     }
 
-    protected override void RaiseCollisionEvent(EntityUid uid, Vector2 direction)
+    protected override void RaiseCollisionEvent(EntityUid uid, Vector2 direction, float speedMod)
     {
         RaiseLocalEvent(uid, new MobCollisionMessage()
         {
             Direction = direction,
+            SpeedModifier = speedMod,
         });
     }
 }
