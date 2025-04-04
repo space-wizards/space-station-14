@@ -1,34 +1,35 @@
-using Content.Shared.Popups;
-using Content.Shared.Damage;
-using Content.Shared.Revenant;
-using Robust.Shared.Random;
-using Content.Shared.Tag;
-using Content.Server.Storage.Components;
-using Content.Server.Light.Components;
+using Content.Server.Chat.Systems;
 using Content.Server.Ghost;
-using Robust.Shared.Physics;
-using Content.Shared.Throwing;
-using Content.Server.Storage.EntitySystems;
-using Content.Shared.Interaction;
-using Content.Shared.Item;
-using Content.Shared.Bed.Sleep;
-using System.Linq;
-using System.Numerics;
+using Content.Server.Light.Components;
 using Content.Server.Revenant.Components;
-using Content.Shared.Physics;
+using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
+using Content.Shared.Bed.Sleep;
+using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
+using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Maps;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Physics;
+using Content.Shared.Popups;
+using Content.Shared.Revenant;
 using Content.Shared.Revenant.Components;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Utility;
-using Robust.Shared.Map.Components;
+using Content.Shared.Tag;
+using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -43,6 +44,8 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly SleepingSystem _sleeping = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     private void InitializeAbilities()
     {
@@ -52,6 +55,7 @@ public sealed partial class RevenantSystem
 
         SubscribeLocalEvent<RevenantComponent, RevenantDefileActionEvent>(OnDefileAction);
         SubscribeLocalEvent<RevenantComponent, RevenantOverloadLightsActionEvent>(OnOverloadLightsAction);
+        SubscribeLocalEvent<RevenantComponent, RevenantSedateActionEvent>(OnSedateAction);
         SubscribeLocalEvent<RevenantComponent, RevenantBlightActionEvent>(OnBlightAction);
         SubscribeLocalEvent<RevenantComponent, RevenantMalfunctionActionEvent>(OnMalfunctionAction);
     }
@@ -312,6 +316,26 @@ public sealed partial class RevenantSystem
             var comp = EnsureComp<RevenantOverloadedLightsComponent>(allLight.First());
             comp.Target = ent; //who they gon fire at?
         }
+    }
+
+    // Temporary replacement for the blight action
+    private void OnSedateAction(EntityUid uid, RevenantComponent component, RevenantSedateActionEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (!TryUseAbility(uid, component, component.SedateCost, component.SedateDebuffs))
+            return;
+
+        args.Handled = true;
+
+        var pendingSleeping = new PendingSleepingComponent
+        {
+            PendingTime = component.SedatePendingTime,
+        };
+        EntityManager.AddComponent(args.Target, pendingSleeping);
+
+        _chat.TryEmoteWithChat(args.Target, component.SedateYawnEmote);
     }
 
     private void OnBlightAction(EntityUid uid, RevenantComponent component, RevenantBlightActionEvent args)

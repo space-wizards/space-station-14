@@ -62,11 +62,30 @@ public sealed partial class SleepingSystem : EntitySystem
         SubscribeLocalEvent<SleepingComponent, GetVerbsEvent<AlternativeVerb>>(AddWakeVerb);
         SubscribeLocalEvent<SleepingComponent, InteractHandEvent>(OnInteractHand);
 
-        SubscribeLocalEvent<ForcedSleepingComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ForcedSleepingComponent, ComponentInit>(OnForcedSleepingInit);
+        SubscribeLocalEvent<PendingSleepingComponent, ComponentInit>(OnPendingSleepingInit);
         SubscribeLocalEvent<SleepingComponent, UnbuckleAttemptEvent>(OnUnbuckleAttempt);
         SubscribeLocalEvent<SleepingComponent, EmoteAttemptEvent>(OnEmoteAttempt);
 
         SubscribeLocalEvent<SleepingComponent, BeforeForceSayEvent>(OnChangeForceSay, after: new []{typeof(PainNumbnessSystem)});
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<PendingSleepingComponent>();
+        while (query.MoveNext(out var uid, out var pendingSleeping))
+        {
+            if (pendingSleeping?.FallAsleepTime != null)
+            {
+                if (pendingSleeping.FallAsleepTime < _gameTiming.CurTime)
+                {
+                    TrySleeping(uid);
+                    EntityManager.RemoveComponent<PendingSleepingComponent>(uid);
+                }
+            }
+        }
     }
 
     private void OnUnbuckleAttempt(Entity<SleepingComponent> ent, ref UnbuckleAttemptEvent args)
@@ -235,9 +254,17 @@ public sealed partial class SleepingSystem : EntitySystem
             _emitSound.SetEnabled((ent, spam), args.NewMobState == MobState.Alive);
     }
 
-    private void OnInit(Entity<ForcedSleepingComponent> ent, ref ComponentInit args)
+    private void OnForcedSleepingInit(Entity<ForcedSleepingComponent> ent, ref ComponentInit args)
     {
         TrySleeping(ent.Owner);
+    }
+
+    private void OnPendingSleepingInit(Entity<PendingSleepingComponent> ent, ref ComponentInit args)
+    {
+        if (ent.Comp.PendingTime != null)
+            ent.Comp.FallAsleepTime = _gameTiming.CurTime + TimeSpan.FromSeconds(ent.Comp.PendingTime);
+        else
+            EntityManager.RemoveComponent<PendingSleepingComponent>(ent.Owner);
     }
 
     private void Wake(Entity<SleepingComponent> ent)

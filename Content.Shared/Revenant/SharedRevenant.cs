@@ -54,6 +54,10 @@ public sealed partial class RevenantOverloadLightsActionEvent : InstantActionEve
 {
 }
 
+public sealed partial class RevenantSedateActionEvent : EntityTargetActionEvent
+{
+}
+
 public sealed partial class RevenantBlightActionEvent : InstantActionEvent
 {
 }
