@@ -4446,4 +4446,11 @@ Entries:
   id: 616
   time: '2025-04-04T08:04:22.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/443
+- author: Happyrobot33
+  changes:
+  - message: Fixed Emote cooldown system for regular uses like radial and chat.
+    type: Fix
+  id: 617
+  time: '2025-04-04T21:19:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/445
 
