@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SaphireLattice
-  changes:
-  - message: The Singularity/Tesla generator now requires being surrounded by containment
-      fields to activate. This can be disabled with an Emag.
-    type: Tweak
-  id: 7631
-  time: '2024-11-20T05:55:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33358
 - author: TheWaffleJesus
   changes:
   - message: You can now craft items with stacks of capacitors without it eating it
@@ -3898,3 +3890,10 @@
   id: 8130
   time: '2025-04-04T15:36:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36218
+- author: TheBlueYowie
+  changes:
+  - message: Aligned Adv. Mineral Scanner rotation in inventory
+    type: Tweak
+  id: 8131
+  time: '2025-04-04T15:56:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36294
