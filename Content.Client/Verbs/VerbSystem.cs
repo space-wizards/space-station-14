@@ -36,6 +36,8 @@ namespace Content.Client.Verbs
 
         private float _lookupSize;
 
+        private static readonly ProtoId<TagPrototype> HideContextMenuTag = "HideContextMenu";
+
         /// <summary>
         ///     These flags determine what entities the user can see on the context menu.
         /// </summary>
@@ -147,7 +149,7 @@ namespace Content.Client.Verbs
 
             for (var i = entities.Count - 1; i >= 0; i--)
             {
-                if (_tagSystem.HasTag(entities[i], "HideContextMenu"))
+                if (_tagSystem.HasTag(entities[i], HideContextMenuTag))
                     entities.RemoveSwap(i);
             }
 

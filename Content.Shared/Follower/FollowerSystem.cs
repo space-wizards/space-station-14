@@ -32,6 +32,7 @@ public sealed class FollowerSystem : EntitySystem
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly ISharedAdminManager _adminManager = default!;
 
+    private static readonly ProtoId<TagPrototype> ForceableFollowTag = "ForceableFollow";
     public override void Initialize()
     {
         base.Initialize();
@@ -106,7 +107,7 @@ public sealed class FollowerSystem : EntitySystem
             ev.Verbs.Add(verb);
         }
 
-        if (_tagSystem.HasTag(ev.Target, "ForceableFollow"))
+        if (_tagSystem.HasTag(ev.Target, ForceableFollowTag))
         {
             if (!ev.CanAccess || !ev.CanInteract)
                 return;

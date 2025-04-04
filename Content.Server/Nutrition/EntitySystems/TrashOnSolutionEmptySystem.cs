@@ -11,6 +11,8 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
 
+        private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
+
         public override void Initialize()
         {
             base.Initialize();
@@ -41,11 +43,11 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             if (solution.Volume <= 0)
             {
-                _tagSystem.AddTag(entity.Owner, "Trash");
+                _tagSystem.AddTag(entity.Owner, TrashTag);
                 return;
             }
-            if (_tagSystem.HasTag(entity.Owner, "Trash"))
-                _tagSystem.RemoveTag(entity.Owner, "Trash");
+            if (_tagSystem.HasTag(entity.Owner, TrashTag))
+                _tagSystem.RemoveTag(entity.Owner, TrashTag);
         }
     }
 }

@@ -23,6 +23,7 @@ public sealed class PayloadSystem : EntitySystem
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
 
+    private static readonly ProtoId<TagPrototype> PayloadTag = "Payload";
     public override void Initialize()
     {
         base.Initialize();
@@ -44,7 +45,7 @@ public sealed class PayloadSystem : EntitySystem
         {
             foreach (var entity in container.ContainedEntities)
             {
-                if (_tagSystem.HasTag(entity, "Payload"))
+                if (_tagSystem.HasTag(entity, PayloadTag))
                     yield return entity;
             }
         }
@@ -71,7 +72,7 @@ public sealed class PayloadSystem : EntitySystem
             return;
 
         // Ensure we don't enter a trigger-loop
-        DebugTools.Assert(!_tagSystem.HasTag(uid, "Payload"));
+        DebugTools.Assert(!_tagSystem.HasTag(uid, PayloadTag));
 
         RaiseLocalEvent(parent, args, false);
     }

@@ -22,6 +22,8 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
 
+    private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -44,7 +46,7 @@ public sealed class SurvivorRuleSystem : GameRuleSystem<SurvivorRuleComponent>
             var mind = humanMind.Owner;
             var ent = humanMind.Comp.OwnedEntity.Value;
 
-            if (HasComp<SurvivorComponent>(mind) || _tag.HasTag(mind, "InvalidForSurvivorAntag"))
+            if (HasComp<SurvivorComponent>(mind) || _tag.HasTag(mind, InvalidForSurvivorAntagTag))
                 continue;
 
             EnsureComp<SurvivorComponent>(mind);

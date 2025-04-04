@@ -21,6 +21,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
 using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Flash
 {
@@ -39,6 +40,7 @@ namespace Content.Server.Flash
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
+        private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
         public override void Initialize()
         {
             base.Initialize();
@@ -94,7 +96,7 @@ namespace Content.Server.Flash
             if (_charges.IsEmpty(uid, charges))
             {
                 _appearance.SetData(uid, FlashVisuals.Burnt, true);
-                _tag.AddTag(uid, "Trash");
+                _tag.AddTag(uid, TrashTag);
                 _popup.PopupEntity(Loc.GetString("flash-component-becomes-empty"), user);
             }
 

@@ -10,6 +10,7 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Light.EntitySystems
@@ -24,6 +25,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
 
+        private static readonly ProtoId<TagPrototype> TrashTag = "Tash";
         public override void Initialize()
         {
             base.Initialize();
@@ -69,7 +71,7 @@ namespace Content.Server.Light.EntitySystems
                         _metaData.SetEntityName(ent, Loc.GetString(component.SpentName), meta);
                         _metaData.SetEntityDescription(ent, Loc.GetString(component.SpentDesc), meta);
 
-                        _tagSystem.AddTag(ent, "Trash");
+                        _tagSystem.AddTag(ent, TrashTag);
 
                         UpdateSounds(ent);
                         UpdateVisualizer(ent);

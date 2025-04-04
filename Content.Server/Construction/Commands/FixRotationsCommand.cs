@@ -13,6 +13,10 @@ public sealed class FixRotationsCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
+    private static readonly ProtoId<TagPrototype> ForceFixRotationsTag = "ForceFixRotations";
+    private static readonly ProtoId<TagPrototype> ForceNoFixRotationsTag = "ForceNoFixRotations";
+    private static readonly ProtoId<TagPrototype> DiagonalTag = "Diagonal";
+
     // ReSharper disable once StringLiteralTypo
     public string Command => "fixrotations";
     public string Description => "Sets the rotation of all occluders, low walls and windows to south.";
@@ -86,11 +90,11 @@ public sealed class FixRotationsCommand : IConsoleCommand
             // cables
             valid |= _entManager.HasComponent<CableComponent>(child);
             // anything else that might need this forced
-            valid |= tagSystem.HasTag(child, "ForceFixRotations");
+            valid |= tagSystem.HasTag(child, ForceFixRotationsTag);
             // override
-            valid &= !tagSystem.HasTag(child, "ForceNoFixRotations");
+            valid &= !tagSystem.HasTag(child, ForceNoFixRotationsTag);
             // remove diagonal entities as well
-            valid &= !tagSystem.HasTag(child, "Diagonal");
+            valid &= !tagSystem.HasTag(child, DiagonalTag);
 
             if (!valid)
                 continue;
