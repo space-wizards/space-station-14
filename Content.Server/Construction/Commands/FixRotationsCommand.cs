@@ -5,6 +5,7 @@ using Content.Shared.Construction;
 using Content.Shared.Tag;
 using Robust.Shared.Console;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Construction.Commands;
 

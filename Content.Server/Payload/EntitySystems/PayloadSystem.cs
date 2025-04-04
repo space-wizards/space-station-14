@@ -11,6 +11,7 @@ using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 using System.Linq;
 using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Payload.EntitySystems;
 

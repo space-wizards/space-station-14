@@ -9,6 +9,7 @@ using Content.Shared.Projectiles;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Collections;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems;
 

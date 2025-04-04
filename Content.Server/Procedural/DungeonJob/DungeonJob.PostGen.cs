@@ -4,6 +4,7 @@ using Content.Shared.Tag;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Procedural.DungeonJob;
 
@@ -12,7 +13,7 @@ public sealed partial class DungeonJob
     /*
      * Run after the main dungeon generation
      */
-     
+
     private static readonly ProtoId<TagPrototype> WallTag = "Wall";
 
     private bool HasWall(Vector2i tile)
