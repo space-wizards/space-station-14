@@ -47,8 +47,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 _tagSystem.AddTag(entity.Owner, TrashTag);
                 return;
             }
-            if (_tagSystem.HasTag(entity.Owner, TrashTag))
-                _tagSystem.RemoveTag(entity.Owner, TrashTag);
+
+            _tagSystem.RemoveTag(entity.Owner, TrashTag);
         }
     }
 }

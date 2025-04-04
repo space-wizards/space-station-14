@@ -24,6 +24,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
 
     private static readonly ProtoId<TagPrototype> WhitelistChameleonTag = "WhitelistChameleon";
+
     public override void Initialize()
     {
         base.Initialize();

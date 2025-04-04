@@ -74,7 +74,6 @@ namespace Content.Server.Kitchen.EntitySystems
         private const string MalfunctionSpark = "Spark";
 
         private static readonly ProtoId<TagPrototype> MetalTag = "Metal";
-
         private static readonly ProtoId<TagPrototype> PlasticTag = "Plastic";
 
         public override void Initialize()

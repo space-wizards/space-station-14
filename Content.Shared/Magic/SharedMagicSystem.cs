@@ -66,6 +66,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stun = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
+
     public override void Initialize()
     {
         base.Initialize();

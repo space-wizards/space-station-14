@@ -25,6 +25,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     private static readonly TimeSpan ExcessTime = TimeSpan.FromSeconds(0.5f);
 
     private static readonly ProtoId<TagPrototype> InstantDoAftersTag = "InstantDoAfters";
+
     public override void Initialize()
     {
         base.Initialize();

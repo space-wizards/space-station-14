@@ -16,6 +16,7 @@ namespace Content.Shared.Construction.Conditions
     public sealed partial class WallmountCondition : IConstructionCondition
     {
         private static readonly ProtoId<TagPrototype> WallTag = "Wall";
+
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();

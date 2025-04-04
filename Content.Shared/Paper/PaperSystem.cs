@@ -26,6 +26,7 @@ public sealed class PaperSystem : EntitySystem
 
     private static readonly ProtoId<TagPrototype> WriteIgnoreStampsTag = "WriteIgnoreStamps";
     private static readonly ProtoId<TagPrototype> WriteTag = "Write";
+
     public override void Initialize()
     {
         base.Initialize();

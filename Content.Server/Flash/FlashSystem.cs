@@ -41,6 +41,7 @@ namespace Content.Server.Flash
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
         private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
+
         public override void Initialize()
         {
             base.Initialize();

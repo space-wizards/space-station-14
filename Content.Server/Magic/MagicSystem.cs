@@ -16,8 +16,7 @@ public sealed class MagicSystem : SharedMagicSystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
 
-    [ValidatePrototypeId<TagPrototype>]
-    private const string InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
+    private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
 
     public override void Initialize()
     {

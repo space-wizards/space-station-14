@@ -33,6 +33,7 @@ public abstract class SharedDeliverySystem : EntitySystem
 
     private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
     private static readonly ProtoId<TagPrototype> RecyclableTag = "Recyclable";
+
     public override void Initialize()
     {
         base.Initialize();

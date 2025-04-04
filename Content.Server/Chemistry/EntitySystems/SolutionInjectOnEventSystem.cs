@@ -26,6 +26,7 @@ public sealed class SolutionInjectOnCollideSystem : EntitySystem
     [Dependency] private readonly TagSystem _tag = default!;
 
     private static readonly ProtoId<TagPrototype> HardsuitTag = "Hardsuit";
+
     public override void Initialize()
     {
         base.Initialize();

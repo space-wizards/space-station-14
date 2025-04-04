@@ -63,6 +63,7 @@ public sealed partial class ZombieSystem
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
+
     /// <summary>
     /// Handles an entity turning into a zombie when they die or go into crit
     /// </summary>

@@ -34,6 +34,7 @@ public sealed class FollowerSystem : EntitySystem
     [Dependency] private readonly ISharedAdminManager _adminManager = default!;
 
     private static readonly ProtoId<TagPrototype> ForceableFollowTag = "ForceableFollow";
+
     public override void Initialize()
     {
         base.Initialize();

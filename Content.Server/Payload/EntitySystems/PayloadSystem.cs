@@ -25,6 +25,7 @@ public sealed class PayloadSystem : EntitySystem
     [Dependency] private readonly ISerializationManager _serializationManager = default!;
 
     private static readonly ProtoId<TagPrototype> PayloadTag = "Payload";
+
     public override void Initialize()
     {
         base.Initialize();

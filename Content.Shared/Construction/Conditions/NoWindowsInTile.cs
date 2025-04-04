@@ -11,6 +11,7 @@ namespace Content.Shared.Construction.Conditions
     public sealed partial class NoWindowsInTile : IConstructionCondition
     {
         private static readonly ProtoId<TagPrototype> WindowTag = "Window";
+
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();

@@ -26,6 +26,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
+
         public override void Initialize()
         {
             base.Initialize();
