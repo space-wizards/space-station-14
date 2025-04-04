@@ -26,7 +26,7 @@ public sealed partial class CCVars
     /// Cap for how much an entity can be pushed per second.
     /// </summary>
     public static readonly CVarDef<float> MovementPushingCap =
-        CVarDef.Create("movement.pushing_cap", 50f, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("movement.pushing_cap", 100f, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     /// Minimum pushing impulse per tick. If the value is below this it rounds to 0.
