@@ -466,3 +466,6 @@ uplink-fake-mindshield-desc = A togglable implant capable of mimicking the same 
 
 uplink-contraband-lighter-name = Contraband Lighter box
 uplink-contraband-lighter-desc = A mystery box guaranteed to contain a syndicate branded lighter. No fuel required
+
+uplink-smuggler-satchel-name = Smuggler's Satchel
+uplink-smuggler-satchel-desc = A handy, suspicious looking satchel. Just flat enough to fit underneath floor tiles.
