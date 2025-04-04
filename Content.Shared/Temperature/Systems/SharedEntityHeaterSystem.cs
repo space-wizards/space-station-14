@@ -5,7 +5,6 @@ using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Temperature.Systems;
 
@@ -14,7 +13,6 @@ namespace Content.Shared.Temperature.Systems;
 /// </summary>
 public abstract partial class SharedEntityHeaterSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] protected readonly SharedTemperatureSystem Temperature = default!;

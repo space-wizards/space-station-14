@@ -1,6 +1,5 @@
 using Content.Server.Power.Components;
 using Content.Shared.Placeable;
-using Content.Shared.Power;
 using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
 using Content.Shared.Temperature.Systems;
@@ -10,6 +9,20 @@ namespace Content.Server.Temperature.Systems;
 ///<inheritdoc cref="SharedEntityHeaterSystem"/>
 public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
 {
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<EntityHeaterComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(Entity<EntityHeaterComponent> ent, ref MapInitEvent args)
+    {
+        // Set initial power level
+        if (TryComp<ApcPowerReceiverComponent>(ent, out var power))
+            power.Load = SettingPower(ent.Comp.Setting, ent.Comp.Power);
+    }
+
     /// <inheritdoc />
     public override void Update(float deltaTime)
     {
