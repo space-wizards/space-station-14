@@ -4,7 +4,6 @@ namespace Content.Shared.Emoting;
 
 public sealed class EmoteSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!; //Starlight-edit
     public override void Initialize()
     {
         base.Initialize();
@@ -29,20 +28,5 @@ public sealed class EmoteSystem : EntitySystem
     {
         if (!TryComp(args.Uid, out EmotingComponent? emote) || !emote.Enabled)
             args.Cancel();
-        
-        //Starlight-start
-        if (emote == null)
-            return;
-        
-        //check if they are on cooldown
-        if (_gameTiming.CurTime > emote.LastEmoteTime + emote.EmoteCooldown)
-        {
-            emote.LastEmoteTime = _gameTiming.CurTime;
-        }
-        else
-        {
-            args.Cancel();
-        }
-        //Starlight-end
     }
 }
