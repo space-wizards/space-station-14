@@ -41,4 +41,10 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> MovementPenetrationCap =
         CVarDef.Create("movement.penetration_cap", 0.4f, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    /// Based on the mass difference multiplies the push amount by this proportionally.
+    /// </summary>
+    public static readonly CVarDef<float> MovementPushMassCap =
+        CVarDef.Create("movement.push_mass_cap", 2f, CVar.SERVER | CVar.REPLICATED);
 }

@@ -46,6 +46,8 @@ public abstract class SharedMobCollisionSystem : EntitySystem
     /// </summary>
     public const float BufferTime = 0.2f;
 
+    private float _massDiffCap;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -60,6 +62,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
             {
                 _pushingDotProduct = value;
             }, true);
+        Subs.CVar(CfgManager, CCVars.MovementPushMassCap, val => _massDiffCap = val, true);
 
         MobQuery = GetEntityQuery<MobCollisionComponent>();
         PhysicsQuery = GetEntityQuery<PhysicsComponent>();
@@ -211,6 +214,7 @@ public abstract class SharedMobCollisionSystem : EntitySystem
         var contacts = Physics.GetContacts(entity.Owner);
         var direction = Vector2.Zero;
         var contactCount = 0;
+        var ourMass = physics.FixturesMass;
 
         while (contacts.MoveNext(out var contact))
         {
@@ -258,6 +262,15 @@ public abstract class SharedMobCollisionSystem : EntitySystem
 
             // Sum the strengths so we get pushes back the same amount (impulse-wise, ignoring prediction).
             var mobMovement = penDepth * diff.Normalized() * (entity.Comp1.Strength + otherComp.Strength);
+
+            // Big mob push smaller mob, needs fine-tuning and potentially another co-efficient.
+            if (_massDiffCap > 0f)
+            {
+                mobMovement *= Math.Clamp(
+                    otherPhysics.FixturesMass / ourMass,
+                    1f / _massDiffCap,
+                    _massDiffCap);
+            }
 
             // Need the push strength proportional to penetration depth.
             direction += mobMovement;
