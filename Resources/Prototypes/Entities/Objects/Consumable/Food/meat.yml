@@ -357,6 +357,34 @@
     defaultTarget: goliath steak
 
 - type: entity
+  id: FoodHivelordRemains
+  parent: FoodMeatRawBase
+  name: hivelord remains
+  description: All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly. Try not to think about what you're eating.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Rororium
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Consumable/Food/rorocore.rsi
+    state: boiled
+  - type: Item
+    size: Normal
+  - type: Perishable
+    rotAfter: 120 # rot after 2 minutes
+    molsPerSecondPerUnitMass: 0
+    forceRotProgression: true
+  - type: RotInto
+    entity: HivelordRemainsInert
+    stage: 1
+  - type: StaticPrice
+    price: 5000
+
+- type: entity
   name: dragon flesh
   parent: FoodMeatBase
   id: FoodMeatDragon
