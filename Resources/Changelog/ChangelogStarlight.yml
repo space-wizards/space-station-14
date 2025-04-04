@@ -4425,4 +4425,25 @@ Entries:
   id: 613
   time: '2025-04-04T08:03:42.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/441
+- author: Dusky
+  changes:
+  - message: Added Engineering SOP to guidebook.
+    type: Add
+  id: 614
+  time: '2025-04-04T08:04:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/443
+- author: Dusky
+  changes:
+  - message: Added NanoTrasen Employee SOP to guidebook.
+    type: Add
+  id: 615
+  time: '2025-04-04T08:04:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/443
+- author: Dusky
+  changes:
+  - message: Made departmental SOP collapse by default to reduce guidebook clutter.
+    type: Fix
+  id: 616
+  time: '2025-04-04T08:04:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/443
 
