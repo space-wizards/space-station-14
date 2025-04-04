@@ -168,8 +168,11 @@ public sealed class TileSystem : EntitySystem
         if (_tileStack.HasTileStack(tileRef))
         {
             ref var tilestacks = ref Comp<TileStackMapComponent>(gridUid).Data;
-            var tileId = tilestacks[tileRef.GridIndices][tilestacks[tileRef.GridIndices].Count - 1];
-            tilestacks[tileRef.GridIndices].RemoveAt(tilestacks[tileRef.GridIndices].Count - 1);
+            var tilestack = tilestacks[tileRef.GridIndices];
+            var tileId = tilestack[^1];
+            tilestack.RemoveAt(tilestack.Count - 1);
+            if (tilestack.Count == 0)
+                tilestacks.Remove(tileRef.GridIndices);
             var newTile = new Tile(((ContentTileDefinition)_tileDefinitionManager[tileId]).TileId);
             _maps.SetTile(gridUid, mapGrid, tileRef.GridIndices, newTile);
         }

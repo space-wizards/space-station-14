@@ -45,7 +45,7 @@ public sealed class TileStackSystem : EntitySystem
     public void CreateTileStack(TileRef tileRef)
     {
         var tilestack = new List<string>();
-        var curtile = tileRef.GetContentTileDefinition().ID;
+        var curtile = tileRef.GetContentTileDefinition().BaseTurf;
         while (!string.IsNullOrEmpty(curtile))
         {
             tilestack.Insert(0, _tileDefinitionManager[curtile].ID);

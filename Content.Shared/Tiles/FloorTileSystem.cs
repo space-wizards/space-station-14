@@ -136,8 +136,9 @@ public sealed class FloorTileSystem : EntitySystem
 
                 var tile = _map.GetTileRef(gridUid, mapGrid, location);
                 var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-
-                if (HasBaseTurf(currentTileDefinition, baseTurf.ID))
+                // even if we put a tile on a standard turf, it has to be handled by the tilestack system if it already has a tilestack
+                // otherwise the tilestack doesn't update properly
+                if (HasBaseTurf(currentTileDefinition, baseTurf.ID) && !_tileStack.HasTileStack(tile))
                 {
                     if (!_stackSystem.Use(uid, 1, stack))
                         continue;
