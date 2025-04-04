@@ -8,6 +8,7 @@
     sprite: Clothing/Head/Animals/cat.rsi
   - type: Clothing
     sprite: Clothing/Head/Animals/cat.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -19,6 +20,7 @@
     sprite: Clothing/Head/Animals/cat2.rsi
   - type: Clothing
     sprite: Clothing/Head/Animals/cat2.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -30,6 +32,7 @@
     sprite: Clothing/Head/Animals/cat3.rsi
   - type: Clothing
     sprite: Clothing/Head/Animals/cat3.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -41,6 +44,7 @@
     sprite: Clothing/Head/Animals/headslime.rsi
   - type: Clothing
     sprite: Clothing/Head/Animals/headslime.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -52,3 +56,4 @@
     sprite: Clothing/Head/Animals/monkey.rsi
   - type: Clothing
     sprite: Clothing/Head/Animals/monkey.rsi
+  - type: RockableItem
