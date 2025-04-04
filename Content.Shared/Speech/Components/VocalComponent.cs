@@ -54,7 +54,6 @@ public sealed partial class VocalComponent : Component
     //starlight start
     [ViewVariables]
     [AutoNetworkedField]
-    [NonSerialized]
     //have to use string as for some reason emote prototypes are not serializable even though im telling it not to serialize
     public Dictionary<string, TimeSpan> LastEmoteTime = new Dictionary<string, TimeSpan>();
 
