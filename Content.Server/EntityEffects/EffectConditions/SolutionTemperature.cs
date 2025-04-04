@@ -19,13 +19,9 @@ public sealed partial class SolutionTemperature : EntityEffectCondition
     {
         if (args is EntityEffectReagentArgs reagentArgs)
         {
-            if (reagentArgs.Source == null)
-                return false;
-            if (reagentArgs.Source.Temperature <= Min)
-                return false;
-            if (reagentArgs.Source.Temperature >= Max)
-                return false;
-            return true;
+            return reagentArgs?.Source != null &&
+                   reagentArgs.Source.Temperature >= Min &&
+                   reagentArgs.Source.Temperature <= Max;
         }
 
         // TODO: Someone needs to figure out how to do this for non-reagent effects.
