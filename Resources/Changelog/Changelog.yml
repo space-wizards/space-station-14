@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: ScarKy0, GoldenCan
   changes:
-  - message: Ion stormed lawsets no longer persist between shifts.
-    type: Fix
-  - message: Cyborgs are now notified when inserted into a chassis with modified laws.
-    type: Tweak
-  id: 7633
-  time: '2024-11-20T07:55:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33311
-- author: ScarKy0, GoldenCan
-  changes:
   - message: The Derelict Cyborg - a broken cyborg with altered laws due to year of
       exposure to ion storms - can now appear as a ghost role through a new midround
       event.
@@ -3896,3 +3887,10 @@
   id: 8132
   time: '2025-04-04T17:46:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36299
+- author: ScarKy0
+  changes:
+  - message: Players now require 1h of playtime before selecting any antagonist role.
+    type: Tweak
+  id: 8133
+  time: '2025-04-04T20:24:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36276
