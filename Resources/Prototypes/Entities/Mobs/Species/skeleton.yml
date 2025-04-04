@@ -109,6 +109,36 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: ShitRockable
+    slotThresholds:
+    - slots: EYES
+      damageThreshold:
+        group:
+          Brute: 5
+    - slots: HEAD
+      damageThreshold:
+        group:
+          Brute: 10
+    - slots: EARS
+      damageThreshold:
+        group:
+          Brute: 5
+    - slots: MASK
+      damageThreshold:
+        types:
+          Slash: 10
+    - slots: GLOVES
+      damageThreshold:
+        types:
+          Slash: 10
+    - slots: INNERCLOTHING #BONK! Its a skeleton okay! # probably also should have some logic for outerclothing preventing this from working.
+      damageThreshold:
+        types:
+          Slash: 10
+    - slots: FEET
+      damageThreshold:
+        group:
+          Brute: 100 # yo, that guys dead!
 
 - type: entity
   parent: BaseSpeciesDummy

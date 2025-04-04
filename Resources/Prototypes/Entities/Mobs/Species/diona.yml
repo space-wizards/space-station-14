@@ -110,6 +110,20 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: ShitRockable
+    slotThresholds:
+    - slots: EYES
+      damageThreshold:
+        types:
+          Blunt: 5
+    - slots: HEAD
+      damageThreshold:
+        types:
+          Blunt: 10
+    - slots: EARS
+      damageThreshold:
+        types:
+          Blunt: 5
 
 - type: entity
   parent: BaseSpeciesDummy

@@ -117,6 +117,12 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
+  - type: ShitRockable # slimes are sticky I guess.
+    slotThresholds:
+    - slots: FEET
+      damageThreshold:
+        group:
+          Brute: 100 # yo, that guys dead!
 
 - type: entity
   parent: MobHumanDummy

@@ -118,7 +118,25 @@
   - type: Inventory
     templateId: arachnid
     speciesId: arachnid
-
+  - type: ShitRockable
+    slotThresholds:
+    - slots: EYES
+      damageThreshold:
+        types:
+          Blunt: 5
+    - slots: HEAD
+      damageThreshold:
+        types:
+          Blunt: 10
+    - slots: EARS
+      damageThreshold:
+        types:
+          Blunt: 5
+    - slots: FEET
+      damageThreshold:
+        group:
+          Brute: 100 # yo, that guys dead!
+    # the spider's extra pockets should probably be rockable, but under the hood theyre just flagged as normal pockets, so I dont think theres an easy way to do that and not also make their pockets into sieves.
 
 - type: entity
   parent: BaseSpeciesDummy
