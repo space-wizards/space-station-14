@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SpaceLizard24
-  changes:
-  - message: Reduced crafting costs of colored light tubes.
-    type: Tweak
-  id: 7629
-  time: '2024-11-20T01:59:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33376
 - author: thetolbean
   changes:
   - message: Items with a damage of 0 now have correct damage examination text.
@@ -3897,3 +3890,11 @@
   id: 8128
   time: '2025-04-03T22:24:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36261
+- author: K-Dynamic
+  changes:
+  - message: Proto-Kinetic Accelerators and PTK-800 Shuttle Gun recipes are now available
+      to the security techfab when researched by science.
+    type: Add
+  id: 8129
+  time: '2025-04-04T13:12:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34566
