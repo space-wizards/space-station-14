@@ -1,8 +1,10 @@
+using Content.Shared.CCVar;
 using Content.Shared.Flash;
 using Content.Shared.Flash.Components;
 using Content.Shared.StatusEffect;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -15,12 +17,14 @@ namespace Content.Client.Flash
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         private readonly SharedFlashSystem _flash;
         private readonly StatusEffectsSystem _statusSys;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _shader;
+        private readonly ShaderInstance _reducedShader;
         public float PercentComplete = 0.0f;
         public Texture? ScreenshotTexture;
 
@@ -28,6 +32,7 @@ namespace Content.Client.Flash
         {
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("FlashedEffect").InstanceUnique();
+            _reducedShader = _prototypeManager.Index<ShaderPrototype>("FlashedEffectAccessible").InstanceUnique();
             _flash = _entityManager.System<SharedFlashSystem>();
             _statusSys = _entityManager.System<StatusEffectsSystem>();
         }
@@ -74,8 +79,16 @@ namespace Content.Client.Flash
                 return;
 
             var worldHandle = args.WorldHandle;
-            _shader.SetParameter("percentComplete", PercentComplete);
-            worldHandle.UseShader(_shader);
+            if (_configManager.GetCVar(CCVars.ReducedMotion))
+            {
+                _reducedShader.SetParameter("percentComplete", PercentComplete);
+                worldHandle.UseShader(_reducedShader);
+            }
+            else
+            {
+                _shader.SetParameter("percentComplete", PercentComplete);
+                worldHandle.UseShader(_shader);
+            }
             worldHandle.DrawTextureRectRegion(ScreenshotTexture, args.WorldBounds);
             worldHandle.UseShader(null);
         }
