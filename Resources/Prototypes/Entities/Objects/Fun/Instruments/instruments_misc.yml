@@ -44,8 +44,8 @@
 - type: entity
   parent: BaseHandheldInstrument
   id: PhoneInstrument
-  name: red phone [Thorn]
-  description: Should anything ever go wrong...
+  name: Thorn Able
+  description: Your probably in trouble if you have to use this.
   components:
   - type: Sprite
     sprite: Objects/Fun/Instruments/otherinstruments.rsi
@@ -61,8 +61,8 @@
 - type: entity
   parent: PhoneInstrument
   id: PhoneInstrumentbloo
-  name: blue phone [Luma]
-  description: For evil people to call their friends.
+  name: Luma Stargazer
+  description: Your bosses favorite assistant.
   components:
   - type: Sprite
     sprite: Objects/Fun/Instruments/blue_phone.rsi
