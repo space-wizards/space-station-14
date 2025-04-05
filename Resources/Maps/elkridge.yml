@@ -10638,8 +10638,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 1734
   - uid: 17115
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 17114
@@ -10672,8 +10670,6 @@ entities:
       originalIconColor: '#FFFFFFFF'
       container: 8057
   - uid: 3800
-    mapInit: true
-    paused: true
     components:
     - type: Transform
       parent: 3798
