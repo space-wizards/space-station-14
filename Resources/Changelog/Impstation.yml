@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Fixed the Courier locker not having a Holobell projector.
-    type: Fix
-  id: 968
-  time: '2025-01-19T04:48:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1424
-- author: Honeyed_Lemons_, AftrLite
-  changes:
-  - message: Tweaked the texture of the Syndicate Defib, and renamed it and its bundle.
-    type: Tweak
-  id: 969
-  time: '2025-01-19T04:50:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1407
 - author: starlighthowls
   changes:
   - message: New map NTAS test 1!
@@ -4077,3 +4063,21 @@
   id: 1467
   time: '2025-04-05T02:26:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2200
+- author: hivehum
+  changes:
+  - message: Added a new reagent, found by bloodletting your local squids.
+    type: Add
+  - message: Kodepiiae walk like normal people. No more squelching.
+    type: Remove
+  - message: Kodepiiae should be a bit stronger.
+    type: Tweak
+  id: 1468
+  time: '2025-04-05T03:41:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2196
+- author: hivehum
+  changes:
+  - message: Some sprites are back to normal. Report if anything else looks off.
+    type: Fix
+  id: 1469
+  time: '2025-04-05T03:42:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2188
