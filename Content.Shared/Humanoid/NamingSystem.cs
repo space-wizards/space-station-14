@@ -64,7 +64,7 @@ namespace Content.Shared.Humanoid
 
         public string GetMiddleName(SpeciesPrototype speciesProto)
         {
-            return _random.Pick(_prototypeManager.Index<LocalizedDatasetPrototype>(speciesProto.MiddleNames).Values);
+            return _random.Pick(_prototypeManager.Index<LocalizedDatasetPrototype>(speciesProto.MiddleNames));
         }
 
         public string GetLastName(SpeciesPrototype speciesProto)
