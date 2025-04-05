@@ -72,9 +72,9 @@
     - StolenEssence
   - type: RandomMetadata
     nameSegments:
-    - The
+    - WordThe
     - NamesRevenantType
-    - of
+    - WordOf
     - NamesRevenantAdjective
     - NamesRevenantTheme
   - type: Speech
