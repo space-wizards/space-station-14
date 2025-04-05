@@ -256,7 +256,7 @@ public abstract class SharedStunSystem : EntitySystem
         return false;
     }
 
-    public bool AdjustSpeed(EntityUid uid,
+    public bool UpdateMovementModifiers(EntityUid uid,
         float walkSpeedModifier = 1f,
         float runSpeedModifier = 1f, StaminaComponent? component = null)
     {
@@ -279,16 +279,16 @@ public abstract class SharedStunSystem : EntitySystem
 
         comp.SprintSpeedModifier = runSpeedModifier;
 
-        Log.Debug($"[AS] Trying to modify SlowedDownComponent directly - walkMod: {comp.WalkSpeedModifier}, sprintMod: {comp.SprintSpeedModifier},  uid: {ToPrettyString(uid)}");
+        Log.Debug($"[UMM] Trying to modify SlowedDownComponent directly - walkMod: {comp.WalkSpeedModifier}, sprintMod: {comp.SprintSpeedModifier},  uid: {ToPrettyString(uid)}");
 
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
 
         return true;
     }
 
-    public bool AdjustSpeed(EntityUid uid, float speedModifier = 1f, StaminaComponent? component = null)
+    public bool UpdateMovementModifiers(EntityUid uid, float speedModifier = 1f, StaminaComponent? component = null)
     {
-        return AdjustSpeed(uid, speedModifier, speedModifier, component);
+        return UpdateMovementModifiers(uid, speedModifier, speedModifier, component);
     }
 
     private void OnInteractHand(EntityUid uid, KnockedDownComponent knocked, InteractHandEvent args)

@@ -287,42 +287,7 @@ public sealed partial class StaminaSystem : EntitySystem
         //    _stunSystem.TrySlowdown(uid, TimeSpan.FromSeconds(3), true, 0.8f, 0.8f);
         //}
 
-        var thresholds = HasComp<SlowOnDamageComponent>(uid)
-            ? Comp<SlowOnDamageComponent>(uid).SpeedModifierThresholds
-            : new Dictionary<FixedPoint2, float> { { 60, 0.7f }, {80, 0.5f} };
-
-        var closest = FixedPoint2.Zero;
-
-        string dbgm = "[TSD] Thresholds: {";
-        foreach (var thres in thresholds)
-        {
-            dbgm += $"{thres.Key} - {thres.Value},";
-        }
-        dbgm += "}";
-        Log.Debug(dbgm);
-
-        foreach (var thres in thresholds)
-        {
-            var key = thres.Key.Float();
-
-            //if (component.StaminaDamage >= component.CritThreshold)
-            //    closest = component.CritThreshold;
-
-            if (component.StaminaDamage >= key && key > closest && closest < component.CritThreshold)
-                closest = thres.Key;
-        }
-
-        Log.Debug($"[TSD] Closest threshold: {closest}");
-
-        if (closest != FixedPoint2.Zero) { //&& component.StaminaDamage < component.CritThreshold){
-            Log.Debug($"[TSD] Adjusting speed to: {thresholds[closest]}");
-            _stunSystem.AdjustSpeed(uid, thresholds[closest], component);
-        }
-        else if (closest == FixedPoint2.Zero)
-        {
-            Log.Debug($"[TSD] Adjusting speed to: 1.0");
-            _stunSystem.AdjustSpeed(uid, 1f, component);
-        }
+        AdjustSpeed(uid, component);
 
         SetStaminaAlert(uid, component);
 
@@ -366,7 +331,7 @@ public sealed partial class StaminaSystem : EntitySystem
         }
     }
 
-    public override void Update(float frameTime)
+    public override void Update(float frameTime) // FLAG
     {
         base.Update(frameTime);
 
@@ -383,6 +348,7 @@ public sealed partial class StaminaSystem : EntitySystem
             if (!stamQuery.TryGetComponent(uid, out var comp) ||
                 comp.StaminaDamage <= 0f && !comp.Critical)
             {
+                Log.Debug($"[U] Removing ActiveStaminaComponent from uid: {ToPrettyString(uid)}");
                 RemComp<ActiveStaminaComponent>(uid);
                 continue;
             }
@@ -427,6 +393,7 @@ public sealed partial class StaminaSystem : EntitySystem
         EnsureComp<ActiveStaminaComponent>(uid);
         Dirty(uid, component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} entered stamina crit");
+        Log.Debug($"[EnterSC] {ToPrettyString(uid):user} entered stamina crit");
     }
 
     private void ExitStamCrit(EntityUid uid, StaminaComponent? component = null)
@@ -440,10 +407,62 @@ public sealed partial class StaminaSystem : EntitySystem
         component.Critical = false;
         component.StaminaDamage = 0f;
         component.NextUpdate = _timing.CurTime; // Возможно тут кроется проблема с остановкой уровня стамины на прежнем уровне.
+        Log.Debug("[ExisSC] Resetting speed to its normal");
+        AdjustSpeed(uid, component, true);
+        Log.Debug($"[ExitSC] NextUpdate: {component.NextUpdate}");
         SetStaminaAlert(uid, component);
         RemComp<ActiveStaminaComponent>(uid);
         Dirty(uid, component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Low, $"{ToPrettyString(uid):user} recovered from stamina crit");
+        Log.Debug($"{ToPrettyString(uid):user} recovered from stamina crit");
+    }
+
+    private void AdjustSpeed(EntityUid uid, StaminaComponent? comp = null, bool recover = false)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        if (recover)
+        {
+            Log.Debug($"[AS] Recovering speed to 1f");
+            _stunSystem.UpdateMovementModifiers(uid, 1f, comp);
+            return;
+        }
+
+        var thresholds = HasComp<SlowOnDamageComponent>(uid)
+            ? Comp<SlowOnDamageComponent>(uid).SpeedModifierThresholds
+            : new Dictionary<FixedPoint2, float> { { 60, 0.7f }, { 80, 0.5f } };
+
+        var closest = FixedPoint2.Zero;
+
+        string dbgm = "[AS] Thresholds: {";
+        foreach (var thres in thresholds)
+        {
+            dbgm += $"{thres.Key} - {thres.Value},";
+        }
+        dbgm += "}";
+        Log.Debug(dbgm);
+
+        foreach (var thres in thresholds)
+        {
+            var key = thres.Key.Float();
+
+            if (comp.StaminaDamage >= key && key > closest && closest < comp.CritThreshold)
+                closest = thres.Key;
+        }
+
+        Log.Debug($"[AS] Closest threshold: {closest}");
+
+        if (closest != FixedPoint2.Zero)
+        {
+            Log.Debug($"[AS] Changing speed to: {thresholds[closest]}");
+            _stunSystem.UpdateMovementModifiers(uid, thresholds[closest], comp);
+        }
+        else if (closest == FixedPoint2.Zero)
+        {
+            Log.Debug($"[AS] Adjusting speed to: 1.0");
+            _stunSystem.UpdateMovementModifiers(uid, 1f, comp);
+        }
     }
 }
 
