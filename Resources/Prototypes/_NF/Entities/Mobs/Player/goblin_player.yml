@@ -31,7 +31,7 @@
   parent: MobGoblin
   id: MobGoblinKnight
   name: Sir Gollylad
-  description: The noble Knight Gollylad, first among his peers. Strong enough to open powered doors.
+  description: The noble knight Gollylad, first among his peers. Her gender is as fluid as the winds and waters. Strong enough to open powered doors. #imp edit
   components:
   - type: GhostRole
     name: ghost-role-information-goblin-knight-name
