@@ -1,6 +1,6 @@
 <Document>"
   # Section C: Metashield
-  
+
   This page will discuss a list of various information or items protected by our rules. Something that is "shielded" cannot be known by your character during a round until ANY of the "breaking" conditions happen. This also means your character cannot act upon shielded information. Doing so before the shield is broken is referred to as metagaming.
 
   Anytime a shield is broken, it applies for the remainder of the round, in all other instances, unless explicitly specified otherwise.
@@ -28,8 +28,8 @@
     </ColorBox>
 	<ColorBox>
       <Box Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        As an entity lacking crew-level intellect (such as an animal), the understanding of station functions, and how they may be sabotaged. 
-		
+        As an entity lacking crew-level intellect (such as an animal), the understanding of station functions, and how they may be sabotaged.
+
 		This includes damaging or destroying critical infrastructure solely to gain a meta-tactical advantage.
       </Box>
     </ColorBox>
@@ -48,14 +48,14 @@
       <Box Orientation="Vertical">
 		- Being a Traitor.
 		- Being told of an item's status by a Traitor. This only applies to that particular item.
-		
+
 		Crew should protect High-Risk Items due to their status as valuable items, not due to their status as objectives.
       </Box>
     </ColorBox>
 	<ColorBox>
       <Box Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-		The existence of Nuclear Operatives, beyond ludicrous propaganda that nobody would act on. 
-		
+		The existence of Nuclear Operatives, beyond ludicrous propaganda that nobody would act on.
+
 		This includes their goal of utter station destruction via a nuclear bomb.
       </Box>
     </ColorBox>
@@ -68,8 +68,8 @@
     </ColorBox>
 	<ColorBox>
       <Box Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-		The existence of implants used by the Syndicate. 
-		
+		The existence of implants used by the Syndicate.
+
 		Implant checks cannot be performed unless there is adequate evidence or authorization from a member of Command, as outlined within Standard Operating Procedures.
       </Box>
     </ColorBox>
@@ -84,8 +84,8 @@
     </ColorBox>
 	<ColorBox>
       <Box Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-		The existence of "chameleon" items, pieces of clothing or technology that can change their appearance. 
-		
+		The existence of "chameleon" items, pieces of clothing or technology that can change their appearance.
+
 		Even while this shield is active, the suspicion of items that may be fake or stolen is not shielded.
       </Box>
     </ColorBox>
@@ -95,7 +95,7 @@
 		- Finding holographic nanomachine fibers.
 		- Experiencing a situation where absolutely no explanation is possible.
 		- Discovering an unlocked Uplink.
-		
+
 		Testing clothing for chameleon status is always prohibited; items that are clearly chameleon can, however, be confiscated by Security.
       </Box>
     </ColorBox>
@@ -110,7 +110,7 @@
 		- Seeing the item used for its hidden purpose
 		- Experiencing a situation where absolutely no other explanation is possible
 		- Discovering an unlocked Uplink.
-		
+
 		Stealth items should not be "tested" for their functionality, but items that are clearly producing some sort of stealth effect can be confiscated.
       </Box>
     </ColorBox>
@@ -127,8 +127,8 @@
     </ColorBox>
 	<ColorBox>
       <Box Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-		The fact that Syndicate agents may possess a program, referred to as an Uplink, used to receive equipment from the Syndicate. 
-		
+		The fact that Syndicate agents may possess a program, referred to as an Uplink, used to receive equipment from the Syndicate.
+
 		These Uplinks are typically contained within PDAs, and may be "locked", preventing access and visibility. You have no way of confirming an Uplink exists within a PDA unless you see it yourself.
       </Box>
     </ColorBox>
@@ -140,9 +140,9 @@
       </Box>
     </ColorBox>
   </Table>
-  
+
   ## Never Shielded:
   - The idea that the Nuclear Authorization Disk must be protected at all costs, and that it can be used to destroy the station by bad actors.
   - The fact that the Syndicate is hostile to Nanotrasen, and will occasionally deploy covert agents to spy on, sabotage, and assault Nanotrasen assets and associates.
-  - The fact that the Syndicate possesses equipment of a similar grade to that accessible by NanoTrasen, such as firearms, armour, shuttles and silicons.
+  - The fact that the Syndicate possesses equipment of a similar grade to that accessible by Nanotrasen, such as firearms, armour, shuttles and silicons.
 </Document>
