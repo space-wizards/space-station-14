@@ -44,3 +44,19 @@
   category: Disabilities
   components:
     - type: Illiterate
+
+- type: trait
+  id: Echolalia
+  name: trait-echolalia-name
+  description: trait-echolalia-desc
+  category: Disabilities
+  components:
+  - type: ActiveListener
+    range: 5
+  - type: ParrotSpeech
+    maximumPhraseLength: 24 # higher chance of saying a full sentence
+    hideMessagesInChat: false # so that people react to it with roleplay
+    minimumWait: 300
+    maximumWait: 600 # triggers once every 5-10 minutes
+    learnChance: 0.1
+# doesn't belong in the speech traits because it's a disability the player cannot control, not something that happens when the player sends a message to chat
