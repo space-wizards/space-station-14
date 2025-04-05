@@ -16,6 +16,9 @@
     spawned:
     - id: MaterialCloth1
       amount: 2
+  - type: PhysicalComposition # 50% of the amount of cloth you'd obtain upon butchering
+    materialComposition:
+      Cloth: 100
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
@@ -28,6 +31,7 @@
   - type: Tag
     tags:
     - ClothMade
+    - Recyclable
     - WhitelistChameleon
 
 - type: entity
@@ -39,4 +43,5 @@
     tags:
     - Scarf
     - ClothMade
+    - Recyclable
     - WhitelistChameleon
