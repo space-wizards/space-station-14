@@ -110,5 +110,66 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
             await pair.CleanReturnAsync();
         }
+
+        /// <summary>
+        /// Test that client-sided alerts function properly.
+        /// </summary>
+        [Test]
+        public async Task ClientAlertsTest()
+        {
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
+            {
+                Connected = true,
+                DummyTicker = false
+            });
+            var server = pair.Server;
+            var client = pair.Client;
+
+            var clientEntityManager = client.ResolveDependency<IEntityManager>();
+            var clientAlertsSystem = clientEntityManager.System<AlertsSystem>();
+
+            var serverEntityManager = server.ResolveDependency<IEntityManager>();
+            var serverAlertsSystem = serverEntityManager.System<AlertsSystem>();
+
+            EntityUid playerUid = default;
+            await client.WaitAssertion(() =>
+            {
+                playerUid = client.AttachedEntity.GetValueOrDefault();
+                Assert.That(playerUid, Is.Not.EqualTo(default(EntityUid)));
+
+                clientAlertsSystem.ShowAlert(playerUid, "DebugClient");
+            });
+
+            await pair.RunTicksSync(5);
+
+            await client.WaitAssertion(() =>
+            {
+                var expectedAlerts = new[] { "HumanHealth", "DebugClient" };
+                Assert.That(clientAlertsSystem.GetActiveAlerts(playerUid), Is.Not.Null);
+                Assert.That(
+                    clientAlertsSystem.GetActiveAlerts(playerUid)!
+                        .Select(key => key.Key.AlertType.GetValueOrDefault("Debug7").Id),
+                    Is.SupersetOf(expectedAlerts));
+            });
+
+            await server.WaitAssertion(() =>
+            {
+                serverAlertsSystem.ShowAlert(playerUid, "Debug1");
+            });
+
+            await pair.RunTicksSync(5);
+
+            await client.WaitAssertion(() =>
+            {
+                var expectedAlerts = new[] { "HumanHealth", "DebugClient", "Debug1" };
+                Assert.That(clientAlertsSystem.GetActiveAlerts(playerUid), Is.Not.Null);
+                Assert.That(
+                    clientAlertsSystem.GetActiveAlerts(playerUid)!
+                        .Select(key => key.Key.AlertType.GetValueOrDefault("Debug7").Id),
+                    Is.SupersetOf(expectedAlerts));
+            });
+
+            await pair.CleanReturnAsync();
+        }
     }
 }
