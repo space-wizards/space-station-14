@@ -868,9 +868,6 @@
   id: MimeHappyHonk
 
 - type: Tag
-  id: MindShield
-
-- type: Tag
   id: MindTransferTarget
 
 - type: Tag
