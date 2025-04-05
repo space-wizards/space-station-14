@@ -46,6 +46,8 @@ namespace Content.Server.Database
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
+        public DbSet<SupportExchange> SupportExchanges { get; set; } = null!;
+        public DbSet<SupportMessage> SupportMessages { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -206,6 +208,46 @@ namespace Content.Server.Database
 
             // SetNull is necessary for created by/edited by-s here,
             // so you can safely delete admins (GDPR right to erasure) while keeping the notes intact
+
+            // Support Logging configuration
+            modelBuilder.Entity<SupportMessage>(entity =>
+            {
+                // Define composite key for SupportMessage
+                entity.HasKey(e => new { e.SupportExchangeId, e.SupportMessageId });
+
+                // Create an index on TimeSent for performance
+                entity.HasIndex(e => e.TimeSent);
+
+                // Define relationship with SupportExchange
+                entity.HasOne(e => e.SupportExchange)
+                    .WithMany(e => e.SupportMessages)
+                    .HasForeignKey(e => e.SupportExchangeId)
+                    .OnDelete(DeleteBehavior.Cascade); // Cascade on delete
+
+                // Define relationship with Player using PlayerUserId as foreign key
+                entity.HasOne<Player>()
+                    .WithMany()
+                    .HasForeignKey(e => e.PlayerUserId)
+                    .HasPrincipalKey(p => p.UserId); // Referencing UserId in Player
+
+                // Configure SupportData as a jsonb column
+                entity.OwnsOne(e => e.SupportData).ToJson(); // Ensure jsonb data type is applied implicitly
+            });
+
+            modelBuilder.Entity<SupportExchange>(entity =>
+            {
+                // Define primary key
+                entity.HasKey(e => e.SupportExchangeId);
+
+                // Define unique index for combined SupportRound and SupportTargetPlayer to avoid duplicates
+                entity.HasIndex(e => new { e.SupportRound, e.SupportTargetPlayer }).IsUnique();
+
+                // Define relationship with SupportMessages
+                entity.HasMany(e => e.SupportMessages)
+                    .WithOne(e => e.SupportExchange)
+                    .HasForeignKey(e => e.SupportExchangeId)
+                    .OnDelete(DeleteBehavior.Cascade); // Cascade delete behavior
+            });
 
             modelBuilder.Entity<AdminNote>()
                 .HasOne(note => note.Player)
@@ -720,6 +762,81 @@ namespace Content.Server.Database
         public Player Player { get; set; } = default!;
 
         [ForeignKey("RoundId,LogId")] public AdminLog Log { get; set; } = default!;
+    }
+
+    /// <summary>
+    /// Represents a support exchange that includes multiple support messages.
+    /// Used for logging player and admin interactions in the form of Ahelp or MentorHelp exchanges.
+    /// </summary>
+    public class SupportExchange
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int SupportExchangeId { get; set; }
+
+        [Required]
+        public int SupportRound { get; set; }
+
+        [Required]
+        public Guid SupportTargetPlayer { get; set; }
+        public ICollection<SupportMessage> SupportMessages { get; set; } = new List<SupportMessage>();
+    }
+
+
+    /// <summary>
+    /// Represents a support message sent within a support exchange.
+    /// </summary>
+    public class SupportMessage
+    {
+        [ForeignKey(nameof(SupportExchangeId))]
+        public int SupportExchangeId { get; set; }
+        public int SupportMessageId { get; set; }
+        [Required]
+        public DateTime TimeSent { get; set; }
+        public Guid PlayerUserId { get; set; }
+        public string? Message { get; set; }
+
+        [Column(TypeName = "jsonb")]
+        public SupportData SupportData { get; set; } = null!; // JSON data for the message
+        public SupportExchange SupportExchange { get; set; } = null!;
+    }
+
+    /// <summary>
+    /// Represents additional data for a support message that gets put into a support message.
+    /// </summary>
+    public class SupportData
+    {
+        public string? SenderEntity { get; set; }
+        public string? SenderEntityName { get; set; }
+        public bool IsAdminned { get; set; }
+        public bool AdminsOnline { get; set; }
+        public bool TargetOnline { get; set; }
+        public string RoundStatus { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SupportData"/> class with the specified details.
+        /// </summary>
+        /// <param name="senderEntity">The ID of the entity that sent the message, if applicable.</param>
+        /// <param name="senderEntityName">The name of the entity that sent the message, if applicable.</param>
+        /// <param name="isAdminned">Indicates whether the sender of the message was adminned at the time of the message sending</param>
+        /// <param name="adminsOnline">Indicates whether admins are currently online.</param>
+        /// <param name="targetOnline">Indicates whether the target player is currently online.</param>
+        /// <param name="roundStatus">The current status of the round when the message was sent.</param>
+        public SupportData(
+            string? senderEntity,
+            string senderEntityName,
+            bool isAdminned,
+            bool adminsOnline,
+            bool targetOnline,
+            string roundStatus
+            )
+        {
+            this.SenderEntity = senderEntity;
+            this.SenderEntityName = senderEntityName;
+            this.IsAdminned = isAdminned;
+            this.AdminsOnline = adminsOnline;
+            this.TargetOnline = targetOnline;
+            this.RoundStatus = roundStatus;
+        }
     }
 
     // Used by SS14.Admin

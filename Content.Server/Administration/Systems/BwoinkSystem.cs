@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.Database;
@@ -43,6 +44,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IAfkManager _afkManager = default!;
         [Dependency] private readonly IServerDbManager _dbManager = default!;
         [Dependency] private readonly PlayerRateLimitManager _rateLimit = default!;
+        [Dependency] private readonly SupportExchangeLogging _supportLogging = default!;
 
         [GeneratedRegex(@"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$")]
         private static partial Regex DiscordRegex();
@@ -635,7 +637,6 @@ namespace Content.Server.Administration.Systems
             _activeConversations[message.UserId] = DateTime.Now;
             var senderSession = eventArgs.SenderSession;
 
-            // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
             var personalChannel = senderSession.UserId == message.UserId;
             var senderAdmin = _adminManager.GetAdminData(senderSession);
@@ -655,7 +656,6 @@ namespace Content.Server.Administration.Systems
             string bwoinkText;
             string adminPrefix = "";
 
-            //Getting an administrator position
             if (_config.GetCVar(CCVars.AhelpAdminPrefix) && senderAdmin is not null && senderAdmin.Title is not null)
             {
                 adminPrefix = $"[bold]\\[{senderAdmin.Title}\\][/bold] ";
@@ -682,8 +682,6 @@ namespace Content.Server.Administration.Systems
             var playSound = (!senderAHelpAdmin || message.PlaySound) && !message.AdminOnly;
             var msg = new BwoinkTextMessage(message.UserId, senderSession.UserId, bwoinkText, playSound: playSound, adminOnly: message.AdminOnly);
 
-            LogBwoink(msg);
-
             var admins = GetTargetAdmins();
 
             // Notify all admins
@@ -691,6 +689,23 @@ namespace Content.Server.Administration.Systems
             {
                 RaiseNetworkEvent(msg, channel);
             }
+
+            bool targetOnline = _playerManager.TryGetSessionById(message.UserId, out var _);
+
+            // Log the message to the database
+            _supportLogging.LogSupportMessage(
+                supportRound: _gameTicker.RoundId,
+                roundStatus: _gameTicker.RunLevel.ToString(),
+                timeSent: DateTime.UtcNow,
+                adminsOnline: AdminsOnline(),
+                senderId: senderSession.UserId,
+                senderEntity: senderSession.AttachedEntity,
+                isAdminned: senderAdmin is {Active: true},
+                senderEntityName: senderSession.Name,
+                supportTargetId: message.UserId,
+                targetOnline: targetOnline,
+                message: message.Text
+            );
 
             string adminPrefixWebhook = "";
 
@@ -782,6 +797,13 @@ namespace Content.Server.Administration.Systems
                 .Select(p => p.Channel)
                 .ToList();
         }
+
+        private bool AdminsOnline()
+        {
+            return _adminManager.ActiveAdmins
+                .Any(p => _adminManager.HasAdminFlag(p, AdminFlags.Adminhelp));
+        }
+
 
         private IList<INetChannel> GetTargetAdmins()
         {
