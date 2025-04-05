@@ -38,9 +38,6 @@ public sealed class LayingDownSystem : EntitySystem
         CommandBinds.Unregister<LayingDownSystem>();
     }
 
-
-@DEATHB4DEFEATJul 9, 2024
-@Anno-Midi
     private void DoRefreshMovementSpeed(EntityUid uid, LayingDownComponent component, object args)
     {
         _movement.RefreshMovementSpeedModifiers(uid);
