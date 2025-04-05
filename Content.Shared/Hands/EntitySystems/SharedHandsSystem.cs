@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Cuffs;
+using Content.Shared.Cuffs.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -17,6 +19,7 @@ public abstract partial class SharedHandsSystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
+    [Dependency] protected readonly SharedCuffableSystem _cuffableSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
@@ -224,6 +227,29 @@ public abstract partial class SharedHandsSystem
             if (handsComp.Hands[name].HeldEntity is { } held)
                 yield return held;
         }
+    }
+
+    public void TransferHeldEntity(
+        Entity<HandsComponent?> user,
+        Entity<HandsComponent?> target,
+        EntityUid item,
+        bool stealth)
+    {
+        if (!Resolve(user, ref user.Comp) ||
+            !Resolve(target, ref target.Comp))
+            return;
+
+        // Is the target a handcuff?
+        if (TryComp<VirtualItemComponent>(item, out var virtualItem) &&
+            TryComp<CuffableComponent>(target.Owner, out var cuffable) &&
+            _cuffableSystem.GetAllCuffs(cuffable).Contains(virtualItem.BlockingEntity))
+        {
+            _cuffableSystem.Uncuff(target.Owner, user, virtualItem.BlockingEntity, cuffable);
+        }
+        else
+            TryDrop(target, item, checkActionBlocker: false, handsComp: target.Comp);
+
+        PickupOrDrop(user, item, animateUser: stealth, animate: !stealth, handsComp: user.Comp);
     }
 
     /// <summary>
