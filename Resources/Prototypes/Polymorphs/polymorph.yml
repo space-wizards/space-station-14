@@ -222,3 +222,33 @@
     polymorphSound: /Audio/Magic/ethereal_enter.ogg
     exitPolymorphSound: /Audio/Magic/ethereal_exit.ogg
     duration: 3
+
+# Petrification
+- type: polymorph
+  id: PetrifyStoneStatue
+  configuration:
+    entity: StoneStatuePetrify
+    forced: true
+    transferDamage: false
+    transferName: false
+    transferHumanoidAppearance: true
+    inventory: Transfer
+    revertOnCrit: false
+    revertOnDeath: false
+    revertOnEat: false
+    allowRepeatedMorphs: true
+
+# Stone Golem
+- type: polymorph
+  id: AnimateStoneStatue
+  configuration:
+    entity: StoneStatueAnimate
+    forced: true
+    transferDamage: true
+    transferName: true
+    transferHumanoidAppearance: true
+    inventory: Transfer
+    revertOnCrit: false
+    revertOnDeath: false
+    revertOnEat: false
+    allowRepeatedMorphs: true

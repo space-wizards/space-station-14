@@ -169,10 +169,10 @@ public sealed partial class PolymorphSystem : EntitySystem
     /// </summary>
     /// <param name="uid">The entity that will be transformed</param>
     /// <param name="protoId">The id of the polymorph prototype</param>
-    public EntityUid? PolymorphEntity(EntityUid uid, ProtoId<PolymorphPrototype> protoId)
+    public EntityUid? PolymorphEntity(EntityUid uid, ProtoId<PolymorphPrototype> protoId, bool allowMove = true, bool allowSpeech = true)
     {
         var config = _proto.Index(protoId).Configuration;
-        return PolymorphEntity(uid, config);
+        return PolymorphEntity(uid, config, allowMove, allowSpeech);
     }
 
     /// <summary>
@@ -181,7 +181,7 @@ public sealed partial class PolymorphSystem : EntitySystem
     /// <param name="uid">The entity that will be transformed</param>
     /// <param name="configuration">Polymorph data</param>
     /// <returns></returns>
-    public EntityUid? PolymorphEntity(EntityUid uid, PolymorphConfiguration configuration)
+    public EntityUid? PolymorphEntity(EntityUid uid, PolymorphConfiguration configuration, bool allowMove = true, bool allowSpeech = true)
     {
         // if it's already morphed, don't allow it again with this condition active.
         if (!configuration.AllowRepeatedMorphs && HasComp<PolymorphedEntityComponent>(uid))
@@ -238,7 +238,7 @@ public sealed partial class PolymorphSystem : EntitySystem
             foreach (var hand in _hands.EnumerateHeld(uid))
             {
                 _hands.TryDrop(uid, hand, checkActionBlocker: false);
-                _hands.TryPickupAnyHand(child, hand);
+                _hands.TryPickupAnyHand(child, hand, checkActionBlocker: false);
             }
         }
         else if (configuration.Inventory == PolymorphInventoryChange.Drop)
