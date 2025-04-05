@@ -131,7 +131,7 @@
   - type: Storage
     grid:
     - 0,0,7,4
-    maxItemSize: Small
+    maxItemSize: Huge #for Jumbo produce
     quickInsert: true
     areaInsert: true
     whitelist:
