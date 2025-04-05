@@ -4,6 +4,7 @@ using Content.Server.Antag.Components;
 using Content.Server.Communications;
 using Content.Server.CriminalRecords.Systems;
 using Content.Server.GameTicking;
+using Content.Server.Objectives.Components;
 using Content.Server.Research.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
@@ -124,6 +125,11 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
         // Ninjitize me, Cap'n
         await MakeNinja(Player);
 
+        // Get the research stealing objective and make sure it has no progress
+        var mindSys = Server.System<SharedMindSystem>();
+        Assert.That(mindSys.TryGetObjectiveComp<StealResearchConditionComponent>(ToServer(Player), out var stealResearchConditionComp));
+        Assert.That(stealResearchConditionComp.DownloadedNodes, Is.Empty, "Player already has stolen research.");
+
         // Add our tracker component to the ninja
         await Server.WaitPost(() =>
         {
@@ -151,6 +157,7 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
         // Interact with the server - gloves are not active, so this should not hack
         await Interact();
         Assert.That(testSys.Hacked, Is.False, "Ninja hacked research server without activating gloves.");
+        Assert.That(stealResearchConditionComp.DownloadedNodes, Is.Empty, "DownloadedNodes count increased unexpectedly");
 
         // Activate the gloves
         await Server.WaitPost(() =>
@@ -164,6 +171,9 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
 
         // Make sure the server was hacked
         Assert.That(testSys.Hacked);
+
+        // Make sure the player gained objective progress
+        Assert.That(stealResearchConditionComp.DownloadedNodes, Has.Count.GreaterThan(0), "DownloadedNodes count did not increase.");
     }
 
     /// <summary>
