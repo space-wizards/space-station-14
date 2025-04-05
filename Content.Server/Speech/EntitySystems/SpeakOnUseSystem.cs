@@ -3,9 +3,7 @@ using Content.Shared.Speech.Components;
 using Content.Shared.Speech;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Speech.Muting;
-using System;
-using Content.Shared.Actions;
-using Robust.Shared.Prototypes;
+using Content.Shared.Actions.Events;
 
 
 namespace Content.Server.Speech.EntitySystems;
@@ -22,10 +20,10 @@ public sealed class SpeakOnUseSystem : SharedSpeakOnUseSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpeakOnUseComponent, SpeakOnUseEvent>(OnSpeakOnUse);
+        SubscribeLocalEvent<SpeakOnUseComponent, ActionPerformedEvent>(OnSpeakOnUse);
     }
 
-    private void OnSpeakOnUse(Entity<SpeakOnUseComponent> ent, ref SpeakOnUseEvent args)
+    private void OnSpeakOnUse(Entity<SpeakOnUseComponent> ent, ref ActionPerformedEvent args)
     {
         var user = args.Performer;
 

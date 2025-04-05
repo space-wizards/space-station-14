@@ -10,5 +10,5 @@ public sealed partial class SpeakOnUseComponent : Component
     /// The ftl id of the sentence that the user will speak.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string? Sentence;
+    public LocId? Sentence;
 }

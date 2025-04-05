@@ -9,8 +9,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mind;
 using Content.Shared.Rejuvenate;
-using Content.Shared.Speech;
-using Content.Shared.Speech.Components;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
@@ -701,12 +699,6 @@ public abstract class SharedActionsSystem : EntitySystem
         if (actionEvent?.Toggle == true)
         {
             action.Toggled = !action.Toggled;
-        }
-
-        if (HasComp<SpeakOnUseComponent>(actionId))
-        {
-            var speakEvent = new SpeakOnUseEvent(performer);
-            RaiseLocalEvent(actionId, ref speakEvent);
         }
 
         _audio.PlayPredicted(action.Sound, performer, predicted ? performer : null);
