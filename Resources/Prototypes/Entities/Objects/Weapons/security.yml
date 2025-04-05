@@ -90,19 +90,6 @@
         - Antagonists
 
 - type: entity
-  parent: Stunbaton
-  id: Debugbaton
-  components:
-    - type: Stunbaton
-      energyPerUse: 0
-    - type: StaminaDamageOnHit
-      damage: 33
-      sound: /Audio/Weapons/egloves.ogg
-    - type: StaminaDamageOnCollide
-      damage: 33
-      sound: /Audio/Weapons/egloves.ogg
-
-- type: entity
   name: truncheon
   parent: [BaseItem, BaseSecurityContraband]
   id: Truncheon
