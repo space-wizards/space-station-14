@@ -45,3 +45,6 @@ reagent-desc-juice-watermelon = The delicious juice of a watermelon.
 
 reagent-name-juice-cherry = cherry juice
 reagent-desc-juice-cherry = Tasty cherry juice, sweet and tangy.
+
+reagent-name-juice-pomegranate = pomegranate juice
+reagent-desc-juice-pomegranate = Tasty pomegranate juice, sweet and tangy.
