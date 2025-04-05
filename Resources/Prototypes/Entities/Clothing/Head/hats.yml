@@ -150,6 +150,22 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatRangerHoS
+  name: head of security's ranger hat
+  description: Somewhere on an icy moon, the bleak wind howls.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/cowboy_hos.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/cowboy_hos.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatBeretWarden
   name: warden's beret
   description: A corporate blue beret with a warden's rank emblem. For officers that are more inclined towards style than safety.
