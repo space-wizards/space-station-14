@@ -1,16 +1,12 @@
 using System.Linq;
-using Content.Server.Doors.Electronics;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
-using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Doors.Electronics;
-using Content.Shared.Doors;
-using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Doors.Electronics;
+namespace Content.Server.Doors.Electronics.Systems;
 
 public sealed class DoorElectronicsSystem : EntitySystem
 {
