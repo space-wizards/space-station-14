@@ -1055,6 +1055,9 @@
   id: ReptilianFood
 
 - type: Tag
+  id: Rice
+
+- type: Tag
   id: RifleStock
 
 - type: Tag
@@ -1086,6 +1089,9 @@
 
 - type: Tag
   id: RollingPin
+
+- type: Tag
+  id: Salad
 
 - type: Tag
   id: SaltShaker
