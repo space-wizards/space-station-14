@@ -491,3 +491,20 @@
     state: critical
   name: Debug6
   description: Debug
+
+- type: alert
+  id: ColdBlooded
+  category: ColdBlooded
+  icons:
+  - sprite: /Textures/Interface/Alerts/coldBlooded.rsi
+    state: Sleep_0
+  - sprite: /Textures/Interface/Alerts/coldBlooded.rsi
+    state: Sleep_1
+  - sprite: /Textures/Interface/Alerts/coldBlooded.rsi
+    state: Sleep_2
+  - sprite: /Textures/Interface/Alerts/coldBlooded.rsi
+    state: Sleep_3
+  name: alerts-coldblooded-name
+  description: alerts-coldblooded-desc
+  minSeverity: 0
+  maxSeverity: 3
