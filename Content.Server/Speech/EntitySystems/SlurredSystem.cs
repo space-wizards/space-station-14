@@ -61,9 +61,11 @@ public sealed class SlurredSystem : SharedSlurredSystem
         // This is pretty much ported from TG.
         foreach (var character in message)
         {
+            var modifiedCharacter = character;
+
             if (_random.Prob(scale / 3f))
             {
-                var lower = char.ToLowerInvariant(character);
+                var lower = char.ToLowerInvariant(modifiedCharacter);
                 var newString = lower switch
                 {
                     'o' => "u",
@@ -71,7 +73,7 @@ public sealed class SlurredSystem : SharedSlurredSystem
                     'a' => "ah",
                     'u' => "oo",
                     'c' => "k",
-                    _ => $"{character}",
+                    _ => $"{modifiedCharacter}",
                 };
 
                 sb.Append(newString);
@@ -79,28 +81,44 @@ public sealed class SlurredSystem : SharedSlurredSystem
 
             if (_random.Prob(scale / 20f))
             {
-                if (character == ' ')
+                switch (modifiedCharacter)
                 {
-                    sb.Append(Loc.GetString("slur-accent-confused"));
+                    case ' ':
+                        sb.Append(Loc.GetString("slur-accent-confused"));
+                        break;
+                
+                    case '.':
+                        sb.Append(' ');
+                        sb.Append(Loc.GetString("slur-accent-burp"));
+                        break;
+                }    
+            }
+
+            // Change lowercase characters to uppercase and vice versa
+            if (_random.Prob(scale / 3f))
+            {
+                if (char.IsLower(modifiedCharacter))
+                {
+                    modifiedCharacter = char.ToUpperInvariant(modifiedCharacter);
                 }
-                else if (character == '.')
+                else if (char.IsUpper(modifiedCharacter))
                 {
-                    sb.Append(' ');
-                    sb.Append(Loc.GetString("slur-accent-burp"));
+                    modifiedCharacter = char.ToLowerInvariant(modifiedCharacter);
                 }
             }
 
+
             if (!_random.Prob(scale * 3/20))
             {
-                sb.Append(character);
+                sb.Append(modifiedCharacter);
                 continue;
             }
 
             var next = _random.Next(1, 3) switch
             {
                 1 => "'",
-                2 => $"{character}{character}",
-                _ => $"{character}{character}{character}",
+                2 => $"{modifiedCharacter}{modifiedCharacter}",
+                _ => $"{modifiedCharacter}{modifiedCharacter}{modifiedCharacter}",
             };
 
             sb.Append(next);
