@@ -113,16 +113,16 @@
     slotThresholds:
     - slots: EYES
       damageThreshold:
-        groups:
-          Brute: 5
+        types:
+          Blunt: 5
     - slots: HEAD
       damageThreshold:
-        groups:
-          Brute: 10
+        types:
+          Blunt: 10
     - slots: EARS
       damageThreshold:
-        groups:
-          Brute: 5
+        types:
+          Blunt: 5
     - slots: MASK
       damageThreshold:
         types:
@@ -137,8 +137,8 @@
           Slash: 10
     - slots: FEET
       damageThreshold:
-        groups:
-          Brute: 100 # yo, that guys dead!
+        types:
+          Blunt: 100 # yo, that guys dead!
 
 - type: entity
   parent: BaseSpeciesDummy

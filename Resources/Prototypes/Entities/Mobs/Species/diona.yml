@@ -123,7 +123,7 @@
     - slots: EARS
       damageThreshold:
         types:
-          Blunt: 5
+          Blunt: 100 # yo, that guys dead!
 
 - type: entity
   parent: BaseSpeciesDummy

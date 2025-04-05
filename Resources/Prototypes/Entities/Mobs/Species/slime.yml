@@ -121,8 +121,8 @@
     slotThresholds:
     - slots: FEET
       damageThreshold:
-        groups:
-          Brute: 100 # yo, that guys dead!
+        types:
+          Blunt: 100 # yo, that guys dead!
 
 - type: entity
   parent: MobHumanDummy
