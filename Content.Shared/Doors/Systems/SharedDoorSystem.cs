@@ -359,8 +359,13 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return;
 
         var lastState = door.State;
+        var nextState = DoorState.Opening;
 
-        if (!SetState(uid, DoorState.Opening, door))
+        // Admin ghosts in map editor mode can instantly open doors.
+        if (Paused(uid) && user is EntityUid realUser && Tags.HasTag(realUser, "InstantDoAfters"))
+            nextState = DoorState.Open;
+
+        if (!SetState(uid, nextState, door))
             return;
 
         if (predicted)
@@ -453,7 +458,13 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return;
 
-        if (!SetState(uid, DoorState.Closing, door))
+        var nextState = DoorState.Closing;
+
+        // Admin ghosts in map editor mode can instantly open doors.
+        if (Paused(uid) && user is EntityUid realUser && Tags.HasTag(realUser, "InstantDoAfters"))
+            nextState = DoorState.Closed;
+
+        if (!SetState(uid, nextState, door))
             return;
 
         if (predicted)
