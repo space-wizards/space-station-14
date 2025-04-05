@@ -14,6 +14,7 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Content.Shared.Containers;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Map;
@@ -68,6 +69,7 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] protected readonly MetaDataSystem MetaDataSys = default!;
     [Dependency] protected readonly INetManager NetManager = default!;
+    [Dependency] protected readonly SlotBasedConnectedContainerSystem SlotBasedConnectedContainer = default!;
 
     public override void Initialize()
     {
@@ -162,6 +164,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         [NotNullWhen(true)] out Entity<SolutionComponent>? entity,
         bool errorOnMissing = false)
     {
+        // use connected container instead of entity from arguments, if it exists.
+        if (SlotBasedConnectedContainer.TryGetConnectedContainer(container, out var replaceUsedWith))
+        {
+            container = replaceUsedWith.Value;
+        }
+
         EntityUid uid;
         if (name is null)
             uid = container;
