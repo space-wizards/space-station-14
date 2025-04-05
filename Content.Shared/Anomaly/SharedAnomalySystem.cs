@@ -116,7 +116,7 @@ public abstract class SharedAnomalySystem : EntitySystem
     /// <summary>
     /// Begins the animation for going supercritical
     /// </summary>
-    /// <param name="ent"></param>
+    /// <param name="ent">Entity to go supercritical</param>
     public void StartSupercriticalEvent(Entity<AnomalyComponent?> ent)
     {
         // don't restart it if it's already begun
