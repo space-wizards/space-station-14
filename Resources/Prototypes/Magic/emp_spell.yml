@@ -1,0 +1,18 @@
+- type: entity
+  id: ActionEmp
+  name: Magnetic blast
+  description: Disable nearby electronics.
+  components:
+  # TODO: Update this to something that makes more sense once the spell refactor is finished!
+  # This doesn't make much sense to be at trigger (This component is never directly used for triggering, it's just storing the values which get passed in)
+  - type: EmpOnTrigger
+    range: 4.0
+    energyConsumption: 50000
+  - type: InstantAction
+    useDelay: 30
+    raiseOnAction: true
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: spell_emp
+    event: !type:EMPSpellActionEvent
