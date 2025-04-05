@@ -454,13 +454,20 @@
 
 - type: entity
   parent: BaseScrapLarge
+  id: BaseScrapGenerator
+  abstract: true
+  components:
+  - type: Anchorable
+  - type: Sprite
+    sprite: Objects/Materials/Scrap/generator.rsi
+
+- type: entity
+  parent: BaseScrapGenerator
   id: ScrapGeneratorPlasmaLeaking
   name: leaking P.A.C.M.A.N. generator
   description: An old looking P.A.C.M.A.N. generator whos plasma tanks started leaking.
   components:
   - type: Sprite
-    sprite: Objects/Materials/Scrap/generator.rsi
-    snapCardinals: true
     layers:
       - state: old_generator_plasma
       - state: old_generator_plasma_fuel_leak
@@ -471,13 +478,12 @@
       Plastic: 500 # 5 sheets
 
 - type: entity
-  parent: BaseScrapLarge
+  parent: BaseScrapGenerator
   id: ScrapGeneratorPlasma
   name: old P.A.C.M.A.N. generator
   description: An old looking P.A.C.M.A.N. generator. It's in very poor condition and non functional.
   components:
   - type: Sprite
-    sprite: Objects/Materials/Scrap/generator.rsi
     layers:
       - state: old_generator_plasma
   - type: PhysicalComposition
@@ -487,13 +493,12 @@
       Plastic: 500 # 5 sheets
 
 - type: entity
-  parent: BaseScrapLarge
+  parent: BaseScrapGenerator
   id: ScrapGeneratorUraniumLeaking
   name: leaking S.U.P.E.R.P.A.C.M.A.N. generator
   description: A S.U.P.E.R.P.A.C.M.A.N. generator that appears to have had some kind of catastrophic failure. Its leaking uranium.
   components:
   - type: Sprite
-    sprite: Objects/Materials/Scrap/generator.rsi
     layers:
       - state: uranium_generator
       - map: [ "extra" ]
@@ -506,7 +511,6 @@
     - extra:
         red_x: ""
         nothing: ""
-  - type: MultiHandedItem
   - type: PhysicalComposition
     materialComposition:
       Steel: 4000 # 40 sheets
@@ -516,7 +520,7 @@
     intensity: 1.0
 
 - type: entity
-  parent: BaseScrapLarge
+  parent: BaseScrapGenerator
   id: ScrapGeneratorUranium
   name: destroyed S.U.P.E.R.P.A.C.M.A.N. generator
   description: A S.U.P.E.R.P.A.C.M.A.N. generator that appears to have had some kind of catastrophic failure.
@@ -540,13 +544,12 @@
     intensity: 0.5
 
 - type: entity
-  parent: BaseScrapLarge
+  parent: BaseScrapGenerator
   id: ScrapGeneratorFrame
   name: generator frame
   description: A frame of a P.A.C.M.A.N. or S.U.P.E.R.P.A.C.M.A.N. type generator. Where is the rest of it?
   components:
   - type: Sprite
-    sprite: Objects/Materials/Scrap/generator.rsi
     layers:
       - state: generator_frame
   - type: PhysicalComposition
