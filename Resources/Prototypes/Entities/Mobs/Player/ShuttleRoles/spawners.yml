@@ -767,6 +767,21 @@
     prototypes:
     - RandomHumanoidVisitorZookeeper
 
+# Misc
+
+- type: entity
+  name: knight errant spawner
+  id: KnightErrantSpawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - sprite: Structures/Decoration/banner.rsi
+        state: banner
+  - type: RandomSpawner
+    prototypes:
+    - RandomHumanoidKnightErrant
+
 ### Visitors missing equipment for challenges
 
 # Command
