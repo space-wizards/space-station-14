@@ -87,3 +87,10 @@
   background: /Textures/_Impstation/LobbyScreens/stares_blankly.webp
   name: stares blankly
   artist: Wendy, Pixel Curatrix
+
+- type: lobbyBackground
+  id: InterdyneProfitSynthesis
+  background: /Textures/_Impstation/LobbyScreens/interdyne_profit_synthesis.webp
+  name: Interdyne Profit & Synthesis
+  artist: Wendy, Pixel Curatrix
+
