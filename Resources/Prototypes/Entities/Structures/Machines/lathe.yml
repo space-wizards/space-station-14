@@ -408,6 +408,8 @@
         - Sheet
         - RawMaterial
         - Ingot
+  - type: LatheAnnouncing
+    channels: [Security]
 
 - type: entity
   id: AmmoTechFab
@@ -478,6 +480,8 @@
     board: MedicalTechFabCircuitboard
   - type: StealTarget
     stealGroup: MedicalTechFabCircuitboard
+  - type: LatheAnnouncing
+    channels: [Medical]
 
 - type: entity
   parent: BaseLathe
