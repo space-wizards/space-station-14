@@ -120,22 +120,22 @@ public abstract class SharedAnomalySystem : EntitySystem
     public void StartSupercriticalEvent(Entity<AnomalyComponent?> ent)
     {
         // don't restart it if it's already begun
-        if (HasComp<AnomalySupercriticalComponent>(ent.Owner))
+        if (HasComp<AnomalySupercriticalComponent>(ent))
             return;
 
-        Resolve(ent.Owner, ref ent.Comp, logMissing: false);
+        Resolve(ent, ref ent.Comp, logMissing: false);
 
         AdminLog.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(ent.Owner)} began to go supercritical.");
         if (_net.IsServer)
             Log.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(ent.Owner)}");
 
         if(ent.Comp != null)
-            Audio.PlayPvs(ent.Comp.SupercriticalSoundAtAnimationStart, Transform(ent.Owner).Coordinates);
+            Audio.PlayPvs(ent.Comp.SupercriticalSoundAtAnimationStart, Transform(ent).Coordinates);
 
-        var super = AddComp<AnomalySupercriticalComponent>(ent.Owner);
+        var super = AddComp<AnomalySupercriticalComponent>(ent);
         super.EndTime = Timing.CurTime + super.SupercriticalDuration;
-        Appearance.SetData(ent.Owner, AnomalyVisuals.Supercritical, true);
-        Dirty(ent.Owner, super);
+        Appearance.SetData(ent, AnomalyVisuals.Supercritical, true);
+        Dirty(ent, super);
     }
 
     /// <summary>
