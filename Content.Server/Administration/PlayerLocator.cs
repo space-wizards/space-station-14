@@ -148,7 +148,7 @@ namespace Content.Server.Administration
             return new LocatedPlayerData(new NetUserId(responseData.UserId), null, null, responseData.UserName, null, []);
         }
 
-        private static LocatedPlayerData ReturnForSession(ICommonSession session)
+        private LocatedPlayerData ReturnForSession(ICommonSession session)
         {
             var userId = session.UserId;
             var address = session.Channel.RemoteEndPoint.Address;
