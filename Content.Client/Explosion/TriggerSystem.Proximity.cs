@@ -93,7 +93,7 @@ public sealed partial class TriggerSystem
                 break;
             case ProximityTriggerVisuals.Active:
                 if (_player.HasRunningAnimation(uid, player, AnimKey)) return;
-                _player.Play(uid, player, _flasherAnimation, AnimKey);
+                _player.Play((uid, player), _flasherAnimation, AnimKey);
                 break;
             case ProximityTriggerVisuals.Off:
             default:
