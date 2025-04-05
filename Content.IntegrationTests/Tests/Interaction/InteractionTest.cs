@@ -26,6 +26,8 @@ using Robust.Shared.Timing;
 using Robust.UnitTesting;
 using Content.Shared.Item.ItemToggle;
 using Robust.Client.State;
+using Content.Server.Station.Systems;
+using Content.Server.Station;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -129,6 +131,17 @@ public abstract partial class InteractionTest
 
     public float TickPeriod => (float) STiming.TickPeriod.TotalSeconds;
 
+    /// <summary>
+    /// If not null, a station entity will be spawned using this prototype
+    /// and the test grid will be registered to it.
+    /// </summary>
+    protected virtual EntProtoId? StationPrototype => null;
+
+    /// <summary>
+    /// The station entity spawned if <see cref="StationPrototype"/> is not null.
+    /// </summary>
+    protected EntityUid? Station;
+
     // Simple mob that has one hand and can perform misc interactions.
     [TestPrototypes]
     private const string TestPrototypes = @"
@@ -193,6 +206,14 @@ public abstract partial class InteractionTest
         PlayerCoords = SEntMan.GetNetCoordinates(Transform.WithEntityId(MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)), MapData.MapUid));
         TargetCoords = SEntMan.GetNetCoordinates(Transform.WithEntityId(MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)), MapData.MapUid));
         await SetTile(Plating, grid: MapData.Grid);
+
+        if (StationPrototype is not null)
+        {
+            await Server.WaitPost(() =>
+            {
+                SEntMan.System<StationSystem>().InitializeNewStation(new StationConfig() { StationPrototype = StationPrototype }, [MapData.Grid]);
+            });
+        }
 
         // Get player data
         var sPlayerMan = Server.ResolveDependency<Robust.Server.Player.IPlayerManager>();
