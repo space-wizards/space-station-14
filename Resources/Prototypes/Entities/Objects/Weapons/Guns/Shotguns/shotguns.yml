@@ -50,6 +50,10 @@
   id: WeaponShotgunBulldog
   description: An automatic magazine-fed shotgun for close-quarters combat. Kicks like a mule on steroids. Uses .50 shotgun shells.
   components:
+  - type: Item
+    size: Large
+    shape:
+      - 0,0,3,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
     layers:
@@ -57,8 +61,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    size: Large
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
     quickEquip: false
@@ -140,12 +142,15 @@
   id: WeaponShotgunEnforcer
   description: A premium semi-automatic shotgun, and the pride of all security forces. Uses .50 shotgun shells.
   components: # intend for Enforcer to have wider choke for semi-auto function
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,1
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
-  - type: Item
-    sprite: Objects/Weapons/Guns/Shotguns/enforcer_inhands_64x.rsi
   - type: BallisticAmmoProvider
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
 
@@ -166,7 +171,7 @@
   - type: Item
     size: Normal
     shape:
-    - 0,0,4,0
+    - 0,0,4,1
     sprite: Objects/Weapons/Guns/Shotguns/pump_inhands_64x.rsi
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
@@ -185,13 +190,16 @@
   id: WeaponShotgunSawn
   description: Groovy! Uses .50 shotgun shells.
   components: # needs to be super inaccurate because you don't need to wield it
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,2,0
+    sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
+
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
-  - type: Item
-    size: Small
-    sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
   - type: Gun
     fireRate: 3
   - type: BallisticAmmoProvider
