@@ -2,6 +2,8 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
@@ -27,6 +29,10 @@ namespace Content.Server.Database
     public abstract class ServerDbBase
     {
         private readonly ISawmill _opsLog;
+        protected string _playtimeServerUrl = String.Empty;
+        protected bool _playtimeServerSaveLocally = false;
+        protected bool _playtimeServerEnabled = false;
+        protected readonly HttpClient _httpClient = new();
 
         public event Action<DatabaseNotification>? OnNotificationReceived;
 
@@ -543,6 +549,18 @@ namespace Content.Server.Database
         #region Playtime
         public async Task<List<PlayTime>> GetPlayTimes(Guid player, CancellationToken cancel)
         {
+            if (_playtimeServerEnabled)
+            {
+                var requestUrl = $"{_playtimeServerUrl}?playerId={WebUtility.UrlEncode(player.ToString())}";
+                var response = await _httpClient.GetAsync(requestUrl, cancel);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return [];
+                }
+                var data = await response.Content.ReadFromJsonAsync<List<PlayTime>>(cancel);
+                return data!;
+            }
+
             await using var db = await GetDb(cancel);
 
             return await db.DbContext.PlayTime
@@ -552,6 +570,21 @@ namespace Content.Server.Database
 
         public async Task UpdatePlayTimes(IReadOnlyCollection<PlayTimeUpdate> updates)
         {
+            if (_playtimeServerEnabled)
+            {
+                var data = updates.Select(x => new PlayTime()
+                {
+                    PlayerId = x.User.UserId,
+                    Tracker = x.Tracker,
+                    TimeSpent = x.Time
+                });
+                await _httpClient.PostAsJsonAsync(_playtimeServerUrl, data);
+                if (!_playtimeServerSaveLocally)
+                {
+                    return;
+                }
+            }
+
             await using var db = await GetDb();
 
             // Ideally I would just be able to send a bunch of UPSERT commands, but EFCore is a pile of garbage.
