@@ -52,7 +52,7 @@ public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTrigger
         {
             case TriggerVisualState.Primed:
                 if (!AnimationSystem.HasRunningAnimation(uid, animPlayer, TimerTriggerVisualsComponent.AnimationKey))
-                    AnimationSystem.Play(uid, animPlayer, comp.PrimingAnimation, TimerTriggerVisualsComponent.AnimationKey);
+                    AnimationSystem.Play((uid, animPlayer), comp.PrimingAnimation, TimerTriggerVisualsComponent.AnimationKey);
                 break;
             case TriggerVisualState.Unprimed:
                 args.Sprite.LayerSetState(TriggerVisualLayers.Base, comp.UnprimedSprite);

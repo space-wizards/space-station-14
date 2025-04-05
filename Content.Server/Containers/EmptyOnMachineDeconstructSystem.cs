@@ -36,9 +36,11 @@ namespace Content.Server.Containers
             if (!EntityManager.TryGetComponent<ContainerManagerComponent>(uid, out var mComp))
                 return;
             var baseCoords = EntityManager.GetComponent<TransformComponent>(uid).Coordinates;
+
+            var sharedContainer = EntityManager.System<SharedContainerSystem>();
             foreach (var v in component.Containers)
             {
-                if (mComp.TryGetContainer(v, out var container))
+                if (sharedContainer.TryGetContainer(uid, v, out var container, mComp))
                 {
                     _container.EmptyContainer(container, true, baseCoords);
                 }

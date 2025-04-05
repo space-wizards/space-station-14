@@ -225,7 +225,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     {
         var metadataQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
 
-        if (Deleted(uid, metadataQuery))
+        if (Deleted(uid))
             return Array.Empty<(NetEntity, string)>();
 
         var list = new ValueList<(NetEntity, string)>();
@@ -388,7 +388,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         {
             if (instrument.Master is {} master)
             {
-                if (Deleted(master, metadataQuery))
+                if (Deleted(master))
                 {
                     Clean(uid, instrument);
                 }
