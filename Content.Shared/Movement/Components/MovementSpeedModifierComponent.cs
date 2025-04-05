@@ -54,59 +54,79 @@ namespace Content.Shared.Movement.Components
             }
         }
 
-        /// <summary>
-        /// Minimum speed a mob has to be moving before applying movement friction.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField]
-        public float MinimumFrictionSpeed = DefaultMinimumFrictionSpeed;
+        #region Weightless
 
         /// <summary>
         /// The negative velocity applied for friction when weightless and providing inputs.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField]
-        public float WeightlessFriction = DefaultWeightlessFriction;
+        [AutoNetworkedField, DataField]
+        public float BaseWeightlessFriction = DefaultWeightlessFriction;
 
         /// <summary>
         /// The negative velocity applied for friction when weightless and not providing inputs.
         /// This is essentially how much their speed decreases per second.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField]
-        public float WeightlessFrictionNoInput = DefaultWeightlessFrictionNoInput;
+        [AutoNetworkedField, DataField]
+        public float BaseWeightlessFrictionNoInput = DefaultWeightlessFrictionNoInput;
 
         /// <summary>
         /// The negative velocity applied for friction when weightless and not standing on a grid or mapgrid
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField]
+        [AutoNetworkedField, DataField]
         public float OffGridFriction = DefaultOffGridFriction;
 
         /// <summary>
         /// The movement speed modifier applied to a mob's total input velocity when weightless.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField]
-        public float WeightlessModifier = DefaultWeightlessModifier;
+        [AutoNetworkedField, DataField]
+        public float BaseWeightlessModifier = DefaultWeightlessModifier;
 
         /// <summary>
         /// The acceleration applied to mobs when moving and weightless.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite), DataField]
-        public float WeightlessAcceleration = DefaultWeightlessAcceleration;
+        [AutoNetworkedField, DataField]
+        public float BaseWeightlessAcceleration = DefaultWeightlessAcceleration;
+
+        /*
+         * Final values
+         */
+
+        [AutoNetworkedField, DataField]
+        public float WeightlessAcceleration;
+
+        [AutoNetworkedField, DataField]
+        public float WeightlessModifier;
+
+        [AutoNetworkedField, DataField]
+        public float WeightlessFriction;
+
+        [AutoNetworkedField, DataField]
+        public float WeightlessFrictionNoInput;
+
+        #endregion
+
+        /// <summary>
+        /// Minimum speed a mob has to be moving before applying movement friction.
+        /// </summary>
+        [DataField]
+        public float MinimumFrictionSpeed = DefaultMinimumFrictionSpeed;
 
         /// <summary>
         /// The acceleration applied to mobs when moving.
         /// </summary>
-        [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
+        [AutoNetworkedField, DataField]
         public float Acceleration = DefaultAcceleration;
 
         /// <summary>
         /// The negative velocity applied for friction.
         /// </summary>
-        [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
+        [AutoNetworkedField, DataField]
         public float Friction = DefaultFriction;
 
         /// <summary>
         /// The negative velocity applied for friction.
         /// </summary>
-        [AutoNetworkedField, ViewVariables(VVAccess.ReadWrite), DataField]
+        [AutoNetworkedField, DataField]
         public float? FrictionNoInput;
 
         [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
