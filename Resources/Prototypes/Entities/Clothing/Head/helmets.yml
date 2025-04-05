@@ -36,6 +36,7 @@
     tags:
     - WhitelistChameleon
     - SecurityHelmet
+    - CorgiWearable
 
 #Mercenary Helmet
 - type: entity
@@ -71,6 +72,9 @@
         Caustic: 0.95
   - type: ExplosionResistance
     damageCoefficient: 0.75
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 #Syndicate SWAT Helmet
 - type: entity
@@ -103,6 +107,9 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.95
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 #Bombsuit Helmet
 - type: entity

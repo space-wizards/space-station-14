@@ -61,7 +61,7 @@
 - type: cargoProduct
   id: LivestockCorgi
   icon:
-    sprite: Mobs/Pets/corgi.rsi
+    sprite: Mobs/Pets/corgi/corgi.rsi
     state: corgi
   product: CrateNPCCorgi
   cost: 1200
@@ -71,7 +71,7 @@
 - type: cargoProduct
   id: LivestockPupCorgi
   icon:
-    sprite: Mobs/Pets/corgi.rsi
+    sprite: Mobs/Pets/corgi/corgi.rsi
     state: puppy
   product: CrateNPCPuppyCorgi
   cost: 1200
