@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.CCVar;
@@ -42,6 +43,8 @@ public sealed partial class StaminaSystem : EntitySystem
     private static readonly TimeSpan StamCritBufferTime = TimeSpan.FromSeconds(3f);
 
     public float UniversalStaminaDamageModifier { get; private set; } = 1f;
+
+    private bool _afterCrit = false;
 
     public override void Initialize()
     {
@@ -216,6 +219,7 @@ public sealed partial class StaminaSystem : EntitySystem
             return;
 
         var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, component.CritThreshold - component.StaminaDamage), component.CritThreshold, 7);
+        Log.Debug($"[SSAlert] uid: {ToPrettyString(uid):user}, severity: {severity}, StaminaDamage: {component.StaminaDamage}");
         _alerts.ShowAlert(uid, component.StaminaAlert, (short)severity);
     }
 
@@ -251,10 +255,17 @@ public sealed partial class StaminaSystem : EntitySystem
         value = UniversalStaminaDamageModifier * value;
 
         // Have we already reached the point of max stamina damage?
-        if (component.Critical)
+        if(component.Critical)
             return;
+        
+        //if (component.Critical && value >= 0)
+        //    return;
 
 
+        //if (component.Critical && value < 0)
+        //{
+        //    ExitStamCrit(uid, component);
+        //}
 
         Log.Debug($"[TSD] value: {value}, uid: {ToPrettyString(uid)}, source: {ToPrettyString(source)}, with: {ToPrettyString(with)}");
         var oldDamage = component.StaminaDamage;
@@ -287,9 +298,15 @@ public sealed partial class StaminaSystem : EntitySystem
         //    _stunSystem.TrySlowdown(uid, TimeSpan.FromSeconds(3), true, 0.8f, 0.8f);
         //}
 
-        AdjustSpeed(uid, component);
+        AdjustSlowdown(uid, component);
 
         SetStaminaAlert(uid, component);
+
+        if (_afterCrit && oldDamage > component.StaminaDamage && component.StaminaDamage <= 0f)
+        {
+            Log.Debug("[TSD] _afterCrit is set to false");
+            _afterCrit = false;
+        }
 
         if (!component.Critical)
         {
@@ -342,7 +359,14 @@ public sealed partial class StaminaSystem : EntitySystem
         var query = EntityQueryEnumerator<ActiveStaminaComponent>();
         var curTime = _timing.CurTime;
 
+        var activeEntities = new List<EntityUid>();
         while (query.MoveNext(out var uid, out _))
+        {
+            activeEntities.Add(uid);
+        }
+
+        // Iterate over the temporary list to avoid modifying the collection during iteration
+        foreach (var uid in activeEntities)
         {
             // Just in case we have active but not stamina we'll check and account for it.
             if (!stamQuery.TryGetComponent(uid, out var comp) ||
@@ -359,15 +383,24 @@ public sealed partial class StaminaSystem : EntitySystem
             if (nextUpdate > curTime)
                 continue;
 
-            // We were in crit so come out of it and continue.
+            // Handle exiting critical condition and restoring stamina damage
             if (comp.Critical)
             {
                 ExitStamCrit(uid, comp);
-                continue;
+                //TakeStaminaDamage(uid, -comp.Decay, comp); // Restore stamina damage
+                //Dirty(uid, comp);
             }
 
             comp.NextUpdate += TimeSpan.FromSeconds(1f);
-            TakeStaminaDamage(uid, -comp.Decay, comp);
+
+            const float afterCritDecayMultiplier = 2f;
+            
+            TakeStaminaDamage(
+                uid,
+                _afterCrit ? -comp.Decay * afterCritDecayMultiplier : -comp.Decay, // Recover faster after crit
+                comp
+                );
+            
             Dirty(uid, comp);
         }
     }
@@ -405,19 +438,26 @@ public sealed partial class StaminaSystem : EntitySystem
         }
 
         component.Critical = false;
-        component.StaminaDamage = 0f;
-        component.NextUpdate = _timing.CurTime;
-        Log.Debug("[ExisSC] Resetting speed to its normal");
-        AdjustSpeed(uid, component, true);
+        _afterCrit = true;
+        Log.Debug("[ExitSC] _afterCrit is set to true");
+        
+        //component.StaminaDamage = 0f;
+        component.NextUpdate = _timing.CurTime;// + TimeSpan.FromSeconds(component.Cooldown);
+        // Log.Debug("[ExisSC] Resetting speed to its normal");
+
+        // Regain the full speed immediately after damage is reset 
+        // AdjustSlowdown(uid, component, true);
+
+
         Log.Debug($"[ExitSC] NextUpdate: {component.NextUpdate}");
         SetStaminaAlert(uid, component);
         RemComp<ActiveStaminaComponent>(uid);
         Dirty(uid, component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Low, $"{ToPrettyString(uid):user} recovered from stamina crit");
-        Log.Debug($"{ToPrettyString(uid):user} recovered from stamina crit");
+        Log.Debug($"[ExitSC] {ToPrettyString(uid):user} recovered from stamina crit");
     }
 
-    private void AdjustSpeed(EntityUid uid, StaminaComponent? comp = null, bool recover = false)
+    private void AdjustSlowdown(EntityUid uid, StaminaComponent? comp = null, bool recover = false)
     {
         if (!Resolve(uid, ref comp))
             return;
@@ -429,6 +469,7 @@ public sealed partial class StaminaSystem : EntitySystem
             return;
         }
 
+        // Use a dictionary with default 'damage - speed' pairs if the entity doesn't have a component with an already existing one
         var thresholds = HasComp<SlowOnDamageComponent>(uid)
             ? Comp<SlowOnDamageComponent>(uid).SpeedModifierThresholds
             : new Dictionary<FixedPoint2, float> { { 60, 0.7f }, { 80, 0.5f } };
@@ -443,6 +484,8 @@ public sealed partial class StaminaSystem : EntitySystem
         dbgm += "}";
         Log.Debug(dbgm);
 
+
+        // Iterate through the dictionary in the similar way as in Damage.SlowOnDamageSystem.OnRefreshMovespeed
         foreach (var thres in thresholds)
         {
             var key = thres.Key.Float();
@@ -455,12 +498,11 @@ public sealed partial class StaminaSystem : EntitySystem
 
         if (closest != FixedPoint2.Zero)
         {
-            Log.Debug($"[AS] Changing speed to: {thresholds[closest]}");
             _stunSystem.UpdateStunModifiers(uid, thresholds[closest], comp);
         }
         else if (closest == FixedPoint2.Zero)
         {
-            Log.Debug($"[AS] Adjusting speed to: 1.0");
+            // Recover the full speed if the closest threshold is zero
             _stunSystem.UpdateStunModifiers(uid, 1f, comp);
         }
     }

@@ -256,21 +256,24 @@ public abstract class SharedStunSystem : EntitySystem
         return false;
     }
 
-    public bool UpdateStunModifiers(EntityUid uid,
+    public void UpdateStunModifiers(EntityUid uid,
         float walkSpeedModifier = 1f,
         float runSpeedModifier = 1f, StaminaComponent? component = null)
     {
-        bool Approximately(float a, float b, float epsilon = 0.0001f) =>
-            Math.Abs(a - b) < epsilon;
-
         if (!Resolve(uid, ref component))
-            return false;
+            return;
 
-        if (Approximately(walkSpeedModifier, 1f) && Approximately(runSpeedModifier, 1f) && component.StaminaDamage == 0f)
-            return RemCompDeferred<SlowedDownComponent>(uid);
+        bool Approximately(float a, float b, float epsilon = 0.0001f) =>
+            Math.Abs(a - b) < epsilon; // Comparing two floats, taking into account the error (epsilon)
 
-        if (walkSpeedModifier == 0f && runSpeedModifier == 0f)
-            return RemCompDeferred<SlowedDownComponent>(uid);
+        if (
+            (Approximately(walkSpeedModifier, 1f) && Approximately(runSpeedModifier, 1f) && component.StaminaDamage == 0f) ||
+            (walkSpeedModifier == 0f && runSpeedModifier == 0f)
+            )
+        {
+            RemComp<SlowedDownComponent>(uid);
+            return;
+        }
             
 
         EnsureComp<SlowedDownComponent>(uid, out var comp);
@@ -282,13 +285,11 @@ public abstract class SharedStunSystem : EntitySystem
         Log.Debug($"[UMM] Trying to modify SlowedDownComponent directly - walkMod: {comp.WalkSpeedModifier}, sprintMod: {comp.SprintSpeedModifier},  uid: {ToPrettyString(uid)}");
 
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
-
-        return true;
     }
 
-    public bool UpdateStunModifiers(EntityUid uid, float speedModifier = 1f, StaminaComponent? component = null)
+    public void UpdateStunModifiers(EntityUid uid, float speedModifier = 1f, StaminaComponent? component = null)
     {
-        return UpdateStunModifiers(uid, speedModifier, speedModifier, component);
+        UpdateStunModifiers(uid, speedModifier, speedModifier, component);
     }
 
     private void OnInteractHand(EntityUid uid, KnockedDownComponent knocked, InteractHandEvent args)

@@ -42,7 +42,7 @@ namespace Content.Shared.Damage
                 return;
             }
 
-            Log.Debug($"[ORM] uid: {ToPrettyString(uid)}, TotalDamage (total): {damage.TotalDamage}, StackTrace: " + Environment.StackTrace);
+            Log.Debug($"[ORM] uid: {ToPrettyString(uid)}, TotalDamage (total): {damage.TotalDamage}"); //, StackTrace: " + Environment.StackTrace);
 
             // Get closest threshold
             FixedPoint2 closest = FixedPoint2.Zero;
