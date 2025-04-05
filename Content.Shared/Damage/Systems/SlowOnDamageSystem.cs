@@ -36,12 +36,9 @@ namespace Content.Shared.Damage
             if (damage.TotalDamage == FixedPoint2.Zero)
                 return;
 
-
             // Get closest threshold
             FixedPoint2 closest = FixedPoint2.Zero;
             var total = damage.TotalDamage;
-
-
             foreach (var thres in component.SpeedModifierThresholds)
             {
                 if (total >= thres.Key && thres.Key > closest)
