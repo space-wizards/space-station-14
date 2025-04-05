@@ -9,5 +9,6 @@ namespace Content.Shared.Silicons.StationAi;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class StationAiHeldComponent : Component
 {
+    [DataField]
     public EntityWhitelist AccessWhitelist = new();
 }
