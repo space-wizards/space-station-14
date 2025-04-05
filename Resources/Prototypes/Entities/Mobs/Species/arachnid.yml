@@ -134,7 +134,7 @@
           Blunt: 5
     - slots: FEET
       damageThreshold:
-        group:
+        groups:
           Brute: 100 # yo, that guys dead!
     # the spider's extra pockets should probably be rockable, but under the hood theyre just flagged as normal pockets, so I dont think theres an easy way to do that and not also make their pockets into sieves.
 

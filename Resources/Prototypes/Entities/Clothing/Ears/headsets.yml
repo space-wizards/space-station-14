@@ -26,6 +26,7 @@
   - type: GuideHelp
     guides:
     - Radio
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadset

@@ -173,7 +173,7 @@
           Blunt: 5
     - slots: FEET
       damageThreshold:
-        group:
+        groups:
           Brute: 100 # yo, that guys dead!
 
 - type: entity

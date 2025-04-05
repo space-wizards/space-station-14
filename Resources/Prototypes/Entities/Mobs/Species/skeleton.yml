@@ -113,15 +113,15 @@
     slotThresholds:
     - slots: EYES
       damageThreshold:
-        group:
+        groups:
           Brute: 5
     - slots: HEAD
       damageThreshold:
-        group:
+        groups:
           Brute: 10
     - slots: EARS
       damageThreshold:
-        group:
+        groups:
           Brute: 5
     - slots: MASK
       damageThreshold:
@@ -137,7 +137,7 @@
           Slash: 10
     - slots: FEET
       damageThreshold:
-        group:
+        groups:
           Brute: 100 # yo, that guys dead!
 
 - type: entity
