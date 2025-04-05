@@ -11,4 +11,5 @@ public struct AlertState
     public bool AutoRemove;
     public bool ShowCooldown;
     public ProtoId<AlertPrototype> Type;
+    public bool ClientOnly;
 }

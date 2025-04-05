@@ -134,6 +134,7 @@
     state: walking
   name: alerts-walking-name
   description: alerts-walking-desc
+  clientOnly: true
 
 - type: alert
   id: Stun

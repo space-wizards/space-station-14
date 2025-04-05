@@ -105,7 +105,7 @@ public abstract class AlertsSystem : EntitySystem
             alertsComponent.Alerts.Remove(alert.AlertKey);
 
             var state = new AlertState
-                { Cooldown = cooldown, Severity = severity, Type = alertType, AutoRemove = autoRemove, ShowCooldown = showCooldown};
+                { Cooldown = cooldown, Severity = severity, Type = alertType, AutoRemove = autoRemove, ShowCooldown = showCooldown, ClientOnly = alert.ClientOnly };
             alertsComponent.Alerts[alert.AlertKey] = state;
 
             // Keeping a list of AutoRemove alerts, so Update() doesn't need to check every alert
@@ -222,7 +222,8 @@ public abstract class AlertsSystem : EntitySystem
                 Cooldown = cooldown,
                 ShowCooldown = alert.Value.ShowCooldown,
                 AutoRemove = alert.Value.AutoRemove,
-                Type = alert.Value.Type
+                Type = alert.Value.Type,
+                ClientOnly = alert.Value.ClientOnly,
             };
             alertComp.Alerts[alert.Key] = state;
             dirty = true;

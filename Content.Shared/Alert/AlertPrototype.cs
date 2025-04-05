@@ -82,6 +82,12 @@ public sealed partial class AlertPrototype : IPrototype
     [DataField]
     public BaseAlertEvent? ClickEvent;
 
+    /// <summary>
+    /// This alert should only be set from the client.
+    /// </summary>
+    [DataField]
+    public bool ClientOnly;
+
     /// <param name="severity">severity level, if supported by this alert</param>
     /// <returns>the icon path to the texture for the provided severity level</returns>
     public SpriteSpecifier GetIcon(short? severity = null)

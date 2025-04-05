@@ -52,7 +52,22 @@ public sealed class ClientAlertsSystem : AlertsSystem
         if (args.Current is not AlertComponentState cast)
             return;
 
+        // Temporarily store all clientside alerts in another dictionary.
+        var clientAlertStorage = new Dictionary<AlertKey, AlertState>();
+        foreach (var clientAlert in alerts.Comp.Alerts)
+        {
+            if (clientAlert.Value.ClientOnly)
+                clientAlertStorage.Add(clientAlert.Key, clientAlert.Value);
+        }
+
         alerts.Comp.Alerts = new(cast.Alerts);
+
+        // Reapply the stored alerts after they have been removed.
+        foreach (var clientAlert in clientAlertStorage)
+        {
+            if (!alerts.Comp.Alerts.ContainsKey(clientAlert.Key))
+                alerts.Comp.Alerts[clientAlert.Key] = clientAlert.Value;
+        }
 
         UpdateHud(alerts);
     }
