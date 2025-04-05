@@ -1,24 +1,21 @@
-using Content.Shared.ActionBlocker;
+using Content.Shared.Emoting;
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Magic.Components;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Pointing;
-using Content.Shared.Slippery;
+using Content.Shared.Speech;
 
 namespace Content.Shared.Magic.Systems;
 
 public abstract class PetrifySpellSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-
     public override void Initialize()
     {
         SubscribeLocalEvent<PetrifiedComponent, MapInitEvent>(OnPetrify);
-        SubscribeLocalEvent<PetrifiedStatueComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<StoneStatueComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<PetrifiedStatueComponent, AnimateSpellEvent>(OnAnimate);
 
         SubscribeLocalEvent<PetrifiedStatueComponent, ChangeDirectionAttemptEvent>(OnAttempt);
@@ -29,6 +26,8 @@ public abstract class PetrifySpellSystem : EntitySystem
         SubscribeLocalEvent<PetrifiedStatueComponent, IsEquippingAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<PetrifiedStatueComponent, IsUnequippingAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<PetrifiedStatueComponent, AttackAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<PetrifiedStatueComponent, SpeakAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<PetrifiedStatueComponent, EmoteAttemptEvent>(OnAttempt);
         SubscribeLocalEvent<PetrifiedStatueComponent, InteractionAttemptEvent>(OnAttemptInteract);
     }
 
@@ -38,25 +37,14 @@ public abstract class PetrifySpellSystem : EntitySystem
         RaiseLocalEvent(ent, ref ev);
     }
 
-    protected virtual void OnStartup(EntityUid ent, PetrifiedStatueComponent comp, ComponentStartup args)
+    protected virtual void OnStartup(EntityUid ent, StoneStatueComponent comp, ComponentStartup args)
     {
-        //_blocker.UpdateCanMove(ent);
+        // Shader handled in ClientPetrifySpellSystem
     }
 
     protected virtual void OnAnimate(Entity<PetrifiedStatueComponent> ent, ref AnimateSpellEvent args)
     {
-        // Stone Golem
-
-        //RemComp<PetrifiedStatueComponent>(ent);
-        //RemComp<NoSlipComponent>(ent);
-        //RemComp<CanMoveInAirComponent>(ent);
-        //RemComp<MovementAlwaysTouchingComponent>(ent);
-
-        // Other than PetrifiedStatue, the components above are added by the Animate spell - and then removed here.
-        // It would be way better to just never add them at all if the entity is a petrified statue.
-        // I don't know the best practice or method for customizing behavior of an action depending on the type of target.
-
-        //_blocker.UpdateCanMove(ent);
+        // Stone Golem handled in ServerPetrifySpellSystem
     }
 
     private void OnAttempt(EntityUid ent, PetrifiedStatueComponent comp, CancellableEntityEventArgs args)

@@ -43,65 +43,89 @@
     node: bananiumStatue
 
 - type: entity
-  id: StoneStatuePetrify
+  id: StoneStatueBase
   parent: BaseStructureDynamic
+  name: stone statue
+  description: A stone statue of a person. It looks extremely lifelike.
+  components:
+  - type: StoneStatue
+  - type: HumanoidAppearance
+    species: Human
+  - type: Inventory
+  - type: InventorySlots
+  - type: Body
+    prototype: Human
+    requiredLegs: 2
+  - type: Hands
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Rock
+  - type: InteractionOutline
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound: !type:SoundPathSpecifier
+          path: /Audio/Effects/break_stone.ogg
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+    layers:
+    - map: [ "enum.HumanoidVisualLayers.Chest" ]
+    - map: [ "enum.HumanoidVisualLayers.Head" ]
+    - map: [ "enum.HumanoidVisualLayers.Snout" ]
+    - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+    - map: [ "enum.HumanoidVisualLayers.RArm" ]
+    - map: [ "enum.HumanoidVisualLayers.LArm" ]
+    - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+    - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+    - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
+    - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
+    - map: ["jumpsuit"]
+    - map: ["enum.HumanoidVisualLayers.LFoot"]
+    - map: ["enum.HumanoidVisualLayers.RFoot"]
+    - map: ["enum.HumanoidVisualLayers.LHand"]
+    - map: ["enum.HumanoidVisualLayers.RHand"]
+    - map: [ "gloves" ]
+    - map: [ "shoes" ]
+    - map: [ "ears" ]
+    - map: [ "eyes" ]
+    - map: [ "belt" ]
+    - map: [ "id" ]
+    - map: [ "outerClothing" ]
+    - map: [ "back" ]
+    - map: [ "neck" ]
+    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+    - map: [ "enum.HumanoidVisualLayers.Hair" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+    - map: [ "enum.HumanoidVisualLayers.Tail" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "pocket1" ]
+    - map: [ "pocket2" ]
+    - map: ["enum.HumanoidVisualLayers.Handcuffs"]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "clownedon" ]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
+
+- type: entity
+  id: StoneStatuePetrify
+  parent: StoneStatueBase
   name: stone statue
   description: A stone statue of a person. It looks extremely lifelike.
   components:
   - type: PetrifiedStatue
-  - type: Sprite
-    noRot: true
-    drawdepth: Mobs
-    layers:
-    - map: [ "enum.HumanoidVisualLayers.Chest" ]
-    - map: [ "enum.HumanoidVisualLayers.Head" ]
-    - map: [ "enum.HumanoidVisualLayers.Snout" ]
-    - map: [ "enum.HumanoidVisualLayers.Eyes" ]
-    - map: [ "enum.HumanoidVisualLayers.RArm" ]
-    - map: [ "enum.HumanoidVisualLayers.LArm" ]
-    - map: [ "enum.HumanoidVisualLayers.RLeg" ]
-    - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-    - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
-    - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
-    - map: ["jumpsuit"]
-    - map: ["enum.HumanoidVisualLayers.LFoot"]
-    - map: ["enum.HumanoidVisualLayers.RFoot"]
-    - map: ["enum.HumanoidVisualLayers.LHand"]
-    - map: ["enum.HumanoidVisualLayers.RHand"]
-    - map: [ "gloves" ]
-    - map: [ "shoes" ]
-    - map: [ "ears" ]
-    - map: [ "eyes" ]
-    - map: [ "belt" ]
-    - map: [ "id" ]
-    - map: [ "outerClothing" ]
-    - map: [ "back" ]
-    - map: [ "neck" ]
-    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
-    - map: [ "enum.HumanoidVisualLayers.Hair" ]
-    - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
-    - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
-    - map: [ "enum.HumanoidVisualLayers.Tail" ]
-    - map: [ "mask" ]
-    - map: [ "head" ]
-    - map: [ "pocket1" ]
-    - map: [ "pocket2" ]
-    - map: ["enum.HumanoidVisualLayers.Handcuffs"]
-      color: "#ffffff"
-      sprite: Objects/Misc/handcuffs.rsi
-      state: body-overlay-2
-      visible: false
-    - map: [ "clownedon" ]
-      sprite: "Effects/creampie.rsi"
-      state: "creampie_human"
-      visible: false
-  - type: HumanoidAppearance
-    species: Human
-  - type: Inventory
-  - type: InventorySlots
-  - type: Body
-    prototype: Human
-    requiredLegs: 2
   - type: Fixtures
     fixtures:
       fix1:
@@ -114,94 +138,17 @@
         - MachineMask
         layer:
         - MachineLayer
-  - type: InputMover
-    canMove: false
-  - type: Hands
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Rock
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound: !type:SoundPathSpecifier
-          path: /Audio/Effects/break_stone.ogg
-  - type: CombatMode
-  - type: MeleeWeapon
-    hidden: true
-    attackRate: 0.5
-    soundHit:
-      collection: MetalThud
-    damage:
-      groups:
-        Brute: 20
   - type: Examiner
   - type: Animateable
+  - type: InputMover
+    canMove: false
 
 - type: entity
   id: StoneStatueAnimate
-  parent: BaseStructureDynamic
+  parent: StoneStatueBase
   name: stone statue
   description: A stone statue of a person. It looks extremely lifelike.
   components:
-  - type: Sprite
-    noRot: true
-    drawdepth: Mobs
-    layers:
-    - map: [ "enum.HumanoidVisualLayers.Chest" ]
-    - map: [ "enum.HumanoidVisualLayers.Head" ]
-    - map: [ "enum.HumanoidVisualLayers.Snout" ]
-    - map: [ "enum.HumanoidVisualLayers.Eyes" ]
-    - map: [ "enum.HumanoidVisualLayers.RArm" ]
-    - map: [ "enum.HumanoidVisualLayers.LArm" ]
-    - map: [ "enum.HumanoidVisualLayers.RLeg" ]
-    - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-    - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
-    - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
-    - map: ["jumpsuit"]
-    - map: ["enum.HumanoidVisualLayers.LFoot"]
-    - map: ["enum.HumanoidVisualLayers.RFoot"]
-    - map: ["enum.HumanoidVisualLayers.LHand"]
-    - map: ["enum.HumanoidVisualLayers.RHand"]
-    - map: [ "gloves" ]
-    - map: [ "shoes" ]
-    - map: [ "ears" ]
-    - map: [ "eyes" ]
-    - map: [ "belt" ]
-    - map: [ "id" ]
-    - map: [ "outerClothing" ]
-    - map: [ "back" ]
-    - map: [ "neck" ]
-    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
-    - map: [ "enum.HumanoidVisualLayers.Hair" ]
-    - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
-    - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
-    - map: [ "enum.HumanoidVisualLayers.Tail" ]
-    - map: [ "mask" ]
-    - map: [ "head" ]
-    - map: [ "pocket1" ]
-    - map: [ "pocket2" ]
-    - map: ["enum.HumanoidVisualLayers.Handcuffs"]
-      color: "#ffffff"
-      sprite: Objects/Misc/handcuffs.rsi
-      state: body-overlay-2
-      visible: false
-    - map: [ "clownedon" ]
-      sprite: "Effects/creampie.rsi"
-      state: "creampie_human"
-      visible: false
-  - type: HumanoidAppearance
-    species: Human
-  - type: Inventory
-  - type: InventorySlots
-  - type: Body
-    prototype: Human
-    requiredLegs: 2
   - type: Fixtures
     fixtures:
       fix1:
@@ -211,25 +158,10 @@
         density: 60
         restitution: 0.0
         mask:
-        - MachineMask
+        - MobMask
         layer:
-        - MachineLayer
+        - MobLayer
   - type: InputMover
-  - type: Hands
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Rock
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound: !type:SoundPathSpecifier
-          path: /Audio/Effects/break_stone.ogg
   - type: CombatMode
   - type: MeleeWeapon
     hidden: true
@@ -243,3 +175,8 @@
   - type: MobState
   - type: MobMover
   - type: MovementSpeedModifier
+  - type: MobCollision
+  - type: Physics
+    bodyType: KinematicController
+  - type: MindContainer
+  - type: Actions

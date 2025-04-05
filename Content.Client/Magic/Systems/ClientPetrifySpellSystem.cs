@@ -19,7 +19,7 @@ public sealed class ClientPetrifySpellSystem : PetrifySpellSystem
         _shader = _protoMan.Index<ShaderPrototype>("Greyscale").InstanceUnique();
     }
 
-    protected override void OnStartup(EntityUid ent, PetrifiedStatueComponent comp, ComponentStartup args)
+    protected override void OnStartup(EntityUid ent, StoneStatueComponent comp, ComponentStartup args)
     {
         base.OnStartup(ent, comp, args);
 
