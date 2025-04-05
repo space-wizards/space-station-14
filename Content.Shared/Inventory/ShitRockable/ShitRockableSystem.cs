@@ -57,6 +57,11 @@ public sealed class ShitRockableSystem : EntitySystem
                 if (!args.RecievedDamage.GEQ(damageThresh))
                     continue;
 
+                if (!_net.IsServer)
+                {
+                    continue;
+                }
+
                 // some probability of getting your shit rocked. Maybe one day we get targetting, but this aint that.
                 // check on the item itself via RockableItemComp
                 if (_random.Prob(rockedComp.Chance) && _net.IsServer)
@@ -66,8 +71,8 @@ public sealed class ShitRockableSystem : EntitySystem
 
                     _adminlogs.Add(Database.LogType.Damaged, Database.LogImpact.Low, $"The {ToPrettyString(rocked)} was knocked out of {ToPrettyString(uid)}'s inventory.");
 
-                    // remove item to floor
-                    if (!rockedComp.DontThrow && _inventory.TryUnequip(uid, slotdef.Name, silent: true))
+                    // remove item to floor, we use the attacker here because we want to also have it work when the wearer is dead.
+                    if (!rockedComp.DontThrow && _inventory.TryUnequip(args.User, uid, slotdef.Name, silent: true))
                     {
                         _throwing.TryThrow(
                             rocked,
