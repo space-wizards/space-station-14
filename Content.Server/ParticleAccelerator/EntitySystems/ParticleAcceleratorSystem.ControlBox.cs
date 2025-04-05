@@ -183,7 +183,7 @@ public sealed partial class ParticleAcceleratorSystem
                     _audio.PlayGlobal("/Audio/Misc/adminlarm.ogg",
                         Filter.Empty().AddPlayers(_adminManager.ActiveAdmins),
                         false,
-                        AudioParams.Default.WithVolume(-8f));
+                        AudioParams.Default.AddVolume(-8f));
                     comp.EffectCooldown = _gameTiming.CurTime + comp.CooldownDuration;
                 }
             }

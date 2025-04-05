@@ -52,7 +52,7 @@ public sealed partial class CloningPodComponent : Component
     [DataField]
     public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("ZombieScreams")
     {
-        Params = AudioParams.Default.WithVolume(4),
+        Params = AudioParams.Default.AddVolume(4),
     };
 
     [ViewVariables(VVAccess.ReadWrite)]

@@ -52,7 +52,7 @@ public sealed partial class DeliveryComponent : Component
     /// The sound to play when the delivery is unlocked.
     /// </summary>
     [DataField]
-    public SoundSpecifier? UnlockSound = new SoundCollectionSpecifier("DeliveryUnlockSounds", AudioParams.Default.WithVolume(-10));
+    public SoundSpecifier? UnlockSound = new SoundCollectionSpecifier("DeliveryUnlockSounds", AudioParams.Default.AddVolume(-10));
 
     /// <summary>
     /// The sound to play when the delivery is opened.

@@ -304,7 +304,9 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void ClickSound(Entity<ChemMasterComponent> chemMaster)
         {
-            _audioSystem.PlayPvs(chemMaster.Comp.ClickSound, chemMaster, AudioParams.Default.WithVolume(-2f));
+            var audioParams = chemMaster.Comp.ClickSound?.Params ?? AudioParams.Default;
+            audioParams = audioParams.AddVolume(-2f);
+            _audioSystem.PlayPvs(chemMaster.Comp.ClickSound, chemMaster, audioParams);
         }
 
         private ContainerInfo? BuildInputContainerInfo(EntityUid? container)

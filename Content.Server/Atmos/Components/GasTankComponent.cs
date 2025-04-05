@@ -22,7 +22,7 @@ namespace Content.Server.Atmos.Components
         public SoundSpecifier? ConnectSound =
             new SoundPathSpecifier("/Audio/Effects/internals.ogg")
             {
-                Params = AudioParams.Default.WithVolume(5f),
+                Params = AudioParams.Default.AddVolume(5f),
             };
 
         [ViewVariables(VVAccess.ReadWrite), DataField("disconnectSound")]
@@ -115,7 +115,7 @@ namespace Content.Server.Atmos.Components
         public SoundSpecifier ValveSound =
             new SoundCollectionSpecifier("valveSqueak")
             {
-                Params = AudioParams.Default.WithVolume(-5f),
+                Params = AudioParams.Default.AddVolume(-5f),
             };
     }
 }

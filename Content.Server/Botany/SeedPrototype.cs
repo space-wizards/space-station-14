@@ -222,7 +222,7 @@ public partial class SeedData
     /// Screams random sound from collection SoundCollectionSpecifier
     /// </summary>
     [DataField]
-    public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("PlantScreams", AudioParams.Default.WithVolume(-10));
+    public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("PlantScreams", AudioParams.Default.AddVolume(-10));
 
     [DataField("screaming")] public bool CanScream;
 

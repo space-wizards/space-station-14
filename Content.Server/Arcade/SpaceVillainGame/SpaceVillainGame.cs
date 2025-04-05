@@ -94,6 +94,11 @@ public sealed partial class SpaceVillainGame
         if (!_running)
             return;
 
+        var playerAttackSoundParams = arcade.PlayerAttackSound?.Params ?? AudioParams.Default;
+        playerAttackSoundParams = playerAttackSoundParams.AddVolume(-4f);
+        var playerHealSoundParams = arcade.PlayerHealSound?.Params ?? AudioParams.Default;
+        playerHealSoundParams = playerHealSoundParams.AddVolume(-4f);
+
         switch (action)
         {
             case PlayerAction.Attack:
@@ -103,7 +108,7 @@ public sealed partial class SpaceVillainGame
                     ("enemyName", _villainName),
                     ("attackAmount", attackAmount)
                 );
-                _audioSystem.PlayPvs(arcade.PlayerAttackSound, uid, AudioParams.Default.WithVolume(-4f));
+                _audioSystem.PlayPvs(arcade.PlayerAttackSound, uid, playerAttackSoundParams);
                 if (!VillainChar.Invincible)
                     VillainChar.Hp -= attackAmount;
                 _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
@@ -116,7 +121,7 @@ public sealed partial class SpaceVillainGame
                     ("magicPointAmount", pointAmount),
                     ("healAmount", healAmount)
                 );
-                _audioSystem.PlayPvs(arcade.PlayerHealSound, uid, AudioParams.Default.WithVolume(-4f));
+                _audioSystem.PlayPvs(arcade.PlayerHealSound, uid, playerHealSoundParams);
                 if (!PlayerChar.Invincible)
                     PlayerChar.Mp -= pointAmount;
                 PlayerChar.Hp += healAmount;
@@ -128,7 +133,7 @@ public sealed partial class SpaceVillainGame
                     "space-villain-game-player-recharge-message",
                     ("regainedPoints", chargeAmount)
                 );
-                _audioSystem.PlayPvs(arcade.PlayerChargeSound, uid, AudioParams.Default.WithVolume(-4f));
+                _audioSystem.PlayPvs(arcade.PlayerChargeSound, uid, playerHealSoundParams);
                 PlayerChar.Mp += chargeAmount;
                 _turtleTracker -= _turtleTracker > 0 ? 1 : 0;
                 break;
@@ -210,6 +215,11 @@ public sealed partial class SpaceVillainGame
     /// <returns>A bool indicating if the game should continue.</returns>
     private bool CheckGameConditions(EntityUid uid, SpaceVillainArcadeComponent arcade)
     {
+        var winSoundParams = arcade.WinSound?.Params ?? AudioParams.Default;
+        winSoundParams = winSoundParams.AddVolume(-4f);
+        var gameOverSoundParams = arcade.GameOverSound?.Params ?? AudioParams.Default;
+        gameOverSoundParams = gameOverSoundParams.AddVolume(-4f);
+
         switch (
             PlayerChar.Hp > 0 && PlayerChar.Mp > 0,
             VillainChar.Hp > 0 && VillainChar.Mp > 0
@@ -225,7 +235,7 @@ public sealed partial class SpaceVillainGame
                     Loc.GetString("space-villain-game-enemy-dies-message", ("enemyName", _villainName)),
                     true
                 );
-                _audioSystem.PlayPvs(arcade.WinSound, uid, AudioParams.Default.WithVolume(-4f));
+                _audioSystem.PlayPvs(arcade.WinSound, uid, winSoundParams);
                 _svArcade.ProcessWin(uid, arcade);
                 return false;
             case (false, true):
@@ -236,7 +246,7 @@ public sealed partial class SpaceVillainGame
                     Loc.GetString("space-villain-game-enemy-cheers-message", ("enemyName", _villainName)),
                     true
                 );
-                _audioSystem.PlayPvs(arcade.GameOverSound, uid, AudioParams.Default.WithVolume(-4f));
+                _audioSystem.PlayPvs(arcade.GameOverSound, uid, gameOverSoundParams);
                 return false;
             case (false, false):
                 _running = false;
@@ -246,7 +256,7 @@ public sealed partial class SpaceVillainGame
                     Loc.GetString("space-villain-game-enemy-dies-with-player-message ", ("enemyName", _villainName)),
                     true
                 );
-                _audioSystem.PlayPvs(arcade.GameOverSound, uid, AudioParams.Default.WithVolume(-4f));
+                _audioSystem.PlayPvs(arcade.GameOverSound, uid, gameOverSoundParams);
                 return false;
         }
     }

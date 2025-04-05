@@ -14,6 +14,6 @@ public sealed partial class SoundOnGatherComponent : Component
     {
         Params = AudioParams.Default
             .WithVariation(SharedContentAudioSystem.DefaultVariation)
-            .WithVolume(-3f),
+            .AddVolume(-3f),
     };
 }

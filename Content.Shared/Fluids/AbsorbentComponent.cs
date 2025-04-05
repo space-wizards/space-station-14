@@ -30,12 +30,12 @@ public sealed partial class AbsorbentComponent : Component
     [DataField("transferSound")] public SoundSpecifier TransferSound =
         new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg")
         {
-            Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-3f),
+            Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).AddVolume(-3f),
         };
 
     public static readonly SoundSpecifier DefaultTransferSound =
         new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg")
         {
-            Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-3f),
+            Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).AddVolume(-3f),
         };
 }
