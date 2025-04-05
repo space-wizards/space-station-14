@@ -69,7 +69,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         return component != null;
     }
 
-    public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)
+    public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid? user, SharedDisposalUnitComponent? disposal = null, bool doContainerInsert = false, bool doAfterInsert = true)
     {
         return;
     }
