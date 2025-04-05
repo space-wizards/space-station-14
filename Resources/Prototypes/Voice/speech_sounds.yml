@@ -1,5 +1,6 @@
 - type: speechSounds
   id: Bass
+  name: chat-speech-noise-name-bass
   saySound:
     path: /Audio/Voice/Talk/speak_4.ogg
   askSound:
@@ -9,6 +10,7 @@
 
 - type: speechSounds
   id: Baritone
+  name: chat-speech-noise-name-baritone
   saySound:
     path: /Audio/Voice/Talk/speak_1.ogg
   askSound:
@@ -18,6 +20,7 @@
 
 - type: speechSounds
   id: Tenor
+  name: chat-speech-noise-name-tenor
   saySound:
     path: /Audio/Voice/Talk/speak_3.ogg
   askSound:
@@ -27,6 +30,7 @@
 
 - type: speechSounds
   id: Alto
+  name: chat-speech-noise-name-alto
   saySound:
     path: /Audio/Voice/Talk/speak_2.ogg
   askSound:
@@ -36,6 +40,7 @@
 
 - type: speechSounds
   id: Squeak
+  name: chat-speech-noise-name-squeak
   saySound:
     path: /Audio/Animals/mouse_squeak.ogg
   askSound:
@@ -45,6 +50,7 @@
 
 - type: speechSounds
   id: Vending
+  name: chat-speech-noise-name-vending
   saySound:
     path: /Audio/Machines/vending_jingle.ogg
   askSound:
@@ -54,6 +60,7 @@
 
 - type: speechSounds
   id: Borg
+  name: chat-speech-noise-name-borg
   saySound:
     path: /Audio/Voice/Talk/Silicon/borg.ogg
   askSound:
@@ -63,6 +70,7 @@
 
 - type: speechSounds
   id: SyndieBorg
+  name: chat-speech-noise-name-syndieBorg
   saySound:
     path: /Audio/Voice/Talk/Silicon/syndieborg.ogg
   askSound:
@@ -72,6 +80,7 @@
 
 - type: speechSounds
   id: Pai
+  name: chat-speech-noise-name-pai
   saySound:
     path: /Audio/Voice/Talk/pai.ogg
   askSound:
@@ -81,6 +90,7 @@
 
 - type: speechSounds
   id: Monkey
+  name: chat-speech-noise-name-monkey
   saySound:
     path: /Audio/Animals/monkey_scream.ogg
   askSound:
@@ -90,6 +100,7 @@
 
 - type: speechSounds
   id: Parrot
+  name: chat-speech-noise-name-parrot
   saySound:
     path: /Audio/Animals/parrot_raught.ogg
   askSound:
@@ -99,6 +110,7 @@
 
 - type: speechSounds
   id: Lizard
+  name: chat-speech-noise-name-lizard
   saySound:
     path: /Audio/Voice/Talk/lizard.ogg
   askSound:
@@ -108,6 +120,7 @@
 
 - type: speechSounds
   id: Slime
+  name: chat-speech-noise-name-slime
   saySound:
     path: /Audio/Voice/Talk/slime.ogg
   askSound:
@@ -117,6 +130,7 @@
 
 - type: speechSounds
   id: Vox
+  name: chat-speech-noise-name-vox
   saySound:
     path: /Audio/Voice/Talk/vox.ogg
   askSound:
@@ -126,6 +140,7 @@
 
 - type: speechSounds
   id: Arachnid
+  name: chat-speech-noise-name-arachnid
   saySound:
     path: /Audio/Voice/Talk/arachnid.ogg
   askSound:
@@ -135,6 +150,7 @@
 
 - type: speechSounds
   id: Cat
+  name: chat-speech-noise-name-cat
   saySound:
     path: /Audio/Animals/cat_meow2.ogg
   askSound:
@@ -144,6 +160,7 @@
 
 - type: speechSounds
   id: Dog
+  name: chat-speech-noise-name-dog
   saySound:
     path: /Audio/Animals/dog_bark1.ogg
   askSound:
@@ -153,6 +170,7 @@
 
 - type: speechSounds
   id: Cluck
+  name: chat-speech-noise-name-cluck
   saySound:
     path: /Audio/Animals/chicken_cluck_happy.ogg
   askSound:
@@ -162,6 +180,7 @@
 
 - type: speechSounds
   id: Goat
+  name: chat-speech-noise-name-goat
   saySound:
     path: /Audio/Animals/goat_bah.ogg
   askSound:

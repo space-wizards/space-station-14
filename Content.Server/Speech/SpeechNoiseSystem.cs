@@ -29,9 +29,13 @@ namespace Content.Server.Speech
             if (ent.Comp.SpeechSounds == null)
                 return null;
 
-            // Play speech sound
+            // Check if there is an override value.
             SoundSpecifier? contextSound;
-            var prototype = _protoManager.Index<SpeechSoundsPrototype>(ent.Comp.SpeechSounds);
+            var evt = new TransformSpeechNoiseEvent(ent.Owner);
+            RaiseLocalEvent(ent.Owner, evt);
+
+            var protoId = evt.OverrideSpeechSound ?? ent.Comp.SpeechSounds.Value;
+            var prototype = _protoManager.Index<SpeechSoundsPrototype>(protoId);
 
             // Different sounds for ask/exclaim based on last character
             contextSound = message[^1] switch
