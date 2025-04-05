@@ -120,7 +120,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             await using var pair = await PoolManager.GetServerClient(new PoolSettings
             {
                 Connected = true,
-                DummyTicker = false
+                DummyTicker = false,
+                Fresh = true, // I don't know why this doesn't work without it, but it doesn't work without it.
             });
             var server = pair.Server;
             var client = pair.Client;
