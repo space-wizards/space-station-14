@@ -242,7 +242,7 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
             Assert.That(gameTicker.StartGameRule(NinjaSpawnGameRuleProtoId, out var ninjaRuleEntity));
             Assert.That(SEntMan.TryGetComponent<AntagSelectionComponent>(ninjaRuleEntity, out var selectionComp));
             // Try to make the target a ninja
-            antagSelection.MakeAntag((ninjaRuleEntity, selectionComp), ClientSession, selectionComp.Definitions[0], ignoreSpawner: true);
+            antagSelection.MakeAntag((ninjaRuleEntity, selectionComp), ServerSession, selectionComp.Definitions[0], ignoreSpawner: true);
             // Make sure it worked
             AssertComp<SpaceNinjaComponent>(true, target);
         });
