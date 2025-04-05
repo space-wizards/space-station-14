@@ -258,7 +258,7 @@ public sealed partial class ExplosionSystem
             {
                 var neighbourIndex = tileRef.GridIndices + NeighbourVectors[i];
 
-                if (grid.TryGetTileRef(neighbourIndex, out var neighbourTile) && !neighbourTile.Tile.IsEmpty)
+                if (_mapSystem.TryGetTileRef(ev.Entity, grid, neighbourIndex, out var neighbourTile) && !neighbourTile.Tile.IsEmpty)
                 {
                     var oppositeDirection = (NeighborFlag) (1 << ((i + 4) % 8));
                     edges[neighbourIndex] = edges.GetValueOrDefault(neighbourIndex) | oppositeDirection;

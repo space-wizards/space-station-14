@@ -94,7 +94,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnReset);
 
         // Handled by ExplosionSystem.Processing.cs
-        SubscribeLocalEvent<MapChangedEvent>(OnMapChanged);
+        SubscribeLocalEvent<MapRemovedEvent>(OnMapRemoved);
 
         // handled in ExplosionSystemAirtight.cs
         SubscribeLocalEvent<AirtightComponent, DamageChangedEvent>(OnAirtightDamaged);
@@ -155,12 +155,12 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
 
         // Override the explosion intensity if optional arguments were provided.
         if (radius != null)
-            totalIntensity ??= RadiusToIntensity((float) radius, explosive.IntensitySlope, explosive.MaxIntensity);
+            totalIntensity ??= RadiusToIntensity((float)radius, explosive.IntensitySlope, explosive.MaxIntensity);
         totalIntensity ??= explosive.TotalIntensity;
 
         QueueExplosion(uid,
             explosive.ExplosionType,
-            (float) totalIntensity,
+            (float)totalIntensity,
             explosive.IntensitySlope,
             explosive.MaxIntensity,
             explosive.TileBreakScale,
@@ -332,7 +332,7 @@ public sealed partial class ExplosionSystem : SharedExplosionSystem
     private Explosion? SpawnExplosion(QueuedExplosion queued)
     {
         var pos = queued.Epicenter;
-        if (!_mapManager.MapExists(pos.MapId))
+        if (!_mapSystem.MapExists(pos.MapId))
             return null;
 
         var results = GetExplosionTiles(pos, queued.Proto.ID, queued.TotalIntensity, queued.Slope, queued.MaxTileIntensity);
