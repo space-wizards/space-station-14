@@ -15,7 +15,7 @@ public sealed partial class IgnitionSourceComponent : Component
     public bool Ignited;
 
     /// <summary>
-    /// The temperature used when creating
+    /// The temperature used when creating atmos hotspots.
     /// </summary>
     [DataField, AutoNetworkedField]
     public int Temperature = 700;
