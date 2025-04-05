@@ -415,9 +415,6 @@ namespace Content.Shared.Damage
             if (other == null)
                 return true;
 
-            if (DamageDict.Count > other.DamageDict.Count)
-                return false;
-
             foreach (var (key, value) in DamageDict)
             {
                 if (!other.DamageDict.TryGetValue(key, out var otherValue))
