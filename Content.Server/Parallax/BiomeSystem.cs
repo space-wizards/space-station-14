@@ -963,7 +963,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                     continue;
 
                 // Don't mess with anything that's potentially anchored.
-                var anchored = grid.GetAnchoredEntitiesEnumerator(indices);
+                var anchored = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid, grid, indices);
 
                 if (anchored.MoveNext(out _))
                 {

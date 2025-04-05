@@ -23,6 +23,7 @@ public sealed class PowerSensorSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     private EntityQuery<NodeContainerComponent> _nodeQuery;
@@ -106,7 +107,7 @@ public sealed class PowerSensorSystem : EntitySystem
         if (!TryComp(xform.GridUid, out MapGridComponent? grid))
             return;
 
-        var cables = deviceNode.GetReachableNodes(xform, _nodeQuery, _xformQuery, grid, EntityManager);
+        var cables = deviceNode.GetReachableNodes(xform, _nodeQuery, _xformQuery, grid, EntityManager, _map);
         foreach (var node in cables)
         {
             if (node.NodeGroup == null)
