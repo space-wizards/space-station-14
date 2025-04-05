@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Client.Clothing.UI;
 
@@ -41,7 +42,7 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
             return;
 
         var targets = _chameleon.GetValidTargets(st.Slot);
-        if (st.RequiredTag != null)
+        if (st.RequiredTags != null && st.RequiredTags.Any())
         {
             var newTargets = new List<string>();
             foreach (var target in targets)
@@ -49,7 +50,7 @@ public sealed class ChameleonBoundUserInterface : BoundUserInterface
                 if (string.IsNullOrEmpty(target) || !_proto.TryIndex(target, out EntityPrototype? proto))
                     continue;
 
-                if (!proto.TryGetComponent(out TagComponent? tag, _factory) || !_tag.HasTag(tag, st.RequiredTag))
+                if (!proto.TryGetComponent(out TagComponent? tag, _factory) || st.RequiredTags.All(requiredTag => !_tag.HasTag(tag, requiredTag)))
                     continue;
 
                 newTargets.Add(target);

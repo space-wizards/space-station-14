@@ -27,3 +27,44 @@
           Slash: 0.95
           Heat: 0.90
       showArmorOnExamine: false
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitChameleon
+  name: EVA Suit
+  description: A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/eva.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/eva.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Caustic: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitChameleon
+  - type: Tag
+    tags: [Hardsuit] # ignore "WhitelistChameleon" tag
+  - type: ChameleonClothing
+    slot: [outerClothing]
+    default: ClothingOuterHardsuitEVA
+    requireTags:
+    - Hardsuit
+    - SuitEVA
+  - type: UserInterface
+    interfaces:
+      enum.ChameleonUiKey.Key:
+        type: ChameleonBoundUserInterface

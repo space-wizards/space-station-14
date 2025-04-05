@@ -1,5 +1,8 @@
 ﻿using System.Linq;
+using Content.Client.Light.Components;
+using Content.Client.Light.EntitySystems;
 using Content.Client.PDA;
+using Content.Client.Toggleable;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
@@ -13,6 +16,9 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
+    [Dependency] private readonly PointLightSystem _pointLight = default!;
+    [Dependency] private readonly LightBehaviorSystem _lightBehavior = default!;
+    [Dependency] private readonly ToggleableLightVisualsSystem _toggleableLightVisuals = default!;
 
     private static readonly SlotFlags[] IgnoredSlots =
     {
@@ -41,6 +47,14 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void HandleState(EntityUid uid, ChameleonClothingComponent component, ref AfterAutoHandleStateEvent args)
     {
+        if (!string.IsNullOrEmpty(component.Default) &&
+        _proto.TryIndex(component.Default, out EntityPrototype? proto))
+        {
+            EnsureCompAndCopyDetails<PointLightComponent>(uid, proto, (otherComp, comp, componentAdded) => _pointLight.CopyVisuals(uid, otherComp, comp, componentAdded));
+            EnsureCompAndCopyDetails<LightBehaviourComponent>(uid, proto, (otherComp, comp, _) => _lightBehavior.CopyVisuals(uid, otherComp, comp));
+            EnsureCompAndCopyDetails<ToggleableLightVisualsComponent>(uid, proto, (otherComp, comp, _) => _toggleableLightVisuals.CopyVisuals(uid, otherComp, comp));
+        }
+
         UpdateVisuals(uid, component);
     }
 

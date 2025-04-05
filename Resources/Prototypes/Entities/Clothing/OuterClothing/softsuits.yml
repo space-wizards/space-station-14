@@ -9,6 +9,8 @@
     sprite: Clothing/OuterClothing/Suits/eva.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva.rsi
+  - type: ChameleonAttachedHelmet
+    clothingPrototype: ClothingHeadHelmetEVA
   - type: Tag
     tags:
     - SuitEVA
@@ -26,6 +28,8 @@
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
+  - type: ChameleonAttachedHelmet
+    clothingPrototype: ClothingHeadHelmetSyndicate
   - type: Tag
     tags:
     - SuitEVA
@@ -68,6 +72,8 @@
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
+  - type: ChameleonAttachedHelmet
+    clothingPrototype: ClothingHeadHelmetEVA
   - type: Tag
     tags:
     - SuitEVA

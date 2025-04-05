@@ -103,4 +103,21 @@ public abstract class SharedHandheldLightSystem : EntitySystem
 
     public abstract bool TurnOff(Entity<HandheldLightComponent> ent, bool makeNoise = true);
     public abstract bool TurnOn(EntityUid user, Entity<HandheldLightComponent> uid);
+
+
+    public void CopyDetails(EntityUid uid, HandheldLightComponent other, HandheldLightComponent? handheldLight = null)
+    {
+        if (!Resolve(uid, ref handheldLight))
+            return;
+
+        handheldLight.AddPrefix = other.AddPrefix;
+        handheldLight.TurnOnSound = other.TurnOffSound;
+        handheldLight.TurnOffSound = other.TurnOffSound;
+        handheldLight.TurnOnFailSound = other.TurnOnFailSound;
+        handheldLight.Wattage = other.Wattage;
+        handheldLight.Level = other.Level;
+        handheldLight.ToggleOnInteract = other.ToggleOnInteract;
+        Dirty(uid, handheldLight);
+    }
+
 }
