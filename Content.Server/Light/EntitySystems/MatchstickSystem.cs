@@ -1,9 +1,9 @@
 using Content.Shared.Smoking;
 using Content.Shared.Light.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Light.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
-using Content.Shared.Light.EntitySystems;
 
 namespace Content.Server.Light.EntitySystems;
 
@@ -12,11 +12,6 @@ public sealed class MatchstickSystem : SharedMatchstickSystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
 
     public override void Update(float frameTime)
     {

@@ -4,7 +4,6 @@ using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Player;
 using Content.Shared.Light.Components;
 using Robust.Shared.Timing;
 
