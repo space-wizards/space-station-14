@@ -99,6 +99,7 @@
       - BROS
       - Trash
       - MultitoolDefibrillatorTarget
+      - KodeEdible
     - type: FoodSequenceElement
       entries:
         Burger: BrosBurger

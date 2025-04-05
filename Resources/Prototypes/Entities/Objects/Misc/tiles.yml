@@ -1436,6 +1436,21 @@
   - type: Construction
     graph: TileFlesh
     node: fleshTile
+  - type: Tag # imp
+    tags:
+    - DroneUsable
+    - KodeEdible
+  - type: Food # imp
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 3
 
 - type: entity
   name: steel maint floor

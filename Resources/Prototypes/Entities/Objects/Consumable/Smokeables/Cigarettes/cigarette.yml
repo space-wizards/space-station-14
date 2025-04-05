@@ -11,7 +11,8 @@
     tags:
       - Cigarette
       - Trash
-      - PetWearable
+      - PetWearable # imp
+      - KodeEdible # imp
   - type: StaticPrice
     price: 1
   - type: SpaceGarbage
@@ -41,7 +42,8 @@
     tags:
       - Cigarette
       - Trash
-      - PetWearable
+      - PetWearable # imp
+      - KodeEdible # imp
   - type: SpaceGarbage
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
@@ -74,9 +76,10 @@
   - type: Tag
     tags:
       - Cigarette
-      - PetWearable
+      - PetWearable # imp
       - Trash
       - Burnt
+      - KodeEdible # imp
 
 - type: entity
   id: CigaretteSyndicate

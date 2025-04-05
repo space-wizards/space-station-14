@@ -15,3 +15,6 @@ reagent-desc-aquamdivinos = A brand of holy water blessed by both god and the ca
 
 reagent-name-brutoxidone = brutoxidone
 reagent-desc-brutoxidone = A cryogenics chemical. Used to treat severe brute damages using synthflesh's ability to conform to the body. Works regardless of the patient being alive or dead.
+
+reagent-name-clarified-phalanximine = clarified phalanximine
+reagent-desc-clarified-phalanximine = Phalanximine, refined through a dubiously legal and morally questionable technique. Reverses cellular damage at the same effectiveness as Phalanximine, with substantially lowered downsides.

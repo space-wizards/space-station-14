@@ -40,3 +40,14 @@
       amount: 1
   products:
     ActivatedSubjuzine: 5
+
+- type: reaction
+  id: ClarifiedPhalanximine
+  minTemp: 300
+  reactants:
+    Phalanximine:
+      amount: 1
+    BloodKodepiia:
+      amount: 1
+  products:
+    ClarifiedPhalanximine: 1

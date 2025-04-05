@@ -86,6 +86,7 @@
     tags:
     - Egg
     - Trash
+    - KodeEdible # imp
   - type: SpaceGarbage
   - type: FoodSequenceElement # imp
     entries:

@@ -526,6 +526,15 @@
         damage:
           types:
             Poison: 1
+      - !type:HealthChange # imp
+        probability: 0.5
+        conditions:
+        - !type:OrganType
+          type: Kodepiia
+          shouldHave: true
+        damage:
+          groups:
+            Brute: -0.4
       - !type:AdjustReagent
         conditions:
         - !type:OrganType
@@ -540,6 +549,12 @@
         reagent: Protein
         amount: 0.5
       - !type:SatiateHunger # imp
+        conditions:
+        - !type:OrganType
+          type: Kodepiia
+          shouldHave: true
+      - !type:ModifyBloodLevel # imp
+        amount: 1
         conditions:
         - !type:OrganType
           type: Kodepiia

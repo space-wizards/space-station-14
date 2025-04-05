@@ -38,6 +38,11 @@
           groups:
             Brute: -3
             Burn: -1.25
+      - !type:ModifyBloodLevel # imp
+        conditions:
+        - !type:OrganType
+          type: Kodepiia
+        amount: 2
   plantMetabolism:
     - !type:PlantAdjustWater
       amount: 0.5

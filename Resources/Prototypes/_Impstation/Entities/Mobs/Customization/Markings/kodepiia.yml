@@ -663,6 +663,18 @@
     state: canvas9
 
 - type: marking
+  id: KodeChestEye
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Kodepiia]
+  followSkinColor: false
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/kodepiia/chest.rsi
+    state: chesteye1
+  - sprite: _Impstation/Mobs/Customization/kodepiia/chest.rsi
+    state: chesteye2
+
+- type: marking
   id: KodeChestGills
   bodyPart: Chest
   markingCategory: Chest

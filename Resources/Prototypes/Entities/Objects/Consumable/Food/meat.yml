@@ -532,6 +532,10 @@
           Quantity: 10
         - ReagentId: Fat
           Quantity: 3
+  - type: Tag # imp - why tf isnt this in FoodMeatBase
+    tags:
+    - Raw
+    - Meat
 
 - type: entity
   name: meatwheat clump
