@@ -1,5 +1,7 @@
 using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 using Content.Shared.Interaction;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -15,6 +17,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
 
     public override void Initialize()
     {
@@ -54,6 +57,9 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (options.Count == 0)
             return;
 
+        if (!CheckForCharges(uid))
+            return;
+
         var (actId, act) = _random.Pick(options);
         _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
@@ -91,6 +97,9 @@ public sealed class ActionOnInteractSystem : EntitySystem
                     entAct.Event.Target = args.Target.Value;
                 }
 
+                if (!CheckForCharges(uid))
+                    return;
+
                 _actions.PerformAction(args.User, null, entActId, entAct, entAct.Event, _timing.CurTime, false);
                 args.Handled = true;
                 return;
@@ -115,6 +124,9 @@ public sealed class ActionOnInteractSystem : EntitySystem
                 entAct.Event.Coords = args.ClickLocation;
             }
 
+            if (!CheckForCharges(uid))
+                return;
+
             _actions.PerformAction(args.User, null, entActId, entAct, entAct.Event, _timing.CurTime, false);
             args.Handled = true;
             return;
@@ -137,6 +149,9 @@ public sealed class ActionOnInteractSystem : EntitySystem
         {
             act.Event.Target = args.ClickLocation;
         }
+
+        if (!CheckForCharges(uid))
+            return;
 
         _actions.PerformAction(args.User, null, actId, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
@@ -162,5 +177,20 @@ public sealed class ActionOnInteractSystem : EntitySystem
         }
 
         return valid;
+    }
+
+    private bool CheckForCharges(EntityUid uid)
+    {
+        // Staves have limited charges, other items may not
+        if (TryComp<LimitedChargesComponent>(uid, out var charges))
+        {
+            if (_charges.IsEmpty(uid, charges))
+                return false;
+
+            _charges.UseCharge(uid, charges);
+            return true;
+        }
+
+        return true;
     }
 }
