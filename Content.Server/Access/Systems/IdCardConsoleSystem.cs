@@ -83,9 +83,9 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
             var targetIdComponent = EntityManager.GetComponent<IdCardComponent>(targetId);
             var targetAccessComponent = EntityManager.GetComponent<AccessComponent>(targetId);
 
-            var jobProto = new ProtoId<AccessLevelPrototype>(string.Empty);
+            var jobProto = targetIdComponent.JobPrototype ?? new ProtoId<AccessLevelPrototype>(string.Empty);
             if (TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
-                && keyStorage.Key is {} key
+                && keyStorage.Key is { } key
                 && _record.TryGetRecord<GeneralStationRecord>(key, out var record))
             {
                 jobProto = record.JobPrototype;
@@ -125,6 +125,8 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (component.TargetIdSlot.Item is not { Valid: true } targetId || !PrivilegedIdIsAuthorized(uid, component))
             return;
 
+        var targetIdComponent = EntityManager.GetComponent<IdCardComponent>(targetId);
+
         _idCard.TryChangeFullName(targetId, newFullName, player: player);
         _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
 
@@ -136,6 +138,13 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         }
 
         UpdateStationRecord(uid, targetId, newFullName, newJobTitle, job);
+        if ((!TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
+            || keyStorage.Key is not { } key
+            || !_record.TryGetRecord<GeneralStationRecord>(key, out var record))
+            && newJobProto != string.Empty)
+        {
+            targetIdComponent.JobPrototype = newJobProto;
+        }
 
         if (!newAccessList.TrueForAll(x => component.AccessLevels.Contains(x)))
         {
