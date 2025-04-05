@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: The AI can no longer be a traitor. Or a changeling. Or a heretic.
-    type: Fix
-  id: 972
-  time: '2025-01-20T04:39:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1431
 - author: mqole
   changes:
   - message: 1 new word in grayspeak.
@@ -4080,3 +4073,11 @@
   id: 1471
   time: '2025-04-05T03:50:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2185
+- author: rainyatrium
+  changes:
+  - message: A weaker (shuttle wall equivalent) interior mining wall variant. Add
+      construction graphs for all mining walls.
+    type: Add
+  id: 1472
+  time: '2025-04-05T04:14:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2204
