@@ -464,4 +464,9 @@ public enum LogType
     /// Logs related to botany, such as planting and harvesting crops
     /// </summary>
     Botany = 100,
+
+    /// <summary>
+    ///     For anything relating to bug reports.
+    /// </summary>
+    BugReport = 101,
 }
