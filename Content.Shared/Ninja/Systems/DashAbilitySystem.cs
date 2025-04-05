@@ -1,16 +1,11 @@
 using Content.Shared.Actions;
-using Content.Shared.Charges.Components;
+using Content.Shared.Actions.Events;
 using Content.Shared.Charges.Systems;
-using Content.Shared.Hands.Components;
+using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
-using Content.Shared.Movement.Pulling.Components;
-using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Popups;
-using Content.Shared.Examine;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Ninja.Systems;
@@ -59,43 +54,20 @@ public sealed class DashAbilitySystem : EntitySystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        var (uid, comp) = ent;
+        var (uid, _) = ent;
         var user = args.Performer;
         if (!CheckDash(uid, user))
             return;
 
-        if (!_hands.IsHolding(user, uid, out var _))
+        if (!_hands.IsHolding(user, uid, out _))
         {
             _popup.PopupClient(Loc.GetString("dash-ability-not-held", ("item", uid)), user, user);
             return;
         }
 
-        var origin = _transform.GetMapCoordinates(user);
-        var target = args.Target.ToMap(EntityManager, _transform);
-        if (!_examine.InRangeUnOccluded(origin, target, SharedInteractionSystem.MaxRaycastRange, null))
-        {
-            // can only dash if the destination is visible on screen
-            _popup.PopupClient(Loc.GetString("dash-ability-cant-see", ("item", uid)), user, user);
-            return;
-        }
+        var ev = new TeleportActionEvent(user, args.Target);
+        RaiseLocalEvent(uid, ref ev);
 
-        if (!_charges.TryUseCharge(uid))
-        {
-            _popup.PopupClient(Loc.GetString("dash-ability-no-charges", ("item", uid)), user, user);
-            return;
-        }
-
-        // Check if the user is BEING pulled, and escape if so
-        if (TryComp<PullableComponent>(user, out var pull) && _pullingSystem.IsPulled(user, pull))
-            _pullingSystem.TryStopPull(user, pull);
-
-        // Check if the user is pulling anything, and drop it if so
-        if (TryComp<PullerComponent>(user, out var puller) && TryComp<PullableComponent>(puller.Pulling, out var pullable))
-            _pullingSystem.TryStopPull(puller.Pulling.Value, pullable);
-
-        var xform = Transform(user);
-        _transform.SetCoordinates(user, xform, args.Target);
-        _transform.AttachToGridOrMap(user, xform);
         args.Handled = true;
     }
 
