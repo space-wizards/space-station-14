@@ -40,6 +40,9 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly PlayTimeTrackingManager _tracking = default!;
 
+    private const string JobPrefix = "Job:";
+    private const string AntagPrefix = "Antag:";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -57,6 +60,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
         SubscribeLocalEvent<StationJobsGetCandidatesEvent>(OnStationJobsGetCandidates);
         SubscribeLocalEvent<IsJobAllowedEvent>(OnIsJobAllowed);
+        SubscribeLocalEvent<IsRoleAllowedEvent>(OnIsRoleAllowed);
         SubscribeLocalEvent<GetDisallowedJobsEvent>(OnGetDisallowedJobs);
         _adminManager.OnPermsChanged += AdminPermsChanged;
     }
@@ -184,6 +188,12 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             ev.Cancelled = true;
     }
 
+    private void OnIsRoleAllowed(ref IsRoleAllowedEvent ev)
+    {
+        if (!IsAllowed(ev.Player, ev.RoleId))
+            ev.Cancelled = true;
+    }
+
     private void OnGetDisallowedJobs(ref GetDisallowedJobsEvent ev)
     {
         ev.Jobs.UnionWith(GetDisallowedJobs(ev.Player));
@@ -191,7 +201,22 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     public bool IsAllowed(ICommonSession player, string role)
     {
-        if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
+        JobPrototype? job;
+        AntagPrototype? antag;
+
+        // Yes, it's a bit ironic that we remove the prefixes right before blindly sorting them into the categories
+        // the prefixes specify, but not every code path that calls this function will send them WITH prefixes
+        if (role.StartsWith(JobPrefix, StringComparison.Ordinal))
+            role = role[JobPrefix.Length..];
+        else if (role.StartsWith(AntagPrefix, StringComparison.Ordinal))
+            role = role[AntagPrefix.Length..];
+
+        var cvar = _cfg.GetCVar(CCVars.GameRoleTimers);
+        _prototypes.TryIndex<JobPrototype>(role, out job);
+        _prototypes.TryIndex<AntagPrototype>(role, out antag);
+
+        if (job is null &&
+            antag is null ||
             !_cfg.GetCVar(CCVars.GameRoleTimers))
             return true;
 
@@ -201,7 +226,13 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             playTimes = new Dictionary<string, TimeSpan>();
         }
 
-        return JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
+        HashSet<JobRequirement>? requirements = null;
+        if (job is not null)
+            requirements = _roles.GetJobRequirement(job);
+        else if (antag is not null)
+            requirements = _roles.GetAntagRequirement(antag);
+
+        return JobRequirements.TryRequirementsMet(requirements, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
     }
 
     public HashSet<ProtoId<JobPrototype>> GetDisallowedJobs(ICommonSession player)
