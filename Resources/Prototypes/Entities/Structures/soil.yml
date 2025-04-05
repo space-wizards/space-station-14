@@ -55,3 +55,17 @@
         solution: soil
   - type: Appearance
   - type: PlantHolderVisuals
+
+- type: entity
+  name: fungal soil
+  id: dryHydroponicsSoil
+  parent: hydroponicsSoil
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Construction
+      graph: Soil
+      node: fungalSoil
+    - type: PlantHolder
+      waterLevel: 0
+      nutritionLevel: 0
