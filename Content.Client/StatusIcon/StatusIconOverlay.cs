@@ -39,7 +39,8 @@ public sealed class StatusIconOverlay : Overlay
         var eyeRot = args.Viewport.Eye?.Rotation ?? default;
 
         var xformQuery = _entity.GetEntityQuery<TransformComponent>();
-        var scaleMatrix = Matrix3Helpers.CreateScale(new Vector2(1, 1));
+        var baseScale = new Vector2(1, 1);
+        var scaleMatrix = Matrix3Helpers.CreateScale(baseScale);
         var rotationMatrix = Matrix3Helpers.CreateRotation(-eyeRot);
 
         var query = _entity.AllEntityQueryEnumerator<StatusIconComponent, SpriteComponent, TransformComponent, MetaDataComponent>();
@@ -78,6 +79,10 @@ public sealed class StatusIconOverlay : Overlay
                 var curTime = _timing.RealTime;
                 var texture = _sprite.GetFrame(proto.Icon, curTime);
 
+                var scale = proto.Scale ?? 1f;
+                var scaledWidth = texture.Width * scale;
+                var scaledHeight = texture.Height * scale;
+
                 float yOffset;
                 float xOffset;
 
@@ -86,11 +91,11 @@ public sealed class StatusIconOverlay : Overlay
                 if (proto.LocationPreference == StatusIconLocationPreference.Left ||
                     proto.LocationPreference == StatusIconLocationPreference.None && countL <= countR)
                 {
-                    if (accOffsetL + texture.Height > sprite.Bounds.Height * EyeManager.PixelsPerMeter)
+                    if (accOffsetL + scaledHeight > sprite.Bounds.Height * EyeManager.PixelsPerMeter)
                         break;
                     if (proto.Layer == StatusIconLayer.Base)
                     {
-                        accOffsetL += texture.Height;
+                        accOffsetL += (int)scaledHeight;
                         countL++;
                     }
                     yOffset = (bounds.Height + sprite.Offset.Y) / 2f - (float) (accOffsetL - proto.Offset) / EyeManager.PixelsPerMeter;
@@ -99,15 +104,15 @@ public sealed class StatusIconOverlay : Overlay
                 }
                 else
                 {
-                    if (accOffsetR + texture.Height > sprite.Bounds.Height * EyeManager.PixelsPerMeter)
+                    if (accOffsetR + scaledHeight > sprite.Bounds.Height * EyeManager.PixelsPerMeter)
                         break;
                     if (proto.Layer == StatusIconLayer.Base)
                     {
-                        accOffsetR += texture.Height;
+                        accOffsetR += (int)scaledHeight;
                         countR++;
                     }
                     yOffset = (bounds.Height + sprite.Offset.Y) / 2f - (float) (accOffsetR - proto.Offset) / EyeManager.PixelsPerMeter;
-                    xOffset = (bounds.Width + sprite.Offset.X) / 2f - (float) texture.Width / EyeManager.PixelsPerMeter;
+                    xOffset = (bounds.Width + sprite.Offset.X) / 2f - scaledWidth / EyeManager.PixelsPerMeter;
 
                 }
 
@@ -117,7 +122,17 @@ public sealed class StatusIconOverlay : Overlay
                     handle.UseShader(_unshadedShader);
 
                 var position = new Vector2(xOffset, yOffset);
-                handle.DrawTexture(texture, position);
+                if (scale != 1f)
+                {
+                    var originalTransform = handle.GetTransform();
+                    handle.SetTransform(Matrix3x2.Multiply(Matrix3x2.CreateScale(scale), originalTransform));
+                    handle.DrawTexture(texture, position / scale);
+                    handle.SetTransform(originalTransform);
+                }
+                else
+                {
+                    handle.DrawTexture(texture, position);
+                }
             }
 
             handle.UseShader(null);

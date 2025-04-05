@@ -275,12 +275,15 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         PersonPrints.Text = stationRecord.Fingerprint ??  Loc.GetString("generic-not-available-shorthand");
         PersonDna.Text = stationRecord.DNA ??  Loc.GetString("generic-not-available-shorthand");
 
+        PersonStatusTX.SetFromSpriteSpecifier(specifier);
+        PersonStatusTX.DisplayRect.TextureScale = new Vector2(3f, 3f);
+
         if (criminalRecord.Status != SecurityStatus.None)
         {
             specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/security_icons.rsi"),  GetStatusIcon(criminalRecord.Status));
+            PersonStatusTX.SetFromSpriteSpecifier(specifier);
+            PersonStatusTX.DisplayRect.TextureScale = new Vector2(1.5f, 1.5f);
         }
-        PersonStatusTX.SetFromSpriteSpecifier(specifier);
-        PersonStatusTX.DisplayRect.TextureScale = new Vector2(3f, 3f);
 
         StatusOptionButton.SelectId((int)criminalRecord.Status);
         if (criminalRecord.Reason is { } reason)
@@ -315,7 +318,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
 
     private void SetStatus(SecurityStatus status)
     {
-        if (status == SecurityStatus.Wanted || status == SecurityStatus.Suspected)
+        if (status == SecurityStatus.Wanted || status == SecurityStatus.Suspected || status == SecurityStatus.Hostile)
         {
             GetReason(status);
             return;
@@ -361,6 +364,8 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             SecurityStatus.Detained => "hud_incarcerated",
             SecurityStatus.Discharged => "hud_discharged",
             SecurityStatus.Suspected => "hud_suspected",
+            SecurityStatus.Hostile => "hud_hostile",
+            SecurityStatus.Eliminated => "hud_eliminated",
             _ => "SecurityIconNone"
         };
     }
