@@ -255,7 +255,7 @@ public sealed partial class StaminaSystem : EntitySystem
         value = UniversalStaminaDamageModifier * value;
 
         // Have we already reached the point of max stamina damage?
-        if(component.Critical)
+        if (component.Critical)
             return;
 
         var oldDamage = component.StaminaDamage;
@@ -368,8 +368,7 @@ public sealed partial class StaminaSystem : EntitySystem
             TakeStaminaDamage(
                 uid,
                 _afterCrit ? -comp.Decay * afterCritDecayMultiplier : -comp.Decay, // Recover faster after crit
-                comp
-                );
+                comp);
 
             Dirty(uid, comp);
         }
