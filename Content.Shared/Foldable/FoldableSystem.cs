@@ -48,7 +48,7 @@ public sealed class FoldableSystem : EntitySystem
 
     public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, ref InsertIntoEntityStorageAttemptEvent args)
     {
-        if (comp.IsFolded)
+        if (!comp.IsFolded && !comp.CanFoldInsideContainer)
             args.Cancelled = true;
     }
 
