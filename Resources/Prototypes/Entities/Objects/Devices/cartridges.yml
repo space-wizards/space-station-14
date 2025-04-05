@@ -34,6 +34,11 @@
   - type: UIFragment
     ui: !type:NanoTaskUi
   - type: NanoTaskCartridge
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    transmitFrequencyId: NanoTaskServer
+    receiveFrequencyId: NanoTaskClient
+  - type: StationLimitedNetwork
 
 - type: entity
   parent: BaseItem

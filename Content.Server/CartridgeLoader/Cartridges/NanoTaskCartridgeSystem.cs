@@ -1,12 +1,17 @@
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.CartridgeLoader;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
-using Content.Shared.Paper;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Timing;
-using Robust.Shared.Utility;
+using Content.Server.DeviceNetwork.Systems;
+using Content.Shared.DeviceNetwork;
+using Content.Server.DeviceNetwork;
+using Content.Shared.NanoTask;
+using Content.Server.NanoTask.Components;
+using Content.Server.DeviceNetwork.Components;
+using Content.Server.Station.Systems;
+using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Prototypes;
+using Content.Shared.NanoTask.Prototypes;
+using System.Linq;
+using Content.Shared.Access.Systems;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
@@ -16,10 +21,11 @@ namespace Content.Server.CartridgeLoader.Cartridges;
 public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
 {
     [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoader = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly PaperSystem _paper = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private readonly SingletonDeviceNetServerSystem _singletonDeviceNetServer = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -30,7 +36,9 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
 
         SubscribeLocalEvent<NanoTaskCartridgeComponent, CartridgeRemovedEvent>(OnCartridgeRemoved);
 
-        SubscribeLocalEvent<NanoTaskInteractionComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<NanoTaskCartridgeComponent, DeviceNetworkPacketEvent>(OnDeviceNetworkPacket);
+        SubscribeLocalEvent<NanoTaskCartridgeComponent, DeviceNetServerDisconnectedEvent>(OnDisconnect);
+        SubscribeLocalEvent<NanoTaskCartridgeComponent, DeviceNetServerConnectedEvent>(OnConnect);
     }
 
     private void OnCartridgeRemoved(Entity<NanoTaskCartridgeComponent> ent, ref CartridgeRemovedEvent args)
@@ -41,23 +49,18 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
         }
     }
 
-    private void OnInteractUsing(Entity<NanoTaskInteractionComponent> ent, ref InteractUsingEvent args)
+    private bool CheckServerAvailable(EntityUid ent, [NotNullWhen(true)] out string? address)
     {
-        if (!_cartridgeLoader.TryGetProgram<NanoTaskCartridgeComponent>(ent.Owner, out var uid, out var program))
+        var station = _station.GetOwningStation(ent);
+        if (station.HasValue &&
+            _singletonDeviceNetServer.TryGetActiveServerAddress<NanoTaskServerComponent>(station.Value, out var addr))
         {
-            return;
+            address = addr;
+            return true;
         }
-        if (!EntityManager.TryGetComponent<NanoTaskPrintedComponent>(args.Used, out var printed))
-        {
-            return;
-        }
-        if (printed.Task is NanoTaskItem item)
-        {
-            program.Tasks.Add(new(program.Counter++, printed.Task));
-            args.Handled = true;
-            EntityManager.DeleteEntity(args.Used);
-            UpdateUiState(new Entity<NanoTaskCartridgeComponent>(uid.Value, program), ent.Owner);
-        }
+
+        address = null;
+        return false;
     }
 
     /// <summary>
@@ -65,30 +68,13 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
     /// </summary>
     private void OnUiReady(Entity<NanoTaskCartridgeComponent> ent, ref CartridgeUiReadyEvent args)
     {
-        UpdateUiState(ent, args.Loader);
-    }
-
-    private void SetupPrintedTask(EntityUid uid, NanoTaskItem item)
-    {
-        PaperComponent? paper = null;
-        NanoTaskPrintedComponent? printed = null;
-        if (!Resolve(uid, ref paper, ref printed))
+        if (!CheckServerAvailable(ent.Owner, out var address))
+        {
+            UpdateUiStateNoServers(args.Loader);
             return;
+        }
 
-        printed.Task = item;
-        var msg = new FormattedMessage();
-        msg.AddText(Loc.GetString("nano-task-printed-description", ("description", item.Description)));
-        msg.PushNewline();
-        msg.AddText(Loc.GetString("nano-task-printed-requester", ("requester", item.TaskIsFor)));
-        msg.PushNewline();
-        msg.AddText(item.Priority switch {
-            NanoTaskPriority.High => Loc.GetString("nano-task-printed-high-priority"),
-            NanoTaskPriority.Medium => Loc.GetString("nano-task-printed-medium-priority"),
-            NanoTaskPriority.Low => Loc.GetString("nano-task-printed-low-priority"),
-            _ => "",
-        });
-
-        _paper.SetContent((uid, paper), msg.ToMarkup());
+        UpdateUiState(ent, args.Loader, args.Actor);
     }
 
     /// <summary>
@@ -102,50 +88,246 @@ public sealed class NanoTaskCartridgeSystem : SharedNanoTaskCartridgeSystem
         if (args is not NanoTaskUiMessageEvent message)
             return;
 
+        if (!CheckServerAvailable(ent.Owner, out var address))
+        {
+            UpdateUiStateNoServers(GetEntity(args.LoaderUid));
+            return;
+        }
+
+        var isAllowed = message.Payload switch
+        {
+            NanoTaskAddTask task => task.Category.Department,
+            NanoTaskUpdateTask task => task.Item.Category.Department,
+            NanoTaskDeleteTask task => ent.Comp.Tasks.FirstOrDefault(x => x.Item.Id == task.Id)?.Category.Department,
+            _ => null
+        } is { } department && _accessReader.IsAllowed(args.Actor, _prototypeManager.Index(department));
+
+        if (!isAllowed)
+            return;
+
+        var device = Comp<DeviceNetworkComponent>(ent);
+
         switch (message.Payload)
         {
             case NanoTaskAddTask task:
                 if (!task.Item.Validate())
                     return;
 
-                ent.Comp.Tasks.Add(new(ent.Comp.Counter++, task.Item));
+                var newPayload = new NetworkPayload
+                {
+                    [NanoTaskConstants.NET_COMMAND] = NanoTaskConstants.NET_NEW_TASK,
+                    [NanoTaskConstants.NET_NEW_ITEM_TASK] = task.Item,
+                    [NanoTaskConstants.NET_ITEM_TASK_CATEGORY] = task.Category,
+                };
+
+                _deviceNetwork.QueuePacket(ent,
+                    address,
+                    newPayload,
+                    device.TransmitFrequency,
+                    device.DeviceNetId,
+                    device);
+
                 break;
             case NanoTaskUpdateTask task:
-            {
-                if (!task.Item.Data.Validate())
-                    return;
+                {
+                    if (!task.Item.Item.Data.Validate())
+                        return;
 
-                var idx = ent.Comp.Tasks.FindIndex(t => t.Id == task.Item.Id);
-                if (idx != -1)
-                    ent.Comp.Tasks[idx] = task.Item;
-                break;
-            }
+                    var updatePayload = new NetworkPayload
+                    {
+                        [NanoTaskConstants.NET_COMMAND] = NanoTaskConstants.NET_UPDATE_TASK,
+                        [NanoTaskConstants.NET_ITEM_TASK] =
+                            new NanoTaskItemAndDepartment(task.Item.Item, task.Item.Category),
+                    };
+
+                    _deviceNetwork.QueuePacket(ent,
+                        address,
+                        updatePayload,
+                        device.TransmitFrequency,
+                        device.DeviceNetId,
+                        device);
+
+                    break;
+                }
             case NanoTaskDeleteTask task:
-                ent.Comp.Tasks.RemoveAll(t => t.Id == task.Id);
-                break;
-            case NanoTaskPrintTask task:
-            {
-                if (!task.Item.Validate())
-                    return;
-                if (_timing.CurTime < ent.Comp.NextPrintAllowedAfter)
-                    return;
+                var deletePayload = new NetworkPayload
+                {
+                    [NanoTaskConstants.NET_COMMAND] = NanoTaskConstants.NET_DELETE_TASK,
+                    [NanoTaskConstants.NET_ITEM_TASK_ID] = task.Id,
+                };
 
-                ent.Comp.NextPrintAllowedAfter = _timing.CurTime + ent.Comp.PrintDelay;
-                var printed = Spawn("PaperNanoTaskItem", Transform(message.Actor).Coordinates);
-                _hands.PickupOrDrop(message.Actor, printed);
-                _audio.PlayPvs(new SoundPathSpecifier("/Audio/Machines/printer.ogg"), ent.Owner);
-                SetupPrintedTask(printed, task.Item);
+                _deviceNetwork.QueuePacket(ent,
+                    address,
+                    deletePayload,
+                    device.TransmitFrequency,
+                    device.DeviceNetId,
+                    device);
+
                 break;
-            }
         }
 
-        UpdateUiState(ent, GetEntity(args.LoaderUid));
+        ent.Comp.ActorUid = args.Actor;
+
+        var loader = GetEntity(args.LoaderUid);
+        UpdateUiState(ent, loader, args.Actor);
     }
 
-
-    private void UpdateUiState(Entity<NanoTaskCartridgeComponent> ent, EntityUid loaderUid)
+    private void OnDeviceNetworkPacket(Entity<NanoTaskCartridgeComponent> ent, ref DeviceNetworkPacketEvent args)
     {
-        var state = new NanoTaskUiState(ent.Comp.Tasks);
+        if (!args.Data.TryGetValue(NanoTaskConstants.NET_COMMAND, out string? command))
+            return;
+
+        switch (command)
+        {
+            case NanoTaskConstants.NET_ALL_TASKS:
+                HandleAllTasks(ent, args);
+                break;
+            case NanoTaskConstants.NET_NEW_TASK:
+                HandleNewTask(ent, args);
+                break;
+            case NanoTaskConstants.NET_UPDATE_TASK:
+                HandleUpdateTask(ent, args);
+                break;
+            case NanoTaskConstants.NET_DELETE_TASK:
+                HandleDeleteTask(ent, args);
+                break;
+        }
+
+        if (Comp<CartridgeComponent>(ent).LoaderUid is not { } loaderUid)
+            return;
+
+        var description =
+            (args.Data[NanoTaskConstants.NET_ITEM_TASK] as NanoTaskItemAndDepartment)?.Item.Data.Description ??
+            (args.Data[NanoTaskConstants.NET_NEW_ITEM_TASK] as NanoTaskItem)?.Description;
+
+        if (description is null)
+            return;
+
+        switch (command)
+        {
+            case NanoTaskConstants.NET_NEW_TASK:
+                _cartridgeLoader.SendNotification(loaderUid,
+                    Loc.GetString("nano-task-ui-new-task-title"),
+                    description);
+                break;
+            case NanoTaskConstants.NET_DELETE_TASK:
+                _cartridgeLoader.SendNotification(loaderUid,
+                    Loc.GetString("nano-task-ui-task-completed-title"),
+                    description);
+                break;
+        }
+
+        var actor = ent.Comp.ActorUid;
+        ent.Comp.ActorUid = null;
+
+        UpdateUiState(ent, loaderUid, actor);
+    }
+
+    private static void HandleAllTasks(Entity<NanoTaskCartridgeComponent> ent, DeviceNetworkPacketEvent args)
+    {
+        if (!args.Data.TryGetValue(NanoTaskConstants.NET_TASKS, out List<NanoTaskItemAndDepartment>? tasks))
+            return;
+
+        ent.Comp.Tasks = tasks;
+    }
+
+    private static void HandleDeleteTask(Entity<NanoTaskCartridgeComponent> ent, DeviceNetworkPacketEvent args)
+    {
+        if (!args.Data.TryGetValue(NanoTaskConstants.NET_ITEM_TASK, out NanoTaskItemAndDepartment? item))
+            return;
+
+        var index = ent.Comp.Tasks.FindIndex(x => x.Item.Id == item.Item.Id);
+        if (index == -1)
+            return;
+
+        ent.Comp.Tasks.RemoveAt(index);
+    }
+
+    private static void HandleUpdateTask(Entity<NanoTaskCartridgeComponent> ent, DeviceNetworkPacketEvent args)
+    {
+        if (!args.Data.TryGetValue(NanoTaskConstants.NET_ITEM_TASK, out NanoTaskItemAndDepartment? item))
+            return;
+
+        var index = ent.Comp.Tasks.FindIndex(x => x.Item.Id == item.Item.Id);
+        if (index == -1)
+            return;
+
+        ent.Comp.Tasks[index] = item;
+    }
+
+    private static void HandleNewTask(Entity<NanoTaskCartridgeComponent> ent, DeviceNetworkPacketEvent args)
+    {
+        if (!args.Data.TryGetValue(NanoTaskConstants.NET_ITEM_TASK, out NanoTaskItemAndDepartment? item))
+            return;
+
+        ent.Comp.Tasks.Add(item);
+    }
+
+    private void OnConnect(Entity<NanoTaskCartridgeComponent> ent, ref DeviceNetServerConnectedEvent args)
+    {
+        var loaderUid = Comp<CartridgeComponent>(ent).LoaderUid;
+        if (!loaderUid.HasValue)
+            return;
+
+        if (!CheckServerAvailable(ent, out var address))
+        {
+            UpdateUiStateNoServers(loaderUid.Value);
+            return;
+        }
+
+        var payload = new NetworkPayload
+        {
+            [DeviceNetworkConstants.Command] = DeviceNetworkConstants.CmdSetState,
+            [NanoTaskConstants.NET_COMMAND] = NanoTaskConstants.NET_ALL_TASKS,
+        };
+
+        var device = Comp<DeviceNetworkComponent>(ent);
+        _deviceNetwork.QueuePacket(ent, address, payload, device.TransmitFrequency, device.DeviceNetId, device);
+    }
+
+    private void OnDisconnect(Entity<NanoTaskCartridgeComponent> ent, ref DeviceNetServerDisconnectedEvent args)
+    {
+        ent.Comp.Tasks.Clear();
+
+        if (CheckServerAvailable(ent, out var address))
+            return;
+
+        var loaderUid = Comp<CartridgeComponent>(ent).LoaderUid;
+        if (!loaderUid.HasValue)
+            return;
+
+        UpdateUiStateNoServers(loaderUid.Value);
+    }
+
+    private void UpdateUiStateNoServers(EntityUid loaderUid)
+    {
+        var state = new NanoTaskServerOfflineUiState();
         _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);
+    }
+
+    private void UpdateUiState(Entity<NanoTaskCartridgeComponent> ent, EntityUid loaderUid, EntityUid? actor = null)
+    {
+        var tasks = ent.Comp.Tasks.Where(t =>
+            {
+                if (t.Category.Category is NanoTaskCategory.Station)
+                    return true;
+
+                if (!actor.HasValue)
+                    return false;
+
+                var proto = _prototypeManager.Index<NanoTaskDepartmentPrototype>(t.Category.Department!);
+                var hasPermissions = _accessReader.IsAllowed(actor.Value, proto);
+
+                return hasPermissions;
+            })
+            .ToList();
+
+        var departments = actor.HasValue ? _prototypeManager.EnumeratePrototypes<NanoTaskDepartmentPrototype>()
+            .Where(x => _accessReader.IsAllowed(actor.Value, x))
+            .Select(x => new ProtoId<NanoTaskDepartmentPrototype>(x.ID))
+            .ToList() : [];
+
+        var filteredState = new NanoTaskUiState(tasks, departments);
+        _cartridgeLoader.UpdateCartridgeUiState(loaderUid, filteredState);
     }
 }

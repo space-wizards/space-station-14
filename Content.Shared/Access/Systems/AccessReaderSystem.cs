@@ -100,6 +100,14 @@ public sealed class AccessReaderSystem : EntitySystem
         Dirty(uid, reader);
     }
 
+    public bool IsAllowed(EntityUid user, IAccessReader target)
+    {
+        var accessSources = FindPotentialAccessItems(user);
+        var access = FindAccessTags(user, accessSources);
+
+        return access.Any(a => target.GetAccesses().Contains(a));
+    }
+
     /// <summary>
     /// Searches the source for access tags
     /// then compares it with the all targets accesses to see if it is allowed.
@@ -277,7 +285,7 @@ public sealed class AccessReaderSystem : EntitySystem
             FindAccessTagsItem(ent, ref tags, ref owned);
         }
 
-        return (ICollection<ProtoId<AccessLevelPrototype>>?) tags ?? Array.Empty<ProtoId<AccessLevelPrototype>>();
+        return (ICollection<ProtoId<AccessLevelPrototype>>?)tags ?? Array.Empty<ProtoId<AccessLevelPrototype>>();
     }
 
     /// <summary>
@@ -338,7 +346,7 @@ public sealed class AccessReaderSystem : EntitySystem
         component.AccessLists.Clear();
         foreach (var access in accesses)
         {
-            component.AccessLists.Add(new HashSet<ProtoId<AccessLevelPrototype>>(){access});
+            component.AccessLists.Add(new HashSet<ProtoId<AccessLevelPrototype>>() { access });
         }
         Dirty(uid, component);
         RaiseLocalEvent(uid, new AccessReaderConfigurationChangedEvent());
