@@ -7,40 +7,39 @@
 ## Movement
 To move, use [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][keybind="MoveDown"][keybind="MoveRight"][/bold][/color].
 
-Some surfaces will make you slip.
+Slippery objects and surfaces will make you fall over for a couple of seconds.
 Hold [color=yellow][bold][keybind="Walk"][/bold][/color] to walk slowly enough to prevent slipping on most of them.
 You can switch walking to a [color=cyan]toggle[/color] in the controls menu.
 
-To [color=cyan]pull[/color] a movable or mobile entity ([italic]mob[/italic]), click [color=yellow][bold][keybind="TryPullObject"][/bold][/color] on it.
-While pulling, you can drag it to your mouse cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
+You can [color=cyan]pull[/color] objects and mobile entities ([italic]mobs[/italic]).
+To start pulling, click [color=yellow][bold][keybind="TryPullObject"][/bold][/color] on a movable entity.
+While pulling, you can push the entity to your cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
 Pull again or press [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] to let go.
 
-You may find yourself in a situation with [color=#EB2D3A][bold]low gravity.[/bold][/color]
+You may find yourself in a situation with [color=#EB2D3A][bold]low gravity[/bold][/color].
 This will cause your character to drift around when moving.
-When off-station, you will be unable to control your direction.
-[bold]Throwing objects[/bold] or [bold]spraying a fire-extinguisher[/bold] can help propel yourself while in this state.
+If you end up completely off-station in space, you'll need to [bold]throw objects[/bold] or [bold]spray a fire-extinguisher[/bold] to propel yourself.
 
 ## Interactions
 Standard, [color=yellow][bold][keybind="Use"][/bold][/color] interactions are context-sensitive and [bold]depend on the item in your active hand[/bold].
 Some items have [bold]alternative interactions[/bold], such as locking lockers and ejecting sub-items from other items.
 To perform [color=cyan]alternative interactions[/color], use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
 
-Many items have use-in-hand interactions, such as reloading or switching to holding with both hands.
+Many items have use-in-hand interactions, such as opening a bottle, reloading a gun or switching to holding an axe with both hands.
 To activate or use a held item, click [color=yellow][bold][keybind="Use"][/bold][/color] on it, or press the [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] hotkey if it's in the active hand.
 The alternative counterpart is [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color].
 
 You can interact with objects even when your hands are full.
 Perform [color=cyan]activation interactions[/color] by pressing [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
 This allows you to interact with the world without picking items up and without using the items you're holding.
-Activation interactions often double as standard interactions.
-The alternative counterpart is still [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
+[italic](Note: The alternative counterpart is still [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].)[/italic]
 
 To sum up, there are [bold]three[/bold] types of context-sensitive interactions.
 You can always click [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on an interactive entity to open the [color=cyan]context menu[/color].
-This menu displays [bold][italic]standard[/italic][/bold], [bold]activation[/bold], [italic]alternative[/italic], and other possible interactions in one list.
+This menu displays [bold][italic]standard[/italic][/bold], [bold]activation[/bold], [italic]alternative[/italic] (usually formatted like that), and other possible interactions in one list.
 Sometimes called the [italic]entity menu[/italic], it also helps you sort through large piles of items.
 
-If you're ever unsure about an entity, you can [color=cyan]examine[/color] it by pressing [color=yellow][bold][keybind="ExamineEntity"][/bold][/color]. 
+If you're ever unsure about an entity, you can [color=cyan]examine[/color] it by pressing [color=yellow][bold][keybind="ExamineEntity"][/bold][/color].
 This opens a window displaying its name, a brief description, relevant details, and sometimes a link to the guidebook.
 
 For more details about interactions, please refer to the [color=cyan]Wiki[/color].
