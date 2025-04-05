@@ -56,7 +56,7 @@
   - type: ParrotSpeech
     maximumPhraseLength: 24 # higher chance of saying a full sentence
     hideMessagesInChat: false # so that people react to it with roleplay
-    whisperChance: 0.25 # partly so it's not always interjecting into conversations, and partly so that
+    whisperChance: 0.25 # partly so it's not always interjecting into conversations
     preserveContext: true # to both creatively obfuscate and clarify the nature of a player's chat messages (the ellipses might tell you an echo is an excerpt, but the caps preservation might make you think otherwise)
     minimumWait: 300
     maximumWait: 600 # triggers once every 5-10 minutes
