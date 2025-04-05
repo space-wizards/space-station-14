@@ -8,28 +8,7 @@
   },
   "states": [
     {
-      "name": "cold1"
-    },
-    {
-      "name": "cold2"
-    },
-    {
-      "name": "cold3",
-      "delays": [
-        [
-          0.5,
-          0.5
-        ]
-      ]
-    },
-    {
-      "name": "hot1"
-    },
-    {
-      "name": "hot2"
-    },
-    {
-      "name": "hot3",
+      "name": "fire",
       "delays": [
         [
           0.5,

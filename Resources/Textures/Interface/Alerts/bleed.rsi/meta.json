@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Edited by Flareguy for Space Station 14, original sprite taken from https://github.com/tgstation/tgstation/blob/master/icons/effects/bleed.dmi",
+  "copyright": "Edited by Flareguy for Space Station 14, original sprite taken from https://github.com/tgstation/tgstation/blob/7a1ab20da660c51fc7753d4ebdf67387cd5c5349/icons/effects/bleed.dmi",
   "states": [
     {
       "name": "bleed0"
@@ -17,28 +17,22 @@
       "name": "bleed2"
     },
     {
-      "name": "bleed3"
+      "name": "bleed3",
+      "delays": [
+        [
+          0.5,
+          0.5
+        ]
+      ]
     },
     {
-      "name": "bleed4"
-    },
-    {
-      "name": "bleed5"
-    },
-    {
-      "name": "bleed6"
-    },
-    {
-      "name": "bleed7"
-    },
-    {
-      "name": "bleed8"
-    },
-    {
-      "name": "bleed9"
-    },
-    {
-      "name": "bleed10"
+      "name": "bleed4",
+      "delays": [
+        [
+          0.5,
+          0.5
+        ]
+      ]
     }
   ]
 }
