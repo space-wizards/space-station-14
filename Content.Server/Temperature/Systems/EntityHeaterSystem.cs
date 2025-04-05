@@ -6,13 +6,9 @@ using Content.Shared.Temperature.Systems;
 
 namespace Content.Server.Temperature.Systems;
 
-/// <summary>
-/// Handles the server-only parts of <see cref="SharedEntityHeaterSystem"/>
-/// </summary>
+///<inheritdoc cref="SharedEntityHeaterSystem"/>
 public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
 {
-    [Dependency] private readonly TemperatureSystem _temperature = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -27,21 +23,24 @@ public sealed class EntityHeaterSystem : SharedEntityHeaterSystem
             power.Load = SettingPower(ent.Comp.Setting, ent.Comp.Power);
     }
 
+    /// <inheritdoc />
     public override void Update(float deltaTime)
     {
+        //Ed: i think it should be in Shared to, but ApcPowerReceiver.PowerReceived in server atm...
         var query = EntityQueryEnumerator<EntityHeaterComponent, ItemPlacerComponent, ApcPowerReceiverComponent>();
         while (query.MoveNext(out _, out _, out var placer, out var power))
         {
             if (!power.Powered)
                 continue;
 
-            // don't divide by total entities since it's a big grill
+            // don't divide by total entities since it is a big grill
             // excess would just be wasted in the air but that's not worth simulating
             // if you want a heater thermomachine just use that...
             var energy = power.PowerReceived * deltaTime;
             foreach (var ent in placer.PlacedEntities)
             {
-                _temperature.ChangeHeat(ent, energy);
+                Entity<TemperatureComponent?> target = (ent, null);
+                Temperature.ChangeHeat(target, energy);
             }
         }
     }
