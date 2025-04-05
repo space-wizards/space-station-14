@@ -1,8 +1,10 @@
+using Content.Shared.CCVar;
 using Content.Shared.Flash;
 using Content.Shared.Flash.Components;
 using Content.Shared.StatusEffect;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -15,6 +17,7 @@ namespace Content.Client.Flash
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
 
         private readonly SharedFlashSystem _flash;
         private readonly StatusEffectsSystem _statusSys;
@@ -74,6 +77,7 @@ namespace Content.Client.Flash
                 return;
 
             var worldHandle = args.WorldHandle;
+            _shader.SetParameter("reduceMotion", _configManager.GetCVar(CCVars.ReducedMotion));
             _shader.SetParameter("percentComplete", PercentComplete);
             worldHandle.UseShader(_shader);
             worldHandle.DrawTextureRectRegion(ScreenshotTexture, args.WorldBounds);
