@@ -1,6 +1,5 @@
 using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Speech.Components;
 
@@ -11,5 +10,5 @@ public sealed partial class SpeakOnUseComponent : Component
     /// The ftl id of the sentence that the user will speak.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public ProtoId<SpeakOnUsePrototype>? Sentence;
+    public string? Sentence;
 }
