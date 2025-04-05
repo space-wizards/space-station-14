@@ -43,6 +43,7 @@ public abstract partial class SharedSalvageSystem : EntitySystem
         // - Lighting
         // - Atmos
         var biome = GetMod<SalvageBiomeModPrototype>(rand, ref modifierBudget);
+        var weather = GetBiomeMod<SalvageWeatherMod>(biome.ID, rand, ref modifierBudget);
         var light = GetBiomeMod<SalvageLightMod>(biome.ID, rand, ref modifierBudget);
         var temp = GetBiomeMod<SalvageTemperatureMod>(biome.ID, rand, ref modifierBudget);
         var air = GetBiomeMod<SalvageAirMod>(biome.ID, rand, ref modifierBudget);
@@ -64,6 +65,11 @@ public abstract partial class SharedSalvageSystem : EntitySystem
             mods.Add(Loc.GetString(temp.Description));
         }
 
+        if (weather.Description != string.Empty)
+        {
+            mods.Add(Loc.GetString(weather.Description));
+        }
+
         if (light.Description != string.Empty)
         {
             mods.Add(Loc.GetString(light.Description));
@@ -71,7 +77,7 @@ public abstract partial class SharedSalvageSystem : EntitySystem
 
         var duration = TimeSpan.FromSeconds(CfgManager.GetCVar(CCVars.SalvageExpeditionDuration));
 
-        return new SalvageMission(seed, dungeon.ID, faction.ID, biome.ID, air.ID, temp.Temperature, light.Color, duration, mods);
+        return new SalvageMission(seed, dungeon.ID, faction.ID, biome.ID, air.ID, temp.Temperature, weather.WeatherPrototype, light.Color, duration, mods);
     }
 
     public T GetBiomeMod<T>(string biome, System.Random rand, ref float rating) where T : class, IPrototype, IBiomeSpecificMod
