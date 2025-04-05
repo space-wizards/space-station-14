@@ -43,7 +43,7 @@ public sealed class RoofOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (args.Viewport.Eye == null)
+        if (args.Viewport.Eye == null || !_entManager.HasComponent<MapLightComponent>(args.MapUid))
             return;
 
         var viewport = args.Viewport;
@@ -55,23 +55,41 @@ public sealed class RoofOverlay : Overlay
         var target = lightoverlay.EnlargedLightTarget;
 
         _grids.Clear();
-        _mapManager.FindGridsIntersecting(args.MapId, bounds, ref _grids);
-
-        for (var i = _grids.Count - 1; i >= 0; i--)
-        {
-            var grid = _grids[i];
-
-            if (_entManager.HasComponent<RoofComponent>(grid.Owner))
-                continue;
-
-            _grids.RemoveAt(i);
-        }
-
-        if (_grids.Count == 0)
-            return;
-
+        _mapManager.FindGridsIntersecting(args.MapId, bounds, ref _grids, approx: true, includeMap: true);
         var lightScale = viewport.LightRenderTarget.Size / (Vector2) viewport.Size;
         var scale = viewport.RenderScale / (Vector2.One / lightScale);
+
+        worldHandle.RenderInRenderTarget(target,
+            () =>
+            {
+                for (var i = 0; i < _grids.Count; i++)
+                {
+                    var grid = _grids[i];
+
+                    if (!_entManager.TryGetComponent(grid.Owner, out ImplicitRoofComponent? roof))
+                        continue;
+
+                    var invMatrix = target.GetWorldToLocalMatrix(eye, scale);
+
+                    var gridMatrix = _xformSystem.GetWorldMatrix(grid.Owner);
+                    var matty = Matrix3x2.Multiply(gridMatrix, invMatrix);
+
+                    worldHandle.SetTransform(matty);
+
+                    var tileEnumerator = _mapSystem.GetTilesEnumerator(grid.Owner, grid, bounds);
+                    var color = roof.Color;
+
+                    while (tileEnumerator.MoveNext(out var tileRef))
+                    {
+                        var local = _lookup.GetLocalBounds(tileRef, grid.Comp.TileSize);
+                        worldHandle.DrawRect(local, color);
+                    }
+
+                    // Don't need it for the next stage.
+                    _grids.RemoveAt(i);
+                    i--;
+                }
+            }, null);
 
         worldHandle.RenderInRenderTarget(target,
             () =>
