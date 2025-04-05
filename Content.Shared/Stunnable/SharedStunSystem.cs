@@ -249,7 +249,6 @@ public abstract class SharedStunSystem : EntitySystem
             slowed.SprintSpeedModifier *= runSpeedMultiplier;
 
             _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
-            Log.Debug($"[TS] Trying to add an effect SlowedDown - walkMult: {walkSpeedMultiplier}, runMult: {runSpeedMultiplier}, walkMod: {slowed.WalkSpeedModifier}, sprintMod: {slowed.SprintSpeedModifier},  uid: {ToPrettyString(uid)}, time: {time}");
             return true;
         }
 
@@ -281,8 +280,6 @@ public abstract class SharedStunSystem : EntitySystem
         comp.WalkSpeedModifier = walkSpeedModifier;
 
         comp.SprintSpeedModifier = runSpeedModifier;
-
-        Log.Debug($"[UMM] Trying to modify SlowedDownComponent directly - walkMod: {comp.WalkSpeedModifier}, sprintMod: {comp.SprintSpeedModifier},  uid: {ToPrettyString(uid)}");
 
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
     }

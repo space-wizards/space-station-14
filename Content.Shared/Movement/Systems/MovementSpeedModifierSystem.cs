@@ -26,7 +26,6 @@ namespace Content.Shared.Movement.Systems
 
             move.WalkSpeedModifier = ev.WalkSpeedModifier;
             move.SprintSpeedModifier = ev.SprintSpeedModifier;
-            Log.Debug($"[RMSM] Walk: {move.WalkSpeedModifier}, Sprint: {move.SprintSpeedModifier}, uid: {ToPrettyString(uid)}");    //, StackTrace:\n" + Environment.StackTrace);
             Dirty(uid, move);
         }
 

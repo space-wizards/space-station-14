@@ -31,38 +31,21 @@ namespace Content.Shared.Damage
         private void OnRefreshMovespeed(EntityUid uid, SlowOnDamageComponent component, RefreshMovementSpeedModifiersEvent args)
         {
             if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damage))
-            {
-                Log.Warning($"[ORM] uid \"{ToPrettyString(uid)}\" has no DamageableComponent. Returning.");
                 return;
-            }
 
             if (damage.TotalDamage == FixedPoint2.Zero)
-            {
-                Log.Warning($"[ORM] uid \"{ToPrettyString(uid)}\" has {damage.TotalDamage} damage. Returning.");
                 return;
-            }
 
-            Log.Debug($"[ORM] uid: {ToPrettyString(uid)}, TotalDamage (total): {damage.TotalDamage}"); //, StackTrace: " + Environment.StackTrace);
 
             // Get closest threshold
             FixedPoint2 closest = FixedPoint2.Zero;
             var total = damage.TotalDamage;
 
-            string dbgm = $"[ORM] uid: {ToPrettyString(uid)}, init closest: {closest}, Thresholds: " + "{";
-            foreach (var thres in component.SpeedModifierThresholds)
-            {
-                dbgm += $"{thres.Key} - {thres.Value},";
-            }
-            dbgm += "}";
-            Log.Debug(dbgm);
 
             foreach (var thres in component.SpeedModifierThresholds)
             {
-                int i = 0;
-                Log.Debug($"[ORM] total({total}) {(total >= thres.Key ? ">=" : "<")} thres[{i}].Key({thres.Key}) && thres[{i}].Key({thres.Key}) {(thres.Key > closest ? ">" : "<=")} closest({closest})" );
                 if (total >= thres.Key && thres.Key > closest)
                     closest = thres.Key;
-                i++;
             }
 
             if (closest != FixedPoint2.Zero)
@@ -71,9 +54,7 @@ namespace Content.Shared.Damage
 
                 var ev = new ModifySlowOnDamageSpeedEvent(speed);
                 RaiseLocalEvent(uid, ref ev);
-                Log.Debug($"[ORM] Calling ModifySpeed(walk = {ev.Speed}, sprint = {ev.Speed})");
                 args.ModifySpeed(ev.Speed, ev.Speed);
-                Log.Debug($"[ORM] After ModifySpeed(...) -  walk = {ev.Speed}, sprint = {ev.Speed}");
             }
         }
 
