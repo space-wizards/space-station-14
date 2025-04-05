@@ -1,13 +1,15 @@
 ﻿uniform highp float percentComplete;
 uniform bool reduceMotion;
 
-const highp float fadeFalloffExp = 8.0;
-
 void fragment() {
     // Ghost textures separate over time in reduced motion
     highp float separation = reduceMotion ? percentComplete*0.01 : 0.01;
     // Reduce spin speed by ten in reduced motion
     highp float spinSpeed = reduceMotion ? 0.1 : 1.0;
+	// The return fade must be much sharper on reduced motion as
+	//   it is much easier to see black fading back in rather than
+	//   ghost textures fading back in
+	highp float fadeFalloffExp = reduceMotion ? 40.0 : 8.0;
 
     // Higher exponent -> stronger blinding effect
     highp float remaining = -pow(percentComplete, fadeFalloffExp) + 1.0;
