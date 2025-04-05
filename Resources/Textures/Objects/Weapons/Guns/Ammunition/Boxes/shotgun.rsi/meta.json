@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Sprites by SpaceRox1244",
+    "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/ca674eff9d23e04357b7609ef7e07eadfc1a993f, modified by ps3moira (github)",
     "size": {
         "x": 32,
         "y": 32
@@ -23,16 +23,88 @@
             "name": "mag-4"
         },
         {
-            "name": "mag-alt-1"
+            "name": "mag-beanbag-1"
         },
         {
-            "name": "mag-alt-2"
+            "name": "mag-beanbag-2"
         },
         {
-            "name": "mag-alt-3"
+            "name": "mag-beanbag-3"
         },
         {
-            "name": "mag-alt-4"
+            "name": "mag-beanbag-4"
+        },
+        {
+            "name": "mag-slug-1"
+        },
+        {
+            "name": "mag-slug-2"
+        },
+        {
+            "name": "mag-slug-3"
+        },
+        {
+            "name": "mag-slug-4"
+        },
+        {
+            "name": "mag-practice-1"
+        },
+        {
+            "name": "mag-practice-2"
+        },
+        {
+            "name": "mag-practice-3"
+        },
+        {
+            "name": "mag-practice-4"
+        },
+        {
+            "name": "mag-tranq-1"
+        },
+        {
+            "name": "mag-tranq-2"
+        },
+        {
+            "name": "mag-tranq-3"
+        },
+        {
+            "name": "mag-tranq-4"
+        },
+        {
+            "name": "mag-uranium-1"
+        },
+        {
+            "name": "mag-uranium-2"
+        },
+        {
+            "name": "mag-uranium-3"
+        },
+        {
+            "name": "mag-uranium-4"
+        },
+        {
+            "name": "mag-flare-1"
+        },
+        {
+            "name": "mag-flare-2"
+        },
+        {
+            "name": "mag-flare-3"
+        },
+        {
+            "name": "mag-flare-4"
+        },
+        {
+            "name": "mag-incend-1"
+        },
+        {
+            "name": "mag-incend-2"
+        },
+        {
+            "name": "mag-incend-3"
+        },
+        {
+            "name": "mag-incend-4"
         },
         {
             "name": "lethal"

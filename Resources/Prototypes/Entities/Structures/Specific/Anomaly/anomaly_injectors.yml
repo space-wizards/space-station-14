@@ -318,3 +318,28 @@
           Vox:
             sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
             state: rock_VOX
+
+- type: entity
+  parent: BaseAnomalyInjector
+  id: AnomalyTrapSanta
+  suffix: Santa
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+    - sprite: Structures/Specific/Anomalies/santa_anom.rsi
+      state: pulse
+    - sprite: Mobs/Species/Human/parts.rsi
+      state: full
+  - type: InnerBodyAnomalyInjector
+    injectionComponents:
+      - type: Anomaly
+        deleteEntity: false
+        maxPointsPerSecond: 100
+        corePrototype: AnomalyCoreSanta
+      - type: InnerBodyAnomaly
+        injectionProto: AnomalyInjectionSanta
+        startMessage: inner-anomaly-start-message-santa
+        fallbackSprite:
+          sprite: Structures/Specific/Anomalies/inner_anom_layer.rsi
+          state: santa

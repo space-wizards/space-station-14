@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "icon taken from tg station at commit https://github.com/tgstation/tgstation/commit/2d26ce62c273d025bed77a0e6c4bdc770b789bb0, inhands from commit https://github.com/tgstation/tgstation/commit/b1edbc1990a98239c6d3fd6871fc365daab61eb5",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "wielded-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "wielded-inhand-right",
+      "directions": 4
+    }
+  ]
+}
