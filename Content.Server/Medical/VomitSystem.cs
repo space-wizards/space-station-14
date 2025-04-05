@@ -22,12 +22,11 @@ namespace Content.Server.Medical
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
         [Dependency] private readonly BodySystem _body = default!;
-        [Dependency] private readonly HungerSystem _hunger = default!;
+        [Dependency] private readonly SatiationSystem _satiation = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PuddleSystem _puddle = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
         [Dependency] private readonly StunSystem _stun = default!;
-        [Dependency] private readonly ThirstSystem _thirst = default!;
         [Dependency] private readonly ForensicsSystem _forensics = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
 
@@ -48,11 +47,12 @@ namespace Content.Server.Medical
                 return;
 
             // Vomiting makes you hungrier and thirstier
-            if (TryComp<HungerComponent>(uid, out var hunger))
-                _hunger.ModifyHunger(uid, hungerAdded, hunger);
-
-            if (TryComp<ThirstComponent>(uid, out var thirst))
-                _thirst.ModifyThirst(uid, thirst, thirstAdded);
+            if (TryComp<SatiationComponent>(uid, out var satiation))
+            {
+                Entity<SatiationComponent> entity = (uid, satiation);
+                _satiation.ModifyValue(entity, "Hunger", hungerAdded);
+                _satiation.ModifyValue(entity, "Thirst", thirstAdded);
+            }
 
             // It fully empties the stomach, this amount from the chem stream is relatively small
             var solutionSize = (MathF.Abs(thirstAdded) + MathF.Abs(hungerAdded)) / 6;
@@ -66,13 +66,17 @@ namespace Content.Server.Medical
             // Empty the stomach out into it
             foreach (var stomach in stomachList)
             {
-                if (_solutionContainer.ResolveSolution(stomach.Owner, StomachSystem.DefaultSolutionName, ref stomach.Comp1.Solution, out var sol))
+                if (_solutionContainer.ResolveSolution(stomach.Owner,
+                        StomachSystem.DefaultSolutionName,
+                        ref stomach.Comp1.Solution,
+                        out var sol))
                 {
                     solution.AddSolution(sol, _proto);
                     sol.RemoveAllSolution();
                     _solutionContainer.UpdateChemicals(stomach.Comp1.Solution.Value);
                 }
             }
+
             // Adds a tiny amount of the chem stream from earlier along with vomit
             if (TryComp<BloodstreamComponent>(uid, out var bloodStream))
             {
@@ -81,9 +85,12 @@ namespace Content.Server.Medical
                 var vomitAmount = solutionSize;
 
                 // Takes 10% of the chemicals removed from the chem stream
-                if (_solutionContainer.ResolveSolution(uid, bloodStream.ChemicalSolutionName, ref bloodStream.ChemicalSolution))
+                if (_solutionContainer.ResolveSolution(uid,
+                        bloodStream.ChemicalSolutionName,
+                        ref bloodStream.ChemicalSolution))
                 {
-                    var vomitChemstreamAmount = _solutionContainer.SplitSolution(bloodStream.ChemicalSolution.Value, vomitAmount);
+                    var vomitChemstreamAmount =
+                        _solutionContainer.SplitSolution(bloodStream.ChemicalSolution.Value, vomitAmount);
                     vomitChemstreamAmount.ScaleSolution(chemMultiplier);
                     solution.AddSolution(vomitChemstreamAmount, _proto);
 
@@ -91,7 +98,8 @@ namespace Content.Server.Medical
                 }
 
                 // Makes a vomit solution the size of 90% of the chemicals removed from the chemstream
-                solution.AddReagent(new ReagentId("Vomit", _bloodstream.GetEntityBloodData(uid)), vomitAmount); // TODO: Dehardcode vomit prototype
+                solution.AddReagent(new ReagentId("Vomit", _bloodstream.GetEntityBloodData(uid)),
+                    vomitAmount); // TODO: Dehardcode vomit prototype
             }
 
             if (_puddle.TrySpillAt(uid, solution, out var puddle, false))
