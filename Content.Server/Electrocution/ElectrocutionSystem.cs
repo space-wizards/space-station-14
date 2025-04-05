@@ -1,5 +1,5 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Light.Components;
+using Content.Shared.Light.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
