@@ -1028,7 +1028,7 @@
 
 - type: entity
   parent: AirlockMaintMedLocked
-  id: AirlockMedicalMorgueMaintLocked
+  id: AirlockMaintMedicalMorgueLocked
   suffix: Morgue, Locked
   components:
   - type: ContainerFill
@@ -1046,7 +1046,7 @@
 
 - type: entity
   parent: AirlockMaint
-  id: AirlockMaintRnDLocked
+  id: AirlockMaintSciLocked
   suffix: Science, Locked
   components:
   - type: ContainerFill
@@ -1056,8 +1056,8 @@
     layoutId: AirlockScience
 
 - type: entity
-  parent: AirlockMaintRnDLocked
-  id: AirlockMaintRnDMedLocked
+  parent: AirlockMaintSciLocked
+  id: AirlockMaintSciMedLocked
   suffix: Medical/Science, Locked
   components:
   - type: ContainerFill
