@@ -31,6 +31,7 @@
     accent-italian-words-3: accent-italian-words-replace-3
     accent-italian-words-4: accent-italian-words-replace-4
     accent-italian-words-5: accent-italian-words-replace-5
+    accent-italian-words-5-2: accent-italian-words-replace-5
     accent-italian-words-6: accent-italian-words-replace-6
     accent-italian-words-7: accent-italian-words-replace-7
     accent-italian-words-8: accent-italian-words-replace-8
@@ -38,7 +39,10 @@
     accent-italian-words-10: accent-italian-words-replace-10
     accent-italian-words-11: accent-italian-words-replace-11
     accent-italian-words-12: accent-italian-words-replace-12
+    accent-italian-words-12-2: accent-italian-words-replace-12
+    accent-italian-words-12-3: accent-italian-words-replace-12
     accent-italian-words-13: accent-italian-words-replace-13
+    accent-italian-words-13-2: accent-italian-words-replace-13
     accent-italian-words-14: accent-italian-words-replace-14
     accent-italian-words-15: accent-italian-words-replace-15
     accent-italian-words-16: accent-italian-words-replace-16
@@ -48,9 +52,14 @@
     accent-italian-words-20: accent-italian-words-replace-20
     accent-italian-words-21: accent-italian-words-replace-21
     accent-italian-words-22: accent-italian-words-replace-22
+    accent-italian-words-22-2: accent-italian-words-replace-22
     accent-italian-words-23: accent-italian-words-replace-23
+    accent-italian-words-23-2: accent-italian-words-replace-23
     accent-italian-words-24: accent-italian-words-replace-24
+    accent-italian-words-24-2: accent-italian-words-replace-24
+    accent-italian-words-24-3: accent-italian-words-replace-24
     accent-italian-words-25: accent-italian-words-replace-25
+    accent-italian-words-25-2: accent-italian-words-replace-25
     accent-italian-words-26: accent-italian-words-replace-26
     accent-italian-words-27: accent-italian-words-replace-27
     accent-italian-words-28: accent-italian-words-replace-28
@@ -61,6 +70,7 @@
     accent-italian-words-33: accent-italian-words-replace-33
     accent-italian-words-34: accent-italian-words-replace-34
     accent-italian-words-35: accent-italian-words-replace-35
+    accent-italian-words-35-2: accent-italian-words-replace-35
     accent-italian-words-36: accent-italian-words-replace-36
     accent-italian-words-37: accent-italian-words-replace-37
     accent-italian-words-38: accent-italian-words-replace-38
@@ -71,10 +81,6 @@
     accent-italian-words-43: accent-italian-words-replace-43
     accent-italian-words-44: accent-italian-words-replace-44
     accent-italian-words-45: accent-italian-words-replace-45
-    accent-italian-words-46: accent-italian-words-replace-46
-    accent-italian-words-47: accent-italian-words-replace-47
-    accent-italian-words-48: accent-italian-words-replace-48
-    accent-italian-words-49: accent-italian-words-replace-49
 
 - type: accent
   id: dwarf
