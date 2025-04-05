@@ -548,3 +548,122 @@
                   max: 2
     - type: StaticPrice
       price: 250
+
+- type: entity
+  name: ceramonial shield
+  parent: [BaseItem, BaseRestrictedContraband]
+  id: WardenShield
+  description: A prototype shield given to the wardens of Nanotrasen's fleet of space stations as a symbol of their rank. It's repairable with a welder, and can be polished to a shine during all those long, dull shifts.
+  components:
+    - type: ItemToggle
+      soundActivate:
+        path: /Audio/Weapons/telescopicon.ogg
+      soundDeactivate:
+        path: /Audio/Weapons/telescopicon.ogg
+    - type: ItemToggleSize
+      activatedSize: Huge
+    - type: ComponentToggler
+      components:
+      - type: DisarmMalus
+        malus: 0.6
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/wardenshield.rsi
+      layers:
+        - state: wardenshield-icon
+        - state: wardenshield-on
+          color: "#fad2d2"
+          visible: false
+          shader: unshaded
+          map: [ "shield" ]
+    - type: Item
+      size: Huge
+      sprite: Objects/Weapons/Melee/wardenshield.rsi
+      heldPrefix: wardenshield
+    - type: UseDelay
+      delay: 0.5
+    - type: ToggleableLightVisuals
+      spriteLayer: shield
+      inhandVisuals:
+        left:
+          - state: inhand-left-shield
+            shader: unshaded
+        right:
+          - state: inhand-right-shield
+            shader: unshaded
+    - type: PointLight
+      netsync: false
+      enabled: false
+      radius: 1.5
+      energy: 2
+      color: red
+    - type: ItemTogglePointLight
+    - type: Blocking
+      passiveBlockModifier:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.8
+          Heat: 0.8
+      activeBlockModifier:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.7
+          Piercing: 0.7
+          Heat: 0.7
+        flatReductions:
+          Heat: 1
+          Piercing: 1
+          Blunt: 1
+          Slash: 1 
+    - type: Appearance
+    - type: Damageable
+      damageContainer: Shield
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                BrokenWardenShield:
+                  min: 1
+                  max: 1
+    - type: StaticPrice
+      price: 350
+    - type: ClothingSpeedModifier
+      walkModifier: 0.9
+      sprintModifier: 0.9
+    - type: HeldSpeedModifier
+
+- type: entity
+  name: broken ceramonial shield 
+  parent: BaseItem
+  id: BrokenWardenShield
+  description: A prototype shield given to the wardens of Nanotrasen's fleet of space stations as a symbol of their rank. It's currently broken, but can be repaired with a welder.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Melee/wardenshield.rsi
+      state: wardenshield-icon
+    - type: Item
+      sprite: Objects/Weapons/Melee/wardenshield.rsi
+      size: Huge 
+      heldPrefix: wardenshield
+    - type: ToolRefinable
+      refineTime: 20
+      refineFuel: 50
+      refineResult:
+      - id: WardenShield
+
+
