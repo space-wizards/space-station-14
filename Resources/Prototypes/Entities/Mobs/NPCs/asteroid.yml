@@ -66,6 +66,7 @@
       types:
         Slash: 10
         Piercing: 10
+        Structural: 10
   - type: NpcFactionMember
     factions:
     - SimpleHostile
@@ -77,8 +78,13 @@
         6
       AggroVisionRadius: !type:Single
         10
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
   - type: NPCUseActionOnTarget
-    actionId: ActionGoliathTentacle
+    actions:
+    - actionId: ActionGoliathTentacle
   - type: Tag
     tags:
     - CannotSuicide
@@ -91,6 +97,18 @@
       amount: 3
     - id: MaterialGoliathHide1
       amount: 3
+
+- type: entity
+  parent: MobGoliath
+  id: MobGoliathDebug
+  suffix: Smite
+  components:
+  - type: NPCUseActionOnTarget
+    actions:
+    - actionId: ActionGoliathTentacle
+    - actionId: ActionSmiteNoReq
+  - type: Godmode
+  - type: MovementAlwaysTouching
 
 - type: entity
   id: ActionGoliathTentacle
@@ -110,6 +128,7 @@
     event: !type:GoliathSummonTentacleAction
     useDelay: 8
     range: 10
+    checkCanAccess: true
 
 - type: entity
   id: GoliathTentacle

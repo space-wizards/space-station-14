@@ -1,13 +1,11 @@
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Shared.Actions;
-using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems;
 
 public sealed class NPCUseActionOnTargetSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
 
     /// <inheritdoc/>
@@ -16,37 +14,41 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<NPCUseActionOnTargetComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<NPCUseActionOnTargetComponent, AddedActionEvent>(OnAddedAction);
     }
 
     private void OnMapInit(Entity<NPCUseActionOnTargetComponent> ent, ref MapInitEvent args)
     {
-        ent.Comp.ActionEnt = _actions.AddAction(ent, ent.Comp.ActionId);
+        foreach (var action in ent.Comp.Actions)
+        {
+            if (!action.Ref)
+                action.ActionEnt = _actions.AddAction(ent, action.ActionId);
+        }
     }
 
-    public bool TryUseTentacleAttack(Entity<NPCUseActionOnTargetComponent?> user, EntityUid target)
+    private void OnAddedAction(EntityUid uid, NPCUseActionOnTargetComponent component, AddedActionEvent args)
+    {
+        var protoId = MetaData(args.Action).EntityPrototype;
+        Log.Debug($"NPC: {ToPrettyString(uid)} has added an action {ToPrettyString(args.Action)}.");
+        foreach (var action in component.Actions)
+        {
+            if (action.Ref && protoId?.ID == action.ActionId.Id)
+                action.ActionEnt = args.Action;
+        }
+    }
+
+    public void TryUseAction(Entity<NPCUseActionOnTargetComponent?> user, NPCActionsData action, EntityUid target)
     {
         if (!Resolve(user, ref user.Comp, false))
-            return false;
+            return;
 
-        if (!TryComp<EntityWorldTargetActionComponent>(user.Comp.ActionEnt, out var action))
-            return false;
-
-        if (!_actions.ValidAction(action))
-            return false;
-
-        if (action.Event != null)
+        if (action.ActionEnt is not { Valid: true } entityTarget)
         {
-            action.Event.Coords = Transform(target).Coordinates;
+            Log.Error($"An NPC attempted to perform an entity-targeted action without a target!");
+            return;
         }
 
-        _actions.PerformAction(user,
-            null,
-            user.Comp.ActionEnt.Value,
-            action,
-            action.BaseEvent,
-            _timing.CurTime,
-            false);
-        return true;
+        _actions.IsValidAction(user.Owner, entityTarget, target, Transform(target).Coordinates);
     }
 
     public override void Update(float frameTime)
@@ -57,10 +59,13 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
         var query = EntityQueryEnumerator<NPCUseActionOnTargetComponent, HTNComponent>();
         while (query.MoveNext(out var uid, out var comp, out var htn))
         {
-            if (!htn.Blackboard.TryGetValue<EntityUid>(comp.TargetKey, out var target, EntityManager))
-                continue;
+            foreach (var action in comp.Actions)
+            {
+                if (!htn.Blackboard.TryGetValue<EntityUid>(action.TargetKey, out var target, EntityManager))
+                    continue;
 
-            TryUseTentacleAttack((uid, comp), target);
+                TryUseAction((uid, comp), action, target);
+            }
         }
     }
 }
