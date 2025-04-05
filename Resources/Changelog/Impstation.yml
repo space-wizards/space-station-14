@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Added mail support to Cog, Omega, Marathon, and Hummingbird.
-    type: Add
-  id: 967
-  time: '2025-01-19T04:48:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1416
 - author: kipdotnet
   changes:
   - message: Fixed the Courier locker not having a Holobell projector.
@@ -4076,3 +4069,11 @@
   id: 1466
   time: '2025-04-04T14:51:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2201
+- author: jtfg-dev, hivehum
+  changes:
+  - message: Made the guidebook page for Space Law more reasonable for first-time
+      lawyers and nervous security cadets.
+    type: Tweak
+  id: 1467
+  time: '2025-04-05T02:26:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2200
