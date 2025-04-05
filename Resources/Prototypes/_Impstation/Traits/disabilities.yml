@@ -49,7 +49,7 @@
   id: Echolalia
   name: trait-echolalia-name
   description: trait-echolalia-desc
-  category: Disabilities
+  category: Disabilities # doesn't belong in the speech traits because it's something the player cannot control, not something that happens when the player sends a message to chat
   components:
   - type: ActiveListener
     range: 5
@@ -61,4 +61,3 @@
     minimumWait: 300
     maximumWait: 600 # triggers once every 5-10 minutes
     learnChance: 0.1
-# doesn't belong in the speech traits because it's something the player cannot control, not something that happens when the player sends a message to chat
