@@ -9,10 +9,19 @@
     sprite: Clothing/OuterClothing/Bio/general.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/general.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
   - type: Armor
     modifiers:
       coefficients:
         Caustic: 0.5
+  - type: HideLayerClothing
+    slots:
+       - Tail
 
 - type: entity
   parent: ClothingOuterBioGeneral
@@ -25,6 +34,12 @@
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
 
 - type: entity
   parent: ClothingOuterBioGeneral
@@ -37,6 +52,12 @@
     sprite: Clothing/OuterClothing/Bio/janitor.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/janitor.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
 
 - type: entity
   parent: ClothingOuterBioGeneral
@@ -49,6 +70,12 @@
     sprite: Clothing/OuterClothing/Bio/scientist.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/scientist.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
 
 - type: entity
   parent: ClothingOuterBioGeneral
@@ -61,6 +88,12 @@
     sprite: Clothing/OuterClothing/Bio/security.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/security.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail
 
 - type: entity
   parent: ClothingOuterBioGeneral
@@ -73,3 +106,9 @@
     sprite: Clothing/OuterClothing/Bio/virology.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/virology.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      outerClothing-reptilian:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-tail

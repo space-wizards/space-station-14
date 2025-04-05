@@ -51,6 +51,9 @@
       head-vox:
       - state: equipped-head-light-vox
         shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
   - type: Clothing
     clothingVisuals:
       head:
@@ -60,6 +63,10 @@
       head-vox:
       - state: equipped-head-vox
       - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
         shader: unshaded
   - type: PointLight
     color: "#adffe6"
@@ -116,6 +123,9 @@
       head-vox:
       - state: equipped-head-light-vox
         shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
   - type: Clothing
     clothingVisuals:
       head:
@@ -125,6 +135,10 @@
       head-vox:
       - state: equipped-head-vox
       - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
         shader: unshaded
   - type: PointLight
     radius: 6
@@ -150,6 +164,7 @@
     radius: 7
     energy: 3
 
+#Goliath Hardsuit
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitGoliath
@@ -176,6 +191,9 @@
       head-vox:
       - state: equipped-head-light-vox
         shader: unshaded
+      head-reptilian:
+      - state: equipped-head-light-reptilian
+        shader: unshaded
   - type: Clothing
     clothingVisuals:
       head:
@@ -186,12 +204,17 @@
       - state: equipped-head-vox
       - state: equipped-head-unshaded-vox
         shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
+        shader: unshaded
   - type: PointLight
     radius: 6
   - type: PressureProtection
     highPressureMultiplier: 0.72
     lowPressureMultiplier: 1000
 
+#Maxim Hardsuit
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitMaxim
@@ -722,6 +745,14 @@
       head:
       - state: equipped-head
       - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
+        shader: unshaded
+      head-reptilian:
+      - state: equipped-head-reptilian
+      - state: equipped-head-unshaded-reptilian
         shader: unshaded
   - type: PointLight
     color: orange
