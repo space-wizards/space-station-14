@@ -88,10 +88,6 @@
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
-  - type: RevolverAmmoProvider
-    capacity: 6
-    chambers: [ True, True, True, True, True, True ]
-    ammoSlots: [ null, null, null, null, null, null ]
 
 - type: entity
   name: Mateba
@@ -127,10 +123,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
   - type: Gun
-    selectedMode: SemiAuto
     fireRate: 2
-    availableModes:
-    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
       params:
@@ -148,7 +141,6 @@
         - SpeedLoaderMagnum
     proto: CartridgeMagnumAP
 
-
 - type: entity
   name: pirate revolver
   parent: [BaseWeaponRevolver, BaseMinorContraband]
@@ -161,9 +153,6 @@
     sprite: Objects/Weapons/Guns/Revolvers/pirate_revolver.rsi
   - type: Gun
     fireRate: 1
-  - type: ContainerContainer
-    containers:
-      revolver-ammo: !type:Container
   - type: RevolverAmmoProvider
     capacity: 5
     chambers: [ True, True, True, True, True ]
