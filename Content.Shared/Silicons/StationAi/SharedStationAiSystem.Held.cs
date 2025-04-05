@@ -161,7 +161,6 @@ public abstract partial class SharedStationAiSystem
         }
     }
 
-
     private bool IsTargetMalfunctioning(Entity<RemoteAccessComponent?> target)
     {
         // If we're calling this function on a target without RemoteAccess there's a logic error elsewhere.

@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Fixed admin ghosts not being able to see or interact with items in pouches
-      in the stripping menu.
-    type: Fix
-  id: 7636
-  time: '2024-11-22T02:56:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31076
-- author: chromiumboy
-  changes:
-  - message: Added the gas pipe sensor. These sensors monitor the mixture of gases
-      passing through their pipe sub-network and report this information to any connected
-      air alarms
-    type: Add
-  id: 7637
-  time: '2024-11-22T03:46:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33128
 - author: IProduceWidgets
   changes:
   - message: The terminal is more tamper proof.
@@ -3889,3 +3872,19 @@
   id: 8135
   time: '2025-04-05T09:38:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36272
+- author: PhilIngham
+  changes:
+  - message: Fixed the Chemical Synthesis Kit claiming to have toxin inside when it
+      infact did not.
+    type: Fix
+  id: 8136
+  time: '2025-04-05T20:21:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36323
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed players being unable to interact with or open any machine UI if
+      the machine is unpowered (ex. wirepanels).
+    type: Fix
+  id: 8137
+  time: '2025-04-05T21:05:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36319

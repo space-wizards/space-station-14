@@ -12,6 +12,8 @@ public sealed class RandomMetadataSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
+    private List<string> _outputSegments = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -43,28 +45,14 @@ public sealed class RandomMetadataSystem : EntitySystem
     /// <param name="separator">The separator that will be inbetween each segment</param>
     /// <returns>The newly generated string</returns>
     [PublicAPI]
-    public string GetRandomFromSegments(List<string> segments, string? separator)
+    public string GetRandomFromSegments(List<ProtoId<LocalizedDatasetPrototype>> segments, string? separator)
     {
-        var outputSegments = new List<string>();
+        _outputSegments.Clear();
         foreach (var segment in segments)
         {
-            if (_prototype.TryIndex<LocalizedDatasetPrototype>(segment, out var localizedProto))
-            {
-                outputSegments.Add(_random.Pick(localizedProto));
-            }
-            else if (_prototype.TryIndex<DatasetPrototype>(segment, out var proto))
-            {
-                var random = _random.Pick(proto.Values);
-                if (Loc.TryGetString(random, out var localizedSegment))
-                    outputSegments.Add(localizedSegment);
-                else
-                    outputSegments.Add(random);
-            }
-            else if (Loc.TryGetString(segment, out var localizedSegment))
-                outputSegments.Add(localizedSegment);
-            else
-                outputSegments.Add(segment);
+            var localizedProto = _prototype.Index(segment);
+            _outputSegments.Add(_random.Pick(localizedProto));
         }
-        return string.Join(separator, outputSegments);
+        return string.Join(separator, _outputSegments);
     }
 }
