@@ -5,15 +5,15 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/TauCetiStation/TauCetiClassic/pull/5184/commits/7489ad4520ddf83968c467cd587bde2c821e10a6",
+  "copyright": "undevoted.png made by Booblesnoot as a modification of the toolbox.png https://github.com/space-wizards/space-station-14/pull/35110, all others taken from https://github.com/TauCetiStation/TauCetiClassic/pull/5184/commits/7489ad4520ddf83968c467cd587bde2c821e10a6",
   "states": [
     {
       "name": "nanotrasen"
     },
-{
+    {
       "name": "druid"
     },
-{
+    {
       "name": "chaos"
     },
     {
@@ -45,6 +45,9 @@
       "delays": [
         [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
       ]
+    },
+    {
+      "name": "undevoted"
     }
   ]
 }

@@ -33,3 +33,6 @@ tool-quality-rolling-tool-name = Rolling Pin
 
 tool-quality-digging-name = Digging
 tool-quality-digging-tool-name = Shovel
+
+tool-quality-undevoting-name = Undevoting
+tool-quality-undevoting-tool-name = Bible
