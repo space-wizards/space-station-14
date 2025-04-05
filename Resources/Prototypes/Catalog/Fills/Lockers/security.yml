@@ -125,7 +125,8 @@
       - id: ClothingHeadHatDetGadget
       - id: ClothingNeckTieDet
       - id: ClothingOuterVestDetective
-      - id: ClothingOuterCoatDetective
+      - id: ClothingOuterCoatDetectiveLoadout
+      - id: FlippoEngravedLighter
       - id: FlashlightSeclite
       - id: ForensicScanner
       - id: LogProbeCartridge
