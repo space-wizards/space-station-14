@@ -25,11 +25,11 @@
     color: "#4080FF"
   - type: Appearance
   - type: LightningArcShooter
-    arcDepth: 2
+    arcDepth: 1
     maxLightningArc: 1
-    shootMinInterval: 4
+    shootMinInterval: 7.5
     shootMaxInterval: 10
-    shootRange: 3
+    shootRange: 2
     lightningPrototype: Lightning
 
 - type: entity
@@ -77,18 +77,19 @@
       params:
         variation: 0.3
   - type: LightningArcShooter
-    arcDepth: 3
+    arcDepth: 2
     maxLightningArc: 4
-    shootMinInterval: 3
-    shootMaxInterval: 5
-    shootRange: 7
+    shootMinInterval: 5
+    shootMaxInterval: 7
+    shootRange: 5
     lightningPrototype: Lightning #To do: change to HyperchargedLightning, after fix beam system
   - type: ChasingWalk
     minSpeed: 1
-    maxSpeed: 3
+    maxSpeed: 2
   - type: ChaoticJump
-    jumpMinInterval: 8
-    jumpMaxInterval: 15
+    jumpMinInterval: 10
+    rangeMin: 2.5
+    rangeMax: 4
   - type: WarpPoint
     follow: true
     location: tesla ball
