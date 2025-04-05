@@ -157,7 +157,7 @@
         32:
           sprite: Mobs/Species/Vox/displacement.rsi
           state: hand_r
-  - type: ShitRockable
+  - type: ShitRockable # You can set groups, but be aware that internally they are treated as equal damage in all types within the group i.e 3 Brute becomes 1 blunt 1 slash 1 pierce ...
     slotThresholds:
     - slots: EYES
       damageThreshold:

@@ -118,7 +118,7 @@
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
   - type: ShitRockable # slimes are sticky I guess.
-    slotThresholds:
+    slotThresholds: # You can set groups, but be aware that internally they are treated as equal damage in all types within the group i.e 3 Brute becomes 1 blunt 1 slash 1 pierce ...
     - slots: FEET
       damageThreshold:
         types:
