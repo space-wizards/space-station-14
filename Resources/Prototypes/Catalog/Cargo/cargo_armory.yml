@@ -4,7 +4,7 @@
     sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
     state: icon
   product: CrateArmorySMG
-  cost: 9000
+  cost: 6000 # 3k per gun + 2 mags
   category: cargoproduct-category-name-armory
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
     state: icon
   product: CrateArmoryShotgun
-  cost: 7000
+  cost: 6000 # $3k per gun and 1.5 shell boxes
   category: cargoproduct-category-name-armory
   group: market
 
@@ -64,6 +64,6 @@
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
     state: icon
   product: CrateArmoryPistols
-  cost: 5200
+  cost: 3200
   category: cargoproduct-category-name-armory
   group: market

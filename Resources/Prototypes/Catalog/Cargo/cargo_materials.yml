@@ -44,7 +44,7 @@
     sprite: Objects/Materials/Sheets/metal.rsi
     state: plasteel_3
   product: CrateMaterialPlasteel
-  cost: 4800
+  cost: 1600
   category: cargoproduct-category-name-materials
   group: market
 
@@ -64,7 +64,7 @@
     sprite: Objects/Materials/Sheets/other.rsi
     state: plasma_3
   product: CrateMaterialPlasma
-  cost: 2000
+  cost: 1500
   category: cargoproduct-category-name-materials
   group: market
 
