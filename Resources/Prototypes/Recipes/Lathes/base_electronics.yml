@@ -1,0 +1,61 @@
+# Costs for computer boards, machine boards, and circuitry
+
+- type: latheRecipe
+  abstract: true
+  id: BaseElectronicsRecipe
+  completetime: 2
+  materials:
+    Steel: 100
+    Plastic: 300
+
+- type: latheRecipe
+  parent: BaseElectronicsRecipe
+  abstract: true
+  id: BaseCheapElectronicsRecipe
+  materials:
+    Steel: 50
+    Plastic: 50
+
+- type: latheRecipe
+  parent: BaseElectronicsRecipe
+  abstract: true
+  id: BaseCheapCircuitboardRecipe
+  materials:
+     Steel: 50
+     Glass: 250
+
+- type: latheRecipe
+  parent: BaseElectronicsRecipe
+  abstract: true
+  id: BaseCircuitboardRecipe
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 500
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  abstract: true
+  id: BaseGoldCircuitboardRecipe
+  materials:
+    Steel: 100
+    Glass: 500
+    Gold: 100
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  abstract: true
+  id: BaseSilverCircuitboardRecipe
+  materials:
+    Steel: 100
+    Glass: 500
+    Silver: 100
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  abstract: true
+  id: BaseBananiumCircuitboardRecipe
+  materials:
+    Steel: 100
+    Glass: 500
+    Bananium: 100
