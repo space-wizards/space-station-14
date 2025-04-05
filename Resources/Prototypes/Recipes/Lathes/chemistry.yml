@@ -91,6 +91,14 @@
     Steel: 250
 
 - type: latheRecipe
+  id: vial
+  result: vial
+  completetime: 2
+  materials:
+    Glass: 200
+    Wood: 50
+
+- type: latheRecipe
   id: ClothingEyesGlassesChemical
   result: ClothingEyesGlassesChemical
   completetime: 2
