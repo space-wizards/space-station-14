@@ -80,7 +80,7 @@ namespace Content.Shared.Examine
             }
             message.AddMessage(GetFormattedMessageFromExamineEntries(group.Entries));
 
-            SendExamineTooltip(user, target, message, false, false);
+            SendExamineTooltip(user, target, message, getVerbs: false, centerAtCursor: false);
         }
 
         /// <returns>A FormattedMessage based on all <paramref name="entries"/>, sorted.</returns>
