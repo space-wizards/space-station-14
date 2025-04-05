@@ -56,7 +56,7 @@
     - id: FoodMeatXeno
       amount: 1
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodReferenceVolume: 50
   - type: CombatMode
   - type: MeleeWeapon
     soundHit:
