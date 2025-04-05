@@ -73,6 +73,9 @@ namespace Content.Server.Kitchen.EntitySystems
         [ValidatePrototypeId<EntityPrototype>]
         private const string MalfunctionSpark = "Spark";
 
+        private static readonly ProtoId<TagPrototype> MetalTag = "Metal";
+        private static readonly ProtoId<TagPrototype> PlasticTag = "Plastic";
+
         public override void Initialize()
         {
             base.Initialize();
@@ -550,12 +553,12 @@ namespace Content.Server.Kitchen.EntitySystems
                     return;
                 }
 
-                if (_tag.HasTag(item, "Metal"))
+                if (_tag.HasTag(item, MetalTag))
                 {
                     malfunctioning = true;
                 }
 
-                if (_tag.HasTag(item, "Plastic"))
+                if (_tag.HasTag(item, PlasticTag))
                 {
                     var junk = Spawn(component.BadRecipeEntityId, Transform(uid).Coordinates);
                     _container.Insert(junk, component.Storage);
