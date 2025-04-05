@@ -11,6 +11,13 @@
       damageRecovery:
         types:
           Asphyxiation: -1.0
+      highTemperatureDamage: # Damage per breath of hot gas
+        types:
+          Heat: 1
+          Caustic: 0.25
+      lowTemperatureDamage: # Damage per breath of cold gas
+        types:
+          Cold: 1.25
 
 # Reformed Diona
 - type: entity
@@ -20,4 +27,4 @@
   name: Reformed Diona
   components:
     - type: IsDeadIC
-    - type: RandomHumanoidAppearance 
+    - type: RandomHumanoidAppearance
