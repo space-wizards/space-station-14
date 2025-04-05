@@ -14,7 +14,6 @@ public sealed class LungSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
     public static string LungSolutionName = "Lung";
 
@@ -29,7 +28,7 @@ public sealed class LungSystem : EntitySystem
 
     private void OnGotUnequipped(Entity<BreathToolComponent> ent, ref GotUnequippedEvent args)
     {
-        _atmosphereSystem.DisconnectInternals(ent);
+        _atmos.DisconnectInternals(ent);
     }
 
     private void OnGotEquipped(Entity<BreathToolComponent> ent, ref GotEquippedEvent args)
@@ -59,7 +58,7 @@ public sealed class LungSystem : EntitySystem
 
     private void OnMaskToggled(Entity<BreathToolComponent> ent, ref ItemMaskToggledEvent args)
     {
-        if (args.IsToggled || args.IsEquip)
+        if (args.Mask.Comp.IsToggled)
         {
             _atmos.DisconnectInternals(ent);
         }
@@ -70,7 +69,7 @@ public sealed class LungSystem : EntitySystem
             if (TryComp(args.Wearer, out InternalsComponent? internals))
             {
                 ent.Comp.ConnectedInternalsEntity = args.Wearer;
-                _internals.ConnectBreathTool((args.Wearer, internals), ent);
+                _internals.ConnectBreathTool((args.Wearer.Value, internals), ent);
             }
         }
     }
@@ -93,7 +92,7 @@ public sealed class LungSystem : EntitySystem
             if (moles <= 0)
                 continue;
 
-            var reagent = _atmosphereSystem.GasReagents[i];
+            var reagent = _atmos.GasReagents[i];
             if (reagent is null)
                 continue;
 

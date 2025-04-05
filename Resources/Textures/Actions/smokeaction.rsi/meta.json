@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/81b3a082ccdfb425f36bbed6e5bc1f0faed346ec/icons/effects/chemsmoke.dmi modified by keronshb",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "smokeaction"
+    }
+  ]
+}

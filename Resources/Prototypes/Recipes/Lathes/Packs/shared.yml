@@ -1,0 +1,51 @@
+## Static
+
+- type: latheRecipePack
+  id: MaterialsStatic
+  recipes:
+  - SheetRGlass
+
+- type: latheRecipePack
+  id: PartsStatic
+  recipes:
+  - Igniter
+  - ModularReceiver
+  - MicroManipulatorStockPart
+  - MatterBinStockPart
+  - CapacitorStockPart
+  - ConveyorBeltAssembly
+
+- type: latheRecipePack
+  id: LightsStatic
+  recipes:
+  - LightTube
+  - LedLightTube
+  - SodiumLightTube
+  - ExteriorLightTube
+  - LightBulb
+  - LedLightBulb
+  - DimLightBulb
+  - WarmLightBulb
+
+- type: latheRecipePack
+  id: PowerCellsStatic
+  recipes:
+  - PowerCellSmall
+  - PowerCellMedium
+
+- type: latheRecipePack
+  id: CablesStatic
+  recipes:
+  - CableStack
+  - CableMVStack
+  - CableHVStack
+
+## Dynamic
+
+# Things you'd expect sci salv and engi to make use of
+- type: latheRecipePack
+  id: Equipment
+  recipes:
+  - HandHeldMassScanner
+  - ClothingMaskWeldingGas
+  - SignallerAdvanced

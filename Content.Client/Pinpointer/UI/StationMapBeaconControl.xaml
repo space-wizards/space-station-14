@@ -1,0 +1,19 @@
+<Control xmlns="https://spacestation14.io" HorizontalExpand="True">
+    <BoxContainer Name="MainContainer"
+                  Orientation="Horizontal"
+                  HorizontalExpand="True">
+        <PanelContainer Name="ColorPanel"
+                        VerticalExpand="True"
+                        SetWidth="7"
+                        Margin="0 1 0 0" />
+        <Button Name="MainButton"
+                HorizontalExpand="True"
+                VerticalExpand="True"
+                StyleClasses="ButtonSquare"
+                Margin="-1 0 0 0">
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <Label Name="BeaconNameLabel" />
+            </BoxContainer>
+        </Button>
+    </BoxContainer>
+</Control>
