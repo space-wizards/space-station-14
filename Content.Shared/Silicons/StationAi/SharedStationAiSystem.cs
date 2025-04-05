@@ -60,7 +60,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     // StationAiHeld is added to anything inside of an AI core.
     // StationAiHolder indicates it can hold an AI positronic brain (e.g. holocard / core).
     // StationAiCore holds functionality related to the core itself.
-    // StationAiWhitelist is a general whitelist to stop it being able to interact with anything
+    // RemoteAccess indicates if an AI can interact with an entity, and if that interaction has been disabled.
     // StationAiOverlay handles the static overlay. It also handles interaction blocking on client and server
     // for anything under it.
 
@@ -83,7 +83,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         InitializeHeld();
         InitializeLight();
 
-        SubscribeLocalEvent<StationAiWhitelistComponent, BoundUserInterfaceCheckRangeEvent>(OnAiBuiCheck);
+        SubscribeLocalEvent<RemoteAccessComponent, BoundUserInterfaceCheckRangeEvent>(OnAiBuiCheck);
 
         SubscribeLocalEvent<StationAiOverlayComponent, AccessibleOverrideEvent>(OnAiAccessible);
         SubscribeLocalEvent<StationAiOverlayComponent, InRangeOverrideEvent>(OnAiInRange);
@@ -151,7 +151,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         args.Visibility &= ~MenuVisibility.NoFov;
     }
 
-    private void OnAiBuiCheck(Entity<StationAiWhitelistComponent> ent, ref BoundUserInterfaceCheckRangeEvent args)
+    private void OnAiBuiCheck(Entity<RemoteAccessComponent> ent, ref BoundUserInterfaceCheckRangeEvent args)
     {
         if (!HasComp<StationAiHeldComponent>(args.Actor))
             return;
@@ -508,28 +508,15 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         return true;
     }
 
-    public virtual bool SetWhitelistEnabled(Entity<StationAiWhitelistComponent> entity, bool value, bool announce = false)
+    public virtual bool SetRemoteAccessConnection(Entity<RemoteAccessComponent> entity, bool isConnected, bool announce = false)
     {
-        if (entity.Comp.Enabled == value)
+        if (entity.Comp.Connected == isConnected)
             return false;
 
-        entity.Comp.Enabled = value;
+        entity.Comp.Connected = isConnected;
         Dirty(entity);
 
         return true;
-    }
-
-    /// <summary>
-    /// BUI validation for ai interactions.
-    /// </summary>
-    private bool ValidateAi(Entity<StationAiHeldComponent?> entity)
-    {
-        if (!Resolve(entity.Owner, ref entity.Comp, false))
-        {
-            return false;
-        }
-
-        return _blocker.CanComplexInteract(entity.Owner);
     }
 }
 

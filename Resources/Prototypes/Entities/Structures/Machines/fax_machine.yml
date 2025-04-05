@@ -34,7 +34,7 @@
     interfaces:
       enum.FaxUiKey.Key:
         type: FaxBoundUi
-  - type: StationAiWhitelist
+  - type: RemoteAccess
   - type: ApcPowerReceiver
     powerLoad: 250
   - type: Faxecute

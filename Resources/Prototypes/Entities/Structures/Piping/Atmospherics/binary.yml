@@ -248,7 +248,7 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: StationAiWhitelist
+  - type: RemoteAccess
   - type: SubFloorHide
     visibleLayers:
     - enum.SubfloorLayers.FirstLayer

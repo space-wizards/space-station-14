@@ -92,7 +92,7 @@
   parent: BaseComputer
   id: BaseComputerAiAccess
   components:
-  - type: StationAiWhitelist
+  - type: RemoteAccess
   - type: Wires
     boardName: wires-board-name-computer
     layoutId: ComputerAi

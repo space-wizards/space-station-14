@@ -269,7 +269,7 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: StationAiWhitelist
+    - type: RemoteAccess
     - type: Sprite
       granularLayersRendering: true
       layers:
@@ -314,7 +314,7 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: StationAiWhitelist
+    - type: RemoteAccess
     - type: Sprite
       granularLayersRendering : true
       layers:

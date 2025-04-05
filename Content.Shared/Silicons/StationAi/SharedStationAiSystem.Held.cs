@@ -3,6 +3,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -14,14 +15,16 @@ public abstract partial class SharedStationAiSystem
      * Added when an entity is inserted into a StationAiCore.
      */
 
+    [Dependency] private EntityWhitelistSystem _whitelist = default!;
+
     //TODO: Fix this, please
     private const string JobNameLocId = "job-name-station-ai";
 
     private void InitializeHeld()
     {
         SubscribeLocalEvent<StationAiRadialMessage>(OnRadialMessage);
-        SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnMessageAttempt);
-        SubscribeLocalEvent<StationAiWhitelistComponent, GetVerbsEvent<AlternativeVerb>>(OnTargetVerbs);
+        SubscribeLocalEvent<StationAiHeldComponent, BoundUserInterfaceMessageAttempt>(OnMessageAttempt);
+        SubscribeLocalEvent<RemoteAccessComponent, GetVerbsEvent<AlternativeVerb>>(OnTargetVerbs);
 
         SubscribeLocalEvent<StationAiHeldComponent, InteractionAttemptEvent>(OnHeldInteraction);
         SubscribeLocalEvent<StationAiHeldComponent, AttemptRelayActionComponentChangeEvent>(OnHeldRelay);
@@ -116,45 +119,62 @@ public abstract partial class SharedStationAiSystem
         RaiseLocalEvent(target.Value, (object) ev.Event);
     }
 
-    private void OnMessageAttempt(BoundUserInterfaceMessageAttempt ev)
+    /// <summary>
+    /// OnMessageAttempt will cancel the event if the AI is not allowed to access the target,
+    /// and display a pop-up if the target is malfunctioning for some reason.
+    /// </summary>
+    /// <param name="ent">An AI that is attempting to interact.</param>
+    /// <param name="ev">The event that encapsulates the AI's attempted interaction.</param>
+    private void OnMessageAttempt(Entity<StationAiHeldComponent> ent, ref BoundUserInterfaceMessageAttempt ev)
     {
-        if (ev.Actor == ev.Target)
-            return;
-
-        // no need to show menu if device is not powered.
-        if (!PowerReceiver.IsPowered(ev.Target))
+        // Held AI cannot interact with non-whitelisted entities.
+        if (!_whitelist.IsValid(ent.Comp.AccessWhitelist, ev.Target))
         {
-            ShowDeviceNotRespondingPopup(ev.Actor);
             ev.Cancel();
+
             return;
         }
 
-        if (TryComp(ev.Actor, out StationAiHeldComponent? aiComp) &&
-           (!TryComp(ev.Target, out StationAiWhitelistComponent? whitelistComponent) ||
-            !ValidateAi((ev.Actor, aiComp))))
-        {
-            if (whitelistComponent is { Enabled: false })
-            {
-                ShowDeviceNotRespondingPopup(ev.Actor);
-            }
-            ev.Cancel();
-        }
+        // Held AI cannot interact with malfunctioning entities.
+        if (!IsTargetMalfunctioning(ev.Target))
+            return;
+
+        ShowDeviceNotRespondingPopup(ev.Actor);
+
+        ev.Cancel();
     }
 
     private void OnHeldInteraction(Entity<StationAiHeldComponent> ent, ref InteractionAttemptEvent args)
     {
-        // Cancel if it's not us or something with a whitelist, or whitelist is disabled.
-        args.Cancelled = (!TryComp(args.Target, out StationAiWhitelistComponent? whitelistComponent)
-                          || !whitelistComponent.Enabled)
-                         && ent.Owner != args.Target
-                         && args.Target != null;
-        if (whitelistComponent is { Enabled: false })
+        if (!_whitelist.IsValid(ent.Comp.AccessWhitelist, args.Target))
+        {
+            args.Cancelled = true;
+
+            return;
+        }
+
+        if (IsTargetMalfunctioning(args.Target.Value))
         {
             ShowDeviceNotRespondingPopup(ent.Owner);
+
+            args.Cancelled = true;
         }
     }
 
-    private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+
+    private bool IsTargetMalfunctioning(Entity<RemoteAccessComponent?> target)
+    {
+        // If we're calling this function on a target without RemoteAccess there's a logic error elsewhere.
+        if (!Resolve(target, ref target.Comp))
+            return false;
+
+        if (!PowerReceiver.IsPowered(target.Owner))
+            return false;
+
+        return !target.Comp.Connected;
+    }
+
+    private void OnTargetVerbs(Entity<RemoteAccessComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanComplexInteract
             || !HasComp<StationAiHeldComponent>(args.User)
@@ -172,7 +192,7 @@ public abstract partial class SharedStationAiSystem
         var verb = new AlternativeVerb
         {
             Text = isOpen ? Loc.GetString("ai-close") : Loc.GetString("ai-open"),
-            Act = () => 
+            Act = () =>
             {
                 if (isOpen)
                 {

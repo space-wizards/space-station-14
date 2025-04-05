@@ -226,7 +226,7 @@
   placement:
     mode: AlignTileAny
   components:
-  - type: StationAiWhitelist
+  - type: RemoteAccess
   - type: SpriteFade
   - type: Sprite
     sprite: Structures/Machines/Anomaly/anomaly_generator.rsi

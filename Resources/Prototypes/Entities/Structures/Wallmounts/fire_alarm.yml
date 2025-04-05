@@ -107,7 +107,7 @@
               collection: MetalGlassBreak
               params:
                 volume: -4
-  - type: StationAiWhitelist
+  - type: RemoteAccess
   placement:
     mode: SnapgridCenter
     snap:

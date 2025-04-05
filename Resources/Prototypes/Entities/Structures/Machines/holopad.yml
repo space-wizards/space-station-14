@@ -61,7 +61,7 @@
           False: { visible: true }
   - type: Machine
     board: HolopadMachineCircuitboard
-  - type: StationAiWhitelist
+  - type: RemoteAccess
   - type: PointLight
     radius: 1.3
     energy: 1.8

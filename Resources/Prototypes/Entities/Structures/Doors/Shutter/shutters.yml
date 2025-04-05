@@ -7,7 +7,7 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: StationAiWhitelist
+  - type: RemoteAccess
   - type: Sprite
     sprite: Structures/Doors/Shutters/shutters.rsi
     drawdepth: BlastDoors

@@ -57,7 +57,7 @@
   placement:
     mode: AlignTileAny
   components:
-    - type: StationAiWhitelist
+    - type: RemoteAccess
     - type: PowerCharge
       windowTitle: station-anchor-window-title
       idlePower: 50

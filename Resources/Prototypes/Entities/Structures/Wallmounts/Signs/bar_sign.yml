@@ -44,7 +44,7 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalGlassBreak
-  - type: StationAiWhitelist
+  - type: RemoteAccess
   - type: WiresPanel
   - type: Wires
     boardName: wires-board-name-barsign

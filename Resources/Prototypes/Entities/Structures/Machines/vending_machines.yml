@@ -8,7 +8,7 @@
   - type: ActionGrant
     actions:
     - ActionVendingThrow
-  - type: StationAiWhitelist
+  - type: RemoteAccess
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -9

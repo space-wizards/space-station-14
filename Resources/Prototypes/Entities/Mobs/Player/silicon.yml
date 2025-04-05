@@ -29,6 +29,10 @@
     - Supply
   - type: IgnoreUIRange
   - type: StationAiHeld
+    accessWhitelist:
+      components:
+      - RemoteAccess
+  - type: RemoteAccess # The AI is always on its own whitelist.
   - type: StationAiOverlay
   - type: ShowElectrocutionHUD
   - type: ActionGrant
@@ -379,7 +383,7 @@
     unlistedNumber: true
     requiresPower: false
   - type: Holopad
-  - type: StationAiWhitelist
+  - type: RemoteAccess
   - type: UserInterface
     interfaces:
         enum.HolopadUiKey.AiRequestWindow:

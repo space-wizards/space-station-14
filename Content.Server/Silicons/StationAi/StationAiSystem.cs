@@ -74,9 +74,9 @@ public sealed class StationAiSystem : SharedStationAiSystem
         return true;
     }
 
-    public override bool SetWhitelistEnabled(Entity<StationAiWhitelistComponent> entity, bool enabled, bool announce = false)
+    public override bool SetRemoteAccessConnection(Entity<RemoteAccessComponent> entity, bool enabled, bool announce = false)
     {
-        if (!base.SetWhitelistEnabled(entity, enabled, announce))
+        if (!base.SetRemoteAccessConnection(entity, enabled, announce))
             return false;
 
         if (announce)

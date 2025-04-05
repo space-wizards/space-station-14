@@ -11,7 +11,7 @@
       Brute:
         collection: GlassSmash
   - type: InteractionOutline
-  - type: StationAiWhitelist
+  - type: RemoteAccess
   - type: Physics
   - type: Fixtures
     fixtures:

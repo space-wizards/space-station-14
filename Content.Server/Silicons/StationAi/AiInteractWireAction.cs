@@ -8,30 +8,30 @@ namespace Content.Server.Silicons.StationAi;
 /// <summary>
 /// Controls whether an AI can interact with the target entity.
 /// </summary>
-public sealed partial class AiInteractWireAction : ComponentWireAction<StationAiWhitelistComponent>
+public sealed partial class AiInteractWireAction : ComponentWireAction<RemoteAccessComponent>
 {
     public override string Name { get; set; } = "wire-name-ai-act-light";
     public override Color Color { get; set; } = Color.DeepSkyBlue;
     public override object StatusKey => AirlockWireStatus.AiControlIndicator;
 
-    public override StatusLightState? GetLightState(Wire wire, StationAiWhitelistComponent component)
+    public override StatusLightState? GetLightState(Wire wire, RemoteAccessComponent component)
     {
-        return component.Enabled ? StatusLightState.On : StatusLightState.Off;
+        return component.Connected ? StatusLightState.On : StatusLightState.Off;
     }
 
-    public override bool Cut(EntityUid user, Wire wire, StationAiWhitelistComponent component)
-    {
-        return EntityManager.System<SharedStationAiSystem>()
-            .SetWhitelistEnabled((component.Owner, component), false, announce: true);
-    }
-
-    public override bool Mend(EntityUid user, Wire wire, StationAiWhitelistComponent component)
+    public override bool Cut(EntityUid user, Wire wire, RemoteAccessComponent component)
     {
         return EntityManager.System<SharedStationAiSystem>()
-            .SetWhitelistEnabled((component.Owner, component), true);
+            .SetRemoteAccessConnection((component.Owner, component), false, announce: true);
     }
 
-    public override void Pulse(EntityUid user, Wire wire, StationAiWhitelistComponent component)
+    public override bool Mend(EntityUid user, Wire wire, RemoteAccessComponent component)
+    {
+        return EntityManager.System<SharedStationAiSystem>()
+            .SetRemoteAccessConnection((component.Owner, component), true);
+    }
+
+    public override void Pulse(EntityUid user, Wire wire, RemoteAccessComponent component)
     {
     }
 }
