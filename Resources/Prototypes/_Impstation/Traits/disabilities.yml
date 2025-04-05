@@ -58,7 +58,7 @@
     hideMessagesInChat: false # so that people react to it with roleplay
     whisperChance: 0.25 # partly so it's not always interjecting into conversations, and partly so that
     preserveContext: true # to both creatively obfuscate and clarify the nature of a player's chat messages (the ellipses might tell you an echo is an excerpt, but the caps preservation might make you think otherwise)
-    minimumWait: 30
-    maximumWait: 60 # triggers once every 5-10 minutes
-    learnChance: 1.0
+    minimumWait: 300
+    maximumWait: 600 # triggers once every 5-10 minutes
+    learnChance: 0.1
 # doesn't belong in the speech traits because it's something the player cannot control, not something that happens when the player sends a message to chat
