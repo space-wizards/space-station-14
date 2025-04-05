@@ -9,7 +9,7 @@ namespace Content.Shared.Clothing.Components;
 /// <summary>
 ///     Allow players to change clothing sprite to any other clothing prototype.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
 [Access(typeof(SharedChameleonClothingSystem))]
 public sealed partial class ChameleonClothingComponent : Component
 {
@@ -38,6 +38,34 @@ public sealed partial class ChameleonClothingComponent : Component
     /// </summary>
     [DataField]
     public string? RequireTag;
+
+    /// <summary>
+    ///     Will component owner be affected by EMP pulses?
+    /// </summary>
+    [DataField]
+    public bool AffectedByEmp = true;
+
+    /// <summary>
+    ///     Intensity of clothes change on EMP.
+    ///     Can be interpreted as "How many times clothes will change every second?".
+    ///     Useless without <see cref="AffectedByEmp"/> set to true.
+    /// </summary>
+    [ViewVariables, DataField]
+    public int EmpChangeIntensity = 7;
+
+    /// <summary>
+    ///     Should the EMP-change happen continuously, or only once?
+    ///     (False = once, True = continuously)
+    ///     Useless without <see cref="AffectedByEmp"/>
+    /// </summary>
+    [ViewVariables, DataField]
+    public bool EmpContinuous = true;
+
+    /// <summary>
+    ///     When should next EMP-caused appearance change happen?
+    /// </summary>
+    [AutoPausedField, DataField]
+    public TimeSpan NextEmpChange = TimeSpan.Zero;
 }
 
 [Serializable, NetSerializable]
