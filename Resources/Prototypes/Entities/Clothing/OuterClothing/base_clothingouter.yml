@@ -8,6 +8,8 @@
     - outerClothing
   - type: Sprite
     state: icon
+  - type: ZombificationResistance
+    coefficient: 0.9
 
 - type: entity
   abstract: true
@@ -23,6 +25,8 @@
     walkModifier: 0.9
     sprintModifier: 0.9
   - type: HeldSpeedModifier
+  - type: ZombificationResistance
+    coefficient: 0.8
 
 - type: entity
   abstract: true
@@ -142,6 +146,8 @@
       flatReductions:
         Heat: 10 # the average lightbulb only does around four damage!
     slots: OUTERCLOTHING
+  - type: ZombificationResistance
+    coefficient: 0.65
 
 - type: entity
   abstract: true
@@ -168,6 +174,8 @@
       flatReductions:
         Heat: 10 # the average lightbulb only does around four damage!
     slots: OUTERCLOTHING
+  - type: ZombificationResistance
+    coefficient: 0.7
 
 - type: entity
   parent: ClothingOuterBase

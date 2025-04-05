@@ -19,6 +19,8 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
+  - type: ZombificationResistance
+    coefficient: 0.95
   - type: Tag
     tags:
     - ClothMade

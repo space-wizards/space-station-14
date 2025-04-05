@@ -11,6 +11,8 @@
     sprite: Clothing/Head/Hoods/Bio/general.rsi
   - type: BreathMask
   - type: IngestionBlocker
+  - type: ZombificationResistance
+    coefficient: 0.6
   - type: Tag
     tags:
     - WhitelistChameleon

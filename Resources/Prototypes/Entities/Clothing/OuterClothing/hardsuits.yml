@@ -567,6 +567,8 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndiemedic.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieMedic
+  - type: ZombificationResistance
+    coefficient: 0.4
   - type: Tag
     tags:
     - Hardsuit
@@ -958,6 +960,8 @@
         Shock: 0.1
         Radiation: 0.1
         Caustic: 0.1
+  - type: ZombificationResistance
+    coefficient: 0.15
   - type: ClothingSpeedModifier
     walkModifier: 1.0
     sprintModifier: 1.0
