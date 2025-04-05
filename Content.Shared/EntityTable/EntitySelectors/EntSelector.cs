@@ -20,7 +20,7 @@ public sealed partial class EntSelector : EntityTableSelector
         IEntityManager entMan,
         IPrototypeManager proto)
     {
-        var num = (int) Math.Round(Amount.Get(rand, entMan, proto));
+        var num = Amount.Get(rand);
         for (var i = 0; i < num; i++)
         {
             yield return Id;
