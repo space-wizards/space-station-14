@@ -28,6 +28,7 @@ namespace Content.Server.Explosion.EntitySystems;
 public sealed partial class ExplosionSystem
 {
     [Dependency] private readonly FlammableSystem _flammableSystem = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
 
     /// <summary>
     ///     Used to limit explosion processing time. See <see cref="MaxProcessingTime"/>.
@@ -527,7 +528,6 @@ public sealed partial class ExplosionSystem
             tileBreakages++;
             effectiveIntensity -= type.TileBreakRerollReduction;
 
-            // does this have a base-turf that we can break it down to?
             if (string.IsNullOrEmpty(tileDef.BaseTurf))
                 break;
 
@@ -537,7 +537,8 @@ public sealed partial class ExplosionSystem
             if (newDef.MapAtmosphere && !canCreateVacuum)
                 break;
 
-            tileDef = newDef;
+            // do not assign newDef directly, that would ignore tilestacks
+            _tile.DeconstructTile(tileRef);
         }
 
         if (tileDef.TileId == tileRef.Tile.TypeId)

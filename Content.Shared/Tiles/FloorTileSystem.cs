@@ -37,6 +37,7 @@ public sealed class FloorTileSystem : EntitySystem
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly TileStackSystem _tileStack = default!;
 
     private static readonly Vector2 CheckRange = new(1f, 1f);
 
@@ -135,12 +136,28 @@ public sealed class FloorTileSystem : EntitySystem
 
                 var tile = _map.GetTileRef(gridUid, mapGrid, location);
                 var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-
-                if (HasBaseTurf(currentTileDefinition, baseTurf.ID))
+                // even if we put a tile on a standard turf, it has to be handled by the tilestack system if it already has a tilestack
+                // otherwise the tilestack doesn't update properly
+                if (HasBaseTurf(currentTileDefinition, baseTurf.ID) && !_tileStack.HasTileStack(tile))
                 {
                     if (!_stackSystem.Use(uid, 1, stack))
                         continue;
 
+                    PlaceAt(args.User, gridUid, mapGrid, location, currentTileDefinition.TileId, component.PlaceTileSound);
+                    args.Handled = true;
+                    return;
+                }
+                if (HasPossibleBaseTurf(currentTileDefinition, baseTurf.ID))
+                {
+                    if (!_tileStack.HasTileStack(tile))
+                    {
+                        _tileStack.CreateTileStack(tile);
+                    }
+                    if (!_stackSystem.Use(uid, 1, stack))
+                        continue;
+                    // current tile gets stored in the tilestack under the new tile
+                    ref var tilestacks = ref Comp<TileStackMapComponent>(gridUid).Data;
+                    tilestacks[tile.GridIndices].Add(tile.GetContentTileDefinition().ID);
                     PlaceAt(args.User, gridUid, mapGrid, location, currentTileDefinition.TileId, component.PlaceTileSound);
                     args.Handled = true;
                     return;
@@ -168,6 +185,11 @@ public sealed class FloorTileSystem : EntitySystem
     public bool HasBaseTurf(ContentTileDefinition tileDef, string baseTurf)
     {
         return tileDef.BaseTurf == baseTurf;
+    }
+
+    public bool HasPossibleBaseTurf(ContentTileDefinition tileDef, string baseTurf)
+    {
+        return HasBaseTurf(tileDef, baseTurf) || tileDef.PossibleBaseTurfs.Contains(baseTurf);
     }
 
     private void PlaceAt(EntityUid user, EntityUid gridUid, MapGridComponent mapGrid, EntityCoordinates location,
