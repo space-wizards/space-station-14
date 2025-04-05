@@ -1759,6 +1759,12 @@
   physicalDesc: reagent-physical-desc-creamy
   flavor: white-gilgamesh
   color: "#e5d27e"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/whitegilgamesh.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
   metabolisms:
     Drink:
       effects:
@@ -2346,3 +2352,27 @@
         - !type:OrganType
           type: Dwarf
           shouldHave: false
+
+- type: reagent
+  id: Bilk
+  name: reagent-name-bilk
+  parent: BaseAlcohol
+  desc: reagent-desc-bilk
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: bilk
+  color: "#e1cc8c"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/bilk.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 3
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.04
+  fizziness: 0.4

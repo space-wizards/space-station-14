@@ -1201,7 +1201,7 @@
   reactants:
     Beer:
       amount: 2
-    Milk:
+    MilkGoat:
       amount: 1
   products:
     WhiteGilgamesh: 3
@@ -1383,3 +1383,13 @@
       amount: 1
   products:
     BacchusBlessing: 4
+
+- type: reaction
+  id: Bilk
+  reactants:
+    Beer:
+      amount: 2
+    Milk:
+      amount: 1
+  products:
+    Bilk: 3

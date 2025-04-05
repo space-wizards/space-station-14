@@ -1403,3 +1403,8 @@
   id: bacchusblessing
   flavorType: Complex
   description: flavor-complex-bacchus-blessing
+
+- type: flavor
+  id: bilk
+  flavorType: Complex
+  description: flavor-complex-bilk
