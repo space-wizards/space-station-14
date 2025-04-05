@@ -41,7 +41,7 @@
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Turnstile
-    blockWhitelist:
+    processWhitelist:
       components:
       - MobState # no mobs
       - Pullable # no dragging things in

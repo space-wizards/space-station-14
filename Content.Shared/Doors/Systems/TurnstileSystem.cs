@@ -51,7 +51,7 @@ public sealed class TurnstileSystem : EntitySystem
         }
 
         // unblockables go through for free.
-        if (!_entityWhitelist.IsValid(ent.Comp.BlockWhitelist, args.OtherEntity))
+        if (_entityWhitelist.IsWhitelistFail(ent.Comp.ProcessWhitelist, args.OtherEntity))
         {
             args.Cancelled = true;
             return;

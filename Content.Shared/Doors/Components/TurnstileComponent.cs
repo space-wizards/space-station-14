@@ -3,6 +3,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Doors.Components;
 
@@ -14,15 +15,16 @@ namespace Content.Shared.Doors.Components;
 public sealed partial class TurnstileComponent : Component
 {
     /// <summary>
-    /// A whitelist of the things this turnstile blocks. Anything else (bullets, etc) can fly right through.
+    /// A whitelist of the things this turnstile can choose to block or let through.
+    /// Things not in this whitelist will be ignored by default.
     /// </summary>
     [DataField]
-    public EntityWhitelist BlockWhitelist = new();
+    public EntityWhitelist? ProcessWhitelist;
 
     /// <summary>
     /// The next time this turnstile can attempt to be passed through.
     /// </summary>
-    [DataField, AutoNetworkedField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextPassTime;
 
     /// <summary>
@@ -34,7 +36,7 @@ public sealed partial class TurnstileComponent : Component
     /// <summary>
     /// The next time at which the resist message can show.
     /// </summary>
-    [DataField, AutoNetworkedField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextResistTime;
 
     /// <summary>
