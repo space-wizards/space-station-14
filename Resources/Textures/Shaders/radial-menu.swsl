@@ -1,0 +1,148 @@
+const highp float Thickness = 0.002;
+
+const highp float pi = 3.14159265;
+const highp float twopi = 2.0 * pi;
+const highp float halfpi = 0.5 * pi;
+const highp float invpi = 1.0 / pi;
+
+uniform highp float innerRadius;
+uniform highp float outerRadius;
+
+uniform highp vec4[64] sectorColors;
+uniform highp vec4[64] borderColors;
+
+uniform highp float[64] separatorAngles;
+uniform highp float[64] sectorMedianAngles;
+uniform highp int childCount;
+uniform highp vec2 centerPos;
+
+uniform highp float selectedFrom;
+uniform highp float selectedTo;
+uniform highp vec2 screenSize;
+
+highp float SMOOTH(highp float r, highp float R)
+{
+    return 1.0 - smoothstep(R - 1.0, R + 1.0, r);
+}
+
+// line from center of circle to radius (outer arg) on theta0 angle (radian,)
+highp float separator(highp vec2 d, highp float r, highp float outer, highp float theta0, highp float thickness)
+{
+    // rotate due to difference in coordinate spaces between shaders and ui
+    highp float theta1 = theta0 - halfpi;
+    highp vec2 p = outer * vec2(cos(theta1), -sin(theta1));
+    highp float l = length(d - p * clamp(dot(d, p) / dot(p, p), 0.0, 1.0));
+    return SMOOTH(l, thickness);
+}
+
+highp float circle(highp float r, highp float radius, highp float width)
+{
+    return SMOOTH(r - width / 2.0, radius) - SMOOTH(r + width / 2.0, radius);
+}
+
+// get angle between current point and circle center
+highp float getAngle(highp vec2 d)
+{
+    highp vec2 n = normalize(d);
+    highp float angle = acos(n.x);
+    int isNegativeY = int(n.y < 0.0);
+    angle = angle + (twopi - angle * 2) * isNegativeY;
+    // rotate
+    angle = mod(angle - halfpi, twopi);
+    return angle;
+}
+
+highp float pcurve(highp float x, highp float a, highp float b )
+{
+    highp float k = pow(a + b,a + b) / (pow(a, a) * pow(b, b));
+    return k * pow(x, a) * pow(1.0 - x, b);
+}
+
+// gets alpha for radial gradients based on pcurve
+highp float fillGradient(highp float r, highp float inner, highp float outer)
+{
+    highp float nInner = inner / outer;
+    highp float nR = r / outer;
+    return pcurve(nR, nInner, 1.0);
+}
+
+void fragment()
+{
+    highp vec4 col = vec4(0.0);
+
+    //angle of the line
+    highp vec2 d = FRAGCOORD.xy - centerPos;
+    highp float angle = getAngle(d);
+
+    highp float r = length(FRAGCOORD.xy - centerPos);
+    // fill sectors
+    int isInsideRange = int(r > innerRadius && r < outerRadius);
+    highp float g = fillGradient(r, innerRadius, outerRadius);
+
+    // trying to mix in color per button
+
+    highp float from = 0;
+    for (int i = 0; i < childCount; i++)
+    {
+        highp float to = separatorAngles[i];
+        int isInSector = int(angle > from && angle < to);
+        col += isInsideRange
+            * vec4(sectorColors[i].xyz , g)* isInSector;
+
+        from = to;
+    }
+
+    // get step of radial menu buttons in radian
+    highp float halfSectorAngleSize = (separatorAngles[1] - separatorAngles[0]) * 0.5;
+
+    for (int i = 0; i < childCount; i++)
+    {
+        highp float sectorMedian = sectorMedianAngles[i];
+        highp float sectorMedianToAngleDiff = abs(sectorMedian - angle);
+        highp vec4 borderColor = borderColors[i];
+        highp vec4 borderColorLight = borderColor * 0.6;
+        int isInInnerRadius = int(r > innerRadius);
+        highp float iAngle = twopi - separatorAngles[i];
+        // button separators
+        highp float sectorFromAngle;
+        int isCurrentZero = int(i > 0);
+        sectorFromAngle = separatorAngles[i - 1] * isCurrentZero;
+
+        col += isInInnerRadius
+            * separator(d, r, outerRadius, sectorFromAngle, 0.5) * borderColor;
+        col += isInInnerRadius
+            * separator(d, r, outerRadius, iAngle, 0.5) * borderColor;
+
+        // set up decorations
+        // inner button 'square' decoration
+        int isInInnerBorderRange = int(r > innerRadius + 15);
+        col += isInInnerRadius * isInInnerBorderRange
+            * separator(d, r, outerRadius - 15, twopi - sectorMedian - halfSectorAngleSize * 0.8, 1.0) * 0.2 * borderColorLight;
+        col += isInInnerRadius * isInInnerBorderRange
+            * separator(d, r, outerRadius - 15, twopi - sectorMedian + halfSectorAngleSize * 0.8, 1.0) * 0.2 * borderColorLight;
+
+        int isInInnerBorderSector = int(sectorMedianToAngleDiff < halfSectorAngleSize * 0.8);
+        col += isInInnerRadius * isInInnerBorderRange * isInInnerBorderSector
+            * circle(r, innerRadius + 15, 2.0) * 0.2 * borderColorLight;
+        col += isInInnerRadius * isInInnerBorderRange * isInInnerBorderSector
+            * circle(r, outerRadius - 15, 2.0) * 0.2 * borderColorLight;
+
+        // outer button decorative elements
+        int isInOuterBorderOuterSector = int(sectorMedianToAngleDiff < halfSectorAngleSize * 0.2);
+        col += isInOuterBorderOuterSector
+            * circle(r, innerRadius - 5, 4.0) * 0.4 * borderColor;
+
+        int isInOuterBorderInnerSector = int(sectorMedianToAngleDiff < halfSectorAngleSize * 0.6);
+        col += isInOuterBorderInnerSector
+            * circle(r, outerRadius + 10, 4.0) * 0.4 * borderColor;
+
+        // outer and inner circle of sectors
+        int isOnSectorBorder = int(sectorMedianToAngleDiff < halfSectorAngleSize);
+        col += isOnSectorBorder
+            * circle(r, innerRadius, 2.0) * borderColor;
+        col += isOnSectorBorder
+            * circle(r, outerRadius, 2.0) * borderColor;
+    }
+
+    COLOR = col;
+}
