@@ -2,6 +2,7 @@
   # Just fades out with no movement animation
   id: WeaponArcStatic
   categories: [ HideSpawnMenu ]
+  save: false
   components:
     - type: TimedDespawn
       lifetime: 2.0
@@ -19,6 +20,7 @@
   # Plays the state animation then disappears with no fade or swing
   id: WeaponArcAnimated
   categories: [ HideSpawnMenu ]
+  save: false
   components:
     - type: Sprite
       sprite: Effects/arcs.rsi
