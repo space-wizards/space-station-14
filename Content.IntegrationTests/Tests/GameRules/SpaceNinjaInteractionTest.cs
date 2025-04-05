@@ -1,6 +1,7 @@
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server.Antag;
 using Content.Server.Antag.Components;
+using Content.Server.Communications;
 using Content.Server.CriminalRecords.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Research.Systems;
@@ -35,13 +36,16 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
 
     [RegisterComponent] public sealed partial class CriminalRecordsHackTestComponent : Component;
     [RegisterComponent] public sealed partial class ResearchServerHackTestComponent : Component;
+    [RegisterComponent] public sealed partial class CommsConsoleHackTestComponent : Component;
     public sealed class CriminalRecordsHackTestSystem : HackTestSystem<CriminalRecordsHackTestComponent, CriminalRecordsHackedEvent>;
     public sealed class ResearchServerHackTestSystem : HackTestSystem<ResearchServerHackTestComponent, ResearchStolenEvent>;
+    public sealed class CommsConsoleHackTestSystem : HackTestSystem<CommsConsoleHackTestComponent, ThreatCalledInEvent>;
 
 
     // ProtoIds of things we need to spawn, check for, etc.
     private static readonly EntProtoId CriminalRecordsConsoleProtoId = "ComputerCriminalRecords";
     private static readonly EntProtoId ResearchServerProtoId = "ResearchAndDevelopmentServer";
+    private static readonly EntProtoId CommsConsoleProtoId = "ComputerComms";
 
     private static readonly EntProtoId NinjaSpawnGameRuleProtoId = "NinjaSpawn";
     private static readonly EntProtoId NinjaGlovesProtoId = "ClothingHandsGlovesSpaceNinja";
@@ -115,7 +119,7 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
     public async Task ResearchServerHackTest()
     {
         var testSys = Server.System<ResearchServerHackTestSystem>();
-        Assert.That(testSys.Hacked, Is.False, "Reseach server was already hacked?");
+        Assert.That(testSys.Hacked, Is.False, "Research server was already hacked?");
 
         // Ninjitize me, Cap'n
         await MakeNinja(Player);
@@ -126,7 +130,7 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
             SEntMan.AddComponent<ResearchServerHackTestComponent>(SEntMan.GetEntity(Player));
         });
 
-        // Drop the jetpack so they have an empty hand to use the console
+        // Drop the jetpack so they have an empty hand to interact with the server
         await Drop();
 
         // Spawn the R&D server
@@ -159,6 +163,51 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
         await Interact();
 
         // Make sure the server was hacked
+        Assert.That(testSys.Hacked);
+    }
+
+    /// <summary>
+    /// Makes the player a ninja, spawns a communications console and makes the player
+    /// interact with the console with gloves off and then on. Makes sure the player entity
+    /// receives the event for a successful hack.
+    /// </summary>
+    [Test]
+    public async Task CommsConsoleHackTest()
+    {
+        var testSys = Server.System<CommsConsoleHackTestSystem>();
+        Assert.That(testSys.Hacked, Is.False, "Comms console was already hacked?");
+
+        // Ninjitize me, Cap'n
+        await MakeNinja(Player);
+
+        // Add our tracker component to the ninja
+        await Server.WaitPost(() =>
+        {
+            SEntMan.AddComponent<CommsConsoleHackTestComponent>(SEntMan.GetEntity(Player));
+        });
+
+        // Drop the jetpack so they have an empty hand to use the console
+        await Drop();
+
+        // Spawn the comms console
+        var commsConsole = await SpawnTarget(CommsConsoleProtoId);
+        Assert.That(testSys.Hacked, Is.False, "Comms console was hacked when it spawned.");
+
+        // Interact with the console - gloves are not active, so this should not hack
+        await Interact();
+        Assert.That(testSys.Hacked, Is.False, "Ninja hacked comms console without activating gloves.");
+
+        // Activate the gloves
+        await Server.WaitPost(() =>
+        {
+            Assert.That(ItemToggleSys.TryActivate(ToServer(_gloves).Value, user: ToServer(Player)),
+                "Failed to activate ninja gloves.");
+        });
+
+        // Interact with the console again with active gloves
+        await Interact();
+
+        // Make sure the console was hacked
         Assert.That(testSys.Hacked);
     }
 
