@@ -11,6 +11,7 @@ using Content.Shared.Administration;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
+using Content.Shared.Physics;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
@@ -268,11 +269,12 @@ namespace Content.Server.NPC.Pathfinding
                 return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
 
             var layer = 0;
-            var mask = 0;
+            var mask = GetCollisionMask(entity);
 
             if (TryComp<FixturesComponent>(entity, out var fixtures))
             {
-                (layer, mask) = _physics.GetHardCollision(entity, fixtures);
+                (layer, var newmask) = _physics.GetHardCollision(entity, fixtures);
+                mask |= newmask;
             }
 
             var request = new BFSPathRequest(maxRange, limit, start.Coordinates, flags, layer, mask, cancelToken);
@@ -428,14 +430,37 @@ namespace Content.Server.NPC.Pathfinding
         private PathRequest GetRequest(EntityUid entity, EntityCoordinates start, EntityCoordinates end, float range, CancellationToken cancelToken, PathFlags flags)
         {
             var layer = 0;
-            var mask = 0;
+            var mask = GetCollisionMask(entity);
 
             if (TryComp<FixturesComponent>(entity, out var fixtures))
             {
-                (layer, mask) = _physics.GetHardCollision(entity, fixtures);
+                (layer, var newmask) = _physics.GetHardCollision(entity, fixtures);
+                mask |= newmask;
             }
 
             return new AStarPathRequest(start, end, flags, range, layer, mask, cancelToken);
+        }
+
+        private int GetCollisionMask(EntityUid uid)
+        {
+            if (!_npc.TryGetNpc(uid, out var npc))
+            {
+                return 0;
+            }
+
+            return GetCollisionMask(npc.Blackboard);
+        }
+
+        private int GetCollisionMask(NPCBlackboard blackboard)
+        {
+            var collisionMask = 0;
+
+            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavLaserFenced, out var fenced, EntityManager) && fenced)
+            {
+                collisionMask |= (int)CollisionGroup.BotImpassible;
+            }
+
+            return collisionMask;
         }
 
         public PathFlags GetFlags(EntityUid uid)

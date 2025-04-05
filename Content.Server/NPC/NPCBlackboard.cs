@@ -320,6 +320,11 @@ public sealed partial class NPCBlackboard : IEnumerable<KeyValuePair<string, obj
     public const string NavClimb = "NavClimb";
 
     /// <summary>
+    /// Is the NPC bounded by laser fences? (utility bot)
+    /// </summary>
+    public const string NavLaserFenced = "NavLaserFenced";
+
+    /// <summary>
     /// Default key storage for a movement pathfind.
     /// </summary>
     public const string PathfindKey = "MovementPathfind";

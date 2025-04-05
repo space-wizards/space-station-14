@@ -24,6 +24,7 @@ public enum CollisionGroup
     InteractImpassable = 1 << 7, // 128 Blocks interaction/InRangeUnobstructed
     // Y dis door passable when all the others impassable / collision.
     DoorPassable       = 1 << 8, // 256 Allows door to close over top, Like blast doors over conveyors for disposals rooms/cargo.
+    BotImpassible      = 1 << 9, // 512 Things impassible by NPC bots (like robot vacuum light fences)
 
     MapGrid = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
 
@@ -46,6 +47,10 @@ public enum CollisionGroup
     // Mechs
     LargeMobMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
     LargeMobLayer = Opaque | HighImpassable | MidImpassable | LowImpassable | BulletImpassable,
+
+    // The set of fixtures that will be considered in pathfinding breadcrumb generation
+    MobPathfindingMask = MobMask | SmallMobMask | FlyingMobMask | BotImpassible,
+    MobPathfindingLayer = MobLayer | SmallMobLayer | FlyingMobLayer,
 
     // Machines, computers
     MachineMask = Impassable | MidImpassable | LowImpassable,

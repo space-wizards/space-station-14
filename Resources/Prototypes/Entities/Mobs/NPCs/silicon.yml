@@ -127,6 +127,9 @@
   - type: HTN
     rootTask:
       task: FirebotCompound
+    blackboard:
+      NavLaserFenced: !type:Bool
+        true
   - type: SolutionContainerManager
     solutions:
       spray:
@@ -299,6 +302,9 @@
   - type: HTN
     rootTask:
       task: CleanbotCompound
+    blackboard:
+      NavLaserFenced: !type:Bool
+        true
   - type: DrainableSolution
     solution: drainBuffer
   - type: InteractionPopup
@@ -342,6 +348,9 @@
   - type: HTN
     rootTask:
       task: MedibotCompound
+    blackboard:
+      NavLaserFenced: !type:Bool
+        true
   - type: Construction
     graph: MediBot
     node: bot
