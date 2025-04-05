@@ -20,7 +20,7 @@ reagent-name-razorium = razorium
 reagent-desc-razorium = A strange, non-newtonian chemical. It is produced when two conflicting brute medications are combined. When force is applied to it, it temporarily hardens creating millions of tiny, sharp edges. Very painful.
 
 reagent-name-fresium = Fresium
-reagent-desc-fresium = A mysterious compound that slows the vibration of atoms and molecules... somehow. In layman's terms, it makes things cold... REALLY cold. Can cause long-lasting movement issues if ingested.
+reagent-desc-fresium = A mysterious compound that slows the vibration of atoms and molecules... somehow. In layman's terms, it makes things cold... REALLY cold. Can cause long-lasting movement issues if ingested, but may have unexpected medicinal properties, capable of rapidly healing burns and mitigating issues caused by frozen tissue.
 
 reagent-name-laughter = laughter
 reagent-desc-laughter = Some say that this is the best medicine, but recent studies have proven that to be untrue.
