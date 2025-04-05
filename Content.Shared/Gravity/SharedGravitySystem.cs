@@ -96,6 +96,7 @@ namespace Content.Shared.Gravity
             component.EnabledVV = state.Enabled;
             var ev = new GravityChangedEvent(uid, component.EnabledVV);
             RaiseLocalEvent(uid, ref ev, true);
+            Dirty(uid, component);
         }
 
         private void OnGetState(EntityUid uid, GravityComponent component, ref ComponentGetState args)

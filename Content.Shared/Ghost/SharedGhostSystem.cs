@@ -50,7 +50,7 @@ namespace Content.Shared.Ghost
             if (!Resolve(uid, ref component))
                 return;
 
-            component.CanReturnToBody = value;
+            SetCanReturnToBody(component, value);
         }
 
         public void SetCanReturnToBody(GhostComponent component, bool value)
