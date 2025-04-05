@@ -10,7 +10,7 @@ namespace Content.Client.Parallax;
 
 public sealed class ParallaxSystem : SharedParallaxSystem
 {
-    [Dependency] private readonly IMapManager _map = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IParallaxManager _parallax = default!;
 
@@ -58,12 +58,12 @@ public sealed class ParallaxSystem : SharedParallaxSystem
 
     public ParallaxLayerPrepared[] GetParallaxLayers(MapId mapId)
     {
-        return _parallax.GetParallaxLayers(GetParallax(_map.GetMapEntityId(mapId)));
+        return _parallax.GetParallaxLayers(GetParallax(_map.GetMapOrInvalid(mapId)));
     }
 
     public string GetParallax(MapId mapId)
     {
-        return GetParallax(_map.GetMapEntityId(mapId));
+        return GetParallax(_map.GetMapOrInvalid(mapId));
     }
 
     public string GetParallax(EntityUid mapUid)
@@ -95,8 +95,8 @@ public sealed class ParallaxSystem : SharedParallaxSystem
         Color? modulate = null)
     {
         // Size of the texture in world units.
-        var size = sprite.Size / (float) EyeManager.PixelsPerMeter * scale;
-        var scrolled = scrolling * (float) curTime.TotalSeconds;
+        var size = sprite.Size / (float)EyeManager.PixelsPerMeter * scale;
+        var scrolled = scrolling * (float)curTime.TotalSeconds;
 
         // Origin - start with the parallax shift itself.
         var originBL = position * slowness + scrolled;
