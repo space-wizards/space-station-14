@@ -1,0 +1,76 @@
+- type: entity
+  name: cooking pot
+  parent: BaseItem
+  description: What do you mean you're at Soup???
+  id: CookingPot
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Kitchen/pot.rsi
+    layers:
+    - state: pot
+    - state: pot1
+      map: [ "enum.SolutionContainerLayers.Fill" ]
+      visible: false
+  - type: Item
+    size: Huge
+    sprite: Objects/Specific/Kitchen/pot.rsi
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
+  - type: SolutionContainerManager
+    solutions:
+      pot:
+        maxVol: 150
+  - type: Spillable
+    solution: pot
+  - type: MixableSolution
+    solution: pot
+  - type: FitsInDispenser
+    solution: pot
+  - type: RefillableSolution
+    solution: pot
+  - type: DrainableSolution
+    solution: pot
+  - type: ExaminableSolution
+    solution: pot
+  - type: DrawableSolution
+    solution: pot
+  - type: InjectableSolution
+    solution: pot
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: pot
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: Drink
+    solution: pot
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: pot
+    inHandsFillBaseName: -fill-
+
+  - type: AtmosExposed
+  - type: ConvectionHeat
+    solution: pot
+  - type: Temperature
+    currentTemperature: 290
+  - type: InternalTemperature
+    conductivity: 0.9 # metal pot
+    thickness: 0.1
+    area: 0.9 # WIDE metal pot
+
+  - type: MultiHandedItem
+
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 200
+  - type: StaticPrice
+    price: 30
+  - type: DnaSubstanceTrace
