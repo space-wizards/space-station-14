@@ -221,6 +221,7 @@
     jumpsuit: ClothingUniformJumpsuitSec
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetBasic
+    neck: ClothingNeckSecurityBadge
     id: VisitorPDA
     belt: ClothingBeltSecurityFilled
     back: ClothingBackpackSecurity
@@ -238,7 +239,7 @@
     jumpsuit: ClothingUniformJumpsuitSecGrey
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetBasic
-    neck: SecurityWhistle
+    neck: ClothingNeckSecurityBadge
     id: VisitorPDA
     belt: ClothingBeltSecurityFilled
     back: ClothingBackpackSatchelSecurity
@@ -256,6 +257,7 @@
     jumpsuit: ClothingUniformJumpsuitSec
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetBasic
+    neck: ClothingNeckSecurityBadge
     id: VisitorPDA
     belt: ClothingBeltSecurityWebbingFilled
     back: ClothingBackpackSecurity
@@ -273,7 +275,7 @@
     jumpsuit: ClothingUniformJumpsuitSecGrey
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatCorpsoft
-    neck: SecurityWhistle
+    neck: ClothingNeckSecurityBadge
     id: VisitorPDA
     belt: ClothingBeltSecurityFilled
     back: ClothingBackpackSatchelSecurity
@@ -291,7 +293,7 @@
     jumpsuit: ClothingUniformJumpsuitDetective
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatFedoraBrown
-    neck: ClothingNeckTieDet
+    neck: ClothingNeckSecurityBadge
     id: VisitorPDA
     belt: ClothingBeltHolsterFilled
     back: ClothingBackpackSecurity
@@ -309,7 +311,7 @@
     jumpsuit: ClothingUniformJumpsuitDetectiveGrey
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHatFedoraGrey
-    neck: ClothingNeckTieDet
+    neck: ClothingNeckSecurityBadge
     id: VisitorPDA
     belt: ClothingBeltHolsterFilled
     back: ClothingBackpackSatchelSecurity
@@ -328,7 +330,7 @@
     shoes: ClothingShoesBootsCombatFilled
     gloves: ClothingHandsGlovesCombat
     head: ClothingHeadHatBeretWarden
-    neck: SecurityWhistle
+    neck: ClothingNeckLargeSecurityBadge
     id: VisitorPDA
     belt: ClothingBeltSecurityWebbingFilled
     back: ClothingBackpackSecurity
@@ -348,6 +350,7 @@
     shoes: ClothingShoesBootsCombatFilled
     gloves: ClothingHandsGlovesCombat
     head: ClothingHeadHatWarden
+    neck: ClothingNeckLargeSecurityBadge
     id: VisitorPDA
     belt: ClothingBeltSecurityFilled
     back: ClothingBackpackSatchelSecurity
