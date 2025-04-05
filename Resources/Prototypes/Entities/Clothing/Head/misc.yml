@@ -8,6 +8,7 @@
     sprite: Clothing/Head/Misc/bunny.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/bunny.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -19,6 +20,7 @@
     sprite: Clothing/Head/Misc/cake.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/cake.rsi
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -32,6 +34,7 @@
     sprite: Clothing/Head/Misc/chickenhead.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -74,6 +77,7 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -85,6 +89,7 @@
     sprite: Clothing/Head/Misc/pwig.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/pwig.rsi
+  - type: RockableItem # lol bald
 
 - type: entity
   parent: ClothingHeadBase
@@ -109,6 +114,7 @@
     sprite: Clothing/Head/Misc/richard.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -122,6 +128,7 @@
     sprite: Clothing/Head/Misc/skubhead.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -137,6 +144,7 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -155,6 +163,8 @@
       Plastic: 100
   - type: StaticPrice
     price: 25
+  - type: RockableItem
+    chance: .50
 
 - type: entity
   parent: ClothingHeadBase
@@ -170,6 +180,7 @@
     price: 3000
   - type: AddAccentClothing
     accent: MobsterAccent
+  - type: RockableItem
 
 - type: entity
   parent: [ ClothingHeadBase, BaseSyndicateContraband ]
@@ -244,6 +255,7 @@
     sprite: Clothing/Head/Misc/squiddy.rsi
   - type: IngestionBlocker
   - type: IdentityBlocker
+  - type: RockableItem
 
 - type: entity
   parent: ClothingHeadBase
@@ -255,6 +267,7 @@
     sprite: Clothing/Head/Misc/red_racoon.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/red_racoon.rsi
+  - type: RockableItem
 
 - type: entity
   parent: Clothing
@@ -338,3 +351,4 @@
   - type: HideLayerClothing
     slots:
     - Hair
+  - type: RockableItem
