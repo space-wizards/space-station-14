@@ -8,7 +8,7 @@
 To move, use [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][keybind="MoveDown"][keybind="MoveRight"][/bold][/color].
 
 Slippery objects and surfaces can cause you to lose your footing and become momentarily stunned.
-Hold [color=yellow][bold][keybind="Walk"][/bold][/color] to walk slowly enough to prevent slipping most of them.
+Hold [color=yellow][bold][keybind="Walk"][/bold][/color] to walk slowly enough to prevent slipping on most of them.
 You can switch walking to a [color=cyan]toggle[/color] in the controls menu.
 
 You can [color=cyan]pull[/color] entities, including players.
