@@ -1,19 +1,13 @@
 - type: entity
+  parent: BaseWallmountMachine
   id: AirAlarm
   name: air alarm
   description: An air alarm. Alarms... air?
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
   components:
   - type: StationAiWhitelist
-  - type: WallMount
-  - type: ApcPowerReceiver
   - type: Electrified
     enabled: false
     usesApcPower: true
-  - type: ExtensionCableReceiver
   - type: DeviceNetwork
     deviceNetId: AtmosDevices
     receiveFrequencyId: AtmosMonitor
@@ -85,8 +79,6 @@
       map: ["airAlarmBase"] # TODO: fire alarm enum
     - state: alarmx
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-  - type: Transform
-    anchored: true
   - type: Construction
     graph: AirAlarm
     node: air_alarm
@@ -118,17 +110,11 @@
     - DeviceMonitoringAndControl
 
 - type: entity
+  parent: BaseWallmountMetallic
   id: AirAlarmAssembly
   name: air alarm assembly
   description: An air alarm. Doesn't look like it'll be alarming air any time soon.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
   components:
-  - type: WallMount
-  - type: Clickable
-  - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
     layers:
@@ -146,3 +132,22 @@
     node: assembly
   - type: Transform
     anchored: true
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 20
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 15
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              collection: MetalGlassBreak
+              params:
+                volume: -4

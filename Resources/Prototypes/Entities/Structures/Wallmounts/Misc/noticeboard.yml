@@ -1,11 +1,9 @@
 ﻿- type: entity
+  parent: BaseWallmount
   id: NoticeBoard
   name: notice board
   description: Is there a job for a witcher?
-  placement:
-    mode: SnapgridCenter
   components:
-  - type: WallMount
   - type: Sprite
     drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/noticeboard.rsi
@@ -17,10 +15,6 @@
     maxFillLevels: 6
     fillBaseName: notice
   - type: Appearance
-  - type: InteractionOutline
-  - type: Clickable
-  - type: Transform
-    anchored: true
   - type: Damageable
     damageModifierSet: Wood
     damageContainer: StructuralInorganic
