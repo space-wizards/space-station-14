@@ -107,6 +107,15 @@
     count: 1
 
 - type: entity
+  parent: RegenerativeMesh
+  id: RegenerativeMeshLingering0
+  suffix: 0, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 0
+
+- type: entity
   name: bruise pack
   description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
   parent: BaseHealingItem
@@ -196,6 +205,15 @@
     count: 1
 
 - type: entity
+  parent: MedicatedSuture
+  id: MedicatedSutureLingering0
+  suffix: 0, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 0
+
+- type: entity
   name: blood pack
   description: Contains a groundbreaking universal blood replacement created by Nanotrasen's advanced medical science.
   parent: BaseHealingItem
@@ -242,6 +260,7 @@
   components:
   - type: Stack
     lingering: true
+    count: 10
 
 - type: entity
   parent: BaseHealingItem
