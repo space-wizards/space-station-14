@@ -264,7 +264,7 @@ public sealed partial class StaminaSystem : EntitySystem
         // Reset the decay cooldown upon taking damage.
         if (oldDamage < component.StaminaDamage)
         {
-
+            
             var nextUpdate = _timing.CurTime + TimeSpan.FromSeconds(component.Cooldown);
             
             if (component.NextUpdate < nextUpdate)
@@ -279,7 +279,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
         if (_afterCrit && oldDamage > component.StaminaDamage && component.StaminaDamage <= 0f)
         {
-            _afterCrit = false;
+            _afterCrit = false; // Since the recovery from the crit has been completed, we are no longer 'afterCrit`
         }
 
         if (!component.Critical)
@@ -363,6 +363,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
             comp.NextUpdate += TimeSpan.FromSeconds(1f);
 
+            // This constant determines how fast stamina will regenerate after exiting the stamcrit
             const float afterCritDecayMultiplier = 5f;
 
             TakeStaminaDamage(
@@ -406,8 +407,7 @@ public sealed partial class StaminaSystem : EntitySystem
         }
 
         component.Critical = false;
-        _afterCrit = true;
-
+        _afterCrit = true;  // Set to true to indicate that stamina will be restored after exiting stamcrit
         component.NextUpdate = _timing.CurTime;
         
         SetStaminaAlert(uid, component);
@@ -416,16 +416,21 @@ public sealed partial class StaminaSystem : EntitySystem
         _adminLogger.Add(LogType.Stamina, LogImpact.Low, $"{ToPrettyString(uid):user} recovered from stamina crit");
     }
 
-    private void AdjustSlowdown(EntityUid uid, StaminaComponent? comp = null, bool recover = false)
+    /// <summary>
+    /// Adjusts the movement speed of an entity based on its current <see cref="StaminaComponent.StaminaDamage"/> value.
+    /// If the entity has a <see cref="SlowOnDamageComponent"/>, its custom damage-to-speed thresholds are used,
+    /// otherwise, a default set of thresholds is applied.
+    /// The method determines the closest applicable damage threshold below the crit limit and applies the corresponding
+    /// speed modifier using the stun system. If no threshold is met then the entity's speed is restored to normal.
+    /// </summary>
+    /// <param name="uid">Entity to update</param>
+    /// <param name="comp">
+    /// Stamina component of the entity. Can be null, in this case the method attempts to resolve it automatically.
+    /// </param>
+    private void AdjustSlowdown(EntityUid uid, StaminaComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;
-
-        if (recover)
-        {
-            _stunSystem.UpdateStunModifiers(uid, 1f, comp);
-            return;
-        }
 
         // Use a dictionary with default 'damage - speed' pairs if the entity doesn't have a component with an already existing one
         var thresholds = HasComp<SlowOnDamageComponent>(uid)
