@@ -256,7 +256,7 @@ public abstract class SharedStunSystem : EntitySystem
         return false;
     }
 
-    public bool UpdateMovementModifiers(EntityUid uid,
+    public bool UpdateStunModifiers(EntityUid uid,
         float walkSpeedModifier = 1f,
         float runSpeedModifier = 1f, StaminaComponent? component = null)
     {
@@ -286,9 +286,9 @@ public abstract class SharedStunSystem : EntitySystem
         return true;
     }
 
-    public bool UpdateMovementModifiers(EntityUid uid, float speedModifier = 1f, StaminaComponent? component = null)
+    public bool UpdateStunModifiers(EntityUid uid, float speedModifier = 1f, StaminaComponent? component = null)
     {
-        return UpdateMovementModifiers(uid, speedModifier, speedModifier, component);
+        return UpdateStunModifiers(uid, speedModifier, speedModifier, component);
     }
 
     private void OnInteractHand(EntityUid uid, KnockedDownComponent knocked, InteractHandEvent args)

@@ -406,7 +406,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
         component.Critical = false;
         component.StaminaDamage = 0f;
-        component.NextUpdate = _timing.CurTime; // Возможно тут кроется проблема с остановкой уровня стамины на прежнем уровне.
+        component.NextUpdate = _timing.CurTime;
         Log.Debug("[ExisSC] Resetting speed to its normal");
         AdjustSpeed(uid, component, true);
         Log.Debug($"[ExitSC] NextUpdate: {component.NextUpdate}");
@@ -425,7 +425,7 @@ public sealed partial class StaminaSystem : EntitySystem
         if (recover)
         {
             Log.Debug($"[AS] Recovering speed to 1f");
-            _stunSystem.UpdateMovementModifiers(uid, 1f, comp);
+            _stunSystem.UpdateStunModifiers(uid, 1f, comp);
             return;
         }
 
@@ -456,12 +456,12 @@ public sealed partial class StaminaSystem : EntitySystem
         if (closest != FixedPoint2.Zero)
         {
             Log.Debug($"[AS] Changing speed to: {thresholds[closest]}");
-            _stunSystem.UpdateMovementModifiers(uid, thresholds[closest], comp);
+            _stunSystem.UpdateStunModifiers(uid, thresholds[closest], comp);
         }
         else if (closest == FixedPoint2.Zero)
         {
             Log.Debug($"[AS] Adjusting speed to: 1.0");
-            _stunSystem.UpdateMovementModifiers(uid, 1f, comp);
+            _stunSystem.UpdateStunModifiers(uid, 1f, comp);
         }
     }
 }
