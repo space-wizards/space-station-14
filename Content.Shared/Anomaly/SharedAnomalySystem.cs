@@ -123,14 +123,14 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (HasComp<AnomalySupercriticalComponent>(ent))
             return;
 
-        Resolve(ent, ref ent.Comp, logMissing: false);
+        if(!Resolve(ent, ref ent.Comp))
+            return;
 
         AdminLog.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(ent.Owner)} began to go supercritical.");
         if (_net.IsServer)
             Log.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(ent.Owner)}");
 
-        if(ent.Comp != null)
-            Audio.PlayPvs(ent.Comp.SupercriticalSoundAtAnimationStart, Transform(ent).Coordinates);
+        Audio.PlayPvs(ent.Comp.SupercriticalSoundAtAnimationStart, Transform(ent).Coordinates);
 
         var super = AddComp<AnomalySupercriticalComponent>(ent);
         super.EndTime = Timing.CurTime + super.SupercriticalDuration;
