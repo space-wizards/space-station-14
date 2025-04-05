@@ -46,6 +46,20 @@ namespace Content.Server.Bible.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float FailChance = 0.34f;
 
+        /// <summary>
+        /// Chance the bible will heal someones eyesight
+        /// </summary>
+        [DataField("eyeHealChance")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float EyeHealChance = 0.20f;
+
+        /// <summary>
+        /// Amount of eye damage the bible will heal
+        /// </summary>
+        [DataField("eyeHealAmount")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int EyeHealAmount = -1;
+
         [DataField("sizzleSound")]
         public SoundSpecifier SizzleSoundPath = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
         [DataField("healSound")]
