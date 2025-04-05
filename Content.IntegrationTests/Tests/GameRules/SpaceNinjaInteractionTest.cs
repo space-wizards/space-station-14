@@ -61,6 +61,11 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
     private NetEntity? _katana = null;
     private NetEntity? _pinpointer = null;
 
+    /// <summary>
+    /// Makes the player a ninja, spawns a criminal records console and makes the player
+    /// interact with the console with gloves off and then on. Makes sure the player entity
+    /// receives the event for a successful hack.
+    /// </summary>
     [Test]
     public async Task CriminalRecordsHackingTest()
     {
@@ -101,6 +106,11 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
         Assert.That(testSys.Hacked);
     }
 
+    /// <summary>
+    /// Makes the player a ninja, spawns an R&D server and makes the player
+    /// interact with the server with gloves off and then on. Makes sure the player entity
+    /// receives the event for a successful hack.
+    /// </summary>
     [Test]
     public async Task ResearchServerHackTest()
     {
@@ -121,6 +131,7 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
 
         // Spawn the R&D server
         var researchServer = await SpawnTarget(ResearchServerProtoId);
+        Assert.That(testSys.Hacked, Is.False, "Research server was hacked when it spawned.");
 
         // Grant all technologies to the server so we have something to steal
         var researchSys = Server.System<ResearchSystem>();
@@ -151,6 +162,10 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
         Assert.That(testSys.Hacked);
     }
 
+    /// <summary>
+    /// Turns the target entity into a ninja antag and makes sure that they got their equipment.
+    /// </summary>
+    /// <param name="target">Entity to turn into a ninja.</param>
     private async Task MakeNinja(NetEntity? target = null)
     {
         target ??= Player;
