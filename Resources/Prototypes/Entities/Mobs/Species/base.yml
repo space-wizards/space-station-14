@@ -255,8 +255,8 @@
         Heat: 1.5 #per second, scales with temperature & other constants
   - type: TemperatureSpeed
     thresholds:
-      260: 0.80
-      220: 0.60
+      293: 0.9
+      260: 0.7
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
