@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: Presents no longer make non-items into items
-    type: Tweak
-  id: 7635
-  time: '2024-11-21T14:20:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33147
 - author: DrSmugleaf
   changes:
   - message: Fixed admin ghosts not being able to see or interact with items in pouches
@@ -3888,3 +3881,11 @@
   id: 8134
   time: '2025-04-05T03:22:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36280
+- author: SlamBamActionman
+  changes:
+  - message: The storage implant's storage has been changed to a new pattern with
+      6 grid slots.
+    type: Tweak
+  id: 8135
+  time: '2025-04-05T09:38:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36272
