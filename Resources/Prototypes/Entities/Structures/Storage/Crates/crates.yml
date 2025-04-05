@@ -156,7 +156,7 @@
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+      sprite: _Impstation/Structures/Storage/Crates/labels.rsi # imp
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Construction
     graph: WebStructures
@@ -343,7 +343,7 @@
     - state: closed
       map: ["enum.StorageVisualLayers.Door"]
     - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+      sprite: _Impstation/Structures/Storage/Crates/labels.rsi # imp
       offset: "-0.25,0.625"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: Icon
@@ -625,7 +625,7 @@
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+      sprite: _Impstation/Structures/Storage/Crates/labels.rsi # imp
       offset: "0.0,0.03125"
       map: ["enum.PaperLabelVisuals.Layer"]
 
@@ -649,7 +649,7 @@
       map: ["enum.LockVisualLayers.Lock"]
       shader: unshaded
     - state: paper
-      sprite: Structures/Storage/Crates/labels.rsi
+      sprite: _Impstation/Structures/Storage/Crates/labels.rsi # imp
       offset: "0.0,0.03125"
       map: ["enum.PaperLabelVisuals.Layer"]
   - type: AccessReader
