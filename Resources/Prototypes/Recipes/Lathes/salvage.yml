@@ -72,7 +72,8 @@
 - type: latheRecipe
   id: PKAUpgradeDamage
   result: PKAUpgradeDamage
-  category: Weapons
+  categories:
+  - Weapons
   completetime: 5
   materials:
     Steel: 1500
@@ -82,7 +83,8 @@
 - type: latheRecipe
   id: PKAUpgradeRange
   result: PKAUpgradeRange
-  category: Weapons
+  categories:
+  - Weapons
   completetime: 5
   materials:
     Steel: 1500
@@ -92,7 +94,8 @@
 - type: latheRecipe
   id: PKAUpgradeFireRate
   result: PKAUpgradeFireRate
-  category: Weapons
+  categories:
+  - Weapons
   completetime: 5
   materials:
     Steel: 1500
