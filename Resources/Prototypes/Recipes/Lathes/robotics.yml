@@ -196,3 +196,13 @@
   parent: BaseBorgModuleRecipe
   id: BorgModuleHarvesting
   result: BorgModuleHarvesting
+
+- type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
+  id: BorgModuleAdvancedClowning
+  result: BorgModuleAdvancedClowning
+  materials:
+    Steel: 500
+    Glass: 500
+    Plastic: 250
+    Bananium: 500
