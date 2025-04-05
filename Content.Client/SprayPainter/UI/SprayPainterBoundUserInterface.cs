@@ -22,16 +22,22 @@ public sealed class SprayPainterBoundUserInterface : BoundUserInterface
 
         _window.OnSpritePicked = OnSpritePicked;
         _window.OnColorPicked = OnColorPicked;
+        _window.OnTabChanged = OnTabChanged;
 
         if (EntMan.TryGetComponent(Owner, out SprayPainterComponent? comp))
         {
-            _window.Populate(EntMan.System<SprayPainterSystem>().Entries, comp.Index, comp.PickedColor, comp.ColorPalette);
+            _window.Populate(EntMan.System<SprayPainterSystem>().Entries, comp.Indexes, comp.PickedColor, comp.ColorPalette, comp.SelectedTab);
         }
     }
 
-    private void OnSpritePicked(ItemList.ItemListSelectedEventArgs args)
+    private void OnTabChanged(int index)
     {
-        SendMessage(new SprayPainterSpritePickedMessage(args.ItemIndex));
+        SendMessage(new SprayPainterTabChangedMessage(index));
+    }
+
+    private void OnSpritePicked(string category, int index)
+    {
+        SendMessage(new SprayPainterSpritePickedMessage(category, index));
     }
 
     private void OnColorPicked(ItemList.ItemListSelectedEventArgs args)

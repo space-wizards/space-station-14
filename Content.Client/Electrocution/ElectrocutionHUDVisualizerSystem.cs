@@ -72,6 +72,8 @@ public sealed class ElectrocutionHUDVisualizerSystem : VisualizerSystem<Electroc
         var electrifiedQuery = AllEntityQuery<ElectrocutionHUDVisualsComponent, AppearanceComponent, SpriteComponent>();
         while (electrifiedQuery.MoveNext(out var uid, out var _, out var appearanceComp, out var spriteComp))
         {
+            if (!HasComp<ElectrocutionHUDVisualsComponent>(uid) || !spriteComp.LayerExists(ElectrifiedLayers.HUD))
+                continue;
 
             spriteComp.LayerSetVisible(ElectrifiedLayers.HUD, false);
         }

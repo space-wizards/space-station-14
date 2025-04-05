@@ -1,0 +1,42 @@
+- type: paintableGroupCategory
+  id: Lockers
+  cost: 2
+
+- type: paintableGroup
+  category: Lockers
+  id: LockerLockless
+  iconPriority: 100
+  visuals: LockerRSI
+  styles:
+    basic:          ClosetCursed
+
+- type: paintableGroup
+  category: Lockers
+  id: LockerSecure
+  iconPriority: 90
+  visuals: LockerRSI
+  styles:
+    basic:          LockerSteel
+    quartermaster:  LockerQuarterMaster
+    captain:        LockerCaptain
+    hop:            LockerHeadOfPersonnel
+    ce:             LockerChiefEngineer
+    cmo:            LockerChiefMedicalOfficer
+    hos:            LockerHeadOfSecurity
+    brigmedic:      LockerBrigmedic
+    security:       LockerSecurity
+    clown:          LockerClown
+    mime:           LockerMime
+    representative: LockerRepresentative
+    salvage:        LockerSalvageSpecialist
+    electrical:     LockerElectricalSupplies
+    welding:        LockerWeldingSupplies
+    atmospheric:    LockerAtmospherics
+    engineer:       LockerEngineer
+    botanist:       LockerBotanist
+    medicine:       LockerMedicine
+    doctor:         LockerMedical
+    paramedic:      LockerParamedic
+    chemical:       LockerChemistry
+    rd:             LockerResearchDirector
+    scientist:      LockerScientist
