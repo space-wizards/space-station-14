@@ -19,6 +19,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Random;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Forensics
 {
@@ -45,6 +46,7 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<DnaComponent, TransferDnaEvent>(OnTransferDnaEvent);
             SubscribeLocalEvent<DnaSubstanceTraceComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
             SubscribeLocalEvent<CleansForensicsComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
+            SubscribeLocalEvent<MicroFiberComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
         }
 
         private void OnSolutionChanged(Entity<DnaSubstanceTraceComponent> ent, ref SolutionContainerChangedEvent ev)
@@ -134,6 +136,11 @@ namespace Content.Server.Forensics
                 dest.Fibers.Add(fiber);
             }
 
+            foreach (var microFiber in src.MicroFibers)
+            {
+                dest.MicroFibers.Add(microFiber);
+            }
+
             foreach (var print in src.Fingerprints)
             {
                 dest.Fingerprints.Add(print);
@@ -218,7 +225,7 @@ namespace Content.Server.Forensics
                 return false;
             }
 
-            var totalPrintsAndFibers = forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count;
+            var totalPrintsAndFibers = forensicsComp.Fingerprints.Count + forensicsComp.Fibers.Count + forensicsComp.MicroFibers.Count;
             var hasRemovableDNA = forensicsComp.DNAs.Count > 0 && forensicsComp.CanDnaBeCleaned;
 
             if (hasRemovableDNA || totalPrintsAndFibers > 0)
@@ -256,6 +263,7 @@ namespace Content.Server.Forensics
                 return;
 
             targetComp.Fibers = new();
+            targetComp.MicroFibers = new();
             targetComp.Fingerprints = new();
 
             if (targetComp.CanDnaBeCleaned)
@@ -315,6 +323,13 @@ namespace Content.Server.Forensics
             var recipientComp = EnsureComp<ForensicsComponent>(args.Recipient);
             recipientComp.DNAs.Add(component.DNA);
             recipientComp.CanDnaBeCleaned = args.CanDnaBeCleaned;
+        }
+
+        private void OnEntInserted(Entity<MicroFiberComponent> ent, ref EntInsertedIntoContainerMessage args)
+        {
+            var targetComp = EnsureComp<ForensicsComponent>(args.Entity);
+
+            targetComp.MicroFibers.Add(string.IsNullOrEmpty(ent.Comp.MicroFiberColor) ? Loc.GetString("forensic-micro-fibers", ("material", ent.Comp.MicroFiberMaterial)) : Loc.GetString("forensic-micro-fibers-colored", ("color", ent.Comp.MicroFiberColor), ("material", ent.Comp.MicroFiberMaterial)));
         }
 
         #region Public API
