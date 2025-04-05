@@ -106,7 +106,7 @@ namespace Content.Shared.Interaction
             _uiQuery = GetEntityQuery<ActivatableUIComponent>();
 
             SubscribeLocalEvent<BoundUserInterfaceCheckRangeEvent>(HandleUserInterfaceRangeCheck);
-            SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
+            SubscribeLocalEvent<ActivatableUIComponent, BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
 
             SubscribeAllEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
 
@@ -151,13 +151,12 @@ namespace Content.Shared.Interaction
         /// <summary>
         ///     Check that the user that is interacting with the BUI is capable of interacting and can access the entity.
         /// </summary>
-        private void OnBoundInterfaceInteractAttempt(BoundUserInterfaceMessageAttempt ev)
+        private void OnBoundInterfaceInteractAttempt(Entity<ActivatableUIComponent> ent, ref BoundUserInterfaceMessageAttempt ev)
         {
-            _uiQuery.TryComp(ev.Target, out var uiComp);
             if (!_actionBlockerSystem.CanInteract(ev.Actor, ev.Target))
             {
                 // We permit ghosts to open uis unless explicitly blocked
-                if (ev.Message is not OpenBoundInterfaceMessage || !HasComp<GhostComponent>(ev.Actor) || uiComp?.BlockSpectators == true)
+                if (ev.Message is not OpenBoundInterfaceMessage || !HasComp<GhostComponent>(ev.Actor) || ent.Comp.BlockSpectators)
                 {
                     ev.Cancel();
                     return;
@@ -175,16 +174,14 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (uiComp == null)
-                return;
 
-            if (uiComp.SingleUser && uiComp.CurrentSingleUser != null && uiComp.CurrentSingleUser != ev.Actor)
+            if (ent.Comp.SingleUser && ent.Comp.CurrentSingleUser != null && ent.Comp.CurrentSingleUser != ev.Actor)
             {
                 ev.Cancel();
                 return;
             }
 
-            if (uiComp.RequiresComplex && !_actionBlockerSystem.CanComplexInteract(ev.Actor))
+            if (ent.Comp.RequiresComplex && !_actionBlockerSystem.CanComplexInteract(ev.Actor))
                 ev.Cancel();
         }
 
