@@ -239,7 +239,10 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 500
+      Steel: 200
 - type: entity
   name: broken floodlight
   id: FloodlightBroken
@@ -289,3 +292,7 @@
         density: 50
         mask:
         - HighImpassable
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 500
+      Steel: 200

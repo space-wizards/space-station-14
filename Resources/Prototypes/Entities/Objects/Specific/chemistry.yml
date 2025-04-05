@@ -311,6 +311,7 @@
   - type: Tag
     tags:
     - Dropper
+  - type: PhysicalComposition
 
 - type: entity
   name: borgdropper

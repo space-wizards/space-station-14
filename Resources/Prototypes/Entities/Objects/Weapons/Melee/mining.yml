@@ -35,6 +35,10 @@
     sprite: Objects/Weapons/Melee/pickaxe.rsi
     storedRotation: -45
   - type: UseDelay
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Wood: 100
 
 - type: entity
   name: mining drill
