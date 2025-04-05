@@ -1,4 +1,4 @@
-﻿using Content.Server.Roles;
+using Content.Server.Roles;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mind.Components;
 using Content.Shared.Roles;
@@ -47,7 +47,7 @@ public sealed partial class BorgSystem
 
         if (_mind.TryGetMind(ent, out var mindId, out var mind))
         {
-            _mind.TransferTo(mindId, uid, true, mind: mind);
+            _mind.TransferTo(mindId, uid, true, mind: mind, setShowExamineInfo: true);
 
             if (!_roles.MindHasRole<SiliconBrainRoleComponent>(mindId))
                 _roles.MindAddRole(mindId, "MindRoleSiliconBrain", silent: true);

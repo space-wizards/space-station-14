@@ -4,6 +4,9 @@
   name: man-machine interface
   description: A machine able to facilitate communication between a biological brain and electronics, enabling crew to continue to provide value after work-related incidents.
   components:
+  - type: Tag
+    tags:
+      - AI
   - type: Sprite
     sprite: Objects/Specific/Robotics/mmi.rsi
     layers:
@@ -122,6 +125,7 @@
     - type: Tag
       tags:
       - CannotSuicide
+      - AI
     - type: GenericVisualizer
       visuals:
         enum.ToggleableGhostRoleVisuals.Status:

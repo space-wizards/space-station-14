@@ -4,6 +4,9 @@
   id: AccessBreakerImmune
 
 - type: Tag
+  id: AI
+
+- type: Tag
   id: AirAlarm
 
 - type: Tag
@@ -1317,10 +1320,10 @@
 
 - type: Tag
   id: Truncheon
-  
+
 - type: Tag
   id: TurretCompatibleWeapon # Used in the construction of sentry turrets
-  
+
 - type: Tag
   id: TurretControlElectronics # Used in the construction of sentry turret control panels
 

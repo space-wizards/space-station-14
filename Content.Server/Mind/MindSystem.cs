@@ -177,7 +177,7 @@ public sealed class MindSystem : SharedMindSystem
     }
 
     public override void TransferTo(EntityUid mindId, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true,
-        MindComponent? mind = null)
+        MindComponent? mind = null, bool setShowExamineInfo = false)
     {
         if (mind == null && !Resolve(mindId, ref mind))
             return;
@@ -192,6 +192,7 @@ public sealed class MindSystem : SharedMindSystem
         if (entity != null)
         {
             component = EnsureComp<MindContainerComponent>(entity.Value);
+            component.showExamineInfo = setShowExamineInfo;
 
             if (component.HasMind)
                 _ghosts.OnGhostAttempt(component.Mind.Value, false);
