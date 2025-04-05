@@ -784,6 +784,9 @@
     sprite: Objects/Materials/hide.rsi
     shape:
     - 0,0,2,2
+  - type: Tag
+    tags:
+      - Plates
 
 - type: entity
   parent: MaterialGoliathHide
