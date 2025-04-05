@@ -1,6 +1,4 @@
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
-using Content.Shared.Interaction;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Inventory.ShitRockable.Components;

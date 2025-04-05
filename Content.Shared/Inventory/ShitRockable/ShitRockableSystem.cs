@@ -54,7 +54,7 @@ public sealed class ShitRockableSystem : EntitySystem
 
                 // have we recieved enough of the right damage?
                 var damageThresh = slotDamageThresh.DamageThreshold;
-                if (damageThresh.GEQ(args.RecievedDamage))
+                if (!args.RecievedDamage.GEQ(damageThresh))
                     continue;
 
                 // some probability of getting your shit rocked. Maybe one day we get targetting, but this aint that.
