@@ -35,6 +35,9 @@ public sealed class ContainerFillSystem : EntitySystem
                 continue;
             }
 
+            else if (component.FillEmptyContainersOnly && container.Count > 0)
+                continue;
+
             foreach (var proto in prototypes)
             {
                 var ent = Spawn(proto, coords);
