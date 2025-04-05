@@ -2,6 +2,7 @@ using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Chat.Systems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Kitchen.Components;
 using Content.Server.Pinpointer;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
@@ -79,11 +80,12 @@ public sealed class NukeSystem : EntitySystem
 
         // Doafter events
         SubscribeLocalEvent<NukeComponent, NukeDisarmDoAfterEvent>(OnDoAfter);
+
+        SubscribeLocalEvent<NukeDiskComponent, BeingMicrowavedEvent>(OnMicrowaved);
     }
 
     private void OnInit(EntityUid uid, NukeComponent component, ComponentInit args)
     {
-        component.RemainingTime = component.Timer;
         _itemSlots.AddItemSlot(uid, SharedNukeComponent.NukeDiskSlotId, component.DiskSlot);
 
         UpdateStatus(uid, component);
@@ -111,11 +113,13 @@ public sealed class NukeSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, NukeComponent nuke, MapInitEvent args)
     {
+        nuke.RemainingTime = nuke.Timer;
         var originStation = _station.GetOwningStation(uid);
 
         if (originStation != null)
+        {
             nuke.OriginStation = originStation;
-
+        }
         else
         {
             var transform = Transform(uid);
@@ -123,6 +127,19 @@ public sealed class NukeSystem : EntitySystem
         }
 
         nuke.Code = GenerateRandomNumberString(nuke.CodeLength);
+    }
+
+    /// <summary>
+    /// Slightly randomize nuke countdown timer
+    /// </summary>
+    private void OnMicrowaved(Entity<NukeDiskComponent> ent, ref BeingMicrowavedEvent args)
+    {
+        if (ent.Comp.TimeModifier != null)
+            return;
+
+        var seconds = _random.NextGaussian(ent.Comp.MicrowaveMean.TotalSeconds, ent.Comp.MicrowaveStd.TotalSeconds);
+        ent.Comp.TimeModifier = TimeSpan.FromSeconds(seconds);
+        _popups.PopupEntity(Loc.GetString("nuke-disk-component-microwave"), ent.Owner, PopupType.Medium);
     }
 
     private void OnRemove(EntityUid uid, NukeComponent component, ComponentRemove args)
@@ -346,11 +363,11 @@ public sealed class NukeSystem : EntitySystem
                     break;
                 }
 
-                // var isValid = _codes.IsCodeValid(uid, component.EnteredCode);
                 if (component.EnteredCode == component.Code)
                 {
                     component.Status = NukeStatus.AWAIT_ARM;
-                    component.RemainingTime = component.Timer;
+                    var modifier = CompOrNull<NukeDiskComponent>(component.DiskSlot.Item)?.TimeModifier ?? TimeSpan.Zero;
+                    component.RemainingTime = MathF.Max(component.Timer + (float)modifier.TotalSeconds, component.MinimumTime);
                     _audio.PlayPvs(component.AccessGrantedSound, uid);
                 }
                 else
