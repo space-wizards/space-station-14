@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: ScarKy0, GoldenCan
-  changes:
-  - message: The Derelict Cyborg - a broken cyborg with altered laws due to year of
-      exposure to ion storms - can now appear as a ghost role through a new midround
-      event.
-    type: Add
-  - message: An ion storm affecting a Cyborg can no longer alter the law order of
-      the AI, cyborgs created later in the round or AI's and cyborgs in subsequent
-      rounds.
-    type: Fix
-  id: 7634
-  time: '2024-11-20T07:55:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32499
 - author: IProduceWidgets
   changes:
   - message: Presents no longer make non-items into items
@@ -3894,3 +3881,10 @@
   id: 8133
   time: '2025-04-04T20:24:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36276
+- author: aada
+  changes:
+  - message: SyndieJuice now comes with 10 units of liquid plasma.
+    type: Add
+  id: 8134
+  time: '2025-04-05T03:22:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36280
