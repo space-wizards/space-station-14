@@ -131,3 +131,45 @@
       types:
         Piercing: 5
     # I love this
+
+- type: entity
+  abstract: true
+  id: BaseDiceLoaded
+  suffix: Loaded
+  components:
+  - type: LoadedDice
+    activatorWhitelist:
+      tags:
+      - LoadedDiceActivator
+  - type: UserInterface
+    interfaces:
+      enum.LoadedDiceUiKey.Key:
+        type: LoadedDiceBoundUserInterface
+
+- type: entity
+  parent: [PercentileDie, BaseDiceLoaded]
+  id: PercentileDieLoaded
+
+- type: entity
+  parent: [d20Dice, BaseDiceLoaded]
+  id: d20DiceLoaded
+
+- type: entity
+  parent: [d12Dice, BaseDiceLoaded]
+  id: d12DiceLoaded
+
+- type: entity
+  parent: [d10Dice, BaseDiceLoaded]
+  id: d10DiceLoaded
+
+- type: entity
+  parent: [d8Dice, BaseDiceLoaded]
+  id: d8DiceLoaded
+
+- type: entity
+  parent: [d6Dice, BaseDiceLoaded]
+  id: d6DiceLoaded
+
+- type: entity
+  parent: [d4Dice, BaseDiceLoaded]
+  id: d4DiceLoaded
