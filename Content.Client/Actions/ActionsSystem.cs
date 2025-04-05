@@ -1,6 +1,8 @@
 using System.IO;
 using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
@@ -22,6 +24,7 @@ namespace Content.Client.Actions
     {
         public delegate void OnActionReplaced(EntityUid actionId);
 
+        [Dependency] private readonly ChargesSystem _charges = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
@@ -38,9 +41,17 @@ namespace Content.Client.Actions
         private readonly List<EntityUid> _removed = new();
         private readonly List<(EntityUid, BaseActionComponent?)> _added = new();
 
+        private readonly HashSet<(EntityUid ActionId, BaseActionComponent Action, LimitedChargesComponent? Charges, AutoRechargeComponent? AutoRecharge)> _disabledActions = new();
+        private readonly List<(EntityUid ActionId, BaseActionComponent Action, LimitedChargesComponent? Charges, AutoRechargeComponent? AutoRecharge)> _toRemove = new();
+
+        private EntityQuery<ActionsComponent> _actionsQuery;
+
         public override void Initialize()
         {
             base.Initialize();
+
+            _actionsQuery = GetEntityQuery<ActionsComponent>();
+
             SubscribeLocalEvent<ActionsComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
             SubscribeLocalEvent<ActionsComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
             SubscribeLocalEvent<ActionsComponent, ComponentHandleState>(HandleComponentState);
@@ -51,26 +62,39 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<EntityWorldTargetActionComponent, ComponentHandleState>(OnEntityWorldTargetHandleState);
         }
 
-        public override void FrameUpdate(float frameTime)
+        /// <inheritdoc/>
+        public override void Update(float frameTime)
         {
-            base.FrameUpdate(frameTime);
+            base.Update(frameTime);
 
-            var worldActionQuery = EntityQueryEnumerator<WorldTargetActionComponent>();
-            while (worldActionQuery.MoveNext(out var uid, out var action))
+            if (_playerManager.LocalEntity is not { } player ||
+                _disabledActions.Count == 0 ||
+                !_actionsQuery.TryComp(player, out var actionsComponent))
+                return;
+
+            _toRemove.Clear();
+
+            foreach (var (actionId, actionComp, charges, autoRecharge) in _disabledActions)
             {
-                UpdateAction(uid, action);
+                if (!actionsComponent.Actions.Contains(actionId) ||
+                    actionComp.IconColor != actionComp.DisabledIconColor)
+                {
+                    _toRemove.Add((actionId, actionComp, charges, autoRecharge));
+                    continue;
+                }
+
+                var currentCharges = _charges.GetCurrentCharges((actionId, charges, autoRecharge));
+                if (currentCharges > 0)
+                {
+                    UpdateAction(actionId, actionComp);
+                    _toRemove.Add((actionId, actionComp, charges, autoRecharge));
+
+                }
             }
 
-            var instantActionQuery = EntityQueryEnumerator<InstantActionComponent>();
-            while (instantActionQuery.MoveNext(out var uid, out var action))
+            foreach (var item in _toRemove)
             {
-                UpdateAction(uid, action);
-            }
-
-            var entityActionQuery = EntityQueryEnumerator<EntityTargetActionComponent>();
-            while (entityActionQuery.MoveNext(out var uid, out var action))
-            {
-                UpdateAction(uid, action);
+                _disabledActions.Remove(item);
             }
         }
 
@@ -127,9 +151,6 @@ namespace Content.Client.Actions
             component.Toggled = state.Toggled;
             component.Cooldown = state.Cooldown;
             component.UseDelay = state.UseDelay;
-            component.Charges = state.Charges;
-            component.MaxCharges = state.MaxCharges;
-            component.RenewCharges = state.RenewCharges;
             component.Container = EnsureEntity<T>(state.Container, uid);
             component.EntityIcon = EnsureEntity<T>(state.EntityIcon, uid);
             component.CheckCanInteract = state.CheckCanInteract;
@@ -152,7 +173,14 @@ namespace Content.Client.Actions
             if (!ResolveActionData(actionId, ref action))
                 return;
 
-            action.IconColor = action.Charges < 1 ? action.DisabledIconColor : action.OriginalIconColor;
+            var hasNoCharges = TryComp<LimitedChargesComponent>(actionId, out var limitedChargesComponent) &&
+                               _charges.GetCurrentCharges((actionId.Value, limitedChargesComponent)) < 1;
+            action.IconColor = hasNoCharges ? action.DisabledIconColor : action.OriginalIconColor;
+
+            if (hasNoCharges)
+                _disabledActions.Add((actionId.Value, action, limitedChargesComponent, CompOrNull<AutoRechargeComponent>(actionId)));
+            else if (action.IconColor != action.DisabledIconColor)
+                _disabledActions.Remove((actionId.Value, action, limitedChargesComponent, CompOrNull<AutoRechargeComponent>(actionId)));
 
             base.UpdateAction(actionId, action);
             if (_playerManager.LocalEntity != action.AttachedEntity)
