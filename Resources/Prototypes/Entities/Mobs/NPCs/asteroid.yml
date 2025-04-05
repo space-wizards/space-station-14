@@ -291,19 +291,3 @@
         15
   - type: TimedDespawn
     lifetime: 100
-
-- type: entity
-  id: HivelordRemainsInert
-  parent: BaseItem
-  name: inert hivelord remains
-  description: All that remains of a hivelord... Now all is truly lost.
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Food/rorocore.rsi
-    state: boiled
-    color: "#664444"
-  - type: SpaceGarbage
-  - type: Item
-    size: Normal
-  - type: StaticPrice
-    price: 500

@@ -357,11 +357,14 @@
     defaultTarget: goliath steak
 
 - type: entity
-  id: FoodHivelordRemains
   parent: FoodMeatRawBase
+  id: FoodHivelordRemains
   name: hivelord remains
-  description: All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly. Try not to think about what you're eating.
+  description: The freakish remains of a hivelord, still leaking a potent medicinal goo. Eat fast before it decays, or your appetite abandons ship.
   components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/rorocore.rsi
+    state: boiled
   - type: SolutionContainerManager
     solutions:
       food:
@@ -369,9 +372,6 @@
         reagents:
         - ReagentId: Rororium
           Quantity: 5
-  - type: Sprite
-    sprite: Objects/Consumable/Food/rorocore.rsi
-    state: boiled
   - type: Item
     size: Normal
   - type: Perishable
@@ -379,10 +379,26 @@
     molsPerSecondPerUnitMass: 0
     forceRotProgression: true
   - type: RotInto
-    entity: HivelordRemainsInert
+    entity: FoodHivelordRemainsInert
     stage: 1
   - type: StaticPrice
     price: 5000
+
+- type: entity
+  parent: FoodMeatRotten
+  id: FoodHivelordRemainsInert
+  name: inert hivelord remains
+  description: The inert remains of a hivelord. Once medicinal, now mostly just meat-flavored regret.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/rorocore.rsi
+    state: boiled
+    color: "#664444"
+  - type: SpaceGarbage
+  - type: Item
+    size: Normal
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   name: dragon flesh
