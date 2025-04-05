@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: formlessnameless
   changes:
-  - message: Headslugs can now open morgue trays and bodybags to help themselves to
-      a little snack.
-    type: Add
-  id: 971
-  time: '2025-01-19T06:48:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1420
-- author: formlessnameless
-  changes:
   - message: The AI can no longer be a traitor. Or a changeling. Or a heretic.
     type: Fix
   id: 972
@@ -4081,3 +4073,10 @@
   id: 1470
   time: '2025-04-05T03:46:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2195
+- author: Darkmajia
+  changes:
+  - message: Cards merge properly into hands.
+    type: Fix
+  id: 1471
+  time: '2025-04-05T03:50:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2185
