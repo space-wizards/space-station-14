@@ -144,6 +144,21 @@
   - type: AccessReader
     access: [["Security"]]
 
+#QM's hardsuit
+- type: entity
+  id: SuitStorageQM
+  parent: SuitStorageBase
+  suffix: Quartermaster
+  components:
+  - type: StorageFill
+    contents:
+    - id: OxygenTankFilled
+    - id: ClothingOuterHardsuitLuxury
+    - id: ClothingMaskBreath
+  - type: AccessReader
+    access: [["Quartermaster"]]
+
+
 #CE's hardsuit
 - type: entity
   id: SuitStorageCE
