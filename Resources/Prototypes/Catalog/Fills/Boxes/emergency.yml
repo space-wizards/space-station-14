@@ -79,7 +79,6 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-
   parent: BoxCardboard
   id: BoxSurvivalSecurity
   name: survival box
@@ -89,7 +88,7 @@
   - type: StorageFill
     contents:
     - id: ClothingMaskGasSecurity
-    - id: EmergencyOxygenTankFilled
+    - id: ExtendedEmergencyOxygenTankFilled
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
@@ -97,7 +96,7 @@
   - type: Sprite
     layers:
     - state: internals
-    - state: emergencytank
+    - state: extendedtank
 
 - type: entity
   parent: BoxSurvivalSecurity
@@ -107,7 +106,7 @@
   - type: StorageFill
     contents:
     - id: ClothingMaskGasSecurity
-    - id: EmergencyNitrogenTankFilled
+    - id: ExtendedEmergencyNitrogenTankFilled
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
@@ -120,7 +119,6 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-
   parent: BoxCardboard
   id: BoxSurvivalMedical
   name: survival box
