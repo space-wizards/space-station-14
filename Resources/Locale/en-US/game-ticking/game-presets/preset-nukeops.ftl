@@ -31,5 +31,5 @@ nukeops-not-enough-ready-players = Not enough players readied up for the game! T
 nukeops-no-one-ready = No players readied up! Can't start Nukeops.
 
 nukeops-role-commander = Commander
-nukeops-role-agent = Agent
+nukeops-role-agent = Corpsman
 nukeops-role-operator = Operator
