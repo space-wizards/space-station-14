@@ -123,6 +123,8 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (HasComp<AnomalySupercriticalComponent>(ent.Owner))
             return;
 
+        Resolve(ent.Owner, ref ent.Comp, logMissing: false);
+
         AdminLog.Add(LogType.Anomaly, LogImpact.High, $"Anomaly {ToPrettyString(ent.Owner)} began to go supercritical.");
         if (_net.IsServer)
             Log.Info($"Anomaly is going supercritical. Entity: {ToPrettyString(ent.Owner)}");
