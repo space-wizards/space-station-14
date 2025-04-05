@@ -53,6 +53,9 @@
   - WeaponForceGun
   - WeaponLaserSvalinn
   - WeaponProtoKineticAccelerator
+  - PKAUpgradeDamage
+  - PKAUpgradeRange
+  - PKAUpgradeFireRate
   - WeaponTetherGun
   - WeaponGauntletGorilla
 
