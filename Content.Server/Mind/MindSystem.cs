@@ -192,7 +192,7 @@ public sealed class MindSystem : SharedMindSystem
         if (entity != null)
         {
             component = EnsureComp<MindContainerComponent>(entity.Value);
-            component.showExamineInfo = setShowExamineInfo;
+            component.ShowExamineInfo = setShowExamineInfo;
 
             if (component.HasMind)
                 _ghosts.OnGhostAttempt(component.Mind.Value, false);

@@ -338,7 +338,12 @@ public abstract partial class SharedMindSystem : EntitySystem
     /// <exception cref="ArgumentException">
     ///     Thrown if <paramref name="entity"/> is already controlled by another player.
     /// </exception>
-    public virtual void TransferTo(EntityUid mindId, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true, MindComponent? mind = null)
+    public virtual void TransferTo(EntityUid mindId,
+        EntityUid? entity,
+        bool ghostCheckOverride = false,
+        bool createGhost = true,
+        MindComponent? mind = null,
+        bool setShowExamineInfo = false)
     {
     }
 
