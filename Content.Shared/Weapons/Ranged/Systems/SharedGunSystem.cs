@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using System.Reflection;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
@@ -119,7 +120,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (melee.NextAttack > component.NextFire)
         {
             component.NextFire = melee.NextAttack;
-            EntityManager.DirtyField(uid, component, nameof(GunComponent.NextFire));
+            DirtyField(uid, component, nameof(GunComponent.NextFire));
         }
     }
 
@@ -200,7 +201,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         gun.ShotCounter = 0;
         gun.ShootCoordinates = null;
         gun.Target = null;
-        EntityManager.DirtyField(uid, gun, nameof(GunComponent.ShotCounter));
+        DirtyField(uid, gun, nameof(GunComponent.ShotCounter));
     }
 
     /// <summary>
@@ -210,8 +211,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         gun.ShootCoordinates = toCoordinates;
         AttemptShoot(user, gunUid, gun);
-        gun.ShotCounter = 0;
-        EntityManager.DirtyField(gunUid, gun, nameof(GunComponent.ShotCounter));
+        TryDirtyField(gunUid, gun, nameof(GunComponent.ShotCounter), ref gun.ShotCounter, 0);
     }
 
     /// <summary>
@@ -280,7 +280,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         // NextFire has been touched regardless so need to dirty the gun.
-        EntityManager.DirtyField(gunUid, gun, nameof(GunComponent.NextFire));
+        DirtyField(gunUid, gun, nameof(GunComponent.NextFire));
 
         // Get how many shots we're actually allowed to make, due to clip size or otherwise.
         // Don't do this in the loop so we still reset NextFire.
@@ -333,8 +333,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         // Even if we don't actually shoot update the ShotCounter. This is to avoid spamming empty sounds
         // where the gun may be SemiAuto or Burst.
-        gun.ShotCounter += shots;
-        EntityManager.DirtyField(gunUid, gun, nameof(GunComponent.ShotCounter));
+        TryDirtyField(gunUid, gun, nameof(GunComponent.ShotCounter), ref gun.ShotCounter, gun.ShotCounter + shots);
 
         if (ev.Ammo.Count <= 0)
         {
@@ -440,10 +439,9 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected void SetCartridgeSpent(EntityUid uid, CartridgeAmmoComponent cartridge, bool spent)
     {
-        if (cartridge.Spent != spent)
-            DirtyField(uid, cartridge, nameof(CartridgeAmmoComponent.Spent));
+        if (!TryDirtyField(uid, cartridge, nameof(CartridgeAmmoComponent.Spent), ref cartridge.Spent, spent))
+            return;
 
-        cartridge.Spent = spent;
         Appearance.SetData(uid, AmmoVisuals.Spent, spent);
     }
 
@@ -539,60 +537,61 @@ public abstract partial class SharedGunSystem : EntitySystem
         );
 
         RaiseLocalEvent(gun, ref ev);
+        TryComp(gun.Owner, out MetaDataComponent? metadata);
 
-        if (comp.SoundGunshotModified != ev.SoundGunshot)
-        {
-            comp.SoundGunshotModified = ev.SoundGunshot;
-            DirtyField(gun, nameof(GunComponent.SoundGunshotModified));
-        }
+        EntityManager.TryDirtyField(gun,
+            nameof(GunComponent.SoundGunshotModified),
+            ref comp.SoundGunshotModified,
+            ev.SoundGunshot,
+            metadata: metadata);
 
-        if (!MathHelper.CloseTo(comp.CameraRecoilScalarModified, ev.CameraRecoilScalar))
-        {
-            comp.CameraRecoilScalarModified = ev.CameraRecoilScalar;
-            DirtyField(gun, nameof(GunComponent.CameraRecoilScalarModified));
-        }
+        TryDirtyField(gun,
+            nameof(GunComponent.CameraRecoilScalarModified),
+            ref comp.CameraRecoilScalarModified,
+            ev.CameraRecoilScalar,
+            metadata: metadata);
 
-        if (!comp.AngleIncreaseModified.EqualsApprox(ev.AngleIncrease))
-        {
-            comp.AngleIncreaseModified = ev.AngleIncrease;
-            DirtyField(gun, nameof(GunComponent.AngleIncreaseModified));
-        }
+        TryDirtyField(gun,
+            nameof(GunComponent.AngleIncreaseModified),
+            ref comp.AngleIncreaseModified,
+            ev.AngleIncrease,
+            metadata: metadata);
 
-        if (!comp.AngleDecayModified.EqualsApprox(ev.AngleDecay))
-        {
-            comp.AngleDecayModified = ev.AngleDecay;
-            DirtyField(gun, nameof(GunComponent.AngleDecayModified));
-        }
+        TryDirtyField(gun,
+            nameof(GunComponent.AngleDecayModified),
+            ref comp.AngleDecayModified,
+            ev.AngleDecay,
+            metadata: metadata);
 
-        if (!comp.MaxAngleModified.EqualsApprox(ev.MinAngle))
-        {
-            comp.MaxAngleModified = ev.MaxAngle;
-            DirtyField(gun, nameof(GunComponent.MaxAngleModified));
-        }
+        TryDirtyField(gun,
+            nameof(GunComponent.MaxAngleModified),
+            ref comp.MaxAngleModified,
+            ev.MaxAngle,
+            metadata: metadata);
 
-        if (!comp.MinAngleModified.EqualsApprox(ev.MinAngle))
-        {
-            comp.MinAngleModified = ev.MinAngle;
-            DirtyField(gun, nameof(GunComponent.MinAngleModified));
-        }
+        TryDirtyField(gun,
+            nameof(GunComponent.MinAngleModified),
+            ref comp.MinAngleModified,
+            ev.MinAngle,
+            metadata: metadata);
 
-        if (comp.ShotsPerBurstModified != ev.ShotsPerBurst)
-        {
-            comp.ShotsPerBurstModified = ev.ShotsPerBurst;
-            DirtyField(gun, nameof(GunComponent.ShotsPerBurstModified));
-        }
+        TryDirtyField(gun,
+            nameof(GunComponent.ShotsPerBurstModified),
+            ref comp.ShotsPerBurstModified,
+            ev.ShotsPerBurst,
+            metadata: metadata);
 
-        if (!MathHelper.CloseTo(comp.FireRateModified, ev.FireRate))
-        {
-            comp.FireRateModified = ev.FireRate;
-            DirtyField(gun, nameof(GunComponent.FireRateModified));
-        }
+        TryDirtyField(gun,
+            nameof(GunComponent.FireRateModified),
+            ref comp.FireRateModified,
+            ev.FireRate,
+            metadata: metadata);
 
-        if (!MathHelper.CloseTo(comp.ProjectileSpeedModified, ev.ProjectileSpeed))
-        {
-            comp.ProjectileSpeedModified = ev.ProjectileSpeed;
-            DirtyField(gun, nameof(GunComponent.ProjectileSpeedModified));
-        }
+        TryDirtyField(gun,
+            nameof(GunComponent.ProjectileSpeedModified),
+            ref comp.ProjectileSpeedModified,
+            ev.ProjectileSpeed,
+            metadata: metadata);
     }
 
     protected abstract void CreateEffect(EntityUid gunUid, MuzzleFlashEvent message, EntityUid? user = null);
