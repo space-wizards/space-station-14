@@ -149,13 +149,15 @@
   parent: BasePyrotechnic
   desc: reagent-desc-welding-fuel
   physicalDesc: reagent-physical-desc-oily
-  slippery: true
+  slipData:
+    requiredSlipSpeed: 3.5
   flavor: bitter
   flavorMinimum: 0.01
   color: "#a76b1c"
   recognizable: true
   boilingPoint: -84.7 # Acetylene. Close enough.
   meltingPoint: -80.7
+  friction: 0.4
   tileReactions:
   - !type:FlammableTileReaction {}
   metabolisms:

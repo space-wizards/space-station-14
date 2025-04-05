@@ -16,8 +16,9 @@
         - ReagentId: Nutriment
           Quantity: 5
   - type: Slippery
-    paralyzeTime: 3
-    launchForwardsMultiplier: 3
+    slipData:
+      paralyzeTime: 3
+      launchForwardsMultiplier: 3
   - type: StepTrigger
     intersectRatio: 0.2
   - type: CollisionWake
