@@ -74,6 +74,12 @@ public sealed partial class CCVars
         CVarDef.Create("ui.admin_playerlist_role_type_color", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
+    /// If true, entries on the player list will be shown with button-style borders
+    /// </summary>
+    public static readonly CVarDef<bool> AdminPlayerlistButtonStyling =
+        CVarDef.Create("ui.admin_playerlist_button_styling", false, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
     /// If true, the admin overlay will show antag symbols
     /// </summary>
     public static readonly CVarDef<bool> AdminOverlaySymbols =
