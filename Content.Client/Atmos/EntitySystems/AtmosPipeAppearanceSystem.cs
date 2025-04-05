@@ -35,6 +35,18 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         }
     }
 
+    public void SetLayerState(Entity<PipeAppearanceComponent> ent, string state)
+    {
+        if (!TryComp(ent, out SpriteComponent? sprite))
+            return;
+
+        foreach (PipeConnectionLayer layerKey in Enum.GetValues(typeof(PipeConnectionLayer)))
+        {
+            var layer = sprite.LayerMapGet(layerKey);
+            sprite.LayerSetState(layer, state);
+        }
+    }
+
     private void HideAllPipeConnection(SpriteComponent sprite)
     {
         foreach (PipeConnectionLayer layerKey in Enum.GetValues(typeof(PipeConnectionLayer)))

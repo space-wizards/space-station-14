@@ -1,7 +1,7 @@
 {
     "version":1,
     "size":{"x":32,"y":32},
-    "copyright":"Base sprites taken from tgstation, splitted to display on two layers (machinebody/panel) by Menshin, for SS14",
+    "copyright":"Base sprites taken from tgstation, splitted to display on two layers (machinebody/panel) by Menshin, for SS14, edited by chromiumboy",
     "license":"CC-BY-SA-3.0",
     "states":[
         {
@@ -32,6 +32,14 @@
         },
         {
             "name":"pipe",
+            "directions":4
+        },
+        {
+            "name":"pipe1",
+            "directions":4
+        },
+        {
+            "name":"pipe2",
             "directions":4
         }
     ]

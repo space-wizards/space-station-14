@@ -96,27 +96,27 @@ public sealed class PipeRestrictOverlapSystem : EntitySystem
 
     public bool PipeNodesOverlap(Entity<NodeContainerComponent, TransformComponent> ent, Entity<NodeContainerComponent, TransformComponent> other)
     {
-        var entDirs = GetAllDirections(ent).ToList();
-        var otherDirs = GetAllDirections(other).ToList();
+        var entDirsAndLayers = GetAllDirectionsAndLayers(ent).ToList();
+        var otherDirsAndLayers = GetAllDirectionsAndLayers(other).ToList();
 
-        foreach (var dir in entDirs)
+        foreach (var (dir, layer) in entDirsAndLayers)
         {
-            foreach (var otherDir in otherDirs)
+            foreach (var (otherDir, otherLayer) in otherDirsAndLayers)
             {
-                if ((dir & otherDir) != 0)
+                if ((dir & otherDir) != 0 && layer == otherLayer)
                     return true;
             }
         }
 
         return false;
 
-        IEnumerable<PipeDirection> GetAllDirections(Entity<NodeContainerComponent, TransformComponent> pipe)
+        IEnumerable<(PipeDirection, int)> GetAllDirectionsAndLayers(Entity<NodeContainerComponent, TransformComponent> pipe)
         {
             foreach (var node in pipe.Comp1.Nodes.Values)
             {
                 // we need to rotate the pipe manually like this because the rotation doesn't update for pipes that are unanchored.
                 if (node is PipeNode pipeNode)
-                    yield return pipeNode.OriginalPipeDirection.RotatePipeDirection(pipe.Comp2.LocalRotation);
+                    yield return (pipeNode.OriginalPipeDirection.RotatePipeDirection(pipe.Comp2.LocalRotation), pipeNode.CurrentPipeLayer);
             }
         }
     }

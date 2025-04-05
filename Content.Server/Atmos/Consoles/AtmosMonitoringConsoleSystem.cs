@@ -406,9 +406,9 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
             var netId = GetPipeNodeNetId(pipeNode);
             var pipeDirection = pipeNode.CurrentPipeDirection;
 
-            chunk.AtmosPipeData.TryGetValue((netId, pipeColor.Color.ToHex()), out var atmosPipeData);
+            chunk.AtmosPipeData.TryGetValue((netId, pipeNode.CurrentPipeLayer, pipeColor.Color.ToHex()), out var atmosPipeData);
             atmosPipeData |= (ulong)pipeDirection << tileIdx * SharedNavMapSystem.Directions;
-            chunk.AtmosPipeData[(netId, pipeColor.Color.ToHex())] = atmosPipeData;
+            chunk.AtmosPipeData[(netId, pipeNode.CurrentPipeLayer, pipeColor.Color.ToHex())] = atmosPipeData;
         }
     }
 
