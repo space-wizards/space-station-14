@@ -1,3 +1,4 @@
+using Content.Shared.Doors.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -9,6 +10,7 @@ namespace Content.Shared.Doors.Components;
 /// This is used for a condition door that allows entry only through a single side.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[Access(typeof(TurnstileSystem))]
 public sealed partial class TurnstileComponent : Component
 {
     /// <summary>

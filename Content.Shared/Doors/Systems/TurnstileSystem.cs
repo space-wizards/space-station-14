@@ -14,7 +14,7 @@ namespace Content.Shared.Doors.Systems;
 /// <summary>
 /// This handles logic and interactions related to <see cref="TurnstileComponent"/>
 /// </summary>
-public sealed class SharedTurnstileSystem : EntitySystem
+public sealed class TurnstileSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
