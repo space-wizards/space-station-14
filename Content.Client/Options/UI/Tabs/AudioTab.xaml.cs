@@ -29,11 +29,6 @@ public sealed partial class AudioTab : Control
         masterVolume.ImmediateValueChanged += OnMasterVolumeSliderChanged;
 
         Control.AddOptionPercentSlider(
-            CVars.MidiVolume,
-            SliderVolumeMidi,
-            scale: ContentAudioSystem.MidiVolumeMultiplier);
-
-        Control.AddOptionPercentSlider(
             CCVars.AmbientMusicVolume,
             SliderVolumeAmbientMusic,
             scale: ContentAudioSystem.AmbientMusicMultiplier);
@@ -52,6 +47,26 @@ public sealed partial class AudioTab : Control
             CCVars.InterfaceVolume,
             SliderVolumeInterface,
             scale: ContentAudioSystem.InterfaceMultiplier);
+
+        Control.AddOptionPercentSlider(
+            CCVars.WorldSoundsVolume,
+            SliderVolumeWorldSounds,
+            scale: 1f);
+
+        Control.AddOptionPercentSlider(
+            CVars.MidiVolume,
+            SliderVolumeMidi,
+            scale: ContentAudioSystem.MidiVolumeMultiplier);
+
+        Control.AddOptionPercentSlider(
+            CCVars.JukeboxVolume,
+            SliderVolumeJukebox,
+            scale: ContentAudioSystem.JukeboxMultiplier);
+
+        Control.AddOptionPercentSlider(
+            CCVars.WorldOtherSoundsVolume,
+            SliderVolumeOtherWorld,
+            scale: 1f);
 
         Control.AddOptionSlider(
             CCVars.MaxAmbientSources,
