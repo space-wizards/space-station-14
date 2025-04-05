@@ -1,4 +1,5 @@
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.StatusEffect;
 
 namespace Content.Shared.Item.ItemToggle;
 
@@ -7,6 +8,8 @@ namespace Content.Shared.Item.ItemToggle;
 /// </summary>
 public sealed class ComponentTogglerSystem : EntitySystem
 {
+    [Dependency] private readonly RefCountSystem _refCount = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -19,8 +22,8 @@ public sealed class ComponentTogglerSystem : EntitySystem
         var target = ent.Comp.Parent ? Transform(ent).ParentUid : ent.Owner;
 
         if (args.Activated)
-            EntityManager.AddComponents(target, ent.Comp.Components);
+            _refCount.AddComponents(target, ent.Comp.Components);
         else
-            EntityManager.RemoveComponents(target, ent.Comp.RemoveComponents ?? ent.Comp.Components);
+            _refCount.RemoveComponents(target, ent.Comp.RemoveComponents ?? ent.Comp.Components);
     }
 }
