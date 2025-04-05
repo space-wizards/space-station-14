@@ -83,6 +83,13 @@ public sealed partial class GhostComponent : Component
     }
 
     /// <summary>
+    ///     Whether the ghost warp is visible in the ghost menu.
+    /// </summary>
+    /// <remarks>Admin ghosts will not appear in the ghost warp menu for the public.</remarks>
+    [DataField("hideGhostWarp"), ViewVariables(VVAccess.ReadWrite)]
+    public bool HideGhostWarp = false;
+
+    /// <summary>
     /// Ghost color
     /// </summary>
     /// <remarks>Used to allow admins to change ghost colors. Should be removed if the capability to edit existing sprite colors is ever added back.</remarks>
