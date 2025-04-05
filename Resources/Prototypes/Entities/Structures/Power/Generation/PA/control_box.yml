@@ -27,6 +27,50 @@
     layoutId: ParticleAccelerator
   - type: AccessReader
     access: [["Engineering"]]
+  - type: MultipartMachine
+    parts:
+      EndCap:
+        component: ParticleAcceleratorEndCap
+        offset: 1, -1
+        rotation: -90
+        sprite:
+          sprite: Structures/Power/Generation/PA/end_cap.rsi
+          state: completed
+      FuelChamber:
+        component: ParticleAcceleratorFuelChamber
+        offset: 0, -1
+        rotation: -90
+        sprite:
+          sprite: Structures/Power/Generation/PA/fuel_chamber.rsi
+          state: completed
+      PowerBox:
+        component: ParticleAcceleratorPowerBox
+        offset: -1, -1
+        rotation: -90
+        sprite:
+          sprite: Structures/Power/Generation/PA/power_box.rsi
+          state: completed
+      PortEmitter:
+        component: ParticleAcceleratorEmitter
+        offset: -2, -2
+        rotation: -90
+        sprite:
+          sprite: Structures/Power/Generation/PA/emitter_port.rsi
+          state: completed
+      ForeEmitter:
+        component: ParticleAcceleratorEmitter
+        offset: -2, -1
+        rotation: -90
+        sprite:
+          sprite: Structures/Power/Generation/PA/emitter_fore.rsi
+          state: completed
+      StarboardEmitter:
+        component: ParticleAcceleratorEmitter
+        offset: -2, 0
+        rotation: -90
+        sprite:
+          sprite: Structures/Power/Generation/PA/emitter_starboard.rsi
+          state: completed
 
 # Unfinished
 
