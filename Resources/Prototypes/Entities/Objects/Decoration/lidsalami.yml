@@ -1,6 +1,6 @@
 - type: entity
-  id: LidSalami
   parent: BaseItem
+  id: LidSalami
   name: salami lid
   description: Ain't gon' fit, won't fit.
   components:
@@ -12,3 +12,21 @@
     size: Ginormous
   - type: StaticPrice
     price: 0
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 5
+  - type: Tag
+    tags:
+    - LidSalami
+
+- type: entity
+  parent: LidSalami
+  id: LidSalamiRGB
+  name: Salami LED
+  description: Someone glued an LED strip and a battery to this salami lid...
+  components:
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+  - type: RgbLightController
+    layers: [ 0 ]
