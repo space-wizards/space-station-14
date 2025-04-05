@@ -110,9 +110,15 @@ public struct AtmosDeviceNavMapData
     public Color PipeColor;
 
     /// <summary>
+    /// The pipe layer the entity is on
+    /// </summary>
+    public byte PipeLayer;
+
+    /// <summary>
     /// Populate the atmos monitoring console nav map with a single entity
     /// </summary>
-    public AtmosDeviceNavMapData(NetEntity netEntity, NetCoordinates netCoordinates, int netId, ProtoId<NavMapBlipPrototype> navMapBlip, Direction direction, Color pipeColor)
+    public AtmosDeviceNavMapData
+        (NetEntity netEntity, NetCoordinates netCoordinates, int netId, ProtoId<NavMapBlipPrototype> navMapBlip, Direction direction, Color pipeColor, byte pipeLayer)
     {
         NetEntity = netEntity;
         NetCoordinates = netCoordinates;
@@ -120,6 +126,7 @@ public struct AtmosDeviceNavMapData
         NavMapBlip = navMapBlip;
         Direction = direction;
         PipeColor = pipeColor;
+        PipeLayer = pipeLayer;
     }
 }
 
