@@ -3,7 +3,7 @@
   Atmos has a wide variety of tools and equipment at their disposal for the manipulation of gasses throughout the station.
 
   [bold]Warning: unanchoring (unwrenching) most devices containing gas will [color=red]leak gas[/color] into the atmosphere.[/bold]
-  You can safely unanchor [textlink="canisters" link="GasCanisters"], [textlink="portable scrubbers" link="PortableScrubber"], [textlink="condensers" link="GasCondensing"], and [textlink="thermomachines" link="Thermomachines"].
+  You can safely unanchor [textlink="canisters" link="GasCanisters"/], [textlink="portable scrubbers" link="PortableScrubber"/], [textlink="condensers" link="GasCondensing"/], and [textlink="thermomachines" link="Thermomachines"/].
 
   <Box>
     <GuideEntityEmbed Entity="GasPipeStraight" Caption=""/>
@@ -16,7 +16,7 @@
     ## Pipes
   </Box>
   <Box>
-    [color=#999999][italic]Distributing gasses from one place to another[italic][/color]
+    [color=#999999][italic]Distributing gasses from one place to another[/italic][/color]
   </Box>
 
   <Box>
@@ -27,7 +27,7 @@
     ## Pumps
   </Box>
   <Box>
-    [color=#999999][italic]Forcing the movement of gasses from one place to another[italic][/color]
+    [color=#999999][italic]Forcing the movement of gasses from one place to another[/italic][/color]
   </Box>
 
   <Box>
@@ -41,7 +41,7 @@
     ## Atmosphere Input and Output
   </Box>
   <Box>
-    [color=#999999][italic]Inserting and extracting gasses from a present (or non-present) atmosphere[italic][/color]
+    [color=#999999][italic]Inserting and extracting gasses from a present (or non-present) atmosphere[/italic][/color]
   </Box>
 
   <Box>
@@ -54,7 +54,7 @@
     ## Valves
   </Box>
   <Box>
-    [color=#999999][italic]Controlling the flow of gas through pipes[italic][/color]
+    [color=#999999][italic]Controlling the flow of gas through pipes[/italic][/color]
   </Box>
 
   <Box>
@@ -65,7 +65,7 @@
     ## Mixing and Filtering
   </Box>
   <Box>
-    [color=#999999][italic]Manipulating the composition of gas[italic][/color]
+    [color=#999999][italic]Manipulating the composition of gas[/italic][/color]
   </Box>
 
   <Box>
@@ -80,7 +80,7 @@
     ## Gas Canisters
   </Box>
   <Box>
-    [color=#999999][italic]Storing and transporting gas for easy use by the crew[italic][/color]
+    [color=#999999][italic]Storing and transporting gas for easy use by the crew[/italic][/color]
   </Box>
 
   <Box>
@@ -93,7 +93,7 @@
     ## Thermomachines and Radiators
   </Box>
   <Box>
-    [color=#999999][italic]Manipulating the temperature of gasses in a pipenet or atmosphere[italic][/color]
+    [color=#999999][italic]Manipulating the temperature of gasses in a pipenet or atmosphere[/italic][/color]
   </Box>
 
   <Box>
@@ -103,6 +103,6 @@
     ## Gas Condensing
   </Box>
   <Box>
-    [color=#999999][italic]Condensing gasses for further use[italic][/color]
+    [color=#999999][italic]Condensing gasses for further use[/italic][/color]
   </Box>
 </Document>

@@ -2,7 +2,7 @@
   # The Wizard
 
   <Box>
-    [color=#457573][italic]IT'S WIZARD TIME MOTHERF-...[italic][/color]
+    [color=#457573][italic]IT'S WIZARD TIME MOTHERF-...[/italic][/color]
   </Box>
   <Box>
     <GuideEntityEmbed Entity="ToyFigurineWizard" Caption=""/>

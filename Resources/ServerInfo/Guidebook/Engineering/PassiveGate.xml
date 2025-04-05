@@ -10,6 +10,6 @@
 
   It's useful in many applications, for example:
   - Preventing a pure gas from getting contaminated via a mixed gas flowing back through the pipe.
-  - Preventing pressure or temperature changes across two [textlink="pipenets" link="PipeNetworks"] in the opposite direction.
-  - Quickly checking the flow rate on a pipenet without needing a [textlink="gas analyzer" link="AtmosTools"].
+  - Preventing pressure or temperature changes across two [textlink="pipenets" link="PipeNetworks"/] in the opposite direction.
+  - Quickly checking the flow rate on a pipenet without needing a [textlink="gas analyzer" link="AtmosTools"/].
 </Document>

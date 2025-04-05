@@ -1,13 +1,13 @@
 <Document>
   # Mixing and Filtering
-  Gas mixers and filters are essential tools for manipulating the composition of gasses within a [textlink="pipe network" link="PipeNetworks"].
+  Gas mixers and filters are essential tools for manipulating the composition of gasses within a [textlink="pipe network" link="PipeNetworks"/].
   <Box>
     <GuideEntityEmbed Entity="GasMixer"/>
     <GuideEntityEmbed Entity="GasFilter"/>
   </Box>
 
   ## Gas Mixer
-  Gas mixers are used to combine gasses in specific ratios within a [textlink="pipe network." link="PipeNetworks"]
+  Gas mixers are used to combine gasses in specific ratios within a [textlink="pipe network." link="PipeNetworks"/]
   They are essential for creating controlled gas mixtures for various applications.
 
   Gas mixers have 3 connections: 2 inputs and 1 output, as shown below:
@@ -36,7 +36,7 @@
   - Mixing oxygen and plasma for plasma burning to create Tritium
 
   ## Gas Filter
-  Gas filters are used to separate gasses from a mixture within a [textlink="pipe network." link="PipeNetworks"]
+  Gas filters are used to separate gasses from a mixture within a [textlink="pipe network." link="PipeNetworks"/]
 
   <Box>
     <GuideEntityEmbed Entity="GasPipeStraight" Caption="Input" Rotation="90"/>
@@ -50,6 +50,6 @@
   Gas filters will become blocked and will not filter gas if either output is blocked.
 
   Gas filters can be used in a variety of applications, for example:
-  - Filtering out unwanted gasses from a [textlink="pipe network" link="PipeNetworks"]
+  - Filtering out unwanted gasses from a [textlink="pipe network" link="PipeNetworks"/]
   - Separating specific gasses for storage in a station's recyclernet
 </Document>
