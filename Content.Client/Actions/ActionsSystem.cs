@@ -68,9 +68,11 @@ namespace Content.Client.Actions
             base.Update(frameTime);
 
             if (_playerManager.LocalEntity is not { } player ||
-                !_actionsQuery.TryComp(player, out var actionsComponent) ||
-                _disabledActions.Count == 0)
+                _disabledActions.Count == 0 ||
+                !_actionsQuery.TryComp(player, out var actionsComponent))
                 return;
+
+            _toRemove.Clear();
 
             foreach (var (actionId, actionComp, charges, autoRecharge) in _disabledActions)
             {
