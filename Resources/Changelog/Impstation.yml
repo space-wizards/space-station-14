@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ruddygreat
-  changes:
-  - message: All cyborgs can now use the L6C ROW module!
-    type: Tweak
-  id: 980
-  time: '2025-01-21T02:39:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1427
 - author: AftrLite
   changes:
   - message: Buffs to the Null Rod's [Divine Grasp] transform.
@@ -4090,3 +4083,15 @@
   id: 1479
   time: '2025-04-06T07:23:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2203
+- author: jtfg-dev
+  changes:
+  - message: A player's echoed messages are back to being sent to the chat.
+    type: Fix
+  - message: Echolalia now might echo a message as a whisper.
+    type: Tweak
+  - message: Players who echo now do so smartly, making it more interesting to determine
+      what is and isn't an unconscious message.
+    type: Tweak
+  id: 1480
+  time: '2025-04-06T10:21:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2209
