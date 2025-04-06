@@ -244,7 +244,7 @@
       - state: base-part-inhand-right
       - state: base-stripes-inhand-right
         color: "#7B0F12"
-      
+
 
 - type: entity
   id: BaseBorgModuleSyndicateAssault
@@ -278,6 +278,7 @@
   id: BorgModuleCable
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: cable cyborg module
+  description: A universal cyborg module which allows the unit to install and manipulate electrical systems.
   components:
   - type: Sprite
     layers:
@@ -288,6 +289,8 @@
     - CableApcStackLingering10
     - CableMVStackLingering10
     - CableHVStackLingering10
+    - Wirecutter
+    - Crowbar
     - trayScanner
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
@@ -296,7 +299,7 @@
   id: BorgModuleFireExtinguisher
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: thruster cyborg module
-  description: NT assigned a team to design a jetpack for cyborg units, but they ran out of funding and just made a big fire extinguisher. Comes with a integrated GPS and mass scanner.
+  description: NT assigned a team to design a jetpack for cyborg units, but they ran out of funding and just made a big fire extinguisher. It comes with a integrated GPS and mass scanner though!
   components:
   - type: Sprite
     layers:
@@ -305,7 +308,7 @@
   - type: ItemBorgModule
     items:
     - BorgFireExtinguisher
-    - HandheldGPSBasic
+    - BorgHandheldGPSBasic
     - HandHeldMassScannerBorg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: extinguisher-module }
@@ -314,7 +317,6 @@
   id: BorgModuleTool
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: tool cyborg module
-  description: A essential part of every Cyborg's loadout, this module contains all the basic tools for maintaining the station.
   components:
   - type: Sprite
     layers:
@@ -342,7 +344,7 @@
     - state: icon-gps
   - type: ItemBorgModule
     items:
-    - HandheldGPSBasic
+    - BorgHandheldGPSBasic
     - HandHeldMassScannerBorg
     - HandheldStationMapUnpowered
   - type: BorgModuleIcon
@@ -391,6 +393,7 @@
   id: BorgModuleAdvancedMining
   parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
   name: advanced mining cyborg module
+  description: Advanced cargo module containing advanced mining equipment. Studies show it advances productivity of a cyborg by 150%.
   components:
   - type: Sprite
     layers:
@@ -418,7 +421,7 @@
     items:
     - WeaponGrapplingGun
     - BorgFireExtinguisher
-    - HandheldGPSBasic
+    - BorgHandheldGPSBasic
     - HandHeldMassScannerBorg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: grappling-module }
@@ -428,6 +431,7 @@
   id: BorgModuleAdvancedTool
   parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
   name: advanced tool cyborg module
+  description: Advanced engineering module containing cutting-edge tools.
   components:
   - type: Sprite
     layers:
@@ -479,7 +483,7 @@
     items:
     - RCDRecharging
     - BorgFireExtinguisher
-    - HandheldGPSBasic
+    - BorgHandheldGPSBasic
     - GasAnalyzer
     - HolofanProjectorBorg
     - GeigerCounter
@@ -501,6 +505,7 @@
     - LightReplacer
     - BorgTrashBag
     - Plunger
+    - SoapNT
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: light-replacer-module }
 
@@ -518,7 +523,7 @@
     - MopItem
     - BorgBucket
     - BorgSprayBottle
-    - HoloprojectorBorg
+    - BorgHoloprojector
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: cleaning-module }
 
@@ -526,6 +531,7 @@
   id: BorgModuleAdvancedCleaning
   parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
   name: advanced cleaning cyborg module
+  description: Advanced janitorial module containing, well... advanced janitor equipment. What were you expecting?
   components:
   - type: Sprite
     layers:
@@ -535,9 +541,9 @@
     items:
     - AdvMopItem
     - BorgMegaSprayBottle
-    - HoloprojectorBorg
+    - BorgHoloprojector
     - BorgDropper
-    - Beaker
+    - BorgBeaker
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-cleaning-module }
 
@@ -569,6 +575,7 @@
     - state: icon-treatment
   - type: ItemBorgModule
     items:
+    - HandheldHealthAnalyzerUnpowered
     - Gauze10Lingering
     - Brutepack10Lingering
     - Ointment10Lingering
@@ -592,7 +599,7 @@
     - HandheldHealthAnalyzerUnpowered
     - DefibrillatorOneHandedUnpowered
     - BorgFireExtinguisher
-    - HandheldGPSBasic
+    - BorgHandheldGPSBasic
     - HandLabeler
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: defib-module }
@@ -609,8 +616,8 @@
   - type: ItemBorgModule
     items:
     - HandheldHealthAnalyzerUnpowered
-    - BorgDropper
     - Syringe
+    - BorgDropper
     - BorgVial
     - BorgVial
     - BorgVial
@@ -621,6 +628,7 @@
   id: BorgModuleAdvancedChemical
   parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
   name: advanced chemical cyborg module
+  description: Advanced medical module containing the cyborg adaptation of the highly coveted hypospray. Now your cyborgs can inject crew-harmers with chloral hydrate even faster!
   components:
   - type: Sprite
     layers:
@@ -631,9 +639,15 @@
     - HandheldHealthAnalyzerUnpowered
     - BorgHypo
     - Syringe
+    - BorgDropper
     - BorgBeaker
     - BorgBeaker
-    - BorgBeaker
+    - BorgVial
+    - BorgVial
+    - BorgVial
+    - BorgVial
+    - BorgVial
+    - BorgVial
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-chem-module }
 
@@ -694,10 +708,10 @@
     - Pen
     #- BooksBag (Add back when hand whitelisting exists, at the moment they can only use it like an orebag.)
     - HandLabeler
-    - Lighter
-    - BorgDropper
     - RubberStampApproved
     - RubberStampDenied
+      - BorgVial
+    - BorgDropper
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: service-module }
 
@@ -730,15 +744,13 @@
   - type: ItemBorgModule
     items:
     - HydroponicsToolSpade
-    - HydroponicsToolClippers
     - HydroponicsToolMiniHoe
-    - HydroponicsToolHatchet
     - Bucket
     - BorgDropper
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: gardening-module }
 
-- type: entity # depreciated, likely will be useful when hand whitelisting is implemented.
+- type: entity
   id: BorgModuleHarvesting
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
   name: harvesting cyborg module
@@ -750,7 +762,7 @@
   - type: ItemBorgModule
     items:
     - HydroponicsToolScythe
-    - HydroponicsToolMiniHoe
+    - HydroponicsToolClippers
     - HydroponicsToolHatchet
     - PlantBag
   - type: BorgModuleIcon

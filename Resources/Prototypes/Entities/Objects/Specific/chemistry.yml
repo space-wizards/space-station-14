@@ -97,7 +97,7 @@
 - type: entity
   parent: BaseItem
   id: BorgBeaker
-  name: large integrated chemical vessel
+  name: integrated beaker
   description: An internal compartment installed into a cyborg. Rated for 50 units of any liquid.
   components:
   - type: Tag
@@ -372,7 +372,7 @@
 - type: entity
   parent: Dropper
   id: BorgDropper
-  name: integrated hydraulic dropper
+  name: hydraulic dropper
   description: State-of-the-art hydraulic dropper built for cyborgs. It features a higher capacity than hand-powered droppers, able to hold 15 units of liquid.
   components:
   - type: Sprite

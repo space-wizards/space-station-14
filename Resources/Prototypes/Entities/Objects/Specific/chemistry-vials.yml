@@ -106,7 +106,7 @@
 - type: entity
   parent: BaseItem
   id: BorgVial
-  name: integrated chemical vessel
+  name: integrated vial
   description: An internal compartment installed into a cyborg. Rated for 30 units of any liquid.
   components:
   - type: Sprite

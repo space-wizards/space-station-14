@@ -210,7 +210,7 @@
   - BorgModuleService
   - BorgModuleClowning
   - BorgModuleGardening
-
+  - BorgModuleHarvesting
   radioChannels:
   - Science
   - Service

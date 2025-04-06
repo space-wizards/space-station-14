@@ -103,9 +103,9 @@
 - type: entity
   parent: SprayBottle
   id: BorgSprayBottle
-  name: integrated spray bottle
+  name: internal spray jet
   suffix: Filled
-  description: A pressurized bottle for spraying reagents, installed directly into a custodial cyborg. Typically filled with space cleaner for dealing with those nasty spills.
+  description: A pressurized vessel for spraying reagents, installed directly into a custodial cyborg. Typically filled with space cleaner for dealing with those nasty spills.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -116,9 +116,9 @@
           Quantity: 200
 
 - type: entity
-  parent: SprayBottle
+  parent: MegaSprayBottle
   id: BorgMegaSprayBottle
-  name: advanced integrated spray bottle
+  name: adv internal spray jet
   suffix: Filled
   description: An upgraded version of the integrated spray bottle, installed directly into a custodial cyborg. Typically filled with space cleaner for dealing with those nasty spills.
   components:

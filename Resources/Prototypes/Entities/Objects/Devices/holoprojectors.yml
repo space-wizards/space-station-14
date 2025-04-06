@@ -37,8 +37,10 @@
 
 - type: entity
   parent: Holoprojector
-  id: HoloprojectorBorg
+  id: BorgHoloprojector
   suffix: borg
+  name: holosign projector
+  description: A modified holographic sign projector for use in custodial cyborgs. Automatically recharges from the main power cell.
   components:
   - type: HolosignProjector
     chargeUse: 240
@@ -86,8 +88,8 @@
 - type: entity
   parent: HolofanProjector
   id: HolofanProjectorBorg
-  name: integrated holofan projector
-  description: Stops idiots from causing more crew harm during atmospheric emergencies. Installed directly into an engineering cyborg.
+  name: integrated holofan
+  description: Stops idiots from causing more crew harm during atmospheric emergencies. Installed directly into an engineering cyborg, it passively recharges from their main battery.
   components:
   - type: ItemSlots
     slots:
