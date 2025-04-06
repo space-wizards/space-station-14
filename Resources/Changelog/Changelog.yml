@@ -1,104 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Toggle verbs are no longer duplicated on magboots and fire extinguishers!
-    type: Fix
-  id: 7627
-  time: '2024-11-20T01:53:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32138
-- author: qwerltaz
-  changes:
-  - message: A new grid item view is available in the construction menu, togglable
-      with a button.
-    type: Add
-  - message: Construction menu default window size was tweaked.
-    type: Tweak
-  id: 7628
-  time: '2024-11-20T01:54:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32577
-- author: SpaceLizard24
-  changes:
-  - message: Reduced crafting costs of colored light tubes.
-    type: Tweak
-  id: 7629
-  time: '2024-11-20T01:59:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33376
-- author: thetolbean
-  changes:
-  - message: Items with a damage of 0 now have correct damage examination text.
-    type: Fix
-  id: 7630
-  time: '2024-11-20T02:05:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33064
-- author: SaphireLattice
-  changes:
-  - message: The Singularity/Tesla generator now requires being surrounded by containment
-      fields to activate. This can be disabled with an Emag.
-    type: Tweak
-  id: 7631
-  time: '2024-11-20T05:55:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33358
-- author: TheWaffleJesus
-  changes:
-  - message: You can now craft items with stacks of capacitors without it eating it
-      all!
-    type: Fix
-  id: 7632
-  time: '2024-11-20T07:18:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31966
-- author: ScarKy0, GoldenCan
-  changes:
-  - message: Ion stormed lawsets no longer persist between shifts.
-    type: Fix
-  - message: Cyborgs are now notified when inserted into a chassis with modified laws.
-    type: Tweak
-  id: 7633
-  time: '2024-11-20T07:55:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33311
-- author: ScarKy0, GoldenCan
-  changes:
-  - message: The Derelict Cyborg - a broken cyborg with altered laws due to year of
-      exposure to ion storms - can now appear as a ghost role through a new midround
-      event.
-    type: Add
-  - message: An ion storm affecting a Cyborg can no longer alter the law order of
-      the AI, cyborgs created later in the round or AI's and cyborgs in subsequent
-      rounds.
-    type: Fix
-  id: 7634
-  time: '2024-11-20T07:55:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32499
-- author: IProduceWidgets
-  changes:
-  - message: Presents no longer make non-items into items
-    type: Tweak
-  id: 7635
-  time: '2024-11-21T14:20:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33147
-- author: DrSmugleaf
-  changes:
-  - message: Fixed admin ghosts not being able to see or interact with items in pouches
-      in the stripping menu.
-    type: Fix
-  id: 7636
-  time: '2024-11-22T02:56:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31076
-- author: chromiumboy
-  changes:
-  - message: Added the gas pipe sensor. These sensors monitor the mixture of gases
-      passing through their pipe sub-network and report this information to any connected
-      air alarms
-    type: Add
-  id: 7637
-  time: '2024-11-22T03:46:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33128
-- author: IProduceWidgets
-  changes:
-  - message: The terminal is more tamper proof.
-    type: Fix
-  id: 7638
-  time: '2024-11-22T22:50:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33281
 - author: MissKay1994
   changes:
   - message: The salvage vendor now has enough equipment for everyone
@@ -3900,3 +3800,94 @@
   id: 8126
   time: '2025-04-03T06:58:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35863
+- author: whatston3
+  changes:
+  - message: Fancy tables and curtains now respect carpet stacks.
+    type: Fix
+  id: 8127
+  time: '2025-04-03T14:45:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33721
+- author: YuNii
+  changes:
+  - message: Stop ghosts from being logged to airlocks
+    type: Fix
+  id: 8128
+  time: '2025-04-03T22:24:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36261
+- author: K-Dynamic
+  changes:
+  - message: Proto-Kinetic Accelerators and PTK-800 Shuttle Gun recipes are now available
+      to the security techfab when researched by science.
+    type: Add
+  id: 8129
+  time: '2025-04-04T13:12:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34566
+- author: lzk228
+  changes:
+  - message: Fix ability to use implants on borgs and bots.
+    type: Fix
+  id: 8130
+  time: '2025-04-04T15:36:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36218
+- author: TheBlueYowie
+  changes:
+  - message: Aligned Adv. Mineral Scanner rotation in inventory
+    type: Tweak
+  id: 8131
+  time: '2025-04-04T15:56:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36294
+- author: Tayrtahn
+  changes:
+  - message: Fixed ninjas being unable to hack criminal records consoles.
+    type: Fix
+  id: 8132
+  time: '2025-04-04T17:46:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36299
+- author: ScarKy0
+  changes:
+  - message: Players now require 1h of playtime before selecting any antagonist role.
+    type: Tweak
+  id: 8133
+  time: '2025-04-04T20:24:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36276
+- author: aada
+  changes:
+  - message: SyndieJuice now comes with 10 units of liquid plasma.
+    type: Add
+  id: 8134
+  time: '2025-04-05T03:22:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36280
+- author: SlamBamActionman
+  changes:
+  - message: The storage implant's storage has been changed to a new pattern with
+      6 grid slots.
+    type: Tweak
+  id: 8135
+  time: '2025-04-05T09:38:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36272
+- author: PhilIngham
+  changes:
+  - message: Fixed the Chemical Synthesis Kit claiming to have toxin inside when it
+      infact did not.
+    type: Fix
+  id: 8136
+  time: '2025-04-05T20:21:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36323
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed players being unable to interact with or open any machine UI if
+      the machine is unpowered (ex. wirepanels).
+    type: Fix
+  id: 8137
+  time: '2025-04-05T21:05:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36319
+- author: RedBookcase
+  changes:
+  - message: The Crusher Dagger has had it's damage reduced from 15 to 12 Slashing.
+    type: Tweak
+  - message: The Crusher and Crusher Glaive can now be worn on the back and suit storage
+      slots.
+    type: Add
+  id: 8138
+  time: '2025-04-06T06:48:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35914
