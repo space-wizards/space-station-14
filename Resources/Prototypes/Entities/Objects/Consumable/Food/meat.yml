@@ -385,7 +385,7 @@
     price: 5000
 
 - type: entity
-  parent: FoodMeatRotten
+  parent: FoodMeatBase
   id: FoodHivelordRemainsInert
   name: inert hivelord remains
   description: The inert remains of a hivelord. Once medicinal, now mostly just meat-flavored regret.
@@ -394,9 +394,23 @@
     sprite: Objects/Consumable/Food/rorocore.rsi
     state: boiled
     color: "#664444"
+  - type: Tag
+    tags:
+    - Raw
+    - Meat
   - type: SpaceGarbage
   - type: Item
     size: Normal
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+        - ReagentId: GastroToxin
+          Quantity: 4
+        - ReagentId: Fat
+          Quantity: 4
   - type: StaticPrice
     price: 500
 
