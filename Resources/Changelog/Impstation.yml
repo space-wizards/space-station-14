@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: harpy and fiend
-  changes:
-  - message: Slimes will gasp and whistle when they hear that some of their sounds
-      are a lot less choppy!
-    type: Tweak
-  id: 977
-  time: '2025-01-20T22:24:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1438
-- author: mqole
-  changes:
-  - message: Minor rules edits
-    type: Tweak
-  id: 978
-  time: '2025-01-20T23:07:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1440
 - author: TheGrimbeeper
   changes:
   - message: Reagent examine text should be more differentiable for solutions with
@@ -4081,3 +4066,28 @@
   id: 1476
   time: '2025-04-06T01:14:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2202
+- author: Sha-Seng
+  changes:
+  - message: Polished and combined all of our and upstream's underwear (RE-ADD YOUR
+      UNDIES!!)
+    type: Tweak
+  id: 1477
+  time: '2025-04-06T01:21:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2136
+- author: Sha-Seng, rainyatrium
+  changes:
+  - message: Senior Lawyer PDA with a Designer Pen in it (also found in a hacked PTech)
+    type: Add
+  - message: Defense Attorney Badge and Black Briefcase to lawyer loadout and LawDrobe
+    type: Add
+  - message: Senior lawyers unlock armbands to get their funny speech bubbles another
+      way
+    type: Add
+  - message: Cybersun Pen now has cyan, purple, and magenta ink like the Designer
+      Pen
+    type: Tweak
+  - message: Cybersun Briefcase now does 12 blunt damage (up from 8)
+    type: Tweak
+  id: 1478
+  time: '2025-04-06T01:21:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2194
