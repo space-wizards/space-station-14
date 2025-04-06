@@ -32,6 +32,7 @@
   - type: WarpPoint
     follow: true
     location: immovable rod
+    ghostOnly: true
 
 - type: entity
   id: ImmovableRodDespawn

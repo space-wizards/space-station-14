@@ -14,5 +14,12 @@ namespace Content.Server.Warps
         /// </summary>
         [DataField]
         public bool Follow;
+
+        /// <summary>
+        ///     Should this warp point be accessable to ghosts only?
+        ///     Useful where you want things like a ghost to reach only like CentComm
+        /// </summary>
+        [DataField]
+        public bool GhostOnly;
     }
 }

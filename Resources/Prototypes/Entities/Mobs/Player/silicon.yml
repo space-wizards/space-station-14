@@ -330,6 +330,7 @@
   suffix: Empty
   components:
   - type: WarpPoint
+    ghostOnly: true
   - type: ContainerComp
     proto: AiHeld
     container: station_ai_mind_slot
@@ -460,6 +461,7 @@
   - type: NoFTL
   - type: WarpPoint
     follow: true
+    ghostOnly: true
   - type: Eye
     pvsScale: 1.5
   - type: Visibility
@@ -482,6 +484,7 @@
     anchored: true
   - type: WarpPoint
     follow: true
+    ghostOnly: true
   - type: Eye
   - type: ContentEye
   - type: Examiner
