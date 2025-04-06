@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Buffs to the Null Rod's [Divine Grasp] transform.
-    type: Tweak
-  - message: The Null Rod & its forms now also deal Holy Damage to entities vulnerable
-      to Holy.
-    type: Tweak
-  - message: The Bible now deals significantly less Holy Damage.
-    type: Tweak
-  id: 981
-  time: '2025-01-21T07:27:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1446
 - author: kipdotnet
   changes:
   - message: Added a selection of Imp specific packages to receive from cargo.
@@ -4095,3 +4083,13 @@
   id: 1480
   time: '2025-04-06T10:21:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2209
+- author: rainyatrium
+  changes:
+  - message: pan flute works the same as harmonica now (including fitting into neck
+      slot)
+    type: Tweak
+  - message: replace harmonica with pan flute in the trinkets list
+    type: Tweak
+  id: 1481
+  time: '2025-04-06T16:07:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2211
