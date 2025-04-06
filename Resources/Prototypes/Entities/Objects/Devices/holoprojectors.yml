@@ -37,7 +37,7 @@
 
 - type: entity
   parent: Holoprojector
-  id: BorgHoloprojector
+  id: HoloprojectorBorg
   suffix: borg
   name: holosign projector
   description: A modified holographic sign projector for use in custodial cyborgs. Automatically recharges from the main power cell.

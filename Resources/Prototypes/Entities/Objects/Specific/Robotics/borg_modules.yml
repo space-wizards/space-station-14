@@ -523,7 +523,7 @@
     - MopItem
     - BorgBucket
     - BorgSprayBottle
-    - BorgHoloprojector
+    - HoloprojectorBorg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: cleaning-module }
 
@@ -541,7 +541,7 @@
     items:
     - AdvMopItem
     - BorgMegaSprayBottle
-    - BorgHoloprojector
+    - HoloprojectorBorg
     - BorgDropper
     - BorgBeaker
   - type: BorgModuleIcon
