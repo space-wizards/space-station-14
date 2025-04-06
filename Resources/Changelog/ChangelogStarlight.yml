@@ -4475,4 +4475,11 @@ Entries:
   id: 620
   time: '2025-04-06T18:55:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/446
+- author: aedler
+  changes:
+  - message: Replaced default CC with the new one, instead of it being under _Starlight.
+    type: Tweak
+  id: 621
+  time: '2025-04-06T19:01:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/444
 
