@@ -7,7 +7,7 @@ namespace Content.Shared.Charges.Components;
 /// <summary>
 /// Specifies the attached action has discrete charges, separate to a cooldown.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(ChargesSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedChargesSystem))]
 public sealed partial class LimitedChargesComponent : Component
 {
     [DataField, AutoNetworkedField]

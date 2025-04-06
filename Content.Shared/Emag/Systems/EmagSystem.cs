@@ -21,7 +21,7 @@ namespace Content.Shared.Emag.Systems;
 public sealed class EmagSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ChargesSystem _charges = default!;
+    [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -62,7 +62,7 @@ public sealed class EmagSystem : EntitySystem
             return false;
 
         Entity<LimitedChargesComponent?> chargesEnt = ent.Owner;
-        if (_charges.IsEmpty(chargesEnt))
+        if (_sharedCharges.IsEmpty(chargesEnt))
         {
             _popup.PopupClient(Loc.GetString("emag-no-charges"), user, user);
             return false;
@@ -81,7 +81,7 @@ public sealed class EmagSystem : EntitySystem
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target} with flag(s): {ent.Comp.EmagType}");
 
         if (emaggedEvent.Handled)
-            _charges.TryUseCharge(chargesEnt);
+            _sharedCharges.TryUseCharge(chargesEnt);
 
         if (!emaggedEvent.Repeatable)
         {

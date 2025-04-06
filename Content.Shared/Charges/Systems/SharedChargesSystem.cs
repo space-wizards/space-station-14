@@ -1,4 +1,3 @@
-using Content.Shared.Actions;
 using Content.Shared.Actions.Events;
 using Content.Shared.Charges.Components;
 using Content.Shared.Examine;
@@ -7,7 +6,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Charges.Systems;
 
-public sealed class ChargesSystem : EntitySystem
+public abstract class SharedChargesSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -190,12 +189,17 @@ public sealed class ChargesSystem : EntitySystem
         return TimeSpan.FromSeconds(nextChargeTime);
     }
 
+    /// <summary>
+    /// Derives the current charges of an entity.
+    /// </summary>
     [Pure]
     public int GetCurrentCharges(Entity<LimitedChargesComponent?, AutoRechargeComponent?> entity)
     {
         if (!Resolve(entity.Owner, ref entity.Comp1, false))
         {
-            return 0;
+            // I'm all in favor of nullable ints however null-checking return args against comp nullability is dodgy
+            // so we get this.
+            return -1;
         }
 
         var calculated = 0;

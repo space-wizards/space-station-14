@@ -23,7 +23,7 @@ namespace Content.Client.Actions
     {
         public delegate void OnActionReplaced(EntityUid actionId);
 
-        [Dependency] private readonly ChargesSystem _charges = default!;
+        [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
@@ -128,7 +128,8 @@ namespace Content.Client.Actions
             if (!ResolveActionData(actionId, ref action))
                 return;
 
-            action.IconColor = _charges.GetCurrentCharges(actionId.Value) < 1 ? action.DisabledIconColor : action.OriginalIconColor;
+            // TODO: Decouple this.
+            action.IconColor = _sharedCharges.GetCurrentCharges(actionId.Value) == 0 ? action.DisabledIconColor : action.OriginalIconColor;
 
             base.UpdateAction(actionId, action);
             if (_playerManager.LocalEntity != action.AttachedEntity)

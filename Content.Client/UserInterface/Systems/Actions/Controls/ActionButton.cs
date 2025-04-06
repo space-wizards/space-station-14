@@ -4,6 +4,7 @@ using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Client.Stylesheets;
 using Content.Shared.Actions;
+using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -23,10 +24,12 @@ public sealed class ActionButton : Control, IEntityControl
     private IEntityManager _entities;
     private SpriteSystem? _spriteSys;
     private ActionUIController? _controller;
-    private ChargesSystem _chargesSys;
+    private SharedChargesSystem _sharedChargesSys;
     private bool _beingHovered;
     private bool _depressed;
     private bool _toggled;
+
+    private int _lastCharges;
 
     public BoundKeyFunction? KeyBind
     {
@@ -67,7 +70,7 @@ public sealed class ActionButton : Control, IEntityControl
 
         _entities = entities;
         _spriteSys = spriteSys;
-        _chargesSys = _entities.System<ChargesSystem>();
+        _sharedChargesSys = _entities.System<SharedChargesSystem>();
         _controller = controller;
 
         MouseFilter = MouseFilterMode.Pass;
@@ -200,7 +203,7 @@ public sealed class ActionButton : Control, IEntityControl
 
         if (_entities.TryGetComponent(ActionId, out Shared.Charges.Components.LimitedChargesComponent? actionCharges))
         {
-            var charges = _chargesSys.GetCurrentCharges((ActionId.Value, actionCharges, null));
+            var charges = _sharedChargesSys.GetCurrentCharges((ActionId.Value, actionCharges, null));
 
             var chargesText = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {charges.ToString()}/{actionCharges.MaxCharges}"));
             return new ActionAlertTooltip(name, decr, charges: chargesText);
