@@ -42,7 +42,7 @@ public sealed partial class HealthAnalyzerComponent : Component
     /// The maximum range in tiles at which the analyzer can receive continuous updates
     /// </summary>
     [DataField]
-    public float MaxScanRange = 2.5f;
+    public float? MaxScanRange = 2.5f;
 
     /// <summary>
     /// Sound played on scanning begin
