@@ -24,7 +24,6 @@ public sealed class TurnstileSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -71,12 +70,7 @@ public sealed class TurnstileSystem : EntitySystem
         if (moveDir.GetDir() == xform.LocalRotation.GetDir())
         {
             if (!_accessReader.IsAllowed(args.OtherEntity, ent))
-            {
-                _audio.PlayPredicted(ent.Comp.DenySound, ent, args.OtherEntity);
-                if (_net.IsClient)
-                    _animationPlayer.Flick(ent, ent.Comp.DenyState, TurnstileVisualLayers.Base);
                 return;
-            }
 
             ent.Comp.CollideExceptions.Add(args.OtherEntity);
             if (_pulling.GetPulling(args.OtherEntity) is { } uid)
@@ -99,7 +93,22 @@ public sealed class TurnstileSystem : EntitySystem
     private void OnStartCollide(Entity<TurnstileComponent> ent, ref StartCollideEvent args)
     {
         if (!ent.Comp.CollideExceptions.Contains(args.OtherEntity))
+        {
+            var xform = Transform(ent);
+            var otherXform = Transform(args.OtherEntity);
+            var moveDir = xform.LocalPosition - otherXform.LocalPosition;
+            if (moveDir.GetDir() == xform.LocalRotation.GetDir())
+            {
+                if (!_accessReader.IsAllowed(args.OtherEntity, ent))
+                {
+                    _audio.PlayPredicted(ent.Comp.DenySound, ent, args.OtherEntity);
+                    if (_net.IsClient)
+                        _animationPlayer.Flick(ent, ent.Comp.DenyState, TurnstileVisualLayers.Base);
+                }
+            }
+
             return;
+        }
         // if they passed through:
         ent.Comp.NextPassTime = _timing.CurTime + ent.Comp.PassDelay;
         if (_net.IsClient)
