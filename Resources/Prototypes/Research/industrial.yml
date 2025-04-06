@@ -69,6 +69,7 @@
   - ProtolatheHyperConvectionMachineCircuitboard
   - CircuitImprinterHyperConvectionMachineCircuitboard
   - SheetifierMachineCircuitboard
+  - UHPHTPMCircuitboard
 
 - type: technology
   id: PowerGeneration
