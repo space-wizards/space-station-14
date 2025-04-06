@@ -1,0 +1,20 @@
+﻿- type: entity
+  id: WizardsTeleportScroll
+  name: teleport scroll
+  suffix: Wizard
+  parent: [ BaseItem, BaseMagicalContraband ]
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  # TODO: TeleportBoundUserInterface
+  #- type: UserInterface
+  #  interfaces:
+  #    enum.StoreUiKey.Key:
+  #      type: StoreBoundUserInterface
+  # TODO: enum.TeleportMenuUiKey.Key
+  #- type: ActivatableUI
+  #  key: enum.StoreUiKey.Key
+  # TODO: Wizard Menu with limited charges/cooldown
+  # - type: TeleportMenu
