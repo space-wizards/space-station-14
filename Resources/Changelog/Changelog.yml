@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: The terminal is more tamper proof.
-    type: Fix
-  id: 7638
-  time: '2024-11-22T22:50:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33281
 - author: MissKay1994
   changes:
   - message: The salvage vendor now has enough equipment for everyone
@@ -3888,3 +3881,13 @@
   id: 8137
   time: '2025-04-05T21:05:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36319
+- author: RedBookcase
+  changes:
+  - message: The Crusher Dagger has had it's damage reduced from 15 to 12 Slashing.
+    type: Tweak
+  - message: The Crusher and Crusher Glaive can now be worn on the back and suit storage
+      slots.
+    type: Add
+  id: 8138
+  time: '2025-04-06T06:48:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35914
