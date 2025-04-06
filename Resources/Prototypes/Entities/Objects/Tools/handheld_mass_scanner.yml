@@ -5,7 +5,6 @@
   description: A hand-held mass scanner.
   components:
   - type: Item
-    size: Normal
     sprite: Objects/Tools/handheld_mass_scanner.rsi
   - type: Sprite
     sprite: Objects/Tools/handheld_mass_scanner.rsi
@@ -50,7 +49,6 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
   - type: Item
-    size: Normal
     sprite: Objects/Tools/handheld_mass_scanner.rsi
   - type: Sprite
     sprite: Objects/Tools/handheld_mass_scanner.rsi
