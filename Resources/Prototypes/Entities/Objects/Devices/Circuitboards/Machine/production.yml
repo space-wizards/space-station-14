@@ -1354,3 +1354,21 @@
       Capacitor: 1
       Manipulator: 1
       Cable: 1
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: UHPHTPMCircuitboard
+  name: U.H.P.H.T.P.M machine board
+  description: A machine printed circuit board for a Universal hig tempeture high preshere production muchine
+  components:
+  - type: MachineBoard
+    prototype: UHPHTPM
+    stackRequirements:
+      MatterBin: 3
+      Glass: 1
+      Steel: 2
+      Cable: 2
+    tagRequirements:
+      Igniter:
+        amount: 2
+        defaultPrototype: Igniter
