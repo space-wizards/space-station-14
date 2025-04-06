@@ -15,13 +15,4 @@ public sealed partial class CCVars
 
     public static readonly CVarDef<float> StopSpeed =
         CVarDef.Create("physics.stop_speed", 0.1f, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
-
-    /// <summary>
-    ///     Whether mobs can push objects like lockers.
-    /// </summary>
-    /// <remarks>
-    ///     Technically client doesn't need to know about it but this may prevent a bug in the distant future so it stays.
-    /// </remarks>
-    public static readonly CVarDef<bool> MobPushing =
-        CVarDef.Create("physics.mob_pushing", false, CVar.REPLICATED | CVar.SERVER);
 }
