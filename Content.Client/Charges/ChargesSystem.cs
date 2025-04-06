@@ -12,9 +12,13 @@ public sealed class ChargesSystem : SharedChargesSystem
     private Dictionary<EntityUid, int> _lastCharges = new();
     private Dictionary<EntityUid, int> _tempLastCharges = new();
 
-    public override void FrameUpdate(float frameTime)
+    public override void Update(float frameTime)
     {
-        base.FrameUpdate(frameTime);
+        // Technically this should probably be in frameupdate but no one will ever notice a tick of delay on this.
+        base.Update(frameTime);
+
+        if (!_timing.IsFirstTimePredicted)
+            return;
 
         // Update recharging actions. Server doesn't actually care about this and it's a waste of performance, actions are immediate.
         var query = AllEntityQuery<AutoRechargeComponent, LimitedChargesComponent>();

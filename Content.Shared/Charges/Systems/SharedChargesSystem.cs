@@ -8,7 +8,7 @@ namespace Content.Shared.Charges.Systems;
 
 public abstract class SharedChargesSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] protected readonly IGameTiming _timing = default!;
 
     /*
      * Despite what a bunch of systems do you don't need to continuously tick linear number updates and can just derive it easily.
