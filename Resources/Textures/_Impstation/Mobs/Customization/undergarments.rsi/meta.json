@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cmss13 at https://github.com/cmss13-devs/cmss13/blob/884ab172389b6fc54ef063f5fbea5e8b0a0a2235/icons/mob/humans/undershirt.dmi, nanotrasen taken from https://github.com/tgstation/tgstation/commit/c14e98740794eb107bfa40aad19bd4c4d307184f, undershirts modified by Pinkbat5(github), binder by Pinkbat5(github), all adjusted to look good under short sleeve tops by Sha-Seng (github), reptilian and vox tanga and lowriders also made by Sha-Seng",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "undershirt",
+      "directions": 4
+    },
+    {
+      "name": "gross_sleeveless",
+      "directions": 4
+    },
+    {
+      "name": "rolled_undershirt",
+      "directions": 4
+    },
+    {
+      "name": "binder",
+      "directions": 4
+    },
+    {
+      "name": "classic",
+      "directions": 4
+    },
+    {
+      "name": "sports",
+      "directions": 4
+    },
+    {
+      "name": "strapless",
+      "directions": 4
+    },
+    {
+      "name": "nanotrasen",
+      "directions": 4
+    },
+    {
+      "name": "undershirt_f",
+      "directions": 4
+    },
+    {
+      "name": "gross_sleeveless_f",
+      "directions": 4
+    },
+    {
+      "name": "rolled_undershirt_f",
+      "directions": 4
+    },
+    {
+      "name": "sports_f",
+      "directions": 4
+    },
+    {
+      "name": "strapless_f",
+      "directions": 4
+    },
+    {
+      "name": "nanotrasen_f",
+      "directions": 4
+    },
+    {
+      "name": "binder_f",
+      "directions": 4
+    },
+    {
+      "name": "tanktop_f",
+      "directions": 4
+    },
+    {
+      "name": "briefs",
+      "directions": 4
+    },
+    {
+      "name": "lowriders",
+      "directions": 4
+    },
+    {
+      "name": "satin",
+      "directions": 4
+    },
+    {
+      "name": "tanga",
+      "directions": 4
+    },
+    {
+      "name": "boxers",
+      "directions": 4
+    },
+    {
+      "name": "tanktop",
+      "directions": 4
+    },
+    {
+      "name": "lowriders_reptilian",
+      "directions": 4
+    },
+    {
+      "name": "tanga_reptilian",
+      "directions": 4
+    },
+    {
+      "name": "binder_vox",
+      "directions": 4
+    },
+    {
+      "name": "boxers_vox",
+      "directions": 4
+    },
+    {
+      "name": "briefs_vox",
+      "directions": 4
+    },
+    {
+      "name": "classic_vox",
+      "directions": 4
+    },
+    {
+      "name": "satin_vox",
+      "directions": 4
+    },
+    {
+      "name": "sports_vox",
+      "directions": 4
+    },
+    {
+      "name": "tanktop_vox",
+      "directions": 4
+    },
+    {
+      "name": "lowriders_vox",
+      "directions": 4
+    },
+    {
+      "name": "tanga_vox",
+      "directions": 4
+    }
+  ]
+}
