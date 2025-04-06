@@ -120,7 +120,7 @@
         conditions:
         - !type:Breathing
         - !type:Internals
-          wearingInternals: false
+          usingInternals: false
 
 - type: reagent
   id: Vinegar
