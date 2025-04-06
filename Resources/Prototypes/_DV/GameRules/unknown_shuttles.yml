@@ -38,8 +38,8 @@
       components:
       - type: RandomMetadata
         nameSegments:
-        - FakeHumanFirst
-        - FakeHumanLast
+        - NamesFakeHumanFirst
+        - NamesFakeHumanLast
       - type: RandomHumanoidAppearance
         randomizeName: false
       - type: NpcFactionMember
@@ -82,8 +82,8 @@
       components:
       - type: RandomMetadata
         nameSegments:
-        - FakeHumanFirst
-        - FakeHumanLast
+        - NamesFakeHumanFirst
+        - NamesFakeHumanLast
       - type: RandomHumanoidAppearance
         randomizeName: false
       - type: NpcFactionMember
