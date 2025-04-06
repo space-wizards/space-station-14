@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Access.Components;
+using Content.Shared.Actions;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Contraband;
 using Content.Shared.Inventory;
@@ -7,9 +8,12 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
+using Content.Shared.Prototypes;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
+using Microsoft.Extensions.ObjectPool;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -23,8 +27,10 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
+    [Dependency] protected internal readonly IEntityManager EntMan = default!;
 
     private static readonly ProtoId<TagPrototype> WhitelistChameleonTag = "WhitelistChameleon";
 
@@ -56,9 +62,6 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             !_proto.TryIndex(component.Default, out EntityPrototype? proto))
             return;
 
-        // world sprite icon
-        UpdateSprite(uid, proto);
-
         // copy name and description, unless its an ID card
         if (!HasComp<IdCardComponent>(uid))
         {
@@ -67,59 +70,14 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             _metaData.SetEntityDescription(uid, proto.Description, meta);
         }
 
-        // item sprite logic
-        if (TryComp(uid, out ItemComponent? item) &&
-            proto.TryGetComponent(out ItemComponent? otherItem, Factory))
-        {
-            _itemSystem.CopyVisuals(uid, otherItem, item);
-        }
+        EnsureCompAndCopyDetails<HandheldLightComponent>(uid, proto);
+        EnsureCompAndCopyDetails<AppearanceComponent>(uid, proto);
+        EnsureCompAndCopyDetails<ClothingComponent>(uid, proto);
+        EnsureCompAndCopyDetails<ItemComponent>(uid, proto);
+        EnsureCompAndCopyDetails<ContrabandComponent>(uid, proto);
 
-        // clothing sprite logic
-        if (TryComp(uid, out ClothingComponent? clothing) &&
-            proto.TryGetComponent("Clothing", out ClothingComponent? otherClothing))
-        {
-            _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
-        }
-
-        // appearance data logic
-        if (TryComp(uid, out AppearanceComponent? appearance) &&
-            proto.TryGetComponent("Appearance", out AppearanceComponent? appearanceOther))
-        {
-            _appearance.AppendData(appearanceOther, uid);
-            Dirty(uid, appearance);
-        }
-
-        // toggleable clothing logic for the chameleon hardsuit
-        if (TryComp(uid, out ToggleableClothingComponent? toggleableClothing) && toggleableClothing?.ClothingUid != null &&
-            proto.TryGetComponent("ToggleableClothing", out ToggleableClothingComponent? toggleableClothingOther))
-        {
-            if (TryComp(toggleableClothing?.ClothingUid, out ChameleonClothingComponent? chamaleonClothingComponent))
-            {
-                UpdateVisuals((EntityUid)toggleableClothing!.ClothingUid!, chamaleonClothingComponent);
-            }
-        }
-
-        EnsureCompAndCopyDetails<HandheldLightComponent>(uid, proto, (handheldLight, current, _) =>
-        {
-            EnsureCompAndCopyDetails<AppearanceComponent>(uid, proto, (_, appearance, __) =>
-            {
-                _handheldLight.CopyDetails(uid, handheldLight, current);
-                _handheldLight.UpdateVisuals(uid, current, appearance);
-                Dirty(uid, appearance);
-                Dirty(uid, current);
-            });
-        });
-
-        // properly mark contraband
-        if (proto.TryGetComponent("Contraband", out ContrabandComponent? contra))
-        {
-            EnsureComp<ContrabandComponent>(uid, out var current);
-            _contraband.CopyDetails(uid, contra, current);
-        }
-        else
-        {
-            RemComp<ContrabandComponent>(uid);
-        }
+        // world sprite icon
+        UpdateSprite(uid, proto);
     }
 
     private void OnVerb(Entity<ChameleonClothingComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
@@ -165,30 +123,28 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         return true;
     }
 
-    protected void EnsureCompAndCopyDetails<T>(EntityUid uid, EntityPrototype proto, Action<T, T, bool>? copyVisualsFunction = null) where T : IComponent, new()
+    protected void EnsureCompAndCopyDetails<T>(EntityUid uid, EntityPrototype proto, Action<T, T?>? afterAddAction = null) where T : IComponent, new()
     {
-        if (!proto.TryGetComponent(out T? otherComponent, _factory)) {
-            if (HasComp<T>(uid))
-                RemComp<T>(uid);
-            return;
-        }
+        if (TryComp<T>(uid, out var previousComponent) && !proto.HasComponent<T>(EntMan.ComponentFactory))
+            RemComp<T>(uid);
 
-        bool componentAdded = false;
-        T ownComponent;
-
-        if (!HasComp<T>(uid))
+        else if (!HasComp<T>(uid) && proto.TryGetComponent<T>(out var protoComonent, EntMan.ComponentFactory))
         {
-            AddComp<T>(uid, otherComponent);
-            componentAdded = true;
-            ownComponent = otherComponent;
+            var newComponent = EntMan.ComponentFactory.GetComponent<T>();
+            _serialization.CopyTo(protoComonent, ref newComponent);
+            AddComp(uid, newComponent);
         }
-        else
+        else if (TryComp<T>(uid, out var currentComponent) && proto.TryGetComponent<T>(out var otherComponent, EntMan.ComponentFactory))
+            _serialization.CopyTo(otherComponent, ref currentComponent);
+
+
+        if (TryComp(uid, out T? component))
         {
-            EnsureComp<T>(uid, out ownComponent);
+            if (component.NetSyncEnabled)
+                Dirty(uid, component);
+
+            if (afterAddAction != null)
+                afterAddAction(component, previousComponent);
         }
-
-        if (copyVisualsFunction != null)
-            copyVisualsFunction(otherComponent, ownComponent, componentAdded);
-
     }
 }

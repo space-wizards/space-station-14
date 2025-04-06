@@ -90,15 +90,20 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
 
     private void UpdateLights(EntityUid uid, EntityPrototype proto)
     {
-        EnsureCompAndCopyDetails<PointLightComponent>(uid, proto, (otherComp, comp, componentAdded) => _pointLight.CopyVisuals(uid, otherComp, comp, componentAdded));
+        EnsureCompAndCopyDetails<PointLightComponent>(uid, proto, (pointLight, previousPointLight) =>
+        {
+            if (previousPointLight != null && previousPointLight.Enabled != pointLight.Enabled)
+                _pointLight.SetEnabled(uid, previousPointLight.Enabled, pointLight);
+        });
+
         EnsureCompAndCopyDetails<LightBehaviourComponent>(uid, proto);
-        EnsureCompAndCopyDetails<BatteryComponent>(uid, proto, (otherComp, comp, _) => _battery.CopyDetails(uid, otherComp, comp));
-        EnsureCompAndCopyDetails<BatterySelfRechargerComponent>(uid, proto, (otherComp, comp, _) => _battery.CopyDetails(uid, otherComp, comp));
+        EnsureCompAndCopyDetails<BatteryComponent>(uid, proto);
+        EnsureCompAndCopyDetails<BatterySelfRechargerComponent>(uid, proto);
     }
 
     private void UpdateToggleableChameleonComponent(EntityUid uid, EntityPrototype proto)
     {
-        if (TryComp(uid, out ToggleableClothingComponent? toggleableClothingComponent) && TryComp(toggleableClothingComponent?.ClothingUid, out ChameleonClothingComponent? toggleableChameleonClothingComponent))
+        if (TryComp(uid, out ToggleableClothingComponent? toggleableClothingComponent) && HasComp<ChameleonClothingComponent>(toggleableClothingComponent?.ClothingUid))
         {
             proto.TryGetComponent(out ToggleableClothingComponent? newToggleableClothingComponent, _factory);
 

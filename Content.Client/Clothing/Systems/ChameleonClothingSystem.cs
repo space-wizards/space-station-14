@@ -49,9 +49,14 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         if (!string.IsNullOrEmpty(component.Default) &&
         _proto.TryIndex(component.Default, out EntityPrototype? proto))
         {
-            EnsureCompAndCopyDetails<PointLightComponent>(uid, proto, (otherComp, comp, componentAdded) => _pointLight.CopyVisuals(uid, otherComp, comp, componentAdded));
-            EnsureCompAndCopyDetails<LightBehaviourComponent>(uid, proto, (otherComp, comp, _) => _lightBehavior.CopyVisuals(uid, otherComp, comp));
-            EnsureCompAndCopyDetails<ToggleableLightVisualsComponent>(uid, proto, (otherComp, comp, _) => _toggleableLightVisuals.CopyVisuals(uid, otherComp, comp));
+            EnsureCompAndCopyDetails<PointLightComponent>(uid, proto, (pointLight, previousPointLight) =>
+            {
+                if (previousPointLight != null && previousPointLight.Enabled != pointLight.Enabled)
+                    _pointLight.SetEnabled(uid, previousPointLight.Enabled, pointLight);
+
+            });
+            EnsureCompAndCopyDetails<LightBehaviourComponent>(uid, proto);
+            EnsureCompAndCopyDetails<ToggleableLightVisualsComponent>(uid, proto);
         }
 
         UpdateVisuals(uid, component);
