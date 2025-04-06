@@ -638,15 +638,9 @@
     items:
     - HandheldHealthAnalyzerUnpowered
     - BorgHypo
-    - Syringe
     - BorgDropper
     - BorgBeaker
     - BorgBeaker
-    - BorgVial
-    - BorgVial
-    - BorgVial
-    - BorgVial
-    - BorgVial
     - BorgVial
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-chem-module }
@@ -710,7 +704,7 @@
     - HandLabeler
     - RubberStampApproved
     - RubberStampDenied
-      - BorgVial
+    - BorgVial
     - BorgDropper
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: service-module }
@@ -745,8 +739,9 @@
     items:
     - HydroponicsToolSpade
     - HydroponicsToolMiniHoe
-    - Bucket
+    - Syringe
     - BorgDropper
+    - Bucket
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: gardening-module }
 
@@ -762,8 +757,8 @@
   - type: ItemBorgModule
     items:
     - HydroponicsToolScythe
-    - HydroponicsToolClippers
     - HydroponicsToolHatchet
+    - HydroponicsToolClippers
     - PlantBag
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: harvesting-module }

@@ -386,6 +386,14 @@
     solutions:
       injector:
         maxVol: 15
+  - type: Injector
+    injectOnly: false
+    ignoreMobs: true
+    ignoreClosed: false
+    minTransferAmount: 1
+    maxTransferAmount: 15
+    transferAmount: 1
+    toggleState: 1 # draw
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
 
