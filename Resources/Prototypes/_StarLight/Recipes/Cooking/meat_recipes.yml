@@ -11,3 +11,16 @@
     FoodMeat: 1
     FoodApple: 1
     HeadVulpkanin: 1
+    
+- type: microwaveMealRecipe
+  id: RecipeFoodFriedfelionoid
+  name: kentucky fried felionoid recipe
+  result: FoodFriedfelionoid
+  time: 10
+  reagents:
+    Egg: 5
+    Flour: 10
+    Water: 5
+  solids:
+    LeftLegFelionoid: 1
+    RightLegFelionoid: 1
