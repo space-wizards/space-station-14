@@ -46,7 +46,7 @@
 
 - type: entity
   parent: DrinkBase
-  id: DrinkBottleBaseFull
+  id: DrinkBottleSmallBaseFull
   suffix: Full
   components:
   - type: Item
@@ -570,42 +570,10 @@
     - Wine
     - DrinkBottle
 
-# Large Plastic Bottles, for Soda/Tonic Water and its Parent. TODO add Large Water Bottle Sprites
-- type: entity
-  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
-  id: DrinkWaterBottleLargeFull
-  name: New London spring water
-  description: A bo'ol o' wo'er. How does a space station have a spring?
-  suffix: Full
-  components:
-  - type: Item
-    size: Normal
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: Water
-          Quantity: 150
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/waterbottle.rsi
-    layers:
-    - state: icon
-      map: ["enum.OpenableVisuals.Layer"]
-    - state: icon-1
-      map: ["enum.SolutionContainerLayers.Fill"]
-      visible: false
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: icon-
-    inHandsMaxFillLevels: 2
-    inHandsFillBaseName: -fill-
-  - type: Sealable
+# Large Plastic Bottles, TODO add Large Water Bottle Sprites
 
 - type: entity
-  parent: DrinkWaterBottleLargeFull
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
   id: DrinkSodaWaterBottleFull
   name: soda water bottle
   description: Like water, but angry!
@@ -619,7 +587,7 @@
           Quantity: 150
 
 - type: entity
-  parent: DrinkWaterBottleLargeFull
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
   id: DrinkTonicWaterBottleFull
   name: tonic water bottle
   description: Like soda water, but angrier maybe? Often sweeter.
@@ -635,7 +603,7 @@
 # Small Plastic Bottles
 
 - type: entity
-  parent: [DrinkBottleVisualsAll, DrinkBottleBaseFull]
+  parent: [DrinkBottleVisualsAll, DrinkBottleSmallBaseFull]
   id: DrinkWaterBottleFull
   name: water bottle
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
