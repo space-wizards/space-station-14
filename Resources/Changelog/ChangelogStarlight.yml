@@ -4453,4 +4453,11 @@ Entries:
   id: 617
   time: '2025-04-04T21:19:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/445
+- author: Quantumcross
+  changes:
+  - message: Funny anomalies are showing up on station 🤡
+    type: Add
+  id: 618
+  time: '2025-04-06T18:52:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/450
 
