@@ -73,6 +73,7 @@
             value: 3
             - type: entity
 
+- type: entity  
   id: CrateFunSharkPlushieBulk
   parent: CrateGenericSteel
   name: bulk soft toy shark crate
