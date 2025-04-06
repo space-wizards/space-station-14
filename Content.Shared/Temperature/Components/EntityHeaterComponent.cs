@@ -1,26 +1,27 @@
-using Content.Server.Temperature.Systems;
-using Content.Shared.Temperature;
+using Content.Shared.Temperature.Systems;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Temperature.Components;
+namespace Content.Shared.Temperature.Components;
 
 /// <summary>
 /// Adds thermal energy to entities with <see cref="TemperatureComponent"/> placed on it.
 /// </summary>
-[RegisterComponent, Access(typeof(EntityHeaterSystem))]
+[RegisterComponent, Access(typeof(SharedEntityHeaterSystem))]
+[NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class EntityHeaterComponent : Component
 {
     /// <summary>
     /// Power used when heating at the high setting.
     /// Low and medium are 33% and 66% respectively.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float Power = 2400f;
 
     /// <summary>
     /// Current setting of the heater. If it is off or unpowered it won't heat anything.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityHeaterSetting Setting = EntityHeaterSetting.Off;
 
     /// <summary>
