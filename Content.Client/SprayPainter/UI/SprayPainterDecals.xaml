@@ -1,0 +1,25 @@
+<controls:SprayPainterDecals
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.SprayPainter.UI">
+    <BoxContainer Orientation="Vertical">
+        <Label Text="{Loc 'spray-painter-selected-decals'}" />
+        <ScrollContainer VerticalExpand="True">
+            <GridContainer Columns="7" Name="DecalsGrid">
+                <!-- by code -->
+            </GridContainer>
+        </ScrollContainer>
+
+        <BoxContainer Orientation="Vertical">
+            <ColorSelectorSliders Name="ColorSelector" />
+            <CheckBox Name="UseCustomColorCheckBox" Text="{Loc 'spray-painter-use-custom-color'}" />
+        </BoxContainer>
+
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'spray-painter-angle-rotation'}" />
+            <SpinBox Name="AngleSpinBox" HorizontalExpand="True" />
+            <Button Text="-90°" Name="SubAngleButton" />
+            <Button Text="0°" Name="SetZeroAngleButton" />
+            <Button Text="+90°" Name="AddAngleButton" />
+        </BoxContainer>
+    </BoxContainer>
+</controls:SprayPainterDecals>

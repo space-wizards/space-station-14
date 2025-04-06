@@ -8,6 +8,11 @@ spray-painter-interact-no-charges = There's not enough charge.
 spray-painter-style-not-available = Cannot apply the selected style to this type of airlock
 spray-painter-selected-style = Selected style:
 
+spray-painter-selected-decals = Selected decal:
+spray-painter-use-custom-color = Use custom color
+spray-painter-angle-rotation = Rotation:
+spray-painter-invalid-location = Can't reach there!
+
 spray-painter-selected-color = Selected color:
 spray-painter-color-red = red
 spray-painter-color-yellow = yellow

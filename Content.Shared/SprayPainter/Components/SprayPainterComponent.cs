@@ -1,5 +1,7 @@
+using Content.Shared.Decals;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SprayPainter.Components;
 
@@ -26,4 +28,13 @@ public sealed partial class SprayPainterComponent : Component
 
     [DataField, AutoNetworkedField]
     public int SelectedTab;
+
+    [DataField, AutoNetworkedField]
+    public ProtoId<DecalPrototype>? SelectedDecal;
+
+    [DataField, AutoNetworkedField]
+    public Color? SelectedDecalColor;
+
+    [DataField, AutoNetworkedField]
+    public int SelectedDecalAngle;
 }

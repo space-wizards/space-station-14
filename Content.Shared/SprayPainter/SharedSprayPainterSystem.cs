@@ -37,12 +37,16 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         SubscribeLocalEvent<SprayPainterComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SprayPainterComponent, SprayPainterDoAfterEvent>(OnPaintableDoAfter);
-        Subs.BuiEvents<SprayPainterComponent>(SprayPainterUiKey.Key, subs =>
-        {
-            subs.Event<SprayPainterSpritePickedMessage>(OnSpritePicked);
-            subs.Event<SprayPainterColorPickedMessage>(OnColorPicked);
-            subs.Event<SprayPainterTabChangedMessage>(OnTabChanged);
-        });
+        Subs.BuiEvents<SprayPainterComponent>(SprayPainterUiKey.Key,
+            subs =>
+            {
+                subs.Event<SprayPainterSpritePickedMessage>(OnSpritePicked);
+                subs.Event<SprayPainterColorPickedMessage>(OnColorPicked);
+                subs.Event<SprayPainterTabChangedMessage>(OnTabChanged);
+                subs.Event<SprayPainterDecalPickedMessage>(OnDecalPicked);
+                subs.Event<SprayPainterDecalColorPickedMessage>(OnDecalColorPicked);
+                subs.Event<SprayPainterDecalAnglePickedMessage>(OnDecalAnglePicked);
+            });
 
         SubscribeLocalEvent<PaintableComponent, InteractUsingEvent>(OnPaintableInteract);
 
@@ -79,17 +83,20 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         if (args.Visuals is PaintableVisuals.Canister)
         {
-            RaiseLocalEvent(ent, new SprayPainterCanisterDoAfterEvent
-            {
-                Category = args.Category,
-                Prototype = args.Prototype,
-                DoAfter = args.DoAfter,
-            });
+            RaiseLocalEvent(ent,
+                new SprayPainterCanisterDoAfterEvent
+                {
+                    Category = args.Category,
+                    Prototype = args.Prototype,
+                    DoAfter = args.DoAfter,
+                });
         }
 
         Dirty(target, paintableComponent);
 
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.Args.User):user} painted {ToPrettyString(args.Args.Target.Value):target}");
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Low,
+            $"{ToPrettyString(args.Args.User):user} painted {ToPrettyString(args.Args.Target.Value):target}");
 
         args.Handled = true;
     }
@@ -123,6 +130,24 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         ent.Comp.PickedColor = paletteKey;
         Dirty(ent, ent.Comp);
+    }
+
+    private void OnDecalPicked(EntityUid uid, SprayPainterComponent component, SprayPainterDecalPickedMessage args)
+    {
+        component.SelectedDecal = args.DecalPrototype;
+        Dirty(uid, component);
+    }
+
+    private void OnDecalAnglePicked(EntityUid uid, SprayPainterComponent component, SprayPainterDecalAnglePickedMessage args)
+    {
+        component.SelectedDecalAngle = args.Angle;
+        Dirty(uid, component);
+    }
+
+    private void OnDecalColorPicked(EntityUid uid, SprayPainterComponent component, SprayPainterDecalColorPickedMessage args)
+    {
+        component.SelectedDecalColor = args.Color;
+        Dirty(uid, component);
     }
 
     #endregion
@@ -178,7 +203,9 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         args.Handled = true;
 
         // Log the attempt
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} is painting {ToPrettyString(ent):target} to '{style}' at {Transform(ent).Coordinates:targetlocation}");
+        _adminLogger.Add(LogType.Action,
+            LogImpact.Low,
+            $"{ToPrettyString(args.User):user} is painting {ToPrettyString(ent):target} to '{style}' at {Transform(ent).Coordinates:targetlocation}");
     }
 
     #region Style caching
@@ -218,4 +245,8 @@ public abstract class SharedSprayPainterSystem : EntitySystem
     #endregion
 }
 
-public record PaintableTargets(List<string> Styles, List<PaintableGroupPrototype> Groups, PaintableVisuals Visuals, float Time);
+public record PaintableTargets(
+    List<string> Styles,
+    List<PaintableGroupPrototype> Groups,
+    PaintableVisuals Visuals,
+    float Time);

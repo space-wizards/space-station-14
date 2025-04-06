@@ -1,6 +1,8 @@
+using Content.Shared.Decals;
 using Content.Shared.DoAfter;
 using Content.Shared.SprayPainter.Components;
 using Content.Shared.SprayPainter.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SprayPainter;
@@ -9,6 +11,24 @@ namespace Content.Shared.SprayPainter;
 public enum SprayPainterUiKey
 {
     Key,
+}
+
+[Serializable, NetSerializable]
+public sealed class SprayPainterDecalPickedMessage(ProtoId<DecalPrototype> protoId) : BoundUserInterfaceMessage
+{
+    public ProtoId<DecalPrototype> DecalPrototype = protoId;
+}
+
+[Serializable, NetSerializable]
+public sealed class SprayPainterDecalColorPickedMessage(Color? color) : BoundUserInterfaceMessage
+{
+    public Color? Color = color;
+}
+
+[Serializable, NetSerializable]
+public sealed class SprayPainterDecalAnglePickedMessage(int angle) : BoundUserInterfaceMessage
+{
+    public int Angle = angle;
 }
 
 [Serializable, NetSerializable]
