@@ -16,5 +16,4 @@
   # TODO: enum.TeleportMenuUiKey.Key
   #- type: ActivatableUI
   #  key: enum.StoreUiKey.Key
-  # TODO: Wizard Menu with limited charges/cooldown
-  # - type: TeleportMenu
+  - type: TeleportLocations
