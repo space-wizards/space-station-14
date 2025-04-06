@@ -124,8 +124,8 @@
 
 - type: latheRecipe
   parent: BaseBorgModuleRecipe
-  id: BorgModuleCable
-  result: BorgModuleCable
+  id: BorgModuleTool
+  result: BorgModuleTool
 
 - type: latheRecipe
   parent: BaseBorgModuleRecipe
