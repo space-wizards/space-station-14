@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Added a selection of Imp specific packages to receive from cargo.
-    type: Add
-  id: 982
-  time: '2025-01-21T12:33:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1434
 - author: honeyed-lemons
   changes:
   - message: Tweaks all the mailrooms on Box, Fland, Oasis, and Xeno
@@ -4093,3 +4086,11 @@
   id: 1481
   time: '2025-04-06T16:07:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2211
+- author: hivehum
+  changes:
+  - message: FakeHumanFirst FakeHumanLast is in custody and will no longer terrorize
+      the station.
+    type: Fix
+  id: 1482
+  time: '2025-04-06T16:08:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2215
