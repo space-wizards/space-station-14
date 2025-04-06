@@ -275,27 +275,6 @@
 
 # generic modules
 - type: entity
-  id: BorgModuleCable
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: cable cyborg module
-  description: A universal cyborg module which allows the unit to install and manipulate electrical systems.
-  components:
-  - type: Sprite
-    layers:
-    - state: generic
-    - state: icon-cables
-  - type: ItemBorgModule
-    items:
-    - CableApcStackLingering10
-    - CableMVStackLingering10
-    - CableHVStackLingering10
-    - Wirecutter
-    - Crowbar
-    - trayScanner
-  - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
-
-- type: entity
   id: BorgModuleFireExtinguisher
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: thruster cyborg module
@@ -444,6 +423,7 @@
     - WelderExperimental
     - Multitool
     - RemoteSignallerAdvanced
+    - GeigerCounter
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-tools-module }
 
@@ -464,9 +444,6 @@
     - SheetRPGlassLingering0
     - SheetPlasteelLingering0
     - PartRodMetalLingering0
-    - FloorTileItemSteelLingering0
-    - FloorTileItemWhiteLingering0
-    - FloorTileItemDarkLingering0
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: construction-module }
 
@@ -485,10 +462,30 @@
     - BorgFireExtinguisher
     - BorgHandheldGPSBasic
     - GasAnalyzer
+    - trayScanner
     - HolofanProjectorBorg
-    - GeigerCounter
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: rcd-module }
+
+- type: entity
+  id: BorgModuleCable
+  parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
+  name: cable cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-cables
+  - type: ItemBorgModule
+    items:
+    - CableApcStackLingering10
+    - CableMVStackLingering10
+    - CableHVStackLingering10
+    - FloorTileItemSteelLingering0
+    - FloorTileItemWhiteLingering0
+    - FloorTileItemDarkLingering0
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
 
 # janitorial modules (this gets its own unique things because janis are epic)
 - type: entity
@@ -576,7 +573,6 @@
   - type: ItemBorgModule
     items:
     - HandheldHealthAnalyzerUnpowered
-    - Gauze10Lingering
     - Brutepack10Lingering
     - Ointment10Lingering
     - Bloodpack10Lingering
@@ -597,6 +593,7 @@
   - type: ItemBorgModule
     items:
     - HandheldHealthAnalyzerUnpowered
+    - Gauze10Lingering
     - DefibrillatorOneHandedUnpowered
     - BorgFireExtinguisher
     - BorgHandheldGPSBasic
@@ -638,16 +635,10 @@
     items:
     - HandheldHealthAnalyzerUnpowered
     - BorgHypo
-    - Syringe
     - BorgDropper
     - BorgBeaker
     - BorgBeaker
-    - BorgVial
-    - BorgVial
-    - BorgVial
-    - BorgVial
-    - BorgVial
-    - BorgVial
+    - BorgBeaker
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: adv-chem-module }
 
@@ -706,12 +697,11 @@
   - type: ItemBorgModule
     items:
     - Pen
-    #- BooksBag (Add back when hand whitelisting exists, at the moment they can only use it like an orebag.)
     - HandLabeler
     - RubberStampApproved
     - RubberStampDenied
-      - BorgVial
     - BorgDropper
+    - BorgVial
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: service-module }
 
@@ -745,8 +735,8 @@
     items:
     - HydroponicsToolSpade
     - HydroponicsToolMiniHoe
+    - Syringe
     - Bucket
-    - BorgDropper
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: gardening-module }
 
@@ -762,8 +752,8 @@
   - type: ItemBorgModule
     items:
     - HydroponicsToolScythe
-    - HydroponicsToolClippers
     - HydroponicsToolHatchet
+    - HydroponicsToolClippers
     - PlantBag
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: harvesting-module }
