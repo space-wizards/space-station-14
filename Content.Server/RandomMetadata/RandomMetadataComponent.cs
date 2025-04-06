@@ -1,3 +1,6 @@
+using Content.Shared.Dataset;
+using Robust.Shared.Prototypes;
+
 ﻿namespace Content.Server.RandomMetadata;
 
 /// <summary>
@@ -6,15 +9,15 @@
 [RegisterComponent]
 public sealed partial class RandomMetadataComponent : Component
 {
-    [DataField("descriptionSegments")]
-    public List<string>? DescriptionSegments;
+    [DataField]
+    public List<ProtoId<LocalizedDatasetPrototype>>? DescriptionSegments;
 
-    [DataField("nameSegments")]
-    public List<string>? NameSegments;
+    [DataField]
+    public List<ProtoId<LocalizedDatasetPrototype>>? NameSegments;
 
-    [DataField("nameSeparator")]
+    [DataField]
     public string NameSeparator = " ";
 
-    [DataField("descriptionSeparator")]
+    [DataField]
     public string DescriptionSeparator = " ";
 }
