@@ -45,6 +45,9 @@ public sealed class HideLayerClothingSystem : EntitySystem
         if (!Resolve(clothing.Owner, ref clothing.Comp1, ref clothing.Comp2))
             return;
 
+        if (!TryComp<HumanoidAppearanceComponent>(user, out _)) // Imp - prevent manequins with clothes on at map start from causing test fails...
+            return;
+
         if (!Resolve(user.Owner, ref user.Comp))
             return;
 
