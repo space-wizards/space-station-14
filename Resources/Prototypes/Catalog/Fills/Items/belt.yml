@@ -173,6 +173,21 @@
       - id: MedkitCombatFilled
 
 - type: entity
+  id: ClothingBeltMilitaryWebbingERTSecurityFilled
+  parent: [BaseCentcommContraband, ClothingBeltMilitaryWebbing]
+  name: ERT chest rig
+  suffix: Security, Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: Truncheon
+    - id: Handcuffs
+      amount: 2
+    - id: MedkitCombatFilled
+    - id: MagazinePistol
+      amount: 2
+
+- type: entity
   parent: ClothingBeltWand
   id: ClothingBeltWandFilled
   suffix: Filled

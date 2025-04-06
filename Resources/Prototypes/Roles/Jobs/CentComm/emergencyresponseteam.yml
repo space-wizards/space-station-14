@@ -357,26 +357,22 @@
     shoes: ClothingShoesBootsCombatFilled
     mask: ClothingMaskGasERT
     head: ClothingHeadHelmetERTSecurity
-    eyes: ClothingEyesGlassesSecurity
-    gloves: ClothingHandsGlovesColorBlack
+    eyes: ClothingEyesHudSecurity
+    gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterArmorBasicSlim
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltSecurityWebbing
+    belt: ClothingBeltMilitaryWebbingERTSecurityFilled
     pocket1: WeaponPistolMk58
     pocket2: FlashlightSeclite
   storage:
     back:
-    - BoxZiptie
-    - MedkitCombatFilled
+    - WeaponDisablerSMG
+    - Stunbaton
     - TelescopicShield
     - CrowbarRed
-    - WeaponDisablerSMG
-    belt:
-    - Stunbaton
     - HoloprojectorSecurity
-    - MagazinePistol
-    - GrenadeFlashBang
+    - TearGasGrenade
     - GrenadeStinger
 
 - type: startingGear
