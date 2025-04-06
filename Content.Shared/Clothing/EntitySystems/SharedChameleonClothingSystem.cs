@@ -72,7 +72,14 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
         EnsureCompAndCopyDetails<HandheldLightComponent>(uid, proto);
         EnsureCompAndCopyDetails<AppearanceComponent>(uid, proto);
-        EnsureCompAndCopyDetails<ClothingComponent>(uid, proto);
+
+        // clothing sprite logic
+        if (TryComp(uid, out ClothingComponent? clothing) &&
+            proto.TryGetComponent("Clothing", out ClothingComponent? otherClothing))
+        {
+            _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
+        }
+
         EnsureCompAndCopyDetails<ItemComponent>(uid, proto);
         EnsureCompAndCopyDetails<ContrabandComponent>(uid, proto);
 
@@ -125,15 +132,17 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
 
     protected void EnsureCompAndCopyDetails<T>(EntityUid uid, EntityPrototype proto, Action<T, T?>? afterAddAction = null) where T : IComponent, new()
     {
+        // if the new proto does not have the component, remove it from the entity
         if (TryComp<T>(uid, out var previousComponent) && !proto.HasComponent<T>(EntMan.ComponentFactory))
             RemComp<T>(uid);
-
+        // if the new proto has the component, but the entity does not, add it to the entity
         else if (!HasComp<T>(uid) && proto.TryGetComponent<T>(out var protoComonent, EntMan.ComponentFactory))
         {
             var newComponent = EntMan.ComponentFactory.GetComponent<T>();
             _serialization.CopyTo(protoComonent, ref newComponent);
             AddComp(uid, newComponent);
         }
+        // if the new proto has the component and the entity does too, copy the data from the proto to the entity
         else if (TryComp<T>(uid, out var currentComponent) && proto.TryGetComponent<T>(out var otherComponent, EntMan.ComponentFactory))
             _serialization.CopyTo(otherComponent, ref currentComponent);
 
