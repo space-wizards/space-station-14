@@ -8,7 +8,7 @@ namespace Content.Shared.Construction
 {
     public abstract class SharedConstructionSystem : EntitySystem
     {
-        [Dependency] protected readonly IMapManager MapManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
 
@@ -20,7 +20,7 @@ namespace Content.Shared.Construction
             if (!canBuildInImpassable)
                 return null;
 
-            if (!MapManager.TryFindGridAt(coords, out _, out var grid))
+            if (!_mapManager.TryFindGridAt(coords, out _, out var grid))
                 return null;
 
             var ignored = grid.GetAnchoredEntities(coords).ToHashSet();

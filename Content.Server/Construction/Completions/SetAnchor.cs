@@ -11,8 +11,8 @@ namespace Content.Server.Construction.Completions
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            var transformSystem = entityManager.System<SharedTransformSystem>();
-            transformSystem.TrySetAnchor(uid, Value);
+            var transform = entityManager.GetComponent<TransformComponent>(uid);
+            transform.Anchored = Value;
         }
     }
 }
