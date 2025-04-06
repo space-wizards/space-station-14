@@ -1,9 +1,7 @@
-using Content.Shared.Smoking;
-using Content.Shared.Light.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Light.Components;
 using Content.Shared.Light.EntitySystems;
 using Robust.Server.GameObjects;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Light.EntitySystems;
 
@@ -11,33 +9,16 @@ public sealed class MatchstickSystem : SharedMatchstickSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
-    public override void Update(float frameTime)
+    protected override void CreateMatchstickHotspot(Entity<MatchstickComponent> ent)
     {
-        var query = EntityQueryEnumerator<MatchstickComponent>();
+        var xform = Transform(ent);
 
-        while (query.MoveNext(out var uid, out var match))
-        {
-            if (match.CurrentState != SmokableState.Lit)
-                continue;
+        if (xform.GridUid is not { } gridUid)
+            return;
 
-            var xform = Transform(uid);
+        var position = _transformSystem.GetGridOrMapTilePosition(ent, xform);
 
-            if (xform.GridUid is not { } gridUid)
-                continue;
-
-            var position = _transformSystem.GetGridOrMapTilePosition(uid, xform);
-
-            _atmosphereSystem.HotspotExpose(gridUid, position, 400, 50, uid, true);
-
-            // Check if the match has expired.
-            var burnoutTime = match.TimeMatchWillBurnOut;
-            if (burnoutTime != null && _timing.CurTime > burnoutTime)
-            {
-                SetState(uid, match, SmokableState.Burnt);
-                match.TimeMatchWillBurnOut = null;
-            }
-        }
+        _atmosphereSystem.HotspotExpose(gridUid, position, ent.Comp.BurnTemperature, 50, ent, true);
     }
 }

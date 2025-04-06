@@ -1,35 +1,40 @@
 using Content.Shared.Smoking;
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Light.Components;
 
-[NetworkedComponent, RegisterComponent]
-[AutoGenerateComponentState, AutoGenerateComponentPause]
+[NetworkedComponent, RegisterComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class MatchstickComponent : Component
 {
     /// <summary>
     ///     Current state to matchstick. Can be <code>Unlit</code>, <code>Lit</code> or <code>Burnt</code>.
     /// </summary>
-    [DataField("state")]
-    [AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public SmokableState CurrentState = SmokableState.Unlit;
 
     /// <summary>
-    ///     How long will matchstick last in seconds.
+    ///     How long the matchstick will burn for.
     /// </summary>
-    [DataField("duration")]
-    public int Duration = 10;
+    [DataField, AutoNetworkedField]
+    public TimeSpan Duration = TimeSpan.FromSeconds(10);
+
+    /// <summary>
+    ///     How hot the matchstick is when burning.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float BurnTemperature = 400f;
 
     /// <summary>
     ///     The time that the match will burn out. If null, that means the match is unlit.
     /// </summary>
-    [AutoNetworkedField, AutoPausedField]
-    public TimeSpan? TimeMatchWillBurnOut = null;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
+    public TimeSpan? TimeMatchWillBurnOut;
 
     /// <summary>
     ///     Sound played when you ignite the matchstick.
     /// </summary>
-    [DataField("igniteSound", required: true)] public SoundSpecifier IgniteSound = default!;
+    [DataField]
+    public SoundSpecifier? IgniteSound;
 }

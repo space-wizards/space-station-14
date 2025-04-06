@@ -21,12 +21,12 @@ public abstract class SharedMatchstickSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<MatchstickComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<MatchstickComponent, IsHotEvent>(OnIsHotEvent);
+        SubscribeLocalEvent<MatchstickComponent, IsHotEvent>(OnIsHot);
     }
 
     private void OnInteractUsing(Entity<MatchstickComponent> ent, ref InteractUsingEvent args)
     {
-        if (args.Handled || ent.Comp.CurrentState != SmokableState.Unlit)
+        if (args.Handled)
             return;
 
         var isHotEvent = new IsHotEvent();
@@ -35,51 +35,74 @@ public abstract class SharedMatchstickSystem : EntitySystem
         if (!isHotEvent.IsHot)
             return;
 
-        Ignite(ent, args.User);
-        args.Handled = true;
+        args.Handled = TryIgnite(ent, args.User);
     }
 
-    private void OnIsHotEvent(EntityUid uid, MatchstickComponent component, IsHotEvent args)
+    private void OnIsHot(Entity<MatchstickComponent> ent, ref IsHotEvent args)
     {
-        args.IsHot = component.CurrentState == SmokableState.Lit;
+        args.IsHot |= ent.Comp.CurrentState == SmokableState.Lit;
     }
 
-    public void Ignite(Entity<MatchstickComponent> matchstick, EntityUid user)
+    /// <summary>
+    ///     Try to light a matchstick!
+    /// </summary>
+    /// <param name="matchstick">The matchstick to light.</param>
+    /// <param name="user">The user lighting the matchstick can be null if there isn't any user.</param>
+    /// <returns>True if the matchstick was lit, false otherwise.</returns>
+    public bool TryIgnite(Entity<MatchstickComponent> matchstick, EntityUid? user)
     {
+        if (matchstick.Comp.CurrentState != SmokableState.Unlit)
+            return false;
+
         // Play Sound
-        _audio.PlayPredicted(matchstick.Comp.IgniteSound, matchstick, user, AudioParams.Default.WithVariation(0.125f).WithVolume(-0.125f));
+        _audio.PlayPredicted(matchstick.Comp.IgniteSound, matchstick, user);
 
         // Change state
-        SetState(matchstick, matchstick.Comp, SmokableState.Lit);
-        matchstick.Comp.TimeMatchWillBurnOut = _timing.CurTime + TimeSpan.FromSeconds(matchstick.Comp.Duration);
+        SetState(matchstick, SmokableState.Lit);
+        matchstick.Comp.TimeMatchWillBurnOut = _timing.CurTime + matchstick.Comp.Duration;
 
+        Dirty(matchstick);
+
+        return true;
     }
 
-    protected void SetState(EntityUid uid, MatchstickComponent component, SmokableState value)
+    private void SetState(Entity<MatchstickComponent> ent, SmokableState newState)
     {
-        component.CurrentState = value;
+        _lights.SetEnabled(ent, newState == SmokableState.Lit);
 
-        if (_lights.TryGetLight(uid, out var pointLightComponent))
+        _appearance.SetData(ent, SmokingVisuals.Smoking, newState);
+
+        switch (newState)
         {
-            _lights.SetEnabled(uid, component.CurrentState == SmokableState.Lit, pointLightComponent);
+            case SmokableState.Lit:
+                _item.SetHeldPrefix(ent, "lit");
+                break;
+            default:
+                _item.SetHeldPrefix(ent, "unlit");
+                break;
         }
 
-        if (EntityManager.TryGetComponent(uid, out ItemComponent? item))
-        {
-            switch (component.CurrentState)
-            {
-                case SmokableState.Lit:
-                    _item.SetHeldPrefix(uid, "lit", component: item);
-                    break;
-                default:
-                    _item.SetHeldPrefix(uid, "unlit", component: item);
-                    break;
-            }
-        }
+        ent.Comp.CurrentState = newState;
+        Dirty(ent);
+    }
 
-        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+    public override void Update(float frameTime)
+    {
+        var query = EntityQueryEnumerator<MatchstickComponent>();
+
+        while (query.MoveNext(out var uid, out var match))
         {
-            _appearance.SetData(uid, SmokingVisuals.Smoking, component.CurrentState, appearance);
+            if (match.CurrentState != SmokableState.Lit)
+                continue;
+
+            CreateMatchstickHotspot((uid, match));
+
+            // Check if the match has expired.
+            if (_timing.CurTime > match.TimeMatchWillBurnOut)
+                SetState((uid, match), SmokableState.Burnt);
         }
     }
+
+    // Atmos isn't predicted on client so client will do nothing, server will do the actual event.
+    protected abstract void CreateMatchstickHotspot(Entity<MatchstickComponent> ent);
 }
