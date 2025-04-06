@@ -244,3 +244,17 @@
   completetime: 1
   materials:
     Wood: 50
+
+- type: latheRecipe
+  id: WoodCoalTransform
+  result: Coal1
+  completetime: 5
+  materials:
+    Wood: 500
+
+- type: latheRecipe
+  id: MaterialDiamondHPHT
+  result: MaterialDiamond1
+  completetime: 180
+  materials:
+    Coal: 3000
