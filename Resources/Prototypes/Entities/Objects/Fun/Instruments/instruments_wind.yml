@@ -146,6 +146,12 @@
   - type: Tag
     tags:
     - WoodwindInstrument
+  - type: Clothing #imp
+    quickEquip: false
+    slots:
+    - neck
+  - type: ActivatableUI #imp
+    inHandsOnly: false  
 
 #if you change this to some cringe-ass zelda reference so help me god i will shoot you dead.
 - type: entity
