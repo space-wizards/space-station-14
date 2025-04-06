@@ -1,0 +1,5 @@
+﻿- type: localizedDataset
+  id: NamesAdmin
+  values:
+    prefix: names-admin-dataset-
+    count: 25
