@@ -31,7 +31,7 @@
       types:
         Slash: 5
         Heat: 5
-        Structural: 10
+        Structural: 15
   - type: MeleeWeapon
     angle: 0
     wideAnimationRotation: -135
