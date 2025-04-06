@@ -1,7 +1,7 @@
 - type: cargoProduct
   id: MedicalSupplies
   icon:
-    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    sprite: _Impstation/Objects/Specific/Medical/firstaidkits.rsi
     state: firstaid
   product: CrateMedicalSupplies
   cost: 2400
@@ -31,7 +31,7 @@
 - type: cargoProduct
   id: EmergencyBurnKit
   icon:
-    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    sprite: _Impstation/Objects/Specific/Medical/firstaidkits.rsi
     state: burnkit
   product: CrateEmergencyBurnKit
   cost: 700
@@ -41,7 +41,7 @@
 - type: cargoProduct
   id: EmergencyToxinKit
   icon:
-    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    sprite: _Impstation/Objects/Specific/Medical/firstaidkits.rsi
     state: toxinkit
   product: CrateEmergencyToxinKit
   cost: 600
@@ -51,7 +51,7 @@
 - type: cargoProduct
   id: EmergencyO2Kit
   icon:
-    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    sprite: _Impstation/Objects/Specific/Medical/firstaidkits.rsi
     state: o2kit
   product: CrateEmergencyO2Kit
   cost: 600
@@ -61,7 +61,7 @@
 - type: cargoProduct
   id: EmergencyBruteKit
   icon:
-    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    sprite: _Impstation/Objects/Specific/Medical/firstaidkits.rsi
     state: brutekit
   product: CrateEmergencyBruteKit
   cost: 600
@@ -71,7 +71,7 @@
 - type: cargoProduct
   id: EmergencyAdvancedKit
   icon:
-    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    sprite: _Impstation/Objects/Specific/Medical/firstaidkits.rsi
     state: advkit
   product: CrateEmergencyAdvancedKit
   cost: 2400
@@ -81,7 +81,7 @@
 - type: cargoProduct
   id: EmergencyRadiationKit
   icon:
-    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    sprite: _Impstation/Objects/Specific/Medical/firstaidkits.rsi
     state: radkit
   product: CrateEmergencyRadiationKit
   cost: 600

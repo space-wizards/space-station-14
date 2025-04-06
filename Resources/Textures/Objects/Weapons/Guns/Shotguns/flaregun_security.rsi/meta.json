@@ -2,6 +2,7 @@
   "version": 1,
   "license": "CC-BY-SA-3.0",
   "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/raw/3f9ebb72931ff884427c3004a594ec61aaaa7041/icons/obj/guns/projectile/flaregun.dmi and edited",
+  "MetaAtlas": false,
   "size": {
     "x": 32,
     "y": 32

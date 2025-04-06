@@ -1,7 +1,7 @@
 - type: cargoProduct
   id: ArmorySmg
   icon:
-    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/SMGs/wt550.rsi
     state: icon
   product: CrateArmorySMG
   cost: 9000
@@ -11,7 +11,7 @@
 - type: cargoProduct
   id: ArmoryShotgun
   icon:
-    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Shotguns/enforcer.rsi
     state: icon
   product: CrateArmoryShotgun
   cost: 7000
@@ -51,7 +51,7 @@
 - type: cargoProduct
   id: ArmoryLaser
   icon:
-    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_gun.rsi
     state: icon
   product: CrateArmoryLaser
   cost: 4800
@@ -61,7 +61,7 @@
 - type: cargoProduct
   id: ArmoryPistol
   icon:
-    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk58.rsi
     state: icon
   product: CrateArmoryPistols
   cost: 5200

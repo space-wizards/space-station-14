@@ -1,7 +1,7 @@
 - type: cargoProduct
   id: EmergencyLasers
   icon:
-    sprite: _Impstation/Objects/Weapons/Guns/Battery/emergency_laser_gun.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/emergency_laser_gun_two.rsi
     state: icon
   product: EmergencyLaserCrate
   cost: 5000
