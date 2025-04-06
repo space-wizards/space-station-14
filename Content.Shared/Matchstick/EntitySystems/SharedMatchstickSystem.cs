@@ -39,7 +39,7 @@ public abstract class SharedMatchstickSystem : EntitySystem
 
     private void OnIsHot(Entity<MatchstickComponent> ent, ref IsHotEvent args)
     {
-        args.IsHot |= ent.Comp.CurrentState == SmokableState.Lit;
+        args.IsHot |= ent.Comp.State == SmokableState.Lit;
     }
 
     /// <summary>
@@ -50,7 +50,7 @@ public abstract class SharedMatchstickSystem : EntitySystem
     /// <returns>True if the matchstick was lit, false otherwise.</returns>
     public bool TryIgnite(Entity<MatchstickComponent> matchstick, EntityUid? user)
     {
-        if (matchstick.Comp.CurrentState != SmokableState.Unlit)
+        if (matchstick.Comp.State != SmokableState.Unlit)
             return false;
 
         // Play Sound
@@ -81,7 +81,7 @@ public abstract class SharedMatchstickSystem : EntitySystem
                 break;
         }
 
-        ent.Comp.CurrentState = newState;
+        ent.Comp.State = newState;
         Dirty(ent);
     }
 
@@ -91,7 +91,7 @@ public abstract class SharedMatchstickSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out var match))
         {
-            if (match.CurrentState != SmokableState.Lit)
+            if (match.State != SmokableState.Lit)
                 continue;
 
             CreateMatchstickHotspot((uid, match));

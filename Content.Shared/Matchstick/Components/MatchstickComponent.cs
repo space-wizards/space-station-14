@@ -12,7 +12,7 @@ public sealed partial class MatchstickComponent : Component
     ///     Current state to matchstick. Can be <code>Unlit</code>, <code>Lit</code> or <code>Burnt</code>.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SmokableState CurrentState = SmokableState.Unlit;
+    public SmokableState State = SmokableState.Unlit;
 
     /// <summary>
     ///     How long the matchstick will burn for.

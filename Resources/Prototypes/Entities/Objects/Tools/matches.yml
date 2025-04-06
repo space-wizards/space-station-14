@@ -32,8 +32,9 @@
     duration: 10
     igniteSound:
       path: /Audio/Items/match_strike.ogg
-      volume: -0.125
-      variation: 0.125
+      params:
+        volume: -0.125
+        variation: 0.125
   - type: PointLight
     enabled: false
     radius: 1.1
