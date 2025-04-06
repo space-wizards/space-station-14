@@ -99,6 +99,7 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             HumanoidSkinColor.Hues => speciesPrototype.DefaultSkinTone,
             HumanoidSkinColor.TintedHues => Humanoid.SkinColor.TintedHues(speciesPrototype.DefaultSkinTone),
             HumanoidSkinColor.VoxFeathers => Humanoid.SkinColor.ClosestVoxColor(speciesPrototype.DefaultSkinTone),
+            HumanoidSkinColor.GrayToned => Humanoid.SkinColor.GraySkinTone(speciesPrototype.DefaultSkinTone), //imp
             _ => Humanoid.SkinColor.ValidHumanSkinTone,
         };
 
@@ -198,6 +199,11 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             // if the species is VoxFeathers toned: confine the skin color to vox limits. Bright colors are otherwise fine, so leave the marking colors alone.
             case HumanoidSkinColor.VoxFeathers:
                 newSkinColor = Humanoid.SkinColor.ProportionalVoxColor(newSkinColor);
+                break;
+
+            // if the species is Gray toned: desaturate. (IMP CHANGE (yes, i know all of this is an imp change (grays are a unique species though (thats why im commenting this (thanks again beck)))))
+            case HumanoidSkinColor.GrayToned:
+                newSkinColor = Humanoid.SkinColor.GraySkinTone(newSkinColor);
                 break;
         }
 
