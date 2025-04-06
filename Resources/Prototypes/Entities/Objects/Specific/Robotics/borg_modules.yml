@@ -441,7 +441,7 @@
   - type: ItemBorgModule
     items:
     - HandheldHealthAnalyzerUnpowered
-    - Syringe
+    - BorgDropper
     - Syringe
     - BorgVial
     - BorgVial
@@ -462,7 +462,7 @@
     items:
     - HandheldHealthAnalyzerUnpowered
     - BorgHypo
-    - BorgDropper
+    - Syringe
     - BorgBeaker
     - BorgBeaker
     - BorgBeaker
@@ -524,7 +524,7 @@
   - type: ItemBorgModule
     items:
     - Pen
-    #- BooksBag (Add back when hand whitelisting exists, at the moment they can only use it like a orebag.)
+    #- BooksBag (Add back when hand whitelisting exists, at the moment they can only use it like an orebag.)
     - HandLabeler
     - Lighter
     - BorgDropper
@@ -544,7 +544,9 @@
     - state: icon-musique
   - type: ItemBorgModule
     items:
-    - SuperSynthesizerInstrument
+    - SynthesizerInstrument
+    - ElectricGuitarInstrument
+    - SaxophoneInstrument
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: musical-module }
 
@@ -561,12 +563,14 @@
     items:
     - HydroponicsToolSpade
     - HydroponicsToolClippers
+    - HydroponicsToolMiniHoe
+    - HydroponicsToolHatchet
     - Bucket
     - BorgDropper
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: gardening-module }
 
-- type: entity
+- type: entity # depreciated, likely will be useful when hand whitelisting is implemented.
   id: BorgModuleHarvesting
   parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
   name: harvesting cyborg module
@@ -577,6 +581,7 @@
     - state: icon-harvesting
   - type: ItemBorgModule
     items:
+    - HydroponicsToolScythe
     - HydroponicsToolMiniHoe
     - HydroponicsToolHatchet
     - PlantBag
