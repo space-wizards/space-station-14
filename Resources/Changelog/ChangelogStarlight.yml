@@ -4468,4 +4468,11 @@ Entries:
   id: 619
   time: '2025-04-06T18:54:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/448
+- author: Happyrobot33
+  changes:
+  - message: Added Resomi speech verbs.
+    type: Add
+  id: 620
+  time: '2025-04-06T18:55:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/446
 
