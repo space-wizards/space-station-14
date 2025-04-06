@@ -1,0 +1,148 @@
+﻿- type: species
+  id: Kodepiia
+  name: species-name-kodepiia
+  roundStart: true
+  prototype: MobKodepiia
+  sprites: MobKodepiiaSprites
+  markingLimits: MobKodepiiaMarkingLimits
+  dollPrototype: MobKodepiiaDummy
+  skinColoration: Hues
+  maleFirstNames: KodepiiaFirst
+  femaleFirstNames: KodepiiaFirst
+  lastNames: KodepiiaLast
+  sexes:
+  - Unsexed
+
+- type: speciesBaseSprites
+  id: MobKodepiiaSprites
+  sprites:
+    Head: MobKodepiiaHead
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking
+    Snout: MobHumanoidAnyMarking
+    Chest: MobKodepiiaTorso
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
+    Tail: MobHumanoidAnyMarking
+    Eyes: MobHumanoidEyes
+    LArm: MobKodepiiaLArm
+    RArm: MobKodepiiaRArm
+    LHand: MobKodepiiaLHand
+    RHand: MobKodepiiaRHand
+    LLeg: MobKodepiiaLLeg
+    RLeg: MobKodepiiaRLeg
+    LFoot: MobKodepiiaLFoot
+    RFoot: MobKodepiiaRFoot
+    RArmExtension: MobHumanoidAnyMarking # Frontier
+
+
+- type: markingPoints
+  id: MobKodepiiaMarkingLimits
+  onlyWhitelisted: true
+  points:
+    Hair:
+      points: 1
+      required: false
+    Tail:
+      points: 2
+      required: false
+    Head:
+      points: 8
+      required: false
+    Snout:
+      points: 1
+      required: false
+    Chest:
+      points: 4
+      required: false
+    Legs:
+      points: 8
+      required: false
+    Arms:
+      points: 1
+      required: true
+      defaultMarkings: [ KodeWingsBlade ]
+
+- type: humanoidBaseSprite
+  id: MobKodepiiaHead
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobKodepiiaHeadMale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobKodepiiaHeadFemale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobKodepiiaTorso
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobKodepiiaTorsoMale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobKodepiiaTorsoFemale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobKodepiiaLLeg
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobKodepiiaLHand
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobKodepiiaLArm
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobKodepiiaLFoot
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobKodepiiaRLeg
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobKodepiiaRHand
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobKodepiiaRArm
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobKodepiiaRFoot
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Kodepiia/parts.rsi
+    state: r_foot

@@ -1,7 +1,7 @@
 marking-UndergarmentTopTanktop = Tanktop
 marking-UndergarmentTopBinder = Binder
-marking-UndergarmentTopBra = Classic Bra
-marking-UndergarmentTopSportsbra = Sports Bra
+marking-UndergarmentTopBra = Bra
+marking-UndergarmentTopSportsbra = Bra (Sports)
 
 marking-UndergarmentBottomBoxers = Boxers
 marking-UndergarmentBottomBriefs = Briefs
@@ -9,8 +9,8 @@ marking-UndergarmentBottomSatin = Satin
 
 marking-UndergarmentTopTanktopVox = Tanktop
 marking-UndergarmentTopBinderVox = Binder
-marking-UndergarmentTopBraVox = Classic Bra
-marking-UndergarmentTopSportsbraVox = Sports Bra
+marking-UndergarmentTopBraVox = Bra
+marking-UndergarmentTopSportsbraVox = Bra (Sports)
 
 marking-UndergarmentBottomBoxersVox = Boxers
 marking-UndergarmentBottomBriefsVox = Briefs

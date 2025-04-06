@@ -1,0 +1,48 @@
+- type: entity
+  parent: BaseWall
+  id: WallMiningInterior
+  name: mining wall
+  suffix: Interior
+  components:
+  - type: StaticPrice
+    price: 400
+  - type: Tag
+    tags:
+      - Wall
+  - type: Sprite
+    sprite: _Impstation/Structures/Walls/mininginterior.rsi
+  - type: Icon
+    sprite: _Impstation/Structures/Walls/mininginterior.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: IconSmooth
+    key: walls
+    base: mining
+  - type: Construction
+    graph: Girder
+    node: miningInteriorWall
+  - type: RandomIconSmooth
+    randomStates:
+    - mining
+    - miningB
+  - type: Appearance

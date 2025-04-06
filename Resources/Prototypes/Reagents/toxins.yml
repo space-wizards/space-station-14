@@ -499,6 +499,9 @@
           - !type:OrganType
             type: Animal
             shouldHave: false
+          - !type:OrganType # imp
+            type: Kodepiia
+            shouldHave: false
         type: Local
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-sick" ]
@@ -509,14 +512,29 @@
           - !type:OrganType
             type: Animal
             shouldHave: false
+          - !type:OrganType # imp
+            type: Kodepiia
+            shouldHave: false
       - !type:HealthChange
         conditions:
         - !type:OrganType
           type: Animal
           shouldHave: false
+        - !type:OrganType # imp
+          type: Kodepiia
+          shouldHave: false
         damage:
           types:
             Poison: 1
+      - !type:HealthChange # imp
+        probability: 0.5
+        conditions:
+        - !type:OrganType
+          type: Kodepiia
+          shouldHave: true
+        damage:
+          groups:
+            Brute: -0.4
       - !type:AdjustReagent
         conditions:
         - !type:OrganType
@@ -524,12 +542,23 @@
           shouldHave: true
         reagent: Protein
         amount: 0.5
-      - !type:AdjustReagent # Frontier: Goblin
-        conditions: # Frontier: Goblin
-        - !type:OrganType # Frontier: Goblin
-          type: Goblin # Frontier: Goblin
-        reagent: Protein # Frontier: Goblin
-        amount: 0.5 # Frontier: Goblin
+      - !type:AdjustReagent # Frontier
+        conditions:
+        - !type:OrganType
+          type: Goblin
+        reagent: Protein
+        amount: 0.5
+      - !type:SatiateHunger # imp
+        conditions:
+        - !type:OrganType
+          type: Kodepiia
+          shouldHave: true
+      - !type:ModifyBloodLevel # imp
+        amount: 1
+        conditions:
+        - !type:OrganType
+          type: Kodepiia
+          shouldHave: true
 
 - type: reagent
   id: Allicin

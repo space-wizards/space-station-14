@@ -91,8 +91,8 @@
       components:
       - type: RandomMetadata
         nameSegments:
-        - FakeHumanFirst
-        - FakeHumanLast
+        - NamesFakeHumanFirst
+        - NamesFakeHumanLast
       - type: RandomHumanoidAppearance
         randomizeName: false
       - type: EmitSoundOnSpawn # fell out of the ceiling

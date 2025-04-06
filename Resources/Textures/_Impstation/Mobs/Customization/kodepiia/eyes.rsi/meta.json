@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites by undertalesex, mqole, Pinkbat5",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+      {
+          "name": "bigsquareeyes1",
+          "directions": 4
+      },
+      {
+          "name": "bigsquareeyes2",
+          "directions": 4
+      },
+      {
+          "name": "bigsquareeyesuneven1",
+          "directions": 4
+      },
+      {
+          "name": "bigsquareeyesuneven2",
+          "directions": 4
+      },
+      {
+          "name": "eyestalk1",
+          "directions": 4
+      },
+      {
+          "name": "eyestalk2",
+          "directions": 4
+      },
+      {
+          "name": "grayeyes",
+          "directions": 4
+      },
+      {
+          "name": "grayeyesuneven",
+          "directions": 4
+      },
+      {
+          "name": "humaneyes",
+          "directions": 4
+      },
+      {
+          "name": "humaneyeseneven1",
+          "directions": 4
+      },
+      {
+          "name": "humaneyeseneven2",
+          "directions": 4
+      },
+      {
+          "name": "jamjareyes",
+          "directions": 4
+      },
+      {
+          "name": "jamjareyes2",
+          "directions": 4
+      },
+      {
+          "name": "maskeyes",
+          "directions": 4
+      },
+      {
+          "name": "motheyes",
+          "directions": 4
+      },
+      {
+          "name": "motheyes1",
+          "directions": 4
+      },
+      {
+          "name": "motheyes2",
+          "directions": 4
+      },
+      {
+          "name": "sideeye1",
+          "directions": 4
+      },
+      {
+          "name": "sideeye2",
+          "directions": 4
+      },
+      {
+          "name": "squareeyes",
+          "directions": 4
+      },
+      {
+          "name": "squareeyesuneven",
+          "directions": 4
+      }
+  ]
+}

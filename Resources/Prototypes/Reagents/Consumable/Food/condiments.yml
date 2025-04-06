@@ -131,6 +131,10 @@
       effects:
       - !type:SatiateHunger
         factor: 0.5
+        conditions: # imp
+        - !type:OrganType
+          type: Kodepiia
+          shouldHave: false
       - !type:SatiateThirst
         factor: -0.5 # high salt content
 
@@ -199,6 +203,10 @@
       effects:
       - !type:SatiateHunger
         factor: 6.0 #Stronger than cookedramen
+        conditions: # imp
+        - !type:OrganType
+          type: Kodepiia
+          shouldHave: false
   footstepSound:
     collection: FootstepBlood
     params:

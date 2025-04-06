@@ -437,6 +437,12 @@
   - type: Construction
     graph: Muzzle
     node: muzzle
+  - type: ClothingGrantComponent #imp change
+    component:
+    - type: Muted
+      mutedEmotes: true
+      mutedScream: false
+      mutedSpeech: false
 
 - type: entity
   parent: ClothingMaskPullableBase

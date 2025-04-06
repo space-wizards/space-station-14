@@ -14,4 +14,10 @@ public sealed partial class VentCrittersRuleComponent : Component
     /// </summary>
     [DataField("specialEntries")]
     public List<EntitySpawnEntry> SpecialEntries = new();
+
+    /// <summary>
+    /// Toggle sending an announcement #IMP
+    /// </summary>
+    [DataField]
+    public bool Announce = true;
 }

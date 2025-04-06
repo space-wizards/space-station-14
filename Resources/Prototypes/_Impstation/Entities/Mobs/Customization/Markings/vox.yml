@@ -284,6 +284,10 @@
   markingCategory: UndergarmentBottom
   speciesRestriction: [ Vox ]
   followSkinColor: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
   sprites:
   - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
     state: underwearixixspecial1
@@ -296,6 +300,10 @@
   markingCategory: UndergarmentBottom
   speciesRestriction: [ Vox ]
   followSkinColor: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#703c14'
   sprites:
   - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
     state: understrappy1
@@ -310,6 +318,10 @@
   markingCategory: UndergarmentBottom
   speciesRestriction: [ Vox ]
   followSkinColor: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
   sprites:
   - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
     state: underwearbriefs
@@ -320,6 +332,10 @@
   markingCategory: UndergarmentBottom
   speciesRestriction: [ Vox ]
   followSkinColor: false
+  coloring:
+    default:
+      type: null
+      fallbackColor: '#FFFFFF'
   sprites:
   - sprite: _Impstation/Mobs/Customization/voxbundle1.rsi
     state: underwearhighwaisted

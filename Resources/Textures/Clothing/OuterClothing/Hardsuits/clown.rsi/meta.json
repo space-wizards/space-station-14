@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, modified by brainfood1183 (github). Vox state made by Flareguy for SS14",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e, modified by brainfood1183 (github). Vox state made by Flareguy for SS14, kodepiia by VMSolidus",
     "size": {
         "x": 32,
         "y": 32
@@ -15,9 +15,13 @@
             "directions": 4
         },
         {
-            "name": "equipped-OUTERCLOTHING-vox",
+            "name": "equipped-OUTERCLOTHING-kodepiia",
             "directions": 4
         },
+        {
+            "name": "equipped-OUTERCLOTHING-vox",
+            "directions": 4
+		},
         {
             "name": "inhand-left",
             "directions": 4

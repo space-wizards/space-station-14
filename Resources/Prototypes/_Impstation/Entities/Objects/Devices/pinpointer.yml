@@ -1,8 +1,0 @@
-- type: entity
-  name: oddball pinpointer
-  id: PinpointerOddball
-  parent: PinpointerBase
-  components:
-  - type: Pinpointer
-    component: Oddball
-    targetName: oddball

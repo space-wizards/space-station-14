@@ -6,6 +6,20 @@
     species:
     - Decapoid
 
+- type: loadoutEffectGroup
+  id: Carnivorous
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Kodepiia
+
+- type: loadoutEffectGroup
+  id: EffectSpeciesSnail
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Gastropoid
+
 #- type: loadout
 #  id: EmergencyAquatic
 #  effects:
@@ -108,6 +122,55 @@
     back:
     - DecapoidBreathingApparatusMime
 
+# Basic
+- type: loadout
+  id: EmergencyMeat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Carnivorous
+  storage:
+    back:
+    - BoxSurvivalKodepiia
+
+- type: loadout
+  id: EmergencyOxygenSnail
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesSnail
+  storage:
+    lhand:
+    - BoxSurvival
+
+# Clown
+- type: loadout
+  id: EmergencyMeatClown
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Carnivorous
+  storage:
+    back:
+    - BoxHugKodepiia
+
+# Mime
+- type: loadout
+  id: EmergencyMeatMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Carnivorous
+  storage:
+    back:
+    - BoxMime
+
+# Engineering / Extended
+- type: loadout
+  id: EmergencyMeatExtended
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Carnivorous
+  storage:
+    back:
+    - BoxSurvivalEngineeringKodepiia
+
 # Command
 - type: loadout
   id: EmergencyOxygenCommand
@@ -126,6 +189,74 @@
   storage:
     back:
     - BoxSurvivalNitrogenCommand
+
+- type: loadout
+  id: EmergencyMeatCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Carnivorous
+  storage:
+    back:
+    - BoxSurvivalCommandKodepiia
+
+# Medical
+- type: loadout
+  id: EmergencyMeatMedical
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Carnivorous
+  storage:
+    back:
+    - BoxSurvivalMedicalKodepiia
+
+# Security
+- type: loadout
+  id: EmergencyMeatSecurity
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Carnivorous
+  storage:
+    back:
+    - BoxSurvivalSecurityKodepiia
+
+# Brigmedic
+- type: loadout
+  id: EmergencyOxygenBrigmedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxSurvivalBrigmedic
+
+- type: loadout
+  id: EmergencyNitrogenBrigmedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxSurvivalBrigmedicNitrogen
+
+- type: loadout
+  id: EmergencyMeatBrigmedic
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Carnivorous
+  storage:
+    back:
+    - BoxSurvivalBrigmedicKodepiia
+
+# Syndicate
+
+- type: loadout
+  id: EmergencyMeatSyndicate
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Carnivorous
+  storage:
+    back:
+    - BoxSurvivalSyndicateKodepiia
 
 # Chief Engineer
 - type: loadout
@@ -146,6 +277,15 @@
     back:
     - BoxSurvivalEngineeringNitrogenCommand
 
+- type: loadout
+  id: EmergencyMeatExtendedCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Carnivorous
+  storage:
+    back:
+    - BoxSurvivalEngineeringCommandKodepiia
+
 # Head of Security
 - type: loadout
   id: EmergencyOxygenSecurityCommand
@@ -164,3 +304,47 @@
   storage:
     back:
     - BoxSurvivalSecurityNitrogenCommand
+
+- type: loadout
+  id: EmergencyMeatSecurityCommand
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Carnivorous
+  storage:
+    back:
+    - BoxSurvivalSecurityCommandKodepiia
+
+# stupid things i have to do bc i cant have kode classified as oxygenbreather
+
+- type: loadout
+  id: LoadoutSpeciesEVAKodepiia
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Carnivorous
+  equipment:
+    suitstorage: OxygenTankFilled
+
+- type: loadout
+  id: LoadoutSpeciesPocketDoubleOxygenKodepiia
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Carnivorous
+  equipment:
+    pocket1: DoubleEmergencyOxygenTankFilled
+
+# commenting these out because I would like to do emergency vapor boxes at some point. - move these to imp filestructure
+#- type: loadoutEffectGroup
+#  id: EffectSpeciesDecapoid
+#  effects:
+#  - !type:SpeciesLoadoutEffect
+#    species:
+#    - Decapoid
+
+#- type: loadout
+#  id: EmergencyOxygenDecapoid
+#  effects:
+#  - !type:GroupLoadoutEffect
+#    proto: EffectSpeciesDecapoid
+#  storage:
+#    back:
+#    - BoxSurvivalVapor

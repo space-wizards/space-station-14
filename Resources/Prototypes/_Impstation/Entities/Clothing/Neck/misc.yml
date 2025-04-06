@@ -1,0 +1,48 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckDefenseAttorneyBadge
+  name: defense attorney badge
+  description: A badge to show that the owner is a 'legitimate' defense attorney who passed the NT bar exam required to practice law.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Misc/defenseattorneybadge.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Misc/defenseattorneybadge.rsi
+  - type: TypingIndicatorClothing
+    proto: lawyerblue
+
+# Senior lawyer armbands
+- type: entity
+  parent: ClothingNeckLawyerbadge
+  id: ClothingNeckLawyerArmband
+  name: lawyer armband
+  description: A prestigious armband carrying your old badge, signifying a long career as a lawyer.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Misc/lawyerarmband.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Misc/lawyerarmband.rsi
+
+- type: entity
+  parent: ClothingNeckProsecutorbadge
+  id: ClothingNeckProsecutorArmband
+  name: prosecutor armband
+  description: A prestigious armband carrying your old badge, signifying a long career as a prosecutor.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Misc/prosecutorarmband.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Misc/prosecutorarmband.rsi
+
+- type: entity
+  parent: ClothingNeckDefenseAttorneyBadge
+  id: ClothingNeckDefenseAttorneyArmband
+  name: defense attorney armband
+  description: A prestigious armband carrying your old badge, signifying a long career as a defense attorney.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Misc/defenseattorneyarmband.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Misc/defenseattorneyarmband.rsi
+  - type: TypingIndicatorClothing
+    proto: lawyerblue

@@ -17,6 +17,11 @@ public static class SkinColor
     public const float MinFeathersValue = 36f / 100;
     public const float MaxFeathersValue = 55f / 100;
 
+    // Imp edit start
+    public const float GraySaturation = 5f / 100;
+    public const float GrayValue = 1f; //this would be 71f / 100, but because of the way grays are sprited, we're leaving it at 1f
+    // Imp edit end
+
     public static Color ValidHumanSkinTone => Color.FromHsv(new Vector4(0.07f, 0.2f, 1f, 1f));
 
     /// <summary>
@@ -124,6 +129,35 @@ public static class SkinColor
 
         return true;
     }
+
+    // imp edit start
+
+    /// <summary>
+    ///     Convert a color to the graytoned type.
+    /// </summary>
+    /// <param name="color">Color to convert</param>
+    /// <returns>graytoned color in RGB</returns>
+    public static Color GraySkinTone(Color color)
+    {
+        var newColor = Color.ToHsv(color);
+        newColor.Y *= GraySaturation;
+        newColor.Z = GrayValue;
+
+        return Color.FromHsv(newColor);
+    }
+
+    /// <summary>
+    ///     Verify if a color is in the gray skin tone range.
+    /// </summary>
+    /// <param name="color">The color to verify</param>
+    /// <returns>True if valid, false otherwise.</returns>
+    public static bool VerifyGraySkinTone(Color color)
+    {
+        // graytoned just ensures saturation is always .05, or 5% saturation at all times, and value is 71
+        return Color.ToHsv(color).Y <= GraySaturation && Color.ToHsv(color).Z >= GrayValue;
+    }
+
+    // imp edit end
 
     /// <summary>
     ///     Convert a color to the 'tinted hues' skin tone type.
@@ -234,6 +268,7 @@ public static class SkinColor
             HumanoidSkinColor.TintedHues => VerifyTintedHues(color),
             HumanoidSkinColor.Hues => VerifyHues(color),
             HumanoidSkinColor.VoxFeathers => VerifyVoxFeathers(color),
+            HumanoidSkinColor.GrayToned => VerifyGraySkinTone(color), //imp
             _ => false,
         };
     }
@@ -246,6 +281,7 @@ public static class SkinColor
             HumanoidSkinColor.TintedHues => ValidTintedHuesSkinTone(color),
             HumanoidSkinColor.Hues => MakeHueValid(color),
             HumanoidSkinColor.VoxFeathers => ClosestVoxColor(color),
+            HumanoidSkinColor.GrayToned => GraySkinTone(color), //imp
             _ => color
         };
     }
@@ -257,4 +293,5 @@ public enum HumanoidSkinColor : byte
     Hues,
     VoxFeathers, // Vox feathers are limited to a specific color range
     TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range).
+    GrayToned, //imp special, 5% saturation & 71 value/lightness
 }

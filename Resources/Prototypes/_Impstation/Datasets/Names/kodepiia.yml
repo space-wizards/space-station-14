@@ -1,0 +1,11 @@
+﻿- type: localizedDataset
+  id: KodepiiaFirst
+  values:
+    prefix: names-kodepiia-first-
+    count: 89
+
+- type: localizedDataset
+  id: KodepiiaLast
+  values:
+    prefix: names-kodepiia-last-
+    count: 57

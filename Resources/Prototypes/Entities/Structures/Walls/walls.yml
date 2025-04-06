@@ -1369,7 +1369,10 @@
   parent: BaseWall
   id: WallMining
   name: mining wall
+  description: Rugged and heat-resistant. #imp
   components:
+  - type: StaticPrice
+    price: 400
   - type: Tag
     tags:
       - Wall
@@ -1388,6 +1391,9 @@
   - type: IconSmooth
     key: walls
     base: mining
+  - type: Construction #imp
+    graph: Girder
+    node: miningWall
   - type: RandomIconSmooth
     randomStates:
     - mining
@@ -1396,6 +1402,7 @@
 
 - type: entity
   parent: WallShuttleDiagonal
+  description: Rugged and heat-resistant. #imp
   id: WallMiningDiagonal
   name: mining wall
   suffix: diagonal
@@ -1404,6 +1411,9 @@
     snap:
     - Wall
   components:
+  - type: Construction #imp
+    graph: Girder
+    node: diagonalMiningWall
   - type: Sprite
     drawdepth: Walls
     sprite: Structures/Walls/mining_diagonal.rsi

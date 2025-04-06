@@ -11,6 +11,7 @@
   - type: Tag
     tags:
     - Trash
+    - KodeEdible # imp
   - type: SpaceGarbage
   - type: StaticPrice
     price: 5
@@ -29,7 +30,8 @@
   - type: Tag
     tags:
     - Trash
-    - PetWearable
+    - PetWearable # imp
+    - KodeEdible # imp
   - type: Food
   - type: FlavorProfile
     flavors:

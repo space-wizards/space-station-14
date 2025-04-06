@@ -8,6 +8,7 @@
     - id: CockroachMigration
     - id: MouseMigration
     - id: LuggageMigration # imp special
+    - id: SingleCritter # imp special
 
 - type: entityTable
   id: SpicyPestEventsTable

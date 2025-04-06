@@ -31,9 +31,12 @@ public sealed class CardHandSystem : EntitySystem
         if (!TryComp(uid, out CardStackComponent? cardStack))
             return;
 
-        _cardSpriteSystem.TryAdjustLayerQuantity((uid, sprite, cardStack), comp.CardLimit);
-
         var cardCount = Math.Min(cardStack.Cards.Count, comp.CardLimit);
+
+        if (cardCount == 0)
+            return;
+
+        _cardSpriteSystem.TryAdjustLayerQuantity((uid, sprite, cardStack), comp.CardLimit);
 
         // Frontier: one card case.
         if (cardCount <= 1)

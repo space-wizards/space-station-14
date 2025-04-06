@@ -269,6 +269,9 @@
       tags:
       - Sheet
       - DroneUsable
+      - KodeEdible # imp
+    - type: Food # imp
+      requiresSpecialDigestion: true
     - type: Material
     - type: PhysicalComposition
       materialComposition:
@@ -294,6 +297,12 @@
           - ReagentId: Fat
             Quantity: 3
           canReact: false
+        food: # imp
+          reagents:
+          - ReagentId: Protein
+            Quantity: 7
+          - ReagentId: Fat
+            Quantity: 3
 
 - type: entity
   parent: MaterialSheetMeat

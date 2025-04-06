@@ -72,7 +72,7 @@
   name: disposal unit
   components:
   - type: Sprite
-    sprite: Structures/Piping/disposal.rsi
+    sprite: _Impstation/Structures/Piping/disposal.rsi # imp
     snapCardinals: true
   - type: Construction
     graph: DisposalMachine

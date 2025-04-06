@@ -325,6 +325,9 @@
     stage: 1
   - type: StaticPrice
     price: 5000
+  - type: Tag # imp
+    tags:
+    - KodeEdible
 
 - type: entity
   id: FoodHivelordRemainsInert

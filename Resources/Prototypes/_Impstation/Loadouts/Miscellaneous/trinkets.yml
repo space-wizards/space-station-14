@@ -56,6 +56,15 @@
     proto: MusicallyTalented
 
 - type: loadout
+  id: PanFluteInstrument
+  storage:
+    back:
+    - PanFluteInstrument
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MusicallyTalented
+
+- type: loadout
   id: FlippoLighter
   storage:
     back:

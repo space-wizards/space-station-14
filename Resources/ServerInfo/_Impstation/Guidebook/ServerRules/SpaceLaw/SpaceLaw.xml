@@ -1,0 +1,110 @@
+﻿<Document>
+  # Space Law
+  In [italic]Space Station 14[/italic], stations operate under [bold]abbreviated space law[/bold], enforced by the [color=#cb0000]Security Department[/color].
+
+  [bold]All crew members, passengers, and visitors aboard a station are expected to follow these laws.[/bold] It is the job of [bold]Lawyers[/bold] and the [bold]Warden[/bold] to act as station legal counsel, and it is the [color=#cb0000]Head of Security[/color] (HoS) and [color=#cb0000]Warden[/color]'s jobs to ensure space law is followed and honored by all involved in criminal proceedings.
+
+  The goals of Space Law are to ensure the equitable treatment of all station personnel; to ensure the continual safe operation of the station; and to administer commensurate punishment unto perpetrators of any dangerous or seditious acts.
+
+  Space Law is not [textlink="server rules" link="newrules"]. However, some rules reference Space Law and require it to be followed by certain individuals or to a certain degree.
+
+  This guidebook page offers an [italic]overview[/italic] of the regular and irregular procedures involved in upholding Space Law, which crew members are expected to be aware of and can be subject to.
+
+  ### Exceptions
+
+  Sentencing is waived for [bold]foreign intruders[/bold] (such as nuclear operatives, ninjas, and other spacial aberrations), who are not governed by space law. Security should continue to follow standard alert procedure for such threats.
+
+  Traitors are [italic]not[/italic] considered foreign invaders, and should be treated in accordance with Space Law, like any member of the crew. 
+
+  ## Search and Seizure
+  A [italic]personnel search[/italic] is a seizure of the objects in a person's backpack, hands, coat, belt, and pockets. If any [color=red]contraband items[/color] are found during a search, the officer may choose to either further the search into a detainment, or simply confiscate the restricted items. After the search is conducted, all legal items are to be returned to the person.
+
+  A crewmate may decline any search conducted without a warrant while the alert level is [color=#7cfc00]Code Green[/color]. If the alert level is [color=#0000bb]Code Blue[/color] or above, personnel searches cannot be declined.
+
+  A [italic]departmental search[/italic] is the sweep of an entire area or department for contraband. It is recommended that the officers be extremely thorough: checking all lockers, crates, and doors. These can only be done with permission or, ideally, a warrant signed by the department head or highest-ranking Command staff, which in most cases is the [color=#1b67a5]Captain[/color].
+
+  ## Crimes
+  All acts on the [textlink="Crime Listing" link="SpaceLawCrimeList"] are to be considered illegal by the purposes of this list.
+
+  ## The Rights of Prisoners
+  [bold]Prisoners have rights[/bold] that must be upheld by station security:
+  - Prisoners must be granted adequate [color=#5b97bc]medical care[/color].
+  - Prisoners must be allowed access to [bold]basic communications equipment[/bold] (i.e. radios) so long as they are not abused.
+  - Prisoners must be granted [bold]clothing, food, water, shelter and safety[/bold]. If the brig is no longer safe, confinement must be established in another location.
+  - Prisoners must be given access to [bold]legal counsel during an interrogation[/bold] if requested and available.
+  - Prisoners must be given their shift-mandated PDA [italic]after confinement has finished[/italic], unless there is proof of PDA tampering. In such cases, the PDA is to be secured and replaced with a new unit.
+ - Prisoners must be granted [bold]freedom of movement[/bold] once safely in custody. Unless prisoners in custody pose an active physical threat to themselves or other personnel, they should be unrestrained and allowed use of their hands. Similarly, any prisoners held for permanent confinement should be held in the communal brig, and should not be confined to a solitary cell, unless they pose a risk to life and limb.
+
+  ### Implantation
+  Implants are technologies placed into the body using syringe-like implanters. These are difficult to remove, and can be used punitively by Security, for subterfuge by enemy forces, or for recreational purposes by members of the crew.
+
+  A [bold]prisoner in custody[/bold] can be subjected to [italic]implantation[/italic] procedures, within reason and upon meeting appropriate circumstances. Prisoners can also be asked to undergo [italic]implant extraction[/italic] for a specific implant, if there is reason to suspect they possess one. The procedure of adding or extracting an implant is considered a part of a detainee's processing and should not prolong their sentence.
+
+[color=red]Detainees may not be forced or coerced into performing implant [bold]extraction[/bold] on themselves against their will.[/color]
+
+  The following implants are issued for use by Security, and have special circumstances required for their use. Anything not in this list can also be implanted, given legal pretext. In extreme situations, or upon request of the individual in question, a prisoner can also receive implantation or extraction procedures [italic]without[/italic] meeting the circumstances for an implant.
+
+  - [color=#a4885c]Tracking Implants:[/color] Trackers can be applied to any suspect that has been convicted of a violent crime (marked in red under Space Law).
+  - [color=#a4885c]Mindshields:[/color] Required for members of Command and Security departments, mindshields protect the implantee from most undue mental tampering. Mindshields can be administered to any detainee who has been clearly mind-controlled, lost control of themselves, or has been charged with unlawful control. Unlike other implants, you [bold]may prolong the detainee's sentence until you finish issuing a mindshield[/bold], so long as it's done in a timely fashion. If the detainee refuses to cooperate or the implant fails to function, they can be charged with 5-00, Refusal of Mental Shielding.
+
+  Usage of contraband implanters is a detainable offense, but it's [color=red]not reasonable[/color] to detain someone solely for having an [bold]unidentified[/bold] implant inside them.
+
+  A former prisoner can also be asked to undergo implantation or extraction after their release from custody. If the required circumstance applied to the implant was met during imprisonment, the individual must comply with such a request.
+
+  ## Punishments
+  ### Standard Punishments
+  - [color=#a4885c]Warning:[/color] For minor crimes, resolve the issue, then [color=yellow]warn[/color] the individual not to attempt the crime again. If the individual fails to comply with a warning, confinement may be more appropriate.
+  - [color=#a4885c]Confinement:[/color] Confinement is a typical punishment; holding the offender in a cell for an amount of time determined by the crimes committed.
+  - [color=#a4885c]Demotion:[/color] Demotion entails removing all departmental gear they have on their person and revoking the involved department access off their ID. This requires the Captain's or relevant department head's approval. Demotions should only be issued if the person pose a threat to their own department or are in a position where they may abuse their job's equipment to commit further crimes.
+
+  ### Major Punishments
+  - [color=#a4885c]Permanent Confinement:[/color] Permanent confinement refers to being held in the permanent brig for the remainder of the shift. A person is eligible for permanent confinement if their timed sentence would exceed 15 minutes. Any persons subject to this punishment are required to be transported in cuffs to CentComm at the end of the shift. A permanent prisoner should never be deprived of their rights.
+  - [color=#a4885c]Execution:[/color] Execution is a humane way of dealing with unruly crewmates. Within reason, a prisoner who has been given the death sentence may pick how they wish to be killed. Common methods include: firing line, lethal injection, exile, or high voltage electrocution. Another alternate method of "execution" is the process of placing the prisoner's mind into a cyborg; this is allowed so long as it is lawful. Execution can only be issued with the authority of the Captain's approval; if there is no Captain, all heads of staff are to hold a vote on the matter.
+
+  ## Sentencing
+  [bold][color=#7cfc00]Exercise humanity when sentencing prisoners. Discipline only as much as is required.[/color][/bold]
+
+  Always take in account the severity of crimes committed, and only charge for what is needed for someone to learn their lesson. You do not — and often, should not — have to levy the highest punishment you can. Prisoners cooperating with Security and/or who are behaving well should have their sentences reduced.
+
+  A member of Security informing the Warden or other superiors of any sentence levied is considered [color=#7cfc00]good practice[/color], even for timed sentences. A [bold]Lawyer[/bold], if available, can be additionally consulted for concerns regarding sentencing.
+
+  ### Inappropriate Sentencing
+  Security officers may not issue a sentence of permanent confinement unless the length of the prisoner's sentence exceeds 15 minutes, or the prisoner requests it. [color=red]To unlawfully detain someone in permanent confinement is a violation of server rules.[/color] Outside of these circumstances, officers may make an in-character decision to sentence a criminal for an inappropriate length of time, but [i]excessive[/i] inappropriate sentencing may be met with admin action.
+
+  The [color=#1b67a5]Captain[/color], [color=#cb0000]Head of Security[/color], and/or [color=#cb0000]Warden[/color] are responsible, for ensuring security officers sentence prisoners in accordance with Space Law. However, if these crew members become aware of any inappropriate sentencing, including excessively-long or non-commensurate sentences, and if there is not an urgent threat or danger that they must prioritize, then [bold]they must work to correct that sentence[/bold].
+
+  [italic]Unreasonable failures of these crew members to ensure space law is followed, as determined by game admins, will be considered a [color=red]failure to follow server rules[/color].[/italic]
+
+  ### Linked Crimes & Stacking Sentences
+  
+  [bold]Suspects can not be charged for multiple instances of the same crime at once[/bold]. If upon release and completion of sentence, it is discovered that the suspect committed another instance of the same crime prior to being processed, they may be retroactively sentenced for previous instances of the crime committed.
+  
+  For example...
+  - A prisoner has been detained for three counts of assault. The maximum sentence would be equivalent to that of a prisoner detained for only a single count of assault.
+  - After this prisoner is released, it is discovered that prior to being arrested, they assaulted a fourth person. They may be arrested and charged with another count of assault for this fourth instance, despite having previously served a sentence for the initial three counts of assault. 
+  
+  If you charge someone with two or more different crimes at the same time, you should [color=#a4885c]combine the sentences[/color] you would give them for each crime.
+
+  Certain categories of crimes are considered [italic]linked crimes[/italic], shown in matching colors and suffixes on the [textlink="Crime Listing" link="SpaceLawCrimeList"]. These [color=red]can not be stacked[/color] and, instead, override each other. You should pick the highest crime that matches the case when considering sentencing.
+
+  For example...
+  - A suspect has committed a 2-01 (possession: tier 2) and a 3-01 (possession: tier 3). The maximum sentence here would be 10 minutes due to them being linked crimes (both ending in '01'), and 3-01 is the greater crime.
+  - A suspect commits a 3-04 (secure trespassing) and a 3-06 (manslaughter). Those crimes stack since they are not linked crimes. You could sentence for a maximum of 20 minutes, but maximum sentences should only be used for the worst offenders.
+
+  ### Repeat Offenses
+  [color=#a4885c]Repeat offenses[/color] are when an individual is sentenced and released for a crime, and then goes to commit the [bold]same crime within the same shift[/bold]. The severity of a repeat offense should affect later sentencing. If an individual shows a consistent disregard for space law, additional time may be appended to their sentence.
+
+  Any additional time appended to a detainee's sentence must be within reasonable bounds of the crime they have committed repeat offenses of.
+
+  ### Aiding, Attempting, or Intending Criminal Acts
+  A person may be charged if they intentionally participate in any of the following:
+    - Assisting another party in committing a crime (becoming an accessory)
+    - Making an attempt to commit an illegal act (attempting)
+    - Expressing a clear desire to commit a crime (criminal intent)
+
+  For any crime which has an [italic]attempted[/italic] listing in the Crime List (i.e. murder), these offenses are charged under that listing. Otherwise, charge offenders [bold]as though they committed the offense[/bold].
+
+  For example...
+  - An engineer giving another person tools after learning they are going to break into a restricted area may be charged for trespass.
+  - A Syndicate operative who attempts to arm the station's nuke may be charged with terrorism, even if the nuke was disarmed.
+</Document>

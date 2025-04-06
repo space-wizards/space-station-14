@@ -61,6 +61,18 @@
         Slash: 6
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: Food # imp
+    requiresSpecialDigestion: true
+    requireDead: true
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 10
+        - ReagentId: Fat
+          Quantity: 10
 
 - type: entity
   parent: BaseMobFlesh

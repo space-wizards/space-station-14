@@ -21,7 +21,7 @@
 - type: cargoProduct
   id: SecurityNonLethal
   icon:
-    sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/disabler.rsi
     state: base
   product: CrateSecurityNonlethal
   cost: 4000

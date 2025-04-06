@@ -13,3 +13,10 @@
   flatReductions:
     Blunt: 5
     Piercing: 5
+
+- type: damageModifierSet
+  id: Kodepiia
+  coefficients:
+    Blunt: 1.15
+    Slash: 1.15
+    Piercing: 1.15

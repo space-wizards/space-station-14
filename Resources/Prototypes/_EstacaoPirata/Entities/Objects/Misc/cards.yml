@@ -31,7 +31,6 @@
 
 - type: entity
   parent: BaseItem
-  abstract: true
   id: CardHandBase
   categories: [ HideSpawnMenu ]
   name: hand of cards
@@ -49,6 +48,9 @@
     interfaces:
       enum.CardUiKey.Key:
         type: CardHandMenuBoundUserInterface
+  - type: ContainerContainer
+    containers:
+      cardstack-container: !type:Container
 
 - type: entity
   parent: BaseItem

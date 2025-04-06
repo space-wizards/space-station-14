@@ -583,7 +583,8 @@
   - type: Tag
     tags:
     - Pill
-  - type: FoodSequenceElement
+    - KodeEdible # imp
+  - type: FoodSequenceElement # imp
     entries:
       Burger: PillBurger
 

@@ -1,0 +1,55 @@
+﻿<Document>
+  # Kodepiia
+
+  <Box>
+    <GuideEntityEmbed Entity="MobKodepiia" Caption=""/>
+  </Box>
+
+  ## Physiology
+  Kodepiiae are invertebrates most closely comparable to mollusca. Kodepiiae have incredible and minute control over every aspect of their appearance, and generally feel compelled to camouflage and blend in with their surroundings — [color=#ffa500]particularly imitating other sapient species.[/color]
+
+  A Kodepiia can "scramble" their appearance on the fly, but the time pressure of doing so quickly means that the result of that scramble is random.
+
+  In addition to their unparalleled ability to change their appearance, Kodepiiae have an astounding memory for sound, and perfect replication. Kodepiiae can sing, and have a large and mostly unique selection of emotes.
+
+  ## Diet
+
+  <Box>
+    <GuideEntityEmbed Entity="FoodMeatHuman" Caption=""/>
+    <GuideEntityEmbed Entity="FoodMeatChicken" Caption=""/>
+    <GuideEntityEmbed Entity="FoodMeatLizard" Caption=""/>
+    <GuideEntityEmbed Entity="FoodMeatKodepiia" Caption=""/>
+  </Box>
+
+  Because of a quirk of their biology, Kodepiiae can only digest uncooked proteins from raw meat and corpses. [color=#1e90ff]Cooked protein makes Kodepiiae sick![/color]
+
+  Kodepiiae have somewhat of a reputation of having "eyes bigger than their stomach", however, and a hungry enough Kodepiia can, with some preparation, [color=#ffa500]take a bite out of a corpse they could not otherwise eat[/color], dealing genetic damage to the dead body in exchange for satiating the Kodepiia's hunger. [bold][color=#994444]Be careful when eating — Prevention of Revival is a capital crime.[/bold][/color]
+
+  ## Breathing
+  Kodepiiae require [color=#1e90ff]higher blood-oxygen content than other species[/color]; they breathe twice as fast, will begin choking if they inhale waste gasses and are very sensitive to changes in the atmospheric oxygen content.
+
+  ## Damage
+  Kodepiiae are unusually fragile. They take [color=#ffa500]15% more blunt, slash, and piercing damage[/color].
+
+  ## Kodepiia Naming Conventions
+
+  Kodepiiae often style their names as a crude, imperfect imitation of other species. Otherwise their names tend to be a combination of color and pattern.
+
+  [color=#ffa500]Kodepiia names must follow RP rule 2. They must not make obvious references, not use random characters, and must not be obscene. [bold]Kodepiia do not have the leeway allowed to Grays.[/bold][/color]
+
+  - [color=#449944]Acceptable:[/color] Aqua Damask
+  - [color=#449944]Acceptable:[/color] Boosssaaa Noova
+  - [color=#449944]Acceptable:[/color] Cranb'irry; the First
+  - [color=#449944]Acceptable:[/color] Dark Times
+  - [color=#449944]Acceptable:[/color] Hiya Creedly
+  - [color=#449944]Acceptable:[/color] Red Herringbone
+  - [color=#449944]Acceptable:[/color] Simmis Mimmim Poppop
+  - [color=#449944]Acceptable:[/color] Your Friend Dave
+  - [color=#994444]Bad:[/color] Blue Waffle
+  - [color=#994444]Bad:[/color] Duel 1971
+  - [color=#994444]Bad:[/color] Fair Market Value
+  - [color=#994444]Bad:[/color] Gina Carano
+  - [color=#994444]Bad:[/color] Magenta Magenta
+  - [color=#994444]Bad:[/color] Benry
+
+</Document>

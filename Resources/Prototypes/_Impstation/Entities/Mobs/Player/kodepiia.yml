@@ -1,0 +1,28 @@
+﻿- type: entity
+  save: false
+  name: Urist McSquid
+  parent: MobKodepiiaBase
+  id: MobKodepiia
+  components:
+  - type: CombatMode
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
+  - type: MindContainer
+    showExamineInfo: true
+  - type: Input
+    context: "human"
+  - type: MobMover
+  - type: InputMover
+  - type: Respirator
+  - type: Alerts
+  - type: Actions
+  - type: Eye
+  - type: CameraRecoil
+  - type: Examiner
+  - type: CanHostGuardian
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen

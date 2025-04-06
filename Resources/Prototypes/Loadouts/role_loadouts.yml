@@ -142,8 +142,10 @@
   - LawyerJumpsuit
   - LawyerOuterClothing # imp
   - LawyerShoes # imp
+  - LawyerBriefcase # imp
   - Glasses
   - CommonBackpack
+  - LawyerPDA # imp
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool

@@ -1,0 +1,30 @@
+﻿- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: BaseSubdermalImplant
+  id: BionicVoiceMaskImplant
+  name: bionic voice mask implant
+  description: This implant lets its user adjust their voice to whoever they can think of.
+  components:
+  - type: SubdermalImplant
+    implantAction: ActionChangeVoiceMask
+  - type: VoiceMask
+  - type: UserInterface
+    interfaces:
+      enum.VoiceMaskUIKey.Key:
+        type: VoiceMaskBoundUserInterface
+
+- type: entity
+  parent: BaseImplantOnlyImplanterSyndi
+  id: BionicVoiceMaskImplanter
+  suffix: bionic voice mask
+  components:
+  - type: Implanter
+    implant: BionicVoiceMaskImplant
+
+- type: entity
+  parent: BionicVoiceMaskImplanter
+  id: BionicSyrinxImplanter
+  suffix: bionic syrinx
+  components:
+  - type: Implanter
+    implant: BionicSyrinxImplant

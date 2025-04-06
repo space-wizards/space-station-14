@@ -134,8 +134,7 @@
     - BorgChassis
   chatMessages: ["chat-emote-msg-boom"]
   chatTriggers:
-  - boom.
-  - booms.
-  - booms!
-  - booming.
-  - boomed.
+  - boom
+  - booms
+  - booming
+  - boomed

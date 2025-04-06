@@ -60,6 +60,9 @@
 - type: reagent
   parent: Blood
   id: BloodKodepiia
+  name: reagent-name-bloodkodepiia
+  group: Biological
+  desc: reagent-desc-bloodkodepiia
   flavor: kodepiia
   color: "#4f0000"
 
@@ -77,7 +80,7 @@
     TableSalt: 2
     Ammonia: 3
     Fat: 4
- 
+
 - type: reagent
   id: SynthFlesh
   name: reagent-name-synthflesh

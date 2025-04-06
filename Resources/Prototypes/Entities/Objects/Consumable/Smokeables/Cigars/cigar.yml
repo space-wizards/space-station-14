@@ -14,7 +14,8 @@
     tags:
       - Cigar
       - Trash
-      - PetWearable
+      - PetWearable # imp
+      - KodeEdible # imp
   - type: Clothing
     sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
     slots: [ mask ]
@@ -47,7 +48,8 @@
       - Cigar
       - Trash
       - Burnt
-      - PetWearable
+      - PetWearable # imp
+      - KodeEdible # imp
 
 - type: entity
   id: CigarGold

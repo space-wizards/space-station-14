@@ -404,7 +404,8 @@
     tags:
     - Trash
     - VimPilot
-    - MultitoolDefibrillatorTarget
+    - MultitoolDefibrillatorTarget # imp
+    - KodeEdible # imp
   - type: Destructible
     thresholds:
     - trigger:

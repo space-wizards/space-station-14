@@ -37,3 +37,18 @@
       behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+  - type: Tag # imp
+    tags:
+    - Structure
+    - KodeEdible
+  - type: Food # imp
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager # imp
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+        - ReagentId: Fat
+          Quantity: 3

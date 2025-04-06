@@ -2,10 +2,14 @@
   parent: [ BriefcaseBrown, Tier1Contraband] # imp - contraband
   id: CybersunBriefcase
   name: cybersun briefcase
-  description: It's like a brown briefcase, but black.
+  description: An expensive black leather briefcase subtly embossed with a grid of Cybersun logos. It's heavy enough to use as a weapon. #imp - contraband for a reason
   components:
   - type: Sprite
     sprite: _DV/Objects/Storage/Briefcases/briefcase_cybersun.rsi
     state: icon
   - type: Item
     sprite: _DV/Objects/Storage/Briefcases/briefcase_cybersun.rsi
+  - type: MeleeWeapon #imp - the reason it's contraband (toolbox damage)
+    damage:
+      types:
+        Blunt: 12

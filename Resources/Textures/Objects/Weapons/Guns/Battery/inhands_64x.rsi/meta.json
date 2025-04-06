@@ -2,6 +2,7 @@
     "version": 1,
     "license": "CC-BY-SA-3.0",
     "copyright": "Energy Shotgun inhands made by Boaz1111 based on the energy shotgun icon sprite made by Papermaker48 for SS14",
+    "MetaAtlas": false,
     "size": {
         "x": 64,
         "y": 64

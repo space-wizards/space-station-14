@@ -99,6 +99,7 @@
       - BROS
       - Trash
       - MultitoolDefibrillatorTarget
+      - KodeEdible
     - type: FoodSequenceElement
       entries:
         Burger: BrosBurger
@@ -289,7 +290,7 @@
   - type: Speech
     speechSounds: Kodepiia
     speechVerb: Kodepiia
-    allowedEmotes: ['Scream', 'Whistle', 'Hiss', 'Boom', 'HarpyRing', 'HarpyHonk', 'HarpyPew', 'HarpyBeep', 'HarpyRev', 'Click', 'Chitter', 'Squeak', 'HarpyCaw', 'Chirp', 'Squish', 'Bubble', 'Pop', 'Coo']
+    allowedEmotes: ['Scream', 'Whistle', 'Hiss', 'Boom', 'KodeRing', 'KodeHonk', 'KodePew', 'KodeBeep', 'KodeRev', 'Click', 'Chitter', 'Squeak', 'Caw', 'Chirp', 'Squish', 'Bubble', 'Pop', 'Coo']
   - type: Vocal
     sounds:
       Male: YoungKodepiia
@@ -317,7 +318,7 @@
   - type: CanEscapeInventory
     baseResistTime: 2
   - type: TypingIndicator
-    proto: slime #placeholder sprite
+    proto: kodepiia
   - type: Body
     prototype: Kodepiia
     requiredLegs: 2 #if you change this number i will put you in a fucking saw trap -mq
@@ -329,3 +330,8 @@
     rules: ghost-role-information-freeagent-rules
     raffle:
       settings: short
+  - type: KodepiiaConsumeAction
+    damage:
+      groups:
+        Genetic: 5
+    canGib: false

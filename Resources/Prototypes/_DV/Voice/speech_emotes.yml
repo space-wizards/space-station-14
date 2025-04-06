@@ -1,6 +1,6 @@
 # Harpy
 - type: emote
-  id: HarpyHonk
+  id: KodeHonk # imp
   name: delta-chat-emote-name-honk
   category: Vocal
   available: false
@@ -19,7 +19,7 @@
     - honked
 
 - type: emote
-  id: HarpyRing
+  id: KodeRing # imp
   name: delta-chat-emote-name-ring
   category: Vocal
   available: false
@@ -39,7 +39,7 @@
     - rang
 
 - type: emote
-  id: HarpyPew
+  id: KodePew # imp
   name: delta-chat-emote-name-pew
   category: Vocal
   available: false
@@ -57,7 +57,7 @@
     - pewpew
 
 - type: emote
-  id: HarpyBang
+  id: KodeBang # imp
   name: delta-chat-emote-name-bang
   category: Vocal
   available: false
@@ -76,7 +76,7 @@
     - banged
 
 - type: emote
-  id: HarpyBeep
+  id: KodeBeep # imp
   name: delta-chat-emote-name-beep
   category: Vocal
   icon: _Impstation/Interface/Emotes/beep.png # imp
@@ -95,7 +95,7 @@
     - beeped
 
 - type: emote
-  id: HarpyRev
+  id: KodeRev # imp
   name: delta-chat-emote-name-rev
   category: Vocal
   available: false
@@ -114,7 +114,7 @@
     - revved
 
 - type: emote
-  id: HarpyCaw
+  id: Caw # imp
   name: delta-chat-emote-name-caw
   category: Vocal
   available: false

@@ -50,7 +50,7 @@
     state: bonfire
   conditions:
     - !type:TileNotBlocked
-    
+
 - type: construction
   name: reinforced secret door
   id: SecretReinf
@@ -67,3 +67,58 @@
     state: closed
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  name: mining wall
+  id: MiningWall
+  graph: Girder
+  startNode: start
+  targetNode: miningWall
+  category: construction-category-structures
+  description: Rugged and heat-resistant.
+  icon:
+    sprite: Structures/Walls/mining.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: interior mining wall
+  id: InteriorMiningWall
+  graph: Girder
+  startNode: start
+  targetNode: miningInteriorWall
+  category: construction-category-structures
+  description: Rugged and heat-resistant.
+  icon:
+    sprite: _Impstation/Structures/Walls/mininginterior.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: diagonal mining wall
+  id: DiagonalMiningWall
+  graph: Girder
+  startNode: start
+  targetNode: diagonalMiningWall
+  category: construction-category-structures
+  description: Rugged and heat-resistant.
+  icon:
+    sprite: Structures/Walls/mining_diagonal.rsi
+    state: state0
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+

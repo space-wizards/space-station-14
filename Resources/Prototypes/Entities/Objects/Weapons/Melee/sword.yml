@@ -138,6 +138,10 @@
     sprite: Objects/Weapons/Melee/machete.rsi
   - type: DisarmMalus
   # imp edits #
+  - type: Clothing # imp
+    sprite: Objects/Weapons/Melee/machete.rsi
+    slots:
+    - Belt
   - type: DamageOtherOnHit
     staminaCost: 5
   - type: EmbeddableProjectile

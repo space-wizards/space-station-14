@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/commit/f743754ec3ef446c8172388431effa73aeddb7ff#diff-b429dd7fccbca60d740d4887c1077a178abf1efffe57e7ae2a0b607c8a9e2202 and modified.",
+    "states": [
+        {
+            "name": "state0"
+        },
+        {
+            "name": "state1"
+        }
+    ]
+}

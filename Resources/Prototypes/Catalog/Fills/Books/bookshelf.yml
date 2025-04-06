@@ -70,7 +70,6 @@
     - id: BookKeelBayWorn
     - id: BookTEGtorial
     - id: BookSMForDummies
-    - id: BookEvilcraft
 
 - type: entityTable
   id: RandomGuidebookTable

@@ -18,10 +18,11 @@
     - Human
     - Moth
     - Reptilian
+    # imp below
+    - Decapoid # ??? beck ???
     - Gray
     - Gastropoid
     - Thaven
-    - Decapoid
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox
@@ -29,39 +30,6 @@
   - !type:SpeciesLoadoutEffect
     species:
     - Vox
-
-- type: loadoutEffectGroup
-  id: EffectSpeciesSnail
-  effects:
-  - !type:SpeciesLoadoutEffect
-    species:
-    - Gastropoid
-
-# commenting these out because I would like to do emergency vapor boxes at some point. - move these to imp filestructure
-#- type: loadoutEffectGroup
-#  id: EffectSpeciesDecapoid
-#  effects:
-#  - !type:SpeciesLoadoutEffect
-#    species:
-#    - Decapoid
-
-#- type: loadout
-#  id: EmergencyOxygenDecapoid
-#  effects:
-#  - !type:GroupLoadoutEffect
-#    proto: EffectSpeciesDecapoid
-#  storage:
-#    back:
-#    - BoxSurvivalVapor
-
-- type: loadout
-  id: EmergencyOxygenSnail
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: EffectSpeciesSnail
-  storage:
-    lhand:
-    - BoxSurvival
 
     # Basic
 - type: loadout
@@ -177,25 +145,6 @@
   storage:
     back:
     - BoxSurvivalSecurityNitrogen
-
-# Brigmedic
-- type: loadout
-  id: EmergencyOxygenBrigmedic
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: OxygenBreather
-  storage:
-    back:
-    - BoxSurvivalBrigmedic
-
-- type: loadout
-  id: EmergencyNitrogenBrigmedic
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: NitrogenBreather
-  storage:
-    back:
-    - BoxSurvivalBrigmedicNitrogen
 
 # Syndicate
 - type: loadout

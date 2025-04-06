@@ -283,6 +283,18 @@
     - node: shuttleInteriorWall
       entity: WallShuttleInterior
       edges:
+        - to: miningInteriorWall #imp
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - material: Plasteel
+              amount: 2
+              doAfter: 1
+            - tool: Welding
+              doAfter: 4
         - to: girder
           completed:
             - !type:SpawnPrototype
@@ -295,6 +307,20 @@
             - tool: Welding
               doAfter: 10
             - tool: Screwing
+              doAfter: 1
+
+    - node: miningInteriorWall #imp
+      entity: WallMiningInterior
+      edges:
+        - to: shuttleInteriorWall
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 4
+            - tool: Cutting
               doAfter: 1
 
     - node: reinforcedGirder
@@ -516,10 +542,35 @@
                   data: 0
             - tool: Cutting
               doAfter: 4
+        - to: miningWall #imp
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - material: Plasteel
+              amount: 2
+              doAfter: 1
+            - tool: Welding
+              doAfter: 5
 
     - node: diagonalshuttleWall
       entity: WallShuttleDiagonal
       edges:
+        - to: diagonalMiningWall #imp
+          completed:
+            - !type:SnapToGrid
+              southRotation: false
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - material: Plasteel
+              amount: 2
+              doAfter: 1
+            - tool: Welding
+              doAfter: 8
+
         - to: reinforcedGirder
           completed:
             - !type:SpawnPrototype
@@ -548,6 +599,34 @@
               doAfter: 1
             - tool: Screwing
               doAfter: 1
+            - tool: Cutting
+              doAfter: 1
+
+    - node: miningWall #imp
+      entity: WallMining
+      edges:
+        - to: shuttleWall
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 4
+            - tool: Cutting
+              doAfter: 1
+
+    - node: diagonalMiningWall #imp
+      entity: WallMiningDiagonal
+      edges:
+        - to: diagonalshuttleWall
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlasteel1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 4
             - tool: Cutting
               doAfter: 1
 

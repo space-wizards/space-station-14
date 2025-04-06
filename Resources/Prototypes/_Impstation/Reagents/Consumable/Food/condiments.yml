@@ -12,5 +12,9 @@
       effects:
       - !type:SatiateHunger
         factor: 0.5
+        conditions:
+        - !type:OrganType
+          type: Kodepiia
+          shouldHave: false
       - !type:SatiateThirst
         factor: -0.5 # high salt content

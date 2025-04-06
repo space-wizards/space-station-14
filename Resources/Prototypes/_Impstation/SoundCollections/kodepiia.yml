@@ -1,9 +1,7 @@
 ﻿- type: soundCollection
   id: KodepiiaScreams
   files:
-  - /Audio/_EE/Supermatter/status/ohfuck.ogg # sorry i think this is funny
-  - /Audio/_Goobstation/Changeling/Effects/changeling_shriek.ogg
-  - /Audio/_Impstation/Effects/gon.ogg # sorry.
+  - /Audio/_Impstation/Animals/bros_hurt.ogg
   - /Audio/_Impstation/Voice/Decapoid/decapoid_scream.ogg
   - /Audio/_Impstation/Voice/Gray/gray_scream.ogg
   - /Audio/_Impstation/Voice/Silicon/silicon_scream.ogg
@@ -24,9 +22,6 @@
   - /Audio/_NF/Voice/Goblin/goblin-scream-02.ogg
   - /Audio/_NF/Voice/Goblin/goblin-scream-03.ogg
   - /Audio/_NF/Voice/Goblin/goblin-scream-04.ogg
-  - /Audio/_Nyanotrasen/Voice/Felinid/cat_scream1.ogg
-  - /Audio/_Nyanotrasen/Voice/Felinid/cat_scream2.ogg
-  - /Audio/_Nyanotrasen/Voice/Felinid/cat_scream3.ogg
   - /Audio/Animals/monkey_scream.ogg
   - /Audio/Animals/space_dragon_roar.ogg
   - /Audio/Voice/Arachnid/arachnid_scream.ogg
@@ -42,7 +37,6 @@
   - /Audio/Voice/Human/malescream_4.ogg
   - /Audio/Voice/Human/malescream_5.ogg
   - /Audio/Voice/Human/malescream_6.ogg
-  - /Audio/Voice/Human/malescream_guardian.ogg
   - /Audio/Voice/Moth/moth_scream.ogg
   - /Audio/Voice/Reptilian/reptilian_scream.ogg
   - /Audio/Voice/Skeleton/skeleton_scream.ogg
@@ -119,20 +113,17 @@
 - type: soundCollection
   id: KodepiiaHisses
   files:
-  - /Audio/_Impstation/Items/bros_grenade_smoke.ogg
+  - /Audio/_Impstation/Effects/gon.ogg
   - /Audio/_Impstation/Voice/Reptillian/reptillian_hiss1.ogg # sorry its spelled what.
   - /Audio/_Impstation/Voice/Vox/voxhiss.ogg
   - /Audio/_NF/Voice/Goblin/goblin-hiss-01.ogg
   - /Audio/_Nyanotrasen/Machines/deepfryer_basket_add_item.ogg
-  - /Audio/_Nyanotrasen/Voice/Felinid/cat_hiss1.ogg
-  - /Audio/_Nyanotrasen/Voice/Felinid/cat_hiss2.ogg
   - /Audio/Animals/snake_hiss.ogg
   - /Audio/Effects/spray.ogg
   - /Audio/Effects/spray2.ogg
   - /Audio/Effects/spray3.ogg
   - /Audio/Items/hiss.ogg
   - /Audio/Items/hypospray.ogg
-  - /Audio/Items/ratchet.ogg
   - /Audio/Items/welder.ogg
   - /Audio/Machines/airlock_close.ogg
   - /Audio/Machines/windoor_open.ogg
@@ -148,18 +139,6 @@
   - /Audio/Items/Toys/meow1.ogg
 
 - type: soundCollection
-  id: KodepiiaGrowls
-  files:
-  - /Audio/_DV/Voice/Vulpkanin/dog_growl1.ogg
-  - /Audio/_DV/Voice/Vulpkanin/dog_growl2.ogg
-  - /Audio/_DV/Voice/Vulpkanin/dog_growl3.ogg
-  - /Audio/_DV/Voice/Vulpkanin/dog_growl4.ogg
-  - /Audio/_DV/Voice/Vulpkanin/dog_growl5.ogg
-  - /Audio/_DV/Voice/Vulpkanin/dog_growl6.ogg
-  - /Audio/_Nyanotrasen/Voice/Felinid/cat_growl1.ogg
-  - /Audio/Animals/bear.ogg
-
-- type: soundCollection
   id: KodepiiaRings
   files:
   - /Audio/_Impstation/Effects/doorbell.ogg
@@ -173,7 +152,6 @@
   id: KodepiiaHonks
   files:
   - /Audio/_Impstation/Effects/tinycarhorn.ogg
-  - /Audio/_Impstation/Weapons/Guns/Gunshots/clowndisabler.ogg
   - /Audio/Animals/goose_honk.ogg
   - /Audio/Items/bikehorn.ogg
   - /Audio/Items/brokenbikehorn.ogg
@@ -181,11 +159,8 @@
 - type: soundCollection
   id: KodepiiaPews
   files:
-  - /Audio/_Impstation/CosmicCult/ability_nova_cast.ogg
-  - /Audio/_Impstation/CosmicCult/cosmic_wield.ogg
   - /Audio/_Impstation/Weapons/Guns/Gunshots/autodisabler.ogg
   - /Audio/_Impstation/Weapons/Guns/Gunshots/goldlaser.ogg
-  - /Audio/_Impstation/Weapons/Guns/Gunshots/raygun.ogg
   - /Audio/_Impstation/Weapons/Guns/Gunshots/stunlauncher.ogg
   - /Audio/_Impstation/Weapons/Guns/Gunshots/stunprojector.ogg
   - /Audio/_Impstation/Weapons/pvc.ogg
@@ -193,7 +168,6 @@
   - /Audio/Effects/Arcade/player_charge.ogg
   - /Audio/Effects/Arcade/player_heal.ogg
   - /Audio/Magic/blink.ogg
-  - /Audio/Magic/staff_healing.ogg
   - /Audio/Weapons/emitter.ogg
   - /Audio/Weapons/Guns/Gunshots/laser.ogg
   - /Audio/Weapons/Guns/Gunshots/laser3.ogg
@@ -204,8 +178,12 @@
 - type: soundCollection
   id: KodepiiaBangs
   files:
+  - /Audio/_Impstation/Effects/hollow_plastic1.ogg
+  - /Audio/_Impstation/Effects/hollow_plastic2.ogg
+  - /Audio/_Impstation/Effects/hollow_plastic3.ogg
+  - /Audio/_Impstation/Effects/hollow_plastic4.ogg
+  - /Audio/_Impstation/Effects/hollow_plastic5.ogg
   - /Audio/_Impstation/Weapons/Guns/Gunshots/daito.ogg
-  - /Audio/_Impstation/Weapons/Guns/Gunshots/kammerer.ogg
   - /Audio/_Impstation/Weapons/Guns/Gunshots/light-pistol.ogg
   - /Audio/_Impstation/Weapons/Guns/Gunshots/light-pistol2.ogg
   - /Audio/_Impstation/Weapons/Guns/Gunshots/nemesis.ogg
@@ -214,9 +192,7 @@
   - /Audio/Machines/blastdoor.ogg
   - /Audio/Machines/machine_vend.ogg
   - /Audio/Magic/forcewall.ogg
-  - /Audio/Magic/knock.ogg
   - /Audio/Weapons/Guns/Gunshots/atreides.ogg
-  - /Audio/Weapons/Guns/Gunshots/bang.ogg
   - /Audio/Weapons/Guns/Gunshots/c-20r.ogg
   - /Audio/Weapons/Guns/Gunshots/mk58.ogg
   - /Audio/Weapons/Guns/Gunshots/pistol.ogg
@@ -259,30 +235,22 @@
 - type: soundCollection
   id: KodepiiaRevs
   files:
-  - /Audio/Machines/reclaimer_startup.ogg
   - /Audio/Weapons/chainsawwield.ogg
 
 - type: soundCollection
   id: KodepiiaBooms
   files:
+  - /Audio/_Impstation/Weapons/Guns/Gunshots/blastercannon.ogg
   - /Audio/_Impstation/Weapons/Guns/Hits/gamemaker-explosion.ogg
   - /Audio/Effects/explosion_small1.ogg
   - /Audio/Effects/explosion_small2.ogg
   - /Audio/Effects/explosion_small3.ogg
   - /Audio/Effects/explosionsmallfar.ogg
-  - /Audio/Effects/flash_bang.ogg
-  - /Audio/Magic/disintegrate.ogg
-  - /Audio/Magic/fireball.ogg
 
 - type: soundCollection
   id: KodepiiaClicks
   files:
   - /Audio/_DV/Items/TapeRecorder/play.ogg
-  - /Audio/_Impstation/Effects/hollow_plastic1.ogg
-  - /Audio/_Impstation/Effects/hollow_plastic2.ogg
-  - /Audio/_Impstation/Effects/hollow_plastic3.ogg
-  - /Audio/_Impstation/Effects/hollow_plastic4.ogg
-  - /Audio/_Impstation/Effects/hollow_plastic5.ogg
   - /Audio/_Impstation/Items/Decapoid/claw_cutting.ogg
   - /Audio/_Impstation/Weapons/Guns/Cock/basic_cock.ogg
   - /Audio/_Impstation/Weapons/Guns/Cock/shotgun_cock.ogg
@@ -294,6 +262,7 @@
   - /Audio/Items/pistol_cock.ogg
   - /Audio/Items/pistol_magin.ogg
   - /Audio/Items/pistol_magout.ogg
+  - /Audio/Items/ratchet.ogg
   - /Audio/Machines/door_lock_off.ogg
   - /Audio/Machines/door_lock_on.ogg
   - /Audio/Machines/id_insert.ogg
@@ -332,14 +301,6 @@
   - /Audio/Voice/Talk/pai_ask.ogg
   - /Audio/Voice/Talk/pai_exclaim.ogg
   - /Audio/Voice/Talk/pai.ogg
-  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-01.ogg # not certain about placing them here but i dont really want to give kode straight up goblin singing
-  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-02.ogg
-  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-03.ogg
-  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-04.ogg
-  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-05.ogg
-  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-06.ogg
-  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-07.ogg
-  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-08.ogg
   - /Audio/Effects/falling.ogg
 
 - type: soundCollection
@@ -428,6 +389,13 @@
   id: KodepiiaWhistles
   files:
   - /Audio/_Impstation/Voice/Slime/slimewhistle.ogg
+  - /Audio/Items/Whistle/whistle_1.ogg
+  - /Audio/Items/Whistle/whistle_2.ogg
+  - /Audio/Items/Whistle/whistle_3.ogg
+  - /Audio/Items/Whistle/whistle_4.ogg
+  - /Audio/Items/Whistle/whistle_5.ogg
+  - /Audio/Items/Whistle/whistle_6.ogg
+  - /Audio/Items/Whistle/whistle_7.ogg
   - /Audio/Voice/Human/whistle_1.ogg
   - /Audio/Voice/Human/whistle_2.ogg
   - /Audio/Voice/Human/whistle_3.ogg

@@ -1,0 +1,18 @@
+- type: entity
+  name: designer pen
+  parent: Pen
+  id: DesignerPen
+  description: A tasteful and elegant pen in Nanotrasen colors. The most expensive writing implement you can legally own aboard this station.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/pens.rsi
+    state: designer_pen
+  - type: Item
+    sprite: _Impstation/Objects/Misc/pens.rsi
+    heldPrefix: designer_pen
+  - type: SignatureWriter
+    colorList:
+      black: "#2f4f4f"
+      cyan: "#1a7694"
+      purple: "#6a3059"
+      magenta: "#a42f6b"

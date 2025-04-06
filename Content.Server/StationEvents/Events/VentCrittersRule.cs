@@ -22,7 +22,7 @@ public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleCompon
     {
         base.Added(uid, component, gameRule, args);
 
-        if (!TryGetRandomStation(out var station))
+        if (!TryGetRandomStation(out var station) || !component.Announce) //IMP: added component.Announce
             return;
 
         _announcer.SendAnnouncement(

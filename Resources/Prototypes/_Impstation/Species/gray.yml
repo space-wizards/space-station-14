@@ -7,7 +7,7 @@
   defaultSkinTone: "#b8b8b8"
   markingLimits: MobGrayMarkingLimits
   dollPrototype: MobGrayDummy
-  skinColoration: Hues
+  skinColoration: GrayToned
   maleFirstNames: NamesGrayFirst
   femaleFirstNames: NamesGrayFirst
   lastNames: NamesGrayLast

@@ -1,0 +1,228 @@
+﻿- type: entity
+  save: false
+  name: Urist McSquid
+  parent: BaseMobHuman
+  id: MobKodepiiaBase
+  abstract: true
+  components:
+  - type: HarpySinger
+  - type: KodepiiaScrambler
+  - type: KodepiiaConsumeAction
+    damage:
+      groups:
+        Genetic: 25
+  - type: Instrument
+    allowPercussion: false
+    program: 52
+  - type: SwappableInstrument
+    instrumentList:
+      "Voice": {52: 0}
+      "Trumpet": {56: 0}
+      "Electric": {27: 0}
+      "Bass": {33: 0}
+      "Rock": {29: 0}
+      "Acoustic": {24: 0}
+      "Flute": {73: 0}
+      "Sax": {66: 0}
+      "Piano": {1: 0}
+      "Church Organ": {19: 0}
+      "Harp": {46: 0}
+    onlySetBySelf: true
+  - type: UserInterface
+    interfaces:
+      enum.InstrumentUiKey.Key:
+        type: InstrumentBoundUserInterface
+      enum.HumanoidMarkingModifierKey.Key:
+        type: HumanoidMarkingModifierBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+      enum.ThavenMoodsUiKey.Key:
+        type: ThavenMoodsBoundUserInterface
+        requireInputValidation: false
+  - type: Sprite
+    layers:
+    - map: [ "enum.HumanoidVisualLayers.Chest" ]
+    - map: [ "enum.HumanoidVisualLayers.Head" ]
+    - map: [ "enum.HumanoidVisualLayers.Snout" ]
+    - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+    - map: [ "enum.HumanoidVisualLayers.RArm" ]
+    - map: [ "enum.HumanoidVisualLayers.LArm" ]
+    - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+    - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+    - map: [ "underpants" ]
+    - map: [ "undershirt" ]
+    - map: [ "socks" ]
+    - map: [ "jumpsuit" ]
+    - map: ["enum.HumanoidVisualLayers.LFoot"]
+    - map: ["enum.HumanoidVisualLayers.RFoot"]
+    - map: ["enum.HumanoidVisualLayers.LHand"]
+    - map: ["enum.HumanoidVisualLayers.RHand"]
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "id" ]
+    - map: [ "gloves" ]
+    - map: [ "shoes" ]
+    - map: [ "ears" ]
+    - map: [ "outerClothing" ]
+    - map: [ "eyes" ]
+    - map: [ "belt" ]
+    - map: [ "back" ]
+    - map: [ "neck" ]
+    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+    - map: [ "pocket1" ]
+    - map: [ "pocket2" ]
+    - map: [ "clownedon" ] # Dynamically generated
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
+    - map: [ "enum.HumanoidVisualLayers.RArmExtension" ]
+    - map: [ "enum.HumanoidVisualLayers.Tail" ]
+    - map: [ "enum.HumanoidVisualLayers.Hair" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ enum.InstrumentVisuals.Layer ]
+      sprite: _DV/Effects/harpysinger.rsi
+      state: singing_music_notes
+      visible: false
+  - type: HumanoidAppearance
+    species: Kodepiia
+    hideLayersOnEquip:
+    - HeadTop
+    - HeadSide
+  - type: Fixtures
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.32
+        density: 150
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Body
+    prototype: Kodepiia
+  - type: Bloodstream
+    bloodReagent: BloodKodepiia
+  - type: Damageable
+    damageModifierSet: Kodepiia
+  - type: MeleeWeapon
+    angle: 0
+    animation: WeaponArcPunch
+    soundHit:
+      collection: BoxingHit #maybe change this
+    damage:
+      types:
+        Blunt: 5
+  - type: TypingIndicator
+    proto: kodepiia
+  - type: Speech
+    speechSounds: Kodepiia
+    speechVerb: Kodepiia
+    allowedEmotes: ['Hiss', 'Snarl', 'KodeHonk', 'KodeRing', 'KodePew', 'KodeBang', 'KodeBeep', 'KodeRev', 'Caw', 'Squish', 'Chitter', 'Squeak', 'Click', 'Squish', 'Coo', 'Boom', 'Chirp', 'Bubble', 'Pop'] # my extremely normal beast
+  - type: Vocal
+    sounds:
+      Male: Kodepiia
+      Female: Kodepiia
+      Unsexed: Kodepiia
+  - type: InstrumentVisuals
+  - type: GenericVisualizer
+    visuals:
+      enum.InstrumentVisuals.Playing:
+        enum.InstrumentVisuals.Layer:
+          False: {visible: false}
+          True: {visible: true}
+  - type: Inventory
+    speciesId: kodepiia
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Kodepiia/displacement.rsi
+            state: jumpsuit
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Kodepiia/displacement.rsi
+            state: hands
+    femaleDisplacements: {}
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatKodepiia
+      amount: 5
+  - type: HarpyVisuals
+
+- type: entity
+  save: false
+  name: Urist McSquid
+  parent: MobHumanDummy
+  id: MobKodepiiaDummy
+  categories: [ HideSpawnMenu ]
+  description: A dummy Kodepiia meant to be used in character setup.
+  components:
+  - type: HumanoidAppearance
+    species: Kodepiia
+  - type: Inventory
+    speciesId: kodepiia
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Kodepiia/displacement.rsi
+            state: jumpsuit
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Kodepiia/displacement.rsi
+            state: hands
+    femaleDisplacements: {}
+  - type: Sprite
+    layers:
+    - map: [ "enum.HumanoidVisualLayers.Chest" ]
+    - map: [ "enum.HumanoidVisualLayers.Head" ]
+    - map: [ "enum.HumanoidVisualLayers.Snout" ]
+    - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+    - map: [ "enum.HumanoidVisualLayers.RArm" ]
+    - map: [ "enum.HumanoidVisualLayers.LArm" ]
+    - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+    - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+    - map: [ "underpants" ]
+    - map: [ "undershirt" ]
+    - map: [ "socks" ]
+    - map: [ "jumpsuit" ]
+    - map: ["enum.HumanoidVisualLayers.LFoot"]
+    - map: ["enum.HumanoidVisualLayers.RFoot"]
+    - map: ["enum.HumanoidVisualLayers.LHand"]
+    - map: ["enum.HumanoidVisualLayers.RHand"]
+    - map: [ "id" ]
+    - map: [ "gloves" ]
+    - map: [ "shoes" ]
+    - map: [ "ears" ]
+    - map: [ "outerClothing" ]
+    - map: [ "eyes" ]
+    - map: [ "belt" ]
+    - map: [ "back" ]
+    - map: [ "neck" ]
+    - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+    - map: [ "pocket1" ]
+    - map: [ "pocket2" ]
+    - map: [ "clownedon" ]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
+    - map: [ "enum.HumanoidVisualLayers.RArmExtension" ]
+    - map: [ "enum.HumanoidVisualLayers.Tail" ]
+    - map: [ "enum.HumanoidVisualLayers.Hair" ]
+    - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]

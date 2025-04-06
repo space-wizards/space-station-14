@@ -57,7 +57,7 @@
     baseWalkSpeed: 0.1
     baseSprintSpeed: 0.2
   - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-inanimate
+    flavorKind: station-event-random-sentience-flavor-superdense
   - type: InteractionPopup
     successChance: .1
     interactSuccessString: petting-success-suppy

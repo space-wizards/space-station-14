@@ -7,9 +7,9 @@
   description: A badge to show that the owner is a 'legitimate' prosecutor who passed the NT bar exam required to practice law.
   components:
   - type: Sprite
-    sprite: _DV/Clothing/Neck/Misc/prosecutorbadge.rsi
+    sprite: _Impstation/Clothing/Neck/Misc/prosecutorbadge.rsi #imp
   - type: Clothing
-    sprite: _DV/Clothing/Neck/Misc/prosecutorbadge.rsi
+    sprite: _Impstation/Clothing/Neck/Misc/prosecutorbadge.rsi #imp
   - type: TypingIndicatorClothing
     proto: lawyer
 

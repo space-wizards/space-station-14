@@ -2,6 +2,7 @@
   "version": 1,
   "license": "CC-BY-SA-3.0",
   "copyright": "Made by Pato Grone for SS14, Wielded states by Jonathan Argo",
+  "MetaAtlas": false,
   "size": {
     "x": 32,
     "y": 32

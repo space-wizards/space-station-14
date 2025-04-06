@@ -7,20 +7,31 @@
       "y": 32
     },
     "states": [
-      {
+        {
         "name": "billeausac"
-      },
-      {
+        },
+        {
+            "name": "compartmentofallthings",
+            "delays": [
+                [
+                    0.6,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
         "name": "finecoil"
-      },
-      {
+        },
+        {
         "name": "opticullis"
-      },
-      {
+        },
+        {
         "name": "primarygullet"
-      },
-      {
+        },
+        {
         "name": "slough"
-      }
+        }
     ]
   }
