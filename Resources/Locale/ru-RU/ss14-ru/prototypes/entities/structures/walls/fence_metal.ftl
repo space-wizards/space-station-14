@@ -12,4 +12,4 @@ ent-FenceMetalEnd = { ent-BaseFenceMetal }
     .suffix = Конец
     .desc = { ent-BaseFenceMetal.desc }
 ent-FenceMetalGate = ворота сетки-рабицы
-    .desc = Вы можете использовать дверь вместо того, чтобы перелезать через неё - если вы ТРУС.
+    .desc = Вы можете использовать дверь вместо того, чтобы перелезать через неё — если вы ТРУС.

@@ -11,6 +11,6 @@ ent-OrganArachnidLiver = печень
 ent-OrganArachnidKidneys = почки
     .desc = Выводят токсины из кровеносной системы.
 ent-OrganArachnidEyes = глаза
-    .desc = Два - это уже слишком много.
+    .desc = Два — это уже слишком много.
 ent-OrganArachnidTongue = язык
     .desc = Мясистая мышца, используемая в основном для обмана.

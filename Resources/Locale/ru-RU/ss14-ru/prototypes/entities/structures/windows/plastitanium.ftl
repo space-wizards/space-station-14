@@ -1,5 +1,5 @@
 ent-PlastitaniumWindowBase = пластитановое окно
-    .desc = Смотри не заляпай.
+    .desc = Смотри, не заляпай.
 ent-PlastitaniumWindowSquareBase = пластитановое окно
     .desc = { ent-PlastitaniumWindowBase.desc }
 ent-PlastitaniumWindowIndestructible = пластитановое окно

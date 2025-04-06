@@ -1,5 +1,5 @@
 ent-ClothingBackpackDuffelSurgeryFilled = { ent-ClothingBackpackDuffelSyndicate }
-    .desc = Большой вещевой мешок для хранения дополнительного медицинского снаряжения - похоже, этот мешок предназначен для хранения хирургических инструментов.
+    .desc = Большой вещевой мешок для хранения дополнительного медицинского снаряжения — похоже, этот мешок предназначен для хранения хирургических инструментов.
     .suffix = Хирургический вещмешок
 ent-ClothingBackpackDuffelCBURNFilled = { ent-ClothingBackpackDuffelCBURN }
     .desc = { ent-ClothingBackpackDuffelCBURN.desc }
