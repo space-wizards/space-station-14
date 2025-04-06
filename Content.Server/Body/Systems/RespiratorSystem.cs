@@ -178,7 +178,7 @@ public sealed class RespiratorSystem : EntitySystem
     /// </summary>
     public bool IsBreathing(Entity<RespiratorComponent?> ent)
     {
-        if (_mobState.IsIncapacitated(uid))
+        if (_mobState.IsIncapacitated(ent))
             return false;
 
         if (!Resolve(ent, ref ent.Comp))
