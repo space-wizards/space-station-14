@@ -104,6 +104,23 @@
   flavor: peppery
   color: black
   recognizable: true
+  metabolisms:
+    Food:
+      effects:
+      - !type:Emote
+        emote: Cough
+        showInChat: true
+        probability: 0.05
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:Emote
+        emote: Cough
+        conditions:
+        - !type:Breathing
+        - !type:Internals
+          wearingInternals: false
 
 - type: reagent
   id: Vinegar
