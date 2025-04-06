@@ -115,6 +115,6 @@
 - type: entity
   name: composition C-4
   suffix: NT
-  description: Used to put holes in specific areas without too much extra hole. NanoTrasen brand.
+  description: Used to put holes in specific areas without too much extra hole. Nanotrasen brand.
   parent: [BaseCentcommContraband, C4]
   id: C4NT

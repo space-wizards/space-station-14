@@ -58,11 +58,10 @@
     beepInterval: 2 # 2 beeps total (at 0 and 2)
 
 - type: entity
-  name: explosive grenade
-  suffix: NT
-  description: Grenade that creates a small but devastating explosion. Nanotrasen brand.
   parent: [BaseCentcommContraband, ExGrenade]
   id: ExGrenadeNT
+  suffix: NT
+  description: Grenade that creates a small but devastating explosion. Nanotrasen brand.
 
 - type: entity
   name: flashbang
@@ -372,6 +371,12 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
+
+- type: entity
+  parent: [BaseCentcommContraband, EmpGrenade]
+  id: EmpGrenadeNT
+  suffix: NT
+  description: Grenade designed to wreak havoc on electronic systems. Nanotrasen brand.
 
 - type: entity
   name: holy hand grenade

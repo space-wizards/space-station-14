@@ -27,23 +27,18 @@
     outerClothing: ClothingOuterArmorBasicSlim
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltSecurityWebbing
+    belt: ClothingBeltMilitaryWebbingERTLeaderFilled
     neck: Whistle
     pocket1: WeaponPistolN1984
     pocket2: FlashlightSeclite
   storage:
     back:
-    - BoxZiptie
-    - MedkitCombatFilled
+    - PortableRecharger
+    - WeaponDisabler
     - CrowbarRed
+    - HoloprojectorField
     - GrenadeFlashBang
     - GrenadeStinger
-    - PinpointerNuclear
-    - WeaponDisabler
-    belt:
-    - Stunbaton
-    - HoloprojectorSecurity
-    - MagazineMagnum
 
 - type: startingGear
   id: ERTLeaderGearEVA
@@ -57,26 +52,21 @@
     outerClothing: ClothingOuterHardsuitERTLeader
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltSecurityWebbing
+    belt: ClothingBeltMilitaryWebbingERTLeaderFilled
     neck: Whistle
     pocket1: WeaponPistolN1984
-    pocket2: FlashlightSeclite
+    pocket2: CombatKnife
   storage:
     back:
-    - BoxZiptie
-    - MedkitCombatFilled
+    - PortableRecharger
+    - WeaponDisabler
     - CrowbarRed
+    - HoloprojectorField
     - GrenadeFlashBang
     - GrenadeStinger
-    - PinpointerNuclear
-    - WeaponDisabler
-    belt:
-    - Stunbaton
-    - HoloprojectorSecurity
-    - MagazineMagnum
 
 - type: startingGear
-  id: ERTMarinesGearLeader
+  id: ERTLeaderGearArmed
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTLeader
     back: ClothingBackpackERTLeader
@@ -87,29 +77,22 @@
     outerClothing: ClothingOuterHardsuitERTLeader
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltMilitaryWebbingNT
+    belt: ClothingBeltMilitaryWebbingERTLeaderFilled
     neck: Whistle
     pocket1: WeaponPistolN1984
     pocket2: WeaponDisabler
   storage:
     back:
-    - BoxZiptie
+    - PortableRecharger
     - WeaponSubMachineGunDrozd
-    - MedkitCombatFilled
+    - MagazinePistolSubMachineGun
+    - MagazinePistolSubMachineGun
+    - MagazinePistolSubMachineGunIncendiary
+    - MagazinePistolSubMachineGunUranium
     - CrowbarRed
-    - CombatKnife
+    - HoloprojectorField
     - GrenadeFlashBang
     - GrenadeStinger
-    - PinpointerNuclear
-    - CombatKnife
-    belt:
-    - Stunbaton
-    - HoloprojectorSecurity
-    - MagazineMagnum
-    - MagazinePistolSubMachineGun
-    - MagazinePistolSubMachineGun
-    - MagazinePistolSubMachineGun
-    - MagazinePistolSubMachineGun
 
 # Chaplain
 - type: job
@@ -362,6 +345,7 @@
     outerClothing: ClothingOuterArmorBasicSlim
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
+    neck: SecurityWhistle
     belt: ClothingBeltMilitaryWebbingERTSecurityFilled
     pocket1: WeaponPistolMk58
     pocket2: FlashlightSeclite
@@ -369,11 +353,13 @@
     back:
     - WeaponDisablerSMG
     - Stunbaton
-    - TelescopicShield
-    - CrowbarRed
-    - HoloprojectorSecurity
     - TearGasGrenade
     - GrenadeStinger
+    - BoxZiptie
+    - TelescopicShield
+    - HoloprojectorSecurity
+    - CrowbarRed
+    - Flash
 
 - type: startingGear
   id: ERTSecurityGearEVA
@@ -387,94 +373,23 @@
     outerClothing: ClothingOuterHardsuitERTSecurity
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltSecurityWebbing
+    neck: SecurityWhistle
+    belt: ClothingBeltMilitaryWebbingERTSecurityFilled
     pocket1: WeaponPistolMk58
-    pocket2: CombatKnife
   storage:
     back:
-    - BoxZiptie
-    - MedkitCombatFilled
-    - TelescopicShield
-    - CrowbarRed
     - WeaponDisablerSMG
-    - CombatKnife
-    belt:
     - Stunbaton
-    - HoloprojectorSecurity
-    - MagazinePistol
-    - GrenadeFlashBang
+    - TearGasGrenade
     - GrenadeStinger
-
-- type: startingGear
-  id: ERTMarinesGearBreacher
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitERTSecurity
-    back: ClothingBackpackERTSecurity
-    shoes: ClothingShoesBootsMagSci
-    mask: ClothingMaskGasERT
-    eyes: ClothingEyesHudSecurity
-    gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitERTSecurity
-    id: ERTSecurityPDA
-    ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltMilitaryWebbingNT
-    pocket1: WeaponPistolMk58
-    pocket2: WeaponDisabler
-  storage:
-    back:
     - BoxZiptie
-    - WeaponShotgunEnforcer
-    - GrenadeFlashBang
-    - MedkitCombatFilled
-    - JawsOfLife
-    - C4NT
-    - C4NT
-    - C4NT
-    - C4NT
-    - C4NT
-    - CombatKnife
-    belt:
-    - Stunbaton
-    - HoloprojectorSecurity
-    - MagazinePistol
-    - BoxLethalshot
-    - BoxLethalshot
-
-- type: startingGear
-  id: ERTMarinesGearRifleman
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitERTSecurity
-    back: ClothingBackpackERTSecurity
-    shoes: ClothingShoesBootsMagSci
-    mask: ClothingMaskGasERT
-    eyes: ClothingEyesHudSecurity
-    gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitERTSecurity
-    id: ERTSecurityPDA
-    ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltMilitaryWebbingNT
-    pocket1: WeaponPistolMk58
-    pocket2: WeaponDisabler
-  storage:
-    back:
-    - BoxZiptie
-    - WeaponRifleLecter
-    - GrenadeFlashBang
-    - CombatKnife
-    - MedkitCombatFilled
-    - CrowbarRed
     - TelescopicShield
-    belt:
-    - Stunbaton
     - HoloprojectorSecurity
-    - MagazinePistol
-    - MagazineRifle
-    - MagazineRifle
-    - MagazineRifle
-    - MagazineRifle
+    - CrowbarRed
+    - Flash
 
 - type: startingGear
-  id: ERTMarinesGearLaserRifleman
+  id: ERTSecurityGearRifleman
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurity
@@ -485,29 +400,56 @@
     outerClothing: ClothingOuterHardsuitERTSecurity
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltMilitaryWebbingNT
+    belt: ClothingBeltMilitaryWebbingERTSecurityFilled
     pocket1: WeaponPistolMk58
     pocket2: WeaponDisabler
   inhand:
-  - WeaponLaserCannon
+  - WeaponRifleLecter
   storage:
     back:
-    - PortableRecharger
-    - WeaponSubMachineGunDrozd
+    - WeaponLaserCannon
     - CrowbarRed
-    - CombatKnife
-    - GrenadeFlashBang
-    belt:
-    - Stunbaton
-    - HoloprojectorSecurity
-    - MagazinePistol
-    - MagazinePistolSubMachineGun
-    - MagazinePistolSubMachineGun
-    - MagazinePistolSubMachineGun
-    - MagazinePistolSubMachineGun
+    - GrenadeShrapnelNT
+    - SmokeGrenade
+    - MagazineRifle
+    - MagazineRifle
+    - MagazineRifleIncendiary
+    - MagazineRifleUranium
+    - TelescopicShield
 
 - type: startingGear
-  id: ERTMarinesGearGrenadier
+  id: ERTSecurityGearBreacher
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
+    back: ClothingBackpackERTSecurity
+    shoes: ClothingShoesBootsMagSci
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesHudSecurity
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitERTSecurity
+    id: ERTSecurityPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltMilitaryWebbingERTSecurityFilled
+    pocket1: WeaponPistolMk58
+    pocket2: WeaponDisabler
+  storage:
+    back:
+    - WeaponShotgunEnforcer
+    - JawsOfLife
+    - BoxLethalshot
+    - BoxShotgunIncendiary
+    - BoxShotgunSlug
+    - EnergySwordNT
+    - EnergyShieldNT
+    - SmokeGrenade
+    - SmokeGrenade
+    - C4NT
+    - C4NT
+    - C4NT
+    - C4NT
+
+- type: startingGear
+  id: ERTSecurityGearGrenadier
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurity
@@ -518,34 +460,33 @@
     outerClothing: ClothingOuterHardsuitERTSecurity
     id: ERTSecurityPDA
     ears: ClothingHeadsetAltCentCom
-    belt: ClothingBeltMilitaryWebbingNT
+    belt: ClothingBeltMilitaryWebbingERTSecurityFilled
     pocket1: WeaponPistolMk58
     pocket2: WeaponDisabler
+  inhand:
+  - WeaponRifleM90GrenadeLauncher
   storage:
     back:
-    - BoxZiptie
-    - WeaponSubMachineGunDrozd
-    - MedkitCombatFilled
+    - MagazineRifle
+    - MagazineRifle
+    - MagazineRifleIncendiary
+    - MagazineRifleUranium
     - CrowbarRed
-    - CombatKnife
-    - GrenadeFlashBang
-    - GrenadeFlashBang
+    - SmokeGrenade
     - SmokeGrenade
     - SmokeGrenade
     - GrenadeShrapnelNT
     - GrenadeShrapnelNT
     - GrenadeShrapnelNT
+    - GrenadeShrapnelNT
     - ExGrenadeNT
     - ExGrenadeNT
     - ExGrenadeNT
-    belt:
-    - Stunbaton
-    - HoloprojectorSecurity
-    - MagazinePistol
-    - MagazinePistolSubMachineGun
-    - MagazinePistolSubMachineGun
-    - MagazinePistolSubMachineGun
-    - MagazinePistolSubMachineGun
+    - ExGrenadeNT
+    - EmpGrenadeNT
+    - EmpGrenadeNT
+    - EmpGrenadeNT
+    - EmpGrenadeNT
 
 # Medical
 - type: job
@@ -685,7 +626,7 @@
     - PyraAutoInjector
 
 - type: startingGear
-  id: ERTMarinesGearMedic
+  id: ERTMedicalGearArmed
   equipment:
     jumpsuit: ClothingUniformJumpsuitERTMedic
     back: ClothingBackpackERTMedical

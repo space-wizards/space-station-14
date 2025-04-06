@@ -661,9 +661,8 @@
 - type: entity
   parent: [ BaseCentcommContraband, ClothingBeltMilitaryWebbing ]
   id: ClothingBeltMilitaryWebbingNT
-  name: chest rig
-  suffix: NT
-  description: A set of tactical webbing worn by ERT marines.
+  name: ERT chest rig
+  description: A set of tactical webbing worn by ERT operatives.
 
 - type: entity
   parent: ClothingBeltMilitaryWebbing

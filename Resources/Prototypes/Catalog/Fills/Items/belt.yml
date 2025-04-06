@@ -172,18 +172,32 @@
       - id: OmnizineChemistryBottle
       - id: MedkitCombatFilled
 
+# ERT Belts
+- type: entity
+  id: ClothingBeltMilitaryWebbingERTLeaderFilled
+  parent: ClothingBeltMilitaryWebbingNT
+  suffix: Leader, Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: Truncheon
+    - id: MedkitCombatFilled
+    - id: PinpointerNuclear
+    - id: PhoneInstrument
+    - id: MagazineMagnum
+      amount: 2
+
 - type: entity
   id: ClothingBeltMilitaryWebbingERTSecurityFilled
-  parent: [BaseCentcommContraband, ClothingBeltMilitaryWebbing]
-  name: ERT chest rig
+  parent: ClothingBeltMilitaryWebbingNT
   suffix: Security, Filled
   components:
   - type: StorageFill
     contents:
     - id: Truncheon
+    - id: MedkitCombatFilled
     - id: Handcuffs
       amount: 2
-    - id: MedkitCombatFilled
     - id: MagazinePistol
       amount: 2
 

@@ -76,7 +76,7 @@
   name: energy sword
   parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
   id: EnergySword
-  description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
+  description: A very loud and dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
@@ -155,11 +155,10 @@
     netsync: false
 
 - type: entity
-  name: energy sword
-  suffix: NT
   parent: [BaseCentcommContraband, EnergySword]
   id: EnergySwordNT
-  description: A reverse-engineered energy blade wielded by only Nanotrasen's most elite forces.
+  suffix: NT
+  description: A very loud and dangerous sword with a beam made of pure, concentrated plasma. Wielded by Nanotrasen's most elite forces, NT and Cybersun both claim ownership over the concept.
 
 - type: entity
   name: pen
