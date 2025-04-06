@@ -10,15 +10,23 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Administration.Commands;
 
+/// <summary>
+/// Randomizes the DisplayName for a given user's session, anonymizing the user in non-admin UI.
+/// The names are selected from the dataset provided in RandomNamesPrototypeId.
+/// </summary>
+/// <remarks>
+/// The current implementation targets admins specifically with the given name dataset.
+/// </remarks>
 [AdminCommand(AdminFlags.Admin)]
 public sealed class RandomDisplayNameCommand : LocalizedCommands
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
 
     [ValidatePrototypeId<LocalizedDatasetPrototype>]
-    public const string AdminNamesPrototypeId = "NamesAdmin";
+    public const string RandomNamesPrototypeId = "NamesAdmin";
 
     public override string Command => "randomizedisplayname";
     public override string Description => Loc.GetString("cmd-displayname-randomize-description");
@@ -28,7 +36,7 @@ public sealed class RandomDisplayNameCommand : LocalizedCommands
     {
         if (args.Length == 1)
         {
-            var names = _playerManager.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
+            var names = _playerManager.Sessions.OrderBy(c => c.Name).Select(c => c.Name);
             return CompletionResult.FromHintOptions(names, Loc.GetString("shell-argument-username-optional-hint"));
         }
 
@@ -72,10 +80,9 @@ public sealed class RandomDisplayNameCommand : LocalizedCommands
             }
         }
 
-        var protoMan = IoCManager.Resolve<IPrototypeManager>();
-        if (!protoMan.TryIndex(AdminNamesPrototypeId, out LocalizedDatasetPrototype? nameData))
+        if (!_protoManager.TryIndex(RandomNamesPrototypeId, out LocalizedDatasetPrototype? nameData))
         {
-            shell.WriteError(Loc.GetString("cmd-displayname-proto-fail", ("id", AdminNamesPrototypeId)));
+            shell.WriteError(Loc.GetString("cmd-displayname-proto-fail", ("id", RandomNamesPrototypeId)));
             return;
         }
 

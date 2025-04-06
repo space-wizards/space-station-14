@@ -7,6 +7,9 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
 
+/// <summary>
+/// Clears the DisplayName for a given user's session, returning the user to displaying as their session Name in non-admin UI.
+/// </summary>
 [AdminCommand(AdminFlags.Admin)]
 public sealed class ClearDisplayNameCommand : LocalizedCommands
 {
@@ -21,7 +24,7 @@ public sealed class ClearDisplayNameCommand : LocalizedCommands
     {
         if (args.Length == 1)
         {
-            var names = _playerManager.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
+            var names = _playerManager.Sessions.OrderBy(c => c.Name).Select(c => c.Name);
             return CompletionResult.FromHintOptions(names, LocalizationManager.GetString("shell-argument-username-optional-hint"));
         }
 

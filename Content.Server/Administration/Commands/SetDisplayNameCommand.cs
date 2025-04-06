@@ -7,6 +7,9 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands;
 
+/// <summary>
+/// Sets a DisplayName for the given user's session, anonymizing the user in non-admin UI.
+/// </summary>
 [AdminCommand(AdminFlags.Admin)]
 public sealed class SetDisplayNameCommand : LocalizedCommands
 {
@@ -21,7 +24,7 @@ public sealed class SetDisplayNameCommand : LocalizedCommands
     {
         if (args.Length == 2)
         {
-            var names = _playerManager.Sessions.OrderBy(c => c.Name).Select(c => c.Name).ToArray();
+            var names = _playerManager.Sessions.OrderBy(c => c.Name).Select(c => c.Name);
             return CompletionResult.FromHintOptions(names, Loc.GetString("shell-argument-username-optional-hint"));
         }
 
