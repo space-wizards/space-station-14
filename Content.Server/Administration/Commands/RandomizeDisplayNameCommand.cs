@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Dataset;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -13,6 +15,7 @@ public sealed class RandomDisplayNameCommand : LocalizedCommands
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
 
     [ValidatePrototypeId<LocalizedDatasetPrototype>]
     public const string AdminNamesPrototypeId = "NamesAdmin";
@@ -84,6 +87,10 @@ public sealed class RandomDisplayNameCommand : LocalizedCommands
             return;
         }
 
-        _playerManager.SetDisplayName(player!, _random.Pick(list));
+        var displayName = _random.Pick(list);
+        _playerManager.SetDisplayName(player!, displayName);
+        _adminLogManager.Add(LogType.AdminCommands,
+            LogImpact.Extreme,
+            $"{player!.Name} ({player!.UserId}) had their display name randomized to {displayName}.");
     }
 }

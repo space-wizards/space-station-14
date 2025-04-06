@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -9,6 +11,7 @@ namespace Content.Server.Administration.Commands;
 public sealed class SetDisplayNameCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
 
     public override string Command => "setdisplayname";
     public override string Description => Loc.GetString("cmd-displayname-set-description");
@@ -67,6 +70,9 @@ public sealed class SetDisplayNameCommand : LocalizedCommands
             shell.WriteError(Loc.GetString("cmd-displayname-name-exists"));
         }
 
-        _playerManager.SetDisplayName(player!, Loc.GetString(args[0]));
+        _playerManager.SetDisplayName(player!, args[0]);
+        _adminLogManager.Add(LogType.AdminCommands,
+            LogImpact.Extreme,
+            $"{shell.Player!.Name} ({shell.Player!.UserId}) had their display name set to {args[0]}.");
     }
 }

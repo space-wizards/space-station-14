@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -9,6 +11,7 @@ namespace Content.Server.Administration.Commands;
 public sealed class ClearDisplayNameCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
 
     public override string Command => "cleardisplayname";
     public override string Description => Loc.GetString("cmd-displayname-clear-description");
@@ -63,5 +66,8 @@ public sealed class ClearDisplayNameCommand : LocalizedCommands
         }
 
         _playerManager.SetDisplayName(player!, string.Empty);
+        _adminLogManager.Add(LogType.AdminCommands,
+            LogImpact.Extreme,
+            $"{shell.Player!.Name} ({shell.Player!.UserId}) had their display name cleared.");
     }
 }
