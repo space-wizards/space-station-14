@@ -25,3 +25,9 @@
   - SheetPlasteel1
   - SheetUGlass1
   - SheetRUGlass1
+
+- type: latheRecipePack
+  id: HPHTTransformation
+  recipes:
+  - WoodCoalTransform
+  - MaterialDiamondHPHT
