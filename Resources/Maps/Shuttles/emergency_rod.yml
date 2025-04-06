@@ -168,7 +168,7 @@ entities:
             168: 0,11
             169: 1,11
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: BrickLineOverlayN
           decals:
             348: -4,1
@@ -177,7 +177,7 @@ entities:
             351: -1,1
             352: 0,1
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: BrickLineOverlayS
           decals:
             353: -2,-2
@@ -364,7 +364,7 @@ entities:
           decals:
             335: -7,-6
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: CheckerNESW
           decals:
             342: -4,-1

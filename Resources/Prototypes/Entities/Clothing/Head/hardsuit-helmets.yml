@@ -261,7 +261,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security-warden.rsi
   - type: PointLight
-    color: "#ffeead"
+    color: "#3fb594"
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000

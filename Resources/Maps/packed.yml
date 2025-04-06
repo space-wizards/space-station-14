@@ -2094,38 +2094,38 @@ entities:
             2718: 15,-45
             2719: 15,-44
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: BrickCornerOverlayNE
           decals:
             2578: 39,19
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: BrickCornerOverlayNW
           decals:
             2579: 36,19
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: BrickCornerOverlaySE
           decals:
             2583: 39,17
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: BrickCornerOverlaySW
           decals:
             2580: 36,17
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: BrickLineOverlayE
           decals:
             2584: 39,18
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: BrickLineOverlayN
           decals:
             2585: 38,19
             2586: 37,19
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: BrickLineOverlayS
           decals:
             2581: 37,17
@@ -2469,7 +2469,7 @@ entities:
             2730: 16,-43
             2733: 26,-43
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: BrickTileWhiteLineE
           decals:
             2707: 10,38
@@ -3104,7 +3104,7 @@ entities:
             140: 2,-33
             141: 3,-29
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: DeliveryGreyscale
           decals:
             2574: 31,18
@@ -3568,7 +3568,7 @@ entities:
             1495: 24,18
             1496: 24,18
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: FullTileOverlayGreyscale
           decals:
             2703: 22,48
@@ -3776,7 +3776,7 @@ entities:
             2897: 76,18
             2900: 76,19
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: HalfTileOverlayGreyscale
           decals:
             2508: -2,-4
@@ -3921,7 +3921,7 @@ entities:
             403: 20,-39
             404: 22,-39
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: HalfTileOverlayGreyscale180
           decals:
             2509: -2,-6
@@ -4039,7 +4039,7 @@ entities:
             401: 21,-44
             402: 22,-44
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: HalfTileOverlayGreyscale270
           decals:
             2507: -3,-5
@@ -4159,7 +4159,7 @@ entities:
             398: 19,-42
             399: 19,-41
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: HalfTileOverlayGreyscale90
           decals:
             2510: -1,-5
@@ -4349,7 +4349,7 @@ entities:
           decals:
             2761: 47,50
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: MiniTileDiagonalCheckerAOverlay
           decals:
             2747: 47,50
@@ -4361,7 +4361,7 @@ entities:
           decals:
             1118: -17,-14
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: QuarterTileOverlayGreyscale
           decals:
             2570: 33,24
@@ -4578,7 +4578,7 @@ entities:
             237: 30,-36
             254: 17,-34
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: QuarterTileOverlayGreyscale180
           decals:
             2606: 27,23
@@ -4833,7 +4833,7 @@ entities:
             2395: 102,-20
             2396: 102,-17
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: QuarterTileOverlayGreyscale270
           decals:
             2569: 33,27
@@ -5068,7 +5068,7 @@ entities:
             2399: 107,-18
             2400: 106,-20
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: QuarterTileOverlayGreyscale90
           decals:
             2572: 34,28
@@ -5321,7 +5321,7 @@ entities:
             1332: 8,29
             1333: 9,29
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: ThreeQuarterTileOverlayGreyscale
           decals:
             2506: -3,-4
@@ -5382,7 +5382,7 @@ entities:
           decals:
             408: 19,-39
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: ThreeQuarterTileOverlayGreyscale180
           decals:
             2505: -1,-6
@@ -5438,7 +5438,7 @@ entities:
           decals:
             405: 23,-44
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: ThreeQuarterTileOverlayGreyscale270
           decals:
             2504: -3,-6
@@ -5496,7 +5496,7 @@ entities:
           decals:
             406: 19,-44
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: ThreeQuarterTileOverlayGreyscale90
           decals:
             2503: -1,-4
@@ -6772,7 +6772,7 @@ entities:
         version: 2
         nodes:
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: BotGreyscale
           decals:
             33: -1,-2
@@ -6795,53 +6795,53 @@ entities:
             13: 4,-5
             14: 3,-5
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: DeliveryGreyscale
           decals:
             34: -2,-1
             35: 2,-1
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: DeliveryGreyscale
           decals:
             41: -1,-4
             46: 2,-6
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: HalfTileOverlayGreyscale
           decals:
             8: 2,-3
             9: 3,-3
             10: 4,-3
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: HalfTileOverlayGreyscale
           decals:
             26: 0,0
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: HalfTileOverlayGreyscale180
           decals:
             11: 3,-5
             12: 4,-5
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: HalfTileOverlayGreyscale180
           decals:
             28: 0,-2
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: HalfTileOverlayGreyscale270
           decals:
             25: -1,-1
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: HalfTileOverlayGreyscale90
           decals:
             27: 1,-1
         - node:
             angle: -3.141592653589793 rad
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: LoadingAreaGreyscale
           decals:
             3: 0,-7
@@ -6882,44 +6882,44 @@ entities:
           decals:
             32: -1,-1
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: MiniTileInnerOverlayNW
           decals:
             37: 0,-5
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: MiniTileInnerOverlaySW
           decals:
             38: 0,-5
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: MiniTileLineOverlayE
           decals:
             4: 0,-3
             36: 0,-5
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: MiniTileLineOverlayN
           decals:
             39: -1,-5
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: MiniTileLineOverlayS
           decals:
             40: -1,-5
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: MiniTileLineOverlayW
           decals:
             5: 0,-3
             6: 0,-4
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: QuarterTileOverlayGreyscale180
           decals:
             42: 2,-5
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: QuarterTileOverlayGreyscale90
           decals:
             43: 2,-6
@@ -6939,7 +6939,7 @@ entities:
           decals:
             1: 0,2
         - node:
-            color: '#2B4652FF'
+            color: '#285A9196'
             id: WarnLineGreyscaleE
           decals:
             7: 0,-4
