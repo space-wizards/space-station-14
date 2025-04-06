@@ -44,6 +44,20 @@ public sealed partial class ParrotSpeechComponent : Component
     [DataField] // imp
     public bool RequiresMind = true;
 
+    /// <summary>
+    /// Preserves capitalization in memorized messages and appends a "..." to the start and end of sentence fragments.
+    /// For signifying the context recalled by smarter entities who aren't just repeating sounds (knowingly repeating words).
+    /// </summary>
+    [DataField] // imp
+    public bool PreserveContext = false;
+
+    /// <summary>
+    /// Percentage chance the echo will be a whisper instead of normal speech. Nervous stimming getting mistaken as syndicate clues. Y'know.
+    /// 1.0 = Always whispering. 0.0 = Doesn't whisper.
+    /// </summary>
+    [DataField] // imp
+    public float WhisperChance = 0.0f;
+
     [DataField] // imp
     public bool FakeTypingIndicator = true;
 

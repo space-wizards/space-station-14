@@ -64,7 +64,7 @@ public sealed class ParrotSpeechSystem : EntitySystem
     }
 
     /// <summary>
-    /// Sets a new typing delay time if there isn't one. If there is, checks it against CurTime, sends the message once the delay is up, and resets. 
+    /// Sets a new typing delay time if there isn't one. If there is, checks it against CurTime, sends the message once the delay is up, and resets.
     /// </summary>
     private void CheckOrSetDelay(EntityUid uid, ParrotSpeechComponent component)
     {
@@ -86,10 +86,11 @@ public sealed class ParrotSpeechSystem : EntitySystem
 
     private void SendMessage(EntityUid uid, ParrotSpeechComponent component) // imp. moved this out of Update() and to its own method to reduce repitition repitition.
     {
+        var whisper = (_random.NextDouble() <= component.WhisperChance);
         _chat.TrySendInGameICMessage(
         uid,
             component.NextMessage ?? _random.Pick(component.LearnedPhrases),
-            InGameICChatType.Speak,
+            whisper ? InGameICChatType.Whisper : InGameICChatType.Speak, //imp change to add nervous whispers
             hideChat: component.HideMessagesInChat, // Don't spam the chat with randomly generated messages(... unless its funny (imp change))
             hideLog: true, // TODO: Don't spam admin logs either. If a parrot learns something inappropriate, admins can search for the player that said the inappropriate thing.
             checkRadioPrefix: false);
@@ -107,7 +108,15 @@ public sealed class ParrotSpeechSystem : EntitySystem
 
             var startIndex = _random.Next(0, Math.Max(0, words.Length - phraseLength + 1));
 
-            var phrase = string.Join(" ", words.Skip(startIndex).Take(phraseLength)).ToLower();
+            var phrase = string.Join(" ", words.Skip(startIndex).Take(phraseLength));
+
+            if(component.PreserveContext){
+                if(startIndex != 0)
+                    phrase = "..." + phrase; //prepend an ellipsis if this echo starts after the start of the message
+                if((phraseLength + startIndex) < words.Length)
+                    phrase = phrase + "..."; //append an ellipsis if this echo stops before the end of the message
+            }
+            else { phrase = phrase.ToLower(); } //sanitize caps for parrots who don't know what words are...
 
             while (component.LearnedPhrases.Count >= component.MaximumPhraseCount)
             {
