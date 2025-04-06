@@ -1,7 +1,7 @@
-using Content.Shared.Light.Components;
-using Content.Shared.Light.EntitySystems;
+using Content.Shared.Matchstick.Components;
+using Content.Shared.Matchstick.EntitySystems;
 
-namespace Content.Client.Light.EntitySystems;
+namespace Content.Client.Matchstick.EntitySystems;
 
 public sealed class MatchstickSystem : SharedMatchstickSystem
 {

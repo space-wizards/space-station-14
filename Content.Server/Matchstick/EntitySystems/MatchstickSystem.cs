@@ -1,9 +1,9 @@
 using Content.Server.Atmos.EntitySystems;
-using Content.Shared.Light.Components;
-using Content.Shared.Light.EntitySystems;
+using Content.Shared.Matchstick.Components;
+using Content.Shared.Matchstick.EntitySystems;
 using Robust.Server.GameObjects;
 
-namespace Content.Server.Light.EntitySystems;
+namespace Content.Server.Matchstick.EntitySystems;
 
 public sealed class MatchstickSystem : SharedMatchstickSystem
 {
