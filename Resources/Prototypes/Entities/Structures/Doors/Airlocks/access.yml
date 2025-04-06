@@ -402,6 +402,25 @@
     containers:
       board: [ DoorElectronicsBrig ]
 
+# TODO: placeholder til turnstile merged.
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockGenpopEntryLocked
+  suffix: Genpop, Entry, Locked
+  components:
+  - type: AccessReader
+    containerAccessProvider: null
+    access: [["Security"], ["GenpopEnter"]]
+
+- type: entity
+  parent: AirlockSecurity
+  id: AirlockGenpopLeaveLocked
+  suffix: Genpop, Leave, Locked
+  components:
+  - type: AccessReader
+    containerAccessProvider: null
+    access: [["Security"], ["GenpopLeave"]]
+
 - type: entity
   parent: AirlockSecurity
   id: AirlockSecurityLawyerLocked

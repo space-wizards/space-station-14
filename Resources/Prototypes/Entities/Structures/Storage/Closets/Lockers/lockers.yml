@@ -381,6 +381,47 @@
   - type: AccessReader
     access: [["Armory"]]
 
+# Genpop Storage
+- type: entity
+  id: LockerPrisoner
+  parent: LockerBaseSecure
+  name: prisoner closet
+  description: It's a secure locker for an inmate's personal belongings during their time in prison.
+  components:
+  - type: EntityStorageVisuals
+    stateBaseClosed: genpop
+    stateDoorOpen: genpop_open
+    stateDoorClosed: genpop_door_1
+  - type: AccessReader
+  - type: Lock
+    locked: false
+  - type: Fixtures # TODO: this doesnt close properly the first time so uhhh figure that out.
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          radius: 0.01
+          vertices:
+          - -0.25,-0.48
+          - 0.25,-0.48
+          - 0.25,0.48
+          - -0.25,0.48
+        mask:
+        - Impassable
+        - TableLayer
+        - LowImpassable
+        layer:
+        - BulletImpassable
+        - Opaque
+        density: 75
+        hard: True
+        restitution: 0
+        friction: 0.4
+  - type: EntityStorage
+    open: True
+    removedMasks: 20
+  - type: PlaceableSurface
+    isPlaceable: True
+
 # Detective
 - type: entity
   id: LockerDetective

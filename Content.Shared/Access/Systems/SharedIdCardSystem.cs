@@ -1,20 +1,29 @@
 using System.Globalization;
 using Content.Shared.Access.Components;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
+using Content.Shared.Popups;
 using Content.Shared.Roles;
+using Content.Shared.Speech;
 using Content.Shared.StatusIcon;
+using Robust.Shared.Containers;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Access.Systems;
 
 public abstract class SharedIdCardSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedAccessSystem _access = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -255,5 +264,31 @@ public abstract class SharedIdCardSystem : EntitySystem
     {
         return $"{idCardComponent.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(idCardComponent.LocalizedJobTitle ?? string.Empty)})"
             .Trim();
+    }
+
+    /// <summary>
+    /// Marks an <see cref="ExpireIdCardComponent"/> as expired, setting the accesses.
+    /// </summary>
+    public virtual void ExpireId(Entity<ExpireIdCardComponent> ent)
+    {
+        _access.TrySetTags(ent, ent.Comp.ExpiredAccess);
+        ent.Comp.Expired = true;
+        Dirty(ent);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        var query = EntityQueryEnumerator<ExpireIdCardComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.Expired || comp.Permanent)
+                continue;
+
+            if (_timing.CurTime < comp.ExpireTime)
+                continue;
+
+            ExpireId((uid, comp));
+        }
     }
 }
