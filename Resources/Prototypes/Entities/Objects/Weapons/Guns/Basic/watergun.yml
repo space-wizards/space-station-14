@@ -62,6 +62,11 @@
     - state: detail
     - state: icon
       map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:
