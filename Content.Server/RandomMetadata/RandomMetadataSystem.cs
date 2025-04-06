@@ -12,7 +12,7 @@ public sealed class RandomMetadataSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
-    private List<string> _outputSegments = new();
+    private readonly List<string> _outputSegments = new();
 
     public override void Initialize()
     {
