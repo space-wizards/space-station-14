@@ -28,10 +28,10 @@
   - type: Dumpable
 
 - type: entity
-  name: internal ore bag
-  id: BorgOreBag
   parent: OreBag
-  description: A large ore bag built into the frame of mining cyborgs.
+  id: BorgOreBag
+  name: integrated ore bag
+  description: A large ore bag built into the frame of a mining cyborg.
   components:
     - type: Storage
       grid:

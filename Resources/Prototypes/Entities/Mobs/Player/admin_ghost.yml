@@ -30,6 +30,7 @@
   - type: Access
     groups:
     - AllAccess
+    - Silicon
     tags:
     - NuclearOperative
     - SyndicateAgent
@@ -66,7 +67,10 @@
   - type: SolarControlConsole # look ma i AM the computer!
   - type: CommunicationsConsole
     title: comms-console-announcement-title-centcom
-    color: "#228b22"
+    color: "#1d8bad"
+    delay: 10
+    initialDelay: 0
+    global: true
   - type: RadarConsole
     followEntity: true
   - type: CargoOrderConsole

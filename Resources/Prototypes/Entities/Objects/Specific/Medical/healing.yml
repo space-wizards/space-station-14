@@ -56,7 +56,7 @@
     count: 1
 
 - type: entity
-  id: OintmentLingering10
+  id: Ointment10Lingering
   parent: Ointment
   suffix: 10, Lingering
   components:
@@ -107,8 +107,8 @@
     count: 1
 
 - type: entity
-  id: RegenerativeMeshLingering0
   parent: RegenerativeMesh
+  id: RegenerativeMeshLingering0
   suffix: 0, Lingering
   components:
   - type: Stack
@@ -127,6 +127,8 @@
     - Brutepack
   - type: Sprite
     state: brutepack
+  - type: Item
+    heldPrefix: brutepack
   - type: Healing
     damageContainers:
       - Biological
@@ -153,7 +155,7 @@
     count: 1
 
 - type: entity
-  id: BrutepackLingering10
+  id: Brutepack10Lingering
   parent: Brutepack
   suffix: 10, Lingering
   components:
@@ -203,8 +205,8 @@
     count: 1
 
 - type: entity
-  id: MedicatedSutureLingering0
   parent: MedicatedSuture
+  id: MedicatedSutureLingering0
   suffix: 0, Lingering
   components:
   - type: Stack
@@ -218,6 +220,8 @@
   id: Bloodpack
   suffix: Full
   components:
+  - type: Item
+    heldPrefix: bloodpack
   - type: Tag
     tags:
     - Bloodpack
@@ -242,7 +246,16 @@
 
 - type: entity
   parent: Bloodpack
-  id: BloodpackLingering10
+  id: Bloodpack1
+  suffix: Single
+  components:
+  - type: Stack
+    stackType: Bloodpack
+    count: 1
+
+- type: entity
+  parent: Bloodpack
+  id: Bloodpack10Lingering
   suffix: 10, Lingering
   components:
   - type: Stack
@@ -260,6 +273,8 @@
         - SecBeltEquip
     - type: Sprite
       state: tourniquet
+    - type: Item
+      heldPrefix: tourniquet
     - type: Healing
       damageContainers:
         - Biological
@@ -287,6 +302,8 @@
     - Gauze
   - type: Sprite
     state: gauze
+  - type: Item
+    heldPrefix: gauze
   - type: Construction
     graph: Gauze
     node: gauze
@@ -317,7 +334,7 @@
     count: 1
 
 - type: entity
-  id: GauzeLingering10
+  id: Gauze10Lingering
   parent: Gauze
   suffix: 10, Lingering
   components:
@@ -343,7 +360,7 @@
   id: HealingToolbox
   name: healing toolbox
   description: A powerful toolbox imbued with robust energy. It can heal your wounds and fill you with murderous intent.
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/healing_toolbox.rsi
@@ -1063,3 +1080,37 @@
         reagents:
         - ReagentId: Stimulants
           Quantity: 15
+
+# Entity Tables
+- type: entityTable
+  id: RandomSafePillTable
+  table: !type:GroupSelector
+    children:
+    - id: PillBicaridine
+    - id: PillCharcoal
+    - id: PillCopper
+    - id: PillDermaline
+    - id: PillDexalin
+    - id: PillDylovene
+    - id: PillHyronalin
+    - id: PillIron
+    - id: PillKelotane
+    - id: PillPotassiumIodide
+    - id: PillTricordrazine
+    - id: StrangePill
+
+- type: entityTable
+  id: RandomSafeSyringeTable
+  table: !type:GroupSelector
+    children:
+    - id: SyringeBicaridine
+    - id: SyringeDermaline
+    - id: SyringeEphedrine
+    - id: SyringeEthylredoxrazine
+    - id: SyringeHyronalin
+    - id: SyringeInaprovaline
+    - id: SyringeIpecac
+    - id: SyringePhalanximine
+    - id: SyringeSaline
+    - id: SyringeSigynate
+    - id: SyringeTranexamicAcid

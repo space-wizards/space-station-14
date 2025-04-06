@@ -13,7 +13,15 @@
           !type:PhysShapeCircle
           radius: 0.25
         mask:
-        - SubfloorMask
+        - Impassable
+        - HighImpassable
+        - MidImpassable
+      fix2:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        mask:
+        - MachineLayer
         layer:
         - LowImpassable
         hard: false
@@ -150,8 +158,7 @@
 - type: entity
   id: HolopadHologram
   name: hologram
-  categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP
+  categories: [ HideSpawnMenu, DoNotMap ]
   components:
   - type: Transform
     anchored: true
