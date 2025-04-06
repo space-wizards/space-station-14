@@ -604,3 +604,8 @@
   parent: BaseCircuitboardRecipe
   id: HolopadMachineCircuitboard
   result: HolopadMachineCircuitboard
+  
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: UHPHTPMCircuitboard
+  result: UHPHTPMCircuitboard
