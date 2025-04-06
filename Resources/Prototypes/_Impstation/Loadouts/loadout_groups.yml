@@ -362,6 +362,7 @@
   - HospitalityDirectorBandana
   - BartenderHead
   - HospitalityDirectorBeret
+  - HospitalityDirectorBellhopHD
 
 - type: loadoutGroup
   id: HospitalityDirectorNeck

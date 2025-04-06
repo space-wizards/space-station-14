@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by SixValentine for Impstation Hospitality Director",
+  "copyright": "Bellhop hat for Impstation Hospitality Director by SixValentine",
   "size": {
     "x": 32,
     "y": 32
@@ -11,7 +11,7 @@
       "name": "icon"
     },
     {
-      "name": "equipped-NECK",
+      "name": "equipped-HELMET",
       "directions": 4
     }
   ]
