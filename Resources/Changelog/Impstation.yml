@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Reagent examine text should be more differentiable for solutions with
-      same color but different brightness.
-    type: Tweak
-  id: 979
-  time: '2025-01-21T02:37:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1439
 - author: ruddygreat
   changes:
   - message: All cyborgs can now use the L6C ROW module!
@@ -4091,3 +4083,10 @@
   id: 1478
   time: '2025-04-06T01:21:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2194
+- author: SixValentine
+  changes:
+  - message: HD get their own sirful cape, mantle and bellhop hat.
+    type: Add
+  id: 1479
+  time: '2025-04-06T07:23:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2203
