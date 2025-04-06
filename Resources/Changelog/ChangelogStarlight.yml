@@ -4460,4 +4460,12 @@ Entries:
   id: 618
   time: '2025-04-06T18:52:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/450
+- author: Killer Tamashi
+  changes:
+  - message: Fixed bug with chainsword that prevented it from breaking windows, lockers
+      and other structures.
+    type: Fix
+  id: 619
+  time: '2025-04-06T18:54:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/448
 
