@@ -1,0 +1,10 @@
+- type: entity
+  parent: BriefcaseBrown
+  id: BriefcaseBlack
+  name: black briefcase
+  components:
+  - type: Sprite
+    sprite: _DV/Objects/Storage/Briefcases/briefcase_cybersun.rsi # no point in respriting it, it's a black briefcase lol
+    state: icon
+  - type: Item
+    sprite: _DV/Objects/Storage/Briefcases/briefcase_cybersun.rsi

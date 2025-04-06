@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Sha-Seng (github) for Impstation",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "equipped-NECK-kodepiia",
+      "directions": 4
+    },
+    {
+      "name": "equipped-NECK-thaven",
+      "directions": 4
+    },
+    {
+      "name": "equipped-NECK-vox",
+      "directions": 4
+    }
+  ]
+}

@@ -50,6 +50,8 @@ loadout-group-librarian-shoes = Librarian shoes
 
 loadout-group-lawyer-outerclothing = Lawyer outer clothing
 loadout-group-lawyer-shoes = Lawyer shoes
+loadout-group-lawyer-id = Lawyer ID
+loadout-group-lawyer-briefcase = Lawyer briefcase
 
 loadout-group-chaplain-belt = Chaplain belt
 loadout-group-chaplain-eyes = Chaplain eye coverings

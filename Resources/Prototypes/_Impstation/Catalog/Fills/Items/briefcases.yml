@@ -1,0 +1,9 @@
+- type: entity
+  id: BriefcaseBlackFilled
+  parent: BriefcaseBlack
+  suffix: Filled, Paper
+  components:
+  - type: StorageFill
+    contents:
+      - id: Paper
+        amount: 3

@@ -123,6 +123,9 @@
       blue: "#284283"
       green: "#108473"
       red: "#ac3235"
+      cyan: "#1a7694" #imp
+      purple: "#6a3059" #imp
+      magenta: "#a42f6b" #imp
       command blue: "#1b67a5"
       CentComm green: "#009100"
 

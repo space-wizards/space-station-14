@@ -66,9 +66,9 @@
   description: A badge to show that the owner is a 'legitimate' lawyer who passed the NT bar exam required to practice law.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/lawyerbadge.rsi
+    sprite: _Impstation/Clothing/Neck/Misc/lawyerbadge.rsi #imp
   - type: Clothing
-    sprite: Clothing/Neck/Misc/lawyerbadge.rsi
+    sprite: _Impstation/Clothing/Neck/Misc/lawyerbadge.rsi #imp
   - type: TypingIndicatorClothing
     proto: lawyer
 

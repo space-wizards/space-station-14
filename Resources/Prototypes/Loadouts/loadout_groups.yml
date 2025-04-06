@@ -392,6 +392,10 @@
   loadouts:
   - LawyerNeck
   - ProsecutorNeck # DeltaV
+  - DefenseAttorneyNeck # imp
+  - LawyerArmband #imp
+  - ProsecutorArmband #imp
+  - DefenseAttorneyArmband #imp
 
 - type: loadoutGroup
   id: ChaplainHead
@@ -1396,7 +1400,7 @@
   - MedicalBlueScrubs
   - MedicalGreenScrubs
   - MedicalPurpleScrubs
-  
+
 - type: loadoutGroup
   id: MedicalDoctorOuterClothing
   name: loadout-group-medical-doctor-outerclothing

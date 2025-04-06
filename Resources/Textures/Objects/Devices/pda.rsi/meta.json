@@ -282,6 +282,17 @@
     {
       "name": "equipped-IDCARD",
       "directions": 4
+    },
+    {
+      "name": "pda-seniorlawyer",
+      "delays": [
+        [
+          1.2,
+          1.2,
+          1.2,
+          1.2
+        ]
+      ]
     }
   ]
 }

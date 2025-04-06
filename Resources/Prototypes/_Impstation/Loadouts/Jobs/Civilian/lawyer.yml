@@ -1,3 +1,14 @@
+# Senior times
+- type: loadoutEffectGroup
+  id: SeniorLawyer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLawyer
+      time: 108000 #30 hrs, ~20 rounds
+
+# Jumpsuit
 - type: loadout
   id: ClothingUniformCreamSuit
   equipment:
@@ -7,3 +18,58 @@
   id: ClothingUniformCreamSuitSkirt
   equipment:
     jumpsuit: ClothingUniformCreamSuitSkirt #imp
+
+# Neck
+- type: loadout
+  id: DefenseAttorneyNeck
+  equipment:
+    neck: ClothingNeckDefenseAttorneyBadge
+
+- type: loadout
+  id: LawyerArmband
+  equipment:
+    neck: ClothingNeckLawyerArmband
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorLawyer
+
+- type: loadout
+  id: ProsecutorArmband
+  equipment:
+    neck: ClothingNeckProsecutorArmband
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorLawyer
+
+- type: loadout
+  id: DefenseAttorneyArmband
+  equipment:
+    neck: ClothingNeckDefenseAttorneyArmband
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorLawyer
+
+# PDA
+- type: loadout
+  id: LawyerPDA
+  equipment:
+    id: LawyerPDA
+
+- type: loadout
+  id: SeniorLawyerPDA
+  equipment:
+    id: SeniorLawyerPDA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorLawyer
+
+# Briefcases
+- type: loadout
+  id: BrownBriefcase
+  equipment:
+    inhand: BriefcaseBrown
+
+- type: loadout
+  id: BlackBriefcase
+  equipment:
+    inhand: BriefcaseBlack

@@ -287,6 +287,31 @@
   - type: Icon
     state: pda-seniorofficer
 
+- type: entity
+  parent: LawyerPDA
+  id: SeniorLawyerPDA
+  name: senior lawyer PDA
+  description: Contains enough sensitive documents to blackmail half of Nanotrasen.
+  components:
+  - type: Pda
+    id: LawyerIDCard
+    penSlot:
+      startingItem: DesignerPen # Also add to SeniorLibrarianPDA and SeniorReporterPDA if they're added in the future
+      priority: -2
+      whitelist:
+        tags:
+        - Write
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-seniorlawyer
+  - type: PdaBorderColor
+    borderColor: "#6f6192"
+    accentVColor: "#c7c7c7"
+  - type: Icon
+    state: pda-seniorlawyer
+
 #Courier
 - type: entity
   parent: BasePDA
