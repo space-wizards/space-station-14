@@ -24,28 +24,32 @@ public sealed class TurnstileSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<TurnstileComponent, PreventCollideEvent>(OnPreventCollide);
+        SubscribeLocalEvent<TurnstileComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<TurnstileComponent, EndCollideEvent>(OnEndCollide);
     }
 
     private void OnPreventCollide(Entity<TurnstileComponent> ent, ref PreventCollideEvent args)
     {
-        if (args.Cancelled || !args.OurFixture.Hard)
+        if (args.Cancelled || !args.OurFixture.Hard || !args.OtherFixture.Hard)
             return;
 
         if (ent.Comp.CollideExceptions.Contains(args.OtherEntity))
         {
-            // We need to add this in here too for chain pulls
-            if (_pulling.GetPulling(args.OtherEntity) is { } uid &&
-                ent.Comp.CollideExceptions.Add(uid))
-            {
-                Dirty(ent);
-            }
+            args.Cancelled = true;
+            return;
+        }
 
+        // We need to add this in here too for chain pulls
+        if (_pulling.GetPuller(args.OtherEntity) is { } puller && ent.Comp.CollideExceptions.Contains(puller))
+        {
+            ent.Comp.CollideExceptions.Add(args.OtherEntity);
+            Dirty(ent);
             args.Cancelled = true;
             return;
         }
@@ -60,42 +64,47 @@ public sealed class TurnstileSystem : EntitySystem
         if (_timing.CurTime < ent.Comp.NextPassTime)
             return;
 
-        if (!_accessReader.IsAllowed(args.OtherEntity, ent))
-        {
-            _audio.PlayPredicted(ent.Comp.DenySound, ent, args.OtherEntity);
-            if (_net.IsClient)
-                _animationPlayer.Flick(ent, ent.Comp.DenyState, TurnstileVisualLayers.Base);
-            return;
-        }
-
         var xform = Transform(ent);
         var otherXform = Transform(args.OtherEntity);
 
-        var moveDir = (xform.LocalPosition - otherXform.LocalPosition).GetDir();
-        var faceDir = xform.LocalRotation.GetDir();
-
-        if (moveDir == faceDir)
+        var moveDir = xform.LocalPosition - otherXform.LocalPosition;
+        if (moveDir.GetDir() == xform.LocalRotation.GetDir())
         {
+            if (!_accessReader.IsAllowed(args.OtherEntity, ent))
+            {
+                _audio.PlayPredicted(ent.Comp.DenySound, ent, args.OtherEntity);
+                if (_net.IsClient)
+                    _animationPlayer.Flick(ent, ent.Comp.DenyState, TurnstileVisualLayers.Base);
+                return;
+            }
+
             ent.Comp.CollideExceptions.Add(args.OtherEntity);
             if (_pulling.GetPulling(args.OtherEntity) is { } uid)
                 ent.Comp.CollideExceptions.Add(uid);
 
             args.Cancelled = true;
-            ent.Comp.NextPassTime = _timing.CurTime + ent.Comp.PassDelay;
-            if (_net.IsClient)
-                _animationPlayer.Flick(ent, ent.Comp.SpinState, TurnstileVisualLayers.Base);
-            _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity);
             Dirty(ent);
         }
         else
         {
             if (_timing.CurTime >= ent.Comp.NextResistTime)
             {
-                _popup.PopupPredicted(Loc.GetString("turnstile-component-popup-resist", ("turnstile", ent.Owner)), ent, args.OtherEntity);
+                _popup.PopupClient(Loc.GetString("turnstile-component-popup-resist", ("turnstile", ent.Owner)), ent, args.OtherEntity);
                 ent.Comp.NextResistTime = _timing.CurTime + TimeSpan.FromSeconds(0.5);
                 Dirty(ent);
             }
         }
+    }
+
+    private void OnStartCollide(Entity<TurnstileComponent> ent, ref StartCollideEvent args)
+    {
+        if (!ent.Comp.CollideExceptions.Contains(args.OtherEntity))
+            return;
+        // if they passed through:
+        ent.Comp.NextPassTime = _timing.CurTime + ent.Comp.PassDelay;
+        if (_net.IsClient)
+            _animationPlayer.Flick(ent, ent.Comp.SpinState, TurnstileVisualLayers.Base);
+        _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity);
     }
 
     private void OnEndCollide(Entity<TurnstileComponent> ent, ref EndCollideEvent args)
