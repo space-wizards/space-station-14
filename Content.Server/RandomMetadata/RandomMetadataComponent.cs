@@ -16,8 +16,8 @@ public sealed partial class RandomMetadataComponent : Component
     public List<ProtoId<LocalizedDatasetPrototype>>? NameSegments;
 
     [DataField]
-    public string NameSeparator = " ";
+    public LocId NameFormat = "random-metadata-name-format-default";
 
     [DataField]
-    public string DescriptionSeparator = " ";
+    public LocId DescriptionFormat = "random-metadata-description-format-default";
 }

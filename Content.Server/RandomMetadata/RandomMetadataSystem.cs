@@ -12,7 +12,7 @@ public sealed class RandomMetadataSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
-    private readonly List<string> _outputSegments = new();
+    private readonly List<(string, object)> _outputSegments = new();
 
     public override void Initialize()
     {
@@ -28,13 +28,13 @@ public sealed class RandomMetadataSystem : EntitySystem
 
         if (component.NameSegments != null)
         {
-            _metaData.SetEntityName(uid, GetRandomFromSegments(component.NameSegments, component.NameSeparator), meta);
+            _metaData.SetEntityName(uid, GetRandomFromSegments(component.NameSegments, component.NameFormat), meta);
         }
 
         if (component.DescriptionSegments != null)
         {
             _metaData.SetEntityDescription(uid,
-                GetRandomFromSegments(component.DescriptionSegments, component.DescriptionSeparator), meta);
+                GetRandomFromSegments(component.DescriptionSegments, component.DescriptionFormat), meta);
         }
     }
 
@@ -45,14 +45,15 @@ public sealed class RandomMetadataSystem : EntitySystem
     /// <param name="separator">The separator that will be inbetween each segment</param>
     /// <returns>The newly generated string</returns>
     [PublicAPI]
-    public string GetRandomFromSegments(List<ProtoId<LocalizedDatasetPrototype>> segments, string? separator)
+    public string GetRandomFromSegments(List<ProtoId<LocalizedDatasetPrototype>> segments, string format)
     {
         _outputSegments.Clear();
-        foreach (var segment in segments)
+        for (var i = 0; i < segments.Count; ++i)
         {
-            var localizedProto = _prototype.Index(segment);
-            _outputSegments.Add(_random.Pick(localizedProto));
+            var localizedProto = _prototype.Index(segments[i]);
+            _outputSegments.Add(($"part-{i}", _random.Pick(localizedProto)));
         }
-        return string.Join(separator, _outputSegments);
+
+        return Loc.GetString(format, _outputSegments.ToArray());
     }
 }
