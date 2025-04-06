@@ -17,7 +17,7 @@
       sprite: Objects/Magic/magicactions.rsi
       state: gib
     event: !type:SmiteSpellEvent
-  - type: SpeakOnUse
+  - type: SpeakOnAction
     sentence: action-speech-spell-smite
   - type: Magic
     requiresClothes: true
@@ -50,7 +50,7 @@
     event: !type:ChangeComponentsSpellEvent
       toAdd:
       - type: Cluwne
-  - type: SpeakOnUse
+  - type: SpeakOnAction
     sentence: action-speech-spell-cluwne
   - type: Magic
     requiresClothes: true
@@ -78,7 +78,7 @@
       - type: Slippery
       - type: StepTrigger
         requiredTriggeredSpeed: -1
-  - type: SpeakOnUse
+  - type: SpeakOnAction
     sentence: action-speech-spell-slip
   - type: Magic
     requiresClothes: true

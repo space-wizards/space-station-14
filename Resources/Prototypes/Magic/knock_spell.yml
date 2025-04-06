@@ -12,5 +12,5 @@
       sprite: Objects/Magic/magicactions.rsi
       state: knock
     event: !type:KnockSpellEvent
-  - type: SpeakOnUse
+  - type: SpeakOnAction
     sentence: action-speech-spell-knock

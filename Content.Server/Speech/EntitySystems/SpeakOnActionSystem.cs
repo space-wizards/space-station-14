@@ -10,9 +10,9 @@ namespace Content.Server.Speech.EntitySystems;
 
 /// <summary>
 /// As soon as the chat refactor moves to Shared
-/// the logic here can move to the shared <see cref="SharedSpeakOnUseSystem"/>
+/// the logic here can move to the shared <see cref="SharedSpeakOnActionSystem"/>
 /// </summary>
-public sealed class SpeakOnUseSystem : SharedSpeakOnUseSystem
+public sealed class SpeakOnActionSystem : SharedSpeakOnActionSystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
 
@@ -20,10 +20,10 @@ public sealed class SpeakOnUseSystem : SharedSpeakOnUseSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpeakOnUseComponent, ActionPerformedEvent>(OnSpeakOnUse);
+        SubscribeLocalEvent<SpeakOnActionComponent, ActionPerformedEvent>(OnActionPerformed);
     }
 
-    private void OnSpeakOnUse(Entity<SpeakOnUseComponent> ent, ref ActionPerformedEvent args)
+    private void OnActionPerformed(Entity<SpeakOnActionComponent> ent, ref ActionPerformedEvent args)
     {
         var user = args.Performer;
 

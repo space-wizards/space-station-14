@@ -17,7 +17,7 @@
       state: fireball
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
-  - type: SpeakOnUse
+  - type: SpeakOnAction
     sentence: action-speech-spell-fireball
   - type: ActionUpgrade
     effectedLevels:
@@ -44,7 +44,7 @@
       state: fireball
     event: !type:ProjectileSpellEvent
       prototype: ProjectileFireball
-  - type: SpeakOnUse
+  - type: SpeakOnAction
     sentence: action-speech-spell-fireball
 
 - type: entity
@@ -67,5 +67,5 @@
         state: fireball
       event: !type:ProjectileSpellEvent
         prototype: ProjectileFireball
-    - type: SpeakOnUse
+    - type: SpeakOnAction
       sentence: action-speech-spell-fireball

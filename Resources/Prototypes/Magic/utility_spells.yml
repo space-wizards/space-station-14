@@ -11,5 +11,5 @@
       state: nothing
     event: !type:ChargeSpellEvent
       charge: 1
-  - type: SpeakOnUse
+  - type: SpeakOnAction
     sentence: action-speech-spell-charge

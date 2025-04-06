@@ -10,4 +10,4 @@ namespace Content.Shared.Speech.EntitySystems;
 /// <see cref="Content.Server.Speech.EntitySystems.SpeakOnUseSystem"/>
 /// to here and set this class to sealed.
 /// </summary>
-public abstract class SharedSpeakOnUseSystem : EntitySystem;
+public abstract class SharedSpeakOnActionSystem : EntitySystem;
