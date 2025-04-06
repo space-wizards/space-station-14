@@ -20,7 +20,7 @@ public abstract partial class SharedIgnitionSourceSystem : EntitySystem
 
     private void OnIsHot(Entity<IgnitionSourceComponent> ent, ref IsHotEvent args)
     {
-        args.IsHot = ent.Comp.Ignited;
+        args.IsHot |= ent.Comp.Ignited;
     }
 
     private void OnItemToggle(Entity<ItemToggleHotComponent> ent, ref ItemToggledEvent args)
