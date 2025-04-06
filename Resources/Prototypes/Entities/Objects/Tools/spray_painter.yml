@@ -33,8 +33,8 @@
   - type: StaticPrice
     price: 40
   - type: LimitedCharges
-    maxCharges: 10
-    charges: 10
+    maxCharges: 15
+    charges: 15
 
 - type: entity
   name: compressed dye
@@ -43,7 +43,7 @@
   description: A cartridge of dye compacted by bluespace technology. Used in spray painter.
   components:
   - type: SprayPainterAmmo
-    charges: 10
+    charges: 15
   - type: Sprite
     sprite: Objects/Tools/spray_painter.rsi
     state: ammo4
