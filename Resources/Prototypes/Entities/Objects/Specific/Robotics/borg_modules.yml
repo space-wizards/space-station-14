@@ -638,8 +638,8 @@
     items:
     - HandheldHealthAnalyzerUnpowered
     - BorgHypo
+    - Syringe
     - BorgDropper
-    - BorgBeaker
     - BorgBeaker
     - BorgBeaker
   - type: BorgModuleIcon
