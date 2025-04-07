@@ -1,3 +1,4 @@
+using Content.Shared.Access.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -8,6 +9,7 @@ namespace Content.Shared.Access.Components;
 /// This is used for an ID that expires and replaces its access after a certain period has passed.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[Access(typeof(SharedIdCardSystem))]
 public sealed partial class ExpireIdCardComponent : Component
 {
     /// <summary>
