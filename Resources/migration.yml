@@ -575,9 +575,3 @@ PaxChemistryBottle: ChemistryBottlePax
 MuteToxinChemistryBottle: ChemistryBottleMuteToxin
 LeadChemistryBottle: ChemistryBottleLead
 ToxinChemistryBottle: ChemistryBottleToxin
-
-# 2025-04-05
-
-AirlockMedicalMorgueMaintLocked: AirlockMaintMedicalMorgueLocked
-AirlockMaintRnDLocked: AirlockMaintSciLocked
-AirlockMaintRnDMedLocked: AirlockMaintSciMedLocked
