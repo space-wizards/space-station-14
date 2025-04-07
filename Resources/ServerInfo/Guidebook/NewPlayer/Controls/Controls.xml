@@ -5,36 +5,44 @@
 <Box Orientation="Vertical"><CommandButton Text="ui-options-tab-controls" Command="options 2"/></Box>
 
 ## Movement
-To move, use [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][keybind="MoveDown"][keybind="MoveRight"][/bold][/color].
+To move around, use [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][keybind="MoveDown"][keybind="MoveRight"][/bold][/color].
 
-Slippery objects and surfaces will cause you to lose your footing and become momentarily stunned.
-Hold [color=yellow][bold][keybind="Walk"][/bold][/color] to walk slowly and prevent slipping on most of them.
+If you run onto slippery objects (soap, banana peels) or liquids spilt on the ground, you'll [color=cyan]slip[/color] and become momentarily stunned.
+Hold [color=yellow][bold][keybind="Walk"][/bold][/color] to walk slowly and prevent slipping on most of them, except for the slippiest ones (oil).
 (Note: you can switch walking to a [color=cyan]toggle[/color] in the controls menu.)
 
-You can [color=cyan]pull[/color] entities, including players.
-To start pulling, click [color=yellow][bold][keybind="TryPullObject"][/bold][/color] on a movable entity.
-While pulling, you can push the entity to your cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
-To [color=cyan]let go[/color] of an object, press [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] or just use [color=yellow][bold][keybind="TryPullObject"][/bold][/color] on it again.
+You can [color=cyan]pull[/color] [bold]entities[/bold] (items, objects, and mobile entities (mobs) such as players).
+To start pulling, use [color=yellow][bold][keybind="TryPullObject"][/bold][/color] on any movable, unanchored entity.
+While pulling, you can [color=cyan]push[/color] the entity to your cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
+To [color=cyan]let go[/color], press [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] or pull the same entity again.
+(You can also use [color=yellow][bold][keybind="Drop"][/bold][/color] to let go with your active hand.)
 
 You may find yourself in a situation with [color=#EB2D3A][bold]low gravity[/bold][/color].
 You'll be able to control movement direction as long as you're within reach of any structure.
 If you end up completely off-station in space, you'll need to [bold]throw objects[/bold] or [bold]spray a fire-extinguisher[/bold] to propel yourself according to the laws of motion.
 
 ## Hands
-Click [color=yellow][bold][keybind="Use"][/bold][/color] on holdable items to pick them up with your active hand — make sure it's empty first.
-Swap between hands with [color=yellow][bold][keybind="SwapHands"][/bold][/color] to control which one is active.
+Your [color=cyan]hand slots[/color] are at the bottom center of your game window.
+[color=cyan]Pick up[/color holdable items into your active hand with [color=yellow][bold][keybind="Use"][/bold][/color] — make sure it's [bold]empty[/bold] first.
+[color=cyan]Swap[/color] between hands with [color=yellow][bold][keybind="SwapHands"][/bold][/color] to control which one is active.
 Pay attention to the active hand when using item-related hotkeys — they only affect that hand.
 
-To [color=cyan]drop[/color] an item from your active hand, use [color=yellow][bold][keybind="Drop"][/bold][/color].
-You can also [color=cyan]throw[/color] it to your cursor with [color=yellow][bold][keybind="ThrowItemInHand"][/bold][/color].
+Use [color=yellow][bold][keybind="Drop"][/bold][/color] to [color=cyan]drop[/color] (place) an item from your hand within arm's reach.
+You can also [color=cyan]throw[/color] it to your cursor with [color=yellow][bold][keybind="ThrowItemInHand"][/bold][/color], which has a much higher range than dropping.
 
 ## Inventory
-Your character has an [bold]inventory[/bold] for equipment and clothing.
-Toggle your [color=cyan]clothing inventory[/color] with the [color=yellow][bold][keybind="OpenInventoryMenu"][/bold][/color] hotkey (or by clicking the bottom leftmost icon).
+Your [color=cyan]inventory bar[/color] is all the icons at the bottom of your game window.
+Left to right, it has the clothing inventory icon in the left corner, then slots for the PDA, belt, bag, hands, pockets, and back/special.
+This may be slightly different for various races.
+
+The [color=cyan]clothing inventory[/color] (open with [color=yellow][bold][keybind="OpenInventoryMenu"][/bold][/color] or by clicking) has slots for eyes, head, neck, face, ears, body, external, hands, and shoes.
 If you want to [color=cyan]wear[/color] a piece of equipment: have it in your active hand, then press [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] or click the item, or click the appropriate slot.
 De-equip items by clicking on them.
 
-Two of the slots on your hotbar correspond to your [bold]bag and belt[/bold].
+You [bold]can't[/bold] swap items directly. You need an empty hand to take any item.
+
+Two of the slots on your hotbar correspond to your [bold]bag[/bold] and [bold]belt[/bold].
+They're at the center left, next to your ID slot.
 If you have a bag or belt equipped, you can quickly access them using the [color=yellow][bold][keybind="OpenBackpack"][/bold][/color] and [color=yellow][bold][keybind="OpenBelt"][/bold][/color] hotkeys, respectively.
 Alternatively, you can open them by using [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] on their hotbar slots or by clicking the mini icon in the [bold]bottom right[/bold] of their icons.
 
