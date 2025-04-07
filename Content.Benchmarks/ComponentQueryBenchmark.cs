@@ -105,23 +105,6 @@ public class ComponentQueryBenchmark
     }
 
     /// <summary>
-    /// TryComp for 2 different components.
-    /// </summary>
-    [Benchmark]
-    [BenchmarkCategory("TryComp")]
-    public int TryCompDouble()
-    {
-        var hashCode = 0;
-        foreach (var uid in _items)
-        {
-
-            if (_entMan.TryGetComponent(uid, out ClothingComponent? clothing, out ItemComponent? _))
-                hashCode = HashCode.Combine(hashCode, clothing.GetHashCode());
-        }
-        return hashCode;
-    }
-
-    /// <summary>
     /// Baseline TryComp benchmark. When the benchmark was created, around 40% of the items were clothing.
     /// </summary>
     [Benchmark]
