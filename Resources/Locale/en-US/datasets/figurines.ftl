@@ -4,11 +4,11 @@ figurines-hop-3 = BRB.
 figurines-hop-4 = You can get AA if you fill out the form.
 figurines-hop-5 = I was gone for two seconds...
 
-figurines-passenger-1 = Insuls please.
-figurines-passenger-2 = Call evac.
-figurines-passenger-3 = HELP MAINTS!!
-figurines-passenger-4 = I'm no tider.
-figurines-passenger-5 = How much for a toolbelt?
+figurines-assistant-1 = Can I help you?
+figurines-assistant-2 = Call evac.
+figurines-assistant-3 = HELP MAINTS!!
+figurines-assistant-4 = I'm assistant.
+figurines-assistant-5 = You need help?
 
 figurines-greytider-1 = Man, this party stinks. I fucking hate these people.
 figurines-greytider-2 = Uh-oh, who's lost their stunbaton?

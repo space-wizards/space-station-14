@@ -1963,7 +1963,7 @@
     - Botanist
 
 - type: listing
-  id: uplinkRiggedBoxingGlovesPassenger
+  id: uplinkRiggedBoxingGlovesAssistant
   name: uplink-rigged-boxing-gloves-name
   description: uplink-rigged-boxing-gloves-desc
   productEntity: ClothingHandsGlovesBoxingRigged
@@ -1977,7 +1977,7 @@
   conditions:
     - !type:BuyerJobCondition
       whitelist:
-        - Passenger
+        - Assistant
 
 - type: listing
   id: uplinkRiggedBoxingGlovesBoxer

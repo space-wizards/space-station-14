@@ -1,9 +1,9 @@
 - type: vendingMachineInventory
   id: PTechInventory
   startingInventory:
-    PassengerPDA: 5
+    AssistantPDA: 5
     ClearPDA: 5
-    PassengerIDCard: 5
+    AssistantIDCard: 5
     ClothingHeadsetGrey: 5
     RubberStampApproved: 1
     RubberStampDenied: 1

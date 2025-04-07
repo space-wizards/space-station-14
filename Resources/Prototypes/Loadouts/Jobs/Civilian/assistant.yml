@@ -5,8 +5,8 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
-      role: JobPassenger
-      time: 36000 #10 hrs, silly reward for people who play passenger a lot
+      role: JobAssistant
+      time: 36000 #10 hrs, silly reward for people who play Assistant a lot
 
 # Head of Greytide (for grey mantle)
 - type: loadoutEffectGroup
@@ -15,12 +15,12 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
-      role: JobPassenger
+      role: JobAssistant
       time: 72000 #20 hrs, fun mantle for the most experienced greytiders
 
 # Face
 - type: loadout
-  id: PassengerFace
+  id: AssistantFace
   effects:
   - !type:GroupLoadoutEffect
     proto: GreyTider
@@ -89,7 +89,7 @@
 
 # Gloves
 - type: loadout
-  id: PassengerGloves
+  id: AssistantGloves
   effects:
   - !type:GroupLoadoutEffect
     proto: GreyTider
@@ -98,7 +98,7 @@
 
 # Outerclothing
 - type: loadout
-  id: PassengerWintercoat
+  id: AssistantWintercoat
   equipment:
     outerClothing: ClothingOuterWinterCoat
 

@@ -1,18 +1,18 @@
 - type: job
-  id: Passenger
-  name: job-name-passenger
-  description: job-description-passenger
-  playTimeTracker: JobPassenger
-  startingGear: PassengerGear
-  icon: "JobIconPassenger"
+  id: Assistant
+  name: job-name-assistant
+  description: job-description-assistant
+  playTimeTracker: JobAssistant
+  startingGear: AssistantGear
+  icon: "JobIconAssistant"
   supervisors: job-supervisors-everyone
   access:
   - Maintenance
 
 - type: startingGear
-  id: PassengerGear
+  id: AssistantGear
   equipment:
-    id: PassengerPDA
+    id: AssistantPDA
     ears: ClothingHeadsetGrey
   #storage:
     #back:

@@ -9,6 +9,9 @@
     },
     "states": [
         {
+            "name": "Assistant"
+        },
+        {
             "name": "Detective"
         },
         {
@@ -91,9 +94,6 @@
         },
         {
             "name": "ShaftMiner"
-        },
-        {
-            "name": "Passenger"
         },
         {
             "name": "ChiefEngineer"

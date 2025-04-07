@@ -5,9 +5,9 @@
     count: 5
 
 - type: localizedDataset
-  id: FigurinesPassenger
+  id: FigurinesAssistant
   values:
-    prefix: figurines-passenger-
+    prefix: figurines-assistant-
     count: 5
 
 - type: localizedDataset
