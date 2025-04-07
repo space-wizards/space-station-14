@@ -4504,4 +4504,11 @@ Entries:
   id: 624
   time: '2025-04-07T17:27:38.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/456
+- author: Happyrobot33
+  changes:
+  - message: Made event spells too expensive by default.
+    type: Tweak
+  id: 625
+  time: '2025-04-07T17:29:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/454
 
