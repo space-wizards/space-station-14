@@ -1267,25 +1267,6 @@
 # Implants
 
 - type: listing
-  id: UplinkStorageImplanter
-  name: uplink-storage-implanter-name
-  description: uplink-storage-implanter-desc
-  icon: { sprite: /Textures/Clothing/Back/Backpacks/backpack.rsi, state: icon }
-  productEntity: StorageImplanter
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 4
-  cost:
-    Telecrystal: 8
-  categories:
-    - UplinkImplants
-  conditions:
-    - !type:StoreWhitelistCondition
-      blacklist:
-        tags:
-          - NukeOpsUplink
-
-- type: listing
   id: UplinkFreedomImplanter
   name: uplink-freedom-implanter-name
   description: uplink-freedom-implanter-desc
