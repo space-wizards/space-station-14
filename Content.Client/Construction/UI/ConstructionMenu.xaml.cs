@@ -49,8 +49,7 @@ namespace Content.Client.Construction.UI
         void ClearRecipeInfo();
         void SetRecipeInfo(string name, string description, Texture iconTexture, bool isItem, bool isFavorite);
         void ResetPlacement();
-        bool TrySelectCategoryById(int categoryId);
-        void Search(string query);
+        bool TrySelectCategoryById(int categoryDisplayId);
         bool TrySelectRecipeById(string recipeId);
         void TogglePreviousRecipeButton(bool enabled);
         void ToggleNextRecipeButton(bool enabled);
@@ -108,7 +107,7 @@ namespace Content.Client.Construction.UI
 
             SearchBar.OnTextChanged += _ =>
                 PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[OptionCategories.SelectedId]));
-            OptionCategories.OnItemSelected += obj => OnOptionCategoriesItemSelected(obj.Id);
+            OptionCategories.OnItemSelected += obj => OnSelectCategory(obj.Id);
 
             BuildButton.Text = Loc.GetString("construction-menu-place-ghost");
             BuildButton.OnToggled += args => BuildButtonToggled?.Invoke(this, args.Pressed);
@@ -165,30 +164,21 @@ namespace Content.Client.Construction.UI
         }
 
         /// <summary>
-        /// Attempts to select a category by its ID.
+        /// Attempts to select a category by its display ID.
         /// </summary>
-        /// <param name="categoryId">Category ID.</param>
+        /// <param name="categoryDisplayId">Category display ID.</param>
         /// <returns>Whether it was successful.</returns>
-        public bool TrySelectCategoryById(int categoryId)
+        public bool TrySelectCategoryById(int categoryDisplayId)
         {
-            // var success = OptionCategories.TrySelectId(categoryId);
-            // if (!success)
-            // {
-            //     return false;
-            // }
+            // do nothing if category is already selected
+            if (OptionCategories.SelectedId == categoryDisplayId)
+            {
+                return true;
+            }
 
-            OnOptionCategoriesItemSelected(categoryId);
+            OnSelectCategory(categoryDisplayId);
 
             return true;
-        }
-
-        /// <summary>
-        /// Performs search using the search bar.
-        /// </summary>
-        /// <param name="query">Search string.</param>
-        public void Search(string query)
-        {
-            SearchBar.SetText(query, true);
         }
 
         /// <summary>
@@ -202,8 +192,6 @@ namespace Content.Client.Construction.UI
             var selectedItem = Recipes.GetSelected().FirstOrDefault();
             if (selectedItem != null)
             {
-                // deselect whatever is selected.
-                // this will trigger deselected event.
                 selectedItem.Selected = false;
             }
 
@@ -239,11 +227,11 @@ namespace Content.Client.Construction.UI
             NextRecipeButton.Disabled = !enabled;
         }
 
-        private void OnOptionCategoriesItemSelected(int selectedCategoryItemId)
+        private void OnSelectCategory(int categoryDisplayId)
         {
-            OptionCategories.SelectId(selectedCategoryItemId);
+            OptionCategories.SelectId(categoryDisplayId);
             SearchBar.SetText(string.Empty);
-            PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[selectedCategoryItemId]));
+            PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[categoryDisplayId]));
         }
     }
 }

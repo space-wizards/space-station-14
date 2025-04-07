@@ -116,6 +116,7 @@ namespace Content.Client.Construction.UI
 
             _constructionView.PreviousRecipeButtonPressed += OnPreviousRecipeButtonPressed;
             _constructionView.NextRecipeButtonPressed += OnNextRecipeButtonPressed;
+            _constructionView.RecipeSelected += (_, _) => OnUpdateRecipeHistoryButtons();
 
             _constructionView.RecipeFavorited += (_, _) => OnViewFavoriteRecipe();
 
@@ -156,7 +157,9 @@ namespace Content.Client.Construction.UI
 
             _selected = (ConstructionPrototype) item.Metadata!;
 
-            AppendRecipeToRecipeHistory(_selected, _constructionView.OptionCategories.SelectedId, true);
+            var logger = _logManager.GetSawmill("OnViewRecipeSelected");
+            logger.Info($"checking if adding selected recipe to recipe history is needed");
+            AddRecipeToRecipeHistory(_selected, _constructionView.OptionCategories.SelectedId);
 
             if (_placementManager.IsActive && !_placementManager.Eraser) UpdateGhostPlacement();
             PopulateInfo(_selected);
@@ -173,7 +176,7 @@ namespace Content.Client.Construction.UI
 
             _selected = recipe;
 
-            AppendRecipeToRecipeHistory(recipe, _constructionView.OptionCategories.SelectedId, true);
+            AddRecipeToRecipeHistory(recipe, _constructionView.OptionCategories.SelectedId);
 
             if (_placementManager.IsActive && !_placementManager.Eraser) UpdateGhostPlacement();
             PopulateInfo(_selected);
@@ -382,58 +385,45 @@ namespace Content.Client.Construction.UI
         }
 
         /// <summary>
-        /// Appends a recipe to the recipe history.
+        /// Adds a recipe to the recipe history with respect to the currently selected recipe in recipe history.
         ///
-        /// Should be called when selected recipe changes.
-        ///
-        /// If recipe is the same recipe at the end of recipe history, it won't be added again.
-        ///
-        /// If <see cref="setAsSelectedRecipeHistoryRecipe" /> is enabled, the selected recipe history recipe will be set
-        /// to the given recipe, discarding following history entries if necessary.
+        /// If the recipe is the same is previous recipe in recipe history, it will be ignored.
+        /// If there are recipes after the currently selected recipe in recipe history, they will be discarded.
         /// </summary>
-        private void AppendRecipeToRecipeHistory(
-            ConstructionPrototype recipe,
-            int categoryDisplayId,
-            bool incrementSelectedRecipeHistoryRecipeIndex = false)
+        private void AddRecipeToRecipeHistory(ConstructionPrototype recipe, int categoryDisplayId)
         {
-            var logger = _logManager.GetSawmill("owo");
-            logger.Info("adding new entry to recipe history, category display id: " + categoryDisplayId);
+            var logger = _logManager.GetSawmill("AppendRecipeToRecipeHistory");
+            logger.Info($"attempting to add a new entry to recipe history, item name '{recipe.Name}' category display id '{categoryDisplayId}'");
+
             var previousRecipeEntry = _recipeHistory.ElementAtOrDefault(_recipeHistorySelectedIndex);
             if (previousRecipeEntry != default && previousRecipeEntry.recipe.ID == recipe.ID)
             {
                 // do not add the same recipe
+                logger.Info("skipping, same recipe");
                 return;
             }
 
+            // discard any next history entries, if any
+            if (_recipeHistorySelectedIndex != -1 && _recipeHistory.Count > _recipeHistorySelectedIndex + 1)
+            {
+                // we have elemnts to discard
+                var elementsToDiscardCount = _recipeHistory.Count - (_recipeHistorySelectedIndex + 1);
+                _recipeHistory.RemoveRange(_recipeHistorySelectedIndex + 1, elementsToDiscardCount);
+            }
+
             _recipeHistory.Add((categoryDisplayId, recipe));
-            if (incrementSelectedRecipeHistoryRecipeIndex)
-            {
-                _recipeHistorySelectedIndex++;
-            }
+            logger.Info("added");
 
-            UpdateRecipeHistoryButtons();
-        }
-
-        private void SetSelectedRecipeHistoryRecipeIndex(int index, bool discardFollowingEntries = false)
-        {
-            if (discardFollowingEntries && index < _recipeHistory.Count - 1)
-            {
-                _recipeHistory.RemoveRange(
-                    index + 1,
-                    _recipeHistory.Count - index - 1
-                );
-            }
-
-            _recipeHistorySelectedIndex = index;
+            _recipeHistorySelectedIndex++;
         }
 
         /// <summary>
-        /// Toggles recipe history buttons on and off based on recipe history.
-        ///
-        /// Should be called after any update to the recipe history or selected recipe history recipe.
+        /// Updates recipe history buttons state (turning them off/on).
         /// </summary>
-        private void UpdateRecipeHistoryButtons()
+        private void OnUpdateRecipeHistoryButtons()
         {
+            var logger = _logManager.GetSawmill("OnUpdateRecipeHistoryButtons");
+            logger.Info($"history buttons update");
             if (_recipeHistorySelectedIndex == -1)
             {
                 return;
@@ -443,20 +433,25 @@ namespace Content.Client.Construction.UI
             _constructionView.ToggleNextRecipeButton(_recipeHistorySelectedIndex < _recipeHistory.Count - 1);
         }
 
-        private void TrySelectRecipeFromHistoryEntry(int categoryDisplayId, ConstructionPrototype recipe)
+        /// <summary>
+        /// Selects a recipe using a recipe history entry data.
+        /// </summary>
+        private void SelectRecipeUsingHistoryEntry(int categoryDisplayId, ConstructionPrototype recipe)
         {
-            var logger = _logManager.GetSawmill("owo");
-            logger.Info("attempting to select recipe from history entry, category display id: " + categoryDisplayId);
+            var logger = _logManager.GetSawmill("TrySelectRecipeFromHistoryEntry");
+            logger.Info($"attempting to select recipe name '{recipe.Name}' from history entry, category display id '{categoryDisplayId}'");
 
             if (_constructionView.TrySelectCategoryById(categoryDisplayId))
             {
-                // _constructionView.Search(recipe.Name);
                 _constructionView.TrySelectRecipeById(recipe.ID);
             }
 
             PopulateInfo(recipe);
         }
 
+        /// <summary>
+        /// Handler for the previous recipe button press.
+        /// </summary>
         private void OnPreviousRecipeButtonPressed(object? sender, EventArgs e)
         {
             if (_recipeHistorySelectedIndex == -1
@@ -466,13 +461,15 @@ namespace Content.Client.Construction.UI
                 return;
             }
 
-            SetSelectedRecipeHistoryRecipeIndex(_recipeHistorySelectedIndex - 1);
+            _recipeHistorySelectedIndex--;
 
-            var recipeEntry = _recipeHistory[_recipeHistorySelectedIndex];
-            TrySelectRecipeFromHistoryEntry(recipeEntry.categoryDisplayId, recipeEntry.recipe);
-            UpdateRecipeHistoryButtons();
+            var previousRecipeEntry = _recipeHistory[_recipeHistorySelectedIndex];
+            SelectRecipeUsingHistoryEntry(previousRecipeEntry.categoryDisplayId, previousRecipeEntry.recipe);
         }
 
+        /// <summary>
+        /// Handler for the next recipe button press.
+        /// </summary>
         private void OnNextRecipeButtonPressed(object? sender, EventArgs e)
         {
             if (_recipeHistorySelectedIndex == -1
@@ -482,11 +479,10 @@ namespace Content.Client.Construction.UI
                 return;
             }
 
-            SetSelectedRecipeHistoryRecipeIndex(_recipeHistorySelectedIndex + 1);
+            _recipeHistorySelectedIndex++;
 
-            var recipeEntry = _recipeHistory[_recipeHistorySelectedIndex];
-            TrySelectRecipeFromHistoryEntry(recipeEntry.categoryDisplayId, recipeEntry.recipe);
-            UpdateRecipeHistoryButtons();
+            var nextRecipeEntry = _recipeHistory[_recipeHistorySelectedIndex];
+            SelectRecipeUsingHistoryEntry(nextRecipeEntry.categoryDisplayId, nextRecipeEntry.recipe);
         }
 
         private ItemList.Item GetItem(ConstructionPrototype recipe, ItemList itemList)
