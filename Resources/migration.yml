@@ -20,7 +20,7 @@ ClothingOuterVestKevlar: ClothingOuterArmorBasic
 Intercom: IntercomCommon
 
 # 2023-07-12
-ToyAssistant: ToyFigurinePassenger
+ToyFigurinePassenger: ToyFigurineAssistant
 
 # 2023-07-20
 ForensicGloves: ClothingHandsGlovesForensic
@@ -122,7 +122,7 @@ WarpPointBeaconService: null
 
 # 2023-12-30
 ClothingEyesGlassesCosmeticSunglasses: ClothingEyesGlassesSunglasses
-SpawnPointAssistant: SpawnPointPassenger
+SpawnPointPassenger: SpawnPointAssistant
 
 # 2024-01-05
 DrinkGoldschlagerBottleFull: DrinkGildlagerBottleFull
