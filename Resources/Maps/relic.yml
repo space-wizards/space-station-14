@@ -42313,7 +42313,7 @@ entities:
     - type: Transform
       pos: 14.5,14.5
       parent: 2
-- proto: SpawnPointPassenger
+- proto: SpawnPointAssistant
   entities:
   - uid: 33
     components:
