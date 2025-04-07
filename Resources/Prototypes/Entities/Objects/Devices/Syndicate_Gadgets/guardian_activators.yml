@@ -5,8 +5,11 @@
   description: A complex artwork of handheld machinery allowing the user to host a holoparasite guardian.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/hypospray.rsi
-    state: combat_hypo
+    sprite: _DeadSpace/Objects/Specific/Medical/holoparasite_injector.rsi # DS14-resprite
+    layers: 
+    - state: icon
+  - type: Item
+    sprite: _DeadSpace/Objects/Specific/Medical/holoparasite_injector.rsi # DS14-resprite
   - type: GuardianCreator
     guardianProto: MobHoloparasiteGuardian
 
