@@ -1545,9 +1545,9 @@
   productEntity: ClothingHandsChameleonThief
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 2
+    Telecrystal: 3
   cost:
-    Telecrystal: 4
+    Telecrystal: 5
   categories:
   - UplinkWearables
 
