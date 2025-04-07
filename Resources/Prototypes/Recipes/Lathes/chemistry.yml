@@ -95,8 +95,8 @@
   result: BaseChemistryEmptyVial
   completetime: 2
   materials:
-    Glass: 200
-    Wood: 50
+    Glass: 100
+    Wood: 20
 
 - type: latheRecipe
   id: ClothingEyesGlassesChemical
