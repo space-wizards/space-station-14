@@ -9,7 +9,7 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    earliestStart: 60
+    earliestStart: 20
     weight: 2
     minimumPlayers: 40
     maxOccurrences: 1
@@ -36,7 +36,7 @@
       components:
       - type: RandomMetadata
         nameSegments:
-        - names_death_commando
+        - NamesDeathCommando
       - type: AutoImplant
         implants:
         - DeathAcidifierImplant

@@ -4,10 +4,4 @@
   antagonist: true
   objective: roles-antag-listening-post-objective
   # keep these in sync with the spawner
-  requirements: # Worth considering these numbers for the goal of making sure someone willing to MRP takes this.
-  - !type:DepartmentTimeRequirement
-    department: Security
-    time: 18000 # 5 hours
-  - !type:DepartmentTimeRequirement
-    department: Command
-    time: 18000 # 5 hours
+
