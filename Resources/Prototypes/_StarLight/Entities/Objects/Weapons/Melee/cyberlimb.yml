@@ -64,12 +64,12 @@
     state: cybermantisblade
   - type: MeleeWeapon
     wideAnimationRotation: -135
-    attackRate: 2.2
-    autoAttack: true
+    attackRate: 2.0
+    autoAttack: false
     damage:
       types:
-        Slash: 18
-        Structural: 55
+        Slash: 15
+        Structural: 25
     soundHit:
       path: /Audio/Weapons/block_metal1.ogg
     soundMiss:
