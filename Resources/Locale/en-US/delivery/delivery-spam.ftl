@@ -30,7 +30,7 @@ delivery-spam-reasons-to-chose-nanotrasen = [color=blue]
                                        {"[head=2]TOP THREE REASONS WHY THE SYNDICATE IS INCOMPETENT[/head]"}
 
                                        {"[bold]NUMBER ONE[/bold]"}
-                                       THEIR SLEEPER AGENTS ARE INCOMPETENT! THEY CAN'T EVEN KILL A PASSENGER WITH A DEATHWISH!
+                                       THEIR SLEEPER AGENTS ARE INCOMPETENT! THEY CAN'T EVEN KILL A ASSISTANT WITH A DEATHWISH!
 
                                        {"[bold]NUMBER TWO[/bold]"}
                                        THEIR CIVILIANS ARE WEAK TO BULLETS! TRUST ME, WE TRIED! UNLIKE THE NANOTRASEN CIVILIANS, SYNDICATE CIVILIANS DIE FROM A BULLET TO THE SKULL! BULLETS WE HAVE!

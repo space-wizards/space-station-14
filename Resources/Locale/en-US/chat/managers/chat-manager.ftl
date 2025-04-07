@@ -113,6 +113,10 @@ chat-speech-verb-vox-1 = screeches
 chat-speech-verb-vox-2 = shrieks
 chat-speech-verb-vox-3 = croaks
 
+chat-speech-verb-name-resomi = Resomi
+chat-speech-verb-resomi-1 = squawks
+chat-speech-verb-resomi-2 = chirps
+
 chat-speech-verb-name-canine = Canine
 chat-speech-verb-canine-1 = barks
 chat-speech-verb-canine-2 = woofs

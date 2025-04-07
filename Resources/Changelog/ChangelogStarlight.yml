@@ -4383,4 +4383,118 @@ Entries:
   id: 607
   time: '2025-04-01T12:25:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/409
+- author: Happyrobot33
+  changes:
+  - message: Fixed Resomi heat threshold spam.
+    type: Fix
+  id: 608
+  time: '2025-04-02T13:17:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/437
+- author: Happyrobot33
+  changes:
+  - message: Fixed Centcomm.
+    type: Fix
+  id: 609
+  time: '2025-04-03T01:01:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/439
+- author: Happyrobot33
+  changes:
+  - message: Fixed Random name generation for Starlight species.
+    type: Fix
+  id: 610
+  time: '2025-04-03T01:01:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/439
+- author: BORT
+  changes:
+  - message: added IAA headset and law encryption to lawdrobe
+    type: Tweak
+  id: 611
+  time: '2025-04-03T04:24:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/442
+- author: Happyrobot33
+  changes:
+  - message: Fixed Resomi flash immunity welding goggles exploit.
+    type: Fix
+  id: 612
+  time: '2025-04-03T04:25:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/440
+- author: Happyrobot33
+  changes:
+  - message: Added cooldown of 0.5 seconds to all Emotes.
+    type: Add
+  id: 613
+  time: '2025-04-04T08:03:42.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/441
+- author: Dusky
+  changes:
+  - message: Added Engineering SOP to guidebook.
+    type: Add
+  id: 614
+  time: '2025-04-04T08:04:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/443
+- author: Dusky
+  changes:
+  - message: Added NanoTrasen Employee SOP to guidebook.
+    type: Add
+  id: 615
+  time: '2025-04-04T08:04:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/443
+- author: Dusky
+  changes:
+  - message: Made departmental SOP collapse by default to reduce guidebook clutter.
+    type: Fix
+  id: 616
+  time: '2025-04-04T08:04:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/443
+- author: Happyrobot33
+  changes:
+  - message: Fixed Emote cooldown system for regular uses like radial and chat.
+    type: Fix
+  id: 617
+  time: '2025-04-04T21:19:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/445
+- author: Quantumcross
+  changes:
+  - message: Funny anomalies are showing up on station 🤡
+    type: Add
+  id: 618
+  time: '2025-04-06T18:52:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/450
+- author: Killer Tamashi
+  changes:
+  - message: Fixed bug with chainsword that prevented it from breaking windows, lockers
+      and other structures.
+    type: Fix
+  id: 619
+  time: '2025-04-06T18:54:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/448
+- author: Happyrobot33
+  changes:
+  - message: Added Resomi speech verbs.
+    type: Add
+  id: 620
+  time: '2025-04-06T18:55:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/446
+- author: aedler
+  changes:
+  - message: Replaced default CC with the new one, instead of it being under _Starlight.
+    type: Tweak
+  id: 621
+  time: '2025-04-06T19:01:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/444
+- author: ScorchFollower
+  changes:
+  - message: Added new syndicate cybernetics "Mantis Blades". Fast moving blades that
+      extend from your arm. Time to chrome the fuck up.
+    type: Add
+  id: 622
+  time: '2025-04-07T12:26:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/432
+- author: STARLIGHT TEAM
+  changes:
+  - message: Passenger removed.
+    type: Remove
+  id: 623
+  time: '2025-04-07T13:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/453
 

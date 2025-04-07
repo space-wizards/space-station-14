@@ -170,12 +170,12 @@
 
 - type: entity
   parent: BasePDA
-  id: PassengerPDA
-  name: passenger PDA
+  id: AssistantPDA
+  name: assistant PDA
   description: Why isn't it gray?
   components:
   - type: Pda
-    id: PassengerIDCard
+    id: AssistantIDCard
   - type: PdaBorderColor
     borderColor: "#717059"
 
@@ -891,7 +891,7 @@
   parent: BaseSecurityPDA
   id: SecurityPDA
   name: security PDA
-  description: Red to hide the stains of passenger blood.
+  description: Red to hide the stains of assistant blood.
   components:
   - type: Pda
     id: SecurityIDCard
@@ -1038,7 +1038,7 @@
   description: 99 and 44/100ths percent pure plastic.
   components:
   - type: Pda
-    id: PassengerIDCard
+    id: AssistantIDCard
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -1486,7 +1486,7 @@
 - type: entity
   parent: BasePDA
   id: ChameleonPDA
-  name: passenger PDA
+  name: assistant PDA
   description: Why isn't it gray?
   suffix: Chameleon
   components:
@@ -1497,7 +1497,7 @@
     - DoorBumpOpener
   - type: ChameleonClothing
     slot: [idcard]
-    default: PassengerPDA
+    default: AssistantPDA
     requireTag: WhitelistChameleonPDA
   - type: UserInterface
     interfaces:

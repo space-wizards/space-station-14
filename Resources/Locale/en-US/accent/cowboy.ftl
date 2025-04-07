@@ -178,10 +178,10 @@ accent-cowboy-replacement-59 = partner
 accent-cowboy-words-60 = party
 accent-cowboy-replacement-60 = shindig
 
-accent-cowboy-words-61 = passenger
+accent-cowboy-words-61 = assistant
 accent-cowboy-replacement-61 = greenhorn
 
-accent-cowboy-words-62 = passengers
+accent-cowboy-words-62 = assistants
 accent-cowboy-replacement-62 = greenhorns
 
 accent-cowboy-words-63 = planning

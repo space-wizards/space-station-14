@@ -6,7 +6,7 @@ barsign-ui-set-label = Set Sign:
 
 ## The Harmbaton
 barsign-prototype-name-harmbaton = The Harmbaton
-barsign-prototype-description-harmbaton = A great dining experience for both security members and passengers.
+barsign-prototype-description-harmbaton = A great dining experience for both security members and assistants.
 
 ## The Singulo
 barsign-prototype-name-singulo = The Singulo

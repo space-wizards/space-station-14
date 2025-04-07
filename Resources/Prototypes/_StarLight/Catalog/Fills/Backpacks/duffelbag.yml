@@ -39,3 +39,14 @@
       - id: WeaponPistolDeagle
       - id: MagazineShotgun
       - id: MagazineShotgun
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDufelSyndicateFilledMantisBladeArms
+  name: Mantis Blade bundle
+  description: "Contains a pair of cybernetic arms, watch out. You got a psycho on the loose."
+  components:
+  - type: StorageFill
+    contents:
+    - id: RightArmCyberMantisBlade
+    - id: LeftArmCyberMantisBlade
