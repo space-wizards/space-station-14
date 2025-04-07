@@ -30,6 +30,7 @@ public sealed partial class HereticRuleSystem : GameRuleSystem<HereticRuleCompon
     [Dependency] private readonly ObjectivesSystem _objective = default!;
     [Dependency] private readonly IRobustRandom _rand = default!;
     [Dependency] private readonly HellWorldSystem _hell = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _userInterfaceSystem = default!;
 
     public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/_Goobstation/Heretic/Ambience/Antag/Heretic/heretic_gain.ogg");
 
@@ -88,6 +89,13 @@ public sealed partial class HereticRuleSystem : GameRuleSystem<HereticRuleCompon
             store.Categories.Add(category);
         store.CurrencyWhitelist.Add(Currency);
         store.Balance.Add(Currency, 2);
+
+        //#IMP: Make sure they can use the store button
+        var uiComp = EnsureComp<UserInterfaceComponent>(target);
+        if (!_userInterfaceSystem.HasUi(target, StoreUiKey.Key, uiComp))
+        {
+            _userInterfaceSystem.SetUi(target, StoreUiKey.Key, new InterfaceData("StoreBoundUserInterface"));
+        }
 
         rule.Minds.Add(mindId);
 
