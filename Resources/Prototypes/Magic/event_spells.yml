@@ -1,7 +1,7 @@
 - type: entity
   id: ActionSummonGhosts
   name: Summon Ghosts
-  description: Makes all current ghosts permanently invisible
+  description: Makes all current ghosts permanently visible
   components:
   - type: InstantAction
     useDelay: 120
@@ -26,6 +26,7 @@
       sprite: Objects/Weapons/Guns/Rifles/ak.rsi
       state: base
     event: !type:RandomGlobalSpawnSpellEvent
+      makeSurvivorAntagonist: true
       spawns:
       - id: WeaponPistolViper
         orGroup: Guns
@@ -158,7 +159,7 @@
       - id: RevolverCapGunFake
         orGroup: Guns
       speech: action-speech-spell-summon-guns
-      
+
 - type: entity
   id: ActionSummonMagic
   name: Summon Magic
@@ -172,14 +173,13 @@
       sprite: Objects/Magic/magicactions.rsi
       state: magicmissile
     event: !type:RandomGlobalSpawnSpellEvent
+      makeSurvivorAntagonist: true
       spawns:
       - id: SpawnSpellbook
         orGroup: Magics
       - id: ForceWallSpellbook
         orGroup: Magics
       - id: BlinkBook
-        orGroup: Magics
-      - id: SmiteBook
         orGroup: Magics
       - id: KnockSpellbook
         orGroup: Magics
@@ -200,5 +200,9 @@
       - id: WeaponStaffHealing
         orGroup: Magics
       - id: WeaponStaffPolymorphDoor
+        orGroup: Magics
+      - id: AnimationStaff
+        orGroup: Magics
+      - id: RGBStaff
         orGroup: Magics
       speech: action-speech-spell-summon-magic

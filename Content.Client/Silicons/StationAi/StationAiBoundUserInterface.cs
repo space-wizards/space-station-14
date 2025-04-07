@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Silicons.StationAi;
 using Robust.Client.UserInterface;
@@ -13,8 +12,6 @@ public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : B
     {
         base.Open();
 
-        this.CreateWindow<SimpleRadialMenu>();
-
         var ev = new GetStationAiRadialEvent();
         EntMan.EventBus.RaiseLocalEvent(Owner, ref ev);
 
@@ -26,18 +23,23 @@ public sealed class StationAiBoundUserInterface(EntityUid owner, Enum uiKey) : B
         _menu.Open();
     }
 
-    private IEnumerable<RadialMenuActionOption> ConvertToButtons(IEnumerable<StationAiRadial> actions)
+    private IEnumerable<RadialMenuActionOption> ConvertToButtons(IReadOnlyList<StationAiRadial> actions)
     {
-        return actions.Select(
-            x => new RadialMenuActionOption<StationAiRadial>(HandleRadialMenuClick, x)
+        var models = new RadialMenuActionOption[actions.Count];
+        for (int i = 0; i < actions.Count; i++)
+        {
+            var action = actions[i];
+            models[i] = new RadialMenuActionOption<BaseStationAiAction>(HandleRadialMenuClick, action.Event)
             {
-                Sprite = x.Sprite,
-                ToolTip = x.Tooltip
-            }
-        );
+                Sprite = action.Sprite,
+                ToolTip = action.Tooltip
+            };
+        }
+
+        return models;
     }
 
-    private void HandleRadialMenuClick(StationAiRadial p)
+    private void HandleRadialMenuClick(BaseStationAiAction p)
     {
         SendPredictedMessage(new StationAiRadialMessage { Event = p });
     }

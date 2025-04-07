@@ -785,7 +785,7 @@
 - type: construction
   id: PressureControlledValve
   name: pneumatic valve
-  description: Valve controlled by pressure.
+  description: A bidirectional valve controlled by pressure. Opens if the output pipe is lower than the pressure of the control pipe by 101.325 kPa.
   graph: GasTrinary
   startNode: start
   targetNode: pneumaticvalve

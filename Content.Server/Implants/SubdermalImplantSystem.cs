@@ -6,6 +6,7 @@ using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Forensics;
+using Content.Shared.Forensics.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
@@ -22,6 +23,7 @@ using System.Numerics;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Server.IdentityManagement;
+using Content.Shared.DetailExaminable;
 using Content.Shared.Store.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
@@ -214,17 +216,12 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             var newProfile = HumanoidCharacterProfile.RandomWithSpecies(humanoid.Species);
             _humanoidAppearance.LoadProfile(ent, newProfile, humanoid);
             _metaData.SetEntityName(ent, newProfile.Name, raiseEvents: false); // raising events would update ID card, station record, etc.
-            if (TryComp<DnaComponent>(ent, out var dna))
-            {
-                dna.DNA = _forensicsSystem.GenerateDNA();
 
-                var ev = new GenerateDnaEvent { Owner = ent, DNA = dna.DNA };
-                RaiseLocalEvent(ent, ref ev);
-            }
-            if (TryComp<FingerprintComponent>(ent, out var fingerprint))
-            {
-                fingerprint.Fingerprint = _forensicsSystem.GenerateFingerprint();
-            }
+            // If the entity has the respecive components, then scramble the dna and fingerprint strings
+            _forensicsSystem.RandomizeDNA(ent);
+            _forensicsSystem.RandomizeFingerprint(ent);
+
+            RemComp<DetailExaminableComponent>(ent); // remove MRP+ custom description if one exists
             _identity.QueueIdentityUpdate(ent); // manually queue identity update since we don't raise the event
             _popup.PopupEntity(Loc.GetString("scramble-implant-activated-popup"), ent, ent);
         }
