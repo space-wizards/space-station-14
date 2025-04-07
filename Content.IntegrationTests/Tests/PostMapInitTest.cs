@@ -81,7 +81,7 @@ namespace Content.IntegrationTests.Tests
             "Elkridge",
             "Convex",
             "Relic",
-            "Tram"
+            "Tram2"
 
         };
 
