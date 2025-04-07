@@ -53,6 +53,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpToggleStatusMessage>(OnToggleStatusMessage);
 
             SubscribeLocalEvent<GasVolumePumpComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
+            SubscribeLocalEvent<GasVolumePumpComponent, MapInitEvent>(OnMapInit); // Frontier
         }
 
         private void OnInit(EntityUid uid, GasVolumePumpComponent pump, ComponentInit args)
@@ -218,6 +219,17 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
                     _deviceNetwork.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
                     return;
             }
+        }
+
+        // Frontier - Enable on map init
+        private void OnMapInit(EntityUid uid, GasVolumePumpComponent pump, MapInitEvent args)
+        {
+            if (!pump.StartEnabled)
+                return;
+            pump.Enabled = true;
+            UpdateAppearance(uid, pump);
+            DirtyUI(uid, pump);
+            _userInterfaceSystem.CloseUi(uid, GasVolumePumpUiKey.Key);
         }
     }
 }
