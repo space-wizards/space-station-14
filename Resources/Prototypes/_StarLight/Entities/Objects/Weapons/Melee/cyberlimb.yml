@@ -72,7 +72,7 @@
         Structural: 25
     soundHit:
       path: /Audio/Weapons/block_metal1.ogg
-    soundMiss:
+    soundNoDamage:
       path: /Audio/Weapons/punchmiss.ogg
     soundSwing:
       path: /Audio/Weapons/punchmiss.ogg
