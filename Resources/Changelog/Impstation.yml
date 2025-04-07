@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Tweaks all the mailrooms on Box, Fland, Oasis, and Xeno
-    type: Tweak
-  id: 983
-  time: '2025-01-22T03:53:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1445
 - author: DinnerCalzone
   changes:
   - message: The supermatter engine has been added to Bagel. Be sure to tune into
@@ -4094,3 +4087,11 @@
   id: 1482
   time: '2025-04-06T16:08:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2215
+- author: TheGrimbeeper
+  changes:
+  - message: Changelings and heretics should be able to open their respective stores
+      regardless of what species/object they are.
+    type: Fix
+  id: 1483
+  time: '2025-04-07T15:34:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2191
