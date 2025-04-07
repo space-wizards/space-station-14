@@ -8,6 +8,9 @@ namespace Content.Shared.Weapons.Ranged.Upgrades.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(GunUpgradeSystem))]
 public sealed partial class GunUpgradeFireRateComponent : Component
 {
+    /// <summary>
+    /// Multiplier for the speed of a gun's fire rate.
+    /// </summary>
     [DataField]
     public float Coefficient = 1;
 }

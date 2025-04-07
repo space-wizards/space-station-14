@@ -9,6 +9,9 @@ namespace Content.Shared.Weapons.Ranged.Upgrades.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(GunUpgradeSystem))]
 public sealed partial class GunUpgradeDamageComponent : Component
 {
+    /// <summary>
+    /// Additional damage added onto the projectile's base damage.
+    /// </summary>
     [DataField]
     public DamageSpecifier Damage = new();
 }

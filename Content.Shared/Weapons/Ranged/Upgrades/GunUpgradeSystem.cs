@@ -25,7 +25,7 @@ public sealed class GunUpgradeSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<UpgradeableGunComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<UpgradeableGunComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<UpgradeableGunComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
         SubscribeLocalEvent<UpgradeableGunComponent, ExaminedEvent>(OnExamine);
 
@@ -56,7 +56,7 @@ public sealed class GunUpgradeSystem : EntitySystem
         }
     }
 
-    private void OnStartup(Entity<UpgradeableGunComponent> ent, ref ComponentStartup args)
+    private void OnInit(Entity<UpgradeableGunComponent> ent, ref ComponentInit args)
     {
         _container.EnsureContainer<Container>(ent, ent.Comp.UpgradesContainerId);
     }
@@ -105,6 +105,9 @@ public sealed class GunUpgradeSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Gets the entities inside the gun's upgrade container.
+    /// </summary>
     public HashSet<Entity<GunUpgradeComponent>> GetCurrentUpgrades(Entity<UpgradeableGunComponent> ent)
     {
         if (!_container.TryGetContainer(ent, ent.Comp.UpgradesContainerId, out var container))
@@ -120,6 +123,9 @@ public sealed class GunUpgradeSystem : EntitySystem
         return upgrades;
     }
 
+    /// <summary>
+    /// Gets the tags of the upgrades currently applied.
+    /// </summary>
     public IEnumerable<ProtoId<TagPrototype>> GetCurrentUpgradeTags(Entity<UpgradeableGunComponent> ent)
     {
         foreach (var upgrade in GetCurrentUpgrades(ent))
