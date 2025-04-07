@@ -1,8 +1,8 @@
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Matchstick.Components;
+using Content.Shared.IgnitionSource.Components;
 
-namespace Content.Shared.Matchstick.EntitySystems;
+namespace Content.Shared.IgnitionSource.EntitySystems;
 
 public sealed class MatchboxSystem : EntitySystem
 {

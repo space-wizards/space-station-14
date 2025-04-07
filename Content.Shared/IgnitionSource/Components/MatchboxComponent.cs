@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Matchstick.Components;
+namespace Content.Shared.IgnitionSource.Components;
 
 /// <summary>
 ///     Component for entities that light matches when they interact. (E.g. striking the match on the matchbox)

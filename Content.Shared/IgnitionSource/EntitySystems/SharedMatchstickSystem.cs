@@ -1,13 +1,12 @@
-using Content.Shared.IgnitionSource;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Shared.Audio.Systems;
-using Content.Shared.Matchstick.Components;
+using Content.Shared.IgnitionSource.Components;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.Matchstick.EntitySystems;
+namespace Content.Shared.IgnitionSource.EntitySystems;
 
 public abstract class SharedMatchstickSystem : EntitySystem
 {

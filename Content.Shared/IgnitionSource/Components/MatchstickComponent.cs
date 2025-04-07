@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Matchstick.Components;
+namespace Content.Shared.IgnitionSource.Components;
 
 [NetworkedComponent, RegisterComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class MatchstickComponent : Component
