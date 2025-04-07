@@ -1,3 +1,4 @@
+using Content.Shared.IgnitionSource;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Smoking;
@@ -15,14 +16,15 @@ public abstract class SharedMatchstickSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedIgnitionSourceSystem _ignition = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<MatchstickComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<MatchstickComponent, IsHotEvent>(OnIsHot);
     }
 
+    // This is for something *else* lighting the matchstick, not the matchstick lighting something else.
     private void OnInteractUsing(Entity<MatchstickComponent> ent, ref InteractUsingEvent args)
     {
         if (args.Handled)
@@ -35,11 +37,6 @@ public abstract class SharedMatchstickSystem : EntitySystem
             return;
 
         args.Handled = TryIgnite(ent, args.User);
-    }
-
-    private void OnIsHot(Entity<MatchstickComponent> ent, ref IsHotEvent args)
-    {
-        args.IsHot |= ent.Comp.State == SmokableState.Lit;
     }
 
     /// <summary>
@@ -71,6 +68,8 @@ public abstract class SharedMatchstickSystem : EntitySystem
 
         _appearance.SetData(ent, SmokingVisuals.Smoking, newState);
 
+        _ignition.SetIgnited(ent.Owner, newState == SmokableState.Lit);
+
         switch (newState)
         {
             case SmokableState.Lit:
@@ -87,6 +86,8 @@ public abstract class SharedMatchstickSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
+        base.Update(frameTime);
+
         var query = EntityQueryEnumerator<MatchstickComponent>();
 
         while (query.MoveNext(out var uid, out var match))
@@ -94,14 +95,9 @@ public abstract class SharedMatchstickSystem : EntitySystem
             if (match.State != SmokableState.Lit)
                 continue;
 
-            CreateMatchstickHotspot((uid, match));
-
             // Check if the match has expired.
             if (_timing.CurTime > match.TimeMatchWillBurnOut)
                 SetState((uid, match), SmokableState.Burnt);
         }
     }
-
-    // Atmos isn't predicted on client so client will do nothing, server will do the actual event.
-    protected abstract void CreateMatchstickHotspot(Entity<MatchstickComponent> ent);
 }

@@ -21,12 +21,6 @@ public sealed partial class MatchstickComponent : Component
     public TimeSpan Duration = TimeSpan.FromSeconds(10);
 
     /// <summary>
-    ///     How hot the matchstick is when burning.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public float BurnTemperature = 400f;
-
-    /// <summary>
     ///     The time that the match will burn out. If null, that means the match is unlit.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
