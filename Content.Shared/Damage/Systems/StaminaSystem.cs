@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Runtime.Intrinsics.Arm;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.CCVar;
@@ -277,6 +276,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
         SetStaminaAlert(uid, component);
 
+        // Checking if the stamina damage has decreased to zero after exiting the stamcrit
         if (_afterCrit && oldDamage > component.StaminaDamage && component.StaminaDamage <= 0f)
         {
             _afterCrit = false; // Since the recovery from the crit has been completed, we are no longer 'afterCrit`
