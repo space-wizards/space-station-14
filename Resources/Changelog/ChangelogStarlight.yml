@@ -4482,4 +4482,12 @@ Entries:
   id: 621
   time: '2025-04-06T19:01:22.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/444
+- author: ScorchFollower
+  changes:
+  - message: Added new syndicate cybernetics "Mantis Blades". Fast moving blades that
+      extend from your arm. Time to chrome the fuck up.
+    type: Add
+  id: 622
+  time: '2025-04-07T12:26:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/432
 
