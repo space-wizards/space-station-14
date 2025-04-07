@@ -1,6 +1,6 @@
 - type: entity
   id: BaseCartridgeHeavyRifle
-  name: cartridge (.20 rifle)
+  name: cartridge (.32 rifle)
   parent: [ BaseCartridge, BaseSecurityContraband ]
   abstract: true
   components:
@@ -19,6 +19,14 @@
   - type: SpentAmmoVisuals
   - type: StaticPrice
     price: 10
+
+- type: entity
+  id: CartridgeHeavyRifle
+  name: cartridge (.32 rifle)
+  parent: BaseCartridgeHeavyRifle
+  components:
+  - type: CartridgeAmmo
+    proto: BulletHeavyRifle
 
 - type: entity
   id: CartridgeMinigun
