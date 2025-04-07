@@ -36,7 +36,6 @@
     sprite: Objects/Specific/Medical/implanter.rsi
     state: implanter0
   content:
-  - StorageImplanter
   - DnaScramblerImplanter
   - ChemistryBottleEphedrine
   - SoapOmega
