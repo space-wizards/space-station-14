@@ -117,7 +117,7 @@
   parent: PosterBase
   id: PosterContrabandGreyTide
   name: "Grey Tide"
-  description: "A rebellious poster symbolizing passenger solidarity."
+  description: "A rebellious poster symbolizing assistant solidarity."
   components:
   - type: Sprite
     state: poster8_contraband

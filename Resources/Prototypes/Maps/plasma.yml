@@ -64,4 +64,4 @@
             SalvageSpecialist: [ 4, 4 ]
             CargoTechnician: [ 4, 6 ]
             #civilian - the tiders yearn for the mines
-            Passenger: [ -1, -1 ]
+            Assistant: [ -1, -1 ]
