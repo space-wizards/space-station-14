@@ -70,7 +70,7 @@
     - type: Sprite
       sprite: _Starlight/Clothing/Head/Hardsuits/mercenaryhelm.rsi
     - type: Clothing
-      sprite: _Starlight/Clothing/Head/Hardsuits/mercenaryhelm.rsi
+      sprite: _Starlight/Clothing/Head/Hardsuits/mercenary.rsi
     - type: PressureProtection
       highPressureMultiplier: 0.45
       lowPressureMultiplier: 10000
