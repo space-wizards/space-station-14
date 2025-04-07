@@ -4490,4 +4490,11 @@ Entries:
   id: 622
   time: '2025-04-07T12:26:04.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/432
+- author: STARLIGHT TEAM
+  changes:
+  - message: Passenger removed.
+    type: Remove
+  id: 623
+  time: '2025-04-07T13:05:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/453
 
