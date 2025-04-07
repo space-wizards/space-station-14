@@ -8,7 +8,8 @@
 [net]
 # The ticks per second the server runs at.
 # Lower values mean less load on the server, but also less responsiveness.
-# Higher values mean more load, but also more responsiveness.
+# Higher values mean more load, but also more responsiveness. 
+# 30 is what most servers on the hub use and going higher has minimal effect.
 tickrate = 30
 # The port the server will bind to. 1212 is the default port for Space Station 14.
 port = 1212
@@ -26,11 +27,11 @@ hostname = "MyServer"
 desc = "Just another server, don't mind me!"
 # The maximum number of players that can connect to the server. (Exluding admins)
 soft_max_players = 30
-# Controlers the lobby timer in seconds.
+# Controls the lobby timer in seconds.
 lobbyduration = 150
 # Should roles be restricted based on time?
 role_timers = true
-# Check connecting player ip against IPIntel (aka stop VPN/Proxy connections). Useful for hosts.
+# Check connecting player ip against the IPIntel API (aka stop VPN/Proxy connections). Useful for hosts.
 # Read more here https://getipintel.net/
 ipintel_enabled = false
 # Required contact email to use IPIntel.
@@ -39,7 +40,7 @@ ipintel_contact_email = ""
 ipintel_bad_rating = 0.95
 
 [ic]
-# Allows flavor text (character descriptions)
+# Allows visibility and editing of flavor text (character descriptions)
 flavor_text = false
 
 [admin]
@@ -51,10 +52,10 @@ see_own_notes = false
 id = "unknown_server_id"
 
 [events]
-# Controls if the game should run station events
+# Controls if the game should run station events. (Meteors, Sleeper Syndicates ETC)
 eneabled = true
 # Should admins count towards the max players count?
-# Example: 9 players, 2 admins. Server list shows 11/10 players. But those 2 admins are subtracted from the max players.
+# Explanation: 9 players, 2 admins. Server list shows 11/10 players. But those 2 admins are subtracted from the max players.
 # So someone who is not an admin can join, since technically the server is at 9/10 players.
 admins_count_for_max_players = false
 # Should admins be displayed on the player count? Just subtracts active admins from the player count. This is hub rule safe.
@@ -93,13 +94,13 @@ advertise = false
 # Comma-separated list of tags, useful for categorizing your server. For a list of standard tags, see the link below.
 # https://docs.spacestation14.com/en/robust-toolbox/server-http-api.html?highlight=http#standard-tags
 tags = ""
+# Comma-separated list of URLs of hub servers to advertise to.
+hub_urls = "https://hub.spacestation14.com/"
 # URL of your server. Fill this in if you have a domain name,
 # want to use HTTPS (with a reverse proxy), or other advanced scenarios.
 # Must be in the form of an ss14:// or ss14s:// URI pointing to the status API.
 # Example: ss14://mydomain.com
 server_url = ""
-# Comma-separated list of URLs of hub servers to advertise to.
-hub_urls = "https://hub.spacestation14.com/"
 
 [status]
 # This is the address of the SS14 server as the launcher uses it.
