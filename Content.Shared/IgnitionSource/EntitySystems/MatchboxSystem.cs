@@ -6,7 +6,7 @@ namespace Content.Shared.IgnitionSource.EntitySystems;
 
 public sealed class MatchboxSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMatchstickSystem _match = default!;
+    [Dependency] private readonly MatchstickSystem _match = default!;
 
     public override void Initialize()
     {

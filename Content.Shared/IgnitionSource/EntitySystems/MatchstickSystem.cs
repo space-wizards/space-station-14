@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.IgnitionSource.EntitySystems;
 
-public abstract class SharedMatchstickSystem : EntitySystem
+public sealed partial class MatchstickSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
