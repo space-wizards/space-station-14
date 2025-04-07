@@ -1220,6 +1220,51 @@
         amount: 0.15
 
 - type: reagent
+  id: JackRose
+  name: reagent-name-jack-rose
+  parent: BaseAlcohol
+  desc: reagent-desc-jack-rose
+  physicalDesc: reagent-physical-desc-tart
+  flavor: jackrose
+  color: "#f53b3b"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/jackrose.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: JungleBird
+  name: reagent-name-jungle-bird
+  parent: BaseAlcohol
+  desc: reagent-desc-jungle-bird
+  physicalDesc: reagent-physical-desc-tropical
+  flavor: junglebird
+  color: "#f27c3d"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/junglebird.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: Kalimotxo
+  name: reagent-name-kalimotxo
+  parent: BaseAlcohol
+  desc: reagent-desc-kalimotxo
+  physicalDesc: reagent-physical-desc-bubbly
+  flavor: kalimotxo
+  color: "#360606"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/kalimotxo.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
   id: LongIslandIcedTea
   name: reagent-name-long-island-iced-tea
   parent: BaseAlcohol
@@ -1341,21 +1386,6 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
   fizziness: 0.4
-
-- type: reagent
-  id: JackRose
-  name: reagent-name-jack-rose
-  parent: BaseAlcohol
-  desc: reagent-desc-jack-rose
-  physicalDesc: reagent-physical-desc-tart
-  flavor: jackrose
-  color: "#f53b3b"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/jackrose.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 4
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
 
 - type: reagent
   id: Mojito
@@ -1533,36 +1563,6 @@
         amount: 0.2
 
 - type: reagent
-  id: JungleBird
-  name: reagent-name-jungle-bird
-  parent: BaseAlcohol
-  desc: reagent-desc-jungle-bird
-  physicalDesc: reagent-physical-desc-tropical
-  flavor: junglebird
-  color: "#f27c3d"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/junglebird.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 4
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
-
-- type: reagent
-  id: Kalimotxo
-  name: reagent-name-kalimotxo
-  parent: BaseAlcohol
-  desc: reagent-desc-kalimotxo
-  physicalDesc: reagent-physical-desc-bubbly
-  flavor: kalimotxo
-  color: "#360606"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/kalimotxo.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 5
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
-
-- type: reagent
   id: Radler
   name: reagent-name-radler
   parent: BaseAlcohol
@@ -1574,21 +1574,6 @@
     sprite: Objects/Consumable/Drinks/radler.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 5
-  metamorphicFillBaseName: fill-
-  metamorphicChangeColor: false
-
-- type: reagent
-  id: Vampiro
-  name: reagent-name-vampiro
-  parent: BaseAlcohol
-  desc: reagent-desc-vampiro
-  physicalDesc: reagent-physical-desc-spicy
-  flavor: vampiro
-  color: "#b51b1b"
-  metamorphicSprite:
-    sprite: Objects/Consumable/Drinks/vampiro.rsi
-    state: icon_empty
-  metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: false
 
@@ -1817,6 +1802,21 @@
   color: "#665c00"
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/toxinsspecialglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+
+- type: reagent
+  id: Vampiro
+  name: reagent-name-vampiro
+  parent: BaseAlcohol
+  desc: reagent-desc-vampiro
+  physicalDesc: reagent-physical-desc-spicy
+  flavor: vampiro
+  color: "#b51b1b"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/vampiro.rsi
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-

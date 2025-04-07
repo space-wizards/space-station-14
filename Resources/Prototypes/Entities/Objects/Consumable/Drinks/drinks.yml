@@ -839,22 +839,6 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkErikaSurprise
-  suffix: erika surprise
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: ErikaSurprise
-          Quantity: 30
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/erikasurprise.rsi
-    state: icon
-
-- type: entity
-  parent: DrinkGlass
   id: DrinkElectricSharkGlass
   suffix: electric shark
   components:
@@ -867,6 +851,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/electricshark.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkErikaSurprise
+  suffix: erika surprise
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: ErikaSurprise
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/erikasurprise.rsi
     state: icon
 
 - type: entity
@@ -1307,22 +1307,6 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkVampiroGlass
-  suffix: vampiro
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Vampiro
-          Quantity: 30
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/vampiro.rsi
-    state: icon
-
-- type: entity
-  parent: DrinkGlass
   id: DrinkKiraSpecial
   suffix: kira special
   components:
@@ -1337,21 +1321,6 @@
     sprite: Objects/Consumable/Drinks/kiraspecial.rsi
     state: icon
 
-- type: entity
-  parent: DrinkGlass
-  id: DrinkTortugaGlass
-  suffix: tortuga
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Tortuga
-          Quantity: 30
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/tortuga.rsi
-    state: icon
 
 - type: entity
   parent: DrinkGlass
@@ -1367,22 +1336,6 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
-    state: icon
-
-- type: entity
-  parent: DrinkGlass
-  id: DrinkRadlerGlass
-  suffix: radler
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Radler
-          Quantity: 30
-  - type: Icon
-    sprite: Objects/Consumable/Drinks/radler.rsi
     state: icon
 
 - type: entity
@@ -1757,6 +1710,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/glass_light_yellow.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkRadlerGlass
+  suffix: radler
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Radler
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/radler.rsi
     state: icon
 
 - type: entity
@@ -2239,6 +2208,22 @@
 
 - type: entity
   parent: DrinkGlass
+  id: DrinkTortugaGlass
+  suffix: tortuga
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Tortuga
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/tortuga.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
   id: DrinkToxinsSpecialGlass
   suffix: toxins special
   components:
@@ -2251,6 +2236,22 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/toxinsspecialglass.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkVampiroGlass
+  suffix: vampiro
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Vampiro
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/vampiro.rsi
     state: icon
 
 - type: entity

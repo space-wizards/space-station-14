@@ -21,7 +21,6 @@
       - DrinkAndalusia
       - DrinkAntifreeze
       - DrinkArnoldPalmer
-      - DrinkTortugaGlass
       - DrinkB52Glass
       - DrinkBahamaMama
       - DrinkBananaHonkGlass
@@ -34,6 +33,7 @@
       - DrinkBloodyMaryGlass
       - DrinkBooger
       - DrinkBraveBullGlass
+      - DrinkBronxGlass
       - BudgetInsulsDrinkGlass
       - DrinkCarrotJuice
       - DrinkCoconutRum
@@ -102,9 +102,9 @@
       - DrinkSyndicatebomb
       - DrinkTequilaSunriseGlass
       - DrinkThreeMileIslandGlass
+      - DrinkTortugaGlass
       - DrinkToxinsSpecialGlass
       - DrinkVampiroGlass
-      - DrinkBronxGlass
       - DrinkVodkaMartiniGlass
       - DrinkVodkaRedBool
       - DrinkVodkaTonicGlass
