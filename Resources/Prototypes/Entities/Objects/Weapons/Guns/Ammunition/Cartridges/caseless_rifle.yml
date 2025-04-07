@@ -25,6 +25,7 @@
   id: CartridgeCaselessRifle
   name: cartridge (.25 caseless)
   parent: BaseCartridgeCaselessRifle
+  description: .25x.65 inches. A small caliber utilizing caseless technology, omitting conventional brass casing in favor of hardened propellant. It leaves no evidence but the bullet itself. Standard kinetic ammunition is common and useful in most situations.
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRifle
@@ -33,6 +34,7 @@
   id: CartridgeCaselessRiflePractice
   name: cartridge (.25 caseless practice)
   parent: BaseCartridgeCaselessRifle
+  description: .25x.65 inches. A small caliber utilizing caseless technology, omitting conventional brass casing in favor of hardened propellant. It leaves no evidence but the bullet itself. Chalk ammunition is generally non-harmful, used for practice.
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRiflePractice
