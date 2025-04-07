@@ -120,8 +120,9 @@
     - type: Storage
       grid:
       - 0,0,0,1
-      - 2,0,2,1
-      - 4,0,4,1
+      - 1,0,1,0
+      - 1,2,1,2
+      - 2,1,2,2
       blacklist:
         components:
         - Storage
@@ -370,3 +371,13 @@
   - type: RadioImplant
     radioChannels:
     - CentCom
+
+- type: entity
+  parent: DeathRattleImplant
+  id: DeathRattleImplantCentcomm
+  name: centcomm death rattle implant
+  description: This implant will inform the Centcomm radio channel should the user fall into critical condition or die.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Rattle
+    radioChannel: CentCom
