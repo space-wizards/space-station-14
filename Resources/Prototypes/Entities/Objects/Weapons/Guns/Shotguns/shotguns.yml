@@ -5,6 +5,18 @@
   description: A rooty tooty point and shooty.
   abstract: true
   components:
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 1
+    selfDamage:
+      types:
+        # axes are kinda like sharp hammers, you know?
+        Blunt: 10
+        Heat: 10
+    items:
+      - id: FlashlightSeclite
+        launchAngle: 0
+      - id: WeaponDisabler
+        launchAngle: 90
   - type: RestrictByUserTag
     doestContain:
     - Abductor
