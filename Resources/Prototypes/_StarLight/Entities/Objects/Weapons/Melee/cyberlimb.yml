@@ -81,6 +81,5 @@
     speedModifier: 2.0
     pryPowered: true
     useSound: /Audio/Items/jaws_pry.ogg
-  - type: Reflect
     reflectProb: 0.2
   - type: Sharp
