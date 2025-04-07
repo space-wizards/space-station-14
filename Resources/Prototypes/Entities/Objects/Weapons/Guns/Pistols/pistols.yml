@@ -210,8 +210,8 @@
 - type: entity
   name: N1984
   parent: [BaseWeaponPistol, BaseSecurityContraband]
-  id: WeaponPistolN1984 # the spaces in description are for formatting.
-  description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber.
+  id: WeaponPistolN1984
+  description: An exceptionally powerful ‘hand cannon’ manufactured by a short-lived Nanotrasen subsidiary. It was passed over by most buyers due its hefty price and even heftier recoil, but has become something of a status symbol for NT officials. Chambered in .45, the lord’s caliber. It feeds from .45 pistol magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
