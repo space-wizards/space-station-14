@@ -72,7 +72,7 @@
   name: viper
   parent: [BaseWeaponPistol, BaseSyndicateContraband]
   id: WeaponPistolViper
-  description: A pistol manufactured by Donk Co. and capable of semi or fully automatic fire, this is a common sidearm for any soldier who fights under the three serpents. Feeds from .35 pistol magazines.
+  description: Originally a common M26 pistol, the Viper has been modified with a new receiver, capable of semi or fully automatic fire. This is a common sidearm for any soldier who fights under the three serpents. Feeds from .35 pistol magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/viper.rsi
