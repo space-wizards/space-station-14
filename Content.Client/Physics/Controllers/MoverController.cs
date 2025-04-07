@@ -1,4 +1,4 @@
-using Content.Shared.Alert;
+using Content.Client.Alerts;
 using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Components;
@@ -17,7 +17,7 @@ public sealed class MoverController : SharedMoverController
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly ClientAlertsSystem _alerts = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public override void Initialize()
@@ -147,7 +147,7 @@ public sealed class MoverController : SharedMoverController
         base.SetSprinting(entity, subTick, walking);
 
         if (walking && _cfg.GetCVar(CCVars.ToggleWalk))
-            _alerts.ShowAlert(entity, WalkingAlert, showCooldown: false, autoRemove: false);
+            _alerts.ShowClientAlert(entity.Owner, WalkingAlert, showCooldown: false, autoRemove: false);
         else
             _alerts.ClearAlert(entity, WalkingAlert);
     }

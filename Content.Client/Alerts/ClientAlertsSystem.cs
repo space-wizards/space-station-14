@@ -115,4 +115,31 @@ public sealed class ClientAlertsSystem : AlertsSystem
     {
         RaisePredictiveEvent(new ClickAlertEvent(alertType));
     }
+
+    /// <summary>
+    /// Show an alert that will only be visible on the client.
+    /// </summary>
+    public void ShowClientAlert(
+        Entity<AlertsComponent?> entity,
+        ProtoId<AlertPrototype> alertType,
+        short? severity = null,
+        (TimeSpan, TimeSpan)? cooldown = null,
+        bool autoRemove = false,
+        bool showCooldown = true)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+
+        ShowAlert(entity, alertType, severity, cooldown, autoRemove, showCooldown);
+
+        if (!TryGet(alertType, out var alert))
+            return;
+
+        if (!entity.Comp.Alerts.TryGetValue(alert.AlertKey, out var newAlertState))
+            return;
+
+        newAlertState.ClientOnly = true;
+
+        entity.Comp.Alerts[alert.AlertKey] = newAlertState;
+    }
 }
