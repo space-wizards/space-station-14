@@ -82,5 +82,5 @@
     pryPowered: true
     useSound: /Audio/Items/jaws_pry.ogg
   - type: Reflect
-    reflectProb: 0.8
+    reflectProb: 0.2
   - type: Sharp
