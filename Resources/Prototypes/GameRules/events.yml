@@ -83,6 +83,7 @@
         volume: -2
     weight: 8
     duration: 35
+    minimumPlayers: 10 # DS14
   - type: AnomalySpawnRule
 
 - type: entity
@@ -498,7 +499,7 @@
     startAudio:
       path: /Audio/_DeadSpace/Announcements/lifesigns.ogg # DS14-Announcements
       params:
-        volume: -2    
+        volume: -2
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
