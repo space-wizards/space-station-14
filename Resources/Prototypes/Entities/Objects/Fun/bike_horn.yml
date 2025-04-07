@@ -201,7 +201,7 @@
   parent: BikeHorn
   id: PushHorn
   name: push horn
-  description: This powerful bikehorn is sure to blast their frowns away.
+  description: This powerful bikehorn is sure to blast frowns away.
   components:
   - type: Sprite
     sprite: Objects/Fun/push_horn.rsi
@@ -216,7 +216,7 @@
     delay: 6
   - type: UseDelayOnMeleeHit
   - type: RepulseAttract
-    speed: 25
+    speed: 30
     range: 2
     whitelist:
       components:
@@ -224,3 +224,9 @@
       - Item
   - type: PushPullOnTrigger
   - type: TriggerOnUse
+  - type: SpawnOnTrigger
+    proto: EffectGravityPulse
+  - type: EmitSoundOnUse
+    handle: false
+  - type: EmitSoundOnActivate
+    handle: false

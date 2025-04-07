@@ -13,7 +13,7 @@ public sealed class PushPullOnTriggerSystem : EntitySystem
         SubscribeLocalEvent<PushPullOnTriggerComponent, TriggerEvent>(OnTrigger);
     }
 
-    private void OnTrigger(Entity<PushPullOnTriggerComponent> ent, ref TriggerEvent args)  //why the heck is this not triggerin :c
+    private void OnTrigger(Entity<PushPullOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (!TryComp<RepulseAttractComponent>(ent, out var repulseAttract))
             return;
