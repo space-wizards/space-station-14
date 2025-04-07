@@ -14,7 +14,7 @@ Hold [color=yellow][bold][keybind="Walk"][/bold][/color] to walk slowly and prev
 You can [color=cyan]pull[/color] entities, including players.
 To start pulling, click [color=yellow][bold][keybind="TryPullObject"][/bold][/color] on a movable entity.
 While pulling, you can push the entity to your cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
-Press [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] to let go.
+To [color=cyan]let go[/color] of an object, press [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] or just use [color=yellow][bold][keybind="TryPullObject"][/bold][/color] on it again.
 
 You may find yourself in a situation with [color=#EB2D3A][bold]low gravity[/bold][/color].
 You'll be able to control movement direction as long as you're within reach of any structure.
