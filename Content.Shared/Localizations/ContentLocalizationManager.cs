@@ -25,7 +25,7 @@ namespace Content.Shared.Localizations
 
         public void Initialize()
         {
-            var culture = new CultureInfo(_cfg.GetCVar(CCVars.Language));
+            var culture = new CultureInfo(_cfg.GetCVar(CCVars.ServerLanguage));
 
             _loc.LoadCulture(culture);
             _loc.AddFunction(culture, "PRESSURE", FormatPressure);
@@ -52,7 +52,7 @@ namespace Content.Shared.Localizations
             _loc.AddFunction(cultureEn, "MAKEPLURAL", FormatMakePlural);
             _loc.AddFunction(cultureEn, "MANY", FormatMany);
 
-            _cfg.OnValueChanged(CCVars.Language, OnCultureUpdate, true);
+            _cfg.OnValueChanged(CCVars.ServerLanguage, OnCultureUpdate, true);
         }
 
         private void OnCultureUpdate(string value)
@@ -82,7 +82,7 @@ namespace Content.Shared.Localizations
         {
             var number = ((LocValueNumber) args.Args[0]).Value * 100;
             var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
-            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(_cfg.GetCVar(CCVars.Language))).Clone();
+            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(_cfg.GetCVar(CCVars.ServerLanguage))).Clone();
             formatter.NumberDecimalDigits = maxDecimals;
             return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator)) + "%");
         }
@@ -91,7 +91,7 @@ namespace Content.Shared.Localizations
         {
             var number = ((LocValueNumber) args.Args[0]).Value;
             var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
-            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(_cfg.GetCVar(CCVars.Language))).Clone();
+            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(_cfg.GetCVar(CCVars.ServerLanguage))).Clone();
             formatter.NumberDecimalDigits = maxDecimals;
             return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd(char.Parse(formatter.NumberDecimalSeparator)));
         }
