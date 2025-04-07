@@ -79,7 +79,8 @@ If you're ever unsure about any entity, whether it's an object or a mob, you can
 This opens a window displaying its name, a brief description, relevant details, and sometimes a link to the guidebook seen as an icon with a question mark.
 
 ## Drag and drop
-"Using" mobs (mobile entities such as players) requires a unique type of interaction:
+The action of "using" mobs incorporates a unique type of interaction: pressing and holding [color=yellow][bold][keybind="Use"][/bold][/color].
+Not to be confused with [italic]pulling[/italic].
 
 - Drag a mob onto a chair, a bed or objects like the medical scanner to place them onto it.
  
