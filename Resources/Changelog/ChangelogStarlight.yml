@@ -4497,4 +4497,11 @@ Entries:
   id: 623
   time: '2025-04-07T13:05:39.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/453
+- author: BORTBORTBORT
+  changes:
+  - message: Nerf Mantis blades Reflect to 20%
+    type: Tweak
+  id: 624
+  time: '2025-04-07T17:27:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/456
 
