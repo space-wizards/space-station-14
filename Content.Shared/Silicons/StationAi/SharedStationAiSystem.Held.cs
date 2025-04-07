@@ -181,12 +181,6 @@ public abstract partial class SharedStationAiSystem
                 }
                 else
                 {
-                    // no need to show menu if device is not powered.
-                    if (!PowerReceiver.IsPowered(ent.Owner))
-                    {
-                        ShowDeviceNotRespondingPopup(user);
-                        return;
-                    }
                     _uiSystem.OpenUi(ent.Owner, AiUi.Key, user);
                 }
             }
