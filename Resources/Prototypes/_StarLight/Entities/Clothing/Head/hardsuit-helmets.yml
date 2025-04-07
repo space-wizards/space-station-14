@@ -68,7 +68,7 @@
   name: mercenary hardsuit helmet
   components:
     - type: Sprite
-      sprite: _Starlight/Clothing/Head/Hardsuits/mercenaryhelm.rsi
+      sprite: _Starlight/Clothing/Head/Hardsuits/mercenary.rsi
     - type: Clothing
       sprite: _Starlight/Clothing/Head/Hardsuits/mercenary.rsi
     - type: PressureProtection
