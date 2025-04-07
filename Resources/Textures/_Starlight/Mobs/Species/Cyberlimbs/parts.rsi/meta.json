@@ -211,6 +211,22 @@
     {
       "name": "r_bulwark_arm_TOOLS",
       "directions": 4
+    },
+    {
+      "name": "l_mantis_blade_arm",
+      "directions": 4
+    },
+    {
+      "name": "r_mantis_blade_arm",
+      "directions": 4
+    },
+    {
+      "name": "l_mantis_blade_arm_BLADE",
+      "directions": 4
+    },
+    {
+      "name": "r_mantis_blade_arm_BLADE",
+      "directions": 4
     }
   ]
 }

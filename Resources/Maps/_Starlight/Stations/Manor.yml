@@ -169458,7 +169458,7 @@ entities:
     - type: Transform
       pos: 13.5,46.5
       parent: 2
-- proto: SpawnPointPassenger
+- proto: SpawnPointAssistant
   entities:
   - uid: 25413
     components:
@@ -172325,7 +172325,7 @@ entities:
       pos: -6.5,19.5
       parent: 2
     - type: SurveillanceCamera
-      id: Greasy Passenger Kitchen
+      id: Greasy Assistant Kitchen
   - uid: 25815
     components:
     - type: Transform
