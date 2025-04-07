@@ -1,5 +1,8 @@
 namespace Content.Shared.Inventory.ShitRockable.Components;
 
+/// <summary>
+/// Items with this component will recieve damage and may be thrown with prob Chance when their wearer is hit with damage according to <see cref="ShitRockableComponent">.
+/// </summary>
 [RegisterComponent]
 public sealed partial class RockableItemComponent : Component
 {
