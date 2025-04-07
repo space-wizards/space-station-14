@@ -2,8 +2,8 @@
   id: Cluster
   mapName: 'Cluster Station'
   mapPath: /Maps/cluster.yml
-  minPlayers: 10
-  maxPlayers: 35
+  minPlayers: 15
+  maxPlayers: 30
   stations:
     Cluster:
       stationProto: StandardNanotrasenStation
