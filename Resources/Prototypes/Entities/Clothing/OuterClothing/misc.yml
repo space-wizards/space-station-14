@@ -237,7 +237,7 @@
 
 - type: entity
   parent: ClothingOuterBase
-  id: ClothingOuterSuitWizardFake
+  id: ClothingOuterWizardFake
   name: fake wizard robes
   description: Covered in glittery stars and mystery stains. Instantly boosts your arcane fashion sense.
   components:
