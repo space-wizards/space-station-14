@@ -31,17 +31,17 @@ public sealed class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : 
             new RadialMenuActionOption<OperatingMode>(HandleRadialMenuClick, OperatingMode.OpenClose)
             {
                 Sprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Structures/Doors/Airlocks/Standard/basic.rsi"), "assembly"),
-                ToolTip = "open/close"
+                ToolTip = Loc.GetString("door-remote-open-close-text")
             },
             new RadialMenuActionOption<OperatingMode>(HandleRadialMenuClick, OperatingMode.ToggleBolts)
             {
                 Sprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_ai.rsi"), "bolt_door"),
-                ToolTip = "bolt"
+                ToolTip = Loc.GetString("door-remote-toggle-bolt-text")
             },
             new RadialMenuActionOption<OperatingMode>(HandleRadialMenuClick, OperatingMode.ToggleEmergencyAccess)
             {
                 Sprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_ai.rsi"), "emergency_on"),
-                ToolTip = "emergency access"
+                ToolTip = Loc.GetString("door-remote-emergency-access-text")
             },
         };
     }
