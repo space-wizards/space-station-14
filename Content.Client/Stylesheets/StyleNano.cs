@@ -67,9 +67,6 @@ namespace Content.Client.Stylesheets
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
         public const string StyleClassStorageButton = "storageButton";
         public const string StyleClassInset = "Inset";
-        public const string StyleClassInsetOpenLeft = "InsetOpenLeft";
-        public const string StyleClassInsetOpenRight = "InsetOpenRight";
-        public const string StyleClassInsetSquare = "InsetSquare";
 
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
