@@ -177,6 +177,19 @@
   - type: GuideHelp
     guides:
     - MinorAntagonists
+  - type: Inventory # imp
+    templateId: dragon
+  - type: InventorySlots # imp
+  - type: Loadout # imp
+    prototypes:
+      - StartingGearDragonPinpointer
+  - type: Strippable # imp
+  - type: UserInterface # imp
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: Hands # imp. don't worry, they don't actually have hands.
+  - type: ComplexInteraction # imp. necessary for them to be able to use the pinpointer. This doesn't do much else for them, except I think they can now open crates. 
 
 - type: entity
   categories: [ HideSpawnMenu ]
