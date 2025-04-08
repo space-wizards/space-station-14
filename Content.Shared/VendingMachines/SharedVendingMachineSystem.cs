@@ -242,7 +242,9 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             return;
 
         entity.Comp.DenyEnd = Timing.CurTime + entity.Comp.DenyDelay;
-        Audio.PlayPredicted(entity.Comp.SoundDeny, entity.Owner, user, AudioParams.Default.WithVolume(-2f));
+        var audioParams = entity.Comp.SoundDeny?.Params ?? AudioParams.Default;
+        audioParams = audioParams.AddVolume(-2f);
+        Audio.PlayPredicted(entity.Comp.SoundDeny, entity.Owner, user, audioParams);
         TryUpdateVisualState(entity);
         Dirty(entity);
     }

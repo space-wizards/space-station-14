@@ -49,7 +49,7 @@ public sealed class PlayGlobalSoundCommand : IConsoleCommand
                 // Try to specify a new volume to play it at.
                 if (int.TryParse(args[1], out var volume))
                 {
-                    audio = audio.WithVolume(volume);
+                    audio = audio.AddVolume(volume);
                     volumeOffset = 1;
                 }
                 else

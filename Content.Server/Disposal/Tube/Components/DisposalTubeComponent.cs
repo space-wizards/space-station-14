@@ -16,7 +16,7 @@ public sealed partial class DisposalTubeComponent : Component
     public bool Connected;
 
     [DataField]
-    public SoundSpecifier ClangSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg", AudioParams.Default.WithVolume(-5f));
+    public SoundSpecifier ClangSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg", AudioParams.Default.AddVolume(-5f));
 
     /// <summary>
     ///     Container of entities that are currently inside this tube

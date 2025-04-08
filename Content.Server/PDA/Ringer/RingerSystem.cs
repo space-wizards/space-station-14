@@ -221,7 +221,7 @@ namespace Content.Server.PDA.Ringer
                     Filter.Empty().AddInRange(_transform.GetMapCoordinates(uid, ringerXform), ringer.Range),
                     uid,
                     true,
-                    AudioParams.Default.WithMaxDistance(ringer.Range).WithVolume(ringer.Volume)
+                    AudioParams.Default.WithMaxDistance(ringer.Range).AddVolume(ringer.Volume)
                 );
 
                 ringer.NoteCount++;

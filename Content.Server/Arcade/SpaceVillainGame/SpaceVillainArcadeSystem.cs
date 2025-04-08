@@ -88,7 +88,9 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
                     _speakOnUIClosed.TrySetFlag((uid, speakComponent));
                 break;
             case SharedSpaceVillainArcadeComponent.PlayerAction.NewGame:
-                _audioSystem.PlayPvs(component.NewGameSound, uid, AudioParams.Default.WithVolume(-4f));
+                var audioParams = component.NewGameSound?.Params ?? AudioParams.Default;
+                audioParams = audioParams.AddVolume(-4f);
+                _audioSystem.PlayPvs(component.NewGameSound, uid, audioParams);
 
                 component.Game = new SpaceVillainGame(uid, component, this);
                 _uiSystem.ServerSendUiMessage(uid, SharedSpaceVillainArcadeComponent.SpaceVillainArcadeUiKey.Key, component.Game.GenerateMetaDataMessage());

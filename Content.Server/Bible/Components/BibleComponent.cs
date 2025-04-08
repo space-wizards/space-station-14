@@ -16,7 +16,7 @@ namespace Content.Server.Bible.Components
         /// Sound to play when bible hits somebody.
         /// </summary>
         [DataField]
-        public SoundSpecifier BibleHitSound = new SoundCollectionSpecifier(DefaultBibleHit, AudioParams.Default.WithVolume(-4f));
+        public SoundSpecifier BibleHitSound = new SoundCollectionSpecifier(DefaultBibleHit, AudioParams.Default.AddVolume(-4f));
 
         /// <summary>
         /// Damage that will be healed on a success
