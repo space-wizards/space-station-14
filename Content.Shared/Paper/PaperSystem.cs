@@ -222,10 +222,17 @@ public sealed class PaperSystem : EntitySystem
             return;
         }
         var dataset = _protoMan.Index(ent.Comp.Dataset);
+        // Intentionally not using the Pick overload that directly takes a LocalizedDataset,
+        // because we want to get multiple attributes from the same pick.
         var pick = _random.Pick(dataset.Values);
+
+        // Name
         _metaSystem.SetEntityName(ent, Loc.GetString(pick));
+        // Description
         _metaSystem.SetEntityDescription(ent, Loc.GetString($"{pick}.desc"));
+        // Content
         SetContent((ent, paperComp), Loc.GetString($"{pick}.content"));
+
         // Our work here is done
         RemCompDeferred(ent, ent.Comp);
     }

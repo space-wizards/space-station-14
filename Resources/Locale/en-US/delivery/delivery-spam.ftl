@@ -1,6 +1,8 @@
 # All spelling mistakes and broken english are intentional!
 # I hate saving paper contents in ftl files
 
+## Headers and reusable elements
+
 -delivery-header-nanotrasen = [color=blue]
                                                                       ╔══════════════════╗
                                                                       ║███░███░░░░██░░░░░║
@@ -28,6 +30,7 @@
                                                                           ║░░░░░████████░░░░░║
                                                                           ╚══════════════════╝[/color]
 
+## Spam letters
 
 delivery-spam-1 =   Robust Toolbox - Special Offer!
     .desc =         An advertisement for robust toolboxes.
