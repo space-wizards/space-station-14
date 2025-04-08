@@ -42,17 +42,16 @@ De-equip items by clicking on them.
 
 You [bold]can't[/bold] swap items directly while already holding something. You need an empty hand to take any item.
 
-You can quickly access equipped bags and belts using the [color=yellow][bold][keybind="OpenBackpack"][/bold][/color] and [color=yellow][bold][keybind="OpenBelt"][/bold][/color] hotkeys, respectively.
+You can quickly access your equipped bag and belt using the [color=yellow][bold][keybind="OpenBackpack"][/bold][/color] and [color=yellow][bold][keybind="OpenBelt"][/bold][/color] hotkeys, respectively.
 Alternatively, you can open them by using [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] on their slots or by clicking the mini icons in the [bold]bottom right[/bold] of their icons.
+
+[color=yellow][bold][keybind="SmartEquipBackpack"][/bold][/color] stores the item from your active hand into your bag, or if your hand is empty, takes the most recent item from the bag into your hand.
+[color=yellow][bold][keybind="SmartEquipBelt"][/bold][/color] does the same with your belt, making tool access faster.!
 
 You can [color=cyan]drag[/color] items from one spot to another [bold]within the same container[/bold] using [color=yellow][bold][keybind="MoveStoredItem"][/bold][/color] and [color=cyan]rotate[/color] them on the grid with [color=yellow][bold][keybind="RotateStoredItem"][/bold][/color].
 Clicking [color=yellow][bold][keybind="MoveStoredItem"][/bold][/color] on an item in a container will just [color=cyan]take it out[/color].
 
 To halve a stack of items, use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
-
-[color=yellow][bold][keybind="SmartEquipBackpack"][/bold][/color] lets you swap items between your hands and the bag, both ways.
-[color=yellow][bold][keybind="SmartEquipBelt"][/bold][/color] does the same for your belt, making tool access faster.
-This takes the item that was most recently placed in a given inventory.
 
 ## Interactions
 Clicking [color=yellow][bold][keybind="Use"][/bold][/color] performs standard interactions.
@@ -73,10 +72,11 @@ You can also perform regular interactions with items inside your inventories.
 
 As you see, the game features [bold]three[/bold] main types of context-sensitive interactions accessible through different methods.
 You can always click [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on an interactive entity to open the [color=cyan]context menu[/color].
-This menu displays [italic][bold]standard[/bold][/italic], [bold]activation[/bold], [italic]alternative[/italic] (usually formatted like that), and any other possible interactions all in one list.
+This menu displays [bolditalic]standard[/bolditalic], [bold]activation[/bold], [italic]alternative[/italic] (usually formatted like that), and any other possible interactions all in one list.
 
-If you're ever unsure about any entity, whether it's an object or a mob, you can [color=cyan]examine[/color] it by pressing [color=yellow][bold][keybind="ExamineEntity"][/bold][/color] (or use the context menu for it).
-This opens a window displaying its name, a brief description, relevant details, and sometimes a link to the guidebook seen as an icon with a question mark.
+If you're ever unsure about any entity, whether it's an object or a mob, you can [color=cyan]examine[/color] it with [color=yellow][bold][keybind="ExamineEntity"][/bold][/color].
+You can also do that while browsing through a list of items in the entity menu ([color=yellow][bold][keybind="UIRightClick"/][/bold][/color]).
+This function opens a window displaying the entity's name, a brief description, relevant details, and sometimes a link to the guidebook that looks like a circle with a question mark. 
 
 ## Drag and drop
 The action of "using" mobs incorporates a unique type of interaction: pressing and holding [color=yellow][bold][keybind="Use"][/bold][/color].
