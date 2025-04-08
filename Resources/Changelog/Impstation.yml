@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pivotbash
-  changes:
-  - message: Added the SecLink to the Security Department.
-    type: Add
-  id: 994
-  time: '2025-01-23T14:42:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1238
 - author: honeyed-lemons
   changes:
   - message: Nerfed money received from mail
@@ -4099,3 +4092,10 @@
   id: 1493
   time: '2025-04-08T10:15:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2229
+- author: widgetbeck
+  changes:
+  - message: Being pulled now thwarts mundane attempts to slip your cuffs.
+    type: Tweak
+  id: 1494
+  time: '2025-04-08T10:20:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2226
