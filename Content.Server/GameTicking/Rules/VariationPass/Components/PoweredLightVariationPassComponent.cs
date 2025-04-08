@@ -22,7 +22,8 @@ public sealed partial class PoweredLightVariationPassComponent : Component
     public float LightAgingChance = 0.05f;
 
     [DataField]
-    public float AgedLightTubeFlickerChance = 0.03f;
+    public float AgedLightTubeFlickerChance = 0.00f; //imp edit; was 0.03f / 3%
+    //note this doesn't remove Aged Light Tube spawning from the game, it just removes the chance that they endlessly flicker!
 
     [DataField]
     public EntProtoId BrokenLightBulbPrototype = "LightBulbBroken";
