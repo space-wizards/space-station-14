@@ -128,3 +128,12 @@
   - type: RuleGrids
   - type: LoadMapRule
     gridPath: /Maps/_Starlight/Shuttles/quantum_ark.yml
+
+# Karma's SS Ana
+- type: entity
+  parent: BaseGameRule
+  id: AnaSpawn
+  components:
+    - type: RuleGrids
+    - type: LoadMapRule
+      gridPath: /Maps/_Starlight/Shuttles/ss_ana.yml
