@@ -317,6 +317,17 @@
   - type: Objective
     difficulty: 1
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: SilverIDStealObjective
+  components:
+  - type: NotJobRequirement
+    job: HeadOfPersonnel, Quartermaster, HeadOfSecurity, ChiefEngineer, ResearchDirector, ChiefMedicalOfficer
+  - type: StealCondition
+    stealGroup: SilverID
+  - type: Objective
+    difficulty: 1.4
+
 # Structures
 
 - type: entity

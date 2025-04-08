@@ -270,6 +270,13 @@
     sprite: Objects/Devices/cartridge.rsi
     state: cart-sec
 
+- type: stealTargetGroup
+  id: SilverID
+  name: steal-target-groups-silver-id
+  sprite:
+    sprite: Objects/Misc/id_cards.rsi
+    state: silver
+
 #Thief structures
 
 - type: stealTargetGroup
