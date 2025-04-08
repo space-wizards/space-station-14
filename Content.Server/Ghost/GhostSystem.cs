@@ -11,6 +11,7 @@ using Content.Server.Warps;
 using Content.Shared._Impstation.CosmicCult.Components;
 using Content.Shared._Impstation.Ghost;
 using Content.Shared.Actions;
+using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -20,6 +21,7 @@ using Content.Shared.Eye;
 using Content.Shared.FixedPoint;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
+using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
@@ -438,10 +440,22 @@ namespace Content.Server.Ghost
                 TryComp<MindContainerComponent>(attached, out var mind);
 
                 var jobName = _jobs.MindTryGetJobName(mind?.Mind);
-                var playerInfo = $"{Comp<MetaDataComponent>(attached).EntityName} ({jobName})";
+                var isGhost = TryComp<GhostComponent>(attached, out var ghost) && ghost.CanGhostInteract == false; // imp. used in modification to line below. second check is to exclude aghosts
+                var playerInfo = isGhost ? $"{Comp<MetaDataComponent>(attached).EntityName} (Ghost of {jobName})" : $"{Comp<MetaDataComponent>(attached).EntityName} ({jobName})";
 
-                if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
-                    yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
+                // imp. removed check for alive or crit - so ghosts can warp to other ghosts.
+                yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
+            }
+
+            // imp - added this so people can warp to dead crewmates
+            var bodyEnumerator = EntityQueryEnumerator<BodyComponent, MindContainerComponent, HumanoidAppearanceComponent>();
+            while (bodyEnumerator.MoveNext(out var uid, out _, out _, out _))
+            {
+                if (_mobState.IsDead(uid))
+                {
+                    var info = $"{Comp<MetaDataComponent>(uid).EntityName} (Dead)";
+                    yield return new GhostWarp(GetNetEntity(uid), info, false);
+                }
             }
         }
 
