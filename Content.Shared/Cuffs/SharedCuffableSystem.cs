@@ -586,6 +586,10 @@ namespace Content.Shared.Cuffs
             if (!Resolve(target, ref cuffable))
                 return;
 
+            // imp. prevent escape attempts if the target is being actively pulled. 
+            if (TryComp<PullableComponent>(target, out var pullable) && pullable.BeingPulled)
+                return;
+
             var isOwner = user == target;
 
             if (cuffsToRemove == null)
