@@ -71,9 +71,8 @@ This allows you to interact with the world without picking items up and without 
 You can also perform regular interactions with items stored in an inventory.
 
 As you see, the game features [bold]three[/bold] main types of context-sensitive interactions accessible through different methods.
-You can always click [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on an interactive entity to open the [color=cyan]context menu[/color].
-This menu displays [bolditalic]standard[/bolditalic], [bold]activation[/bold], [italic]alternative[/italic] (usually formatted like that), and any other possible interactions all in one list.
-If you use it on a pile of items, you'll open the [color=cyan entity menu[/color], listing all ovelapping items.
+You can always click [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on an interactive entity to open the [color=cyan]context menu[/color], which displays the [bolditalic]Standard Interaction[/bolditalic], [bold]Activation Interaction[/bold], [italic]Alternative Interaction[/italic] (usually formatted like that), and any other possible interactions, all in one list.
+If you use it on a pile of items, you'll open the [color=cyan]entity menu[/color], listing the ovelapping entities you can interact with.
 
 If you're ever unsure about any entity, whether it's an object or a mob, you can [color=cyan]examine[/color] it with [color=yellow][bold][keybind="ExamineEntity"][/bold][/color].
 You can also do that while browsing a list of entities ([color=yellow][bold][keybind="UIRightClick"/][/bold][/color]).
