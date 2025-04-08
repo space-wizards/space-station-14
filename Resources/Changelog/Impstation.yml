@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Nerfed money received from mail
-    type: Tweak
-  id: 995
-  time: '2025-01-25T07:52:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1460
 - author: ATDoop
   changes:
   - message: Crewsimov Law 1 no longer has the "inaction" clause.
@@ -4099,3 +4092,15 @@
   id: 1494
   time: '2025-04-08T10:20:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2226
+- author: Kandiyaki
+  changes:
+  - message: The codex cicatrix can now only be opened by heretics.
+    type: Tweak
+  - message: The codex cicatrix is only marked as contraband while open.
+    type: Tweak
+  - message: Changed the codex cicatrix ritual to take a heart instead of a pair of
+      eyes.
+    type: Tweak
+  id: 1495
+  time: '2025-04-08T16:17:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2167
