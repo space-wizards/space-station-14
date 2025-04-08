@@ -46,7 +46,7 @@ You can quickly access your equipped bag and belt using the [color=yellow][bold]
 Alternatively, you can open them by using [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] on their slots or by clicking the mini icons in the [bold]bottom right[/bold] of their icons.
 
 [color=yellow][bold][keybind="SmartEquipBackpack"][/bold][/color] stores the item from your active hand into your bag, or if your hand is empty, takes the most recent item from the bag into your hand.
-[color=yellow][bold][keybind="SmartEquipBelt"][/bold][/color] does the same with your belt, making tool access faster.!
+[color=yellow][bold][keybind="SmartEquipBelt"][/bold][/color] does the same with your belt, making tool access faster.
 
 You can [color=cyan]drag[/color] items from one spot to another [bold]within the same container[/bold] using [color=yellow][bold][keybind="MoveStoredItem"][/bold][/color] and [color=cyan]rotate[/color] them on the grid with [color=yellow][bold][keybind="RotateStoredItem"][/bold][/color].
 Clicking [color=yellow][bold][keybind="MoveStoredItem"][/bold][/color] on an item in a container will just [color=cyan]take it out[/color].
