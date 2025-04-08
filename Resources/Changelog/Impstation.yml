@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Saeko-44
-  changes:
-  - message: SOS app for the PDA
-    type: Add
-  id: 987
-  time: '2025-01-22T05:46:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1450
 - author: AvianMaiden
   changes:
   - message: Sounds for vox! Chitter, coo, cry, gasp, and hiss your heart away!
@@ -4094,3 +4087,10 @@
   id: 1486
   time: '2025-04-08T02:25:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2199
+- author: hivehum
+  changes:
+  - message: Grays are the exact same but a process has occurred.
+    type: Tweak
+  id: 1487
+  time: '2025-04-08T02:26:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2216
