@@ -1,5 +1,96 @@
 - type: playTimeTracker
   id: JobCourier
-  
+
 - type: playTimeTracker
   id: JobHospitalityDirector
+
+
+# imp - upstream antag trackers
+# placeholder trackers for building blocks - there's too much to rework otherwise so i'm doing this instead. they literally do nothing.
+- type: playTimeTracker
+  id: AntagGeneric
+
+- type: playTimeTracker
+  id: AntagGenericTeam
+
+- type: playTimeTracker
+  id: AntagGenericFreeAgent
+
+- type: playTimeTracker
+  id: AntagGenericSilicon
+
+# actual real trackers
+
+- type: playTimeTracker
+  id: AntagDragon
+
+- type: playTimeTracker
+  id: AntagNinja
+
+- type: playTimeTracker
+  id: AntagNuclearOperative
+
+- type: playTimeTracker
+  id: AntagNuclearAgent
+
+- type: playTimeTracker
+  id: AntagNuclearCommander
+
+- type: playTimeTracker
+  id: AntagHeadRevolutionary
+
+- type: playTimeTracker
+  id: AntagRevolutionary
+
+- type: playTimeTracker
+  id: AntagSubvertedSilicon
+
+- type: playTimeTracker
+  id: AntagThief
+
+- type: playTimeTracker
+  id: AntagSyndicateAgent
+
+- type: playTimeTracker
+  id: AntagSyndicateSleeperAgent
+
+- type: playTimeTracker
+  id: AntagInitialInfected
+
+- type: playTimeTracker
+  id: AntagSurvivor
+
+- type: playTimeTracker
+  id: AntagWizard
+
+- type: playTimeTracker
+  id: AntagZombie
+
+- type: playTimeTracker
+  id: AntagParadoxClone
+
+# non-upstream antagonists:
+
+- type: playTimeTracker
+  id: AntagFugitive
+
+- type: playTimeTracker
+  id: AntagSyndicateRecruiter
+
+- type: playTimeTracker
+  id: AntagListeningPost
+
+- type: playTimeTracker
+  id: AntagSynthesisSpecialist
+
+- type: playTimeTracker
+  id: AntagChangeling
+
+- type: playTimeTracker
+  id: AntagHeretic
+
+- type: playTimeTracker
+  id: AntagCosmicCultist
+
+- type: playTimeTracker
+  id: AntagRogueAscended
