@@ -32,7 +32,7 @@
     sprite: _Goobstation/Heretic/book.rsi
     state: icon-on
   requiredTags:
-    Eyes: 1
+    Heart: 1
     Book: 1
     Write: 1
   output:
