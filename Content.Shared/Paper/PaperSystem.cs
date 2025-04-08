@@ -217,7 +217,8 @@ public sealed class PaperSystem : EntitySystem
     {
         if (!_paperQuery.TryComp(ent, out var paperComp))
         {
-            Log.Error($"{EntityManager.ToPrettyString(ent)} has a {nameof(RandomPaperContentComponent)} but no {nameof(PaperComponent)}!");
+            Log.Warning($"{EntityManager.ToPrettyString(ent)} has a {nameof(RandomPaperContentComponent)} but no {nameof(PaperComponent)}!");
+            RemCompDeferred(ent, ent.Comp);
             return;
         }
         var dataset = _protoMan.Index(ent.Comp.Dataset);
