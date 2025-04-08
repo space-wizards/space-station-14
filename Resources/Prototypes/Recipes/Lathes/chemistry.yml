@@ -95,7 +95,7 @@
   result: BaseChemistryEmptyVial
   completetime: 2
   materials:
-    Glass: 100
+    Glass: 50
     Wood: 20
 
 - type: latheRecipe
