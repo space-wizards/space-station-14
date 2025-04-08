@@ -268,11 +268,22 @@ public abstract class SharedIdCardSystem : EntitySystem
         Dirty(ent);
     }
 
+    public void SetPermanent(Entity<ExpireIdCardComponent?> ent, bool val)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+        ent.Comp.Permanent = val;
+        Dirty(ent);
+    }
+
     /// <summary>
     /// Marks an <see cref="ExpireIdCardComponent"/> as expired, setting the accesses.
     /// </summary>
     public virtual void ExpireId(Entity<ExpireIdCardComponent> ent)
     {
+        if (ent.Comp.Expired)
+            return;
+
         _access.TrySetTags(ent, ent.Comp.ExpiredAccess);
         ent.Comp.Expired = true;
         Dirty(ent);

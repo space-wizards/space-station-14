@@ -98,6 +98,9 @@ public sealed class IdCardSystem : SharedIdCardSystem
 
     public override void ExpireId(Entity<ExpireIdCardComponent> ent)
     {
+        if (ent.Comp.Expired)
+            return;
+
         base.ExpireId(ent);
 
         if (ent.Comp.ExpireMessage != null)

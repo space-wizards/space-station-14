@@ -394,12 +394,16 @@
     stateBaseClosed: genpop
     stateDoorOpen: genpop_open
     stateDoorClosed: genpop_door_1
-  - type: AccessReader # note! this access is for the UI, not the door.
+  - type: UserInterface
+    interfaces:
+      enum.GenpopLockerUiKey.Key:
+        type: GenpopLockerBoundUserInterface
+  - type: AccessReader # note! this access is for the UI, not the door. door access is handled on GenpopLocker
     access: [["Security"]]
   - type: Lock
     locked: false
     useAccess: false
-  - type: Fixtures # TODO: this doesnt close properly the first time so uhhh figure that out.
+  - type: Fixtures
     fixtures:
       fix1:
         shape: !type:PolygonShape

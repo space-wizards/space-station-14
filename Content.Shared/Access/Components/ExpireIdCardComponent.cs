@@ -21,13 +21,14 @@ public sealed partial class ExpireIdCardComponent : Component
     /// <summary>
     /// Whether this card will expire at all.
     /// </summary>
-    public bool Permanent => ExpireTime == TimeSpan.MinValue;
+    [DataField, AutoNetworkedField]
+    public bool Permanent;
 
     /// <summary>
     /// The time at which this card will expire and the access will be removed.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
-    public TimeSpan ExpireTime;
+    public TimeSpan ExpireTime = TimeSpan.MaxValue;
 
     /// <summary>
     /// Access the replaces current access once this card expires.

@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Security.Components;
 
@@ -13,11 +12,11 @@ public sealed partial class GenpopIdCardComponent : Component
     /// The crime committed, as a string.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string Crime = "[Redacted]";
+    public string Crime = string.Empty;
 
     /// <summary>
-    /// The time at which the sentence started, used to calculate the sentence duration.
+    /// The length of the sentence
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
-    public TimeSpan StartTime;
+    [DataField, AutoNetworkedField, AutoPausedField]
+    public TimeSpan SentenceDuration;
 }
