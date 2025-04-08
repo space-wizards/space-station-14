@@ -66,7 +66,7 @@ public sealed class DoorRemoteSystem : EntitySystem
         }
 
         if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent)
-            && !_doorSystem.HasAccess(args.Target.Value, args.Used, doorComp, accessComponent))
+            && !_doorSystem.HasAccess(args.Target.Value, args.User, doorComp, accessComponent))
         {
             if (isAirlock)
                 _doorSystem.Deny(args.Target.Value, doorComp, args.User);
@@ -78,7 +78,7 @@ public sealed class DoorRemoteSystem : EntitySystem
         switch (entity.Comp.Mode)
         {
             case OperatingMode.OpenClose:
-                if (_doorSystem.TryToggleDoor(args.Target.Value, doorComp, args.Used, predicted: true))
+                if (_doorSystem.TryToggleDoor(args.Target.Value, doorComp, args.User, predicted: true))
                     _adminLogger.Add(LogType.Action,
                         LogImpact.Medium,
                         $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)}: {doorComp.State}");

@@ -48,6 +48,7 @@ public sealed class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : 
 
     private void HandleRadialMenuClick(OperatingMode mode)
     {
-        SendPredictedMessage(new DoorRemoteModeChangeMessage { Mode= mode });
+        var msg = new DoorRemoteModeChangeMessage { Mode = mode };
+        SendPredictedMessage(msg);
     }
 }
