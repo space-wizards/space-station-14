@@ -4518,4 +4518,18 @@ Entries:
   id: 626
   time: '2025-04-08T04:13:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/461
+- author: KarmaKitsuna
+  changes:
+  - message: SS Ana Event Shuttle
+    type: Add
+  id: 627
+  time: '2025-04-08T04:13:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/460
+- author: KarmaKitsuna
+  changes:
+  - message: Updated the Quantum Ark Shuttles
+    type: Tweak
+  id: 628
+  time: '2025-04-08T04:13:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/460
 
