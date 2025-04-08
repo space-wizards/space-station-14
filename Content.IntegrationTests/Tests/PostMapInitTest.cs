@@ -138,7 +138,8 @@ namespace Content.IntegrationTests.Tests
             "Luna",
             "Skimmer",
             "Union",
-            "Hash"
+            "Hash",
+            "Refsdal"
         };
 
         /// <summary>
