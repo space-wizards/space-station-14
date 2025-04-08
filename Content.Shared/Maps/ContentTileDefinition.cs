@@ -49,7 +49,7 @@ namespace Content.Shared.Maps
         ///     You can place a tile on BaseTurf and all the tiles listed here; if it's not placed on BaseTurf, a tilestack is created in <see cref="TileStackMapComponent"/>.
         /// </summary>
         [DataField]
-        public string[] PossibleBaseTurfs = [];
+        public HashSet<string> PossibleBaseTurfs = [];
 
         [DataField]
         public PrototypeFlags<ToolQualityPrototype> DeconstructTools { get; set; } = new();

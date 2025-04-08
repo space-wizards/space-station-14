@@ -165,22 +165,20 @@ public sealed class TileSystem : EntitySystem
             _decal.RemoveDecal(tileRef.GridUid, id);
         }
 
-        if (_tileStack.HasTileStack(tileRef))
-        {
-            ref var tilestacks = ref Comp<TileStackMapComponent>(gridUid).Data;
-            var tilestack = tilestacks[tileRef.GridIndices];
-            var tileId = tilestack[^1];
-            tilestack.RemoveAt(tilestack.Count - 1);
-            if (tilestack.Count == 0)
-                tilestacks.Remove(tileRef.GridIndices);
-            var newTile = new Tile(((ContentTileDefinition)_tileDefinitionManager[tileId]).TileId);
-            _maps.SetTile(gridUid, mapGrid, tileRef.GridIndices, newTile);
-        }
-        else
+        if (!_tileStack.HasTileStack(tileRef))
         {
             var plating = _tileDefinitionManager[tileDef.BaseTurf];
             _maps.SetTile(gridUid, mapGrid, tileRef.GridIndices, new Tile(plating.TileId));
+            return true;
         }
+        ref var tilestacks = ref Comp<TileStackMapComponent>(gridUid).Data;
+        var tilestack = tilestacks[tileRef.GridIndices];
+        var tileId = tilestack[^1];
+        tilestack.RemoveAt(tilestack.Count - 1);
+        if (tilestack.Count == 0)
+            tilestacks.Remove(tileRef.GridIndices);
+        var newTile = new Tile(((ContentTileDefinition)_tileDefinitionManager[tileId]).TileId);
+        _maps.SetTile(gridUid, mapGrid, tileRef.GridIndices, newTile);
         return true;
     }
 }
