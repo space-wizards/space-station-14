@@ -76,7 +76,7 @@ If you use it on a pile of items, you'll open the [color=cyan]entity menu[/color
 
 If you're ever unsure about any entity, whether it's an object or a mob, you can [color=cyan]examine[/color] it with [color=yellow][bold][keybind="ExamineEntity"][/bold][/color].
 You can also do that while browsing a list of entities ([color=yellow][bold][keybind="UIRightClick"/][/bold][/color]).
-This opens a window displaying the entity's name, a brief description, relevant details, and sometimes a link to the guidebook that looks like a circle with a question mark.
+It opens a window displaying the entity's name, a brief description, relevant details, and sometimes a link to the guidebook that looks like a circle with a question mark.
 
 ## Drag and drop
 The action of "using" mobs incorporates a unique type of interaction: pressing and holding [color=yellow][bold][keybind="Use"][/bold][/color].
