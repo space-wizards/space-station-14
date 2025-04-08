@@ -73,7 +73,7 @@
   - Centrifuge
   reactants:
     BloodKodepiia:
-      amount: 5
+      amount: 20
   products:
     Ice: 11
     Copper: 0.5
@@ -142,3 +142,22 @@
     collection: FootstepBlood
     params:
       volume: 6
+
+- type: reagent
+  id: GrayBlood
+  name: reagent-name-gray-blood
+  group: Biological
+  parent: Radium
+  desc: reagent-desc-gray-blood
+  physicalDesc: reagent-physical-desc-glowing
+
+- type: reaction
+  id: GrayBloodBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    GrayBlood:
+      amount: 5
+  products:
+    Radium: 5

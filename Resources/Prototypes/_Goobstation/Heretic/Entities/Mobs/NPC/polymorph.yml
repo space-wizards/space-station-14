@@ -87,16 +87,16 @@
     layers:
     - map: [ "fleshMap" ]
       state: flesh
-    - map: [ "bloodMap" ] 
+    - map: [ "bloodMap" ]
       state: blood
     - map: [ "eyesMap" ]
       state: eyes
   - type: RandomSprite # imp. it's not actually random, but we do what we must with the tools we are given. this gets edited by HereticAbilitySystem.Flesh on ascention.
-    selected: 
+    selected:
       fleshMap:
         flesh: "#ffd2ba"
       bloodMap:
-        blood: "#9e0000" 
+        blood: "#9e0000"
       eyesMap:
         eyes: "#000000"
   - type: Destructible # imp. replaces DamageSpriteVisuals
@@ -125,7 +125,7 @@
           Quantity: 100
         - ReagentId: Slime
           Quantity: 100
-        - ReagentId: Radium
+        - ReagentId: GrayBlood
           Quantity: 100
         - ReagentId: CopperBlood
           Quantity: 100

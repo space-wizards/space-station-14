@@ -95,7 +95,7 @@
   - !type:RitualReagentPuddleBehavior
     reagents:
     - Blood
-    - Radium #imp
+    - GrayBlood #imp
     - InsectBlood
     - Slime
     - Sap
@@ -132,7 +132,7 @@
   - !type:RitualReagentPuddleBehavior
     reagents:
     - Blood
-    - Radium #imp
+    - GrayBlood #imp
     - InsectBlood
     - Slime
     - Sap
@@ -158,7 +158,7 @@
   - !type:RitualReagentPuddleBehavior
     reagents:
     - Blood
-    - Radium #imp
+    - GrayBlood #imp
     - InsectBlood
     - Slime
     - Sap

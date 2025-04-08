@@ -436,7 +436,7 @@
     groups:
       Acidic: [ Touch ]
     reactions:
-    - reagents: [ Blood, CopperBlood, InsectBlood, Slime, AmmoniaBlood, ZombieBlood, ShimmeringBlood, BloodKodepiia ]
+    - reagents: [ Blood, CopperBlood, InsectBlood, Slime, AmmoniaBlood, ZombieBlood, ShimmeringBlood, BloodKodepiia, GrayBlood ]
       methods: [ Touch ]
       effects:
       - !type:ActivateArtifact
