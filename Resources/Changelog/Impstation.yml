@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: 'Fresh shipment from Frontier Sector: Space Blades, the hot new toy that
-      both kids and adults love!'
-    type: Add
-  id: 985
-  time: '2025-01-22T04:21:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1451
 - author: RosySaturniidae
   changes:
   - message: role icons for centcomm jobs
@@ -4094,3 +4086,12 @@
   id: 1484
   time: '2025-04-08T02:14:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2218
+- author: hivehum
+  changes:
+  - message: Added plenty of new music, as suggested by the community.
+    type: Add
+  - message: Shuffled around the jukebox a little. (Get it?)
+    type: Tweak
+  id: 1485
+  time: '2025-04-08T02:23:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2186
