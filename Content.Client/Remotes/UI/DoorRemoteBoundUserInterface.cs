@@ -6,15 +6,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Remotes.UI;
 
-public class DoorRemoteBoundUserInterface: BoundUserInterface
+public sealed class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private SimpleRadialMenu? _menu;
-
-    /// <inheritdoc />
-    public DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-        IoCManager.InjectDependencies(this);
-    }
 
     protected override void Open()
     {
@@ -30,7 +24,7 @@ public class DoorRemoteBoundUserInterface: BoundUserInterface
         _menu.OpenOverMouseScreenPosition();
     }
 
-    private IEnumerable<RadialMenuOption> CreateButtons()
+    private RadialMenuOption[] CreateButtons()
     {
         return new[]
         {
