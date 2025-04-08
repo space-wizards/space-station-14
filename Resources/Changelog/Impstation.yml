@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: New sprites for all syndicate hardsuits, with Vox versions to match.
-    type: Add
-  id: 993
-  time: '2025-01-23T09:06:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1464
 - author: Pivotbash
   changes:
   - message: Added the SecLink to the Security Department.
@@ -4098,3 +4091,11 @@
   id: 1492
   time: '2025-04-08T08:36:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2182
+- author: widgetbeck
+  changes:
+  - message: Dragons now have a method of pinpointing the location of the station,
+      so they are no longer as likely to get lost in space.
+    type: Add
+  id: 1493
+  time: '2025-04-08T10:15:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2229
