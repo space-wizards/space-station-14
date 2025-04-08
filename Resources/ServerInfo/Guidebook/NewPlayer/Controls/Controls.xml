@@ -9,12 +9,12 @@ To move around, use [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][k
 
 If you run onto slippery objects (soap, banana peels) or liquids spilt on the ground, your character will [color=cyan]slip[/color] and become momentarily stunned.
 \nHold [color=yellow][bold][keybind="Walk"][/bold][/color] to walk slowly and prevent slipping on most of them, with the exception of oil.
-\n(Note: walking can be switched to a [color=cyan]toggle[/color] in the controls menu.)
+\n[italic]Note: walking can be switched to a [color=cyan]toggle[/color] in the controls menu.[/italic]
 
 [color=cyan]Pull[/color] [bold]entities[/bold] (items, objects, and mobile entities (mobs) such as players) by using [color=yellow][bold][keybind="TryPullObject"][/bold][/color] on any movable, unanchored entity.
 \nWhile pulling, you can [color=cyan]push[/color] the entity to your cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
 \nTo [color=cyan]let go[/color], press [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] or pull the same entity again.
-\n(Note: you can use [color=yellow][bold][keybind="Drop"][/bold][/color] to let go with your active hand.)
+\n[italic]Note: you can use [color=yellow][bolditalic][keybind="Drop"][/bolditalic][/color] to let go with your active hand.[/italic]
 
 If you find yourself in [color=#EB2D3A][bold]zero gravity[/bold][/color], you'll still be able to control movement as long as you're within reach of any structure.
 But if you end up completely off station in space, you'll need to [bold]throw objects[/bold] or [bold]spray a fire extinguisher[/bold] to propel yourself according to the laws of motion.
@@ -31,7 +31,7 @@ Use [color=yellow][bold][keybind="Drop"][/bold][/color] to [color=cyan]drop[/col
 ## Inventory
 At the bottom of your game window, you'll find the [color=cyan]inventory bar[/color], consisting of all the icons displayed there.
 From left to right, it includes the [bold]clothing inventory[/bold] icon in the left corner, then slots for the PDA, belt, bag, hands, pockets, and back/special.
-\n(Note: this may vary slightly for nonhumanoid races.)
+\n[italic]Note: this may vary slightly for nonhumanoid races.[/italic]
 
 The [color=cyan]clothing inventory[/color] (press [color=yellow][bold][keybind="OpenInventoryMenu"][/bold][/color] or click on it) has slots for eyes, head, neck, face, ears, body, external, hands, and shoes.
 
@@ -63,11 +63,11 @@ Some items have [color=cyan]alternative interactions[/color].
 
 Many items have [color=cyan]use-in-hand interactions[/color], such as opening a bottle, reloading a gun or switching to holding an axe with both hands.
 \nTo activate or use a held item, press the [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] hotkey (or click [color=yellow][bold][keybind="Use"][/bold][/color] on it).
-\nThe alternative interaction is [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] (or click [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color]).
+\For alternative interactions, use the [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] hotkey (or click [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] on it).
 
 Interact with objects even when your hands are full by performing [color=cyan]activation interactions[/color] with [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
 This allows you to interact with the world without picking items up and without using the items you're holding.
-\n(Note: the alternative interaction is still [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].)
+\n[italic]Note: the alternative counterpart is still [color=yellow][bolditalic][keybind="AltActivateItemInWorld"][/bolditalic][/color].[/italic]
 
 You can also perform regular interactions with items stored in an inventory.
 
@@ -92,7 +92,7 @@ Not to be confused with [italic]pulling[/italic].
 ## Camera
 [color=cyan]Zoom[/color] the camera in and out with [color=yellow][bold][keybind="ZoomIn"][/bold][/color] and [color=yellow][bold][keybind="ZoomOut"][/bold][/color] and reset with [color=yellow][bold][keybind="ResetZoom"][/bold][/color].
 \n[color=cyan]Rotate[/color] it with [color=yellow][bold][keybind="CameraRotateLeft"][/bold][/color] and [color=yellow][bold][keybind="CameraRotateRight"][/bold][/color] and reset with [color=yellow][bold][keybind="CameraReset"][/bold][/color].
-\n(Note: maps are generally designed to be played with the standard camera rotation.)
+\n[italic]Note: maps are generally designed to be played with the standard camera rotation.[/italic]
 
 For more details about controls, please refer to the [color=cyan]Wiki[/color].
 
