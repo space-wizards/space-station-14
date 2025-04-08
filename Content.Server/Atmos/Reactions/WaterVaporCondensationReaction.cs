@@ -1,0 +1,83 @@
+using System.Collections.Generic;
+using System.Linq;
+using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Atmos;
+using Content.Shared.Atmos.Reactions;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.FixedPoint;
+
+namespace Content.Server.Atmos.Reactions
+{
+    [DataDefinition]
+    public sealed partial class WaterVaporCondensationReaction : IGasReactionEffect
+    {
+        private const int GasId = 5; // Vapor
+        private const string Reagent = "Water";
+        private const float CondensationRate = 0.1f;
+        private const int MaxTilesCap = 100; // Max tiles processed per tick
+        private const float MaxCondensationPressure = 200f;
+        
+        private static readonly HashSet<TileAtmosphere> _eligibleTiles = new();
+        private static readonly Random _random = new();
+
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem, float heatScale)
+        {
+            // Only react on tile atmospheres
+            if (holder is not TileAtmosphere tile)
+                return ReactionResult.NoReaction;
+
+            // Skip if pressure is too high
+            if (mixture.Pressure > MaxCondensationPressure)
+                return ReactionResult.NoReaction;
+
+            _eligibleTiles.Add(tile);
+            return ReactionResult.Reacting;
+        }
+
+        public static void ProcessEligibleTiles(AtmosphereSystem system)
+        {
+            // Early exit if no tiles to process
+            if (_eligibleTiles.Count == 0)
+                return;
+
+            // Dynamic processing limit (10% of eligible tiles, capped at MaxTilesCap)
+            int dynamicLimit = (int)Math.Ceiling(_eligibleTiles.Count * 0.1);
+            int maxTilesThisTick = Math.Min(dynamicLimit, MaxTilesCap);
+
+            // Shuffle all the tiles so that the system does not select the same tiles every tick
+            var tilesList = _eligibleTiles.ToList();
+            for (int i = tilesList.Count - 1; i > 0; i--)
+            {
+                int j = _random.Next(i + 1);
+                var temp = tilesList[i];
+                tilesList[i] = tilesList[j];
+                tilesList[j] = temp;
+            }
+            _eligibleTiles.Clear();
+
+            // Process each tile
+            foreach (var tile in tilesList)
+            {
+                // Protection against NullReferenceException
+                if (tile.Air?.GetMoles(GasId) is not > 0)
+                continue;
+
+                // Get tile reference
+                var tileRef = system.GetTileRef(tile);
+                if (tileRef == null)
+                    continue;
+
+                // Calculate
+                float currentMoles = tile.Air.GetMoles(GasId);
+                float amountToCondense = Math.Min(currentMoles, CondensationRate);
+
+                // Create water puddle
+                FixedPoint2 reagentAmount = FixedPoint2.New(amountToCondense);
+                system.Puddle.TrySpillAt(tileRef, new Solution(Reagent, reagentAmount), out _, sound: false);
+
+                // Adjust gas mixture
+                tile.Air.AdjustMoles(GasId, -amountToCondense);
+            }
+        }
+    }
+}
