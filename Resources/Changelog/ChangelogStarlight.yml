@@ -4532,4 +4532,13 @@ Entries:
   id: 628
   time: '2025-04-08T04:13:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/460
+- author: Conflee
+  changes:
+  - message: Added Elkridge. Added double security lockers and more security slots.
+      Added Brigmedic, Surgeon, Miner, and Roboticists. Added NTRep, BSO, and Magistrate
+      spawns etc
+    type: Add
+  id: 629
+  time: '2025-04-08T04:15:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/458
 
