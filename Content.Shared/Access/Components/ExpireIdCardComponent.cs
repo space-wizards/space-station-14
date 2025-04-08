@@ -28,7 +28,7 @@ public sealed partial class ExpireIdCardComponent : Component
     /// The time at which this card will expire and the access will be removed.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
-    public TimeSpan ExpireTime = TimeSpan.MaxValue;
+    public TimeSpan ExpireTime = TimeSpan.Zero;
 
     /// <summary>
     /// Access the replaces current access once this card expires.
