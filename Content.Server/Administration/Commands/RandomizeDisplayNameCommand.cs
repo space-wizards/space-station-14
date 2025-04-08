@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Dataset;
+using Content.Shared.Ghost;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
@@ -24,6 +25,7 @@ public sealed class RandomDisplayNameCommand : LocalizedCommands
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     [ValidatePrototypeId<LocalizedDatasetPrototype>]
     public const string RandomNamesPrototypeId = "NamesAdmin";
@@ -95,7 +97,18 @@ public sealed class RandomDisplayNameCommand : LocalizedCommands
         }
 
         var displayName = _random.Pick(list);
-        _playerManager.SetDisplayName(player!, displayName);
+
+        // Admin ghosts
+        if (player!.AttachedEntity != null &&
+            _entityManager.HasComponent<GhostComponent>(player.AttachedEntity) &&
+            _entityManager.TrySystem(out MetaDataSystem? metaDataSystem) &&
+            _entityManager.TryGetComponent<MetaDataComponent>(player.AttachedEntity, out var metaData) &&
+            (metaData.EntityName == player.Name || metaData.EntityName == player.DisplayName))
+        {
+            metaDataSystem.SetEntityName(player.AttachedEntity.Value, displayName);
+        }
+
+        _playerManager.SetDisplayName(player, displayName);
         _adminLogManager.Add(LogType.AdminCommands,
             LogImpact.Extreme,
             $"{player!.Name} ({player!.UserId}) had their display name randomized to {displayName}.");

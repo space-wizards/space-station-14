@@ -2,6 +2,7 @@
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -15,6 +16,7 @@ public sealed class SetDisplayNameCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     public override string Command => "setdisplayname";
     public override string Description => Loc.GetString("cmd-displayname-set-description");
@@ -73,7 +75,17 @@ public sealed class SetDisplayNameCommand : LocalizedCommands
             shell.WriteError(Loc.GetString("cmd-displayname-name-exists"));
         }
 
-        _playerManager.SetDisplayName(player!, args[0]);
+        // Admin ghosts
+        if (player!.AttachedEntity != null &&
+            _entityManager.HasComponent<GhostComponent>(player.AttachedEntity) &&
+            _entityManager.TrySystem(out MetaDataSystem? metaDataSystem) &&
+            _entityManager.TryGetComponent<MetaDataComponent>(player.AttachedEntity, out var metaData) &&
+            (metaData.EntityName == player.Name || metaData.EntityName == player.DisplayName))
+        {
+            metaDataSystem.SetEntityName(player.AttachedEntity.Value, args[0]);
+        }
+
+        _playerManager.SetDisplayName(player, args[0]);
         _adminLogManager.Add(LogType.AdminCommands,
             LogImpact.Extreme,
             $"{shell.Player!.Name} ({shell.Player!.UserId}) had their display name set to {args[0]}.");

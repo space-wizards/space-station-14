@@ -2,6 +2,7 @@
 using Content.Server.Administration.Logs;
 using Content.Shared.Administration;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -15,6 +16,7 @@ public sealed class ClearDisplayNameCommand : LocalizedCommands
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     public override string Command => "cleardisplayname";
     public override string Description => Loc.GetString("cmd-displayname-clear-description");
@@ -66,6 +68,16 @@ public sealed class ClearDisplayNameCommand : LocalizedCommands
                 shell.WriteError(LocalizationManager.GetString("shell-target-player-does-not-exist"));
                 return;
             }
+        }
+
+        // Admin ghosts
+        if (player!.AttachedEntity != null &&
+            _entityManager.HasComponent<GhostComponent>(player.AttachedEntity) &&
+            _entityManager.TrySystem(out MetaDataSystem? metaDataSystem) &&
+            _entityManager.TryGetComponent<MetaDataComponent>(player.AttachedEntity, out var metaData) &&
+            metaData.EntityName == player.DisplayName)
+        {
+            metaDataSystem.SetEntityName(player.AttachedEntity.Value, player.Name);
         }
 
         _playerManager.SetDisplayName(player!, string.Empty);
