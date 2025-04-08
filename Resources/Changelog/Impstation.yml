@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ATDoop
-  changes:
-  - message: Crewsimov Law 1 no longer has the "inaction" clause.
-    type: Tweak
-  id: 996
-  time: '2025-01-25T07:54:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1461
 - author: DinnerCalzone
   changes:
   - message: Supermatter has been added to Cog, along with some other layout changes.
@@ -4104,3 +4097,10 @@
   id: 1495
   time: '2025-04-08T16:17:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2167
+- author: widgetbeck
+  changes:
+  - message: Player ghosts can now warp to player ghosts & corpses.
+    type: Add
+  id: 1496
+  time: '2025-04-08T16:19:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2222
