@@ -277,6 +277,13 @@
     sprite: Objects/Misc/id_cards.rsi
     state: silver
 
+- type: stealTargetGroup
+  id: AccessConfigurator
+  name: steal-target-groups-access-configurator
+  sprite:
+    sprite: Objects/Tools/access_configurator.rsi
+    state: icon
+
 #Thief structures
 
 - type: stealTargetGroup

@@ -43,6 +43,7 @@ steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
 steal-target-groups-clothing-neck-clownmedal = clown medal
 steal-target-groups-wanted-list-cartridge = wanted list cartridge
 steal-target-groups-silver-id = silver ID card
+steal-target-groups-access-configurator = access configurator
 
 # Thief structures
 steal-target-groups-teg = teg generator part
