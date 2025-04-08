@@ -20,7 +20,7 @@ public sealed class ObjectiveCommandsTest
   components:
   - type: Objective
     difficulty: 1
-    issuer: test
+    issuer: objective-issuer-syndicate
     icon:
       sprite: error.rsi
       state: error
