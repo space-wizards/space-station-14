@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Fixed Courier jumpsuit/skirt sprite hiding your arms.
-    type: Fix
-  - message: You can now take off your top on the courier jumpsuit! Have fun.
-    type: Add
-  id: 991
-  time: '2025-01-22T14:55:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1456
 - author: DVDPlayerOfDiscordFame
   changes:
   - message: The mosin's speedloader now uses the correct ammunition.
@@ -4092,3 +4083,11 @@
   id: 1490
   time: '2025-04-08T03:09:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2223
+- author: rainyatrium, Newemisma, astral_amy, Jellvisk, ComicalSomber
+  changes:
+  - message: Refsdal, a cozy(?) and safe(?) 5-25 person shuttle map for space adventure
+      with ragtag crew!
+    type: Add
+  id: 1491
+  time: '2025-04-08T07:32:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2207
