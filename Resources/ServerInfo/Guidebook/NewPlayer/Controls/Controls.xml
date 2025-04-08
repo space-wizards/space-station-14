@@ -7,7 +7,7 @@
 ## Movement
 To move your character around, use [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][keybind="MoveDown"][keybind="MoveRight"][/bold][/color].
 
-If you run onto slippery objects (like soap, banana peels) or liquids spilt on the ground, your character will [color=cyan]slip[/color] and become momentarily stunned.
+If you run onto slippery objects (like soap or banana peels) or liquids spilt on the ground, your character will [color=cyan]slip[/color] and become momentarily stunned.
 Different hazards have different slip thresholds.
 If you're moving slower than the threshold, you won't slip.
 \nHold [color=yellow][bold][keybind="Walk"][/bold][/color] to move slower and avoid slipping on everything except for [bold]space lube[/bold].
