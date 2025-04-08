@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Fix airlock animations mispredicting if the closing animation is interrupted,
-      e.g. via walking into it.
-    type: Fix
-  id: 7642
-  time: '2024-11-23T09:31:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33481
-- author: metalgearsloth
-  changes:
   - message: Drag-drop outline no longer shows the vaulting outlines if you're vaulting.
     type: Tweak
   id: 7643
@@ -3891,3 +3883,11 @@
   id: 8141
   time: '2025-04-08T21:27:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36036
+- author: TheBlueYowie
+  changes:
+  - message: NutriMax now contains a sterile swab dispenser instead of individual
+      swabs
+    type: Tweak
+  id: 8142
+  time: '2025-04-08T21:54:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36399
