@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: The Tck'tck now has access to a wirecutter and a fire extinguisher.
-    type: Tweak
-  - message: The Tck'tck's laws have been rewritten to allow more player freedom.
-    type: Tweak
-  id: 989
-  time: '2025-01-22T06:18:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1447
-- author: normalgirl2171, mqole
-  changes:
-  - message: A new clown outfit for professional jokesters.
-    type: Add
-  id: 990
-  time: '2025-01-22T06:21:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1442
 - author: AftrLite
   changes:
   - message: Fixed Courier jumpsuit/skirt sprite hiding your arms.
@@ -4094,3 +4078,17 @@
   id: 1488
   time: '2025-04-08T02:29:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2082
+- author: Mousetrinity
+  changes:
+  - message: Foresaw unforeseen consequences with making vox tails actual tails
+    type: Fix
+  id: 1489
+  time: '2025-04-08T03:09:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2225
+- author: jtfg-dev
+  changes:
+  - message: Removed the chance for aged light tubes to flicker endlessly.
+    type: Remove
+  id: 1490
+  time: '2025-04-08T03:09:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2223
