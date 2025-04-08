@@ -116,7 +116,7 @@
 - type: humanoidBaseSprite
   id: MobVoxTorso
   baseSprite:
-    sprite: Mobs/Species/Vox/parts.rsi
+    sprite: _Impstation/Mobs/Species/Vox/parts.rsi #imp
     state: torso
 
 - type: humanoidBaseSprite
