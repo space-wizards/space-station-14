@@ -48,5 +48,11 @@ namespace Content.Server.Atmos.Piping.Binary.Components
 
         [DataField("lastMolesTransferred")]
         public float LastMolesTransferred;
+
+        /// <summary>
+        /// Frontier - Enables the device on MapInit if set to true.
+        /// </summary>
+        [DataField]
+        public bool StartEnabled;
     }
 }

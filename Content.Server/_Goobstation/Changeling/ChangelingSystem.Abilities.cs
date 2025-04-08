@@ -5,6 +5,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
+using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Content.Shared.Popups;
 using Content.Shared.Damage;
@@ -30,6 +31,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 {
     [Dependency] private readonly SharedRottingSystem _rotting = default!;
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _userInterfaceSystem = default!;
 
     public void SubscribeAbilities()
     {
@@ -716,6 +718,12 @@ public sealed partial class ChangelingSystem : EntitySystem
         }
 
         var targetUid = (EntityUid)newUid;
+
+        var uiComp = EnsureComp<UserInterfaceComponent>(targetUid);
+        if (!_userInterfaceSystem.HasUi(targetUid, StoreUiKey.Key, uiComp))
+        {
+            _userInterfaceSystem.SetUi(targetUid, StoreUiKey.Key, new InterfaceData("StoreBoundUserInterface"));
+        }
 
         var popupSelf = Loc.GetString("changeling-transform-lesser-self");
         var popupOthers = Loc.GetString("changeling-transform-lesser-others", ("user", Identity.Entity(uid, EntityManager)));

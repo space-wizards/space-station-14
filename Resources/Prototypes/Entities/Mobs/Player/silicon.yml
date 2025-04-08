@@ -833,6 +833,7 @@
   - type: ComplexInteraction
   - type: Body
     prototype: Drone
+    thermalVisibility: false # imp edit. mostly for drones, but i think this is cool and interesting 
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:

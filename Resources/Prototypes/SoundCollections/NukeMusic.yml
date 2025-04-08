@@ -6,6 +6,7 @@
     - /Audio/StationEvents/sound_station_14.ogg
     # imp additions below
     - /Audio/_Impstation/Music/blatantly_nuclear.ogg
+    - /Audio/_Impstation/Music/boss.ogg
     - /Audio/_Impstation/Music/cyber_grind.ogg
     - /Audio/_Impstation/Music/departure.ogg
     - /Audio/_Impstation/Music/fiend.ogg
@@ -13,6 +14,9 @@
     - /Audio/_Impstation/Music/hurry_up.ogg
     - /Audio/_Impstation/Music/roadkilla.ogg
     - /Audio/_Impstation/Music/ruinous_intnt.ogg
+    - /Audio/_Impstation/Music/rules_of_nature.ogg
     - /Audio/_Impstation/Music/secondwarning.ogg
     - /Audio/_Impstation/Music/shootem.ogg
+    - /Audio/_Impstation/Music/unbreakable.ogg
     - /Audio/_Impstation/Music/war_without_reason.ogg
+    - /Audio/_Impstation/Music/werehog_battle_theme.ogg

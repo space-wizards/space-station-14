@@ -5,9 +5,11 @@
 - type: entity
   parent: ClothingBeltStorageBase
   id: DroneMaterialsBelt
-  name: internal materials storage
-  description: Holds up to four stacks of sheet material.
+  name: internal storage
+  suffix: Unremoveable
+  description: An internal pocket to hold your stuff. The space is limited.
   components:
+  - type: Unremoveable
   - type: Clothing
     slots: [back]
   - type: Icon
@@ -20,7 +22,6 @@
     - 0,0,7,1
     whitelist:
       tags:
-        - Sheet
         - DroneUsable
   - type: Appearance
 
@@ -98,14 +99,12 @@
     - DroneUsable
 
 - type: entity
-  id: RCDRechargingDrone
+  id: RCDRechargingCardboard
   parent: BaseItem
-  name: mini RCD
-  description: The sleek, pared-down offspring the standard Rapid Construction Device. Contains a nanomass compressor which allows it to recharge slowly over time, but severely limits its charge capacity. It also requires full charge to deconstruct.
-  suffix: Unremoveable
+  name: cardboard RCD
+  description: A nanomass-compressor fueled Rapid Construction Device designed for speedy, but temporary, repairs. Produces temporary structures made from fiberboard.
   categories: [ HideSpawnMenu ]
   components:
-  - type: Unremoveable
   - type: Sprite
     sprite: _Impstation/Objects/Tools/dronercd.rsi
     state: icon
@@ -116,10 +115,12 @@
     rechargeDuration: 5 # originally 10. buffing it to 5 until we get cardboard RCD
   - type: RCD
     availablePrototypes: # significantly pared down - just the essentials for quick patch-jobs. If they want to do more permanent fixes, they start with the materials to do so.
-    - WallSolid
-    - FloorSteel
-    - Window
-    - AirlockGlass
+    - CardboardWall
+    - FloorCardboard
+    - CardboardWindow
+    - WindowCardboardDirectional
+    - ChairCardboard
+    - DoorCardboard
     - TubeLight
     - BulbLight
     - LVCable
@@ -138,18 +139,13 @@
     tags:
     - DroneUsable
 
-# RCD functions
-
-- type: rcd
-  id: DeconstructDrone
-  name: rcd-component-deconstruct
-  category: Main
-  sprite: /Textures/Interface/Radial/RCD/deconstruct.png
-  mode: Deconstruct
-  prototype: EffectRCDDeconstructPreview
-  rotation: Camera
-  cost: 8
-  delay: 4
+- type: entity
+  id: RCDRechargingCardboardUnremoveable
+  suffix: Unremoveable
+  parent: RCDRechargingCardboard
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Unremoveable
 
 # PAI actions
 
@@ -218,14 +214,7 @@
     pocket1: trayScannerUnremoveable
     pocket2: GasAnalyzerUnremoveable
     pocket3: PinpointerStationUnremoveable
-    back: DroneMaterialsBelt
-  storage:
-    back:
-    - SheetPlasteel
-    - SheetSteel
-    - SheetRGlass
-    - PartRodMetal
   inhand:
     - OmnitoolUnremoveable
     - WelderExperimentalUnremoveable
-    - RCDRechargingDrone
+    - RCDRechargingCardboardUnremoveable

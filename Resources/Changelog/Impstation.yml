@@ -1,112 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Tweaks all the mailrooms on Box, Fland, Oasis, and Xeno
-    type: Tweak
-  id: 983
-  time: '2025-01-22T03:53:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1445
-- author: DinnerCalzone
-  changes:
-  - message: The supermatter engine has been added to Bagel. Be sure to tune into
-      your local broadcast station to see it in action!
-    type: Add
-  id: 984
-  time: '2025-01-22T04:09:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1449
-- author: hivehum
-  changes:
-  - message: 'Fresh shipment from Frontier Sector: Space Blades, the hot new toy that
-      both kids and adults love!'
-    type: Add
-  id: 985
-  time: '2025-01-22T04:21:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1451
-- author: RosySaturniidae
-  changes:
-  - message: role icons for centcomm jobs
-    type: Add
-  - message: new ids/pdas for deathsquad and cburn
-    type: Add
-  - message: new job descriptions for deathsquad and cburn
-    type: Tweak
-  id: 986
-  time: '2025-01-22T05:01:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1423
-- author: Saeko-44
-  changes:
-  - message: SOS app for the PDA
-    type: Add
-  id: 987
-  time: '2025-01-22T05:46:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1450
-- author: AvianMaiden
-  changes:
-  - message: Sounds for vox! Chitter, coo, cry, gasp, and hiss your heart away!
-    type: Add
-  id: 988
-  time: '2025-01-22T06:18:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1448
-- author: kipdotnet
-  changes:
-  - message: The Tck'tck now has access to a wirecutter and a fire extinguisher.
-    type: Tweak
-  - message: The Tck'tck's laws have been rewritten to allow more player freedom.
-    type: Tweak
-  id: 989
-  time: '2025-01-22T06:18:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1447
-- author: normalgirl2171, mqole
-  changes:
-  - message: A new clown outfit for professional jokesters.
-    type: Add
-  id: 990
-  time: '2025-01-22T06:21:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1442
-- author: AftrLite
-  changes:
-  - message: Fixed Courier jumpsuit/skirt sprite hiding your arms.
-    type: Fix
-  - message: You can now take off your top on the courier jumpsuit! Have fun.
-    type: Add
-  id: 991
-  time: '2025-01-22T14:55:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1456
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: The mosin's speedloader now uses the correct ammunition.
-    type: Fix
-  id: 992
-  time: '2025-01-22T15:33:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1421
-- author: AftrLite
-  changes:
-  - message: New sprites for all syndicate hardsuits, with Vox versions to match.
-    type: Add
-  id: 993
-  time: '2025-01-23T09:06:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1464
-- author: Pivotbash
-  changes:
-  - message: Added the SecLink to the Security Department.
-    type: Add
-  id: 994
-  time: '2025-01-23T14:42:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1238
-- author: honeyed-lemons
-  changes:
-  - message: Nerfed money received from mail
-    type: Tweak
-  id: 995
-  time: '2025-01-25T07:52:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1460
-- author: ATDoop
-  changes:
-  - message: Crewsimov Law 1 no longer has the "inaction" clause.
-    type: Tweak
-  id: 996
-  time: '2025-01-25T07:54:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1461
 - author: DinnerCalzone
   changes:
   - message: Supermatter has been added to Cog, along with some other layout changes.
@@ -4094,3 +3986,121 @@
   id: 1482
   time: '2025-04-06T16:08:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2215
+- author: TheGrimbeeper
+  changes:
+  - message: Changelings and heretics should be able to open their respective stores
+      regardless of what species/object they are.
+    type: Fix
+  id: 1483
+  time: '2025-04-07T15:34:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2191
+- author: SixValentine
+  changes:
+  - message: Hash edits check the PR
+    type: Fix
+  id: 1484
+  time: '2025-04-08T02:14:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2218
+- author: hivehum
+  changes:
+  - message: Added plenty of new music, as suggested by the community.
+    type: Add
+  - message: Shuffled around the jukebox a little. (Get it?)
+    type: Tweak
+  id: 1485
+  time: '2025-04-08T02:23:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2186
+- author: Kandiyaki, Sha-Sheng
+  changes:
+  - message: Removed the heretic's reality fractures.
+    type: Remove
+  - message: Added Eldritch Tomes, an item that heretics can use to gain knowledge
+      points.
+    type: Add
+  id: 1486
+  time: '2025-04-08T02:25:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2199
+- author: hivehum
+  changes:
+  - message: Grays are the exact same but a process has occurred.
+    type: Tweak
+  id: 1487
+  time: '2025-04-08T02:26:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2216
+- author: FlippenPage
+  changes:
+  - message: Mechs are now 20% less broken.
+    type: Fix
+  id: 1488
+  time: '2025-04-08T02:29:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2082
+- author: Mousetrinity
+  changes:
+  - message: Foresaw unforeseen consequences with making vox tails actual tails
+    type: Fix
+  id: 1489
+  time: '2025-04-08T03:09:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2225
+- author: jtfg-dev
+  changes:
+  - message: Removed the chance for aged light tubes to flicker endlessly.
+    type: Remove
+  id: 1490
+  time: '2025-04-08T03:09:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2223
+- author: rainyatrium, Newemisma, astral_amy, Jellvisk, ComicalSomber
+  changes:
+  - message: Refsdal, a cozy(?) and safe(?) 5-25 person shuttle map for space adventure
+      with ragtag crew!
+    type: Add
+  id: 1491
+  time: '2025-04-08T07:32:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2207
+- author: widgetbeck
+  changes:
+  - message: Drones now see living beings only as silhouettes.
+    type: Add
+  - message: Drone laws have been updated for clarity.
+    type: Tweak
+  - message: Cardboard walls, windows, directional windows, tiles, chairs, and airlocks.
+    type: Add
+  - message: Substantial maintenance drone nerf. Drones can no longer easily make
+      permanent repairs - instead, they have a Cardboard RCD for temporary repairs.
+    type: Tweak
+  id: 1492
+  time: '2025-04-08T08:36:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2182
+- author: widgetbeck
+  changes:
+  - message: Dragons now have a method of pinpointing the location of the station,
+      so they are no longer as likely to get lost in space.
+    type: Add
+  id: 1493
+  time: '2025-04-08T10:15:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2229
+- author: widgetbeck
+  changes:
+  - message: Being pulled now thwarts mundane attempts to slip your cuffs.
+    type: Tweak
+  id: 1494
+  time: '2025-04-08T10:20:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2226
+- author: Kandiyaki
+  changes:
+  - message: The codex cicatrix can now only be opened by heretics.
+    type: Tweak
+  - message: The codex cicatrix is only marked as contraband while open.
+    type: Tweak
+  - message: Changed the codex cicatrix ritual to take a heart instead of a pair of
+      eyes.
+    type: Tweak
+  id: 1495
+  time: '2025-04-08T16:17:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2167
+- author: widgetbeck
+  changes:
+  - message: Player ghosts can now warp to player ghosts & corpses.
+    type: Add
+  id: 1496
+  time: '2025-04-08T16:19:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2222

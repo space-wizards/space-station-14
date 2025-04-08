@@ -9,3 +9,6 @@ reagent-desc-shimmering-blood = The strange, nacreous blood of a creature relate
 
 reagent-name-bloodkodepiia = kodepiia ooze
 reagent-desc-bloodkodepiia = The fluid that bleeds from a kodepiia if you cut it. Smells delicious.
+
+reagent-name-gray-blood = joos
+reagent-desc-gray-blood = Thui hope glump mochigi ketchup.

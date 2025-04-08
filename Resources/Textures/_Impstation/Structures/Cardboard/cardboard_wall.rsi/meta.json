@@ -1,0 +1,46 @@
+{
+	"version": 1,
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"license": "CC-BY-SA-3.0",
+	"copyright": "made by widgetbeck",
+	"states": [
+		{
+			"name": "wall0",
+			"directions": 4
+		},
+		{
+			"name": "wall1",
+			"directions": 4
+		},
+		{
+			"name": "wall2",
+			"directions": 4
+		},
+		{
+			"name": "wall3",
+			"directions": 4
+		},
+		{
+			"name": "wall4",
+			"directions": 4
+		},
+		{
+			"name": "wall5",
+			"directions": 4
+		},
+		{
+			"name": "wall6",
+			"directions": 4
+		},
+		{
+			"name": "wall7",
+			"directions": 4
+		},
+		{
+			"name": "full"
+		}
+	]
+}

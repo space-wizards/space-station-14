@@ -24,6 +24,9 @@ public sealed partial class HereticActionComponent : Component
 {
     public bool MagicItemActive = false;
 }
+
+[Serializable, NetSerializable] public sealed partial class HereticKnowledgeItemDoAfterEvent : SimpleDoAfterEvent;
+
 [Serializable, NetSerializable] public sealed partial class DrawRitualRuneDoAfterEvent : SimpleDoAfterEvent
 {
     [NonSerialized] public EntityCoordinates Coords;

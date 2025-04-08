@@ -1,0 +1,31 @@
+- type: entity
+  parent: GasFilter
+  id: GasFilterEnabled
+  suffix: Enabled
+  components:
+  - type: GasFilter
+    startEnabled: true
+
+- type: entity
+  parent: GasFilterFlipped
+  id: GasFilterFlippedEnabled
+  suffix: Flipped, Enabled
+  components:
+  - type: GasFilter
+    startEnabled: true
+
+- type: entity
+  parent: GasMixer
+  id: GasMixerEnabled
+  suffix: Enabled
+  components:
+  - type: GasMixer
+    startEnabled: true
+
+- type: entity
+  parent: GasMixerFlipped
+  id: GasMixerFlippedEnabled
+  suffix: Flipped, Enabled
+  components:
+  - type: GasMixer
+    startEnabled: true

@@ -1,0 +1,28 @@
+- type: entity
+  parent: PinpointerBase
+  name: hunter's instinct
+  description: You smell prey... Interact with this to locate its den.
+  suffix: Station, Unremoveable
+  id: PinpointerDragon
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Devices/pinpointer.rsi
+    layers:
+    - state: pinpointer-dragon
+      map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: ["enum.PinpointerLayers.Screen"]
+      shader: unshaded
+      visible: false
+  - type: Icon
+    sprite: _Impstation/Objects/Devices/pinpointer.rsi
+    state: pinpointer-dragon
+  - type: Pinpointer
+    component: ResearchServer
+    targetName: the station
+  - type: Unremoveable
+
+- type: startingGear
+  id: StartingGearDragonPinpointer
+  equipment:
+    pocket1: PinpointerDragon

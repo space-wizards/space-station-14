@@ -1,0 +1,23 @@
+- type: entity
+  parent: GasPressurePump
+  id: GasPressurePumpEnabled
+  suffix: Enabled
+  components:
+  - type: GasPressurePump
+    startEnabled: true
+
+- type: entity
+  parent: GasPressurePumpEnabled
+  id: GasPressurePumpEnabledMax
+  suffix: Enabled, Max Output
+  components:
+  - type: GasPressurePump
+    targetPressure: 4500
+
+- type: entity
+  parent: GasVolumePump
+  id: GasVolumePumpEnabled
+  suffix: Enabled
+  components:
+  - type: GasVolumePump
+    startEnabled: true

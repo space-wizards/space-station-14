@@ -9,7 +9,7 @@
 	Knowledge Points can be spent in the knowledge store to unlock new spells and rituals.
 
 	You can gain knowledge points and become stronger through a few ways:
-	- Draining influences that spawn randomly around the station.
+	- Reading tomes that spawn randomly around the station.
 	- Sacrificing crew members your dark patrons hunger for.
 	- Automatically getting one knowledge point every 20 minutes.
 	
@@ -22,19 +22,18 @@
 	You can earn abilities from other paths to a limited degree, but only when you have researched sufficient knowledge from your main path.
 
 
-	## Eldritch Influences
+	## Eldritch Tomes
 	<Box>
 		<GuideEntityEmbed Entity="EldritchInfluence" Caption=""/>
 	</Box>
-	Influences are the easy way to gain knowledge points. Whenever there are Heretics aboard Space Station 14, influences will randomly spawn across the station.
+	Tomes are the easy way to gain knowledge points. Whenever there are Heretics aboard Space Station 14, tomes will randomly spawn across the station.
 	
-	They are not visible to the naked eye of a crew member, hovewer they [bold]will[/bold] become visible after harvesting, aside from suddenly changing colors.
+	Each will provide a single knowledge point upon use. Be mindful in your search - drawing too much attention to yourself could mean the end of your studies.
 	
-	PRO TIP: Harvesting with a [color=orange]Focus[/color] equipped will yield double the points from influences.
 	<Box>
-		<GuideEntityEmbed Entity="EldritchInfluenceSpent" Caption="Harvested influence. Notice the glow."/>
+		<GuideEntityEmbed Entity="EldritchTome" Caption="An Eldritch Tome, emblazoned with the mark of the Mansus."/>
 	</Box>
 
-	Each influence can only be harvested once, so the heretic that goes the fastest and grabs the most influences first has to do less killing and sacrificing to reach their ascensions.
+	Each book can only be harvested once, so the more tomes you gain access to first, the less killing you have to do to reach ascension.
 
 </Document>

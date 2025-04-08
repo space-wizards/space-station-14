@@ -32,7 +32,7 @@
     sprite: _Goobstation/Heretic/book.rsi
     state: icon-on
   requiredTags:
-    Eyes: 1
+    Heart: 1
     Book: 1
     Write: 1
   output:
@@ -95,7 +95,7 @@
   - !type:RitualReagentPuddleBehavior
     reagents:
     - Blood
-    - Radium #imp
+    - GrayBlood #imp
     - InsectBlood
     - Slime
     - Sap
@@ -132,7 +132,7 @@
   - !type:RitualReagentPuddleBehavior
     reagents:
     - Blood
-    - Radium #imp
+    - GrayBlood #imp
     - InsectBlood
     - Slime
     - Sap
@@ -158,7 +158,7 @@
   - !type:RitualReagentPuddleBehavior
     reagents:
     - Blood
-    - Radium #imp
+    - GrayBlood #imp
     - InsectBlood
     - Slime
     - Sap

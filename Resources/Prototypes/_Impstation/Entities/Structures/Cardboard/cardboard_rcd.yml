@@ -1,0 +1,287 @@
+- type: entity
+  parent: BaseWall
+  id: WallCardboard
+  name: cardboard wall
+  description: Keeps the air in, and... Honestly, doesn't keep much of anything out.
+  components:
+  - type: Clickable
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/slash.ogg"
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Tag
+    tags:
+      - Wall
+  - type: Sprite
+    sprite: _Impstation/Structures/Cardboard/cardboard_wall.rsi
+  - type: Icon
+    sprite: _Impstation/Structures/Cardboard/cardboard_wall.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCardboard1:
+            min: 1
+            max: 1
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+  - type: IconSmooth
+    key: webs
+    base: wall
+  - type: Construction
+    graph: CardboardStructures
+    node: wall
+
+- type: entity
+  id: WindowCardboard
+  parent: BaseStructure
+  name: cardboard "window"
+  description: There are some holes covered with packing tape that you can see through.
+  components:
+    - type: Airtight
+    - type: IconSmooth
+      key: windows
+      base: window
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Weapons/slash.ogg"
+    - type: Sprite
+      drawdepth: WallTops
+      sprite: _Impstation/Structures/Cardboard/cardboard_window.rsi
+    - type: Icon
+      sprite: _Impstation/Structures/Cardboard/cardboard_window.rsi
+      state: full
+      deconstructionTarget: start
+    - type: Physics
+      bodyType: Static
+    - type: Damageable
+      damageModifierSet: Web
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 2
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialCardboard1:
+              min: 1
+              max: 1
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WoodDestroy
+    - type: Construction
+      graph: CardboardStructures
+      node: window
+    - type: RCDDeconstructable
+      cost: 4
+      delay: 2
+      fx: EffectRCDDeconstruct2
+
+- type: entity
+  id: WindowCardboardDirectional
+  parent: BaseStructure
+  name: directional cardboard "window"
+  description: This isn't going to do much for you.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+    - type: WallMount
+      arc: 360 # interact despite grilles
+    - type: Tag
+      tags:
+        - Window
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Weapons/slash.ogg"
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: _Impstation/Structures/Cardboard/cardboard_directional.rsi
+      state: window
+    - type: Icon
+      sprite: _Impstation/Structures/Cardboard/cardboard_directional.rsi
+      state: window
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,-0.28125"
+          density: 1500
+          mask:
+          - FullTileMask
+          layer:
+          - GlassLayer
+    - type: Damageable
+      damageContainer: StructuralInorganic
+      damageModifierSet: Web
+    - type: RCDDeconstructable
+      cost: 4
+      delay: 2
+      fx: EffectRCDDeconstruct2
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 50 #excess damage (nuke?). avoid computational cost of spawning entities.
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WoodDestroy
+      - trigger:
+          !type:DamageTrigger
+          damage: 25
+        behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: WoodDestroy
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            MaterialCardboard1:
+              min: 1
+              max: 1
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: Airtight
+      noAirWhenFullyAirBlocked: false
+      airBlockedDirection:
+      - South
+    - type: Construction
+      graph: CardboardStructures
+      node: directional
+    - type: Appearance
+
+- type: entity
+  name: cardboard chair
+  id: ChairCardboard
+  parent: ChairBase
+  description: You can try to sit on it. You're not sure it'll go well.
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Animateable
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - TableMask
+  - type: Sprite
+    sprite: _Impstation/Structures/Cardboard/cardboard_chair.rsi
+    state: chair
+    noRot: true
+  - type: Strap
+    position: Stand
+    buckleOffset: "0,-0.05"
+  - type: Pullable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Web
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+  - type: Construction
+    graph: CardboardStructures
+    node: chair
+
+- type: entity
+  name: cardboard floor tile
+  parent: FloorTileItemBase
+  id: FloorTileItemCardboard
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Cardboard/cardboard_tile.rsi
+    state: icon
+  - type: Item
+  - type: FloorTile
+    outputs:
+      - FloorCardboard
+  - type: Stack
+    stackType: FloorTileCardboard
+  - type: Construction
+    graph: CardboardStructures
+    node: tile
+
+- type: tile
+  id: FloorCardboard
+  name: cardboard floor tile
+  sprite: /Textures/_Impstation/Structures/Cardboard/cardboardtile.png
+  variants: 4
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemCardboard
+  heatCapacity: 1000 # weak
+
+- type: stack
+  id: FloorTileCardboard
+  name: cardboard floor tile
+  spawn: FloorTileItemCardboard
+  maxCount: 30
+
+- type: entity
+  id: DoorCardboard
+  parent: WoodDoor
+  name: cardboard airlock
+  description: Somehow, it actually seems to form an airtight seal.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Cardboard/cardboard_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Web
+  - type: Construction
+    graph: CardboardStructures
+    node: door

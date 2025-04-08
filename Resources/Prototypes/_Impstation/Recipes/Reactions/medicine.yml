@@ -20,12 +20,12 @@
     Brutoxidone: 1
 
 - type: reaction
-  id: Subjuzine-Activation-Radium #imp, so greys can use it
+  id: Subjuzine-Activation-GrayBlood #imp, so greys can use it
   preserveDNA: true
   reactants:
     Subjuzine:
       amount: 4
-    Radium:
+    GrayBlood:
       amount: 1
   products:
     ActivatedSubjuzine: 5

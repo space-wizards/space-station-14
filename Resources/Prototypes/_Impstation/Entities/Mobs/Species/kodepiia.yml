@@ -96,6 +96,8 @@
     hideLayersOnEquip:
     - HeadTop
     - HeadSide
+    - Hair 
+    - Tail
   - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
       fix1:

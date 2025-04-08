@@ -1,0 +1,121 @@
+- type: constructionGraph
+  id: CardboardStructures
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DestroyEntity {}
+    edges:
+    - to: wall
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: Cardboard
+        amount: 4
+        doAfter: 3
+
+    - to: window
+      completed:
+      - !type:SnapToGrid
+        southRotation: true
+      steps:
+      - material: Cardboard
+        amount: 2
+        doAfter: 3
+
+    - to: directional
+      completed:
+      - !type:SnapToGrid
+      steps:
+      - material: Cardboard
+        amount: 1
+        doAfter: 3
+
+    - to: chair
+      completed:
+      - !type:SnapToGrid
+      steps:
+      - material: Cardboard
+        amount: 1
+        doAfter: 3
+
+    - to: tile
+      completed:
+      - !type:SetStackCount
+        amount: 4
+      steps:
+        - material: Cardboard
+          amount: 1
+
+    - to: door
+      completed:
+      - !type:SnapToGrid
+      steps:
+      - material: Cardboard
+        amount: 4
+        doAfter: 4
+
+  - node: tile
+    entity: FloorTileItemCardboard
+
+  # Deconstruction is down here
+  - node: wall
+    entity: WallCardboard
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialCardboard1
+        amount: 4
+      steps:
+      - tool: Cutting
+        doAfter: 2
+
+  - node: window
+    entity: WindowCardboard
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialCardboard1
+        amount: 2
+      steps:
+      - tool: Cutting
+        doAfter: 1
+  
+  - node: directional
+    entity: WindowCardboardDirectional
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialCardboard1
+        amount: 1
+      steps:
+      - tool: Cutting
+        doAfter: 1
+
+  - node: chair
+    entity: ChairCardboard
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialCardboard1
+        amount: 1
+      steps:
+      - tool: Cutting
+        doAfter: 1
+
+  - node: door
+    entity: DoorCardboard
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialCardboard1
+        amount: 4
+      steps:
+      - tool: Cutting
+        doAfter: 1
