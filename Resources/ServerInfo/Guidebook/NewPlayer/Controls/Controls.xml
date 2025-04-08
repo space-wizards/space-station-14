@@ -23,7 +23,7 @@ If you end up completely off-station in space, you'll need to [bold]throw object
 
 ## Hands
 Your [color=cyan]hand slots[/color] are at the bottom center of your game window.
-[color=cyan]Pick up[/color holdable items into your active hand with [color=yellow][bold][keybind="Use"][/bold][/color] — make sure it's [bold]empty[/bold] first.
+[color=cyan]Pick up[/color] holdable items into your active hand with [color=yellow][bold][keybind="Use"][/bold][/color] — make sure it's [bold]empty[/bold] first.
 [color=cyan]Swap[/color] between hands with [color=yellow][bold][keybind="SwapHands"][/bold][/color] to control which one is active.
 Pay attention to the active hand when using item-related hotkeys — they only affect that hand.
 
