@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DVDPlayerOfDiscordFame
-  changes:
-  - message: The mosin's speedloader now uses the correct ammunition.
-    type: Fix
-  id: 992
-  time: '2025-01-22T15:33:29.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1421
 - author: AftrLite
   changes:
   - message: New sprites for all syndicate hardsuits, with Vox versions to match.
@@ -4091,3 +4084,17 @@
   id: 1491
   time: '2025-04-08T07:32:14.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2207
+- author: widgetbeck
+  changes:
+  - message: Drones now see living beings only as silhouettes.
+    type: Add
+  - message: Drone laws have been updated for clarity.
+    type: Tweak
+  - message: Cardboard walls, windows, directional windows, tiles, chairs, and airlocks.
+    type: Add
+  - message: Substantial maintenance drone nerf. Drones can no longer easily make
+      permanent repairs - instead, they have a Cardboard RCD for temporary repairs.
+    type: Tweak
+  id: 1492
+  time: '2025-04-08T08:36:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2182
