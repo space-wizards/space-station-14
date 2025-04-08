@@ -178,6 +178,7 @@
     - Snout
     - HeadTop
     - HeadSide
+    - FacialHair #imp
 
 - type: entity
   abstract: true

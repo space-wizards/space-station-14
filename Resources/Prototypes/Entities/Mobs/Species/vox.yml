@@ -18,6 +18,7 @@
     - HeadSide
     - Hair
     - Tail
+    - FacialHair
     undergarmentTop: UndergarmentTopTanktopVox
     undergarmentBottom: UndergarmentBottomBoxersVox
     #- type: VoxAccent # Not yet coded
