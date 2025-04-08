@@ -1,0 +1,98 @@
+- type: construction
+  name: cardboard wall
+  id: WallCardboard
+  graph: CardboardStructures
+  startNode: start
+  targetNode: wall
+  category: construction-category-structures
+  description: Keeps the air in, and... Honestly, doesn't keep much of anything out.
+  icon:
+    sprite: _Impstation/Structures/Cardboard/cardboard_wall.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: cardboard "window"
+  id: WindowCardboard
+  graph: CardboardStructures
+  startNode: start
+  targetNode: window
+  category: construction-category-structures
+  description: It's... *Technically* spaceproof...
+  icon:
+    sprite: _Impstation/Structures/Cardboard/cardboard_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: cardboard directional "window"
+  id: WindowDirectionalCardboard
+  graph: CardboardStructures
+  startNode: start
+  targetNode: directional
+  category: construction-category-structures
+  description: This isn't going to do much for you.
+  icon:
+    sprite: _Impstation/Structures/Cardboard/cardboard_directional.rsi
+    state: window
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: cardboard chair
+  id: ChairCardboard
+  graph: CardboardStructures
+  startNode: start
+  targetNode: chair
+  category: construction-category-structures
+  description: It even kind of stands up on its own!
+  icon:
+    sprite: _Impstation/Structures/Cardboard/cardboard_chair.rsi
+    state: chair
+  objectType: Structure
+  placementMode: PlaceFree
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: cardboard floor tile
+  id: TileCardboard
+  graph: CardboardStructures
+  startNode: start
+  targetNode: tile
+  category: construction-category-tiles
+  description: "Four cardboard floor tiles."
+  icon: { sprite: _Impstation/Structures/Cardboard/cardboard_tile.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: cardboard airlock
+  id: DoorCardboard
+  graph: CardboardStructures
+  startNode: start
+  targetNode: door
+  category: construction-category-airlocks
+  description: "Somehow, it actually seems to form an airtight seal."
+  icon: { sprite: _Impstation/Structures/Cardboard/cardboard_door.rsi, state: closed }
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

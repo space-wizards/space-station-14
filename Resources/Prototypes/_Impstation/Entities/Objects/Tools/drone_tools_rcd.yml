@@ -1,0 +1,93 @@
+# RCD functions
+
+- type: rcd
+  id: DeconstructDrone
+  name: rcd-component-deconstruct
+  category: Main
+  sprite: /Textures/Interface/Radial/RCD/deconstruct.png
+  mode: Deconstruct
+  prototype: EffectRCDDeconstructPreview
+  rotation: Camera
+  cost: 8
+  delay: 4
+
+- type: rcd
+  id: CardboardWall
+  name: cardboard wall
+  category: WallsAndFlooring
+  sprite: /Textures/_Impstation/Structures/Cardboard/CardboardRCDIcons/wall.png
+  mode: ConstructObject
+  prototype: WallCardboard
+  cost: 2
+  delay: 2
+  collisionMask: FullTileMask
+  rotation: Fixed
+  fx: EffectRCDConstruct2
+
+- type: rcd
+  id: CardboardWindow
+  name: cardboard window
+  category: WindowsAndGrilles
+  sprite: /Textures/_Impstation/Structures/Cardboard/CardboardRCDIcons/window.png
+  mode: ConstructObject
+  prototype: WindowCardboard
+  cost: 2
+  delay: 2
+  collisionMask: FullTileMask
+  rotation: Fixed
+  fx: EffectRCDConstruct2
+
+- type: rcd
+  id: WindowCardboardDirectional
+  name: cardboard directional window
+  category: WindowsAndGrilles
+  sprite: /Textures/_Impstation/Structures/Cardboard/CardboardRCDIcons/windowdirectional.png
+  mode: ConstructObject
+  prototype: WindowCardboardDirectional
+  cost: 1
+  delay: 1
+  collisionMask: Impassable
+  collisionBounds: "-0.23,-0.49,0.23,-0.36"
+  rules:
+    - IsWindow
+  rotation: User
+  fx: EffectRCDConstruct1
+
+- type: rcd
+  id: ChairCardboard
+  category: WallsAndFlooring
+  name: cardboard chair
+  sprite: /Textures/_Impstation/Structures/Cardboard/CardboardRCDIcons/chair.png
+  mode: ConstructObjecT
+  prototype: ChairCardboard
+  cost: 1
+  delay: 1
+  rotation: User
+  fx: EffectRCDConstruct1
+
+- type: rcd
+  id: FloorCardboard
+  name: cardboard floor tile
+  category: WallsAndFlooring
+  sprite: /Textures/_Impstation/Structures/Cardboard/CardboardRCDIcons/tile.png
+  mode: ConstructTile
+  prototype: FloorCardboard
+  cost: 1
+  delay: 1
+  collisionMask: InteractImpassable
+  rules:
+    - CanBuildOnEmptyTile
+  fx: EffectRCDConstruct1
+
+- type: rcd
+  id: DoorCardboard
+  name: cardboard airlock
+  category: Airlocks
+  sprite: /Textures/_Impstation/Structures/Cardboard/CardboardRCDIcons/door.png
+  mode: ConstructObject
+  prototype: DoorCardboard
+  cost: 4
+  delay: 4
+  collisionMask: FullTileMask
+  rotation: Camera
+  fx: EffectRCDConstruct4
