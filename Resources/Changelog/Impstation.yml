@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: The supermatter engine has been added to Bagel. Be sure to tune into
-      your local broadcast station to see it in action!
-    type: Add
-  id: 984
-  time: '2025-01-22T04:09:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1449
 - author: hivehum
   changes:
   - message: 'Fresh shipment from Frontier Sector: Space Blades, the hot new toy that
@@ -4095,3 +4087,10 @@
   id: 1483
   time: '2025-04-07T15:34:02.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2191
+- author: SixValentine
+  changes:
+  - message: Hash edits check the PR
+    type: Fix
+  id: 1484
+  time: '2025-04-08T02:14:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2218
