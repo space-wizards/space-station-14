@@ -4541,4 +4541,11 @@ Entries:
   id: 629
   time: '2025-04-08T04:15:22.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/458
+- author: KarmaKitsuna
+  changes:
+  - message: Mercenary Hardsuits
+    type: Add
+  id: 630
+  time: '2025-04-08T04:17:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/449
 
