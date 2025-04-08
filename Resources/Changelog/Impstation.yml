@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: RosySaturniidae
-  changes:
-  - message: role icons for centcomm jobs
-    type: Add
-  - message: new ids/pdas for deathsquad and cburn
-    type: Add
-  - message: new job descriptions for deathsquad and cburn
-    type: Tweak
-  id: 986
-  time: '2025-01-22T05:01:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1423
 - author: Saeko-44
   changes:
   - message: SOS app for the PDA
@@ -4095,3 +4084,13 @@
   id: 1485
   time: '2025-04-08T02:23:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2186
+- author: Kandiyaki, Sha-Sheng
+  changes:
+  - message: Removed the heretic's reality fractures.
+    type: Remove
+  - message: Added Eldritch Tomes, an item that heretics can use to gain knowledge
+      points.
+    type: Add
+  id: 1486
+  time: '2025-04-08T02:25:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2199
