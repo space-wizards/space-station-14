@@ -3,34 +3,38 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 
-namespace Content.Client.DeviceLinking.UI
+namespace Content.Client.DeviceLinking.UI;
+
+[GenerateTypedNameReferences]
+public sealed partial class ThresholdAmountWindow : DefaultWindow
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class ThresholdAmountWindow : DefaultWindow
+    private int _max;
+    private int _min;
+
+    public ThresholdAmountWindow()
     {
-        private int _max = Int32.MaxValue;
-        private int _min = 1;
+        RobustXamlLoader.Load(this);
 
-        public ThresholdAmountWindow()
-        {
-            RobustXamlLoader.Load(this);
-            AmountLineEdit.OnTextChanged += OnValueChanged;
-        }
+        AmountLineEdit.OnTextChanged += OnValueChanged;
+    }
 
-        public void SetBounds(int min, int max)
-        {
-          _min = min;
-          _max = max;
-          MinimumAmount.Text = Loc.GetString("comp-power-threshold-set-amount-min", ("amount", _min));
-          MaximumAmount.Text = Loc.GetString("comp-power-threshold-set-amount-max", ("amount", _max));
-        }
+    /// <summary>
+    /// Sets the upper and lower limits the window claims the threshold can be set to.
+    /// </summary>
+    public void SetBounds(int min, int max)
+    {
+        _min = min;
+        _max = max;
 
-        private void OnValueChanged(LineEdit.LineEditEventArgs args)
-        {
-            if (!int.TryParse(AmountLineEdit.Text, out var amount)  || amount > _max || amount < _min)
-                ApplyButton.Disabled = true;
-            else 
-                ApplyButton.Disabled = false; 
-        }
+        MinimumAmount.Text = Loc.GetString("comp-power-threshold-set-amount-min", ("amount", _min));
+        MaximumAmount.Text = Loc.GetString("comp-power-threshold-set-amount-max", ("amount", _max));
+    }
+
+    /// <summary>
+    /// Prevents the user from pressing apply if they put an inappropriate value in the box.
+    /// </summary>
+    private void OnValueChanged(LineEdit.LineEditEventArgs args)
+    {
+        ApplyButton.Disabled = (!int.TryParse(AmountLineEdit.Text, out var amount)  || amount > _max || amount < _min);
     }
 }

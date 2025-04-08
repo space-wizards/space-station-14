@@ -15,24 +15,30 @@ public sealed partial class PowerThresholdComponent : Component
     [DataField("thresholdAmount")]
     [ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
-    public FixedPoint2 ThresholdAmount { get; set; } = FixedPoint2.New(350000);
+    public int ThresholdAmount { get; set; } = 350000;
+
+    /// <summary>
+    ///     Default threshold amounts for the set-threshold verb.
+    /// </summary>
+    [DataField("defaultThresholdAmounts")]
+    public List<int>? DefaultThresholdAmounts;
 
     /// <summary>
     ///     The minimum value the threshold can be set to.
     /// </summary>
     [DataField("minThresholdAmount")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 MinimumThresholdAmount { get; set; } = FixedPoint2.New(0);
+    public int MinimumThresholdAmount { get; set; } = 0;
 
     /// <summary>
     ///     The maximum value the threshold can be set to.
     /// </summary>
     [DataField("maxThresholdAmount")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 MaximumThresholdAmount { get; set; } = FixedPoint2.New(999999999);
+    public int MaximumThresholdAmount { get; set; } = 999999999;
 
     /// <summary>
-    /// Whether you're allowed to change the threshold amount.
+    ///     Whether you're allowed to change the threshold amount.
     /// </summary>
     [DataField("canChangeThresholdAmount")]
     [ViewVariables(VVAccess.ReadWrite)]

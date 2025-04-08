@@ -3,13 +3,13 @@ using Content.Server.NodeContainer;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Nodes;
 using Content.Server.Power.NodeGroups;
+using Content.Shared.DeviceLinking.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Power.Generator;
 using Content.Shared.Timing;
 using Content.Shared.Tools.Systems;
-using Content.Shared.DeviceLinking.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
@@ -93,8 +93,9 @@ public sealed class PowerSensorSystem : EntitySystem
     private void UpdateOutputs(EntityUid uid, PowerSensorComponent comp)
     {
         // Get current threshold
-        var threshold = Comp<PowerThresholdComponent>(uid).ThresholdAmount;
-        comp.ThresholdAmount = threshold;
+        if (!TryComp<PowerThresholdComponent>(uid, out var thresholdComp))
+            return;
+        comp.ThresholdAmount = thresholdComp.ThresholdAmount;
         
         // get power stats on the power network that's been switched to
         var powerSwitchable = Comp<PowerSwitchableComponent>(uid);

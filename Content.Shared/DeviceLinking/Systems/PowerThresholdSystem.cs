@@ -20,11 +20,6 @@ public sealed class PowerThresholdSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
-    /// <summary>
-    ///     Default threshold amounts for the set-threshold verb.
-    /// </summary>
-    public static readonly FixedPoint2[] DefaultThresholdAmounts = new FixedPoint2[] { 0, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 1000000 };
-
     public override void Initialize()
     {
         base.Initialize();
@@ -37,7 +32,7 @@ public sealed class PowerThresholdSystem : EntitySystem
     {
         var (uid, comp) = ent;
 
-        var newThresholdAmount = FixedPoint2.Clamp(message.Value, comp.MinimumThresholdAmount, comp.MaximumThresholdAmount);
+        var newThresholdAmount = int.Clamp(message.Value, comp.MinimumThresholdAmount, comp.MaximumThresholdAmount);
         comp.ThresholdAmount = newThresholdAmount;
 
         if (message.Actor is { Valid: true } user)
@@ -54,7 +49,7 @@ public sealed class PowerThresholdSystem : EntitySystem
             return;
 
         // Custom threshold verb
-        var @event = args;
+        var e = args; // Necessary because args can't be used inside args.Verbs.Add
 
         args.Verbs.Add(new AlternativeVerb()
         {
@@ -63,15 +58,18 @@ public sealed class PowerThresholdSystem : EntitySystem
             // TODO: remove server check when bui prediction is a thing
             Act = () =>
             {
-                _ui.OpenUi(uid, ThresholdAmountUiKey.Key, @event.User);
+                _ui.OpenUi(uid, ThresholdAmountUiKey.Key, e.User);
             },
             Priority = 1
         });
 
         // Add default threshold verbs
+        if (comp.DefaultThresholdAmounts == null)
+            return;
+        
         var priority = 0;
         var user = args.User;
-        foreach (var amount in DefaultThresholdAmounts)
+        foreach (var amount in comp.DefaultThresholdAmounts)
         {
             AlternativeVerb verb = new();
             verb.Text = Loc.GetString("comp-power-threshold-verb-amount", ("amount", amount));

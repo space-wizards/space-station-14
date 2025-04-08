@@ -85,18 +85,30 @@ public sealed partial class PowerSensorComponent : Component
     /// Charge threshold to compare against.
     /// </summary>
     [DataField]
-    public FixedPoint2 ThresholdAmount = 100;
+    public int ThresholdAmount = 100;
 
+    /// <summary>
+    /// True when charging.
+    /// </summary>
     // Initial state
     [DataField]
     public bool ChargingState;
 
+    /// <summary>
+    /// True when discharging.
+    /// </summary>
     [DataField]
     public bool DischargingState;
 
+    /// <summary>
+    /// True when above threshold.
+    /// </summary>
     [DataField]
     public bool AboveState;
 
+    /// <summary>
+    /// True when below threshold.
+    /// </summary>
     [DataField]
     public bool BelowState;
 }

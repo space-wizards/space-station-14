@@ -274,6 +274,7 @@
   - type: Construction
     node: power_sensor
   - type: PowerThreshold
+    defaultThresholdAmounts: [0, 5000, 10000, 50000, 100000, 500000, 1000000]
     canChangeThresholdAmount: true
   - type: UserInterface
     interfaces:
