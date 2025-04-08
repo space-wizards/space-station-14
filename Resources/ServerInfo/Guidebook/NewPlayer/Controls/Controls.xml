@@ -73,7 +73,7 @@ Many items also have [color=cyan]standard use-in-hand interactions[/color], such
 \nFor [color=cyan]alternative use-in-hand interactions[/color], use the [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] hotkey (or click [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] on it).
 
 In conclusion, all the main interactions are [bolditalic]standard[/bolditalic] (click), [italic]alternative[/italic] (alt+click), [bold]activation[/bold] (use), [bolditalic]use-in-hand[/bolditalic] (click), and [italic]alternative use-in-hand[/italic] (alt+click).
-Don't worry about having to memorize them — they're usually intuitive and consistent across item categories, and most items support far fewer than five.
+Don't worry about having to memorize them — they're usually intuitive and consistent across entity categories, and most entities support far fewer than five.
 
 ## Menus
 Click [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on any interactive entity to open the [color=cyan]context menu[/color], which shows you what you can do with the [bolditalic]Standard Interaction[/bolditalic], [bold]Activation Interaction[/bold], [italic]Alternative Interaction[/italic] (usually formatted like that), and any other possible interactions, all in one list.
