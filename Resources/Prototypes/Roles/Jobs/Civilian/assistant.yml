@@ -2,7 +2,7 @@
   id: Assistant
   name: job-name-assistant
   description: job-description-assistant
-  playTimeTracker: JobAssistant
+  playTimeTracker: JobPassenger
   startingGear: AssistantGear
   icon: "JobIconAssistant"
   supervisors: job-supervisors-everyone
