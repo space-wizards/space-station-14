@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "created by Sha-Sheng & Kandiyaki for Impstation",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+        "name": "eldritch-book-base1"
+    },
+	{
+        "name": "eldritch-book-base2"
+    },
+	{
+        "name": "eldritch-book-base3"
+    },
+	{
+        "name": "eldritch-book-base4"
+    },
+	{
+        "name": "eldritch-book-base5"
+    },
+	{
+        "name": "eldritch-book-base6"
+    },
+	{
+        "name": "eldritch-book-base7"
+    },
+	{
+        "name": "eldritch-book-base8"
+    },
+    {
+        "name": "eldritch-book-icon1"
+    },
+    {
+        "name": "eldritch-book-icon2"
+    },
+	{
+        "name": "eldritch-book-icon3"
+    },
+	{
+        "name": "eldritch-book-icon4"
+    },
+	{
+        "name": "eldritch-book-icon5"
+    },
+	{
+        "name": "eldritch-book-icon6"
+    }
+  ]
+}

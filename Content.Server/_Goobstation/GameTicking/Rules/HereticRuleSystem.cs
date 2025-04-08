@@ -1,6 +1,5 @@
 using Content.Server.Antag;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server._Goobstation.Objectives.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives;
 using Content.Server.Objectives.Components;
@@ -12,10 +11,9 @@ using Content.Shared.Roles;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.Map;
+using Robust.Server.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using System.Linq;
 using System.Text;
 using Content.Server._Goobstation.Heretic.EntitySystems;
 
@@ -24,6 +22,7 @@ namespace Content.Server.GameTicking.Rules;
 public sealed partial class HereticRuleSystem : GameRuleSystem<HereticRuleComponent>
 {
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
@@ -33,6 +32,8 @@ public sealed partial class HereticRuleSystem : GameRuleSystem<HereticRuleCompon
     [Dependency] private readonly SharedUserInterfaceSystem _userInterfaceSystem = default!;
 
     public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/_Goobstation/Heretic/Ambience/Antag/Heretic/heretic_gain.ogg");
+    public readonly SoundSpecifier RiftSpawnSound = new SoundPathSpecifier("/Audio/_Goobstation/Heretic/Ambience/Antag/Heretic/heretic_gain.ogg");
+
 
     [ValidatePrototypeId<NpcFactionPrototype>] public readonly ProtoId<NpcFactionPrototype> HereticFactionId = "Heretic";
 
@@ -56,7 +57,7 @@ public sealed partial class HereticRuleSystem : GameRuleSystem<HereticRuleCompon
 
         for (int i = 0; i < _rand.Next(6, 12); i++)
             if (TryFindRandomTile(out var _, out var _, out var _, out var coords))
-                Spawn("EldritchInfluence", coords);
+                _audio.PlayPvs(RiftSpawnSound, Spawn("RealityTear", coords)); //reality tears disappear after 1 second, leaving behind an eldritch book
         _hell.MakeHell();
     }
 
