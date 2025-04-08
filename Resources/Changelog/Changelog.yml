@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MissKay1994
-  changes:
-  - message: The salvage vendor now has enough equipment for everyone
-    type: Tweak
-  id: 7639
-  time: '2024-11-23T02:53:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33437
 - author: slarticodefast
   changes:
   - message: The AI and observers can now see if doors are electrified.
@@ -3891,3 +3884,11 @@
   id: 8138
   time: '2025-04-06T06:48:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35914
+- author: K-Dynamic
+  changes:
+  - message: Normalised ziptie box; reduced ziptie box storage from 4x5 to 3x3 (item
+      shape unchanged), reduced zipties from 10 to 9, removed handcuff whitelist
+    type: Tweak
+  id: 8139
+  time: '2025-04-08T08:23:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35057
