@@ -5,32 +5,33 @@
 <Box Orientation="Vertical"><CommandButton Text="ui-options-tab-controls" Command="options 2"/></Box>
 
 ## Movement
-To move around, use [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][keybind="MoveDown"][keybind="MoveRight"][/bold][/color].
+To move your character around, use [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][keybind="MoveDown"][keybind="MoveRight"][/bold][/color].
 
 If you run onto slippery objects (soap, banana peels) or liquids spilt on the ground, your character will [color=cyan]slip[/color] and become momentarily stunned.
-\nHold [color=yellow][bold][keybind="Walk"][/bold][/color] to walk slowly and prevent slipping on most of them, with the exception of oil.
+\nHold [color=yellow][bold][keybind="Walk"][/bold][/color] to walk slowly and prevent slipping on most of them — one exception is [bold]oil[/bold].
 \n[italic]Note: walking can be switched to a [color=cyan]toggle[/color] in the controls menu.[/italic]
 
-[color=cyan]Pull[/color] [bold]entities[/bold] (items, objects, and mobile entities (mobs) such as players) by using [color=yellow][bold][keybind="TryPullObject"][/bold][/color] on any movable, unanchored entity.
+Use [color=yellow][bold][keybind="TryPullObject"][/bold][/color] to start [color=cyan]pulling[/color] movable [bold]entities[/bold].
+Entities include items, objects, and mobile entities (mobs) such as players.
 \nWhile pulling, you can [color=cyan]push[/color] the entity to your cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
 \nTo [color=cyan]let go[/color], press [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] or pull the same entity again.
-\n[italic]Note: you can use [color=yellow][bolditalic][keybind="Drop"][/bolditalic][/color] to let go with your active hand.[/italic]
 
-If you find yourself in [color=#EB2D3A][bold]zero gravity[/bold][/color], you'll still be able to control movement as long as you're within reach of any structure.
-But if you end up completely off station in space, you'll need to [bold]throw objects[/bold] or [bold]spray a fire extinguisher[/bold] to propel yourself according to the laws of motion.
+If you find yourself in [color=#EB2D3A][bold]zero gravity[/bold][/color], you'll still be able to control your movement as long as you're within reach of any structure.
+But if you drift completely off station and into space, you'll need to [bold]throw objects[/bold] or [bold]spray a fire extinguisher[/bold] to propel yourself according to the laws of motion.
 
 ## Hands
-You have [color=cyan]hand slots[/color] at the bottom center of your game window.
+Your character’s hands are represented by [color=cyan]hand slots[/color], which are centered along the bottom of the screen.
 \n[color=cyan]Pick up[/color] holdable items into your active hand with [color=yellow][bold][keybind="Use"][/bold][/color] — but make sure it's [bold]empty[/bold] first.
 \n[color=cyan]Swap[/color] between hands with [color=yellow][bold][keybind="SwapHands"][/bold][/color] to control which one is active.
 \nPay attention to the active hand when using item-related hotkeys — they'll only affect that hand.
 
 Use [color=yellow][bold][keybind="Drop"][/bold][/color] to [color=cyan]drop[/color] (place) an item from your hand within arm's reach.
 \n[color=cyan]Throw[/color] it to your cursor with [color=yellow][bold][keybind="ThrowItemInHand"][/bold][/color], which has a much greater range than dropping.
+\n[italic]Note: you can also use [color=yellow][bolditalic][keybind="Drop"][/bolditalic][/color] to stop pulling entities.[/italic]
 
 ## Inventory
-At the bottom of your game window, you'll find the [color=cyan]inventory bar[/color], consisting of all the icons displayed there.
-From left to right, it includes the [bold]clothing inventory[/bold] icon in the left corner, then slots for the PDA, belt, bag, hands, pockets, and back/special.
+Positioned around the hand slots, you’ll find the [color=cyan]inventory bar[/color], which contains all the icons related to your equipment and storage.
+It includes the [bold]clothing inventory[/bold] icon in the left corner, then slots for the PDA, belt, and bag, and on the right side you'll find your pockets, and the back/special slot.
 \n[italic]Note: this may vary slightly for nonhumanoid races.[/italic]
 
 The [color=cyan]clothing inventory[/color] (press [color=yellow][bold][keybind="OpenInventoryMenu"][/bold][/color] or click on it) has slots for eyes, head, neck, face, ears, body, external, hands, and shoes.
@@ -41,7 +42,7 @@ Alternatively, click the appropriate slot.
 
 You [bold]can't[/bold] swap items directly while already holding something. You need an empty hand to take any item.
 
-Quickly access your equipped bag and belt using the [color=yellow][bold][keybind="OpenBackpack"][/bold][/color] and [color=yellow][bold][keybind="OpenBelt"][/bold][/color] hotkeys, respectively.
+To quickly access your equipped bag and belt, use [color=yellow][bold][keybind="OpenBackpack"][/bold][/color] and [color=yellow][bold][keybind="OpenBelt"][/bold][/color] hotkeys, respectively.
 Alternatively, open them by using [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] on their slots or by clicking the mini-icons in the [bold]bottom right[/bold] of their icons.
 
 [color=yellow][bold][keybind="SmartEquipBackpack"][/bold][/color] stores the item from your active hand into your bag, or if your hand is empty, takes the most recently added item from the bag into your hand.
@@ -63,7 +64,7 @@ Some items have [color=cyan]alternative interactions[/color].
 
 Many items have [color=cyan]use-in-hand interactions[/color], such as opening a bottle, reloading a gun or switching to holding an axe with both hands.
 \nTo activate or use a held item, press the [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] hotkey (or click [color=yellow][bold][keybind="Use"][/bold][/color] on it).
-\For alternative interactions, use the [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] hotkey (or click [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] on it).
+\nFor alternative interactions, use the [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] hotkey (or click [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] on it).
 
 Interact with objects even when your hands are full by performing [color=cyan]activation interactions[/color] with [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
 This allows you to interact with the world without picking items up and without using the items you're holding.
@@ -73,7 +74,7 @@ You can also perform regular interactions with items stored in an inventory.
 
 ## Menus
 Click [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on any interactive entity to open the [color=cyan]context menu[/color], which displays the [bolditalic]Standard Interaction[/bolditalic], [bold]Activation Interaction[/bold], [italic]Alternative Interaction[/italic] (usually formatted like that), and any other possible interactions, all in one list.
-If you use it on a pile of items, you'll open the [color=cyan]entity menu[/color], listing the ovelapping entities you can interact with.
+If you use it on a pile of items, you'll open the [color=cyan]entity menu[/color], listing the overlapping entities you can interact with.
 
 If you're ever unsure about any entity, whether it's an object or a mob, [color=cyan]examine[/color] it with [color=yellow][bold][keybind="ExamineEntity"][/bold][/color].
 You can also do that while browsing a list of entities ([color=yellow][bold][keybind="UIRightClick"/][/bold][/color]).
