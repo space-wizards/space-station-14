@@ -1,0 +1,11 @@
+﻿- type: microwaveMealRecipe
+- id: RecipeDreamingCake
+- name: Dreaming cake Recipe
+- result: FoodResomiCake
+- time: 25
+- reagents:
+    Sugar: 5
+- solids:
+    LeftHandResomi: 1
+    RightHandResomi: 1
+    FoodCakePlain: 1

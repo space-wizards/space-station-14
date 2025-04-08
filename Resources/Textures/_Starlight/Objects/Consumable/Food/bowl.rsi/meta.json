@@ -8,13 +8,10 @@
     },
     "states": [
         {
-            "name": "plate"
+            "name": "bowl"
         },
         {
-            "name": "baked_vulpkanin"
-        },
-        {
-            "name": "FriedNoidCooked"
+            "name": "MothSoup"
         }
     ]
 }
