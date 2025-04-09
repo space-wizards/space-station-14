@@ -95,7 +95,7 @@ namespace Content.Server.Cargo.Systems
                 bank.NextIncomeTime += bank.IncomeDelay;
 
                 var balanceToAdd = (int) Math.Round(bank.IncreasePerSecond * bank.IncomeDelay.TotalSeconds);
-                UpdateBankAccount((uid, bank), balanceToAdd, bank.BaselineDistribution);
+                UpdateBankAccount((uid, bank), balanceToAdd, bank.RevenueDistribution);
             }
         }
 

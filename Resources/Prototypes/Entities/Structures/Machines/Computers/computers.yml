@@ -1140,6 +1140,43 @@
 
 - type: entity
   parent: BaseComputerAiAccess
+  id: ComputerFundingAllocation
+  name: funding allocation computer
+  description: Terminal for controlling the distribution of funds and pay to departments.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: allocate # ALLOCATION !!!
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: FundingAllocationConsole
+  - type: ActivatableUI
+    key: enum.FundingAllocationConsoleUiKey.Key
+  - type: ActivatableUIRequiresAccess
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
+  - type: UserInterface
+    interfaces:
+      enum.FundingAllocationConsoleUiKey.Key:
+        type: FundingAllocationConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: FundingAllocationComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3c5eb5"
+
+- type: entity
+  parent: BaseComputerAiAccess
   id: ComputerCloningConsole
   name: cloning console computer
   description: The centerpiece of the cloning system, medicine's greatest accomplishment. It has lots of ports and wires.

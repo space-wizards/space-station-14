@@ -51,3 +51,13 @@ cargo-shuttle-console-station-unknown = Unknown
 cargo-shuttle-console-shuttle-not-found = Not found
 cargo-shuttle-console-organics = Detected organic lifeforms on the shuttle
 cargo-no-shuttle = No cargo shuttle found!
+
+# Funding allocation console
+cargo-funding-alloc-console-menu-title = Funding Allocation Console
+cargo-funding-alloc-console-label-account = [bold]Account[/bold]
+cargo-funding-alloc-console-label-code = [bold]Code[/bold]
+cargo-funding-alloc-console-label-balance = [bold]Balance[/bold]
+cargo-funding-alloc-console-label-cut = [bold]Revenue Division (%)[/bold]
+
+cargo-funding-alloc-console-button-save = Save Changes
+cargo-funding-alloc-console-label-save-fail = [bold][color=red]Revenue Divisions Must Sum to 100![/color][/bold]

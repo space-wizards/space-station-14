@@ -40,7 +40,7 @@ public sealed partial class StationBankAccountComponent : Component
     /// A baseline distribution used for income and dispersing leftovers after sale.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<ProtoId<CargoAccountPrototype>, double> BaselineDistribution = new()
+    public Dictionary<ProtoId<CargoAccountPrototype>, double> RevenueDistribution = new()
     {
         { "Cargo",       0.00 },
         { "Engineering", 0.25 },
@@ -54,7 +54,7 @@ public sealed partial class StationBankAccountComponent : Component
     /// How much the bank balance goes up per second, every Delay period. Rounded down when multiplied.
     /// </summary>
     [DataField]
-    public int IncreasePerSecond = 1;
+    public int IncreasePerSecond = 2;
 
     /// <summary>
     /// The time at which the station will receive its next deposit of passive income
@@ -66,5 +66,5 @@ public sealed partial class StationBankAccountComponent : Component
     /// How much time to wait (in seconds) before increasing bank accounts balance.
     /// </summary>
     [DataField]
-    public TimeSpan IncomeDelay = TimeSpan.FromSeconds(100);
+    public TimeSpan IncomeDelay = TimeSpan.FromSeconds(50);
 }

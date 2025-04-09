@@ -162,6 +162,21 @@
   - type: StaticPrice
     price: 750
 
+
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: FundingAllocationComputerCircuitboard
+  name: funding allocation computer board
+  description: A computer printed circuit board for a funding allocation card console.
+  components:
+  - type: Sprite
+    state: cpu_command
+  - type: ComputerBoard
+    prototype: ComputerFundingAllocation
+  - type: StaticPrice
+    price: 750
+
 - type: entity
   parent: BaseComputerCircuitboard
   id: CargoSaleComputerCircuitboard

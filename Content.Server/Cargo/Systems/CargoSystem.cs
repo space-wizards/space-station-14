@@ -66,6 +66,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
         InitializeShuttle();
         InitializeTelepad();
         InitializeBounty();
+        InitializeFunds();
     }
 
     public override void Update(float frameTime)

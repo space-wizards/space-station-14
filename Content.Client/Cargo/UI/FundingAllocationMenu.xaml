@@ -1,0 +1,22 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      Title="{Loc 'cargo-funding-alloc-console-menu-title'}"
+                      SetSize="680 350"
+                      MinSize="620 350">
+    <BoxContainer Orientation="Vertical"
+                  VerticalExpand="True"
+                  HorizontalExpand="True"
+                  Margin="10">
+        <GridContainer Name="EntriesContainer" Columns="4" HorizontalExpand="True" VerticalExpand="True" HSeparationOverride="10" VSeparationOverride="0">
+            <RichTextLabel Text="{Loc 'cargo-funding-alloc-console-label-account'}" HorizontalAlignment="Center"/>
+            <RichTextLabel Text="{Loc 'cargo-funding-alloc-console-label-code'}" HorizontalAlignment="Center"/>
+            <RichTextLabel Text="{Loc 'cargo-funding-alloc-console-label-balance'}" HorizontalAlignment="Center"/>
+            <RichTextLabel Text="{Loc 'cargo-funding-alloc-console-label-cut'}" HorizontalAlignment="Center"/>
+        </GridContainer>
+        <Control MinHeight="20"/>
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="15 0">
+            <Button Name="SaveButton" Text="{Loc 'cargo-funding-alloc-console-button-save'}"  Disabled="True"/>
+            <RichTextLabel Name="SaveAlertLabel" Text="{Loc 'cargo-funding-alloc-console-label-save-fail'}" HorizontalExpand="True" HorizontalAlignment="Right" Modulate="#FF0000" Visible="False"/>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

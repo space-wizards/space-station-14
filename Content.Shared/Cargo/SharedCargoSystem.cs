@@ -42,7 +42,7 @@ public abstract class SharedCargoSystem : EntitySystem
         };
         var remaining = 1.0 - primaryCut;
 
-        var allAccountPercentages = new Dictionary<ProtoId<CargoAccountPrototype>, double>(stationBank.BaselineDistribution);
+        var allAccountPercentages = new Dictionary<ProtoId<CargoAccountPrototype>, double>(stationBank.RevenueDistribution);
         allAccountPercentages.Remove(primary);
         var weightsSum = allAccountPercentages.Values.Sum();
 
