@@ -34,7 +34,7 @@ Use [color=yellow][bold][keybind="Drop"][/bold][/color] to [color=cyan]drop[/col
 ## Inventory
 Positioned around the hand slots, you’ll find the [color=cyan]inventory bar[/color], which contains all the icons related to your equipment and storage.
 It includes the [bold]clothing inventory[/bold] icon in the left corner, followed by slots for your PDA, belt, and the back slot (for bags, guns, etc.).
-On the right side, you'll find your pockets, useful for storing items for quick use, and the special [bold]suit slot[/bold], used only when wearing a space suit, hardsuit or armor, which can store items like oxygen tanks or guns.
+On the right side, you'll find your pockets, useful for storing items for quick use, and the special [bold]suit storage slot[/bold], used only when wearing a space suit, hardsuit or armor, which can store items like oxygen tanks or guns.
 \n[italic]Note: this may slightly vary for nonhumanoid races.[/italic]
 
 The [color=cyan]clothing inventory[/color] (press [color=yellow][bold][keybind="OpenInventoryMenu"][/bold][/color] or click the icon) has slots for eyes, head, neck, face, ears, body, external, hands, and shoes.
@@ -47,11 +47,11 @@ You [bold]can't[/bold] swap items directly while already holding something. You 
 
 To quickly access your equipped bag and belt, use the hotkeys [color=yellow][bold][keybind="OpenBackpack"][/bold][/color] and [color=yellow][bold][keybind="OpenBelt"][/bold][/color], respectively.
 Alternatively, open them by using [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] on their slots or by clicking the mini-icons in the [bold]bottom right[/bold] of their icons.
-\nTip: you can sacrifice your bag to use the back slot for storing guns and other items that would normally fit in the suit slot.
+\n[italic]Tip: you can sacrifice your bag to use the back slot for storing guns and other items that would normally fit in the suit slot.[/italic]
 
 [color=yellow][bold][keybind="SmartEquipBackpack"][/bold][/color] stores the item from your active hand into your bag, or if your hand is empty, takes the most recently added item from the bag into your hand.
 \n[color=yellow][bold][keybind="SmartEquipBelt"][/bold][/color] does the same for your belt, making tool access faster.
-If you're using the back slot for storing single items, use [color=yellow][bold][keybind="SmartEquipBackpack"][/bold][/color] for quick access.
+\n[italic]Tip: if you're using the back slot for storing single items, [color=yellow][bolditalic][keybind="SmartEquipBackpack"][/bolditalic][/color] also allows quick access to them.[/italic]
 
 You can organize grid inventories (containers such as bags and belts) by [color=cyan]dragging[/color] items from one spot to another [bold]within the same container[/bold] by holding [color=yellow][bold][keybind="MoveStoredItem"][/bold][/color], and [color=cyan]rotate[/color] them on the grid with [color=yellow][bold][keybind="RotateStoredItem"][/bold][/color].
 Clicking [color=yellow][bold][keybind="MoveStoredItem"][/bold][/color] on an item in a container will just [color=cyan]take it out[/color].
