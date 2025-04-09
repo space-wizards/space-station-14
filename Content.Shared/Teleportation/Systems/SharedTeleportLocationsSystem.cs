@@ -1,6 +1,4 @@
-﻿using Content.Shared.Mind;
-using Content.Shared.Speech;
-using Content.Shared.Teleportation.Components;
+﻿using Content.Shared.Teleportation.Components;
 using Content.Shared.Timing;
 using Content.Shared.UserInterface;
 
@@ -10,6 +8,7 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xForm = default!;
     [Dependency] private readonly UseDelaySystem _delay = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _uI = default!;
 
     private const string TeleportDelay = "TeleportDelay";
 
@@ -45,5 +44,11 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
         SpawnAtPosition(comp.TeleportEffect, destination);
 
         _delay.TryResetDelay(ent.Owner, true, id: TeleportDelay);
+
+        if (!ent.Comp.CloseAfterTeleport)
+            return;
+
+        // Teleport's done, now tell the BUI to close if needed.
+        _uI.ServerSendUiMessage(ent.Owner, TeleportLocationUiKey.Key, new TeleportLocationRequestCloseMessage());
     }
 }
