@@ -47,7 +47,7 @@ namespace Content.Client.Construction.UI
         private string _favoriteCatName = "construction-category-favorites";
         private string _forAllCategoryName = "construction-category-all";
         /// <summary>How many recipes to remember in recipe history.</summary>
-        private int _recipeHistoryMaxLength = 50;
+        private int _recipeHistoryLimit = 50;
         private bool CraftingAvailable
         {
             get => _uiManager.GetActiveUIWidget<GameTopMenuBar>().CraftingButton.Visible;
@@ -457,7 +457,7 @@ namespace Content.Client.Construction.UI
             _recipeHistorySelectedIndex++;
 
 
-            if (_recipeHistory.Count > _recipeHistoryMaxLength)
+            if (_recipeHistory.Count > _recipeHistoryLimit)
             {
                 logger.Info("recipe limit reached, removing oldest entry");
                 _recipeHistory.RemoveAt(0);
