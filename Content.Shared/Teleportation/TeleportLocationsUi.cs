@@ -15,7 +15,8 @@ public sealed class TeleportLocationRequestPointsMessage() : BoundUserInterfaceM
 }
 
 [Serializable, NetSerializable]
-public sealed class TeleportLocationRequestTeleportMessage(NetEntity netEnt) : BoundUserInterfaceMessage
+public sealed class TeleportLocationRequestTeleportMessage(NetEntity netEnt, string pointName) : BoundUserInterfaceMessage
 {
     public NetEntity NetEnt = netEnt;
+    public string PointName = pointName;
 }

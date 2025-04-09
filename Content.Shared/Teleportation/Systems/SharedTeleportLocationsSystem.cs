@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Mind;
+using Content.Shared.Speech;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.UserInterface;
 
@@ -20,17 +21,24 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
     {
         // TODO: If secondary use delay is active, return
 
-        ent.Comp.ScrollOwner ??= args.User;
+        ent.Comp.TeleLocOwner ??= args.User;
     }
 
-    private void OnTeleportLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationRequestTeleportMessage args)
+    protected virtual void OnTeleportLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationRequestTeleportMessage args)
     {
-        if (ent.Comp.ScrollOwner is null || !TryGetEntity(args.NetEnt, out var telePointEnt))
+        if (ent.Comp.TeleLocOwner is null || !TryGetEntity(args.NetEnt, out var telePointEnt))
             return;
 
-        _xForm.SetCoordinates(ent.Comp.ScrollOwner.Value, Transform(telePointEnt.Value).Coordinates);
+        var comp = ent.Comp;
+        var originEnt = comp.TeleLocOwner.Value;
+        var destination = Transform(telePointEnt.Value).Coordinates;
 
-        // TODO: After warp, emit smoke
+        SpawnAtPosition(comp.TeleportEffect, Transform(originEnt).Coordinates);
+
+        _xForm.SetCoordinates(originEnt, destination);
+
+        SpawnAtPosition(comp.TeleportEffect, destination);
+
         // TODO: On warp, announce warp point
     }
 }

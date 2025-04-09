@@ -1,13 +1,15 @@
-﻿using Content.Server.Warps;
+﻿using Content.Server.Chat.Systems;
+using Content.Server.Warps;
 using Content.Shared.Teleportation;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
-using Content.Shared.UserInterface;
 
 namespace Content.Server.Teleportation;
 
 public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSystem
 {
+    [Dependency] private readonly ChatSystem _chat = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -39,5 +41,15 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
         }
 
         Dirty(ent);
+    }
+
+    protected override void OnTeleportLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationRequestTeleportMessage args)
+    {
+        if (ent.Comp.TeleLocOwner is null)
+            return;
+
+        _chat.TrySendInGameICMessage(ent.Comp.TeleLocOwner.Value, $"CHAOS CONTROL ({args.PointName})", InGameICChatType.Speak, ChatTransmitRange.Normal);
+
+        base.OnTeleportLocationRequest(ent, ref args);
     }
 }

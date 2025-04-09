@@ -14,7 +14,7 @@ public sealed partial class TeleportMenu : DefaultWindow
 
     public event EventHandler<string>? SearchTextUpdated;
 
-    public event Action<NetEntity>? TeleportClicked;
+    public event Action<NetEntity, string>? TeleportClicked;
 
     public TeleportMenu()
     {
@@ -40,7 +40,7 @@ public sealed partial class TeleportMenu : DefaultWindow
                 ClipText = true,
             };
 
-            currentButtonRef.OnPressed += _ => TeleportClicked?.Invoke(teleportPoint);
+            currentButtonRef.OnPressed += _ => TeleportClicked?.Invoke(teleportPoint, name);
             //currentButtonRef.Visible = ButtonIsVisible(currentButtonRef);
 
             TeleportButtonContainer.AddChild(currentButtonRef);

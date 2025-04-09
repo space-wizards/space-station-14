@@ -31,9 +31,9 @@ public sealed class TeleportLocationsBoundUserInterface : BoundUserInterface
         _menu._warps = teleComp.AvailableWarps;
         _menu.AddTeleportButtons();
 
-        _menu.TeleportClicked += netEnt =>
+        _menu.TeleportClicked += (netEnt, pointName) =>
         {
-            SendMessage(new TeleportLocationRequestTeleportMessage(netEnt));
+            SendMessage(new TeleportLocationRequestTeleportMessage(netEnt, pointName));
         };
     }
 }
