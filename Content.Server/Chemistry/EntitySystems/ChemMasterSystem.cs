@@ -1,5 +1,4 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Labels;
 using Content.Server.Popups;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Administration.Logs;
@@ -19,6 +18,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Labels.EntitySystems;
 
 namespace Content.Server.Chemistry.EntitySystems
 {

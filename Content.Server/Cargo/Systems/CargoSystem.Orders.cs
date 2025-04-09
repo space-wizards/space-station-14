@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Cargo.Components;
-using Content.Server.Labels.Components;
 using Content.Server.Station.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
@@ -11,6 +10,7 @@ using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Labels.Components;
 using Content.Shared.Paper;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
