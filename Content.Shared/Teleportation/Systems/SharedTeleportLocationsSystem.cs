@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Mind;
 using Content.Shared.Speech;
 using Content.Shared.Teleportation.Components;
+using Content.Shared.Timing;
 using Content.Shared.UserInterface;
 
 namespace Content.Shared.Teleportation.Systems;
@@ -8,6 +9,9 @@ namespace Content.Shared.Teleportation.Systems;
 public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xForm = default!;
+    [Dependency] private readonly UseDelaySystem _delay = default!;
+
+    private const string TeleportDelay = "TeleportDelay";
 
     public override void Initialize()
     {
@@ -19,7 +23,8 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 
     private void OnUiOpenAttempt(Entity<TeleportLocationsComponent> ent, ref ActivatableUIOpenAttemptEvent args)
     {
-        // TODO: If secondary use delay is active, return
+        if (_delay.IsDelayed(ent.Owner, TeleportDelay))
+            return;
 
         ent.Comp.TeleLocOwner ??= args.User;
     }
@@ -39,6 +44,6 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 
         SpawnAtPosition(comp.TeleportEffect, destination);
 
-        // TODO: On warp, announce warp point
+        _delay.TryResetDelay(ent.Owner, true, id: TeleportDelay);
     }
 }

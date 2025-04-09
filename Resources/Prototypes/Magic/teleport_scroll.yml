@@ -16,3 +16,8 @@
     - state: spell_default
   - type: TeleportLocations
     teleportEffect: WizardSmoke
+  - type: UseDelay
+    delay: 1
+    delays:
+      TeleportDelay: !type:UseDelayInfo
+        length: 120
