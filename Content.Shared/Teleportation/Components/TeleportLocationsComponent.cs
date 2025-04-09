@@ -22,6 +22,12 @@ public sealed partial class TeleportLocationsComponent : Component
     /// </summary>
     [DataField]
     public EntProtoId? TeleportEffect;
+
+    /// <summary>
+    ///     Should this close the BUI after teleport?
+    /// </summary>
+    [DataField]
+    public bool CloseAfterTeleport;
 }
 
 [Serializable, NetSerializable]

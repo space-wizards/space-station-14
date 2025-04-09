@@ -16,6 +16,7 @@
     - state: spell_default
   - type: TeleportLocations
     teleportEffect: WizardSmoke
+    closeAfterTeleport: true
   - type: UseDelay
     delay: 1
     delays:
