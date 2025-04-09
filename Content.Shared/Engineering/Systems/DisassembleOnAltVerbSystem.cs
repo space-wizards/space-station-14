@@ -1,19 +1,21 @@
-using Content.Shared.Engineering.Components;
 using Content.Shared.DoAfter;
-using Content.Shared.Verbs;
+using Content.Shared.Engineering.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Verbs;
 using Robust.Shared.Network;
 
-namespace Content.Shared.Engineering.EntitySystems;
+namespace Content.Shared.Engineering.Systems;
 
-public sealed class SharedDisassembleOnAltVerbSystem : EntitySystem
+public sealed partial class DisassembleOnAltVerbSystem : EntitySystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly INetManager _net = default!;
+
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<DisassembleOnAltVerbComponent, GetVerbsEvent<AlternativeVerb>>(AddDisassembleVerb);
         SubscribeLocalEvent<DisassembleOnAltVerbComponent, DisassembleDoAfterEvent>(OnDisassembleDoAfter);
     }
@@ -54,6 +56,6 @@ public sealed class SharedDisassembleOnAltVerbSystem : EntitySystem
         if (TrySpawnNextTo(entity.Comp.PrototypeToSpawn, entity.Owner, out var spawnedEnt))
             _handsSystem.TryPickup(args.User, spawnedEnt.Value);
 
-        EntityManager.QueueDeleteEntity(entity.Owner);
+        QueueDel(entity.Owner);
     }
 }
