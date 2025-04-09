@@ -40,6 +40,8 @@ public sealed class SupportExchangeLogging
         EntityUid? senderEntity,
         string? senderEntityName,
         bool isAdminned,
+        bool adminOnly,
+        bool silentBwoink,
         NetUserId supportTargetId,
         bool targetOnline,
         string message
@@ -51,6 +53,8 @@ public sealed class SupportExchangeLogging
             senderEntity?.ToString() ?? string.Empty,
             senderEntityName ?? string.Empty,
             isAdminned,
+            adminOnly,
+            silentBwoink,
             adminsOnline,
             targetOnline,
             roundStatus

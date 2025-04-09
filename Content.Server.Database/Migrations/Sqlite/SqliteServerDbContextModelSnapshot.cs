@@ -15,7 +15,7 @@ namespace Content.Server.Database.Migrations.Sqlite
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.1");
 
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
@@ -264,8 +264,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("expiration_time");
 
-                    b.Property<DateTime?>("LastEditedAt")
-                        .IsRequired()
+                    b.Property<DateTime>("LastEditedAt")
                         .HasColumnType("TEXT")
                         .HasColumnName("last_edited_at");
 
@@ -393,8 +392,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("expiration_time");
 
-                    b.Property<DateTime?>("LastEditedAt")
-                        .IsRequired()
+                    b.Property<DateTime>("LastEditedAt")
                         .HasColumnType("TEXT")
                         .HasColumnName("last_edited_at");
 
@@ -1291,8 +1289,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.HasKey("SupportExchangeId")
                         .HasName("PK_support_exchanges");
 
-                    b.HasIndex("SupportRound");
-
                     b.HasIndex("SupportRound", "SupportTargetPlayer")
                         .IsUnique();
 
@@ -1978,30 +1974,34 @@ namespace Content.Server.Database.Migrations.Sqlite
                                 .HasColumnType("INTEGER")
                                 .HasColumnName("support_message_id");
 
+                            b1.Property<bool>("AdminOnly")
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("support_data_admin_only");
+
                             b1.Property<bool>("AdminsOnline")
                                 .HasColumnType("INTEGER")
-                                .HasColumnName("support_data__admins_online");
+                                .HasColumnName("support_data_admins_online");
 
                             b1.Property<bool>("IsAdminned")
                                 .HasColumnType("INTEGER")
-                                .HasColumnName("support_data__is_adminned");
+                                .HasColumnName("support_data_is_adminned");
 
                             b1.Property<string>("RoundStatus")
                                 .IsRequired()
                                 .HasColumnType("TEXT")
-                                .HasColumnName("support_data__round_status");
+                                .HasColumnName("support_data_round_status");
 
                             b1.Property<string>("SenderEntity")
                                 .HasColumnType("TEXT")
-                                .HasColumnName("support_data__sender_entity");
+                                .HasColumnName("support_data_sender_entity");
 
                             b1.Property<string>("SenderEntityName")
                                 .HasColumnType("TEXT")
-                                .HasColumnName("support_data__sender_entity_name");
+                                .HasColumnName("support_data_sender_entity_name");
 
                             b1.Property<bool>("TargetOnline")
                                 .HasColumnType("INTEGER")
-                                .HasColumnName("support_data__target_online");
+                                .HasColumnName("support_data_target_online");
 
                             b1.HasKey("SupportMessageSupportExchangeId", "SupportMessageId");
 

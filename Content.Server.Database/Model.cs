@@ -810,6 +810,8 @@ namespace Content.Server.Database
         public string? SenderEntity { get; set; }
         public string? SenderEntityName { get; set; }
         public bool IsAdminned { get; set; }
+        public bool AdminOnly { get; set; }
+        public bool SilentBwoink { get; set; }
         public bool AdminsOnline { get; set; }
         public bool TargetOnline { get; set; }
         public string RoundStatus { get; set; }
@@ -820,6 +822,8 @@ namespace Content.Server.Database
         /// <param name="senderEntity">The ID of the entity that sent the message, if applicable.</param>
         /// <param name="senderEntityName">The name of the entity that sent the message, if applicable.</param>
         /// <param name="isAdminned">Indicates whether the sender of the message was adminned at the time of the message sending</param>
+        /// <param name="adminOnly">Indicates whether the message is admin only</param>
+        /// <param name="silentBwoink">Indicates whether the ahelp was silent or not</param>
         /// <param name="adminsOnline">Indicates whether admins are currently online.</param>
         /// <param name="targetOnline">Indicates whether the target player is currently online.</param>
         /// <param name="roundStatus">The current status of the round when the message was sent.</param>
@@ -827,6 +831,8 @@ namespace Content.Server.Database
             string? senderEntity,
             string senderEntityName,
             bool isAdminned,
+            bool adminOnly,
+            bool silentBwoink,
             bool adminsOnline,
             bool targetOnline,
             string roundStatus
@@ -835,6 +841,8 @@ namespace Content.Server.Database
             this.SenderEntity = senderEntity;
             this.SenderEntityName = senderEntityName;
             this.IsAdminned = isAdminned;
+            this.AdminOnly = adminOnly;
+            this.SilentBwoink = silentBwoink;
             this.AdminsOnline = adminsOnline;
             this.TargetOnline = targetOnline;
             this.RoundStatus = roundStatus;

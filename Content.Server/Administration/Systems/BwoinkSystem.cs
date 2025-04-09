@@ -701,6 +701,8 @@ namespace Content.Server.Administration.Systems
                 senderId: senderSession.UserId,
                 senderEntity: senderSession.AttachedEntity,
                 isAdminned: senderAdmin is {Active: true},
+                adminOnly: message.AdminOnly,
+                silentBwoink: playSound,
                 senderEntityName: senderSession.Name,
                 supportTargetId: message.UserId,
                 targetOnline: targetOnline,
