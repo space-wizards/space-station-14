@@ -20,15 +20,15 @@
         !type:ImageParallaxTextureSource
         path: "/Textures/Parallaxes/Asteroids.png"
       slowness: 0.990
-      scale: "0.5, 0.5"
+      scale: "0.4, 0.4"
       worldHomePosition: "20.0, 100.0"
       scrolling: "0.01, 0.0"
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Parallaxes/Asteroids.png"
       slowness: 0.987
-      scale: "0.8, 0.8"
-      scrolling: "-10.0, 0.0"
+      scale: "0.6, 0.6"
+      scrolling: "-0.01, 0.0"
     - texture:
         !type:ImageParallaxTextureSource
         path: "/Textures/Parallaxes/debris_large.png"
@@ -41,7 +41,7 @@
         path: "/Textures/Parallaxes/debris_small.png"
       slowness: 0.95
       scale: "0.50, 0.50"
-      scrolling: "-0.03, 0.0"
+      scrolling: "-0.02, 0.0"
       worldHomePosition: "0.0, 100"
   layersLQ:
     - texture:
