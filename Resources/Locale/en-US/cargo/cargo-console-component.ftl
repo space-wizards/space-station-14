@@ -1,10 +1,11 @@
 ## UI
 cargo-console-menu-title = Cargo request console
-cargo-console-menu-account-name-label = Account name:{" "}
+cargo-console-menu-account-name-label = Account:{" "}
 cargo-console-menu-account-name-none-text = None
+cargo-console-menu-account-name-format = [bold][color={$color}]{$name}[/color][/bold] [font="Monospace"]\[{$code}\][/font]
 cargo-console-menu-shuttle-name-label = Shuttle name:{" "}
 cargo-console-menu-shuttle-name-none-text = None
-cargo-console-menu-points-label = Spesos:{" "}
+cargo-console-menu-points-label = Balance:{" "}
 cargo-console-menu-points-amount = ${$amount}
 cargo-console-menu-shuttle-status-label = Shuttle status:{" "}
 cargo-console-menu-shuttle-status-away-text = Away
@@ -32,14 +33,17 @@ cargo-console-unfulfilled = No room to fulfill order
 cargo-console-trade-station = Sent to {$destination}
 cargo-console-unlock-approved-order-broadcast = [bold]{$productName} x{$orderAmount}[/bold], which cost [bold]{$cost}[/bold], was approved by [bold]{$approver}[/bold]
 
+cargo-console-paper-reason-default = None
+cargo-console-paper-approver-default = Self
 cargo-console-paper-print-name = Order #{$orderNumber}
-cargo-console-paper-print-text =
-    Order #{$orderNumber}
-    Item: {$itemName}
-    Quantity: {$orderQuantity}
-    Requested by: {$requester}
-    Reason: {$reason}
-    Approved by: {$approver}
+cargo-console-paper-print-text = [head=2]Order #{$orderNumber}[/head]
+    {"[bold]Item:[/bold]"} {$itemName} (x{$orderQuantity})
+    {"[bold]Requested by:[/bold]"} {$requester}
+
+    {"[head=3]Order Information[/head]"}
+    {"[bold]Payer[/bold]:"} {$account} [font="Monospace"]\[{$accountcode}\][/font]
+    {"[bold]Reason:[/bold]"} {$reason}
+    {"[bold]Approved by:[/bold]"} {$approver}
 
 # Cargo shuttle console
 cargo-shuttle-console-menu-title = Cargo shuttle console

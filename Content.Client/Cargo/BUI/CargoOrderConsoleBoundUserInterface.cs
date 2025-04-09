@@ -1,6 +1,7 @@
 using Content.Shared.Cargo;
 using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.BUI;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.IdentityManagement;
@@ -14,6 +15,8 @@ namespace Content.Client.Cargo.BUI
 {
     public sealed class CargoOrderConsoleBoundUserInterface : BoundUserInterface
     {
+        private SharedCargoSystem _cargoSystem;
+
         [ViewVariables]
         private CargoConsoleMenu? _menu;
 
@@ -43,6 +46,7 @@ namespace Content.Client.Cargo.BUI
 
         public CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
+            _cargoSystem = EntMan.System<SharedCargoSystem>();
         }
 
         protected override void Open()
@@ -112,18 +116,19 @@ namespace Content.Client.Cargo.BUI
         {
             base.UpdateState(state);
 
-            if (state is not CargoConsoleInterfaceState cState)
+            if (state is not CargoConsoleInterfaceState cState || !EntMan.TryGetComponent<CargoOrderConsoleComponent>(Owner, out var orderConsole))
                 return;
+            var station = EntMan.GetEntity(cState.Station);
 
             OrderCapacity = cState.Capacity;
             OrderCount = cState.Count;
-            BankBalance = cState.Balance;
+            BankBalance = _cargoSystem.GetBalanceFromAccount(station, orderConsole.Account);
 
             AccountName = cState.Name;
 
             Populate(cState.Orders);
             _menu?.UpdateCargoCapacity(OrderCount, OrderCapacity);
-            _menu?.UpdateBankData(AccountName, BankBalance);
+            _menu?.UpdateStation(station);
         }
 
         protected override void Dispose(bool disposing)

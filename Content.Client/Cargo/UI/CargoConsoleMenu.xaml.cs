@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.Cargo.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
@@ -8,6 +9,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.Cargo.UI
@@ -17,8 +19,10 @@ namespace Content.Client.Cargo.UI
     {
         private IEntityManager _entityManager;
         private IPrototypeManager _protoManager;
+        private CargoSystem _cargoSystem;
         private SpriteSystem _spriteSystem;
         private EntityUid _owner;
+        private EntityUid? _station;
 
         public event Action<ButtonEventArgs>? OnItemSelected;
         public event Action<ButtonEventArgs>? OnOrderApproved;
@@ -32,13 +36,23 @@ namespace Content.Client.Cargo.UI
             RobustXamlLoader.Load(this);
             _entityManager = entMan;
             _protoManager = protoManager;
+            _cargoSystem = entMan.System<CargoSystem>();
             _spriteSystem = spriteSystem;
             _owner = owner;
 
-            Title = Loc.GetString("cargo-console-menu-title");
+            Title = entMan.GetComponent<MetaDataComponent>(owner).EntityName;
 
             SearchBar.OnTextChanged += OnSearchBarTextChanged;
             Categories.OnItemSelected += OnCategoryItemSelected;
+
+            if (entMan.TryGetComponent<CargoOrderConsoleComponent>(owner, out var orderConsole))
+            {
+                var accountProto = _protoManager.Index(orderConsole.Account);
+                AccountNameLabel.Text = Loc.GetString("cargo-console-menu-account-name-format",
+                    ("color", accountProto.Color),
+                    ("name", Loc.GetString(accountProto.Name)),
+                    ("code", Loc.GetString(accountProto.Code)));
+            }
         }
 
         private void OnCategoryItemSelected(OptionButton.ItemSelectedEventArgs args)
@@ -164,8 +178,11 @@ namespace Content.Client.Cargo.UI
                             ("orderAmount", order.OrderQuantity),
                             ("orderRequester", order.Requester))
                     },
-                    Description = {Text = Loc.GetString("cargo-console-menu-order-reason-description",
-                                                        ("reason", order.Reason))}
+                    Description =
+                    {
+                        Text = Loc.GetString("cargo-console-menu-order-reason-description",
+                                                        ("reason", order.Reason))
+                    }
                 };
                 row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(args); };
                 if (order.Approved)
@@ -189,10 +206,23 @@ namespace Content.Client.Cargo.UI
             ShuttleCapacityLabel.Text = $"{count}/{capacity}";
         }
 
-        public void UpdateBankData(string name, int points)
+        public void UpdateStation(EntityUid station)
         {
-            AccountNameLabel.Text = name;
-            PointsLabel.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", points.ToString()));
+            _station = station;
+        }
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+
+            if (!_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bankAccount) ||
+                !_entityManager.TryGetComponent<CargoOrderConsoleComponent>(_owner, out var orderConsole))
+            {
+                return;
+            }
+
+            var balance = _cargoSystem.GetBalanceFromAccount((_station.Value, bankAccount), orderConsole.Account);
+            PointsLabel.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", balance));
         }
     }
 }

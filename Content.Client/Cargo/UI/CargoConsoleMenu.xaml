@@ -7,7 +7,7 @@
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'cargo-console-menu-account-name-label'}"
                    StyleClasses="LabelKeyText" />
-            <Label Name="AccountNameLabel"
+            <RichTextLabel Name="AccountNameLabel"
                    Text="{Loc 'cargo-console-menu-account-name-none-text'}" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">

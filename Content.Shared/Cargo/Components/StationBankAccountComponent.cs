@@ -1,0 +1,70 @@
+using Content.Shared.Cargo.Prototypes;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared.Cargo.Components;
+
+/// <summary>
+/// Added to the abstract representation of a station to track its money.
+/// </summary>
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedCargoSystem)), AutoGenerateComponentPause, AutoGenerateComponentState]
+public sealed partial class StationBankAccountComponent : Component
+{
+    /// <summary>
+    /// The account that receives funds by default
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public ProtoId<CargoAccountPrototype> PrimaryAccount = "Cargo";
+
+    /// <summary>
+    /// When giving funds to a particular account, the proportion of funds they should receive compared to remaining accounts.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public double PrimaryCut = 0.75;
+
+    /// <summary>
+    /// A dictionary corresponding to the money held by each cargo account.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<ProtoId<CargoAccountPrototype>, int> Accounts = new()
+    {
+        { "Cargo",       2000 },
+        { "Engineering", 1000 },
+        { "Medical",     1000 },
+        { "Science",     1000 },
+        { "Security",    1000 },
+        { "Service",     1000 },
+    };
+
+    /// <summary>
+    /// A baseline distribution used for income and dispersing leftovers after sale.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Dictionary<ProtoId<CargoAccountPrototype>, double> BaselineDistribution = new()
+    {
+        { "Cargo",       0.00 },
+        { "Engineering", 0.25 },
+        { "Medical",     0.30 },
+        { "Science",     0.15 },
+        { "Security",    0.20 },
+        { "Service",     0.10 },
+    };
+
+    /// <summary>
+    /// How much the bank balance goes up per second, every Delay period. Rounded down when multiplied.
+    /// </summary>
+    [DataField]
+    public int IncreasePerSecond = 1;
+
+    /// <summary>
+    /// The time at which the station will receive its next deposit of passive income
+    /// </summary>
+    [DataField, AutoPausedField]
+    public TimeSpan NextIncomeTime;
+
+    /// <summary>
+    /// How much time to wait (in seconds) before increasing bank accounts balance.
+    /// </summary>
+    [DataField]
+    public TimeSpan IncomeDelay = TimeSpan.FromSeconds(100);
+}

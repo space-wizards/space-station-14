@@ -12,6 +12,12 @@ namespace Content.Shared.Cargo.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class CargoOrderConsoleComponent : Component
 {
+    /// <summary>
+    /// The account that this console pulls from for ordering.
+    /// </summary>
+    [DataField]
+    public ProtoId<CargoAccountPrototype> Account = "Cargo";
+
     [DataField("soundError")] public SoundSpecifier ErrorSound =
         new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_sigh.ogg");
 
@@ -29,5 +35,10 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<RadioChannelPrototype> AnnouncementChannel = "Supply";
+
+    /// <summary>
+    /// Secondary radio channel which always receives order announcements.
+    /// </summary>
+    public static readonly ProtoId<RadioChannelPrototype> BaseAnnouncementChannel = "Supply";
 }
 

@@ -9,6 +9,7 @@ using Content.Shared.Administration.Logs;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
+using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Paper;
@@ -70,31 +71,29 @@ public sealed partial class CargoSystem : SharedCargoSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        UpdateConsole(frameTime);
+        UpdateConsole();
         UpdateTelepad(frameTime);
         UpdateBounty();
     }
 
     [PublicAPI]
-    public void UpdateBankAccount(Entity<StationBankAccountComponent?> ent, int balanceAdded)
+    public void UpdateBankAccount(
+        Entity<StationBankAccountComponent?> ent,
+        int balanceAdded,
+        Dictionary<ProtoId<CargoAccountPrototype>, double> accountDistribution,
+        bool dirty = true)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        ent.Comp.Balance += balanceAdded;
-
-        var ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Balance);
-
-        var query = EntityQueryEnumerator<BankClientComponent, TransformComponent>();
-        while (query.MoveNext(out var client, out var comp, out var xform))
+        foreach (var (account, percent) in accountDistribution)
         {
-            var station = _station.GetOwningStation(client, xform);
-            if (station != ent)
-                continue;
-
-            comp.Balance = ent.Comp.Balance;
-            Dirty(client, comp);
-            RaiseLocalEvent(client, ref ev);
+            var accountBalancedAdded = (int) Math.Round(percent * balanceAdded);
+            ent.Comp.Accounts[account] += accountBalancedAdded;
         }
+
+        if (!dirty)
+            return;
+        Dirty(ent);
     }
 }

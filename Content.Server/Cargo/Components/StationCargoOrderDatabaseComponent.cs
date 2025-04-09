@@ -3,7 +3,6 @@ using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Cargo.Components;
 
@@ -19,8 +18,19 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("capacity")]
     public int Capacity = 20;
 
+    public IEnumerable<CargoOrderData> AllOrders()
+    {
+        foreach (var (_, orders) in Orders)
+        {
+            foreach (var order in orders)
+            {
+                yield return order;
+            }
+        }
+    }
+
     [ViewVariables(VVAccess.ReadWrite), DataField("orders")]
-    public List<CargoOrderData> Orders = new();
+    public Dictionary<ProtoId<CargoAccountPrototype>, List<CargoOrderData>> Orders = new();
 
     /// <summary>
     /// Used to determine unique order IDs

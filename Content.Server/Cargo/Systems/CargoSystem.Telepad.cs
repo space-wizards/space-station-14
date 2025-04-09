@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Power.Components;
@@ -40,9 +41,8 @@ public sealed partial class CargoSystem
                 continue;
 
             // todo cannot be fucking asked to figure out device linking rn but this shouldn't just default to the first port.
-            if (!TryComp<DeviceLinkSinkComponent>(uid, out var sinkComponent) ||
-                sinkComponent.LinkedSources.FirstOrNull() is not { } console ||
-                console != args.OrderConsole.Owner)
+            if (!TryGetLinkedConsole((uid, tele), out var console) ||
+                console.Value.Owner != args.OrderConsole.Owner)
                 continue;
 
             for (var i = 0; i < args.Order.OrderQuantity; i++)
@@ -55,6 +55,22 @@ public sealed partial class CargoSystem
             return;
         }
     }
+
+    private bool TryGetLinkedConsole(Entity<CargoTelepadComponent> ent,
+        [NotNullWhen(true)] out Entity<CargoOrderConsoleComponent>? console)
+    {
+        console = null;
+        if (!TryComp<DeviceLinkSinkComponent>(ent, out var sinkComponent) ||
+            sinkComponent.LinkedSources.FirstOrNull() is not { } linked)
+            return false;
+
+        if (!TryComp<CargoOrderConsoleComponent>(linked, out var consoleComp))
+            return false;
+
+        console = (linked, consoleComp);
+        return true;
+    }
+
 
     private void UpdateTelepad(float frameTime)
     {
@@ -82,7 +98,7 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            if (comp.CurrentOrders.Count == 0)
+            if (comp.CurrentOrders.Count == 0 || !TryGetLinkedConsole((uid, comp), out var console))
             {
                 comp.Accumulator += comp.Delay;
                 continue;
@@ -90,7 +106,7 @@ public sealed partial class CargoSystem
 
             var xform = Transform(uid);
             var currentOrder = comp.CurrentOrders.First();
-            if (FulfillOrder(currentOrder, xform.Coordinates, comp.PrinterOutput))
+            if (FulfillOrder(currentOrder, console.Value.Comp.Account, xform.Coordinates, comp.PrinterOutput))
             {
                 _audio.PlayPvs(_audio.ResolveSound(comp.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));
 
@@ -128,9 +144,12 @@ public sealed partial class CargoSystem
             !TryComp<StationDataComponent>(station, out var data))
             return;
 
+        if (!TryGetLinkedConsole(ent, out var console))
+            return;
+
         foreach (var order in ent.Comp.CurrentOrders)
         {
-            TryFulfillOrder((station, data), order, db);
+            TryFulfillOrder((station, data), console.Value.Comp.Account, order, db);
         }
     }
 
