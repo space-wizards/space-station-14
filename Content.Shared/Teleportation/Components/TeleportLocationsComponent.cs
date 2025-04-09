@@ -12,10 +12,10 @@ public sealed partial class TeleportLocationsComponent : Component
     public HashSet<TeleportPoint> AvailableWarps = new();
 
     /// <summary>
-    ///
+    ///     User of this
     /// </summary>
     [DataField]
-    public EntityUid? TeleLocOwner;
+    public EntityUid? User;
 
     /// <summary>
     ///     What should spawn as an effect when the user teleports?
@@ -28,6 +28,12 @@ public sealed partial class TeleportLocationsComponent : Component
     /// </summary>
     [DataField]
     public bool CloseAfterTeleport;
+
+    /// <summary>
+    ///     Should the user speak on teleport?
+    /// </summary>
+    [DataField]
+    public string Speech = "";
 }
 
 [Serializable, NetSerializable]

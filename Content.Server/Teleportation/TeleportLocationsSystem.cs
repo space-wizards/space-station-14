@@ -45,10 +45,10 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
 
     protected override void OnTeleportLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationRequestTeleportMessage args)
     {
-        if (ent.Comp.TeleLocOwner is null)
+        if (ent.Comp.User is null)
             return;
 
-        _chat.TrySendInGameICMessage(ent.Comp.TeleLocOwner.Value, $"CHAOS CONTROL ({args.PointName})", InGameICChatType.Speak, ChatTransmitRange.Normal);
+        _chat.TrySendInGameICMessage(ent.Comp.User.Value, $"CHAOS CONTROL ({args.PointName})", InGameICChatType.Speak, ChatTransmitRange.Normal);
 
         base.OnTeleportLocationRequest(ent, ref args);
     }

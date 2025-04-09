@@ -25,16 +25,16 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
         if (_delay.IsDelayed(ent.Owner, TeleportDelay))
             return;
 
-        ent.Comp.TeleLocOwner ??= args.User;
+        ent.Comp.User ??= args.User;
     }
 
     protected virtual void OnTeleportLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationRequestTeleportMessage args)
     {
-        if (ent.Comp.TeleLocOwner is null || !TryGetEntity(args.NetEnt, out var telePointEnt))
+        if (ent.Comp.User is null || !TryGetEntity(args.NetEnt, out var telePointEnt))
             return;
 
         var comp = ent.Comp;
-        var originEnt = comp.TeleLocOwner.Value;
+        var originEnt = comp.User.Value;
         var destination = Transform(telePointEnt.Value).Coordinates;
 
         SpawnAtPosition(comp.TeleportEffect, Transform(originEnt).Coordinates);
