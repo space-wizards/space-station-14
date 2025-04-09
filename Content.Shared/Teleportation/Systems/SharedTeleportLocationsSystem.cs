@@ -23,7 +23,10 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
     private void OnUiOpenAttempt(Entity<TeleportLocationsComponent> ent, ref ActivatableUIOpenAttemptEvent args)
     {
         if (_delay.IsDelayed(ent.Owner, TeleportDelay))
+        {
+            args.Cancel();
             return;
+        }
 
         ent.Comp.User ??= args.User;
     }
