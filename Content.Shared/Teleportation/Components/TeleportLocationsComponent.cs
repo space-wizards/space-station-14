@@ -9,6 +9,9 @@ public sealed partial class TeleportLocationsComponent : Component
 {
     [DataField, AutoNetworkedField]
     public HashSet<TeleportPoint> AvailableWarps = new();
+
+    [DataField]
+    public EntityUid? ScrollOwner;
 }
 
 [Serializable, NetSerializable]
