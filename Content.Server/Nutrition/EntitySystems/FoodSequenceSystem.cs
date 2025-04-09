@@ -130,6 +130,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
             return false;
         }
 
+        //Prevents plushies with items hidden in them from being added to prevent deletion of items
         if (TryComp<SecretStashComponent>(element, out var stashComponent) && stashComponent.ItemContainer.Count != 0)
         {
             return false;
