@@ -4563,4 +4563,11 @@ Entries:
   id: 632
   time: '2025-04-09T04:05:38.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/465
+- author: Neccer, Grapegifter
+  changes:
+  - message: Added Rule 13 -> Command Member Expectations.
+    type: Add
+  id: 633
+  time: '2025-04-09T15:46:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/467
 
