@@ -60,8 +60,8 @@
           type: GasFilterBoundUserInterface
     - type: GasFilter
       enabled: false
-      transferRate: 1000
-      maxTransferRate: 1000
+      transferRate: 200
+      maxTransferRate: 200
     - type: Flippable
       mirrorEntity: GasFilterFlipped
     - type: Construction
