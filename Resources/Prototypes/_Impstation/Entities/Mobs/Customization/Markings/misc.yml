@@ -883,8 +883,8 @@
 
 - type: marking
   id: GrayFakeLashes
-  bodyPart: Head
-  markingCategory: Head
+  bodyPart: Eyes
+  markingCategory: HeadTop
   speciesRestriction: [ Gray ]
   forcedColoring: false
   followSkinColor: false

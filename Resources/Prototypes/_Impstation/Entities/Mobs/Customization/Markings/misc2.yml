@@ -76,7 +76,7 @@
 - type: marking
   id: RadiumGlowCheeks
   bodyPart: Head
-  markingCategory: Head
+  markingCategory: HeadTop
   speciesRestriction: [ Gray ]
   forcedColoring: true
   followSkinColor: false
@@ -88,7 +88,7 @@
 - type: marking
   id: RadiumGlowBrain
   bodyPart: Head
-  markingCategory: Head
+  markingCategory: HeadTop
   speciesRestriction: [ Gray ]
   forcedColoring: true
   followSkinColor: false
