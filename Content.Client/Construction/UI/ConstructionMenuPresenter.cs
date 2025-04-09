@@ -39,7 +39,7 @@ namespace Content.Client.Construction.UI
         private ConstructionSystem? _constructionSystem;
         private ConstructionPrototype? _selected;
         private List<ConstructionPrototype> _favoritedRecipes = [];
-        private List<(int categoryDisplayId, ConstructionPrototype recipe)> _recipeHistory = [];
+        private List<(int categoryDisplayId, string categoryName, ConstructionPrototype recipe)> _recipeHistory = [];
         private int _recipeHistorySelectedIndex = -1;
         private Dictionary<string, TextureButton> _recipeButtons = new();
         private Dictionary<ConstructionPrototype, TextureButton> _recipeToGridItemButtonMap = new();
@@ -311,6 +311,8 @@ namespace Content.Client.Construction.UI
 
         private void PopulateCategories(string? selectCategory = null)
         {
+            var logger = _logManager.GetSawmill("PopulateCategories");
+
             var uniqueCategories = new HashSet<string>();
 
             foreach (var prototype in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
@@ -353,6 +355,33 @@ namespace Content.Client.Construction.UI
             }
 
             _constructionView.Categories = categoriesArray;
+
+            // remap category indices in recipe history
+            for (var i = 0; i < _recipeHistory.Count; i++)
+            {
+                var entry = _recipeHistory[i];
+
+                // category index = category display ID, see "OptionCategories.AddItem" above.
+                if (entry.categoryDisplayId == 0)
+                {
+                    // 0 = "all" category. these should remain as is.
+                    continue;
+                }
+
+                var newCategoryDisplayId = Array.IndexOf(categoriesArray, entry.categoryName);
+                logger.Info($"populating categories; category '{entry.categoryName}' old index '{entry.categoryDisplayId}' new index '{newCategoryDisplayId}'");
+                if (newCategoryDisplayId == -1)
+                {
+                    // set to "all" if category wasn't found
+                    newCategoryDisplayId = 0;
+                }
+
+                if (newCategoryDisplayId != entry.categoryDisplayId)
+                {
+                    entry.categoryDisplayId = newCategoryDisplayId;
+                    _recipeHistory[i] = entry;
+                }
+            }
         }
 
         private void PopulateInfo(ConstructionPrototype prototype)
@@ -420,7 +449,7 @@ namespace Content.Client.Construction.UI
                 _recipeHistory.RemoveRange(_recipeHistorySelectedIndex + 1, elementsToDiscardCount);
             }
 
-            _recipeHistory.Add((categoryDisplayId, recipe));
+            _recipeHistory.Add((categoryDisplayId, recipe.Category, recipe));
             logger.Info("added");
 
             _recipeHistorySelectedIndex++;
