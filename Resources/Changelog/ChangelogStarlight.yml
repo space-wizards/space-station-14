@@ -4555,4 +4555,12 @@ Entries:
   id: 631
   time: '2025-04-08T06:42:30.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/457
+- author: PubliclyExecutedPig
+  changes:
+  - message: Altered the SP-91 Riot SMG, its now a burst gun, and slightly less lethal.
+      Antagonists rejoice!
+    type: Tweak
+  id: 632
+  time: '2025-04-09T04:05:38.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/465
 
