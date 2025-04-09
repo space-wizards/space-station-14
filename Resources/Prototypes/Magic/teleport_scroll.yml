@@ -4,6 +4,12 @@
   suffix: Wizard
   parent: [ BaseItem, BaseMagicalContraband ]
   components:
+  - type: UserInterface
+    interfaces:
+      enum.TeleportLocationUiKey.Key:
+        type: TeleportLocationsBoundUserInterface
+  - type: ActivatableUI
+    key: enum.TeleportLocationUiKey.Key
   - type: Sprite
     sprite: Objects/Magic/magicactions.rsi
     layers:
