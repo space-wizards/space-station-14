@@ -30,3 +30,5 @@
   - type: Thieving
     stripTimeReduction: 2
     stealthy: true
+  - type: Fiber
+    fiberMaterial: fibers-holographic-chameleon

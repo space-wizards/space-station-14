@@ -9,7 +9,8 @@ fibers-durathread = durathread
 fibers-latex = latex
 fibers-nitrile = nitrile
 fibers-nanomachines = insulative nanomachine
-fibers-chameleon = holographic chameleon
+fibers-holographic-chameleon = holographic chameleon
+fibers-chameleon = chameleon
 fibers-holographic = holographic
 fibers-rubber = rubber
 
