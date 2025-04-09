@@ -1,0 +1,24 @@
+- type: entity
+  name: binoculars
+  parent: BaseItem
+  id: Binoculars
+  description: Used for long-distance surveillance.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/binoculars.rsi
+    state: icon
+  - type: Item
+    size: Normal
+  - type: Wieldable
+  - type: UseDelay
+    delay: 1.0
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 5
+    pvsIncrease: 0.5
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Glass: 50
+  - type: StaticPrice
+    price: 100

@@ -5,6 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Tag;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Ninja.Systems;
 
@@ -13,6 +14,7 @@ namespace Content.Shared.Ninja.Systems;
 /// </summary>
 public sealed class EmagProviderSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -42,14 +44,18 @@ public sealed class EmagProviderSystem : EntitySystem
             return;
 
         // only allowed to emag non-immune entities
-        if (_tag.HasTag(target, comp.EmagImmuneTag))
+        if (_tag.HasTag(target, comp.AccessBreakerImmuneTag))
             return;
 
-        var handled = _emag.DoEmagEffect(uid, target);
-        if (!handled)
+        var emagEv = new GotEmaggedEvent(uid, EmagType.Access);
+        RaiseLocalEvent(args.Target, ref emagEv);
+
+        if (!emagEv.Handled)
             return;
 
-        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(uid):player} emagged {ToPrettyString(target):target}");
+        _audio.PlayPredicted(comp.EmagSound, uid, uid);
+
+        _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(uid):player} emagged {ToPrettyString(target):target} with flag(s): {ent.Comp.EmagType}");
         var ev = new EmaggedSomethingEvent(target);
         RaiseLocalEvent(uid, ref ev);
         args.Handled = true;
@@ -57,7 +63,7 @@ public sealed class EmagProviderSystem : EntitySystem
 }
 
 /// <summary>
-/// Raised on the player when emagging something.
+/// Raised on the player when access breaking something.
 /// </summary>
 [ByRefEvent]
 public record struct EmaggedSomethingEvent(EntityUid Target);

@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
@@ -54,9 +53,9 @@ public abstract partial class SharedStationAiSystem
     }
 
     /// <summary>
-    /// Tries to get the entity held in the AI core.
+    /// Tries to get the entity held in the AI core using StationAiCore.
     /// </summary>
-    private bool TryGetHeld(Entity<StationAiCoreComponent?> entity, out EntityUid held)
+    public bool TryGetHeld(Entity<StationAiCoreComponent?> entity, out EntityUid held)
     {
         held = EntityUid.Invalid;
 
@@ -71,8 +70,22 @@ public abstract partial class SharedStationAiSystem
         return true;
     }
 
-    private bool TryGetCore(EntityUid ent, out Entity<StationAiCoreComponent?> core)
+    /// <summary>
+    /// Tries to get the entity held in the AI using StationAiHolder.
+    /// </summary>
+    public bool TryGetHeld(Entity<StationAiHolderComponent?> entity, out EntityUid held)
     {
+        TryComp<StationAiCoreComponent>(entity.Owner, out var stationAiCore);
+
+        return TryGetHeld((entity.Owner, stationAiCore), out held);
+    }
+
+    public bool TryGetCore(EntityUid entity, out Entity<StationAiCoreComponent?> core)
+    {
+        var xform = Transform(entity);
+        var meta = MetaData(entity);
+        var ent = new Entity<TransformComponent?, MetaDataComponent?>(entity, xform, meta);
+
         if (!_containers.TryGetContainingContainer(ent, out var container) ||
             container.ID != StationAiCoreComponent.Container ||
             !TryComp(container.Owner, out StationAiCoreComponent? coreComp) ||
@@ -112,6 +125,15 @@ public abstract partial class SharedStationAiSystem
            (!TryComp(ev.Target, out StationAiWhitelistComponent? whitelistComponent) ||
             !ValidateAi((ev.Actor, aiComp))))
         {
+            // Don't allow the AI to interact with anything that isn't powered.
+            if (!PowerReceiver.IsPowered(ev.Target))
+            {
+                ShowDeviceNotRespondingPopup(ev.Actor);
+                ev.Cancel();
+                return;
+            }
+
+            // Don't allow the AI to interact with anything that it isn't allowed to (ex. AI wire is cut)
             if (whitelistComponent is { Enabled: false })
             {
                 ShowDeviceNotRespondingPopup(ev.Actor);
@@ -136,7 +158,8 @@ public abstract partial class SharedStationAiSystem
     private void OnTargetVerbs(Entity<StationAiWhitelistComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanComplexInteract
-            || !HasComp<StationAiHeldComponent>(args.User))
+            || !HasComp<StationAiHeldComponent>(args.User)
+            || !args.CanInteract)
         {
             return;
         }
@@ -150,15 +173,8 @@ public abstract partial class SharedStationAiSystem
         var verb = new AlternativeVerb
         {
             Text = isOpen ? Loc.GetString("ai-close") : Loc.GetString("ai-open"),
-            Act = () => 
+            Act = () =>
             {
-                // no need to show menu if device is not powered.
-                if (!PowerReceiver.IsPowered(ent.Owner))
-                {
-                    ShowDeviceNotRespondingPopup(user);
-                    return;
-                }
-
                 if (isOpen)
                 {
                     _uiSystem.CloseUi(ent.Owner, AiUi.Key, user);

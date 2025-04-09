@@ -283,6 +283,7 @@
   - type: Injector
     injectOnly: false
     ignoreMobs: true
+    ignoreClosed: false
     minTransferAmount: 1
     maxTransferAmount: 5
     transferAmount: 1
@@ -530,7 +531,8 @@
     sprite: Objects/Specific/Chemistry/pills.rsi
   - type: Pill
   - type: Food
-    forceFeedDelay: 1
+    delay: 0.6
+    forceFeedDelay: 2
     transferAmount: null
     eatMessage: food-swallow
     useSound: /Audio/Items/pill.ogg

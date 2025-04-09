@@ -20,7 +20,7 @@ namespace Content.Client.Clickable
             "/Textures/Logo",
         };
 
-        private const float Threshold = 0.25f;
+        private const float Threshold = 0.1f;
         private const int ClickRadius = 2;
 
         [Dependency] private readonly IResourceCache _resourceCache = default!;
