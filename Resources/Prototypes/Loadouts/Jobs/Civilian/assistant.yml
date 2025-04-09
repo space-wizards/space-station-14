@@ -5,7 +5,7 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
-      role: JobAssistant
+      role: JobPassenger
       time: 36000 #10 hrs, silly reward for people who play Assistant a lot
 
 # Head of Greytide (for grey mantle)
@@ -15,7 +15,7 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
-      role: JobAssistant
+      role: JobPassenger
       time: 72000 #20 hrs, fun mantle for the most experienced greytiders
 
 # Face
