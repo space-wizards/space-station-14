@@ -50,3 +50,5 @@
     contents:
     - id: RightArmCyberMantisBlade
     - id: LeftArmCyberMantisBlade
+    - id: RightHandCyber
+    - id: LeftHandCyber
