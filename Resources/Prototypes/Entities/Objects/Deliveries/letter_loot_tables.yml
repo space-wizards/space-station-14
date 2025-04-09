@@ -1,0 +1,46 @@
+# Basically all different loot tables that the mail can choose from
+
+# Common
+- type: entityTable
+  id: SpamMailTable
+  table: !type:GroupSelector
+    children:
+      - id: MailAllAccessSpam
+      - id: MailAlternativeDimensionSpam
+      - id: MailCentcommRetributionSpam
+      - id: MailEvilLizardSpam
+      - id: MailNanotrasenSpam
+      - id: MailNarsieCultSpam
+      - id: MailParentsNeedMoneySpam
+      - id: MailRageCageSpam
+      - id: MailRobustToolsSpam
+      - id: MailScienceSpiderClanSpam
+      - id: MailSyndicateSpam
+      - id: MailVoyageAdvertisementSpam
+
+# Letter Bundles
+## Basically items that should always spawn together, specific to letters
+- type: entityTable
+  id: UncommonLetterBundleTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: LetterBundleDarts
+    - !type:NestedSelector
+      tableId: LetterBundleLetter
+
+- type: entityTable
+  id: LetterBundleDarts
+  table: !type:AllSelector
+    children:
+    - id: Dart
+    - id: DartBlue
+    - id: DartPurple
+    - id: DartYellow
+
+- type: entityTable
+  id: LetterBundleLetter
+  table: !type:AllSelector
+    children:
+    - id: Paper
+    - id: Pen

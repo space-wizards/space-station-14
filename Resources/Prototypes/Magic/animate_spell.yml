@@ -9,13 +9,16 @@
     itemIconStyle: BigAction
     whitelist:
       components:
-      - Animateable # Currently on: SeatBase, TableBase, ClosetBase, BaseMachine, ConstructibleMachine, BaseComputer, BaseItem, CrateGeneric, StorageTank, GasCanister
+      - Animateable # Currently on: SeatBase, TableBase, ClosetBase, BaseMachine, ConstructibleMachine, BaseComputer, BaseItem, CrateGeneric, StorageTank, GasCanister, BaseTarget
     blacklist:
       components:
       - MindContainer
       - NukeDisk
       - GravityGenerator
       - AnomalyGenerator
+      - TegGenerator
+      - TegCirculator
+      - Artifact
     canTargetSelf: false
     interactOnMiss: false
     sound: !type:SoundPathSpecifier
@@ -23,8 +26,9 @@
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: spell_default
-    event: !type:AnimateSpellEvent
-      addComponents:
+    event: !type:ChangeComponentsSpellEvent
+      toAdd:
+      - type: Animate
       - type: MindContainer
       - type: InputMover
       - type: MobMover
@@ -65,6 +69,9 @@
               collection: MetalBreak
       - type: Hands
       - type: CanEscapeInventory
-      removeComponents:
+      toRemove:
       - RequireProjectileTarget
+      - BlockMovement
+      - Item
       speech: action-speech-spell-animate
+      doSpeech: false
