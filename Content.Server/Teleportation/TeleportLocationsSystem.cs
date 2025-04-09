@@ -1,4 +1,5 @@
 ﻿using Content.Server.Warps;
+using Content.Shared.Teleportation;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
 using Content.Shared.UserInterface;
@@ -11,12 +12,22 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
     {
         base.Initialize();
 
+        SubscribeLocalEvent<TeleportLocationsComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<TeleportLocationsComponent, TeleportLocationRequestPointsMessage>(OnTeleportLocationRequest);
     }
 
-    protected override void OnTeleportLocationsOpen(Entity<TeleportLocationsComponent> ent, ref AfterActivatableUIOpenEvent args)
+    private void OnInit(Entity<TeleportLocationsComponent> ent, ref MapInitEvent args)
     {
-        base.OnTeleportLocationsOpen(ent, ref args);
+        UpdateTeleportPoints(ent);
+    }
 
+    private void OnTeleportLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationRequestPointsMessage args)
+    {
+        UpdateTeleportPoints(ent);
+    }
+
+    private void UpdateTeleportPoints(Entity<TeleportLocationsComponent> ent)
+    {
         var allEnts = AllEntityQuery<WarpPointComponent>();
 
         while (allEnts.MoveNext(out var warpEnt, out var warpPointComp))
