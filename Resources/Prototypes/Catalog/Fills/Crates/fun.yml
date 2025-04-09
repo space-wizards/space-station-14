@@ -71,7 +71,6 @@
         - id: PlushieSpaceLizard
           amount: !type:ConstantNumberSelector
             value: 3
-            - type: entity
 
 - type: entity  
   id: CrateFunSharkPlushieBulk
