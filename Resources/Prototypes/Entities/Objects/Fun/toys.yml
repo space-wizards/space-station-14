@@ -87,6 +87,10 @@
     - type: Item
       size: Ginormous
       sprite: Objects/Weapons/Melee/Throngler-in-hand.rsi
+    - type: FoodSequenceElement
+      entries:
+        CottonBurger: ThronglerPlushie
+
 
 - type: entity
   parent: BasePlushie
@@ -126,6 +130,9 @@
       accumulatorRatio: 0.5
       maxSpeed: 1
       minSpeed: 0.25
+    - type: FoodSequenceElement
+      entries:
+        CottonBurger: GhostPlushie
 
 - type: entity
   parent: PlushieGhost
@@ -143,6 +150,9 @@
     - type: Construction
       graph: PlushieGhostRevenant
       node: plushie
+    - type: FoodSequenceElement
+      entries:
+        CottonBurger: RevenantPlushie
 
 - type: entity
   parent: BasePlushie
@@ -178,6 +188,9 @@
     equippedPrefix: bee
     slots:
     - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: BeePlushie
 
 - type: entity
   parent: BasePlushie
@@ -210,6 +223,9 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: HamptrPlushie
 
 - type: entity
   parent: PlushieBee
@@ -244,6 +260,9 @@
   components:
   - type: Sprite
     state: plushie_nuke
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: NukiePlushie
 
 - type: entity
   parent: BasePlushie
@@ -254,6 +273,9 @@
   - type: Sprite
     state: plushie_rouny
   - type: Rotatable
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: RounyPlushie
 
 - type: entity
   parent: BasePlushie
@@ -267,6 +289,9 @@
     radius: 1.5
     energy: 2
     netsync: false
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: LampPlushie
 
 - type: entity
   parent: BasePlushie
@@ -299,6 +324,9 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Voice/Arachnid/arachnid_laugh.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: ArachnidPlushie
 
 - type: entity
   parent: BasePlushie
@@ -361,6 +389,9 @@
     - ClothMade
     - Payload
     - PlushieLizard
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: LizardPlushie
 
 - type: entity
   parent: PlushieLizard
@@ -454,6 +485,9 @@
       head:
       - state: spacelizard-equipped-HELMET
         offset: "0, 0.03"
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: SpaceLizardPlushie
 
 - type: entity
   parent: PlushieLizard
@@ -505,6 +539,9 @@
     equippedPrefix: lizard-inversed
     slots:
     - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: InversedLizardPlushie
 
 
 - type: entity
@@ -585,6 +622,9 @@
             - LowImpassable
     - type: CollisionWake
       enabled: false
+    - type: FoodSequenceElement
+      entries:
+        CottonBurger: DionaPlushie
 
 - type: entity
   parent: BasePlushie
@@ -621,6 +661,9 @@
     tags:
       - PlushieSharkBlue
       - Payload
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: BlueSharkPlushie
 
 - type: entity
   parent: PlushieSharkBlue
@@ -637,6 +680,9 @@
     tags:
       - PlushieSharkPink
       - Payload
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: PinkSharkPlushie
 
 - type: entity
   parent: PlushieSharkBlue
@@ -653,6 +699,9 @@
     tags:
       - PlushieSharkGrey
       - Payload
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: GreySharkPlushie
 
 - type: entity
   parent: BasePlushie
@@ -664,6 +713,9 @@
     size: Normal
   - type: Sprite
     state: plushie_ratvar
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: RatvarPlushie
 
 - type: entity
   parent: BasePlushie
@@ -675,6 +727,9 @@
     size: Normal
   - type: Sprite
     state: narplush
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: NarPlushie
 
 - type: entity
   parent: BasePlushie
@@ -717,6 +772,9 @@
       - Payload
       - ClothMade
       - PlushieCarp
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: CarpPlushie
 
 - type: entity
   parent: PlushieCarp
@@ -726,6 +784,9 @@
   components:
   - type: Sprite
     state: magicplush
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: MagicarpPlushie
 
 - type: entity
   parent: PlushieCarp
@@ -757,6 +818,9 @@
   components:
   - type: Sprite
     state: holoplush
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: HolocarpPlushie
 
 - type: entity
   parent: BasePlushie
@@ -782,6 +846,9 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Voice/Slime/slime_squish.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: SlimePlushie
 
 - type: entity
   parent: BasePlushie
@@ -823,6 +890,9 @@
     - NECK
   - type: Speech
     speechVerb: Reptilian # for pais (In the secret stash)
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: SnakePlushie
 
 - type: entity
   parent: BasePlushie
@@ -861,6 +931,9 @@
     equippedPrefix: mouse
     slots:
     - HEAD
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: MousePlushie
 
 - type: entity
   parent: BasePlushie
@@ -932,6 +1005,9 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Voice/Vox/shriek1.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: VoxPlushie
 
 - type: entity
   parent: BasePlushie
@@ -941,6 +1017,9 @@
   components:
   - type: Sprite
     state: plushie_atmosian
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: AtmosianPlushie
 
 - type: entity
   parent: BasePlushie
@@ -975,6 +1054,10 @@
     wideAnimationRotation: 180
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: XenoPlushie
+
 - type: entity
   parent: BasePlushie
   id: PlushiePenguin
@@ -983,6 +1066,9 @@
   components:
   - type: Sprite
     state: plushie_penguin
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: PenguinPlushie
 
 - type: entity
   parent: BasePlushie
@@ -1014,6 +1100,9 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Human/malescream_5.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: HumanPlushie
 
 - type: entity
   parent: BasePlushie
@@ -1045,6 +1134,9 @@
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: MothPlushie
 
 ## Cheapo Figurines
 
@@ -1139,6 +1231,9 @@
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Items/Toys/ian.ogg
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: IanPlushie
 
 ## Toyweapons
 
@@ -1561,6 +1656,10 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           base: Sixteen
+#  - type: FoodSequenceElement - does not work with randomized sprites
+#    entries:
+#      CottonBurger: AmongPequeno
+
 
 - type: entity
   parent: BaseItem
@@ -1869,3 +1968,6 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 25
+  - type: FoodSequenceElement
+    entries:
+      CottonBurger: RubberChicken
