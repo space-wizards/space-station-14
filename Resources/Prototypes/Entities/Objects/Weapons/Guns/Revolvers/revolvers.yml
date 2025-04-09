@@ -82,7 +82,7 @@
   name: Inspector
   parent: [BaseWeaponRevolver, BaseSecurityContraband]
   id: WeaponRevolverInspector
-  description: A powerful revolver manufactured by various companies. It’s readily available on the civilian market, making it a popular choice among private investigators. You feel lucky just holding it. Loads 6 rounds of .45 magnum.
+  description: A single-action revolver manufactured by various companies. It is readily available on the civilian market, making it a popular choice among private investigators. You feel lucky just holding it. Loads 6 rounds of .45 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/inspector.rsi
@@ -97,7 +97,7 @@
   name: Mateba
   parent: [BaseWeaponRevolver, BaseMajorContraband]
   id: WeaponRevolverMateba
-  description: A revolver designed by Nanotrasen and reserved for their special forces, the notorious ‘Death Squad’ being the most notable. It’s hard to say how many have stared down the length of its barrel, but few have lived to tell of it. Loads 6 rounds of .45 magnum.
+  description: Advanced revolver used by Nanotrasen’s elite, near mythical ‘Death Squad’. Its unique semi-automatic design allows a lighter trigger pull and higher fire rate. Many have looked down this barrel, but few have lived to tell of it. Loads 6 rounds of .45 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
@@ -120,7 +120,7 @@
   name: Python
   parent: [BaseWeaponRevolver, BaseSyndicateContraband]
   id: WeaponRevolverPython
-  description: A powerful revolver manufactured by The Syndicate. Loud and flashy, perfect for any agent looking to make a statement. Loads 6 rounds of .45 magnum.
+  description: A powerful double-action revolver manufactured by the Syndicate. Loud and flashy, perfect for any agent looking to make a statement. Loads 6 rounds of .45 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi

@@ -93,7 +93,7 @@
   id: SpeedLoaderMagnumAP
   name: "speed loader (.45 magnum armor-piercing)"
   parent: BaseSpeedLoaderMagnum
-  description: Designed to quickly refill an empty revolver, it fits up to six rounds. Intended to hold restricted armor-piercing ammunition.
+  description: Designed to quickly refill an empty revolver, it fits up to six rounds. Intended to hold rare armor-piercing ammunition.
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP
