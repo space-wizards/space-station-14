@@ -8,10 +8,10 @@
   },
     "states": [
         {
-            "name": "icon"
+            "name": "icon-beard"
         },
         {
-            "name": "icon-beard"
+            "name": "icon"
         },
         {
             "name": "equipped-HELMET",

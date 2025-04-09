@@ -424,11 +424,16 @@
   parent: [ClothingHeadBase, BaseFoldable]
   id: ClothingHeadHatSantahat
   name: santa hat
-  description: A festive hat worn by Santa Claus, now with a foldable beard.
+  description: A festive hat worn by Santa Claus.
   components:
   - type: Clothing
     sprite: Clothing/Head/Hats/santahat.rsi
-  #- type: Appearance
+  - type: Appearance
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - HeadTop
+    - HeadSide
   - type: Foldable
     canFoldInsideContainer: true
   - type: FoldableClothing
@@ -438,10 +443,10 @@
     sprite: Clothing/Head/Hats/santahat.rsi
     layers:
     - state: icon
-      map: [ "foldedLayer" ]
-    - state: icon-beard
       map: ["unfoldedLayer"]
-      visible: false
+    - state: icon-beard
+      map: [ "foldedLayer" ]
+      visible: true
 
 - type: entity
   parent: ClothingHeadBase
