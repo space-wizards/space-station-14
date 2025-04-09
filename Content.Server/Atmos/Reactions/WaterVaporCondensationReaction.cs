@@ -13,9 +13,10 @@ namespace Content.Server.Atmos.Reactions
     {
         private const int GasId = 5; // Vapor
         private const string Reagent = "Water";
-        private const float CondensationRate = 0.1f;
+        private const float CondensationRate = 0.05f;
         private const int MaxTilesCap = 100; // Max tiles processed per tick
         private const float MaxCondensationPressure = 200f;
+        private const float MolesToUnitsMultiplier = 2f;
         
         private static readonly HashSet<TileAtmosphere> _eligibleTiles = new();
         private static readonly Random _random = new();
@@ -60,7 +61,7 @@ namespace Content.Server.Atmos.Reactions
             {
                 // Protection against NullReferenceException
                 if (tile.Air?.GetMoles(GasId) is not > 0)
-                continue;
+                    continue;
 
                 // Get tile reference
                 var tileRef = system.GetTileRef(tile);
@@ -72,7 +73,7 @@ namespace Content.Server.Atmos.Reactions
                 float amountToCondense = Math.Min(currentMoles, CondensationRate);
 
                 // Create water puddle
-                FixedPoint2 reagentAmount = FixedPoint2.New(amountToCondense);
+                FixedPoint2 reagentAmount = FixedPoint2.New(amountToCondense * MolesToUnitsMultiplier);
                 system.Puddle.TrySpillAt(tileRef, new Solution(Reagent, reagentAmount), out _, sound: false);
 
                 // Adjust gas mixture
