@@ -46,6 +46,8 @@ namespace Content.Client.Construction.UI
         private string _selectedCategory = string.Empty;
         private string _favoriteCatName = "construction-category-favorites";
         private string _forAllCategoryName = "construction-category-all";
+        /// <summary>How many recipes to remember in recipe history.</summary>
+        private int _recipeHistoryMaxLength = 50;
         private bool CraftingAvailable
         {
             get => _uiManager.GetActiveUIWidget<GameTopMenuBar>().CraftingButton.Visible;
@@ -450,9 +452,17 @@ namespace Content.Client.Construction.UI
             }
 
             _recipeHistory.Add((categoryDisplayId, recipe.Category, recipe));
-            logger.Info("added");
+            logger.Info("added, current count: " + _recipeHistory.Count);
 
             _recipeHistorySelectedIndex++;
+
+
+            if (_recipeHistory.Count > _recipeHistoryMaxLength)
+            {
+                logger.Info("recipe limit reached, removing oldest entry");
+                _recipeHistory.RemoveAt(0);
+                _recipeHistorySelectedIndex--;
+            }
         }
 
         /// <summary>
