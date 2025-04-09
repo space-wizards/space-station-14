@@ -30,7 +30,7 @@
     groups:
     - Command
   - type: DoorRemote
-    extendedByID: true
+    includeUserAccess: true
 
 - type: entity
   parent: [DoorRemoteDefault, BaseCommandContraband]
@@ -158,7 +158,7 @@
     - state: door_remotescreencolour
       color: "#22871a"
   - type: DoorRemote
-    extendedByID: true
+    includeUserAccess: true
   - type: Access
     groups:
     - AllAccess

@@ -53,7 +53,7 @@ namespace Content.Shared.Remotes
 
             var accessTarget = args.Used;
             // This covers the accesses the REMOTE has, and is not effected by the user's ID card.
-            if (entity.Comp.ExtendedByID) // Allows some door remotes to inherit the user's access.
+            if (entity.Comp.IncludeUserAccess) // Allows some door remotes to inherit the user's access.
             {
                 accessTarget = args.User;
                 // This covers the accesses the USER has, which always includes the remote's access since holding a remote acts like holding an ID card.
