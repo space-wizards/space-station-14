@@ -97,6 +97,13 @@
   priority: 12
   text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL12.xml"
 
+- type: guideEntry
+  id: RuleSL13
+  name: guide-entry-sl-rule-13
+  ruleEntry: true
+  priority: 13
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL13.xml"
+
 # Clarifications
 
 - type: guideEntry
