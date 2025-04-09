@@ -11,9 +11,6 @@ public sealed class TeleportLocationsBoundUserInterface : BoundUserInterface
     [ViewVariables]
     private TeleportMenu? _menu;
 
-    [ViewVariables]
-    private string _search = "";
-
     public TeleportLocationsBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
