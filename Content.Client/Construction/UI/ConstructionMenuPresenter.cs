@@ -42,6 +42,7 @@ namespace Content.Client.Construction.UI
         private List<(int categoryDisplayId, ConstructionPrototype recipe)> _recipeHistory = [];
         private int _recipeHistorySelectedIndex = -1;
         private Dictionary<string, TextureButton> _recipeButtons = new();
+        private Dictionary<ConstructionPrototype, TextureButton> _recipeToGridItemButtonMap = new();
         private string _selectedCategory = string.Empty;
         private string _favoriteCatName = "construction-category-favorites";
         private string _forAllCategoryName = "construction-category-all";
@@ -236,6 +237,7 @@ namespace Content.Client.Construction.UI
 
             var recipesGrid = _constructionView.RecipesGrid;
             recipesGrid.RemoveAllChildren();
+            _recipeToGridItemButtonMap.Clear();
 
             _constructionView.RecipesGridScrollContainer.Visible = _constructionView.GridViewButtonPressed;
             _constructionView.Recipes.Visible = !_constructionView.GridViewButtonPressed;
@@ -260,22 +262,12 @@ namespace Content.Client.Construction.UI
                     };
 
                     itemButton.OnToggled += buttonToggledEventArgs =>
-                    {
-                        SelectGridButton(itemButton, buttonToggledEventArgs.Pressed);
+                        OnGridRecipeButtonPressed(recipe, itemButton, buttonToggledEventArgs.Pressed);
 
-                        if (buttonToggledEventArgs.Pressed &&
-                            _selected != null &&
-                            _recipeButtons.TryGetValue(_selected.Name, out var oldButton))
-                        {
-                            oldButton.Pressed = false;
-                            SelectGridButton(oldButton, false);
-                        }
-
-                        OnGridViewRecipeSelected(this, buttonToggledEventArgs.Pressed ? recipe : null);
-                    };
-
+                    _recipeToGridItemButtonMap[recipe] = itemButton;
                     recipesGrid.AddChild(itemButtonPanelContainer);
                     _recipeButtons[recipe.Name] = itemButton;
+
                     var isCurrentButtonSelected = _selected == recipe;
                     itemButton.Pressed = isCurrentButtonSelected;
                     SelectGridButton(itemButton, isCurrentButtonSelected);
@@ -288,6 +280,23 @@ namespace Content.Client.Construction.UI
                     recipesList.Add(GetItem(recipe, recipesList));
                 }
             }
+        }
+
+        private void OnGridRecipeButtonPressed(ConstructionPrototype recipe, TextureButton button, bool pressed)
+        {
+            SelectGridButton(button, pressed);
+
+            if (pressed &&
+                _selected != null &&
+                _recipeButtons.TryGetValue(_selected.Name, out var oldButton))
+            {
+                oldButton.Pressed = false;
+                SelectGridButton(oldButton, false);
+            }
+
+            OnGridViewRecipeSelected(this, pressed ? recipe : null);
+
+            OnUpdateRecipeHistoryButtons();
         }
 
         private void SelectGridButton(TextureButton button, bool select)
@@ -441,7 +450,20 @@ namespace Content.Client.Construction.UI
             var logger = _logManager.GetSawmill("TrySelectRecipeFromHistoryEntry");
             logger.Info($"attempting to select recipe name '{recipe.Name}' from history entry, category display id '{categoryDisplayId}'");
 
-            if (_constructionView.TrySelectCategoryById(categoryDisplayId))
+            var isGridMode = _constructionView.GridViewButtonPressed;
+
+            _constructionView.TrySelectCategoryById(categoryDisplayId);
+
+            if (isGridMode)
+            {
+                _recipeToGridItemButtonMap.TryGetValue(recipe, out var gridItem);
+                if (gridItem != null)
+                {
+                    gridItem.Pressed = true;
+                    OnGridRecipeButtonPressed(recipe, gridItem, true);
+                }
+            }
+            else
             {
                 _constructionView.TrySelectRecipeById(recipe.ID);
             }

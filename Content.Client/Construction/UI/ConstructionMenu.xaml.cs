@@ -227,6 +227,10 @@ namespace Content.Client.Construction.UI
             NextRecipeButton.Disabled = !enabled;
         }
 
+        /// <summary>
+        /// Handler for when a category is selected.
+        /// </summary>
+        /// <param name="categoryDisplayId"></param>
         private void OnSelectCategory(int categoryDisplayId)
         {
             OptionCategories.SelectId(categoryDisplayId);
