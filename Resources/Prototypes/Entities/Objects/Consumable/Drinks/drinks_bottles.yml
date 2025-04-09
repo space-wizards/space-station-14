@@ -22,7 +22,7 @@
     state: icon
     sprite: Objects/Consumable/Drinks/generic_jug.rsi # fallback to generic plastic jug
   - type: Item
-    size: Normal
+    size: Large # DS14
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -85,6 +85,8 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 100
+  - type: Item
+    size: Normal # DS14
 
 - type: entity
   id: DrinkBottleVisualsOpenable
@@ -241,6 +243,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/colabottle.rsi
   - type: Sealable
+  - type: Item
+    size: Normal # DS14
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -417,6 +421,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
   - type: Sealable
+  - type: Item
+    size: Normal # DS14
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
@@ -436,6 +442,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
   - type: Sealable
+  - type: Item
+    size: Normal # DS14
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -582,6 +590,8 @@
     tags:
     - Beer
     - DrinkBottle
+  - type: Item
+    size: Large # DS14
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
@@ -590,7 +600,7 @@
   description: A true dorf's drink of choice.
   components:
   - type: Item
-    size: Small
+    size: Normal # DS14
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -674,6 +684,8 @@
           Quantity: 150
   - type: Label
     currentLabel: reagent-name-soda-water
+  - type: Item
+    size: Normal # DS14
 
 - type: entity
   parent: DrinkWaterBottleFull
@@ -690,6 +702,8 @@
           Quantity: 150
   - type: Label
     currentLabel: reagent-name-tonic-water
+  - type: Item
+    size: Normal # DS14
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
@@ -780,10 +794,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 200 # DS14
         reagents:
         - ReagentId: Sugar
-          Quantity: 300
+          Quantity: 200 # DS14
   - type: Drink
   - type: Label
     currentLabel: reagent-name-sugar
@@ -797,10 +811,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 200 # DS14
         reagents:
         - ReagentId: LemonLime
-          Quantity: 300
+          Quantity: 200 # DS14
   - type: Drink
   - type: Label
     currentLabel: reagent-name-lemon-lime
@@ -831,10 +845,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 200 # DS14
         reagents:
         - ReagentId: Ice
-          Quantity: 300
+          Quantity: 200 # DS14
   - type: Drink
   - type: Label
     currentLabel: reagent-name-ice
@@ -848,10 +862,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 200 # DS14
         reagents:
         - ReagentId: CoconutWater
-          Quantity: 300
+          Quantity: 200 # DS14
   - type: Drink
   - type: Label
     currentLabel: reagent-name-coconut-water
@@ -865,10 +879,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 200 # DS14
         reagents:
         - ReagentId: Coffee
-          Quantity: 300
+          Quantity: 200 # DS14
   - type: Drink
   - type: Label
     currentLabel: reagent-name-coffee
@@ -882,10 +896,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 200 # DS14
         reagents:
         - ReagentId: Tea
-          Quantity: 300
+          Quantity: 200 # DS14
   - type: Drink
   - type: Label
     currentLabel: reagent-name-tea
@@ -899,10 +913,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 200 # DS14
         reagents:
         - ReagentId: GreenTea
-          Quantity: 300
+          Quantity: 200 # DS14
   - type: Drink
   - type: Label
     currentLabel: reagent-name-green-tea
@@ -916,10 +930,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 200 # DS14
         reagents:
         - ReagentId: IcedTea
-          Quantity: 300
+          Quantity: 200 # DS14
   - type: Drink
   - type: Label
     currentLabel: reagent-name-iced-tea
@@ -933,10 +947,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 200 # DS14
         reagents:
         - ReagentId: DrGibb
-          Quantity: 300
+          Quantity: 200 # DS14
   - type: Drink
   - type: Label
     currentLabel: reagent-name-dr-gibb
@@ -950,10 +964,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 200 # DS14
         reagents:
         - ReagentId: RootBeer
-          Quantity: 300
+          Quantity: 200 # DS14
   - type: Drink
   - type: Label
     currentLabel: reagent-name-root-beer
@@ -967,10 +981,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 300
+        maxVol: 200 # DS14
         reagents:
         - ReagentId: JuiceWatermelon
-          Quantity: 300
+          Quantity: 200 # DS14
   - type: Drink
   - type: Label
     currentLabel: reagent-name-juice-watermelon
@@ -1001,5 +1015,5 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 150
+        maxVol: 200 # DS14
   - type: Drink
