@@ -16,6 +16,10 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: EntityStorageVisuals
     stateBaseClosed: base
     stateDoorOpen: open
