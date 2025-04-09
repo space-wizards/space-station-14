@@ -35,7 +35,7 @@ public sealed class CorporealSystem : SharedCorporealSystem
         while (childEnumerator.MoveNext(out var child))
         {
             if (TryComp<EmbeddableProjectileComponent>(child, out var embeddable))
-                _projectile.RemoveEmbed(child, embeddable);
+                _projectile.EmbedDetach(child, embeddable);
         }
 
         if (TryComp<VisibilityComponent>(uid, out var visibility) && _ticker.RunLevel != GameRunLevel.PostRound)
