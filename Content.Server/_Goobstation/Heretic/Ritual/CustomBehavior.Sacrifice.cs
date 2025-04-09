@@ -141,7 +141,9 @@ namespace Content.Server.Heretic.Ritual;
             if (!_proto.TryIndex(humanoid.Species, out var speciesPrototype))
                 return;
 
-            //spawn a clone of the victim 
+            //spawn a clone of the victim
+            //this should really use the cloningsystem but i coded this before that existed
+            //and it works so i'm not changing it unless it causes issues
             var sacrificialWhiteBoy = args.EntityManager.Spawn(speciesPrototype.Prototype, _transformSystem.GetMapCoordinates(uids[i]));
             _humanoid.CloneAppearance(uids[i], sacrificialWhiteBoy);
             //make sure it has the right DNA
@@ -172,7 +174,6 @@ namespace Content.Server.Heretic.Ritual;
 
             //send the target to hell world
             _hellworld.AddVictimComponent(uids[i]);
-            
 
             //teleport the body to a midround antag spawn spot so it's not just tossed into space
             _hellworld.TeleportRandomly(args, uids[i]);

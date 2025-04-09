@@ -27,6 +27,7 @@ heretic-fleshsurgery-mute = Your tongue falls limp!
 heretic-speech-mansusgrasp = R'CH T'H TR'TH!
 
 heretic-speech-ash-jaunt = ASH'N P'SSG'
+heretic-speech-ash-dash = FL'SH F'R'
 heretic-speech-ash-volcano = V'LC'N!
 heretic-speech-ash-rebirth = G'LR'Y T' TH' N'GHT'W'TCH'ER!
 heretic-speech-ash-flame = FL'MS!!

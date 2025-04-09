@@ -7,17 +7,13 @@ using Content.Shared.Atmos;
 using Content.Server.Polymorph.Systems;
 using Robust.Server.Audio;
 using Robust.Shared.Audio;
-using Content.Server.EntityEffects.EffectConditions;
-using Content.Server.Temperature.Components;
-using Content.Shared.Speech.Muting;
-using Content.Server.Temperature.Systems;
 
 namespace Content.Server.Heretic.Abilities;
 
 public sealed partial class HereticAbilitySystem : EntitySystem
 {
     [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly TemperatureSystem _temperature = default!;
+    [Dependency] private readonly BlazingDashSystem _blazingDash = default!;
     public SoundSpecifier JauntExitSound = new SoundPathSpecifier("/Audio/Magic/fireball.ogg");
     public const float RebirthRange = 3f;
 
@@ -28,21 +24,34 @@ public sealed partial class HereticAbilitySystem : EntitySystem
         SubscribeLocalEvent<HereticComponent, PolymorphRevertEvent>(OnJauntEnd);
 
         SubscribeLocalEvent<HereticComponent, EventHereticVolcanoBlast>(OnVolcano);
+        SubscribeLocalEvent<HereticComponent, EventHereticBlazingDash>(OnBlazingDash);
         SubscribeLocalEvent<HereticComponent, EventHereticNightwatcherRebirth>(OnNWRebirth);
         SubscribeLocalEvent<HereticComponent, EventHereticFlames>(OnFlames);
         SubscribeLocalEvent<HereticComponent, EventHereticCascade>(OnCascade);
     }
 
+    //keeping this in for when i eventually make it possible to turn the shitpig into the Ashen Pig
     private void OnJaunt(Entity<HereticComponent> ent, ref EventHereticAshenShift args)
     {
         if (TryUseAbility(ent, args) && TryDoJaunt(ent))
             args.Handled = true;
     }
+
+    //a few of the flesh ghouls use this so it stays too
     private void OnJauntGhoul(Entity<GhoulComponent> ent, ref EventHereticAshenShift args)
     {
         if (TryUseAbility(ent, args) && TryDoJaunt(ent))
             args.Handled = true;
     }
+
+    private void OnBlazingDash(Entity<HereticComponent> ent, ref EventHereticBlazingDash args)
+    {
+        if (!TryUseAbility(ent, args))
+            return;
+
+        _blazingDash.TryDoDash(ent, ref args);
+    }
+
     private bool TryDoJaunt(EntityUid ent)
     {
         Spawn("PolymorphAshJauntAnimation", Transform(ent).Coordinates);
@@ -55,15 +64,6 @@ public sealed partial class HereticAbilitySystem : EntitySystem
     {
         Spawn("PolymorphAshJauntEndAnimation", Transform(ent).Coordinates);
 
-        if (TryComp<FlammableComponent>(ent, out var flam))
-        {
-            //don't really need this bc of the direct temp change but it looks sick as fuck
-            _flammable.AdjustFireStacks(ent, 1, flam, true);
-        }
-        if (TryComp<TemperatureComponent>(ent, out var temp))
-        {
-            _temperature.ForceChangeTemperature(ent, temp.CurrentTemperature + 10f, temp);
-        }
         // play a distinct sound, audible thru walls, so you can track where that slippery fuck went
         _audio.PlayPvs(JauntExitSound, ent, AudioParams.Default
             .WithVolume(-2f)

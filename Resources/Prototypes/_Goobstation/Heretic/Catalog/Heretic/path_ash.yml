@@ -46,7 +46,7 @@
   name: knowledge-path-ash-s3-name
   description: knowledge-path-ash-s3-desc
   icon: { sprite: _Goobstation/Heretic/abilities_heretic.rsi, state: ashen_shift }
-  productHereticKnowledge: AshenShift
+  productHereticKnowledge: BlazingDash
   cost:
     KnowledgePoint: 2
   categories:

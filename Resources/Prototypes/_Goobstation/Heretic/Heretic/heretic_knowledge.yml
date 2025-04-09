@@ -34,6 +34,14 @@
   stage: 2
 
 - type: hereticKnowledge
+  id: BlazingDash
+  path: Ash
+  sideKnowledge: true
+  stage: 3
+  actionPrototypes:
+  - ActionHereticBlazingDash
+
+- type: hereticKnowledge
   id: AshenShift
   path: Ash
   sideKnowledge: true

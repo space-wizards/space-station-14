@@ -79,6 +79,7 @@ public sealed partial class EventHereticMansusLink : EntityTargetActionEvent { }
 // ash
 public sealed partial class EventHereticAshenShift : InstantActionEvent { }
 public sealed partial class EventHereticVolcanoBlast : InstantActionEvent { }
+public sealed partial class EventHereticBlazingDash : InstantActionEvent { }
 public sealed partial class EventHereticNightwatcherRebirth : InstantActionEvent { }
 public sealed partial class EventHereticFlames : InstantActionEvent { }
 public sealed partial class EventHereticCascade : InstantActionEvent { }

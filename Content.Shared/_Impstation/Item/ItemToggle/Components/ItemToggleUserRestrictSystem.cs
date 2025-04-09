@@ -26,7 +26,7 @@ namespace Content.Shared._Impstation.Item.ItemToggle.Components
                 if (!HasComp(args.User, type))
                 {
                     args.Cancelled = true;
-                    if(ent.Comp.RestrictMessage != null)
+                    if (ent.Comp.RestrictMessage != null)
                     {
                         args.Popup = Loc.GetString(ent.Comp.RestrictMessage);
                     }
