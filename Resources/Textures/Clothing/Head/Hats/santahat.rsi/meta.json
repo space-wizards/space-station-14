@@ -6,25 +6,44 @@
     "x": 32,
     "y": 32
   },
-  "states": [
-    {
-      "name": "icon"
-    },
-    {
-      "name": "equipped-HELMET",
-      "directions": 4
-    },
-    {
-      "name": "equipped-HELMET-vox",
-      "directions": 4
-    },
-    {
-      "name": "inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    }
-  ]
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon-beard"
+        },
+        {
+            "name": "equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "beard-equipped-HELMET",
+            "directions": 4
+        },
+        {
+            "name": "equipped-HELMET-vox",
+            "directions": 4
+        },
+        {
+            "name": "beard-equipped-HELMET-vox",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "beard-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "beard-inhand-right",
+            "directions": 4
+        }
+    ]
 }
