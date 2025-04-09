@@ -1,0 +1,391 @@
+# Sponsor Loadout
+- type: sponsorLoadout
+  id: Smoldering
+  entity: ClothingBackpackSmoldering
+  sponsorOnly: true
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackSmoldering
+  name: Спринфирас
+  description: Небольшой разумный дракон с чешуёй, переливающейся глубокими фиолетовыми оттенками. Его глаза мерцают загадочным светом, а крылья трепещут, реагируя на малейшую угрозу. Он не просто спутник - он хранитель ваших тайн.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,11,5
+  - type: StorageFill
+    contents:
+    - id: ClothingBeltSmolderingFilled
+    - id: ClothingNeckCloakSmoldering
+    - id: ClothingHandsGlovesSmoldering
+    - id: ClothingOuterHardsuitSmoldering
+    - id: ClothingUniformJumpsuitSmoldering
+    - id: ClothingShoesBootsMagSmoldering
+    - id: ClothingUnderSocksSmoldering
+    - id: ClothingUnderwearBottomBoxersSmoldering
+    - id: ClothingUnderwearTopBraSmoldering
+    - id: ClothingUnderwearBottomPantiesSmoldering
+    - id: ClothingMaskSmoldering
+    - id: ClothingEyesHudSmoldering
+    - id: ClothingHeadsetSmoldering
+    - id: PDASmoldering
+    - id: JetpackVoidFilledSmoldering
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Belt
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltSmolderingFilled
+  name: блюспейс хранилище
+  description: Изящная чешуйчатая перевязь с блюспейс-отсеком, позволяющая носить инструменты в компактном пространстве.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Smoldering/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+    - id: PowerDrillSmoldering
+    - id: SyndicateJawsOfLifeSmoldering
+    - id: WelderExperimentalSmoldering
+    - id: MultitoolSmoldering
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,9,1
+
+# Cloak
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakSmoldering
+  name: теневой плащ
+  description: Лёгкий, но зловеще переливающийся фиолетово-чёрный плащ, напоминающий расправленные крылья ночного хищника. Кажется, что он движется сам по себе.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/cloak.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesSmoldering
+  name: фиолетовые боевые перчатки
+  description: Гибкие и прочные перчатки, словно сотканные из самой тьмы. Чешуйчатая поверхность обеспечивает надёжную защиту.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Smoldering/gloves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-purple
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitSmoldering
+  name: скафандр осколков реальности
+  description: Этот скафандр создан из материалов, в которых сплелись обломки артефактов и передовые технологии. Его поверхность сияет мистическими знаками.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Smoldering/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSmoldering
+  - type: Item
+    size: Huge
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitSmoldering
+  categories: [ HideSpawnMenu ]
+  name: шлем осколков реальности
+  description: Высокотехнологичный шлем, усиливающий восприятие владельца. Через его визор можно видеть вспышки иной реальности, если смотреть в темноту достаточно долго.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Smoldering/helmet.rsi
+  - type: PointLight
+    color: "#daffad"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Jumpsuit
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpsuitSmoldering
+  name: платье флоры
+  description: Лёгкое и удобное платье, сотканное из ткани, мерцающей при слабом освещении. Несмотря на изящность, оно довольно практично, будто создано для долгих путешествий по неизведанным мирам.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/dress.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Smoldering/dress.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMag
+  id: ClothingShoesBootsMagSmoldering
+  name: магнитные ботинки теневого шага
+  description: Украшенные орнаментом магбутсы, обеспечивающие идеальную устойчивость в любой среде.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/magboots.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleVisuals.Layer" ]
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Smoldering/magboots.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Socks
+- type: entity
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderSocksSmoldering
+  name: чулки флоры
+  description: Элегантные, с лёгким налётом загадочности, подчёркивают характер владельца.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/socks.rsi
+
+# Boxers
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBoxersSmoldering
+  name: теневые боксеры
+  description: Ткань, сотканная из теней, сохраняет тепло и неощутима на теле.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/boxers.rsi
+
+# Bra
+- type: entity
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraSmoldering
+  name: теневое бра
+  description: Ткань, сотканная из теней, сохраняет тепло и неощутима на теле.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/bra.rsi
+
+# Panties
+- type: entity
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPantiesSmoldering
+  name: теневые стринги
+  description: Ткань, сотканная из теней, сохраняет тепло и неощутима на теле.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/panties.rsi
+
+# Mask
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskSmoldering
+  name: теневая маска
+  description: Скрывает лицо носителя, позволяя ему слиться с тьмой.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/gasmask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Smoldering/gasmask.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Eyes
+- type: entity
+  parent: ClothingEyesHudMultiversal
+  id: ClothingEyesHudSmoldering
+  name: визор "Око Бездны"
+  description: Глубокие линзы этого визора проникают за грань видимого спектра, открывая тайны, скрытые во мраке.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/hud.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Smoldering/hud.rsi
+  - type: EyeProtection
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Headset
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetSmoldering
+  name: гарнитура "Созвучие Пустоты"
+  description: Эта гарнитура позволяет слышать даже шёпот пространства, передавая скрытые волны радиопереговоров и намёки из иного мира.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/headset.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Smoldering/headset.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# PDA
+- type: entity
+  parent: BaseMedicalPDA
+  id: PDASmoldering
+  name: кпк Арканиста
+  description: КПК уникального формата, созданный из редких металлов в сплаве с артефактами. Изготовлено на заказ организацией LaFleur Wear.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Icon
+    sprite: _DeadSpace/Sponsor/Smoldering/pda.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/pda.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Multitool
+- type: entity
+  parent: Multitool
+  id: MultitoolSmoldering
+  name: мультитул бездны
+  description: Изготовлено на заказ организацией LaFleur Wear.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/multitool.rsi
+
+# JawsOfLife
+- type: entity
+  parent: SyndicateJawsOfLife
+  id: SyndicateJawsOfLifeSmoldering
+  name: челюсти жизни бездны
+  description: Изготовлено на заказ организацией LaFleur Wear.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/jawsoflife.rsi
+    state: syn_jaws_pry
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: syn_inhand-left
+      right:
+      - state: syn_inhand-right
+    size: Normal
+  - type: MultipleTool
+    entries:
+    - behavior: Prying
+      sprite:
+        sprite: _DeadSpace/Sponsor/Smoldering/jawsoflife.rsi
+        state: syn_jaws_pry
+      useSound: /Audio/Items/jaws_pry.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+    - behavior: Cutting
+      sprite:
+        sprite: _DeadSpace/Sponsor/Smoldering/jawsoflife.rsi
+        state: syn_jaws_cutter
+      useSound: /Audio/Items/jaws_cut.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14
+
+# WelderExperimental
+- type: entity
+  parent: WelderExperimental
+  id: WelderExperimentalSmoldering
+  name: сварочный аппарат бездны
+  description: Изготовлено на заказ организацией LaFleur Wear.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/welder.rsi
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Smoldering/welder.rsi
+
+# PowerDrill
+- type: entity
+  parent: PowerDrill
+  id: PowerDrillSmoldering
+  name: дрель бездны
+  description: Изготовлено на заказ организацией LaFleur Wear.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/powerdrill.rsi
+    state: drill_screw
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Smoldering/powerdrill.rsi
+    size: Small
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+    - behavior: Screwing
+      sprite:
+        sprite: _DeadSpace/Sponsor/Smoldering/powerdrill.rsi
+        state: drill_screw
+      useSound:
+        path: /Audio/Items/drill_use.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+    - behavior: Anchoring
+      sprite:
+        sprite: _DeadSpace/Sponsor/Smoldering/powerdrill.rsi
+        state: drill_bolt
+      useSound:
+        path: /Audio/Items/drill_use.ogg
+      changeSound:
+        path: /Audio/Items/change_drill.ogg
+
+# Jetpack
+- type: entity
+  parent: JetpackVoidFilled
+  id: JetpackVoidFilledSmoldering
+  name: теневой джетпак
+  description: Позволяет владельцу скользить по космосу, подобно ночному хищнику.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: _DeadSpace/Sponsor/Smoldering/jetpack.rsi
+    size: Large
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Smoldering/jetpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Smoldering/jetpack.rsi
+    slots:
+    - Back
+    - suitStorage
+    - Belt
