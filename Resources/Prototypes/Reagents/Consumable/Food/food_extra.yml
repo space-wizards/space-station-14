@@ -1,0 +1,20 @@
+# For any fluid food that should be a reagent on it's own, but also have nutritive scores varying for every species
+- type: reagent
+  id: PumpkinFlesh
+  parent: Carbohydrate
+  name: reagent-name-pumpkin-flesh
+  desc: reagent-desc-pumpkin-flesh
+  flavor: pumpkin
+  color: "#fc9300"
+
+- type: reaction
+  id: PumpkinFleshComposition
+  source: true
+  requiredMixerCategories:
+  - Digestion
+  - Centrifuge
+  reactants:
+    PumpkinFlesh:
+      amount: 1
+  products:
+    Carbohydrate: 1

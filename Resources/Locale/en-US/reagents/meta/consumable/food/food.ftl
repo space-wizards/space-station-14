@@ -1,5 +1,8 @@
 reagent-name-nutriment = nutriment
-reagent-desc-nutriment = All the vitamins, minerals, and carbohydrates the body needs in pure form.
+reagent-desc-nutriment = The ultimate source of energy for every biological specimen.
+
+reagent-name-carbohydrate = carbohydrate
+reagent-desc-carbohydrate = A complex sugar found in many foods.
 
 reagent-name-glucose = glucose
 reagent-desc-glucose = A simple sugar found in many foods.
