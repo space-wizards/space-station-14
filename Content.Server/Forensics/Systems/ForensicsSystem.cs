@@ -139,6 +139,11 @@ namespace Content.Server.Forensics
             {
                 dest.Fingerprints.Add(print);
             }
+
+            foreach (var residue in src.Residues)
+            {
+                dest.Residues.Add(residue);
+            }
         }
 
         //gets the name of a person from the DNA inside it. RETURNS NULL FOR ANIMALS, OR ANYTHING ELSE WITH UNKNOWN DNA.

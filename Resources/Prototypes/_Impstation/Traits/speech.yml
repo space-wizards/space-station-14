@@ -1,22 +1,6 @@
 # Free
 
 - type: trait
-  id: Accentless
-  name: trait-accentless-name
-  description: trait-accentless-desc
-  category: SpeechTraits
-  cost: 0
-  components:
-  - type: Accentless
-    removes:
-    - type: LizardAccent
-    - type: MothAccent
-    - type: SnalienAccent
-    - type: GrayAccent
-    - type: DwarfAccent
-    - type: NoContractionsAccent
-
-- type: trait
   id: ProperCapitalization
   name: trait-propercapitalization-name
   description: trait-propercapitalization-desc

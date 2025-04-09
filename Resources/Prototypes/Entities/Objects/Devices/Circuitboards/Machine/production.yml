@@ -33,17 +33,17 @@
   name: protolathe machine board
   description: A machine printed circuit board for a protolathe.
   components:
-    - type: Sprite #imp
-      state: science
-    - type: MachineBoard
-      prototype: Protolathe
-      stackRequirements:
-        MatterBin: 2
-        Manipulator: 2
-      tagRequirements:
-        GlassBeaker:
-          amount: 2
-          defaultPrototype: Beaker
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: Protolathe
+    stackRequirements:
+      MatterBin: 2
+      Manipulator: 2
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker
 
 - type: entity
   parent: [ BaseMachineCircuitboard, BaseScienceContraband ]
@@ -51,19 +51,19 @@
   name: hyper convection protolathe machine board
   description: A machine printed circuit board for a hyper convection protolathe.
   components:
-    - type: Sprite #imp
-      state: science
-    - type: MachineBoard
-      prototype: ProtolatheHyperConvection
-      stackRequirements:
-        MatterBin: 2
-      tagRequirements:
-        GlassBeaker:
-          amount: 2
-          defaultPrototype: Beaker
-        Igniter:
-          amount: 1
-          defaultPrototype: Igniter
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: ProtolatheHyperConvection
+    stackRequirements:
+      MatterBin: 2
+    tagRequirements:
+      GlassBeaker:
+        amount: 2
+        defaultPrototype: Beaker
+      Igniter:
+        amount: 1
+        defaultPrototype: Igniter
 
 - type: entity
   id: BiofabricatorMachineCircuitboard
@@ -71,11 +71,13 @@
   name: biocube fabricator machine board
   description: A machine printed circuit board for a biocube fabricator.
   components:
-    - type: MachineBoard
-      prototype: Biofabricator
-      stackRequirements:
-        MatterBin: 4
-        Glass: 1
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: Biofabricator
+    stackRequirements:
+      MatterBin: 4
+      Glass: 1
 
 - type: entity
   id: SecurityTechFabCircuitboard
@@ -577,17 +579,19 @@
   name: biomass reclaimer machine board
   description: A machine printed circuit board for a biomass reclaimer.
   components:
-    - type: MachineBoard
-      prototype: BiomassReclaimer
-      stackRequirements:
-        MatterBin: 2
-        Manipulator: 1
-        Steel: 5
-      tagRequirements:
-        Knife:
-          amount: 2
-          defaultPrototype: KitchenKnife
-          examineName: construction-insert-info-examine-name-knife
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: BiomassReclaimer
+    stackRequirements:
+      MatterBin: 2
+      Manipulator: 1
+      Steel: 5
+    tagRequirements:
+      Knife:
+        amount: 2
+        defaultPrototype: KitchenKnife
+        examineName: construction-insert-info-examine-name-knife
 
 - type: entity
   id: HydroponicsTrayMachineCircuitboard
@@ -803,12 +807,14 @@
   id: DawInstrumentMachineCircuitboard
   name: digital audio workstation machine board
   components:
-    - type: MachineBoard
-      prototype: DawInstrument
-      stackRequirements:
-        Glass: 1
-        Cable: 1
-      tagRequirements:
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: DawInstrument
+    stackRequirements:
+      Glass: 1
+      Cable: 1
+    tagRequirements:
 #      One instrument to bring them all and in the darkness bind them...
        KeyedInstrument:
           amount: 1
@@ -856,6 +862,8 @@
   parent: BaseMachineCircuitboard
   name: thruster machine board
   components:
+  - type: Sprite
+    state: supply
   - type: MachineBoard
     prototype: Thruster
     stackRequirements:
@@ -867,6 +875,8 @@
   parent: BaseMachineCircuitboard
   name: gyroscope machine board
   components:
+  - type: Sprite
+    state: supply
   - type: MachineBoard
     prototype: Gyroscope
     stackRequirements:
@@ -936,11 +946,13 @@
   name: hotplate machine board
   description: A machine printed circuit board for a hotplate.
   components:
-    - type: MachineBoard
-      prototype: ChemistryHotplate
-      stackRequirements:
-        Capacitor: 2
-        Glass: 1
+  - type: Sprite
+    state: medical
+  - type: MachineBoard
+    prototype: ChemistryHotplate
+    stackRequirements:
+      Capacitor: 2
+      Glass: 1
 
 - type: entity
   parent: BaseMachineCircuitboard
@@ -948,6 +960,8 @@
   name: electric grill machine board
   description: A machine printed circuit board for an electric grill.
   components:
+  - type: Sprite
+    state: service
   - type: MachineBoard
     prototype: KitchenElectricGrill
     stackRequirements:
@@ -1117,10 +1131,12 @@
   name: surveillance camera router board
   description: A machine printed circuit board for a surveillance camera router.
   components:
-    - type: MachineBoard
-      prototype: SurveillanceCameraRouterConstructed
-      stackRequirements:
-        Cable: 1
+  - type: Sprite
+    state: security
+  - type: MachineBoard
+    prototype: SurveillanceCameraRouterConstructed
+    stackRequirements:
+      Cable: 1
 
 - type: entity
   id: SurveillanceCameraWirelessRouterCircuitboard
@@ -1128,11 +1144,13 @@
   name: surveillance camera wireless router board
   description: A machine printed circuit board for a surveillance camera wireless router.
   components:
-    - type: MachineBoard
-      prototype: SurveillanceCameraWirelessRouterConstructed
-      stackRequirements:
-        Cable: 2
-        Glass: 1
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: SurveillanceCameraWirelessRouterConstructed
+    stackRequirements:
+      Cable: 2
+      Glass: 1
 
 - type: entity
   id: SurveillanceWirelessCameraMovableCircuitboard
@@ -1140,11 +1158,13 @@
   name: movable wireless camera board
   description: A machine printed circuit board for a movable wireless camera.
   components:
-    - type: MachineBoard
-      prototype: SurveillanceWirelessCameraMovableConstructed
-      stackRequirements:
-        Glass: 2
-        Cable: 2
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: SurveillanceWirelessCameraMovableConstructed
+    stackRequirements:
+      Glass: 2
+      Cable: 2
 
 - type: entity
   id: SurveillanceWirelessCameraAnchoredCircuitboard
@@ -1152,11 +1172,13 @@
   name: wireless camera board
   description: A machine printed circuit board for a wireless camera.
   components:
-    - type: MachineBoard
-      prototype: SurveillanceWirelessCameraAnchoredConstructed
-      stackRequirements:
-        Cable: 2
-        Glass: 1
+  - type: Sprite
+    state: service
+  - type: MachineBoard
+    prototype: SurveillanceWirelessCameraAnchoredConstructed
+    stackRequirements:
+      Cable: 2
+      Glass: 1
 
 - type: entity
   id: GasRecyclerMachineCircuitboard
@@ -1164,6 +1186,8 @@
   name: gas recycler board
   description: A printed circuit board for a gas recycler.
   components:
+  - type: Sprite
+    state: engineering
   - type: MachineBoard
     prototype: GasRecycler
     stackRequirements:
@@ -1240,11 +1264,13 @@
   name: telecommunication server machine board
   description: A machine printed circuit board for an telecommunication server.
   components:
-    - type: MachineBoard
-      prototype: TelecomServer
-      stackRequirements:
-        Steel: 1
-        Cable: 2
+  - type: Sprite
+    state: engineering
+  - type: MachineBoard
+    prototype: TelecomServer
+    stackRequirements:
+      Steel: 1
+      Cable: 2
 
 - type: entity
   parent: [ BaseMachineCircuitboard, BaseCargoContraband ]
@@ -1268,6 +1294,8 @@
   name: mini gravity generator machine board
   description: A machine printed circuit board for a mini gravity generator.
   components:
+  - type: Sprite
+    state: supply
   - type: MachineBoard
     prototype: GravityGeneratorMini
     stackRequirements:
@@ -1311,6 +1339,8 @@
   name: jukebox machine board
   description: A machine printed circuit board for a jukebox.
   components:
+  - type: Sprite
+    state: service
   - type: MachineBoard
     prototype: Jukebox
     stackRequirements:

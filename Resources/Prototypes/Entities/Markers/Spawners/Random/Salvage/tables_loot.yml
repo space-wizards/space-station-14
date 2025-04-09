@@ -252,7 +252,7 @@
     - id: WeaponCrusherGlaive
     - id: ClothingOuterHardsuitSalvage
     - id: ClothingOuterHardsuitGoliath # imp
-    - id: OmnizineChemistryBottle
+    - id: ChemistryBottleOmnizine
     - !type:GroupSelector
       children:
       - id: JetpackBlueFilled

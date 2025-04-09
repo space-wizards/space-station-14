@@ -156,6 +156,7 @@
   - type: Vocal
     sounds:
       Unsexed: UnisexSilicon
+  - type: DamagedSiliconAccent
   - type: UnblockableSpeech
   - type: FootstepModifier
     footstepSoundCollection:

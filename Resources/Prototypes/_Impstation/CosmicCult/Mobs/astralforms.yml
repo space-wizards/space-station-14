@@ -25,7 +25,6 @@
     visMask:
       - Normal
       - Ghost
-      - 777
   - type: ContentEye
     maxZoom: 1.2, 1.2
   - type: Speech
@@ -75,7 +74,6 @@
     visMask:
       - Normal
       - Ghost
-      - 777
   - type: SSDIndicator
   - type: StatusIcon
     bounds: -0.5,-0.5,0.5,0.5
@@ -84,7 +82,7 @@
   - type: ContentEye
     maxZoom: 1.2, 1.2
   - type: Visibility
-    layer: 2 #ghost vis layer
+    layer: 1 #ghost vis layer
   - type: Speech
     enabled: false
   - type: PointLight
@@ -177,7 +175,6 @@
     visMask:
       - Normal
       - Ghost
-      - 777
   - type: GhostRole
     makeSentient: true
     name: ghost-role-information-rogue-ascended-name

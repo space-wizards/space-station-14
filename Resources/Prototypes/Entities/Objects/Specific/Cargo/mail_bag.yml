@@ -1,0 +1,31 @@
+- type: entity
+  name: mail bag
+  id: MailBag
+  parent: BaseStorageItem
+  description: A bag for carrying mail around the station. Made from tanned space bear hide.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Belt/mailbag.rsi # Imp
+    state: icon
+  - type: Clothing
+    sprite: _Impstation/Clothing/Belt/mailbag.rsi # Imp
+    quickEquip: false
+    slots:
+    - belt
+  - type: Item
+    size: Ginormous
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,4,3
+    quickInsert: true
+    areaInsert: true
+    whitelist:
+      components:
+      - Paper
+      - Delivery
+      - Envelope # DeltaV - Allow handwritten mail
+      tags:
+      - Document
+      - Paper
+  - type: Dumpable

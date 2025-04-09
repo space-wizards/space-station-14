@@ -64,7 +64,7 @@ Plants treated with [color=cyan]unstable mutagen[/color] will experience random 
 The more unstable mutagen you use, the more mutations you will get. Since many genes are vital to a plant's survival, most mutations will cause a plant to die.
 
 <Box>
-<GuideEntityEmbed Entity="UnstableMutagenChemistryBottle"/>
+<GuideEntityEmbed Entity="ChemistryBottleUnstableMutagen"/>
 </Box>
 
 ## Cross-Pollination

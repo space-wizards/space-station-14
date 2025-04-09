@@ -1,3 +1,26 @@
+# If you add a new trait, make sure to add the corresponding component to the whitelist in \Resources\Prototypes\Entities\Mobs\Player\clone.yml so it gets copied to clones correctly!
+
+# Free
+
+- type: trait # Imp - use our own version that handles our own traits. we could use this one but also fuck it
+  id: Accentless
+  name: trait-accentless-name
+  description: trait-accentless-desc
+  category: SpeechTraits
+  cost: 0 # Imp
+  components:
+  - type: Accentless
+    removes:
+    - type: LizardAccent
+    - type: MothAccent
+    - type: ReplacementAccent
+      accent: dwarf
+    # Imp accents below
+    - type: SnalienAccent
+    - type: GrayAccent
+    - type: DwarfAccent
+    - type: NoContractionsAccent
+
 # 1 Cost
 
 - type: trait

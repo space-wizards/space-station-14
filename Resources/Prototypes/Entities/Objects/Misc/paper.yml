@@ -197,6 +197,21 @@
     headerMargin: 0.0, 12.0, 0.0, 0.0
 
 - type: entity
+  id: PaperNanoTaskItem
+  parent: Paper
+  name: NanoTask item
+  description: A printed NanoTask item. Can be inserted into your PDA to add it to your tasks.
+  components:
+  - type: Tag
+    tags:
+    - Document
+    - Trash
+    - Paper
+  - type: StaticPrice
+    price: 0
+  - type: NanoTaskPrinted
+
+- type: entity
   id: PaperCargoBountyManifest
   parent: PaperCargoInvoice
   name: bounty manifest

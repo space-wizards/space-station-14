@@ -23,7 +23,7 @@ public sealed class StandingStateSystem : EntitySystem
     [Dependency] private readonly SharedBuckleSystem _buckle = default!; // WD EDIT
 
     // If StandingCollisionLayer value is ever changed to more than one layer, the logic needs to be edited.
-    private const int StandingCollisionLayer = (int) CollisionGroup.MidImpassable;
+    private const int StandingCollisionLayer = (int)CollisionGroup.MidImpassable;
     public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
     {
         if (!Resolve(uid, ref standingState, false))
@@ -57,7 +57,8 @@ public sealed class StandingStateSystem : EntitySystem
         // and ultimately this is just to avoid boilerplate in Down callers + keep their behavior consistent.
         if (dropHeldItems && hands != null)
         {
-            RaiseLocalEvent(uid, new DropHandItemsEvent(), false);
+            var ev = new DropHandItemsEvent();
+            RaiseLocalEvent(uid, ref ev, false);
         }
 
         if (!force)
@@ -88,6 +89,7 @@ public sealed class StandingStateSystem : EntitySystem
                 _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask & ~StandingCollisionLayer, manager: fixtureComponent);
             }
         }
+
         // check if component was just added or streamed to client
         // if true, no need to play sound - mob was down before player could seen that
         if (standingState.LifeStage <= ComponentLifeStage.Starting)
@@ -99,6 +101,7 @@ public sealed class StandingStateSystem : EntitySystem
         }
 
         _movement.RefreshMovementSpeedModifiers(uid); // WD EDIT
+
         return true;
     }
 
@@ -110,6 +113,7 @@ public sealed class StandingStateSystem : EntitySystem
         // TODO: This should actually log missing comps...
         if (!Resolve(uid, ref standingState, false))
             return false;
+
         // Optional component.
         Resolve(uid, ref appearance, false);
 
@@ -139,34 +143,58 @@ public sealed class StandingStateSystem : EntitySystem
         }
         standingState.ChangedFixtures.Clear();
         _movement.RefreshMovementSpeedModifiers(uid); // WD EDIT
-
         return true;
     }
 }
-public sealed class DropHandItemsEvent : EventArgs
-{
-}
+
+[ByRefEvent]
+public record struct DropHandItemsEvent();
+
 /// <summary>
 /// Subscribe if you can potentially block a down attempt.
 /// </summary>
 public sealed class DownAttemptEvent : CancellableEntityEventArgs
 {
 }
+
 /// <summary>
 /// Subscribe if you can potentially block a stand attempt.
 /// </summary>
 public sealed class StandAttemptEvent : CancellableEntityEventArgs
 {
 }
+
 /// <summary>
 /// Raised when an entity becomes standing
 /// </summary>
 public sealed class StoodEvent : EntityEventArgs
 {
 }
+
 /// <summary>
 /// Raised when an entity is not standing
 /// </summary>
 public sealed class DownedEvent : EntityEventArgs
 {
 }
+
+/// <summary>
+/// Raised after an entity falls down.
+/// </summary>
+public sealed class FellDownEvent : EntityEventArgs
+{
+    public EntityUid Uid { get; }
+
+    public FellDownEvent(EntityUid uid)
+    {
+        Uid = uid;
+    }
+}
+
+/// <summary>
+/// Raised on the entity being thrown due to the holder falling down.
+/// </summary>
+[ByRefEvent]
+public record struct FellDownThrowAttemptEvent(EntityUid Thrower, bool Cancelled = false);
+
+
