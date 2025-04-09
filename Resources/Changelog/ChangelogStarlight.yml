@@ -4570,4 +4570,11 @@ Entries:
   id: 633
   time: '2025-04-09T15:46:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/467
+- author: Floating lotus
+  changes:
+  - message: Changeling blood is no longer see though
+    type: Fix
+  id: 634
+  time: '2025-04-09T18:20:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/463
 
