@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Supermatter has been added to Cog, along with some other layout changes.
-    type: Add
-  id: 997
-  time: '2025-01-25T07:59:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1468
-- author: DinnerCalzone
-  changes:
-  - message: The engine has been removed from Marathon.
-    type: Remove
-  id: 998
-  time: '2025-01-25T08:00:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1473
 - author: widgetbeck
   changes:
   - message: Gastropoid Mucin no longer speeds them up directly. Instead, using the
@@ -4104,3 +4090,19 @@
   id: 1496
   time: '2025-04-08T16:19:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2222
+- author: kipdotnet
+  changes:
+  - message: S-Cargo Moving Trunks no longer have a giant ERROR written on them.
+    type: Fix
+  id: 1497
+  time: '2025-04-09T13:35:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2236
+- author: Sha-Seng
+  changes:
+  - message: Moved gray Head markings to Head (Top) and you'll have to reapply them!!
+    type: Tweak
+  - message: Gray Head (Top) and Chest marking points have been increased to 3
+    type: Tweak
+  id: 1498
+  time: '2025-04-09T02:32:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2114
