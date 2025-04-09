@@ -159,6 +159,10 @@
         orGroup: GiftPool
       - id: PlushieLilaMarrnes
         orGroup: GiftPool
+      - id: PlushieDragonFoxMedTech
+        orGroup: GiftPool
+      - id: PlushieDragonFoxMadParadox
+        orGroup: GiftPool
 
 - type: entity
   id: PresentFigurine
