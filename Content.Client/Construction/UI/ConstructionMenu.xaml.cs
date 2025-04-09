@@ -210,7 +210,7 @@ namespace Content.Client.Construction.UI
         }
 
         /// <summary>
-        /// Toggles previous recipe button on or off.
+        /// Toggles previous recipe button on/off.
         /// </summary>
         /// <param name="enabled">Desired toggle state.</param>
         public void TogglePreviousRecipeButton(bool enabled)
@@ -219,7 +219,7 @@ namespace Content.Client.Construction.UI
         }
 
         /// <summary>
-        /// Toggles previous recipe button on or off.
+        /// Toggles next recipe button on/off.
         /// </summary>
         /// <param name="enabled">Desired toggle state.</param>
         public void ToggleNextRecipeButton(bool enabled)
@@ -228,9 +228,9 @@ namespace Content.Client.Construction.UI
         }
 
         /// <summary>
-        /// Handler for when a category is selected.
+        /// Handle category selection.
         /// </summary>
-        /// <param name="categoryDisplayId"></param>
+        /// <param name="categoryDisplayId">Category display ID.</param>
         private void OnSelectCategory(int categoryDisplayId)
         {
             OptionCategories.SelectId(categoryDisplayId);
