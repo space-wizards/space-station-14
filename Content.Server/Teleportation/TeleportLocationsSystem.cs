@@ -28,6 +28,9 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
         UpdateTeleportPoints(ent);
     }
 
+    /// <summary>
+    ///     Gets the teleport points to send to the BUI
+    /// </summary>
     private void UpdateTeleportPoints(Entity<TeleportLocationsComponent> ent)
     {
         var allEnts = AllEntityQuery<WarpPointComponent>();
@@ -45,10 +48,10 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
 
     protected override void OnTeleportLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationRequestTeleportMessage args)
     {
-        if (ent.Comp.User is null)
+        if (ent.Comp.User is null || string.IsNullOrWhiteSpace(ent.Comp.Speech))
             return;
 
-        _chat.TrySendInGameICMessage(ent.Comp.User.Value, $"CHAOS CONTROL ({args.PointName})", InGameICChatType.Speak, ChatTransmitRange.Normal);
+        _chat.TrySendInGameICMessage(ent.Comp.User.Value, $"{ent.Comp.Speech.Trim()} ({args.PointName})", InGameICChatType.Speak, ChatTransmitRange.Normal);
 
         base.OnTeleportLocationRequest(ent, ref args);
     }

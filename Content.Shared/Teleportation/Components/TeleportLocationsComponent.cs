@@ -5,6 +5,11 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Teleportation.Components;
 
+/// <summary>
+///     Used where you want an entity to display a list of player-safe teleport locations
+///     They teleport to the location clicked
+///     Looks for non Ghost-Only WarpPointComponents
+/// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedTeleportLocationsSystem)), AutoGenerateComponentState]
 public sealed partial class TeleportLocationsComponent : Component
 {
@@ -30,15 +35,20 @@ public sealed partial class TeleportLocationsComponent : Component
     public bool CloseAfterTeleport;
 
     /// <summary>
-    ///     Should the user speak on teleport?
+    ///     Should the user have some speech if they teleport?
+    ///     If enabled it will be prepended to the location name.
+    ///     So something like "I am going to" would become "I am going to (Bridge)"
     /// </summary>
     [DataField]
     public string Speech = "";
 }
 
+/// <summary>
+///     A teleport point, which has a location (the destination) and the entity that it represents.
+/// </summary>
 [Serializable, NetSerializable]
-public record struct TeleportPoint(string Location, NetEntity WarpPoint)
+public record struct TeleportPoint(string Location, NetEntity TelePoint)
 {
     public string Location = Location;
-    public NetEntity WarpPoint = WarpPoint;
+    public NetEntity TelePoint = TelePoint;
 }

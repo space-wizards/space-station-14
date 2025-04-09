@@ -19,8 +19,6 @@ public sealed class TeleportLocationRequestPointsMessage : BoundUserInterfaceMes
 /// <summary>
 ///     Sends message to request that the clicker teleports to the requested location
 /// </summary>
-/// <param name="netEnt"></param>
-/// <param name="pointName"></param>
 [Serializable, NetSerializable]
 public sealed class TeleportLocationRequestTeleportMessage(NetEntity netEnt, string pointName) : BoundUserInterfaceMessage
 {
