@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Teleportation.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Teleportation.Components;
@@ -10,8 +11,17 @@ public sealed partial class TeleportLocationsComponent : Component
     [DataField, AutoNetworkedField]
     public HashSet<TeleportPoint> AvailableWarps = new();
 
+    /// <summary>
+    ///
+    /// </summary>
     [DataField]
-    public EntityUid? ScrollOwner;
+    public EntityUid? TeleLocOwner;
+
+    /// <summary>
+    ///     What should spawn as an effect when the user teleports?
+    /// </summary>
+    [DataField]
+    public EntProtoId? TeleportEffect;
 }
 
 [Serializable, NetSerializable]
