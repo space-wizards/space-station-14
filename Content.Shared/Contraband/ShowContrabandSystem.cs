@@ -6,7 +6,7 @@ public sealed class ShowContrabandSystem : EntitySystem
 {
     public override void Initialize()
     {
-        SubscribeLocalEvent<ShowContrabandDetailsComponent, InventoryRelayedEvent<GetContrabandDetailsEvent>>(GetContrabandDetailsEventHandler); ;
+        SubscribeLocalEvent<ShowContrabandDetailsComponent, InventoryRelayedEvent<GetContrabandDetailsEvent>>(GetContrabandDetailsEventHandler);
     }
 
     private void GetContrabandDetailsEventHandler(Entity<ShowContrabandDetailsComponent> ent, ref InventoryRelayedEvent<GetContrabandDetailsEvent> args)

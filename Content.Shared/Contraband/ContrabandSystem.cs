@@ -44,7 +44,7 @@ public sealed class ContrabandSystem : EntitySystem
         Dirty(uid, contraband);
     }
 
-    private void OnDetailedExamine(EntityUid ent,ContrabandComponent component, ref GetVerbsEvent<ExamineVerb> args)
+    private void OnDetailedExamine(EntityUid ent, ContrabandComponent component, ref GetVerbsEvent<ExamineVerb> args)
     {
 
         if (!_contrabandExamineEnabled)
@@ -54,7 +54,7 @@ public sealed class ContrabandSystem : EntitySystem
         if (_contrabandExamineOnlyInHudEnabled)
         {
             var ev = new GetContrabandDetailsEvent();
-            RaiseLocalEvent(ent, ev);
+            RaiseLocalEvent(args.User, ev);
             if (!ev.CanShowContraband)
                 return;
         }
