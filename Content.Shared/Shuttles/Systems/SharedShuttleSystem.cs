@@ -19,7 +19,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     [Dependency] protected readonly SharedTransformSystem XformSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
-    public const float FTLRange = 256f;
+    //public const float FTLRange = 256f; //starlight removed
     public const float FTLBufferRange = 8f;
 
     private EntityQuery<MapGridComponent> _gridQuery;
@@ -155,7 +155,15 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         return HasComp<MapComponent>(coordinates.EntityId);
     }
 
-    public float GetFTLRange(EntityUid shuttleUid) => FTLRange;
+    public float GetFTLRange(EntityUid shuttleUid)
+    {
+        Logger.Info($"GetFTLRange({shuttleUid})");
+        if(!TryComp<ShuttleComponent>(shuttleUid, out var shuttle))
+            return 0f;
+        
+        Logger.Info($"GetFTLRange({shuttleUid}) = {shuttle.FTLRange}");
+        return shuttle.FTLRange;
+    }
 
     public float GetFTLBufferRange(EntityUid shuttleUid, MapGridComponent? grid = null)
     {
@@ -189,7 +197,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         var targetPosition = mapCoordinates.Position;
 
         // Check range even if it's cross-map.
-        if ((targetPosition - ourPos).Length() > FTLRange)
+        if ((targetPosition - ourPos).Length() > GetFTLRange(shuttleUid)) //starlight modification
         {
             return false;
         }
