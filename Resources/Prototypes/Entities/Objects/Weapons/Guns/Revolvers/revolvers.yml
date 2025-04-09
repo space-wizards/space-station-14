@@ -97,7 +97,7 @@
   name: Mateba
   parent: [BaseWeaponRevolver, BaseMajorContraband]
   id: WeaponRevolverMateba
-  description: Advanced revolver used by Nanotrasen’s elite, near mythical ‘Death Squad’. Its unique semi-automatic design allows a lighter trigger pull and higher fire rate. Many have looked down this barrel, but few have lived to tell of it. Loads 6 rounds of .45 magnum.
+  description: A modern revolver used by Nanotrasen’s elite, near mythical ‘Death Squad’ task force. Its unique semi-automatic design allows a lighter trigger pull and higher fire rate than traditional double-action designs. Many have looked down this barrel, but few have lived to tell of it. Loads 6 rounds of .45 magnum.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
