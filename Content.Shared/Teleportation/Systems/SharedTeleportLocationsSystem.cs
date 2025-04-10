@@ -52,6 +52,6 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
             return;
 
         // Teleport's done, now tell the BUI to close if needed.
-        _uI.ServerSendUiMessage(ent.Owner, TeleportLocationUiKey.Key, new TeleportLocationRequestCloseMessage());
+        _uI.CloseUi(ent.Owner, TeleportLocationUiKey.Key);
     }
 }

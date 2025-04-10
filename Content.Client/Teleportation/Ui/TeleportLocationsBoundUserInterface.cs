@@ -11,17 +11,6 @@ public sealed class TeleportLocationsBoundUserInterface : BoundUserInterface
     [ViewVariables]
     private TeleportMenu? _menu;
 
-    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
-    {
-        base.ReceiveMessage(message);
-
-        if (_menu is null)
-            return;
-
-        if (message is TeleportLocationRequestCloseMessage)
-            CloseBUIResponse();
-    }
-
     public TeleportLocationsBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
@@ -43,13 +32,5 @@ public sealed class TeleportLocationsBoundUserInterface : BoundUserInterface
         {
             SendMessage(new TeleportLocationRequestTeleportMessage(netEnt, pointName));
         };
-    }
-
-    private void CloseBUIResponse()
-    {
-        if (_menu is null)
-            return;
-
-        _menu.Close();
     }
 }

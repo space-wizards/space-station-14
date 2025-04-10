@@ -26,11 +26,3 @@ public sealed class TeleportLocationRequestTeleportMessage(NetEntity netEnt, str
     public string PointName = pointName;
 }
 
-/// <summary>
-///     Sends a message to request that the BUI closes
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class TeleportLocationRequestCloseMessage : BoundUserInterfaceMessage
-{
-
-}
