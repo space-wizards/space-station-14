@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Fland has been derotated to reduce map maintenance load.
-    type: Remove
-  id: 1001
-  time: '2025-01-25T08:08:11.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1472
 - author: TheGrimbeeper
   changes:
   - message: reduced cellular damage from anomalium
@@ -4099,3 +4092,14 @@
   id: 1500
   time: '2025-04-10T09:22:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2237
+- author: Sha-Seng
+  changes:
+  - message: Cybersun Briefcase is more obviously illegal.
+    type: Tweak
+  - message: Cybersun outerwear now shows your hands when facing east/west
+    type: Fix
+  - message: Lawyers will now properly spawn with their chosen briefcase
+    type: Fix
+  id: 1501
+  time: '2025-04-10T09:27:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2220
