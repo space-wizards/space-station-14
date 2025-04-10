@@ -436,7 +436,7 @@
     solution:
       reagents:
       - ReagentId: TearGas
-        Quantity: 50
+        Quantity: 15
 
 - type: entity
   parent: [ BaseEngineeringContraband, SmokeGrenade ]
