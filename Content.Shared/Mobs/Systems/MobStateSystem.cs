@@ -1,5 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Damage;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Standing;
@@ -17,6 +18,7 @@ public partial class MobStateSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
     private ISawmill _sawmill = default!;
 
     private EntityQuery<MobStateComponent> _mobStateQuery;

@@ -25,6 +25,7 @@
     - BaseStationSiliconLawCrewsimov
     - BaseStationAllEventsEligible
     - BaseStationNanotrasen
+    - BaseStationDeliveries
     - BaseStationCryoTeleportation
     - BaseStationGammaWeaponry
   categories: [ HideSpawnMenu ]

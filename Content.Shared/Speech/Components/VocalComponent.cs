@@ -50,4 +50,16 @@ public sealed partial class VocalComponent : Component
     [ViewVariables]
     [AutoNetworkedField]
     public EmoteSoundsPrototype? EmoteSounds = null;
+
+    //starlight start
+    [ViewVariables]
+    [AutoNetworkedField]
+    //have to use string as for some reason emote prototypes are not serializable even though im telling it not to serialize
+    public Dictionary<string, TimeSpan> LastEmoteTime = new Dictionary<string, TimeSpan>();
+
+    [ViewVariables]
+    [AutoNetworkedField]
+    [DataField]
+    public TimeSpan EmoteCooldown = TimeSpan.FromSeconds(0.5f);
+    //starlight end
 }

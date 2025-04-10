@@ -328,7 +328,7 @@
         orGroup: coms
       - id: ClothingHeadsetMining
         orGroup: coms
-      - id: ClothingHeadsetGrey
+      - id: ClothingHeadsetAssistant
         orGroup: coms
       - id: ClothingHeadsetScience
         orGroup: coms

@@ -19,6 +19,7 @@
     - id: RubberStampDenied
     - id: RubberStampQm
     - id: AstroNavCartridge
+    - id: MailTeleporterMachineCircuitboard
 
 - type: entity
   id: LockerQuarterMasterFilled
@@ -117,7 +118,7 @@
     children:
     - id: ClothingNeckCloakHopElite
     - id: AccessConfigurator
-    - id: BoxEncryptionKeyPassenger
+    - id: BoxEncryptionKeyAssistant
     - id: BoxEncryptionKeyService
     - id: BoxHeadset
     - id: BoxID

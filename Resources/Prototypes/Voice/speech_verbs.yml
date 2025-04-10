@@ -95,6 +95,13 @@
   - chat-speech-verb-vox-3
 
 - type: speechVerb
+  id: Resomi
+  name: chat-speech-verb-name-resomi
+  speechVerbStrings:
+  - chat-speech-verb-resomi-1
+  - chat-speech-verb-resomi-2
+
+- type: speechVerb
   id: Plant
   name: chat-speech-verb-name-plant
   speechVerbStrings:

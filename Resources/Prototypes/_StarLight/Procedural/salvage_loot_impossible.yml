@@ -62,7 +62,7 @@
         - proto: MedkitCombatFilled
           prob: 0.4
           cost: 36
-        - proto: OmnizineChemistryBottle
+        - proto: ChemistryBottleOmnizine
           cost: 3
         - proto: ClothingEyesHudMedSec
           prob: 0.3

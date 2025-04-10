@@ -10,5 +10,6 @@ namespace Content.Shared.Eye
         Normal = 1 << 0,
         Ghost  = 1 << 1,
         Abductor  = 1 << 2,
+        Subfloor = 1 << 3,
     }
 }

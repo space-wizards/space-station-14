@@ -43,7 +43,11 @@
     minAngle: -19
     maxAngle: -16
   - type: Gun
-    fireRate: 10
+    fireRate: 13
+    selectedMode: Burst
+    shotsPerBurst: 5
+    availableModes:
+      - Burst
     soundGunshot:
       path: /Audio/_Starlight/Weapons/Guns/Gunshots/1sp_91.ogg
   - type: MagazineVisuals

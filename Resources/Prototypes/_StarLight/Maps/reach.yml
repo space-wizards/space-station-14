@@ -37,5 +37,5 @@
             AtmosphericTechnician: [ 1, 1 ]
             StationEngineer: [ 1, 2 ]
             Scientist: [ 1, 1 ]
-            Passenger: [ -1, -1 ]
+            Assistant: [ -1, -1 ]
             SalvageSpecialist: [ 2, 4 ]

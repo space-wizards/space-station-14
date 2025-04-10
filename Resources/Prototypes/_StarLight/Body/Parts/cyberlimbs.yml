@@ -277,3 +277,49 @@
       items:
         - EnergyShieldCyber
         - CyberEnergyChainsword
+
+
+#Mantis Blade
+- type: entity
+  id: LeftArmCyberMantisBlade
+  name: "left mantis blade arm"
+  parent: [PartCyber, BaseLeftArm, BaseSyndicateContraband]
+  components:
+    - type: BaseLayerId
+      layer: CyberLArmMantisBlade
+    - type: BaseLayerIdToggled
+      layer: CyberLArmMantisBladeToggled 
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_mantis_blade_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_mantis_blade_arm"
+    - type: LimbWithItems
+      action: ActionToggleCyberHandLeft
+      sound:
+        path: /Audio/Effects/metal_scrape1.ogg
+      items:
+        - CyberMantisBlade
+
+- type: entity
+  id: RightArmCyberMantisBlade
+  name: "right mantis blade arm"
+  parent: [PartCyber, BaseRightArm, BaseSyndicateContraband]
+  components:
+    - type: BaseLayerId
+      layer: CyberRArmMantisBlade
+    - type: BaseLayerIdToggled
+      layer: CyberRArmMantisBladeToggled
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_mantis_blade_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_mantis_blade_arm"
+    - type: LimbWithItems
+      action: ActionToggleCyberHandRight
+      sound:
+        path: /Audio/Effects/metal_scrape1.ogg
+      items:
+        - CyberMantisBlade
