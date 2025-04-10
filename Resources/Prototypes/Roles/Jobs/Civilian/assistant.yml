@@ -13,7 +13,7 @@
   id: AssistantGear
   equipment:
     id: AssistantPDA
-    ears: ClothingHeadsetGrey
+    ears: ClothingHeadsetAssistant
   #storage:
     #back:
     #- Stuff
