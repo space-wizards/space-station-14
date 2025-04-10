@@ -4,25 +4,25 @@
   components:
   - type: Sprite
     layers:
-    - state: robot
+    - state: borg
       map: [ "enum.BorgVisualLayers.Body", "movement" ]
-    - state: robot_e_r
+    - state: borg_e_r
       map: [ "enum.BorgVisualLayers.Light" ]
       shader: unshaded
       visible: false
-    - state: robot_l
+    - state: borg_l
       shader: unshaded
       map: [ "light","enum.BorgVisualLayers.LightStatus" ]
       visible: false
   - type: BorgChassis
     # Default borg can take no modules until selected type.
     maxModules: 0
-    hasMindState: robot_e
-    noMindState: robot_e_r
+    hasMindState: borg_e
+    noMindState: borg_e_r
   - type: BorgTransponder
     sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: robot
+      sprite: Mobs/Silicon/Chassis/generic.rsi
+      state: generic
     name: cyborg
   - type: InteractionPopup
     interactSuccessString: petting-success-generic-cyborg
