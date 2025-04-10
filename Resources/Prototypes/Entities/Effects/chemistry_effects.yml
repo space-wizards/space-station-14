@@ -49,6 +49,22 @@
     - HideContextMenu
 
 - type: entity
+  parent: BaseFoam
+  id: TearGasSmoke
+  name: tear gas
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke
+    color: '#ffffff1a'
+  - type: TimedDespawn
+    lifetime: 10
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
   parent: Smoke
   id: WizardSmoke
   name: smoke
