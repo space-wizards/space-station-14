@@ -26,7 +26,6 @@ namespace Content.Server.Cargo.Systems
 
         private void InitializeConsole()
         {
-            SubscribeLocalEvent<StationCargoOrderDatabaseComponent, ComponentStartup>(OnOrderDatabaseStartup);
             SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleAddOrderMessage>(OnAddOrderMessage);
             SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleRemoveOrderMessage>(OnRemoveOrderMessage);
             SubscribeLocalEvent<CargoOrderConsoleComponent, CargoConsoleApproveOrderMessage>(OnApproveOrderMessage);
@@ -34,16 +33,6 @@ namespace Content.Server.Cargo.Systems
             SubscribeLocalEvent<CargoOrderConsoleComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<CargoOrderConsoleComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<CargoOrderConsoleComponent, GotEmaggedEvent>(OnEmagged);
-        }
-
-        private void OnOrderDatabaseStartup(Entity<StationCargoOrderDatabaseComponent> ent, ref ComponentStartup args)
-        {
-            if (!TryComp<StationBankAccountComponent>(ent, out var bankAccount))
-                return;
-            foreach (var account in bankAccount.Accounts.Keys)
-            {
-                ent.Comp.Orders.Add(account, new());
-            }
         }
 
         private void OnInteractUsing(EntityUid uid, CargoOrderConsoleComponent component, ref InteractUsingEvent args)
