@@ -157,6 +157,8 @@
     magState: mag
     steps: 5
     zeroVisible: true
+  - type: MeleeWeapon #imp; for pistolwhip anim
+    wideAnimationRotation: -80
 
 - type: entity
   name: retro laser blaster
@@ -180,6 +182,8 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  - type: MeleeWeapon #imp; for pistolwhip anim
+    wideAnimationRotation: -80
 
 - type: entity
   name: makeshift laser pistol
@@ -208,6 +212,8 @@
   - type: Battery
     maxCharge: 500
     startingCharge: 500
+  - type: MeleeWeapon #imp; for pistolwhip anim
+    wideAnimationRotation: -80
 
 - type: entity
   name: tesla gun
@@ -329,6 +335,8 @@
   - type: Battery
     maxCharge: 2000
     startingCharge: 2000
+  - type: MeleeWeapon #imp; for pistolwhip anim
+    wideAnimationRotation: -80
 
 - type: entity
   name: PX-14C pulse carbine #imp
@@ -464,7 +472,7 @@
     attackRate: 0.4 #slower, but hits harder; bigger object to shove with
     damage:
       types:
-        blunt: 8
+        Blunt: 8
   - type: StaminaDamageOnHit
     damage: 15 #slight stagger, but still like 7 hits to stun completely
   - type: MeleeRequiresWield
@@ -513,7 +521,7 @@
       attackRate: 0.4 #slower, but hits harder; bigger object to shove with
       damage:
         types:
-            blunt: 8
+            Blunt: 8
     - type: StaminaDamageOnHit
       damage: 15 #slight stagger, but still like 7 hits to stun completely
     - type: MeleeRequiresWield
@@ -559,7 +567,7 @@
     attackRate: 0.4 #slower, but hits harder; bigger object to shove with
     damage:
       types:
-        blunt: 8
+        Blunt: 8
   - type: StaminaDamageOnHit
     damage: 15 #slight stagger, but still like 7 hits to stun completely
   - type: MeleeRequiresWield
@@ -610,6 +618,8 @@
     tags:
     - Taser
     - Sidearm
+  - type: MeleeWeapon #imp; for pistolwhip anim
+    wideAnimationRotation: -80
 
 - type: entity
   name: disabler
@@ -712,6 +722,8 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  - type: MeleeWeapon #imp; for pistolwhip anim
+    wideAnimationRotation: -80
 
 - type: entity
   name: antique laser pistol
@@ -756,6 +768,8 @@
     flavorKind: station-event-random-sentience-flavor-inanimate
     weight: 0.0002 # 5,000 times less likely than 1 regular animal
     # not putting a BlockMovement component here cause that's funny.
+  - type: MeleeWeapon #imp; for pistolwhip anim
+    wideAnimationRotation: -80
 
 - type: entity
   name: X-66 advanced laser pistol #imp
@@ -791,6 +805,8 @@
   - type: Appearance
   - type: StaticPrice
     price: 63
+  - type: MeleeWeapon #imp; for pistolwhip anim
+    wideAnimationRotation: -80
 
 - type: entity
   name: C.H.I.M.P. handcannon
@@ -837,6 +853,8 @@
     node: start
   - type: StaticPrice
     price: 100
+  - type: MeleeWeapon #imp; for pistolwhip anim
+    wideAnimationRotation: -80
 
 - type: entity
   name: experimental C.H.I.M.P. handcannon

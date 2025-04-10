@@ -46,6 +46,8 @@
         whitelist:
           tags:
             - BlasterCell
+  - type: MeleeWeapon
+    wideAnimationRotation: -80
 
 - type: entity
   name: TW-07 blaster cannon
@@ -86,7 +88,7 @@
     attackRate: 0.4 #slower, but hits harder; bigger object to shove with
     damage:
       types:
-        blunt: 8
+        Blunt: 8
   - type: StaminaDamageOnHit
     damage: 15 #slight stagger, but still like 7 hits to stun completely
   - type: MeleeRequiresWield
@@ -134,3 +136,5 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 30
+  - type: MeleeWeapon
+    wideAnimationRotation: -80
