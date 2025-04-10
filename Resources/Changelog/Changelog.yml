@@ -1,47 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Drag-drop outline no longer shows the vaulting outlines if you're vaulting.
-    type: Tweak
-  id: 7643
-  time: '2024-11-23T11:19:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33477
-- author: goet
-  changes:
-  - message: Useless wires some vending machines have can be cut now.
-    type: Fix
-  id: 7644
-  time: '2024-11-23T11:41:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32447
-- author: IProduceWidgets
-  changes:
-  - message: Arrivals shuttle is more tamper proof.
-    type: Fix
-  id: 7645
-  time: '2024-11-23T15:14:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33284
-- author: metalgearsloth
-  changes:
-  - message: The auto-orientation when showing up on the arrivals shuttle now has
-      a delay to it.
-    type: Tweak
-  id: 7646
-  time: '2024-11-23T16:52:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33479
-- author: Winkarst-cpu
-  changes:
-  - message: Now muzzle flashes are displayed below mobs.
-    type: Tweak
-  id: 7647
-  time: '2024-11-24T04:20:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33465
-- author: MilenVolf
-  changes:
-  - message: Expeditions can now be completed prematurely again by making an FTL jump.
-    type: Fix
-  id: 7648
-  time: '2024-11-24T08:11:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33507
 - author: deltanedas
   changes:
   - message: Fixed expeditions on cave planets not having any ore.
@@ -3891,3 +3848,45 @@
   id: 8142
   time: '2025-04-08T21:54:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36399
+- author: ColonelThirtyTwo
+  changes:
+  - message: Spider clan charges are now marked as contraband
+    type: Fix
+  id: 8143
+  time: '2025-04-09T22:32:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36421
+- author: Beck Thompson
+  changes:
+  - message: Inflatable barrier disassembly is not not laggy anymore.
+    type: Fix
+  id: 8144
+  time: '2025-04-10T10:39:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32420
+- author: RedBookcase
+  changes:
+  - message: Fixed empty handheld mass scanners being 2x2.
+    type: Fix
+  id: 8145
+  time: '2025-04-10T10:44:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36340
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed power cells and power cages counting for laser gun cargo bounties.
+    type: Fix
+  id: 8146
+  time: '2025-04-10T13:55:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36431
+- author: chromiumboy
+  changes:
+  - message: Large objects, such as crates, can once again be dragged over holopads
+    type: Fix
+  id: 8147
+  time: '2025-04-10T14:18:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36341
+- author: JuneSzalkowska
+  changes:
+  - message: Added cooked dragon steak and dragon cutlets.
+    type: Add
+  id: 8148
+  time: '2025-04-10T15:59:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36273
