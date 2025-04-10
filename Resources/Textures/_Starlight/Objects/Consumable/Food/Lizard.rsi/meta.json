@@ -8,10 +8,10 @@
     },
     "states": [
         {
-            "name": "bowl"
+            "name": "plate"
         },
         {
-            "name": "MothSoup"
+            "name": "LizardCooked"
         }
     ]
 }

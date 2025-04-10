@@ -26,15 +26,15 @@
     RightLegFelionoid: 1
     
 - type: microwaveMealRecipe
-  id: RecipeFoodCookedlizardplate
+  id: RecipeFoodCookedlizard
   name: Volcanic explosion recipe
   result: FoodCookedLizardPlate
-  time: 10
+  time: 20
   reagents:
     Ketchup: 3
     Blackpepper: 2
   solids:
     FoodPlate: 1
     FoodOrange: 1
-    RightHandLizard: 1
+    RightHandReptilian: 1
     FoodCabbage: 1

@@ -11,12 +11,12 @@
         - profits
     - type: Food
       trash:
-        - FoodPlate
+      - FoodPlate
     - type: Sprite
-      sprite: _Starlight/Objects/Consumable/Food/plate.rsi
+      sprite: _Starlight/Objects/Consumable/Food/Lizard.rsi
       layers:
         - state: plate
-        - state: AHandinDemise
+        - state: LizardCooked
     - type: SolutionContainerManager
       solutions:
         food:
