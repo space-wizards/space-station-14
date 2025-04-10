@@ -8,7 +8,7 @@ uplink-revolver-python-desc = A brutally simple, effective, and loud Syndicate r
 uplink-pistol-cobra-name = Cobra
 uplink-pistol-cobra-desc = A rugged, robust operator handgun with inbuilt silencer. Uses pistol magazines (.25 caseless).
 
-uplink-rifle-mosin-name = Surplus Rifle
+uplink-rifle-mosin-name = Kardashev-Mosin
 uplink-rifle-mosin-desc = A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
 
 uplink-esword-name = Energy Sword
