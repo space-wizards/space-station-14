@@ -30,7 +30,7 @@ public sealed class TeleportLocationsBoundUserInterface : BoundUserInterface
 
         _menu.TeleportClicked += (netEnt, pointName) =>
         {
-            SendPredictedMessage(new TeleportLocationRequestTeleportMessage(netEnt, pointName));
+            SendPredictedMessage(new TeleportLocationDestinationMessage(netEnt, pointName));
         };
     }
 }

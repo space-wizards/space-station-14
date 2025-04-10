@@ -7,17 +7,17 @@ namespace Content.Shared.Teleportation.Systems;
 public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xForm = default!;
-    [Dependency] private readonly UseDelaySystem _delay = default!;
+    [Dependency] protected readonly UseDelaySystem _delay = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uI = default!;
 
-    private const string TeleportDelay = "TeleportDelay";
+    protected const string TeleportDelay = "TeleportDelay";
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<TeleportLocationsComponent, ActivatableUIOpenAttemptEvent>(OnUiOpenAttempt);
-        SubscribeLocalEvent<TeleportLocationsComponent, TeleportLocationRequestTeleportMessage>(OnTeleportLocationRequest);
+        SubscribeLocalEvent<TeleportLocationsComponent, TeleportLocationDestinationMessage>(OnTeleportToLocationRequest);
     }
 
     private void OnUiOpenAttempt(Entity<TeleportLocationsComponent> ent, ref ActivatableUIOpenAttemptEvent args)
@@ -31,9 +31,9 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
         ent.Comp.User ??= args.User;
     }
 
-    protected virtual void OnTeleportLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationRequestTeleportMessage args)
+    protected virtual void OnTeleportToLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationDestinationMessage args)
     {
-        if (ent.Comp.User is null || !TryGetEntity(args.NetEnt, out var telePointEnt))
+        if (ent.Comp.User is null || !TryGetEntity(args.NetEnt, out var telePointEnt) || _delay.IsDelayed(ent.Owner, TeleportDelay))
             return;
 
         var comp = ent.Comp;

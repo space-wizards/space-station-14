@@ -46,13 +46,13 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
         Dirty(ent);
     }
 
-    protected override void OnTeleportLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationRequestTeleportMessage args)
+    protected override void OnTeleportToLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationDestinationMessage args)
     {
-        if (ent.Comp.User is null || string.IsNullOrWhiteSpace(ent.Comp.Speech))
+        if (ent.Comp.User is null || string.IsNullOrWhiteSpace(ent.Comp.Speech) || _delay.IsDelayed(ent.Owner, TeleportDelay))
             return;
 
         _chat.TrySendInGameICMessage(ent.Comp.User.Value, $"{ent.Comp.Speech.Trim()} ({args.PointName})", InGameICChatType.Speak, ChatTransmitRange.Normal);
 
-        base.OnTeleportLocationRequest(ent, ref args);
+        base.OnTeleportToLocationRequest(ent, ref args);
     }
 }
