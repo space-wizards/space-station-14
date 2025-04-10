@@ -98,7 +98,7 @@
   id: JobMusician
 
 - type: playTimeTracker
-  id: JobAssistant
+  id: JobPassenger
 
 - type: playTimeTracker
   id: JobParamedic

@@ -320,7 +320,7 @@
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
-      role: JobAssistant
+      role: JobPassenger
       time: 360000 # 100hr
   storage:
     back:
