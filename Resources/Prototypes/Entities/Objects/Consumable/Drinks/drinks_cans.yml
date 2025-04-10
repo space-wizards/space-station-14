@@ -20,7 +20,6 @@
           Quantity: 4
         - ReagentId: Iron
           Quantity: 1
-        maxVol: 5
   - type: MixableSolution
     solution: drink
   - type: SolutionTransfer
