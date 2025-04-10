@@ -11,9 +11,8 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.WebPlacer;
 
 /// <summary>
-/// Spawns entities (probably webs) around the component owner when using the component's action.
+///     Spawns entities (probably webs) around the component owner when using the component's action.
 /// </summary>
-/// <seealso cref="WebPlacerComponent"/>
 public sealed class WebPlacerSystem : SharedWebPlacerSystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -46,7 +45,7 @@ public sealed class WebPlacerSystem : SharedWebPlacerSystem
         }
 
         // Get coordinates and spawn webs if the coordinates are valid.
-        bool success = false;
+        var success = false;
         foreach (var vect in webPlacer.Comp.OffsetVectors)
         {
             var pos = xform.Coordinates.Offset(vect);
@@ -79,20 +78,9 @@ public sealed class WebPlacerSystem : SharedWebPlacerSystem
             return false;
 
         // Don't place webs on webs
-        if (blacklist != null)
-            foreach (var entity in _lookup.GetEntitiesIntersecting(coords, LookupFlags.Uncontained))
-                if (_whitelist.IsBlacklistPass(blacklist, entity))
-                    return false;
-
-        // Only place webs on webs
-        if (whitelist != null)
-        {
-            foreach (var entity in _lookup.GetEntitiesIntersecting(coords, LookupFlags.Uncontained))
-                if (_whitelist.IsWhitelistPass(whitelist, entity))
-                    return true;
-
-            return false;
-        }
+        foreach (var entity in _lookup.GetEntitiesIntersecting(coords, LookupFlags.Uncontained))
+            if (!_whitelist.CheckBoth(entity, blacklist, whitelist))
+                return false;
 
         return true;
     }
