@@ -92,7 +92,7 @@
   id: AssistantGloves
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: HonoredAssistant
   equipment:
     gloves: ClothingHandsGlovesFingerlessInsulated
 
