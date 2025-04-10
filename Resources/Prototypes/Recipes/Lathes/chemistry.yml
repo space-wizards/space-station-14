@@ -91,6 +91,14 @@
     Steel: 250
 
 - type: latheRecipe
+  id: BaseChemistryEmptyVial
+  result: BaseChemistryEmptyVial
+  completetime: 2
+  materials:
+    Glass: 50
+    Wood: 20
+
+- type: latheRecipe
   id: ClothingEyesGlassesChemical
   result: ClothingEyesGlassesChemical
   completetime: 2
