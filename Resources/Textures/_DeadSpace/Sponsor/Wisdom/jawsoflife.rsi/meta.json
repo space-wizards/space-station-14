@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "modified from tgstation at commit https://github.com/tgstation/tgstation/commit/f07f847706d85b7cfa4b398e5175732212b69a63 by hq._.dishka (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "syn_jaws_cutter"
+    },
+    {
+      "name": "syn_jaws_pry"
+    },
+    {
+      "name": "syn_inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "syn_inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
+    }
+  ]
+}
