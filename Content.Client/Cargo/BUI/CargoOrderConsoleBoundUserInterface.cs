@@ -138,8 +138,8 @@ namespace Content.Client.Cargo.BUI
 
             AccountName = cState.Name;
 
-            Populate(cState.Orders);
             _menu?.UpdateStation(station);
+            Populate(cState.Orders);
         }
 
         protected override void Dispose(bool disposing)

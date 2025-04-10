@@ -138,7 +138,7 @@ public sealed partial class CargoSystem
             return orders;
 
         var spaceRemaining = GetCargoSpace(shuttleUid);
-        var allOrders = component.AllOrders().ToList();
+        var allOrders = component.AllOrders.ToList();
         for (var i = 0; i < allOrders.Count && spaceRemaining > 0; i++)
         {
             var order = allOrders[i];

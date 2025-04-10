@@ -50,7 +50,7 @@ namespace Content.Server.Cargo.Systems
             if (!TryComp(stationUid, out StationBankAccountComponent? bank))
                 return;
 
-            _audio.PlayPvs(component.ConfirmSound, uid);
+            _audio.PlayPvs(ApproveSound, uid);
             UpdateBankAccount((stationUid.Value, bank), (int) price, CreateAccountDistribution(component.Account, bank));
             QueueDel(args.Used);
             args.Handled = true;
@@ -177,7 +177,7 @@ namespace Content.Server.Cargo.Systems
             }
 
             order.Approved = true;
-            _audio.PlayPvs(component.ConfirmSound, uid);
+            _audio.PlayPvs(ApproveSound, uid);
 
             if (!_emag.CheckFlag(uid, EmagType.Interaction))
             {

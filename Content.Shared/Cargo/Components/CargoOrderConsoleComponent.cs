@@ -22,16 +22,14 @@ public sealed partial class CargoOrderConsoleComponent : Component
     [DataField]
     public ProtoId<CargoAccountPrototype> Account = "Cargo";
 
-    [DataField] public SoundSpecifier ErrorSound = new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_sigh.ogg");
-
     [DataField]
-    public SoundSpecifier ConfirmSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg");
+    public SoundSpecifier ErrorSound = new SoundCollectionSpecifier("CargoError");
 
     /// <summary>
     /// Sound made when <see cref="TransferUnbounded"/> is toggled.
     /// </summary>
     [DataField]
-    public SoundSpecifier ToggleLimitSound = new SoundPathSpecifier("/Audio/Machines/quickbeep.ogg");
+    public SoundSpecifier ToggleLimitSound = new SoundCollectionSpecifier("CargoToggleLimit");
 
     /// <summary>
     /// If true, account transfers have no limit and a lower cooldown.
@@ -76,7 +74,7 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// <summary>
     /// All of the <see cref="CargoProductPrototype.Group"/>s that are supported.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public List<string> AllowedGroups = new() { "market" };
 
     /// <summary>

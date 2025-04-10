@@ -6,21 +6,6 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cargo;
 
-[NetSerializable, Serializable]
-public enum CargoConsoleUiKey : byte
-{
-    Orders,
-    Bounty,
-    Shuttle,
-    Telepad
-}
-
-[NetSerializable, Serializable]
-public enum CargoPalletConsoleUiKey : byte
-{
-    Sale
-}
-
 public abstract class SharedCargoSystem : EntitySystem
 {
     public int GetBalanceFromAccount(Entity<StationBankAccountComponent?> station, ProtoId<CargoAccountPrototype> account)
@@ -54,6 +39,21 @@ public abstract class SharedCargoSystem : EntitySystem
         }
         return distribution;
     }
+}
+
+[NetSerializable, Serializable]
+public enum CargoConsoleUiKey : byte
+{
+    Orders,
+    Bounty,
+    Shuttle,
+    Telepad
+}
+
+[NetSerializable, Serializable]
+public enum CargoPalletConsoleUiKey : byte
+{
+    Sale
 }
 
 [Serializable, NetSerializable]

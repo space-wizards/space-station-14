@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Station.Components;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
@@ -15,21 +16,12 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     /// <summary>
     /// Maximum amount of orders a station is allowed, approved or not.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("capacity")]
+    [DataField]
     public int Capacity = 20;
 
-    public IEnumerable<CargoOrderData> AllOrders()
-    {
-        foreach (var (_, orders) in Orders)
-        {
-            foreach (var order in orders)
-            {
-                yield return order;
-            }
-        }
-    }
+    public IEnumerable<CargoOrderData> AllOrders => Orders.SelectMany(p => p.Value);
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("orders")]
+    [DataField]
     public Dictionary<ProtoId<CargoAccountPrototype>, List<CargoOrderData>> Orders = new();
 
     /// <summary>
