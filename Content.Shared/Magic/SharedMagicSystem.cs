@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.Body.Components;
@@ -27,8 +26,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -68,6 +65,8 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
 
+    private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -84,7 +83,6 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<RandomGlobalSpawnSpellEvent>(OnRandomGlobalSpawnSpell);
         SubscribeLocalEvent<MindSwapSpellEvent>(OnMindSwapSpell);
         SubscribeLocalEvent<VoidApplauseSpellEvent>(OnVoidApplause);
-        SubscribeLocalEvent<AnimateSpellEvent>(OnAnimateSpell);
     }
 
     private void OnBeforeCastSpell(Entity<MagicComponent> ent, ref BeforeCastSpellEvent args)
@@ -301,7 +299,8 @@ public abstract class SharedMagicSystem : EntitySystem
             return;
 
         ev.Handled = true;
-        Speak(ev);
+        if (ev.DoSpeech)
+            Speak(ev);
 
         RemoveComponents(ev.Target, ev.ToRemove);
         AddComponents(ev.Target, ev.ToAdd);
@@ -469,7 +468,8 @@ public abstract class SharedMagicSystem : EntitySystem
     #endregion
     #region Global Spells
 
-    private void OnRandomGlobalSpawnSpell(RandomGlobalSpawnSpellEvent ev)
+    // TODO: Change this into a "StartRuleAction" when actions with multiple events are supported
+    protected virtual void OnRandomGlobalSpawnSpell(RandomGlobalSpawnSpellEvent ev)
     {
         if (!_net.IsServer || ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || ev.Spawns is not { } spawns)
             return;
@@ -485,6 +485,9 @@ public abstract class SharedMagicSystem : EntitySystem
                 continue;
 
             var ent = human.Comp.OwnedEntity.Value;
+
+            if (_tag.HasTag(ent, InvalidForGlobalSpawnSpellTag))
+                continue;
 
             var mapCoords = _transform.GetMapCoordinates(ent);
             foreach (var spawn in EntitySpawnCollection.GetSpawns(spawns, _random))
@@ -526,33 +529,6 @@ public abstract class SharedMagicSystem : EntitySystem
 
         _stun.TryParalyze(ev.Target, ev.TargetStunDuration, true);
         _stun.TryParalyze(ev.Performer, ev.PerformerStunDuration, true);
-    }
-
-    #endregion
-    #region Animation Spells
-
-    private void OnAnimateSpell(AnimateSpellEvent ev)
-    {
-        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || !TryComp<FixturesComponent>(ev.Target, out var fixtures) ||
-            !TryComp<PhysicsComponent>(ev.Target, out var physics))
-            return;
-
-        ev.Handled = true;
-        //Speak(ev);
-
-        RemoveComponents(ev.Target, ev.RemoveComponents);
-        AddComponents(ev.Target, ev.AddComponents);
-
-        var xform = Transform(ev.Target);
-        var fixture = fixtures.Fixtures.First();
-
-        _transform.Unanchor(ev.Target);
-        _physics.SetCanCollide(ev.Target, true, true, false, fixtures, physics);
-        _physics.SetCollisionMask(ev.Target, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobMask, fixtures, physics);
-        _physics.SetCollisionLayer(ev.Target, fixture.Key, fixture.Value, (int)CollisionGroup.FlyingMobLayer, fixtures, physics);
-        _physics.SetBodyType(ev.Target, BodyType.KinematicController, fixtures, physics, xform);
-        _physics.SetBodyStatus(ev.Target, physics, BodyStatus.InAir, true);
-        _physics.SetFixedRotation(ev.Target, false, true, fixtures, physics);
     }
 
     #endregion
