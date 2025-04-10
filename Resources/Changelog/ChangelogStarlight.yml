@@ -4630,4 +4630,12 @@ Entries:
   id: 641
   time: '2025-04-10T16:22:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/466
+- author: walksanatora
+  changes:
+  - message: Musician can now get a sypersynth as as a trinket loadout option. after
+      10 hours of musician gameplay. (With Midi Limit)
+    type: Add
+  id: 642
+  time: '2025-04-10T16:40:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/426
 
