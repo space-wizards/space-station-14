@@ -417,6 +417,10 @@
       - !type:MovespeedModifier
         walkSpeedModifier: 0.5
         sprintSpeedModifier: 0.5
+        statusLifetime: 1.5
+        conditions: # because of the remainding after effect, threshold is given so the effects ends simultaniously
+        - !type:ReagentThreshold
+          min: 5
 
 - type: reagent
   id: Happiness
