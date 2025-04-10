@@ -34,7 +34,19 @@ public sealed partial class CloningSettingsPrototype : IPrototype, IInheritingPr
     ///     Disabled when null.
     /// </summary>
     [DataField]
-    public SlotFlags? CopyEquipment = SlotFlags.WITHOUT_POCKET;
+    public SlotFlags? CopyEquipment = SlotFlags.All;
+
+    /// <summary>
+    ///     Whether or not to copy slime storage and storage implant contents.
+    /// </summary>
+    [DataField]
+    public bool CopyInternalStorage = true;
+
+    /// <summary>
+    ///     Whether or not to copy implants.
+    /// </summary>
+    [DataField]
+    public bool CopyImplants = true;
 
     /// <summary>
     ///     Whitelist for the equipment allowed to be copied.

@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/07/2025 19:06:04
+  entityCount: 15478
+maps:
+- 126
+grids:
+- 2
+orphans: []
+nullspace: []
 tilemap:
   0: Space
   3: FloorArcadeRed
@@ -6612,7 +6623,6 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
-    - type: LoadedMap
 - proto: AccordionInstrument
   entities:
   - uid: 13494
@@ -9600,7 +9610,7 @@ entities:
       pos: 44.5,30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2148.529
+      secondsUntilStateChange: -2424.868
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -33264,6 +33274,13 @@ entities:
     components:
     - type: Transform
       pos: 58.5,10.5
+      parent: 2
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 15478
+    components:
+    - type: Transform
+      pos: 17.5,23.5
       parent: 2
 - proto: Carpet
   entities:
