@@ -23,4 +23,4 @@
           Quantity: 5
   - type: ReactionMixer
     reactionTypes:
-    - Digestion
+    - CarnivoreDigestion
