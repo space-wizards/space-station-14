@@ -4713,4 +4713,11 @@ Entries:
   id: 652
   time: '2025-04-10T18:32:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/436
+- author: Happyrobot33
+  changes:
+  - message: Fixed shuttle FTL UI being unusable.
+    type: Fix
+  id: 653
+  time: '2025-04-10T21:51:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/475
 
