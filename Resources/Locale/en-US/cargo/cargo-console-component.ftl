@@ -23,7 +23,7 @@ cargo-console-menu-cargo-order-row-approve-button = Approve
 cargo-console-menu-cargo-order-row-cancel-button = Cancel
 cargo-console-menu-tab-title-orders = Orders
 cargo-console-menu-tab-title-funds = Transfers
-cargo-console-menu-account-action-transfer-limit = [bold]Transfer Limit:[/bold] {$limit}
+cargo-console-menu-account-action-transfer-limit = [bold]Transfer Limit:[/bold] ${$limit}
 cargo-console-menu-account-action-transfer-limit-unlimited-notifier = [color=gold](Unlimited)[/color]
 cargo-console-menu-account-action-select = [bold]Account Action:[/bold]
 cargo-console-menu-account-action-amount = [bold]Amount:[/bold] $
