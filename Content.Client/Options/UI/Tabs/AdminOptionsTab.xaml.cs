@@ -8,13 +8,45 @@ namespace Content.Client.Options.UI.Tabs;
 [GenerateTypedNameReferences]
 public sealed partial class AdminOptionsTab : Control
 {
+    private const float OverlayMergeMin = 0.05f;
+    private const float OverlayMergeMax = 0.95f;
+    private const int OverlayGhostFadeMin = 0;
+    private const int OverlayGhostFadeMax = 10;
+    private const int OverlayGhostHideMin = 0;
+    private const int OverlayGhostHideMax = 5;
+
     public AdminOptionsTab()
     {
         RobustXamlLoader.Load(this);
 
+        Control.AddOptionCheckBox(CCVars.AdminPlayerlistSeparateSymbols, PlayerlistSeparateSymbolsCheckBox);
+        Control.AddOptionCheckBox(CCVars.AdminPlayerlistHighlightedCharacterColor, PlayerlistCharacterColorCheckBox);
+        Control.AddOptionCheckBox(CCVars.AdminPlayerlistRoleTypeColor, PlayerlistRoleTypeColorCheckBox);
+
         Control.AddOptionCheckBox(CCVars.AdminOverlayClassic, EnableClassicOverlayCheckBox);
+        Control.AddOptionCheckBox(CCVars.AdminOverlaySymbols, EnableOverlaySymbolsCheckBox);
+        Control.AddOptionCheckBox(CCVars.AdminOverlayPlaytime, EnableOverlayPlaytimeCheckBox);
+        Control.AddOptionCheckBox(CCVars.AdminOverlayStartingJob, EnableOverlayStartingJobCheckBox);
 
         Control.Initialize();
+
+        Control.AddOptionPercentSlider(
+            CCVars.AdminOverlayMergeDistance,
+            OverlayMergeDistanceSlider,
+            OverlayMergeMin,
+            OverlayMergeMax);
+
+        Control.AddOptionSlider(
+            CCVars.AdminOverlayGhostFadeDistance,
+            OverlayGhostFadeSlider,
+            OverlayGhostFadeMin,
+            OverlayGhostFadeMax);
+
+        Control.AddOptionSlider(
+            CCVars.AdminOverlayGhostHideDistance,
+            OverlayGhostHideSlider,
+            OverlayGhostHideMin,
+            OverlayGhostHideMax);
     }
 }
 
