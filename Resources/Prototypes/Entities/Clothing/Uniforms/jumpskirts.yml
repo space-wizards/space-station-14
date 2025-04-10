@@ -561,8 +561,8 @@
 - type: entity
   parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtLawyerRed
-  name: red lawyer 
-  description: A flashy red  worn by lawyers and show-offs.
+  name: red lawyer suitskirt
+  description: A flashy red suitskirt worn by lawyers and show-offs.
   components:
     - type: Sprite
       sprite: Clothing/Uniforms/Jumpskirt/lawyerred.rsi
