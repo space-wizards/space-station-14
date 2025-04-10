@@ -1762,6 +1762,15 @@
     Telecrystal: 8
   categories:
   - UplinkWearables
+  conditions: # DS14
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkClothingOuterArmorRaid
@@ -1778,6 +1787,10 @@
     whitelist:
       tags:
       - NukeOpsUplink
+  - !type:BuyerWhitelistCondition # DS14
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkHardsuitSyndieElite
@@ -1792,6 +1805,15 @@
     Telecrystal: 12
   categories:
   - UplinkWearables
+  conditions: # DS14
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle
 
 - type: listing
   id: UplinkClothingOuterHardsuitJuggernaut
