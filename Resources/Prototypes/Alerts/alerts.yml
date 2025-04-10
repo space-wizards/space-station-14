@@ -7,7 +7,6 @@
     - alertType: ChangelingBiomass
     - category: Health
     - category: Stamina
-    - alertType: CosmicEntropy
     - alertType: ChangelingChemicals
     - alertType: SuitPower
     - category: Internals

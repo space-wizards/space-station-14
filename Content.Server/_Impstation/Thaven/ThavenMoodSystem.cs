@@ -296,49 +296,6 @@ public sealed partial class ThavenMoodsSystem : SharedThavenMoodSystem
             UpdateBUIState(ent);
     }
 
-    /// <summary>
-    /// lazily wipes all of a Thaven's moods. This leaves them mood-less.
-    /// </summary>
-    public void ClearMoods(Entity<ThavenMoodsComponent> ent, bool notify = false)
-    {
-        ent.Comp.Moods = new List<ThavenMood>();
-        Dirty(ent);
-
-        if (notify)
-            NotifyMoodChange(ent);
-        else
-            UpdateBUIState(ent);
-    }
-
-    /// <summary>
-    /// Allows external systems to toggle wether or not a ThavenMoodsComponent follows the shared thaven mood.
-    /// </summary>
-    public void ToggleSharedMoods(Entity<ThavenMoodsComponent> ent, bool notify = false)
-    {
-        if (!ent.Comp.FollowsSharedMoods)
-            ent.Comp.FollowsSharedMoods = true;
-        else
-            ent.Comp.FollowsSharedMoods = false;
-        Dirty(ent);
-
-        if (notify)
-            NotifyMoodChange(ent);
-        else
-            UpdateBUIState(ent);
-    }
-
-    /// <summary>
-    /// Allows external sytems to toggle wether or not a ThavenMoodsComponent is emaggable.
-    /// </summary>
-    public void ToggleEmaggable(Entity<ThavenMoodsComponent> ent)
-    {
-        if (!ent.Comp.CanBeEmagged)
-            ent.Comp.CanBeEmagged = true;
-        else
-            ent.Comp.CanBeEmagged = false;
-        Dirty(ent);
-    }
-
     public HashSet<ProtoId<ThavenMoodPrototype>> GetConflicts(IEnumerable<ThavenMood> moods)
     {
         var conflicts = new HashSet<ProtoId<ThavenMoodPrototype>>();

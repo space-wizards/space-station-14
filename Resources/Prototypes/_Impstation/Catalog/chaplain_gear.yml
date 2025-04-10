@@ -1,14 +1,4 @@
 - type: chaplainGearMenuSet
-  id: ChaplainGearRosary
-  name: chaplain-gearset-category-rosary-name
-  description: chaplain-gearset-category-rosary-description
-  sprite:
-    sprite: _Impstation/Objects/Misc/nullrod.rsi
-    state: nullrod_rosary
-  content:
-  - NullRodRosary
-
-- type: chaplainGearMenuSet
   id: ChaplainGearGrail
   name: chaplain-gearset-category-grail-name
   description: chaplain-gearset-category-grail-description

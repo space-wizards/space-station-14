@@ -104,8 +104,6 @@
           32:
             sprite: _Impstation/Mobs/Species/Thaven/displacement.rsi
             state: hands
-  - type: CosmicStarMarkOffset
-    offset: 0, 0.0625 #2 px up. doesn't quite line up because computers can't actually do maths but it's close enough.
 
 
 - type: entity

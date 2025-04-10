@@ -137,7 +137,6 @@
     base: decay
   - type: Tag
     tags:
-      - Entropy
       - HideContextMenu
   - type: PointLight
     radius: 4.25

@@ -11,7 +11,6 @@
       - state: computer
       - state: computer-unshaded
         shader: unshaded
-  - type: CosmicMarkStructure
   - type: Thruster
     thrusterType: Angular # These are overpowered thruster-shuttle-console-hybrids that require no power grid. As such, they cannot be anchored or meaningfully taken outside of their intended use.
     requireSpace: false
@@ -62,7 +61,6 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: CosmicMarkStructure
   - type: Sprite
     sprite: _Impstation/CosmicCult/Tileset/cosmicchair.rsi
     state: chair
@@ -89,7 +87,6 @@
       - state: icon
     drawdepth: Mobs
     noRot: true
-  - type: CosmicMarkStructure
   - type: SpriteFade
   - type: InteractionOutline
   - type: Transform
@@ -119,7 +116,6 @@
   id: CosmicThruster
   name: malign engine
   components:
-  - type: CosmicMarkStructure
   - type: Fixtures
     fixtures:
       fix1:
@@ -185,7 +181,6 @@
       Brute:
         collection: GlassSmash
   - type: Transform
-  - type: CosmicMarkStructure
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -221,137 +216,6 @@
     mode: SnapgridCenter
 
 - type: entity
-  id: CosmicMalignRift
-  name: malign rift
-  description: A malign light pours forth from within.
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: InteractionOutline
-  - type: Sprite
-    sprite: _Impstation/CosmicCult/Tileset/malignrift.rsi
-    drawdepth: Mobs
-    snapCardinals: true
-    offset: 0,0.27
-    layers:
-      - state: rift-unshaded
-        shader: unshaded
-  - type: Clickable
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    castShadows: false
-    color: "#42a4ae"
-  - type: CosmicMarkStructure
-  - type: CosmicMalignRift
-  - type: CosmicCorrupting
-    corruptionMaxTicks: 6
-    corruptionSpeed: 8
-    corruptionChance: 1
-    corruptionReduction: 0.16
-
-##################### SPIRE
-- type: entity
-  id: CosmicVacuousSpire
-  parent: BaseStructure
-  name: vacuous spire
-  description: Also known as the "chuuni fork".
-  components:
-  - type: Pullable
-  - type: Anchorable
-  - type: Physics
-    bodyType: Dynamic
-  - type: Transform
-    anchored: false
-  - type: AtmosDevice
-    joinSystem: true
-  - type: CosmicSpire
-  - type: CosmicMarkStructure
-  - type: SpriteFade
-  - type: InteractionOutline
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.375,0.25,0.4"
-        density: 100
-        mask:
-        - LargeMobMask
-        layer:
-        - WallLayer
-  - type: Sprite
-    sprite: _Impstation/CosmicCult/Tileset/cosmicspire.rsi
-    offset: 0, 0.5
-    layers:
-      - state: base-disabled
-        map: ["base"]
-      - state: overlay
-        map: ["vfx"]
-        shader: unshaded
-        visible: false
-    drawdepth: Mobs
-    noRot: true
-  - type: GenericVisualizer
-    visuals:
-      enum.SpireVisuals.Status:
-        base:
-          On: {state: base-enabled}
-          Off: {state: base-disabled}
-        vfx:
-          On: {visible: True}
-          Off: {visible: False}
-  - type: Appearance
-  - type: AmbientSound
-    enabled: false
-    volume: -5
-    range: 15
-    sound:
-      path: /Audio/_Impstation/CosmicCult/spire_draining.ogg
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Metallic
-  - type: RCDDeconstructable
-    deconstructable: false
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors: #excess damage, don't spawn entities.
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-  - type: PointLight
-    radius: 2
-    energy: 1.6
-    enabled: false
-    castShadows: false
-    color: "#42a4ae"
-
-- type: entity
-  id: AltarCosmic
-  parent: AltarNanotrasen
-  name: cosmic altar
-  description: Altar of.. Something.
-  components:
-  - type: Sprite
-    sprite: _Impstation/CosmicCult/Tileset/altar.rsi
-    layers:
-    - state: cosmic
-    - state: cosmic_light
-      shader: unshaded
-  - type: Icon
-    sprite: _Impstation/CosmicCult/Tileset/altar.rsi
-    state: cosmic
-  - type: PointLight
-    radius: 1.5
-    energy: 2.5
-    color: "#42a4ae"
-
-- type: entity
   id: CosmicTable
   parent: CounterBase
   name: malign table
@@ -365,7 +229,6 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Metallic
-  - type: CosmicMarkStructure
   - type: Destructible
     thresholds:
     - trigger:

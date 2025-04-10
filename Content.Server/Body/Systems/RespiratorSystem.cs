@@ -18,7 +18,6 @@ using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Content.Shared._Impstation.CosmicCult.Components;
 
 namespace Content.Server.Body.Systems;
 
@@ -94,9 +93,6 @@ public sealed class RespiratorSystem : EntitySystem
 
             if (respirator.Saturation < respirator.SuffocationThreshold)
             {
-                if (TryComp<CosmicCultComponent>(uid, out var cultComponent) && !cultComponent.Respiration && !_mobState.IsIncapacitated(uid)) return; // Imp HACK so cultists gasp while in crit.
-                // One line change but a refactor would be so much better. this is VERY BAD and AWFUL.
-
                 if (_gameTiming.CurTime >= respirator.LastGaspEmoteTime + respirator.GaspEmoteCooldown)
                 {
                     respirator.LastGaspEmoteTime = _gameTiming.CurTime;

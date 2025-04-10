@@ -3,7 +3,6 @@
   name: guide-entry-antagonists
   text: "/ServerInfo/_Impstation/Guidebook/Antagonist/Antagonists.xml"
   children:
-  - CosmicCult # impstation - cosmic cult
   - Traitors
   - Changelings # goobstation - changelings
   - Heretics # goob - heretics
