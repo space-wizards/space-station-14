@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: The auto-orientation when showing up on the arrivals shuttle now has
-      a delay to it.
-    type: Tweak
-  id: 7646
-  time: '2024-11-23T16:52:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33479
 - author: Winkarst-cpu
   changes:
   - message: Now muzzle flashes are displayed below mobs.
@@ -3891,3 +3883,10 @@
   id: 8145
   time: '2025-04-10T10:44:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36340
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed power cells and power cages counting for laser gun cargo bounties.
+    type: Fix
+  id: 8146
+  time: '2025-04-10T13:55:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36431
