@@ -1,5 +1,5 @@
 ﻿- type: entity
-  id: WizardsTeleportScroll
+  id: WizardTeleportScroll
   name: teleport scroll
   suffix: Wizard
   parent: [ BaseItem, BaseMagicalContraband ]
