@@ -244,14 +244,9 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     /// <param name="virtualItem">The virtual item, if spawned</param>
     public bool TrySpawnVirtualItem(EntityUid blockingEnt, EntityUid user, [NotNullWhen(true)] out EntityUid? virtualItem)
     {
-        if (_netManager.IsClient)
-        {
-            virtualItem = null;
-            return false;
-        }
-
         var pos = Transform(user).Coordinates;
         virtualItem = Spawn(VirtualItem, pos);
+        EntityManager.FlagPredicted(virtualItem.Value);
         var virtualItemComp = Comp<VirtualItemComponent>(virtualItem.Value);
         virtualItemComp.BlockingEntity = blockingEnt;
         Dirty(virtualItem.Value, virtualItemComp);
