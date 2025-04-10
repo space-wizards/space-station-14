@@ -25,18 +25,19 @@ public abstract class SharedRootableSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
-    private EntityQuery<PuddleComponent> _puddleQuery;
+    protected EntityQuery<PuddleComponent> PuddleQuery;
+    protected EntityQuery<PhysicsComponent> PhysicsQuery;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        _puddleQuery = GetEntityQuery<PuddleComponent>();
+        PuddleQuery = GetEntityQuery<PuddleComponent>();
+        PhysicsQuery = GetEntityQuery<PhysicsComponent>();
 
         SubscribeLocalEvent<RootableComponent, MapInitEvent>(OnRootableMapInit);
         SubscribeLocalEvent<RootableComponent, ComponentShutdown>(OnRootableShutdown);
@@ -49,43 +50,40 @@ public abstract class SharedRootableSystem : EntitySystem
         SubscribeLocalEvent<RootableComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeed);
     }
 
-    private void OnRootableMapInit(EntityUid uid, RootableComponent component, MapInitEvent args)
+    private void OnRootableMapInit(Entity<RootableComponent> entity, ref MapInitEvent args)
     {
-        component.NextUpdate = _timing.CurTime;
-        _actions.AddAction(uid, ref component.ActionEntity, component.Action, uid);
+        entity.Comp.NextUpdate = _timing.CurTime;
+        _actions.AddAction(entity, ref entity.Comp.ActionEntity, entity.Comp.Action, entity);
     }
 
-    private void OnRootableShutdown(EntityUid uid, RootableComponent component, ComponentShutdown args)
+    private void OnRootableShutdown(Entity<RootableComponent> entity, ref ComponentShutdown args)
     {
-        _actions.RemoveAction(uid, component.ActionEntity);
+        _actions.RemoveAction(entity, entity.Comp.ActionEntity);
     }
 
-    private void OnRootableToggle(EntityUid uid, RootableComponent component, ref ToggleActionEvent args)
+    private void OnRootableToggle(Entity<RootableComponent> entity, ref ToggleActionEvent args)
     {
-        args.Handled = TryToggleRooting(uid, rooted: component);
+        args.Handled = TryToggleRooting(entity);
     }
 
-    private void OnMobStateChanged(EntityUid uid, RootableComponent component, MobStateChangedEvent args)
+    private void OnMobStateChanged(Entity<RootableComponent> entity, ref MobStateChangedEvent args)
     {
-        if (component.Rooted)
-            TryToggleRooting(uid, rooted: component);
+        if (entity.Comp.Rooted)
+            TryToggleRooting(entity);
     }
 
-    public bool TryToggleRooting(EntityUid uid, RootableComponent? rooted = null)
+    public bool TryToggleRooting(Entity<RootableComponent> entity)
     {
-        if (!Resolve(uid, ref rooted))
-            return false;
+        entity.Comp.Rooted = !entity.Comp.Rooted;
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(entity);
+        Dirty(entity);
 
-        rooted.Rooted = !rooted.Rooted;
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
-        Dirty(uid, rooted);
-
-        if (rooted.Rooted)
-            _alerts.ShowAlert(uid, rooted.RootedAlert);
+        if (entity.Comp.Rooted)
+            _alerts.ShowAlert(entity, entity.Comp.RootedAlert);
         else
-            _alerts.ClearAlert(uid, rooted.RootedAlert);
+            _alerts.ClearAlert(entity, entity.Comp.RootedAlert);
 
-        _audio.PlayPredicted(rooted.RootSound, uid.ToCoordinates(), uid);
+        _audio.PlayPredicted(entity.Comp.RootSound, entity.Owner.ToCoordinates(), entity);
 
         return true;
     }
@@ -116,7 +114,7 @@ public abstract class SharedRootableSystem : EntitySystem
 
     private void OnStartCollide(Entity<RootableComponent> entity, ref StartCollideEvent args)
     {
-        if (!_entityManager.HasComponent<PuddleComponent>(args.OtherEntity))
+        if (!PuddleQuery.HasComp(args.OtherEntity))
         {
             return;
         }
@@ -134,7 +132,7 @@ public abstract class SharedRootableSystem : EntitySystem
 
         var exists = Exists(args.OtherEntity);
 
-        if (!TryComp<PhysicsComponent>(entity, out var body))
+        if (!PhysicsQuery.TryComp(entity, out var body))
             return;
 
         foreach (var ent in _physics.GetContactingEntities(entity, body))
@@ -142,7 +140,7 @@ public abstract class SharedRootableSystem : EntitySystem
             if (exists && ent == args.OtherEntity)
                 continue;
 
-            if (!_puddleQuery.HasComponent(ent))
+            if (!PuddleQuery.HasComponent(ent))
                 continue;
 
             entity.Comp.PuddleEntity = ent;

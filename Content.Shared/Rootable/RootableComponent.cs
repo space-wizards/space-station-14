@@ -51,7 +51,7 @@ public sealed partial class RootableComponent : Component
     /// The frequency of which chemicals are transferred from the puddle to the rooted entity.
     /// </summary>
     [DataField]
-    public float TransferFrequency = 1;
+    public TimeSpan TransferFrequency = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// The movement speed modifier for when rooting is active.
