@@ -709,21 +709,21 @@
     energy: 0.5
 
 - type: entity
-  name: singularity buster rocket
-  id: BulletSingularityBusterRocket
   parent: BaseBulletTrigger
+  id: BulletSingularityBusterRocket
   categories: [ HideSpawnMenu ]
+  name: singularity buster rocket
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
-      - state: buster
+    - state: buster
   - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Default
-    maxIntensity: 40 # same as regular rocket
-    intensitySlope: 6
+    explosionType: Radioactive
     totalIntensity: 200
+    intensitySlope: 6
+    maxIntensity: 40 # same as regular rocket
     maxTileBreak: 1
   - type: PointLight
     radius: 3.5

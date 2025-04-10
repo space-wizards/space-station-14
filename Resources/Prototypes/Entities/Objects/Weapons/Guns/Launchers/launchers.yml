@@ -87,21 +87,21 @@
   - type: Appearance
   
 - type: entity
-  name: singularity buster rocket launcher
   parent: [BaseWeaponLauncher, BaseGunWieldable, BaseGrandTheftContraband]
   id: WeaponLauncherSingularityBuster
+  name: singularity buster rocket launcher
   description: An experimental rocket launcher designed to fire rockets capable of decomposing a singularity. 
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/buster_rocket.rsi
     layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/buster_rocket.rsi
   - type: Tag
     tags:
-      - HighRiskItem
+    - HighRiskItem
   - type: Gun
     fireRate: 0.5
     soundGunshot:
@@ -109,7 +109,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeRocket
+      - CartridgeRocket
     proto: CartridgeRocketSingularityBuster
     capacity: 1
     soundInsert:
