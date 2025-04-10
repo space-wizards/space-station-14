@@ -1,5 +1,35 @@
 - type: entity
   parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtAssistant
+  name: assistant jumpskirt
+  description: A tasteful green jumpskirt that reminds you of the good old days.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+    layers:
+    - state: icon
+      color: "#639137"
+    - state: trinkets-icon
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#639137"
+      - state: trinkets-inhand-left
+      right:
+      - state: inhand-right
+        color: "#639137"
+      - state: trinkets-inhand-right
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING
+        color: "#639137"
+      - state: trinkets-equipped-INNERCLOTHING
+
+- type: entity
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtBartender
   name: bartender's uniform
   description: A nice and tidy uniform. Shame about the bar though.

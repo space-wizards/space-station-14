@@ -1,6 +1,6 @@
 # Greytide Time
 - type: loadoutEffectGroup
-  id: GreyTider
+  id: HonoredAssistant
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
@@ -23,28 +23,28 @@
   id: AssistantFace
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: HonoredAssistant
   equipment:
     mask: ClothingMaskGas
 
 # Jumpsuits
-# Grey
+# Basic
 - type: loadout
-  id: GreyJumpsuit
+  id: BasicJumpsuit
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorGrey
+    jumpsuit: ClothingUniformJumpsuitAssistant
 
 - type: loadout
-  id: GreyJumpskirt
+  id: BasicJumpskirt
   equipment:
-    jumpsuit: ClothingUniformJumpskirtColorGrey
+    jumpsuit: ClothingUniformJumpskirtAssistant
 
 # Rainbow
 - type: loadout
   id: RainbowJumpsuit
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: HonoredAssistant
   equipment:
     jumpsuit: ClothingUniformColorRainbow
 
@@ -53,7 +53,7 @@
   id: AncientJumpsuit
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: HonoredAssistant
   equipment:
     jumpsuit: ClothingUniformJumpsuitAncient
 
