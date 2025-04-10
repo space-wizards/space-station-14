@@ -4698,4 +4698,19 @@ Entries:
   id: 650
   time: '2025-04-10T18:01:59.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/470
+- author: Happyrobot33
+  changes:
+  - message: Added Knockback and self-stun damage to large weapons for Resomi and
+      Felionoids only.
+    type: Add
+  id: 651
+  time: '2025-04-10T18:32:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/436
+- author: Happyrobot33
+  changes:
+  - message: Resomi can now use large weapons.
+    type: Tweak
+  id: 652
+  time: '2025-04-10T18:32:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/436
 
