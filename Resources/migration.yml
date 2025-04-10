@@ -799,3 +799,7 @@ CBURNSierraIDcard: null
 CBURNSierraLeaderIDcard: null
 SignERTsierra: null
 SignERTsierraDocking: null
+
+# 2025-04-11 - DS14
+RandomHumanoidSpawnerMobHumanCentcomBlueShieldOfficer: RandomHumanoidSpawnerCentcomBlueShieldOfficer
+
