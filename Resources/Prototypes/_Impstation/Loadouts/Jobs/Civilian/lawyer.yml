@@ -66,10 +66,10 @@
 # Briefcases
 - type: loadout
   id: BrownBriefcase
-  equipment:
-    inhand: BriefcaseBrown
+  inhand:
+  - BriefcaseBrownFilled
 
 - type: loadout
   id: BlackBriefcase
-  equipment:
-    inhand: BriefcaseBlack
+  inhand:
+  - BriefcaseBlackFilled
