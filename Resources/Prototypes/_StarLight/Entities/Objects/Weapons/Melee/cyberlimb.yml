@@ -77,9 +77,6 @@
     soundSwing:
       path: /Audio/Weapons/punchmiss.ogg
   - type: Item
-    speedModifier: 3.2
-    pryPowered: true
-    useSound: /Audio/Items/jaws_pry.ogg
   - type: Sharp
   - type: Reflect
     reflectProb: 0.2
