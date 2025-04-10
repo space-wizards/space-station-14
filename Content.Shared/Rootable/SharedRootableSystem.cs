@@ -115,9 +115,7 @@ public abstract class SharedRootableSystem : EntitySystem
     private void OnStartCollide(Entity<RootableComponent> entity, ref StartCollideEvent args)
     {
         if (!PuddleQuery.HasComp(args.OtherEntity))
-        {
             return;
-        }
 
         entity.Comp.PuddleEntity = args.OtherEntity;
 
