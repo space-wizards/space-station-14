@@ -20,3 +20,11 @@
   materials:
     Glass: 100
     Plasma: 50
+
+- type: latheRecipe
+  id: WalkingCane
+  result: WalkingCane
+  completetime: 2
+  materials:
+    Steel: 100
+    Wood: 100
