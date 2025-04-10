@@ -4638,4 +4638,29 @@ Entries:
   id: 642
   time: '2025-04-10T16:40:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/426
+- author: InanimateIJK
+  changes:
+  - message: Addition of new Track 'Breacher', a Custom-track made for IJK by Artifyber;
+      given to Starlight SS14, revolving around the upbeat, mysterious & defining
+      nature of the mechanical, the unknown, or the synthetic (Currently unused).
+    type: Add
+  id: 643
+  time: '2025-04-10T17:30:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/451
+- author: InanimateIJK
+  changes:
+  - message: Addition of IPCsaster, a new lobby art done for the future rollout of
+      IPCs development by TheAnaRina (apart of the Manisols), starring the IPC Character
+      Beatrice Manisol.
+    type: Add
+  id: 644
+  time: '2025-04-10T17:30:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/451
+- author: Rinary
+  changes:
+  - message: Returned skubstep music to lobby.
+    type: Tweak
+  id: 645
+  time: '2025-04-10T17:30:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/451
 
