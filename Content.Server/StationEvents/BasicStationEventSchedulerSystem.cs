@@ -181,12 +181,13 @@ namespace Content.Server.StationEvents
             if (!eventScheduler.TryGetComponent<BasicStationEventSchedulerComponent>(out var basicScheduler, _compFac))
                 yield break;
 
-            var theoryTime = TimeSpan.Zero + TimeSpan.FromSeconds(time);
+            var timemins = time * 60;
+            var theoryTime = TimeSpan.Zero + TimeSpan.FromSeconds(timemins);
             var available = _stationEvent.AvailableEvents(false, playerCount, theoryTime);
             if (!_stationEvent.TryBuildLimitedEvents(basicScheduler.ScheduledGameRules, available, out var untimedEvents))
                 yield break;
 
-            var events = untimedEvents.Where(pair => pair.Value.EarliestStart <= time).ToList();
+            var events = untimedEvents.Where(pair => pair.Value.EarliestStart <= timemins).ToList();
 
             var totalWeight = events.Sum(x => x.Value.Weight); // same subsetting issue as lsprob.
 
