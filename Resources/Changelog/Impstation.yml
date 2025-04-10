@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: reduced cellular damage from anomalium
-    type: Tweak
-  id: 1002
-  time: '2025-01-25T08:13:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1478
 - author: DinnerCalzone
   changes:
   - message: Basic solid airlocks have had their sprite changed to better match their
@@ -4103,3 +4096,14 @@
   id: 1501
   time: '2025-04-10T09:27:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2220
+- author: AvianMaiden
+  changes:
+  - message: Reality should no longer end when you melee with some larger guns.
+    type: Fix
+  - message: What if I pistol-whipped you as hard as humanly possible?
+    type: Tweak
+  - message: Flare gun bonking.
+    type: Add
+  id: 1502
+  time: '2025-04-10T09:48:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2172
