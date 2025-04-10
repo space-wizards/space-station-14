@@ -9,4 +9,4 @@
     layers:
     - state: icon
   - type: AutoRecharge
-    rechargeDuration: 10
+    rechargeDuration: 120
