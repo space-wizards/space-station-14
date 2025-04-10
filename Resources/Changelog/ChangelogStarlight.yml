@@ -4691,4 +4691,11 @@ Entries:
   id: 649
   time: '2025-04-10T17:30:55.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/471
+- author: Happyrobot33
+  changes:
+  - message: Added way for admins to unlimit shuttle range and mass for FTL.
+    type: Tweak
+  id: 650
+  time: '2025-04-10T18:01:59.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/470
 
