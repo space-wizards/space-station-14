@@ -424,7 +424,7 @@
   parent: [ClothingHeadBase, BaseFoldable]
   id: ClothingHeadHatSantahat
   name: santa hat
-  description: A festive hat worn by Santa Claus.
+  description: A festive hat worn by Santa Claus. Now with a foldable beard.
   components:
   - type: Clothing
     sprite: Clothing/Head/Hats/santahat.rsi
