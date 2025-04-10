@@ -17,4 +17,4 @@ public sealed partial class InitialNecroficationComponent : Component
 }
 
 [ByRefEvent]
-public readonly record struct StartNecroficationEvent();
+public readonly record struct InitialNecroficationEvent();

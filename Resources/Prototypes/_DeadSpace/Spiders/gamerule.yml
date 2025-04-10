@@ -65,8 +65,8 @@
     definitions:
     - prefRoles: [ SpiderTerrorQueen ]
       fallbackRoles: [ SpiderTerrorKingBlood, SpiderTerrorKing ]
-      max: 2
-      min: 2
+      max: 3
+      min: 3
       briefing:
         text: spider-terror-quin-briefing-greeting
         color: CornflowerBlue
@@ -99,8 +99,8 @@
       - MindRoleSpiderTettorKing
     - prefRoles: [ SpiderTerrorKingBlood ]
       fallbackRoles: [ SpiderTerrorQueen, SpiderTerrorKing ]
-      max: 2
-      min: 2
+      max: 3
+      min: 3
       playerRatio: 10
       briefing:
         text: spider-terror-kingblood-briefing-greeting
@@ -224,9 +224,7 @@
     startAnnouncement: station-event-response-team-arrival
     startAudio:
       path: /Audio/_DeadSpace/Announcements/centcomm.ogg # DS14-Announcements
-    weight: 0
-    reoccurrenceDelay: 30
-    duration: 1
+    willNotStartRandomly: true
   - type: RuleGrids
   - type: LoadMapRule
     preloadedGrid: DeathSquadShuttle
