@@ -155,6 +155,17 @@
 
 - type: entity
   parent: ClothingScarfBase
+  id: ClothingNeckScarfStripedAroace
+  name: striped aroace scarf
+  description: A stylish striped aroace scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Scarfs/PrideScarfs/aroace.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Scarfs/PrideScarfs/aroace.rsi
+
+- type: entity
+  parent: ClothingScarfBase
   id: ClothingNeckScarfStripedBiSexual
   name: striped bisexual scarf
   description: A stylish striped bisexual scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks.
