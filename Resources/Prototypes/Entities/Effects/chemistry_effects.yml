@@ -9,7 +9,6 @@
   - type: SmokeVisuals
   - type: Transform
     anchored: true
-  - type: Clickable
   - type: Physics
   - type: Fixtures
     fixtures:
