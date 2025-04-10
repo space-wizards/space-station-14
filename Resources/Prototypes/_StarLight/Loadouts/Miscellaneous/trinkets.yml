@@ -3,12 +3,6 @@
 - type: loadoutEffectGroup
   id: SuperSynthTimerAndWhitelist
   effects:
-    - !type:AnyFlagLoadoutEffect
-      flags:
-        - Staff
-        - Mentor
-        - ExtRoles
-        - Retiree
     - !type:JobRequirementLoadoutEffect
       requirement:
         !type:RoleTimeRequirement
