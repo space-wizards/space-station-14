@@ -54,7 +54,7 @@
             # science
             Borg: [ 1, 1 ]
             ResearchAssistant: [ 1, 1 ]
-            Scientist: [ 2, 2 ]
+            Scientist: [ 1, 1 ]
             StationAi: [1,1]
             # security
             SecurityCadet: [ 1, 1 ]

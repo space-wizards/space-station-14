@@ -4,8 +4,8 @@ meta:
   engineVersion: 248.0.2
   forkId: ""
   forkVersion: ""
-  time: 04/05/2025 03:07:55
-  entityCount: 216
+  time: 04/09/2025 11:38:24
+  entityCount: 241
 maps: []
 grids:
 - 1
@@ -230,11 +230,11 @@ entities:
       parent: 1
 - proto: AppraisalTool
   entities:
-  - uid: 99
+  - uid: 186
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: 8.819321,-0.5001314
+      pos: 8.491466,-0.43598187
       parent: 1
 - proto: AtmosDeviceFanDirectional
   entities:
@@ -463,30 +463,25 @@ entities:
     - type: Transform
       pos: 11.5,0.5
       parent: 1
-  - uid: 186
-    components:
-    - type: Transform
-      pos: 8.5,-0.5
-      parent: 1
   - uid: 187
     components:
     - type: Transform
-      pos: 8.5,-1.5
+      pos: 9.5,2.5
       parent: 1
   - uid: 188
     components:
     - type: Transform
-      pos: 8.5,-2.5
+      pos: 9.5,-0.5
       parent: 1
   - uid: 189
     components:
     - type: Transform
-      pos: 8.5,1.5
+      pos: 9.5,3.5
       parent: 1
   - uid: 190
     components:
     - type: Transform
-      pos: 8.5,2.5
+      pos: 9.5,1.5
       parent: 1
   - uid: 191
     components:
@@ -522,6 +517,11 @@ entities:
     components:
     - type: Transform
       pos: 13.5,-1.5
+      parent: 1
+  - uid: 217
+    components:
+    - type: Transform
+      pos: 9.5,-1.5
       parent: 1
 - proto: CableHV
   entities:
@@ -576,6 +576,131 @@ entities:
     components:
     - type: Transform
       pos: -0.5,-3.5
+      parent: 1
+  - uid: 218
+    components:
+    - type: Transform
+      pos: -0.5,-2.5
+      parent: 1
+  - uid: 219
+    components:
+    - type: Transform
+      pos: 0.5,-2.5
+      parent: 1
+  - uid: 220
+    components:
+    - type: Transform
+      pos: 1.5,-2.5
+      parent: 1
+  - uid: 221
+    components:
+    - type: Transform
+      pos: 1.5,-1.5
+      parent: 1
+  - uid: 222
+    components:
+    - type: Transform
+      pos: 1.5,-0.5
+      parent: 1
+  - uid: 223
+    components:
+    - type: Transform
+      pos: 2.5,-0.5
+      parent: 1
+  - uid: 224
+    components:
+    - type: Transform
+      pos: 3.5,-0.5
+      parent: 1
+  - uid: 225
+    components:
+    - type: Transform
+      pos: 4.5,-0.5
+      parent: 1
+  - uid: 226
+    components:
+    - type: Transform
+      pos: 5.5,-0.5
+      parent: 1
+  - uid: 227
+    components:
+    - type: Transform
+      pos: 6.5,-0.5
+      parent: 1
+  - uid: 228
+    components:
+    - type: Transform
+      pos: 6.5,0.5
+      parent: 1
+  - uid: 229
+    components:
+    - type: Transform
+      pos: 7.5,0.5
+      parent: 1
+  - uid: 230
+    components:
+    - type: Transform
+      pos: 8.5,0.5
+      parent: 1
+  - uid: 231
+    components:
+    - type: Transform
+      pos: 8.5,0.5
+      parent: 1
+  - uid: 232
+    components:
+    - type: Transform
+      pos: 9.5,0.5
+      parent: 1
+  - uid: 233
+    components:
+    - type: Transform
+      pos: 10.5,0.5
+      parent: 1
+  - uid: 234
+    components:
+    - type: Transform
+      pos: 11.5,0.5
+      parent: 1
+  - uid: 235
+    components:
+    - type: Transform
+      pos: 11.5,1.5
+      parent: 1
+  - uid: 236
+    components:
+    - type: Transform
+      pos: 11.5,2.5
+      parent: 1
+  - uid: 237
+    components:
+    - type: Transform
+      pos: 12.5,2.5
+      parent: 1
+  - uid: 238
+    components:
+    - type: Transform
+      pos: 13.5,2.5
+      parent: 1
+  - uid: 239
+    components:
+    - type: Transform
+      pos: 11.5,-0.5
+      parent: 1
+  - uid: 240
+    components:
+    - type: Transform
+      pos: 11.5,-1.5
+      parent: 1
+  - uid: 241
+    components:
+    - type: Transform
+      pos: 12.5,-1.5
+      parent: 1
+  - uid: 242
+    components:
+    - type: Transform
+      pos: 13.5,-1.5
       parent: 1
 - proto: CarpetBlack
   entities:
@@ -1060,6 +1185,12 @@ entities:
     - type: Transform
       pos: 9.5,2.5
       parent: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        135:
+        - Pressed: Toggle
+        130:
+        - Pressed: Toggle
   - uid: 145
     components:
     - type: Transform
