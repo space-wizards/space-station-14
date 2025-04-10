@@ -75,6 +75,18 @@ public sealed partial class StationJobsSystem : EntitySystem
             x => x.Key,
             x=> (int?)(x.Value[1] < 0 ? null : x.Value[1]));
 
+        /// JobGroup logic
+        foreach (var group in stationJobs.JobGroups.Values)
+        {
+            foreach (var member in group.Members)
+            {
+                if (stationJobs.JobList.TryGetValue(member, out _))
+                {
+                    stationJobs.JobList[member] = group.RoundStart;
+                }
+            }
+        }
+
         stationJobs.TotalJobs = stationJobs.JobList.Values.Select(x => x ?? 0).Sum();
 
         UpdateJobsAvailable();
@@ -160,6 +172,29 @@ public sealed partial class StationJobsSystem : EntitySystem
 
         if (amount == 0)
             return true;
+
+        //Adjustment logic for jobs that are in JobGroups
+        foreach (var group in stationJobs.JobGroups.Values)
+        {
+            if (group.Members.Contains(jobPrototypeId))
+            {
+                var newMidRound = group.MidRound + amount;
+ 
+                if (newMidRound < 0 && !clamp)
+                    return false;
+
+                group.MidRound = Math.Max(newMidRound, 0);
+
+                // Update all group members
+                foreach (var member in group.Members)
+                {
+                    stationJobs.JobList[member] = group.MidRound;
+                }
+
+                UpdateJobsAvailable();
+                return true;
+            }
+        }
 
         switch (jobList.TryGetValue(jobPrototypeId, out var available))
         {
@@ -343,6 +378,16 @@ public sealed partial class StationJobsSystem : EntitySystem
     {
         if (!Resolve(station, ref stationJobs))
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
+
+        /// Logic to update slots for jobs in JobGroups
+        foreach (var group in stationJobs.JobGroups.Values)
+        {
+            if (group.Members.Contains(jobPrototypeId))
+            {
+                slots = group.MidRound;
+                return true;
+            }
+        }
 
         return stationJobs.JobList.TryGetValue(jobPrototypeId, out slots);
     }
