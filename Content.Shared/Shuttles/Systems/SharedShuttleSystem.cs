@@ -2,12 +2,14 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.UI.MapObjects;
+using Content.Shared.Starlight.CCVar; //Starlight-edit
 using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Configuration; //Starlight-edit
 
 namespace Content.Shared.Shuttles.Systems;
 
@@ -18,6 +20,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     [Dependency] protected readonly SharedMapSystem Maps = default!;
     [Dependency] protected readonly SharedTransformSystem XformSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
     //public const float FTLRange = 256f; //starlight removed
     public const float FTLBufferRange = 8f;
@@ -155,15 +158,22 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         return HasComp<MapComponent>(coordinates.EntityId);
     }
 
+    // Starlight-edit start
     public float GetFTLRange(EntityUid shuttleUid)
     {
         Logger.Info($"GetFTLRange({shuttleUid})");
         if(!TryComp<ShuttleComponent>(shuttleUid, out var shuttle))
             return 0f;
         
+        var serverShuttleLimit = _configurationManager.GetCVar(StarlightCCVars.AdmemeShuttleLimit);
+        
+        if (serverShuttleLimit != null && shuttle.FTLRange > serverShuttleLimit)
+            return serverShuttleLimit;
+        
         Logger.Info($"GetFTLRange({shuttleUid}) = {shuttle.FTLRange}");
         return shuttle.FTLRange;
     }
+    // Starlight-edit end
 
     public float GetFTLBufferRange(EntityUid shuttleUid, MapGridComponent? grid = null)
     {
