@@ -63,7 +63,8 @@ public sealed partial class ZombieSystem
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     private static readonly ProtoId<TagPrototype> InvalidForGlobalSpawnSpellTag = "InvalidForGlobalSpawnSpell";
-
+    private static readonly ProtoId<TagPrototype> CannotSuicideTag = "CannotSuicide";
+    
     /// <summary>
     /// Handles an entity turning into a zombie when they die or go into crit
     /// </summary>
