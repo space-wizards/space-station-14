@@ -10,6 +10,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Salvage;
 using Content.Shared.Shuttles.Systems;
+using Content.Shared.Shuttles.Components; //starlight
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
