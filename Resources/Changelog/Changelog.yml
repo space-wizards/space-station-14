@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed expeditions on cave planets not having any ore.
-    type: Fix
-  id: 7649
-  time: '2024-11-24T08:49:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32890
 - author: slarticodefast
   changes:
   - message: Fixed doors not auto-closing correctly after being unbolted in an open
@@ -3890,3 +3883,14 @@
   id: 8148
   time: '2025-04-10T15:59:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36273
+- author: SlamBamActionman
+  changes:
+  - message: The Syndicate Raid Bundle now comes in a Syndicate backpack instead of
+      duffelbag.
+    type: Tweak
+  - message: The Syndicate Raid Suit now has an inventory size of 2x2 (previously
+      4x4).
+    type: Tweak
+  id: 8149
+  time: '2025-04-10T22:22:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35890
