@@ -78,5 +78,3 @@
       path: /Audio/Weapons/punchmiss.ogg
   - type: Item
   - type: Sharp
-  - type: Reflect
-    reflectProb: 0.2
