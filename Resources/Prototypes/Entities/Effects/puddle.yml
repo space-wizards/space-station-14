@@ -176,6 +176,8 @@
   save: false
   description: След жидкости
   components:
+    - type: TimedDespawn # This can be easily fixed, right?
+      lifetime: 600
     - type: Clickable
     - type: FootstepModifier
       footstepSoundCollection:
