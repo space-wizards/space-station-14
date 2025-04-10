@@ -4663,4 +4663,32 @@ Entries:
   id: 645
   time: '2025-04-10T17:30:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/451
+- author: Floating Lotus
+  changes:
+  - message: Added Kentucky Fried Felionoid a dish made with Felionoids legs
+    type: Add
+  id: 646
+  time: '2025-04-10T17:30:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/471
+- author: Floating Lotus
+  changes:
+  - message: Added Dreaming cake a dish made with Resomi hands
+    type: Add
+  id: 647
+  time: '2025-04-10T17:30:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/471
+- author: Floating Lotus
+  changes:
+  - message: Added Volcanic explosion a dish made with a singular reptilian hand
+    type: Add
+  id: 648
+  time: '2025-04-10T17:30:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/471
+- author: Floating Lotus
+  changes:
+  - message: Added Moth soup a dish made using a moths head
+    type: Add
+  id: 649
+  time: '2025-04-10T17:30:55.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/471
 
