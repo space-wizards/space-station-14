@@ -182,7 +182,7 @@
     minPulseLength: 180
     maxPulseLength: 300
     supercriticalSoundAtAnimationStart:
-      path: /Audio/Items/Anomaly/flesh_crit.ogg
+      collection: AnomalyShadowSupercritical
   - type: Sprite
     layers:
     - state: anom5
@@ -947,7 +947,7 @@
     animationTime: 4
     offset: "-0.1,0.1"
     supercriticalSoundAtAnimationStart:
-      path: /Audio/Items/Anomaly/shadow_crit.ogg
+      collection: AnomalyShadowSupercritical
   - type: EntitySpawnAnomaly
     entries:
     - settings:
@@ -1008,6 +1008,8 @@
     coreInertPrototype: AnomalyCoreTechInert
     minPulseLength: 60
     maxPulseLength: 120
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyTechSupercritical
   - type: TechAnomaly
   - type: DeviceLinkSource
     ports:

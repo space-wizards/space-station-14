@@ -1,0 +1,15 @@
+﻿- type: soundCollection
+  id: AnomalyFleshSupercritical
+  files:
+  - /Audio/Items/Anomaly/flesh_crit.ogg
+
+- type: soundCollection
+  id: AnomalyShadowSupercritical
+  files:
+  - /Audio/Items/Anomaly/shadow_crit.ogg
+
+- type: soundCollection
+  id: AnomalyTechSupercritical
+  files:
+  - /Audio/Items/Anomaly/tech_crit.ogg
+  - /Audio/Items/Anomaly/tech_crit2.ogg

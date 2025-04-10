@@ -9,3 +9,13 @@
   license: Custom
   copyright: "Mashup of sourced sound effect and anomaly_scary.ogg"
   source: https://pixabay.com/sound-effects/psychedelic-144822/
+
+- files: ["tech_crit1.ogg"]
+  license: Custom
+  copyright: "wtermini (Freesound), edited by Quantum-cross@github"
+  source: https://pixabay.com/sound-effects/the-sound-of-dial-up-internet-6240/
+
+- files: ["tech_crit2.ogg"]
+  license: Custom
+  copyright: "unfa (Freesound), edited by Quantum-cross@github"
+  source: https://pixabay.com/sound-effects/gsm-signal-91070/
