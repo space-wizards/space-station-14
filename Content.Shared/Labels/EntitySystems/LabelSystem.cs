@@ -8,7 +8,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Labels.EntitySystems;
 
-public sealed class LabelSystem : EntitySystem
+public sealed partial class LabelSystem : EntitySystem
 {
     [Dependency] private readonly NameModifierSystem _nameModifier = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
@@ -31,15 +31,15 @@ public sealed class LabelSystem : EntitySystem
         SubscribeLocalEvent<PaperLabelComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnLabelCompMapInit(EntityUid uid, LabelComponent component, MapInitEvent args)
+    private void OnLabelCompMapInit(Entity<LabelComponent> ent, ref MapInitEvent args)
     {
-        if (!string.IsNullOrEmpty(component.CurrentLabel))
+        if (!string.IsNullOrEmpty(ent.Comp.CurrentLabel))
         {
-            component.CurrentLabel = Loc.GetString(component.CurrentLabel);
-            Dirty(uid, component);
+            ent.Comp.CurrentLabel = Loc.GetString(ent.Comp.CurrentLabel);
+            Dirty(ent);
         }
 
-        _nameModifier.RefreshNameModifiers(uid);
+        _nameModifier.RefreshNameModifiers(ent.Owner);
     }
 
     /// <summary>
@@ -51,8 +51,7 @@ public sealed class LabelSystem : EntitySystem
     /// <param name="metadata">metadata component for resolve</param>
     public void Label(EntityUid uid, string? text, MetaDataComponent? metadata = null, LabelComponent? label = null)
     {
-        if (!Resolve(uid, ref label, false))
-            label = EnsureComp<LabelComponent>(uid);
+        label ??= EnsureComp<LabelComponent>(uid);
 
         label.CurrentLabel = text;
         _nameModifier.RefreshNameModifiers(uid);
@@ -60,19 +59,16 @@ public sealed class LabelSystem : EntitySystem
         Dirty(uid, label);
     }
 
-    private void OnExamine(EntityUid uid, LabelComponent? label, ExaminedEvent args)
+    private void OnExamine(Entity<LabelComponent> ent, ref ExaminedEvent args)
     {
-        if (!Resolve(uid, ref label))
+        if (!ent.Comp.Examinable)
             return;
 
-        if (!label.Examinable)
-            return;
-
-        if (label.CurrentLabel == null)
+        if (ent.Comp.CurrentLabel == null)
             return;
 
         var message = new FormattedMessage();
-        message.AddText(Loc.GetString("hand-labeler-has-label", ("label", label.CurrentLabel)));
+        message.AddText(Loc.GetString("hand-labeler-has-label", ("label", ent.Comp.CurrentLabel)));
         args.PushMessage(message);
     }
 
@@ -82,21 +78,21 @@ public sealed class LabelSystem : EntitySystem
             args.AddModifier("comp-label-format", extraArgs: ("label", entity.Comp.CurrentLabel));
     }
 
-    private void OnComponentInit(EntityUid uid, PaperLabelComponent component, ComponentInit args)
+    private void OnComponentInit(Entity<PaperLabelComponent> ent, ref ComponentInit args)
     {
-        _itemSlots.AddItemSlot(uid, ContainerName, component.LabelSlot);
+        _itemSlots.AddItemSlot(ent, ContainerName, ent.Comp.LabelSlot);
 
-        UpdateAppearance((uid, component));
+        UpdateAppearance(ent);
     }
 
-    private void OnComponentRemove(EntityUid uid, PaperLabelComponent component, ComponentRemove args)
+    private void OnComponentRemove(Entity<PaperLabelComponent> ent, ref ComponentRemove args)
     {
-        _itemSlots.RemoveItemSlot(uid, component.LabelSlot);
+        _itemSlots.RemoveItemSlot(ent, ent.Comp.LabelSlot);
     }
 
-    private void OnExamined(EntityUid uid, PaperLabelComponent comp, ExaminedEvent args)
+    private void OnExamined(Entity<PaperLabelComponent> ent, ref ExaminedEvent args)
     {
-        if (comp.LabelSlot.Item is not {Valid: true} item)
+        if (ent.Comp.LabelSlot.Item is not {Valid: true} item)
             return;
 
         using (args.PushGroup(nameof(PaperLabelComponent)))
@@ -107,8 +103,8 @@ public sealed class LabelSystem : EntitySystem
                 return;
             }
 
-            if (!EntityManager.TryGetComponent(item, out PaperComponent? paper))
-                // Assuming yaml has the correct entity whitelist, this should not happen.
+            // Assuming yaml has the correct entity whitelist, this should not happen.
+            if (!TryComp<PaperComponent>(item, out var paper))
                 return;
 
             if (string.IsNullOrWhiteSpace(paper.Content))
@@ -123,6 +119,7 @@ public sealed class LabelSystem : EntitySystem
         }
     }
 
+    // Not ref-sub due to being used for multiple subscriptions.
     private void OnContainerModified(EntityUid uid, PaperLabelComponent label, ContainerModifiedMessage args)
     {
         if (!label.Initialized)
