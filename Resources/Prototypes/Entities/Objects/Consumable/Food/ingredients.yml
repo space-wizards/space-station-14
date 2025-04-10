@@ -274,7 +274,7 @@
       food:
         maxVol: 18
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 15
   - type: Tag
     tags:
@@ -320,7 +320,7 @@
       food:
         maxVol: 6
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 5
 
 - type: entity
@@ -342,7 +342,7 @@
       food:
         maxVol: 6
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 5
 
 - type: entity
@@ -455,7 +455,7 @@
       food:
         maxVol: 18
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 5
         - ReagentId: Fiber
           Quantity: 10
@@ -483,7 +483,7 @@
       food:
         maxVol: 6
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 1.5
         - ReagentId: Fiber
           Quantity: 3.5
@@ -508,7 +508,7 @@
       food:
         maxVol: 6
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 1.5
         - ReagentId: Fiber
           Quantity: 3.5
@@ -706,7 +706,7 @@
       food:
         maxVol: 6
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Fat
           Quantity: 3.75
   - type: Tag
     tags:
@@ -736,7 +736,7 @@
       food:
         maxVol: 6
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Fat
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 0.6
@@ -758,7 +758,7 @@
       food:
         maxVol: 2
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Fat
           Quantity: 1
         - ReagentId: Vitamin
           Quantity: 0.2
@@ -784,8 +784,10 @@
         reagents:
         - ReagentId: Protein
           Quantity: 9
-        - ReagentId: Nutriment
-          Quantity: 6
+        - ReagentId: Fat
+          Quantity: 3
+        - ReagentId: Carbohydrate
+          Quantity: 3
   - type: SliceableFood
     count: 3
     slice: FoodTofuSlice
@@ -808,8 +810,10 @@
         reagents:
         - ReagentId: Protein
           Quantity: 3
-        - ReagentId: Nutriment
-          Quantity: 2
+        - ReagentId: Fat
+          Quantity: 1
+        - ReagentId: Carbohydrate
+          Quantity: 1
   - type: Tag
     tags:
     - Slice
@@ -830,7 +834,7 @@
       food:
         maxVol: 8
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Oil
           Quantity: 2
         - ReagentId: GastroToxin
           Quantity: 3
@@ -855,7 +859,7 @@
       food:
         maxVol: 14
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Oil
           Quantity: 2
         - ReagentId: Vitamin
           Quantity: 1
@@ -886,7 +890,7 @@
       food:
         maxVol: 4
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Carbohydrate
           Quantity: 3
 
 - type: entity

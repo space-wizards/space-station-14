@@ -14,7 +14,7 @@
       food:
         maxVol: 20 # For sprinkles or something? Idk.
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Sugar
           Quantity: 10
 
 # Ice-cream
@@ -68,7 +68,7 @@
       food:
         maxVol: 20
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Sugar
           Quantity: 10
         - ReagentId: Theobromine
           Quantity: 1
@@ -128,7 +128,7 @@
       food:
         maxVol: 30
         reagents:
-        - ReagentId: Nutriment
+        - ReagentId: Sugar
           Quantity: 10
         - ReagentId: Theobromine
           Quantity: 1
