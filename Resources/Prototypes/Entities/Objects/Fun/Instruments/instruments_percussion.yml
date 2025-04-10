@@ -128,7 +128,7 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/reversecymbal.rsi
     state: icon
-
+    
 - type: entity
   parent: BaseHandheldInstrument
   id: SuperSynthesizerInstrument
@@ -138,7 +138,7 @@
   - type: Instrument
     allowPercussion: true
     allowProgramChange: true
-    respectMidiLimits: false
+    respectMidiLimits: true
   - type: Sprite
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: supersynth
@@ -146,3 +146,10 @@
     heldPrefix: super
     size: Normal
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+
+- type: entity
+  parent: SuperSynthesizerInstrument
+  id: SuperSynthesizerInstrumentAdmeme
+  components:
+  - type: Instrument
+    respectMidiLimits: false
