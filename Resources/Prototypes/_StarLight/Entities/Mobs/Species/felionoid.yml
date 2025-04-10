@@ -67,6 +67,13 @@
         showInChat: true
   - type: Sprite 
     scale: 0.8, 0.8
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - Felionoid
   - type: Fixtures
     fixtures: 
       fix1:
