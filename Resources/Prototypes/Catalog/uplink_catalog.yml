@@ -1979,7 +1979,7 @@
 - type: listing
   id: uplinkBananaPeelExplosive
   name: uplink-banana-peel-explosive-name
-  description: uplink-banana-peel-explosive-desc
+  description: uplink-banana-peel-desc
   icon: { sprite: Objects/Specific/Hydroponics/banana.rsi, state: peel }
   productEntity: TrashBananaPeelExplosiveUnarmed
   discountCategory: rareDiscounts
@@ -1993,6 +1993,33 @@
   - !type:BuyerJobCondition
     whitelist:
     - Clown
+
+- type: listing
+  id: uplinkCigarBomb
+  name: uplink-cigar-bomb-name
+  description: uplink-cigar-bomb-explosive-desc
+  icon: { sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi, state: lit-icon }
+  productEntity: CigarBomb
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 1
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Clown
+    - Mime
+    - Chef
+    - Janitor
+    - Boxer
+    - Bartender
+    - Zookeeper
+    - Chaplain
+    - Passenger
+    - Psychologist
 
 - type: listing
   id: UplinkClusterBananaPeel

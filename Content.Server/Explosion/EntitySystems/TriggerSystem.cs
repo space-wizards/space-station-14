@@ -4,6 +4,7 @@ using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Electrocution;
 using Content.Server.Pinpointer;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Flash.Components;
 using Content.Server.Radio.EntitySystems;
@@ -84,6 +85,9 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
         [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+        [Dependency] private readonly SmokingSystem _smokingSystem = default!;
+
+        private EntityQuery<MobStateComponent> _mobQuery;
 
         public override void Initialize()
         {
@@ -103,6 +107,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
             SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredOffEvent>(OnStepTriggered);
             SubscribeLocalEvent<TriggerOnSlipComponent, SlipEvent>(OnSlipTriggered);
+            SubscribeLocalEvent<TriggerOnSmokableExpendedComponent, SmokableSolutionEmptyEvent>(OnSmokableExpended);
             SubscribeLocalEvent<TriggerWhenEmptyComponent, OnEmptyGunShotEvent>(OnEmptyTriggered);
             SubscribeLocalEvent<RepeatingTriggerComponent, MapInitEvent>(OnRepeatInit);
 
@@ -291,6 +296,20 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnSlipTriggered(EntityUid uid, TriggerOnSlipComponent component, ref SlipEvent args)
         {
             Trigger(uid, args.Slipped);
+        }
+
+        private void OnSmokableExpended(EntityUid uid, TriggerOnSmokableExpendedComponent component, ref SmokableSolutionEmptyEvent args)
+        {
+            _mobQuery = GetEntityQuery<MobStateComponent>();
+
+            var outcomp = new MobStateComponent();
+
+            if (component.LitBy != null)
+            {
+                Trigger(uid, component.LitBy);
+                return;
+            }
+            Trigger(uid, uid);
         }
 
         private void OnEmptyTriggered(EntityUid uid, TriggerWhenEmptyComponent component, ref OnEmptyGunShotEvent args)

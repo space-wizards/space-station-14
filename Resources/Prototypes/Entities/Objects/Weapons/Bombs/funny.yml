@@ -120,3 +120,18 @@
   - type: Tag
     tags:
     - Banana
+
+- type: entity
+  parent: Cigar
+  id: CigarBomb
+  suffix: bomb
+  components:
+  - type: TriggerOnSmokableExpended
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 3.4
+    intensitySlope: 3
+    totalIntensity: 20
+    canCreateVacuum: false
+    
