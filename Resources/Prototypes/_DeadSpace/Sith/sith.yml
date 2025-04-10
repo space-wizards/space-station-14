@@ -118,8 +118,17 @@
     description: ghost-role-information-sith-description
     rules: ghost-role-information-antagonist-rules
     requirements:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 36000 # 10 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 72000 # 20 hours
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 36000 # 10 hours
     - !type:OverallPlaytimeRequirement
-      time: 144000 # 40h overall
+      time: 144000 # 40 hours
     raffle:
       settings: default
   - type: Sprite
