@@ -57,7 +57,6 @@
   - type: Sprite
     sprite: Effects/chemsmoke.rsi
     state: chemsmoke
-    color: '#ffffff1a'
   - type: TimedDespawn
     lifetime: 10
   - type: Tag
