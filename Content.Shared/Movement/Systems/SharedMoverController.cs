@@ -34,7 +34,6 @@ public abstract partial class SharedMoverController : VirtualController
 {
     [Dependency] private   readonly IConfigurationManager _configManager = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private   readonly IMapManager _mapManager = default!;
     [Dependency] private   readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private   readonly EntityLookupSystem _lookup = default!;
     [Dependency] private   readonly InventorySystem _inventory = default!;
@@ -119,52 +118,92 @@ public abstract partial class SharedMoverController : VirtualController
     ///     Movement while considering actionblockers, weightlessness, etc.
     /// </summary>
     protected void HandleMobMovement(
-        EntityUid uid,
-        InputMoverComponent mover,
-        EntityUid physicsUid,
-        PhysicsComponent physicsComponent,
-        TransformComponent xform,
+        Entity<InputMoverComponent> entity,
         float frameTime)
     {
-        var canMove = mover.CanMove;
-        if (RelayTargetQuery.TryGetComponent(uid, out var relayTarget))
+        var uid = entity.Owner;
+        var mover = entity.Comp;
+
+        // If we're a relay then apply all of our data to the parent instead and go next.
+        if (RelayQuery.TryComp(uid, out var relay))
         {
-            if (_mobState.IsIncapacitated(relayTarget.Source) ||
-                TryComp<SleepingComponent>(relayTarget.Source, out _) ||
-                !MoverQuery.TryGetComponent(relayTarget.Source, out var relayedMover))
+            if (!MoverQuery.TryComp(relay.RelayEntity, out var relayTargetMover))
+                return;
+
+            // Always lerp rotation so relay entities aren't cooked.
+            LerpRotation(uid, mover, frameTime);
+            var dirtied = false;
+
+            if (relayTargetMover.RelativeEntity != mover.RelativeEntity)
             {
-                canMove = false;
+                relayTargetMover.RelativeEntity = mover.RelativeEntity;
+                dirtied = true;
             }
-            else
+
+            if (relayTargetMover.RelativeRotation != mover.RelativeRotation)
             {
-                mover.RelativeEntity = relayedMover.RelativeEntity;
-                mover.RelativeRotation = relayedMover.RelativeRotation;
-                mover.TargetRelativeRotation = relayedMover.TargetRelativeRotation;
+                relayTargetMover.RelativeRotation = mover.RelativeRotation;
+                dirtied = true;
             }
+
+            if (relayTargetMover.TargetRelativeRotation != mover.TargetRelativeRotation)
+            {
+                relayTargetMover.TargetRelativeRotation = mover.TargetRelativeRotation;
+                dirtied = true;
+            }
+
+            if (relayTargetMover.CanMove != mover.CanMove)
+            {
+                relayTargetMover.CanMove = mover.CanMove;
+                dirtied = true;
+            }
+
+            if (dirtied)
+            {
+                Dirty(relay.RelayEntity, relayTargetMover);
+            }
+
+            return;
         }
 
-        // Update relative movement
-        if (mover.LerpTarget < Timing.CurTime)
+        if (!XformQuery.TryComp(entity.Owner, out var xform))
+            return;
+
+        RelayTargetQuery.TryComp(uid, out var relayTarget);
+        var relaySource = relayTarget?.Source;
+
+        // If we're not the target of a relay then handle lerp data.
+        if (relaySource == null)
         {
-            if (TryUpdateRelative(mover, xform))
+            // Update relative movement
+            if (mover.LerpTarget < Timing.CurTime)
             {
-                Dirty(uid, mover);
+                TryUpdateRelative(uid, mover, xform);
             }
+
+            LerpRotation(uid, mover, frameTime);
         }
 
-        LerpRotation(uid, mover, frameTime);
-
-        if (!canMove
-            || physicsComponent.BodyStatus != BodyStatus.OnGround && !CanMoveInAirQuery.HasComponent(uid)
+        // If we can't move then just use tile-friction / no movement handling.
+        if (!mover.CanMove
+            || !PhysicsQuery.TryComp(uid, out var physicsComponent)
             || PullableQuery.TryGetComponent(uid, out var pullable) && pullable.BeingPulled)
         {
             UsedMobMovement[uid] = false;
             return;
         }
 
+        // If the body is in air but isn't weightless then can't move
+        var weightless = _gravity.IsWeightless(uid, physicsComponent, xform);
+
+        if (physicsComponent.BodyStatus != BodyStatus.OnGround && !CanMoveInAirQuery.HasComponent(uid) && !weightless)
+        {
+            UsedMobMovement[uid] = false;
+            return;
+        }
+
         UsedMobMovement[uid] = true;
-        // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
-        var weightless = _gravity.IsWeightless(physicsUid, physicsComponent, xform);
+
         var (walkDir, sprintDir) = GetVelocityInput(mover);
         var touching = false;
 
@@ -181,8 +220,8 @@ public abstract partial class SharedMoverController : VirtualController
                 // No gravity: is our entity touching anything?
                 touching = ev.CanMove;
 
-                if (!touching && TryComp<MobMoverComponent>(uid, out var mobMover))
-                    touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, physicsUid, physicsComponent);
+                if (!touching && MobMoverQuery.TryComp(uid, out var mobMover))
+                    touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, uid, physicsComponent);
             }
         }
 
@@ -221,25 +260,33 @@ public abstract partial class SharedMoverController : VirtualController
         // Whether we use weightless friction or not.
         if (weightless)
         {
-            if (gridComp == null && !MapGridQuery.HasComp(xform.GridUid))
-                friction = moveSpeedComponent?.OffGridFriction ?? MovementSpeedModifierComponent.DefaultOffGridFriction;
-            else if (wishDir != Vector2.Zero && touching)
-                friction = moveSpeedComponent?.WeightlessFriction ?? MovementSpeedModifierComponent.DefaultWeightlessFriction;
+            // If we're touching then use the weightless values
+            // Some stuff like jetpacks for example might flag it as touching even if it isn't.
+            if (touching || gridComp != null || MapGridQuery.HasComp(xform.GridUid))
+            {
+                if (wishDir != Vector2.Zero)
+                    friction = moveSpeedComponent?.WeightlessFriction ?? MovementSpeedModifierComponent.DefaultWeightlessFriction;
+                else
+                    friction = moveSpeedComponent?.WeightlessFrictionNoInput ?? MovementSpeedModifierComponent.DefaultWeightlessFrictionNoInput;
+            }
+            // Otherwise use the off-grid values.
             else
-                friction = moveSpeedComponent?.WeightlessFrictionNoInput ?? MovementSpeedModifierComponent.DefaultWeightlessFrictionNoInput;
+            {
+                friction = moveSpeedComponent?.OffGridFriction ?? MovementSpeedModifierComponent.DefaultOffGridFriction;
+            }
 
             weightlessModifier = moveSpeedComponent?.WeightlessModifier ?? MovementSpeedModifierComponent.DefaultWeightlessModifier;
             accel = moveSpeedComponent?.WeightlessAcceleration ?? MovementSpeedModifierComponent.DefaultWeightlessAcceleration;
         }
         else
         {
-            if (wishDir != Vector2.Zero || moveSpeedComponent?.FrictionNoInput == null)
+            if (wishDir != Vector2.Zero)
             {
                 friction = tileDef?.MobFriction ?? moveSpeedComponent?.Friction ?? MovementSpeedModifierComponent.DefaultFriction;
             }
             else
             {
-                friction = tileDef?.MobFrictionNoInput ?? moveSpeedComponent.FrictionNoInput ?? MovementSpeedModifierComponent.DefaultFrictionNoInput;
+                friction = tileDef?.MobFrictionNoInput ?? moveSpeedComponent?.FrictionNoInput ?? MovementSpeedModifierComponent.DefaultFrictionNoInput;
             }
 
             weightlessModifier = 1f;
@@ -256,10 +303,10 @@ public abstract partial class SharedMoverController : VirtualController
 
         SetWishDir((uid, mover), wishDir);
 
-        PhysicsSystem.SetLinearVelocity(physicsUid, velocity, body: physicsComponent);
+        PhysicsSystem.SetLinearVelocity(uid, velocity, body: physicsComponent);
 
         // Ensures that players do not spiiiiiiin
-        PhysicsSystem.SetAngularVelocity(physicsUid, 0, body: physicsComponent);
+        PhysicsSystem.SetAngularVelocity(uid, 0, body: physicsComponent);
 
         // Handle footsteps at the end
         if (total != Vector2.Zero)
@@ -269,7 +316,8 @@ public abstract partial class SharedMoverController : VirtualController
                 // TODO apparently this results in a duplicate move event because "This should have its event run during
                 // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
                 var worldRot = _transform.GetWorldRotation(xform);
-                _transform.SetLocalRotation(xform, xform.LocalRotation + wishDir.ToWorldAngle() - worldRot);
+
+                _transform.SetLocalRotation(uid, xform.LocalRotation + wishDir.ToWorldAngle() - worldRot, xform);
             }
 
             if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&
@@ -282,9 +330,9 @@ public abstract partial class SharedMoverController : VirtualController
                     .WithVariation(sound.Params.Variation ?? mobMover.FootstepVariation);
 
                 // If we're a relay target then predict the sound for all relays.
-                if (relayTarget != null)
+                if (relaySource != null)
                 {
-                    _audio.PlayPredicted(sound, uid, relayTarget.Source, audioParams);
+                    _audio.PlayPredicted(sound, uid, relaySource.Value, audioParams);
                 }
                 else
                 {
@@ -332,14 +380,12 @@ public abstract partial class SharedMoverController : VirtualController
                 adjustment = Math.Clamp(adjustment, -angleDiff, angleDiff);
             }
 
-            mover.RelativeRotation += adjustment;
-            mover.RelativeRotation.FlipPositive();
+            mover.RelativeRotation = (mover.RelativeRotation + adjustment).FlipPositive();
             Dirty(uid, mover);
         }
         else if (!angleDiff.Equals(Angle.Zero))
         {
-            mover.TargetRelativeRotation.FlipPositive();
-            mover.RelativeRotation = mover.TargetRelativeRotation;
+            mover.RelativeRotation = mover.TargetRelativeRotation.FlipPositive();
             Dirty(uid, mover);
         }
     }

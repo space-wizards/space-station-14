@@ -94,11 +94,17 @@ public abstract class SharedConveyorController : VirtualController
 
         while (contacts.MoveNext(out var contact))
         {
+            var otherBody = contact.OtherBody(conveyorUid);
+
+            if (otherBody.BodyType == BodyType.Static || !otherBody.Hard)
+                continue;
+
             var other = contact.OtherEnt(conveyorUid);
+            PhysicsSystem.WakeBody(other);
 
             if (_conveyedQuery.HasComp(other))
             {
-                PhysicsSystem.WakeBody(other);
+                AddComp<ConveyedComponent>(other);
             }
         }
     }
@@ -110,7 +116,13 @@ public abstract class SharedConveyorController : VirtualController
         if (!args.OtherFixture.Hard || args.OtherBody.BodyType == BodyType.Static)
             return;
 
-        EnsureComp<ConveyedComponent>(otherUid);
+        // Disable collisionwake so our contact doesn't get touched.
+
+        // If conveyor is on then treat this entity as conveyed
+        if (conveyor.Comp.State != ConveyorState.Off)
+        {
+            EnsureComp<ConveyedComponent>(otherUid);
+        }
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -120,20 +132,17 @@ public abstract class SharedConveyorController : VirtualController
         _job.Prediction = prediction;
         _job.Conveyed.Clear();
 
-        var query = EntityQueryEnumerator<ConveyedComponent, FixturesComponent, PhysicsComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<ConveyedComponent, FixturesComponent, PhysicsComponent>();
 
-        while (query.MoveNext(out var uid, out var comp, out var fixtures, out var physics, out var xform))
+        while (query.MoveNext(out var uid, out var comp, out var fixtures, out var body))
         {
-            _job.Conveyed.Add(((uid, comp, fixtures, physics, xform), Vector2.Zero, false));
+            _job.Conveyed.Add(((uid, comp, fixtures, body, Transform(uid)), Vector2.Zero, false));
         }
 
         _parallel.ProcessNow(_job, _job.Conveyed.Count);
 
         foreach (var ent in _job.Conveyed)
         {
-            if (!ent.Entity.Comp3.Predict && prediction)
-                continue;
-
             var physics = ent.Entity.Comp3;
             var velocity = physics.LinearVelocity;
             var targetDir = ent.Direction;
@@ -160,16 +169,16 @@ public abstract class SharedConveyorController : VirtualController
 
                 SharedMoverController.Accelerate(ref velocity, targetDir, 20f, frameTime);
             }
-            else if (!_mover.UsedMobMovement.TryGetValue(ent.Entity.Owner, out var usedMob) || !usedMob)
+            else
             {
                 // Need friction to outweigh the movement as it will bounce a bit against the wall.
                 // This facilitates being able to sleep entities colliding into walls.
                 _mover.Friction(0f, frameTime: frameTime, friction: 40f, ref velocity);
             }
 
-            PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity, wakeBody: false);
+            PhysicsSystem.SetLinearVelocity(ent.Entity.Owner, velocity);
 
-            if (!IsConveyed((ent.Entity.Owner, ent.Entity.Comp2)))
+            if (!IsConveyed((ent.Entity.Owner, ent.Entity.Comp2, ent.Entity.Comp3)))
             {
                 RemComp<ConveyedComponent>(ent.Entity.Owner);
             }
@@ -199,7 +208,7 @@ public abstract class SharedConveyorController : VirtualController
         var xform = entity.Comp4;
 
         if (!physics.Awake)
-            return true;
+            return false;
 
         // Client moment
         if (!physics.Predict && prediction)
@@ -228,18 +237,15 @@ public abstract class SharedConveyorController : VirtualController
             // Check if our center is over their fixture otherwise ignore it.
             var other = contact.OtherEnt(entity.Owner);
 
-            // Check for blocked, if so then we can't convey at all and just try to sleep
-            // Otherwise we may just keep pushing it into the wall
-
             if (!_conveyorQuery.TryComp(other, out var conveyor))
                 continue;
 
             anyConveyors = true;
             var otherFixture = contact.OtherFixture(entity.Owner);
-            var otherTransform = PhysicsSystem.GetPhysicsTransform(other);
+            Transform? otherTransform = PhysicsSystem.GetPhysicsTransform(other);
 
             // Check if our center is over the conveyor, otherwise ignore it.
-            if (!_fixtures.TestPoint(otherFixture.Item2.Shape, otherTransform, transform.Position))
+            if (!_fixtures.TestPoint(otherFixture.Item2.Shape, otherTransform.Value, transform.Position))
                 continue;
 
             if (conveyor.Speed > bestSpeed && CanRun(conveyor))
@@ -320,7 +326,7 @@ public abstract class SharedConveyorController : VirtualController
 
         if (r.Length() < 0.1)
         {
-            var velocity = direction * speed;
+            var velocity = direction.Normalized() * speed;
             return velocity;
         }
         else
@@ -368,9 +374,10 @@ public abstract class SharedConveyorController : VirtualController
     /// <summary>
     /// Checks an entity's contacts to see if it's still being conveyed.
     /// </summary>
-    private bool IsConveyed(Entity<FixturesComponent?> ent)
+    private bool IsConveyed(Entity<FixturesComponent?, PhysicsComponent?> ent)
     {
-        if (!Resolve(ent.Owner, ref ent.Comp))
+        // TODO: Move this to the parallel loop
+        if (!Resolve(ent.Owner, ref ent.Comp1, ref ent.Comp2))
             return false;
 
         var contacts = PhysicsSystem.GetContacts(ent.Owner);
