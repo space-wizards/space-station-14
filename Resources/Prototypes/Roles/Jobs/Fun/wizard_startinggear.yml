@@ -28,9 +28,3 @@
     jumpsuit: ClothingUniformJumpsuitColorPurple
     head: ClothingHeadHatVioletwizard
     outerClothing: ClothingOuterWizardViolet
-
-- type: startingGear
-  id: WizardHardsuitGear
-  parent: WizardVioletGear
-  equipment:
-    outerClothing: ClothingOuterHardsuitWizard
