@@ -429,11 +429,6 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/santahat.rsi
   - type: Appearance
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - HeadTop
-    - HeadSide
   - type: Foldable
     canFoldInsideContainer: true
   - type: FoldableClothing
@@ -447,6 +442,7 @@
     - state: icon-beard
       map: [ "foldedLayer" ]
       visible: true
+    
 
 - type: entity
   parent: ClothingHeadBase
