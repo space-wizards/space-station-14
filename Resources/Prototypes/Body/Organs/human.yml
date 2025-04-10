@@ -210,7 +210,7 @@
     - id: Drink
   - type: ReactionMixer
     reactionTypes:
-    - Centrifuge
+    - Digestion
 
 - type: entity
   id: OrganHumanLiver

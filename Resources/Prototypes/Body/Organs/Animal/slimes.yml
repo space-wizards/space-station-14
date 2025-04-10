@@ -26,7 +26,7 @@
           maxVol: 30.0
     - type: ReactionMixer
       reactionTypes:
-      - Centrifuge
+      - Digestion
 
 - type: entity
   id: OrganSlimesLungs

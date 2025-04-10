@@ -50,6 +50,9 @@
           Quantity: 5
   - type: Metabolizer
     updateInterval: 1.5
+  - type: ReactionMixer
+    reactionTypes:
+    - CarnivoreDigestion
 
 - type: entity
   id: OrganArachnidLungs

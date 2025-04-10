@@ -98,7 +98,7 @@
     heldPrefix: stomach
   - type: ReactionMixer
     reactionTypes:
-    - Centrifuge
+    - Digestion
 
 - type: entity
   id: OrganDionaLungs

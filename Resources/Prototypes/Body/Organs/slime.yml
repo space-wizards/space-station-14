@@ -38,7 +38,7 @@
       heldPrefix: brain
     - type: ReactionMixer
       reactionTypes:
-      - Centrifuge
+      - Digestion
 
 
 - type: entity
