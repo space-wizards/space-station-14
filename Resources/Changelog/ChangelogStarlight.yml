@@ -4614,4 +4614,20 @@ Entries:
   id: 639
   time: '2025-04-10T14:52:13.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/472
+- author: ScorchFollower
+  changes:
+  - message: New contraband severity (Advanced Cyberlimbs). Added cyber hands to Mantis
+      Blade bundle.
+    type: Add
+  id: 640
+  time: '2025-04-10T16:22:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/466
+- author: ScorchFollower
+  changes:
+  - message: 'Mantis Blade Bundle cost: 18 to 15 TC, Balanced Mantis Blade stats,
+      Changed Mantis Blade (In hand) sprite, Changed Mantis Blade Uplink description'
+    type: Tweak
+  id: 641
+  time: '2025-04-10T16:22:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/466
 
