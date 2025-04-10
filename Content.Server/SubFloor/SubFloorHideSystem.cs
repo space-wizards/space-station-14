@@ -1,9 +1,7 @@
-using Content.Shared.Construction.Components;
 using Content.Shared.Eye;
 using Content.Shared.SubFloor;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.SubFloor;
@@ -18,8 +16,6 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SubFloorHideComponent, AnchorAttemptEvent>(OnAnchorAttempt);
-        SubscribeLocalEvent<SubFloorHideComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         SubscribeNetworkEvent<ShowSubfloorRequestEvent>(OnShowSubfloor);
         SubscribeLocalEvent<GetVisMaskEvent>(OnGetVisibility);
 
@@ -71,25 +67,5 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         {
             Value = ev.Value,
         }, args.SenderSession);
-    }
-
-    private void OnAnchorAttempt(EntityUid uid, SubFloorHideComponent component, AnchorAttemptEvent args)
-    {
-        // No teleporting entities through floor tiles when anchoring them.
-        var xform = Transform(uid);
-
-        if (TryComp<MapGridComponent>(xform.GridUid, out var grid)
-            && HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates)))
-        {
-            args.Cancel();
-        }
-    }
-
-    private void OnUnanchorAttempt(EntityUid uid, SubFloorHideComponent component, UnanchorAttemptEvent args)
-    {
-        // No un-anchoring things under the floor. Only required for something like vents, which are still interactable
-        // despite being partially under the floor.
-        if (component.IsUnderCover)
-            args.Cancel();
     }
 }
