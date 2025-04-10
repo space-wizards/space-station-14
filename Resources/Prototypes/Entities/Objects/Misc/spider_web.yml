@@ -114,7 +114,7 @@
         slips:
           shape:
             !type:PhysShapeAabb
-            bounds: "-0.3,-0.3,0.3,0.3"
+            bounds: "-0.4,-0.3,0.4,0.3"
           hard: false
           layer:
           - SlipLayer
