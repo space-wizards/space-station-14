@@ -181,6 +181,8 @@
     coreInertPrototype: AnomalyCoreFleshInert
     minPulseLength: 180
     maxPulseLength: 300
+    supercriticalSoundAtAnimationStart:
+      path: /Audio/Items/Anomaly/flesh_crit.ogg
   - type: Sprite
     layers:
     - state: anom5
@@ -944,6 +946,8 @@
     maxPulseLength: 120
     animationTime: 4
     offset: "-0.1,0.1"
+    supercriticalSoundAtAnimationStart:
+      path: /Audio/Items/Anomaly/shadow_crit.ogg
   - type: EntitySpawnAnomaly
     entries:
     - settings:
