@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Basic solid airlocks have had their sprite changed to better match their
-      glass counterpart.
-    type: Tweak
-  id: 1003
-  time: '2025-01-25T08:23:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1480
 - author: Darkmajia, AftrLite
   changes:
   - message: The supermatter has received a large amount of changes and upgrades.
@@ -4107,3 +4099,10 @@
   id: 1502
   time: '2025-04-10T09:48:40.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2172
+- author: Darkmajia
+  changes:
+  - message: Jungle juice might be fixed for real.
+    type: Fix
+  id: 1503
+  time: '2025-04-10T14:12:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2242
