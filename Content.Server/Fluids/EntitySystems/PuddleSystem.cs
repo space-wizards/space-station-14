@@ -450,9 +450,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         var totalQuantity = 0f;
         var fullPuddleAmount = FixedPoint2.New(component.OverflowVolume.Float() * LowThreshold);
 
-        foreach (var (reagent, _) in solution.Contents)
+        foreach (var (reagent, quantity) in solution.Contents)
         {
-            var reagentQuant = solution.GetReagentQuantity(reagent).Float();
+            var reagentQuant = quantity.Float();
             var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
 
             totalViscosity += reagentQuant * reagentProto.Viscosity;
