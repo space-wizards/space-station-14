@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Gastropoid Mucin no longer speeds them up directly. Instead, using the
-      "Slime Trail" action will give you a brief, but substantial, speed boost, and
-      lay a quickly-vanishing trail of slippery Mucin. This new ability has a substantially
-      higher thirst cost and minimum thirst threshold.
-    type: Tweak
-  id: 999
-  time: '2025-01-25T07:58:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1463
-- author: ruddygreat
-  changes:
-  - message: Nuclear Operatives now have their TC spend displayed at the end of a
-      round!
-    type: Add
-  - message: The round end TC summary no longer misgenders the dead. It will still
-      misgender those who have been gibbed, unfortunately.
-    type: Fix
-  id: 1000
-  time: '2025-01-25T08:05:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1393
 - author: DinnerCalzone
   changes:
   - message: Fland has been derotated to reduce map maintenance load.
@@ -4106,3 +4085,17 @@
   id: 1498
   time: '2025-04-09T02:32:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2114
+- author: snaviian
+  changes:
+  - message: Walking canes can now be printed from the medical techfab.
+    type: Add
+  id: 1499
+  time: '2025-04-10T09:24:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2230
+- author: rainyatrium
+  changes:
+  - message: various Refsdal fixes
+    type: Tweak
+  id: 1500
+  time: '2025-04-10T09:22:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2237
