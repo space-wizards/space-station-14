@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by meijunkie on Discord, funkystation.org at commit https://github.com/funky-station/funky-station/commit/430be9247ac220367f338c2c1a716a7503b1446d",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "unlit"
+    }
+  ]
+}
