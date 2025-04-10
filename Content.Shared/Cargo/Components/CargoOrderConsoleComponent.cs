@@ -1,15 +1,19 @@
+using Content.Shared.Access;
 using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Content.Shared.Radio;
+using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Cargo.Components;
 
 /// <summary>
 /// Handles sending order requests to cargo. Doesn't handle orders themselves via shuttle or telepads.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CargoOrderConsoleComponent : Component
 {
     /// <summary>
@@ -18,17 +22,68 @@ public sealed partial class CargoOrderConsoleComponent : Component
     [DataField]
     public ProtoId<CargoAccountPrototype> Account = "Cargo";
 
-    [DataField("soundError")] public SoundSpecifier ErrorSound =
-        new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_sigh.ogg");
+    [DataField] public SoundSpecifier ErrorSound = new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_sigh.ogg");
 
-    [DataField("soundConfirm")]
+    [DataField]
     public SoundSpecifier ConfirmSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg");
+
+    /// <summary>
+    /// Sound made when <see cref="TransferUnbounded"/> is toggled.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier ToggleLimitSound = new SoundPathSpecifier("/Audio/Machines/quickbeep.ogg");
+
+    /// <summary>
+    /// If true, account transfers have no limit and a lower cooldown.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool TransferUnbounded;
+
+    public float TransferLimit => TransferUnbounded ? 1 : BaseTransferLimit;
+
+    /// <summary>
+    /// The maximum percent of total funds that can be transferred or withdrawn in one action.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float BaseTransferLimit = 0.20f;
+
+    /// <summary>
+    /// The time at which account actions can be performed again.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    public TimeSpan NextAccountActionTime;
+
+    public TimeSpan AccountActionDelay => TransferUnbounded ? UnboundedAccountActionDelay : BaseAccountActionDelay;
+
+    /// <summary>
+    /// The minimum time between account actions when <see cref="TransferUnbounded"/> is false
+    /// </summary>
+    [DataField]
+    public TimeSpan BaseAccountActionDelay = TimeSpan.FromMinutes(1);
+
+    /// <summary>
+    /// The minimum time between account actions when <see cref="TransferUnbounded"/> is true
+    /// </summary>
+    [DataField]
+    public TimeSpan UnboundedAccountActionDelay = TimeSpan.FromSeconds(10);
+
+    /// <summary>
+    /// The stack representing cash dispensed on withdrawals.
+    /// </summary>
+    [DataField]
+    public ProtoId<StackPrototype> CashType = "Credit";
 
     /// <summary>
     /// All of the <see cref="CargoProductPrototype.Group"/>s that are supported.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public List<string> AllowedGroups = new() { "market" };
+
+    /// <summary>
+    /// Access needed to toggle the limit on this console.
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<AccessLevelPrototype>> RemoveLimitAccess = new();
 
     /// <summary>
     /// Radio channel on which order approval announcements are transmitted
@@ -42,3 +97,24 @@ public sealed partial class CargoOrderConsoleComponent : Component
     public static readonly ProtoId<RadioChannelPrototype> BaseAnnouncementChannel = "Supply";
 }
 
+/// <summary>
+/// Withdraw funds from an account
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class CargoConsoleWithdrawFundsMessage : BoundUserInterfaceMessage
+{
+    public ProtoId<CargoAccountPrototype>? Account;
+    public int Amount;
+
+    public CargoConsoleWithdrawFundsMessage(ProtoId<CargoAccountPrototype>? account, int amount)
+    {
+        Account = account;
+        Amount = amount;
+    }
+}
+
+/// <summary>
+/// Toggle the limit on withdrawals and transfers.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class CargoConsoleToggleLimitMessage : BoundUserInterfaceMessage;

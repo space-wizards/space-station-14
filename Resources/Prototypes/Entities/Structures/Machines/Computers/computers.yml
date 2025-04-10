@@ -910,6 +910,7 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: CargoOrderConsole
+    removeLimitAccess: [ "Quartermaster" ]
   - type: ActiveRadio
     channels:
     - Supply
@@ -964,6 +965,7 @@
   - type: CargoOrderConsole
     account: Engineering
     announcementChannel: Engineering
+    removeLimitAccess: [ "ChiefEngineer" ]
   - type: ActiveRadio
     channels:
     - Engineering
@@ -995,6 +997,7 @@
   - type: CargoOrderConsole
     account: Medical
     announcementChannel: Medical
+    removeLimitAccess: [ "ChiefMedicalOfficer" ]
   - type: ActiveRadio
     channels:
     - Medical
@@ -1026,6 +1029,7 @@
   - type: CargoOrderConsole
     account: Science
     announcementChannel: Science
+    removeLimitAccess: [ "ResearchDirector" ]
   - type: ActiveRadio
     channels:
     - Science
@@ -1057,6 +1061,7 @@
   - type: CargoOrderConsole
     account: Security
     announcementChannel: Security
+    removeLimitAccess: [ "HeadOfSecurity" ]
   - type: ActiveRadio
     channels:
     - Security
@@ -1088,6 +1093,7 @@
   - type: CargoOrderConsole
     account: Service
     announcementChannel: Service
+    removeLimitAccess: [ "HeadOfPersonnel" ]
   - type: ActiveRadio
     channels:
     - Service
@@ -1374,9 +1380,9 @@
     - map: ["computerLayerKeyboard"]
       state: generic_keyboard
     - map: ["computerLayerScreen"]
-      state: request
+      state: transfer
     - map: ["computerLayerKeys"]
-      state: tech_key
+      state: generic_keys
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: Anchorable

@@ -79,7 +79,8 @@ public sealed partial class FundingAllocationMenu : FancyWindow
             var codeLabel = new RichTextLabel
             {
                 Text = $"[font=\"Monospace\"]{Loc.GetString(accountProto.Code)}[/font]",
-                HorizontalAlignment = HAlignment.Center
+                HorizontalAlignment = HAlignment.Center,
+                Margin = new Thickness(5, 0),
             };
             EntriesContainer.AddChild(codeLabel);
 
@@ -88,6 +89,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
                 Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", balance)),
                 HorizontalExpand = true,
                 HorizontalAlignment = HAlignment.Center,
+                Margin = new Thickness(5, 0),
             };
             EntriesContainer.AddChild(balanceLabel);
 
@@ -115,7 +117,8 @@ public sealed partial class FundingAllocationMenu : FancyWindow
         if (!_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bank))
             return;
 
-        var incorrectSum = _spinBoxes.Sum(s => s.Value) != 100;
+        var sum = _spinBoxes.Sum(s => s.Value);
+        var incorrectSum = sum != 100;
 
         var differs = false;
         var accounts = bank.Accounts.Keys.OrderBy(p => p.Id).ToList();
@@ -130,7 +133,12 @@ public sealed partial class FundingAllocationMenu : FancyWindow
         }
 
         SaveButton.Disabled = !differs || incorrectSum;
+
+        var diff = sum - 100;
         SaveAlertLabel.Visible = incorrectSum;
+        SaveAlertLabel.SetMarkup(Loc.GetString("cargo-funding-alloc-console-label-save-fail",
+            ("pos", Math.Sign(diff)),
+            ("val", Math.Abs(diff))));
     }
 
     public void Update(FundingAllocationConsoleBuiState state)

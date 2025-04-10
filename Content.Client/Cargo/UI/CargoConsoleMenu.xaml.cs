@@ -17,6 +17,8 @@ namespace Content.Client.Cargo.UI
     [GenerateTypedNameReferences]
     public sealed partial class CargoConsoleMenu : FancyWindow
     {
+        [Dependency] private IGameTiming _timing = default!;
+
         private IEntityManager _entityManager;
         private IPrototypeManager _protoManager;
         private CargoSystem _cargoSystem;
@@ -28,12 +30,17 @@ namespace Content.Client.Cargo.UI
         public event Action<ButtonEventArgs>? OnOrderApproved;
         public event Action<ButtonEventArgs>? OnOrderCanceled;
 
+        public event Action<ProtoId<CargoAccountPrototype>?, int>? OnAccountAction;
+
+        public event Action<ButtonEventArgs>? OnToggleUnboundedLimit;
+
         private readonly List<string> _categoryStrings = new();
         private string? _category;
 
         public CargoConsoleMenu(EntityUid owner, IEntityManager entMan, IPrototypeManager protoManager, SpriteSystem spriteSystem)
         {
             RobustXamlLoader.Load(this);
+            IoCManager.InjectDependencies(this);
             _entityManager = entMan;
             _protoManager = protoManager;
             _cargoSystem = entMan.System<CargoSystem>();
@@ -53,6 +60,34 @@ namespace Content.Client.Cargo.UI
                     ("name", Loc.GetString(accountProto.Name)),
                     ("code", Loc.GetString(accountProto.Code)));
             }
+
+            TabContainer.SetTabTitle(0, Loc.GetString("cargo-console-menu-tab-title-orders"));
+            TabContainer.SetTabTitle(1, Loc.GetString("cargo-console-menu-tab-title-funds"));
+
+            ActionOptions.OnItemSelected += idx =>
+            {
+                ActionOptions.SelectId(idx.Id);
+            };
+
+            TransferSpinBox.IsValid = val =>
+            {
+                if (!_entityManager.TryGetComponent<CargoOrderConsoleComponent>(owner, out var console) ||
+                    !_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bank))
+                    return true;
+
+                return val >= 0 && val <= (int) (console.TransferLimit * bank.Accounts[console.Account]);
+            };
+
+            AccountActionButton.OnPressed += _ =>
+            {
+                var account = (ProtoId<CargoAccountPrototype>?) ActionOptions.SelectedMetadata;
+                OnAccountAction?.Invoke(account, TransferSpinBox.Value);
+            };
+
+            AccountLimitToggleButton.OnPressed += a =>
+            {
+                OnToggleUnboundedLimit?.Invoke(a);
+            };
         }
 
         private void OnCategoryItemSelected(OptionButton.ItemSelectedEventArgs args)
@@ -158,11 +193,13 @@ namespace Content.Client.Cargo.UI
         /// </summary>
         public void PopulateOrders(IEnumerable<CargoOrderData> orders)
         {
-            Orders.DisposeAllChildren();
             Requests.DisposeAllChildren();
 
             foreach (var order in orders)
             {
+                if (order.Approved)
+                    continue;
+
                 var product = _protoManager.Index<EntityPrototype>(order.ProductId);
                 var productName = product.Name;
 
@@ -185,25 +222,34 @@ namespace Content.Client.Cargo.UI
                     }
                 };
                 row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(args); };
-                if (order.Approved)
-                {
-                    row.Approve.Visible = false;
-                    row.Cancel.Visible = false;
-                    Orders.AddChild(row);
-                }
-                else
-                {
-                    // TODO: Disable based on access.
-                    row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(args); };
-                    Requests.AddChild(row);
-                }
+
+                // TODO: Disable based on access.
+                row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(args); };
+                Requests.AddChild(row);
             }
         }
 
-        public void UpdateCargoCapacity(int count, int capacity)
+        public void PopulateAccountActions()
         {
-            // TODO: Rename + Loc.
-            ShuttleCapacityLabel.Text = $"{count}/{capacity}";
+            if (!_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bank) ||
+                !_entityManager.TryGetComponent<CargoOrderConsoleComponent>(_owner, out var console))
+                return;
+
+            var i = 0;
+            ActionOptions.Clear();
+            ActionOptions.AddItem(Loc.GetString("cargo-console-menu-account-action-option-withdraw"), i);
+            i++;
+            foreach (var account in bank.Accounts.Keys)
+            {
+                if (account == console.Account)
+                    continue;
+                var accountProto = _protoManager.Index(account);
+                ActionOptions.AddItem(Loc.GetString("cargo-console-menu-account-action-option-transfer",
+                    ("code", Loc.GetString(accountProto.Code))),
+                    i);
+                ActionOptions.SetItemMetadata(i, account);
+                i++;
+            }
         }
 
         public void UpdateStation(EntityUid station)
@@ -223,6 +269,13 @@ namespace Content.Client.Cargo.UI
 
             var balance = _cargoSystem.GetBalanceFromAccount((_station.Value, bankAccount), orderConsole.Account);
             PointsLabel.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", balance));
+            TransferLimitLabel.Text = Loc.GetString("cargo-console-menu-account-action-transfer-limit",
+                ("limit", (int) (balance * orderConsole.TransferLimit)));
+
+            UnlimitedNotifier.Visible = orderConsole.TransferUnbounded;
+            AccountActionButton.Disabled = TransferSpinBox.Value <= 0 ||
+                                           TransferSpinBox.Value > bankAccount.Accounts[orderConsole.Account] * orderConsole.TransferLimit ||
+                                           _timing.CurTime < orderConsole.NextAccountActionTime;
         }
     }
 }

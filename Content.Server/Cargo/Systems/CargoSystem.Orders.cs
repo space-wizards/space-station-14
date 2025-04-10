@@ -46,7 +46,6 @@ namespace Content.Server.Cargo.Systems
             }
         }
 
-        // TODO: move this to fund transfer console
         private void OnInteractUsing(EntityUid uid, CargoOrderConsoleComponent component, ref InteractUsingEvent args)
         {
             if (!HasComp<CashComponent>(args.Used))

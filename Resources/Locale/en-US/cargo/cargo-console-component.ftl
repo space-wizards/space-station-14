@@ -21,6 +21,16 @@ cargo-console-menu-populate-categories-all-text = All
 cargo-console-menu-populate-orders-cargo-order-row-product-name-text = {$productName} (x{$orderAmount}) by {$orderRequester}
 cargo-console-menu-cargo-order-row-approve-button = Approve
 cargo-console-menu-cargo-order-row-cancel-button = Cancel
+cargo-console-menu-tab-title-orders = Orders
+cargo-console-menu-tab-title-funds = Transfers
+cargo-console-menu-account-action-transfer-limit = [bold]Transfer Limit:[/bold] {$limit}
+cargo-console-menu-account-action-transfer-limit-unlimited-notifier = [color=gold](Unlimited)[/color]
+cargo-console-menu-account-action-select = [bold]Account Action:[/bold]
+cargo-console-menu-account-action-amount = [bold]Amount:[/bold] $
+cargo-console-menu-account-action-button = Transfer
+cargo-console-menu-toggle-account-lock-button = Toggle Transfer Limit
+cargo-console-menu-account-action-option-withdraw = Withdraw Cash
+cargo-console-menu-account-action-option-transfer = Transfer Funds to {$code}
 
 # Orders
 cargo-console-order-not-allowed = Access not allowed
@@ -32,6 +42,9 @@ cargo-console-insufficient-funds = Insufficient funds (require {$cost})
 cargo-console-unfulfilled = No room to fulfill order
 cargo-console-trade-station = Sent to {$destination}
 cargo-console-unlock-approved-order-broadcast = [bold]{$productName} x{$orderAmount}[/bold], which cost [bold]{$cost}[/bold], was approved by [bold]{$approver}[/bold]
+cargo-console-fund-withdraw-broadcast = [bold]{$name} withdrew {$amount} spesos from {$name1} \[{$code1}\]
+cargo-console-fund-transfer-broadcast = [bold]{$name} transferred {$amount} spesos from {$name1} \[{$code1}\] to {$name2} \[{$code2}\][/bold]
+cargo-console-fund-transfer-user-unknown = Unknown
 
 cargo-console-paper-reason-default = None
 cargo-console-paper-approver-default = Self
@@ -55,9 +68,12 @@ cargo-no-shuttle = No cargo shuttle found!
 # Funding allocation console
 cargo-funding-alloc-console-menu-title = Funding Allocation Console
 cargo-funding-alloc-console-label-account = [bold]Account[/bold]
-cargo-funding-alloc-console-label-code = [bold]Code[/bold]
-cargo-funding-alloc-console-label-balance = [bold]Balance[/bold]
-cargo-funding-alloc-console-label-cut = [bold]Revenue Division (%)[/bold]
+cargo-funding-alloc-console-label-code = [bold] Code [/bold]
+cargo-funding-alloc-console-label-balance = [bold] Balance [/bold]
+cargo-funding-alloc-console-label-cut = [bold] Revenue Division (%) [/bold]
 
 cargo-funding-alloc-console-button-save = Save Changes
-cargo-funding-alloc-console-label-save-fail = [bold][color=red]Revenue Divisions Must Sum to 100![/color][/bold]
+cargo-funding-alloc-console-label-save-fail = [bold]Revenue Divisions Invalid![/bold] [color=red]({$pos ->
+    [1] +
+    *[-1] -
+}{$val}%)[/color]

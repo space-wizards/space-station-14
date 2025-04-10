@@ -162,8 +162,6 @@
   - type: StaticPrice
     price: 750
 
-
-
 - type: entity
   parent: BaseComputerCircuitboard
   id: FundingAllocationComputerCircuitboard
