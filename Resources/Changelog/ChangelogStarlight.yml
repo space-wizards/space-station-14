@@ -4585,4 +4585,33 @@ Entries:
   id: 635
   time: '2025-04-10T04:12:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/469
+- author: STARLIGHT TEAM
+  changes:
+  - message: Changed Assistant uniform color from grey to green.
+    type: Tweak
+  id: 636
+  time: '2025-04-10T14:52:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/472
+- author: STARLIGHT TEAM
+  changes:
+  - message: Changed Assistant headset color from grey to green.
+    type: Tweak
+  id: 637
+  time: '2025-04-10T14:52:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/472
+- author: STARLIGHT TEAM
+  changes:
+  - message: Changed Service headset color from white to green.
+    type: Tweak
+  id: 638
+  time: '2025-04-10T14:52:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/472
+- author: STARLIGHT TEAM
+  changes:
+  - message: Some service job icons changed from grey to green(removed lawyer job
+      icon, boxer, etc.)
+    type: Tweak
+  id: 639
+  time: '2025-04-10T14:52:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/472
 
