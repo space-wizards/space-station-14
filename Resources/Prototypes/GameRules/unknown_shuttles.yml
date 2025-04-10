@@ -32,10 +32,8 @@
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
     - id: LoneOpsSpawn
-    - id: UnknownShuttleManOWar
-    - id: UnknownShuttleInstigator
 
-# Shuttle Game Rules
+# Shuttle Game Rules 
 
 - type: entity
   abstract: true
@@ -46,7 +44,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 10 # 10 default. Don't go lower than 1, it wont ever spawn. If you need something to be rarer than  that you need to shift all the weights. :shrug:
+    weight: 10 # 10 default.
     reoccurrenceDelay: 30
     duration: 1
     maxOccurrences: 1 # should be the same as [copies] in shuttle_incoming_event.yml
@@ -110,7 +108,7 @@
   components:
   - type: StationEvent
     startAnnouncement: null # It should be silent.
-    weight: 1 # Hopefully this is uncommon enough, it needs to be uncommon enough that people wont waste time metaknowledging it.
+    weight: .5 # Hopefully this is uncommon enough, it needs to be uncommon enough that people wont waste time metaknowledging it.
     earliestStart: 45 # late to hopefully have enough ghosts to fill all roles quickly.
     minimumPlayers: 25
   - type: LoadMapRule
@@ -175,17 +173,6 @@
     preloadedGrid: NTIncorporation
 
 - type: entity
-  id: UnknownShuttleInstigator
-  parent: BaseUnknownShuttleRule
-  components:
-  - type: StationEvent
-    startAnnouncement: null #dont nark on antags
-    weight: 1 #  lower because antags.
-    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly (3) and because antags
-  - type: LoadMapRule
-    preloadedGrid: Instigator
-
-- type: entity
   id: UnknownShuttleJoe
   parent: BaseUnknownShuttleRule
   components:
@@ -202,17 +189,6 @@
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
   - type: LoadMapRule
     preloadedGrid: Lambordeere
-
-- type: entity
-  id: UnknownShuttleManOWar
-  parent: BaseUnknownShuttleRule
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #Leaving this one because theyre like primitives and its funnier
-    weight: 1 # lower because antags
-    earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly. (4) & antags
-  - type: LoadMapRule
-    preloadedGrid: ManOWar
 
 - type: entity
   id: UnknownShuttleMeatZone

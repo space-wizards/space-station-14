@@ -91,8 +91,6 @@ namespace Content.Server.StationEvents
         ///     a real round (it won't pollute the state, but it will get contaminated by previously ran events in the actual round)
         ///     and things like `MaxOccurrences` and `ReoccurrenceDelay` won't be respected.
         ///
-        ///     VERY IMPORTANTLY this also means this runs through the checks for StationEvent availability given the current roundstate
-        ///
         ///     I consider these to not be that relevant to the analysis here though (and I don't want most uses of them
         ///     to even exist) so I think it's fine.
         /// </remarks>
@@ -123,7 +121,7 @@ namespace Content.Server.StationEvents
             for (var i = 0; i < rounds; i++)
             {
                 var curTime = TimeSpan.Zero;
-                var randomEndTime = _random.NextGaussian(roundEndMean, roundEndStdDev); // Its in seconds, so is all the other station event stuff, fuck it.
+                var randomEndTime = _random.NextGaussian(roundEndMean, roundEndStdDev); // Its in minutes, should probably be a better time format once we get that in toolshed like [hh:mm:ss]
                 if (randomEndTime <= 0)
                     continue;
 
