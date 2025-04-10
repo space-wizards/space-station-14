@@ -4577,4 +4577,12 @@ Entries:
   id: 634
   time: '2025-04-09T18:20:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/463
+- author: KarmaKitsuna
+  changes:
+  - message: 4 shiny new books with lore unique to the Starlight sector. Lore lovers
+      rejoice!
+    type: Add
+  id: 635
+  time: '2025-04-10T04:12:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/469
 
