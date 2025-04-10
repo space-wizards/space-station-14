@@ -138,7 +138,7 @@
       amount: 2
   products:
     Carbohydrate: 1
-    Salt: 1
+    TableSalt: 1
 
 - type: reagent
   id: TableSalt
