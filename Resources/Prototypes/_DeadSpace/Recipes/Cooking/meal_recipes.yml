@@ -30,7 +30,7 @@
     Egg: 10
     Water: 5
 
-- type: microwaveMealRecipe # TODO: Fix
+- type: microwaveMealRecipe
   id: RecipeBoneSoup1
   name: bone soup recipe
   result: FoodSoupBone
@@ -41,7 +41,7 @@
     FoodBowlBig: 1
     HandsAnimal: 1
 
-- type: microwaveMealRecipe # TODO: Fix
+- type: microwaveMealRecipe
   id: RecipeBoneSoup2
   name: bone soup recipe
   result: FoodSoupBone
@@ -52,7 +52,7 @@
     FoodBowlBig: 1
     LegsAnimal: 1
 
-- type: microwaveMealRecipe # TODO: Fix
+- type: microwaveMealRecipe
   id: RecipeBoneSoup3
   name: bone soup recipe
   result: FoodSoupBone
@@ -63,7 +63,7 @@
     FoodBowlBig: 1
     FeetAnimal: 1
 
-- type: microwaveMealRecipe # TODO: Fix
+- type: microwaveMealRecipe
   id: RecipeBoneSoup4
   name: bone soup recipe
   result: FoodSoupBone
@@ -73,48 +73,6 @@
   solids:
     TorsoAnimal: 1
     FoodBowlBig: 1
-
-- type: reaction
-  id: BluespaceHot
-  reactants:
-    Vodka:
-      amount: 3
-    SpaceUp:
-      amount: 3
-    Licoxide:
-      amount: 1
-    Ice:
-      amount: 3
-  products:
-    BluespaceHot: 10
-
-- type: reaction
-  id: Sontse
-  reactants:
-    WeldingFuel:
-      amount: 1
-    Coffee:
-      amount: 1
-    JuiceOrange:
-      amount: 1
-    Mead:
-      amount: 1
-  products:
-    Sontse: 4
-
-- type: reaction
-  id: UplinkDrink
-  reactants:
-    NuclearCola:
-      amount: 1
-    Rum:
-      amount: 1
-    Iron:
-      amount: 1
-    WeldingFuel:
-      amount: 1
-  products:
-    UplinkDrink: 4
 
 - type: microwaveMealRecipe
   id: RecipeSawdustSoup
@@ -145,3 +103,17 @@
     Sugar: 20
   solids:
     FoodCakePlain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFoodMegaSandwich
+  name: megasandwich recipe
+  result: FoodMegaSandwich
+  time: 15
+  reagents:
+    Mayo: 10
+  solids:
+    FoodBreadBaguette: 1
+    FoodMeatCutlet: 3
+    FoodCheeseSlice: 2
+    FoodTomato: 2
+    FoodCabbage: 1
