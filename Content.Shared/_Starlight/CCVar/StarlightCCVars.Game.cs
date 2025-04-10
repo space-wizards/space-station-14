@@ -19,5 +19,5 @@ public sealed partial class StarlightCCVars
     /// Sends afk players to cryo.
     /// </summary>
     public static readonly CVarDef<float> AdmemeShuttleLimit =
-        CVarDef.Create("game.admeme_shuttle_limit", 1000f, CVar.SERVERONLY);
+        CVarDef.Create("game.admeme_shuttle_limit", 1000f, CVar.SERVER | CVar.REPLICATED);
 }
