@@ -720,7 +720,7 @@
     - state: buster
   - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Radioactive
+    explosionType: Default
     totalIntensity: 200
     intensitySlope: 6
     maxIntensity: 40 # same as regular rocket
