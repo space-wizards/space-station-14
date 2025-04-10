@@ -75,8 +75,8 @@
   id: RoboticCleanliness
   name: research-technology-robotic-cleanliness
   icon:
-    sprite: Mobs/Silicon/chassis.rsi
-    state: janitor
+    sprite: Mobs/Silicon/Chassis/janitor.rsi
+    state: borg
   discipline: CivilianServices
   tier: 1
   cost: 5000
@@ -135,8 +135,8 @@
   id: MechanizedTreatment
   name: research-technology-mechanized-treatment
   icon:
-    sprite: Mobs/Silicon/chassis.rsi
-    state: medical
+    sprite: Mobs/Silicon/Chassis/medical.rsi
+    state: borg
   discipline: CivilianServices
   tier: 2
   cost: 5000
