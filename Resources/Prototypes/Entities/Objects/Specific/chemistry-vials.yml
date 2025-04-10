@@ -148,6 +148,9 @@
     canChangeTransferAmount: true
   - type: StaticPrice
     price: 50
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 10
 
 - type: entity
   id: VestineChemistryVial
