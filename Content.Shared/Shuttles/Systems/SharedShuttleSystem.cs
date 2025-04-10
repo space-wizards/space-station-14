@@ -161,7 +161,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
     // Starlight-edit start
     public float GetFTLRange(EntityUid shuttleUid)
     {
-        Logger.Info($"GetFTLRange({shuttleUid})");
+        //Logger.Info($"GetFTLRange({shuttleUid})");
         if(!TryComp<ShuttleComponent>(shuttleUid, out var shuttle))
             return 0f;
         
@@ -170,7 +170,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
         if (serverShuttleLimit != null && shuttle.FTLRange > serverShuttleLimit)
             return serverShuttleLimit;
         
-        Logger.Info($"GetFTLRange({shuttleUid}) = {shuttle.FTLRange}");
+        //Logger.Info($"GetFTLRange({shuttleUid}) = {shuttle.FTLRange}");
         return shuttle.FTLRange;
     }
     // Starlight-edit end
