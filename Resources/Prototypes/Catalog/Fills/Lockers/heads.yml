@@ -163,6 +163,10 @@
     - id: RCD
     - id: RCDAmmo
     - id: RubberStampCE
+    - id: CartridgeRocketSingularityBuster
+    - id: CartridgeRocketSingularityBuster
+    - id: WeaponLauncherSingularityBuster
+
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable

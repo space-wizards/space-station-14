@@ -210,14 +210,29 @@
 ## ce
 
 - type: entity
+  abstract: true
   parent: BaseTraitorStealObjective
-  id: MagbootsStealObjective
+  id: BaseCEStealObjective
   components:
   - type: NotJobRequirement
     job: ChiefEngineer
   - type: StealCondition
-    stealGroup: ClothingShoesBootsMagAdv
     owner: job-name-ce
+
+- type: entity
+  parent: BaseCEStealObjective
+  id: MagbootsStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: ClothingShoesBootsMagAdv
+
+- type: entity
+  parent: BaseCEStealObjective
+  id: CERocketLauncherStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: WeaponLauncherSingularityBuster
+
 
 ## qm
 
