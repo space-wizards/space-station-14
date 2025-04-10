@@ -48,6 +48,10 @@ public sealed partial class AirAlarmComponent : Component
     [DataField("normalPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
     public string NormalPort = "AirNormal";
 
+    /// <summary>
+    /// If not null, this mode will be forced and any attempts to change it will be ignored.
+    /// E.g., if the panic wire is cut, this will be set to panic.
+    /// </summary>
     [ViewVariables]
     public AirAlarmMode? ForcedMode;
 }
