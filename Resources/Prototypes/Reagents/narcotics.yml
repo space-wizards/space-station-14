@@ -381,7 +381,7 @@
   meltingPoint: 36.0
   metabolisms:
     Narcotic:
-      metabolismRate: 1
+      metabolismRate: 2
       effects:
       - !type:PopupMessage
         type: Local
