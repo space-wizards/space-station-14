@@ -23,3 +23,8 @@
   id: AnomalyPyroSupercritical
   files:
   - /Audio/Items/Anomaly/pyro_crit.ogg
+
+- type: soundCollection
+  id: AnomalyGravitySupercritical
+  files:
+  - /Audio/Items/Anomaly/grav_crit.ogg

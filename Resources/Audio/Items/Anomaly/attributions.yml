@@ -29,3 +29,8 @@
   license: "CC-BY-NC-4.0"
   copyright: "Robinhood76 (Freesound), edited by Quantum-cross@github"
   source: https://freesound.org/people/Robinhood76/sounds/612277/
+
+- files: ["grav_crit.ogg"]
+  license: "CC0-1.0"
+  copyright: "anomaly_drone.ogg (Joao_Janz, EmoGarbage) as base, further editing by Quantum-Cross@github"
+  source: "https://freesound.org/people/Joao_Janz/sounds/478472/"

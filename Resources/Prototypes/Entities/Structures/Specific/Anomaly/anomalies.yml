@@ -126,6 +126,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreGravity
     coreInertPrototype: AnomalyCoreGravityInert
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyGravitySupercritical
   - type: Sprite
     layers:
     - state: anom2
