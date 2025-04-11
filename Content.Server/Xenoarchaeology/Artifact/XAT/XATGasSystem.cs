@@ -5,6 +5,9 @@ using Content.Shared.Xenoarchaeology.Artifact.XAT;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAT;
 
+/// <summary>
+/// System for xeno artifact trigger, which gets activated from some gas being on the same time as artifact with certain concentration.
+/// </summary>
 public sealed class XATGasSystem : BaseQueryUpdateXATSystem<XATGasComponent>
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
@@ -16,16 +19,17 @@ public sealed class XATGasSystem : BaseQueryUpdateXATSystem<XATGasComponent>
         if (_atmosphere.GetTileMixture((artifact, xform)) is not { } mixture)
             return;
 
-        var moles = mixture.GetMoles(node.Comp1.TargetGas);
+        var gasTrigger = node.Comp1;
+        var moles = mixture.GetMoles(gasTrigger.TargetGas);
 
-        if (node.Comp1.ShouldBePresent)
+        if (gasTrigger.ShouldBePresent)
         {
-            if (moles >= node.Comp1.Moles)
+            if (moles >= gasTrigger.Moles)
                 Trigger(artifact, node);
         }
         else
         {
-            if (moles <= node.Comp1.Moles)
+            if (moles <= gasTrigger.Moles)
                 Trigger(artifact, node);
         }
     }

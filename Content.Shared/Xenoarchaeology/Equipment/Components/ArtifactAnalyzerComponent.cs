@@ -30,9 +30,9 @@ public sealed partial class ArtifactAnalyzerComponent : Component
     [ViewVariables, AutoNetworkedField]
     public EntityUid? Console;
 
+    /// <summary>
+    /// Marker, if artifact graph data is ready for printing.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public bool ReadyToPrint = false;
-
-    [DataField]
-    public SoundSpecifier? ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 }

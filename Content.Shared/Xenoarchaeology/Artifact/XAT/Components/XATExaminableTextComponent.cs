@@ -8,6 +8,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedXenoArtifactSystem)), AutoGenerateComponentState]
 public sealed partial class XATExaminableTextComponent : Component
 {
+    /// <summary> Text to display. </summary>
     [DataField(required: true), AutoNetworkedField]
     public LocId ExamineText;
 }

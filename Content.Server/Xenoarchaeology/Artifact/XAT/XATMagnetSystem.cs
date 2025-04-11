@@ -27,6 +27,23 @@ public sealed class XATMagnetSystem : BaseQueryUpdateXATSystem<XATMagnetComponen
         SubscribeLocalEvent<SalvageMagnetActivatedEvent>(OnMagnetActivated);
     }
 
+    /// <inheritdoc />
+    protected override void UpdateXAT(Entity<XenoArtifactComponent> artifact, Entity<XATMagnetComponent, XenoArtifactNodeComponent> node, float frameTime)
+    {
+        var coords = Transform(artifact.Owner).Coordinates;
+
+        _magbootEntities.Clear();
+        _lookup.GetEntitiesInRange(coords, node.Comp1.MagbootsRange, _magbootEntities);
+        foreach (var ent in _magbootEntities)
+        {
+            if(!TryComp<ItemToggleComponent>(ent, out var itemToggle) || !itemToggle.Activated)
+                continue;
+
+            Trigger(artifact, node);
+            break;
+        }
+    }
+
     private void OnMagnetActivated(ref SalvageMagnetActivatedEvent args)
     {
         var magnetCoordinates = Transform(args.Magnet).Coordinates;
@@ -45,22 +62,6 @@ public sealed class XATMagnetSystem : BaseQueryUpdateXATSystem<XATMagnetComponen
             var artifactCoordinates = Transform(artifact).Coordinates;
             if (_transform.InRange(magnetCoordinates, artifactCoordinates, comp.MagnetRange))
                 Trigger(artifact, (uid, comp, node));
-        }
-    }
-
-    protected override void UpdateXAT(Entity<XenoArtifactComponent> artifact, Entity<XATMagnetComponent, XenoArtifactNodeComponent> node, float frameTime)
-    {
-        var coords = Transform(artifact.Owner).Coordinates;
-
-        _magbootEntities.Clear();
-        _lookup.GetEntitiesInRange(coords, node.Comp1.MagbootsRange, _magbootEntities);
-        foreach (var ent in _magbootEntities)
-        {
-            if(!TryComp<ItemToggleComponent>(ent, out var itemToggle) || !itemToggle.Activated)
-                continue;
-
-            Trigger(artifact, node);
-            break;
         }
     }
 }

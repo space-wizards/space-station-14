@@ -30,6 +30,9 @@ public sealed partial class XATReactiveComponent : Component
     [DataField, AutoNetworkedField]
     public HashSet<ProtoId<ReactiveGroupPrototype>> ReactiveGroups = new();
 
+    /// <summary>
+    /// Min amount of reagent to trigger.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public FixedPoint2 MinQuantity = 5f;
 }

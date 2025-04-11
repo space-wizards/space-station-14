@@ -5,6 +5,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Xenoarchaeology.Artifact;
 
+/// <summary> Command for unlocking specific node of xeno artifact. </summary>
 [AdminCommand(AdminFlags.Debug)]
 public sealed class XenoArtifactUnlockNodeCommand : LocalizedCommands
 {

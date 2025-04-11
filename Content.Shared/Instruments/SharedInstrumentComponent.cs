@@ -34,7 +34,9 @@ public abstract partial class SharedInstrumentComponent : Component
     public BitArray FilteredChannels { get; set; } = new(RobustMidiEvent.MaxChannels, true);
 }
 
-
+/// <summary>
+/// Component that indicates that musical instrument was activated (ui opened).
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ActiveInstrumentComponent : Component;
 

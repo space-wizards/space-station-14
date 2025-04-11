@@ -31,6 +31,7 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
         InitializeXAE();
     }
 
+    /// <inheritdoc />
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

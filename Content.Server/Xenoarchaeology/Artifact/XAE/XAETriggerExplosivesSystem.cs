@@ -6,6 +6,9 @@ using Content.Shared.Xenoarchaeology.Artifact.XAE;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 
+/// <summary>
+/// System for xeno artifact effect of triggering explosion.
+/// </summary>
 public sealed class XAETriggerExplosivesSystem : BaseXAESystem<XAETriggerExplosivesComponent>
 {
     [Dependency] private readonly ExplosionSystem _explosion = default!;

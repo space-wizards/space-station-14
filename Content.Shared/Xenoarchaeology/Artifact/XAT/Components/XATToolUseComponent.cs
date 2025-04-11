@@ -12,16 +12,26 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(XATToolUseSystem)), AutoGenerateComponentState]
 public sealed partial class XATToolUseComponent : Component
 {
+    /// <summary>
+    /// Tool to be used.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public ProtoId<ToolQualityPrototype> RequiredTool;
 
+    /// <summary>
+    /// Time that using tool on artifact will take.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float Delay = 3;
 
+    /// <summary>
+    /// Amount of fuel using tool will take (for devices such as Welding tool).
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float Fuel;
 }
 
+/// <summary> Do after that will be used if proper tool was used on artifact with <see cref="XATToolUseComponent"/>. </summary>
 [Serializable, NetSerializable]
 public sealed partial class XATToolUseDoAfterEvent : DoAfterEvent
 {

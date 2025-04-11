@@ -3,6 +3,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 
+/// <summary>
+/// Base type for xeno artifact trigger systems. Each system should work with 1 trigger mechanics.
+/// </summary>
+/// <typeparam name="T">Type of XAT component that system will work with.</typeparam>
 public abstract class BaseXATSystem<T> : EntitySystem where T : Component
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
@@ -18,6 +22,11 @@ public abstract class BaseXATSystem<T> : EntitySystem where T : Component
         _unlockingQuery = GetEntityQuery<XenoArtifactUnlockingComponent>();
     }
 
+    /// <summary>
+    /// Subscribes to event occurring on artifact (and by relaying - on node).
+    /// </summary>
+    /// <typeparam name="TEvent">Type of event to sub for.</typeparam>
+    /// <param name="eventHandler">Delegate that handles event.</param>
     protected void XATSubscribeDirectEvent<TEvent>(XATEventHandler<TEvent> eventHandler) where TEvent : notnull
     {
         SubscribeLocalEvent<T, XenoArchNodeRelayedEvent<TEvent>>((uid, component, args) =>
@@ -32,6 +41,11 @@ public abstract class BaseXATSystem<T> : EntitySystem where T : Component
         });
     }
 
+    /// <summary>
+    /// Checks if node can be triggered.
+    /// </summary>
+    /// <param name="artifact">Artifact entity.</param>
+    /// <param name="node">Node from <see cref="artifact"/>.</param>
     protected bool CanTrigger(Entity<XenoArtifactComponent> artifact, Entity<XenoArtifactNodeComponent> node)
     {
         if (Timing.CurTime < artifact.Comp.NextUnlockTime)
@@ -47,6 +61,9 @@ public abstract class BaseXATSystem<T> : EntitySystem where T : Component
         return true;
     }
 
+    /// <summary>
+    /// Triggers node. Triggered nodes participate in node unlocking.
+    /// </summary>
     protected void Trigger(Entity<XenoArtifactComponent> artifact, Entity<T, XenoArtifactNodeComponent> node)
     {
         if (!Timing.IsFirstTimePredicted)
@@ -56,6 +73,13 @@ public abstract class BaseXATSystem<T> : EntitySystem where T : Component
         XenoArtifact.TriggerXenoArtifact(artifact, (node.Owner, node.Comp2));
     }
 
+    /// <summary>
+    /// Delegate for handling relayed artifact trigger events.
+    /// </summary>
+    /// <typeparam name="TEvent">Event type to be handled.</typeparam>
+    /// <param name="artifact">Artifact, on which event occurred.</param>
+    /// <param name="node">Node which for which event were relayed.</param>
+    /// <param name="args">Event data.</param>
     protected delegate void XATEventHandler<TEvent>(
         Entity<XenoArtifactComponent> artifact,
         Entity<T, XenoArtifactNodeComponent> node,

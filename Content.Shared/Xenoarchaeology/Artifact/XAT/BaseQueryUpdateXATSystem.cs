@@ -2,6 +2,10 @@ using Content.Shared.Xenoarchaeology.Artifact.Components;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 
+/// <summary>
+/// Base type for xeno artifact trigger systems, that are relied on updating loop.
+/// </summary>
+/// <typeparam name="T">Type of XAT component that system will work with.</typeparam>
 public abstract class BaseQueryUpdateXATSystem<T> : BaseXATSystem<T> where T : Component
 {
     protected EntityQuery<XenoArtifactComponent> _xenoArtifactQuery;
@@ -14,6 +18,7 @@ public abstract class BaseQueryUpdateXATSystem<T> : BaseXATSystem<T> where T : C
         _xenoArtifactQuery = GetEntityQuery<XenoArtifactComponent>();
     }
 
+    /// <inheritdoc />
     public override void Update(float frameTime)
     {
         base.Update(frameTime);

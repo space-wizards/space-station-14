@@ -8,9 +8,15 @@ using Robust.Shared.Toolshed;
 
 namespace Content.Server.Xenoarchaeology.Artifact;
 
+/// <summary>
+/// Toolshed commands for manipulating xeno artifact.
+/// </summary>
 [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
 public sealed class XenoArtifactCommand : ToolshedCommand
 {
+    public static readonly ProtoId<EntityPrototype> ArtifactPrototype = "BaseXenoArtifact";
+
+    /// <summary> List existing artifacts. </summary>
     [CommandImplementation("list")]
     public IEnumerable<EntityUid> List()
     {
@@ -21,10 +27,13 @@ public sealed class XenoArtifactCommand : ToolshedCommand
         }
     }
 
+    /// <summary>
+    /// Output matrix of artifact nodes and how they are connected.
+    /// </summary>
     [CommandImplementation("printMatrix")]
-    public string PrintMatrix([PipedArgument] EntityUid ent)
+    public string PrintMatrix([PipedArgument] EntityUid artifactEntitUid)
     {
-        var comp = EntityManager.GetComponent<XenoArtifactComponent>(ent);
+        var comp = EntityManager.GetComponent<XenoArtifactComponent>(artifactEntitUid);
 
         var nodeCount = comp.NodeVertices.Length;
 
@@ -62,15 +71,16 @@ public sealed class XenoArtifactCommand : ToolshedCommand
         }
     }
 
+    /// <summary> Output total research points artifact contains. </summary>
     [CommandImplementation("totalResearch")]
-    public int TotalResearch([PipedArgument] EntityUid ent)
+    public int TotalResearch([PipedArgument] EntityUid artifactEntityUid)
     {
         var artiSys = EntityManager.System<XenoArtifactSystem>();
-        var comp = EntityManager.GetComponent<XenoArtifactComponent>(ent);
+        var comp = EntityManager.GetComponent<XenoArtifactComponent>(artifactEntityUid);
 
         var sum = 0;
 
-        var nodes = artiSys.GetAllNodes((ent, comp));
+        var nodes = artiSys.GetAllNodes((artifactEntityUid, comp));
         foreach (var node in nodes)
         {
             sum += node.Comp.ResearchValue;
@@ -79,9 +89,9 @@ public sealed class XenoArtifactCommand : ToolshedCommand
         return sum;
     }
 
-    [ValidatePrototypeId<EntityPrototype>]
-    public const string ArtifactPrototype = "BaseXenoArtifact";
-
+    /// <summary>
+    /// Spawns a bunch of artifacts and gets average total research points they can yield.
+    /// </summary>
     [CommandImplementation("averageResearch")]
     public float AverageResearch()
     {
@@ -98,13 +108,14 @@ public sealed class XenoArtifactCommand : ToolshedCommand
         return (float) sum / n;
     }
 
+    /// <summary> Unlocks all nodes of artifact. </summary>
     [CommandImplementation("unlockAllNodes")]
-    public void UnlockAllNodes([PipedArgument] EntityUid ent)
+    public void UnlockAllNodes([PipedArgument] EntityUid artifactEntityUid)
     {
         var artiSys = EntityManager.System<XenoArtifactSystem>();
-        var comp = EntityManager.GetComponent<XenoArtifactComponent>(ent);
+        var comp = EntityManager.GetComponent<XenoArtifactComponent>(artifactEntityUid);
 
-        var nodes = artiSys.GetAllNodes((ent, comp));
+        var nodes = artiSys.GetAllNodes((artifactEntityUid, comp));
         foreach (var node in nodes)
         {
             artiSys.SetNodeUnlocked((node, node.Comp));

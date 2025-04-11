@@ -5,6 +5,9 @@ using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 
+/// <summary>
+/// System for xeno artifact trigger that requires player to examine details of artifact.
+/// </summary>
 public sealed class XATExamineSystem : BaseXATSystem<XATExamineComponent>
 {
     /// <inheritdoc/>

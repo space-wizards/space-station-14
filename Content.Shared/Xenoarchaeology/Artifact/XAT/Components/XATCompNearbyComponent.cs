@@ -16,9 +16,15 @@ public sealed partial class XATCompNearbyComponent : Component
     [DataField(customTypeSerializer: typeof(ComponentNameSerializer)), AutoNetworkedField]
     public string RequireComponentWithName = "Item";
 
+    /// <summary>
+    /// Radius, in which trigger going to search for entity with component.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float Radius = 5;
 
+    /// <summary>
+    /// Required entities count.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public int Count = 1;
 }

@@ -4,6 +4,9 @@ using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 
+/// <summary>
+/// System for xeno artifact trigger that requires death of some mob near artifact.
+/// </summary>
 public sealed class XATDeathSystem : BaseXATSystem<XATDeathComponent>
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;

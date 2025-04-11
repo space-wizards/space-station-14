@@ -8,6 +8,9 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(XATDeathSystem)), AutoGenerateComponentState]
 public sealed partial class XATDeathComponent : Component
 {
+    /// <summary>
+    /// Range within which artifact going to listen to death event.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public float Range = 15;
 }

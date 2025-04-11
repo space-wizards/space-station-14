@@ -6,6 +6,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 
+/// <summary>
+/// System for xeno artifact effect that damages entities from whitelist in area.
+/// </summary>
 public sealed class XAEDamageInAreaSystem : BaseXAESystem<XAEDamageInAreaComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;

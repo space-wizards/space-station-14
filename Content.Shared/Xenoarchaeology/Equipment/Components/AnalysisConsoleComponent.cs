@@ -1,4 +1,4 @@
-﻿using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceLinking;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -19,7 +19,6 @@ public sealed partial class AnalysisConsoleComponent : Component
     [DataField, AutoNetworkedField]
     public NetEntity? AnalyzerEntity;
 
-    // TODO: GOD MY EARS ITS SO FUCKING LOUD
     [DataField]
     public SoundSpecifier? ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
 
