@@ -4764,4 +4764,11 @@ Entries:
   id: 659
   time: '2025-04-11T10:28:22.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/477
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added an admin-only CBURN Shuttle
+    type: Add
+  id: 660
+  time: '2025-04-11T21:02:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/478
 
