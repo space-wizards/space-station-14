@@ -1,12 +1,12 @@
 # Greytide Time
 - type: loadoutEffectGroup
-  id: GreyTider
+  id: HonoredAssistant
   effects:
   - !type:JobRequirementLoadoutEffect
     requirement:
       !type:RoleTimeRequirement
       role: JobPassenger
-      time: 36000 #10 hrs, silly reward for people who play passenger a lot
+      time: 36000 #10 hrs, silly reward for people who play Assistant a lot
 
 # Head of Greytide (for grey mantle)
 - type: loadoutEffectGroup
@@ -20,31 +20,31 @@
 
 # Face
 - type: loadout
-  id: PassengerFace
+  id: AssistantFace
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: HonoredAssistant
   equipment:
     mask: ClothingMaskGas
 
 # Jumpsuits
-# Grey
+# Basic
 - type: loadout
-  id: GreyJumpsuit
+  id: BasicJumpsuit
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorGrey
+    jumpsuit: ClothingUniformJumpsuitAssistant
 
 - type: loadout
-  id: GreyJumpskirt
+  id: BasicJumpskirt
   equipment:
-    jumpsuit: ClothingUniformJumpskirtColorGrey
+    jumpsuit: ClothingUniformJumpskirtAssistant
 
 # Rainbow
 - type: loadout
   id: RainbowJumpsuit
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: HonoredAssistant
   equipment:
     jumpsuit: ClothingUniformColorRainbow
 
@@ -53,7 +53,7 @@
   id: AncientJumpsuit
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: HonoredAssistant
   equipment:
     jumpsuit: ClothingUniformJumpsuitAncient
 
@@ -89,16 +89,16 @@
 
 # Gloves
 - type: loadout
-  id: PassengerGloves
+  id: AssistantGloves
   effects:
   - !type:GroupLoadoutEffect
-    proto: GreyTider
+    proto: HonoredAssistant
   equipment:
     gloves: ClothingHandsGlovesFingerlessInsulated
 
 # Outerclothing
 - type: loadout
-  id: PassengerWintercoat
+  id: AssistantWintercoat
   equipment:
     outerClothing: ClothingOuterWinterCoat
 

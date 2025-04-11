@@ -14,7 +14,7 @@
     - AnomalyPyroclastic
     - AnomalyGravity
     - AnomalyElectricity
-    - AnomalyFlesh
+    - RandomFleshAnomalySpawner # Starlight edit, don't dilute the pool with a flesh anomaly variant
     - AnomalyBluespace
     - AnomalyIce
     - RandomRockAnomalySpawner

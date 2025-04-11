@@ -28,7 +28,7 @@
   - type: SpawnItemsOnUse
     items:
       - id: MysteryFigureBoxTrash
-      - id: ToyFigurinePassenger
+      - id: ToyFigurineAssistant
         orGroup: SpacemenFig
       - id: ToyFigurineClown
         orGroup: SpacemenFig

@@ -1,9 +1,4 @@
-﻿- files: ["Chasing-Cosmic-Dreams.ogg.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "Darkrell"
-  source: "https://github.com/ss14Starlight/space-station-14"
-
-- files: ["thunderdome.ogg"]
+﻿- files: ["thunderdome.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "-Sector11 by MashedByMachines. Converted from MP3 to OGG."
   source: "https://www.newgrounds.com/audio/listen/312622"
@@ -85,8 +80,3 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "every light is blinking at once by Sunbeamstress/Lauren Loveless."
   source: "https://soundcloud.com/sunbeamstress/every-light-is-blinking-at-once"
-
-- files: ["Cosmonaut.ogg"]
-  license: "CC-BY-ND-4.0"
-  copyright: "Cosmonaut by Artifyber, for InanimateIJK & their associated projects."
-  source: "https://soundcloud.com/r3dz3r/cosmonaut"

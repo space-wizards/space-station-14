@@ -2,6 +2,7 @@ using Content.Server.Actions;
 using Content.Server.Chat.Systems;
 using Content.Server.Speech.Components;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared.Emoting; //starlight-edit
 using Content.Shared.Humanoid;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
@@ -9,6 +10,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing; //starlight edit
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -19,6 +21,7 @@ public sealed class VocalSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!; //Starlight-edit
 
     public override void Initialize()
     {
@@ -56,6 +59,22 @@ public sealed class VocalSystem : EntitySystem
     {
         if (args.Handled || !args.Emote.Category.HasFlag(EmoteCategory.Vocal))
             return;
+
+        //starlight-start
+        //check if this specific emote is on cooldown
+        if (component.LastEmoteTime.TryGetValue(args.Emote.ID, out TimeSpan lastEmoteTime))
+        {
+            //check if we are still within cooldown
+            if (_gameTiming.CurTime < lastEmoteTime + component.EmoteCooldown)
+            {
+                //handle the event and then return so we dont play any audio
+                args.Handled = true;
+                return;
+            }
+        }
+        //save the last time we emoted properly
+        component.LastEmoteTime[args.Emote.ID] = _gameTiming.CurTime;
+        //starlight-end
 
         // snowflake case for wilhelm scream easter egg
         if (args.Emote.ID == component.ScreamId)

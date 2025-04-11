@@ -29,7 +29,7 @@
   description: Tacticool never looked so good..However, impractical armor placement makes it just as effective as the normal coat.
   components:
   - type: Sprite
-    sprite: _Starlight/Clothing//OuterClothing/Coats/corpsman.rsi
+    sprite: _Starlight/Clothing/OuterClothing/Coats/corpsman.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/OuterClothing/Coats/corpsman.rsi
   - type: Pierceable
