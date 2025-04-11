@@ -5,13 +5,17 @@ using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Server.PDA.Ringer;
+using Content.Shared.DoAfter;
 using Robust.Shared.Timing;
 using Content.Shared.Mind;
+using Content.Shared.Mindshield.Components;
 
 namespace Content.Server.Store.Systems;
 
@@ -24,6 +28,7 @@ public sealed partial class StoreSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
     public override void Initialize()
     {
@@ -37,6 +42,9 @@ public sealed partial class StoreSystem : EntitySystem
         SubscribeLocalEvent<StoreComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StoreComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StoreComponent, OpenUplinkImplantEvent>(OnImplantActivate);
+
+        SubscribeLocalEvent<StealableStoreComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<StealableStoreComponent, StealableStoreDoAfterEvent>(OnStealableDoAfter);
 
         InitializeUi();
         InitializeCommand();
@@ -109,6 +117,66 @@ public sealed partial class StoreSystem : EntitySystem
     private void OnImplantActivate(EntityUid uid, StoreComponent component, OpenUplinkImplantEvent args)
     {
         ToggleUi(args.Performer, uid, component);
+    }
+
+    private void OnInteractUsing(Entity<StealableStoreComponent> ent, ref InteractUsingEvent args)
+    {
+        if (args.Handled || !ent.Comp.CanBeStolenFrom)
+            return;
+
+        // fuck you
+        if (HasComp<MindShieldComponent>(args.User))
+            return;
+
+        if (ent.Comp.RequireUserUnlocked && TryComp<RingerUplinkComponent>(args.Used, out var usedUplink) && !usedUplink.Unlocked)
+            return;
+
+        if (ent.Comp.RequireTargetUnlocked && TryComp<RingerUplinkComponent>(ent, out var targetUplink) && !targetUplink.Unlocked)
+            return;
+
+        if (!TryComp<StoreComponent>(ent, out var targetStore) || !TryComp<StoreComponent>(args.Used, out var usedStore))
+            return;
+
+        var doAfterEventArgs = new DoAfterArgs(EntityManager, args.User, ent.Comp.DoAfterDuration, new StealableStoreDoAfterEvent(), ent, target: ent, used: args.Used)
+        {
+            NeedHand = true,
+            BreakOnDamage = true,
+            BreakOnMove = true,
+            BreakOnDropItem = true,
+            BreakOnHandChange = true
+        };
+
+        if (ent.Comp.SelfStealPopup != null)
+            _popup.PopupEntity(Loc.GetString(ent.Comp.SelfStealPopup, ("target", args.Target)), args.User, args.User);
+
+        _doAfter.TryStartDoAfter(doAfterEventArgs);
+    }
+
+    private void OnStealableDoAfter(Entity<StealableStoreComponent> ent, ref StealableStoreDoAfterEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (ent.Comp.RequireUserUnlocked && TryComp<RingerUplinkComponent>(args.Used, out var usedUplink) && !usedUplink.Unlocked)
+            return;
+
+        if (ent.Comp.RequireTargetUnlocked && TryComp<RingerUplinkComponent>(ent, out var targetUplink) && !targetUplink.Unlocked)
+            return;
+
+        if (!TryComp<StoreComponent>(ent, out var targetStore) || !TryComp<StoreComponent>(args.Used, out var usedStore))
+            return;
+
+        foreach (var currency in targetStore.Balance.ToList())
+        {
+            TryAddCurrency(new Dictionary<string, FixedPoint2> { { currency.Key, currency.Value } }, args.Used.Value, usedStore);
+        }
+
+        targetStore.Balance.Clear();
+
+        _audio.PlayPvs(ent.Comp.FinishStealingSound, ent);
+
+        if (ent.Comp.SuccessfulStealPopup != null)
+            _popup.PopupEntity(Loc.GetString(ent.Comp.SuccessfulStealPopup), ent, PopupType.MediumCaution);
     }
 
     /// <summary>

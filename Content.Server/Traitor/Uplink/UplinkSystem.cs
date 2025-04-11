@@ -34,12 +34,14 @@ public sealed class UplinkSystem : EntitySystem
     /// <param name="balance">The amount of currency on the uplink. If null, will just use the amount specified in the preset.</param>
     /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
     /// <param name="giveDiscounts">Marker that enables discounts for uplink items.</param>
+    /// /// <param name="canSteal">Whether this store can steal currency from other stores with the StealableStore component.</param>
     /// <returns>Whether or not the uplink was added successfully</returns>
     public bool AddUplink(
         EntityUid user,
         FixedPoint2 balance,
         EntityUid? uplinkEntity = null,
-        bool giveDiscounts = false)
+        bool giveDiscounts = false,
+        bool canSteal = false)
     {
         // Try to find target item if none passed
 
@@ -49,6 +51,9 @@ public sealed class UplinkSystem : EntitySystem
             return ImplantUplink(user, balance, giveDiscounts);
 
         EnsureComp<UplinkComponent>(uplinkEntity.Value);
+
+        if (canSteal)
+            EnsureComp<StealableStoreComponent>(uplinkEntity.Value);
 
         SetUplink(user, uplinkEntity.Value, balance, giveDiscounts);
 
