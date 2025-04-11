@@ -1,0 +1,9 @@
+- type: entity
+  id: VaultDoor
+  parent: HighSecDoor
+  name: vault door
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Vault/vault.rsi
+  - type: DoorBolt
+    boltsDown: true

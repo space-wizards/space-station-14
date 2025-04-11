@@ -9,7 +9,7 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsHospitalityDirector ]
-      
+
 # Service
 - type: entity
   parent: AirlockClown
@@ -46,7 +46,7 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsMusician ]
-      
+
 - type: entity
   parent: AirlockReporter
   id: AirlockReporterLocked
@@ -87,7 +87,7 @@
     containers:
       board: [ DoorElectronicsHospitalityDirector ]
 
-# Service      
+# Service
 - type: entity
   parent: AirlockClownGlass
   id: AirlockClownGlassLocked
@@ -114,7 +114,7 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsMime ]
-      
+
 - type: entity
   parent: AirlockMusicianGlass
   id: AirlockMusicianGlassLocked
@@ -142,7 +142,7 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsCourier ]
-      
+
 - type: entity
   parent: AirlockCargoGlass
   id: AirlockLogisticsGlassLocked
@@ -152,7 +152,7 @@
     containers:
       board: [ DoorElectronicsLogistics ]
 
-# Misc.  
+# Misc.
 - type: entity
   parent: AirlockChemistryGlass # For Synth Specailist, unique textures in the future, but this matches the colors of interdyne
   id: AirlockChemistrySyndicateGlassLocked
@@ -223,7 +223,7 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsLibrarian ]
-    
+
 - type: entity
   parent: AirlockMaintServiceLocked
   id: AirlockMaintMimeLocked
@@ -271,6 +271,25 @@
       board: [ DoorElectronicsCourier ]
   - type: Wires
     layoutId: AirlockCargo
+
+# Vault
+- type: entity
+  parent: VaultDoor
+  id: VaultDoorCentralCommandLocked
+  suffix: Central Command, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCentralCommand ]
+
+- type: entity
+  parent: VaultDoor
+  id: VaultDoorCommandLocked
+  suffix: Command, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCommand ]
 
 # Misc.
 - type: entity
