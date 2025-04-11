@@ -265,7 +265,7 @@
     stunTime: 5
   - type: RandomMetadata
     nameSegments:
-    - names_borgi
+    - NamesBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
