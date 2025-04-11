@@ -13,6 +13,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
         public float VolumeRate { get; set; } = 200f;
         public bool WideNet { get; set; } = false;
+        public bool AirAlarmPanicWireCut { get; set; }
 
         public static HashSet<Gas> DefaultFilterGases = new()
         {
