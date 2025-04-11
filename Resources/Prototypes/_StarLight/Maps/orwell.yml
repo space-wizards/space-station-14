@@ -1,6 +1,6 @@
 - type: gameMap
   id: Orwell
-  mapName: 'Orwell Station'
+  mapName: 'Orwell "Citadel" Station'
   mapPath: /Maps/_Starlight/Stations/Orwell.yml
   minPlayers: 50
   stations:
@@ -8,7 +8,7 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Manor Station {1}'
+          mapNameTemplate: '{0} Orwell "Cidatel" Station {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: 'GO'
