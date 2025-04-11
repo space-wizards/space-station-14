@@ -329,7 +329,7 @@
     difficulty: 1.4
 
 - type: entity
-  parent: BaseThiefStalObjective
+  parent: BaseThiefStealObjective
   id: AccessConfiguratorStealObjective
   components:
   - type: NotJobRequirement
