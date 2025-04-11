@@ -8,6 +8,8 @@
   - type: Sprite
   - type: Item
     size: Huge
+    shape:
+    - 0,0,4,2
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
     quickEquip: false

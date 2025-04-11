@@ -12,7 +12,7 @@
     slots:
     - Back
   - type: Item
-    size: Huge
+    size: Ginormous
   - type: StaticPrice
     price: 500
   - type: ContainerContainer
@@ -36,6 +36,10 @@
     slots:
     - Back
     - suitStorage
+  - type: Item
+    size: Huge
+    shape:
+    - 0,0,4,3
   - type: AmmoCounter
   - type: Gun
     fireRate: 1
