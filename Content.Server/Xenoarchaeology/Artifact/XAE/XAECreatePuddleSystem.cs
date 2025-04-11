@@ -18,20 +18,21 @@ public sealed class XAECreatePuddleSystem: BaseXAESystem<XAECreatePuddleComponen
     /// <inheritdoc />
     public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<XAECreatePuddleComponent, MapInitEvent>(OnInit);
     }
 
     private void OnInit(EntityUid uid, XAECreatePuddleComponent component, MapInitEvent _)
     {
         if (component.PossibleChemicals == null || component.PossibleChemicals.Count == 0)
-        {
             return;
-        }
 
         if (component.SelectedChemicals == null)
         {
             var chemicalList = new List<ProtoId<ReagentPrototype>>();
-            for (var i = 0; i < component.ChemAmount; i++)
+            var chemAmount = component.ChemAmount.Next(_random);
+            for (var i = 0; i < chemAmount; i++)
             {
                 var chemProto = _random.Pick(component.PossibleChemicals);
                 chemicalList.Add(chemProto);
@@ -59,8 +60,11 @@ public sealed class XAECreatePuddleSystem: BaseXAESystem<XAECreatePuddleComponen
     protected override void OnActivated(Entity<XAECreatePuddleComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
         var component = ent.Comp;
-        var amountPerChem = component.ChemicalSolution.MaxVolume / component.ChemAmount;
-        foreach (var reagent in component.SelectedChemicals!)
+        if (component.SelectedChemicals == null)
+            return;
+
+        var amountPerChem = component.ChemicalSolution.MaxVolume / component.SelectedChemicals.Count;
+        foreach (var reagent in component.SelectedChemicals)
         {
             component.ChemicalSolution.AddReagent(reagent, amountPerChem);
         }

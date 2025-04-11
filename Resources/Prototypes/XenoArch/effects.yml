@@ -521,6 +521,9 @@
             value: 6
           prob: 0.5
   - type: XAECreatePuddle
+    chemAmount:
+      min: 1
+      max: 1
     chemicalSolution:
       maxVol: 100
       canReact: false
@@ -548,6 +551,9 @@
   description: Produces puddle of chemical mixture # todo: make description say what exact chemical is produced, maybe add mixes into possible chemicals
   components:
   - type: XAECreatePuddle
+    chemAmount:
+      min: 1
+      max: 3
     replaceDescription: true
     chemicalSolution:
       maxVol: 500
@@ -1030,6 +1036,9 @@
   description: Creates puddle of helpful chemicals
   components:
   - type: XAECreatePuddle
+    chemAmount:
+      min: 1
+      max: 3
     replaceDescription: true
     chemicalSolution:
       maxVol: 500

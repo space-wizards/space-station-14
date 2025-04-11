@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
@@ -12,22 +13,22 @@ namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 public sealed partial class XAECreatePuddleComponent : Component
 {
     /// <summary>
-    /// The solution where all the chemicals are stored
+    /// The solution where all the chemicals are stored.
     /// </summary>
     [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
     public Solution ChemicalSolution = default!;
 
     /// <summary>
-    /// The different chemicals that can be spawned by this effect
+    /// The different chemicals that can be spawned by this effect.
     /// </summary>
     [DataField]
     public List<ProtoId<ReagentPrototype>> PossibleChemicals = new();
 
     /// <summary>
-    /// The number of chemicals in the puddle
+    /// The number of chemicals in the puddle.
     /// </summary>
     [DataField]
-    public int ChemAmount = 3;
+    public MinMax ChemAmount = new MinMax(1, 3);
 
     /// <summary>
     /// List of reagents selected for this node. Selected ones are chosen on first activation
