@@ -36,7 +36,7 @@ public sealed partial class PlayerPanel : FancyWindow
             RobustXamlLoader.Load(this);
             _adminManager = adminManager;
 
-            UsernameCopyButton.OnPressed += _ => OnUsernameCopy?.Invoke(PlayerName.Text ?? "");
+            UsernameCopyButton.OnPressed += _ => OnUsernameCopy?.Invoke(TargetUsername ?? "");
             BanButton.OnPressed += _ => OnOpenBanPanel?.Invoke(TargetPlayer);
             KickButton.OnPressed += _ => OnKick?.Invoke(TargetUsername);
             NotesButton.OnPressed += _ => OnOpenNotes?.Invoke(TargetPlayer);
