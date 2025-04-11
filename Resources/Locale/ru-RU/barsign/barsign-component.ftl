@@ -57,7 +57,7 @@ barsign-prototype-description-ale-nath = По какой-то причине п�
 ## The Net
 
 barsign-prototype-name-the-net = Сеть
-barsign-prototype-description-the-net = Незаметишь как затянет на пару часов.
+barsign-prototype-description-the-net = Не заметишь, как затянет на пару часов.
 
 ## Maid Cafe
 

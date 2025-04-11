@@ -32,4 +32,4 @@ ent-ClothingShoesCluwne = клувеньские туфли
 ent-ClothingShoesClownLarge = большие клоунские туфли
     .desc = Когда вам нужно выделиться в комнате, полной клоунов!
 ent-ClothingShoesSkates = роликовые коньки
-    .desc = Надевай свои ролики!
+    .desc = Надень свои ролики!

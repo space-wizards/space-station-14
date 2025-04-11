@@ -1,7 +1,7 @@
 ent-CrateEngineeringGear = ящик инженерного оборудования
     .desc = Различные инженерные компоненты.
 ent-CrateEngineeringToolbox = ящик ящиков для инструментов
-    .desc = Два обычных и два электромонтанжных ящика для инструментов.
+    .desc = Два обычных и два электромонтажных ящика для инструментов.
 ent-CrateEngineeringCableLV = ящик кабеля НВ
     .desc = 3 мотка низковольтного кабеля.
 ent-CrateEngineeringCableMV = ящик кабеля СВ
@@ -9,7 +9,7 @@ ent-CrateEngineeringCableMV = ящик кабеля СВ
 ent-CrateEngineeringCableHV = ящик кабеля ВВ
     .desc = 3 мотка высоковольтного кабеля.
 ent-CrateEngineeringFoamGrenade = ящик герметизирующих гранат
-    .desc = 5 гранат с металопенным герметиком.
+    .desc = 5 гранат с металлопенным герметиком.
 ent-CrateEngineeringCableBulk = ящик кабеля различного вольтажа
     .desc = 2 мотка кабеля каждого типа.
 ent-CrateEngineeringElectricalSupplies = ящик электромонтажного снаряжения

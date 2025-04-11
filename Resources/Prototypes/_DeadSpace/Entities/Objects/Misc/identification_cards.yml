@@ -1,7 +1,7 @@
 - type: entity
   parent: IDCardStandard
   id: TypanIDCardCargo
-  name: ID карта
+  name: ID-карта
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Misc/typancargo.rsi
@@ -18,7 +18,7 @@
 - type: entity
   parent: IDCardStandard
   id: TypanIDCardCom
-  name: ID карта
+  name: ID-карта
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Misc/typansec.rsi
@@ -40,7 +40,7 @@
 - type: entity
   parent: IDCardStandard
   id: TypanIDCardEng
-  name: ID карта
+  name: ID-карта
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Misc/typaneng.rsi
@@ -57,7 +57,7 @@
 - type: entity
   parent: IDCardStandard
   id: TypanIDCardMed
-  name: ID карта
+  name: ID-карта
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Misc/typanmed.rsi
@@ -73,7 +73,7 @@
 - type: entity
   parent: IDCardStandard
   id: TypanIDCardRd
-  name: ID карта
+  name: ID-карта
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Misc/typanrd.rsi
@@ -91,7 +91,7 @@
 - type: entity
   parent: IDCardStandard
   id: TypanIDCardScience
-  name: ID карта
+  name: ID-карта
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Misc/typanscien.rsi
@@ -109,7 +109,7 @@
 - type: entity
   parent: IDCardStandard
   id: TypanIDCardBotanist
-  name: ID карта
+  name: ID-карта
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Misc/typanbotan.rsi
@@ -127,7 +127,7 @@
 - type: entity
   parent: IDCardStandard
   id: TypanIDCardChef
-  name: ID карта
+  name: ID-карта
   components:
   - type: Sprite
     sprite: _DeadSpace/Objects/Misc/typanchef.rsi

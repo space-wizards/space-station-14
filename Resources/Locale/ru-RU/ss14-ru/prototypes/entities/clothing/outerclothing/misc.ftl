@@ -1,7 +1,7 @@
 ent-ClothingOuterApron = фартук
     .desc = Модный фартук для стильных людей.
 ent-ClothingOuterApronBar = фартук
-    .desc = Тёмного цвета фартук, предназначенный для барменов.
+    .desc = Тёмный фартук, предназначенный для барменов.
     .suffix = Барменский
 ent-ClothingOuterApronBotanist = фартук
     .desc = Толстый синий фартук, идеально подходящий для защиты вашей нежной плоти от пятен, грязи и колючек.
@@ -17,7 +17,7 @@ ent-ClothingOuterHoodieGrey = серая толстовка
     .desc = Серая толстовка.
 ent-ClothingOuterCardborg = костюм картонного борга
     .desc = Обычная картонная коробка с прорезанными в боках отверстиями.
-ent-ClothingOuterHoodieChaplain = облачения священника
+ent-ClothingOuterHoodieChaplain = облачение священника
     .desc = Строгие чёрные облачения священника.
 ent-ClothingOuterPonchoClassic = классическое пончо
     .desc = Тёплое и удобное классическое пончо.

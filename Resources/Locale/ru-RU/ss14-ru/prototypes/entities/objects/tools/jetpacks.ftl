@@ -1,7 +1,7 @@
 ent-JetpackEffect = { "" }
     .desc = { "" }
 ent-BaseJetpack = джетпак
-    .desc = Это реактивный ранец - джетпак. Вмещает 5 Л газа.
+    .desc = Это реактивный ранец — джетпак. Вмещает 5 Л газа.
 ent-ActionToggleJetpack = Переключить джетпак
     .desc = Переключить джетпак, позволяющий с лёгкостью передвигаться вне станции.
 ent-JetpackBlue = джетпак
@@ -24,7 +24,7 @@ ent-JetpackCaptainFilled = джетпак капитана
     .desc = { ent-JetpackCaptain.desc }
 ent-JetpackMini = мини джетпак
     .suffix = Пустой
-    .desc = Это реактивный ранец - джетпак. Вмещает 1,5 Л газа.
+    .desc = Это реактивный ранец — джетпак. Вмещает 1,5 Л газа.
 ent-JetpackMiniFilled = мини джетпак
     .suffix = Полный
     .desc = { ent-JetpackMini.desc }

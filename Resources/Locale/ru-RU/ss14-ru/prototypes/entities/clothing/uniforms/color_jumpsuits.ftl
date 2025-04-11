@@ -1,5 +1,5 @@
 ent-ClothingUniformJumpsuitColorGrey = серый комбинезон
-    .desc = Серый комбинезон, напоминающая вам о старых добрых временах.
+    .desc = Серый комбинезон, напоминающий вам о старых добрых временах.
 ent-ClothingUniformJumpsuitColorBlack = чёрный комбинезон
     .desc = Обычный чёрный комбинезон без знаков различия.
 ent-ClothingUniformJumpsuitColorBlue = синий комбинезон

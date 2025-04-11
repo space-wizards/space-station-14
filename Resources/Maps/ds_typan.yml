@@ -95280,7 +95280,7 @@ entities:
   - uid: 10435
     components:
     - type: MetaData
-      name: ID карта Тейа-Суэ, (Учёный)
+      name: ID-карта Тейа-Суэ, (Учёный)
     - type: Transform
       parent: 10429
     - type: Access

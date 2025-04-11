@@ -1,5 +1,5 @@
 ent-ProjectileFireball = огненный шар
-    .desc = По мнению волшебников явлется средством от всех проблем.
+    .desc = По мнению волшебников, является средством от всех проблем.
 ent-ProjectileDragonsBreath = дыхание дракона
     .desc = Постарайтесь не поджариться.
 ent-ProjectileAnomalyFireball = огненный шар
@@ -19,7 +19,7 @@ ent-ProjectileHealingBolt = исцеляющий заряд
 ent-BulletInstakillMagic = волшебный свинцовый цилиндр
     .desc = Выглядит знакомо.
 ent-ProjectilePolyboltCluwne = полизаряд клувеня
-    .desc = кноХ кноХ!
+    .desc = КноХ КноХ!
 ent-ProjectileIcicle = сосулька
     .desc = Бррррр.
 ent-ProjectilePolyboltBread = полизаряд хлеба
