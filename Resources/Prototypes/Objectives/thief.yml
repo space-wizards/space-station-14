@@ -207,6 +207,17 @@
   - type: Objective
     difficulty: 1.2
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ClothingNeckLawyerBadgeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Lawyer
+  - type: StealCondition
+    stealGroup: LawyerBadge
+  - type: Objective
+    difficulty: .8
+
 - type: entity                                      #Medical subgroup
   parent: BaseThiefStealObjective
   id: ClothingOuterHardsuitVoidParamedStealObjective

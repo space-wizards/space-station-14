@@ -194,6 +194,13 @@
     state: lamp-int
 
 - type: stealTargetGroup
+  id: LawyerBadge
+  name: steal-target-groups-clothing-neck-lawyer-badge
+  sprite:
+    sprite: Clothing/Neck/Misc/lawyerbadge.rsi
+    state: icon
+
+- type: stealTargetGroup
   id: ClothingOuterHardsuitVoidParamed
   name: steal-target-groups-clothing-outer-hardsuit-void-paramed
   sprite:
