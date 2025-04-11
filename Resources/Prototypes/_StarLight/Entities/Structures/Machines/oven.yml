@@ -43,12 +43,12 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.3,-0.16,0.3,0.16"
+          bounds: "-0.3,-0.16,0.3,0.40"
         density: 190
         mask:
-        - TabletopMachineMask
+        - MachineMask
         layer:
-        - TabletopMachineLayer
+        - MachineLayer
   - type: Sprite
     sprite: _Starlight/Structures/Machines/oven.rsi
     drawdepth: SmallObjects
