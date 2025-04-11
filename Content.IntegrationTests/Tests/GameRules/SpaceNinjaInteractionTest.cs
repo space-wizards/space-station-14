@@ -5,6 +5,8 @@ using Content.Server.Communications;
 using Content.Server.CriminalRecords.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Objectives.Components;
+using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Research.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
@@ -47,6 +49,7 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
     private static readonly EntProtoId CriminalRecordsConsoleProtoId = "ComputerCriminalRecords";
     private static readonly EntProtoId ResearchServerProtoId = "ResearchAndDevelopmentServer";
     private static readonly EntProtoId CommsConsoleProtoId = "ComputerComms";
+    private static readonly EntProtoId APCProtoId = "APCBasic";
 
     private static readonly EntProtoId NinjaSpawnGameRuleProtoId = "NinjaSpawn";
     private static readonly EntProtoId NinjaGlovesProtoId = "ClothingHandsGlovesSpaceNinja";
@@ -219,6 +222,61 @@ public sealed partial class SpaceNinjaInteractionTest : InteractionTest
 
         // Make sure the console was hacked
         Assert.That(testSys.Hacked);
+    }
+
+    /// <summary>
+    /// Makes the player a ninja, spawns a full APC and makes the player interact
+    /// with it with gloves on and off. Makes sure that the player's battery gains
+    /// charge and the APC loses charge.
+    /// </summary>
+    [Test]
+    public async Task APCDrainTest()
+    {
+        var batterySys = Server.System<BatterySystem>();
+
+        await MakeNinja(Player);
+
+        // Drop the jetpack so they have an empty hand
+        await Drop();
+
+        // Spawn the APC
+        await SpawnTarget(APCProtoId);
+
+        // Make sure the APC has full charge
+        Assert.That(TryComp<BatteryComponent>(out var apcBattery));
+        Assert.That(apcBattery.CurrentCharge, Is.GreaterThanOrEqualTo(apcBattery.MaxCharge),
+            "APC did not spawn with full charge.");
+
+        // Try interacting with the APC without the gloves on.
+        await Interact();
+
+        // Make sure the APC still has full charge.
+        Assert.That(apcBattery.CurrentCharge, Is.GreaterThanOrEqualTo(apcBattery.MaxCharge),
+            "APC lost charge when interacted with gloves disabled.");
+
+        // Activate the gloves
+        await Server.WaitPost(() =>
+        {
+            Assert.That(ItemToggleSys.TryActivate(ToServer(_gloves).Value, user: ToServer(Player)),
+                "Failed to activate ninja gloves.");
+        });
+
+        Assert.That(TryComp<BatteryDrainerComponent>(Player, out var batteryDrainer));
+        var ninjaBatteryEnt = batteryDrainer.BatteryUid;
+        var ninjaBatteryComp = SEntMan.GetComponent<BatteryComponent>(ninjaBatteryEnt.Value);
+
+        // Drain the ninja's battery
+        batterySys.SetCharge(ninjaBatteryEnt.Value, 0, ninjaBatteryComp);
+
+        // Interact with the APC with the gloves enabled.
+        await Interact();
+
+        // Make sure the ninja's battery gained charge.
+        Assert.That(ninjaBatteryComp.CurrentCharge, Is.GreaterThan(0),
+            "Ninja's battery did not gain charge.");
+        // Make sure the APC lost charge.
+        Assert.That(apcBattery.CurrentCharge, Is.LessThan(apcBattery.MaxCharge),
+            "APC battery did not lose charge.");
     }
 
     /// <summary>
