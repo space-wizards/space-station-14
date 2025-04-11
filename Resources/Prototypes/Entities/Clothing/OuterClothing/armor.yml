@@ -35,7 +35,7 @@
   id: ClothingOuterArmorBasicSlim
   name: armor vest
   suffix: slim
-  description: A slim version of the Type I armored vest that provides similarly decent protection against most types of damage.
+  description: A slim Type I armored vest that provides decent protection against most types of damage.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/security_slim.rsi
@@ -84,6 +84,7 @@
     reflects:
       - Energy
 
+#Detective's vest
 - type: entity
   parent: [ClothingOuterArmorBase, BaseSecurityContraband]
   id: ClothingOuterVestDetective
@@ -138,6 +139,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/centcomm_carapace.rsi
 
+#Web vest
 - type: entity
   parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSyndicateContraband]
   id: ClothingOuterVestWeb
@@ -158,6 +160,7 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
+#Mercenary web vest
 - type: entity
   parent: [ BaseMajorContraband, ClothingOuterVestWeb] #web vest so it should have some pockets for ammo
   id: ClothingOuterVestWebMerc
