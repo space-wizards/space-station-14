@@ -20,14 +20,15 @@ public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsC
 
         foreach (var registry in ent.Comp.Components)
         {
-            if (!ent.Comp.ApplyIfAlreadyHave && EntityManager.HasComponent(artifact, registry.Value.Component.GetType()))
+            var componentType = registry.Value.Component.GetType();
+            if (!ent.Comp.ApplyIfAlreadyHave && EntityManager.HasComponent(artifact, componentType))
             {
                 continue;
             }
 
             if (ent.Comp.RefreshOnReactivate)
             {
-                EntityManager.RemoveComponent(artifact, registry.Value.Component.GetType());
+                EntityManager.RemoveComponent(artifact, componentType);
             }
 
             var clone = EntityManager.ComponentFactory.GetComponent(registry.Value);
