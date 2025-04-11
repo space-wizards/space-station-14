@@ -4742,4 +4742,26 @@ Entries:
   id: 656
   time: '2025-04-11T08:34:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/438
+- author: Rinary
+  changes:
+  - message: Added oven as new coocking device.
+    type: Add
+  id: 657
+  time: '2025-04-11T10:28:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/477
+- author: Rinary
+  changes:
+  - message: Now cooking recipes also needs correct device type. (You can check this
+      in in-game guidebook)
+    type: Tweak
+  id: 658
+  time: '2025-04-11T10:28:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/477
+- author: Rinary
+  changes:
+  - message: Added oven machine board bounty & oven machine board.
+    type: Add
+  id: 659
+  time: '2025-04-11T10:28:22.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/477
 
