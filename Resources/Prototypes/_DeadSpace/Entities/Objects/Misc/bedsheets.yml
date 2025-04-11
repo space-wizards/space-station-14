@@ -1,0 +1,451 @@
+- type: entity
+  id: DoubleBedsheetBase
+  parent: BaseItem
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Bed
+  components:
+  - type: Sprite
+    drawdepth: Overdoors
+    sprite: _DeadSpace/Objects/Misc/bedsheets.rsi
+    noRot: true
+  - type: Item
+    size: Normal
+  - type: Clothing
+    quickEquip: true
+    slots:
+    - neck
+  - type: StaticPrice
+    price: 200
+  - type: Tag
+    tags:
+    - Bedsheet
+
+# Double bedsheets
+- type: entity
+  id: DoubleBedsheetBlack
+  parent: DoubleBedsheetBase
+  name: двухспальное чёрное одеяло
+  description: Классическое чёрное одеяло из мягкого льна.
+  components:
+  - type: Sprite
+    state: double_sheetblack
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/black.rsi
+
+- type: entity
+  id: DoubleBedsheetBlue
+  parent: DoubleBedsheetBase
+  name: двухспальное синее одеяло
+  description: Успокаивающее синее одеяло, напоминающее океан.
+  components:
+  - type: Sprite
+    state: double_sheetblue
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/blue.rsi
+
+- type: entity
+  id: DoubleBedsheetBrown
+  parent: DoubleBedsheetBase
+  name: двухспальное коричневое одеяло
+  description: Тёплое коричневое одеяло земляных тонов.
+  components:
+  - type: Sprite
+    state: double_sheetbrown
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/brown.rsi
+
+- type: entity
+  id: DoubleBedsheetGreen
+  parent: DoubleBedsheetBase
+  name: двухспальное зелёное одеяло
+  description: Свежее зелёное одеяло цвета весенней листвы.
+  components:
+  - type: Sprite
+    state: double_sheetgreen
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/green.rsi
+
+- type: entity
+  id: DoubleBedsheetGrey
+  parent: DoubleBedsheetBase
+  name: двухспальное серое одеяло
+  description: Нейтральное серое одеяло для практичных людей.
+  components:
+  - type: Sprite
+    state: double_sheetgrey
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/grey.rsi
+
+- type: entity
+  id: DoubleBedsheetOrange
+  parent: DoubleBedsheetBase
+  name: двухспальное оранжевое одеяло
+  description: Яркое оранжевое одеяло, заряжающее энергией.
+  components:
+  - type: Sprite
+    state: double_sheetorange
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/orange.rsi
+
+- type: entity
+  id: DoubleBedsheetPurple
+  parent: DoubleBedsheetBase
+  name: двухспальное фиолетовое одеяло
+  description: Благородное фиолетовое одеяло королевских оттенков.
+  components:
+  - type: Sprite
+    state: double_sheetpurple
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/purple.rsi
+
+- type: entity
+  id: DoubleBedsheetRed
+  parent: DoubleBedsheetBase
+  name: двухспальное красное одеяло
+  description: Страстное красное одеяло для ярких личностей.
+  components:
+  - type: Sprite
+    state: double_sheetred
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/red.rsi
+
+- type: entity
+  id: DoubleBedsheetWhite
+  parent: DoubleBedsheetBase
+  name: двухспальное белое одеяло
+  description: Чистое белое одеяло, символизирующее невинность.
+  components:
+  - type: Sprite
+    state: double_sheetwhite
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/white.rsi
+
+- type: entity
+  id: DoubleBedsheetYellow
+  parent: DoubleBedsheetBase
+  name: двухспальное жёлтое одеяло
+  description: Солнечное жёлтое одеяло, поднимающее настроение.
+  components:
+  - type: Sprite
+    state: double_sheetyellow
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/yellow.rsi
+
+- type: entity
+  id: DoubleBedsheetRainbow
+  parent: DoubleBedsheetBase
+  name: двухспальное радужное одеяло
+  description: Яркое разноцветное одеяло, переливающееся всеми цветами радуги.
+  components:
+  - type: Sprite
+    state: double_sheetrainbow
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/rainbow.rsi
+
+- type: entity
+  id: DoubleBedsheetCaptain
+  parent: DoubleBedsheetBase
+  name: двухспальное капитанское одеяло
+  description: Изысканное одеяло с эмблемой Nanotrasen, соткано из революционных нитей, снижающих проникновение веществ на 99.99%.
+  components:
+  - type: Sprite
+    state: double_sheetcaptain
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/captain.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetCE
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло старшего инженера
+  description: Прочное одеяло с эмблемой гаечного ключа, устойчивое к маслам и пятнам.
+  components:
+  - type: Sprite
+    state: double_sheetce
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/ce.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetCMO
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло главврача
+  description: Стерильное одеяло с медицинским крестом, часто покрытое кошачьей шерстью.
+  components:
+  - type: Sprite
+    state: double_sheetcmo
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/cmo.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetHOP
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло главы персонала
+  description: Уютное одеяло с эмблемой ключа для редких моментов отдыха.
+  components:
+  - type: Sprite
+    state: double_sheethop
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/hop.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetHOS
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло главы СБ
+  description: Надёжное одеяло с эмблемой щита - вы спите, но закон бдит.
+  components:
+  - type: Sprite
+    state: double_sheethos
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/hos.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetQM
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло квартирмейстера
+  description: Практичное одеяло для тех, кто знает цену качественному текстилю.
+  components:
+  - type: Sprite
+    state: double_sheetqm
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/qm.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetRD
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло научного руководителя
+  description: Инновационное огнестойкое одеяло с эмблемой мензурки.
+  components:
+  - type: Sprite
+    state: double_sheetrd
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/rd.rsi
+  - type: StealTarget
+    stealGroup: HeadBedsheet
+
+- type: entity
+  id: DoubleBedsheetBrigmedic
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло бригмедика
+  description: Прочное хлопковое одеяло для экстренного отдыха.
+  components:
+  - type: Sprite
+    state: double_sheetbrigmedic
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/brigmedic.rsi
+
+- type: entity
+  id: DoubleBedsheetCentcom
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло Центкома
+  description: Элитное нанотканевое одеяло для высшего руководства.
+  components:
+  - type: Sprite
+    state: double_sheetcentcom
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/centcom.rsi
+
+- type: entity
+  id: DoubleBedsheetClown
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло клоуна
+  description: Радужное одеяло с клоунской маской, пахнущее бананами.
+  components:
+  - type: Sprite
+    state: double_sheetclown
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/rainbow.rsi
+
+- type: entity
+  id: DoubleBedsheetCosmos
+  parent: DoubleBedsheetBase
+  name: двухспальное космическое одеяло
+  description: Одеяло, вплетающее в себя мечты о звёздах и далёких мирах.
+  components:
+  - type: Sprite
+    state: double_sheetcosmos
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/cosmos.rsi
+
+- type: entity
+  id: DoubleBedsheetCult
+  parent: DoubleBedsheetBase
+  name: двухспальное культовое одеяло
+  description: Потрёпанное одеяло, светящееся зловещим сиянием Нар'Си.
+  components:
+  - type: Sprite
+    state: double_sheetcult
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/yellow.rsi
+
+- type: entity
+  id: DoubleBedsheetMedical
+  parent: DoubleBedsheetBase
+  name: двухспальное медицинское одеяло
+  description: Стерильное* больничное одеяло (*кроме случаев наличия вирусолога).
+  components:
+  - type: Sprite
+    state: double_sheetmedical
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/medical.rsi
+
+- type: entity
+  id: DoubleBedsheetMime
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло мима
+  description: Бесшумное полосатое одеяло, поглощающее все звуки.
+  components:
+  - type: Sprite
+    state: double_sheetmime
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/mime.rsi
+
+- type: entity
+  id: DoubleBedsheetNT
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло NT
+  description: Одеяло с логотипом Nanotrasen, пропитанное духом корпорации.
+  components:
+  - type: Sprite
+    state: double_sheetNT
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/NT.rsi
+
+- type: entity
+  id: DoubleBedsheetPirate
+  parent: DoubleBedsheetBase
+  name: двухспальное пиратское одеяло
+  description: Одеяло с пиратской символикой для настоящих морских волков.
+  components:
+  - type: Sprite
+    state: double_sheetpirate
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/black.rsi
+
+- type: entity
+  id: DoubleBedsheetSyndie
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло Синдиката
+  description: Одеяло с кроваво-красной эмблемой, излучающее ауру зла.
+  components:
+  - type: Sprite
+    state: double_sheetsyndie
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/syndie.rsi
+
+- type: entity
+  id: DoubleBedsheetWiz
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло волшебника
+  description: Зачарованное светящееся одеяло для магических сновидений.
+  components:
+  - type: Sprite
+    state: double_sheetwiz
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/wiz.rsi
+
+- type: entity
+  id: DoubleBedsheetIan
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло Иана
+  description: Мягкое одеяло, сохраняющее тепло любимого станционного кота.
+  components:
+  - type: Sprite
+    state: double_sheetian
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/ian.rsi
+
+- type: entity
+  id: DoubleBedsheetRuntime
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло Рантайма
+  description: Уютное одеяло с лёгким кошачьим ароматом.
+  components:
+  - type: Sprite
+    state: double_sheetruntime
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/black.rsi
+
+- type: entity
+  id: DoubleBedsheetChaplain
+  parent: DoubleBedsheetBase
+  name: двухспальное одеяло священника
+  description: Благословенное одеяло с религиозными символами.
+  components:
+  - type: Sprite
+    state: double_sheetchap
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/black.rsi
+
+- type: entity
+  id: DoubleBedsheetClockwork
+  parent: DoubleBedsheetBase
+  name: двухспальное заводное одеяло
+  description: Исключительно точное одеяло с механическим узором.
+  components:
+  - type: Sprite
+    state: double_sheetclockwork
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/yellow.rsi
+
+# Bedsheets
+- type: entity
+  id: BedsheetChaplain
+  parent: BedsheetBase
+  name: одеяло священника
+  description: Благословенное одеяло для духовных практик.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/bedsheets.rsi
+    state: sheetchap
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/black.rsi
+
+- type: entity
+  id: BedsheetClockwork
+  parent: BedsheetBase
+  name: заводное одеяло
+  description: Точность и аккуратность в каждом витке.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/bedsheets.rsi
+    state: sheetclockwork
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/black.rsi
+
+- type: entity
+  id: BedsheetPirate
+  parent: BedsheetBase
+  name: пиратское одеяло
+  description: Для тех, кто спит с мыслями о морских приключениях.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/bedsheets.rsi
+    state: sheetpirate
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/black.rsi
+
+- type: entity
+  id: BedsheetRuntime
+  parent: BedsheetBase
+  name: одеяло Рантайма
+  description: Пахнет кошачьей мятой и домашним уютом.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Misc/bedsheets.rsi
+    state: sheetruntime
+  - type: Clothing
+    sprite: Clothing/Neck/Bedsheets/black.rsi
