@@ -4720,4 +4720,26 @@ Entries:
   id: 653
   time: '2025-04-10T21:51:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/475
+- author: walksanatora
+  changes:
+  - message: Adopted Borgis from upstream april fools as they were too precious to
+      be left behind.
+    type: Add
+  id: 654
+  time: '2025-04-11T08:34:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/438
+- author: Sparlight
+  changes:
+  - message: Borgis can be made in the bio generator
+    type: Add
+  id: 655
+  time: '2025-04-11T08:34:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/438
+- author: Sparlight
+  changes:
+  - message: Syndicate borgis can be bought in the uplink.
+    type: Add
+  id: 656
+  time: '2025-04-11T08:34:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/438
 
