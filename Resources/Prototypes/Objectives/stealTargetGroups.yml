@@ -284,6 +284,13 @@
     sprite: Objects/Tools/access_configurator.rsi
     state: icon
 
+- type: stealTargetGroup
+  id: ToolboxGolden
+  name: steal-target-groups-toolbox-golden
+  sprite:
+    sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
+    state: icon
+
 #Thief structures
 
 - type: stealTargetGroup

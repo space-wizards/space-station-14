@@ -339,6 +339,15 @@
   - type: Objective
     difficulty: 1
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ToolboxGoldenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: ToolboxGolden
+  - type: Objective
+    difficulty: .8
+
 # Structures
 
 - type: entity

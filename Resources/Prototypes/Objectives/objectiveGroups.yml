@@ -88,6 +88,7 @@
     ClothingNeckClownmedalStealObjective: 0.5
     SilverIDStealObjective: 1
     AccessConfiguratorStealObjective: 1
+    ToolboxGoldenStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupStructure
