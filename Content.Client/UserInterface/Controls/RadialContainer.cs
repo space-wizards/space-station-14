@@ -1,12 +1,23 @@
 using Robust.Client.UserInterface.Controls;
 using System.Linq;
 using System.Numerics;
+using Robust.Client.Graphics;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.UserInterface.Controls;
 
 [Virtual]
 public class RadialContainer : LayoutContainer
 {
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IClyde _clyde= default!;
+    private readonly ShaderInstance _shader;
+
+    private readonly float[] _angles = new float[64];
+    private readonly float[] _sectorMedians = new float[64];
+    private readonly Color[] _sectorColors = new Color[64];
+    private readonly Color[] _borderColors = new Color[64];
+
     /// <summary>
     /// Increment of radius per child element to be rendered.
     /// </summary>
@@ -24,11 +35,7 @@ public class RadialContainer : LayoutContainer
     [ViewVariables(VVAccess.ReadWrite)]
     public Vector2 AngularRange
     {
-        get
-        {
-            return _angularRange;
-        }
-
+        get => _angularRange;
         set
         {
             var x = value.X;
@@ -89,7 +96,9 @@ public class RadialContainer : LayoutContainer
     /// </summary>
     public RadialContainer()
     {
-
+        IoCManager.InjectDependencies(this);
+        _shader = _prototypeManager.Index<ShaderPrototype>("RadialMenu")
+                                   .InstanceUnique();
     }
 
     /// <inheritdoc />
@@ -159,6 +168,67 @@ public class RadialContainer : LayoutContainer
         }
 
         return base.ArrangeOverride(finalSize);
+    }
+
+    /// <inheritdoc />
+    protected override void Draw(DrawingHandleScreen handle)
+    {
+        base.Draw(handle);
+
+        float selectedFrom = 0;
+        float selectedTo = 0;
+
+        var i = 0;
+        foreach (var child in Children)
+        {
+            if (child is not IRadialMenuItemWithSector menuWithSector)
+            {
+                continue;
+            }
+
+            _angles[i] = menuWithSector.AngleSectorTo;
+            _sectorMedians[i] = (menuWithSector.AngleSectorTo + menuWithSector.AngleSectorFrom) / 2;
+
+            if (menuWithSector.IsHovered)
+            {
+                // menuWithSector.DrawBackground;
+                // menuWithSector.DrawBorder;
+                _sectorColors[i] = menuWithSector.HoverBackgroundColor;
+                _borderColors[i] = menuWithSector.HoverBorderColor;
+                selectedFrom = menuWithSector.AngleSectorFrom;
+                selectedTo = menuWithSector.AngleSectorTo;
+            }
+            else
+            {
+                _sectorColors[i] = menuWithSector.BackgroundColor;
+                _borderColors[i] = menuWithSector.BorderColor;
+            }
+
+            i++;
+        }
+
+        var screenSize = _clyde.ScreenSize;
+
+        var menuCenter = new Vector2(
+            ScreenCoordinates.X + (Size.X / 2) * UIScale,
+            screenSize.Y - ScreenCoordinates.Y - (Size.Y / 2) * UIScale
+        );
+
+        _shader.SetParameter("separatorAngles", _angles);
+        _shader.SetParameter("sectorMedianAngles", _sectorMedians);
+        _shader.SetParameter("selectedFrom", selectedFrom);
+        _shader.SetParameter("selectedTo", selectedTo);
+        _shader.SetParameter("childCount", i);
+        _shader.SetParameter("sectorColors", _sectorColors);
+        _shader.SetParameter("borderColors", _borderColors);
+        _shader.SetParameter("centerPos", menuCenter);
+        _shader.SetParameter("screenSize", screenSize);
+        _shader.SetParameter("innerRadius", CalculatedRadius * InnerRadiusMultiplier * UIScale);
+        _shader.SetParameter("outerRadius", CalculatedRadius * OuterRadiusMultiplier * UIScale);
+
+        handle.UseShader(_shader);
+        handle.DrawRect(new UIBox2(0, 0, screenSize.X, screenSize.Y), Color.White);
+        handle.UseShader(null);
     }
 
     /// <summary>
