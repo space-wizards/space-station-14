@@ -46,6 +46,8 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCorePyroclastic
+        supercriticalSoundAtAnimationStart:
+          collection: AnomalyPyroSupercritical
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionPyroclastic
         startMessage: inner-anomaly-start-message-pyro
@@ -75,6 +77,8 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreElectricity
+        supercriticalSoundAtAnimationStart:
+          collection: AnomalyElectricitySupercritical
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionElectric
         startMessage: inner-anomaly-start-message-shock
@@ -104,6 +108,8 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreShadow
+        supercriticalSoundAtAnimationStart:
+          collection: AnomalyShadowSupercritical
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionShadow
         startMessage: inner-anomaly-start-message-shadow
@@ -133,6 +139,8 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreIce
+        supercriticalSoundAtAnimationStart:
+          collection: AnomalyIceSupercritical
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionIce
         startMessage: inner-anomaly-start-message-frost
@@ -162,6 +170,8 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreFlora
+        supercriticalSoundAtAnimationStart:
+          collection: AnomalyFloraSupercritical
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionFlora
         startMessage: inner-anomaly-start-message-flora
@@ -191,6 +201,10 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreBluespace
+        supercriticalSound:
+          collection: AnomalyBluespaceExplosion
+        supercriticalSoundAtAnimationStart:
+          collection: AnomalyBluespaceSupercritical
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionBluespace
         startMessage: inner-anomaly-start-message-bluespace
@@ -220,6 +234,8 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreFlesh
+        supercriticalSoundAtAnimationStart:
+          collection: AnomalyFleshSupercritical
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionFlesh
         startMessage: inner-anomaly-start-message-flesh
@@ -249,6 +265,8 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreGravity
+        supercriticalSoundAtAnimationStart:
+          collection: AnomalyGravitySupercritical
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionGravity
         startMessage: inner-anomaly-start-message-grav
@@ -278,6 +296,8 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreTech
+        supercriticalSoundAtAnimationStart:
+          collection: AnomalyTechSupercritical
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionTech
         startMessage: inner-anomaly-start-message-tech
@@ -337,6 +357,8 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreSanta
+        supercriticalSoundAtAnimationStart:
+          collection: AnomalyPresentSupercritical
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionSanta
         startMessage: inner-anomaly-start-message-santa
