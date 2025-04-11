@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: slarticodefast
   changes:
-  - message: Fixed space ambient music not playing.
-    type: Fix
-  id: 7656
-  time: '2024-11-27T05:32:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33594
-- author: slarticodefast
-  changes:
   - message: Fixed windoors and high security doors not showing up on the AI's electrocution
       HUD.
     type: Fix
@@ -3890,3 +3883,11 @@
   id: 8155
   time: '2025-04-11T02:15:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36385
+- author: Nox38, BurgerMoth, ArtisticRoomba
+  changes:
+  - message: Added descriptions to all .45 magnum cartridges, magazines, speed loaders,
+      and ammo boxes.
+    type: Add
+  id: 8156
+  time: '2025-04-11T04:58:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36383
