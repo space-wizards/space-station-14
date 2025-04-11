@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
@@ -68,6 +69,7 @@ public abstract partial class SharedXenoArtifactSystem
         XenoArtifactComponent artifactComponent = ent;
         XenoArtifactUnlockingComponent unlockingComponent = ent;
 
+        SoundSpecifier? soundEffect;
         if (TryGetNodeFromUnlockState(ent, out var node))
         {
             SetNodeUnlocked((ent, artifactComponent), node.Value);
@@ -76,16 +78,19 @@ public abstract partial class SharedXenoArtifactSystem
             // as an experiment - unlocking node doesn't activate it, activation is left for player to decide.
             // var activated = ActivateNode((ent, artifactComponent), node.Value, null, null, Transform(ent).Coordinates, false);
             // if (activated)
-            _audio.PlayPvs(unlockingComponent.UnlockActivationSuccessfulSound, ent.Owner);
+            soundEffect = unlockingComponent.UnlockActivationSuccessfulSound;
         }
         else
         {
-            _audio.PlayPvs(unlockingComponent.UnlockActivationFailedSound, ent.Owner);
             unlockAttemptResultMsg = "artifact-unlock-state-end-failure";
+            soundEffect = unlockingComponent.UnlockActivationFailedSound;
         }
 
         if (_net.IsServer)
+        {
             _popup.PopupEntity(Loc.GetString(unlockAttemptResultMsg), ent);
+            _audio.PlayPvs(soundEffect, ent.Owner);
+        }
 
         RemComp(ent, unlockingComponent);
         RiseUnlockingFinished(ent, node);
