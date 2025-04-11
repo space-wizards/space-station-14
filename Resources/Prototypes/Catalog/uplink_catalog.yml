@@ -2020,6 +2020,9 @@
     - Chaplain
     - Passenger
     - Psychologist
+    - Musician
+    - Librarian
+    - Lawyer
 
 - type: listing
   id: UplinkClusterBananaPeel
