@@ -14,6 +14,6 @@ store-not-account-owner = This {$store} is not bound to you!
 store-preset-name-uplink = Uplink
 store-preset-name-spellbook = Spellbook
 
-store-steal-self-popup = You press your uplink against {THE($target)}.
+store-steal-self-popup = You try to siphon the store currency from {THE($target)}.
 store-steal-success-popup = Store currency transferred successfully.
 
