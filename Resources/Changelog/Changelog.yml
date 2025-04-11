@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed doors not auto-closing correctly after being unbolted in an open
-      state.
-    type: Fix
-  id: 7650
-  time: '2024-11-25T04:26:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33524
 - author: Schrodinger71
   changes:
   - message: Fixed a bug letting players type "ghost" in the console and then see
@@ -3894,3 +3886,10 @@
   id: 8149
   time: '2025-04-10T22:22:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35890
+- author: EmoGarbage404
+  changes:
+  - message: Grinding soda cans now gives a small amount of Aluminum.
+    type: Add
+  id: 8150
+  time: '2025-04-11T00:54:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36449
