@@ -1,9 +1,0 @@
-admin-note-webhook-severity-low = Низкая
-admin-note-webhook-severity-medium = Средняя
-admin-note-webhook-severity-high = Высокая
-admin-note-desc-player = Нарушитель
-admin-note-desc-reason = Причина
-admin-note-desc-severity = Степень тяжести
-admin-note-desc-staff = Предупреждение выдал(-а)
-admin-note-embed-title = Предупреждение
-admin-note-embed-footer = раунд
