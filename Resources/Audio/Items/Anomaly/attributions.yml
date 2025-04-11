@@ -57,3 +57,12 @@
   license: "CC-BY-4.0"
   copyright: "iainmccurdy (Freesound), edited by Quantum-Cross@github"
   source: https://https://freesound.org/people/iainmccurdy/sounds/440858/
+
+- files: ["fluid_crit.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "DJT4NN3R, unfa, klankbeeld (all Freesound), slime_squish.ogg from paradise station, layered edited by Quantum-Cross@github"
+  source: https://freesound.org/people/unfa/sounds/504930/
+  # additional sources:
+  # source: https://freesound.org/people/DJT4NN3R/sounds/484158/
+  # source: https://freesound.org/people/klankbeeld/sounds/325537/
+  # source: https://github.com/ParadiseSS13/Paradise

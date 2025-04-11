@@ -48,3 +48,8 @@
   id: AnomalyIceSupercritical
   files:
   - /Audio/Items/Anomaly/ice_crit.ogg
+
+- type: soundCollection
+  id: AnomalyFluidSupercritical
+  files:
+  - /AUdio/Items/Anomaly/fluid_crit.ogg

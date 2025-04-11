@@ -845,6 +845,8 @@
     coreInertPrototype: AnomalyCoreLiquidInert
     minPulseLength: 60
     maxPulseLength: 120
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyFluidSupercritical
   - type: EntitySpawnAnomaly
     entries:
     - settings:
