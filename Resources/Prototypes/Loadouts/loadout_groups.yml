@@ -22,6 +22,7 @@
   - ClothingNeckAllyPin
   - ClothingNeckAromanticPin
   - ClothingNeckAsexualPin
+  - ClothingNeckAroacePin
   - ClothingNeckBisexualPin
   - ClothingNeckGayPin
   - ClothingNeckIntersexPin
@@ -49,6 +50,7 @@
   - TowelColorSilver
   - TowelColorWhite
   - TowelColorYellow
+  - SuperSynthesizerInstrument # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: Glasses
@@ -77,6 +79,7 @@
   - EmergencyOxygen
   - LoadoutSpeciesVoxNitrogen
 
+# nitrogen or oxygen tank, depending on what your species needs
 - type: loadoutGroup
   id: GroupEVATank
   name: loadout-group-EVA-tank
@@ -84,6 +87,14 @@
   loadouts:
   - LoadoutSpeciesEVANitrogen
   - LoadoutSpeciesEVAOxygen
+
+# vox get a nitrogen tank, other species get nothing
+- type: loadoutGroup
+  id: GroupEVATankVox
+  name: loadout-group-vox-tank
+  hidden: true
+  loadouts:
+  - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
   id: GroupPocketTankDouble
@@ -182,27 +193,27 @@
 
 # Civilian
 - type: loadoutGroup
-  id: PassengerJumpsuit
-  name: loadout-group-passenger-jumpsuit
+  id: AssistantJumpsuit
+  name: loadout-group-assistant-jumpsuit
   loadouts:
-  - GreyJumpsuit
-  - GreyJumpskirt
+  - BasicJumpsuit
+  - BasicJumpskirt
   - AncientJumpsuit
   - RainbowJumpsuit
 
 - type: loadoutGroup
-  id: PassengerFace
-  name: loadout-group-passenger-mask
+  id: AssistantFace
+  name: loadout-group-assistant-mask
   minLimit: 0
   loadouts:
-  - PassengerFace
+  - AssistantFace
 
 - type: loadoutGroup
-  id: PassengerGloves
-  name: loadout-group-passenger-gloves
+  id: AssistantGloves
+  name: loadout-group-assistant-gloves
   minLimit: 0
   loadouts:
-  - PassengerGloves
+  - AssistantGloves
 
 - type: loadoutGroup
   id: CommonBackpack
@@ -213,24 +224,26 @@
   - CommonDuffel
 
 - type: loadoutGroup
-  id: PassengerNeck
-  name: loadout-group-passenger-neck
+  id: AssistantNeck
+  name: loadout-group-assistant-neck
   minLimit: 0
   loadouts:
   - Mantle
 
 - type: loadoutGroup
-  id: PassengerOuterClothing
-  name: loadout-group-passenger-outerclothing
+  id: AssistantOuterClothing
+  name: loadout-group-assistant-outerclothing
   minLimit: 0
   loadouts:
-  - PassengerWintercoat
+  - AssistantWintercoat
 
 - type: loadoutGroup
-  id: PassengerShoes
-  name: loadout-group-passenger-shoes
+  id: AssistantShoes
+  name: loadout-group-assistant-shoes
   loadouts:
   - BlackShoes
+  - BrownShoes
+  - WhiteShoes
   - WinterBoots
 
 - type: loadoutGroup
@@ -1074,6 +1087,9 @@
   minLimit: 0
   loadouts:
   - SecurityHelmet
+  - SecurityHelmetPlate
+  - SecurityHelmetStabproof
+  - SecurityHelmetHeatAbsorbent
   - SecurityBeret
   - SecurityHat
   - TrooperHat
@@ -1113,6 +1129,7 @@
   - ArmorVestSlim
   - ArmorVestPlate
   - ArmorVestStab
+  - ArmorVestHeatAbsorb
   - SecurityOfficerWintercoat
 
 - type: loadoutGroup

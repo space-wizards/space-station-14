@@ -52,6 +52,7 @@
   - Abyss
   - AllHostile
   - Wizard
+  - Dragon
 
 - type: npcFaction
   id: SimpleHostile
@@ -69,6 +70,7 @@
   - Changeling
   - AllHostile
   - Wizard
+  - Dragon
 
 - type: npcFaction
   id: SimpleNeutral
@@ -105,6 +107,7 @@
   - Changeling
   - AllHostile
   - Wizard
+  - Dragon
 
 - type: npcFaction
   id: Zombie
@@ -123,6 +126,7 @@
   - Changeling
   - AllHostile
   - Wizard
+  - Dragon
 
 - type: npcFaction
   id: Revolutionary

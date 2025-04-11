@@ -97,10 +97,12 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.90
-        Slash: 0.90
-        Piercing: 0.60
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.55
         Heat: 0.85
+  - type: ExplosionResistance
+    damageCoefficient: 0.85
 
 - type: entity
   parent: [ClothingOuterArmorBase, BaseSecurityContraband]
@@ -117,7 +119,27 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.60
-        Slash: 0.60
-        Piercing: 0.90
-        Heat: 0.95
+        Blunt: 0.55
+        Slash: 0.55
+        Piercing: 0.85
+        Heat: 0.85
+
+- type: entity
+  parent: [ClothingOuterArmorBase, BaseSecurityContraband]
+  id: ClothingOuterArmorHeatAbsorb
+  name: heat absorbent vest
+  description: Advanced vest designed to absorb heat rather than reflect it, but still has some reflective properties itself. Not good against bullets or blunt impacts due to the fragile material.
+  components:
+  - type: Pierceable
+    level: Metal
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Armor/heatabsorbent.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Armor/heatabsorbent.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Piercing: 0.85
+        Heat: 0.55

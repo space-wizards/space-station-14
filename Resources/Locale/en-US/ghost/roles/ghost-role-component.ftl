@@ -215,6 +215,9 @@ ghost-role-information-BreadDog-description = You are the chef's favorite child.
 ghost-role-information-space-ninja-name = Space Ninja
 ghost-role-information-space-ninja-description = Use stealth and deception to sabotage the station.
 
+ghost-role-information-paradox-clone-name = Paradox Clone
+ghost-role-information-paradox-clone-description = A freak space-time anomaly has teleported you into another reality! Now you have to find your counterpart and kill and replace them.
+
 ghost-role-information-syndicate-reinforcement-name = Syndicate Agent
 ghost-role-information-syndicate-reinforcement-description = Someone needs reinforcements. You, the first person the syndicate could find, will help them.
 ghost-role-information-syndicate-reinforcement-rules = You are a [color=red][bold]Team Antagonist[/bold][/color] with the agent who summoned you.
@@ -289,7 +292,7 @@ ghost-role-information-disaster-victim-name = Disaster Victim
 ghost-role-information-disaster-victim-description = You were rescued in an escape pod from another station that suffered a terrible fate. Perhaps you will be found and rescued.
 
 ghost-role-information-syndie-disaster-victim-name = Syndicate Disaster Victim
-ghost-role-information-syndie-disaster-victim-description = You're a regular passenger from a syndicate station. Unfortunately, an evacuation pod has thrown you into an enemy sector...
+ghost-role-information-syndie-disaster-victim-description = You're a regular assistant from a syndicate station. Unfortunately, an evacuation pod has thrown you into an enemy sector...
 
 ghost-role-information-syndie-soldier-name = Syndicate Soldier
 ghost-role-information-syndie-soldier-description = You are a soldier from the Syndicate.

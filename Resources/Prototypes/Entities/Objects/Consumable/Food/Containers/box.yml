@@ -512,7 +512,7 @@
         orGroup: GiftPool
       - id: ToyNuke
         orGroup: GiftPool
-      - id: ToyFigurinePassenger
+      - id: ToyFigurineAssistant
         orGroup: GiftPool
       - id: ToyGriffin
         orGroup: GiftPool
@@ -712,7 +712,7 @@
         orGroup: GiftPool
       - id: ToyNuke
         orGroup: GiftPool
-      - id: ToyFigurinePassenger
+      - id: ToyFigurineAssistant
         orGroup: GiftPool
       - id: ToyGriffin
         orGroup: GiftPool

@@ -213,7 +213,7 @@ namespace Content.Client.Verbs
             {
                 // maybe send an informative pop-up message.
                 if (!string.IsNullOrWhiteSpace(verb.Message))
-                    _popupSystem.PopupEntity(verb.Message, user);
+                    _popupSystem.PopupEntity(FormattedMessage.RemoveMarkupOrThrow(verb.Message), user);
 
                 return;
             }

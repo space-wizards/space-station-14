@@ -29,6 +29,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBasic
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Atmospherics Hardsuit
 - type: entity
@@ -67,6 +72,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitAtmos
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Engineering Hardsuit
 - type: entity
@@ -101,6 +111,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Spationaut Hardsuit
 - type: entity
@@ -137,6 +152,7 @@
     - Hardsuit
     - WhitelistChameleon
     - HardsuitSpatio
+    - CorgiWearable
 
 #Salvage Hardsuit
 - type: entity
@@ -170,6 +186,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Goliath Hardsuit
 - type: entity
@@ -205,6 +226,11 @@
   - type: Construction
     graph: HardsuitGoliath
     node: hardsuitGoliath
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Maxim Hardsuit
 - type: entity
@@ -398,6 +424,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCap
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Chief Engineer's Hardsuit
 - type: entity
@@ -434,6 +465,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Chief Medical Officer's Hardsuit
 - type: entity
@@ -461,6 +497,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMedical
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Research Director's Hardsuit
 - type: entity
@@ -643,6 +684,7 @@
     - MonkeyWearable
     - Hardsuit
     - WhitelistChameleon
+    - CorgiWearable
 
 # Syndicate Medic Hardsuit
 - type: entity
@@ -704,6 +746,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Syndicate Commander Hardsuit
 - type: entity
@@ -810,6 +857,11 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWizard
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - Hardsuit
+    - WhitelistChameleon
 
 #Ling Space Suit
 - type: entity

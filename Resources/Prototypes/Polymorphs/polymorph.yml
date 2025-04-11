@@ -22,6 +22,27 @@
     revertOnDeath: true
 
 - type: polymorph
+  id: CorgiMorph
+  configuration:
+    entity: SmartCorgi
+    forced: false
+    inventory: Drop
+    transferName: true
+    revertOnCrit: false
+    revertOnDeath: false
+    allowRepeatedMorphs: false
+- type: polymorph
+  id: PermanentCorgiMorph
+  configuration:
+    entity: SmartCorgi
+    forced: true
+    inventory: Drop
+    transferName: true
+    revertOnCrit: false
+    revertOnDeath: false
+    allowRepeatedMorphs: false
+
+- type: polymorph
   id: WizardForcedCarp
   configuration:
     entity: MobCarpMagic
@@ -31,6 +52,10 @@
     transferDamage: true
     revertOnCrit: false
     revertOnDeath: true
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
 
 - type: polymorph
   id: WizardForcedSkeleton
@@ -42,6 +67,10 @@
     transferDamage: true
     revertOnCrit: false
     revertOnDeath: false
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
 
 - type: polymorph
   id: WizardForcedMonkey
@@ -53,6 +82,10 @@
     transferDamage: true
     revertOnCrit: false
     revertOnDeath: true
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
 
 - type: polymorph
   id: WizardWallDoor
@@ -64,6 +97,10 @@
     transferDamage: false
     revertOnCrit: false
     revertOnDeath: false
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
 
 - type: polymorph
   id: WizardForcedCluwne
@@ -73,7 +110,11 @@
     transferName: true
     transferHumanoidAppearance: true
     inventory: Transfer
-    revertOnDeath: false
+    revertOnDeath: true
+    polymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
+    exitPolymorphSound: !type:SoundPathSpecifier
+      path: /Audio/Magic/forcewall.ogg
 
 - type: polymorph
   id: ForcedCluwneBeast

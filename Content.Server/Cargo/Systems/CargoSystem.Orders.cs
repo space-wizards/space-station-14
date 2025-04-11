@@ -62,7 +62,7 @@ namespace Content.Server.Cargo.Systems
                 return;
 
             _audio.PlayPvs(component.ConfirmSound, uid);
-            UpdateBankAccount(stationUid.Value, bank, (int) price);
+            UpdateBankAccount((stationUid.Value, bank), (int) price);
             QueueDel(args.Used);
             args.Handled = true;
         }
@@ -103,7 +103,7 @@ namespace Content.Server.Cargo.Systems
                 while (stationQuery.MoveNext(out var uid, out var bank))
                 {
                     var balanceToAdd = bank.IncreasePerSecond * Delay;
-                    UpdateBankAccount(uid, bank, balanceToAdd);
+                    UpdateBankAccount((uid, bank), balanceToAdd);
                 }
 
                 var query = EntityQueryEnumerator<CargoOrderConsoleComponent>();
@@ -229,7 +229,7 @@ namespace Content.Server.Cargo.Systems
                 $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bank.Balance}");
 
             orderDatabase.Orders.Remove(order);
-            UpdateBankAccount(station.Value, bank, -cost);
+            UpdateBankAccount((station.Value, bank), -cost);
             UpdateOrders(station.Value);
         }
 

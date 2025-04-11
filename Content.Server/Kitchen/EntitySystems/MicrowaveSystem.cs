@@ -537,6 +537,9 @@ namespace Content.Server.Kitchen.EntitySystems
             var solidsDict = new Dictionary<string, int>();
             var reagentDict = new Dictionary<string, FixedPoint2>();
             var malfunctioning = false;
+            
+            int notTrueTypeCount = 0;
+            
             // TODO use lists of Reagent quantities instead of reagent prototype ids.
             foreach (var item in component.Storage.ContainedEntities.ToArray())
             {
@@ -639,6 +642,9 @@ namespace Content.Server.Kitchen.EntitySystems
                 //can't be a multiple of this recipe
                 return (recipe, 0);
             }
+            
+            if (recipe.DeviceType != component.DeviceType)
+                return (recipe, 0);
 
             foreach (var solid in recipe.IngredientsSolids)
             {

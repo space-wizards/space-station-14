@@ -3,6 +3,7 @@ cuffable-component-cannot-remove-cuffs-too-far-message = You are too far away to
 
 cuffable-component-start-uncuffing-self = You start to painfully wriggle out of your restraints.
 cuffable-component-start-uncuffing-observer = {$user} starts unrestraining {$target}!
+cuffable-component-start-uncuffing-self-observer = {$user} starts unrestraining {REFLEXIVE($target)}!
 cuffable-component-start-uncuffing-target-message = You start unrestraining {$targetName}.
 cuffable-component-start-uncuffing-by-other-message = {$otherName} starts unrestraining you!
 

@@ -376,10 +376,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             // If they're firing an existing clip then don't play anything.
             if (shots > 0)
             {
-                if (ev.Reason != null && Timing.IsFirstTimePredicted)
-                {
-                    PopupSystem.PopupCursor(ev.Reason);
-                }
+                PopupSystem.PopupCursor(ev.Reason ?? Loc.GetString("gun-magazine-fired-empty"));
 
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
                 // May cause prediction issues? Needs more tweaking
@@ -390,6 +387,9 @@ public abstract partial class SharedGunSystem : EntitySystem
 
             return;
         }
+
+        var NonEmptyGunShotEvent = new OnNonEmptyGunShotEvent(user, ev.Ammo);
+        RaiseLocalEvent(gunUid, ref NonEmptyGunShotEvent);
 
         // Handle burstfire
         if (gun.SelectedMode == SelectiveFire.Burst)
@@ -679,6 +679,9 @@ public record struct AttemptShootEvent(EntityUid User, string? Message, bool Can
 /// <param name="User">The user that fired this gun.</param>
 [ByRefEvent]
 public record struct GunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
+
+[ByRefEvent]
+public record struct OnNonEmptyGunShotEvent(EntityUid User, List<(EntityUid? Uid, IShootable Shootable)> Ammo);
 
 public enum EffectLayers : byte
 {

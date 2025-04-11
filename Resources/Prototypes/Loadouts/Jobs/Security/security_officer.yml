@@ -30,6 +30,21 @@
     head: ClothingHeadHelmetBasic
 
 - type: loadout
+  id: SecurityHelmetPlate
+  equipment:
+    head: ClothingHeadHelmetPlate
+
+- type: loadout
+  id: SecurityHelmetStabproof
+  equipment:
+    head: ClothingHeadHelmetStabproof
+
+- type: loadout
+  id: SecurityHelmetHeatAbsorbent
+  equipment:
+    head: ClothingHeadHelmetHeatAbsorbent
+
+- type: loadout
   id: SecurityHat
   equipment:
     head: ClothingHeadHatSecsoft
@@ -133,6 +148,11 @@
   id: ArmorVestStab
   equipment:
     outerClothing: ClothingOuterArmorStab
+
+- type: loadout
+  id: ArmorVestHeatAbsorb
+  equipment:
+    outerClothing: ClothingOuterArmorHeatAbsorb
 
 - type: loadout
   id: SecurityOfficerWintercoat

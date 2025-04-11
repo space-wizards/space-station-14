@@ -49,7 +49,7 @@
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 5, 7 ]
+            SecurityOfficer: [ 10, 13 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 4, 4 ]
             Brigmedic: [ 1, 1 ]
@@ -59,7 +59,7 @@
             MiningSpecialist: [ 3, 3 ]
             CargoTechnician: [ 5, 7 ]
             #civilian
-            Passenger: [ -1, -1 ]
+            Assistant: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 2, 2 ]

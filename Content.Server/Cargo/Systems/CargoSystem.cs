@@ -76,19 +76,23 @@ public sealed partial class CargoSystem : SharedCargoSystem
     }
 
     [PublicAPI]
-    public void UpdateBankAccount(EntityUid uid, StationBankAccountComponent component, int balanceAdded)
+    public void UpdateBankAccount(Entity<StationBankAccountComponent?> ent, int balanceAdded)
     {
-        component.Balance += balanceAdded;
-        var query = EntityQueryEnumerator<BankClientComponent, TransformComponent>();
+        if (!Resolve(ent, ref ent.Comp))
+            return;
 
-        var ev = new BankBalanceUpdatedEvent(uid, component.Balance);
+        ent.Comp.Balance += balanceAdded;
+
+        var ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Balance);
+
+        var query = EntityQueryEnumerator<BankClientComponent, TransformComponent>();
         while (query.MoveNext(out var client, out var comp, out var xform))
         {
             var station = _station.GetOwningStation(client, xform);
-            if (station != uid)
+            if (station != ent)
                 continue;
 
-            comp.Balance = component.Balance;
+            comp.Balance = ent.Comp.Balance;
             Dirty(client, comp);
             RaiseLocalEvent(client, ref ev);
         }

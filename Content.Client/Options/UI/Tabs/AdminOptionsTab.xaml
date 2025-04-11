@@ -4,7 +4,20 @@
     <BoxContainer Orientation="Vertical">
         <ScrollContainer VerticalExpand="True" HScrollEnabled="False">
             <BoxContainer Orientation="Vertical" Margin="8">
+                <Label Text="{Loc 'ui-options-admin-player-panel'}"
+                       StyleClasses="LabelKeyText"/>
+                <CheckBox Name="PlayerlistSeparateSymbolsCheckBox" Text="{Loc 'ui-options-admin-playerlist-separate-symbols'}" />
+                <CheckBox Name="PlayerlistCharacterColorCheckBox" Text="{Loc 'ui-options-admin-playerlist-character-color'}" />
+                <CheckBox Name="PlayerlistRoleTypeColorCheckBox" Text="{Loc 'ui-options-admin-playerlist-roletype-color'}" />
+                <Label Text="{Loc 'ui-options-admin-overlay-title'}"
+                       StyleClasses="LabelKeyText"/>
                 <CheckBox Name="EnableClassicOverlayCheckBox" Text="{Loc 'ui-options-enable-classic-overlay'}" />
+                <CheckBox Name="EnableOverlaySymbolsCheckBox" Text="{Loc 'ui-options-enable-overlay-symbols'}" />
+                <CheckBox Name="EnableOverlayPlaytimeCheckBox" Text="{Loc 'ui-options-enable-overlay-playtime'}" />
+                <CheckBox Name="EnableOverlayStartingJobCheckBox" Text="{Loc 'ui-options-enable-overlay-starting-job'}" />
+                <ui:OptionSlider Name="OverlayMergeDistanceSlider"  Title="{Loc 'ui-options-overlay-merge-distance'}"/>
+                <ui:OptionSlider Name="OverlayGhostFadeSlider"  Title="{Loc 'ui-options-overlay-ghost-fade-distance'}"/>
+                <ui:OptionSlider Name="OverlayGhostHideSlider"  Title="{Loc 'ui-options-overlay-ghost-hide-distance'}"/>
             </BoxContainer>
         </ScrollContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />

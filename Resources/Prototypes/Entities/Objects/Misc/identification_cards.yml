@@ -30,18 +30,18 @@
 
 - type: entity
   parent: IDCardStandard
-  id: PassengerIDCard
-  name: passenger ID card
+  id: AssistantIDCard
+  name: assistant ID card
   components:
   - type: Sprite
     layers:
     - state: default
-    - state: idpassenger
+    - state: idassistant
   - type: PresetIdCard
-    job: Passenger
+    job: Assistant
 
 - type: entity
-  parent: PassengerIDCard
+  parent: AssistantIDCard
   id: TechnicalAssistantIDCard
   name: technical assistant ID card
   components:
@@ -53,7 +53,7 @@
     - state: idintern-tech
 
 - type: entity
-  parent: PassengerIDCard
+  parent: AssistantIDCard
   id: MedicalInternIDCard
   name: medical intern ID card
   components:
@@ -65,7 +65,7 @@
     - state: idintern-med
 
 - type: entity
-  parent: PassengerIDCard
+  parent: AssistantIDCard
   id: ResearchAssistantIDCard
   name: research assistant ID card
   components:
@@ -77,7 +77,7 @@
     - state: idintern-sci
 
 - type: entity
-  parent: PassengerIDCard
+  parent: AssistantIDCard
   id: SecurityCadetIDCard
   name: security cadet ID card
   components:
@@ -89,7 +89,7 @@
     - state: idintern-cadet
 
 - type: entity
-  parent: PassengerIDCard
+  parent: AssistantIDCard
   id: ServiceWorkerIDCard
   name: service worker ID card
   components:
@@ -569,13 +569,13 @@
     job: DeathSquad
 
 - type: entity
-  name: passenger ID card
+  name: assistant ID card
   parent: IDCardStandard
   id: AgentIDCard
   suffix: Agent
   components:
   - type: PresetIdCard
-    job: Passenger
+    job: Assistant
   - type: Access
     tags:
     - Maintenance
@@ -583,7 +583,7 @@
   - type: Sprite
     layers:
     - state: default
-    - state: idpassenger
+    - state: idassistant
   - type: AgentIDCard
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
@@ -593,7 +593,7 @@
     - DoorBumpOpener
   - type: ChameleonClothing
     slot: [idcard]
-    default: PassengerIDCard
+    default: AssistantIDCard
     requireTag: WhitelistChameleonIdCard
   - type: UserInterface
     interfaces:
@@ -603,7 +603,7 @@
         type: ChameleonBoundUserInterface
 
 - type: entity
-  name: passenger ID card
+  name: assistant ID card
   parent: AgentIDCard
   id: NukieAgentIDCard
   suffix: Nukie
@@ -830,6 +830,7 @@
   - type: Access
     groups:
     - AllAccess
+    - Silicon
     tags:
     - CentralCommand
     - NuclearOperative

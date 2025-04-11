@@ -153,5 +153,5 @@
     spawned:
     - id: FoodMeatBear
       amount: 6
-    - id: OmnizineChemistryBottle
+    - id: ChemistryBottleOmnizine
       amount: 1

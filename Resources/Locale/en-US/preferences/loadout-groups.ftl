@@ -15,6 +15,7 @@ loadout-group-survival-syndicate = Github is forcing me to write text that is li
 loadout-group-breath-tool = Species-dependent breath tools
 loadout-group-tank-harness = Species-specific survival equipment
 loadout-group-EVA-tank = Species-specific gas tank
+loadout-group-vox-tank = Vox-specific gas tank
 loadout-group-pocket-tank-double = Species-specific double emergency tank in pocket
 loadout-group-survival-mime = Mime Survival Box
 
@@ -33,12 +34,12 @@ loadout-group-hop-backpack = Head of Personnel backpack
 loadout-group-hop-outerclothing = Head of Personnel outer clothing
 
 # Civilian
-loadout-group-passenger-jumpsuit = Passenger jumpsuit
-loadout-group-passenger-mask = Passenger mask
-loadout-group-passenger-gloves = Passenger gloves
-loadout-group-passenger-outerclothing = Passenger outer clothing
-loadout-group-passenger-shoes = Passenger shoes
-loadout-group-passenger-neck = Passenger neck
+loadout-group-assistant-jumpsuit = Assistant jumpsuit
+loadout-group-assistant-mask = Assistant mask
+loadout-group-assistant-gloves = Assistant gloves
+loadout-group-assistant-outerclothing = Assistant outer clothing
+loadout-group-assistant-shoes = Assistant shoes
+loadout-group-assistant-neck = Assistant neck
 
 loadout-group-bartender-head = Bartender head
 loadout-group-bartender-jumpsuit = Bartender jumpsuit

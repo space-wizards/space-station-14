@@ -5,34 +5,40 @@
   id: Neutral
   name: role-type-crew-aligned-name
   color: '#eeeeee'
+  symbol: "🗡" # Should never be antag, but just in case.
 
 - type: roleType
   id: SoloAntagonist
   name: role-type-solo-antagonist-name
   color: '#d82000'
+  symbol: "🗡"
 
 - type: roleType
   id: TeamAntagonist
   name: role-type-team-antagonist-name
   color: '#d82000'
+  symbol: "⚔"
 
 - type: roleType
   id: FreeAgent
   name: role-type-free-agent-name
   color: '#ffff00'
+  symbol: "☯"
 
 - type: roleType
   id: Familiar
   name: role-type-familiar-name
   color: '#6495ed'
+  symbol: "🗡" # Should never be antag, but just in case.
 
 - type: roleType
   id: Silicon
   name: role-type-silicon-name
   color: '#6495ed'
+  symbol: "🗡" # Should never be antag, but just in case.
 
 - type: roleType
   id: SiliconAntagonist
   name: role-type-silicon-antagonist-name
   color: '#c832e6'
-
+  symbol: "⛞"
