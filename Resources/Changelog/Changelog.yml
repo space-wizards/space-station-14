@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: slarticodefast
   changes:
-  - message: Added the greytide virus station event. It will bolt open all doors in
-      a few randomly chosen departments and unlock lockers with the corresponding
-      access.
-    type: Add
-  id: 7655
-  time: '2024-11-26T13:50:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33547
-- author: slarticodefast
-  changes:
   - message: Fixed space ambient music not playing.
     type: Fix
   id: 7656
@@ -3891,3 +3882,11 @@
   id: 8154
   time: '2025-04-11T02:10:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36428
+- author: Nox38, BurgerMoth, ArtisticRoomba
+  changes:
+  - message: Added descriptions for all .25 caseless cartridges, magazines, and ammo
+      boxes.
+    type: Add
+  id: 8155
+  time: '2025-04-11T02:15:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36385
