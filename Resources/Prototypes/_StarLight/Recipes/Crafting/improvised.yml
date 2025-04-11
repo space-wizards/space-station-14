@@ -10,3 +10,42 @@
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun.rsi
     state: icon
+
+- type: construction
+  name: makeshift pistol
+  id: WeaponPistolMakeshiftCrafted
+  graph: MakeshiftPistolCraftedGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: A hastily built pistol, looks horrible and is liable to explode in your face.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/makeshift_pistol_crafted.rsi
+    state: icon
+
+- type: construction
+  name: improvised pistol
+  id: WeaponPistolImprovised
+  graph: ImprovisedPistolGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: The next best thing in improvised pistols, comes with an internal magazine of five rounds.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/improvised_pistol.rsi
+    state: icon
+
+- type: construction
+  name: forged pistol
+  id: WeaponPistolForged
+  graph: ForgedPistolGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: A reliable, high quality firearm. Takes six-round clipazines, and needs welding supplies to make.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/forged_pistol.rsi
+    state: icon

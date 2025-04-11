@@ -8,15 +8,36 @@
     size: Normal
     shape:
     - 0,0,4,0
-    - type: Sprite
-      sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun.rsi
-      state: ishotgunstep2
-    - type: ToolRefinable
-      refineResult:
-      - id: WeaponShotgunForged
-    - type: Tag
-      tags:
-      - Metal
-    - type: Construction
-      graph: ForgedShotgunGraph
-      node: shotgun
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun.rsi
+    state: ishotgunstep2
+  - type: ToolRefinable
+    refineResult:
+    - id: WeaponShotgunForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ForgedShotgunGraph
+    node: shotgun
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedPistolForged
+  name: forged pistol parts
+  description: Some assembly may be reqiured. Needs welding.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/forged_pistol.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: WeaponPistolForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ForgedPistolGraph
+    node: shotgun

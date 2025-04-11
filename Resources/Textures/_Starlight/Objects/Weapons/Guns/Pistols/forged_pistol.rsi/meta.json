@@ -20,6 +20,9 @@
             "name": "mag-0"
         },
         {
+            "name": "unfinished"
+        },
+        {
             "name": "inhand-left",
             "directions": 4
         },

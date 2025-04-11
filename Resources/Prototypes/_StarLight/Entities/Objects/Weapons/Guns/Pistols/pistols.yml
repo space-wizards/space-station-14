@@ -295,6 +295,9 @@
         whitelist:
           tags:
             - CartridgePistol
+  - type: Construction
+    graph: MakeshiftPistolCraftedGraph
+    node: shotgun
 
 - type: entity
   name: improvised pistol
@@ -327,6 +330,9 @@
       - CartridgePistol
   - type: Item
     size: Small
+  - type: Construction
+    graph: ImprovisedPistolGraph
+    node: shotgun
 
 - type: entity
   name: forged pistol
@@ -345,7 +351,27 @@
     sprite: _Starlight/Objects/Weapons/Guns/Pistols/forged_pistol.rsi
   - type: Gun
     fireRate: 4
+    minAngle: 1
+    maxAngle: 20
+    angleIncrease: 8
+    angleDecay: 9
     availableModes:
     - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolSP
+        whitelist:
+          tags:
+            - MagazinePistol
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistolSP
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
