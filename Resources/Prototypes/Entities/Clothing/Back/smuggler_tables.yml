@@ -158,12 +158,8 @@
     - id: CigCartonGreen
     - id: CigCartonBlack
     - id: CigarCase
-      amount: !type:RangeNumberSelector
-        range: 1, 2
     - id: CigarGoldCase
       weight: 0.25
-      amount: !type:RangeNumberSelector
-        range: 1, 2
 
 - type: entityTable #5x small
   id: RandomSatchelPartyTable
@@ -486,7 +482,7 @@
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: RandomSatchelAlcoholTable #3x medium
+      tableId: RandomSatchelAlcoholTable #2x medium
     - !type:NestedSelector
       tableId: RandomSatchelInstrumentTable #1x Medium
     - !type:NestedSelector
@@ -494,7 +490,7 @@
     - !type:NestedSelector
       tableId: RandomSatchelMysteriesTable #1x Medium
 
-- type: entityTable #3x medium
+- type: entityTable #2x medium
   id: RandomSatchelAlcoholTable
   table: !type:GroupSelector
     children:
@@ -502,16 +498,16 @@
       weight: 5
     - id: DrinkCognacBottleFull
       amount: !type:RangeNumberSelector
-        range: 1, 3
+        range: 1, 2
     - id: DrinkGildlagerBottleFull
       amount: !type:RangeNumberSelector
-        range: 1, 3
+        range: 1, 2
     - id: DrinkPatronBottleFull
       amount: !type:RangeNumberSelector
-        range: 1, 3
+        range: 1, 2
     - id: DrinkRumBottleFull
       amount: !type:RangeNumberSelector
-        range: 1, 3
+        range: 1, 2
 
 - type: entityTable #1x Medium
   id: RandomSatchelInstrumentTable
