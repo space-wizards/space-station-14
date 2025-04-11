@@ -149,6 +149,20 @@ namespace Content.Server.Popups
             }
         }
 
+        public override void PopupPredicted(string? message, EntityUid uid, EntityUid? recipient, Filter filter, bool recordReplay, PopupType type = PopupType.Small)
+        {
+            if (message == null)
+                return;
+
+            if (recipient != null)
+            {
+                // Don't send to recipient, since they predicted it locally
+                filter = filter.RemovePlayerByAttachedEntity(recipient.Value);
+            }
+
+            RaiseNetworkEvent(new PopupEntityEvent(message, type, GetNetEntity(uid)), filter, recordReplay);
+        }
+
         public override void PopupPredicted(string? recipientMessage, string? othersMessage, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small)
         {
             PopupPredicted(othersMessage, uid, recipient, type);
