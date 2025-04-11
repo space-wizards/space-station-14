@@ -13,3 +13,8 @@
   files:
   - /Audio/Items/Anomaly/tech_crit.ogg
   - /Audio/Items/Anomaly/tech_crit2.ogg
+
+- type: soundCollection
+  id: AnomalyPresentSupercritical
+  files:
+  - /Audio/Items/Anomaly/present_crit.ogg

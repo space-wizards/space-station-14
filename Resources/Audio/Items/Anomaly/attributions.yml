@@ -19,3 +19,8 @@
   license: Custom
   copyright: "unfa (Freesound), edited by Quantum-cross@github"
   source: https://pixabay.com/sound-effects/gsm-signal-91070/
+
+- files: ["present_crit.ogg"]
+  license: "CC0-1.0"
+  copyright: "richwise (Freesound), edited by Quantum-cross@github"
+  source: https://freesound.org/people/richwise/sounds/414374/

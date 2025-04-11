@@ -1068,6 +1068,8 @@
     coreInertPrototype: AnomalyCoreSantaInert
     minPulseLength: 60
     maxPulseLength: 120
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyPresentSupercritical
   - type: EntitySpawnAnomaly
     entries:
     - settings:
