@@ -16,6 +16,9 @@
   id: AirSensor
 
 - type: Tag
+  id: AllowBiomeLoading # Entities with this tag will load terrain, even if a ghost.
+
+- type: Tag
   id: AllowGhostShownByEvent
 
 - type: Tag
@@ -1027,6 +1030,9 @@
   id: Powerdrill
 
 - type: Tag
+  id: PreventAccessLogging
+
+- type: Tag
   id: PrisonUniform
 
 - type: Tag
@@ -1287,10 +1293,10 @@
 
 - type: Tag
   id: Truncheon
-  
+
 - type: Tag
   id: TurretCompatibleWeapon # Used in the construction of sentry turrets
-  
+
 - type: Tag
   id: TurretControlElectronics # Used in the construction of sentry turret control panels
 
