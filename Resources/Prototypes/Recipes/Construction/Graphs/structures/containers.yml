@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: ShippingContainer
+  start: start
+  graph:
+  - node: start
+  - node: container
+    edges:
+    - to: start
+      steps:
+      - tool: Welding
+        doAfter: 15
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel
+        amount: 30
+      - !type:DeleteEntity
