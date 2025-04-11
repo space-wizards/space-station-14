@@ -49,4 +49,7 @@ public sealed partial class DismantleOnShootItem
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public Angle LaunchAngle = Angle.FromDegrees(0);
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public Angle AngleRandomness = Angle.FromDegrees(5);
 }

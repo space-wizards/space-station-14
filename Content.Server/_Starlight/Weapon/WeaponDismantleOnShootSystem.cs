@@ -67,24 +67,32 @@ public sealed partial class WeaponDismantleOnShootSystem : SharedWeaponDismantle
         var random = IoCManager.Resolve<IRobustRandom>();
         foreach (var item in ent.Comp.items)
         {
-            //roll to see if we destroy the item or not
-            if (!random.Prob(item.SpawnProbability))
-                continue;
+            for (var i = 0; i < item.Amount; i++)
+            {
+                //roll to see if we destroy the item or not
+                if (!random.Prob(item.SpawnProbability))
+                    continue;
 
-            //get the item entity
-            var itemEntity = Spawn(item.PrototypeId, userPosition);
+                //get the item entity
+                var itemEntity = Spawn(item.PrototypeId, userPosition);
 
-            Vector2 direction = toCoordinates.Value.Position;
-            //normalize it
-            direction = Vector2.Normalize(direction);
-            //multiply it by the distance
-            direction *= ent.Comp.DismantleDistance;
-            //rotate it by the angle
-            direction = item.LaunchAngle.RotateVec(direction);
+                Vector2 direction = toCoordinates.Value.Position;
+                //normalize it
+                direction = Vector2.Normalize(direction);
+                //multiply it by the distance
+                direction *= ent.Comp.DismantleDistance;
+                //rotate it by the angle
+                direction = item.LaunchAngle.RotateVec(direction);
 
-            var throwDirection = new EntityCoordinates(args.Shooter.Value, direction);
+                //roll for random angle modifier
+                double randomAngle = random.NextDouble(-item.AngleRandomness.Degrees, item.AngleRandomness.Degrees);
+                //rotate it by the random angle
+                direction = Angle.FromDegrees(randomAngle).RotateVec(direction);
 
-            _throwing.TryThrow(itemEntity, throwDirection, ent.Comp.DismantleDistance, compensateFriction: true);
+                var throwDirection = new EntityCoordinates(args.Shooter.Value, direction);
+
+                _throwing.TryThrow(itemEntity, throwDirection, ent.Comp.DismantleDistance, compensateFriction: true);
+            }
         }
 
         //now we need to destroy the gun
