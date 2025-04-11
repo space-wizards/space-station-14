@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Minemoder
-  changes:
-  - message: The shark plushie now goes rawr when hitting something or being thrown.
-    type: Tweak
-  id: 7652
-  time: '2024-11-25T12:23:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33540
 - author: red15
   changes:
   - message: Vending machine lights turns off when broken.
@@ -3892,3 +3885,10 @@
   id: 8151
   time: '2025-04-11T00:57:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36446
+- author: Nukesthestation
+  changes:
+  - message: Zombies /suicideing return to an ai state
+    type: Tweak
+  id: 8152
+  time: '2025-04-11T01:12:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36453
