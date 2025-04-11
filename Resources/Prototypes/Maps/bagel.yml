@@ -17,7 +17,7 @@
           emergencyShuttlePath: /Maps/Shuttles/emergency_lox.yml
         - type: StationJobs
           availableJobs: # 60 jobs total w/o latejoins & interns, 77 jobs total w/ latejoins & interns
-            #command
+            #command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             HeadOfSecurity: [ 1, 1 ]
@@ -45,7 +45,7 @@
             MedicalIntern: [ 4, 4 ] #intern, not counted
             #science (5)
             Scientist: [ 5, 5 ]
-            ResearchAssistant: [ 4, 4 ]
+            ResearchAssistant: [ 4, 4 ] #intern, not counted
             #security (10)
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 6, 6 ]
