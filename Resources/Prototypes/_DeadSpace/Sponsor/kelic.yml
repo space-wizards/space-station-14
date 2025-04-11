@@ -1,0 +1,228 @@
+- type: sponsorLoadout
+  id: Kelic
+  entity: ClothingBackpackKelic
+  sponsorOnly: true
+  
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackKelic
+  name: потрёпанная сумка
+  description: Компактная, износостойкая сумка, специально созданная для скафандра MS-06. 
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/backpack.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Kelic/backpack.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,15,5
+  - type: StorageFill
+    contents:
+      - id: ClothingNeckKelic 
+      - id: ClothingOuterHardsuitKelic 
+      - id: JetpackVoidFilledKelic 
+      - id: ClothingBeltKelic 
+      - id: ClothingShoesBootsMagKelic
+      - id: ClothingHandsGlovesCombatKelic
+      - id: PaperLawKelic
+      - id: ClothingUniformJumpsuitKelic
+      - id: ClothingEyesGlassesKelic
+      - id: ClothingMaskGasKelic
+      - id: MedkitFilled
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Belt
+- type: entity
+  parent: ClothingBeltChiefEngineer
+  id: ClothingBeltKelic
+  name: пояс исследователя
+  description: Универсальный пояс с множеством карманов, специально созданный для длительных путешествий.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/belt.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Kelic/belt.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+      
+# Neck
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckKelic
+  name: старая потрепанная накидка
+  description: Старая потрепанная накидка на скафандр, на выцветшем ярлыке написано, "комплектация к MS-06".
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/cloak.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitAtmos
+  id: ClothingOuterHardsuitKelic
+  name: MS-06
+  description: Старая разработка не вышедшая в массовое производство. Теперь личная вещь, скорее всего выданная пользователю за какие-то заслуги перед командованием.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/hardsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Kelic/hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitKelic
+  - type: Item
+    size: Huge
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.6
+        Heat: 0.7
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+  - type: HardsuitIdentification
+    nonlethal: true
+  - type: HideLayerClothing
+    slots:
+    - Tail
+    hideOnToggle: true
+
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitKelic
+  categories: [ HideSpawnMenu ]
+  name: шлем MS-06
+  description: Старая разработка не вышедшая в массовое производство. Теперь личная вещь, скорее всего выданная пользователю за какие-то заслуги перед командованием.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/helmet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Kelic/helmet.rsi
+  - type: PointLight
+    color: "#d46f11"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Jetpack
+- type: entity
+  id: JetpackVoidFilledKelic
+  parent: JetpackVoidFilled
+  name: пустотный реактивный ранец
+  description: Прыжковый ранец, модифицированный для открытого космоса.
+  suffix: Filled
+  categories: [ HideSpawnMenu ]
+
+# Gloves
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesCombatKelic
+  name: старые перчатки исследователя
+  description: Укреплённые перчатки из высокопрочных материалов, обеспечивающие защиту в работе с опасными объектами.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Kelic/gloves.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Magboots
+- type: entity
+  parent: ClothingShoesBootsMagAdv
+  id: ClothingShoesBootsMagKelic
+  name: магнитные сапоги с оранжевыми вставками
+  description: Сапоги с заметными оранжевыми вставками, предназначенными для быстрого распознавания. На подошве штамп "MS-06".
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/magboots.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Kelic/magboots.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# Glasses
+- type: entity
+  parent: ClothingEyesGlassesMeson
+  id: ClothingEyesGlassesKelic
+  name: визор с оранжевой вставкой
+  description: Стекла слегка поцарапаны, оправа крепкая.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/hud.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Kelic/hud.rsi
+  - type: FlashImmunity
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# JumpSuit
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitKelic
+  name: рабочий комбинезон
+  description: Рабочий комбинезон, хорошо сочетающийся со скафандром MS-06. Изрядно потертый, с нашивками, которые уже почти не читаются.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Kelic/jumpsuit.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# GasMask
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskGasKelic
+  name: старая маска для дыхания
+  description: Старая, но все еще прекрасно рабочая маска, которая обеспечивает носителя дыхательной смесью.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Kelic/gasmask.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/Kelic/gasmask.rsi
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+# PaperLaw
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawKelic
+  name: распечатанный документ
+  description: Лист бумаги с заголовком центкома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-kelic
