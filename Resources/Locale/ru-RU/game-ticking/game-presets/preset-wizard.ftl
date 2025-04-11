@@ -1,43 +1,43 @@
 ## Survivor
 
-roles-antag-survivor-name = Survivor
+roles-antag-survivor-name = Выживший
 # It's a Halo reference
-roles-antag-survivor-objective = Current Objective: Survive
+roles-antag-survivor-objective = Текущая задача: Выжить
 survivor-role-greeting =
-    You are a Survivor.
-    Above all you need to make it back to CentComm alive.
-    Collect as much firepower as needed to guarantee your survival.
-    Trust no one.
+    Вы — Выживший.
+    Прежде всего, вам нужно добраться до Центральгого Командования живым.
+    Соберите столько огневой мощи, сколько потребуется для гарантии вашего выживания.
+    Никому не доверяйте.
 survivor-round-end-dead-count =
     { $deadCount ->
-        [one] [color=red]{ $deadCount }[/color] survivor died.
-       *[other] [color=red]{ $deadCount }[/color] survivors died.
+        [one] [color=red]{ $deadCount }[/color] выживший погиб.
+       *[other] [color=red]{ $deadCount }[/color] выживших погибло.
     }
 survivor-round-end-alive-count =
     { $aliveCount ->
-        [one] [color=yellow]{ $aliveCount }[/color] survivor was marooned on the station.
-       *[other] [color=yellow]{ $aliveCount }[/color] survivors were marooned on the station.
+        [one] [color=yellow]{ $aliveCount }[/color] выживший был оставлен на станции.
+       *[other] [color=yellow]{ $aliveCount }[/color] выжившие были оставлены на станции.
     }
 survivor-round-end-alive-on-shuttle-count =
     { $aliveCount ->
-        [one] [color=green]{ $aliveCount }[/color] survivor made it out alive.
-       *[other] [color=green]{ $aliveCount }[/color] survivors made it out alive.
+        [one] [color=green]{ $aliveCount }[/color] выживший смог выбраться живым.
+       *[other] [color=green]{ $aliveCount }[/color] выжившие смогли выбраться живыми.
     }
 
 ## Wizard
 
-objective-issuer-swf = [color=turquoise]The Space Wizards Federation[/color]
-wizard-title = Wizard
-wizard-description = There's a Wizard on the station! You never know what they might do.
-roles-antag-wizard-name = Wizard
-roles-antag-wizard-objective = Teach them a lesson they'll never forget.
+objective-issuer-swf = [color=turquoise]Федерация Космических Магов[/color]
+wizard-title = Маг
+wizard-description = На станции появился маг! Никогда не знаешь, что он может сделать.
+roles-antag-wizard-name = Маг
+roles-antag-wizard-objective = Преподать им урок, который они никогда не забудут.
 wizard-role-greeting =
-    YER A WIZARD!
-    There's been tensions between the Space Wizards Federation and NanoTrasen.
-    So you've been selected by the Space Wizards Federation to pay a visit to the station.
-    Give them a good demonstration of your powers.
-    What you do is up to you, just remember the Space Wizards want you to make it out alive.
-wizard-round-end-name = wizard
+    ТЫ — МАГ!
+    Между Федерацией Космических Магов и NanoTrasen возникли трения.
+    Поэтому федерация выбрала вас, чтобы вы навестили станцию.
+    Продемонстрируйте им всю мощь своих способностей.
+    Что вы будете делать, зависит от вас, но помните: федерация хочет, чтобы вы остались в живых.
+wizard-round-end-name = маг
 
 ## TODO: Wizard Apprentice (Coming sometime post-wizard release)
 
