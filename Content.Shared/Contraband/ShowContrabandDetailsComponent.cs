@@ -5,7 +5,4 @@ namespace Content.Shared.Contraband;
 ///     This component allows you to see Contraband details on examine items
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ShowContrabandDetailsComponent : Component
-{
-
-}
+public sealed partial class ShowContrabandDetailsComponent : Component;
