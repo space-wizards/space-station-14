@@ -54,7 +54,7 @@ public sealed class ContrabandSystem : EntitySystem
         if (_contrabandExamineOnlyInHudEnabled)
         {
             // Check if Examiner has ShowContrabandDetailsComponent (aghost for example), if false then check if the contraband is only shown in the HUD
-            if (TryComp<ShowContrabandDetailsComponent>(args.User, out var comp) == false)
+            if (HasComp<ShowContrabandDetailsComponent>(args.User) == false)
             {
                 var ev = new GetContrabandDetailsEvent();
                 RaiseLocalEvent(args.User, ev);
