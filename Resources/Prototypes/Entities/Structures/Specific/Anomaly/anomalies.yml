@@ -314,6 +314,10 @@
   - type: Anomaly
     corePrototype: AnomalyCoreBluespace
     coreInertPrototype: AnomalyCoreBluespaceInert
+    supercriticalSound:
+      collection: AnomalyBluespaceExplosion
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyBluespaceSupercritical
     pulseSound:
       collection: RadiationPulse
       params:

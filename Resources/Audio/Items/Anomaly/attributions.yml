@@ -39,3 +39,16 @@
   license: Custom
   copyright: "jensfelger (Freesound), edited by Quantum-Cross@github"
   source: https://pixabay.com/sound-effects/sliding-discharge-160kv-71800/
+
+- files: ["bluespace_crit.ogg"]
+  license: "CC-BY-NC-3.0"
+  copyright: "dersinnsspace, harpoyume, Soapuel (all Freesound), layered and edited by Quantum-Cross@github"
+  source: https://freesound.org/people/dersinnsspace/sounds/417116/
+  # additional sources:
+  # source: https://freesound.org/people/harpoyume/sounds/86070/
+  # source: https://freesound.org/people/Soapuel/sounds/489442/
+
+- files: ["bluespace_explosion.ogg"]
+  license: "CC0-1.0"
+  copyright: "Geoff-Bremner-Audio (Freesound), edited by Quantum-Cross@github"
+  source: https://freesound.org/people/Geoff-Bremner-Audio/sounds/725949/

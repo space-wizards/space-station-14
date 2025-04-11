@@ -34,3 +34,12 @@
   files:
   - /Audio/Items/Anomaly/electricity_crit.ogg
 
+- type: soundCollection
+  id: AnomalyBluespaceSupercritical
+  files:
+  - /Audio/Items/Anomaly/bluespace_crit.ogg
+
+- type: soundCollection
+  id: AnomalyBluespaceExplosion
+  files:
+  - /Audio/Items/Anomaly/bluespace_explosion.ogg
