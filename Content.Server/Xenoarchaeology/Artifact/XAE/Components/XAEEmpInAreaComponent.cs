@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
+namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 
 /// <summary>
 /// Effect of EMP on activation.
@@ -6,12 +6,21 @@
 [RegisterComponent, Access(typeof(XAEEmpInAreaSystem))]
 public sealed partial class XAEEmpInAreaComponent : Component
 {
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Range of EMP effect.
+    /// </summary>
+    [DataField]
     public float Range = 4f;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Energy to be consumed from energy containers.
+    /// </summary>
+    [DataField]
     public float EnergyConsumption = 1000000;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    /// Duration (in seconds) for which devices going to be disabled.
+    /// </summary>
+    [DataField]
     public float DisableDuration = 60f;
 }

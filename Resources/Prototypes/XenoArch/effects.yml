@@ -1087,8 +1087,9 @@
   components:
   - type: XAEIgnite
     range: 7
-    minFireStack: 3
-    maxFireStack: 6
+    fireStack:
+      min: 3
+      max: 6
 
 - type: entity
   id: XenoArtifactTeleport

@@ -19,31 +19,31 @@ public sealed partial class XAEFoamComponent : Component
     /// <summary>
     /// The foam reagent.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string? SelectedReagent;
 
     /// <summary>
     /// How long does the foam last?
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float Duration = 10f;
 
     /// <summary>
     /// How much reagent is in the foam?
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float ReagentAmount = 100f;
 
     /// <summary>
     /// Minimum radius of foam spawned.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int MinFoamAmount = 15;
 
     /// <summary>
     /// Maximum radius of foam spawned.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int MaxFoamAmount = 20;
 
     /// <summary>

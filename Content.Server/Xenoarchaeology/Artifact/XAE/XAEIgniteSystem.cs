@@ -40,7 +40,7 @@ public sealed class XAEIgniteSystem : BaseXAESystem<XAEIgniteComponent>
             if (!_flammables.TryGetComponent(target, out var fl))
                 continue;
 
-            fl.FireStacks += _random.Next(component.MinFireStack, component.MaxFireStack);
+            fl.FireStacks += component.FireStack.Next(_random);
             _flammable.Ignite(target, ent.Owner, fl);
         }
     }
