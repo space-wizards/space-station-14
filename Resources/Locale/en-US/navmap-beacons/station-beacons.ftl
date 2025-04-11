@@ -9,6 +9,7 @@ station-beacon-hop = HOP
 
 station-beacon-security = Security
 station-beacon-brig = Brig
+station-beacon-brig-med = Brig Med
 station-beacon-warden = Warden
 station-beacon-hos = HOS
 station-beacon-armory = Armory
@@ -25,6 +26,8 @@ station-beacon-cryonics = Cryopods
 station-beacon-cmo = CMO
 station-beacon-morgue = Morgue
 station-beacon-surgery = Surgery
+station-beacon-psychology = Psychology
+station-beacon-clinic = Clinic
 
 station-beacon-science = Science
 station-beacon-research-and-development = Research
@@ -62,12 +65,16 @@ station-beacon-janitor = Janitor
 station-beacon-ai = AI
 station-beacon-ai-sat = AI Sat
 station-beacon-ai-core = AI Core
+station-beacon-ai-upload = AI Upload
+station-beacon-ai-power = AI Power
 
 station-beacon-arrivals = Arrivals
 station-beacon-evac = Evac
+station-beacon-docking-arm = Docking Arm
 station-beacon-eva-storage = EVA Storage
 station-beacon-chapel = Chapel
 station-beacon-library = Library
+station-beacon-reporter = Reporter
 station-beacon-dorms = Dorms
 station-beacon-theater = Theater
 station-beacon-tools = Tools

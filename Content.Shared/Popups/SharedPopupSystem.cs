@@ -59,6 +59,13 @@ namespace Content.Shared.Popups
         public abstract void PopupCoordinates(string? message, EntityCoordinates coordinates, ICommonSession recipient, PopupType type = PopupType.Small);
 
         /// <summary>
+        ///    Variant of <see cref="PopupCoordinates(string, EntityCoordinates, PopupType)"/> for use with prediction. The local client will
+        ///    the popup to the recipient, and the server will show it to every other player in PVS range. If recipient is null, the local 
+        //     client will do nothing and the server will show the message to every player in PVS range.
+        /// </summary>
+        public abstract void PopupPredictedCoordinates(string? message, EntityCoordinates coordinates, EntityUid? recipient, PopupType type = PopupType.Small);
+
+        /// <summary>
         ///     Shows a popup above an entity for every player in pvs range.
         /// </summary>
         /// <param name="message">The message to display.</param>
@@ -106,6 +113,19 @@ namespace Content.Shared.Popups
         /// will do nothing and the server will show the message to every player in PVS range.
         /// </summary>
         public abstract void PopupPredicted(string? message, EntityUid uid, EntityUid? recipient, PopupType type = PopupType.Small);
+
+        /// <summary>
+        /// Variant of <see cref="PopupEntity(string, EntityUid, Filter, bool, PopupType)"/> for use with prediction.
+        /// The local client will show the popup to the recipient, and the server will show it to players in the filter.
+        /// If recipient is null, the local client will do nothing and the server will show the message to players in the filter.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
+        /// <param name="uid">The entity to display the popup above.</param>
+        /// <param name="recipient">The client that will see this popup locally during prediction.</param>
+        /// <param name="filter">Filter for players that will see the popup from the server.</param>
+        /// <param name="recordReplay">If true, this pop-up will be considered as a globally visible pop-up that gets shown during replays.</param>
+        /// <param name="type">Used to customize how this popup should appear visually. See: <see cref="PopupType"/>.</param>
+        public abstract void PopupPredicted(string? message, EntityUid uid, EntityUid? recipient, Filter filter, bool recordReplay, PopupType type = PopupType.Small);
 
         /// <summary>
         /// Variant of <see cref="PopupPredicted(string?, EntityUid, EntityUid?, PopupType)"/> that displays <paramref name="recipientMessage"/>

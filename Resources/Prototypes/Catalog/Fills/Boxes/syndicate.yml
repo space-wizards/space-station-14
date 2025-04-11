@@ -15,7 +15,7 @@
   parent: [BoxVial, BaseSyndicateContraband]
   id: ChemicalSynthesisKit
   name: chemical synthesis kit
-  description: A starter kit for the aspiring chemist, includes toxin and vestine for all your criminal needs!
+  description: A starter kit for the aspiring chemist, includes two vials of vestine for all your criminal needs!
   components:
   - type: Storage
     grid:

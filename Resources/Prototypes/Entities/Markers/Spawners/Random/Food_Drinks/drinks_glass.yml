@@ -59,7 +59,7 @@
       - DrinkIcedBeerGlass
       - DrinkIceCreamGlass
       - IrishBoolGlass
-      - DrinkIrishCarBomb
+      - DrinkIrishSlammer
       - DrinkIrishCoffeeGlass
       - DrinkLemonadeGlass
       - DrinkKiraSpecial
@@ -124,4 +124,5 @@
       - DrinkShakeRobo
       - DrinkHoochGlass
       - DrinkBeepskySmashGlass
+      - DrinkBacchusBlessing
     rareChance: 0.05
