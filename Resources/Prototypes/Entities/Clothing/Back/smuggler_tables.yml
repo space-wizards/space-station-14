@@ -28,8 +28,8 @@
     - !type:NestedSelector
       tableId: RandomSatchelTable6
 
-  #number after each group is potential max weight. If combined PMW is too high, it could result in an over-filled bag/error.
-  #number after each group is potential max inventory capacity. If combined PMIC is too high, it could result in an over-filled bag/error.
+
+  #number after each group inidcates potential max inventory fill. If all combined fills are too high, it could result in an over-filled bag/error.
 - type: entityTable
   id: RandomSatchelTable1
   table: !type:AllSelector
