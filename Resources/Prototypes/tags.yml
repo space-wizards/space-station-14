@@ -1,6 +1,9 @@
 # PUT YOUR TAGS IN ALPHABETICAL ORDER
 
 - type: Tag
+  id: AccessBreakerImmune
+
+- type: Tag
   id: AirAlarm
 
 - type: Tag
@@ -11,6 +14,12 @@
 
 - type: Tag
   id: AirSensor
+
+- type: Tag
+  id: AllowBiomeLoading # Entities with this tag will load terrain, even if a ghost.
+
+- type: Tag
+  id: AllowGhostShownByEvent
 
 - type: Tag
   id: Ambrosia
@@ -110,6 +119,9 @@
 
 - type: Tag
   id: BorgModuleMedical
+
+- type: Tag
+  id: BorgModuleScience
 
 - type: Tag
   id: BorgModuleService
@@ -212,36 +224,6 @@
 
 - type: Tag
   id: Carpet
-
-- type: Tag
-  id: CarpetBlack
-
-- type: Tag
-  id: CarpetBlue
-
-- type: Tag
-  id: CarpetCyan
-
-- type: Tag
-  id: CarpetGreen
-
-- type: Tag
-  id: CarpetOrange
-
-- type: Tag
-  id: CarpetPink
-
-- type: Tag
-  id: CarpetPurple
-
-- type: Tag
-  id: CarpetRed
-
-- type: Tag
-  id: CarpetSBlue
-
-- type: Tag
-  id: CarpetWhite
 
 - type: Tag
   id: Carrot
@@ -414,6 +396,9 @@
   id: Cryobeaker
 
 - type: Tag
+  id: CrystalBlack
+
+- type: Tag
   id: CrystalBlue
 
 - type: Tag
@@ -432,6 +417,9 @@
   id: CrystalRed
 
 - type: Tag
+  id: CrystalYellow
+
+- type: Tag
   id: CubanCarp
 
 - type: Tag
@@ -439,6 +427,9 @@
 
 - type: Tag
   id: Debug
+
+- type: Tag
+  id: Diagonal
 
 - type: Tag
   id: Dice
@@ -657,6 +648,9 @@
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
 
 - type: Tag
+  id: HardsuitSpatio
+
+- type: Tag
   id: Haunted
 
 - type: Tag
@@ -739,6 +733,12 @@
 
 - type: Tag
   id: IntercomElectronics
+
+- type: Tag
+  id: InvalidForGlobalSpawnSpell
+
+- type: Tag
+  id: InvalidForSurvivorAntag
 
 - type: Tag
   id: JawsOfLife
@@ -838,6 +838,9 @@
   id: MailingUnitElectronics
 
 - type: Tag
+  id: Maints
+
+- type: Tag
   id: Matchstick
 
 - type: Tag
@@ -928,6 +931,9 @@
   id: Packet
 
 - type: Tag
+  id: ParadoxCloneObjectiveBlacklist # objective entities with this tag don't get copied to paradox clones
+
+- type: Tag
   id: Paper
 
 - type: Tag
@@ -994,6 +1000,9 @@
   id: PlushieGhost
 
 - type: Tag
+  id: PlushieLizard
+
+- type: Tag
   id: PlushieSharkBlue
 
 - type: Tag
@@ -1019,6 +1028,9 @@
 
 - type: Tag
   id: Powerdrill
+
+- type: Tag
+  id: PreventAccessLogging
 
 - type: Tag
   id: PrisonUniform
@@ -1130,6 +1142,9 @@
   id: SignalTrigger
 
 - type: Tag
+  id: SilentStorageUser # used in SharedStorageSystem, so the entity will do all silently
+
+- type: Tag
   id: SkeletonMotorcycleKeys
 
 - type: Tag
@@ -1182,6 +1197,9 @@
 
 - type: Tag
   id: Spray
+
+- type: Tag
+  id: SprayNozzle
 
 - type: Tag
   id: SpreaderIgnore
@@ -1275,6 +1293,12 @@
 
 - type: Tag
   id: Truncheon
+
+- type: Tag
+  id: TurretCompatibleWeapon # Used in the construction of sentry turrets
+
+- type: Tag
+  id: TurretControlElectronics # Used in the construction of sentry turret control panels
 
 - type: Tag
   id: Unimplantable

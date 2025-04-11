@@ -7,7 +7,7 @@
   - type: Sprite
     noRot: true
     sprite: Structures/Machines/artifact_analyzer.rsi
-    drawdepth: FloorObjects
+    drawdepth: HighFloorObjects
     layers:
     - state: icon
     - state: unshaded
@@ -128,6 +128,9 @@
     whitelist:
       components:
       - Artifact
+      tags:
+      - CanPilot # People
+      - VimPilot # Pets
   - type: Appearance
   - type: GenericVisualizer
     visuals:

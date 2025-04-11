@@ -178,7 +178,7 @@
   description: A computer printed circuit board for a surveillance wireless camera monitor.
   components:
   - type: Sprite
-    state: cpu_security
+    state: cpu_service
   - type: ComputerBoard
     prototype: ComputerSurveillanceWirelessCameraMonitor
 
@@ -286,6 +286,28 @@
     state: cpu_syndicate
   - type: ComputerBoard
     prototype: SyndicateComputerComms
+
+- type: entity
+  parent: [ BaseComputerCircuitboard, BaseSyndicateContraband ]
+  id: WizardCommsComputerCircuitboard
+  name: wizard communications computer board
+  description: A computer printed circuit board for a wizard communications console.
+  components:
+  - type: Sprite
+    state: cpu_wizard
+  - type: ComputerBoard
+    prototype: WizardComputerComms
+
+- type: entity
+  parent: [ BaseComputerCircuitboard, BaseCentcommContraband ]
+  id: CentcommCommsComputerCircuitboard
+  name: central command communications computer board
+  description: A computer printed circuit board for a central command communications console.
+  components:
+  - type: Sprite
+    state: cpu_centcomm
+  - type: ComputerBoard
+    prototype: CentcommComputerComms
 
 - type: entity
   parent: BaseComputerCircuitboard

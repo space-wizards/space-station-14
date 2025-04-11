@@ -109,3 +109,8 @@
   id: Hologram
   kind: source
   path: "/Textures/Shaders/hologram.swsl"
+
+- type: shader
+  id: RadialMenu
+  kind: source
+  path: "/Textures/Shaders/radial-menu.swsl"

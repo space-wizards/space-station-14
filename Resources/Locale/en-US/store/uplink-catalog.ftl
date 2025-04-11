@@ -17,6 +17,9 @@ uplink-esword-desc = A very dangerous energy sword that can reflect shots. Can b
 uplink-esword-double-name = Double Bladed Energy Sword
 uplink-esword-double-desc = A much more expensive counter part to the normal energy sword: with a much higher reflection chance, larger attack angle, higher structural damage, and faster swing. Makes a lot of noise when used or turned on.
 
+uplink-hypereutactic-blade-name = Hypereutactic Blade
+uplink-hypereutactic-blade-desc = A gigantic energy sword with power that matches its looks. Requires two hands. Slow and unwieldy, yet pretty adept at reflecting. Previously made infamous by an operative wearing a joy mask. You wouldn't want to see this coming at you down the hall!
+
 uplink-edagger-name = Energy Dagger
 uplink-edagger-desc = A small energy blade conveniently disguised in the form of a pen.
 
@@ -39,8 +42,8 @@ uplink-smoke-grenade-desc = A grenade that releases a huge cloud of smoke, perfe
 uplink-mini-bomb-name = Minibomb
 uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive with a 5 second long fuse. Perfect for quickly destroying a machine, dead body, or whatever else needs to go.
 
-uplink-supermatter-grenade-name = Supermatter Grenade
-uplink-supermatter-grenade-desc = Grenade that simulates delamination of a suppermatter engine, generates powerful gravity well. Explosion comparable to a Mini Bomb.
+uplink-singularity-grenade-name = Singularity Grenade
+uplink-singularity-grenade-desc = Grenade that simulates the power of a singularity, generates powerful gravity well.
 
 uplink-whitehole-grenade-name = Whitehole Grenade
 uplink-whitehole-grenade-desc = Grenade that repulses everything around for about 10 seconds. Very useful in small rooms and for chasing someone.
@@ -113,7 +116,10 @@ uplink-chest-rig-name = Chest Rig
 uplink-chest-rig-desc = Explosion-resistant tactical webbing used for holding traitor goods.
 
 uplink-emag-name = Emag
-uplink-emag-desc = The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
+uplink-emag-desc = The business card of the syndicate, this sequencer is able to tamper with a variety of station devices. Recharges automatically.
+
+uplink-access-breaker-name = Access Breaker
+uplink-access-breaker-desc = A hacked access configurator and a good friend of the emag. This device is able to force airlocks open as well as erase access requirements from station equipment. Recharges automatically.
 
 uplink-agent-id-card-name = Agent ID Card
 uplink-agent-id-card-desc = A modified ID card that can copy accesses from other cards and change its name and job title at-will.
@@ -200,6 +206,9 @@ uplink-death-acidifier-implant-desc = Completely melts the user and their equipm
 uplink-micro-bomb-implanter-name = Micro Bomb Implanter
 uplink-micro-bomb-implanter-desc = Explode on death or manual activation with this implant. Destroys the body with all equipment.
 
+uplink-radio-implanter-name = Radio Implanter
+uplink-radio-implanter-desc = Implants a Syndicate radio, allowing covert communication without a headset.
+
 # Bundles
 uplink-observation-kit-name = Observation Kit
 uplink-observation-kit-desc = Includes surveillance camera monitor board and security hud disguised as sunglasses.
@@ -211,7 +220,7 @@ uplink-decoy-kit-name = Decoy Kit
 uplink-decoy-kit-desc = State-of-the-art distraction technology straight from RND. Comes with five realistic balloons, four decoy grenades, and some snap poppers!
 
 uplink-chemistry-kit-name = Chemical Synthesis Kit
-uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes toxin and vestine for all your criminal needs!
+uplink-chemistry-kit-desc = A starter kit for the aspiring chemist, includes two vials of vestine for all your criminal needs!
 
 uplink-knives-kit-name = Throwing Knives Kit
 uplink-knives-kit-desc = A set of 4 syndicate branded throwing knives, perfect for embedding into the body of your victims.
@@ -229,7 +238,7 @@ uplink-c20r-bundle-name = C-20r Bundle
 uplink-c20r-bundle-desc = Old faithful: The classic C-20r Submachine Gun, bundled with three magazines.
 
 uplink-buldog-bundle-name = Bulldog Bundle
-uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and three 12g buckshot drums.
+uplink-buldog-bundle-desc = Lean and mean: Contains the popular Bulldog Shotgun and four 12g buckshot drums.
 
 uplink-grenade-launcher-bundle-name = China-Lake Bundle
 uplink-grenade-launcher-bundle-desc = An old China-Lake grenade launcher bundled with 11 rounds of varying destructive capability.
@@ -307,7 +316,7 @@ uplink-clothing-no-slips-shoes-name = No-slip Shoes
 uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slips.
 
 uplink-clothing-thieving-gloves-name = Thieving Gloves
-uplink-clothing-thieving-gloves-desc = Discretely steal from pockets and improve your thieving technique with these fancy new gloves. They even look like normal gloves!
+uplink-clothing-thieving-gloves-desc = Discreetly steal from pockets and improve your thieving technique with these fancy new gloves. They even look like normal gloves!
 
 uplink-clothing-outer-vest-web-name = Web Vest
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
@@ -451,3 +460,9 @@ uplink-combat-bakery-desc = A kit of clandestine baked weapons. Contains a bague
 
 uplink-business-card-name = Syndicate Business Card
 uplink-business-card-desc = A business card that you can give to someone to demonstrate your involvement in the syndicate or leave at the crime scene in order to make fun of the detective. You can buy no more than three of them.
+
+uplink-fake-mindshield-name = Fake Mindshield
+uplink-fake-mindshield-desc = A togglable implant capable of mimicking the same transmissions a real mindshield puts out when on, tricking capable Heads-up displays into thinking you have a mindshield (Nanotrasen brand implanter not provided.)
+
+uplink-smuggler-satchel-name = Smuggler's Satchel
+uplink-smuggler-satchel-desc = A handy, suspicious looking satchel. Just flat enough to fit underneath floor tiles.

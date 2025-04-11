@@ -241,6 +241,15 @@
   - type: Sprite
     state: direction_wash
 
+- type: entity
+  parent: BaseSignDirectional
+  id: SignDirectionalEscapePod
+  name: escape pods sign
+  description: A direction sign, pointing out the way to an escape pod dock.
+  components:
+  - type: Sprite
+    state: direction_pods
+
 # Regular Signs
 
 - type: entity

@@ -3,6 +3,14 @@
 
   Most if not all Minor Antagonists are ghost-controlled roles that gives dead people new ways to cause chaos around the station. They are spawned by random events.
 
+  # Paradox Clone
+
+  <Box>
+    <GuideEntityEmbed Entity="ParadoxCloneDummy"/>
+  </Box>
+
+  A perfect copy of a random crewmember that was thrown into our universe by a space-time anomaly. To fix the paradox and survive they have to find and kill their original counterpart. They have no special abilities, but are have identical appearance, DNA, fingerprints, clothing, equipment and IDs, making it hard to figure out who is the orginal and who is the clone, unless you know your fellow crewmembers well.
+
   # Revenant
 
   <Box>

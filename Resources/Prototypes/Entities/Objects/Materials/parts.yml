@@ -68,6 +68,9 @@
           Quantity: 4.5
         - ReagentId: Carbon
           Quantity: 0.5
+  - type: GuideHelp
+    guides:
+    - ExpandingRepairingStation
 
 - type: entity
   parent: PartRodMetal
