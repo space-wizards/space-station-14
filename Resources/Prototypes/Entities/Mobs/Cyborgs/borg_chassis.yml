@@ -22,7 +22,7 @@
   - type: BorgTransponder
     sprite:
       sprite: Mobs/Silicon/Chassis/generic.rsi
-      state: generic
+      state: borg
     name: cyborg
   - type: InteractionPopup
     interactSuccessString: petting-success-generic-cyborg
