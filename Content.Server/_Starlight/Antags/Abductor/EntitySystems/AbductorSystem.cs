@@ -39,6 +39,8 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     {
         SubscribeLocalEvent<AbductorHumanObservationConsoleComponent, BeforeActivatableUIOpenEvent>(OnBeforeActivatableUIOpen);
         SubscribeLocalEvent<AbductorHumanObservationConsoleComponent, ActivatableUIOpenAttemptEvent>(OnActivatableUIOpenAttemptEvent);
+        
+        SubscribeLocalEvent<AbductorComponent, GetVisMaskEvent>(OnAbductorGetVis);
 
         Subs.BuiEvents<AbductorHumanObservationConsoleComponent>(AbductorCameraConsoleUIKey.Key, subs => subs.Event<AbductorBeaconChosenBuiMsg>(OnAbductorBeaconChosenBuiMsg));
         InitializeActions();
@@ -48,6 +50,11 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         InitializeVest();
         InitializeExtractor();
         base.Initialize();
+    }
+    
+    private void OnAbductorGetVis(Entity<AbductorComponent> ent, ref GetVisMaskEvent args)
+    {
+        args.VisibilityMask |= (int)VisibilityFlags.Abductor;
     }
 
     private void OnAbductorBeaconChosenBuiMsg(Entity<AbductorHumanObservationConsoleComponent> ent, ref AbductorBeaconChosenBuiMsg args)
@@ -89,7 +96,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
             if (TryComp(args.Actor, out EyeComponent? eyeComp))
             {
-                _eye.SetVisibilityMask(args.Actor, eyeComp.VisibilityMask | (int)VisibilityFlags.Abductor, eyeComp);
+                _eye.RefreshVisibilityMask(args.Actor);
                 _eye.SetTarget(args.Actor, eye, eyeComp);
                 _eye.SetDrawFov(args.Actor, false);
 

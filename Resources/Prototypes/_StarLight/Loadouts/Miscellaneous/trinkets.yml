@@ -1,0 +1,19 @@
+#The Synth
+# Timers
+- type: loadoutEffectGroup
+  id: SuperSynthTimerAndWhitelist
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobMusician
+        time: 72000 # 20 hours of being the biggest musician on the station
+
+- type: loadout
+  id: SuperSynthesizerInstrument
+  effects:
+    - !type:GroupLoadoutEffect
+      proto: SuperSynthTimerAndWhitelist
+  storage:
+    back:
+      - SuperSynthesizerInstrument

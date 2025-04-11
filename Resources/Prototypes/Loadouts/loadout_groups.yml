@@ -50,6 +50,7 @@
   - TowelColorSilver
   - TowelColorWhite
   - TowelColorYellow
+  - SuperSynthesizerInstrument # 🌟Starlight🌟
 
 - type: loadoutGroup
   id: Glasses
@@ -195,8 +196,8 @@
   id: AssistantJumpsuit
   name: loadout-group-assistant-jumpsuit
   loadouts:
-  - GreyJumpsuit
-  - GreyJumpskirt
+  - BasicJumpsuit
+  - BasicJumpskirt
   - AncientJumpsuit
   - RainbowJumpsuit
 

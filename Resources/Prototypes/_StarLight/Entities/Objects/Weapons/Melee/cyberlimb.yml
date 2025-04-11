@@ -64,12 +64,12 @@
     state: cybermantisblade
   - type: MeleeWeapon
     wideAnimationRotation: -135
-    attackRate: 2.0
+    attackRate: 2.4
     autoAttack: false
     damage:
       types:
-        Slash: 15
-        Structural: 25
+        Slash: 12
+        Structural: 20
     soundHit:
       path: /Audio/Weapons/block_metal1.ogg
     soundNoDamage:
@@ -77,8 +77,4 @@
     soundSwing:
       path: /Audio/Weapons/punchmiss.ogg
   - type: Item
-  - type: Prying
-    speedModifier: 2.0
-    pryPowered: true
-    useSound: /Audio/Items/jaws_pry.ogg
   - type: Sharp

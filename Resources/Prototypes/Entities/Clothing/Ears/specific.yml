@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: ClothingHeadsetGrey
+  parent: ClothingHeadsetAssistant
   id: ClothingHeadsetChameleon
   name: assistant headset
   description: An updated, modular intercom that fits over the head. Takes encryption keys.
@@ -13,7 +13,7 @@
       sprite: Clothing/Ears/Headsets/base.rsi
     - type: ChameleonClothing
       slot: [ears]
-      default: ClothingHeadsetGrey
+      default: ClothingHeadsetAssistant
     - type: UserInterface
       interfaces:
         enum.ChameleonUiKey.Key:

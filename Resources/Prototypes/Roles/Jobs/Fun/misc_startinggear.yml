@@ -12,7 +12,7 @@
     gloves: ClothingHandsGlovesFingerless
     shoes: ClothingShoesBootsJack
     id: AssistantPDA
-    ears: ClothingHeadsetGrey
+    ears: ClothingHeadsetAssistant
   storage:
     back:
     - BoxSurvival
@@ -110,7 +110,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorWhite
     shoes: ClothingShoesBootsJack
-    ears: ClothingHeadsetGrey
+    ears: ClothingHeadsetAssistant
     gloves: ClothingHandsGlovesFingerless
   inhand:
     - WeaponMeleeToolboxRobust
