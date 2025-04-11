@@ -59,7 +59,7 @@ reagent-name-ambuzol = ambuzol
 reagent-desc-ambuzol = A highly engineered substance able to halt the progression of a zombie infection.
 
 reagent-name-ambuzol-plus = ambuzol plus
-reagent-desc-ambuzol-plus = Further engineered with the blood of the infected, inoculates the living against the infection.
+reagent-desc-ambuzol-plus = Further engineered with omnizine, inoculates the living against the infection.
 
 reagent-name-pulped-banana-peel = pulped banana peel
 reagent-desc-pulped-banana-peel = Pulped banana peels have some effectiveness against bleeding.
