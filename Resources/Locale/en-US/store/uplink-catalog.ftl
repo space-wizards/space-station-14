@@ -291,7 +291,7 @@ uplink-banana-peel-explosive-name = Explosive Banana Peel
 uplink-banana-peel-explosive-desc = They will burst into laughter when they slip on it!
 
 uplink-cigar-bomb-name = Explosive Cigar
-uplink-cigar-bomb-desc = Lighter not included.
+uplink-cigar-bomb-desc = A mildly dangerous exploding cigar. Matches not included.
 
 uplink-hot-potato-name = Hot Potato
 uplink-hot-potato-desc = Once activated, this time bomb can't be dropped - only passed to someone else!

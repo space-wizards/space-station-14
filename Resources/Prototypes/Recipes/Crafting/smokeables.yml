@@ -89,3 +89,14 @@
   icon: { sprite: Objects/Misc/reagent_fillings.rsi, state: powderpile }
 #    color: brown
   objectType: Item
+
+- type: construction
+  name: harmless trick cigar 
+  id: smokeableCigarBombHarmless
+  graph: smokeableCigarBombHarmless
+  startNode: start
+  targetNode: cigarBombHarmless
+  category: construction-category-misc
+  description: "A harmless cigar that explodes in your face."
+  icon: {sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi, state: lit-icon}
+  onjectType: Item

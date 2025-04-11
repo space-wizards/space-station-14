@@ -134,4 +134,28 @@
     intensitySlope: 3
     totalIntensity: 20
     canCreateVacuum: false
+  - type: Tag
+    tags:
+      - CigarBombHarmlessCrafter
+      - Cigar
+      - Trash
     
+- type: entity
+  parent: CigarBomb
+  id: CigarBombHarmless
+  suffix: harmless
+  components:
+  - type: Explosive
+    explosionType: Default
+    # Cosmetic explosion :tf:
+    maxIntensity: 0.01
+    intensitySlope: 1
+    totalIntensity: 0.01
+  - type: Construction
+    graph: smokeableCigarBombHarmless
+    node: cigarBombHarmless
+  - type: Tag
+    tags:
+      - CigarBombHarmlessCrafter
+      - Cigar
+      - Trash
