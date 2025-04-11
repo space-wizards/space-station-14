@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Adjusted the top menu on the separated game screen. The buttons will
-      now form multiple rows and no longer overflow into the viewport.
-    type: Tweak
-  id: 7654
-  time: '2024-11-26T00:59:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33047
 - author: slarticodefast
   changes:
   - message: Added the greytide virus station event. It will bolt open all doors in
@@ -3892,3 +3884,10 @@
   id: 8153
   time: '2025-04-11T02:06:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36408
+- author: DinnerCalzone
+  changes:
+  - message: Fixed gas mixers and pneumatic valves being hidden by floor tiles.
+    type: Fix
+  id: 8154
+  time: '2025-04-11T02:10:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36428
