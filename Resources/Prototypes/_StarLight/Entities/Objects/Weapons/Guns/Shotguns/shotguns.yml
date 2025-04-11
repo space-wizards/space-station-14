@@ -195,3 +195,26 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
+
+- type: entity
+  name: forged double-barrel shotgun
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseMinorContraband]
+  id: WeaponShotgunForged
+  description: Decently made double-barrel shotgun, reinforced with mixed steel and plasteel plates to keep it together. Not as accurate as a real gun.
+  components:
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun_inhands_64x.rsi
+    size: Normal
+    shape:
+    - 0,0,4,0
+  - type: Gun
+    spread: 15
+    fireRate: 3
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun.rsi
+  - type: GunRequiresWield
+  - type: BallisticAmmoProvider
+    capacity: 2
+    proto: null

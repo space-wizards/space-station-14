@@ -1,0 +1,22 @@
+- type: entity
+  parent: BaseItem
+  id: UnfinishedForgedShotgun
+  name: assembled forged shotgun
+  description: Just needs the welding to keep everything in place.
+  components:
+  - type: Item
+    size: Normal
+    shape:
+    - 0,0,4,0
+    - type: Sprite
+      sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun.rsi
+      state: ishotgunstep2
+    - type: ToolRefinable
+      refineResult:
+      - id: WeaponShotgunForged
+    - type: Tag
+      tags:
+      - Metal
+    - type: Construction
+      graph: ForgedShotgunGraph
+      node: shotgun

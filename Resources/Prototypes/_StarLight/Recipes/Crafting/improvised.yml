@@ -1,0 +1,12 @@
+- type: construction
+  name: forged double-barrel shotgun
+  id: WeaponShotgunForged
+  graph: ForgedShotgunGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: The cousin of the improvised shotgun, this one is made from better quality parts and an additional barrel! Takes time and welding supplies to make, however. 
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/forged_shotgun.rsi
+    state: icon
