@@ -298,6 +298,9 @@ namespace Content.Server.Explosion.EntitySystems
             Trigger(uid, args.Slipped);
         }
 
+        /// <summary>
+        /// trigger's when a smokeable entity expends its reagents to 0.
+        /// </summary>
         private void OnSmokableExpended(EntityUid uid, TriggerOnSmokableExpendedComponent component, ref SmokableSolutionEmptyEvent args)
         {
             _mobQuery = GetEntityQuery<MobStateComponent>();
