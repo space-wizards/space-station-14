@@ -32,17 +32,17 @@
 
 - files: ["grav_crit.ogg"]
   license: "CC0-1.0"
-  copyright: "anomaly_drone.ogg (Joao_Janz, EmoGarbage) as base, further editing by Quantum-Cross@github"
+  copyright: "anomaly_drone.ogg (Joao_Janz, EmoGarbage) as base, further editing by Quantum-cross@github"
   source: "https://freesound.org/people/Joao_Janz/sounds/478472/"
 
 - files: ["electricity_crit.ogg"]
   license: Custom
-  copyright: "jensfelger (Freesound), edited by Quantum-Cross@github"
+  copyright: "jensfelger (Freesound), edited by Quantum-cross@github"
   source: https://pixabay.com/sound-effects/sliding-discharge-160kv-71800/
 
 - files: ["bluespace_crit.ogg"]
   license: "CC-BY-NC-3.0"
-  copyright: "dersinnsspace, harpoyume, Soapuel (all Freesound), layered and edited by Quantum-Cross@github"
+  copyright: "dersinnsspace, harpoyume, Soapuel (all Freesound), layered and edited by Quantum-cross@github"
   source: https://freesound.org/people/dersinnsspace/sounds/417116/
   # additional sources:
   # source: https://freesound.org/people/harpoyume/sounds/86070/
@@ -50,19 +50,28 @@
 
 - files: ["bluespace_explosion.ogg"]
   license: "CC0-1.0"
-  copyright: "Geoff-Bremner-Audio (Freesound), edited by Quantum-Cross@github"
+  copyright: "Geoff-Bremner-Audio (Freesound), edited by Quantum-cross@github"
   source: https://freesound.org/people/Geoff-Bremner-Audio/sounds/725949/
 
 - files: ["ice_crit.ogg"]
   license: "CC-BY-4.0"
-  copyright: "iainmccurdy (Freesound), edited by Quantum-Cross@github"
+  copyright: "iainmccurdy (Freesound), edited by Quantum-cross@github"
   source: https://freesound.org/people/iainmccurdy/sounds/440858/
 
 - files: ["fluid_crit.ogg"]
   license: "CC-BY-NC-4.0"
-  copyright: "DJT4NN3R, unfa, klankbeeld (all Freesound), slime_squish.ogg from paradise station, layered edited by Quantum-Cross@github"
+  copyright: "DJT4NN3R, unfa, klankbeeld (all Freesound), slime_squish.ogg from paradise station, layered and edited by Quantum-cross@github"
   source: https://freesound.org/people/unfa/sounds/504930/
   # additional sources:
   # source: https://freesound.org/people/DJT4NN3R/sounds/484158/
   # source: https://freesound.org/people/klankbeeld/sounds/325537/
   # source: https://github.com/ParadiseSS13/Paradise
+
+- files: ["flora_crit.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Clusman, hereforthebass, eyesplice, Clearwavsound (all Freesound), layered and edited by Quantum-cross@github"
+  source: https://freesound.org/people/Clusman/sounds/543508/
+  # additional sources:
+  # source: https://freesound.org/people/hereforthebass/sounds/733255/
+  # source: https://freesound.org/people/eyesplice/sounds/717773/
+  # source: https://freesound.org/people/Clearwavsound/sounds/541032/

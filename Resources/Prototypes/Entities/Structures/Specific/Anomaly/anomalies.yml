@@ -742,6 +742,8 @@
     coreInertPrototype: AnomalyCoreFloraInert
     minPulseLength: 60
     maxPulseLength: 120
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyFloraSupercritical
   - type: TileSpawnAnomaly
     entries:
     - settings:

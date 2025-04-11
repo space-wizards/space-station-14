@@ -52,5 +52,9 @@
 - type: soundCollection
   id: AnomalyFluidSupercritical
   files:
-  - /AUdio/Items/Anomaly/fluid_crit.ogg
   - /Audio/Items/Anomaly/fluid_crit.ogg
+
+- type: soundCollection
+  id: AnomalyFloraSupercritical
+  files:
+  - /Audio/Items/Anomaly/flora_crit.ogg
