@@ -25,7 +25,7 @@ comms-console-menu-alert-level-button = Установить код
 comms-console-menu-alert-level-button-tooltip = Изменение уровня угрозы станции. Применяется сразу после выбора.
 # Emergency shuttle
 comms-console-menu-category-shuttle = Шаттл эвакуации
-comms-console-announcement-title-wizard = Wizard
+comms-console-announcement-title-wizard = Маг
 comms-console-menu-call-shuttle = Вызвать
 comms-console-menu-recall-shuttle = Отозвать
 comms-console-menu-emergency-shuttle-button-tooltip = Вызывает или отзывает эвакуационный шаттл. Вы можете отозвать шаттл, только если осталось достаточно времени.
