@@ -39,16 +39,18 @@ public sealed class FollowerSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<BeforeSerializationEvent>(OnBeforeSave);
+        SubscribeLocalEvent<FollowTargetEvent>(OnFollowPlayer);
         SubscribeLocalEvent<GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerbs);
+
+        SubscribeLocalEvent<FollowerComponent, AfterAutoHandleStateEvent>(OnAfterHandleState);
+        SubscribeLocalEvent<FollowerComponent, EntityTerminatingEvent>(OnFollowerTerminating);
+        SubscribeLocalEvent<FollowerComponent, GotEquippedHandEvent>(OnGotEquippedHand);
         SubscribeLocalEvent<FollowerComponent, MoveInputEvent>(OnFollowerMove);
         SubscribeLocalEvent<FollowerComponent, PullStartedMessage>(OnPullStarted);
-        SubscribeLocalEvent<FollowerComponent, EntityTerminatingEvent>(OnFollowerTerminating);
-        SubscribeLocalEvent<FollowerComponent, AfterAutoHandleStateEvent>(OnAfterHandleState);
 
         SubscribeLocalEvent<FollowedComponent, ComponentGetStateAttemptEvent>(OnFollowedAttempt);
-        SubscribeLocalEvent<FollowerComponent, GotEquippedHandEvent>(OnGotEquippedHand);
         SubscribeLocalEvent<FollowedComponent, EntityTerminatingEvent>(OnFollowedTerminating);
-        SubscribeLocalEvent<BeforeSerializationEvent>(OnBeforeSave);
         SubscribeLocalEvent<FollowedComponent, PolymorphedEvent>(OnFollowedPolymorphed);
     }
 
@@ -65,6 +67,12 @@ public sealed class FollowerSystem : EntitySystem
         {
             args.Cancelled = true;
         }
+    }
+
+    private void OnFollowPlayer(FollowTargetEvent args)
+    {
+        if (args.Follower != args.Target)
+            StartFollowingEntity(args.Follower, args.Target);
     }
 
     private void OnBeforeSave(BeforeSerializationEvent ev)
@@ -379,5 +387,21 @@ public sealed class EntityStoppedFollowingEvent : FollowEvent
 {
     public EntityStoppedFollowingEvent(EntityUid following, EntityUid follower) : base(following, follower)
     {
+    }
+}
+
+/// <summary>
+///     Makes Follower follow Target
+/// </summary>
+[Serializable]
+public sealed class FollowTargetEvent : EntityEventArgs //TODO:ERRANT struct or something? Idunno
+{
+    public readonly EntityUid Follower;
+    public readonly EntityUid Target;
+
+    public FollowTargetEvent(EntityUid follower, EntityUid target)
+    {
+        Follower = follower;
+        Target = target;
     }
 }

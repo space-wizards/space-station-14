@@ -8,6 +8,7 @@ using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Eui;
+using Content.Shared.Follower;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 
@@ -140,6 +141,16 @@ public sealed class PlayerPanelEui : BaseEui
                     _adminLog.Add(LogType.Action,$"{Player:actor} deleted {_entity.ToPrettyString(session.AttachedEntity):subject}");
                     _entity.DeleteEntity(session.AttachedEntity);
                 }
+                break;
+            case PlayerPanelFollowMessage:
+                if (!_admins.HasAdminFlag(Player, AdminFlags.Admin) ||
+                    !_player.TryGetSessionById(_targetPlayer.UserId, out session) ||
+                    session.AttachedEntity == null ||
+                    Player.AttachedEntity is null)
+                    return;
+
+                var ev = new FollowTargetEvent(Player.AttachedEntity.Value, session.AttachedEntity.Value) ;
+                _entity.EventBus.RaiseEvent(EventSource.Local, ev);
                 break;
         }
     }
