@@ -5,6 +5,9 @@ using Content.Shared.Xenoarchaeology.Artifact.XAE;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 
+/// <summary>
+/// System for xeno artifact effect that creates EMP on use.
+/// </summary>
 public sealed class XAEEmpInAreaSystem : BaseXAESystem<XAEEmpInAreaComponent>
 {
     [Dependency] private readonly EmpSystem _emp = default!;

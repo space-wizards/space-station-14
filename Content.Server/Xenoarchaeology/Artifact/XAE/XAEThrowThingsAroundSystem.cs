@@ -43,8 +43,8 @@ public sealed class XAEThrowThingsAroundSystem : BaseXAESystem<XAEThrowThingsAro
         var xform = Transform(ent);
         if (TryComp<MapGridComponent>(xform.GridUid, out var grid))
         {
-            var boxForTilesPry = Box2.CenteredAround(_transform.GetWorldPosition(xform), new Vector2(component.Range * 2, component.Range));
-            var tiles = _map.GetTilesIntersecting(xform.GridUid.Value, grid, boxForTilesPry, true);
+            var areaForTilesPry = new Circle(_transform.GetWorldPosition(xform), component.Range);
+            var tiles = _map.GetTilesIntersecting(xform.GridUid.Value, grid, areaForTilesPry, true);
 
             foreach (var tile in tiles)
             {

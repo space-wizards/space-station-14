@@ -4,10 +4,14 @@ using Content.Shared.Atmos;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.XAE;
 using Robust.Server.GameObjects;
+using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 
+/// <summary>
+/// System for xeno artifact effect that creates certain atmospheric gas on artifact tile / adjacent tiles.
+/// </summary>
 public sealed class XAECreateGasSystem : BaseXAESystem<XAECreateGasComponent>
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
@@ -23,7 +27,7 @@ public sealed class XAECreateGasSystem : BaseXAESystem<XAECreateGasComponent>
 
         var tile = _map.LocalToTile(grid.Value, gridComp, args.Coordinates);
 
-        var mixtures = new List<GasMixture>();
+        var mixtures = new ValueList<GasMixture>();
         if (_atmosphere.GetTileMixture(grid.Value, map.Value, tile, excite: true) is { } localMixture)
             mixtures.Add(localMixture);
 

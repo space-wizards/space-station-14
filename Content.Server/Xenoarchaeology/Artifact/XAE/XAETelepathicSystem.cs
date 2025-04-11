@@ -28,7 +28,7 @@ public sealed class XAETelepathicSystem : BaseXAESystem<XAETelepathicComponent>
         _lookup.GetEntitiesInRange(ent, component.Range, _entities);
         foreach (var victimUid in _entities)
         {
-            if (!EntityManager.HasComponent<ActorComponent>(victimUid))
+            if (!HasComp<ActorComponent>(victimUid))
                 continue;
 
             // roll if msg should be usual or drastic

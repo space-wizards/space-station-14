@@ -7,6 +7,9 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 
+/// <summary>
+/// System for xeno artifact effect that changes atmospheric temperature on adjacent tiles.
+/// </summary>
 public sealed class XAETemperatureSystem : BaseXAESystem<XAETemperatureComponent>
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
