@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -9,7 +10,7 @@ namespace Content.Shared.Kitchen
     /// <summary>
     ///    A recipe for space microwaves.
     /// </summary>
-    [Prototype("microwaveMealRecipe")]
+    [Prototype("mealRecipe")]
     public sealed partial class FoodRecipePrototype : IPrototype
     {
         [ViewVariables]
@@ -21,6 +22,12 @@ namespace Content.Shared.Kitchen
 
         [DataField]
         public string Group = "Other";
+        
+        /// <summary>
+        /// What kind of device needs to cook this? (Microwave/Oven/Stove)
+        /// </summary>
+        [DataField("deviceType")]
+        public CookingDeviceType DeviceType = CookingDeviceType.Microwave;
 
         [DataField("reagents", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]
         private Dictionary<string, FixedPoint2> _ingsReagents = new();

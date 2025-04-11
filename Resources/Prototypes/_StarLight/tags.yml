@@ -80,3 +80,6 @@
 
 - type: Tag
   id: Felionoid
+  
+- type: Tag
+  id: OvenMachineBoard
