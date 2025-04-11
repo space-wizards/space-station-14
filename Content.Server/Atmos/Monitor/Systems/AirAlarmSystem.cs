@@ -473,9 +473,9 @@ public sealed class AirAlarmSystem : EntitySystem
             return;
         }
 
-        if (controller.ForcedMode is not null)
+        if (controller.PanicWireCut)
         {
-            mode = controller.ForcedMode.Value;
+            mode = AirAlarmMode.Panic;
         }
 
         if (controller.CurrentMode == mode)

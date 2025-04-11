@@ -49,9 +49,8 @@ public sealed partial class AirAlarmComponent : Component
     public string NormalPort = "AirNormal";
 
     /// <summary>
-    /// If not null, this mode will be forced and any attempts to change it will be ignored.
-    /// E.g., if the panic wire is cut, this will be set to panic.
+    /// Whether the panic wire is cut, forcing the alarm into panic mode.
     /// </summary>
     [DataField, ViewVariables]
-    public AirAlarmMode? ForcedMode;
+    public bool PanicWireCut;
 }
