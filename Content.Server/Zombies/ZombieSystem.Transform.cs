@@ -292,7 +292,7 @@ public sealed partial class ZombieSystem
         _movementSpeedModifier.RefreshMovementSpeedModifiers(target);
 
         //Need to prevent them from getting an item, they have no hands.
-        // Also prevents them from becoming a Survivor. They're undead.  
+        // Also prevents them from becoming a Survivor. They're undead.
         _tag.AddTag(target, InvalidForGlobalSpawnSpellTag);
         _tag.AddTag(target, CannotSuicideTag);
     }
