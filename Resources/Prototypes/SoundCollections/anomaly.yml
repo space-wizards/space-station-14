@@ -28,3 +28,9 @@
   id: AnomalyGravitySupercritical
   files:
   - /Audio/Items/Anomaly/grav_crit.ogg
+
+- type: soundCollection
+  id: AnomalyElectricitySupercritical
+  files:
+  - /Audio/Items/Anomaly/electricity_crit.ogg
+

@@ -160,6 +160,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreElectricity
     coreInertPrototype: AnomalyCoreElectricityInert
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyElectricitySupercritical
   - type: Sprite
     layers:
     - state: anom3

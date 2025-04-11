@@ -34,3 +34,8 @@
   license: "CC0-1.0"
   copyright: "anomaly_drone.ogg (Joao_Janz, EmoGarbage) as base, further editing by Quantum-Cross@github"
   source: "https://freesound.org/people/Joao_Janz/sounds/478472/"
+
+- files: ["electricity_crit.ogg"]
+  license: Custom
+  copyright: "jensfelger (Freesound), edited by Quantum-Cross@github"
+  source: https://pixabay.com/sound-effects/sliding-discharge-160kv-71800/
