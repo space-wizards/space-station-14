@@ -99,4 +99,4 @@
   category: construction-category-misc
   description: "A harmless cigar that explodes in your face."
   icon: {sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi, state: lit-icon}
-  onjectType: Item
+  objectType: Item
