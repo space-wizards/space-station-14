@@ -43,3 +43,8 @@
   id: AnomalyBluespaceExplosion
   files:
   - /Audio/Items/Anomaly/bluespace_explosion.ogg
+
+- type: soundCollection
+  id: AnomalyIceSupercritical
+  files:
+  - /Audio/Items/Anomaly/ice_crit.ogg

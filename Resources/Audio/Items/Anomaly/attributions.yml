@@ -52,3 +52,8 @@
   license: "CC0-1.0"
   copyright: "Geoff-Bremner-Audio (Freesound), edited by Quantum-Cross@github"
   source: https://freesound.org/people/Geoff-Bremner-Audio/sounds/725949/
+
+- files: ["ice_crit.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "iainmccurdy (Freesound), edited by Quantum-Cross@github"
+  source: https://https://freesound.org/people/iainmccurdy/sounds/440858/

@@ -344,6 +344,8 @@
   - type: Anomaly
     corePrototype: AnomalyCoreIce
     coreInertPrototype: AnomalyCoreIceInert
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyIceSupercritical
   - type: ExplosionAnomaly
     supercriticalExplosion: Cryo
     explosionTotalIntensity: 300
