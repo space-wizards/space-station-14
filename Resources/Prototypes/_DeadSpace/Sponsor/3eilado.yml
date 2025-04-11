@@ -491,6 +491,7 @@
   id: DemonHorns3eilado
   bodyPart: HeadTop
   markingCategory: HeadTop
+  sponsorOnly: true
   sprites:
   - sprite: _DeadSpace/Sponsor/3eilado/horns.rsi
     state: horns
