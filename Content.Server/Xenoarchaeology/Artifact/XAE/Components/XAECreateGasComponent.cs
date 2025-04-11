@@ -2,7 +2,9 @@ using Content.Shared.Atmos;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 
-
+/// <summary>
+/// XenoArtifact effect that creates gas in atmosphere.
+/// </summary>
 [RegisterComponent, Access(typeof(XAECreateGasSystem))]
 public sealed partial class XAECreateGasComponent : Component
 {

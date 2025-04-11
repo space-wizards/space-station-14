@@ -7,13 +7,13 @@ namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 public sealed partial class XAELightFlickerComponent : Component
 {
     /// <summary>
-    /// Lights within this radius will be flickered on activation
+    /// Lights within this radius will be flickered on activation.
     /// </summary>
     [DataField]
     public float Radius = 4;
 
     /// <summary>
-    /// The chance that the light will flicker
+    /// The chance that the light will flicker.
     /// </summary>
     [DataField]
     public float FlickerChance = 0.75f;

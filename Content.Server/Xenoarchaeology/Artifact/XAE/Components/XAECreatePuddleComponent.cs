@@ -21,7 +21,7 @@ public sealed partial class XAECreatePuddleComponent : Component
     /// The different chemicals that can be spawned by this effect
     /// </summary>
     [DataField]
-    public List<ProtoId<ReagentPrototype>> PossibleChemicals = default!;
+    public List<ProtoId<ReagentPrototype>> PossibleChemicals = new();
 
     /// <summary>
     /// The number of chemicals in the puddle
@@ -31,8 +31,9 @@ public sealed partial class XAECreatePuddleComponent : Component
 
     /// <summary>
     /// List of reagents selected for this node. Selected ones are chosen on first activation
-    /// and are picked from <see cref="PossibleChemicals"/>.
+    /// and are picked from <see cref="PossibleChemicals"/> and is calculated separately for each node.
     /// </summary>
+    [DataField]
     public List<ProtoId<ReagentPrototype>>? SelectedChemicals;
 
     /// <summary>

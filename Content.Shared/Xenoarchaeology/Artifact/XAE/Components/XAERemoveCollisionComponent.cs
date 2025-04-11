@@ -5,6 +5,4 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
 ///     and such.
 /// </summary>
 [RegisterComponent, Access(typeof(XAERemoveCollisionSystem))]
-public sealed partial class XAERemoveCollisionComponent : Component
-{
-}
+public sealed partial class XAERemoveCollisionComponent : Component;

@@ -4,20 +4,20 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 
 /// <summary>
-/// Generates foam from the artifact when activated
+/// Generates foam from the artifact when activated.
 /// </summary>
 [RegisterComponent, Access(typeof(XAEFoamSystem))]
 public sealed partial class XAEFoamComponent : Component
 {
     /// <summary>
     /// The list of reagents that will randomly be picked from
-    /// to choose the foam reagent
+    /// to choose the foam reagent.
     /// </summary>
     [DataField(required: true)]
     public List<ProtoId<ReagentPrototype>> Reagents = new();
 
     /// <summary>
-    /// The foam reagent
+    /// The foam reagent.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string? SelectedReagent;
@@ -35,13 +35,13 @@ public sealed partial class XAEFoamComponent : Component
     public float ReagentAmount = 100f;
 
     /// <summary>
-    /// Minimum radius of foam spawned
+    /// Minimum radius of foam spawned.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int MinFoamAmount = 15;
 
     /// <summary>
-    /// Maximum radius of foam spawned
+    /// Maximum radius of foam spawned.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public int MaxFoamAmount = 20;

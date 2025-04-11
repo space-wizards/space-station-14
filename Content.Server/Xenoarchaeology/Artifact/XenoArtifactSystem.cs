@@ -4,6 +4,7 @@ using Content.Shared.Xenoarchaeology.Artifact.Components;
 
 namespace Content.Server.Xenoarchaeology.Artifact;
 
+/// <inheritdoc cref="SharedXenoArtifactSystem"/>
 public sealed partial class XenoArtifactSystem : SharedXenoArtifactSystem
 {
     /// <inheritdoc/>

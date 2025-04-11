@@ -5,6 +5,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Xenoarchaeology.Equipment;
 
+/// <inheritdoc cref="SharedNodeScannerSystem"/>
 public sealed class NodeScannerSystem : SharedNodeScannerSystem
 {
     [Dependency] private readonly UserInterfaceSystem _ui = default!;

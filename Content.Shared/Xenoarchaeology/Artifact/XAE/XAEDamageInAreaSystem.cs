@@ -14,6 +14,9 @@ public sealed class XAEDamageInAreaSystem : BaseXAESystem<XAEDamageInAreaCompone
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
+    /// <summary> Pre-allocated and re-used collection.</summary>
+    private readonly HashSet<EntityUid> _entitiesInRange = new();
+
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEDamageInAreaComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
@@ -21,15 +24,15 @@ public sealed class XAEDamageInAreaSystem : BaseXAESystem<XAEDamageInAreaCompone
             return;
 
         var damageInAreaComponent = ent.Comp;
-        var entitiesInRange = _lookup.GetEntitiesInRange(ent.Owner, damageInAreaComponent.Radius);
-
-        foreach (var entityInRange in entitiesInRange)
+        _entitiesInRange.Clear();
+        _lookup.GetEntitiesInRange(ent.Owner, damageInAreaComponent.Radius, _entitiesInRange);
+        foreach (var entityInRange in _entitiesInRange)
         {
-            if (_whitelistSystem.IsWhitelistFail(damageInAreaComponent.Whitelist, entityInRange))
+            if (!_random.Prob(damageInAreaComponent.DamageChance))
                 continue;
 
-            if (!_random.Prob(damageInAreaComponent.DamageChance))
-                return;
+            if (_whitelistSystem.IsWhitelistFail(damageInAreaComponent.Whitelist, entityInRange))
+                continue;
 
             _damageable.TryChangeDamage(entityInRange, damageInAreaComponent.Damage, damageInAreaComponent.IgnoreResistances);
         }

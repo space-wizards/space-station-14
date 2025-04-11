@@ -1,9 +1,14 @@
 using Content.Shared.Research.Components;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
+using Robust.Client.UserInterface;
 using JetBrains.Annotations;
 
 namespace Content.Client.Xenoarchaeology.Ui;
 
+/// <summary>
+/// BUI for artifact analysis console, proxies server-provided UI updates
+/// (related to device, connected artifact analyzer, and artifact lying on it).
+/// </summary>
 [UsedImplicitly]
 public sealed class AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
@@ -15,7 +20,8 @@ public sealed class AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKe
     {
         base.Open();
 
-        _consoleMenu = new AnalysisConsoleMenu(Owner);
+        _consoleMenu = this.CreateWindow<AnalysisConsoleMenu>();
+        _consoleMenu.SetOwner(owner);
 
         _consoleMenu.OnClose += Close;
         _consoleMenu.OpenCentered();

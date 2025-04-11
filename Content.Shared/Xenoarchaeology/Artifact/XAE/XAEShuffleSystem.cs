@@ -5,6 +5,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 
+/// <summary>
+/// System that handles mob entities spacial shuffling effect.
+/// </summary>
 public sealed class XAEShuffleSystem : BaseXAESystem<XAEShuffleComponent>
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -12,19 +15,31 @@ public sealed class XAEShuffleSystem : BaseXAESystem<XAEShuffleComponent>
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
+    private EntityQuery<MobStateComponent> _mobState;
+
+    /// <summary> Pre-allocated and re-used collection.</summary>
+    private readonly HashSet<EntityUid> _entities= new();
+
+    /// <inheritdoc />
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _mobState = GetEntityQuery<MobStateComponent>();
+    }
+
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEShuffleComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
         if(!_timing.IsFirstTimePredicted)
             return;
 
-        var mobState = GetEntityQuery<MobStateComponent>();
-
         List<Entity<TransformComponent>> toShuffle = new();
-
-        foreach (var entity in _lookup.GetEntitiesInRange(ent.Owner, ent.Comp.Radius, LookupFlags.Dynamic | LookupFlags.Sundries))
+        _entities.Clear();
+        _lookup.GetEntitiesInRange(ent.Owner, ent.Comp.Radius, _entities, LookupFlags.Dynamic | LookupFlags.Sundries);
+        foreach (var entity in _entities)
         {
-            if (!mobState.HasComponent(entity))
+            if (!_mobState.HasComponent(entity))
                 continue;
 
             var xform = Transform(entity);

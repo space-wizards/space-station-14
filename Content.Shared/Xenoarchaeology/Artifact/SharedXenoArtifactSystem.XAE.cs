@@ -88,7 +88,10 @@ public abstract partial class SharedXenoArtifactSystem
         );
         RaiseLocalEvent(artifact, ref ev);
 
-        _audio.PlayPvs(xenoArtifactComponent.ForceActivationSoundSpecifier, artifact);
+        if (user.HasValue)
+            _audio.PlayPredicted(xenoArtifactComponent.ForceActivationSoundSpecifier, artifact, user);
+        else
+            _audio.PlayPvs(xenoArtifactComponent.ForceActivationSoundSpecifier, artifact);
 
         return true;
     }

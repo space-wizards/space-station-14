@@ -11,13 +11,24 @@ public sealed partial class NodeScannerDisplay : FancyWindow
 {
     [Dependency] private readonly IEntityManager _ent = default!;
 
-    public NodeScannerDisplay(EntityUid scannerEntityUid)
+    public NodeScannerDisplay()
     {
         RobustXamlLoader.Load(this);
 
         IoCManager.InjectDependencies(this);
+    }
 
-        var scannerComponent = _ent.GetComponent<NodeScannerComponent>(scannerEntityUid);
+    /// <summary>
+    /// Sets entity that represents hand-held xeno artifact node scanner for which window is opened.
+    /// Closes window if <see cref="NodeScannerComponent"/> is not present on entity.
+    /// </summary>
+    public void SetOwner(EntityUid scannerEntityUid)
+    {
+        if (!_ent.TryGetComponent<NodeScannerComponent>(scannerEntityUid, out var scannerComponent))
+        {
+            Close();
+            return;
+        }
 
         Update((scannerEntityUid, scannerComponent));
     }

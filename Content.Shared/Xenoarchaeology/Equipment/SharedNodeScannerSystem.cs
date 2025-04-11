@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.NameIdentifier;
 using Content.Shared.Timing;
@@ -7,10 +6,10 @@ using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Robust.Shared.Timing;
-using NodeScannerComponent = Content.Shared.Xenoarchaeology.Equipment.Components.NodeScannerComponent;
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
+/// <summary> Controls behaviour of artifact node scanner device. </summary>
 public abstract class SharedNodeScannerSystem : EntitySystem
 {
     [Dependency] private readonly UseDelaySystem _useDelay = default!;

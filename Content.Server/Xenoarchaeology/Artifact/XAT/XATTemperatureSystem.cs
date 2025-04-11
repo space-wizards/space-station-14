@@ -5,6 +5,9 @@ using Content.Shared.Xenoarchaeology.Artifact.XAT;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAT;
 
+/// <summary>
+/// System for checking if temperature-related xeno artifact node should be triggered.
+/// </summary>
 public sealed class XATTemperatureSystem : BaseQueryUpdateXATSystem<XATTemperatureComponent>
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;

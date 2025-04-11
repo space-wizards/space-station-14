@@ -8,7 +8,6 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 /// </summary>
 public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsComponent>
 {
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <inheritdoc />
@@ -31,7 +30,7 @@ public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsC
                 EntityManager.RemoveComponent(artifact, registry.Value.Component.GetType());
             }
 
-            var clone = _componentFactory.GetComponent(registry.Value);
+            var clone = EntityManager.ComponentFactory.GetComponent(registry.Value);
             EntityManager.AddComponent(artifact, clone);
         }
     }

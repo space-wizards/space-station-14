@@ -7,7 +7,7 @@ namespace Content.Server.Xenoarchaeology.Artifact.XAT.Components;
 public sealed partial class XATMagnetComponent : Component
 {
     /// <summary>
-    /// how close to the magnet do you have to be?
+    /// How close to the magnet do you have to be?
     /// </summary>
     [DataField]
     public float MagnetRange = 40f;

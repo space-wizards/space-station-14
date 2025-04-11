@@ -39,25 +39,25 @@
                         <Label Name="NoneSelectedLabel" Text="{Loc 'analysis-console-no-node'}" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalExpand="True" Visible="False"/>
                         <BoxContainer Name="InfoContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
                             <BoxContainer HorizontalExpand="True">
-                                <RichTextLabel Name="IDLabel" HorizontalExpand="True"/>
+                                <RichTextLabel Name="IDLabel" HorizontalExpand="True" Text="{Loc 'analysis-console-info-id'}"/>
                                 <RichTextLabel Name="IDValueLabel" HorizontalAlignment="Right"/>
                             </BoxContainer>
                             <BoxContainer HorizontalExpand="True">
-                                <RichTextLabel Name="ClassLabel" HorizontalExpand="True"/>
+                                <RichTextLabel Name="ClassLabel" HorizontalExpand="True" Text="{Loc 'analysis-console-info-class'}"/>
                                 <RichTextLabel Name="ClassValueLabel" HorizontalAlignment="Right"/>
                             </BoxContainer>
                             <BoxContainer HorizontalExpand="True">
-                                <RichTextLabel Name="LockedLabel" HorizontalExpand="True"/>
+                                <RichTextLabel Name="LockedLabel" HorizontalExpand="True" Text="{Loc 'analysis-console-info-locked'}"/>
                                 <RichTextLabel Name="LockedValueLabel" HorizontalAlignment="Right"/>
                             </BoxContainer>
                             <BoxContainer HorizontalExpand="True">
-                                <RichTextLabel Name="DurabilityLabel" HorizontalExpand="True"/>
+                                <RichTextLabel Name="DurabilityLabel" HorizontalExpand="True" Text="{Loc 'analysis-console-info-durability'}"/>
                                 <RichTextLabel Name="DurabilityValueLabel" HorizontalAlignment="Right"/>
                             </BoxContainer>
                             <Control MinHeight="20"/>
-                            <RichTextLabel Name="EffectLabel"/>
+                            <RichTextLabel Name="EffectLabel" Text="{Loc 'analysis-console-info-effect'}"/>
                             <RichTextLabel Name="EffectValueLabel" HorizontalExpand="True"/>
-                            <RichTextLabel Name="TriggerLabel"/>
+                            <RichTextLabel Name="TriggerLabel" Text="{Loc 'analysis-console-info-trigger'}"/>
                             <RichTextLabel Name="TriggerValueLabel" HorizontalExpand="True"/>
                         </BoxContainer>
                     </BoxContainer>
