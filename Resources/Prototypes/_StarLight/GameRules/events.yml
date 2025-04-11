@@ -121,7 +121,7 @@
   - type: LoadMapRule
     gridPath: /Maps/_Starlight/Shuttles/Radiotower.yml
 
-      #Pig's ERT Shuttle
+      #Pig's CBURN Shuttle
 - type: entity
   parent: BaseGameRule
   id: CBURNShuttleSpawn
