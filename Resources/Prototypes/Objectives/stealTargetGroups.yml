@@ -180,6 +180,20 @@
     state: icon
 
 - type: stealTargetGroup
+  id: WantedListCartridge
+  name: steal-target-groups-wanted-list-cartridge
+  sprite:
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-sec
+
+- type: stealTargetGroup
+  id: InterrogatorLamp
+  name: steal-target-groups-interrogator-lamp
+  sprite:
+    sprite: Objects/Misc/Lights/lampint.rsi
+    state: lamp-int
+
+- type: stealTargetGroup
   id: ClothingOuterHardsuitVoidParamed
   name: steal-target-groups-clothing-outer-hardsuit-void-paramed
   sprite:
@@ -262,13 +276,6 @@
   sprite:
     sprite: Clothing/Neck/Medals/clownmedal.rsi
     state: icon
-
-- type: stealTargetGroup
-  id: WantedListCartridge
-  name: steal-target-groups-wanted-list-cartridge
-  sprite:
-    sprite: Objects/Devices/cartridge.rsi
-    state: cart-sec
 
 - type: stealTargetGroup
   id: SilverID

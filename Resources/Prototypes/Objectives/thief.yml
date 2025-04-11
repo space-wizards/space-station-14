@@ -196,6 +196,17 @@
   - type: Objective
     difficulty: 1
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: InterrogatorLampStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Detective
+  - type: StealCondition
+    stealGroup: InterrogatorLamp
+  - type: Objective
+    difficulty: 1.2
+
 - type: entity                                      #Medical subgroup
   parent: BaseThiefStealObjective
   id: ClothingOuterHardsuitVoidParamedStealObjective
