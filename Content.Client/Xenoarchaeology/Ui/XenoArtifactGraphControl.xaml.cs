@@ -160,7 +160,7 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
             // draw edges for each segment and each node that have successors
             foreach (var node in segment)
             {
-                var from = GetNodePos(node, ySpacing, segments, ref bottomLeft) + new Vector2(0, -NodeRadius);
+                var fromNode = GetNodePos(node, ySpacing, segments, ref bottomLeft) + new Vector2(0, -NodeRadius);
                 var successorNodes = _artifactSystem.GetDirectSuccessorNodes((artifact, artifact), node);
                 foreach (var successorNode in successorNodes)
                 {
@@ -168,8 +168,8 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
                         ? LockedNodeColor
                         : UnlockedNodeColor;
 
-                    var to = GetNodePos(successorNode, ySpacing, segments, ref bottomLeft) + new Vector2(0, NodeRadius);
-                    handle.DrawLine(from, to, color);
+                    var toNode = GetNodePos(successorNode, ySpacing, segments, ref bottomLeft) + new Vector2(0, NodeRadius);
+                    handle.DrawLine(fromNode, toNode, color);
                 }
             }
 
