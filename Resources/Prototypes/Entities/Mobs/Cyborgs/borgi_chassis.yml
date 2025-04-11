@@ -412,7 +412,7 @@
     subverted: true
   - type: RandomMetadata
     nameSegments:
-    - names_syndiborgi
+    - NamesSyndieBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
