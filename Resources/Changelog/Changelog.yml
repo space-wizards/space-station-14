@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: red15
-  changes:
-  - message: Vending machine lights turns off when broken.
-    type: Fix
-  id: 7653
-  time: '2024-11-25T12:35:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33513
 - author: metalgearsloth
   changes:
   - message: Adjusted the top menu on the separated game screen. The buttons will
@@ -3892,3 +3885,10 @@
   id: 8152
   time: '2025-04-11T01:12:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36453
+- author: YoungThugSS14
+  changes:
+  - message: Wizards now appear roundstart in the "all at once" gamemode.
+    type: Tweak
+  id: 8153
+  time: '2025-04-11T02:06:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36408
