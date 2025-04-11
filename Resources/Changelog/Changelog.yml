@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Schrodinger71
-  changes:
-  - message: Fixed a bug letting players type "ghost" in the console and then see
-      the whole chat while being in the lobby.
-    type: Fix
-  id: 7651
-  time: '2024-11-25T07:20:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33529
 - author: Minemoder
   changes:
   - message: The shark plushie now goes rawr when hitting something or being thrown.
@@ -3893,3 +3885,10 @@
   id: 8150
   time: '2025-04-11T00:54:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36449
+- author: RedBookcase
+  changes:
+  - message: The Kardashev-Mosin is now considered Major Contraband.
+    type: Tweak
+  id: 8151
+  time: '2025-04-11T00:57:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36446
