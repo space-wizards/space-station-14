@@ -52,6 +52,6 @@ public sealed partial class AirAlarmComponent : Component
     /// If not null, this mode will be forced and any attempts to change it will be ignored.
     /// E.g., if the panic wire is cut, this will be set to panic.
     /// </summary>
-    [ViewVariables]
+    [DataField, ViewVariables]
     public AirAlarmMode? ForcedMode;
 }
