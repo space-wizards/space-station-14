@@ -182,7 +182,7 @@
     minPulseLength: 180
     maxPulseLength: 300
     supercriticalSoundAtAnimationStart:
-      collection: AnomalyShadowSupercritical
+      collection: AnomalyFleshSupercritical
   - type: Sprite
     layers:
     - state: anom5
