@@ -110,6 +110,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
         {
             UpdateDeviceData(addr, dev);
         }
+        _modes.Disabled = state.PanicWireCut;
     }
 
     public void UpdateModeSelector(AirAlarmMode mode)
