@@ -223,7 +223,7 @@
   components:
   - type: RandomMetadata
     nameSegments:
-    - names_corgi
+    - NamesСorgi
   # Custom inventory template
   - type: Inventory
     speciesId: dog
