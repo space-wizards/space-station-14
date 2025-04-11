@@ -171,7 +171,7 @@ public sealed partial class GraphicsTab : Control
             if (val <= 0.125)
                 return QualityVeryLow;
 
-            if (val <= 0.5 && !soft)
+            if (val <= 0.3 && !soft)
                 return QualityLow;
 
             if (val <= 0.5)
