@@ -525,7 +525,7 @@
     subverted: true
   - type: RandomMetadata
     nameSegments:
-    - names_shadowborgi
+    - NamesShadowBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
