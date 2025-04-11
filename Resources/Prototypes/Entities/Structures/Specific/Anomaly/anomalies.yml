@@ -72,6 +72,8 @@
   - type: Anomaly
     corePrototype: AnomalyCorePyroclastic
     coreInertPrototype: AnomalyCorePyroclasticInert
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyPyroSupercritical
   - type: Sprite
     sprite: Structures/Specific/Anomalies/pyro_anom.rsi
     layers:

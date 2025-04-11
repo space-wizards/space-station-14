@@ -24,3 +24,8 @@
   license: "CC0-1.0"
   copyright: "richwise (Freesound), edited by Quantum-cross@github"
   source: https://freesound.org/people/richwise/sounds/414374/
+
+- files: ["pyro_crit.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Robinhood76 (Freesound), edited by Quantum-cross@github"
+  source: https://freesound.org/people/Robinhood76/sounds/612277/

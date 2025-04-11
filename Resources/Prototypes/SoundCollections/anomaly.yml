@@ -18,3 +18,8 @@
   id: AnomalyPresentSupercritical
   files:
   - /Audio/Items/Anomaly/present_crit.ogg
+
+- type: soundCollection
+  id: AnomalyPyroSupercritical
+  files:
+  - /Audio/Items/Anomaly/pyro_crit.ogg
