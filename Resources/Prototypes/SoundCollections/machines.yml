@@ -1,4 +1,10 @@
 - type: soundCollection
+  id: CargoPing
+  files:
+  - /Audio/Effects/Cargo/ping.ogg
+
+
+- type: soundCollection
   id: CargoError
   files:
   - /Audio/Effects/Cargo/buzz_sigh.ogg

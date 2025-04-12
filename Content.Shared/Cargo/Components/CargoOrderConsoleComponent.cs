@@ -13,7 +13,8 @@ namespace Content.Shared.Cargo.Components;
 /// <summary>
 /// Handles sending order requests to cargo. Doesn't handle orders themselves via shuttle or telepads.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
+[Access(typeof(SharedCargoSystem))]
 public sealed partial class CargoOrderConsoleComponent : Component
 {
     /// <summary>
@@ -37,6 +38,7 @@ public sealed partial class CargoOrderConsoleComponent : Component
     [DataField, AutoNetworkedField]
     public bool TransferUnbounded;
 
+    [ViewVariables]
     public float TransferLimit => TransferUnbounded ? 1 : BaseTransferLimit;
 
     /// <summary>
@@ -48,9 +50,10 @@ public sealed partial class CargoOrderConsoleComponent : Component
     /// <summary>
     /// The time at which account actions can be performed again.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
     public TimeSpan NextAccountActionTime;
 
+    [ViewVariables]
     public TimeSpan AccountActionDelay => TransferUnbounded ? UnboundedAccountActionDelay : BaseAccountActionDelay;
 
     /// <summary>

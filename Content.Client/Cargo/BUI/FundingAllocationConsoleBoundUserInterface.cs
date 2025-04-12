@@ -6,14 +6,10 @@ using Robust.Client.UserInterface;
 namespace Content.Client.Cargo.BUI;
 
 [UsedImplicitly]
-public sealed class FundingAllocationConsoleBoundUserInterface : BoundUserInterface
+public sealed class FundingAllocationConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private FundingAllocationMenu? _menu;
-
-    public FundingAllocationConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {

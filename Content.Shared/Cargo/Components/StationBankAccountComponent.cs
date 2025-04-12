@@ -1,6 +1,7 @@
 using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Cargo.Components;
 
@@ -59,7 +60,7 @@ public sealed partial class StationBankAccountComponent : Component
     /// <summary>
     /// The time at which the station will receive its next deposit of passive income
     /// </summary>
-    [DataField, AutoPausedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextIncomeTime;
 
     /// <summary>
@@ -68,3 +69,9 @@ public sealed partial class StationBankAccountComponent : Component
     [DataField]
     public TimeSpan IncomeDelay = TimeSpan.FromSeconds(50);
 }
+
+/// <summary>
+/// Broadcast and raised on station ent whenever its balance is updated.
+/// </summary>
+[ByRefEvent]
+public readonly record struct BankBalanceUpdatedEvent(EntityUid Station, Dictionary<ProtoId<CargoAccountPrototype>, int> Balance);

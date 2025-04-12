@@ -96,5 +96,7 @@ public sealed partial class CargoSystem : SharedCargoSystem
         if (!dirty)
             return;
         Dirty(ent);
+        var ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Accounts);
+        RaiseLocalEvent(ent, ref ev, true);
     }
 }

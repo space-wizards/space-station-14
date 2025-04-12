@@ -151,12 +151,12 @@ public sealed partial class CargoSystem
                     // which represents the space we do have left:
                     var reducedOrder = new CargoOrderData(
                         order.OrderId,
-                            order.ProductId,
-                            order.ProductName,
-                            order.Price,
-                            spaceRemaining,
-                            order.Requester,
-                            order.Reason);
+                        order.ProductId,
+                        order.ProductName,
+                        order.Price,
+                        spaceRemaining,
+                        order.Requester,
+                        order.Reason);
                     orders.Add(reducedOrder);
                 }
                 else

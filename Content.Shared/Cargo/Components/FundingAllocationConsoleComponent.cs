@@ -17,7 +17,7 @@ public sealed partial class FundingAllocationConsoleComponent : Component
     /// Sound played when the budget distribution is set.
     /// </summary>
     [DataField]
-    public SoundSpecifier SetDistributionSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg");
+    public SoundSpecifier SetDistributionSound = new SoundCollectionSpecifier("CargoPing");
 }
 
 [Serializable, NetSerializable]
