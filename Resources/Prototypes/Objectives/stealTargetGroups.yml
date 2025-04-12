@@ -278,6 +278,13 @@
     state: icon
 
 - type: stealTargetGroup
+  id: Cleaver
+  name: steal-target-groups-butchers-cleaver
+  sprite:
+    sprite: Objects/Weapons/Melee/cleaver.rsi
+    state: butch
+
+- type: stealTargetGroup
   id: ClothingNeckGoldmedal
   name: steal-target-groups-clothing-neck-goldmedal
   sprite:

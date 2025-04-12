@@ -328,6 +328,17 @@
   - type: Objective
     difficulty: 0.4
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ButcherCleaverStealObjective
+  components:
+    - type: NotJobRequirement
+      job: Chef
+    - type: StealCondition
+      stealGroup: Cleaver
+    - type: Objective
+      difficulty: 1 # Do you really think Chef'll be happy?
+
 - type: entity                                      #Other subgroup
   parent: BaseThiefStealObjective
   id: ClothingNeckGoldmedalStealObjective

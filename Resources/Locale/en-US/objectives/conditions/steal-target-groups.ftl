@@ -43,6 +43,7 @@ steal-target-groups-cargo-shuttle-console-circuitboard = cargo shuttle console b
 steal-target-groups-astro-nav-cartridge = astronav cartridge
 steal-target-groups-clothing-eyes-hud-beer = beer goggles
 steal-target-groups-bible = bible
+steal-target-groups-butchers-cleaver = butcher's cleaver
 steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
 steal-target-groups-clothing-neck-clownmedal = clown medal
 steal-target-groups-silver-id = silver ID card
