@@ -4771,4 +4771,11 @@ Entries:
   id: 660
   time: '2025-04-11T21:02:48.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/478
+- author: ScorchFollower
+  changes:
+  - message: Bug fix on Elkridge Station.
+    type: Fix
+  id: 661
+  time: '2025-04-12T06:11:23.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/480
 
