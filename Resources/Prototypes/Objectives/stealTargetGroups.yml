@@ -222,11 +222,11 @@
     state: icon_alt
 
 - type: stealTargetGroup
-  id: ResearchAndDevelopmentServerMachineCircuitboard
-  name: steal-target-groups-research-and-development-server-machine-circuitboard
+  id: CrewMonitorServerBoard
+  name: steal-target-groups-crew-monitor-server-board
   sprite:
     sprite: Objects/Misc/module.rsi
-    state: science
+    state: cpu_medical
 
 - type: stealTargetGroup
   id: FireAxe

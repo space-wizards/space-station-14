@@ -35,7 +35,7 @@ steal-target-groups-clothing-neck-lawyer-badge = lawyer badge
 steal-target-groups-clothing-outer-hardsuit-void-paramed = paramedic void suit
 steal-target-groups-medical-tech-fab-circuitboard = medical techfab machine board
 steal-target-groups-clothing-headset-alt-medical = chief medical officer's over-ear headset
-steal-target-groups-research-and-development-server-machine-circuitboard = R&D server machine board
+steal-target-groups-crew-monitor-server-board = crew monitoring server board
 steal-target-groups-fire-axe = fireaxe
 steal-target-groups-ame-part-flatpack =  AME flatpack
 steal-target-groups-salvage-expeditions-computer-circuitboard = salvage expeditions computer board
@@ -54,7 +54,6 @@ steal-target-groups-toolbox-golden = golden toolbox
 steal-target-groups-teg = teg generator part
 steal-target-groups-freezer-heater = freezer or heater
 steal-target-groups-altar-nanotrasen = nanotrasen altar (any)
-
 steal-target-groups-nuclear-bomb = nuclear fission explosive
 steal-target-groups-fax-machine-captain = captain long range fax machine
 steal-target-groups-chem-dispenser = chemical dispenser

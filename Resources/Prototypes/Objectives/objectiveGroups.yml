@@ -79,6 +79,7 @@
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
     MedicalTechFabCircuitboardStealObjective: 1
     ClothingHeadsetAltMedicalStealObjective: 1
+    CrewMonitorServerBoardStealObjective: 1
     FireAxeStealObjective: 1                            #eng
     AmePartFlatpackStealObjective: 1
     ExpeditionsCircuitboardStealObjective: 1            #sup

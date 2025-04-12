@@ -251,6 +251,17 @@
   - type: Objective
     difficulty: 1
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: CrewMonitorServerBoardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: ResearchDirector
+  - type: StealCondition
+    stealGroup: CrewMonitorServerBoard
+  - type: Objective
+    difficulty: 1.5 # Typically in RD's office
+
 - type: entity                                      #Engineering subgroup
   parent: BaseThiefStealObjective
   id: FireAxeStealObjective
