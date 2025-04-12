@@ -75,6 +75,12 @@ public enum MaterialStorageVisuals : byte
     Inserting
 }
 
+[ByRefEvent]
+public readonly record struct GetStoredMaterialsEvent(Entity<MaterialStorageComponent> Entity, Dictionary<ProtoId<MaterialPrototype>, int> Materials, bool LocalOnly);
+
+[ByRefEvent]
+public readonly record struct ConsumeStoredMaterialsEvent(Entity<MaterialStorageComponent> Entity, Dictionary<ProtoId<MaterialPrototype>, int> Materials, bool LocalOnly);
+
 /// <summary>
 /// event raised on the materialStorage when a material entity is inserted into it.
 /// </summary>
