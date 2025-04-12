@@ -356,7 +356,7 @@ public abstract class SharedAnomalySystem : EntitySystem
             if (Timing.CurTime <= super.EndTime)
                 continue;
             DoAnomalySupercriticalEvent(ent, anom);
-            RemComp(ent, super);
+            // Removal of the supercritical component is handled by DoAnomalySupercriticalEvent
         }
     }
 
