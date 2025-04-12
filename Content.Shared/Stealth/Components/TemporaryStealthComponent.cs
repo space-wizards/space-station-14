@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Stealth.Components;
 
@@ -38,7 +39,7 @@ public sealed partial class TemporaryStealthComponent : Component
     /// The moment of imposition of this component, is calculated automatically by the system.
     /// The invisibility level timings are calculated based on the shift from this moment of time.
     /// </summary>
-    
+
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoNetworkedField, AutoPausedField]
     public TimeSpan StartTime = TimeSpan.Zero;
