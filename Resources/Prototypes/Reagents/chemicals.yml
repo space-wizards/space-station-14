@@ -186,3 +186,15 @@
         key: Adrenaline
         component: IgnoreSlowOnDamage
         time: 120
+
+- type: reagent
+  id: SpectraFade
+  name: reagent-name-spectra-fade
+  desc: reagent-desc-spectra-fade
+  flavor: metallic
+  physicalDesc: reagent-physical-desc-crystalline
+  color: "#5ee0aa"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:AddStealth
