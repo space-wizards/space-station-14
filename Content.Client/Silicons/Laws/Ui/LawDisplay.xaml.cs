@@ -105,7 +105,7 @@ public sealed partial class LawDisplay : Control
         var curTime = _timing.CurTime;
         foreach (var (button, nextPress) in _nextAllowedPress)
         {
-            button.Disabled = curTime < nextPress;
+            button.Disabled = curTime < nextPress || !AllowStatingLaws.Pressed;
         }
     }
 }

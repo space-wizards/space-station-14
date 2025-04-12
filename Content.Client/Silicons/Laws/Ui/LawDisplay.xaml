@@ -7,6 +7,7 @@
                       VerticalExpand="True"
                       Margin="5 5 5 5">
             <RichTextLabel Name="LawNumberLabel" StyleClasses="LabelKeyText"/>
+            <Button Name="AllowStatingLaws" Text="{Loc 'laws-ui-stating-toggle'}" ToggleMode="True" Pressed="True"/>
             <customControls:HSeparator Margin="0 5 0 5"/>
             <RichTextLabel Name="LawLabel"/>
             <BoxContainer Name="LawAnnouncementButtons" Orientation="Horizontal" HorizontalExpand="True" Margin="0 5 0 0">
