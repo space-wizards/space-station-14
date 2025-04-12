@@ -1014,5 +1014,12 @@ Entries:
   id: 123
   time: '2025-04-12T13:37:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36474
+- author: Errant
+  changes:
+  - message: Player Panel now has a Follow button.
+    type: Add
+  id: 124
+  time: '2025-04-12T20:00:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36466
 Name: Admin
 Order: 1
