@@ -148,7 +148,7 @@
   name: Lecter
   parent: [BaseWeaponRifle, BaseSecurityContraband]
   id: WeaponRifleLecter
-  description: A high end military grade assault rifle. Uses .20 rifle ammo.
+  description: Popular gas-operated combat rifle used by nearly all of Nanotrasen’s armed details. Operating in semi or fully automatic, its accuracy, stopping power and reliability make it excel in all manner of environments. | Feeds from .20 rifle magazines.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
