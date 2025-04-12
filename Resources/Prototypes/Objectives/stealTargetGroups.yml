@@ -257,6 +257,13 @@
     state: cpuboard
 
 - type: stealTargetGroup
+  id: AstroNavCartridge
+  name: steal-target-groups-astro-nav-cartridge
+  sprite:
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-nav
+
+- type: stealTargetGroup
   id: ClothingEyesHudBeer
   name: steal-target-groups-clothing-eyes-hud-beer
   sprite:
