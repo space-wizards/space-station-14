@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: Darkmajia, AftrLite
-  changes:
-  - message: The supermatter has received a large amount of changes and upgrades.
-      Check out the updated guidebook!
-    type: Tweak
-  - message: The supermatter monitoring console now has full functionality.
-    type: Tweak
-  - message: The supermatter now emits waste gas as intended, instead of storing waste
-      inside itself.
-    type: Fix
-  id: 1004
-  time: '2025-01-25T08:44:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1359
 - author: AftrLite
   changes:
   - message: Syndicate Decoys have been fixed to match the new hardsuit sprites. Deploy
@@ -4106,3 +4093,14 @@
   id: 1503
   time: '2025-04-10T14:12:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2242
+- author: jtfg-dev
+  changes:
+  - message: The jukebox is now sorted by track name, rather than by source / artist.
+    type: Tweak
+  - message: The recently-added music should sound a lot better, and is more in balance
+      volume-wise with the other songs. Your ears have been spared the wrath of FIRE
+      TEMPLE in the bar. (Gondal is, however, inescapable.)
+    type: Fix
+  id: 1504
+  time: '2025-04-12T04:22:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2248
