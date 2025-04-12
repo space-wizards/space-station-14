@@ -177,6 +177,11 @@
   - type: Clothing
     sprite: _DeadSpace/Sponsor/Kelic/hud.rsi
   - type: FlashImmunity
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+    - Inorganic
+    - Silicon
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
