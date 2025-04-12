@@ -385,7 +385,7 @@
   id: AccessConfiguratorStealObjective
   components:
   - type: NotJobRequirement
-    job: ChiefEngineer, HeadOfPersonnel
+    job: HeadOfPersonnel
   - type: StealCondition
     stealGroup: AccessConfigurator
   - type: Objective
