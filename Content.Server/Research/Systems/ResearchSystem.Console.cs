@@ -55,7 +55,14 @@ public sealed partial class ResearchSystem
                 ("amount", technologyPrototype.Cost),
                 ("approver", getIdentityEvent.Title ?? string.Empty)
             );
+
             _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
+
+            if (PrototypeManager.TryIndex<TechDisciplinePrototype>(technologyPrototype.Discipline, out var disciplinePrototype) &&
+                !string.IsNullOrEmpty(disciplinePrototype.RadioChannel))
+            {
+                _radio.SendRadioMessage(uid, message, disciplinePrototype.RadioChannel, uid, escapeMarkup: false);
+            }
         }
 
         SyncClientWithServer(uid);
