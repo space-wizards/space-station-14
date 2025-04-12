@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Antag;
 using Content.Server.Players.PlayTimeTracking;
+using Content.Server.Preferences.Managers;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Shared.Preferences;
@@ -21,6 +22,7 @@ public sealed partial class StationJobsSystem
     [Dependency] private readonly IBanManager _banManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
+    [Dependency] private readonly IServerPreferencesManager _serverPreferences = default!;
 
     private Dictionary<int, HashSet<string>> _jobsByWeight = default!;
     private List<int> _orderedWeights = default!;
@@ -110,7 +112,7 @@ public sealed partial class StationJobsSystem
                 if (profiles.Count == 0)
                     goto endFunc;
 
-                var candidates = GetPlayersJobCandidates(weight, selectedPriority, profiles);
+                var candidates = GetPlayersJobCandidates(weight, selectedPriority, profiles.Keys);
 
                 var optionsRemaining = 0;
 
@@ -342,15 +344,34 @@ public sealed partial class StationJobsSystem
     /// <param name="selectedPriority">Priority to find, if any.</param>
     /// <param name="profiles">Profiles to look in.</param>
     /// <returns>Players and a list of their matching jobs.</returns>
-    private Dictionary<NetUserId, List<string>> GetPlayersJobCandidates(int? weight, JobPriority? selectedPriority, Dictionary<NetUserId, HumanoidCharacterProfile> profiles)
+    private Dictionary<NetUserId, List<string>> GetPlayersJobCandidates(int? weight, JobPriority? selectedPriority, ICollection<NetUserId> players)
     {
-        var outputDict = new Dictionary<NetUserId, List<string>>(profiles.Count);
+        var outputDict = new Dictionary<NetUserId, List<string>>(players.Count);
 
-        foreach (var (player, profile) in profiles)
+        foreach (var player in players)
         {
             var roleBans = _banManager.GetJobBans(player);
             var antagBlocked = _antag.GetPreSelectedAntagSessions();
-            var profileJobs = profile.JobPriorities.Keys.Select(k => new ProtoId<JobPrototype>(k)).ToList();
+            var playerPrefs = _serverPreferences.GetPreferences(player);
+            var playerJobs = playerPrefs.JobPriorities;
+            var allCharacterJobs = new HashSet<ProtoId<JobPrototype>>();
+            foreach (var profile in playerPrefs.Characters.Values)
+            {
+                if (profile is not HumanoidCharacterProfile { Enabled: true } humanoid)
+                    continue;
+                allCharacterJobs.UnionWith(humanoid.JobPreferences);
+            }
+            var filteredPlayerJobs = new HashSet<ProtoId<JobPrototype>>();
+            foreach (var (job, priority) in playerJobs)
+            {
+                if (!(priority == selectedPriority || selectedPriority is null))
+                    continue;
+                if (!allCharacterJobs.Contains(job))
+                    continue;
+                filteredPlayerJobs.Add(job);
+            }
+
+            var profileJobs = filteredPlayerJobs.ToList();
             var ev = new StationJobsGetCandidatesEvent(player, profileJobs);
             RaiseLocalEvent(ref ev);
 
@@ -358,7 +379,7 @@ public sealed partial class StationJobsSystem
 
             foreach (var jobId in profileJobs)
             {
-                var priority = profile.JobPriorities[jobId];
+                var priority = playerJobs[jobId];
 
                 if (!(priority == selectedPriority || selectedPriority is null))
                     continue;
@@ -375,7 +396,7 @@ public sealed partial class StationJobsSystem
                 if (!(roleBans == null || !roleBans.Contains(jobId)))
                     continue;
 
-                availableJobs ??= new List<string>(profile.JobPriorities.Count);
+                availableJobs ??= new List<string>(playerJobs.Count);
                 availableJobs.Add(jobId);
             }
 

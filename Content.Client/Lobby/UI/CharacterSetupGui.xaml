@@ -34,15 +34,27 @@
                 </PanelContainer.PanelOverride>
             </PanelContainer>
             <BoxContainer Orientation="Horizontal" VerticalExpand="True" SeparationOverride="0">
-                <ScrollContainer MinSize="325 0" Margin="5 5 0 0">
-                    <BoxContainer Name="Characters" Orientation="Vertical" />
-                </ScrollContainer>
+                <BoxContainer MinSize="325 0" Margin="5 5 0 0" Orientation="Vertical">
+                    <Button Name="JobPrioritiesButton"
+                            HorizontalExpand="True"
+                            Text="{Loc 'character-setup-gui-edit-job-priorities-button'}"
+                            StyleClasses="ButtonBig"/>
+                    <PanelContainer>
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
+                        </PanelContainer.PanelOverride>
+                    </PanelContainer>
+                    <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+                        <BoxContainer Name="Characters" Orientation="Vertical" />
+                    </ScrollContainer>
+                </BoxContainer>
                 <PanelContainer MinSize="2 0">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
                     </PanelContainer.PanelOverride>
                 </PanelContainer>
                 <BoxContainer Name="CharEditor" HorizontalExpand="True" />
+                <BoxContainer Name="JobPriorityEditor" HorizontalExpand="True" Visible="False"/>
             </BoxContainer>
         </BoxContainer>
     </Control>

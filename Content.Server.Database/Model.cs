@@ -84,13 +84,16 @@ namespace Content.Server.Database
                 .HasForeignKey(e => e.ProfileLoadoutGroupId)
                 .IsRequired();
 
-            modelBuilder.Entity<Job>()
-                .HasIndex(j => j.ProfileId);
+            modelBuilder.Entity<JobPreference>()
+                .HasIndex(j => j.PreferenceId);
 
-            modelBuilder.Entity<Job>()
-                .HasIndex(j => j.ProfileId, "IX_job_one_high_priority")
+            modelBuilder.Entity<JobPreference>()
+                .HasIndex(j => j.PreferenceId, "IX_job_one_high_priority")
                 .IsUnique()
                 .HasFilter("priority = 3");
+
+            modelBuilder.Entity<Job>()
+                .HasIndex(j => j.ProfileId);
 
             modelBuilder.Entity<Job>()
                 .HasIndex(j => new { j.ProfileId, j.JobName })
@@ -394,6 +397,7 @@ namespace Content.Server.Database
         public int SelectedCharacterSlot { get; set; }
         public string AdminOOCColor { get; set; } = null!;
         public List<Profile> Profiles { get; } = new();
+        public List<JobPreference> JobPreferences { get; set; } = new();
     }
 
     public class Profile
@@ -423,6 +427,8 @@ namespace Content.Server.Database
 
         [Column("pref_unavailable")] public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
 
+        public bool Enabled { get; set; }
+
         public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;
     }
@@ -432,6 +438,15 @@ namespace Content.Server.Database
         public int Id { get; set; }
         public Profile Profile { get; set; } = null!;
         public int ProfileId { get; set; }
+
+        public string JobName { get; set; } = null!;
+    }
+
+    public class JobPreference
+    {
+        public int Id { get; set; }
+        public Preference Preference { get; set; } = null!;
+        public int PreferenceId { get; set; }
 
         public string JobName { get; set; } = null!;
         public DbJobPriority Priority { get; set; }

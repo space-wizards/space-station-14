@@ -9,6 +9,7 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Shuttles.Components;
 using Content.Server.Polymorph.Components;
 using Content.Server.Polymorph.Systems;
+using Content.Server.Preferences.Managers;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -38,6 +39,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly NewLifeSystem _newLifeSystem = default!; //🌟Starlight🌟
         [Dependency] private readonly IPlayerRolesManager _playerRolesManager = default!; //🌟Starlight🌟
         [Dependency] private readonly PolymorphSystem _polymorphSystem = default!;
+        [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         public const string ObserverPrototypeName = "MobObserver";
@@ -66,6 +68,7 @@ namespace Content.Server.GameTicking
             return spawnableStations;
         }
 
+        // TODO: I don't think SpawnPlayers needs the HumanoidCharacterProfiles anymore
         private void SpawnPlayers(List<ICommonSession> readyPlayers,
             Dictionary<NetUserId, HumanoidCharacterProfile> profiles,
             bool force)
@@ -126,7 +129,12 @@ namespace Content.Server.GameTicking
                 if (job == null)
                     continue;
 
-                SpawnPlayer(_playerManager.GetSessionById(player), profiles[player], station, job, false);
+                var playerPrefs = _preferencesManager.GetPreferences(player);
+                var profile = playerPrefs.SelectProfileForJob(job.Value);
+                if (profile == null)
+                    continue;
+
+                SpawnPlayer(_playerManager.GetSessionById(player), profile, station, job, false);
             }
 
             RefreshLateJoinAllowed();
@@ -209,8 +217,10 @@ namespace Content.Server.GameTicking
                 restrictedRoles.UnionWith(jobBans);
 
             // Pick best job best on prefs.
+            var playerPreferences = _preferencesManager.GetPreferences(player.UserId);
+            var jobPrioritiesFiltered = playerPreferences.JobPrioritiesFiltered();
             jobId ??= _stationJobs.PickBestAvailableJobWithPriority(station,
-                character.JobPriorities,
+                jobPrioritiesFiltered,
                 true,
                 restrictedRoles);
             // If no job available, stay in lobby, or if no lobby spawn as observer

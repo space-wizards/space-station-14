@@ -1,0 +1,19 @@
+﻿<BoxContainer
+    xmlns="https://spacestation14.io"
+    xmlns:ui="clr-namespace:Content.Client.Lobby.UI"
+    HorizontalExpand="True">
+    <BoxContainer Orientation="Vertical" MinSize="60 0" HorizontalExpand="True" HorizontalAlignment="Right">
+        <ui:HighlightedContainer Name="ProfileHighlight">
+            <BoxContainer Orientation="Vertical">
+                <Button Name="SaveButton" Text="{Loc 'humanoid-profile-editor-save-button'}"/>
+                <Button Name="ResetButton" Disabled="True" Text="{Loc 'humanoid-profile-editor-reset-button'}"/>
+            </BoxContainer>
+        </ui:HighlightedContainer>
+    </BoxContainer>
+    <!-- <BoxContainer Orientation="Vertical"> -->
+    <!--     ~1~ Jobs @1@ -->
+        <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+            <BoxContainer Name="JobList" Orientation="Vertical" />
+        </ScrollContainer>
+    <!-- </BoxContainer> -->
+</BoxContainer>

@@ -879,10 +879,8 @@ namespace Content.Client.Lobby.UI
 
             var items = new[]
             {
-                ("humanoid-profile-editor-job-priority-never-button", (int) JobPriority.Never),
-                ("humanoid-profile-editor-job-priority-low-button", (int) JobPriority.Low),
-                ("humanoid-profile-editor-job-priority-medium-button", (int) JobPriority.Medium),
-                ("humanoid-profile-editor-job-priority-high-button", (int) JobPriority.High),
+                ("humanoid-profile-editor-antag-preference-yes-button", 0),
+                ("humanoid-profile-editor-antag-preference-no-button", 1)
             };
 
             foreach (var department in departments)
@@ -966,32 +964,12 @@ namespace Content.Client.Lobby.UI
                         selector.UnlockRequirements();
                     }
 
-                    selector.OnSelected += selectedPrio =>
+                    selector.OnSelected += selection =>
                     {
-                        var selectedJobPrio = (JobPriority)selectedPrio;
-                        Profile = Profile?.WithJobPriority(job.ID, selectedJobPrio);
+                        var include = selection == 0;
+                        Profile = Profile?.WithJob(job.ID, include);
 
-                        foreach (var (jobId, other) in _jobPriorities)
-                        {
-                            // Sync other selectors with the same job in case of multiple department jobs
-                            if (jobId == job.ID)
-                            {
-                                other.Select(selectedPrio);
-                                continue;
-                            }
-
-                            if (selectedJobPrio != JobPriority.High || (JobPriority)other.Selected != JobPriority.High)
-                                continue;
-
-                            // Lower any other high priorities to medium.
-                            other.Select((int)JobPriority.Medium);
-                            Profile = Profile?.WithJobPriority(jobId, JobPriority.Medium);
-                        }
-
-                        // TODO: Only reload on high change (either to or from).
-                        ReloadPreview();
-
-                        UpdateJobPriorities();
+                        UpdateJobPreferences();
                         SetDirty();
                     };
 
@@ -1039,7 +1017,7 @@ namespace Content.Client.Lobby.UI
                 }
             }
 
-            UpdateJobPriorities();
+            UpdateJobPreferences();
         }
 
         private void OpenLoadout(JobPrototype? jobProto, RoleLoadout roleLoadout, RoleLoadoutPrototype roleLoadoutProto)
@@ -1098,7 +1076,7 @@ namespace Content.Client.Lobby.UI
             if (Profile is null)
                 return;
 
-            UpdateJobPriorities();
+            UpdateJobPreferences();
         }
 
         private void OnFlavorTextChange(string content)
@@ -1309,12 +1287,11 @@ namespace Content.Client.Lobby.UI
         /// <summary>
         /// Updates selected job priorities to the profile's.
         /// </summary>
-        private void UpdateJobPriorities()
+        private void UpdateJobPreferences()
         {
             foreach (var (jobId, prioritySelector) in _jobPriorities)
             {
-                var priority = Profile?.JobPriorities.GetValueOrDefault(jobId, JobPriority.Never) ?? JobPriority.Never;
-                prioritySelector.Select((int)priority);
+                prioritySelector.Select((Profile?.JobPreferences.Contains(jobId) ?? false) ? 0 : 1);
             }
         }
 
