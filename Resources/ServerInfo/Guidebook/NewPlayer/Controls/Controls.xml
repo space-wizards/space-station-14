@@ -70,7 +70,7 @@ This allows you to for example [bold]open containers[/bold] without picking them
 
 You can also perform regular interactions with items stored in an inventory.
 
-Many items also have [color=cyan]standard use-in-hand interactions[/color], such as opening a bottle, reloading a gun or switching to holding an axe with both hands.
+Many items also have [color=cyan]standard use-in-hand interactions[/color], such as opening a bottle, reloading a gun or wielding melee weapons with both hands (clubs, spears, axes, mops, etc.)
 \nTo activate or use a held item, press the [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] hotkey (or click [color=yellow][bold][keybind="Use"][/bold][/color] on it).
 \nFor [color=cyan]alternative use-in-hand interactions[/color], use the [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] hotkey (or click [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] on it).
 
