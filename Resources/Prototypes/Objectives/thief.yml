@@ -374,7 +374,7 @@
   id: SilverIDStealObjective
   components:
   - type: NotJobRequirement
-    job: HeadOfPersonnel, Quartermaster, HeadOfSecurity, ChiefEngineer, ResearchDirector, ChiefMedicalOfficer
+    job: HeadOfPersonnel
   - type: StealCondition
     stealGroup: SilverID
   - type: Objective
