@@ -13,6 +13,8 @@
   - WeaponProtoKineticAccelerator
   - ShuttleGunKineticCircuitboard
   - MechEquipmentKineticAccelerator
+  radioChannels:
+  - Supply
   # These are roundstart but not replenishable for salvage
 
 - type: technology
@@ -39,6 +41,8 @@
   - LightRifleHeavyMagazineIncendiary
   - MagazinePistolSubMachineGunIncendiary
   - SpeedLoaderShotgunIncendiary
+  radioChannels:
+  - Security
 
 - type: technology
   id: WeaponizedLaserManipulation
@@ -52,6 +56,8 @@
   recipeUnlocks:
   - WeaponLaserCarbine
   - WeaponMechCombatFiredartLaser
+  radioChannels:
+  - Security
 
 - type: technology
   id: NonlethalAmmunition
@@ -76,6 +82,8 @@
   - MagazineBoxMagnumRubber
   - MagazineBoxLightRifleRubber
   - MagazineBoxRifleRubber
+  radioChannels:
+  - Security
 
 - type: technology
   id: UraniumMunitions
@@ -100,6 +108,8 @@
   - LightRifleHeavyMagazineUranium
   - MagazinePistolSubMachineGunUranium
   - SpeedLoaderShotgunUranium
+  radioChannels:
+  - Security
 
 - type: technology
   id: AdvancedRiotControl
@@ -115,6 +125,8 @@
   - TelescopicShield
   - HoloprojectorSecurity
   - WeaponDisablerSMG
+  radioChannels:
+  - Security
 
 - type: technology
   id: ExplosiveTechnology
@@ -133,6 +145,8 @@
   - FlashPayload
   - ExplosivePayload
   - ChemicalPayload
+  radioChannels:
+  - Security
 
 - type: technology
   id: SpecialMeans
@@ -145,6 +159,8 @@
   cost: 5000
   recipeUnlocks:
   - ClothingBackpackElectropack
+  radioChannels:
+  - Security
 
 # Tier 2
 
@@ -161,6 +177,8 @@
   - WeaponLaserCannon
   - WeaponMechCombatSolarisLaser
   - WeaponLaserImmolator
+  radioChannels:
+  - Security
 
 - type: technology
   id: WaveParticleHarnessing
@@ -173,6 +191,8 @@
   cost: 10000
   recipeUnlocks:
   - WeaponXrayCannon
+  radioChannels:
+  - Security
   
 - type: technology
   id: BasicShuttleArmament
@@ -195,6 +215,8 @@
   - ShuttleGunFriendshipCircuitboard
   technologyPrerequisites:
   - SalvageWeapons
+  radioChannels:
+  - Security
 
 # Tier 3
 
@@ -211,6 +233,8 @@
   - WeaponAdvancedLaser
   - PortableRecharger
   - WeaponMechCombatImmolationGun
+  radioChannels:
+  - Security
 
 - type: technology
   id: ExperimentalBatteryAmmo
@@ -223,6 +247,8 @@
   cost: 15000
   recipeUnlocks:
   - WeaponLaserSvalinn
+  radioChannels:
+  - Security
 
 - type: technology
   id: AdvancedShuttleWeapon
@@ -239,3 +265,5 @@
   - ShuttleGunDusterCircuitboard
   technologyPrerequisites:
   - BasicShuttleArmament
+  radioChannels:
+  - Security

@@ -46,10 +46,4 @@ public sealed partial class TechDisciplinePrototype : IPrototype
     /// </summary>
     [DataField("lockoutTier")]
     public int LockoutTier = 4;
-
-    /// <summary>
-    /// Radio Channel to broadast on in addition to science when a technology of this discipline is unlocked.
-    /// <\summary>
-    [DataField("radioChannel", required: false)]
-    public string RadioChannel = string.Empty;
 }
