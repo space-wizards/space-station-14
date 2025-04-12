@@ -66,11 +66,13 @@ public sealed class ClientsidePlaytimeTracking
         if (timeDiff < TimeSpan.Zero)
             throw new Exception("Time differential on player detachment somehow less than zero!");
 
+        // At 0 minutes of time diff, there's no point, as saving regardless will brick tests
+        if (timeDiff.Minutes == 0)
+            return;
+
         _configurationManager.SetCVar(CCVars.MinutesToday, _configurationManager.GetCVar(CCVars.MinutesToday) + timeDiff.Minutes);
         _sawmill.Info("Recorded " + timeDiff.Minutes.ToString() + " minutes of living playtime!");
 
-        // Tests in particular aren't gonna have a config. So don't save it in those cases.
-        if (_configurationManager.IsCVarRegistered(CCVars.MinutesToday.Name) && _configurationManager.IsCVarRegistered(CCVars.LastConnectDate.Name))
-            _configurationManager.SaveToFile(); // We don't like that we have to save the entire config just to store playtime stats '^'
+        _configurationManager.SaveToFile(); // We don't like that we have to save the entire config just to store playtime stats '^'
     }
 }
