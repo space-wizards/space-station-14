@@ -75,3 +75,13 @@
   # source: https://freesound.org/people/hereforthebass/sounds/733255/
   # source: https://freesound.org/people/eyesplice/sounds/717773/
   # source: https://freesound.org/people/Clearwavsound/sounds/541032/
+
+- files: ["rock_crit.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "nicStage, falcospizaetus, iwanPlays, Widowaker, xkeril (all Freesound), layered and edited by Quantum-cross@github"
+  source: https://freesound.org/people/nicStage/sounds/1912/
+  # additional sources:
+  # source: https://freesound.org/people/falcospizaetus/sounds/489905/
+  # source: https://freesound.org/people/iwanPlays/sounds/567250/
+  # source: https://freesound.org/people/Widowaker/sounds/459110/
+  # source: https://freesound.org/people/xkeril/sounds/703247/

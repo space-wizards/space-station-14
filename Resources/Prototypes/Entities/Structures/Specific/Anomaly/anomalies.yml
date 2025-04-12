@@ -390,6 +390,8 @@
     coreInertPrototype: AnomalyCoreRockInert
     minPulseLength: 180
     maxPulseLength: 300
+    supercriticalSoundAtAnimationStart:
+      collection: AnomalyRockSupercritical
   - type: Sprite
     layers:
     - state: anom6

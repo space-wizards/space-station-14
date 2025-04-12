@@ -328,6 +328,8 @@
         deleteEntity: false
         maxPointsPerSecond: 100
         corePrototype: AnomalyCoreRock
+        supercriticalSoundAtAnimationStart:
+          collection: AnomalyRockSupercritical
       - type: InnerBodyAnomaly
         injectionProto: AnomalyInjectionRock
         startMessage: inner-anomaly-start-message-rock

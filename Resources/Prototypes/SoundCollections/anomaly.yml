@@ -58,3 +58,8 @@
   id: AnomalyFloraSupercritical
   files:
   - /Audio/Items/Anomaly/flora_crit.ogg
+
+- type: soundCollection
+  id: AnomalyRockSupercritical
+  files:
+  - /Audio/Items/Anomaly/rock_crit.ogg
