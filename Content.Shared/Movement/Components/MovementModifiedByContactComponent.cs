@@ -10,3 +10,8 @@ namespace Content.Shared.Movement.Components;
 public sealed partial class SpeedModifiedByContactComponent : Component
 {
 }
+
+[NetworkedComponent, RegisterComponent] // ditto but for friction
+public sealed partial class FrictionModifiedByContactComponent : Component
+{
+}

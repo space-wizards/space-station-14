@@ -12,16 +12,17 @@ namespace Content.Shared.Movement.Components
     public sealed partial class MovementSpeedModifierComponent : Component
     {
         // Weightless
-        public const float DefaultMinimumFrictionSpeed = 0.005f;
+        public const float DefaultMinimumFrictionSpeed = 0.05f;
+        public const float MinStoppingSpeed = 0.5f;
         public const float DefaultWeightlessFriction = 1f;
         public const float DefaultWeightlessFrictionNoInput = 0.2f;
         public const float DefaultOffGridFriction = 0.05f;
         public const float DefaultWeightlessModifier = 0.7f;
         public const float DefaultWeightlessAcceleration = 1f;
 
-        public const float DefaultAcceleration = 20f;
-        public const float DefaultFriction = 20f;
-        public const float DefaultFrictionNoInput = 20f;
+        public const float DefaultAcceleration = 30f;
+        public const float DefaultFriction = 2.5f;
+        public const float DefaultFrictionNoInput = 1f;
 
         public const float DefaultBaseWalkSpeed = 2.5f;
         public const float DefaultBaseSprintSpeed = 4.5f;
@@ -55,6 +56,12 @@ namespace Content.Shared.Movement.Components
         }
 
         #region Weightless
+
+        /// <summary>
+        /// The negative velocity applied for friction.
+        /// </summary>
+        [AutoNetworkedField, DataField]
+        public float BaseFriction = DefaultFriction;
 
         /// <summary>
         /// The negative velocity applied for friction when weightless and providing inputs.
@@ -112,16 +119,16 @@ namespace Content.Shared.Movement.Components
         public float MinimumFrictionSpeed = DefaultMinimumFrictionSpeed;
 
         /// <summary>
-        /// The acceleration applied to mobs when moving.
+        /// The acceleration applied to mobs when moving. If this is ever less than Friction the mob will be slower.
         /// </summary>
         [AutoNetworkedField, DataField]
         public float Acceleration = DefaultAcceleration;
 
         /// <summary>
-        /// The negative velocity applied for friction.
+        /// Modifier to the negative velocity applied for friction.
         /// </summary>
         [AutoNetworkedField, DataField]
-        public float Friction = DefaultFriction;
+        public float Friction;
 
         /// <summary>
         /// The negative velocity applied for friction.

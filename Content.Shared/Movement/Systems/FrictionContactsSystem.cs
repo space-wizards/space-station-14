@@ -11,38 +11,56 @@ public sealed class FrictionContactsSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
 
     // Comment copied from "original" SlowContactsSystem.cs (now SpeedModifierContactsSystem.cs)
-    // TODO full-game-save 
+    // TODO full-game-save
     // Either these need to be processed before a map is saved, or slowed/slowing entities need to update on init.
-    private HashSet<EntityUid> _toUpdate = new();
+    private readonly HashSet<EntityUid> _toUpdate = new();
+    private readonly HashSet<EntityUid> _toRemove = new();
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<FrictionContactsComponent, StartCollideEvent>(OnEntityEnter);
         SubscribeLocalEvent<FrictionContactsComponent, EndCollideEvent>(OnEntityExit);
+        SubscribeLocalEvent<FrictionModifiedByContactComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionModifiers);
         SubscribeLocalEvent<FrictionContactsComponent, ComponentShutdown>(OnShutdown);
 
         UpdatesAfter.Add(typeof(SharedPhysicsSystem));
     }
 
-    private void OnEntityEnter(EntityUid uid, FrictionContactsComponent component, ref StartCollideEvent args)
+    public override void Update(float frameTime)
     {
-        var otherUid = args.OtherEntity;
+        base.Update(frameTime);
 
-        if (!HasComp(otherUid, typeof(MovementSpeedModifierComponent)))
-            return;
+        _toRemove.Clear();
 
-        _toUpdate.Add(otherUid);
+        foreach (var ent in _toUpdate)
+        {
+            _speedModifierSystem.RefreshFrictionModifiers(ent);
+        }
+
+        foreach (var ent in _toRemove)
+        {
+            RemComp<FrictionModifiedByContactComponent>(ent);
+        }
+
+        _toUpdate.Clear();
     }
 
-    private void OnEntityExit(EntityUid uid, FrictionContactsComponent component, ref EndCollideEvent args)
+    public void ChangeFrictionModifiers(EntityUid uid, float friction, FrictionContactsComponent? component = null)
     {
-        var otherUid = args.OtherEntity;
+        ChangeFrictionModifiers(uid, friction, null, null, component);
+    }
 
-        if (!HasComp(otherUid, typeof(MovementSpeedModifierComponent)))
+    public void ChangeFrictionModifiers(EntityUid uid, float mobFriction, float? mobFrictionNoInput, float? acceleration, FrictionContactsComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
             return;
 
-        _toUpdate.Add(otherUid);
+        component.MobFriction = mobFriction;
+        component.MobFrictionNoInput = mobFrictionNoInput;
+        component.MobAcceleration = acceleration;
+        Dirty(uid, component);
+        _toUpdate.UnionWith(_physics.GetContactingEntities(uid));
     }
 
     private void OnShutdown(EntityUid uid, FrictionContactsComponent component, ComponentShutdown args)
@@ -50,51 +68,78 @@ public sealed class FrictionContactsSystem : EntitySystem
         if (!TryComp(uid, out PhysicsComponent? phys))
             return;
 
+        // Note that the entity may not be getting deleted here. E.g., glue puddles.
         _toUpdate.UnionWith(_physics.GetContactingEntities(uid, phys));
     }
 
-    public override void Update(float frameTime)
+    private void OnRefreshFrictionModifiers(Entity<FrictionModifiedByContactComponent> entity, ref RefreshFrictionModifiersEvent args)
     {
-        base.Update(frameTime);
-
-        foreach (var uid in _toUpdate)
-        {
-            ApplyFrictionChange(uid);
-        }
-
-        _toUpdate.Clear();
-    }
-
-    private void ApplyFrictionChange(EntityUid uid)
-    {
-        if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
+        if (!EntityManager.TryGetComponent<PhysicsComponent>(entity, out var physicsComponent))
             return;
 
-        if (!TryComp(uid, out MovementSpeedModifierComponent? speedModifier))
-            return;
+        var friction = 0.0f;
+        float? frictionNoInput = null;
+        float? acceleration = null;
 
-        FrictionContactsComponent? frictionComponent = TouchesFrictionContactsComponent(uid, physicsComponent);
+        bool remove = true;
+        var entries = 0;
+        foreach (var ent in _physics.GetContactingEntities(entity, physicsComponent))
+        {
+            bool modified = false;
 
-        if (frictionComponent == null)
-        {
-            _speedModifierSystem.ChangeFriction(uid, MovementSpeedModifierComponent.DefaultFriction, null, MovementSpeedModifierComponent.DefaultAcceleration, speedModifier);
+            if (TryComp<FrictionContactsComponent>(ent, out var contacts))
+            {
+                friction += contacts.MobFriction;
+                frictionNoInput = frictionNoInput == null ? contacts.MobFrictionNoInput : frictionNoInput + contacts.MobFrictionNoInput;
+                acceleration = acceleration == null ? contacts.MobAcceleration : acceleration + contacts.MobAcceleration;
+                modified = true;
+            }
+
+            if (modified)
+            {
+                remove = false;
+                entries++;
+            }
         }
-        else
+
+        if (entries > 0)
         {
-            _speedModifierSystem.ChangeFriction(uid, frictionComponent.MobFriction, frictionComponent.MobFrictionNoInput, frictionComponent.MobAcceleration, speedModifier);
+            if (!MathHelper.CloseTo(friction, entries))
+                friction /= entries;
+            if (frictionNoInput != null)
+                frictionNoInput /= entries;
+
+            args.ModifyFriction(friction, frictionNoInput);
+            if (acceleration != null)
+            {
+                acceleration /= entries;
+                args.Acceleration = acceleration;
+            }
+
         }
+
+        // no longer colliding with anything
+        if (remove)
+            _toRemove.Add(entity);
     }
 
-    private FrictionContactsComponent? TouchesFrictionContactsComponent(EntityUid uid, PhysicsComponent physicsComponent)
+    private void OnEntityExit(EntityUid uid, FrictionContactsComponent component, ref EndCollideEvent args)
     {
-        foreach (var ent in _physics.GetContactingEntities(uid, physicsComponent))
-        {
-            if (!TryComp(ent, out FrictionContactsComponent? frictionContacts))
-                continue;
+        var otherUid = args.OtherEntity;
+        _toUpdate.Add(otherUid);
+    }
 
-            return frictionContacts;
-        }
+    private void OnEntityEnter(EntityUid uid, FrictionContactsComponent component, ref StartCollideEvent args)
+    {
+        AddModifiedEntity(args.OtherEntity);
+    }
 
-        return null;
+    public void AddModifiedEntity(EntityUid uid)
+    {
+        if (!HasComp<MovementSpeedModifierComponent>(uid))
+            return;
+
+        EnsureComp<FrictionModifiedByContactComponent>(uid);
+        _toUpdate.Add(uid);
     }
 }

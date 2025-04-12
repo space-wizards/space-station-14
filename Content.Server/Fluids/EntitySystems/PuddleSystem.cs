@@ -476,7 +476,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         {
             var comp = EnsureComp<SpeedModifierContactsComponent>(uid);
             var speed = 1 - maxViscosity;
-            _speedModContacts.ChangeModifiers(uid, speed, comp);
+            _speedModContacts.ChangeSpeedModifiers(uid, speed, comp);
         }
         else
         {

@@ -1,5 +1,6 @@
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Systems
@@ -12,6 +13,7 @@ namespace Content.Shared.Movement.Systems
         {
             base.Initialize();
             SubscribeLocalEvent<MovementSpeedModifierComponent, MapInitEvent>(OnModMapInit);
+            SubscribeLocalEvent<MovementSpeedModifierComponent, TileFrictionEvent>(OnTileFriction);
         }
 
         private void OnModMapInit(Entity<MovementSpeedModifierComponent> ent, ref MapInitEvent args)
@@ -21,6 +23,7 @@ namespace Content.Shared.Movement.Systems
             ent.Comp.WeightlessModifier = ent.Comp.BaseWeightlessModifier;
             ent.Comp.WeightlessFriction = ent.Comp.BaseWeightlessFriction;
             ent.Comp.WeightlessFrictionNoInput = ent.Comp.BaseWeightlessFrictionNoInput;
+            ent.Comp.Friction = ent.Comp.BaseFriction;
             Dirty(ent);
         }
 
@@ -88,16 +91,42 @@ namespace Content.Shared.Movement.Systems
             Dirty(uid, move);
         }
 
-        // We might want to create separate RefreshMovementFrictionModifiersEvent and RefreshMovementFrictionModifiers function that will call it
-        public void ChangeFriction(EntityUid uid, float friction, float? frictionNoInput, float acceleration, MovementSpeedModifierComponent? move = null)
+        public void RefreshFrictionModifiers(EntityUid uid, MovementSpeedModifierComponent? move = null)
         {
             if (!Resolve(uid, ref move, false))
                 return;
 
-            move.Friction = friction;
+            if (_timing.ApplyingState)
+                return;
+
+            var ev = new RefreshFrictionModifiersEvent()
+            {
+                Friction = move.BaseFriction
+            };
+            RaiseLocalEvent(uid, ref ev);
+
+            if (MathHelper.CloseTo(ev.Friction, move.Friction) && ev.FrictionNoInput == null)
+                return;
+
+            move.Friction = ev.Friction;
+            move.FrictionNoInput = ev.FrictionNoInput * move.BaseFriction;
+            Dirty(uid, move);
+        }
+
+        public void ChangeBaseFriction(EntityUid uid, float friction, float? frictionNoInput, float acceleration, MovementSpeedModifierComponent? move = null)
+        {
+            if (!Resolve(uid, ref move, false))
+                return;
+
+            move.BaseFriction = friction;
             move.FrictionNoInput = frictionNoInput;
             move.Acceleration = acceleration;
             Dirty(uid, move);
+        }
+
+        private void OnTileFriction(Entity<MovementSpeedModifierComponent> ent, ref TileFrictionEvent args)
+        {
+            args.Modifier *= ent.Comp.BaseFriction;
         }
     }
 
@@ -135,5 +164,25 @@ namespace Content.Shared.Movement.Systems
         public float WeightlessModifier;
 
         public float WeightlessFrictionNoInput;
+    }
+    [ByRefEvent]
+    public record struct RefreshFrictionModifiersEvent() : IInventoryRelayEvent
+    {
+        public float Friction;
+        public float? FrictionNoInput;
+        public float? Acceleration;
+
+        public void ModifyFriction(float friction, float? noInput = null)
+        {
+            Friction *= friction;
+            // If FrictionNoInput doesn't have a value, give it one, otherwise multiply the current value by the mod.
+            FrictionNoInput = FrictionNoInput == null ? noInput : FrictionNoInput * noInput;
+        }
+
+        public void ModifyAcceleration(float acceleration)
+        {
+            Acceleration = acceleration;
+        }
+        SlotFlags IInventoryRelayEvent.TargetSlots =>  ~SlotFlags.POCKET;
     }
 }

@@ -62,6 +62,9 @@ public abstract partial class SharedMoverController : VirtualController
     /// <see cref="CCVars.StopSpeed"/>
     /// </summary>
     private float _stopSpeed;
+    private float _airDamping;
+    private float _minDamping;
+    private float _frictionModifier;
 
     private bool _relativeMovement;
 
@@ -90,6 +93,9 @@ public abstract partial class SharedMoverController : VirtualController
         InitializeInput();
         InitializeRelay();
         Subs.CVar(_configManager, CCVars.RelativeMovement, value => _relativeMovement = value, true);
+        Subs.CVar(_configManager, CCVars.TileFrictionModifier, value => _frictionModifier = value, true);
+        Subs.CVar(_configManager, CCVars.MinFriction, value => _minDamping = value, true);
+        Subs.CVar(_configManager, CCVars.AirFriction, value => _airDamping = value, true);
         Subs.CVar(_configManager, CCVars.StopSpeed, value => _stopSpeed = value, true);
         UpdatesBefore.Add(typeof(TileFrictionController));
     }
@@ -194,6 +200,7 @@ public abstract partial class SharedMoverController : VirtualController
         }
 
         // If the body is in air but isn't weightless then can't move
+        // TODO: MAKE ISWEIGHTLESS EVENT BASED
         var weightless = _gravity.IsWeightless(uid, physicsComponent, xform);
 
         if (physicsComponent.BodyStatus != BodyStatus.OnGround && !CanMoveInAirQuery.HasComponent(uid) && !weightless)
@@ -280,13 +287,14 @@ public abstract partial class SharedMoverController : VirtualController
         }
         else
         {
+            friction = _frictionModifier * tileDef?.Friction ?? 0.3f;
             if (wishDir != Vector2.Zero)
             {
-                friction = tileDef?.MobFriction ?? moveSpeedComponent?.Friction ?? MovementSpeedModifierComponent.DefaultFriction;
+                friction *= tileDef?.MobFriction ?? moveSpeedComponent?.Friction ?? MovementSpeedModifierComponent.DefaultFriction;
             }
             else
             {
-                friction = tileDef?.MobFrictionNoInput ?? moveSpeedComponent?.FrictionNoInput ?? MovementSpeedModifierComponent.DefaultFrictionNoInput;
+                friction *= tileDef?.MobFrictionNoInput ?? moveSpeedComponent?.FrictionNoInput ?? MovementSpeedModifierComponent.DefaultFrictionNoInput;
             }
 
             weightlessModifier = 1f;
@@ -298,10 +306,14 @@ public abstract partial class SharedMoverController : VirtualController
 
         wishDir *= weightlessModifier;
 
+        if (!weightless && velocity.Length() < MovementSpeedModifierComponent.MinStoppingSpeed)
+            velocity = Vector2.Zero;
+
         if (!weightless || touching)
             Accelerate(ref velocity, in wishDir, accel, frameTime);
 
         SetWishDir((uid, mover), wishDir);
+
 
         PhysicsSystem.SetLinearVelocity(uid, velocity, body: physicsComponent);
 
@@ -392,6 +404,8 @@ public abstract partial class SharedMoverController : VirtualController
 
     public void Friction(float minimumFrictionSpeed, float frameTime, float friction, ref Vector2 velocity)
     {
+        //This is how damping is calculated so we should use this for friction always
+        //linearVelocity *= Math.Clamp(1.0f - data.FrameTime * body.LinearDamping, 0.0f, 1.0f);
         var speed = velocity.Length();
 
         if (speed < minimumFrictionSpeed)

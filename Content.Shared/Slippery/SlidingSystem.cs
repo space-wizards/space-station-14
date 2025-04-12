@@ -9,6 +9,9 @@ namespace Content.Shared.Slippery;
 public sealed class SlidingSystem : EntitySystem
 {
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
+
+    private readonly HashSet<EntityUid> _toUpdate = new();
+    private readonly HashSet<EntityUid> _toRemove = new();
     public override void Initialize()
     {
         base.Initialize();
@@ -16,13 +19,14 @@ public sealed class SlidingSystem : EntitySystem
         SubscribeLocalEvent<SlidingComponent, StoodEvent>(OnStand);
         SubscribeLocalEvent<SlidingComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<SlidingComponent, EndCollideEvent>(OnEndCollide);
+        SubscribeLocalEvent<SlidingComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionModifiers);
     }
 
     //TODO: Check if you can make the movementSpeedModifier shit event based
-    //TODO: Test if entering knockdown without touching a puddle breaks this
-    //TODO: Ensure friction for items and crawling players matches
-    //TODO: Test with Ice_Crust and see if shit breaks, fix Ice_Crust
-    //TODO: Why the fuck does slipping prediction suck ass?
+    //TESTED WORKS: Test if entering knockdown without touching a puddle breaks this
+    //TESTED IT'S FUCKED: Ensure friction for items and crawling players matches
+    //TESTED IT'S FUCKED: Test with Ice_Crust and see if shit breaks, fix Ice_Crust
+    //TESTED IT'S FUCKED: Why the fuck does slipping prediction suck ass?
 
     /// <summary>
     ///     Remove the component when the entity stands up again, and reset friction.
@@ -30,8 +34,8 @@ public sealed class SlidingSystem : EntitySystem
     private void OnStand(EntityUid entity, SlidingComponent component, ref StoodEvent args)
     {
         RemComp<SlidingComponent>(entity);
-        if (TryComp<MovementSpeedModifierComponent>(entity, out var comp))
-            _speedModifierSystem.ChangeFriction(entity, MovementSpeedModifierComponent.DefaultFriction, null, MovementSpeedModifierComponent.DefaultAcceleration, comp);
+        if (HasComp<MovementSpeedModifierComponent>(entity))
+            _speedModifierSystem.RefreshFrictionModifiers(entity);
     }
 
     /// <summary>
@@ -39,16 +43,17 @@ public sealed class SlidingSystem : EntitySystem
     /// </summary>
     private void OnStartCollide(Entity<SlidingComponent> entity, ref StartCollideEvent args)
     {
-        if (!TryComp<SlipperyComponent>(args.OtherEntity, out var slippery) || !slippery.SlipData.SuperSlippery)
+        if (!TryComp<SlipperyComponent>(args.OtherEntity, out var slippery))
             return;
         // Add colliding entity so it can be tracked.
         entity.Comp.CollidingEntities.Add(args.OtherEntity);
         // Set friction modifier for sliding to the friction modifier stored in the slipperyComponent.
+        RecalculateFriction(entity, slippery);
         entity.Comp.FrictionModifier = slippery.SlipData.SlipFriction;
         Dirty(entity, entity.Comp);
         // If this entity has a MovementSpeedModifierComponent we better edit the friction for that too.
-        if (TryComp<MovementSpeedModifierComponent>(entity, out var comp))
-            _speedModifierSystem.ChangeFriction(entity, entity.Comp.FrictionModifier, entity.Comp.FrictionModifier, entity.Comp.FrictionModifier, comp);
+        if (HasComp<MovementSpeedModifierComponent>(entity))
+            _speedModifierSystem.RefreshFrictionModifiers(entity);
     }
 
     /// <summary>
@@ -64,11 +69,25 @@ public sealed class SlidingSystem : EntitySystem
         // If we aren't colliding with any superSlippery Entities, stop sliding
         if (component.CollidingEntities.Count == 0)
         {
-            if (TryComp<MovementSpeedModifierComponent>(entity, out var comp))
-                _speedModifierSystem.ChangeFriction(entity, MovementSpeedModifierComponent.DefaultFriction, null, MovementSpeedModifierComponent.DefaultAcceleration, comp);
+            if (HasComp<MovementSpeedModifierComponent>(entity))
+                _speedModifierSystem.RefreshFrictionModifiers(entity);
             RemComp<SlidingComponent>(entity);
         }
 
         Dirty(entity, component);
+    }
+
+
+    private void RecalculateFriction(Entity<SlidingComponent> entity, SlipperyComponent component)
+    {
+
+    }
+
+    private void OnRefreshFrictionModifiers(Entity<SlidingComponent> entity, ref RefreshFrictionModifiersEvent args)
+    {
+        if (!TryComp<MovementSpeedModifierComponent>(entity, out var move))
+            return;
+        args.ModifyFriction(entity.Comp.FrictionModifier, entity.Comp.FrictionModifier);
+        args.ModifyAcceleration(entity.Comp.FrictionModifier * move.BaseFriction);
     }
 }
