@@ -391,6 +391,13 @@
     sprite: Structures/Furniture/golden_toilet.rsi
     state: condisposal
 
+- type: stealTargetGroup
+  id: TelecommsServer
+  name: steal-target-groups-telecomm
+  sprite:
+    sprite: Structures/Machines/telecomms.rsi
+    state: icon
+
 # Thief Animal
 
 - type: stealTargetGroup

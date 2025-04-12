@@ -108,6 +108,7 @@
     AltarNanotrasenStealObjective: 1
     PlantRDStealObjective: 1
     ToiletGoldenStealObjective: 1
+    TelecommsServerStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupAnimal

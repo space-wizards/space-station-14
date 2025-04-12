@@ -61,6 +61,7 @@ steal-target-groups-xeno-artifact = alien artifact
 steal-target-groups-booze-dispenser = booze dispenser
 steal-target-groups-plant-rd = "RD's potted plant"
 steal-target-groups-toilet-golden-dirty-water = golden toilet
+steal-target-groups-telecomm = telecomms server
 
 # Thief Animal
 steal-target-groups-animal-named-cat = CMO's Cat
