@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Syndicate Decoys have been fixed to match the new hardsuit sprites. Deploy
-      a swole new juggernaut dakimakura decoy today.
-    type: Fix
-  - message: Divine Grasp no longer unanchors on hit. That wasn't intended, whoops.
-    type: Fix
-  id: 1005
-  time: '2025-01-25T08:49:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1477
 - author: hivehum
   changes:
   - message: 'New to the SecLink: A special, non-lethal Space Blade!'
@@ -4104,3 +4094,11 @@
   id: 1504
   time: '2025-04-12T04:22:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2248
+- author: MintyTheBinty
+  changes:
+  - message: 4 casual space outfits added to Clothesmate, with new jumpsuits available
+      for security officer, chef, and hospitality director round start!
+    type: Add
+  id: 1505
+  time: '2025-04-12T05:55:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2235
