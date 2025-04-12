@@ -2,62 +2,43 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Content.Shared.CCVar;
 using Content.Client.Overlays;
 
-namespace Content.Client.Overlays
+namespace Content.Client.Overlays;
+
+public sealed class SharpeningSystem : EntitySystem
 {
+    [Dependency] private readonly IOverlayManager _overlayManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-    public sealed class SharpeningSystem : EntitySystem
+    private SharpeningOverlay _overlay = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IOverlayManager _overlayManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        base.Initialize();
+        _overlay = new SharpeningOverlay();
+        _overlayManager.AddOverlay(_overlay);
 
-        private SharpeningOverlay _overlay = default!;
+        var initialSharpness = _cfg.GetCVar(CCVars.DisplaySharpening);
+        OnSharpnessChanged(initialSharpness);
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            _overlay = new SharpeningOverlay();
+        _cfg.OnValueChanged(CCVars.DisplaySharpening, OnSharpnessChanged);
+    }
 
-            var initialSharpness = _cfg.GetCVar(CCVars.DisplaySharpening);
-            OnSharpnessChanged(initialSharpness);
+    private void OnSharpnessChanged(int value)
+    {
+        _overlay.Sharpness = value / 10f;
+    }
 
-            _playerManager.LocalPlayerAttached += OnPlayerAttached;
-            _playerManager.LocalPlayerDetached += OnPlayerDetached;
+    public override void Shutdown()
+    {
+        _overlayManager.RemoveOverlay(_overlay);
+        base.Shutdown();
+    }
 
-            _cfg.OnValueChanged(CCVars.DisplaySharpening, OnSharpnessChanged);
-        }
-
-        private void OnSharpnessChanged(int value)
-        {
-            if (_overlay != null)
-                _overlay.Sharpness = value / 10f;
-        }
-
-        private void OnPlayerAttached(EntityUid entity)
-        {
-            _overlayManager.AddOverlay(_overlay);
-        }
-
-        private void OnPlayerDetached(EntityUid entity)
-        {
-            _overlayManager.RemoveOverlay(_overlay);
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            _playerManager.LocalPlayerAttached -= OnPlayerAttached;
-            _playerManager.LocalPlayerDetached -= OnPlayerDetached;
-        }
-
-        public void SetSharpness(float value)
-        {
-            if (_overlay != null)
-                _overlay.Sharpness = value;
-        }
+    public void SetSharpness(float value)
+    {
+        _overlay.Sharpness = value;
     }
 }
