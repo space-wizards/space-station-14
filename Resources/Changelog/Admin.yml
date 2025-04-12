@@ -1007,5 +1007,12 @@ Entries:
   id: 122
   time: '2025-04-11T21:04:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36468
+- author: slarticodefast
+  changes:
+  - message: Added debug verb for quickly inspecting someone's mind entity in VV.
+    type: Add
+  id: 123
+  time: '2025-04-12T13:37:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36474
 Name: Admin
 Order: 1
