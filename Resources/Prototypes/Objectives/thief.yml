@@ -44,7 +44,7 @@
   id: BaseThiefStealAnimalObjective
   components:
   - type: StealCondition
-    verifyMapExistence: false
+    verifyMapExistence: true
     checkAlive: true
     objectiveNoOwnerText: objective-condition-steal-title-alive-no-owner
     descriptionText: objective-condition-thief-animal-description
@@ -136,8 +136,6 @@
     verifyMapExistence: false
   - type: Objective
     difficulty: 0.7
-
-
 
 - type: entity
   parent: BaseThiefStealCollectionObjective
@@ -621,7 +619,7 @@
   description: You don't want your illegal activities to be discovered by anyone, do you?
   components:
   - type: Objective
-    difficulty: 1.3
+    difficulty: 0
     icon:
       sprite: Structures/Furniture/chairs.rsi
       state: shuttle
