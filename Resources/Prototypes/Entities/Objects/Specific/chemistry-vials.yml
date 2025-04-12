@@ -109,6 +109,7 @@
   name: integrated vial
   description: An internal compartment installed into a cyborg. Rated for 30 units of any liquid.
   components:
+  # All this shit is here to avoid inheriting breakable, since borgs can't replace broken vials.
   - type: Sprite
     sprite: Objects/Specific/Chemistry/vial.rsi
     layers:
