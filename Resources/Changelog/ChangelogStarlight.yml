@@ -4778,4 +4778,11 @@ Entries:
   id: 661
   time: '2025-04-12T06:11:23.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/480
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added an admeme only Radio Tower
+    type: Add
+  id: 662
+  time: '2025-04-12T06:11:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/479
 
