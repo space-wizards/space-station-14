@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed windoors and high security doors not showing up on the AI's electrocution
-      HUD.
-    type: Fix
-  id: 7657
-  time: '2024-11-27T05:55:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33551
 - author: Beck Thompson
   changes:
   - message: Handheld light verbs are now predicted!
@@ -3891,3 +3883,11 @@
   id: 8156
   time: '2025-04-11T04:58:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36383
+- author: PJB3005
+  changes:
+  - message: Lobby time on Wizard's Den has been increased from 2 minute 30 seconds
+      to 5 minutes.
+    type: Tweak
+  id: 8157
+  time: '2025-04-12T09:05:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36476
