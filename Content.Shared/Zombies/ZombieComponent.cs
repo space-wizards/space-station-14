@@ -141,8 +141,6 @@ public sealed partial class ZombieComponent : Component
         }
     };
 
-
-
     /// <summary>
     ///     Path to antagonist alert sound.
     /// </summary>
