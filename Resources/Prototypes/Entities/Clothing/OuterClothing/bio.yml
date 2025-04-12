@@ -15,6 +15,10 @@
         Caustic: 0.75
   - type: ZombificationResistance
     zombificationResistanceCoefficient: 0.35
+  - type: GroupExamine
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.95
 
 - type: entity
   parent: ClothingOuterBioGeneral

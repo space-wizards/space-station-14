@@ -8,4 +8,4 @@ zombie-role-rules = You are a [color={role-type-team-antagonist-color}][bold]{ro
 
 zombie-permadeath = This time, you're dead for real.
 
-zombification-resistance-coefficient-value = - [color=violet]Infection[/color] chance reduced by [color=lightblue]{$value}%[/color]
+zombification-resistance-coefficient-value = - [color=violet]Infection[/color] chance reduced by [color=lightblue]{$value}%[/color].
