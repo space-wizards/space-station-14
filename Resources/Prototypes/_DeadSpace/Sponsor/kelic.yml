@@ -181,7 +181,6 @@
     damageContainers:
     - Biological
     - Inorganic
-    - Silicon
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
