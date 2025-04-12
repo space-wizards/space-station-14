@@ -66,11 +66,11 @@ They heavily depend on the item you're holding and what you click on.
 Some items have [color=cyan]alternative interactions[/color] — use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] to lock lockers, eject sub-items such as batteries from other items, etc.
 
 Interact with objects such as containers even when your hands are full by performing [color=cyan]activation interactions[/color] with [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
-This allows you to for example [bold]open containers[/bold] without picking them up, and [bold]open doors[/bold] without using the item you're holding.
+This allows you to for example [bold]open containers[/bold] without picking them up, [bold]open doors[/bold] without using the item you're holding, and [bold]reload guns[/bold].
 
 You can also perform regular interactions with items stored in an inventory.
 
-Many items also have [color=cyan]standard use-in-hand interactions[/color], such as opening a bottle, reloading a gun or wielding melee weapons with both hands (clubs, spears, axes, mops, etc.)
+Many items also have [color=cyan]standard use-in-hand interactions[/color], such as opening bottles, or wielding two-handed guns and big melee weapons with both hands (clubs, spears, axes, mops, shotguns, etc.)
 \nTo activate or use a held item, press the [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] hotkey (or click [color=yellow][bold][keybind="Use"][/bold][/color] on it).
 \nFor [color=cyan]alternative use-in-hand interactions[/color], use the [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] hotkey (or click [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] on it).
 
