@@ -6,7 +6,7 @@
   playTimeTracker: JobERTLeader
   setPreference: false
   startingGear: ERTLeaderGearEVA
-  icon: "JobIconNanotrasen"
+  icon: "JobIconCentComm"
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
@@ -21,7 +21,7 @@
     back: ClothingBackpackERTLeader
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetERTLeader
-    eyes: ClothingEyesGlassesSecurity
+    eyes: ClothingEyesGlassesCentComm
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterArmorBasicSlim
     id: ERTLeaderPDA
@@ -45,7 +45,7 @@
     back: ClothingBackpackERTLeader
     shoes: ClothingShoesBootsMagAdv
     mask: ClothingMaskGasERT
-    eyes: ClothingEyesGlassesSecurity
+    eyes: ClothingEyesGlassesCentComm
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTLeader
     id: ERTLeaderPDA
@@ -69,7 +69,7 @@
     back: ClothingBackpackERTLeader
     shoes: ClothingShoesBootsMagAdv
     mask: ClothingMaskGasERT
-    eyes: ClothingEyesGlassesSecurity
+    eyes: ClothingEyesGlassesCentComm
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTLeader
     id: ERTLeaderPDA
@@ -96,7 +96,7 @@
   playTimeTracker: JobERTChaplain
   setPreference: false
   startingGear: ERTChaplainGear
-  icon: "JobIconNanotrasen"
+  icon: "JobIconCentComm"
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
@@ -115,7 +115,7 @@
     back: ClothingBackpackERTChaplain
     shoes: ClothingShoesLeather
     head: ClothingHeadHatFez
-    eyes: ClothingEyesGlasses
+    eyes: ClothingEyesGlassesCentComm
     neck: ClothingNeckStoleChaplain
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterArmorBasicSlim
@@ -146,7 +146,7 @@
     back: ClothingBackpackERTChaplain
     shoes: ClothingShoesBootsMagAdv
     mask: ClothingMaskGasERT
-    eyes: ClothingEyesGlasses
+    eyes: ClothingEyesGlassesCentComm
     neck: ClothingNeckStoleChaplain
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTChaplain
@@ -178,7 +178,7 @@
   playTimeTracker: JobERTEngineer
   setPreference: false
   startingGear: ERTEngineerGearEVA
-  icon: "JobIconNanotrasen"
+  icon: "JobIconCentComm"
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
@@ -250,7 +250,7 @@
   playTimeTracker: JobERTSecurity
   setPreference: false
   startingGear: ERTEngineerGearEVA
-  icon: "JobIconNanotrasen"
+  icon: "JobIconCentComm"
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
@@ -265,7 +265,7 @@
     back: ClothingBackpackERTSecurity
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetERTSecurity
-    eyes: ClothingEyesGlassesSecurity
+    eyes: ClothingEyesGlassesCentComm
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterArmorBasicSlim
     id: ERTSecurityPDA
@@ -289,7 +289,7 @@
     back: ClothingBackpackERTSecurity
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskGasERT
-    eyes: ClothingEyesGlassesSecurity
+    eyes: ClothingEyesGlassesCentComm
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTSecurity
     id: ERTSecurityPDA
@@ -313,7 +313,7 @@
     back: ClothingBackpackERTSecurity
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskGasERT
-    eyes: ClothingEyesGlassesSecurity
+    eyes: ClothingEyesGlassesCentComm
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitERTSecurity
     id: ERTSecurityPDA
@@ -340,7 +340,7 @@
   playTimeTracker: JobERTMedical
   setPreference: false
   startingGear: ERTMedicalGearEVA
-  icon: "JobIconNanotrasen"
+  icon: "JobIconCentComm"
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
@@ -355,7 +355,7 @@
     back: ClothingBackpackERTMedical
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetERTMedic
-    eyes: ClothingEyesHudMedical
+    eyes: ClothingEyesGlassesCentComm
     gloves: ClothingHandsGlovesNitrile
     outerClothing: ClothingOuterArmorBasicSlim
     id: ERTMedicPDA
@@ -379,7 +379,7 @@
     back: ClothingBackpackERTMedical
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskGasERT
-    eyes: ClothingEyesHudMedical
+    eyes: ClothingEyesHudCentComm
     gloves: ClothingHandsGlovesNitrile
     outerClothing: ClothingOuterHardsuitERTMedical
     id: ERTMedicPDA
@@ -404,7 +404,7 @@
   playTimeTracker: JobERTJanitor
   setPreference: false
   startingGear: ERTJanitorGearEVA
-  icon: "JobIconNanotrasen"
+  icon: "JobIconCentComm"
   supervisors: job-supervisors-centcom
   canBeAntag: false
   accessGroups:
