@@ -111,6 +111,24 @@
   - type: RuleGrids
   - type: LoadMapRule
     gridPath: /Maps/_Starlight/Shuttles/DSshuttle.yml
+    
+    #Pig's RadioTower
+- type: entity
+  parent: BaseGameRule
+  id: RadioTowerSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/Radiotower.yml
+
+      #Pig's CBURN Shuttle
+- type: entity
+  parent: BaseGameRule
+  id: CBURNShuttleSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/CBURN.yml
 
 # Karma's Quantum Ark Shuttles
 - type: entity
