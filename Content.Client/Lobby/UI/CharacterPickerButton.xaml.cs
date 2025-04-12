@@ -29,6 +29,8 @@ public sealed partial class CharacterPickerButton : ContainerButton
     /// </summary>
     public event Action? OnDeletePressed;
 
+    public event Action<bool>? OnEnableToggled;
+
     public CharacterPickerButton(
         IEntityManager entityManager,
         IPrototypeManager prototypeManager,
@@ -52,12 +54,13 @@ public sealed partial class CharacterPickerButton : ContainerButton
             _previewDummy = UserInterfaceManager.GetUIController<LobbyUIController>()
                 .LoadProfileEntity(humanoid, null, true);
 
-            var highPriorityJob = humanoid.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
-            if (highPriorityJob != default)
-            {
-                var jobName = prototypeManager.Index(highPriorityJob).LocalizedName;
-                description = $"{description}\n{jobName}";
-            }
+            // TODO: Fix dummy character rendering
+            // var highPriorityJob = humanoid.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
+            // if (highPriorityJob != default)
+            // {
+            //     var jobName = prototypeManager.Index(highPriorityJob).LocalizedName;
+            //     description = $"{description}\n{jobName}";
+            // }
         }
 
         Pressed = isSelected;
@@ -77,6 +80,11 @@ public sealed partial class CharacterPickerButton : ContainerButton
         {
             DeleteButton.Visible = false;
             ConfirmDeleteButton.Visible = true;
+        };
+
+        EnabledCheck.OnToggled += args =>
+        {
+            OnEnableToggled?.Invoke(args.Pressed);
         };
     }
 
