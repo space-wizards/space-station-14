@@ -34,11 +34,13 @@ public sealed class PlayerPanelEui : BaseEui
     private bool _frozen;
     private bool _canFreeze;
     private bool _canAhelp;
+    private FollowerSystem _follower;
 
     public PlayerPanelEui(LocatedPlayerData player)
     {
         IoCManager.InjectDependencies(this);
         _targetPlayer = player;
+        _follower = _entity.System<FollowerSystem>();
     }
 
     public override void Opened()
@@ -146,11 +148,11 @@ public sealed class PlayerPanelEui : BaseEui
                 if (!_admins.HasAdminFlag(Player, AdminFlags.Admin) ||
                     !_player.TryGetSessionById(_targetPlayer.UserId, out session) ||
                     session.AttachedEntity == null ||
-                    Player.AttachedEntity is null)
+                    Player.AttachedEntity is null ||
+                    session.AttachedEntity == Player.AttachedEntity)
                     return;
 
-                var ev = new FollowTargetEvent(Player.AttachedEntity.Value, session.AttachedEntity.Value) ;
-                _entity.EventBus.RaiseEvent(EventSource.Local, ev);
+                _follower.StartFollowingEntity(Player.AttachedEntity.Value, session.AttachedEntity.Value);
                 break;
         }
     }
