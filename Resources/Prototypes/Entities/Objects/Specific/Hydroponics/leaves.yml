@@ -65,22 +65,24 @@
       - Smokable
   - type: Item
     size: Tiny
-    
+
 - type: entity
   name: rainbow cannabis leaves
   parent: LeavesCannabis
   id: LeavesCannabisRainbow
-  description: "Is it supposed to be glowing like that...?"
+  #description: "Is it supposed to be glowing like that...?"
+  description: "Wasn't it supposed to be glowing...?"
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
   - type: Produce
     seedId: rainbowCannabis
-  - type: PointLight
-    radius: 1.5
-    energy: 2
-  - type: RgbLightController
-    cycleRate: 0.6
+  # disabled because 50 morbillion point lights still break the lighting engine
+  #- type: PointLight
+  #  radius: 1.5
+  #  energy: 2
+  #- type: RgbLightController
+  #  cycleRate: 0.6
   - type: SolutionContainerManager
     solutions:
       food:
