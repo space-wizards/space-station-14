@@ -32,6 +32,7 @@
       - id: ClothingEyesGlassesKelic
       - id: ClothingMaskGasKelic
       - id: MedkitFilled
+      - id: SynthesizerInstrument
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -177,6 +178,10 @@
   - type: Clothing
     sprite: _DeadSpace/Sponsor/Kelic/hud.rsi
   - type: FlashImmunity
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+    - Inorganic
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
