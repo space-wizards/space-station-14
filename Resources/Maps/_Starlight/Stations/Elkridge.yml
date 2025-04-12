@@ -46796,7 +46796,7 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: ClothingHeadsetGrey
+- proto: ClothingHeadsetAssistant
   entities:
   - uid: 16721
     components:
