@@ -43,9 +43,6 @@ public sealed partial class StaminaSystem : EntitySystem
 
     public float UniversalStaminaDamageModifier { get; private set; } = 1f;
 
-    // A flag indicating whether the entity recovers after exiting a crit
-    private bool _afterCrit = false;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -276,9 +273,9 @@ public sealed partial class StaminaSystem : EntitySystem
         SetStaminaAlert(uid, component);
 
         // Checking if the stamina damage has decreased to zero after exiting the stamcrit
-        if (_afterCrit && oldDamage > component.StaminaDamage && component.StaminaDamage <= 0f)
+        if (component.AfterCritical && oldDamage > component.StaminaDamage && component.StaminaDamage <= 0f)
         {
-            _afterCrit = false; // Since the recovery from the crit has been completed, we are no longer 'afterCrit`
+            component.AfterCritical = false; // Since the recovery from the crit has been completed, we are no longer 'after crit'
         }
 
         if (!component.Critical)
@@ -361,12 +358,9 @@ public sealed partial class StaminaSystem : EntitySystem
 
             comp.NextUpdate += TimeSpan.FromSeconds(1f);
 
-            // This constant determines how fast stamina will regenerate after exiting the stamcrit
-            const float afterCritDecayMultiplier = 5f;
-
             TakeStaminaDamage(
                 uid,
-                _afterCrit ? -comp.Decay * afterCritDecayMultiplier : -comp.Decay, // Recover faster after crit
+                comp.AfterCritical ? -comp.Decay * comp.AfterCritDecayMultiplier : -comp.Decay, // Recover faster after crit
                 comp);
 
             Dirty(uid, comp);
@@ -405,7 +399,7 @@ public sealed partial class StaminaSystem : EntitySystem
         }
 
         component.Critical = false;
-        _afterCrit = true;  // Set to true to indicate that stamina will be restored after exiting stamcrit
+        component.AfterCritical = true;  // Set to true to indicate that stamina will be restored after exiting stamcrit
         component.NextUpdate = _timing.CurTime;
 
         SetStaminaAlert(uid, component);

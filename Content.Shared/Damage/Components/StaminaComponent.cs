@@ -56,4 +56,16 @@ public sealed partial class StaminaComponent : Component
 
     [DataField]
     public ProtoId<AlertPrototype> StaminaAlert = "Stamina";
+
+    /// <summary>
+    /// This flag indicates whether the value of <see cref="StaminaDamage"/> decreases after the entity exits stamina crit.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool AfterCritical = false;
+
+    /// <summary>
+    /// This float determines how fast stamina will regenerate after exiting the stamina crit.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float AfterCritDecayMultiplier = 5f;
 }
