@@ -116,6 +116,10 @@
     ClothingSpaceCadetJumpsuitColorDarkBlue: 2
     ClothingSpaceCadetJumpsuitColorDarkGreen: 2
     ClothingSpaceCadetJumpsuitColorTeal: 2
+    ClothingUniformSpaceJumpsuitCasualBrown: 3
+    ClothingUniformSpaceJumpsuitCasualTriColor: 3
+    ClothingUniformSpaceJumpsuitCasualMulti: 3
+    ClothingUniformSpaceJumpsuitCasualBlue: 3
   contrabandInventory:
     ClothingMaskNeckGaiter: 2
     ClothingUniformJumpsuitTacticool: 1

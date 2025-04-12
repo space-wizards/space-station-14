@@ -64,6 +64,11 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitHospitalityDirectorBotany
 
+- type: loadout
+  id: HospitalityDirectorProprietorJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformSpaceJumpsuitHospitalityDirectorProprietor
+
 # Head
 - type: loadout
   id: HospitalityDirectorHead

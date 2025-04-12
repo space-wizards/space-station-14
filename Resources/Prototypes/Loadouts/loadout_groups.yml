@@ -350,6 +350,7 @@
   loadouts:
   - ChefJumpsuit
   - ChefJumpskirt
+  - ChefSpaceJumpsuit # imp
 
 - type: loadoutGroup
   id: ChefOuterClothing
@@ -1214,6 +1215,7 @@
   - SecurityJumpskirtGrey
   - TrooperUniform # imp
   - SecurityJumpsuitBlue # imp
+  - SecuritySpaceJumpsuit # imp
   - SeniorOfficerJumpsuit
   - SeniorOfficerJumpskirt
 

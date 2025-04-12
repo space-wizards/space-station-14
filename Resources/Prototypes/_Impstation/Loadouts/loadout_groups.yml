@@ -386,6 +386,7 @@
   - HospitalityDirectorBartenderJumpsuit
   - HospitalityDirectorBartenderJumpskirt
   - HospitalityDirectorBotanyJumpsuit
+  - HospitalityDirectorProprietorJumpsuit
 
 - type: loadoutGroup
   id: HospitalityDirectorGloves

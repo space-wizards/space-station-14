@@ -316,3 +316,81 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/cargo_cableknit.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/cargo_cableknit.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformSpaceJumpsuitCasualBrown
+  name: casual space jumpsuit
+  description: An outfit reflecting the current trends of the deep spacefaring citizens of Nanotrasen near and far!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecasualbrown.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecasualbrown.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformSpaceJumpsuitCasualTriColor
+  name: casual space jumpsuit
+  description: An outfit reflecting the current trends of the deep spacefaring citizens of Nanotrasen near and far!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecasualtricolor.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecasualtricolor.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformSpaceJumpsuitCasualMulti
+  name: casual space jumpsuit
+  description: An outfit reflecting the current trends of the deep spacefaring citizens of Nanotrasen near and far!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecasualmulti.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecasualmulti.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformSpaceJumpsuitCasualBlue
+  name: casual space jumpsuit
+  description: An outfit reflecting the current trends of the deep spacefaring citizens of Nanotrasen near and far!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecasualblue.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecasualblue.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformSpaceJumpsuitHospitalityDirectorProprietor
+  name: hospitality proprietor jumpsuit
+  description: The iconic Nanotrasen Hospitality Director jumpsuit accented with a trademark blazer, an outfit suited for any self respecting host of a fine establishment operating within legal parameters.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacehd.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacehd.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformSpaceJumpsuitChef
+  name: space chef jumpsuit
+  description: A fine silken chefs coat with a purple lapel flair that's awarded to distinguished chef with Nanotrasen, the faint smell of aubergine stew can still be picked up off it.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacechef.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacechef.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformSpaceJumpsuitSecurity
+  name: space security jumpsuit
+  description: The standard issue uniform for select Nanotrasen security personal assigned to deep space missions, perfect for patrols on the promenade and check ins at the bar.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacesecurity.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacesecurity.rsi
+

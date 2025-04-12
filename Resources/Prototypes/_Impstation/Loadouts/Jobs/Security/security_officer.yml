@@ -1,3 +1,9 @@
+# Jumpsuit
+- type: loadout
+  id: SecuritySpaceJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformSpaceJumpsuitSecurity
+
 # Outer Clothing
 - type: loadout
   id: ArmorVestCompact
