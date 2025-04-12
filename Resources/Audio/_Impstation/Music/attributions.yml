@@ -12,7 +12,8 @@
 
 - files: ["armored_in_green.ogg"]
   license: "Custom"
-  copyright: "Suburb - Armored in Green by Manabu Namiki and Jake 'virt' Kaufman for Ketsuipachi Arrange"
+  copyright: "SUBURB - Armored Green by Manabu Namiki and Jake 'virt' Kaufman for DoDonPachi Resurrection Black Label, originally from Ketsui ~Kizuna Jigoku Tachi~"
+  # Researching this was wild LOL
   source: "https://www.youtube.com/watch?v=Fg6VtW2s85Q"
 
 - files: ["bio-engineering.ogg"]
@@ -37,8 +38,9 @@
 
 - files: ["create_a_wrestler.ogg"]
   license: "Custom"
-  copyright: "Create-A-Wrestler by James A. Johnston and J.J. Maguire for Wrestlemania X8. Suggested by HunBunQueen"
+  copyright: "Create-A-Wrestler by Tomoyuki Hamada, Satoshi Miyashita, Akira Yasumichi & Tenyuu Nakamura for WWF WrestleMania X8. Suggested by HunBunQueen"
   source: "https://www.youtube.com/watch?v=wf7BMXcGFR4"
+  # Don't ask me how James A. Johnston and J. J. Maguire were credited for this one; those're the composers of the Sega Genesis game "WWF Super Wrestlemania"... they have nothing to do with the GameCube game this is from...
 
 - files: ["dont_drink_it.ogg"]
   license: "Custom"
@@ -588,7 +590,7 @@
 - files: ["shootem.ogg"]
   license: "Custom"
   copyright: "Shoot 'Em by Washboard Rhythm Kings"
-  source: "https://www.youtube.com/watch?v=hx01Bt5BHaM"
+  source: "https://www.youtube.com/watch?v=8M8JRm8waI8"
 
 - files: ["unbreakable.ogg"]
   license: "Custom"

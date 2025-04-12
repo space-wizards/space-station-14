@@ -1,341 +1,348 @@
+# HEY!! MAKE SURE YOUR FILES AREN'T TOO LOUD (PEAK OF -2.7 dB) AND ARE IN MONO!! THANKS!!
+# IF THEY'RE NOT IN MONO YOU'LL BORK THE POSITIONAL AUDIO SYSTEM AND YOUR SOUNDS WON'T ATTENUATE AT A DISTANCE!
+# SO BE CAREFUL!!
+# ALSO DON'T EVEN THINK ABOUT ASKING FOR A JUKEBOX VOLUME SLIDER
+# FOR SOME REASON THAT SHIT IS ONLY EXPOSED ENGINE SIDE AND YOU MIGHT GO INSANE THINKING ABOUT HOW STUPID THAT IS
+# I LOVE ROBUST TOOLBOX!!
+
 - type: jukebox
   id: 4ff
-  name: NANORAY - 4ff
+  name: "4ff // NANORAY"
   path:
     path: /Audio/_Impstation/Music/4ff.ogg
 
 - type: jukebox
   id: AlongWithBrew
-  name: Pilotredsky - Along With Brew
+  name: "Along With Brew // Pilotredsky"
   path:
     path: /Audio/_Impstation/Music/along_with_brew.ogg
 
 - type: jukebox
-  id: ArmoredInGreen
-  name: "[Ketsuipachi Arrange] Manabu Namiki and Jake 'virt' Kaufman - Suburb - Armored in Green"
+  id: ArmoredInGreen # it's not called "armored in green", this is a mistake made by a youtube uploader and copied by kartkrew. researching this was fun
+  name: "[Ketsui ~Kizuna Jigoku Tachi~] SUBURB - Armored Green (Stage 2) // Manabu Namiki, arranged by Jake 'virt' Kaufman (for DoDonPachi Resurrection Black Label)"
   path:
     path: /Audio/_Impstation/Music/armored_in_green.ogg
 
 - type: jukebox
   id: BioEngineering
-  name: "[Rain World] James Primate - Bio-Engineering"
+  name: "[Rain World] Bio-Engineering // James Primate"
   path:
     path: /Audio/_Impstation/Music/bio-engineering.ogg
 
 - type: jukebox
   id: Bodybuilder
-  name: Pilotredsun - Bodybuilder
+  name: "Bodybuilder // PilotRedSun"
   path:
     path: /Audio/_Impstation/Music/bodybuilder.ogg
 
 - type: jukebox
   id: CantGoHomeAgain
-  name: "[Ragnarok Online] SoundTeMP - Can't go home again, baby"
+  name: "[Ragnarok Online] Can't go home again, baby // SoundTeMP"
   path:
     path: /Audio/_Impstation/Music/cant_go_home_again_baby.ogg
 
 - type: jukebox
   id: Cizgi
-  name: TRT ÇOCUK - ÇİZGİ FİLM MAKİNESİ
+  name: "ÇİZGİ FİLM MAKİNESİ // TRT ÇOCUK"
   path:
     path: /Audio/_Impstation/Music/cizgi.ogg
 
 - type: jukebox
   id: CreateAWrestler
-  name: "[Wrestlemania X8] James A. Johnston and J.J. Maguire - Create-A-Wrestler"
+  name: "[WWF WrestleMania X8] Create-A-Wrestler // Tomoyuki Hamada, Satoshi Miyashita, Akira Yasumichi & Tenyuu Nakamura"
   path:
     path: /Audio/_Impstation/Music/create_a_wrestler.ogg
 
 - type: jukebox
   id: DontDrinkIt
-  name: Pilotredsky - Don't Drink It
+  name: "Don't Drink It // Pilotredsky"
   path:
     path: /Audio/_Impstation/Music/dont_drink_it.ogg
 
 - type: jukebox
   id: Epoch
-  name: "[Cobalt Core] Aaron Cherof - Epoch"
+  name: "[Cobalt Core] Epoch // Aaron Cherof"
   path:
     path: /Audio/_Impstation/Music/epoch.ogg
 
 - type: jukebox
   id: EternalSanctity
-  name: "[Tower of Heaven] flashygoodness - Eternal Sanctity"
+  name: "[Tower of Heaven] Eternal Sanctity // flashygoodness"
   path:
     path: /Audio/_Impstation/Music/eternal_sanctity.ogg
 
 - type: jukebox
   id: Eudora
-  name: "[Rachet & Clank] David Bergeaud - Eudora, Logging Site"
+  name: "[Rachet & Clank] Eudora, Logging Site // David Bergeaud"
   path:
     path: /Audio/_Impstation/Music/eudora.ogg
 
 - type: jukebox
   id: FinalTagRoll
-  name: Rukunetsu - Final Tag Roll
+  name: "Final Tag Roll // Rukunetsu"
   path:
     path: /Audio/_Impstation/Music/final_tag_roll.ogg
 
 - type: jukebox
   id: FireTemple
-  name: Hige Driver - FIRE TEMPLE
+  name: "FIRE TEMPLE // Hige Driver"
   path:
     path: /Audio/_Impstation/Music/fire_temple.ogg
 
 - type: jukebox
   id: FunkyJazz
-  name: "[Ears of the Killer] Tommy Tone - Funky Jazz"
+  name: "[Ears of the Killer] Funky Jazz // Tommy Tone"
   path:
     path: /Audio/_Impstation/Music/funky_jazz.ogg
 
 - type: jukebox
   id: GETENUF
-  name: "[BOMB RUSH CYBERFUNK] Hideki Naganuma - GET ENUF"
+  name: "[Bomb Rush Cyberfunk] GET ENUF // Hideki Naganuma"
   path:
     path: /Audio/_Impstation/Music/get_enuf.ogg
 
 - type: jukebox
   id: GrinchsUltimatum
-  name: PilotRedSun - Grinch's Ultimatum
+  name: "Grinch's Ultimatum // PilotRedSun"
   path:
     path: /Audio/_Impstation/Music/grinchs_ultimatum.ogg
 
 - type: jukebox
   id: HitchedHighRail
-  name: "[Hardspace Shipbreaker] Traz Damji - Hitched High Rail"
+  name: "[Hardspace: Shipbreaker] Hitched High Rail // Traz Damji"
   path:
     path: /Audio/_Impstation/Music/hitched_high_rail.ogg
 
 - type: jukebox
   id: HourglassMeadow
-  name: "[ENA - Temptation Stairway] Oliver Buckland - Hourglass Meadow"
+  name: "[ENA - Temptation Stairway] Hourglass Meadow // Oliver Buckland"
   path:
-    path: /Audio/_Impstation/Music/hitched_high_rail.ogg
+    path: /Audio/_Impstation/Music/hourglass_meadow.ogg
 
 - type: jukebox
   id: ILikeItHere
-  name: "[Rimworld] Alistair Lindsay - I Like It Here"
+  name: "[Rimworld] I Like It Here // Alistair Lindsay"
   path:
     path: /Audio/_Impstation/Music/i_like_it_here.ogg
 
 - type: jukebox
   id: InThePocket
-  name: "[BOMB RUSH CYBERFUNK] Ethan Goldhammer - In The Pocket"
+  name: "[Bomb Rush Cyberfunk] In The Pocket // Ethan Goldhammer"
   path:
     path: /Audio/_Impstation/Music/in_the_pocket.ogg
 
 - type: jukebox
   id: JoinUs4Happy
-  name: "[Sonic Adventure] Kenichi Tokoi and Fumie Kumatani - Join Us 4 Happy Time"
+  name: "[Sonic Adventure] Join Us 4 Happy Time (Chao Race) // Kenichi Tokoi & Fumie Kumatani"
   path:
     path: /Audio/_Impstation/Music/join_us_4_happy_time.ogg
 
 - type: jukebox
   id: LastHoorah
-  name: KiloWatts - Last Hoorah
+  name: "Last Hoorah // KiloWatts"
   path:
     path: /Audio/_Impstation/Music/last_hoorah.ogg
 
 - type: jukebox
   id: LaxLullaby
-  name: "[Void Stranger] Eero Lahtinen - Lax Lullaby"
+  name: "[Void Stranger] Lax Lullaby // Eero Lahtinen"
   path:
     path: /Audio/_Impstation/Music/lax_lullaby.ogg
 
 - type: jukebox
   id: Level0
-  name: "[Tetris (CD-i)] Jim Andron - Nature (Level 0)"
+  name: "[Tetris (CD-i)] Nature (Level 0) // Jim Andron"
   path:
     path: /Audio/_Impstation/Music/level_0.ogg
 
 - type: jukebox
   id: LifeIsBeautiful
-  name: "[Deadly Premonition] Riyou Kinugasa, Takuya Kobayashi and Hiromi Mizutani - Life is Beautiful"
+  name: "[Deadly Premonition] Life is Beautiful // Riyou Kinugasa, Takuya Kobayashi & Hiromi Mizutani"
   path:
     path: /Audio/_Impstation/Music/level_0.ogg
 
 - type: jukebox
   id: LiveStudioAudience
-  name: "[Dr. Robotnik's Ring Racers] Tyron - Live Studio Audience"
+  name: "[Dr. Robotnik's Ring Racers] Live Studio Audience // Tyron"
   path:
     path: /Audio/_Impstation/Music/live_studio_audience.ogg
 
 - type: jukebox
   id: Loadsamoney
-  name: Harry Enfield - Loadsamoney (Doin' Up the House)
+  name: "Loadsamoney (Doin' Up the House) // Harry Enfield"
   path:
     path: /Audio/_Impstation/Music/loadsamoney.ogg
 
 - type: jukebox
   id: LonelyRollingStar
-  name: "[Katamari Damacy] Yoshihito Yano and Saki Kabata - Lonely Rolling Star"
+  name: "[Katamari Damacy] Lonely Rolling Star // Yoshihito Yano & Saki Kabata"
   path:
     path: /Audio/_Impstation/Music/lonely_rolling_star.ogg
 
 - type: jukebox
   id: LosingIsFun
-  name: "[Dwarf Fortress] Dabu & Simon Swerwer - Losing is Fun"
+  name: "[Dwarf Fortress] Losing is Fun // Dabu & Simon Swerwer"
   path:
     path: /Audio/_Impstation/Music/losing_is_fun.ogg
 
 - type: jukebox
   id: LostInRecollection
-  name: "[Dr. Robotnik's Ring Racers] DrTapeworm - Lost in Recollection"
+  name: "[Dr. Robotnik's Ring Racers] Lost in Recollection // DrTapeworm"
   path:
     path: /Audio/_Impstation/Music/lost_in_recollection.ogg
 
 - type: jukebox
   id: Match
-  name: Fred Mug - Match
+  name: "Match // Fred Mug"
   path:
     path: /Audio/_Impstation/Music/match.ogg
 
 - type: jukebox
   id: Montage
-  name: "[Ace Combat 3: Electrosphere] Tetsukazu Nakanishi - Montage - 8/40"
+  name: "[Ace Combat 3: Electrosphere] Montage // Tetsukazu Nakanishi"
   path:
     path: /Audio/_Impstation/Music/montage.ogg
 
 - type: jukebox
   id: MoreGun
-  name: "[Poker Night at the Inventory] Mike Morasky & Jared Emerson-Johnson - More Gun"
+  name: "[Team Fortress 2] More Gun // Mike Morasky, arranged by Jared Emerson-Johnson (for Poker Night at the Inventory)"
   path:
     path: /Audio/_Impstation/Music/more_gun.ogg
 
 - type: jukebox
   id: MorningGlow
-  name: "[BOMB RUSH CYBERFUNK] Doc McLennon - Morning Glow (Ft. Nicholas Mangiafico)"
+  name: "[Bomb Rush Cyberfunk] Morning Glow // Doc McLennon (ft. Nicholas Mangiafico)"
   path:
     path: /Audio/_Impstation/Music/morning_glow.ogg
 
 - type: jukebox
   id: Mtamientvsspasm
-  name: Soichi Terada - Mt. Amient vs Spasm
+  name: "Mt. Amient vs Spasm // Soichi Terada"
   path:
     path: /Audio/_Impstation/Music/mt_amient_vs_spasm.ogg
 
 - type: jukebox
   id: NamcoMuseum
-  name: "[Namco Museum] Jim Andron - Main Theme"
+  name: "[Namco Museum] Main Theme // Jim Andron"
   path:
     path: /Audio/_Impstation/Music/namco_museum.ogg
 
 - type: jukebox
   id: NeoSFStrut
-  name: "[2064: Read Only Memories] Aethernaut - Neo-SF Strut"
+  name: "[2064: Read Only Memories] Neo-SF Strut // Aethernaut"
   path:
     path: /Audio/_Impstation/Music/neosf_strut.ogg
 
 - type: jukebox
   id: OrdinaryDays
-  name: "[Lethal League Blaze] Klaus Veen - Ordinary Days V2"
+  name: "[Lethal League Blaze] Ordinary Days V2 // Klaus Veen"
   path:
     path: /Audio/_Impstation/Music/ordinary_days_v2.ogg
 
 - type: jukebox
   id: OverclockedWeakness
-  name: "[Barotrauma] Jussi Elsilä - Overclocked Weakness"
+  name: "[Barotrauma] Overclocked Weakness // Jussi Elsilä"
   path:
     path: /Audio/_Impstation/Music/overclocked_weakness.ogg
 
 - type: jukebox
   id: PillarsofCreation
-  name: "[Tower of Heaven] flashygoodness - Pillars of Creation"
+  name: "[Tower of Heaven] Pillars of Creation // flashygoodness"
   path:
     path: /Audio/_Impstation/Music/pillars_of_creation.ogg
 
 - type: jukebox
   id: FFXPrelude
-  name: "[FINAL FANTASY X] Junya Nakano, Masashi Hamauzu and Nobuo Uematsu - Prelude"
+  name: "[FINAL FANTASY X] Prelude // Junya Nakano, Masashi Hamauzu and Nobuo Uematsu"
   path:
     path: /Audio/_Impstation/Music/prelude.ogg
 
 - type: jukebox
   id: RollingDownTheStreet
-  name: Fearofdark - Rolling Down The Street, In My Katamari
+  name: "Rolling Down The Street, In My Katamari // Fearofdark"
   path:
     path: /Audio/_Impstation/Music/rolling_down_the_street_in_my_katamari.ogg
 
 - type: jukebox
   id: SamJones
-  name: Leslie Fish - Sam Jones
+  name: "Sam Jones // Leslie Fish"
   path:
     path: /Audio/_Impstation/Music/sam_jones.ogg
 
 - type: jukebox
   id: SetMeFree
-  name: "[Minnesota Fats: Pool Legend] Shogo Sakai, Masaaki Iwasaki, Seiji Momoi, Taihei Sato and Arma - Set Me Free"
+  name: "[Minnesota Fats: Pool Legend] Set Me Free // Shogo Sakai, Masaaki Iwasaki, Seiji Momoi, Taihei Sato & Arma"
   path:
     path: /Audio/_Impstation/Music/set_me_free.ogg
 
 - type: jukebox
   id: Shred
-  name: "[Lethal League Blaze] B. Bravo and Lean Rock - Shred"
+  name: "[Lethal League Blaze] Shred // B. Bravo & Lean Rock"
   path:
     path: /Audio/_Impstation/Music/shred.ogg
 
 - type: jukebox
   id: SnowBurn
-  name: Fearofdark - Snow Burn
+  name: "Snow Burn // Fearofdark"
   path:
     path: /Audio/_Impstation/Music/snow_burn.ogg
 
 - type: jukebox
   id: EncounterACaterpillar
-  name: Solaris - song that plays when you encounter a caterpillar
+  name: "song that plays when you encounter a caterpillar // Solaris"
   path:
     path: /Audio/_Impstation/Music/song_that_plays_when_you_encounter_a_caterpillar.ogg
 
 - type: jukebox
   id: SpaceAsshole
-  name: Space Asshole - Chris Remo
+  name: "Space Asshole // Chris Remo"
   path:
     path: /Audio/_Impstation/Music/space_asshole.ogg
 
 - type: jukebox
   id: Thanks
-  name: Pilotredsun - Thanks
+  name: "Thanks // PilotRedSun"
   path:
     path: /Audio/_Impstation/Music/thanks.ogg
 
 - type: jukebox
   id: TheFluteTune
-  name: J-Cut & Kolt Siewerts - The Flute Tune (Soulpride Remix)
+  name: "The Flute Tune (Soulpride Remix) // J-Cut & Kolt Siewerts"
   path:
     path: /Audio/_Impstation/Music/the_flute_tune.ogg
 
 - type: jukebox
   id: ThrashardInTheCave
-  name: "[Castlevania Chronicles] Sota Fujimori - Thrashard In The Cave - Stage 2 (Arrange Ver.)"
+  name: "[Akumajō Dracula] Thrashard In The Cave - Stage 2 // Shin-chan, Keizo Nakamura, & Hiroshi Kobayashi; arranged by Sota Fujimori (for Castlevania Chronicles)"
   path:
     path: /Audio/_Impstation/Music/thrashard_in_the_cave.ogg
 
 - type: jukebox
   id: TopollaTheatre
-  name: "[Earthbound] Keiichi Suzuki and Hirokazu Tanaka - Topolla Theatre, Home to the One and Only Venus"
+  name: "[Mother 2 / Earthbound] Topolla Theatre, Home to the One and Only Venus // Keiichi Suzuki & Hirokazu Tanaka"
   path:
     path: /Audio/_Impstation/Music/topolla_theatre.ogg
 
 - type: jukebox
   id: TwoDaysOff
-  name: KiloWatts - Two Days Off
+  name: "Two Days Off // KiloWatts"
   path:
     path: /Audio/_Impstation/Music/twodaysoff.ogg
 
 - type: jukebox
   id: Warsaw
-  name: PilotRedSun - Warsaw
+  name: "warsaw // PilotRedSun"
   path:
     path: /Audio/_Impstation/Music/warsaw.ogg
 
 - type: jukebox
   id: YouBlowMyMind
-  name: "[Street Fighter III: 3rd Strike: Fight for the Future] Hideki Okugawa - You Blow My Mind"
+  name: "[Street Fighter III: 3rd Strike] You Blow My Mind // Hideki Okugawa" # i'm not including the subsubtitle. who give a shit
   path:
     path: /Audio/_Impstation/Music/you_blow_my_mind.ogg
 
 - type: jukebox
   id: ZIPYKKARRANGE
-  name: Rukunetsu - ZIP YKK ARRANGE
+  name: "ZIP YKK ARRANGE // Rukunetsu"
   path:
     path: /Audio/_Impstation/Music/zip_ykk_arrange.ogg
