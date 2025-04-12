@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Research.Prototypes;
