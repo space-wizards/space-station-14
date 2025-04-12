@@ -263,9 +263,8 @@ public sealed partial class StaminaSystem : EntitySystem
         // Reset the decay cooldown upon taking damage.
         if (oldDamage < component.StaminaDamage)
         {
-            
             var nextUpdate = _timing.CurTime + TimeSpan.FromSeconds(component.Cooldown);
-            
+
             if (component.NextUpdate < nextUpdate)
             {
                 component.NextUpdate = nextUpdate;
@@ -359,7 +358,6 @@ public sealed partial class StaminaSystem : EntitySystem
             // Handle exiting critical condition and restoring stamina damage
             if (comp.Critical)
                 ExitStamCrit(uid, comp);
-            
 
             comp.NextUpdate += TimeSpan.FromSeconds(1f);
 
@@ -409,7 +407,7 @@ public sealed partial class StaminaSystem : EntitySystem
         component.Critical = false;
         _afterCrit = true;  // Set to true to indicate that stamina will be restored after exiting stamcrit
         component.NextUpdate = _timing.CurTime;
-        
+
         SetStaminaAlert(uid, component);
         RemComp<ActiveStaminaComponent>(uid);
         Dirty(uid, component);
