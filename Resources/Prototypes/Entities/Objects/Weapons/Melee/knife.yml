@@ -75,7 +75,7 @@
     - Chef
     - FoodRecipes
   - type: StealTarget
-    stealObjective: Cleaver
+    stealGroup: Cleaver
 
 - type: entity
   name: combat knife
