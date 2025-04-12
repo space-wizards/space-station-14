@@ -34,7 +34,7 @@ public sealed partial class ZombieComponent : Component
     /// </summary>
     public Dictionary<string, FixedPoint2> ResistanceEffectiveness = new()
     {
-        {"Slash", 0.6},
+        {"Slash", 0.5},
         {"Piercing", 0.3},
         {"Blunt", 0.1},
     };
@@ -136,22 +136,6 @@ public sealed partial class ZombieComponent : Component
             { "Piercing", -2 }
         }
     };
-
-    /// <summary>
-    /// The damage dealt on bite, dehardcoded for your enjoyment
-    /// </summary>
-    [DataField]
-    public DamageSpecifier DamageOnBite = new()
-    {
-        DamageDict = new()
-        {
-            { "Slash", 13 },
-            { "Piercing", 7 },
-            { "Structural", 10 }
-        }
-    };
-
-
 
     /// <summary>
     ///     Path to antagonist alert sound.
