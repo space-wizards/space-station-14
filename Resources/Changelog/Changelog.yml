@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Handheld light verbs are now predicted!
-    type: Fix
-  id: 7658
-  time: '2024-11-28T13:41:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33622
 - author: arimah
   changes:
   - message: GPS coordinates are now more readable.
@@ -3891,3 +3884,10 @@
   id: 8157
   time: '2025-04-12T09:05:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36476
+- author: Quantum-cross
+  changes:
+  - message: Supercrit anomaly playing explosion sound twice
+    type: Fix
+  id: 8158
+  time: '2025-04-12T23:27:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36489
