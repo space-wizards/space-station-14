@@ -6,9 +6,9 @@ using Robust.Client.Player;
 using Content.Shared.CCVar;
 using Content.Client.Overlays;
 
-namespace Content.Client.Overlays;
-
+namespace Content.Client.Overlays
 {
+
     public sealed class SharpeningSystem : EntitySystem
     {
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
