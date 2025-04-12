@@ -30,7 +30,7 @@
       enum.OreSiloUiKey.Key:
         type: OreSiloBoundUserInterface
   - type: Machine
-    board: DawInstrumentMachineCircuitboard
+    board: MaterialSiloMachineCircuitboard
   - type: Fixtures
     fixtures:
       fix1:
