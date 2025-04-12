@@ -69,6 +69,8 @@ public sealed class ClientsidePlaytimeTracking
         _configurationManager.SetCVar(CCVars.MinutesToday, _configurationManager.GetCVar(CCVars.MinutesToday) + timeDiff.Minutes);
         _sawmill.Info("Recorded " + timeDiff.Minutes.ToString() + " minutes of living playtime!");
 
-        _configurationManager.SaveToFile(); // We don't like that we have to save the entire config just to store playtime stats '^'
+        // Tests in particular aren't gonna have a config. So don't save it in those cases.
+        if (_configurationManager.IsCVarRegistered(CCVars.MinutesToday.Name) && _configurationManager.IsCVarRegistered(CCVars.LastConnectDate.Name))
+            _configurationManager.SaveToFile(); // We don't like that we have to save the entire config just to store playtime stats '^'
     }
 }
