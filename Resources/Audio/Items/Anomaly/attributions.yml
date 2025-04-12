@@ -11,14 +11,14 @@
   source: https://pixabay.com/sound-effects/psychedelic-144822/
 
 - files: ["tech_crit1.ogg"]
-  license: Custom
+  license: "CC0-1.0"
   copyright: "wtermini (Freesound), edited by Quantum-cross@github"
-  source: https://pixabay.com/sound-effects/the-sound-of-dial-up-internet-6240/
+  source: https://freesound.org/people/wtermini/sounds/546450/
 
 - files: ["tech_crit2.ogg"]
-  license: Custom
+  license: "CC0-1.0"
   copyright: "unfa (Freesound), edited by Quantum-cross@github"
-  source: https://pixabay.com/sound-effects/gsm-signal-91070/
+  source: https://freesound.org/people/unfa/sounds/124547/
 
 - files: ["present_crit.ogg"]
   license: "CC0-1.0"
