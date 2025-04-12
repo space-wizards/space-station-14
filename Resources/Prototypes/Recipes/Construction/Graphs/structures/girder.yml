@@ -304,8 +304,6 @@
               doAfter: 1
 
         - to: diagonalshuttleWall
-          completed:
-            - !type:SnapToGrid
           conditions:
             - !type:EntityAnchored { }
           steps:
