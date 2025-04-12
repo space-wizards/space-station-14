@@ -195,6 +195,36 @@ namespace Content.Client.Lobby
             {
                 Lobby!.ServerInfo.SetInfoBlob(_gameTicker.ServerInfoBlob);
             }
+
+            var minutesToday = _cfg.GetCVar(CCVars.MinutesToday) ;
+            if (minutesToday > 60)
+            {
+                Lobby!.PlaytimeComment.Visible = true;
+
+                var hoursToday = Math.Round(minutesToday / 60f, 1);
+
+                string chosenString;
+
+                switch (minutesToday)
+                {
+                    case < 180:
+                        chosenString = "lobby-state-playtime-comment-normal";
+                        break;
+                    case < 360:
+                        chosenString = "lobby-state-playtime-comment-concerning";
+                        break;
+                    case < 720:
+                        chosenString = "lobby-state-playtime-comment-selfdestructive";
+                        break;
+                    default:
+                        chosenString = "lobby-state-playtime-comment-grasstouchless";
+                        break;
+                }
+
+                Lobby.PlaytimeComment.SetMarkup(Loc.GetString(chosenString, ("hours", hoursToday)));
+            }
+            else
+                Lobby!.PlaytimeComment.Visible = false;
         }
 
         private void UpdateLobbySoundtrackInfo(LobbySoundtrackChangedEvent ev)
