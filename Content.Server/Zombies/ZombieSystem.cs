@@ -11,6 +11,7 @@ using Content.Shared.Armor;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
@@ -75,7 +76,6 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<IncurableZombieComponent, MapInitEvent>(OnPendingMapInit);
 
             SubscribeLocalEvent<ZombifyOnDeathComponent, MobStateChangedEvent>(OnDamageChanged);
-
         }
 
         private void OnBeforeRemoveAnomalyOnDeath(Entity<PendingZombieComponent> ent,
@@ -201,35 +201,34 @@ namespace Content.Server.Zombies
             }
         }
 
-        private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
+        private float GetZombieInfectionChance(EntityUid uid, ZombieComponent zombieComponent)
         {
-            var chance = component.BaseZombieInfectionChance;
+            var chance = zombieComponent.BaseZombieInfectionChance;
 
             if (!_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator, ProtectiveSlots))
                 return chance;
 
-            while (enumerator.MoveNext(out var con))
+            var armorEv = new CoefficientQueryEvent(ProtectiveSlots);
+            RaiseLocalEvent(uid, armorEv);
+            foreach (KeyValuePair<string, FixedPoint2> resistanceEffectiveness in zombieComponent
+                         .ResistanceEffectiveness)
             {
-                if (con.ContainedEntity == null)
-                    continue;
-                if (TryComp<ZombificationResistanceComponent>(con.ContainedEntity,
-                        out var zombificationResistanceComponent))
+                if (armorEv.DamageModifiers.Coefficients.TryGetValue(resistanceEffectiveness.Key, out var coefficient))
                 {
-                    chance *= zombificationResistanceComponent.ZombificationResistanceCoefficient;
-                }
-
-                if (TryComp<ArmorComponent>(con.ContainedEntity, out var armorComponent))
-                {
-                    var modifiers = armorComponent.Modifiers;
-                    if (modifiers.Coefficients.TryGetValue("Slash", out var coefficient))
-                    {
-                        chance *= coefficient;
-                    }
+                    // Scale the coefficient by the resistance effectiveness, very descriptive I know
+                    // For example. With 30% slash resist (0.7 coeff), but only a 60% resistance effectiveness for slash,
+                    // you'll end up with 1 - (0.3 * 0.6) = 0.82 coefficient, or a 18% resistance
+                    var adjustedCoefficient = 1 - ((1 - coefficient) * resistanceEffectiveness.Value.Float());
+                    chance *= adjustedCoefficient;
                 }
             }
 
+            var zombificationResistanceEv = new ZombificationResistanceQueryEvent(ProtectiveSlots);
+            RaiseLocalEvent(uid, zombificationResistanceEv);
+            chance *= zombificationResistanceEv.TotalCoefficient;
 
-            var min = component.MinZombieInfectionChance;
+
+            var min = zombieComponent.MinZombieInfectionChance;
             chance = MathF.Max(chance, min);
             return chance;
         }
@@ -295,10 +294,12 @@ namespace Content.Server.Zombies
                 _humanoidAppearance.SetBaseLayerColor(target, layer, info.Color);
                 _humanoidAppearance.SetBaseLayerId(target, layer, info.Id);
             }
+
             if (TryComp<HumanoidAppearanceComponent>(target, out var appcomp))
             {
                 appcomp.EyeColor = zombiecomp.BeforeZombifiedEyeColor;
             }
+
             _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor, false);
             _bloodstream.ChangeBloodReagent(target, zombiecomp.BeforeZombifiedBloodReagent);
 

@@ -178,16 +178,7 @@ public sealed partial class ZombieSystem
             _humanoidAppearance.SetBaseLayerId(target, HumanoidVisualLayers.Snout, zombiecomp.BaseLayerExternal, humanoid: huApComp);
 
             //This is done here because non-humanoids shouldn't get baller damage
-            //lord forgive me for the hardcoded damage
-            DamageSpecifier dspec = new()
-            {
-                DamageDict = new()
-                {
-                    { "Slash", 13 },
-                    { "Piercing", 7 },
-                    { "Structural", 10 }
-                }
-            };
+            DamageSpecifier dspec = zombiecomp.DamageOnBite;
             melee.Damage = dspec;
 
             // humanoid zombies get to pry open doors and shit

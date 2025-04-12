@@ -1,7 +1,7 @@
-using Content.Shared.Antag;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
@@ -28,6 +28,16 @@ public sealed partial class ZombieComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public float MinZombieInfectionChance = 0.05f;
+
+    /// <summary>
+    /// How effective each resistance type on a piece of armor is.
+    /// </summary>
+    public Dictionary<string, FixedPoint2> ResistanceEffectiveness = new()
+    {
+        {"Slash", 0.6},
+        {"Piercing", 0.3},
+        {"Blunt", 0.1},
+    };
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float ZombieMovementSpeedDebuff = 0.70f;
@@ -126,6 +136,22 @@ public sealed partial class ZombieComponent : Component
             { "Piercing", -2 }
         }
     };
+
+    /// <summary>
+    /// The damage dealt on bite, dehardcoded for your enjoyment
+    /// </summary>
+    [DataField]
+    public DamageSpecifier DamageOnBite = new()
+    {
+        DamageDict = new()
+        {
+            { "Slash", 13 },
+            { "Piercing", 7 },
+            { "Structural", 10 }
+        }
+    };
+
+
 
     /// <summary>
     ///     Path to antagonist alert sound.

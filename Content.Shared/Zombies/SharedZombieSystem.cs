@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Armor;
+using Content.Shared.Inventory;
 using Content.Shared.Movement.Systems;
 using Content.Shared.NameModifier.EntitySystems;
 
@@ -14,8 +15,13 @@ public abstract class SharedZombieSystem : EntitySystem
         SubscribeLocalEvent<ZombieComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
         SubscribeLocalEvent<ZombieComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
         SubscribeLocalEvent<ZombificationResistanceComponent, ArmorExamineEvent>(OnArmorExamine);
+        SubscribeLocalEvent<ZombificationResistanceComponent, InventoryRelayedEvent<ZombificationResistanceQueryEvent>>(OnResistanceQuery);
     }
 
+    private void OnResistanceQuery(Entity<ZombificationResistanceComponent> ent, ref InventoryRelayedEvent<ZombificationResistanceQueryEvent> query)
+    {
+        query.Args.TotalCoefficient *= ent.Comp.ZombificationResistanceCoefficient;
+    }
     private void OnArmorExamine(Entity<ZombificationResistanceComponent> ent, ref ArmorExamineEvent args)
     {
         var value = MathF.Round((1f - ent.Comp.ZombificationResistanceCoefficient) * 100, 1);

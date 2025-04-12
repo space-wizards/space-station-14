@@ -1,3 +1,5 @@
+using Content.Shared.Damage;
+using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Zombies;
@@ -6,15 +8,32 @@ namespace Content.Shared.Zombies;
 public sealed partial class ZombificationResistanceComponent : Component
 {
     /// <summary>
-    ///  The multiplier that will by applied to the cha
+    ///  The multiplier that will by applied to the zombification chance.
     /// </summary>
-    [DataField("coefficient")]
+    [DataField]
     public float ZombificationResistanceCoefficient = 1;
 
     /// <summary>
     /// Examine string for the zombification resistance.
     /// Passed <c>value</c> from 0 to 100.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public LocId Examine = "zombification-resistance-coefficient-value";
+}
+
+public sealed class ZombificationResistanceQueryEvent : EntityEventArgs, IInventoryRelayEvent
+{
+    /// <summary>
+    /// All slots to relay to
+    /// </summary>
+    public SlotFlags TargetSlots { get; set; }
+
+    /// <summary>
+    /// The Total of all Coefficients.
+    /// </summary>
+    public float TotalCoefficient { get; set; } = 1.0f;
+
+    public ZombificationResistanceQueryEvent(SlotFlags slots)
+    {
+        TargetSlots = slots;
+    }
 }
