@@ -276,13 +276,10 @@ public abstract class SharedStunSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        bool Approximately(float a, float b, float epsilon = 0.0001f) =>
-            Math.Abs(a - b) < epsilon; // Comparing two floats, taking into account the error (epsilon)
-
         if (
-            (Approximately(walkSpeedModifier, 1f) && Approximately(runSpeedModifier, 1f) && component.StaminaDamage == 0f) ||
+            (MathHelper.CloseTo(walkSpeedModifier, 1f) && MathHelper.CloseTo(runSpeedModifier, 1f) && component.StaminaDamage == 0f) ||
             (walkSpeedModifier == 0f && runSpeedModifier == 0f)
-            )
+        )
         {
             RemComp<SlowedDownComponent>(uid);
             return;
