@@ -94,4 +94,16 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<float> PointingCooldownSeconds =
         CVarDef.Create("pointing.cooldown_seconds", 0.5f, CVar.SERVERONLY);
+
+    /// <summary>
+    ///     The last time the client recorded a valid connection to a game server
+    /// </summary>
+    public static readonly CVarDef<string> LastConnectDate =
+        CVarDef.Create("playtime.last_connect_date", "1970-01-01", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
+    ///     The total minutes that the client has spent on the current date
+    /// </summary>
+    public static readonly CVarDef<int> MinutesToday =
+        CVarDef.Create("playtime.minutes_today", 0, CVar.CLIENTONLY | CVar.ARCHIVE);
 }
