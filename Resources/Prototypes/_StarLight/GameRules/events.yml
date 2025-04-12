@@ -111,8 +111,17 @@
   - type: RuleGrids
   - type: LoadMapRule
     gridPath: /Maps/_Starlight/Shuttles/DSshuttle.yml
+    
+    #Pig's RadioTower
+- type: entity
+  parent: BaseGameRule
+  id: RadioTowerSpawn
+  components:
+  - type: RuleGrids
+  - type: LoadMapRule
+    gridPath: /Maps/_Starlight/Shuttles/Radiotower.yml
 
-      #Pig's ERT Shuttle
+      #Pig's CBURN Shuttle
 - type: entity
   parent: BaseGameRule
   id: CBURNShuttleSpawn
