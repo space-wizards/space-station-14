@@ -52,53 +52,40 @@ Telecoms: Change reinforced walls?
 Move warden's office?
 Make easier to navigate in general, + add standard colors around more
 	Maybe crappy scribble decals on top of the MIRI flooring?
-Make HoP's office clearer in particular
-Reinforce canister room walls
 Take out empty trit can?
-Remove riveted walls in storage
 Deal with very long TEG pipeline somehow.
-TEG just engi doors
 Swap nuke/PA? Move nuke to vault?
 Move oxy miner to where the other gasses are?
 Set ejection chamber button access (cap and HoS)
 Nudge wall sign transform variables to make them line up better
-Fix bridge door power (and make glass?)
 One missing Amogus camera: Admin (probably because of fix wiring)
-Probably growing anomaly berries is a no-go.
-Couple of cameras just called "camera" on security
-	Outside high-sec brig in space
-	Inside Perma
-Security camera at north sec lobby?
-Hook up bathroom vent in perma?
-Thought there was a maints loot spawner in the shower?
-Fix hole in bar windoors
-Arrivals->service corridor substations are unlabeled.
-Unnamed APC hallway outside brigs
 AI power isn't connected?
 	Double-check the internal wiring. It seems wrong.
 	Esp. how wires merge when it's all wired properly.
 	It was broken by a meteor anyway, though.
 		Needs more protection from that?
 	Also, some wires under walls in space. Not so great.
-Radiation from singulo hits AI walkway
-Maybe some railings to protect from HV grilles, too.
-	Not just on AI walk, but in general, make it a bit less easy to just bump into those
-	grilles. Outer layer should have no HV, so only if you're determined to get in
-	will it become relevant.
-	VERY MUCH especially near singulo, too!
-AI room's south side hall, when small firelock is shut, can't be traversed.
-Atmos waste system isn't set to right filters?
-Why start with N2 already hooked up to distro?
-	Maybe it's okay.
 Salvage space arm is getting sensed as part of the room by air sensors?
-Defense Lawyer station beacon uncapitalized
 Weapons north maints door stuck open
+Somewhere, there is a holopad with no label.
+
+I'd really like the sec camera monitors to only see General if possible...
+	And I think I already have it on this list, but the Admin camera still no worky.
+Det/Prosc door bolt doesn't work. It bolts, then immediately unbolts.
+	nor instead of or gate?
+Why can AI see inside tider shop? Is the holopad in there anchored? Is there a camera? Do the shutters not block?
+	Holopad. I'll make it private with the otheres.
+Not much vision of arti/anom hall
+	This is confusing, and I need to investigate more. The camera on the east side should see just fine, and the camera on the west side should get anything it misses.
+Vision of HoP/Bridge shortcut *does* see secret door.
+	Clearly, moving the camera off the corner wouldn't fix this, too, as it's on the other corner. :C
+		I can't really do that anyway.
+
 
 The big things:
 Set up evac shuttle (possibly shrink it, too)
 Cafeteria firelocks
 Cafeteria floor
-Mail chutes
 Possibly move Evac farther out to make room for shuttle
 	at north dock.
 Check AI vision
@@ -124,6 +111,22 @@ AI scrubber vent pump starts off
 Check lighting
 Make sure arrivals meteor shield didn't block the shuttle
 Make sure det/prosc door switches do what they're supposed to. Especially wrt the shutter.
+Even without holopad, the hallway engie camera can see CE's outer office.
+	Moved it. Maybe fixed. There's always curtains.
+Vision of service hall little room near caf through the window
+	For some reason, this is the camera in the main arrivals hallway, even though it should have a wall blocking it.
+		Camera vision range is clearly screwy.
+			Would moving cameras off of the corners of walls fix this?
+				no.
+		I moved it.
+Vision hole in middle of Atmos
+	Should be fixed now.
+Tiny one-tile vision hole right under doors below Weapons
+	Should be fixed.
+Tiny one-tile vision hole under HoP area
+	Moved camera from right by vent.
+Atmos waste system isn't set to right filters?
+	Should be set now
 
 
 THINGS I COULD MAKE:
@@ -201,3 +204,74 @@ DONE:
 /* Glass doors at sec -> hall */
 /* Double-check reinforced walls around substations */
 /* Liquid carbon dioxide can hooked up to condenser behind bar is wrong? */
+/* Mail chutes */
+/* Add service camera to bar area? And maybe to service hallway, even? */
+/* Holopad between AI/AI Dock: Can see into second airlock. Is this okay, or no? */
+/* 	I just deleted it. Meh. */
+/* No vision of TEG burn chamber. */
+/* 	Maybe this is fine. */
+/* Assembly camera still in salv airlock (but AI gets vision through glass doors anyway) */
+/* QM's room also entirely visible by AI through window. (Would the curtains change that?) */
+/* 	I think I'll leave it. QM can always close curtains. */
+/* Gap in vision along lower east side of storage */
+/* Two cameras outside tider shop are still assembly (but AI has plenty of vision anyway.) */
+/* Could delete wall outside mime room and still not expose vent to AI */
+/* Gap in vision at NE cafeteria table */
+/* More of psych office than I want is visible via the camera (though the curtains might solve that.) */
+	/* Curtains. */
+/* Might want vision of little hallway in Viro */
+/* Big hole in vision of NE Shields */
+/* 	Was an assembled camera */
+/* Should add cameras to bridge front window, in space */
+/* AI has vision on Admin vent disposal */
+/* 	This comes from the HoP's holopad, actually */
+/* 		Moved it. This one shouldn't be private. */
+/* Maybe move janitor room camera to east side so it can see down the hallway */
+/* North service hall dock camera still assembly */
+/* AI Cameras: */
+/* -Engi locker room + that other little one */
+/* -Engi hallway */
+/* -West half of Reactor */
+/* HOLOPADS DO GIVE VISION, even when not in use! */
+/* 	Otherwise, I can only use cameras set to an actual department network. */
+/* 	...or the "Camera [Constructed]" also. */
+/* Also, the tripod-mounted cams do give me vision. Or do they? */
+/* 	The one in meeting room did. Maybe it's set to a different network than the ones I'm creating */
+/* 		on the fly. */
+/* 		Or maybe it never did, and closing the shutters blocked something else. */
+/* StationAiVisionComponent */
+/* 	-I should take this out of some holopads and call them "Private Holopad" */
+
+/* See screenshots */
+/* Science cams should be lower-case and not have Science prefix */
+/* Disable tider shop door bolt light? */
+/* Air problems. Fixgridatmos? */
+/* Defense Lawyer station beacon uncapitalized */
+/* Why start with N2 already hooked up to distro? */
+/* 	Maybe it's okay. */
+/* AI room's south side hall, when small firelock is shut, can't be traversed. */
+/* Maybe some railings to protect from HV grilles, too. */
+/* 	Not just on AI walk, but in general, make it a bit less easy to just bump into those */
+/* 	grilles. Outer layer should have no HV, so only if you're determined to get in */
+/* 	will it become relevant. */
+/* 	VERY MUCH especially near singulo, too! */
+/* Radiation from singulo hits AI walkway */
+/* Unnamed APC hallway outside brigs */
+/* Arrivals->service corridor substations are unlabeled. */
+/* Fix hole in bar windoors */
+/* 	There are no windoors. */
+/* Thought there was a maints loot spawner in the shower? */
+/* 	There is now, at least? Maybe it spawned something a mothroach ate. */
+/* Hook up bathroom vent in perma? */
+/* 	It is hooked up. */
+/* Security camera at north sec lobby? */
+/* 	There are two AI cameras. I don't think I want NT cameras, AI aside, in MIRA areas? */
+/* Couple of cameras just called "camera" on security */
+/* 	Outside high-sec brig in space */
+/* 	Inside Perma */
+/* Probably growing anomaly berries is a no-go. */
+/* Fix bridge door power (and make glass?) */
+/* TEG just engi doors */
+/* Remove riveted walls in storage */
+/* Reinforce canister room walls */
+/* Make HoP's office clearer in particular */
