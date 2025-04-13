@@ -77387,39 +77387,11 @@ entities:
     - type: Transform
       pos: -11.40432,-23.46709
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 5704
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 5704
-    - type: ActionsContainer
   - uid: 19898
     components:
     - type: Transform
       pos: 45.4472,-50.26539
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 19899
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 19899
-    - type: ActionsContainer
 - proto: FlashlightSeclite
   entities:
   - uid: 492
@@ -77427,39 +77399,11 @@ entities:
     - type: Transform
       pos: -23.535683,15.622428
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 494
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 494
-    - type: ActionsContainer
   - uid: 15576
     components:
     - type: Transform
       pos: 64.553955,-73.50326
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 20759
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 20759
-    - type: ActionsContainer
 - proto: FlippoLighter
   entities:
   - uid: 20241
@@ -77474,20 +77418,6 @@ entities:
     - type: Transform
       pos: -9.483673,-93.49975
       parent: 2
-    - type: HandheldLight
-      toggleActionEntity: 121
-    - type: ContainerContainer
-      containers:
-        cell_slot: !type:ContainerSlot
-          showEnts: False
-          occludes: True
-          ent: null
-        actions: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 121
-    - type: ActionsContainer
 - proto: FloorDrain
   entities:
   - uid: 1143
