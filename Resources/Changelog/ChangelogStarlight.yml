@@ -4799,4 +4799,11 @@ Entries:
   id: 664
   time: '2025-04-13T06:31:25.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/484
+- author: PubliclyExecutedPig
+  changes:
+  - message: Removed Saltern from the map pool.
+    type: Remove
+  id: 665
+  time: '2025-04-13T06:32:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/482
 
