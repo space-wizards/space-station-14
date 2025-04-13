@@ -94,6 +94,10 @@
       children:
       - id: ClothingNeckCloakHerald
       - id: ClothingHeadHelmetTemplar
+      # Pill Dispensers
+      - !type:GroupSelector
+        children:
+        - id: PillDispenserWeh # the other strange pills are in on the maint locker fill.
       # Cloaks
       - !type:GroupSelector
         children:

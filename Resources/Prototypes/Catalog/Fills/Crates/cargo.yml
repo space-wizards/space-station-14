@@ -72,6 +72,9 @@
     - id: TrashBananiumPeel
       prob: 0.1
       orGroup: Junk
+    - id: PillDispenserWeh
+      prob: 0.1
+      orGroup: Junk
     #canisters
     - id: AirCanister
       prob: 0.001
