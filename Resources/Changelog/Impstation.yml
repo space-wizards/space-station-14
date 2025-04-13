@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Fixed Marathon engineering missing it's PA computer board.
-    type: Fix
-  id: 1010
-  time: '2025-01-27T01:56:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1496
 - author: kipdotnet
   changes:
   - message: Added the NT-strugglebug, a cheap, compact salvage shuttle. Buy from
@@ -4103,3 +4096,10 @@
   id: 1509
   time: '2025-04-13T04:57:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2217
+- author: DinnerCalzone
+  changes:
+  - message: Updates to Cluster, Marathon, Train, and other maps. Details in PR.
+    type: Tweak
+  id: 1510
+  time: '2025-04-13T05:00:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2249
