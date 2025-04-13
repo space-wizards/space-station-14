@@ -4,7 +4,7 @@ meta:
   engineVersion: 252.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/13/2025 22:03:11
+  time: 04/13/2025 23:55:39
   entityCount: 23697
 maps:
 - 1
@@ -65687,6 +65687,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: 74.5,-46.5
       parent: 2
+- proto: ComputerFundingAllocation
+  entities:
+  - uid: 4934
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -12.5,-48.5
+      parent: 2
 - proto: ComputerId
   entities:
   - uid: 7571
@@ -74980,7 +74988,7 @@ entities:
   - uid: 6354
     components:
     - type: Transform
-      pos: -12.5,-48.5
+      pos: -11.5,-48.5
       parent: 2
     - type: FaxMachine
       name: HoP
@@ -113963,7 +113971,7 @@ entities:
   - uid: 6361
     components:
     - type: Transform
-      pos: -11.694337,-48.372257
+      pos: -11.495297,-47.294464
       parent: 2
 - proto: MaterialCloth1
   entities:
@@ -114001,7 +114009,7 @@ entities:
   - uid: 7551
     components:
     - type: Transform
-      pos: -11.475477,-47.861485
+      pos: -11.495297,-47.763542
       parent: 2
 - proto: MaterialWoodPlank
   entities:
@@ -135463,11 +135471,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -31.5,-54.5
       parent: 2
-  - uid: 4934
-    components:
-    - type: Transform
-      pos: -12.5,-48.5
-      parent: 2
   - uid: 5012
     components:
     - type: Transform
@@ -136434,7 +136437,7 @@ entities:
   - uid: 20222
     components:
     - type: Transform
-      pos: -16.557547,-48.286213
+      pos: -16.692001,-48.31601
       parent: 2
 - proto: ToyFigurineHeadOfSecurity
   entities:
