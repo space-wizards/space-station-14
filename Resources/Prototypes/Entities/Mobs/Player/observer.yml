@@ -77,6 +77,32 @@
   - type: Tag
     tags:
     - AllowGhostShownByEvent
+  - type: UserInterface # imp - add mass scanner console. might need to remove this if it becomes a performance issue.
+    interfaces:
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+  - type: IntrinsicUI # imp. ditto
+    uis:
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: ActionGhostShowRadar
+  - type: RadarConsole # imp. ditto
+    followEntity: true
+  - type: IgnoreUIRange # imp. pretty much all this does is make it so that ghosts can see IDs and health info at any range, since ghosts don't have hands or complexinteract
+
+# imp - ActionAghostShowRadar except with CheckCanInteract set to false, and a UseDelay 
+- type: entity
+  id: ActionGhostShowRadar
+  name: Mass Scanner Interface
+  description: View a Mass Scanner Interface.
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    icon: { sprite: Interface/Actions/actions_ai.rsi, state: mass_scanner }
+    iconOn: Interface/Actions/actions_ai.rsi/mass_scanner.png
+    keywords: [ "AI", "console", "interface" ]
+    priority: -6
+    event: !type:ToggleIntrinsicUIEvent { key: enum.RadarConsoleUiKey.Key }
+    useDelay: 60 # to discourage everyone from opening it at once and causing potential perf issues.
 
 - type: entity
   id: ActionGhostBoo
