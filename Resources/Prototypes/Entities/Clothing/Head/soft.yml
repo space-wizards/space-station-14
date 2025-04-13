@@ -100,7 +100,7 @@
   name: quartermaster's cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippableClothingUniformJumpsuitCommandGeneric
+  parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatCommandSoft
   name: command cap
   description: It's a baseball hat painted in Command colours.
