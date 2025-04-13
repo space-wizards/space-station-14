@@ -214,10 +214,10 @@ namespace Content.Client.Lobby
                         chosenString = "lobby-state-playtime-comment-concerning";
                         break;
                     case < 720:
-                        chosenString = "lobby-state-playtime-comment-selfdestructive";
+                        chosenString = "lobby-state-playtime-comment-grasstouchless";
                         break;
                     default:
-                        chosenString = "lobby-state-playtime-comment-grasstouchless";
+                        chosenString = "lobby-state-playtime-comment-selfdestructive";
                         break;
                 }
 
