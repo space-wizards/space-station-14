@@ -4,7 +4,7 @@ desc = "Unofficial server for fans of RTVS featuring custom content. Come and se
 soft_max_players = 80
 # seconds
 # default 150
-lobbyduration = 300
+lobbyduration = 720
 
 [server]
 # TODO
@@ -13,7 +13,7 @@ uptime_restart_minutes = 240
 
 [chat]
 # Message Of The Day
-# motd = "Be sure to fill out the Impstation rules survey, found in the impstation #status channel in the Discord server! Your feedback is appreciated!!"
+# motd = ""
 
 [ic]
 flavor_text = true
@@ -29,11 +29,12 @@ restricted_names = false
 rate_limit_count = 20
 
 [infolinks]
-discord = "https://discord.gg/TGNz3cEkag"
+# discord = ""
 github = "https://github.com/impstation/imp-station-14"
 website = "https://impstation.gay"
 # wiki = ""
 bug_report = "https://github.com/impstation/imp-station-14/issues"
+appeal = "https://impstation.gay/banappeal"
 
 [looc]
 # people abused the privilege, so off it goes
