@@ -211,6 +211,4 @@
       solution: step
       viscosityAffectsMovement: false
     - type: Appearance
-    - type: TimedDespawn
-      lifetime: 520
 # Backmen-footsteps-end
