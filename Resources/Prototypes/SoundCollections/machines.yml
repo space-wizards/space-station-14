@@ -3,7 +3,6 @@
   files:
   - /Audio/Effects/Cargo/ping.ogg
 
-
 - type: soundCollection
   id: CargoError
   files:
