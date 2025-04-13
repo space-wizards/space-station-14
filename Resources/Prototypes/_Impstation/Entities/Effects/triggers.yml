@@ -9,3 +9,28 @@
     state: icon
   - type: TimedDespawn
     lifetime: 0.05
+
+- type: entity
+  id: ArtifactWeakInstantEffectGravityWell
+  suffix: Weak Gravity Well
+  parent: AdminInstantEffectBase
+  components:
+  - type: SoundOnTrigger
+    removeOnTrigger: true
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg
+      volume: 5
+  - type: AmbientSound
+    enabled: true
+    volume: -5
+    range: 14
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
+  - type: GravityWell
+    maxRange: 3
+    baseRadialAcceleration: 2
+    baseTangentialAcceleration: 0
+    gravPulsePeriod: 0.04
+  - type: SingularityDistortion
+    intensity: 10
+    falloffPower: 1.5

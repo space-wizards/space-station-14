@@ -555,7 +555,7 @@
     spawns:
     - id: PortalSupermatter
     - id: SupermatterNoAnnouncementSpawner
-    - id: AdminInstantEffectGravityWell
+    - id: ArtifactWeakInstantEffectGravityWell
 
 - type: artifactEffect
   id: EffectMindlessClone
