@@ -38,7 +38,7 @@
     - type: Sprite
       state: cpu_centcomm
     - type: ComputerBoard
-      prototype: BSAcomputer
+      prototype: BSAComputer
 
 - type: entity
   parent: BaseComputerCircuitboard
