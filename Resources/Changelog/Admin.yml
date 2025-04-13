@@ -990,5 +990,36 @@ Entries:
   id: 120
   time: '2025-04-06T12:10:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36325
+- author: slarticodefast
+  changes:
+  - message: Fixed the rmobjective command.
+    type: Fix
+  - message: Added completion hints to the rmobjective command.
+    type: Tweak
+  id: 121
+  time: '2025-04-08T14:54:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36396
+- author: Errant
+  changes:
+  - message: The Copy button on the PlayerPanel now copies only the target username,
+      not the entire line.
+    type: Fix
+  id: 122
+  time: '2025-04-11T21:04:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36468
+- author: slarticodefast
+  changes:
+  - message: Added debug verb for quickly inspecting someone's mind entity in VV.
+    type: Add
+  id: 123
+  time: '2025-04-12T13:37:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36474
+- author: Errant
+  changes:
+  - message: Player Panel now has a Follow button.
+    type: Add
+  id: 124
+  time: '2025-04-12T20:00:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36466
 Name: Admin
 Order: 1
