@@ -217,7 +217,7 @@
     handle: false
     sound: "/Audio/Items/Toys/pushHornHonk.ogg"
   - type: EmitSoundOnLand
-    sound: "/Audio/Items/Toys/pushHornHonk.ogg"
+    sound: "/Audio/Items/Toys/pushHornFloor.ogg"
   - type: UseDelay
     delay: 6
   - type: UseDelayOnMeleeHit
@@ -232,4 +232,5 @@
   - type: TriggerOnUse
   - type: SpawnOnTrigger
     proto: EffectGravityPulse
+
 
