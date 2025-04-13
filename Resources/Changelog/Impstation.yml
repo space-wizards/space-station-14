@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: GOBLIN AND GREY LESS SICK! GOOBABA
-    type: Fix
-  id: 1007
-  time: '2025-01-26T03:18:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1487
 - author: 12rabbits
   changes:
   - message: Unborgable brains now dissolve into more appropriate reagents.
@@ -4102,3 +4095,11 @@
   id: 1506
   time: '2025-04-13T04:46:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2250
+- author: DinnerCalzone
+  changes:
+  - message: Station Specific and Dining Services departments no longer appear in
+      the late-join menu.
+    type: Tweak
+  id: 1507
+  time: '2025-04-13T04:47:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2252
