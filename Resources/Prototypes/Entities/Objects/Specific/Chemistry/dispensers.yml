@@ -1,0 +1,19 @@
+- type: entity
+  parent: BaseAmmoProvider # idk man it just works and if we want filled versions it  only spawns them on demand.
+  id: PillDispenserWeh
+  name: weh pill dispenser
+  description: Dispenses 9 delicious snacks, its probably your happy pills.
+  components:
+  - type: Sprite
+    sprite: Objects/Storage/pilldispensers.rsi
+    layers:
+    - state: base
+    - state: weh
+  - type: BallisticAmmoProvider
+    soundRack: /Audio/Items/Toys/weh.ogg
+    soundInsert: /Audio/Weapons/Guns/Cock/smg_cock.ogg #trust
+    whitelist:
+      components:
+      - Pill
+    proto: StrangePill
+    capacity: 9
