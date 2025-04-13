@@ -27,7 +27,6 @@ public sealed partial class JobPriorityEditor : BoxContainer
     private readonly Dictionary<string, BoxContainer> _jobCategories = new();
     private readonly List<(string, RequirementsSelector)> _jobPriorities = new();
 
-    public Dictionary<ProtoId<JobPrototype>, JobPriority> SavedJobPriorities { get; private set; } = new();
     public Dictionary<ProtoId<JobPrototype>, JobPriority> SelectedJobPriorities { get; private set; } = new();
 
     public event Action<Dictionary<ProtoId<JobPrototype>, JobPriority>>? Save;
@@ -45,7 +44,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
 
         ResetButton.OnPressed += args =>
         {
-            SelectedJobPriorities = SavedJobPriorities.ShallowClone();
+            SelectedJobPriorities = _preferencesManager.Preferences?.JobPriorities.ShallowClone() ??  new Dictionary<ProtoId<JobPrototype>, JobPriority>();
             UpdateJobPriorities();
             SetDirty();
         };
@@ -53,7 +52,6 @@ public sealed partial class JobPriorityEditor : BoxContainer
         SaveButton.OnPressed += args =>
         {
             Save?.Invoke(SelectedJobPriorities);
-            SavedJobPriorities = SelectedJobPriorities.ShallowClone();
             UpdateJobPriorities();
             SetDirty();
         };
@@ -211,6 +209,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
         }
 
         UpdateJobPriorities();
+        SetDirty();
     }
 
     /// <summary>
@@ -227,7 +226,8 @@ public sealed partial class JobPriorityEditor : BoxContainer
     private void SetDirty()
     {
         // If it equals default then reset the button.
-        if (!SelectedJobPriorities.Keys.ToHashSet().SetEquals(SavedJobPriorities.Keys.ToHashSet()))
+        var savedJobPriorities = _preferencesManager.Preferences?.JobPriorities ?? new Dictionary<ProtoId<JobPrototype>, JobPriority>();
+        if (!SelectedJobPriorities.Keys.ToHashSet().SetEquals(savedJobPriorities.Keys.ToHashSet()))
         {
             IsDirty = true;
             return;
@@ -235,7 +235,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
 
         foreach (var (job, prio) in SelectedJobPriorities)
         {
-            if (prio != SavedJobPriorities.GetValueOrDefault(job))
+            if (prio != savedJobPriorities.GetValueOrDefault(job))
             {
                 IsDirty = true;
                 return;
@@ -266,11 +266,18 @@ public sealed partial class JobPriorityEditor : BoxContainer
         ResetButton.Disabled = !IsDirty;
     }
 
-    public void SetJobPriorities(Dictionary<ProtoId<JobPrototype>,JobPriority>? jobPriorities)
+    public void LoadJobPriorities()
     {
-        SelectedJobPriorities = jobPriorities ?? new Dictionary<ProtoId<JobPrototype>, JobPriority>();
-        SavedJobPriorities = new Dictionary<ProtoId<JobPrototype>, JobPriority>(SelectedJobPriorities);
+        SelectedJobPriorities = _preferencesManager.Preferences?.JobPriorities.ShallowClone() ??  new Dictionary<ProtoId<JobPrototype>, JobPriority>();
         UpdateJobPriorities();
+        SetDirty();
+    }
+
+    public void LoadJobPriorities(Dictionary<ProtoId<JobPrototype>,JobPriority>? jobPriorities)
+    {
+        SelectedJobPriorities = jobPriorities?.ShallowClone() ?? new Dictionary<ProtoId<JobPrototype>, JobPriority>();
+        UpdateJobPriorities();
+        SetDirty();
     }
 }
 
