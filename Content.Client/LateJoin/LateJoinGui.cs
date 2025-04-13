@@ -170,6 +170,9 @@ namespace Content.Client.LateJoin
 
                 foreach (var department in departments)
                 {
+                    // Skip adding departments that are manifest hidden. Imp addition.
+                    if (department.ManifestHidden)
+                        continue;
                     var departmentName = Loc.GetString(department.Name);
                     _jobCategories[id] = new Dictionary<string, BoxContainer>();
                     var stationAvailable = _gameTicker.JobsAvailable[id];
