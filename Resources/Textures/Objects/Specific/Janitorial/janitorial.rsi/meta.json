@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428, mopbucket_shark_* by Psychpsyo, mopbucket_carpplush adapted by Psychpsyo from tgstation carpplush at commit https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432",
   "size": {
     "x": 32,
     "y": 32
@@ -24,6 +24,18 @@
     },
     {
       "name": "mopbucket_water-3"
+    },
+    {
+      "name": "mopbucket_shark_blue"
+    },
+    {
+      "name": "mopbucket_shark_pink"
+    },
+    {
+      "name": "mopbucket_shark_grey"
+    },
+    {
+      "name": "mopbucket_carpplush"
     },
     {
       "name": "inhand-left",

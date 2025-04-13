@@ -15,6 +15,10 @@
   - Maintenance
   extendedAccess:
   - Chemistry
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: DoctorDay
+    prototype: WehMedipen
 
 - type: startingGear
   id: DoctorGear

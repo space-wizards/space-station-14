@@ -12,6 +12,7 @@ using Content.Shared.Whitelist;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -35,6 +36,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
     [Dependency] private   readonly SharedAmbientSoundSystem _ambient = default!;
     [Dependency] private   readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
@@ -53,11 +55,55 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         SubscribeLocalEvent<EmitSoundOnCollideComponent, StartCollideEvent>(OnEmitSoundOnCollide);
 
         SubscribeLocalEvent<SoundWhileAliveComponent, MobStateChangedEvent>(OnMobState);
+
+        // We need to handle state manually here
+        // BaseEmitSoundComponent isn't registered so we have to subscribe to each one
+        // TODO: Make it use autonetworking instead of relying on inheritance
+        SubscribeEmitComponent<EmitSoundOnActivateComponent>();
+        SubscribeEmitComponent<EmitSoundOnCollideComponent>();
+        SubscribeEmitComponent<EmitSoundOnDropComponent>();
+        SubscribeEmitComponent<EmitSoundOnInteractUsingComponent>();
+        SubscribeEmitComponent<EmitSoundOnLandComponent>();
+        SubscribeEmitComponent<EmitSoundOnPickupComponent>();
+        SubscribeEmitComponent<EmitSoundOnSpawnComponent>();
+        SubscribeEmitComponent<EmitSoundOnThrowComponent>();
+        SubscribeEmitComponent<EmitSoundOnUIOpenComponent>();
+        SubscribeEmitComponent<EmitSoundOnUseComponent>();
+
+        // Helper method so it's a little less ugly
+        void SubscribeEmitComponent<T>() where T : BaseEmitSoundComponent
+        {
+            SubscribeLocalEvent<T, ComponentGetState>(GetBaseEmitState);
+            SubscribeLocalEvent<T, ComponentHandleState>(HandleBaseEmitState);
+        }
+    }
+
+    private static void GetBaseEmitState<T>(Entity<T> ent, ref ComponentGetState args) where T : BaseEmitSoundComponent
+    {
+        args.State = new EmitSoundComponentState(ent.Comp.Sound);
+    }
+
+    private static void HandleBaseEmitState<T>(Entity<T> ent, ref ComponentHandleState args) where T : BaseEmitSoundComponent
+    {
+        if (args.Current is not EmitSoundComponentState state)
+            return;
+
+        ent.Comp.Sound = state.Sound switch
+        {
+            SoundPathSpecifier pathSpec => new SoundPathSpecifier(pathSpec.Path, pathSpec.Params),
+            SoundCollectionSpecifier collectionSpec => collectionSpec.Collection != null
+                ? new SoundCollectionSpecifier(collectionSpec.Collection, collectionSpec.Params)
+                : null,
+            _ => null,
+        };
     }
 
     private void HandleEmitSoundOnUIOpen(EntityUid uid, EmitSoundOnUIOpenComponent component, AfterActivatableUIOpenEvent args)
     {
-        TryEmitSound(uid, component, args.User);
+        if (_whitelistSystem.IsBlacklistFail(component.Blacklist, args.User))
+        {
+            TryEmitSound(uid, component, args.User);
+        }
     }
 
     private void OnMobState(Entity<SoundWhileAliveComponent> entity, ref MobStateChangedEvent args)
@@ -86,7 +132,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
             return;
         }
 
-        var tile = grid.GetTileRef(xform.Coordinates);
+        var tile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
 
         // Handle maps being grids (we'll still emit the sound).
         if (xform.GridUid != xform.MapUid && tile.IsSpace(_tileDefMan))
@@ -141,14 +187,22 @@ public abstract class SharedEmitSoundSystem : EntitySystem
         if (component.Sound == null)
             return;
 
-        if (predict)
+        if (component.Positional)
         {
-            _audioSystem.PlayPredicted(component.Sound, uid, user);
+            var coords = Transform(uid).Coordinates;
+            if (predict)
+                _audioSystem.PlayPredicted(component.Sound, coords, user);
+            else if (_netMan.IsServer)
+                // don't predict sounds that client couldn't have played already
+                _audioSystem.PlayPvs(component.Sound, coords);
         }
-        else if (_netMan.IsServer)
+        else
         {
-            // don't predict sounds that client couldn't have played already
-            _audioSystem.PlayPvs(component.Sound, uid);
+            if (predict)
+                _audioSystem.PlayPredicted(component.Sound, uid, user);
+            else if (_netMan.IsServer)
+                // don't predict sounds that client couldn't have played already
+                _audioSystem.PlayPvs(component.Sound, uid);
         }
     }
 
@@ -175,7 +229,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
         if (_netMan.IsServer && sound != null)
         {
-            _audioSystem.PlayPvs(_audioSystem.GetSound(sound), uid, AudioParams.Default.WithVolume(volume));
+            _audioSystem.PlayPvs(_audioSystem.ResolveSound(sound), uid, AudioParams.Default.WithVolume(volume));
         }
     }
 
