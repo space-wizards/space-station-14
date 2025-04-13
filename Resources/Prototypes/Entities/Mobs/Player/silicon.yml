@@ -604,7 +604,7 @@
         - PositronicBrain
       borg_module:
         - BorgModuleTool
-        - BorgModuleFireExtinguisher
+        - BorgModuleThruster
   - type: ItemSlots
     slots:
       cell_slot:
