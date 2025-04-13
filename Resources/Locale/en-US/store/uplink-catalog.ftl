@@ -466,3 +466,6 @@ uplink-fake-mindshield-desc = A togglable implant capable of mimicking the same 
 
 uplink-smuggler-satchel-name = Smuggler's Satchel
 uplink-smuggler-satchel-desc = A handy, suspicious looking satchel. Just flat enough to fit underneath floor tiles.
+
+uplink-bluespace-light-name = Bluespace Mixed Lights Box
+uplink-bluespace-light-desc = A science project that never found reasonable use has become the go to covert explosive installation method. These lights can be filled with small payload that can be activated from excessive 'On' signal of the fixture. Payloads with already active timer or no timer at all will be ejected.

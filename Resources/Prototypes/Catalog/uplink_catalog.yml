@@ -2161,3 +2161,21 @@
     Telecrystal: 2
   categories:
   - UplinkDeception
+
+- type: listing
+  id: uplinkBluespaceLight
+  name: uplink-bluespace-light-name
+  description: uplink-bluespace-light-desc
+  discountCategory: usualDiscounts
+  discountDownTo:
+    Telecrystal: 1
+  productEntity: BoxBluespaceLightMixed
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Janitor
+    - Engineer

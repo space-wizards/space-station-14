@@ -477,3 +477,19 @@
     contents:
       - id: Envelope
         amount: 9
+
+- type: entity
+  name: mixed bluespace lights box
+  parent: BoxLightbulb
+  id: BoxBluespaceLightMixed
+  components:
+  - type: Sprite
+    layers:
+      - state: box
+      - state: lightmixed
+  - type: StorageFill
+    contents:
+      - id: BluespaceLightTube
+        amount: 6
+      - id: BluespaceLightBulb
+        amount: 6

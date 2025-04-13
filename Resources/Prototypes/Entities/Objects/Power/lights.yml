@@ -579,3 +579,70 @@
     refineResult:
     - id: SheetGlass1
     - id: ShardCrystalGreen
+
+- type: entity
+  parent: BaseLightTube
+  name: bluespace light tube
+  description: A high power high energy bulb.
+  id: BluespaceLightTube
+  components:
+  - type: LightBulb
+    color: "#EEEEFF"
+    lightEnergy: 1
+    lightRadius: 15
+    lightSoftness: 0.9
+    BurningTemperature: 350
+    PowerUse: 12
+  - type: ContainerContainer
+    containers:
+      payloadSlot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      payloadSlot:
+        whitelist:
+          sizes:
+            - Tiny
+            - Small
+        insertSound:
+          path: /Audio/Weapons/Guns/Empty/empty.ogg
+        ejectSound:
+          path: /Audio/Weapons/Guns/Empty/empty.ogg
+        swap: false
+        disableEject: true
+        ejectOnBreak: true
+
+- type: entity
+  parent: BaseLightbulb
+  name: bluespace light bulb
+  id: BluespaceLightBulb
+  description: A power efficient light bulb.
+  components:
+  - type: LightBulb
+    bulb: Bulb
+    color: "#EEEEFF"
+    lightEnergy: 1
+    lightRadius: 8
+    lightSoftness: 1
+    BurningTemperature: 350 #LEDs are colder than incandescent bulbs
+    PowerUse: 6 #LEDs are more power efficient than incandescent bulbs
+  - type: Tag
+    tags:
+      - LightBulb
+      - Trash
+  - type: ContainerContainer
+    containers:
+      payloadSlot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      payloadSlot:
+        whitelist:
+          sizes:
+            - Tiny
+            - Small
+        insertSound:
+          path: /Audio/Weapons/Guns/Empty/empty.ogg
+        ejectSound:
+          path: /Audio/Weapons/Guns/Empty/empty.ogg
+        swap: false
+        disableEject: true
+        ejectOnBreak: true

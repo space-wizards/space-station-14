@@ -20,6 +20,9 @@ using Robust.Shared.Audio.Systems;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Damage.Components;
 using Content.Shared.Power;
+using Content.Shared.Explosion.Components;
+using Content.Shared.Containers.ItemSlots;
+using Content.Server.Explosion.EntitySystems;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -39,6 +42,9 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly PointLightSystem _pointLight = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly DamageOnInteractSystem _damageOnInteractSystem = default!;
+        [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+        [Dependency] private readonly TriggerSystem _trigger = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
@@ -101,7 +107,7 @@ namespace Content.Server.Light.EntitySystems
 
             var userUid = args.User;
             //removing a broken/burned bulb, so allow instant removal
-            if(TryComp<LightBulbComponent>(bulbUid.Value, out var bulb) && bulb.State != LightBulbState.Normal)
+            if (TryComp<LightBulbComponent>(bulbUid.Value, out var bulb) && bulb.State != LightBulbState.Normal)
             {
                 args.Handled = EjectBulb(uid, userUid, light) != null;
                 return;
@@ -204,6 +210,43 @@ namespace Content.Server.Light.EntitySystems
                 return null;
 
             return light.LightBulbContainer.ContainedEntity;
+        }
+
+        private void ActivatePayload(EntityUid uid, PoweredLightComponent? light = null)
+        {
+            if (!Resolve(uid, ref light))
+                return;
+            if (GetBulb(uid, light) is not { Valid: true } bulb)
+                return;
+            if (!_entityManager.HasComponent<ItemSlotsComponent>(bulb))
+                return;
+            if (_itemSlots.TryGetSlot(bulb, PoweredLightComponent.PayloadSlotName, out var itemSlot))
+            {
+                var payloadItem = _itemSlots.GetItemOrNull(bulb, PoweredLightComponent.PayloadSlotName);
+                if (payloadItem == null)
+                    return;
+                if (HasComp<ActiveTimerTriggerComponent>(payloadItem))
+                {
+                    _itemSlots.TryEject(uid, itemSlot, user: null, out var item);
+                }
+                else
+                {
+                    if (TryComp<OnUseTimerTriggerComponent>(payloadItem, out var timerTrigger))
+                    {
+                        _trigger.HandleTimerTrigger(
+                            payloadItem.Value,
+                            null,
+                            timerTrigger.Delay,
+                            timerTrigger.BeepInterval,
+                            timerTrigger.InitialBeepDelay,
+                            timerTrigger.BeepSound);
+                    }
+                    else
+                    {
+                        _itemSlots.TryEject(uid, itemSlot, user: null, out var item);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -357,7 +400,14 @@ namespace Content.Server.Light.EntitySystems
             if (args.Port == component.OffPort)
                 SetState(uid, false, component);
             else if (args.Port == component.OnPort)
+            {
+                if (component.On)
+                {
+                    ActivatePayload(uid, component);
+                }
                 SetState(uid, true, component);
+            }
+
             else if (args.Port == component.TogglePort)
                 ToggleLight(uid, component);
         }
@@ -389,11 +439,11 @@ namespace Content.Server.Light.EntitySystems
                 if (color != null)
                     _pointLight.SetColor(uid, color.Value, pointLight);
                 if (radius != null)
-                    _pointLight.SetRadius(uid, (float) radius, pointLight);
+                    _pointLight.SetRadius(uid, (float)radius, pointLight);
                 if (energy != null)
-                    _pointLight.SetEnergy(uid, (float) energy, pointLight);
+                    _pointLight.SetEnergy(uid, (float)energy, pointLight);
                 if (softness != null)
-                    _pointLight.SetSoftness(uid, (float) softness, pointLight);
+                    _pointLight.SetSoftness(uid, (float)softness, pointLight);
             }
 
             // light bulbs burn your hands!

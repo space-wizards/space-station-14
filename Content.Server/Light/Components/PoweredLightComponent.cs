@@ -76,5 +76,7 @@ namespace Content.Server.Light.Components
         /// </summary>
         [DataField("unarmedHitStun")]
         public TimeSpan UnarmedHitStun = TimeSpan.FromSeconds(5);
+
+        public const string PayloadSlotName = "payloadSlot";
     }
 }
