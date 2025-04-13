@@ -4814,3 +4814,11 @@ Entries:
   id: 666
   time: '2025-04-13T07:17:45.305835+00:00'
   url: 'null'
+- author: RetSamphis
+  changes:
+  - message: Technology unlocks are broadcasted to relevant radio channels
+    type: Add
+  id: 667
+  time: '2025-04-13T07:20:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/481
+
