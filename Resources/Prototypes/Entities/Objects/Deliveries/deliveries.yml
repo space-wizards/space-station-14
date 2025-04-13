@@ -48,7 +48,7 @@
   name: package
   components:
   - type: Sprite
-    sprite: Objects/Specific/Cargo/mail_large.rsi
+    sprite: _Impstation/Objects/Specific/Mail/mail_large.rsi # imp
     layers:
     - state: icon
       map: [ "enum.DeliveryVisualLayers.Icon" ]
@@ -86,7 +86,7 @@
   name: letter
   components:
   - type: Sprite
-    sprite: Objects/Specific/Cargo/mail.rsi
+    sprite: _Impstation/Objects/Specific/Mail/mail.rsi # imp
     layers:
     - state: icon
       map: [ "enum.DeliveryVisualLayers.Icon" ]
@@ -95,7 +95,7 @@
       visible: false
     - state: postmark
     - map: [ "enum.DeliveryVisualLayers.JobStamp" ]
-      offset: -0.125, -0.0625
+      offset: 0.19, 0.09 # imp - getting that job stamp in the right corner
     - state: fragile
       map: [ "enum.DeliveryVisualLayers.FragileStamp" ]
       visible: false
