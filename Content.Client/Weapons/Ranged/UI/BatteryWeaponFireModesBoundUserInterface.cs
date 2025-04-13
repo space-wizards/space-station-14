@@ -5,6 +5,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Weapons.Ranged.UI;
 
+/// <summary>
+/// BUI for simple radial that helps to change battery-weapons fire mode.
+/// </summary>
 public sealed class BatteryWeaponFireModesBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -20,31 +23,36 @@ public sealed class BatteryWeaponFireModesBoundUserInterface : BoundUserInterfac
         IoCManager.InjectDependencies(this);
     }
 
+    /// <inheritdoc />
     protected override void Open()
     {
         base.Open();
 
         if (!EntMan.TryGetComponent(Owner, out BatteryWeaponFireModesComponent? fireModes))
             return;
-        
+
+        var models = CreateButtons(fireModes);
+        if (models.Count<= 1)
+            Close();
 
         _menu = this.CreateWindow<SimpleRadialMenu>();
-        var models = CreateButtons(fireModes);
         _menu.SetButtons(models);
 
         _menu.OpenOverMouseScreenPosition();
     }
 
-    private IEnumerable<RadialMenuOption> CreateButtons(BatteryWeaponFireModesComponent fireModes)
+    /// <summary>
+    /// Collect options for radial menu from component's <see cref="BatteryWeaponFireModesComponent.FireModes"/>.
+    /// </summary>
+    private List<RadialMenuOption> CreateButtons(BatteryWeaponFireModesComponent fireModes)
     {
-        var list = new List<RadialMenuActionOption>();
+        var list = new List<RadialMenuOption>();
 
         for (var i = 0; i < fireModes.FireModes.Count; i++)
         {
             var fireMode = fireModes.FireModes[i];
             var entProto = _prototypeManager.Index<EntityPrototype>(fireMode.Prototype);
             var index = i;
-
             var option = new RadialMenuActionOption<BatteryWeaponFireMode>(mode => HandleRadialMenuClick(index), fireMode)
             {
                 ToolTip = entProto.Name,
