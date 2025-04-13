@@ -4,7 +4,7 @@
   name: sentry turret
   description: A high-tech autonomous weapons system designed to keep unauthorized personnel out of sensitive areas.
   components:
-  
+
   # Physics
   - type: Fixtures
     fixtures:
@@ -25,7 +25,7 @@
         layer:
           - MachineLayer
         hard: false
-        
+
   # Sprites and appearance
   - type: Sprite
     sprite: Objects/Weapons/Guns/Turrets/sentry_turret.rsi
@@ -70,11 +70,11 @@
         enum.WiresVisualLayers.MaintenancePanel:
           True: { visible: false }
           False: { visible: true }
-  
+
   # HTN
   - type: HTN
     enabled: false
-  
+
   # Faction / control
   - type: StationAiWhitelist
   - type: NpcFactionMember
@@ -82,7 +82,7 @@
     - AllHostile
   - type: AccessReader
     access: [["Security"]]
-    
+
   # Weapon systems
   - type: ProjectileBatteryAmmoProvider
     proto: BulletEnergyTurretDisabler
@@ -90,15 +90,21 @@
   - type: BatteryWeaponFireModes
     fireModes:
     - proto: BulletEnergyTurretDisabler
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: omnilaser
       fireCost: 100
     - proto: BulletEnergyTurretLaser
+      modeIcon:
+        sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+        state: heavylaser
       fireCost: 100
   - type: TurretTargetSettings
     exemptAccessLevels:
     - Security
     - Borg
     - BasicSilicon
-    
+
   # Defenses / destruction
   - type: DeployableTurret
     retractedDamageModifierSetId: Metallic
@@ -130,7 +136,7 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
-      
+
   # Device network
   - type: DeviceNetwork
     deviceNetId: Wired
@@ -141,7 +147,7 @@
     examinableAddress: true
   - type: DeviceNetworkRequiresPower
   - type: WiredNetworkConnection
-  
+
   # Wires
   - type: UserInterface
     interfaces:
@@ -156,8 +162,8 @@
     locked: true
     unlockOnClick: false
   - type: LockedWiresPanel
-  
-  # General properties  
+
+  # General properties
   - type: Machine
     board: WeaponEnergyTurretStationMachineCircuitboard
   - type: UseDelay

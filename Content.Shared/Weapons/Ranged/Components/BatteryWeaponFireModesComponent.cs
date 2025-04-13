@@ -61,6 +61,7 @@ public enum BatteryWeaponFireModeVisuals : byte
 /// Message for changing battery weapon fire mode.
 /// Uses index of mode in <see cref="BatteryWeaponFireModesComponent.FireModes"/>.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed class BatteryWeaponFireModeChangeMessage : BoundUserInterfaceMessage
 {
     public int ModeIndex { get; set; }

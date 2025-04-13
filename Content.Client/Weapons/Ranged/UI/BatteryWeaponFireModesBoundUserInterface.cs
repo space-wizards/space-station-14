@@ -11,6 +11,9 @@ public sealed class BatteryWeaponFireModesBoundUserInterface : BoundUserInterfac
 
     private SimpleRadialMenu? _menu;
 
+    private readonly Color _selectedModeBackgroundColor = Color.ToSrgb(new Color(90, 73, 102, 128));
+    private readonly Color _selectedModeHoverBackgroundColor = Color.ToSrgb(new Color(107, 91, 127, 128));
+
     /// <inheritdoc />
     public BatteryWeaponFireModesBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -49,8 +52,8 @@ public sealed class BatteryWeaponFireModesBoundUserInterface : BoundUserInterfac
             };
             if (index == fireModes.CurrentFireMode)
             {
-                option.BackgroundColor = new Color();
-                option.HoverBackgroundColor = new Color();
+                option.BackgroundColor = _selectedModeBackgroundColor;
+                option.HoverBackgroundColor = _selectedModeHoverBackgroundColor;
             }
 
             list.Add(option);

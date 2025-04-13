@@ -6,6 +6,7 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -130,6 +131,7 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
     }
 }
 
+[Serializable, NetSerializable]
 public enum BatteryWeaponFireModesUiKey
 {
     Key
