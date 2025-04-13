@@ -297,14 +297,14 @@
   description: A specialized riot suit geared to combat low pressure environments.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/security-warden.rsi #imp
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/security-warden.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/security-warden.rsi #imp
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
-    damageCoefficient: 0.35 #IMP balance changes; same stats as the raid suit but as slow as the jugg suit. awaiting new sprite to reflect armor
+    damageCoefficient: 0.35 #IMP balance changes; same stats as the raid suit but as slow as the jugg suit.
   - type: Armor
     modifiers:
       coefficients:
