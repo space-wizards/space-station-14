@@ -18,18 +18,18 @@
       state: rd_key
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
-    - type: AccessReader
-      access:
-      - [ Command ]
-    - type: ActivatableUI
-      singleUser: true
-      key: enum.BluespaceArtileryUIKey.Key
-    - type: UserInterface
-      interfaces:
-        enum.BluespaceArtileryUIKey.Key:
-          type: BluespaceArtileryConsoleBoundUserInterfaces
-        enum.WiresUiKey.Key:
-          type: WiresBoundUserInterface
+  - type: AccessReader
+    access:
+    - [ Command ]
+  - type: ActivatableUI
+    singleUser: true
+    key: enum.BluespaceArtileryUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.BluespaceArtileryUIKey.Key:
+        type: BluespaceArtileryConsoleBoundUserInterfaces
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
 
 - type: entity
   parent: BaseComputerAiAccess
