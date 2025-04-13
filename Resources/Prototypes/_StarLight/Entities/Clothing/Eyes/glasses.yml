@@ -66,7 +66,7 @@
     protectionTime: 5
 
 - type: entity
-  parent: [ClothingEyesBase, BaseCommandContraband]
+  parent: [ClothingEyesBase, BaseCentcommContraband]
   id: ClothingEyesGlassesCentComm
   name: centcomm officer's glasses
   description: The innovative green lenses hide your eyes from light flashes and have a built-in visor.
