@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Client.Sprite;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Utility;
@@ -18,14 +17,12 @@ public sealed class ClickableSystem : EntitySystem
 
     private EntityQuery<ClickableComponent> _clickableQuery;
     private EntityQuery<TransformComponent> _xformQuery;
-    private EntityQuery<FadingSpriteComponent> _fadingSpriteQuery;
 
     public override void Initialize()
     {
         base.Initialize();
         _clickableQuery = GetEntityQuery<ClickableComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
-        _fadingSpriteQuery = GetEntityQuery<FadingSpriteComponent>();
     }
 
     /// <summary>
@@ -37,7 +34,7 @@ public sealed class ClickableSystem : EntitySystem
     /// The draw depth for the sprite that captured the click.
     /// </param>
     /// <returns>True if the click worked, false otherwise.</returns>
-    public bool CheckClick(Entity<ClickableComponent?, SpriteComponent, TransformComponent?, FadingSpriteComponent?> entity, Vector2 worldPos, IEye eye, bool excludeFaded, out int drawDepth, out uint renderOrder, out float bottom)
+    public bool CheckClick(Entity<ClickableComponent?, SpriteComponent, TransformComponent?> entity, Vector2 worldPos, IEye eye, out int drawDepth, out uint renderOrder, out float bottom)
     {
         if (!_clickableQuery.Resolve(entity.Owner, ref entity.Comp1, false))
         {
@@ -48,14 +45,6 @@ public sealed class ClickableSystem : EntitySystem
         }
 
         if (!_xformQuery.Resolve(entity.Owner, ref entity.Comp3))
-        {
-            drawDepth = default;
-            renderOrder = default;
-            bottom = default;
-            return false;
-        }
-
-        if (excludeFaded && _fadingSpriteQuery.Resolve(entity.Owner, ref entity.Comp4, false))
         {
             drawDepth = default;
             renderOrder = default;
