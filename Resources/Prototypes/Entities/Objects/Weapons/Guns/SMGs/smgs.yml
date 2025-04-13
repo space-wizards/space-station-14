@@ -146,6 +146,7 @@
       burstFireRate: 18
       soundGunshot:
         path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
+      selectedMode: Burst
       availableModes:
       - Burst
       - FullAuto
