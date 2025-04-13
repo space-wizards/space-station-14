@@ -14,7 +14,11 @@ public sealed class OreSiloSystem : SharedOreSiloSystem
     [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _userInterface = default!;
 
+    private const float OreSiloPreloadRangeSquared = 225f; // ~1 screen
+
     private readonly HashSet<Entity<OreSiloClientComponent>> _clientLookup = new();
+    private readonly HashSet<EntityUid> _silosToAdd = new();
+    private readonly HashSet<EntityUid> _silosToRemove = new();
 
     protected override void UpdateOreSiloUi(Entity<OreSiloComponent> ent)
     {
@@ -67,16 +71,13 @@ public sealed class OreSiloSystem : SharedOreSiloSystem
         _userInterface.SetUiState(ent.Owner, OreSiloUiKey.Key, new OreSiloBuiState(clients));
     }
 
-    private const float OreSiloPreloadRangeSquared = 225f; // ~1 screen
-    private readonly HashSet<EntityUid> _silosToAdd = new();
-    private readonly HashSet<EntityUid> _silosToRemove = new();
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
         // Solving an annoying problem: we need to send the silo to people who are near the silo so that
         // Things don't start wildly mispredicting. We do this as cheaply as possible via grid-based local-pos checks.
+        // Sloth okay-ed this in the interim until a better solution comes around.
 
         var actorQuery = EntityQueryEnumerator<ActorComponent, TransformComponent>();
         while (actorQuery.MoveNext(out _, out var actorComp, out var actorXform))

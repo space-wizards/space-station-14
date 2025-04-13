@@ -138,6 +138,7 @@ public abstract class SharedOreSiloSystem : EntitySystem
 
         silo.Clients.Remove(ent);
         Dirty(ent.Comp.Silo.Value, silo);
+        UpdateOreSiloUi((ent.Comp.Silo.Value, silo));
     }
 
     /// <summary>
