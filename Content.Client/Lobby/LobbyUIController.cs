@@ -150,9 +150,11 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     public void OnStateExited(LobbyState state)
     {
         PreviewPanel?.SetLoaded(false);
-        _profileEditor?.Dispose();
-        _characterSetup?.Dispose();
-        _jobPriorityEditor?.Dispose();
+
+        if (_stateManager.CurrentState is LobbyState lobby)
+        {
+            lobby.Lobby?.CharacterSetupState.RemoveAllChildren();
+        }
 
         _characterSetup = null;
         _profileEditor = null;
