@@ -77,6 +77,13 @@ public sealed partial class CargoSystem : SharedCargoSystem
         UpdateBounty();
     }
 
+    /// <summary>
+    /// Adds or removes funds from the <see cref="StationBankAccountComponent"/>.
+    /// </summary>
+    /// <param name="ent">The station.</param>
+    /// <param name="balanceAdded">The amount of funds to add or remove.</param>
+    /// <param name="accountDistribution">The distribution between individual <see cref="CargoAccountPrototype"/>.</param>
+    /// <param name="dirty">Whether to mark the bank accoujnt component as dirty.</param>
     [PublicAPI]
     public void UpdateBankAccount(
         Entity<StationBankAccountComponent?> ent,
@@ -93,10 +100,12 @@ public sealed partial class CargoSystem : SharedCargoSystem
             ent.Comp.Accounts[account] += accountBalancedAdded;
         }
 
-        if (!dirty)
-            return;
-        Dirty(ent);
         var ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Accounts);
         RaiseLocalEvent(ent, ref ev, true);
+
+        if (!dirty)
+            return;
+
+        Dirty(ent);
     }
 }

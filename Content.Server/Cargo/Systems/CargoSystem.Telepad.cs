@@ -74,8 +74,8 @@ public sealed partial class CargoSystem
 
     private void UpdateTelepad(float frameTime)
     {
-        var query = EntityQueryEnumerator<CargoTelepadComponent>();
-        while (query.MoveNext(out var uid, out var comp))
+        var query = EntityQueryEnumerator<CargoTelepadComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var comp, out var xform))
         {
             // Don't EntityQuery for it as it's not required.
             TryComp<AppearanceComponent>(uid, out var appearance);
@@ -104,7 +104,6 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            var xform = Transform(uid);
             var currentOrder = comp.CurrentOrders.First();
             if (FulfillOrder(currentOrder, console.Value.Comp.Account, xform.Coordinates, comp.PrinterOutput))
             {

@@ -17,7 +17,7 @@ namespace Content.Client.Cargo.UI
     [GenerateTypedNameReferences]
     public sealed partial class CargoConsoleMenu : FancyWindow
     {
-        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         private readonly IEntityManager _entityManager;
         private readonly IPrototypeManager _protoManager;

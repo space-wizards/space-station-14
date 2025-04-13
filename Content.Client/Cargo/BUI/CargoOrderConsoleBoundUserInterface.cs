@@ -15,7 +15,7 @@ namespace Content.Client.Cargo.BUI
 {
     public sealed class CargoOrderConsoleBoundUserInterface : BoundUserInterface
     {
-        private SharedCargoSystem _cargoSystem;
+        private readonly SharedCargoSystem _cargoSystem;
 
         [ViewVariables]
         private CargoConsoleMenu? _menu;

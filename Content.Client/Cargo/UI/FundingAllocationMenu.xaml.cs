@@ -18,7 +18,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    private EntityQuery<StationBankAccountComponent> _bankQuery;
+    private readonly EntityQuery<StationBankAccountComponent> _bankQuery;
 
     public event Action<Dictionary<ProtoId<CargoAccountPrototype>, int>>? OnSavePressed;
 
@@ -58,7 +58,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
         if (!_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bank))
             return;
         HelpLabel.Text = Loc.GetString("cargo-funding-alloc-console-label-help",
-            ("percent", (int)(bank.PrimaryCut * 100)));
+            ("percent", (int) (bank.PrimaryCut * 100)));
 
         foreach (var ctrl in _addedControls)
         {
@@ -128,7 +128,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
 
         var differs = false;
         var accounts = bank.Accounts.Keys.OrderBy(p => p.Id).ToList();
-        for (int i = 0; i < accounts.Count; i++)
+        for (var i = 0; i < accounts.Count; i++)
         {
             var percent = _spinBoxes[i].Value;
             if (percent != (int) Math.Round(bank.RevenueDistribution[accounts[i]] * 100))
@@ -160,6 +160,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
 
         if (!_bankQuery.TryComp(_station, out var bank))
             return;
+
         foreach (var (account, label) in _balanceLabels)
         {
             label.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", bank.Accounts[account]));

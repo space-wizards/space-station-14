@@ -19,6 +19,7 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     [DataField]
     public int Capacity = 20;
 
+    [ViewVariables]
     public IEnumerable<CargoOrderData> AllOrders => Orders.SelectMany(p => p.Value);
 
     [DataField]
@@ -27,6 +28,7 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     /// <summary>
     /// Used to determine unique order IDs
     /// </summary>
+    [ViewVariables]
     public int NumOrdersCreated;
 
     // TODO: Can probably dump this
