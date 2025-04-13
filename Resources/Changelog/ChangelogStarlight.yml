@@ -4785,4 +4785,18 @@ Entries:
   id: 662
   time: '2025-04-12T06:11:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/479
+- author: Happyrobot33
+  changes:
+  - message: Fixed Meta Station.
+    type: Fix
+  id: 663
+  time: '2025-04-13T06:31:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/484
+- author: Happyrobot33
+  changes:
+  - message: Fixed Saltern Station.
+    type: Fix
+  id: 664
+  time: '2025-04-13T06:31:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/484
 
