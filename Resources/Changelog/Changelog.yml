@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: VlaDOS1408
-  changes:
-  - message: Locale to shuttle-ftl-status-Invalid
-    type: Add
-  id: 7663
-  time: '2024-11-30T02:54:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33651
 - author: jbox144
   changes:
   - message: Fixed the link on Marathon's TEG exterior airlock
@@ -3898,3 +3891,11 @@
   id: 8162
   time: '2025-04-13T14:24:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36503
+- author: ScarKy0
+  changes:
+  - message: Oxygen, Carbon Dioxide, Nitrous Oxide and Frezon can now metabolize when
+      digested/injected.
+    type: Tweak
+  id: 8163
+  time: '2025-04-13T15:21:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31648
