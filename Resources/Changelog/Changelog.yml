@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: jbox144
-  changes:
-  - message: Fixed the link on Marathon's TEG exterior airlock
-    type: Fix
-  - message: Fixed Cog's exterior atmospherics airlock
-    type: Fix
-  id: 7664
-  time: '2024-11-30T06:23:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33621
 - author: Plykiya
   changes:
   - message: You can no longer cuff someone multiple times if multiple cuff do-afters
@@ -3899,3 +3890,12 @@
   id: 8163
   time: '2025-04-13T15:21:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31648
+- author: ArchRBX
+  changes:
+  - message: Handheld GPS's can now be examined to read their displays
+    type: Add
+  - message: Handheld GPS's now update their displays much more frequently
+    type: Tweak
+  id: 8164
+  time: '2025-04-13T15:29:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31814
