@@ -170,6 +170,14 @@
 
 # Nukies
 - type: entity
+  parent: MindRoleNukeops
+  id: MindRoleLoneops
+  name: Loneops Operative Role
+  components:
+  - type: MindRole
+    roleType: SoloAntagonist
+
+- type: entity
   parent: BaseMindRoleAntag
   id: MindRoleNukeops
   name: Nukeops Operative Role
