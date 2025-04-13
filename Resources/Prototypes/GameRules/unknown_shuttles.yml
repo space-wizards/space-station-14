@@ -195,6 +195,15 @@
     preloadedGrid: Joe
 
 - type: entity
+  id: UnknownShuttleLambordeere
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+  - type: LoadMapRule
+    preloadedGrid: Lambordeere
+
+- type: entity
   id: UnknownShuttleManOWar
   parent: BaseUnknownShuttleRule
   components:
@@ -204,15 +213,6 @@
     earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly. (4) & antags
   - type: LoadMapRule
     preloadedGrid: ManOWar
-
-- type: entity
-  id: UnknownShuttleLambordeere
-  parent: BaseUnknownShuttleRule
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-unknown-shuttle-incoming #!!
-  - type: LoadMapRule
-    preloadedGrid: Lambordeere
 
 - type: entity
   id: UnknownShuttleMeatZone
