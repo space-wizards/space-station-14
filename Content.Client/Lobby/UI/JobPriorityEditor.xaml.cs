@@ -27,8 +27,8 @@ public sealed partial class JobPriorityEditor : BoxContainer
     private readonly Dictionary<string, BoxContainer> _jobCategories = new();
     private readonly List<(string, RequirementsSelector)> _jobPriorities = new();
 
-    public Dictionary<ProtoId<JobPrototype>, JobPriority> SavedJobPriorities = new();
-    public Dictionary<ProtoId<JobPrototype>, JobPriority> SelectedJobPriorities = new();
+    public Dictionary<ProtoId<JobPrototype>, JobPriority> SavedJobPriorities { get; private set; } = new();
+    public Dictionary<ProtoId<JobPrototype>, JobPriority> SelectedJobPriorities { get; private set; } = new();
 
     public event Action<Dictionary<ProtoId<JobPrototype>, JobPriority>>? Save;
 
@@ -254,6 +254,13 @@ public sealed partial class JobPriorityEditor : BoxContainer
     {
         SaveButton.Disabled = !IsDirty;
         ResetButton.Disabled = !IsDirty;
+    }
+
+    public void SetJobPriorities(Dictionary<ProtoId<JobPrototype>,JobPriority>? jobPriorities)
+    {
+        SelectedJobPriorities = jobPriorities ?? new Dictionary<ProtoId<JobPrototype>, JobPriority>();
+        SavedJobPriorities = new Dictionary<ProtoId<JobPrototype>, JobPriority>(SelectedJobPriorities);
+        UpdateJobPriorities();
     }
 }
 
