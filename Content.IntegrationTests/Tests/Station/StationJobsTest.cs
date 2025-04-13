@@ -116,7 +116,7 @@ public sealed class StationJobsTest
 
             var start = new Stopwatch();
             start.Start();
-            var assigned = stationJobs.AssignJobs(fakePlayers, stations);
+            var assigned = stationJobs.AssignJobs(fakePlayers.Keys.ToHashSet(), stations);
             Assert.That(assigned, Is.Not.Empty);
             var time = start.Elapsed.TotalMilliseconds;
             logmill.Info($"Took {time} ms to distribute {TotalPlayers} players.");

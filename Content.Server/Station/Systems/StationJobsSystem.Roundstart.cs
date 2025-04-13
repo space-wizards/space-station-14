@@ -48,7 +48,7 @@ public sealed partial class StationJobsSystem
     /// Assigns jobs based on the given preferences and list of stations to assign for.
     /// This does NOT change the slots on the station, only figures out where each player should go.
     /// </summary>
-    /// <param name="profiles">The profiles to use for selection.</param>
+    /// <param name="profilesIn">The profiles to use for selection.</param>
     /// <param name="stations">List of stations to assign for.</param>
     /// <param name="useRoundStartJobs">Whether or not to use the round-start jobs for the stations instead of their current jobs.</param>
     /// <returns>List of players and their assigned jobs.</returns>
@@ -57,17 +57,17 @@ public sealed partial class StationJobsSystem
     /// as there may end up being more round-start slots than available slots, which can cause weird behavior.
     /// A warning to all who enter ye cursed lands: This function is long and mildly incomprehensible. Best used without touching.
     /// </remarks>
-    public Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> AssignJobs(Dictionary<NetUserId, HumanoidCharacterProfile> profiles, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
+    public Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> AssignJobs(IReadOnlySet<NetUserId> profilesIn, IReadOnlyList<EntityUid> stations, bool useRoundStartJobs = true)
     {
         DebugTools.Assert(stations.Count > 0);
 
         InitializeRoundStart();
 
-        if (profiles.Count == 0)
+        if (profilesIn.Count == 0)
             return new();
 
         // We need to modify this collection later, so make a copy of it.
-        profiles = profiles.ShallowClone();
+        var profiles = profilesIn.ToHashSet();
 
         // Player <-> (job, station)
         var assigned = new Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)>(profiles.Count);
@@ -112,7 +112,7 @@ public sealed partial class StationJobsSystem
                 if (profiles.Count == 0)
                     goto endFunc;
 
-                var candidates = GetPlayersJobCandidates(weight, selectedPriority, profiles.Keys);
+                var candidates = GetPlayersJobCandidates(weight, selectedPriority, profiles);
 
                 var optionsRemaining = 0;
 
@@ -269,56 +269,6 @@ public sealed partial class StationJobsSystem
 
         endFunc:
         return assigned;
-    }
-
-    /// <summary>
-    /// Attempts to assign overflow jobs to any player in allPlayersToAssign that is not in assignedJobs.
-    /// </summary>
-    /// <param name="assignedJobs">All assigned jobs.</param>
-    /// <param name="allPlayersToAssign">All players that might need an overflow assigned.</param>
-    /// <param name="profiles">Player character profiles.</param>
-    /// <param name="stations">The stations to consider for spawn location.</param>
-    public void AssignOverflowJobs(
-        ref Dictionary<NetUserId, (ProtoId<JobPrototype>?, EntityUid)> assignedJobs,
-        IEnumerable<NetUserId> allPlayersToAssign,
-        IReadOnlyDictionary<NetUserId, HumanoidCharacterProfile> profiles,
-        IReadOnlyList<EntityUid> stations)
-    {
-        var givenStations = stations.ToList();
-        if (givenStations.Count == 0)
-            return; // Don't attempt to assign them if there are no stations.
-        // For players without jobs, give them the overflow job if they have that set...
-        foreach (var player in allPlayersToAssign)
-        {
-            if (assignedJobs.ContainsKey(player))
-            {
-                continue;
-            }
-
-            var profile = profiles[player];
-            if (profile.PreferenceUnavailable != PreferenceUnavailableMode.SpawnAsOverflow)
-            {
-                assignedJobs.Add(player, (null, EntityUid.Invalid));
-                continue;
-            }
-
-            _random.Shuffle(givenStations);
-
-            foreach (var station in givenStations)
-            {
-                // Pick a random overflow job from that station
-                var overflows = GetOverflowJobs(station).ToList();
-                _random.Shuffle(overflows);
-
-                // Stations with no overflow slots should simply get skipped over.
-                if (overflows.Count == 0)
-                    continue;
-
-                // If the overflow exists, put them in as it.
-                assignedJobs.Add(player, (overflows[0], givenStations[0]));
-                break;
-            }
-        }
     }
 
     public void CalcExtendedAccess(Dictionary<EntityUid, int> jobsCount)
