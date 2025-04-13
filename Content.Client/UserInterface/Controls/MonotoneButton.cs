@@ -1,101 +1,72 @@
-using Content.Client.Resources;
-using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controls;
+using static Robust.Client.UserInterface.Controls.Label;
 
 namespace Content.Client.UserInterface.Controls;
 
-public sealed class MonotoneButton : Button
+public sealed class MonotoneButton : ContainerButton
 {
     /// <summary>
-    /// Specifies the color of the button's background element
+    ///     Specifies the color of the label text when the button is pressed.
     /// </summary>
-    public Color BackgroundColor { set; get; } = new Color(0.2f, 0.2f, 0.2f);
+    [ViewVariables]
+    public Color AltTextColor { set; get; } = new Color(0.2f, 0.2f, 0.2f);
 
     /// <summary>
-    /// Describes the general shape of the button (i.e., open vs closed).
+    ///     The label that holds the button text.
     /// </summary>
-    public MonotoneButtonShape Shape
-    {
-        get { return _shape; }
-        set { _shape = value; UpdateAppearance(); }
-    }
+    public Label Label { get; }
 
-    private MonotoneButtonShape _shape = MonotoneButtonShape.Closed;
+    /// <summary>
+    ///     The text displayed by the button.
+    /// </summary>
+    [PublicAPI, ViewVariables]
+    public string? Text { get => Label.Text; set => Label.Text = value; }
 
-    // Unfilled buttons
-    // Since the texture isn't uniform, we can't subsample it to make buttons
-    // of different shapes, we need to use a separate texture for each
-    private string[] _buttons =
-        ["/Textures/Interface/Nano/Monotone/monotone_button.svg.96dpi.png",
-        "/Textures/Interface/Nano/Monotone/monotone_button_open_left.svg.96dpi.png",
-        "/Textures/Interface/Nano/Monotone/monotone_button_open_right.svg.96dpi.png",
-        "/Textures/Interface/Nano/Monotone/monotone_button_open_both.svg.96dpi.png"];
+    /// <summary>
+    ///     How to align the text inside the button.
+    /// </summary>
+    [PublicAPI, ViewVariables]
+    public AlignMode TextAlign { get => Label.Align; set => Label.Align = value; }
 
-    // Filled buttons
-    // Let's just treat these the same as the unfilled buttons to ensure consistency
-    private string[] _buttonsFilled =
-        ["/Textures/Interface/Nano/Monotone/monotone_button_filled.svg.96dpi.png",
-        "/Textures/Interface/Nano/Monotone/monotone_button_open_left_filled.svg.96dpi.png",
-        "/Textures/Interface/Nano/Monotone/monotone_button_open_right_filled.svg.96dpi.png",
-        "/Textures/Interface/Nano/Monotone/monotone_button_open_both_filled.svg.96dpi.png"];
-
-    private readonly IResourceCache _resourceCache;
+    /// <summary>
+    ///     If true, the button will allow shrinking and clip text
+    ///     to prevent the text from going outside the bounds of the button.
+    ///     If false, the minimum size will always fit the contained text.
+    /// </summary>
+    [PublicAPI, ViewVariables]
+    public bool ClipText { get => Label.ClipText; set => Label.ClipText = value; }
 
     public MonotoneButton()
     {
-        IoCManager.InjectDependencies(this);
+        Label = new Label
+        {
+            StyleClasses = { StyleClassButton }
+        };
 
-        _resourceCache = IoCManager.Resolve<IResourceCache>();
-
-        Initialize();
+        AddChild(Label);
         UpdateAppearance();
-    }
-
-    private void Initialize()
-    {
-        // Apply button texture
-        var buttonbase = new StyleBoxTexture();
-        buttonbase.SetPatchMargin(StyleBox.Margin.All, 11);
-        buttonbase.SetPadding(StyleBox.Margin.All, 1);
-        buttonbase.SetContentMarginOverride(StyleBox.Margin.Vertical, 2);
-        buttonbase.SetContentMarginOverride(StyleBox.Margin.Horizontal, 14);
-        buttonbase.Texture = _resourceCache.GetTexture(_buttons[(int)Shape]);
-
-        // We don't want any generic button styles being applied
-        this.StyleBoxOverride = buttonbase;
     }
 
     private void UpdateAppearance()
     {
-        if (_resourceCache == null)
-            return;
-
-        // Recolor label
+        // Recolor the label
         if (Label != null)
-            Label.ModulateSelfOverride = Pressed ? BackgroundColor : null;
+            Label.ModulateSelfOverride = DrawMode == DrawModeEnum.Pressed ? AltTextColor : null;
 
-        // Get button texture
-        var buttonTexture = Pressed ? _buttonsFilled[(int)Shape] : _buttons[(int)Shape];
-
-        // Apply button texture
-        if (StyleBoxOverride is StyleBoxTexture { } styleBoxTexture)
-            styleBoxTexture.Texture = _resourceCache.GetTexture(buttonTexture);
-
-        // Appearance modulations
+        // Modulate the button if disabled
         Modulate = Disabled ? Color.Gray : Color.White;
+    }
+
+    protected override void StylePropertiesChanged()
+    {
+        base.StylePropertiesChanged();
+        UpdateAppearance();
     }
 
     protected override void DrawModeChanged()
     {
+        base.DrawModeChanged();
         UpdateAppearance();
     }
-}
-
-public enum MonotoneButtonShape : byte
-{
-    Closed = 0,
-    OpenLeft = 1,
-    OpenRight = 2,
-    OpenBoth = 3
 }
