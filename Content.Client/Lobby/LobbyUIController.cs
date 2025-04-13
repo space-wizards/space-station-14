@@ -338,8 +338,6 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         {
             _preferencesManager.SetCharacterEnable(args.Item1, args.Item2);
             _characterSetup?.ReloadCharacterPickers();
-            if (_profileEditor.Profile != null)
-                _profileEditor.Profile.Enabled = args.Item2;
         };
 
         if (_stateManager.CurrentState is LobbyState lobby)
