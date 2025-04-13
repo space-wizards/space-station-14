@@ -373,7 +373,7 @@
 - type: entity
   parent: Dropper
   id: BorgDropper
-  name: hydraulic dropper
+  name: hydraulic pipette
   description: State-of-the-art hydraulic dropper built for cyborgs. It features a higher capacity than hand-powered droppers, able to hold 15 units of liquid.
   components:
   - type: Sprite

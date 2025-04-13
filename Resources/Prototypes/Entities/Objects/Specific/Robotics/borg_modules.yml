@@ -333,23 +333,6 @@
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: tool-module }
 
-- type: entity
-  id: BorgModuleGPS # Currently its functions are covered by the fire extinguisher module, but im leaving the prototype in case it's useful in the future.
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
-  name: GPS cyborg module
-  components:
-  - type: Sprite
-    layers:
-    - state: generic
-    - state: icon-gps
-  - type: ItemBorgModule
-    items:
-    - BorgHandheldGPSBasic
-    - HandHeldMassScannerBorg
-    - HandheldStationMapUnpowered
-  - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: gps-module }
-
 # cargo modules
 - type: entity
   id: BorgModuleAppraisal
