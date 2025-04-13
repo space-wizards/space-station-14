@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MossyGreySlope
-  changes:
-  - message: Rename the "slimeperson life support crate" to "internals crate (nitrogen)".
-    type: Tweak
-  id: 7661
-  time: '2024-11-29T12:51:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33545
 - author: GansuLalan
   changes:
   - message: The arrival shuttle will no longer smash the nuke
@@ -3892,3 +3885,16 @@
   id: 8160
   time: '2025-04-13T10:35:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32227
+- author: EmoGarbage404
+  changes:
+  - message: Adds departmental economy! All departments now have custom request consoles
+      where they can order from cargo and make money transfers.
+    type: Add
+  - message: Added lock boxes. These are access-locked crates that allow a department
+      to earn sole income when they are sold. Order more from cargo.
+    type: Add
+  - message: Slightly increased passive station income.
+    type: Tweak
+  id: 8161
+  time: '2025-04-13T13:22:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36445
