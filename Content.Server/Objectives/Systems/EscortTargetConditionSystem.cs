@@ -18,10 +18,10 @@ public sealed class EscortTargetConditionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RandomTargetAliveComponent, ObjectiveGetProgressEvent>(OnGetProgress);
+        SubscribeLocalEvent<SyndieTargetAliveComponent, ObjectiveGetProgressEvent>(OnGetProgress);
     }
 
-    private void OnGetProgress(EntityUid uid, RandomTargetAliveComponent comp, ref ObjectiveGetProgressEvent args)
+    private void OnGetProgress(EntityUid uid, SyndieTargetAliveComponent comp, ref ObjectiveGetProgressEvent args)
     {
         if (!_target.GetTarget(uid, out var target))
             return;

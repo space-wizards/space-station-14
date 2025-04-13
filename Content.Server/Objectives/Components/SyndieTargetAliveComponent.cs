@@ -4,4 +4,4 @@ namespace Content.Server.Objectives.Components;
 /// Sets the target for <see cref="EscortTargetConditionComponent"/> to a random character that another Syndicate agent has to kill.
 /// </summary>
 [RegisterComponent]
-public sealed partial class RandomTargetAliveComponent : Component;
+public sealed partial class SyndieTargetAliveComponent : Component;

@@ -29,7 +29,7 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
 
         SubscribeLocalEvent<RandomTraitorProgressComponent, ObjectiveAssignedEvent>(OnRandomTraitorProgressAssigned);
         SubscribeLocalEvent<RandomTraitorAliveComponent, ObjectiveAssignedEvent>(OnRandomTraitorAliveAssigned);
-        SubscribeLocalEvent<RandomTargetAliveComponent, ObjectiveAssignedEvent>(OnRandomTargetAliveAssigned);
+        SubscribeLocalEvent<SyndieTargetAliveComponent, ObjectiveAssignedEvent>(OnSyndieTargetAliveAssigned);
 
     }
 
@@ -212,7 +212,7 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
         _target.SetTarget(ent.Owner, _random.Pick(traitors).Id, target);
     }
 
-    private void OnRandomTargetAliveAssigned(Entity<RandomTargetAliveComponent> ent, ref ObjectiveAssignedEvent args)
+    private void OnSyndieTargetAliveAssigned(Entity<SyndieTargetAliveComponent> ent, ref ObjectiveAssignedEvent args)
     {
         // invalid prototype
         if (!TryComp<TargetObjectiveComponent>(ent.Owner, out var target))
