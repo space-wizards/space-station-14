@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You can now inspect entities in the stripping window instead of the entity
-      that happened to be underneath the window.
-    type: Fix
-  id: 7667
-  time: '2024-11-30T16:23:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33644
 - author: Winkarst-cpu
   changes:
   - message: Now borgs get names on roundstart.
@@ -3900,3 +3892,10 @@
   id: 8166
   time: '2025-04-13T16:09:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36480
+- author: K-Dynamic
+  changes:
+  - message: Stinger grenades no longer flash on detonation.
+    type: Tweak
+  id: 8167
+  time: '2025-04-13T17:23:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36394
