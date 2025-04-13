@@ -16,8 +16,13 @@ public abstract class SharedOreSiloSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<OreSiloComponent, ToggleOreSiloClientMessage>(OnToggleOreSiloClient);
-        SubscribeLocalEvent<OreSiloComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
         SubscribeLocalEvent<OreSiloComponent, ComponentShutdown>(OnSiloShutdown);
+        Subs.BuiEvents<OreSiloComponent>(OreSiloUiKey.Key,
+            subs =>
+        {
+            subs.Event<BoundUIOpenedEvent>(OnBoundUIOpened);
+        });
+
 
         SubscribeLocalEvent<OreSiloClientComponent, GetStoredMaterialsEvent>(OnGetStoredMaterials);
         SubscribeLocalEvent<OreSiloClientComponent, ConsumeStoredMaterialsEvent>(OnConsumeStoredMaterials);
@@ -67,8 +72,7 @@ public abstract class SharedOreSiloSystem : EntitySystem
 
     private void OnBoundUIOpened(Entity<OreSiloComponent> ent, ref BoundUIOpenedEvent args)
     {
-        if (args.UiKey is OreSiloUiKey.Key)
-           UpdateOreSiloUi(ent);
+        UpdateOreSiloUi(ent);
     }
 
     private void OnSiloShutdown(Entity<OreSiloComponent> ent, ref ComponentShutdown args)

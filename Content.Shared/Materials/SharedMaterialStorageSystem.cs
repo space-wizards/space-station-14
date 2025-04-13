@@ -134,6 +134,9 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         return component.StorageLimit == null || GetTotalMaterialAmount(uid, component, true) + volume <= component.StorageLimit;
     }
 
+    /// <summary>
+    /// Checks if a certain material prototype is supported by this entity.
+    /// </summary>
     public bool IsMaterialWhitelisted(Entity<MaterialStorageComponent?> ent, ProtoId<MaterialPrototype> material)
     {
         if (!Resolve(ent, ref ent.Comp))
