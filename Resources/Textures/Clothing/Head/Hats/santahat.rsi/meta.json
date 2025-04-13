@@ -8,7 +8,7 @@
   },
     "states": [
         {
-            "name": "icon-beard"
+            "name": "icon-nobeard"
         },
         {
             "name": "icon"
@@ -18,7 +18,7 @@
             "directions": 4
         },
         {
-            "name": "beard-equipped-HELMET",
+            "name": "nobeard-equipped-HELMET",
             "directions": 4
         },
         {
@@ -26,7 +26,7 @@
             "directions": 4
         },
         {
-            "name": "beard-equipped-HELMET-vox",
+            "name": "nobeard-equipped-HELMET-vox",
             "directions": 4
         },
         {
@@ -34,7 +34,7 @@
             "directions": 4
         },
         {
-            "name": "beard-inhand-left",
+            "name": "nobeard-inhand-left",
             "directions": 4
         },
         {
@@ -42,7 +42,7 @@
             "directions": 4
         },
         {
-            "name": "beard-inhand-right",
+            "name": "nobeard-inhand-right",
             "directions": 4
         }
     ]

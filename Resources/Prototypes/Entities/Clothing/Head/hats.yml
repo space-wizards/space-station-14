@@ -432,14 +432,14 @@
   - type: Foldable
     canFoldInsideContainer: true
   - type: FoldableClothing
-    foldedEquippedPrefix: beard
-    foldedHeldPrefix: beard
+    foldedEquippedPrefix: nobeard
+    foldedHeldPrefix: nobeard
   - type: Sprite
     sprite: Clothing/Head/Hats/santahat.rsi
     layers:
     - state: icon
       map: ["unfoldedLayer"]
-    - state: icon-beard
+    - state: icon-nobeard
       map: [ "foldedLayer" ]
       visible: true
     
