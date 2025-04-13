@@ -72,6 +72,8 @@ public sealed class MapMigrationSystem : EntitySystem
         
         if (mappings != null)
             return true;
+        else
+            return false;
     }
 
     private void OnBeforeReadEvent(BeforeEntityReadEvent ev)
