@@ -96,6 +96,7 @@ public sealed class ContrabandSystem : EntitySystem
         var examineMarkup = GetContrabandExamine(departmentExamineMessage, carryingMessage);
         _examine.AddHoverExamineVerb(args,
             component,
+            Loc.GetString("contraband-examinable-verb-text"),
             examineMarkup.ToMarkup(),
             iconTexture);
     }
