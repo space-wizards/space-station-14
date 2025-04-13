@@ -10,3 +10,16 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: SpellbookWandPolymorphCluwne
+  name: spellbook-wand-polymorph-cluwne-name
+  description: spellbook-wand-polymorph-cluwne-description
+  productEntity: WeaponWandCluwne
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
