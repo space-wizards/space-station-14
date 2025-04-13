@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by Nimfar11 (GitHub) for Space Station 14. Reptilian edit by Nairod(Github), vox edit by Flareguy. 'mothroach-moving' by MilenVolf, all edited by lzk228",
+  "copyright": "Taken from fulpstation at https://github.com/fulpstation/fulpstation/commit/edb232b692ec9f356ec554ea1971da552b9bc447. 'mothroach-moving' by MilenVolf, all edited by lzk228",
   "size": {
     "x": 32,
     "y": 32
@@ -46,18 +46,6 @@
     },
     {
       "name": "mothroach_dead",
-      "directions": 4
-    },
-    {
-      "name": "equipped-MASK",
-      "directions": 4
-    },
-    {
-      "name": "equipped-MASK-reptilian",
-      "directions": 4
-    },
-    {
-      "name": "equipped-MASK-vox",
       "directions": 4
     },
     {
