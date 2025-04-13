@@ -20,7 +20,8 @@ public sealed partial class GasPressureReliefValveComponent : Component
 
     /// <summary>
     /// Determines whether the valve is open or closed.
-    /// Used for showing the valve animation.
+    /// Used for showing the valve animation, the UI,
+    /// and on examine.
     /// </summary>
     [DataField]
     public bool Enabled;
@@ -30,4 +31,13 @@ public sealed partial class GasPressureReliefValveComponent : Component
     /// </summary>
     [DataField]
     public float MaxTransferRate = Atmospherics.MaxTransferRate;
+
+    /// <summary>
+    /// The current flow rate of the valve.
+    /// Used for displaying the flow rate in the UI,
+    /// and on examine.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
+    public float FlowRate;
 }

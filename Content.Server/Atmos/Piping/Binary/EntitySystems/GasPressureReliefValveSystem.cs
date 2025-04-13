@@ -30,7 +30,39 @@ public sealed class GasPressureReliefValveSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<GasPressureReliefValveComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<GasPressureReliefValveComponent, AtmosDeviceUpdateEvent>(OnReliefValveUpdated);
-        //SubscribeLocalEvent<GasPressureReliefValveComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<GasPressureReliefValveComponent, ExaminedEvent>(OnExamined);
+    }
+
+    private void OnExamined(EntityUid valveEntityUid,
+        GasPressureReliefValveComponent valveComponent,
+        ExaminedEvent args)
+    {
+        // No cool stuff provided if it's unable to be examined.
+        if (Transform(valveEntityUid).Anchored || !args.IsInDetailsRange)
+            return;
+
+        // TODO: Obliterate this shitcode, holy shit. Wanted to write out this proof of concept before I go play SK5.
+        if (Loc.TryGetString("gas-pressure-relief-valve-system-examined",
+                out var str,
+                ("statusColor", valveComponent.Enabled ? "green" : "red"),
+                ("open", valveComponent.Enabled)))
+        {
+            args.PushMarkup(str);
+        }
+
+        if (Loc.TryGetString("gas-pressure-relief-valve-examined-threshold-pressure",
+                out var str2,
+                ("threshold", $"{valveComponent.Threshold:0.#}")))
+        {
+            args.PushMarkup(str2);
+        }
+
+        if (Loc.TryGetString("gas-pressure-relief-valve-examined-flow-rate",
+                out var str3,
+                ("flowRate", $"{valveComponent.FlowRate:0.#}")))
+        {
+            args.PushMarkup(str3);
+        }
     }
 
     private void OnInit(EntityUid valveEntityUid, GasPressureReliefValveComponent valveComponent, ComponentInit args)
@@ -44,11 +76,14 @@ public sealed class GasPressureReliefValveSystem : EntitySystem
 /// In summary, the valve should only open if the pressure on the inlet side is above a certain threshold.
 /// When releasing gas, it should only release enough gas to tip under the threshold,
 /// or the max atmospherics flow rate.
+/// It should also not release more gas than it would take to equalize the pressure.
 /// </summary>
 /// <param name="valveEntityUid"> the <see cref="EntityUid"/> of the pressure relief valve</param>
 /// <param name="valveComponent"> the <see cref="GasPressureReliefValveComponent"/> component of the valve</param>
 /// <param name="args"> Args provided to us via <see cref="AtmosDeviceUpdateEvent"/></param>
-    private void OnReliefValveUpdated(EntityUid valveEntityUid, GasPressureReliefValveComponent valveComponent, ref AtmosDeviceUpdateEvent args)
+    private void OnReliefValveUpdated(EntityUid valveEntityUid,
+        GasPressureReliefValveComponent valveComponent,
+        ref AtmosDeviceUpdateEvent args)
     {
         if (!_nodeContainer.TryGetNodes(valveEntityUid,
                 valveComponent.InletName,
@@ -123,7 +158,9 @@ public sealed class GasPressureReliefValveSystem : EntitySystem
         _atmosphereSystem.Merge(outletPipeNode.Air, removed);
     }
 
-    private void UpdateAppearance(EntityUid valveEntityUid, GasPressureReliefValveComponent? valveComponent = null, AppearanceComponent? appearance = null)
+    private void UpdateAppearance(EntityUid valveEntityUid,
+        GasPressureReliefValveComponent? valveComponent = null,
+        AppearanceComponent? appearance = null)
     {
         if (!Resolve(valveEntityUid, ref valveComponent, ref appearance, false))
             return;
