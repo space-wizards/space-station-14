@@ -2178,4 +2178,6 @@
   - !type:BuyerJobCondition
     whitelist:
     - Janitor
-    - Engineer
+    - StationEngineer
+    - TechnicalAssistant
+    - AtmosphericTechnician
