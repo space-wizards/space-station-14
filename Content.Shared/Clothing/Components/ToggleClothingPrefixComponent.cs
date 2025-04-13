@@ -5,19 +5,18 @@ namespace Content.Shared.Clothing.Components;
 /// <summary>
 /// Handles the changes to ClothingComponent.EquippedPrefix when toggled.
 /// </summary>
-/// <remarks>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ToggleClothingPrefixComponent : Component
 {
     /// <summary>
-    ///     Clothing's EquippedPrefix when activated.
+    /// Clothing's EquippedPrefix when activated.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public string? PrefixOn = "on";
 
     /// <summary>
-    ///     Clothing's EquippedPrefix when deactivated.
+    /// Clothing's EquippedPrefix when deactivated.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public string? PrefixOff;
 }

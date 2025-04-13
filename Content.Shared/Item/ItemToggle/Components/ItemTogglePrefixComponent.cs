@@ -5,19 +5,18 @@ namespace Content.Shared.Item.ItemToggle.Components;
 /// <summary>
 /// Handles the changes to ItemComponent.HeldPrefix when toggled.
 /// </summary>
-/// <remarks>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ItemTogglePrefixComponent : Component
 {
     /// <summary>
-    ///     Item's HeldPrefix when activated.
+    /// Item's HeldPrefix when activated.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public string? PrefixOn = "on";
 
     /// <summary>
-    ///     Item's HeldPrefix when deactivated.
+    /// Item's HeldPrefix when deactivated.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public string? PrefixOff;
 }

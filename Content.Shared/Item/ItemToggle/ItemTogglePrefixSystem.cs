@@ -9,6 +9,7 @@ public sealed class ItemTogglePrefixSystem : EntitySystem
 {
     [Dependency] private readonly SharedItemSystem _item = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();

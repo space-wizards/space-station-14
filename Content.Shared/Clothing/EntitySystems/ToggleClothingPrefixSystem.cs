@@ -4,12 +4,13 @@ using Content.Shared.Item.ItemToggle.Components;
 namespace Content.Shared.Clothing.EntitySystems;
 
 /// <summary>
-/// On toggle handles the changes to ItemComponent.HeldPrefix. <see cref="ItemToggleHeldComponent"/>.
+/// On toggle handles the changes to ItemComponent.HeldPrefix. <see cref="ToggleClothingPrefixComponent"/>.
 /// </summary>
 public sealed class ToggleClothingPrefixSystem : EntitySystem
 {
     [Dependency] private readonly ClothingSystem _clothing = default!;
 
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
