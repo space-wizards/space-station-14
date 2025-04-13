@@ -15,6 +15,9 @@
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
   - ReagentGrinderIndustrialMachineCircuitboard
+  radioChannels:
+  - Service
+
 
 - type: technology
   id: CritterMechs
@@ -54,6 +57,8 @@
   - SurveillanceWirelessCameraMonitorCircuitboard
   - TelecomServerCircuitboard
   - HolopadMachineCircuitboard
+  radioChannels:
+  - Service
 
 - type: technology
   id: AdvancedEntertainment
@@ -70,6 +75,8 @@
     - DawInstrumentMachineCircuitboard
     - MassMediaCircuitboard
     - JukeboxCircuitBoard
+  radioChannels:
+  - Service
 
 - type: technology
   id: RoboticCleanliness
@@ -96,6 +103,8 @@
   - FatExtractorMachineCircuitboard
   - BiofabricatorMachineCircuitboard
   - BiomassReclaimerMachineCircuitboard
+  radioChannels:
+  - Service
 
 # Tier 2
 
@@ -115,6 +124,8 @@
   - FauxTileAstroIce
   - FauxTileAstroSnow
   - FauxTileAstroAsteroidSand
+  radioChannels:
+  - Service
 
 - type: technology
   id: BiochemicalStasis
@@ -130,6 +141,8 @@
   - CryoPodMachineCircuitboard
   - CryostasisBeaker
   - SyringeCryostasis
+  radioChannels:
+  - Medical
 
 - type: technology
   id: MechanizedTreatment
@@ -156,6 +169,8 @@
   recipeUnlocks:
   - AdvMopItem
   - MegaSprayBottle
+  radioChannels:
+  - Service
 
 - type: technology
   id: HONKMech
@@ -202,6 +217,8 @@
   recipeUnlocks:
   - WeaponSprayNozzle
   - ClothingBackpackWaterTank
+  radioChannels:
+  - Service
 
 - type: technology
   id: BluespaceCargoTransport
@@ -214,6 +231,8 @@
   cost: 15000
   recipeUnlocks:
   - CargoTelepadMachineCircuitboard
+  radioChannels:
+  - Supply
 
 # Tier 3
 
@@ -228,6 +247,8 @@
   cost: 10000
   recipeUnlocks:
   - ClothingShoesBootsSpeed
+  radioChannels:
+  - Service
 
 - type: technology
   id: BluespaceChemistry
@@ -241,3 +262,5 @@
   recipeUnlocks:
   - BluespaceBeaker
   - SyringeBluespace
+  radioChannels:
+  - Medical
