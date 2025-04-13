@@ -214,6 +214,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void ActivatePayload(EntityUid uid, PoweredLightComponent? light = null)
         {
+            //Bunch of checks to make sure we have valid bluespace lightbulb
             if (!Resolve(uid, ref light))
                 return;
             if (GetBulb(uid, light) is not { Valid: true } bulb)
@@ -225,12 +226,15 @@ namespace Content.Server.Light.EntitySystems
                 var payloadItem = _itemSlots.GetItemOrNull(bulb, PoweredLightComponent.PayloadSlotName);
                 if (payloadItem == null)
                     return;
+                // check for already active timer trigger in the payload
                 if (HasComp<ActiveTimerTriggerComponent>(payloadItem))
                 {
+                    //eject payload
                     _itemSlots.TryEject(uid, itemSlot, user: null, out var item);
                 }
                 else
                 {
+                    // check if there is timer trigger
                     if (TryComp<OnUseTimerTriggerComponent>(payloadItem, out var timerTrigger))
                     {
                         _trigger.HandleTimerTrigger(
@@ -243,6 +247,7 @@ namespace Content.Server.Light.EntitySystems
                     }
                     else
                     {
+                        //eject payload
                         _itemSlots.TryEject(uid, itemSlot, user: null, out var item);
                     }
                 }
@@ -401,10 +406,9 @@ namespace Content.Server.Light.EntitySystems
                 SetState(uid, false, component);
             else if (args.Port == component.OnPort)
             {
+                // check if light is already on, if yes, try to work with possible bluespace payload
                 if (component.On)
-                {
                     ActivatePayload(uid, component);
-                }
                 SetState(uid, true, component);
             }
 
