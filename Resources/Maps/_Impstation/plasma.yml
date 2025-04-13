@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 247.2.0
+  engineVersion: 250.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/28/2025 03:56:39
+  time: 04/12/2025 06:46:52
   entityCount: 26457
 maps:
 - 1
@@ -631,6 +631,7 @@ entities:
             7934: -97,8
             7948: -91,-31
             7949: -91,-35
+            7963: -112,-30
         - node:
             angle: 3.141592653589793 rad
             color: '#FFFFFFFF'
@@ -25402,15 +25403,17 @@ entities:
     - type: Transform
       pos: -48.5,-52.5
       parent: 2
-  - uid: 3847
-    components:
-    - type: Transform
-      pos: -49.5,-52.5
-      parent: 2
   - uid: 3858
     components:
     - type: Transform
       pos: -46.5,-56.5
+      parent: 2
+- proto: BookshelfGuidebooksFilled
+  entities:
+  - uid: 3847
+    components:
+    - type: Transform
+      pos: -49.5,-52.5
       parent: 2
 - proto: BookSpaceLaw
   entities:
@@ -25472,6 +25475,14 @@ entities:
     components:
     - type: Transform
       pos: -115.5,-50.5
+      parent: 2
+- proto: BorgChargerDroneSpawner
+  entities:
+  - uid: 26305
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -111.5,-29.5
       parent: 2
 - proto: BoxBeaker
   entities:
@@ -39920,7 +39931,7 @@ entities:
   - uid: 23304
     components:
     - type: Transform
-      pos: -112.261406,-29.224083
+      pos: -112.47464,-29.2193
       parent: 2
 - proto: CableApcStack1
   entities:
@@ -55297,6 +55308,13 @@ entities:
     - type: Transform
       pos: -129.5,7.5
       parent: 2
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 9505
+    components:
+    - type: Transform
+      pos: -92.5,12.5
+      parent: 2
 - proto: Carpet
   entities:
   - uid: 1601
@@ -64152,6 +64170,23 @@ entities:
     - type: Transform
       pos: -39.5,-25.5
       parent: 2
+- proto: ChemistryBottleEpinephrine
+  entities:
+  - uid: 2612
+    components:
+    - type: Transform
+      pos: -60.347107,-3.8663821
+      parent: 2
+  - uid: 6479
+    components:
+    - type: Transform
+      pos: -36.623154,-30.40255
+      parent: 2
+  - uid: 6480
+    components:
+    - type: Transform
+      pos: -36.404404,-30.261925
+      parent: 2
 - proto: ChemistryHotplate
   entities:
   - uid: 3949
@@ -65300,6 +65335,13 @@ entities:
     components:
     - type: Transform
       pos: -66.47555,-40.507927
+      parent: 2
+- proto: ClothingShoesSkates
+  entities:
+  - uid: 19640
+    components:
+    - type: Transform
+      pos: -92.53163,7.7350483
       parent: 2
 - proto: ClothingUnderSocksCoder
   entities:
@@ -68106,44 +68148,32 @@ entities:
     - type: Transform
       pos: -24.5,6.5
       parent: 2
-- proto: DefaultStationBeaconSolars
+- proto: DefaultStationBeaconSolarsPortBow
   entities:
-  - uid: 12475
-    components:
-    - type: Transform
-      pos: -148.5,-27.5
-      parent: 2
-    - type: NavMapBeacon
-      text: Port Quarter Solars
-    - type: WarpPoint
-      location: Port Quarter Solars
   - uid: 14098
-    components:
-    - type: Transform
-      pos: -15.5,-79.5
-      parent: 2
-    - type: NavMapBeacon
-      text: Starboard Bow Solars
-    - type: WarpPoint
-      location: Starboard Quarter Solars
-  - uid: 26332
-    components:
-    - type: Transform
-      pos: -2.5,6.5
-      parent: 2
-    - type: NavMapBeacon
-      text: Starboard Bow Solars
-    - type: WarpPoint
-      location: Starboard Bow Solars
-  - uid: 26411
     components:
     - type: Transform
       pos: -148.5,13.5
       parent: 2
-    - type: NavMapBeacon
-      text: Port Bow Solars
-    - type: WarpPoint
-      location: Port Bow Solars
+- proto: DefaultStationBeaconSolarsPortQuarter
+  entities:
+  - uid: 4277
+    components:
+    - type: Transform
+      pos: -148.5,-27.5
+      parent: 2
+- proto: DefaultStationBeaconSolarsStarboardBow
+  entities:
+  - uid: 11189
+    components:
+    - type: Transform
+      pos: -15.5,-79.5
+      parent: 2
+  - uid: 12475
+    components:
+    - type: Transform
+      pos: -2.5,6.5
+      parent: 2
 - proto: DefaultStationBeaconSurgery
   entities:
   - uid: 22233
@@ -77581,23 +77611,6 @@ entities:
     - type: Transform
       pos: -92.25896,11.161083
       parent: 2
-- proto: EpinephrineChemistryBottle
-  entities:
-  - uid: 2612
-    components:
-    - type: Transform
-      pos: -60.347107,-3.8663821
-      parent: 2
-  - uid: 6479
-    components:
-    - type: Transform
-      pos: -36.623154,-30.40255
-      parent: 2
-  - uid: 6480
-    components:
-    - type: Transform
-      pos: -36.404404,-30.261925
-      parent: 2
 - proto: ExosuitFabricator
   entities:
   - uid: 20469
@@ -82140,19 +82153,24 @@ entities:
   - uid: 23306
     components:
     - type: Transform
-      pos: -112.761406,-29.411583
+      pos: -112.97464,-29.234924
       parent: 2
 - proto: FlashlightLantern
   entities:
+  - uid: 14245
+    components:
+    - type: Transform
+      pos: -112.61156,-29.51019
+      parent: 2
   - uid: 22903
     components:
     - type: Transform
       pos: -54.584934,-70.46617
       parent: 2
-  - uid: 23311
+  - uid: 26458
     components:
     - type: Transform
-      pos: -112.323906,-29.567833
+      pos: -92.45351,7.6100483
       parent: 2
 - proto: FlashlightSeclite
   entities:
@@ -125336,11 +125354,6 @@ entities:
     - type: Transform
       pos: -114.5,-31.5
       parent: 2
-  - uid: 11189
-    components:
-    - type: Transform
-      pos: -68.5,-2.5
-      parent: 2
   - uid: 23403
     components:
     - type: Transform
@@ -126986,11 +126999,6 @@ entities:
     - type: Transform
       pos: -92.5,8.5
       parent: 2
-  - uid: 14839
-    components:
-    - type: Transform
-      pos: -92.5,7.5
-      parent: 2
 - proto: LockerDetectiveFilled
   entities:
   - uid: 16181
@@ -127362,11 +127370,6 @@ entities:
       parent: 2
 - proto: LockerSalvageSpecialistFilled
   entities:
-  - uid: 19640
-    components:
-    - type: Transform
-      pos: -90.5,30.5
-      parent: 2
   - uid: 22345
     components:
     - type: Transform
@@ -128078,13 +128081,6 @@ entities:
     components:
     - type: Transform
       pos: -93.5,-25.5
-      parent: 2
-- proto: MailTeleporter
-  entities:
-  - uid: 9505
-    components:
-    - type: Transform
-      pos: -92.5,12.5
       parent: 2
 - proto: MaintenanceFluffSpawner
   entities:
@@ -134055,6 +134051,11 @@ entities:
     components:
     - type: Transform
       pos: -119.5,-65.5
+      parent: 2
+  - uid: 26332
+    components:
+    - type: Transform
+      pos: -92.5,7.5
       parent: 2
   - uid: 26351
     components:
@@ -143895,13 +143896,6 @@ entities:
     - type: Transform
       pos: -46.5,-9.5
       parent: 2
-- proto: SpawnMobDrone
-  entities:
-  - uid: 26305
-    components:
-    - type: Transform
-      pos: -111.5,-32.5
-      parent: 2
 - proto: SpawnMobFoxRenault
   entities:
   - uid: 22264
@@ -144142,11 +144136,6 @@ entities:
     components:
     - type: Transform
       pos: -93.5,8.5
-      parent: 2
-  - uid: 26280
-    components:
-    - type: Transform
-      pos: -93.5,7.5
       parent: 2
 - proto: SpawnPointDetective
   entities:
@@ -148289,11 +148278,6 @@ entities:
     - type: Transform
       pos: -112.5,-29.5
       parent: 2
-  - uid: 14245
-    components:
-    - type: Transform
-      pos: -111.5,-29.5
-      parent: 2
   - uid: 14247
     components:
     - type: Transform
@@ -151060,6 +151044,13 @@ entities:
     - type: Transform
       pos: -25.5,-54.5
       parent: 2
+- proto: VaultDoorCommandLocked
+  entities:
+  - uid: 14839
+    components:
+    - type: Transform
+      pos: -68.5,-2.5
+      parent: 2
 - proto: VendingBarDrobe
   entities:
   - uid: 16707
@@ -151352,6 +151343,13 @@ entities:
     components:
     - type: Transform
       pos: -95.5,30.5
+      parent: 2
+- proto: VendingMachineSalvDrobe
+  entities:
+  - uid: 26280
+    components:
+    - type: Transform
+      pos: -90.5,30.5
       parent: 2
 - proto: VendingMachineSciDrobe
   entities:
@@ -167169,6 +167167,14 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -68.5,-54.5
       parent: 2
+- proto: WallWeaponCapacitorRecharger
+  entities:
+  - uid: 26411
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -114.5,-30.5
+      parent: 2
 - proto: WardrobeBlackFilled
   entities:
   - uid: 23889
@@ -167740,11 +167746,6 @@ entities:
       parent: 2
 - proto: WeaponCapacitorRecharger
   entities:
-  - uid: 4277
-    components:
-    - type: Transform
-      pos: -111.5,-29.5
-      parent: 2
   - uid: 6673
     components:
     - type: Transform

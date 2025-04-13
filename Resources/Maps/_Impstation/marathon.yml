@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 247.2.0
+  engineVersion: 250.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/18/2025 05:53:54
-  entityCount: 23444
+  time: 04/12/2025 04:27:06
+  entityCount: 23443
 maps:
 - 1
 grids:
@@ -7923,7 +7923,6 @@ entities:
       devices:
       - 10269
       - 10267
-      - 10272
       - 10268
       - 10263
       - 10327
@@ -9375,18 +9374,6 @@ entities:
       devices:
       - 13515
       - 13722
-  - uid: 129
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -14.5,-46.5
-      parent: 2
-    - type: DeviceList
-      devices:
-      - 13706
-      - 13518
-      - 10272
-      - 10259
   - uid: 130
     components:
     - type: Transform
@@ -16087,11 +16074,6 @@ entities:
     - type: Transform
       pos: -58.5,-64.5
       parent: 2
-  - uid: 1119
-    components:
-    - type: Transform
-      pos: -67.5,-65.5
-      parent: 2
   - uid: 1120
     components:
     - type: Transform
@@ -16171,6 +16153,13 @@ entities:
     components:
     - type: Transform
       pos: -76.5,-58.5
+      parent: 2
+- proto: BookshelfGuidebooksFilled
+  entities:
+  - uid: 1119
+    components:
+    - type: Transform
+      pos: -67.5,-65.5
       parent: 2
 - proto: BoozeDispenser
   entities:
@@ -45214,6 +45203,13 @@ entities:
     - type: Transform
       pos: -5.5,-50.5
       parent: 2
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 23145
+    components:
+    - type: Transform
+      pos: 18.5,-9.5
+      parent: 2
 - proto: Carpet
   entities:
   - uid: 6940
@@ -52007,11 +52003,6 @@ entities:
       parent: 2
 - proto: ClosetEmergency
   entities:
-  - uid: 7354
-    components:
-    - type: Transform
-      pos: -15.5,-48.5
-      parent: 2
   - uid: 8216
     components:
     - type: Transform
@@ -56955,26 +56946,20 @@ entities:
     - type: Transform
       pos: -17.5,-54.5
       parent: 2
-- proto: DefaultStationBeaconSolars
+- proto: DefaultStationBeaconSolarsPort
+  entities:
+  - uid: 8819
+    components:
+    - type: Transform
+      pos: -64.5,43.5
+      parent: 2
+- proto: DefaultStationBeaconSolarsStarboard
   entities:
   - uid: 8818
     components:
     - type: Transform
       pos: 50.5,30.5
       parent: 2
-    - type: NavMapBeacon
-      text: Starboard Solars
-    - type: WarpPoint
-      location: Starboard Solars
-  - uid: 8819
-    components:
-    - type: Transform
-      pos: -64.5,43.5
-      parent: 2
-    - type: NavMapBeacon
-      text: Port Solars
-    - type: WarpPoint
-      location: Port Solars
 - proto: DefaultStationBeaconSurgery
   entities:
   - uid: 8820
@@ -65085,7 +65070,6 @@ entities:
     - type: DeviceList
       devices:
       - 592
-      - 10272
       - 10267
       - 10269
       - 10326
@@ -67199,14 +67183,6 @@ entities:
       deviceLists:
       - 17
       - 10004
-  - uid: 10259
-    components:
-    - type: Transform
-      pos: -17.5,-49.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 129
   - uid: 10260
     components:
     - type: Transform
@@ -67298,16 +67274,6 @@ entities:
     - type: Transform
       pos: 18.5,24.5
       parent: 2
-  - uid: 10272
-    components:
-    - type: Transform
-      pos: -17.5,-45.5
-      parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 129
-      - 20
-      - 10013
   - uid: 10273
     components:
     - type: Transform
@@ -91954,9 +91920,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -17.5,-48.5
       parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 129
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 13519
@@ -93713,9 +93676,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -17.5,-46.5
       parent: 2
-    - type: DeviceNetwork
-      deviceLists:
-      - 129
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 13708
@@ -102416,13 +102376,6 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#03FCD3FF'
-- proto: HighSecCommandLocked
-  entities:
-  - uid: 15293
-    components:
-    - type: Transform
-      pos: 5.5,40.5
-      parent: 2
 - proto: HolofanProjector
   entities:
   - uid: 15294
@@ -105621,11 +105574,6 @@ entities:
       parent: 2
 - proto: LockerCourierFilled
   entities:
-  - uid: 23146
-    components:
-    - type: Transform
-      pos: 17.5,-11.5
-      parent: 2
   - uid: 23147
     components:
     - type: Transform
@@ -106758,13 +106706,6 @@ entities:
     - type: Transform
       pos: -22.54349,53.796127
       parent: 2
-- proto: MailTeleporter
-  entities:
-  - uid: 23145
-    components:
-    - type: Transform
-      pos: 18.5,-9.5
-      parent: 2
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 15880
@@ -107085,7 +107026,7 @@ entities:
   - uid: 15937
     components:
     - type: Transform
-      pos: 30.48165,-9.547565
+      pos: 26.527508,-11.421719
       parent: 2
 - proto: MedkitBurnFilled
   entities:
@@ -107592,6 +107533,11 @@ entities:
       parent: 2
 - proto: NitrogenCanister
   entities:
+  - uid: 7354
+    components:
+    - type: Transform
+      pos: -15.5,-48.5
+      parent: 2
   - uid: 15985
     components:
     - type: Transform
@@ -109631,6 +109577,11 @@ entities:
       parent: 2
 - proto: PottedPlantRandom
   entities:
+  - uid: 15293
+    components:
+    - type: Transform
+      pos: 17.5,-11.5
+      parent: 2
   - uid: 16316
     components:
     - type: Transform
@@ -127381,6 +127332,11 @@ entities:
       parent: 2
 - proto: Table
   entities:
+  - uid: 10259
+    components:
+    - type: Transform
+      pos: 26.5,-11.5
+      parent: 2
   - uid: 19121
     components:
     - type: Transform
@@ -130874,6 +130830,13 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 11.5,61.5
       parent: 2
+- proto: VaultDoorCommandLocked
+  entities:
+  - uid: 10272
+    components:
+    - type: Transform
+      pos: 5.5,40.5
+      parent: 2
 - proto: VendingBarDrobe
   entities:
   - uid: 19743
@@ -131284,6 +131247,13 @@ entities:
       name: Salvage Equipment
     - type: Transform
       pos: 23.5,-9.5
+      parent: 2
+- proto: VendingMachineSalvDrobe
+  entities:
+  - uid: 129
+    components:
+    - type: Transform
+      pos: 30.5,-9.5
       parent: 2
 - proto: VendingMachineSciDrobe
   entities:
@@ -146070,6 +146040,8 @@ entities:
       parent: 2
     - type: Physics
       canCollide: False
+    - type: Fixtures
+      fixtures: {}
 - proto: WardrobeAtmosphericsFilled
   entities:
   - uid: 22734
@@ -146511,7 +146483,7 @@ entities:
     - type: Transform
       pos: 28.5,-32.5
       parent: 2
-- proto: WarningWaste
+- proto: WarningWaterVapor
   entities:
   - uid: 22761
     components:

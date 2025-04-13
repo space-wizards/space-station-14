@@ -1,10 +1,10 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 247.2.0
+  engineVersion: 250.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/24/2025 22:43:22
+  time: 04/12/2025 03:59:02
   entityCount: 25319
 maps:
 - 1
@@ -243,7 +243,7 @@ entities:
           version: 6
         8,-2:
           ind: 8,-2
-          tiles: QQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQAAAAAAAQQAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQAAAAAAAQQAAAAAAQAAAAAAAQQAAAAAAQAAAAAAAQQAAAAAAQwAAAAACQwAAAAACQwAAAAADQwAAAAAAQwAAAAABQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQQAAAAAAQAAAAAAAQQAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQwAAAAABQwAAAAADQwAAAAADQwAAAAADQwAAAAADQQAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQAAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQAAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQQAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAATgAAAAAAWAAAAAAAWAAAAAAAWAAAAAAATgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAATgAAAAAAVQAAAAAAVQAAAAAAVQAAAAAATgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASAAAAAADSAAAAAADSAAAAAADSAAAAAAASAAAAAACTgAAAAAAVQAAAAAAVQAAAAAAVQAAAAAATgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAARQAAAAAASAAAAAABSAAAAAADSAAAAAADSAAAAAACSAAAAAAATgAAAAAAVQAAAAAAVQAAAAAAVQAAAAAATgAAAAAAQgAAAAAASgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASAAAAAAASAAAAAAASAAAAAACSAAAAAACSAAAAAAATgAAAAAAWAAAAAAAWAAAAAAAWAAAAAAATgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASAAAAAAASAAAAAACSAAAAAABSAAAAAABSAAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASAAAAAAASAAAAAACSAAAAAAASAAAAAADSAAAAAAB
+          tiles: QQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQAAAAAAAQQAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQAAAAAAAQQAAAAAAQAAAAAAAQQAAAAAAQAAAAAAAQQAAAAAAQwAAAAACQwAAAAACQwAAAAADQwAAAAAAQwAAAAABQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQQAAAAAAQAAAAAAAQQAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQwAAAAABQwAAAAADQwAAAAADQwAAAAADQwAAAAADQQAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQAAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQQAAAAAAQQAAAAAAQAAAAAAAQAAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQQAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAATgAAAAAAWAAAAAAAWAAAAAAAWAAAAAAATgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAATgAAAAAAVQAAAAAAVQAAAAAAVQAAAAAATgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASAAAAAADSAAAAAADSAAAAAADSAAAAAAASAAAAAACTgAAAAAAVQAAAAAAVQAAAAAAVQAAAAAATgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAARQAAAAAASAAAAAABSAAAAAADSAAAAAADSAAAAAACSAAAAAAATgAAAAAAVQAAAAAAVQAAAAAAVQAAAAAATgAAAAAAQgAAAAAASgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASAAAAAAASAAAAAAASAAAAAACSAAAAAACSAAAAAAATgAAAAAAWAAAAAAAWAAAAAAAWAAAAAAATgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASAAAAAAASAAAAAACSAAAAAABSAAAAAABSAAAAAAAQgAAAAAAQgAAAAAATAAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAAQgAAAAAASAAAAAAASAAAAAACSAAAAAAASAAAAAADSAAAAAAB
           version: 6
         7,-2:
           ind: 7,-2
@@ -6558,6 +6558,7 @@ entities:
     - type: RadiationGridResistance
     - type: BecomesStation
       id: Hummingbird
+    - type: NavMap
 - proto: AccordionInstrument
   entities:
   - uid: 3
@@ -12411,7 +12412,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 87
-      - 11228
+      - 17334
   - uid: 634
     components:
     - type: Transform
@@ -16808,21 +16809,6 @@ entities:
       parent: 2
 - proto: BenchRedComfy
   entities:
-  - uid: 1292
-    components:
-    - type: Transform
-      pos: 96.5,30.5
-      parent: 2
-  - uid: 1293
-    components:
-    - type: Transform
-      pos: 97.5,30.5
-      parent: 2
-  - uid: 1294
-    components:
-    - type: Transform
-      pos: 98.5,30.5
-      parent: 2
   - uid: 1295
     components:
     - type: Transform
@@ -17259,6 +17245,16 @@ entities:
       parent: 2
 - proto: BookshelfFilled
   entities:
+  - uid: 1292
+    components:
+    - type: Transform
+      pos: 96.5,30.5
+      parent: 2
+  - uid: 1293
+    components:
+    - type: Transform
+      pos: 97.5,30.5
+      parent: 2
   - uid: 1368
     components:
     - type: Transform
@@ -17318,6 +17314,13 @@ entities:
     components:
     - type: Transform
       pos: 72.5,-38.5
+      parent: 2
+- proto: BookshelfGuidebooksFilled
+  entities:
+  - uid: 1294
+    components:
+    - type: Transform
+      pos: 98.5,30.5
       parent: 2
 - proto: BookSlothClownMMD
   entities:
@@ -34765,6 +34768,11 @@ entities:
     - type: Transform
       pos: -2.5,10.5
       parent: 2
+  - uid: 9955
+    components:
+    - type: Transform
+      pos: 136.5,5.5
+      parent: 2
   - uid: 11668
     components:
     - type: Transform
@@ -49764,6 +49772,13 @@ entities:
     - type: Transform
       pos: 85.37665,-28.30073
       parent: 2
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 24418
+    components:
+    - type: Transform
+      pos: 84.5,-46.5
+      parent: 2
 - proto: Carpet
   entities:
   - uid: 7640
@@ -58523,6 +58538,13 @@ entities:
     - type: Transform
       pos: 74.5,1.5
       parent: 2
+- proto: ChemistryBottleRobustHarvest
+  entities:
+  - uid: 24556
+    components:
+    - type: Transform
+      pos: 115.54687,20.595747
+      parent: 2
 - proto: ChemistryHotplate
   entities:
   - uid: 9201
@@ -61344,12 +61366,6 @@ entities:
     - type: Transform
       pos: 65.5,53.5
       parent: 2
-  - uid: 9627
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 141.5,-9.5
-      parent: 2
   - uid: 9628
     components:
     - type: Transform
@@ -61382,6 +61398,12 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,4.5
+      parent: 2
+  - uid: 9627
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 141.5,-9.5
       parent: 2
   - uid: 25096
     components:
@@ -63353,37 +63375,27 @@ entities:
     - type: Transform
       pos: -1.5,2.5
       parent: 2
-- proto: DefaultStationBeaconSolars
+- proto: DefaultStationBeaconSolarsForward
   entities:
-  - uid: 9953
-    components:
-    - type: MetaData
-      name: station beacon
-    - type: Transform
-      pos: 18.5,24.5
-      parent: 2
-    - type: NavMapBeacon
-      text: Port Solars
-    - type: WarpPoint
-      location: Port Solars
   - uid: 9954
-    components:
-    - type: Transform
-      pos: 154.5,-23.5
-      parent: 2
-    - type: NavMapBeacon
-      text: Starboard Solars
-    - type: WarpPoint
-      location: Starboard Solars
-  - uid: 9955
     components:
     - type: Transform
       pos: 78.5,71.5
       parent: 2
-    - type: NavMapBeacon
-      text: Forward Solars
-    - type: WarpPoint
-      location: Forward Solars
+- proto: DefaultStationBeaconSolarsPort
+  entities:
+  - uid: 9680
+    components:
+    - type: Transform
+      pos: 18.5,24.5
+      parent: 2
+- proto: DefaultStationBeaconSolarsStarboard
+  entities:
+  - uid: 9953
+    components:
+    - type: Transform
+      pos: 154.5,-23.5
+      parent: 2
 - proto: DefaultStationBeaconSurgery
   entities:
   - uid: 9956
@@ -72204,23 +72216,6 @@ entities:
       - 620
       - 14907
       - 11547
-  - uid: 11228
-    components:
-    - type: MetaData
-      name: Library
-    - type: Transform
-      pos: 96.5,31.5
-      parent: 2
-    - type: DeviceList
-      devices:
-      - 11523
-      - 11522
-      - 14928
-      - 15124
-      - 633
-      - 11555
-      - 11572
-      - 24601
   - uid: 11229
     components:
     - type: MetaData
@@ -73175,6 +73170,21 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 100.5,36.5
       parent: 2
+  - uid: 17334
+    components:
+    - type: Transform
+      pos: 94.5,31.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 11523
+      - 11522
+      - 14928
+      - 15124
+      - 633
+      - 11555
+      - 11572
+      - 24601
   - uid: 24317
     components:
     - type: MetaData
@@ -75688,9 +75698,9 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 87
-      - 11228
       - 11232
       - 91
+      - 17334
   - uid: 11523
     components:
     - type: Transform
@@ -75699,9 +75709,9 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 87
-      - 11228
       - 11232
       - 91
+      - 17334
   - uid: 11524
     components:
     - type: Transform
@@ -76030,7 +76040,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 87
-      - 11228
+      - 17334
   - uid: 11556
     components:
     - type: Transform
@@ -76212,7 +76222,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 87
-      - 11228
+      - 17334
   - uid: 11573
     components:
     - type: Transform
@@ -77922,9 +77932,9 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 87
-      - 11228
       - 98
       - 11239
+      - 17334
   - uid: 25185
     components:
     - type: Transform
@@ -104252,7 +104262,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 87
-      - 11228
+      - 17334
     - type: AtmosPipeColor
       color: '#0335FCFF'
   - uid: 14929
@@ -106576,7 +106586,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 87
-      - 11228
+      - 17334
     - type: AtmosPipeColor
       color: '#FF1212FF'
   - uid: 15125
@@ -114611,11 +114621,6 @@ entities:
     - type: Transform
       pos: 69.5,51.5
       parent: 2
-  - uid: 16493
-    components:
-    - type: Transform
-      pos: 130.5,-16.5
-      parent: 2
 - proto: HolofanProjector
   entities:
   - uid: 16494
@@ -116587,11 +116592,6 @@ entities:
     - type: Transform
       pos: 84.5,-48.5
       parent: 2
-  - uid: 24212
-    components:
-    - type: Transform
-      pos: 83.5,-48.5
-      parent: 2
 - proto: LockerDetectiveFilled
   entities:
   - uid: 16753
@@ -117505,13 +117505,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: MailTeleporter
-  entities:
-  - uid: 24418
-    components:
-    - type: Transform
-      pos: 84.5,-46.5
-      parent: 2
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 16835
@@ -120517,13 +120510,6 @@ entities:
     - type: Transform
       pos: 105.49823,0.259578
       parent: 2
-- proto: PottedPlant24
-  entities:
-  - uid: 17293
-    components:
-    - type: Transform
-      pos: 98.668274,19.375778
-      parent: 2
 - proto: PottedPlant26
   entities:
   - uid: 25277
@@ -120554,6 +120540,11 @@ entities:
       parent: 2
 - proto: PottedPlant5
   entities:
+  - uid: 17293
+    components:
+    - type: Transform
+      pos: 98.5,19.5
+      parent: 2
   - uid: 17298
     components:
     - type: Transform
@@ -120723,6 +120714,11 @@ entities:
     - type: Transform
       pos: 64.5,-42.5
       parent: 2
+  - uid: 24212
+    components:
+    - type: Transform
+      pos: 85.5,-48.5
+      parent: 2
   - uid: 24497
     components:
     - type: Transform
@@ -120744,11 +120740,6 @@ entities:
     components:
     - type: Transform
       pos: 96.5,35.5
-      parent: 2
-  - uid: 17334
-    components:
-    - type: Transform
-      pos: 99.5,30.5
       parent: 2
   - uid: 17335
     components:
@@ -130228,13 +130219,6 @@ entities:
     - type: Transform
       pos: 54.16827,-31.430775
       parent: 2
-- proto: RobustHarvestChemistryBottle
-  entities:
-  - uid: 24556
-    components:
-    - type: Transform
-      pos: 115.54687,20.595747
-      parent: 2
 - proto: RollingPin
   entities:
   - uid: 18995
@@ -136420,11 +136404,6 @@ entities:
     components:
     - type: Transform
       pos: 84.5,-47.5
-      parent: 2
-  - uid: 9680
-    components:
-    - type: Transform
-      pos: 83.5,-47.5
       parent: 2
 - proto: SpawnPointDetective
   entities:
@@ -143728,6 +143707,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: VaultDoorCommandLocked
+  entities:
+  - uid: 16493
+    components:
+    - type: Transform
+      pos: 130.5,-16.5
+      parent: 2
 - proto: VendingBarDrobe
   entities:
   - uid: 20908
@@ -143871,10 +143857,10 @@ entities:
       parent: 2
 - proto: VendingMachineCourierDrobe
   entities:
-  - uid: 24213
+  - uid: 20954
     components:
     - type: Transform
-      pos: 85.5,-48.5
+      pos: 83.5,-48.5
       parent: 2
 - proto: VendingMachineCuraDrobe
   entities:
@@ -144031,7 +144017,14 @@ entities:
       parent: 2
 - proto: VendingMachineSalvage
   entities:
-  - uid: 20954
+  - uid: 11228
+    components:
+    - type: Transform
+      pos: 91.5,-50.5
+      parent: 2
+- proto: VendingMachineSalvDrobe
+  entities:
+  - uid: 24213
     components:
     - type: Transform
       pos: 86.5,-50.5
@@ -161611,7 +161604,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -190187.16
+      secondsUntilStateChange: -191081.3
       state: Opening
     - type: Airlock
       autoClose: False

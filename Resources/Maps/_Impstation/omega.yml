@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 247.2.0
+  engineVersion: 250.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/18/2025 07:12:56
-  entityCount: 14435
+  time: 04/12/2025 04:32:17
+  entityCount: 14436
 maps:
 - 1
 grids:
@@ -11819,11 +11819,6 @@ entities:
     - type: Transform
       pos: -22.5,-14.5
       parent: 2
-  - uid: 1155
-    components:
-    - type: Transform
-      pos: -22.5,-16.5
-      parent: 2
   - uid: 1156
     components:
     - type: Transform
@@ -11838,6 +11833,13 @@ entities:
     components:
     - type: Transform
       pos: -29.5,-17.5
+      parent: 2
+- proto: BookshelfGuidebooksFilled
+  entities:
+  - uid: 1155
+    components:
+    - type: Transform
+      pos: -22.5,-16.5
       parent: 2
 - proto: BoozeDispenser
   entities:
@@ -28605,6 +28607,13 @@ entities:
     - type: Transform
       pos: -51.5,0.5
       parent: 2
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 14202
+    components:
+    - type: Transform
+      pos: 16.5,21.5
+      parent: 2
 - proto: Carpet
   entities:
   - uid: 4455
@@ -36216,26 +36225,20 @@ entities:
     - type: Transform
       pos: 9.5,-43.5
       parent: 2
-- proto: DefaultStationBeaconSolars
+- proto: DefaultStationBeaconSolarsPort
   entities:
   - uid: 5567
     components:
     - type: Transform
       pos: -52.5,-24.5
       parent: 2
-    - type: NavMapBeacon
-      text: Port Solars
-    - type: WarpPoint
-      location: Port Solars
+- proto: DefaultStationBeaconSolarsStarboard
+  entities:
   - uid: 5568
     components:
     - type: Transform
       pos: 32.5,-38.5
       parent: 2
-    - type: NavMapBeacon
-      text: Starboard Solars
-    - type: WarpPoint
-      location: Starboard Solars
 - proto: DefaultStationBeaconTechVault
   entities:
   - uid: 5569
@@ -62712,11 +62715,6 @@ entities:
       parent: 2
 - proto: HighSecCommandLocked
   entities:
-  - uid: 9387
-    components:
-    - type: Transform
-      pos: -2.5,21.5
-      parent: 2
   - uid: 9388
     components:
     - type: Transform
@@ -64952,13 +64950,6 @@ entities:
     - type: Transform
       pos: -21.281672,23.225285
       parent: 2
-- proto: MailTeleporter
-  entities:
-  - uid: 14202
-    components:
-    - type: Transform
-      pos: 16.5,21.5
-      parent: 2
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 9620
@@ -65522,11 +65513,10 @@ entities:
       parent: 2
 - proto: OreBox
   entities:
-  - uid: 9712
+  - uid: 14436
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 22.5,12.5
+      pos: 31.5,14.5
       parent: 2
 - proto: OreProcessor
   entities:
@@ -80650,6 +80640,13 @@ entities:
     - type: Transform
       pos: -38.5,-33.5
       parent: 2
+- proto: VaultDoorCommandLocked
+  entities:
+  - uid: 9387
+    components:
+    - type: Transform
+      pos: -2.5,21.5
+      parent: 2
 - proto: VendingBarDrobe
   entities:
   - uid: 12108
@@ -81031,6 +81028,13 @@ entities:
     components:
     - type: Transform
       pos: 24.5,17.5
+      parent: 2
+- proto: VendingMachineSalvDrobe
+  entities:
+  - uid: 9712
+    components:
+    - type: Transform
+      pos: 22.5,12.5
       parent: 2
 - proto: VendingMachineSciDrobe
   entities:
