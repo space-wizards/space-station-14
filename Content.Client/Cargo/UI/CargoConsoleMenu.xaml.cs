@@ -19,12 +19,15 @@ namespace Content.Client.Cargo.UI
     {
         [Dependency] private IGameTiming _timing = default!;
 
-        private IEntityManager _entityManager;
-        private IPrototypeManager _protoManager;
-        private CargoSystem _cargoSystem;
-        private SpriteSystem _spriteSystem;
+        private readonly IEntityManager _entityManager;
+        private readonly IPrototypeManager _protoManager;
+        private readonly CargoSystem _cargoSystem;
+        private readonly SpriteSystem _spriteSystem;
         private EntityUid _owner;
         private EntityUid? _station;
+
+        private readonly EntityQuery<CargoOrderConsoleComponent> _orderConsoleQuery;
+        private readonly EntityQuery<StationBankAccountComponent> _bankQuery;
 
         public event Action<ButtonEventArgs>? OnItemSelected;
         public event Action<ButtonEventArgs>? OnOrderApproved;
@@ -46,6 +49,9 @@ namespace Content.Client.Cargo.UI
             _cargoSystem = entMan.System<CargoSystem>();
             _spriteSystem = spriteSystem;
             _owner = owner;
+
+            _orderConsoleQuery = _entityManager.GetEntityQuery<CargoOrderConsoleComponent>();
+            _bankQuery = _entityManager.GetEntityQuery<StationBankAccountComponent>();
 
             Title = entMan.GetComponent<MetaDataComponent>(owner).EntityName;
 
@@ -261,8 +267,8 @@ namespace Content.Client.Cargo.UI
         {
             base.FrameUpdate(args);
 
-            if (!_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bankAccount) ||
-                !_entityManager.TryGetComponent<CargoOrderConsoleComponent>(_owner, out var orderConsole))
+            if (!_bankQuery.TryComp(_station, out var bankAccount) ||
+                !_orderConsoleQuery.TryComp(_owner, out var orderConsole))
             {
                 return;
             }

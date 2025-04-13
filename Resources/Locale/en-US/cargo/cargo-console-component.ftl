@@ -55,8 +55,8 @@ cargo-console-paper-print-text = [head=2]Order #{$orderNumber}[/head]
 
     {"[head=3]Order Information[/head]"}
     {"[bold]Payer[/bold]:"} {$account} [font="Monospace"]\[{$accountcode}\][/font]
-    {"[bold]Reason:[/bold]"} {$reason}
     {"[bold]Approved by:[/bold]"} {$approver}
+    {"[bold]Reason:[/bold]"} {$reason}
 
 # Cargo shuttle console
 cargo-shuttle-console-menu-title = Cargo shuttle console
@@ -72,6 +72,7 @@ cargo-funding-alloc-console-label-code = [bold] Code [/bold]
 cargo-funding-alloc-console-label-balance = [bold] Balance [/bold]
 cargo-funding-alloc-console-label-cut = [bold] Revenue Division (%) [/bold]
 
+cargo-funding-alloc-console-label-help = Cargo receives {$percent}% of all profits. The rest is split as specified below:
 cargo-funding-alloc-console-button-save = Save Changes
 cargo-funding-alloc-console-label-save-fail = [bold]Revenue Divisions Invalid![/bold] [color=red]({$pos ->
     [1] +

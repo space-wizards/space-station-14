@@ -18,6 +18,8 @@ public sealed partial class FundingAllocationMenu : FancyWindow
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+    private EntityQuery<StationBankAccountComponent> _bankQuery;
+
     public event Action<Dictionary<ProtoId<CargoAccountPrototype>, int>>? OnSavePressed;
 
     private EntityUid? _station;
@@ -30,6 +32,8 @@ public sealed partial class FundingAllocationMenu : FancyWindow
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+
+        _bankQuery = _entityManager.GetEntityQuery<StationBankAccountComponent>();
 
         SaveButton.OnPressed += _ =>
         {
@@ -53,6 +57,8 @@ public sealed partial class FundingAllocationMenu : FancyWindow
     {
         if (!_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bank))
             return;
+        HelpLabel.Text = Loc.GetString("cargo-funding-alloc-console-label-help",
+            ("percent", (int)(bank.PrimaryCut * 100)));
 
         foreach (var ctrl in _addedControls)
         {
@@ -152,7 +158,7 @@ public sealed partial class FundingAllocationMenu : FancyWindow
     {
         base.FrameUpdate(args);
 
-        if (!_entityManager.TryGetComponent<StationBankAccountComponent>(_station, out var bank))
+        if (!_bankQuery.TryComp(_station, out var bank))
             return;
         foreach (var (account, label) in _balanceLabels)
         {
