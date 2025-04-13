@@ -449,6 +449,7 @@ public sealed partial class StaminaSystem : EntitySystem
         {
             // Recover the full speed if the closest threshold is zero
             _stunSystem.UpdateStunModifiers(uid, 1f, comp);
+            RemComp<ActiveStaminaComponent>(uid);
         }
     }
 }
