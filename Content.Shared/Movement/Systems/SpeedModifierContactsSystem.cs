@@ -2,7 +2,10 @@ using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Slippery;
+using Content.Shared.StepTrigger.Components; // imp edit
+using Content.Shared.StepTrigger.Systems; // imp edit
 using Content.Shared.Whitelist;
+using Robust.Shared.Map.Components; // imp edit
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -14,6 +17,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!; // imp edit
 
     // TODO full-game-save
     // Either these need to be processed before a map is saved, or slowed/slowing entities need to update on init.
@@ -27,6 +31,8 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
         SubscribeLocalEvent<SpeedModifierContactsComponent, EndCollideEvent>(OnEntityExit);
         SubscribeLocalEvent<SpeedModifiedByContactComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedCheck);
         SubscribeLocalEvent<SpeedModifierContactsComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<SpeedModifierContactsComponent, StepTriggeredOffEvent>(OnStepTriggered); // imp edit
+        SubscribeLocalEvent<SpeedModifierContactsComponent, StepTriggerAttemptEvent>(OnStepTriggerAttempt); // imp edit
 
         UpdatesAfter.Add(typeof(SharedPhysicsSystem));
     }
@@ -88,6 +94,11 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
         var entries = 0;
         foreach (var ent in _physics.GetContactingEntities(uid, physicsComponent))
         {
+            // imp edit - StepTrigger and TryBlacklist checks
+            if (TryComp<StepTriggerComponent>(ent, out var stepTriggerComponent) &&
+                !TryBlacklist((ent, stepTriggerComponent)))
+                continue;
+
             bool speedModified = false;
 
             if (TryComp<SpeedModifierContactsComponent>(ent, out var slowContactsComponent))
@@ -148,6 +159,10 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
 
     private void OnEntityEnter(EntityUid uid, SpeedModifierContactsComponent component, ref StartCollideEvent args)
     {
+        // imp edit - added StepTrigger check
+        if (HasComp<StepTriggerComponent>(uid))
+            return;
+
         AddModifiedEntity(args.OtherEntity);
     }
 
@@ -162,5 +177,48 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
 
         EnsureComp<SpeedModifiedByContactComponent>(uid);
         _toUpdate.Add(uid);
+    }
+
+    // imp edit
+    private void OnStepTriggered(Entity<SpeedModifierContactsComponent> ent, ref StepTriggeredOffEvent args)
+    {
+        AddModifiedEntity(args.Tripper);
+    }
+
+    // imp edit
+    private static void OnStepTriggerAttempt(Entity<SpeedModifierContactsComponent> ent, ref StepTriggerAttemptEvent args)
+    {
+        args.Continue = true;
+    }
+
+    // imp edit - copied from StepTriggerSystem, but converting that into a separate method is its own headache
+    private bool TryBlacklist(Entity<StepTriggerComponent> ent)
+    {
+        if (!ent.Comp.Active ||
+            ent.Comp.Colliding.Count == 0)
+        {
+            return true;
+        }
+
+        var transform = Transform(ent);
+
+        if (ent.Comp.Blacklist == null || !TryComp<MapGridComponent>(transform.GridUid, out var grid))
+            return true;
+
+        var pos = _map.LocalToTile(transform.GridUid.Value, grid, transform.Coordinates);
+        var anch = _map.GetAnchoredEntitiesEnumerator(ent, grid, pos);
+
+        while (anch.MoveNext(out var otherEnt))
+        {
+            if (otherEnt == ent)
+                continue;
+
+            if (_whitelistSystem.IsBlacklistPass(ent.Comp.Blacklist, otherEnt.Value))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
