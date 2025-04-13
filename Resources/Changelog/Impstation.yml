@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Sleiphros
-  changes:
-  - message: Several changes to a few derelicts.
-    type: Tweak
-  id: 1012
-  time: '2025-01-27T15:06:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1497
-- author: Kandiyaki
-  changes:
-  - message: Heretic is back in rotation, now as a main antagonist!
-    type: Tweak
-  id: 1013
-  time: '2025-01-27T22:09:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1503
-- author: EpicToast
-  changes:
-  - message: You can now label mechs like the Ripley APLU with a hand labeler.
-    type: Tweak
-  id: 1014
-  time: '2025-01-27T22:13:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1502
 - author: AvianMaiden
   changes:
   - message: AI law boards can now be examined to see their laws!
@@ -4100,3 +4079,28 @@
   id: 1511
   time: '2025-04-13T05:01:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2234
+- author: widgetbeck
+  changes:
+  - message: Player ghosts can now view a mass scanner interface.
+    type: Add
+  - message: Player ghosts can now view detailed inspect information on living players
+      from any distance.
+    type: Tweak
+  id: 1512
+  time: '2025-04-13T05:02:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2227
+- author: Darkmajia
+  changes:
+  - message: Catwalks placed over water tiles keep you above the surface.
+    type: Tweak
+  id: 1513
+  time: '2025-04-13T05:03:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2238
+- author: AvianMaiden
+  changes:
+  - message: Greater efforts by the Syndicate and affiliate corporations to decrease
+      toxicity in the workplace aboard NT stations.
+    type: Add
+  id: 1514
+  time: '2025-04-13T05:03:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2241
