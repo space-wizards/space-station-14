@@ -179,3 +179,13 @@
   materials:
     Steel: 25
     Plastic: 540
+
+- type: latheRecipe
+  id: BriefcaseSteelRecipe
+  result: BriefcaseSteel
+  completetime: 4
+  materials:
+    Steel: 500
+    Plasma: 200
+    Cloth: 100
+    Plastic: 100

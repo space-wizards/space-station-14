@@ -15,6 +15,11 @@
   - MagazineLPistol
   - MagazineLPistolEmpty
 
+- type: latheRecipePack
+  id: SteelBriefcaseImp
+  recipes:
+  - BriefcaseSteelRecipe
+
 # Dynamic
 
 - type: latheRecipePack

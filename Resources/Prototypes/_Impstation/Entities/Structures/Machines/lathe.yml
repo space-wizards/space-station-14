@@ -35,6 +35,7 @@
       - ServiceMiscPack
       - ReportingStatic # DeltaV
       - LunchboxPack
+      - SteelBriefcaseImp
     dynamicPacks:
       - CleanPackDynamic
       - ServiceMiscPackDynamic
