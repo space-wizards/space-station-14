@@ -1,4 +1,4 @@
-﻿# Configuration preset used on Wizard's Den Leviathan
+# Configuration preset used on Wizard's Den Leviathan
 
 [game]
 hostname = "[EN][Testing] Wizard's Den Vulture [US East 2]"
@@ -10,6 +10,10 @@ tags = "lang:en,region:am_n_e,rp:low"
 [server]
 # This needs to be specified even though it's identical to the hostname, because fallback lobby name is "Lobby <hostname>" which would be too long and go out of bounds
 lobby_name = "[EN][Testing] Wizard's Den Vulture [US East 2]"
+force_client_hud_version_watermark = true
 
 [chat]
 motd = "\n########################################################\n\n[font size=17]This is a test server. You can play with the newest changes to the game, but these [color=red]changes may not be final or stable[/color], and may be reverted. Please report bugs via our GitHub, forum, or community Discord.[/font]\n\n########################################################\n"
+
+[debug]
+pow3r_disable_parallel = false
