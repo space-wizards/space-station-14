@@ -643,6 +643,21 @@
         - ReagentId: Sulfur
           Quantity: 30
 
+- type: entity
+  id: ChemistryBottleSpectraFade
+  parent: BaseChemistryBottleFilled
+  suffix: Spectra-Fade
+  components:
+  - type: Label
+    currentLabel: reagent-name-spectra-fade
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+          - ReagentId: SpectraFade
+            Quantity: 30
+
 # Entity tables
 - type: entityTable
   id: BasicReagentBottlesTable

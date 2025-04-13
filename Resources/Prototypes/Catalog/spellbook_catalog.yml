@@ -265,6 +265,16 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookInvisibilityPotion
+  name: spellbook-invisibility-potion-name
+  description: spellbook-invisibility-potion-description
+  productEntity: ChemistryBottleSpectraFade
+  cost:
+    WizCoin: 1
+  categories:
+  - SpellbookEquipment
+
 # Event
 - type: listing
   id: SpellbookEventSummonGhosts

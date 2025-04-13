@@ -384,6 +384,7 @@
         - ReagentSlimeNorepinephricAcid
         - ReagentSlimeEphedrine
         - ReagentSlimeRobustHarvest
+        - ReagentSlimeSpectraFade
       chance: 1
 
 - type: entity
@@ -595,3 +596,23 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#3e901c"
+
+- type: entity
+  id: ReagentSlimeSpectraFade
+  parent: ReagentSlime
+  suffix: Spectra-Fade
+  components:
+  - type: Bloodstream
+    bloodReagent: SpectraFade
+  - type: PointLight
+    color: "#5ee0aa"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#3e901c"
+  - type: Stealth
+    minVisibility: 0.1
+    lastVisibility: 0.1

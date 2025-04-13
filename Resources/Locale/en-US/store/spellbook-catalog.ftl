@@ -67,6 +67,9 @@ spellbook-hammer-singularity-description = Ever wonder what it'd be like to be t
 spellbook-staff-animation-name = Staff of Animation
 spellbook-staff-animation-description = Bring inanimate objects to life!
 
+spellbook-invisibility-potion-name = Invisibility potion
+spellbook-invisibility-potion-description = A magic potion that will make you (or other unfortunates) invisible for a short time!
+
 # Events
 
 spellbook-event-summon-ghosts-name = Summon Ghosts
