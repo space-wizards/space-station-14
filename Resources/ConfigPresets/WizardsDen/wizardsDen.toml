@@ -32,7 +32,7 @@ appeal     = "https://appeal.ss14.io"
 rules_file = "StandardRuleset"
 
 [movement]
-mob_pushing = true
+mob_pushing = false
 
 [net]
 max_connections = 1024
