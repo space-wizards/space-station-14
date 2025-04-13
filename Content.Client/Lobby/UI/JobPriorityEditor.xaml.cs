@@ -47,6 +47,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
         {
             SelectedJobPriorities = SavedJobPriorities.ShallowClone();
             UpdateJobPriorities();
+            SetDirty();
         };
 
         SaveButton.OnPressed += args =>
@@ -54,6 +55,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
             Save?.Invoke(SelectedJobPriorities);
             SavedJobPriorities = SelectedJobPriorities.ShallowClone();
             UpdateJobPriorities();
+            SetDirty();
         };
 
         RefreshJobs();
@@ -225,14 +227,22 @@ public sealed partial class JobPriorityEditor : BoxContainer
     private void SetDirty()
     {
         // If it equals default then reset the button.
-        if (SavedJobPriorities.Equals(SelectedJobPriorities))
+        if (!SelectedJobPriorities.Keys.ToHashSet().SetEquals(SavedJobPriorities.Keys.ToHashSet()))
         {
-            IsDirty = false;
+            IsDirty = true;
             return;
         }
 
-        // TODO: Check if profile matches default.
-        IsDirty = true;
+        foreach (var (job, prio) in SelectedJobPriorities)
+        {
+            if (prio != SavedJobPriorities.GetValueOrDefault(job))
+            {
+                IsDirty = true;
+                return;
+            }
+        }
+
+        IsDirty = false;
     }
 
     private bool _isDirty;
