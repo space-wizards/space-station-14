@@ -113,6 +113,6 @@
 
     rareChance: 0.1
     prototypes:
-    - BorgModuleThruster
+    - BorgModuleFireExtinguisher
     chance: 0.9
     offset: 0.2

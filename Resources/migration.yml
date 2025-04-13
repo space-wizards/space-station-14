@@ -542,7 +542,6 @@ DrinkIrishCarBomb: DrinkIrishSlammer
 #2025-01-06
 BorgModuleRadiationDetection: null
 BorgModuleGPS: null
-BorgModuleFireExtinguisher: BorgModuleThruster
 
 ClothingMaskSexyClown: ClothingMaskBlushingClown
 ClothingMaskSexyMime: ClothingMaskBlushingMime

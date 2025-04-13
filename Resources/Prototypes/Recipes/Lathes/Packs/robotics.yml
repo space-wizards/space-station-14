@@ -12,7 +12,7 @@
   id: BorgModulesStatic
   recipes:
   - BorgModuleTool
-  - BorgModuleThruster
+  - BorgModuleFireExtinguisher
 
 - type: latheRecipePack
   id: BorgLimbsStatic

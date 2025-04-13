@@ -296,7 +296,7 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
 
 - type: entity
-  id: BorgModuleThruster
+  id: BorgModuleFireExtinguisher
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: thruster cyborg module
   description: NT assigned a team to design a jetpack for cyborg units, but they ran out of funding and just made a bigger fire extinguisher. It comes with a integrated GPS and mass scanner though!
