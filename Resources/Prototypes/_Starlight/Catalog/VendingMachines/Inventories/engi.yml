@@ -1,0 +1,11 @@
+- type: listing
+  id: VendorPrototypeJawsOfLife
+  productEntity: PrototypeJawsOfLife
+  cost:
+    NTCredit: 153
+  categories:
+  - SLEnginery
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+  - !type:BuyerAccessCondition

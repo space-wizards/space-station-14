@@ -1,0 +1,26 @@
+- type: playTimeTracker
+  id: JobBrigmedic
+
+- type: playTimeTracker
+  id: JobRoboticist
+
+- type: playTimeTracker
+  id: JobMagistrate
+
+- type: playTimeTracker
+  id: JobNanoTrasenRepresentative
+
+- type: playTimeTracker
+  id: JobIAA
+
+- type: playTimeTracker
+  id: JobCentralCommandOperator
+
+- type: playTimeTracker
+  id: JobBlueShield
+
+- type: playTimeTracker
+  id: JobMiningSpecialist
+
+- type: playTimeTracker
+  id: JobSurgeon

@@ -1,0 +1,432 @@
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtNtrep
+  name: nt representive skirt
+  description: That skirt that is better not to see.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/ntrep.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/ntrep.rsi
+    
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtBlueShield
+  name: blueshield officer's skirt
+  description: Skirt of a glorified bodyguard
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/blueshield.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/blueshield.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtEliteBlueShield
+  name: Elite Blueshield Officer's Skirt
+  description: Skirt of an Elite Blueshield. To reach such a level, you must have protected command from a [REDACTED] threat.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/eliteblueshield.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/eliteblueshield.rsi
+
+- type: entity
+  parent: [ClothingUniformSkirtBase, BaseSecurityContraband]
+  id: ClothingUniformJumpskirtCorpsman
+  name: Corpsman's Skirt
+  description: Die in style on the front lines!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/corpsman.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/corpsman.rsi
+
+# Fashion-O-Mat, not obtainable any other way, unless mapped
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtGothic
+  name: gothic dress
+  description: A gothic dress is an elegant and mysterious garment characterized by its dark and intriguing style. Deep, dark shades like black, burgundy, or navy blue add an aura of mystery and aristocratic allure. Delicate lace accents, luxurious drapery, and ruffles evoke a sense of ancient romance. Keyhole or high neckline cuts give the gothic dress uniqueness and opulence. This dress is perfect for those who want to stand out and emphasize their individuality and mystique. In it, every woman feels refined and captivating, ready to enchant at first sight.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/dress_gothic.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/dress_gothic.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtMaid
+  name: evening maid dress
+  description: This refined evening dress, inspired by the elegant maid's style, combines sophistication with a touch of playful femininity. Made from high-quality black satin, it is designed to highlight the refined taste and style of its wearer.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/dress_maid.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/dress_maid.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtDressRed
+  name: evening red dress
+  description: This stunning evening gown embodies passion and boldness, blended with elegance and sophistication. Crafted from deep red silk, it captivates attention and exudes luxury and sensuality.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/dress_red.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/dress_red.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtTango
+  name: tango dress
+  description: This dress is made for tango, embodying passion and elegance. Its fitted silhouette, with a back cutout and decorative draping, accentuates feminine curves while offering freedom of movement and enhancing the beauty of the dance.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/dress_tango.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/dress_tango.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtVictorianBlack
+  name: victorian black dress
+  description: This black Victorian dress captures the essence of the era. Cutouts, lace, and cuffs add mystery, while the corset creates a refined silhouette. It's perfect for evening events where elegance and intrigue are desired.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/dress_victorian_black.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/dress_victorian_black.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtReporter
+  name: reporter jumpskirt
+  description: A good reporter remains a skeptic for life.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/reporter.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/reporter.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtJournalist
+  name: journalist jumpskirt
+  description: If journalism is good, it is contradictory by nature.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/journalist.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/journalist.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtVictorianrRed
+  name: victorian red dress
+  description: Inspired by Victorian style, this red dress embodies passion and luxury. Intricate details like lace, puffed sleeves, and a voluminous skirt make it the perfect choice for special events where standing out and making an impression is key.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/dress_victorian_red.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/dress_victorian_red.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtSuitNurse
+  name: nurse's uniform
+  description: This nurse uniform combines functionality and style. Durable, comfortable pants paired with a blouse and signature cap create a professional and neat look, making it an ideal choice for healthcare staff.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/suit_nurse.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/suit_nurse.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPencilTan
+  name: beige "pencil" style skirt 
+  description: The beige "pencil" style skirt exudes softness and elegance. The fitted blazer and straight skirt create a refined silhouette, making it suitable for various occasions, from business meetings to evening dinners.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/pencil_tan.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/pencil_tan.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPencilCentcomOfficial
+  name: centcomm "pencil" style skirt 
+  description: A strict green "pencil" skirt exudes authority and poise. The fitted blazer and straight skirt form an elegant silhouette, suitable for various occasions, from business meetings to a captain's dismissal.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/pencil_centcom_official.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/pencil_centcom_official.rsi
+  
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtPencilSpecialOperationsOfficer
+  name: SOC officer "pencil" skirt 
+  description: A formal black Special Operations Corps officer's "pencil" skirt embodies authority and sophistication. The tailored blazer and straight skirt create a refined silhouette, suitable for various occasions, from strategic meetings to... well, less conventional operations.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/pencil_special_operations_officer.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/pencil_special_operations_officer.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCargoSalvage
+  name: salvage jumpskirt
+  description: Perfectly pairs with a pickaxe, this versatile and durable skirt jumpsuit is designed for tough work, offering both practicality and a rugged, stylish appearance.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/salvage.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/salvage.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCargoSalvageFormal
+  name: formal salvage jumpskirt
+  description: Perfectly pairs with a pickaxe, this rugged yet stylish skirt jumpsuit combines functionality and toughness, ideal for salvaging work with a practical, efficient design.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/salvageformal.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/salvageformal.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCargoFormal
+  name: formal cargo jumpskirt
+  description: An official jumpsuit skirt combines practicality with a professional appearance. The tailored design offers comfort and mobility, while maintaining a structured look suitable for work settings requiring efficiency and formality.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/cargoformal.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/cargoformal.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtScientistFormal
+  name: formal scientist jumpskirt
+  description: A uniform for discerning scientists, best paired with a matching tie, offering a blend of professionalism and intellectual flair. Perfect for prestigious events or high-level research settings.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/scientist_formal.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/scientist_formal.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCoroner
+  name: coroner jumpskirt
+  description: Made from specialized fibers offering minimal protection against biological hazards, this jumpsuit proves that style doesn’t have to die with the patients. Perfect for the professional with a sense of dark humor.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/coroner.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/coroner.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCentcomOfficial
+  name: CentComm officer's suitskirt
+  description: It's a suitskirt worn by CentComm's highest-tier Commanders.
+  components:
+    - type: Sprite
+      sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcom_official.rsi
+    - type: Clothing
+      sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcom_official.rsi
+  
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCentcomOfficer
+  name: CentComm turtleneck skirt
+  description: A skirt version of the CentComm turtleneck, rarer and more sought after than the original.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcom_officer.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcom_officer.rsi
+  
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtElegantMaid
+  name: elegant maid uniform
+  description: Call me master and bring me some beer.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/elegantmaid.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/elegantmaid.rsi
+  
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformColorJumpskirtRainbow
+  name: rainbow jumpskirt
+  description: A multi-colored jumpskirt!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/rainbow.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/rainbow.rsi
+  
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtSchool
+  name: school skirt
+  description: Stylish and comfortable school skirt.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/schoolskirt.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/schoolskirt.rsi
+  
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtCapTurtleneck
+  name: captain's turtleneck
+  description: True captain's turtleneck.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/cap_turtleneck.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/cap_turtleneck.rsi
+  
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtHoPTurtleneck
+  name: head of personal's turtleneck
+  description: It's Head of Personal's turtleneck.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/hop_turtleneck.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/hop_turtleneck.rsi
+  
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtHoSBlack
+  name: head of security's black skirt
+  description: It's Head of Security's black skirt.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/hos_black.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/hos_black.rsi
+  
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpskirtRDClassical
+  name: research director's classical skirt
+  description: It's Research Director's classical skirt.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/rd_classical.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/rd_classical.rsi
+
+# Fashion-O-Mat-END
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCentcommDomesticFormalWear
+  name: central command domestic division formal wear
+  description: A dress for special occasions.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommdomesticformalwear.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommdomesticformalwear.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCentcommAdminFormalWear
+  name: central command administrative division formal wear
+  description: A dress for special occasions.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommadminformalwear.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommadminformalwear.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCentcommCargoFormalWear
+  name: central command cargo division formal wear
+  description: A dress for special occasions.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommcargoformalwear.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommcargoformalwear.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtEngiCentcommFormalWear
+  name: central command engineering division formal wear
+  description: A dress for special occasions.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommengiformalwear.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommengiformalwear.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCentcommIntelFormalWear
+  name: central command intelligence division formal wear
+  description: A dress for special occasions.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommintelformalwear.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommintelformalwear.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCentcommMedFormalWear
+  name: central command medical division formal wear
+  description: A dress for special occasions.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommmedformalwear.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommmedformalwear.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCentcommResearchFormalWear
+  name: central command research division formal wear
+  description: A dress for special occasions.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommresearchformalwear.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommresearchformalwear.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCentcommSecurityFormalWear
+  name: central command security division formal wear
+  description: A dress for special occasions.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommsecformalwear.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommsecformalwear.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCentcommSpecialOpsFormalWear
+  name: central command special operations division formal wear
+  description: A dress for special occasions.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommspecialopsformalwear.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpskirt/centcommspecialopsformalwear.rsi

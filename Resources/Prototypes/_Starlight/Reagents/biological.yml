@@ -1,0 +1,11 @@
+- type: reagent
+  parent: Blood
+  id: AbductorBlood
+  name: reagent-name-abductor-blood
+  group: Biological
+  desc: reagent-desc-abductor-blood
+  flavor: abductorBlood
+  color: "#d600bd"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-abductor
+  slippery: false

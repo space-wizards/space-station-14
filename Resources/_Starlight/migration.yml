@@ -1,7 +1,11 @@
 # Example:
 # #  yyyy-mm-dd
-# ItemIdFrom: ItemIdTo
+# ItemIdFrom: ItemIdTo - Change item
+# ItemIdFrom: null - Removes item from map
 
 # 2025-04-13
 
 ClothingHeadsetGrey: ClothingHeadsetAssistant
+ToyFigurineGreytider: null
+RubberStampGreytide: null
+PosterContrabandGreyTide: null

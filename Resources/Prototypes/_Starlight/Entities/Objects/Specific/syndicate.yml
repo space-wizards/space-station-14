@@ -1,0 +1,86 @@
+- type: entity
+  name: Shuttle building Currency
+  parent: BaseItem
+  id: BuildToken
+  suffix: 1
+  description: Currency used for shuttle building uplink.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/stock_parts.rsi
+    state: ansible_crystal
+  - type: Item
+    sprite: Objects/Misc/stock_parts.rsi
+    heldPrefix: ansible_crystal
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      BuildToken: 1
+
+- type: entity
+  name: Shuttle building Currency
+  parent: BaseItem
+  id: BuildToken2
+  suffix: 20
+  description: Currency used for shuttle building uplink.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/stock_parts.rsi
+    state: ansible_crystal
+  - type: Item
+    sprite: Objects/Misc/stock_parts.rsi
+    heldPrefix: ansible_crystal
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      BuildToken: 20
+
+# Uplinks
+
+# Debug uplink 2000 coins
+- type: entity
+  parent: [ BaseUplinkRadio, StorePresetShuttleBuilder ]
+  id: ShuttleBuilderUplink
+  name: Shuttle building uplink
+  description: Debug uplink for shuttle building
+  suffix: DEBUG
+  components:
+  - type: Store
+    balance:
+      BuildToken: 2000
+
+- type: entity
+  parent: [ BaseUplinkRadio, StorePresetShuttleBuilder ]
+  id: ShuttleBuilderUplink0
+  name: Shuttle building uplink
+  description: Uplink for shuttle building
+  suffix: Admeme, 0
+  components:
+  - type: Store
+    balance:
+      BuildToken: 0
+      
+# Debug uplink 2000 coins
+- type: entity
+  parent: [ BaseUplinkRadio, StorePresetShuttleBuilderDangerous ]
+  id: MenacingShuttleBuilderUplink
+  name: Menacing shuttle building uplink
+  description: Debug uplink for shuttle building
+  suffix: DEBUG
+  components:
+  - type: Store
+    balance:
+      BuildToken: 2000
+
+- type: entity
+  parent: [ BaseUplinkRadio, StorePresetShuttleBuilderDangerous ]
+  id: MenacingShuttleBuilderUplink0
+  name: Menacing shuttle building uplink
+  description: Uplink for shuttle building
+  suffix: Admeme, 0
+  components:
+  - type: Store
+    balance:
+      BuildToken: 0
+

@@ -10,13 +10,6 @@ figurines-assistant-3 = HELP MAINTS!!
 figurines-assistant-4 = I'm assistant.
 figurines-assistant-5 = You need help?
 
-figurines-greytider-1 = Man, this party stinks. I fucking hate these people.
-figurines-greytider-2 = Uh-oh, who's lost their stunbaton?
-figurines-greytider-3 = Robust.
-figurines-greytider-4 = I'm not me without a toolbox.
-figurines-greytider-5 = Grey tide station wide!
-figurines-greytider-6 = Viva la revolution.
-
 figurines-clown-1 = Honk!
 figurines-clown-2 = Banana!
 figurines-clown-3 = Soap!

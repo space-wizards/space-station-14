@@ -1,0 +1,78 @@
+- type: entity
+  id: CartridgePistolRubber
+  name: cartridge (.35 auto rubber)
+  parent: BaseCartridgePistol
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: RubberBulletTrace
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#43c4f7"
+        
+- type: entity
+  id: CartridgePistol40SP
+  name: cartridge (.40 SP)
+  parent: BaseCartridgePistol
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolTrace40SP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#326ec8"
+  - type: Tag
+    tags:
+      - Cartridge
+      - CartridgePistolDP
+      
+- type: entity
+  id: CartridgePistol40HP
+  name: cartridge (.40 HP)
+  parent: CartridgePistol40SP
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolTrace40HP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#000000"
+
+- type: entity
+  id: CartridgePistol40FMJ
+  name: cartridge (.40 FMJ)
+  parent: CartridgePistol40SP
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolTrace40FMJ
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#B68F0E"
+
+- type: entity
+  id: CartridgePistol40AP
+  name: cartridge (.40 AP)
+  parent: CartridgePistol40SP
+  components:
+  - type: HitScanCartridgeAmmo
+    hitscan: BulletPistolTrace40AP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#1A8C1A"

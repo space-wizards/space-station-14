@@ -1,0 +1,49 @@
+- type: entity
+  parent: BaseLathe
+  id: PrinterDoc
+  name: document printer
+  description: Bureaucratic perfection. Stores a database of all Nanotrasen documents, and lets you print them as long as you have paper.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/printer.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: idle
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Transform
+    noRot: false
+  - type: Machine
+    board: PrinterDocMachineCircuitboard
+  - type: Lathe
+    producingSound: /Audio/Machines/scanning.ogg
+    idleState: icon
+    runningState: building
+    staticPacks:
+    - StarlightDocs
+#  - type: EmagLatheRecipes
+#    emagStaticPacks:
+#    - StarlightDocsEmag
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 25
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: MaterialStorage
+    whitelist:
+      tags:
+      - Document
+    storage:
+      SheetPrinter: 0

@@ -1,0 +1,25 @@
+#Uniforms
+- type: loadout
+  id: NanoTrasenRepresentativeJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitNtrep
+
+- type: loadout
+  id: NanoTrasenRepresentativeJumpsuitFormal
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitNtrepFormal
+
+- type: loadout
+  id: NanoTrasenRepresentativeJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtNtrep
+
+- type: loadout
+  id: NanoTrasenRepresentativeGlasses
+  equipment:
+    eyes: ClothingEyesSunGlassesHudSkill
+
+- type: loadout
+  id: NanoTrasenRepresentativeHud
+  equipment:
+    eyes: ClothingEyesHudSkills

@@ -4806,4 +4806,11 @@ Entries:
   id: 665
   time: '2025-04-13T06:32:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/482
-
+- author: STARLIGHT TEAM
+  changes:
+  - message: GreyTide removed(GreyTide virus -> DoorLagging virus, GreyTide Figurine
+      -> Removed, GreyTide Stump -> Removed, etc.)
+    type: Remove
+  id: 666
+  time: '2025-04-13T07:17:45.305835+00:00'
+  url: 'null'

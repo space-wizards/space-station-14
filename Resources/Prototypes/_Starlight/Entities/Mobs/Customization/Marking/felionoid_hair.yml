@@ -1,0 +1,71 @@
+- type: marking
+  id: FelionoidHairCrestedQuills
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Felionoid]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/felionoid_hair.rsi
+      state: crestedquills_s
+
+- type: marking
+  id: FelionoidHairFlowing
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Felionoid]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/felionoid_hair.rsi
+      state: flowing_s
+
+- type: marking
+  id: FelionoidHairHawk
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Felionoid]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/felionoid_hair.rsi
+      state: hawk_s
+
+- type: marking
+  id: FelionoidHairKeelQuills
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Felionoid]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/felionoid_hair.rsi
+      state: keelquills_s
+
+- type: marking
+  id: FelionoidHairKeetQuills
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Felionoid]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/felionoid_hair.rsi
+      state: keetquills_s
+
+- type: marking
+  id: FelionoidHairKingly
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Felionoid]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/felionoid_hair.rsi
+      state: kingly_s
+
+- type: marking
+  id: FelionoidHairMange
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Felionoid]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/felionoid_hair.rsi
+      state: mange_s
+      
+- type: marking
+  id: FelionoidHairNights
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Felionoid]
+  sprites:
+    - sprite: _Starlight/Mobs/Customization/felionoid_hair.rsi
+      state: nights_s

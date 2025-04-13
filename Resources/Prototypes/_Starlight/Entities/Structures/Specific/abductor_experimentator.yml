@@ -1,0 +1,30 @@
+- type: entity
+  parent: BaseStructure
+  id: AbductorExperimentator
+  name: experimentator
+  description: A device that analyzes the result of the experiment and resets the subject to the place from where they were taken.
+  components:
+  - type: AbductorExperimentator
+  - type: Sprite
+    noRot: true
+    sprite: _Starlight/Structures/abductor_experimentator.rsi
+    layers:
+    - state: experimentator_0
+      map: ["base"]
+  - type: InteractionOutline
+  - type: Physics
+    canCollide: false
+  - type: DragInsertContainer
+    containerId: storage
+  - type: ExitContainerOnMove
+    containerId: storage
+  - type: ContainerContainer
+    containers:
+      storage: !type:ContainerSlot
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AbductorExperimentatorVisuals.Full:
+        base:
+          True: { state: experimentator_1 }
+          False: { state: experimentator_0 } 

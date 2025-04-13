@@ -1,0 +1,11 @@
+- type: entity
+  id: BaseStationCryoTeleportation
+  abstract: true
+  components:
+  - type: StationCryoTeleportation
+  
+- type: entity
+  id: BaseStationGammaWeaponry
+  abstract: true
+  components:
+    - type: GammaWeaponryStation

@@ -1,0 +1,13 @@
+- type: latheRecipe
+  id: IngotAbyssium30
+  result: IngotAbyssium
+  completetime: 10
+  materials:
+    RawAbyssium: 3000
+
+- type: latheRecipe
+  id: IngotAbyssium1
+  result: IngotAbyssium1
+  completetime: 2
+  materials:
+    RawAbyssium: 100

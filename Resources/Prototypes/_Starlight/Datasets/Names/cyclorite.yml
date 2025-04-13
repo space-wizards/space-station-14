@@ -1,0 +1,5 @@
+- type: localizedDataset
+  id: names_cyclorite
+  values:
+    prefix: names-cyclorite-dataset-
+    count: 95

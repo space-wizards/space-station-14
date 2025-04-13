@@ -1,0 +1,14 @@
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyLaw
+  name: law encryption key
+  description: An encryption key used by the most meticulous person.
+  components:
+    - type: EncryptionKey
+      channels:
+      - Law
+      defaultChannel: Law
+    - type: Sprite
+      layers:
+      - state: crypt_silver
+      - state: nano_label

@@ -1,0 +1,263 @@
+- type: entity
+  name: makarov
+  parent: [BaseWeaponPistol, BaseSovietContraband]
+  id: WeaponPistolMakarov
+  description: A cheap and cumbersome pistol, with a dot on the rear sight indicating the direction in which it tends to misfire, as this model does not shoot straight. Uses .35 auto ammo.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/makarov.rsi
+  - type: Gun
+    minAngle: 1
+    maxAngle: 30
+    angleIncrease: 9
+    angleDecay: 10
+    fireRate: 3
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolSP
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistol
+            - MagazinePistolHighCapacitySP
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistolSP
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: StaticPrice
+    price: 150
+    
+- type: entity
+  id: WeaponPistolMk58Nonlethal
+  parent: WeaponPistolMk58
+  suffix: Non-lethal
+  components:
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistolRubber
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistol
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistolRubber
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistol
+            
+- type: entity
+  name: N1984
+  parent: WeaponPistolN1984
+  id: WeaponPistolN1984Nonlethal
+  suffix: Non-lethal
+  components:
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineMagnumRubber
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineMagnum
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeMagnumRubber
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeMagnum
+            
+- type: entity
+  name: golden mk 58
+  parent: [WeaponPistolMk58, BaseRestrictedContraband]
+  id: WeaponPistolGoldenMk58
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/golden_mk58.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/golden_mk58.rsi
+    
+- type: entity
+  name: enforcer
+  parent: [BaseWeaponPistol, BaseRestrictedContraband]
+  id: WeaponPistolEnforcer
+  description: A pistol of modern design.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/enforcer.rsi
+  - type: Gun
+    fireRate: 6
+    availableModes:
+    - SemiAuto
+  - type: ChamberMagazineAmmoProvider
+    availablePrefixes:
+    - ""
+    - redgrip
+    - red
+    - tangrip
+    - green
+    - black
+    - tan
+    - grey
+    - greengrip
+    
+- type: entity
+  name: Due Process
+  parent: [BaseWeaponPistol, BaseRestrictedContraband]
+  id: WeaponPistolDP
+  description: A pistol that packs a punch for brig defense, just as NanoTransen intended.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/dp.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/dp.rsi
+  - type: Gun
+    fireRate: 5
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/dp.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazinePistol40SP
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazinePistolDP
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgePistol40SP
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgePistolDP
+            
+- type: entity
+  name: sp-8t
+  parent: WeaponPistolDP
+  id: WeaponPistolSP8T
+  components:
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/sp8t.ogg
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/sp8t.rsi
+  - type: ChamberMagazineAmmoProvider
+    availablePrefixes:
+    - ""
+    - dust
+    
+- type: entity
+  name: sp-8ar
+  parent: WeaponPistolDP
+  id: WeaponPistolSP8AR
+  components:
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/sp8ar.ogg
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/sp8ar.rsi
+  - type: ChamberMagazineAmmoProvider
+    availablePrefixes:
+    - ""
+    
+- type: entity
+  name: stechkin pistol
+  parent: [WeaponPistolMk58, BaseRestrictedContraband]
+  id: WeaponPistolStechkin
+  description: A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/stechkin.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/stechkin.rsi
+  - type: Gun
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/1suppres.ogg
+      
+- type: entity
+  name: stechkin APS pistol
+  parent: [WeaponPistolMk58, BaseRestrictedContraband]
+  id: WeaponPistolAPS
+  description: The original russian version of a widely used Syndicate sidearm. Uses 9mm ammo.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/aps.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/aps.rsi
+  - type: Gun
+    selectedMode: Burst
+    shotsPerBurst: 3
+    availableModes:
+    - Burst
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/1suppres.ogg
+      
+- type: entity
+  name: desert eagle
+  parent: WeaponPistolN1984
+  id: WeaponPistolDeagle
+  description: A robust magnum handgun.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/deagle.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/deagle.rsi
+  - type: Gun
+    minAngle: 1
+    maxAngle: 15
+    angleIncrease: 6
+    angleDecay: 7
+    fireRate: 5
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/deagle.ogg
+      
+- type: entity
+  name: m1911
+  parent: WeaponPistolN1984
+  id: WeaponPistolM1911
+  description: A classic .45 handgun with a small magazine capacity.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/m1911.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Pistols/m1911.rsi
+  - type: Gun
+    minAngle: 1
+    maxAngle: 20
+    angleIncrease: 8
+    angleDecay: 7
+    fireRate: 7
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/colt.ogg

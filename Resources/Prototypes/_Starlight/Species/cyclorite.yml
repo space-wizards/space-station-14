@@ -1,0 +1,147 @@
+- type: species
+  id: Cyclorite
+  name: species-name-cyclorite
+  roundStart: true
+  prototype: MobCyclorite
+  sprites: MobCycloriteSprites
+  markingLimits: MobCycloriteMarkingLimits
+  dollPrototype: MobCycloriteDummy
+  skinColoration: Hues
+  defaultSkinTone: "#FFFFFF"
+  maleFirstNames: names_cyclorite
+  femaleFirstNames: names_cyclorite
+  naming: First
+
+- type: speciesBaseSprites
+  id: MobCycloriteSprites
+  sprites:
+    Head: MobCycloriteHead
+    Snout: MobHumanoidAnyMarking
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking
+    Chest: MobCycloriteTorso
+    Eyes: MobCycloriteEyes
+    LArm: MobCycloriteLArm
+    RArm: MobCycloriteRArm
+    LHand: MobCycloriteLHand
+    RHand: MobCycloriteRHand
+    LLeg: MobCycloriteLLeg
+    RLeg: MobCycloriteRLeg
+    LFoot: MobCycloriteLFoot
+    RFoot: MobCycloriteRFoot
+
+- type: markingPoints
+  id: MobCycloriteMarkingLimits
+  onlyWhitelisted: true
+  points:
+    Hair:
+      points: 1
+      required: false
+    FacialHair:
+      points: 1
+      required: false
+    Head:
+      points: 1
+      required: true
+    Snout:
+      points: 1
+      required: true
+    Arms:
+      points: 1
+      required: true
+    Legs:
+      points: 1
+      required: true
+    Chest:
+      points: 1
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobCycloriteEyes
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: eyes
+
+- type: humanoidBaseSprite
+  id: MobCycloriteHead
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobCycloriteHeadMale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobCycloriteHeadFemale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobCycloriteTorso
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobCycloriteTorsoMale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobCycloriteTorsoFemale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobCycloriteLLeg
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobCycloriteLArm
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobCycloriteLHand
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobCycloriteLFoot
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobCycloriteRLeg
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobCycloriteRArm
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobCycloriteRHand
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobCycloriteRFoot
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: r_foot

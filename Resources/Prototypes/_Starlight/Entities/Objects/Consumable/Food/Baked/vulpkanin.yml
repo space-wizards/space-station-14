@@ -1,0 +1,34 @@
+- type: entity
+  name: baked vulpkanin
+  parent: FoodMealBase
+  id: FoodBakedVulpkaninPlate
+  description: You can still see bits of fur on the surface of the dish..
+  components:
+    - type: FlavorProfile
+      flavors:
+        - meaty
+        - parents
+        - hope
+    - type: Food
+      trash: 
+      - FoodPlate
+    - type: Sprite
+      sprite: _Starlight/Objects/Consumable/Food/plate.rsi
+      layers:
+        - state: plate
+        - state: baked_vulpkanin
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 30
+          reagents:
+            - ReagentId: Nutriment
+              Quantity: 10
+            - ReagentId: Protein
+              Quantity: 15
+            - ReagentId: Vitamin
+              Quantity: 5
+    - type: Tag
+      tags:
+      - Meat
+      - Trash

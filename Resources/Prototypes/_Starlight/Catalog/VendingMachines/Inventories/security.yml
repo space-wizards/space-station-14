@@ -1,0 +1,112 @@
+- type: listing
+  id: VendorDoubleStunbaton
+  productEntity: DoubleStunbaton
+  cost:
+    NTCredit: 556
+  categories:
+  - SLSecurity
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  - !type:BuyerAccessCondition
+  
+- type: listing
+  id: VendorPurpleStunbaton
+  productEntity: PurpleStunbaton
+  cost:
+    NTCredit: 376
+  categories:
+  - SLSecurity
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: ClothingHandsGlovesCombat
+  productEntity: ClothingHandsGlovesCombat
+  cost:
+    NTCredit: 399
+  categories:
+  - SLSecurity
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: ClothingHeadHelmetDredd
+  productEntity: ClothingHeadHelmetDredd
+  cost:
+    NTCredit: 300
+  categories:
+  - SLSecurity
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: RedBrutePack
+  productEntity: RedBrutePack
+  cost:
+    NTCredit: 68
+  categories:
+  - SLBrigmedic
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+  - !type:BuyerAccessCondition
+    access: Brigmedic
+
+- type: listing
+  id: RedOintment
+  productEntity: RedOintment
+  cost:
+    NTCredit: 68
+  categories:
+  - SLBrigmedic
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+  - !type:BuyerAccessCondition
+    access: Brigmedic
+
+- type: listing
+  id: RedPunctPack
+  productEntity: RedPunctPack
+  cost:
+    NTCredit: 102
+  categories:
+  - SLBrigmedic
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+  - !type:BuyerAccessCondition
+    access: Brigmedic
+
+- type: listing
+  id: RedLacePack
+  productEntity: RedLacePack
+  cost:
+    NTCredit: 102
+  categories:
+  - SLBrigmedic
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+  - !type:BuyerAccessCondition
+    access: Brigmedic
+
+- type: listing
+  id: RedBruizPack
+  productEntity: RedBruizPack
+  cost:
+    NTCredit: 102
+  categories:
+  - SLBrigmedic
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+  - !type:BuyerAccessCondition
+    access: Brigmedic

@@ -1,0 +1,284 @@
+- type: latheRecipe
+  id: ScalpelAdvanced
+  result: ScalpelAdvanced
+  categories:
+  - Surgery
+  completetime: 3
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  id: RetractorAdvanced
+  result: RetractorAdvanced
+  categories:
+  - Surgery
+  completetime: 4
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  id: SawAdvanced
+  result: SawAdvanced
+  categories:
+  - Surgery
+  completetime: 5
+  materials:
+    Steel: 500
+    Plastic: 100
+
+- type: latheRecipe
+  id: HemostatAdvanced
+  result: HemostatAdvanced
+  categories:
+  - Surgery
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 100
+    
+- type: latheRecipe
+  id: BoneSetterAdvanced
+  result: BoneSetterAdvanced
+  categories:
+  - Surgery
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  id: BoneGel
+  result: BoneGel
+  categories:
+  - Surgery
+  completetime: 2
+  materials:
+    Plastic: 200
+    Steel: 200
+
+- type: latheRecipe
+  id: BoneSetter
+  result: BoneSetter
+  categories:
+  - Surgery
+  completetime: 2
+  materials:
+    Steel: 200
+
+#cyberlimbs
+
+- type: latheRecipe
+  id: LeftArmCyber
+  result: LeftArmCyber
+  categories:
+  - Cyberlimbs
+  completetime: 3
+  materials:
+    Plastic: 200
+    Steel: 200
+
+- type: latheRecipe
+  id: RightArmCyber
+  result: RightArmCyber
+  categories:
+  - Cyberlimbs
+  completetime: 3
+  materials:
+    Plastic: 200
+    Steel: 200
+
+- type: latheRecipe
+  id: LeftHandCyber
+  result: LeftHandCyber
+  categories:
+  - Cyberlimbs
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 100
+
+- type: latheRecipe
+  id: RightHandCyber
+  result: RightHandCyber
+  categories:
+  - Cyberlimbs
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 100
+
+- type: latheRecipe
+  id: LeftLegCyber
+  result: LeftLegCyber
+  categories:
+  - Cyberlimbs
+  completetime: 3
+  materials:
+    Plastic: 200
+    Steel: 200
+
+- type: latheRecipe
+  id: RightLegCyber
+  result: RightLegCyber
+  categories:
+  - Cyberlimbs
+  completetime: 3
+  materials:
+    Plastic: 200
+    Steel: 200
+      
+- type: latheRecipe
+  id: LeftFootCyber
+  result: LeftFootCyber
+  categories:
+  - Cyberlimbs
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 100
+
+- type: latheRecipe
+  id: RightFootCyber
+  result: RightFootCyber
+  categories:
+  - Cyberlimbs
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 100
+#
+- type: latheRecipe
+  id: LeftArmCyberReaper
+  result: LeftArmCyberReaper
+  categories:
+  - Cyberlimbs
+  completetime: 10
+  materials:
+    Plastic: 550
+    Steel: 100
+    Silver: 450
+    Glass: 100
+
+- type: latheRecipe
+  id: RightArmCyberReaper
+  result: RightArmCyberReaper
+  categories:
+  - Cyberlimbs
+  completetime: 10
+  materials:
+    Plastic: 550
+    Steel: 100
+    Silver: 450
+    Glass: 100
+#
+- type: latheRecipe
+  id: LeftArmCyberMechwright
+  result: LeftArmCyberMechwright
+  categories:
+  - Cyberlimbs
+  completetime: 10
+  materials:
+    Plastic: 450
+    Steel: 550
+    Silver: 100
+    Glass: 100
+
+- type: latheRecipe
+  id: RightArmCyberMechwright
+  result: RightArmCyberMechwright
+  categories:
+  - Cyberlimbs
+  completetime: 10
+  materials:
+    Plastic: 450
+    Steel: 550
+    Silver: 100
+    Glass: 100
+# IMPLANTS
+
+# Eye
+
+- type: latheRecipe
+  id: EyeImplantWelding
+  result: EyeImplantWelding
+  categories:
+  - Implants
+  completetime: 3
+  materials:
+    Plastic: 100
+    Steel: 100
+    Plasma: 250
+    Glass: 100
+
+- type: latheRecipe
+  id: EyeImplantMedical
+  result: EyeImplantMedical
+  categories:
+  - Implants
+  completetime: 4
+  materials:
+    Steel: 200
+    Plasma: 300
+    Glass: 100
+    
+- type: latheRecipe
+  id: EyeImplantSecurity
+  result: EyeImplantSecurity
+  categories:
+  - Implants
+  completetime: 4
+  materials:
+    Steel: 200
+    Plasma: 300
+    Glass: 150
+
+- type: latheRecipe
+  id: CyberEyeNightVision
+  result: CyberEyeNightVision
+  categories:
+  - Implants
+  completetime: 5
+  materials:
+    Plastic: 100
+    Steel: 100
+    Gold: 100
+    Glass: 100
+
+- type: latheRecipe
+  id: CyberEyeThermal
+  result: CyberEyeThermal
+  categories:
+  - Implants
+  completetime: 10
+  materials:
+    Plastic: 200
+    Steel: 100
+    Gold: 300
+    Plasma: 300
+    Glass: 100
+    
+# Automenders
+
+- type: latheRecipe
+  id: AutoMenderBrute
+  result: AutoMenderBrute
+  categories:
+  - Tools
+  completetime: 4
+  materials:
+    Plastic: 200
+    Steel: 100
+    Silver: 50
+    
+- type: latheRecipe
+  id: AutoMenderBurn
+  result: AutoMenderBurn
+  categories:
+  - Tools
+  completetime: 4
+  materials:
+    Plastic: 200
+    Steel: 100
+    Silver: 50

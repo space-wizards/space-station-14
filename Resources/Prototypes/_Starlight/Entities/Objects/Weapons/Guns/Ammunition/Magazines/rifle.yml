@@ -1,0 +1,141 @@
+- type: entity
+  id: MagazineRifleRubber
+  name: "magazine (.20 rifle rubber)"
+  parent: BaseMagazineRifle
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleRubber
+  - type: Sprite
+    layers:
+    - state: rubber
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+      
+# M-52
+
+- type: entity
+  id: BaseMagazineRifleM52
+  parent: BaseMagazineRifle
+  abstract: true
+  components:
+  - type: BallisticAmmoProvider
+    capacity: 24
+  - type: Tag
+    tags:
+      - MagazineRifleM52
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/Rifle/m-52.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 7
+    zeroVisible: false
+    
+- type: entity
+  id: MagazineRifleM52SP
+  name: "magazine (.20 rifle SP)"
+  parent: BaseMagazineRifleM52
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleSP
+  - type: Sprite
+    layers:
+    - state: sp
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineRifleM52HP
+  name: "magazine (.20 rifle HP)"
+  parent: BaseMagazineRifleM52
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleHP
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineRifleM52FMJ
+  name: "magazine (.20 rifle FMJ)"
+  parent: BaseMagazineRifleM52
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleFMJ
+  - type: Sprite
+    layers:
+    - state: fmj
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineRifleM52AP
+  name: "magazine (.20 rifle AP)"
+  parent: BaseMagazineRifleM52
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleAP
+  - type: Sprite
+    layers:
+    - state: ap
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineRifleM52Empty
+  name: "magazine (.20 rifle any)"
+  suffix: empty
+  parent: BaseMagazineRifleM52
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+
+- type: entity
+  id: MagazineRifleM52Incendiary
+  name: "magazine (.20 rifle incendiary)"
+  parent: BaseMagazineRifleM52
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleIncendiary
+  - type: Sprite
+    layers:
+    - state: incendiary
+      map: ["enum.GunVisualLayers.Base"]
+
+- type: entity
+  id: MagazineRifleM52Practice
+  name: "magazine (.20 rifle practice)"
+  parent: BaseMagazineRifleM52
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRiflePractice
+  - type: Sprite
+    layers:
+    - state: practice
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineRifleM52Uranium
+  name: "magazine (.20 rifle uranium)"
+  parent: BaseMagazineRifleM52
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeRifleUranium
+  - type: Sprite
+    layers:
+    - state: uranium
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]

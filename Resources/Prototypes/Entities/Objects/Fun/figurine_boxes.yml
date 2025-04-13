@@ -98,8 +98,6 @@
         orGroup: SpacemenFig
       - id: ToyFigurineSlime
         orGroup: SpacemenFig
-      - id: ToyFigurineGreytider
-        orGroup: SpacemenFig
       - id: ToyFigurineWizard
         prob: 0.50
         orGroup: SpacemenFig

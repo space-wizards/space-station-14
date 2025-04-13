@@ -1,0 +1,197 @@
+- type: entity
+  name: riot shotgun
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
+  id: WeaponShotgunRiot
+  description: A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control.
+  components:
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/riot_inhands_64x.rsi
+  - type: Gun
+    spread: 20
+    pump: true
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/riot.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/riot.rsi
+  - type: GunRequiresWield
+  - type: BallisticAmmoProvider
+    capacity: 7
+  - type: Construction
+    graph: ShotgunRiotSawn
+    node: start
+    deconstructionTarget: null
+    
+- type: entity
+  name: sawn-off riot shotgun
+  parent: [BaseWeaponShotgun, BaseGunWieldable]
+  id: WeaponShotgunRiotSawn
+  description: Come with me if you want to live.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/riot_sawn.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/riot_sawn.rsi
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/riot_sawn_inhands_64x.rsi
+  - type: Gun
+    spread: 30
+    pump: true
+  - type: GunRequiresWield
+  - type: BallisticAmmoProvider
+    capacity: 4
+  - type: Construction
+    graph: ShotgunRiotSawn
+    node: shotgunsawn
+    deconstructionTarget: null
+    
+- type: entity
+  parent: WeaponShotgunRiotSawn
+  id: WeaponShotgunRiotSawnEmpty
+  suffix: Empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null
+  - type: Construction
+    graph: ShotgunRiotSawn
+    node: shotgunsawn
+    deconstructionTarget: null
+    
+- type: entity
+  name: combat shotgun
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
+  id: WeaponShotgunCombat
+  description: A semi automatic shotgun with tactical furniture and a six-shell capacity underneath.
+  components:
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/cshotgun_inhands_64x.rsi
+  - type: Gun
+    spread: 20
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/cshotgun.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/cshotgun.rsi
+  - type: GunRequiresWield
+  - type: BallisticAmmoProvider
+    capacity: 7
+    
+- type: entity
+  name: cycler shotgun
+  parent: [BaseWeaponShotgunAny, BaseGunWieldable, BaseRestrictedContraband]
+  id: WeaponShotgunCycler
+  description: An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types.
+  components:
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/cycler.rsi
+  - type: Gun
+    spread: 20
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/cycler.rsi
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/cycler.rsi
+  - type: GunRequiresWield
+  - type: BallisticAmmoProvider
+    capacity: 7
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+      - ShellShotgun
+      - SpeedLoaderShotgun
+    proto: ShellShotgun
+    capacity: 9
+    chambers: [ True, True, True, True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null, null, null, null ]
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+      
+- type: entity
+  name: Tkach Ya-Sui GA 12 revolver
+  parent: [BaseWeaponShotgunAny, BaseRestrictedContraband]
+  id: WeaponShotgunGA12
+  description: An outdated sidearm rarely seen in use by certain PMCs that operate throughout the frontier systems, featuring a three-shell cylinder. Thats right, shell, this one shoots twelve gauge.
+  components:
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/ga12.rsi
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/ga12.rsi
+    quickEquip: false
+    slots:
+    - suitStorage
+    - Belt
+  - type: Tag
+    tags:
+    - Sidearm
+  - type: Gun
+    spread: 30
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/ga12.rsi
+  - type: GunRequiresWield
+  - type: BallisticAmmoProvider
+    capacity: 3
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+      - ShellShotgun
+      - SpeedLoaderShotgun
+    proto: ShellShotgun
+    capacity: 3
+    chambers: [ True, True, True ]
+    ammoSlots: [ null, null, null ]
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
+      
+- type: entity
+  name: "AS-12 'Minotaur' Shotgun"
+  parent: [BaseWeaponShotgunAny, BaseGunWieldable, BaseSyndicateContraband]
+  id: WeaponShotgunMinotaur
+  description: Smooth, powerful, highly illegal. The newest full auto shotgun available at the market, utilizes standard 12g drum mags. Property of Gorlex Marauders.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/minotaur.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/Shotguns/minotaur.rsi
+  - type: GunRequiresWield
+  - type: Gun
+    spread: 20
+    fireRate: 3
+    burstFireRate: 4
+    burstCooldown: 1
+    selectedMode: Burst
+    shotsPerBurst: 3
+    availableModes:
+    - Burst
+    - FullAuto
+    soundGunshot:
+      path: /Audio/_Starlight/Weapons/Guns/Gunshots/minotaur.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineShotgun
+        priority: 2
+        whitelist:
+          tags:
+          - MagazineShotgun
+        whitelistFailPopup: gun-magazine-whitelist-fail
+        insertSound: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: ChamberMagazineAmmoProvider
+    autoEject: true
+  - type: MagazineVisuals
+    magState: mag
+    steps: 1
+    zeroVisible: true
+  - type: Appearance

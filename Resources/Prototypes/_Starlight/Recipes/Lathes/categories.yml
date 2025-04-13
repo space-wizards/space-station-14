@@ -1,0 +1,53 @@
+- type: latheCategory
+  id: Surgery
+  name: lathe-category-surgery
+
+- type: latheCategory
+  id: Cyberlimbs
+  name: lathe-category-cyberlimbs
+
+- type: latheCategory
+  id: Implants
+  name: lathe-category-implants
+
+# Doc Printer
+
+- type: latheCategory
+  id: Reports
+  name: lathe-category-reports
+
+- type: latheCategory
+  id: Statements
+  name: lathe-category-statements
+
+- type: latheCategory
+  id: InquiriesAndAppeals
+  name: lathe-category-inquiries-and-appeals
+
+- type: latheCategory
+  id: Complaintst
+  name: lathe-category-complaints
+
+- type: latheCategory
+  id: Permissions
+  name: lathe-category-permissions
+
+- type: latheCategory
+  id: OrdersAndInstructions
+  name: lathe-category-orders-and-instructions
+
+- type: latheCategory
+  id: Orders
+  name: lathe-category-orders
+
+- type: latheCategory
+  id: Evidence
+  name: lathe-category-evidence
+
+- type: latheCategory
+  id: ConclusionsAndDecisions
+  name: lathe-category-conclusions-and-decisions
+
+- type: latheCategory
+  id: ErrorDocument
+  name: lathe-category-error

@@ -1,0 +1,151 @@
+# Lava
+- type: tile
+  id: FloorAbyss
+  name: tiles-abyss-floor
+  sprite: /Textures/_Starlight/Tiles/Planet/abyss.png
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+  indestructible: true
+
+- type: tile
+  id: FloorAbyss2
+  name: tiles-abyss-floor
+  sprite: /Textures/_Starlight/Tiles/Planet/abyss2.png
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+  indestructible: true
+
+- type: entity
+  id: FloorAbyssEnergyEntity
+  parent: FloorWaterEntity
+  name: AbyssEnergy
+  components:
+  - type: Sprite
+    sprite: _Starlight/Tiles/Planet/abyss_energy.rsi
+    drawdepth: BelowFloor
+    layers:
+      - state: energy
+  - type: SpeedModifierContacts
+    walkSpeedModifier: 0.25
+    sprintSpeedModifier: 0.25
+  - type: TileEntityEffect
+    effects:
+    - !type:EmpReactionEffect
+      rangePerUnit: 0.2
+      maxRange: 6
+      energyConsumption: 12500
+      duration: 15
+      probability: 0.05
+
+- type: decal
+  id: AbyssBushOne
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/_Starlight/Decals/Abyss/bushes.rsi
+    state: bush1
+
+- type: decal
+  id: AbyssBushTwo
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/_Starlight/Decals/Abyss/bushes.rsi
+    state: bush2
+
+- type: decal
+  id: AbyssBushThree
+  snapCardinals: true
+  defaultSnap: false
+  sprite:
+    sprite: /Textures/_Starlight/Decals/Abyss/bushes.rsi
+    state: bush3
+
+
+
+- type: entity
+  id: BaseObelisk
+  abstract: true
+  components:
+  - type: SpriteFade
+  - type: Clickable
+  - type: Sprite
+    noRot: true
+    sprite: _Starlight/Objects/Decoration/Flora/Abyss/obelisk.rsi
+    drawdepth: Overdoors
+    offset: 0,0.9
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.4,0.35,0.4"
+        density: 1000
+        layer:
+        - WallLayer
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Wood
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/_Starlight/Effects/chisel.ogg
+        params:
+          variation: 0.05
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/_Starlight/Effects/stones_falling.ogg
+          params:
+            volume: 5
+            variation: 0.05
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          AbyssiumOre:
+            min: 1
+            max: 3
+
+- type: entity
+  parent: BaseObelisk
+  id: FloraObelisk01
+  name: obelisk
+  components:
+  - type: Sprite
+    state: obelisk01
+
+- type: entity
+  parent: BaseObelisk
+  id: FloraObelisk02
+  name: obelisk
+  components:
+  - type: Sprite
+    state: obelisk02
+
+- type: entity
+  parent: BaseObelisk
+  id: FloraObelisk03
+  name: obelisk
+  components:
+  - type: Sprite
+    state: obelisk03

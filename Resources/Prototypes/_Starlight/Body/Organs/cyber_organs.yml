@@ -1,0 +1,47 @@
+- type: entity
+  id: OrganCyber
+  parent: BaseItem
+  name: "cyber organ"
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+  - type: Organ
+  - type: Gibbable
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Iron
+        Quantity: 30
+
+- type: entity
+  id: CyberEyeNightVision
+  name: NightVision cyber eyes
+  description: Enables you to see in the dark.
+  parent: [OrganCyber, BaseOrganEyes]
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/implants.rsi
+    state: eyes_night
+  - type: FunctionalOrgan
+    comps: 
+    - type: NightVision
+  - type: OrganVisualization
+    layer: Eyes
+    prototype: CyberEyesNightVision
+
+- type: entity
+  id: CyberEyeThermal
+  name: ThermalVision cyber eyes
+  description: Enables you to see in the dark and detect warm objects through walls.
+  parent: [OrganCyber, BaseOrganEyes]
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/implants.rsi
+    state: eyes_thermal
+  - type: FunctionalOrgan
+    comps: 
+    - type: ThermalVision
+  - type: OrganVisualization
+    layer: Eyes
+    prototype: CyberEyesThermalVision

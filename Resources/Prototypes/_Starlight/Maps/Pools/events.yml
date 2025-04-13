@@ -1,0 +1,15 @@
+- type: gameMapPool
+  id: ChristmasStarlightMapPool
+  maps:
+  - StarlightChristmasBagel
+  - StarlightChristmasBox
+  - StarlightChristmasCog
+  - StarlightChristmasFland
+  - ChristmasHotel
+  - ChristmasManor
+  - StarlightChristmasMarathon
+  - StarlightChristmasMeta
+  - StarlightChristmasOasis
+  - StarlightChristmasOmega
+  - StarlightChristmasPacked
+

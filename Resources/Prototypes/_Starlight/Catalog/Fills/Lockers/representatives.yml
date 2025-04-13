@@ -1,0 +1,44 @@
+- type: entity
+  id: LockerRepresentativeFilled
+  suffix: Filled
+  parent: LockerRepresentative
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingEyesHudSkills
+      - id: ClothingEyesSunGlassesHudSkill
+      - id: ClothingHeadHatCapNtrep
+      - id: ClothingUniformJumpsuitNtrepFormal
+      - id: ClothingUniformJumpskirtNtrep
+      - id: ClothingUniformJumpsuitNtrep
+      - id: ClothingOuterCoatNtrep
+      - id: ClothingShoesBootsLaceup
+      - id: ClothingHeadsetAltCommand
+      - id: WeaponDisabler
+      - id: LuxuryPen
+      - id: BoxFolderClipboardFilled
+      - id: PrinterDocFlatpack
+      - id: FaxMachineFlatpack
+
+- type: entity
+  id: LockerBSOFilled
+  suffix: Filled
+  parent: LockerBlueshield
+  components:
+  - type: StorageFill
+    contents:
+      - id: FlashlightSeclite
+      - id: ClothingHandsGlovesCombat
+      - id: ClothingShoesBootsCombat
+      - id: TrackingImplanter
+        amount: 3
+      - id: MedkitAdvancedFilled
+      - id: ClothingEyesGlassesBlueShield
+      - id: ClothingEyesHudBlueShield
+      - id: ClothingHeadHatBeretBlueShield
+      - id: ClothingUniformJumpsuitBlueShield
+      - id: ClothingUniformJumpskirtBlueShield
+      - id: HandheldGPSBasic
+      - id: ClothingNeckCloakBsoElite
+      - id: ClothingNeckCloakBsoElite
+      - id: RadioHandheldSecurity

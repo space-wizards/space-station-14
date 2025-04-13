@@ -1,0 +1,506 @@
+# BaseHealingItem
+
+- type: entity
+  parent: BaseHealingItem
+  id: BaseStarlightHealingItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/medical.rsi
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Specific/Medical/medical.rsi
+    heldPrefix: ointment
+
+- type: entity
+  name: blue bruise pack
+  description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
+  parent: Brutepack
+  id: Bluebrutepack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: bluebrutepack
+  - type: Stack
+    stackType: Bluebrutepack
+    count: 1
+
+- type: entity
+  name: blue bruise pack
+  description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
+  parent: Brutepack1
+  id: Bluebrutepack10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: bluebrutepack2
+  - type: Stack
+    stackType: Bluebrutepack
+    count: 10
+
+- type: entity
+  name: blue bruise pack
+  description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
+  parent: Brutepack1
+  id: Bluebrutepack20
+  suffix: 20
+  components:
+  - type: Sprite
+    state: bluebrutepack3
+  - type: Stack
+    stackType: Bluebrutepack
+    count: 20
+
+- type: stack
+  id: Bluebrutepack
+  name: brutepack
+  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: bluebrutepack }
+  spawn: Bluebrutepack1
+  maxCount: 20
+
+
+
+- type: entity
+  name: blue ointment
+  description: Used to treat those nasty burns. Less effective on caustic burns.
+  parent: Ointment
+  id: Blueointment1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: blueointment
+  - type: Stack
+    stackType: Blueointment
+    count: 1
+
+- type: entity
+  name: blue ointment
+  description: Used to treat those nasty burns. Less effective on caustic burns.
+  parent: Ointment
+  id: Blueointment10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: blueointment2
+  - type: Stack
+    stackType: Blueointment
+    count: 10
+
+- type: entity
+  name: blue ointment
+  description: Used to treat those nasty burns. Less effective on caustic burns.
+  parent: Ointment
+  id: Blueointment20
+  suffix: 20
+  components:
+  - type: Sprite
+    state: blueointment3
+  - type: Stack
+    stackType: Blueointment
+    count: 20
+
+
+- type: stack
+  id: Blueointment
+  name: blueointment
+  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: blueointment }
+  spawn: Blueointment1
+  maxCount: 20
+
+
+
+- type: entity
+  parent:
+  - MobSiliconBase
+  - ShowMedicalIcons
+  - StripableInventoryBase
+  id: MobTrueDoctorbot
+  name: real doctor
+  description: Definitely a real doctor.
+  components:
+  - type: Medibot
+    treatments:
+      Alive:
+        reagent: Omnizine
+        quantity: 10
+        minDamage: 49
+        maxDamage: 120
+      Critical:
+        reagent: Omnizine
+        quantity: 10
+  - type: EmaggableMedibot
+    replacements:
+      # when you are fine, medibot will help you go sleep
+      Alive:
+        reagent: ChloralHydrate
+        quantity: 15
+      # when you are crit, medibot will help you have fun
+      Critical:
+        reagent: SpaceDrugs
+        quantity: 25
+  - type: Sprite
+    sprite: _Starlight/Mobs/Silicon/Bots/medibot.rsi
+    state: medibot
+  - type: HTN
+    rootTask:
+      task: MedibotCompound
+  - type: Anchorable
+  - type: InteractionPopup
+    interactSuccessString: petting-success-medibot
+    interactFailureString: petting-failure-medibot
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Advertise
+    pack: MedibotAds
+  - type: Inventory
+    templateId: medibot
+
+- type: entity
+  name: red ointment
+  description: Uses a special blend of pyrazine and aloe to treat severe burns. Does nothing for caustic.
+  parent: BaseStarlightHealingItem
+  id: RedOintment
+  suffix: 20
+  components:
+  - type: Tag
+    tags:
+    - Ointment
+  - type: Sprite
+    state: redointment3
+  - type: Item
+    heldPrefix: redointment
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Heat: -6
+        Cold: -6
+        Shock: -6
+    healingBeginSound:
+      path: "/Audio/Items/Medical/ointment_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/ointment_end.ogg"
+  - type: Stack
+    stackType: RedOintment
+    count: 20
+
+- type: entity
+  name: red ointment
+  description: Uses a special blend of pyrazine and aloe to treat severe burns. Does nothing for caustic. Gotta really squeeze for that last bit.
+  parent: RedOintment
+  id: RedOintment1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: redointment
+  - type: Stack
+    stackType: RedOintment
+    count: 1
+
+- type: entity
+  name: red ointment
+  description: Uses a special blend of pyrazine and aloe to treat severe burns. Does nothing for caustic. Partially used..
+  parent: RedOintment
+  id: RedOintment10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: redointment2
+  - type: Stack
+    stackType: RedOintment
+    count: 10
+
+- type: stack
+  id: RedOintment
+  name: redointment
+  icon: { sprite: "/Textures/_Starlight/Objects/Specific/Medical/medical.rsi", state: redointment }
+  spawn: RedOintment1
+  maxCount: 20
+
+- type: entity
+  name: red bruise pack
+  description: Security-Graded Bruise Packs for all your harmbaton needs!
+  parent: BaseStarlightHealingItem
+  id: RedBrutePack
+  suffix: 20
+  components:
+  - type: Tag
+    tags:
+    - Brutepack
+  - type: Sprite
+    state: redbrutepack3
+  - type: Item
+    heldPrefix: redbrutepack
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      groups:
+        Brute: -18 # 6 for each type in the group :3
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Stack
+    stackType: RedBrutePack
+    count: 20
+
+- type: entity
+  name: red bruise pack
+  description: Security-Graded Bruise Packs for all your harmbaton needs! You really went ham with that baton, huh?
+  parent: RedBrutePack
+  id: RedBrutePack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: redbrutepack
+  - type: Stack
+    stackType: RedBrutePack
+    count: 1
+
+- type: entity
+  name: red bruise pack
+  description: Security-Graded Bruise Packs for all your harmbaton needs! Someone's been busy!
+  parent: RedBrutePack
+  id: RedBrutePack10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: redbrutepack2
+  - type: Stack
+    stackType: RedBrutePack
+    count: 10
+
+- type: stack
+  id: RedBrutePack
+  name: redbrutepack
+  icon: { sprite: "/Textures/_Starlight/Objects/Specific/Medical/medical.rsi", state: redbrutepack }
+  spawn: RedBrutePack1
+  maxCount: 20
+
+- type: entity
+  name: red punct-laced brute pack
+  description: Specalized mixture of Puncturase and Security-Quality Red Goo. Best used for bullet-wounds, as it is much less effective on other types of damage.
+  parent: BaseStarlightHealingItem
+  id: RedPunctPack
+  suffix:
+  components:
+  - type: Tag
+    tags:
+    - Brutepack
+  - type: Sprite
+    state: puncturaseredbrutepack3
+  - type: Item
+    heldPrefix: puncturaseredbrutepack
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Piercing: -7.5
+        Slash: -2.5
+        Blunt: -2.5
+    bloodlossModifier: -1 # Punct normally stops bleeding. Stands to reason a weaker version would slow it.
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Stack
+    stackType: RedPunctPack
+    count: 20
+
+- type: entity
+  name: red punct-laced brute pack
+  description: Specalized mixture of Puncturase and Security-Quality Red Goo. Best used for bullet-wounds, as it is much less effective on other types of damage.
+  parent: RedPunctPack
+  id: RedPunctPack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: puncturaseredbrutepack
+  - type: Stack
+    stackType: RedPunctPack
+    count: 1
+
+- type: entity
+  name: red punct-laced brute pack
+  description: Specalized mixture of Puncturase and Security-Quality Red Goo. Best used for bullet-wounds, as it is much less effective on other types of damage.
+  parent: RedPunctPack
+  id: RedPunctPack10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: puncturaseredbrutepack2
+  - type: Stack
+    stackType: RedPunctPack
+    count: 10
+
+- type: stack
+  id: RedPunctPack
+  name: redpunctpack
+  icon: { sprite: "/Textures/_Starlight/Objects/Specific/Medical/medical.rsi", state: puncturaseredbrutepack }
+  spawn: RedPunctPack1
+  maxCount: 20
+
+- type: entity
+  name: red lace-laced brute pack
+  description: Specalized mixture of Lacerinol and Security-Quality Red Goo. Best used for stab-wounds, as it is much less effective on other types of damage.
+  parent: BaseStarlightHealingItem
+  id: RedLacePack
+  suffix: 10
+  components:
+  - type: Tag
+    tags:
+    - Brutepack
+  - type: Sprite
+    state: lacerinolbrutepack3
+  - type: Item
+    heldPrefix: lacerinolbrutepack
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Piercing: -2.5
+        Slash: -7.5
+        Blunt: -2.5
+    bloodlossModifier: -1 # lace normally stops bleeding. Stands to reason a weaker version would slow it.
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Stack
+    stackType: RedLacePack
+    count: 20
+
+- type: entity
+  name: red lace-laced brute pack
+  description: Specalized mixture of Lacerinol and Security-Quality Red Goo. Best used for stab-wounds, as it is much less effective on other types of damage.
+  parent: RedLacePack
+  id: RedLacePack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: lacerinolbrutepack
+  - type: Stack
+    stackType: RedLacePack
+    count: 1
+
+- type: entity
+  name: red lace-laced brute pack
+  description: Specalized mixture of Lacerinol and Security-Quality Red Goo. Best used for stab-wounds, as it is much less effective on other types of damage.
+  parent: RedLacePack
+  id: RedLacePack10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: lacerinolbrutepack2
+  - type: Stack
+    stackType: RedLacePack
+    count: 10
+
+- type: stack
+  id: RedLacePack
+  name: redlacepack
+  icon: { sprite: "/Textures/_Starlight/Objects/Specific/Medical/medical.rsi", state: lacerinolbrutepack }
+  spawn: RedLacePack1
+  maxCount: 20
+
+- type: entity
+  name: red bruiz-laced brute pack
+  description: Specalized mixture of Bruizine and Security-Quality Red Goo. Best used for blunt-force trauma, as it is much less effective on other types of damage.
+  parent: BaseStarlightHealingItem
+  id: RedBruizPack
+  suffix: 10
+  components:
+  - type: Tag
+    tags:
+    - Brutepack
+  - type: Sprite
+    state: bruizinebrutepack3
+  - type: Item
+    heldPrefix: bruizinebrutepack
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Piercing: -2.5
+        Slash: -2.5
+        Blunt: -7.5
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Stack
+    stackType: RedBruizPack
+    count: 20
+
+- type: entity
+  name: red bruiz-laced brute pack
+  description: Specalized mixture of Bruizine and Security-Quality Red Goo. Best used for blunt-force trauma, as it is much less effective on other types of damage.
+  parent: RedBruizPack
+  id: RedBruizPack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: bruizinebrutepack
+  - type: Stack
+    stackType: RedBruizPack
+    count: 1
+
+- type: entity
+  name: red bruiz-laced brute pack
+  description: Specalized mixture of Bruizine and Security-Quality Red Goo. Best used for blunt-force trauma, as it is much less effective on other types of damage.
+  parent: RedBruizPack
+  id: RedBruizPack10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: bruizinebrutepack2
+  - type: Stack
+    stackType: RedBruizPack
+    count: 10
+
+- type: stack
+  id: RedBruizPack
+  name: redbruizpack
+  icon: { sprite: "/Textures/_Starlight/Objects/Specific/Medical/medical.rsi", state: bruizinebrutepack }
+  spawn: RedBruizPack1
+  maxCount: 20
+
+- type: entity
+  name: BrigKit
+  description: A heavy-duty first aid kit with slots and hooks for medical supplies, but nothing else.
+  parent: BaseStorageItem
+  id: SecurityMedkit
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/firstaidkits.rsi
+    state: BrigKube
+  - type: Storage
+    whitelist:
+      tags:
+        - Bottle
+        - Brutepack
+        - Bloodpack
+        - Gauze
+        - Ointment
+        - PillCanister
+      components:
+        - Hypospray
+        - Injector
+        - Pill
+    grid:
+    - 0,0,3,2
+  - type: Item
+    size: Normal
+    sprite: _Starlight/Objects/Specific/Medical/firstaidkits.rsi
+    heldPrefix: BrigKube
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 150
+  - type: Tag
+    tags:
+    - Medkit

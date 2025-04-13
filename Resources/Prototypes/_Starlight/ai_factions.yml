@@ -1,0 +1,49 @@
+- type: npcFaction
+  id: Abyss
+  hostile:
+  - DungeonSoviet
+  - DungeonSyndicate
+  - Dragon
+  - NanoTrasen
+  - Mouse
+  - PetsNT
+  - SimpleHostile
+  - Syndicate
+  - Xeno
+  - Zombie
+  - Revolutionary
+  - Vampire
+  - Changeling
+  - AllHostile
+
+- type: npcFaction
+  id: DungeonSoviet
+  hostile:
+  - NanoTrasen
+  - SimpleHostile
+  - Xeno
+  - PetsNT
+  - Syndicate
+  - DungeonSyndicate
+  - Zombie
+  - Revolutionary
+  - Abyss
+  - Vampire
+  - Changeling
+  - AllHostile
+
+- type: npcFaction
+  id: DungeonSyndicate
+  hostile:
+  - NanoTrasen
+  - SimpleHostile
+  - Xeno
+  - PetsNT
+  - Syndicate
+  - DungeonSoviet
+  - Zombie
+  - Revolutionary
+  - Abyss
+  - Vampire
+  - Changeling
+  - AllHostile

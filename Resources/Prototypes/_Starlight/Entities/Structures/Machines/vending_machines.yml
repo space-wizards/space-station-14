@@ -1,0 +1,197 @@
+- type: entity
+  id: SLVendingMachine
+  parent: BaseMachinePowered
+  name: vending machine
+  description: Just add capitalism!
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/plushiemat.rsi
+    snapCardinals: true
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: normal-unshaded
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+  - type: StationAiWhitelist
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -9
+    range: 3
+    enabled: false
+    sound:
+      path: /Audio/Ambience/Objects/vending_machine_hum.ogg
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.40"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 190
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+  - type: Repairable
+    doAfterDelay: 8
+  - type: UserInterface
+    interfaces:
+        enum.StoreUiKey.Key:
+          type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: WiresPanel
+  - type: Wires
+   #boardName: wires-board-name-vendingmachine
+    layoutId: Vending
+  - type: Anchorable
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: PointLight
+    enabled: false
+    castShadows: false
+    radius: 1.5
+  - type: LitOnPowered
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: StaticPrice
+    price: 100
+  - type: Appearance
+  - type: WiresVisuals
+  - type: Store
+    name: store-preset-name-spellbook
+    categories: []
+    currencyWhitelist:
+    - NTCredit
+    
+- type: entity
+  parent: SLVendingMachine
+  id: SLVendingMachineHugDispenser
+  name: hug dispenser
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/plushiemat.rsi
+  - type: Store
+    name: vendor-hug-dispenser
+    categories:
+    - SLPlushies
+    - SLSpecies
+
+- type: entity
+  parent: SLVendingMachine
+  id: SLVendingMachineFashion
+  name: Fashion-o-Mat
+  description: Happiness should be expensive.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/fashionmat.rsi
+  - type: Store
+    name: vendor-fashion-o-mat
+    categories:
+    - SLFahsionSkirt
+    - SLFahsionSuit
+    - SLFahsionOther
+        
+- type: entity
+  parent: SLVendingMachine
+  id: SLVendingMachineMedical
+  name: medical dispenser
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/medical.rsi
+  - type: Store
+    name: vendor-medical-dispenser
+    categories:
+    - SLChemistry
+    - SLMedical
+    - SLSurgery
+            
+- type: entity
+  parent: SLVendingMachine
+  id: SLVendingMachineEngi
+  name: engi dispenser
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/engi.rsi
+  - type: Store
+    name: vendor-engineering-dispenser
+    categories:
+    - SLEnginery
+    
+- type: entity
+  parent: SLVendingMachine
+  id: VendingMachineClown
+  name: HohohonkersVend
+  description: Get your honk fix here! Surprise the station with HohohonkersVend — the ultimate machine for hilarious pranks. Hack it, and you'll unlock something special!
+  components:
+  - type: AccessReader
+    access: [["Theatre"]]
+  - type: Store
+    name: vendor-clown-dispenser
+    categories:
+    - SLClown
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/hohohonkers.rsi
+        
+- type: entity
+  parent: SLVendingMachine
+  id: SLVendingMachineSecurity
+  name: security dispenser
+  components:
+  - type: AccessReader
+    access: [["Security"]]
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/security.rsi
+  - type: Store
+    name: vendor-security-dispenser
+    categories:
+    - SLSecurity
+    - SLBrigmedic
+    
+- type: entity
+  parent: SLVendingMachine
+  id: SLVendingMachineSalvage
+  name: salvage ticket machine
+  components:
+  - type: AccessReader
+    access: [["Salvage"]]
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/salvage.rsi
+  - type: Store
+    name: vendor-salvage-ticket-machine
+    categories:
+    - SalvageEquipment
+    - SalvageWeapons
+    - SalvageConsumeables
+    currencyWhitelist:
+    - SalvageTicket

@@ -1,0 +1,17 @@
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackRoboticist
+  name: roboticist backpack
+  description: A backpack specifically designed for oil and short circuit protection.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Backpacks/roboticist.rsi
+    
+- type: entity
+  parent: [ClothingBackpack, BaseCommandContraband]
+  id: ClothingBackpackBlueShield
+  name: blueshield's backpack
+  description: A lightweight but reliable backpack. Can't go wrong with the classics!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Backpacks/blueshield.rsi

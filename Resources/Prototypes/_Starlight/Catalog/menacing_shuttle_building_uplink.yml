@@ -1,0 +1,185 @@
+﻿- type: listing
+  id: ClothingOuterHardsuitPirateCapSet
+  productEntity: ClothingOuterHardsuitPirateCap
+  cost:
+    BuildToken: 4
+  categories:
+  - MenacingShuttleUplinkEquipment
+
+- type: listing
+  id: ClothingOuterHardsuitSyndieSet
+  productEntity: ClothingOuterHardsuitSyndie
+  cost:
+    BuildToken: 10
+  categories:
+  - MenacingShuttleUplinkEquipment
+
+- type: listing
+  id: ClothingOuterHardsuitSyndieEliteSet
+  productEntity: ClothingOuterHardsuitSyndieElite
+  cost:
+    BuildToken: 12
+  categories:
+  - MenacingShuttleUplinkEquipment
+
+- type: listing
+  id: ClothingOuterHardsuitSyndieCommanderSet
+  productEntity: ClothingOuterHardsuitSyndieCommander
+  cost:
+    BuildToken: 15
+  categories:
+  - MenacingShuttleUplinkEquipment
+
+- type: listing
+  id: UplinkClothingOuterHardsuitJuggernautSet
+  name: uplink-clothing-outer-hardsuit-juggernaut-name
+  productEntity: ClothingOuterHardsuitJuggernaut
+  cost:
+    BuildToken: 20
+  categories:
+  - MenacingShuttleUplinkEquipment
+
+- type: listing
+  id: ClothingShoesBootsMagSyndieSet
+  productEntity: ClothingShoesBootsMagSyndie
+  cost:
+    BuildToken: 6
+  categories:
+  - MenacingShuttleUplinkEquipment
+
+#ОРУЖИЕ
+- type: listing
+  id: EmagUnlimitedSet
+  name: EMAG
+  productEntity: EmagUnlimited
+  cost:
+    BuildToken: 5
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: UplinkAmmoBundleSet
+  name: uplink-ammo-bundle-name
+  productEntity: ClothingBackpackDuffelSyndicateAmmoFilled
+  cost:
+    BuildToken: 5
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: UplinkBulldogBundleSet
+  name: uplink-buldog-bundle-name
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Shotguns/bulldog.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledShotgun
+  cost:
+    BuildToken: 10
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: UplinkC20RBundleSet
+  name: uplink-c20r-bundle-name
+  icon: { sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledSMG
+  cost:
+    BuildToken: 10
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: UplinkL6SawBundleSet
+  name: uplink-l6-saw-bundle-name
+  icon: { sprite: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledLMG
+  cost:
+    BuildToken: 25
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: FireAxeFlamingSetBattles
+  productEntity: FireAxeFlaming
+  cost:
+    BuildToken: 2
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: PowerCellMicroreactorSet
+  productEntity: PowerCellMicroreactor
+  cost:
+    BuildToken: 1
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: ShuttleGunSvalinnMachineGunSet
+  productEntity: ShuttleGunSvalinnMachineGun
+  cost:
+    BuildToken: 1
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: ShuttleGunPerforatorGunSet
+  productEntity: ShuttleGunPerforator
+  cost:
+    BuildToken: 8
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: PowerCageSmallGunSet
+  productEntity: PowerCageSmall
+  cost:
+    BuildToken: 1
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: PowerCageMediumSet
+  productEntity: PowerCageMedium
+  cost:
+    BuildToken: 2
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: PowerCageHighSet
+  productEntity: PowerCageHigh
+  cost:
+    BuildToken: 3
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: TurboItemRechargerSet
+  productEntity: TurboItemRecharger
+  cost:
+    BuildToken: 2
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: PowerCageRechargerSet
+  productEntity: PowerCageRecharger
+  cost:
+    BuildToken: 4
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: WeaponLaserCannonSet
+  productEntity: WeaponLaserCannon
+  cost:
+    BuildToken: 4
+  categories:
+  - MenacingShuttleUplinkWeapons
+
+- type: listing
+  id: ShuttleGunPirateCannonSet
+  productEntity: ShuttleGunPirateCannon
+  cost:
+    BuildToken: 6
+  categories:
+  - MenacingShuttleUplinkPirate
