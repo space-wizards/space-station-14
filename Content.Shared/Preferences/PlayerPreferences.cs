@@ -90,7 +90,41 @@ namespace Content.Shared.Preferences
                 pool.Add(humanoid);
             }
 
-            var random = new System.Random();
+            var random = IoCManager.Resolve<IRobustRandom>();
+            return pool.Count == 0 ? null : random.Pick(pool);
+        }
+
+        public bool HasAntagPreference(ICollection<ProtoId<AntagPrototype>> antagList)
+        {
+            foreach (var profile in Characters.Values)
+            {
+                if (profile is not HumanoidCharacterProfile { Enabled: true } humanoid)
+                    continue;
+                foreach (var antag in antagList)
+                {
+                    if (humanoid.AntagPreferences.Contains(antag))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        public HumanoidCharacterProfile? SelectProfileForAntag(ICollection<ProtoId<AntagPrototype>> antags)
+        {
+            var pool = new HashSet<HumanoidCharacterProfile>();
+            foreach (var profile in Characters.Values)
+            {
+                if (profile is not HumanoidCharacterProfile { Enabled: true } humanoid)
+                    continue;
+                foreach (var antag in antags)
+                {
+                    if (humanoid.AntagPreferences.Contains(antag))
+                        pool.Add(humanoid);
+                }
+            }
+
+            var random = IoCManager.Resolve<IRobustRandom>();
             return pool.Count == 0 ? null : random.Pick(pool);
         }
     }

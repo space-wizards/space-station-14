@@ -2,7 +2,7 @@
   id: SpaceNinja
   name: roles-antag-space-ninja-name
   antagonist: true
-  setPreference: false
+  setPreference: true
   objective: roles-antag-space-ninja-objective
   guides: [ SpaceNinja ]
 

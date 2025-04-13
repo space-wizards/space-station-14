@@ -59,9 +59,8 @@ namespace Content.Server.GameTicking
             return spawnableStations;
         }
 
-        // TODO: I don't think SpawnPlayers needs the HumanoidCharacterProfiles anymore
         private void SpawnPlayers(List<ICommonSession> readyPlayers,
-            Dictionary<NetUserId, HumanoidCharacterProfile> profiles,
+            HashSet<NetUserId> profiles,
             bool force)
         {
             // Allow game rules to spawn players by themselves if needed. (For example, nuke ops or wizard)
@@ -75,7 +74,7 @@ namespace Content.Server.GameTicking
             {
                 var toRemove = new RemQueue<NetUserId>();
 
-                foreach (var (player, _) in profiles)
+                foreach (var player in profiles)
                 {
                     if (playerNetIds.Contains(player))
                         continue;
@@ -91,8 +90,6 @@ namespace Content.Server.GameTicking
 
             var spawnableStations = GetSpawnableStations();
             var assignedJobs = _stationJobs.AssignJobs(profiles, spawnableStations);
-
-            _stationJobs.AssignOverflowJobs(ref assignedJobs, playerNetIds, profiles, spawnableStations);
 
             // Calculate extended access for stations.
             var stationJobCounts = spawnableStations.ToDictionary(e => e, _ => 0);
