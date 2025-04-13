@@ -76,14 +76,13 @@ public sealed class GasAnalyzerSystem : EntitySystem
     /// </summary>
     private void OnUseInHand(Entity<GasAnalyzerComponent> entity, ref UseInHandEvent args)
     {
+        // Not checking for Handled because ActivatableUISystem already marks it as such.
+
         if (!entity.Comp.Enabled)
-        {
             ActivateAnalyzer(entity, args.User);
-        }
         else
-        {
             DisableAnalyzer(entity, args.User);
-        }
+
         args.Handled = true;
     }
 

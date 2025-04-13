@@ -33,7 +33,8 @@ public abstract class SharedIdCardSystem : EntitySystem
         // When a player gets renamed their id card is renamed as well to match.
         // Unfortunately since TryFindIdCard will succeed if the entity is also a card this means that the card will
         // keep renaming itself unless we return early.
-        if (HasComp<IdCardComponent>(ev.Uid))
+        // We also do not include the PDA itself being renamed, as that triggers the same event (e.g. for chameleon PDAs).
+        if (HasComp<IdCardComponent>(ev.Uid) || HasComp<PdaComponent>(ev.Uid))
             return;
 
         if (TryFindIdCard(ev.Uid, out var idCard))
@@ -116,6 +117,7 @@ public abstract class SharedIdCardSystem : EntitySystem
     /// </summary>
     /// <remarks>
     /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
+    /// Actually works with the LocalizedJobTitle DataField and not with JobTitle.
     /// </remarks>
     public bool TryChangeJobTitle(EntityUid uid, string? jobTitle, IdCardComponent? id = null, EntityUid? player = null)
     {
@@ -134,9 +136,9 @@ public abstract class SharedIdCardSystem : EntitySystem
             jobTitle = null;
         }
 
-        if (id.JobTitle == jobTitle)
+        if (id.LocalizedJobTitle == jobTitle)
             return true;
-        id.JobTitle = jobTitle;
+        id.LocalizedJobTitle = jobTitle;
         Dirty(uid, id);
         UpdateEntityName(uid, id);
 
@@ -238,7 +240,7 @@ public abstract class SharedIdCardSystem : EntitySystem
         if (!Resolve(uid, ref id))
             return;
 
-        var jobSuffix = string.IsNullOrWhiteSpace(id.JobTitle) ? string.Empty : $" ({id.JobTitle})";
+        var jobSuffix = string.IsNullOrWhiteSpace(id.LocalizedJobTitle) ? string.Empty : $" ({id.LocalizedJobTitle})";
 
         var val = string.IsNullOrWhiteSpace(id.FullName)
             ? Loc.GetString(id.NameLocId,
@@ -251,7 +253,7 @@ public abstract class SharedIdCardSystem : EntitySystem
 
     private static string ExtractFullTitle(IdCardComponent idCardComponent)
     {
-        return $"{idCardComponent.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(idCardComponent.JobTitle ?? string.Empty)})"
+        return $"{idCardComponent.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(idCardComponent.LocalizedJobTitle ?? string.Empty)})"
             .Trim();
     }
 }

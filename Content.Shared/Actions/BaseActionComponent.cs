@@ -41,6 +41,16 @@ public abstract partial class BaseActionComponent : Component
     [DataField("iconColor")] public Color IconColor = Color.White;
 
     /// <summary>
+    ///     The original <see cref="IconColor"/> this action was.
+    /// </summary>
+    [DataField] public Color OriginalIconColor;
+
+    /// <summary>
+    ///     The color the action should turn to when disabled
+    /// </summary>
+    [DataField] public Color DisabledIconColor = Color.DimGray;
+
+    /// <summary>
     ///     Keywords that can be used to search for this action in the action menu.
     /// </summary>
     [DataField("keywords")] public HashSet<string> Keywords = new();
@@ -65,6 +75,11 @@ public abstract partial class BaseActionComponent : Component
     /// </summary>
     // TODO serialization
     public (TimeSpan Start, TimeSpan End)? Cooldown;
+
+    /// <summary>
+    ///     If true, the action will have an initial cooldown applied upon addition.
+    /// </summary>
+    [DataField] public bool StartDelay = false;
 
     /// <summary>
     ///     Time interval between action uses.
@@ -153,6 +168,14 @@ public abstract partial class BaseActionComponent : Component
     public bool RaiseOnUser;
 
     /// <summary>
+    ///     If true, this will cause the the action event to always be raised directed at the action itself instead of the action's container/provider.
+    ///     Takes priority over RaiseOnUser.
+    /// </summary>
+    [DataField]
+    [Obsolete("This datafield will be reworked in an upcoming action refactor")]
+    public bool RaiseOnAction;
+
+    /// <summary>
     ///     Whether or not to automatically add this action to the action bar when it becomes available.
     /// </summary>
     [DataField("autoPopulate")] public bool AutoPopulate = true;
@@ -179,6 +202,8 @@ public abstract class BaseActionComponentState : ComponentState
     public SpriteSpecifier? Icon;
     public SpriteSpecifier? IconOn;
     public Color IconColor;
+    public Color OriginalIconColor;
+    public Color DisabledIconColor;
     public HashSet<string> Keywords;
     public bool Enabled;
     public bool Toggled;
@@ -195,6 +220,7 @@ public abstract class BaseActionComponentState : ComponentState
     public int Priority;
     public NetEntity? AttachedEntity;
     public bool RaiseOnUser;
+    public bool RaiseOnAction;
     public bool AutoPopulate;
     public bool Temporary;
     public ItemActionIconStyle ItemIconStyle;
@@ -206,9 +232,12 @@ public abstract class BaseActionComponentState : ComponentState
         EntityIcon = entManager.GetNetEntity(component.EntIcon);
         AttachedEntity = entManager.GetNetEntity(component.AttachedEntity);
         RaiseOnUser = component.RaiseOnUser;
+        RaiseOnAction = component.RaiseOnAction;
         Icon = component.Icon;
         IconOn = component.IconOn;
         IconColor = component.IconColor;
+        OriginalIconColor = component.OriginalIconColor;
+        DisabledIconColor = component.DisabledIconColor;
         Keywords = component.Keywords;
         Enabled = component.Enabled;
         Toggled = component.Toggled;

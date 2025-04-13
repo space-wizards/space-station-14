@@ -427,7 +427,9 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     private void OnUiMessage(EntityUid uid, CartridgeLoaderComponent component, CartridgeUiMessage args)
     {
         var cartridgeEvent = args.MessageEvent;
+        cartridgeEvent.User = args.Actor;
         cartridgeEvent.LoaderUid = GetNetEntity(uid);
+        cartridgeEvent.Actor = args.Actor;
 
         RelayEvent(component, cartridgeEvent, true);
     }
