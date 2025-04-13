@@ -30,6 +30,17 @@
       prototype: ComputerAlert
 
 - type: entity
+  parent: [ BaseComputerCircuitboard, BaseCommandContraband ]
+  id: BSABoard
+  name: Bluespace artillery electronics
+  description: You're either dead or alive with this board...
+  components:
+    - type: Sprite
+      state: cpu_centcomm
+    - type: ComputerBoard
+      prototype: BSAcomputer
+
+- type: entity
   parent: BaseComputerCircuitboard
   id: AtmosMonitoringComputerCircuitboard
   name: atmospheric network monitor board

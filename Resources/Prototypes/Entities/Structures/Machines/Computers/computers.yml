@@ -1,4 +1,37 @@
 - type: entity
+  parent: BaseComputer
+  id: BSAComputer
+  name: Bluespace artillery computer
+  description: Used to aim and fire bluespace artillery.
+  components:
+  - type: Computer
+    board: BSABoard
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: command
+    - map: ["computerLayerKeys"]
+      state: rd_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+    - type: AccessReader
+      access:
+      - [ Command ]
+    - type: ActivatableUI
+      singleUser: true
+      key: enum.BluespaceArtileryUIKey.Key
+    - type: UserInterface
+      interfaces:
+        enum.BluespaceArtileryUIKey.Key:
+          type: BluespaceArtileryConsoleBoundUserInterfaces
+        enum.WiresUiKey.Key:
+          type: WiresBoundUserInterface
+
+- type: entity
   parent: BaseComputerAiAccess
   id: ComputerAlert
   name: atmospheric alerts computer

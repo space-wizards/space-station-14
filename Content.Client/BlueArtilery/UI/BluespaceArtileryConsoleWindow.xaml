@@ -1,0 +1,8 @@
+<ui:FancyWindow xmlns="https://spacestation14.io"
+    xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="{Loc 'ui-bsa'}"
+    Resizable="False">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
+        <Button Name="FireBSA" Text="{Loc 'ui-bsa-fire'}" />
+    </BoxContainer>
+</ui:FancyWindow>
