@@ -305,9 +305,9 @@
       - id: ToyFigurineNukieElite
         orGroup: GiftPool
       - id: ToyFigurineHqdishka
-        orGroup: SpacemenFig
+        orGroup: GiftPool
       - id: ToyFigurineHacksLua
-        orGroup: SpacemenFig
+        orGroup: GiftPool
 
 - type: entity
   id: PresentRandom
