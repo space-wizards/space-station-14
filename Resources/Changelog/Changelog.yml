@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DrSmugleaf
-  changes:
-  - message: Added admin log for ghost warping.
-    type: Add
-  id: 7660
-  time: '2024-11-29T09:46:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33636
 - author: MossyGreySlope
   changes:
   - message: Rename the "slimeperson life support crate" to "internals crate (nitrogen)".
@@ -3892,3 +3885,10 @@
   id: 8159
   time: '2025-04-13T06:29:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36348
+- author: KingFroozy
+  changes:
+  - message: Added white shoes to paramedic's loadout.
+    type: Add
+  id: 8160
+  time: '2025-04-13T10:35:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32227
