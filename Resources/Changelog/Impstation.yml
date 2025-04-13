@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Added the NT-strugglebug, a cheap, compact salvage shuttle. Buy from
-      the shipyard today!
-    type: Add
-  - message: Drastically lowered the cost of the Shipyard's bargain bin option.
-    type: Tweak
-  id: 1011
-  time: '2025-01-27T15:04:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1498
 - author: Sleiphros
   changes:
   - message: Several changes to a few derelicts.
@@ -4103,3 +4093,10 @@
   id: 1510
   time: '2025-04-13T05:00:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2249
+- author: SixValentine
+  changes:
+  - message: Fur trim to Warden's Hardsuit (Fashion Forward Militarism? Slay?)
+    type: Add
+  id: 1511
+  time: '2025-04-13T05:01:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2234
