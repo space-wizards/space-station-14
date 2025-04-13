@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Monkeys and Kobolds can now pilot shuttles.
-    type: Add
-  id: 1009
-  time: '2025-01-27T00:54:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1495
 - author: DinnerCalzone
   changes:
   - message: Fixed Marathon engineering missing it's PA computer board.
@@ -4103,3 +4096,10 @@
   id: 1508
   time: '2025-04-13T04:49:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2244
+- author: hivehum
+  changes:
+  - message: Mail looks more like you're used to.
+    type: Tweak
+  id: 1509
+  time: '2025-04-13T04:57:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2217
