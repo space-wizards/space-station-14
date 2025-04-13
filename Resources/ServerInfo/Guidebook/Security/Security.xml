@@ -15,7 +15,7 @@ They face [textlink="Syndicate Agents" link="Traitors"], [textlink="Nuclear Oper
   </Box>
 
 ## Gear
-First we have non-lethals a step above simply telling someone to cooperate with instructions. Both the stunbaton and disabler are capable of limiting the movement of an assailant, whereas handcuffs can be applied to deny a criminal free movement and access to their hands.
+First we have non-lethals a step above simply telling someone to cooperate with instructions. Both the stunbaton and disabler are capable of limiting the movement of an assailant, whereas handcuffs can be applied to deny a criminal free movement and access to their hands. Cuffs will also shove the person down if your [color=red]harm mode[/color] is active during uncuff.
   <Box>
     <GuideEntityEmbed Entity="Stunbaton"/>
     <GuideEntityEmbed Entity="Handcuffs"/>
@@ -31,7 +31,7 @@ It is worth noting that flashes can be both used in a large area ([color=yellow]
     <GuideEntityEmbed Entity="ClothingEyesGlassesSecurity"/>
     <GuideEntityEmbed Entity="GrenadeFlashBang"/>
   </Box>
-  
+
 ## Lethals
 Should the situation dictate, [color=#cb0000]Security[/color] have access to laser rifles, shotguns, handguns and automatic rifles able to put down substancial fire against any who would stand against the station.
   <Box>

@@ -57,7 +57,7 @@
   components:
   - type: GameRule
   - type: BasicStationEventScheduler
-    minimumTimeUntilFirstEvent: 300 # 5 min
+    minimumTimeUntilFirstEvent: 600 # 10 min
     minMaxEventTiming:
       min: 750 # 12.5 min
       max: 930 # 17.5 min
@@ -70,7 +70,7 @@
   components:
   - type: GameRule
   - type: BasicStationEventScheduler
-    minimumTimeUntilFirstEvent: 300 # 5 min 
+    minimumTimeUntilFirstEvent: 600 # 10 min 
     minMaxEventTiming:
       min: 750 # 12.5 min
       max: 930 # 17.5 min
