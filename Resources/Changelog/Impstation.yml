@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Removed the Flagship wreck.
-    type: Remove
-  id: 1018
-  time: '2025-01-30T19:56:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1518
 - author: dayn-e
   changes:
   - message: Reworked the dog accent to sound more scoob-like.
@@ -4106,3 +4099,11 @@
   id: 1517
   time: '2025-04-13T09:06:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2197
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: Introducing the Portable Sensor Array, a Stealth Detector. Unlocked in
+      "Special Means" and produced at Science!
+    type: Add
+  id: 1518
+  time: '2025-04-13T15:54:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2232
