@@ -13,8 +13,6 @@ Command Meeting: Needs access to execution cameras
 Execution telescreens: Need access to execution cameras
 Weird color room in east service maints starts with lights on
 Chef's closets have stuff in 'em they shouldn't? Like, crowbars and N2 tanks.
-Cargo computer shutter button seems not to be hooked up.
-	It is, though...? Does the directional window block it?
 Cargo shuttle computer can't find the shuttle. Mass scanner says it's out there...
 Forms for things like borging, department access, psych prescriptions...
 	Make lots of forms for HoP, too
@@ -68,13 +66,10 @@ AI power isn't connected?
 Salvage space arm is getting sensed as part of the room by air sensors?
 Weapons north maints door stuck open
 Somewhere, there is a holopad with no label.
-
 I'd really like the sec camera monitors to only see General if possible...
 	And I think I already have it on this list, but the Admin camera still no worky.
 Det/Prosc door bolt doesn't work. It bolts, then immediately unbolts.
 	nor instead of or gate?
-Why can AI see inside tider shop? Is the holopad in there anchored? Is there a camera? Do the shutters not block?
-	Holopad. I'll make it private with the otheres.
 Not much vision of arti/anom hall
 	This is confusing, and I need to investigate more. The camera on the east side should see just fine, and the camera on the west side should get anything it misses.
 Vision of HoP/Bridge shortcut *does* see secret door.
@@ -127,6 +122,8 @@ Tiny one-tile vision hole under HoP area
 	Moved camera from right by vent.
 Atmos waste system isn't set to right filters?
 	Should be set now
+Cargo computer shutter button seems not to be hooked up.
+	It is, though...? Does the directional window block it?
 
 
 THINGS I COULD MAKE:
@@ -275,3 +272,6 @@ DONE:
 /* Remove riveted walls in storage */
 /* Reinforce canister room walls */
 /* Make HoP's office clearer in particular */
+/* Why can AI see inside tider shop? Is the holopad in there anchored? Is there a camera? Do the shutters not block? */
+/* 	Holopad. I'll make it private with the otheres. */
+/* 		Or I won't bother. */
