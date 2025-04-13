@@ -46,7 +46,7 @@ steal-target-groups-bible = bible
 steal-target-groups-butchers-cleaver = butcher's cleaver
 steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
 steal-target-groups-clothing-neck-clownmedal = clown medal
-steal-target-groups-silver-id = silver ID card
+steal-target-groups-silver-id = Any Head ID card
 steal-target-groups-access-configurator = access configurator
 steal-target-groups-toolbox-golden = golden toolbox
 
