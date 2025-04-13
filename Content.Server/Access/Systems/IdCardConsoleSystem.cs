@@ -1,25 +1,24 @@
+using System.Linq;
+using Content.Server.Chat.Systems;
+using Content.Server.Containers;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Components;
+using static Content.Shared.Access.Components.IdCardConsoleComponent;
 using Content.Shared.Access.Systems;
+using Content.Shared.Access;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Construction;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Roles;
 using Content.Shared.StationRecords;
-using Content.Shared.StatusIcon;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
-using System.Linq;
-using static Content.Shared.Access.Components.IdCardConsoleComponent;
-using Content.Shared.Access;
-using Content.Shared.Construction;
-using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Throwing;
 using Robust.Shared.Random;
-using Content.Server.Containers;
-using Content.Shared.Damage;
-using Content.Server.Chat.Systems;
 
 namespace Content.Server.Access.Systems;
 
@@ -48,11 +47,11 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         SubscribeLocalEvent<IdCardConsoleComponent, ComponentStartup>(UpdateUserInterface);
         SubscribeLocalEvent<IdCardConsoleComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<IdCardConsoleComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
-
         SubscribeLocalEvent<IdCardConsoleComponent, DamageChangedEvent>(OnDamageChanged);
 
         // Intercept the event before anyone can do anything with it!
-        SubscribeLocalEvent<IdCardConsoleComponent, MachineDeconstructedEvent>(OnMachineDeconstructed, before: [typeof(EmptyOnMachineDeconstructSystem), typeof(ItemSlotsSystem)]);
+        SubscribeLocalEvent<IdCardConsoleComponent, MachineDeconstructedEvent>(OnMachineDeconstructed,
+            before: [typeof(EmptyOnMachineDeconstructSystem), typeof(ItemSlotsSystem)]);
     }
 
     private void OnWriteToTargetIdMessage(EntityUid uid, IdCardConsoleComponent component, WriteToTargetIdMessage args)
@@ -229,28 +228,29 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
     private void OnMachineDeconstructed(Entity<IdCardConsoleComponent> entity, ref MachineDeconstructedEvent args)
     {
-        TryDropAndThrowIds(entity.Owner, entity.Comp, null);
+        TryDropAndThrowIds(entity.AsNullable());
     }
 
     private void OnDamageChanged(Entity<IdCardConsoleComponent> entity, ref DamageChangedEvent args)
     {
-        if (TryDropAndThrowIds(entity.Owner, entity.Comp, null))
-            _chat.TrySendInGameICMessage(entity, Loc.GetString("id-console-system-eject-on-damage"), InGameICChatType.Speak, true);
+        if (TryDropAndThrowIds(entity.AsNullable()))
+            _chat.TrySendInGameICMessage(entity, Loc.GetString("id-card-console-damaged"), InGameICChatType.Speak, true);
     }
 
-    #region Public functions
+    #region PublicAPI
+
     /// <summary>
     ///     Tries to drop any IDs stored in the console, and then tries to throw them away.
     ///     Returns true if anything was ejected and false otherwise.
     /// </summary>
-    public bool TryDropAndThrowIds(EntityUid uid, IdCardConsoleComponent? idCardConsoleComp, ItemSlotsComponent? itemSlotsComp)
+    public bool TryDropAndThrowIds(Entity<IdCardConsoleComponent?, ItemSlotsComponent?> ent)
     {
-        if (!Resolve(uid, ref idCardConsoleComp, ref itemSlotsComp))
+        if (!Resolve(ent, ref ent.Comp1, ref ent.Comp2))
             return false;
 
         var didEject = false;
 
-        foreach (var slot in itemSlotsComp.Slots.Values)
+        foreach (var slot in ent.Comp2.Slots.Values)
         {
             if (slot.Item == null || slot.ContainerSlot == null)
                 continue;
@@ -265,5 +265,6 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         return didEject;
     }
+
     #endregion
 }
