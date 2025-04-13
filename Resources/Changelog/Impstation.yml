@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Tck'tck's now have a multitool and salvage access.
-    type: Tweak
-  id: 1016
-  time: '2025-01-29T19:39:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1514
 - author: honeyed-lemons
   changes:
   - message: Fixed vent crawling through gas pipe sensors
@@ -4106,3 +4099,10 @@
   id: 1515
   time: '2025-04-13T05:05:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2219
+- author: mqole
+  changes:
+  - message: LOBBY TIMER IS ACTUALLY 7 MINUTES NOW I PROMMY
+    type: Fix
+  id: 1516
+  time: '2025-04-13T08:49:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2255
