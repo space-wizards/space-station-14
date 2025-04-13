@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: dayn-e
-  changes:
-  - message: Reworked the dog accent to sound more scoob-like.
-    type: Tweak
-  id: 1019
-  time: '2025-01-30T22:10:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1494
 - author: kipdotnet
   changes:
   - message: Added a new "Logistics" access group, given to Cargo Technicians and
@@ -4107,3 +4100,10 @@
   id: 1518
   time: '2025-04-13T15:54:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2232
+- author: TheGrimbeeper
+  changes:
+  - message: Oxygen foam from artifacts.
+    type: Remove
+  id: 1519
+  time: '2025-04-13T15:56:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2245
