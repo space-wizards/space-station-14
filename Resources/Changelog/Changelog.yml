@@ -1,94 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed expeditions on cave planets not having any ore.
-    type: Fix
-  id: 7649
-  time: '2024-11-24T08:49:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32890
-- author: slarticodefast
-  changes:
-  - message: Fixed doors not auto-closing correctly after being unbolted in an open
-      state.
-    type: Fix
-  id: 7650
-  time: '2024-11-25T04:26:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33524
-- author: Schrodinger71
-  changes:
-  - message: Fixed a bug letting players type "ghost" in the console and then see
-      the whole chat while being in the lobby.
-    type: Fix
-  id: 7651
-  time: '2024-11-25T07:20:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33529
-- author: Minemoder
-  changes:
-  - message: The shark plushie now goes rawr when hitting something or being thrown.
-    type: Tweak
-  id: 7652
-  time: '2024-11-25T12:23:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33540
-- author: red15
-  changes:
-  - message: Vending machine lights turns off when broken.
-    type: Fix
-  id: 7653
-  time: '2024-11-25T12:35:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33513
-- author: metalgearsloth
-  changes:
-  - message: Adjusted the top menu on the separated game screen. The buttons will
-      now form multiple rows and no longer overflow into the viewport.
-    type: Tweak
-  id: 7654
-  time: '2024-11-26T00:59:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33047
-- author: slarticodefast
-  changes:
-  - message: Added the greytide virus station event. It will bolt open all doors in
-      a few randomly chosen departments and unlock lockers with the corresponding
-      access.
-    type: Add
-  id: 7655
-  time: '2024-11-26T13:50:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33547
-- author: slarticodefast
-  changes:
-  - message: Fixed space ambient music not playing.
-    type: Fix
-  id: 7656
-  time: '2024-11-27T05:32:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33594
-- author: slarticodefast
-  changes:
-  - message: Fixed windoors and high security doors not showing up on the AI's electrocution
-      HUD.
-    type: Fix
-  id: 7657
-  time: '2024-11-27T05:55:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33551
-- author: Beck Thompson
-  changes:
-  - message: Handheld light verbs are now predicted!
-    type: Fix
-  id: 7658
-  time: '2024-11-28T13:41:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33622
-- author: arimah
-  changes:
-  - message: GPS coordinates are now more readable.
-    type: Tweak
-  id: 7659
-  time: '2024-11-29T08:14:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33625
-- author: DrSmugleaf
-  changes:
-  - message: Added admin log for ghost warping.
-    type: Add
-  id: 7660
-  time: '2024-11-29T09:46:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33636
 - author: MossyGreySlope
   changes:
   - message: Rename the "slimeperson life support crate" to "internals crate (nitrogen)".
@@ -3890,3 +3800,95 @@
   id: 8148
   time: '2025-04-10T15:59:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36273
+- author: SlamBamActionman
+  changes:
+  - message: The Syndicate Raid Bundle now comes in a Syndicate backpack instead of
+      duffelbag.
+    type: Tweak
+  - message: The Syndicate Raid Suit now has an inventory size of 2x2 (previously
+      4x4).
+    type: Tweak
+  id: 8149
+  time: '2025-04-10T22:22:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35890
+- author: EmoGarbage404
+  changes:
+  - message: Grinding soda cans now gives a small amount of Aluminum.
+    type: Add
+  id: 8150
+  time: '2025-04-11T00:54:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36449
+- author: RedBookcase
+  changes:
+  - message: The Kardashev-Mosin is now considered Major Contraband.
+    type: Tweak
+  id: 8151
+  time: '2025-04-11T00:57:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36446
+- author: Nukesthestation
+  changes:
+  - message: Zombies /suicideing return to an ai state
+    type: Tweak
+  id: 8152
+  time: '2025-04-11T01:12:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36453
+- author: YoungThugSS14
+  changes:
+  - message: Wizards now appear roundstart in the "all at once" gamemode.
+    type: Tweak
+  id: 8153
+  time: '2025-04-11T02:06:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36408
+- author: DinnerCalzone
+  changes:
+  - message: Fixed gas mixers and pneumatic valves being hidden by floor tiles.
+    type: Fix
+  id: 8154
+  time: '2025-04-11T02:10:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36428
+- author: Nox38, BurgerMoth, ArtisticRoomba
+  changes:
+  - message: Added descriptions for all .25 caseless cartridges, magazines, and ammo
+      boxes.
+    type: Add
+  id: 8155
+  time: '2025-04-11T02:15:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36385
+- author: Nox38, BurgerMoth, ArtisticRoomba
+  changes:
+  - message: Added descriptions to all .45 magnum cartridges, magazines, speed loaders,
+      and ammo boxes.
+    type: Add
+  id: 8156
+  time: '2025-04-11T04:58:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36383
+- author: PJB3005
+  changes:
+  - message: Lobby time on Wizard's Den has been increased from 2 minute 30 seconds
+      to 5 minutes.
+    type: Tweak
+  id: 8157
+  time: '2025-04-12T09:05:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36476
+- author: Quantum-cross
+  changes:
+  - message: Supercrit anomaly playing explosion sound twice
+    type: Fix
+  id: 8158
+  time: '2025-04-12T23:27:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36489
+- author: metalgearsloth
+  changes:
+  - message: Fixed docking ports being clipped in shuttle nav if using non-100% UI
+      scales.
+    type: Fix
+  id: 8159
+  time: '2025-04-13T06:29:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36348
+- author: KingFroozy
+  changes:
+  - message: Added white shoes to paramedic's loadout.
+    type: Add
+  id: 8160
+  time: '2025-04-13T10:35:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32227
