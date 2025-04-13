@@ -1,13 +1,18 @@
-﻿using Content.Server.Atmos.EntitySystems;
+﻿using Content.Server.Administration.Logs;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
+using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Audio;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
 
@@ -23,6 +28,9 @@ public sealed class GasPressureReliefValveSystem : EntitySystem
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+
 
 
     public override void Initialize()
@@ -31,6 +39,11 @@ public sealed class GasPressureReliefValveSystem : EntitySystem
         SubscribeLocalEvent<GasPressureReliefValveComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<GasPressureReliefValveComponent, AtmosDeviceUpdateEvent>(OnReliefValveUpdated);
         SubscribeLocalEvent<GasPressureReliefValveComponent, ExaminedEvent>(OnExamined);
+
+        // Bound UI subscriptions
+        SubscribeLocalEvent<GasPressureReliefValveComponent, GasPressureReliefValveChangeThresholdMessage>(OnThresholdChangeMessage);
+
+        // No device network jazz because I don't know how to do it.
     }
 
     private void OnExamined(EntityUid valveEntityUid,
@@ -156,6 +169,10 @@ public sealed class GasPressureReliefValveSystem : EntitySystem
         // We remove the gas from the inlet and merge it into the outlet.
         var removed = inletPipeNode.Air.RemoveVolume(actualVolumeToTransfer);
         _atmosphereSystem.Merge(outletPipeNode.Air, removed);
+
+        // Oh, and set the flow rate (L/S) to the actual volume we transferred.
+        // This is used for the UI and examine.
+        valveComponent.FlowRate = actualVolumeToTransfer / args.dt;
     }
 
     private void UpdateAppearance(EntityUid valveEntityUid,
@@ -166,6 +183,27 @@ public sealed class GasPressureReliefValveSystem : EntitySystem
             return;
 
         _appearance.SetData(valveEntityUid, FilterVisuals.Enabled, valveComponent.Enabled, appearance);
+    }
+
+    private void OnThresholdChangeMessage(EntityUid valveEntityUid,
+        GasPressureReliefValveComponent valveComponent,
+        GasPressureReliefValveChangeThresholdMessage args)
+    {
+        valveComponent.Threshold = Math.Max(0f, args.ThresholdPressure);
+        _adminLogger.Add(LogType.AtmosVolumeChanged,
+            LogImpact.Medium,
+            $"{ToPrettyString(args.Actor):player} set the pressure threshold on {ToPrettyString(valveEntityUid):device} to {args.ThresholdPressure}");
+        DirtyUI(valveEntityUid, valveComponent);
+    }
+
+    private void DirtyUI(EntityUid valveEntityUid, GasPressureReliefValveComponent? valveComponent)
+    {
+        if (!Resolve(valveEntityUid, ref valveComponent))
+            return;
+
+        _userInterfaceSystem.SetUiState(valveEntityUid,
+            GasPressureReliefValveUiKey.Key,
+            new GasPressureReliefValveBoundUserInterfaceState(Name(valveEntityUid), valveComponent.FlowRate, valveComponent.Threshold, valveComponent.Enabled));
     }
 
 
