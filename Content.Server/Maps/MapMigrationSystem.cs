@@ -21,7 +21,11 @@ public sealed class MapMigrationSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IResourceManager _resMan = default!;
 
-    private const List<string> MigrationFiles = ["/migration.yml", "/_Starlight/migration.yml"]; // Starlight-edit
+    private static readonly List<string> MigrationFiles = new()
+    {
+        "/migration.yml", 
+        "/_Starlight/migration.yml"
+    }; // Starlight-edit
 
     public override void Initialize()
     {
