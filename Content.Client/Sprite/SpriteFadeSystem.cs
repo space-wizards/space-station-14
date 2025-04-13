@@ -104,6 +104,9 @@ public sealed class SpriteFadeSystem : EntitySystem
 
                         foreach (var fixture in body.Fixtures.Values)
                         {
+                            if (!fixture.Hard)
+                                continue;
+
                             if (_fixtures.TestPoint(fixture.Shape, transform, mapPos.Position))
                             {
                                 collided = true;
