@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AvianMaiden
-  changes:
-  - message: AI law boards can now be examined to see their laws!
-    type: Add
-  id: 1015
-  time: '2025-01-28T21:46:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1510
 - author: kipdotnet
   changes:
   - message: Tck'tck's now have a multitool and salvage access.
@@ -4104,3 +4097,12 @@
   id: 1514
   time: '2025-04-13T05:03:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2241
+- author: Oberonics
+  changes:
+  - message: Cluwne spells are now banned magic.
+    type: Remove
+  - message: Wizards can buy a cluwne wand instead.
+    type: Tweak
+  id: 1515
+  time: '2025-04-13T05:05:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2219
