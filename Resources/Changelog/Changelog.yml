@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: GansuLalan
-  changes:
-  - message: The arrival shuttle will no longer smash the nuke
-    type: Fix
-  id: 7662
-  time: '2024-11-30T02:48:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33659
 - author: VlaDOS1408
   changes:
   - message: Locale to shuttle-ftl-status-Invalid
@@ -3898,3 +3891,10 @@
   id: 8161
   time: '2025-04-13T13:22:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36445
+- author: K-Dynamic
+  changes:
+  - message: Neutralised anomaly infections now drop inert cores.
+    type: Tweak
+  id: 8162
+  time: '2025-04-13T14:24:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36503
