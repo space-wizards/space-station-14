@@ -29,6 +29,8 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
 
         SubscribeLocalEvent<RandomTraitorProgressComponent, ObjectiveAssignedEvent>(OnRandomTraitorProgressAssigned);
         SubscribeLocalEvent<RandomTraitorAliveComponent, ObjectiveAssignedEvent>(OnRandomTraitorAliveAssigned);
+        SubscribeLocalEvent<RandomTargetAliveComponent, ObjectiveAssignedEvent>(OnRandomTargetAliveAssigned);
+
     }
 
     private void OnSpecificPersonAssigned(Entity<PickSpecificPersonComponent> ent, ref ObjectiveAssignedEvent args)
@@ -208,5 +210,58 @@ public sealed class PickObjectiveTargetSystem : EntitySystem
         }
 
         _target.SetTarget(ent.Owner, _random.Pick(traitors).Id, target);
+    }
+
+    private void OnRandomTargetAliveAssigned(Entity<RandomTargetAliveComponent> ent, ref ObjectiveAssignedEvent args)
+    {
+        // invalid prototype
+        if (!TryComp<TargetObjectiveComponent>(ent.Owner, out var target))
+        {
+            args.Cancelled = true;
+            return;
+        }
+
+        var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind).ToHashSet();
+        var targetAssigned = false;
+        var targets = new HashSet<EntityUid>();
+
+        // If you have to help a traitor, you can't also be told to make them fail their hit.
+        foreach (var objective in args.Mind.Objectives)
+        {
+            if (HasComp<RandomTraitorProgressComponent>(objective))
+            {
+                if (TryComp<TargetObjectiveComponent>(objective, out var help))
+                {
+                    traitors.RemoveWhere(x => x.Id == help.Target);
+                }
+            }
+        }
+
+        // Check for kill objectives in each traitor, excluding those you have to help.
+        foreach (var traitor in traitors)
+        {
+            foreach (var objective in traitor.Mind.Objectives)
+            {
+                if (HasComp<KillPersonConditionComponent>(objective))
+                {
+                    if (TryComp<TargetObjectiveComponent>(objective, out var hit))
+                    {
+                        if (hit.Target.HasValue)
+                        {
+                            targets.Add(hit.Target.Value);
+                            targetAssigned = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        // There are no valid targets.
+        if (!targetAssigned)
+        {
+            args.Cancelled = true;
+            return;
+        }
+        _target.SetTarget(ent.Owner, _random.Pick(targets), target);
     }
 }
