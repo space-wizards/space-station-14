@@ -1,0 +1,4 @@
+- files: ["detectorbeep.ogg"]
+  license: "Custom" #AGPL 3.0 but this is not considered a valid license by the RGA validator
+  copyright: "Taken from Command and Conquer: Renegade"
+  source: "https://github.com/electronicarts/CnC_Renegade/tree/main"

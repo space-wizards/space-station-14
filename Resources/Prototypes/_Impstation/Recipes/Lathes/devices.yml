@@ -1,0 +1,9 @@
+- type: latheRecipe
+  id: PortableSensorArray
+  result: PSAEmpty
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 100
+    Plasma: 050
+    Gold: 010

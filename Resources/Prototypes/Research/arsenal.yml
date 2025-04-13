@@ -139,6 +139,7 @@
   cost: 5000
   recipeUnlocks:
   - PRIbarPlusConversionKit #imp
+  - PortableSensorArray #imp
   - ClothingBackpackElectropack
 
 # Tier 2

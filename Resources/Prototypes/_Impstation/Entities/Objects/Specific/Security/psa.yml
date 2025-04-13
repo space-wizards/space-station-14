@@ -1,0 +1,58 @@
+- type: entity
+  id: PSAUnpowered
+  parent: BaseItem
+  name: portable sensor array
+  description: A device used to detect electromagnetic irregularities that warp the visual spectrum.
+  suffix: Unpowered
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Security/psa.rsi
+    layers:
+      - state: icon
+      - state: screen
+        shader: unshaded
+        visible: false
+        map: ["enum.ToggleVisuals.Layer"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ItemToggle
+  - type: ProximityBeeper
+  - type: ProximityDetector
+    range: 8
+    criteria:
+      components:
+      - Stealth
+  - type: Beeper
+    isMuted: true
+    minBeepInterval: 1.00
+    maxBeepInterval: 1.00
+    beepSound:
+      path: "/Audio/_Impstation/Items/detectorbeep.ogg"
+      params:
+        maxDistance: 1
+        volume: -8
+
+- type: entity
+  id: PSA
+  parent: [ PSAUnpowered, PowerCellSlotSmallItem ]
+  suffix: Powered
+  components:
+  - type: PowerCellDraw
+    drawRate: 6
+    useRate: 0
+  - type: ToggleCellDraw
+
+- type: entity
+  id: PSAEmpty
+  parent: PSA
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
