@@ -30,13 +30,16 @@ public sealed partial class ZombieComponent : Component
     public float MinZombieInfectionChance = 0.05f;
 
     /// <summary>
-    /// How effective each resistance type on a piece of armor is.
+    /// How effective each resistance type on a piece of armor is. Using a damage specifier for this seems illegal.
     /// </summary>
-    public Dictionary<string, FixedPoint2> ResistanceEffectiveness = new()
+    public DamageSpecifier ResistanceEffectiveness = new()
     {
-        {"Slash", 0.5},
-        {"Piercing", 0.3},
-        {"Blunt", 0.1},
+        DamageDict = new ()
+        {
+            {"Slash", 0.5},
+            {"Piercing", 0.3},
+            {"Blunt", 0.1},
+        }
     };
 
     [ViewVariables(VVAccess.ReadWrite)]

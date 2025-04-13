@@ -210,8 +210,7 @@ namespace Content.Server.Zombies
 
             var armorEv = new CoefficientQueryEvent(ProtectiveSlots);
             RaiseLocalEvent(uid, armorEv);
-            foreach (KeyValuePair<string, FixedPoint2> resistanceEffectiveness in zombieComponent
-                         .ResistanceEffectiveness)
+            foreach (var resistanceEffectiveness in zombieComponent.ResistanceEffectiveness.DamageDict)
             {
                 if (armorEv.DamageModifiers.Coefficients.TryGetValue(resistanceEffectiveness.Key, out var coefficient))
                 {
