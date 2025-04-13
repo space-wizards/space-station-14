@@ -284,7 +284,6 @@ public abstract class SharedStunSystem : EntitySystem
             RemComp<SlowedDownComponent>(uid);
             return;
         }
-            
 
         EnsureComp<SlowedDownComponent>(uid, out var comp);
 
