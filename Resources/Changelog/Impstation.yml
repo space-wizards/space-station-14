@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: 12rabbits
-  changes:
-  - message: Unborgable brains now dissolve into more appropriate reagents.
-    type: Tweak
-  id: 1008
-  time: '2025-01-27T00:40:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1437
 - author: kipdotnet
   changes:
   - message: Monkeys and Kobolds can now pilot shuttles.
@@ -4103,3 +4096,10 @@
   id: 1507
   time: '2025-04-13T04:47:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2252
+- author: TheGrimbeeper
+  changes:
+  - message: weakened pull when artifact opens a supermatter portal
+    type: Fix
+  id: 1508
+  time: '2025-04-13T04:49:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2244
