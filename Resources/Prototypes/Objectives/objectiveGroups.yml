@@ -41,7 +41,7 @@
   weights:
     RandomTraitorAliveObjective: 1
     RandomTraitorProgressObjective: 1
-    RandomTargetAliveObjective: 0.8
+    RandomTargetAliveObjective: 1
 
 #Thief groups
 - type: weightedRandom
