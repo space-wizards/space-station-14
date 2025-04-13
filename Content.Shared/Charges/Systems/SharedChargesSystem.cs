@@ -92,6 +92,9 @@ public abstract class SharedChargesSystem : EntitySystem
         return current >= charges;
     }
 
+    /// <summary>
+    /// Adds the specified charges. Does not reset the accumulator.
+    /// </summary>
     public void AddCharges(Entity<LimitedChargesComponent?> action, int addCharges)
     {
         if (addCharges == 0)
@@ -99,14 +102,23 @@ public abstract class SharedChargesSystem : EntitySystem
 
         action.Comp ??= EnsureComp<LimitedChargesComponent>(action.Owner);
 
-        var oldCharges = GetCurrentCharges((action.Owner, action.Comp, null));
-        var charges = Math.Clamp(oldCharges + addCharges, 0, action.Comp.MaxCharges);
+        // 1. If we're going FROM max then set lastupdate to now (so it doesn't instantly recharge).
+        // 2. If we're going TO max then also set lastupdate to now.
+        // 3. Otherwise don't modify it.
+        // No idea if we go to 0 but future problem.
 
-        if (oldCharges == charges)
+        var lastCharges = GetCurrentCharges(action);
+        var charges = lastCharges + addCharges;
+
+        if (lastCharges == charges)
             return;
 
-        action.Comp.LastCharges = charges;
-        action.Comp.LastUpdate = _timing.CurTime;
+        if (charges == action.Comp.MaxCharges || lastCharges == action.Comp.MaxCharges)
+        {
+            action.Comp.LastUpdate = _timing.CurTime;
+        }
+
+        action.Comp.LastCharges = Math.Clamp(action.Comp.LastCharges + addCharges, 0, action.Comp.MaxCharges);
         Dirty(action);
     }
 
