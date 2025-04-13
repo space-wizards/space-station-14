@@ -82,7 +82,7 @@
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtColorGrey
   result: ClothingUniformJumpskirtColorGrey
-  
+
 - type: latheRecipe
   parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitLoungewear
@@ -842,8 +842,8 @@
 
 - type: latheRecipe
   parent: BaseCommandHatRecipe
-  id: ClothingHeadHatCommandsoft
-  result: ClothingHeadHatCommandsoft
+  id: ClothingHeadHatCommandSoft
+  result: ClothingHeadHatCommandSoft
 
 # Non-command hats
 

@@ -397,7 +397,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/hos_parade.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband]
+  parent: [ ClothingUniformBase, BaseCommandContraband ]
   id: ClothingUniformJumpsuitCommandGeneric
   name: command jumpsuit
   description: A generic Command-colored jumpsuit not associated with any particular department.

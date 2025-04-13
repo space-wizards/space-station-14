@@ -100,10 +100,10 @@
   name: quartermaster's cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
-  id: ClothingHeadHatCommandsoft
+  parent: ClothingHeadHeadHatBaseFlippableClothingUniformJumpsuitCommandGeneric
+  id: ClothingHeadHatCommandSoft
   name: command cap
-  description: "It's a baseball hat painted in Command colours."
+  description: It's a baseball hat painted in Command colours.
   components:
   - type: Sprite
     sprite: Clothing/Head/Soft/commandsoft.rsi
@@ -111,10 +111,10 @@
     sprite: Clothing/Head/Soft/commandsoft.rsi
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatCommandsoft]
-  id: ClothingHeadHatCommandsoftFlipped
+  parent: [ ClothingHeadHeadHatBaseFlipped, ClothingHeadHatCommandSoft ]
+  id: ClothingHeadHatCommandSoftFlipped
   name: command cap
-    
+
 - type: entity
   parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatCorpsoft
