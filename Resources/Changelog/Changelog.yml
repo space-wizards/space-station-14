@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Plykiya
   changes:
-  - message: You can no longer cuff someone multiple times if multiple cuff do-afters
-      are completed at the exact same time.
-    type: Fix
-  id: 7665
-  time: '2024-11-30T15:58:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33646
-- author: Plykiya
-  changes:
   - message: You can now inspect the entity in your hand instead of the entity that
       happened to be underneath your hand.
     type: Fix
@@ -3899,3 +3891,12 @@
   id: 8164
   time: '2025-04-13T15:29:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31814
+- author: Beck Thompson, Kaz Wooblie
+  changes:
+  - message: Computers now wont delete items inside of them when deconstructing.
+    type: Fix
+  - message: The ID card computer now throws the IDs out when deconstructed or damaged!
+    type: Add
+  id: 8165
+  time: '2025-04-13T15:51:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32308
