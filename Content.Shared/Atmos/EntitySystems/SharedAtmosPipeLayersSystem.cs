@@ -31,7 +31,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<AtmosPipeLayersComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<AtmosPipeLayersComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerb);
+        SubscribeLocalEvent<AtmosPipeLayersComponent, GetVerbsEvent<Verb>>(OnGetVerb);
         SubscribeLocalEvent<AtmosPipeLayersComponent, UseInHandEvent>(OnUseInHandEvent);
         SubscribeLocalEvent<AtmosPipeLayersComponent, TryCyclingPipeLayerCompletedEvent>(OnCyclingPipeLayerCompleted);
         SubscribeLocalEvent<AtmosPipeLayersComponent, TrySettingPipeLayerCompletedEvent>(OnSettingPipeLayerCompleted);
@@ -43,9 +43,9 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         args.PushMarkup(Loc.GetString("atmos-pipe-layers-component-current-layer", ("layerName", layerName)));
     }
 
-    private void OnGetVerb(Entity<AtmosPipeLayersComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
+    private void OnGetVerb(Entity<AtmosPipeLayersComponent> ent, ref GetVerbsEvent<Verb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract)
             return;
 
         if (ent.Comp.NumberOfPipeLayers <= 1 || ent.Comp.PipeLayersLocked)
@@ -62,7 +62,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             var toolName = Loc.GetString(toolProto.ToolName).ToLower();
             var label = Loc.GetString("atmos-pipe-layers-component-tool-missing", ("toolName", toolName));
 
-            var v = new AlternativeVerb
+            var v = new Verb
             {
                 Priority = 1,
                 Category = VerbCategory.Adjust,
@@ -83,7 +83,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             var layerName = Loc.GetString("atmos-pipe-layers-component-layer-" + index);
             var label = Loc.GetString("atmos-pipe-layers-component-select-layer", ("layerName", layerName));
 
-            var v = new AlternativeVerb
+            var v = new Verb
             {
                 Priority = 1,
                 Category = VerbCategory.Adjust,
