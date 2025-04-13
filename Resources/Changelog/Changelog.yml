@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Plykiya
   changes:
-  - message: You can now inspect the entity in your hand instead of the entity that
-      happened to be underneath your hand.
-    type: Fix
-  id: 7666
-  time: '2024-11-30T16:14:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33642
-- author: Plykiya
-  changes:
   - message: You can now inspect entities in the stripping window instead of the entity
       that happened to be underneath the window.
     type: Fix
@@ -3900,3 +3892,11 @@
   id: 8165
   time: '2025-04-13T15:51:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32308
+- author: ElectroJr
+  changes:
+  - message: Fixed a bug that allowed dead or incapacitated people to potentially
+      interact with some UIs.
+    type: Fix
+  id: 8166
+  time: '2025-04-13T16:09:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36480
