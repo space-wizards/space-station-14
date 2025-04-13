@@ -39,6 +39,9 @@
   - type: Machine
     board: MailTeleporterMachineCircuitboard
   - type: PowerSwitch
+  - type: InteractionPopup
+    interactSuccessString: petting-success-mail-teleporter
+    interactFailureString: petting-failure-mail-teleporter
   - type: DeliverySpawner
     table: !type:NestedSelector
       tableId: RandomDeliveryBasic
