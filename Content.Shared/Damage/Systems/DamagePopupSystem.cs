@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -16,14 +15,14 @@ public sealed class DamagePopupSystem : EntitySystem
         SubscribeLocalEvent<DamagePopupComponent, InteractHandEvent>(OnInteractHand);
     }
 
-    private void OnDamageChange(EntityUid uid, DamagePopupComponent component, DamageChangedEvent args)
+    private void OnDamageChange(Entity<DamagePopupComponent> ent, ref DamageChangedEvent args)
     {
         if (args.DamageDelta != null)
         {
             var damageTotal = args.Damageable.TotalDamage;
             var damageDelta = args.DamageDelta.GetTotal();
 
-            var msg = component.Type switch
+            var msg = ent.Comp.Type switch
             {
                 DamagePopupType.Delta => damageDelta.ToString(),
                 DamagePopupType.Total => damageTotal.ToString(),
@@ -32,18 +31,18 @@ public sealed class DamagePopupSystem : EntitySystem
                 _ => "Invalid type",
             };
 
-            _popupSystem.PopupPredicted(msg, uid, args.Origin);
+            _popupSystem.PopupPredicted(msg, ent.Owner, args.Origin);
         }
     }
 
-    private void OnInteractHand(EntityUid uid, DamagePopupComponent component, InteractHandEvent args)
+    private void OnInteractHand(Entity<DamagePopupComponent> ent, ref InteractHandEvent args)
     {
-        if (component.AllowTypeChange)
+        if (ent.Comp.AllowTypeChange)
         {
-            var next = (DamagePopupType) (((int)component.Type + 1) % Enum.GetValues<DamagePopupType>().Length);
-            component.Type = next;
-            Dirty(uid, component);
-            _popupSystem.PopupPredicted("Target set to type: " + component.Type, uid, args.User);
+            var next = (DamagePopupType)(((int)ent.Comp.Type + 1) % Enum.GetValues<DamagePopupType>().Length);
+            ent.Comp.Type = next;
+            Dirty(ent);
+            _popupSystem.PopupPredicted(Loc.GetString("damage-popup-component-switched", ("setting", ent.Comp.Type)), ent.Owner, args.User);
         }
     }
 }
