@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: StationEvents with very low weights will now actually appear.
-    type: Fix
-  id: 7680
-  time: '2024-12-06T04:52:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33584
 - author: Winkarst-cpu
   changes:
   - message: Bar signs now have a maintenance panel and AI can interact with them.
@@ -3900,3 +3893,10 @@
   id: 8179
   time: '2025-04-14T16:50:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36555
+- author: Golub
+  changes:
+  - message: Added the Knock spell to the wizard's grimoire
+    type: Add
+  id: 8180
+  time: '2025-04-14T18:57:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36562
