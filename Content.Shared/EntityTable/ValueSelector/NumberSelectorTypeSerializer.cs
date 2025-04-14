@@ -1,4 +1,4 @@
-using System.Numerics;
+using System.Globalization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown.Validation;
@@ -44,9 +44,9 @@ public sealed class NumberSelectorTypeSerializer :
 
         if (VectorSerializerUtility.TryParseArgs(node.Value, 2, out var args))
         {
-            var x = float.Parse(args[0]);
-            var y = float.Parse(args[1]);
-            return new RangeNumberSelector(new Vector2(x, y));
+            var x = int.Parse(args[0], CultureInfo.InvariantCulture);
+            var y = int.Parse(args[1], CultureInfo.InvariantCulture);
+            return new RangeNumberSelector(new Vector2i(x, y));
         }
 
         return (NumberSelector) serializationManager.Read(type, node, context)!;
