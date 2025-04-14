@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Updates Synthesis Ship to have missing equipment
-    type: Tweak
-  id: 1021
-  time: '2025-01-30T22:33:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1509
 - author: aada
   changes:
   - message: The blinding lens can now be found in the MedTech.
@@ -4102,3 +4095,12 @@
   id: 1520
   time: '2025-04-14T02:07:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2257
+- author: Kandiyaki
+  changes:
+  - message: the Mask of Madness will now only work if it is worn.
+    type: Tweak
+  - message: the heretic lore book will now spawn in the library again.
+    type: Fix
+  id: 1521
+  time: '2025-04-14T10:22:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2240
