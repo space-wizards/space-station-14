@@ -150,6 +150,10 @@
     sprite: Clothing/Head/Misc/cone.rsi
   - type: Item
     storedRotation: 0
+  - type: Armor
+    modifiers:
+        coefficients:
+          Piercing: 0.95
   - type: PhysicalComposition #you can't just pass up some free plastic!
     materialComposition:
       Plastic: 100
