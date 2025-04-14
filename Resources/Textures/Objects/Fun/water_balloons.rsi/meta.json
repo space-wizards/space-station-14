@@ -14,9 +14,6 @@
             "name": "icon_inflated"
         },
         {
-            "name": "icon_inflated_fill-1"
-        },
-        {
             "name": "water_balloon_box"
         },
         {
@@ -26,9 +23,6 @@
         {
             "name": "water-balloon-box-inhand-right",
             "directions": 4
-        },
-        {
-            "name": "water_balloon_cargo_icon"
         }
     ]
 }
