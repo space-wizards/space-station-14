@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Fixed debris chunks loot spawning
-    type: Fix
-  id: 7683
-  time: '2024-12-06T10:15:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33747
 - author: metalgearsloth
   changes:
   - message: Fix gas pumps being capped to atmos max pressure and not their own max
@@ -3899,3 +3892,10 @@
   id: 8182
   time: '2025-04-14T20:23:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35995
+- author: SlamBamActionman
+  changes:
+  - message: Chest rig explosive resistance is increased from 50% to 90%.
+    type: Tweak
+  id: 8183
+  time: '2025-04-14T20:45:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35889
