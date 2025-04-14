@@ -16,7 +16,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_meta.yml
         - type: StationJobs
-          availableJobs: # 61 jobs total w/o latejoins, 79 jobs total w/ latejoins. Interns are never counted.
+          availableJobs: # 61 jobs total w/o latejoins, 78 jobs total w/ latejoins. Interns are never counted.
             #Command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
@@ -60,6 +60,6 @@
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
-            #Silicon (5 - 7)
+            #Silicon (5 - 6)
             StationAi: [ 1, 1 ]
-            Borg: [ 4, 6 ]
+            Borg: [ 4, 5 ]
