@@ -57,40 +57,40 @@ public sealed partial class HandcuffComponent : Component
     /// We need the extra information for when the virtual item is deleted because that can happen when you simply stop
     /// pulling them on the ground.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Used;
 
     /// <summary>
     ///     The path of the RSI file used for the player cuffed overlay.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string? CuffedRSI = "Objects/Misc/handcuffs.rsi";
 
     /// <summary>
     ///     The iconstate used with the RSI file for the player cuffed overlay.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField, AutoNetworkedField]
     public string? BodyIconState = "body-overlay";
 
     /// <summary>
-    /// An opptional color specification for <see cref="BodyIconState"/>
+    /// An optional color specification for <see cref="BodyIconState"/>
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public Color Color = Color.White;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public SoundSpecifier StartCuffSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_start.ogg");
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public SoundSpecifier EndCuffSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_end.ogg");
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public SoundSpecifier StartBreakoutSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_breakout_start.ogg");
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public SoundSpecifier StartUncuffSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_takeoff_start.ogg");
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public SoundSpecifier EndUncuffSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_takeoff_end.ogg");
 }
 

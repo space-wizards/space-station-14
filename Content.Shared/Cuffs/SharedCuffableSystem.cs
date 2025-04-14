@@ -341,6 +341,7 @@ namespace Content.Shared.Cuffs
             if (!args.Cancelled && TryAddNewCuffs(target, user, uid, cuffable))
             {
                 component.Used = true;
+                Dirty(uid, component);
                 _audio.PlayPredicted(component.EndCuffSound, uid, user);
 
                 var popupText = (user == target)
@@ -700,6 +701,7 @@ namespace Content.Shared.Cuffs
 
             cuff.Removing = true;
             cuff.Used = false;
+            Dirty(cuffsToRemove, cuff);
             _audio.PlayPredicted(cuff.EndUncuffSound, target, user);
 
             _container.Remove(cuffsToRemove, cuffable.Container);
