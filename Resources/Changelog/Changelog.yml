@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: IProduceWidgets
   changes:
-  - message: N2 survival boxes now show the right tank icon.
-    type: Tweak
-  id: 7679
-  time: '2024-12-05T21:39:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33733
-- author: IProduceWidgets
-  changes:
   - message: StationEvents with very low weights will now actually appear.
     type: Fix
   id: 7680
@@ -3897,3 +3890,13 @@
   id: 8178
   time: '2025-04-14T15:58:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30703
+- author: SlamBamActionman
+  changes:
+  - message: Implanters are now named after the implant they contained, even after
+      the implanter has been used.
+    type: Tweak
+  - message: Syndicate implanters now remind you to scrub them in the item description.
+    type: Add
+  id: 8179
+  time: '2025-04-14T16:50:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36555
