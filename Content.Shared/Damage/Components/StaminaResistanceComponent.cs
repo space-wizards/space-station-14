@@ -10,14 +10,14 @@ namespace Content.Shared.Damage.Components;
 /// not the wearer use <c>worn: false</c>.
 /// </summary>
 /// <remarks>
-///     This is desirable over just using damage modifier sets, given that equipment like bomb-suits need to
-///     significantly reduce the damage, but shouldn't be silly overpowered in regular combat.
+/// This is desirable over just using damage modifier sets, given that equipment like bomb-suits need to
+/// significantly reduce the damage, but shouldn't be silly overpowered in regular combat.
 /// </remarks>
 [NetworkedComponent, RegisterComponent, AutoGenerateComponentState]
 public sealed partial class StaminaResistanceComponent : Component
 {
     /// <summary>
-    ///     The stamina resistance coefficient, This fraction is multiplied into the total resistance.
+    /// The stamina resistance coefficient, This fraction is multiplied into the total resistance.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float DamageCoefficient = 1;

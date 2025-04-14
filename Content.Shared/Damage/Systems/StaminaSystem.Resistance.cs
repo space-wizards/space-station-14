@@ -1,6 +1,5 @@
 using Content.Shared.Armor;
 using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Damage.Events;
 using Content.Shared.Inventory;
 
@@ -15,16 +14,15 @@ public sealed partial class StaminaSystem
         SubscribeLocalEvent<StaminaResistanceComponent, ArmorExamineEvent>(OnArmorExamine);
     }
 
-    private void OnGetResistance(EntityUid uid, StaminaResistanceComponent component, ref BeforeStaminaDamageEvent args)
+    private void OnGetResistance(Entity<StaminaResistanceComponent> ent, ref BeforeStaminaDamageEvent args)
     {
-        args.Value *= component.DamageCoefficient;
+        args.Value *= ent.Comp.DamageCoefficient;
     }
 
-    private void RelayedResistance(EntityUid uid, StaminaResistanceComponent component,
-        InventoryRelayedEvent<BeforeStaminaDamageEvent> args)
+    private void RelayedResistance(Entity<StaminaResistanceComponent> ent, ref InventoryRelayedEvent<BeforeStaminaDamageEvent> args)
     {
-        if (component.Worn)
-            OnGetResistance(uid, component, ref args.Args);
+        if (ent.Comp.Worn)
+            OnGetResistance(ent, ref args.Args);
     }
 
     private void OnArmorExamine(Entity<StaminaResistanceComponent> ent, ref ArmorExamineEvent args)
