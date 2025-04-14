@@ -44,6 +44,12 @@ namespace Content.Shared.Maps
         [DataField("baseTurf")]
         public string BaseTurf { get; private set; } = string.Empty;
 
+        /// <summary>
+        ///     Tiles that this tile can be placed on. This creates a tilestack on the grid.
+        /// </summary>
+        [DataField]
+        public List<ProtoId<ContentTileDefinition>> PossibleBaseTurfs = new();
+
         [DataField]
         public PrototypeFlags<ToolQualityPrototype> DeconstructTools { get; set; } = new();
 
