@@ -398,6 +398,8 @@
     - HarmonySecurityEquipmentStatic # Harmony
     - HarmonySecurityAmmoStatic # Harmony
     dynamicPacks:
+    - SalvageSecurityBoards
+    - SalvageSecurityWeapons
     - SecurityEquipment
     - SecurityBoards
     - SecurityExplosives
