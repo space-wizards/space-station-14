@@ -4,8 +4,8 @@ meta:
   engineVersion: 253.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/14/2025 13:51:37
-  entityCount: 25715
+  time: 04/14/2025 14:08:28
+  entityCount: 25721
 maps:
 - 943
 grids:
@@ -65369,6 +65369,46 @@ entities:
     components:
     - type: Transform
       pos: 33.5,-37.5
+      parent: 60
+- proto: CrateLockBoxEngineering
+  entities:
+  - uid: 22134
+    components:
+    - type: Transform
+      pos: 4.5,17.5
+      parent: 60
+- proto: CrateLockBoxMedical
+  entities:
+  - uid: 22133
+    components:
+    - type: Transform
+      pos: 49.5,-20.5
+      parent: 60
+- proto: CrateLockBoxScience
+  entities:
+  - uid: 22135
+    components:
+    - type: Transform
+      pos: -49.5,-4.5
+      parent: 60
+- proto: CrateLockBoxSecurity
+  entities:
+  - uid: 22136
+    components:
+    - type: Transform
+      pos: -31.5,-16.5
+      parent: 60
+- proto: CrateLockBoxService
+  entities:
+  - uid: 22137
+    components:
+    - type: Transform
+      pos: 13.5,-39.5
+      parent: 60
+  - uid: 22138
+    components:
+    - type: Transform
+      pos: 34.5,-41.5
       parent: 60
 - proto: CrateMaterialSteel
   entities:
