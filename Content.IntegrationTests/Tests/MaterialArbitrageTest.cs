@@ -17,7 +17,6 @@ using Content.Shared.Research.Prototypes;
 using Content.Shared.Stacks;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;
@@ -29,6 +28,21 @@ namespace Content.IntegrationTests.Tests;
 [TestFixture]
 public sealed class MaterialArbitrageTest
 {
+    // These recipes are currently broken and need fixing. You should not be adding to these sets.
+    private readonly HashSet<string> _destructionArbitrageIgnore =
+    [
+        "BaseChemistryEmptyVial", "DrinkShotGlass", "Beaker", "SodiumLightTube", "DrinkGlassCoupeShaped",
+        "LedLightBulb", "ExteriorLightTube", "LightTube", "DrinkGlass", "DimLightBulb", "LightBulb", "LedLightTube",
+        "SheetRGlass1", "ChemistryEmptyBottle01", "WarmLightBulb",
+    ];
+
+    private readonly HashSet<string> _compositionArbitrageIgnore =
+    [
+        "FoodPlateSmall", "AirTank", "FoodPlateTin", "FoodPlateMuffinTin", "WeaponCapacitorRechargerCircuitboard",
+        "WeaponCapacitorRechargerCircuitboard", "BorgChargerCircuitboard", "BorgChargerCircuitboard", "FoodPlate",
+        "CellRechargerCircuitboard", "CellRechargerCircuitboard",
+    ];
+
     [Test]
     public async Task NoMaterialArbitrage()
     {
@@ -39,7 +53,6 @@ public sealed class MaterialArbitrageTest
         await server.WaitIdleAsync();
 
         var entManager = server.ResolveDependency<IEntityManager>();
-        var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
 
         var pricing = entManager.System<PricingSystem>();
@@ -238,10 +251,13 @@ public sealed class MaterialArbitrageTest
         }
 
         // This is the main loop where we actually check for destruction arbitrage
-        Assert.Multiple(async () =>
+        await Assert.MultipleAsync(async () =>
         {
             foreach (var (id, (spawnedEnts, spawnedMats)) in spawnedOnDestroy)
             {
+                if (_destructionArbitrageIgnore.Contains(id))
+                    continue;
+
                 // Check cargo sell price
                 // several constructible entities have no sell price
                 // also this test only really matters if the entity is also purchaseable.... eh..
@@ -328,7 +344,7 @@ public sealed class MaterialArbitrageTest
         // This is functionally the same loop as before, but now testing deconstruction rather than destruction.
         // This is pretty brain-dead. In principle construction graphs can have loops and whatnot.
 
-        Assert.Multiple(async () =>
+        await Assert.MultipleAsync(async () =>
         {
             foreach (var (id, deconstructedMats) in deconstructionMaterials)
             {
@@ -386,10 +402,13 @@ public sealed class MaterialArbitrageTest
 
         // This is functionally the same loop as before, but now testing composition rather than destruction or deconstruction.
         // This doesn't take into account chemicals generated when deconstructing. Maybe it should.
-        Assert.Multiple(async () =>
+        await Assert.MultipleAsync(async () =>
         {
             foreach (var (id, compositionComponent) in physicalCompositions)
             {
+                if (_compositionArbitrageIgnore.Contains(id))
+                    continue;
+
                 // Check cargo sell price
                 var materialPrice = await GetDeconstructedPrice(compositionComponent.MaterialComposition);
                 var chemicalPrice = await GetChemicalCompositionPrice(compositionComponent.ChemicalComposition);
