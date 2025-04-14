@@ -128,6 +128,20 @@ public sealed partial class ZombieComponent : Component
     };
 
     /// <summary>
+    /// The damage dealt on bite, dehardcoded for your enjoyment
+    /// </summary>
+    [DataField]
+    public DamageSpecifier DamageOnBite = new()
+    {
+        DamageDict = new()
+        {
+            { "Slash", 13 },
+            { "Piercing", 7 },
+            { "Structural", 10 }
+        }
+    };
+
+    /// <summary>
     ///     Path to antagonist alert sound.
     /// </summary>
     [DataField("greetSoundNotification")]
