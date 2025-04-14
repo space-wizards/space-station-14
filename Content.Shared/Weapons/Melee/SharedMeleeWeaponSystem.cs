@@ -879,14 +879,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return false;
 
         var chance = CalculateDisarmChance(user, target.Value, inTargetHand, combatMode);
-        var eventArgs = new DisarmedEvent { Target = target.Value, Source = user, PushProbability = 1 - chance };
-        RaiseLocalEvent(target.Value, ref eventArgs);
-
-        // Nothing handled it so abort.
-        if (!eventArgs.Handled)
-        {
-            return false;
-        }
 
         // At this point we diverge
         if (_netMan.IsClient)
@@ -897,6 +889,15 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         if (_random.Prob(chance))
+        {
+            return false;
+        }
+
+        var eventArgs = new DisarmedEvent { Target = target.Value, Source = user, PushProbability = 1 - chance };
+        RaiseLocalEvent(target.Value, ref eventArgs);
+
+        // Nothing handled it so abort.
+        if (!eventArgs.Handled)
         {
             return false;
         }
