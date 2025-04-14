@@ -1,4 +1,3 @@
-using Content.Shared.Damage;
 using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 
@@ -25,12 +24,12 @@ public sealed class ZombificationResistanceQueryEvent : EntityEventArgs, IInvent
     /// <summary>
     /// All slots to relay to
     /// </summary>
-    public SlotFlags TargetSlots { get; set; }
+    public SlotFlags TargetSlots { get; }
 
     /// <summary>
     /// The Total of all Coefficients.
     /// </summary>
-    public float TotalCoefficient { get; set; } = 1.0f;
+    public float TotalCoefficient = 1.0f;
 
     public ZombificationResistanceQueryEvent(SlotFlags slots)
     {

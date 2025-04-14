@@ -11,7 +11,6 @@ using Content.Shared.Armor;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Cloning.Events;
 using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Mind;
@@ -205,9 +204,6 @@ namespace Content.Server.Zombies
         {
             var chance = zombieComponent.BaseZombieInfectionChance;
 
-            if (!_inventory.TryGetContainerSlotEnumerator(uid, out var enumerator, ProtectiveSlots))
-                return chance;
-
             var armorEv = new CoefficientQueryEvent(ProtectiveSlots);
             RaiseLocalEvent(uid, armorEv);
             foreach (var resistanceEffectiveness in zombieComponent.ResistanceEffectiveness.DamageDict)
@@ -226,10 +222,7 @@ namespace Content.Server.Zombies
             RaiseLocalEvent(uid, zombificationResistanceEv);
             chance *= zombificationResistanceEv.TotalCoefficient;
 
-
-            var min = zombieComponent.MinZombieInfectionChance;
-            chance = MathF.Max(chance, min);
-            return chance;
+            return MathF.Max(chance, zombieComponent.MinZombieInfectionChance);
         }
 
         private void OnMeleeHit(EntityUid uid, ZombieComponent component, MeleeHitEvent args)
@@ -293,12 +286,10 @@ namespace Content.Server.Zombies
                 _humanoidAppearance.SetBaseLayerColor(target, layer, info.Color);
                 _humanoidAppearance.SetBaseLayerId(target, layer, info.Id);
             }
-
             if (TryComp<HumanoidAppearanceComponent>(target, out var appcomp))
             {
                 appcomp.EyeColor = zombiecomp.BeforeZombifiedEyeColor;
             }
-
             _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor, false);
             _bloodstream.ChangeBloodReagent(target, zombiecomp.BeforeZombifiedBloodReagent);
 

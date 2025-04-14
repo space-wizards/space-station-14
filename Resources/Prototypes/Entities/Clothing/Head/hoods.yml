@@ -269,8 +269,6 @@
     sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hooddefault.rsi
-  - type: ZombificationResistance
-    zombificationResistanceCoefficient: 0.95
 
 - type: entity
   parent: ClothingHeadHatHoodWinterBase

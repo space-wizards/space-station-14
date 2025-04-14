@@ -25,19 +25,12 @@
   id: ClothingOuterBioCmo
   name: bio suit
   suffix: CMO
-  description: An advanced suit that protects against biological contamination, specially made with armor for the CMO.
+  description: An advanced suit that protects against biological contamination, in CMO colors.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Caustic: 0.5
-        Slash: 0.75
-  - type: ZombificationResistance
-    zombificationResistanceCoefficient: 0.3
 
 - type: entity
   parent: ClothingOuterBioGeneral
@@ -86,7 +79,6 @@
         Piercing: 0.8
   - type: ZombificationResistance
     zombificationResistanceCoefficient: 0.4
-
 
 - type: entity
   parent: ClothingOuterBioGeneral

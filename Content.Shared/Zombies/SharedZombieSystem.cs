@@ -22,6 +22,7 @@ public abstract class SharedZombieSystem : EntitySystem
     {
         query.Args.TotalCoefficient *= ent.Comp.ZombificationResistanceCoefficient;
     }
+
     private void OnArmorExamine(Entity<ZombificationResistanceComponent> ent, ref ArmorExamineEvent args)
     {
         var value = MathF.Round((1f - ent.Comp.ZombificationResistanceCoefficient) * 100, 1);
