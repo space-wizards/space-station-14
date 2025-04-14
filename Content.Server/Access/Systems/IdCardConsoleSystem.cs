@@ -124,7 +124,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         if (component.TargetIdSlot.Item is not { Valid: true } targetId || !PrivilegedIdIsAuthorized(uid, component))
             return;
-        
+
         _idCard.TryChangeFullName(targetId, newFullName, player: player);
         _idCard.TryChangeJobTitle(targetId, newJobTitle, player: player);
 
