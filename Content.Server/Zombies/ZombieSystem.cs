@@ -77,8 +77,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombifyOnDeathComponent, MobStateChangedEvent>(OnDamageChanged);
         }
 
-        private void OnBeforeRemoveAnomalyOnDeath(Entity<PendingZombieComponent> ent,
-            ref BeforeRemoveAnomalyOnDeathEvent args)
+        private void OnBeforeRemoveAnomalyOnDeath(Entity<PendingZombieComponent> ent, ref BeforeRemoveAnomalyOnDeathEvent args)
         {
             // Pending zombies (e.g. infected non-zombies) do not remove their hosted anomaly on death.
             // Current zombies DO remove the anomaly on death.
