@@ -1021,5 +1021,12 @@ Entries:
   id: 124
   time: '2025-04-12T20:00:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36466
+- author: slarticodefast
+  changes:
+  - message: Fixed the inspect mind command not working for other players.
+    type: Fix
+  id: 125
+  time: '2025-04-14T14:45:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36558
 Name: Admin
 Order: 1
