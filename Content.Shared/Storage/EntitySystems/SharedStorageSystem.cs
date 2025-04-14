@@ -723,8 +723,13 @@ public abstract class SharedStorageSystem : EntitySystem
 
         var localPlayer = args.SenderSession.AttachedEntity;
 
-        if (!TryComp(localPlayer, out HandsComponent? handsComp) || !_sharedHandsSystem.TryPickup(localPlayer.Value, itemEnt.Value, handsComp: handsComp, animate: false))
+        // TryPickup doesn't validate interaction range hence we need to do it manually.
+        if (!TryComp(localPlayer, out HandsComponent? handsComp) ||
+            !_interactionSystem.InRangeUnobstructed(localPlayer.Value, itemEnt.Value) ||
+            !_sharedHandsSystem.TryPickup(localPlayer.Value, itemEnt.Value, handsComp: handsComp, animate: false))
+        {
             return;
+        }
 
         if (!ValidateInput(args, msg.StorageEnt, msg.ItemEnt, out var player, out var storage, out var item, held: true))
             return;
@@ -1579,6 +1584,9 @@ public abstract class SharedStorageSystem : EntitySystem
     public abstract void PlayPickupAnimation(EntityUid uid, EntityCoordinates initialCoordinates,
         EntityCoordinates finalCoordinates, Angle initialRotation, EntityUid? user = null);
 
+    /// <summary>
+    /// Validates the player can interact with the target storage.
+    /// </summary>
     private bool ValidateInput(
         EntitySessionEventArgs args,
         NetEntity netStorage,
