@@ -166,6 +166,8 @@ public sealed partial class JobPriorityEditor : BoxContainer
                 if (!_requirements.IsAllowed(job, null, out var reason))
                 {
                     selector.LockRequirements(reason);
+                    SelectedJobPriorities[job.ID] = JobPriority.Never;
+                    SetDirty();
                 }
                 else
                 {

@@ -368,7 +368,21 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     /// </summary>
     public JobPrototype GetPreferredJob(HumanoidCharacterProfile profile)
     {
-        var highPriorityJob = profile.JobPreferences.FirstOrDefault();
+        ProtoId<JobPrototype> highPriorityJob = default;
+        if (profile.JobPreferences.Count == 1)
+        {
+            highPriorityJob = profile.JobPreferences.First();
+        }
+        else
+        {
+            var priorities = _preferencesManager.Preferences?.JobPriorities ?? [];
+            foreach (var priority in new List<JobPriority>{JobPriority.High, JobPriority.Medium, JobPriority.Low})
+            {
+                highPriorityJob = profile.JobPreferences.FirstOrDefault(p => priorities.GetValueOrDefault(p) == priority);
+                if (highPriorityJob.Id != null)
+                    break;
+            }
+        }
         // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract (what is resharper smoking?)
         return _prototypeManager.Index<JobPrototype>(highPriorityJob.Id ?? SharedGameTicker.FallbackOverflowJob);
     }
