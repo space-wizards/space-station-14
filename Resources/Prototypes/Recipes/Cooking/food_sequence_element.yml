@@ -67,10 +67,22 @@
   - Cooked
   - Meat
 
-# Becon
+# Dragon Steak
 
 - type: foodSequenceElement
-  id: MeatBecon
+  id: DragonSteak
+  name: food-sequence-content-dragon
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: dragon-cooked
+  tags:
+  - Cooked
+  - Meat
+
+# Bacon
+
+- type: foodSequenceElement
+  id: MeatBacon
   sprites:
   - sprite: Objects/Consumable/Food/meat.rsi
     state: bacon-cooked
@@ -276,7 +288,7 @@
   tags:
   - Cooked
   - Meat
-  
+
 # Snail meat
 
 - type: foodSequenceElement
@@ -437,6 +449,19 @@
   - Cutlet
   - Meat
 
+# Dragon cutlet
+
+- type: foodSequenceElement
+  id: DragonCutlet
+  name: food-sequence-content-dragon
+  sprites:
+  - sprite: Objects/Consumable/Food/meat.rsi
+    state: dragoncutlet-cooked
+  tags:
+  - Cooked
+  - Cutlet
+  - Meat
+
 # Brain
 
 - type: foodSequenceElement
@@ -572,6 +597,28 @@
   sprites:
   - sprite: Objects/Specific/Hydroponics/orange.rsi
     state: produce
+  tags:
+    - Fruit
+
+# Extradimensional Orange
+
+- type: foodSequenceElement
+  id: ExtradimensionalOrange
+  name: food-sequence-content-orange
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/extradimensional_orange.rsi
+    state: produce
+  scale: 0.5,0.5
+  tags:
+    - Fruit
+
+- type: foodSequenceElement
+  id: ExtradimensionalOrangeBurger
+  name: food-sequence-burger-content-extradimensional-orange
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/extradimensional_orange.rsi
+    state: produce
+  scale: 0.5,0.5
   tags:
     - Fruit
 
@@ -748,6 +795,38 @@
   sprites:
   - sprite: Objects/Consumable/Food/skewer.rsi
     state: skewer-watermelon
+  tags:
+  - Fruit
+  - Slice
+
+# Holymelon
+
+- type: foodSequenceElement
+  id: HolymelonSliceBurger
+  name: food-sequence-burger-content-holymelon
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/holymelon.rsi
+    state: slice
+  tags:
+  - Fruit
+  - Slice
+
+- type: foodSequenceElement
+  id: HolymelonSlice
+  name: food-sequence-content-holymelon
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/holymelon.rsi
+    state: slice
+  tags:
+  - Fruit
+  - Slice
+
+- type: foodSequenceElement
+  id: HolymelonSliceSkewer
+  name: food-sequence-content-holymelon
+  sprites:
+  - sprite: Objects/Consumable/Food/skewer.rsi
+    state: skewer-holymelon
   tags:
   - Fruit
   - Slice
@@ -1056,6 +1135,26 @@
   tags:
   - Vegetable
 
+# World Pea
+
+- type: foodSequenceElement
+  id: WorldPea
+  name: food-sequence-content-world-pea
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/world_pea.rsi
+    state: produce
+  tags:
+  - Vegetable
+
+- type: foodSequenceElement
+  id: WorldPeaBurger
+  name: food-sequence-burger-content-world-pea
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/world_pea.rsi
+    state: produce
+  tags:
+  - Vegetable
+
 # Cherry
 
 - type: foodSequenceElement
@@ -1102,3 +1201,20 @@
   sprites:
   - sprite: Objects/Consumable/Food/Baked/cake.rsi
     state: suppermatter-shard
+
+
+# Anomaly berries
+
+- type: foodSequenceElement
+  id: AnomalyBerry
+  name: food-sequence-content-anomaly-berry
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
+    state: produce
+
+- type: foodSequenceElement
+  id: AnomalyBerryBurger
+  name: food-sequence-burger-content-anomaly-berry
+  sprites:
+  - sprite: Objects/Specific/Hydroponics/anomaly_berry.rsi
+    state: produce

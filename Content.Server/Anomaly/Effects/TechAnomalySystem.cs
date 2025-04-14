@@ -16,15 +16,20 @@ public sealed class TechAnomalySystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BeamSystem _beam = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly EmagSystem _emag = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<TechAnomalyComponent, MapInitEvent>(OnTechMapInit);
         SubscribeLocalEvent<TechAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<TechAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
         SubscribeLocalEvent<TechAnomalyComponent, AnomalyStabilityChangedEvent>(OnStabilityChanged);
+    }
+
+    private void OnTechMapInit(Entity<TechAnomalyComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextTimer = _timing.CurTime;
     }
 
     public override void Update(float frameTime)
@@ -35,9 +40,9 @@ public sealed class TechAnomalySystem : EntitySystem
         while (query.MoveNext(out var uid, out var tech, out var anom))
         {
             if (_timing.CurTime < tech.NextTimer)
-                return;
+                continue;
 
-            tech.NextTimer = _timing.CurTime + TimeSpan.FromSeconds(tech.TimerFrequency * anom.Stability);
+            tech.NextTimer += TimeSpan.FromSeconds(tech.TimerFrequency);
 
             _signal.InvokePort(uid, tech.TimerPort);
         }
@@ -61,7 +66,7 @@ public sealed class TechAnomalySystem : EntitySystem
         var devices = _lookup.GetEntitiesInRange<DeviceLinkSinkComponent>(Transform(tech).Coordinates, range);
         if (devices.Count < 1)
             return;
-        
+
         for (var i = 0; i < count; i++)
         {
             var device = _random.Pick(devices);
@@ -110,8 +115,11 @@ public sealed class TechAnomalySystem : EntitySystem
 
             if (_random.Prob(tech.Comp.EmagSupercritProbability))
             {
-                _emag.DoEmagEffect(tech, source);
-                _emag.DoEmagEffect(tech, sink);
+                var sourceEv = new GotEmaggedEvent(tech, EmagType.Access | EmagType.Interaction);
+                RaiseLocalEvent(source, ref sourceEv);
+
+                var sinkEv = new GotEmaggedEvent(tech, EmagType.Access | EmagType.Interaction);
+                RaiseLocalEvent(sink, ref sinkEv);
             }
 
             CreateNewLink(tech, source, sink);

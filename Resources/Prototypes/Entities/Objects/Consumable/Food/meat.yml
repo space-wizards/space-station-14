@@ -382,6 +382,13 @@
       reagents:
       - ReagentId: Ichor
         Quantity: 10
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatDragonCutlet
+  - type: Construction
+    graph: DragonSteak
+    node: start
+    defaultTarget: dragon steak
 
 - type: entity
   name: raw rat meat
@@ -504,6 +511,9 @@
   id: FoodMeatWheat
   description: This doesn't look like meat, but your standards aren't that high to begin with.
   components:
+  - type: FlavorProfile
+    flavors:
+      - falsemeat
   - type: Sprite
     state: clump
   - type: SolutionContainerManager
@@ -522,6 +532,7 @@
   - type: Tag
     tags:
     - Raw
+    - Meat
   - type: Sprite
     state: snake
   - type: SolutionContainerManager
@@ -660,6 +671,9 @@
     - Meat
   - type: Sprite
     state: meatball
+  - type: Construction
+    graph: MeatMeatballCooked
+    node: start
 
 - type: entity
   name: slimeball
@@ -674,6 +688,11 @@
     tags:
     - Raw
     - Meat
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 10
   - type: Sprite
     state: slime
 
@@ -696,6 +715,36 @@
           Quantity: 3
         - ReagentId: Water
           Quantity: 4 #It makes saline if you add salt!
+
+- type: entity
+  name: anomalous meat mass
+  parent: FoodMeatRawBase
+  id: FoodMeatAnomaly
+  description: An impossibly dense slab of meat. Just looking at it makes you uncomfortable.
+  components:
+  - type: Sprite
+    state: anomalymeat
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 90
+        - ReagentId: Fat
+          Quantity: 90
+  - type: SliceableFood
+    count: 10
+    sliceTime: 5
+    slice: FoodMeat #That's... So much meat
+  - type: InternalTemperature
+    conductivity: 0.43
+  - type: Construction
+    graph: AnomalyMeatSteak
+    node: start
+    defaultTarget: anomaly steak
+  - type: Tag
+    tags:
+    - Meat
 
 # Cooked
 
@@ -796,8 +845,8 @@
     node: bacon
   - type: FoodSequenceElement
     entries:
-      Burger: MeatBecon
-      Taco: MeatBecon
+      Burger: MeatBacon
+      Taco: MeatBacon
 
 - type: entity
   name: cooked bear
@@ -1139,6 +1188,9 @@
     entries:
       Burger: MeatBall
       Taco: MeatBall
+  - type: Construction
+    graph: MeatMeatballCooked
+    node: meatball cooked
 
 - type: entity
   name: boiled snail
@@ -1168,6 +1220,70 @@
     entries:
       Burger: MeatSnail
       Taco: MeatSnail
+
+- type: entity
+  name: anomalous steak
+  parent: FoodMeatBase
+  id: FoodMeatAnomalyCooked
+  description: A gigantic mass of cooked meat. A meal for a dinner party, or someone REALLY hungry.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+  - type: Sprite
+    layers:
+    - state: anomalymeat-cooked #Kinda hard to cook this... thing evenly
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 100
+        - ReagentId: Protein
+          Quantity: 50
+  - type: SliceableFood
+    count: 10
+    sliceTime: 5
+    slice: FoodMeatCooked
+  - type: Construction
+    graph: AnomalyMeatSteak
+    node: anomaly steak
+
+- type: entity
+  name: dragon steak
+  parent: FoodMeatBase
+  id: FoodMeatDragonCooked
+  description: Pouring ketchup on this is considered a capital crime on most stations.
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Meat
+    - Steak
+  - type: Sprite
+    layers:
+    - state: dragon-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ichor
+          Quantity: 6
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Protein
+          Quantity: 6
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatDragonCutletCooked
+  - type: Construction
+    graph: DragonSteak
+    node: dragon steak
+  - type: FoodSequenceElement
+    entries:
+      Burger: DragonSteak
+      Taco: DragonSteak
 
 # Cutlets
 
@@ -1431,6 +1547,33 @@
         - ReagentId: Protein
           Quantity: 1
 
+- type: entity
+  name: raw dragon cutlet
+  parent: FoodMeatBase
+  id: FoodMeatDragonCutlet
+  description: A raw dragon meat cutlet.
+  components:
+  - type: Tag
+    tags:
+    - Raw
+    - Cutlet
+    - Meat
+  - type: Sprite
+    layers:
+    - state: dragoncutlet
+    - state: dragoncutlet_veins
+      shader: unshaded
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ichor
+          Quantity: 3
+  - type: Construction
+    graph: DragonCutlet
+    node: start
+    defaultTarget: dragon cutlet
+
 # Cooked
 
 - type: entity
@@ -1672,3 +1815,34 @@
     entries:
       Burger: XenoCutlet
       Taco: XenoCutlet
+
+- type: entity
+  name: dragon cutlet
+  parent: FoodMeatBase
+  id: FoodMeatDragonCutletCooked
+  description: It's a meal for kings!
+  components:
+  - type: Tag
+    tags:
+    - Cooked
+    - Cutlet
+    - Meat
+  - type: Sprite
+    state: dragoncutlet-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ichor
+          Quantity: 2
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Protein
+          Quantity: 2
+  - type: Construction
+    graph: DragonCutlet
+    node: dragon cutlet
+  - type: FoodSequenceElement
+    entries:
+      Burger: DragonCutlet
+      Taco: DragonCutlet

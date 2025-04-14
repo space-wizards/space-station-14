@@ -1,50 +1,129 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
-            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-            xmlns:ui="clr-namespace:Content.Client.ParticleAccelerator.UI"
-            xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
-            Title="{Loc 'particle-accelerator-control-menu-device-version-label'}"
-            MinSize="420 320"
-            SetSize="420 320">
-    <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="0 10 0 0">
-        <BoxContainer Orientation="Horizontal" VerticalExpand="True">
-            <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="10 0 10 5">
-                <BoxContainer Orientation="Horizontal">
-                    <RichTextLabel Name="StatusLabel" HorizontalExpand="True"/>
-                    <RichTextLabel Name="StatusStateLabel"/>
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:ui="clr-namespace:Content.Client.ParticleAccelerator.UI"
+    Title="{Loc 'particle-accelerator-control-menu-device-version-label'}"
+    MinSize="320 120">
+
+    <!-- Main Container -->
+    <BoxContainer Orientation="Vertical"
+        VerticalExpand="True">
+
+        <!-- Sub-Main container -->
+        <BoxContainer Orientation="Horizontal"
+            VerticalExpand="True"
+            HorizontalExpand="True">
+
+            <!-- Info part -->
+            <BoxContainer Orientation="Vertical"
+                HorizontalExpand="True"
+                Margin="8">
+
+                <!-- Info -->
+                <BoxContainer Orientation="Vertical"
+                    SeparationOverride="4">
+
+                    <!-- Status -->
+                    <BoxContainer Orientation="Horizontal">
+                        <RichTextLabel Name="StatusLabel" HorizontalExpand="True"/>
+                        <Control MinWidth="8"/>
+                        <RichTextLabel Name="StatusStateLabel"/>
+                    </BoxContainer>
+
+                    <!-- Power -->
+                    <BoxContainer Orientation="Horizontal">
+                        <RichTextLabel Name="PowerLabel"
+                            HorizontalExpand="True"
+                            VerticalAlignment="Center"/>
+
+                        <Control MinWidth="8"/>
+
+                        <Button Name="OffButton"
+                            ToggleMode="False"
+                            Text="{Loc 'particle-accelerator-control-menu-off-button'}"
+                            StyleClasses="OpenRight"/>
+
+                        <Button Name="OnButton"
+                            ToggleMode="False"
+                            Text="{Loc 'particle-accelerator-control-menu-on-button'}"
+                            StyleClasses="OpenLeft"/>
+                    </BoxContainer>
+
+                    <!-- Strenght -->
+                    <BoxContainer Orientation="Horizontal">
+                        <RichTextLabel Name="StrengthLabel"
+                            HorizontalExpand="True"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"/>
+
+                        <Control MinWidth="8"/>
+
+                        <SpinBox Name="StateSpinBox" Value="0"/>
+                    </BoxContainer>
+
+                    <!-- Power -->
+                    <BoxContainer Orientation="Horizontal">
+                        <RichTextLabel Name="DrawLabel" HorizontalExpand="True"/>
+                        <Control MinWidth="8"/>
+                        <RichTextLabel Name="DrawValueLabel"/>
+                    </BoxContainer>
                 </BoxContainer>
-                <Control MinHeight="5"/>
-                <BoxContainer Orientation="Horizontal">
-                    <RichTextLabel Name="PowerLabel" Margin="0 0 20 0" HorizontalExpand="True" VerticalAlignment="Center"/>
-                    <Button Name="OffButton" ToggleMode="False" Text="{Loc 'particle-accelerator-control-menu-off-button'}" StyleClasses="OpenRight"/>
-                    <Button Name="OnButton" ToggleMode="False" Text="{Loc 'particle-accelerator-control-menu-on-button'}" StyleClasses="OpenLeft"/>
+
+                <Control MinHeight="8" VerticalExpand="True"/> <!-- Filler -->
+
+                <!-- Alarm -->
+                <BoxContainer Name="AlarmControl"
+                    Orientation="Vertical"
+                    VerticalAlignment="Center"
+                    Visible="False">
+
+                    <controls:StripeBack Margin="-8 0">
+                        <BoxContainer Orientation="Vertical">
+                            <RichTextLabel Name="BigAlarmLabel"
+                                HorizontalAlignment="Center"/>
+
+                            <RichTextLabel Name="BigAlarmLabelTwo"
+                                HorizontalAlignment="Center"/>
+                        </BoxContainer>
+                    </controls:StripeBack>
+
+                    <Label Text="{Loc 'particle-accelerator-control-menu-service-manual-reference'}"
+                        HorizontalAlignment="Center"
+                        StyleClasses="LabelSubText"/>
                 </BoxContainer>
-                <Control MinHeight="5"/>
-                <BoxContainer Orientation="Horizontal">
-                    <RichTextLabel Name="StrengthLabel" Margin="0 0 20 0" HorizontalExpand="True" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    <SpinBox Name="StateSpinBox" Value="0"/>
-                </BoxContainer>
-                <Control MinHeight="5"/>
-                <BoxContainer Orientation="Horizontal">
-                    <RichTextLabel Name="DrawLabel" HorizontalExpand="True"/>
-                    <RichTextLabel Name="DrawValueLabel"/>
-                </BoxContainer>
-                <Control MinHeight="10" VerticalExpand="True"/>
-                <BoxContainer Name="AlarmControl" Orientation="Vertical" VerticalAlignment="Center" Visible="False">
-                    <RichTextLabel Name="BigAlarmLabel" HorizontalAlignment="Center"/>
-                    <RichTextLabel Name="BigAlarmLabelTwo" HorizontalAlignment="Center"/>
-                    <Label Text="{Loc 'particle-accelerator-control-menu-service-manual-reference'}" HorizontalAlignment="Center" StyleClasses="LabelSubText"/>
-                </BoxContainer>
-                <Control MinHeight="10" VerticalExpand="True"/>
             </BoxContainer>
-            <customControls:VSeparator Margin="0 0 0 10"/>
-            <BoxContainer Orientation="Vertical" Margin="20 0 20 0" VerticalAlignment="Center">
-                <PanelContainer Name="BackPanel" HorizontalAlignment="Center">
+
+            <PanelContainer StyleClasses="LowDivider" Margin="0 -8" HorizontalAlignment="Right"/>
+
+            <!-- PA Visual part -->
+            <BoxContainer Orientation="Vertical"
+                VerticalAlignment="Center"
+                Margin="8">
+
+                <PanelContainer Name="BackPanel"
+                    HorizontalAlignment="Center">
+
                     <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxTexture Modulate="#202023" PatchMarginBottom="10" PatchMarginLeft="10" PatchMarginRight="10" PatchMarginTop="10"/>
+                        <gfx:StyleBoxTexture Modulate="#202023"
+                            PatchMarginBottom="8"
+                            PatchMarginLeft="8"
+                            PatchMarginRight="8"
+                            PatchMarginTop="8"/>
                     </PanelContainer.PanelOverride>
-                    <BoxContainer Orientation="Vertical" HorizontalExpand="True" HorizontalAlignment="Center" VerticalExpand="True">
-                        <GridContainer Columns="3" VSeparationOverride="0" HSeparationOverride="0" HorizontalAlignment="Center">
+
+                    <BoxContainer Orientation="Vertical"
+                        SeparationOverride="6"
+                        VerticalExpand="True"
+                        VerticalAlignment="Stretch"
+                        HorizontalExpand="True"
+                        HorizontalAlignment="Center">
+
+                        <!-- PA Visualisation -->
+                        <GridContainer Columns="3"
+                            VSeparationOverride="0"
+                            HSeparationOverride="0"
+                            HorizontalAlignment="Center">
+
                             <Control/>
                             <ui:PASegmentControl Name="EndCapTexture" BaseState="end_cap"/>
                             <Control/>
@@ -58,17 +137,47 @@
                             <ui:PASegmentControl Name="EmitterForeTexture" BaseState="emitter_fore"/>
                             <ui:PASegmentControl Name="EmitterPortTexture" BaseState="emitter_port"/>
                         </GridContainer>
-                        <Control MinHeight="5"/>
-                        <Button Name="ScanButton" Text="{Loc 'particle-accelerator-control-menu-scan-parts-button'}" HorizontalAlignment="Center"/>
+
+                        <Button Name="ScanButton"
+                            Text="{Loc 'particle-accelerator-control-menu-scan-parts-button'}"
+                            HorizontalAlignment="Center"/>
                     </BoxContainer>
                 </PanelContainer>
             </BoxContainer>
         </BoxContainer>
-        <controls:StripeBack>
-            <Label Text="{Loc 'particle-accelerator-control-menu-check-containment-field-warning'}" HorizontalAlignment="Center" StyleClasses="LabelSubText" Margin="4 4 0 4"/>
-        </controls:StripeBack>
-        <BoxContainer Orientation="Horizontal" Margin="12 0 0 0">
-            <Label Text="{Loc 'particle-accelerator-control-menu-foo-bar-baz'}" StyleClasses="LabelSubText"/>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical"
+            VerticalAlignment="Bottom">
+
+            <controls:StripeBack>
+                <Label Text="{Loc 'particle-accelerator-control-menu-check-containment-field-warning'}"
+                    HorizontalAlignment="Center"
+                    StyleClasses="LabelSubText"
+                    Margin="0 4"/>
+            </controls:StripeBack>
+
+            <BoxContainer Orientation="Horizontal"
+                Margin="12 0 6 2"
+                VerticalAlignment="Bottom">
+
+                <!-- Footer title -->
+                <Label Text="{Loc 'particle-accelerator-control-menu-flavor-left'}"
+                    StyleClasses="WindowFooterText" />
+
+                <!-- Version -->
+                <Label Text="{Loc 'particle-accelerator-control-menu-flavor-right'}"
+                    StyleClasses="WindowFooterText"
+                    HorizontalAlignment="Right"
+                    HorizontalExpand="True"
+                    Margin="0 0 4 0" />
+
+                <TextureRect StyleClasses="NTLogoDark"
+                    Stretch="KeepAspectCentered"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right"
+                    SetSize="19 19"/>
+            </BoxContainer>
         </BoxContainer>
     </BoxContainer>
 </controls:FancyWindow>

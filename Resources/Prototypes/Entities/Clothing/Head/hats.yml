@@ -182,7 +182,7 @@
     sprite: Clothing/Head/Hats/beret_brigmedic.rsi
 
 - type: entity
-  parent: [ ClothingHeadBase, BaseRestrictedContraband ]
+  parent: [ ClothingHeadBase ]
   id: ClothingHeadHatBeretMerc
   name: mercenary beret
   description: Olive beret, the badge depicts a jackal on a rock.
@@ -580,7 +580,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingHeadBase
+  parent: [ ClothingHeadBase, BaseMagicalContraband ]
   id: ClothingHeadHatWizardBase
   components:
   - type: WizardClothes
@@ -693,6 +693,17 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadWehcellentCap
+  name: wehcellent cap
+  description: It was a net hat! Tiders wear them all the time! It's got airholes in the back to keep a cross-breeze going and everything!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/wehcellentcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/wehcellentcap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadNurseHat
   name: nurse hat
   description: Somehow I feel I'm not supposed to leave this place.
@@ -792,6 +803,21 @@
         Blunt: 0.95
 
 - type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHolyWatermelon
+  name: watermelon halo
+  description: Holy moly.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/holyhatmelon.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/holyhatmelon.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.95
+
+- type: entity
   parent: [ClothingHeadBase, BaseSyndicateContraband]
   id: ClothingHeadHatSyndie
   name: syndicate hat
@@ -879,6 +905,8 @@
     sprite: Clothing/Head/Hats/capcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/capcap.rsi
+  - type: Item
+    sprite: Clothing/Head/Hats/capcap.rsi
   - type: Tag
     tags:
     - ClothMade
@@ -898,6 +926,8 @@
   - type: Sprite
     sprite: Clothing/Head/Hats/comcap.rsi
   - type: Clothing
+    sprite: Clothing/Head/Hats/comcap.rsi
+  - type: Item
     sprite: Clothing/Head/Hats/comcap.rsi
   - type: Tag
     tags:
