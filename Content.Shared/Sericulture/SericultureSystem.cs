@@ -93,7 +93,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         _hungerSystem.ModifyHunger(uid, -comp.HungerCost);
 
         var newEntity = Spawn(comp.EntityProduced, Transform(uid).Coordinates);
-        EntityManager.FlagPredicted(newEntity);
+        FlagPredicted(newEntity);
         _stackSystem.TryMergeToHands(newEntity, uid);
 
         args.Repeat = true;

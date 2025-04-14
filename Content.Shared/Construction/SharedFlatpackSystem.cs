@@ -71,8 +71,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
         {
             Log.Error($"No entity prototype present for flatpack {ToPrettyString(ent)}.");
 
-            if (_net.IsServer)
-                QueueDel(ent);
+            PredictedQueueDel(ent);
             return;
         }
 
@@ -90,14 +89,13 @@ public abstract class SharedFlatpackSystem : EntitySystem
             return;
         }
 
-        if (_net.IsServer)
-        {
-            var spawn = Spawn(comp.Entity, _map.GridTileToLocal(grid, gridComp, buildPos));
-            _adminLogger.Add(LogType.Construction,
-                LogImpact.Low,
-                $"{ToPrettyString(args.User):player} unpacked {ToPrettyString(spawn):entity} at {xform.Coordinates} from {ToPrettyString(uid):entity}");
-            QueueDel(uid);
-        }
+        var spawn = Spawn(comp.Entity, _map.GridTileToLocal(grid, gridComp, buildPos));
+        FlagPredicted(spawn);
+
+        _adminLogger.Add(LogType.Construction,
+            LogImpact.Low,
+            $"{ToPrettyString(args.User):player} unpacked {ToPrettyString(spawn):entity} at {xform.Coordinates} from {ToPrettyString(uid):entity}");
+        PredictedQueueDel(uid);
 
         _audio.PlayPredicted(comp.UnpackSound, args.Used, args.User);
     }

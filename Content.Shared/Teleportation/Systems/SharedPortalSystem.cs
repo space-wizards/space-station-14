@@ -176,9 +176,6 @@ public abstract class SharedPortalSystem : EntitySystem
 
         if (!onSameMap && !portalComponent.CanTeleportToOtherMaps || distanceInvalid)
         {
-            if (!_netMan.IsServer)
-                return;
-
             // Early out if this is an invalid configuration
             _popup.PopupCoordinates(Loc.GetString("portal-component-invalid-configuration-fizzle"),
                 ourCoords, Filter.Pvs(ourCoords, entityMan: EntityManager), true);
@@ -186,10 +183,10 @@ public abstract class SharedPortalSystem : EntitySystem
             _popup.PopupCoordinates(Loc.GetString("portal-component-invalid-configuration-fizzle"),
                 target, Filter.Pvs(target, entityMan: EntityManager), true);
 
-            QueueDel(portal);
+            PredictedQueueDel(portal);
 
             if (targetEntity != null)
-                QueueDel(targetEntity.Value);
+                PredictedQueueDel(targetEntity.Value);
 
             return;
         }

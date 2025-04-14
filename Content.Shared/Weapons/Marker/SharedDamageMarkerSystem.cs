@@ -75,16 +75,13 @@ public abstract class SharedDamageMarkerSystem : EntitySystem
         component.Amount--;
         Dirty(args.OtherEntity, marker);
 
-        if (_netManager.IsServer)
+        if (component.Amount <= 0)
         {
-            if (component.Amount <= 0)
-            {
-                QueueDel(uid);
-            }
-            else
-            {
-                Dirty(uid, component);
-            }
+            PredictedQueueDel(uid);
+        }
+        else
+        {
+            Dirty(uid, component);
         }
     }
 }

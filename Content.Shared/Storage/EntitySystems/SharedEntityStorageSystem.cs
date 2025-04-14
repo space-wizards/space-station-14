@@ -401,8 +401,8 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             var newCoords = new EntityCoordinates(target, component.EnteringOffset);
             if (!_interaction.InRangeUnobstructed(target, newCoords, 0, collisionMask: component.EnteringOffsetCollisionFlags))
             {
-                if (!silent && _net.IsServer)
-                    Popup.PopupEntity(Loc.GetString("entity-storage-component-cannot-open-no-space"), target);
+                if (!silent)
+                    Popup.PopupClient(Loc.GetString("entity-storage-component-cannot-open-no-space"), target);
                 return false;
             }
         }
