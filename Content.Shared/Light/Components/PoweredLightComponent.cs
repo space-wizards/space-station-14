@@ -30,7 +30,7 @@ namespace Content.Shared.Light.Components
         [DataField("bulb")]
         public LightBulbType BulbType;
 
-        [DataField]
+        [DataField, AutoNetworkedField]
         public bool On = true;
 
         [DataField]
@@ -45,7 +45,7 @@ namespace Content.Shared.Light.Components
         [ViewVariables]
         public ContainerSlot LightBulbContainer = default!;
 
-        [DataField, AutoNetworkedField]
+        [AutoNetworkedField]
         public bool CurrentLit;
 
         [DataField, AutoNetworkedField]
