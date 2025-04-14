@@ -53,7 +53,7 @@ selectable-set-thief-smuggler-description =
 selectable-set-syndicate-spy-name = Spy Bundle
 selectable-set-syndicate-spy-description =
     Complete your objectives quietly with this compilation of stealthy items.
-    Contains: Chameleon thieving gloves, chameleon kit, voice mask,
+    Contains: chameleon thieving gloves, chameleon kit, voice mask,
     agent ID card, energy dagger, radio jammer, stealth box,
     syndicate jaws of life, and a syndicate encryption key.
 
