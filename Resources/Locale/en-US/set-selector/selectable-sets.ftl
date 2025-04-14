@@ -67,7 +67,7 @@ selectable-set-syndicate-implants-name = Cyberpsychosis Bundle
 selectable-set-syndicate-implants-description =
     A few implants to give you some options for when you inevitably get arrested.
     Contains: EMP, freedom, scram, storage, fake mindshield,
-    DNA scramber and syndicate radio implanters,
+    DNA scramber and syndicate radio implanters.
 
 selectable-set-syndicate-hacker-name = Hacker Bundle
 selectable-set-syndicate-hacker-description =
