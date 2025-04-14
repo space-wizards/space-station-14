@@ -350,6 +350,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
             !_storage.TryGetStorageLocation(DraggingGhost.Entity, out var container, out _, out _) ||
             !_ui.IsUiOpen(container.Owner, StorageComponent.StorageUiKey.Key, player.Value))
         {
+            DraggingGhost.Orphan();
             return false;
         }
 
