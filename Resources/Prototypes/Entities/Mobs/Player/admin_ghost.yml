@@ -15,6 +15,7 @@
     - NoConsoleSound
     - SilentStorageUser
     - PreventAccessLogging
+    - AllowBiomeLoading
   - type: Input
     context: "aghost"
   - type: Ghost
@@ -76,7 +77,6 @@
   - type: RadarConsole
     followEntity: true
   - type: CargoOrderConsole
-  - type: BankClient
   - type: CrewMonitoringConsole
   - type: GeneralStationRecordConsole
     canDeleteEntries: true

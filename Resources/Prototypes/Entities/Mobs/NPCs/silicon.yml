@@ -66,6 +66,7 @@
     tags:
     - DoorBumpOpener
     - Bot
+    - Unimplantable
   - type: MobState
     allowedStates:
       - Alive
@@ -451,6 +452,7 @@
     - DoorBumpOpener
     - FootstepSound
     - Bot
+    - Unimplantable
   - type: ActiveRadio
     channels:
     - Common
