@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 247.2.0
+  engineVersion: 253.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/07/2025 19:06:04
-  entityCount: 15478
+  time: 04/14/2025 16:14:43
+  entityCount: 15489
 maps:
 - 126
 grids:
@@ -9610,7 +9610,7 @@ entities:
       pos: 44.5,30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2424.868
+      secondsUntilStateChange: -3208.6338
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12215,7 +12215,7 @@ entities:
   - uid: 10292
     components:
     - type: Transform
-      pos: 19.48426,-2.579442
+      pos: 19.597303,-2.513713
       parent: 2
   - uid: 14766
     components:
@@ -12312,7 +12312,7 @@ entities:
   - uid: 12244
     components:
     - type: Transform
-      pos: 16.370987,-5.343148
+      pos: 16.347303,-5.341838
       parent: 2
   - uid: 12269
     components:
@@ -12324,7 +12324,7 @@ entities:
   - uid: 10294
     components:
     - type: Transform
-      pos: 16.51551,-5.391942
+      pos: 16.550428,-5.544963
       parent: 2
 - proto: BriefcaseBrownFilled
   entities:
@@ -39704,6 +39704,45 @@ entities:
     - type: Transform
       pos: 7.5,19.5
       parent: 2
+- proto: ComputerCargoOrdersEngineering
+  entities:
+  - uid: 15480
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 19.5,-36.5
+      parent: 2
+- proto: ComputerCargoOrdersMedical
+  entities:
+  - uid: 10276
+    components:
+    - type: Transform
+      pos: 73.5,8.5
+      parent: 2
+- proto: ComputerCargoOrdersScience
+  entities:
+  - uid: 12164
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 57.5,17.5
+      parent: 2
+- proto: ComputerCargoOrdersSecurity
+  entities:
+  - uid: 15482
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 35.5,17.5
+      parent: 2
+- proto: ComputerCargoOrdersService
+  entities:
+  - uid: 6619
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 32.5,-7.5
+      parent: 2
 - proto: ComputerCargoShuttle
   entities:
   - uid: 14770
@@ -39789,6 +39828,14 @@ entities:
     components:
     - type: Transform
       pos: 45.5,25.5
+      parent: 2
+- proto: ComputerFundingAllocation
+  entities:
+  - uid: 4017
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 15.5,-5.5
       parent: 2
 - proto: ComputerId
   entities:
@@ -40486,6 +40533,46 @@ entities:
       containers:
       - EntityStorageComponent
       - entity_storage
+- proto: CrateLockBoxEngineering
+  entities:
+  - uid: 15489
+    components:
+    - type: Transform
+      pos: 22.5,-25.5
+      parent: 2
+- proto: CrateLockBoxMedical
+  entities:
+  - uid: 15486
+    components:
+    - type: Transform
+      pos: 79.5,1.5
+      parent: 2
+- proto: CrateLockBoxScience
+  entities:
+  - uid: 15487
+    components:
+    - type: Transform
+      pos: 58.5,8.5
+      parent: 2
+- proto: CrateLockBoxSecurity
+  entities:
+  - uid: 15488
+    components:
+    - type: Transform
+      pos: 32.5,19.5
+      parent: 2
+- proto: CrateLockBoxService
+  entities:
+  - uid: 15484
+    components:
+    - type: Transform
+      pos: 48.5,-13.5
+      parent: 2
+  - uid: 15485
+    components:
+    - type: Transform
+      pos: 57.5,-18.5
+      parent: 2
 - proto: CrateMaterialSteel
   entities:
   - uid: 5687
@@ -40669,7 +40756,7 @@ entities:
   - uid: 2153
     components:
     - type: Transform
-      pos: 38.46774,19.5811
+      pos: 38.497105,19.578838
       parent: 2
 - proto: CryogenicSleepUnit
   entities:
@@ -45087,10 +45174,10 @@ entities:
     - type: Transform
       pos: 41.5,19.5
       parent: 2
-  - uid: 10276
+  - uid: 15479
     components:
     - type: Transform
-      pos: 15.5,-5.5
+      pos: 35.5,45.5
       parent: 2
 - proto: filingCabinetTallRandom
   entities:
@@ -47517,6 +47604,9 @@ entities:
     - type: Transform
       pos: -0.0010213852,-26.399889
       parent: 2
+    - type: CollisionWake
+      enabled: False
+    - type: Conveyed
 - proto: FoodMeat
   entities:
   - uid: 566
@@ -47583,6 +47673,9 @@ entities:
     - type: Transform
       pos: -0.9697714,-25.884264
       parent: 2
+    - type: CollisionWake
+      enabled: False
+    - type: Conveyed
 - proto: FoodPoppy
   entities:
   - uid: 12099
@@ -47618,6 +47711,9 @@ entities:
     - type: Transform
       pos: -1.0166464,-26.540514
       parent: 2
+    - type: CollisionWake
+      enabled: False
+    - type: Conveyed
   - uid: 5887
     components:
     - type: Transform
@@ -70907,13 +71003,6 @@ entities:
     - type: Transform
       pos: 30.5,12.5
       parent: 2
-- proto: PottedPlant1
-  entities:
-  - uid: 6619
-    components:
-    - type: Transform
-      pos: 32.48526,-7.8502135
-      parent: 2
 - proto: PottedPlant19
   entities:
   - uid: 2615
@@ -71041,11 +71130,6 @@ entities:
     - type: ContainerContainer
       containers:
         stash: !type:ContainerSlot {}
-  - uid: 12164
-    components:
-    - type: Transform
-      pos: 73.5,8.5
-      parent: 2
   - uid: 12165
     components:
     - type: Transform
@@ -71090,6 +71174,16 @@ entities:
     components:
     - type: Transform
       pos: 15.5,22.5
+      parent: 2
+  - uid: 15481
+    components:
+    - type: Transform
+      pos: 74.5,8.5
+      parent: 2
+  - uid: 15483
+    components:
+    - type: Transform
+      pos: 31.5,-2.5
       parent: 2
 - proto: PottedPlantRD
   entities:
@@ -82757,11 +82851,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 12.5,20.5
       parent: 2
-  - uid: 4017
-    components:
-    - type: Transform
-      pos: 57.5,17.5
-      parent: 2
   - uid: 4117
     components:
     - type: Transform
@@ -84447,6 +84536,7 @@ entities:
     - type: Transform
       pos: 0.13960361,-25.931139
       parent: 2
+    - type: Conveyed
   - uid: 9603
     components:
     - type: Transform
