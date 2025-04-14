@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Fixed broken layout on some wire hacking UIs.
-    type: Fix
-  id: 7676
-  time: '2024-12-04T10:13:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33714
 - author: keronshb
   changes:
   - message: Adds Wand of the Locker - a wand that shoots out cursed lockers, that
@@ -3899,3 +3892,10 @@
   id: 8175
   time: '2025-04-14T15:02:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34921
+- author: BramvanZijp
+  changes:
+  - message: Deathsquad Hardsuit now provides 85% stamina damage resistance.
+    type: Add
+  id: 8176
+  time: '2025-04-14T15:27:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35580
