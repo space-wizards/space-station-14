@@ -162,7 +162,8 @@ public sealed partial class JobPriorityEditor : BoxContainer
                 icon.Texture = jobIcon.Icon.Frame0();
                 selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
 
-                if (!_requirements.IsAllowed(job, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
+                // This shouldn't depend on any character specific properties, so pass null
+                if (!_requirements.IsAllowed(job, null, out var reason))
                 {
                     selector.LockRequirements(reason);
                 }
