@@ -1,7 +1,7 @@
-using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords.Systems;
+using Content.Shared.Cargo.Components;
 using Content.Shared.Delivery;
 using Content.Shared.FingerprintReader;
 using Content.Shared.Labels.EntitySystems;
@@ -73,7 +73,10 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (!TryComp<StationBankAccountComponent>(ent.Comp.RecipientStation, out var account))
             return;
 
-        _cargo.UpdateBankAccount((ent.Comp.RecipientStation.Value, account), ent.Comp.SpesoReward);
+        _cargo.UpdateBankAccount(
+            (ent.Comp.RecipientStation.Value, account),
+            ent.Comp.SpesoReward,
+            _cargo.CreateAccountDistribution(account.PrimaryAccount, account, account.PrimaryCut));
     }
 
     public override void Update(float frameTime)
