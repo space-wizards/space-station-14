@@ -343,8 +343,12 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (DraggingGhost == null)
             return false;
 
+        var player = _player.LocalEntity;
+
         // If the attached storage is closed then stop dragging
-        if (!_storage.TryGetStorageLocation(DraggingGhost.Entity, out _, out _, out _))
+        if (player == null ||
+            !_storage.TryGetStorageLocation(DraggingGhost.Entity, out var container, out _, out _) ||
+            !_ui.IsUiOpen(container.Owner, StorageComponent.StorageUiKey.Key, player.Value))
         {
             return false;
         }
