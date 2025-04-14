@@ -247,7 +247,8 @@ public sealed partial class ClimbSystem : VirtualController
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
-        if (_containers.IsEntityInContainer(uid)) {
+        if (_containers.IsEntityInContainer(uid))
+        {
             args.Handled = true;
             return;
         }
@@ -528,12 +529,14 @@ public sealed partial class ClimbSystem : VirtualController
 
     private void StopOrCancelClimb(EntityUid uid, ClimbingComponent component)
     {
-        if (component.IsClimbing) {
+        if (component.IsClimbing)
+        {
             StopClimb(uid, component);
             return;
         }
 
-        if (component.DoAfter != null) {
+        if (component.DoAfter != null)
+        {
             _doAfterSystem.Cancel(component.DoAfter);
             component.DoAfter = null;
         }
