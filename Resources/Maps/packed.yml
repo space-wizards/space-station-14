@@ -4,7 +4,7 @@ meta:
   engineVersion: 253.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/14/2025 16:24:20
+  time: 04/14/2025 18:36:28
   entityCount: 15485
 maps:
 - 126
@@ -9610,7 +9610,7 @@ entities:
       pos: 44.5,30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -3247.2131
+      secondsUntilStateChange: -3540.0032
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -39709,11 +39709,10 @@ entities:
       parent: 2
 - proto: ComputerCargoOrdersSecurity
   entities:
-  - uid: 15482
+  - uid: 10290
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 35.5,17.5
+      pos: 35.5,28.5
       parent: 2
 - proto: ComputerCargoOrdersService
   entities:
