@@ -154,8 +154,6 @@ public abstract class SharedStorageSystem : EntitySystem
 
         SubscribeLocalEvent<MetaDataComponent, StackCountChangedEvent>(OnStackCountChanged);
 
-        SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundUIAttempt);
-
         SubscribeAllEvent<OpenNestedStorageEvent>(OnStorageNested);
         SubscribeAllEvent<StorageTransferItemEvent>(OnStorageTransfer);
         SubscribeAllEvent<StorageInteractWithItemEvent>(OnInteractWithItem);
