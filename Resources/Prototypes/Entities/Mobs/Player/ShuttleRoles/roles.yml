@@ -24,7 +24,6 @@
     - type: RandomHumanoidSpawner
       settings: VisitorCE
 
-
 - type: entity
   id: RandomHumanoidVisitorCMO
   name: visiting CMO ghost role
@@ -34,7 +33,6 @@
       state: cmo
     - type: RandomHumanoidSpawner
       settings: VisitorCMO
-
 
 - type: entity
   id: RandomHumanoidVisitorHOP
@@ -46,7 +44,6 @@
     - type: RandomHumanoidSpawner
       settings: VisitorHOP
 
-
 - type: entity
   id: RandomHumanoidVisitorHOS
   name: visiting HOS ghost role
@@ -56,7 +53,6 @@
       state: hos
     - type: RandomHumanoidSpawner
       settings: VisitorHOS
-
 
 - type: entity
   id: RandomHumanoidVisitorRD
@@ -68,7 +64,6 @@
     - type: RandomHumanoidSpawner
       settings: VisitorResearchDirector
 
-
 - type: entity
   id: RandomHumanoidVisitorQM
   name: visiting QM ghost role
@@ -78,7 +73,6 @@
       state: qm
     - type: RandomHumanoidSpawner
       settings: VisitorQM
-
 
 # Security
 
@@ -92,7 +86,6 @@
     - type: RandomHumanoidSpawner
       settings: VisitorSecurityCadet
 
-
 - type: entity
   id: RandomHumanoidVisitorSecurityOfficer
   name: visiting security officer ghost role
@@ -102,7 +95,6 @@
       state: security_officer
     - type: RandomHumanoidSpawner
       settings: VisitorSecurityOfficer
-
 
 - type: entity
   id: RandomHumanoidVisitorDetective
@@ -114,7 +106,6 @@
     - type: RandomHumanoidSpawner
       settings: VisitorDetective
 
-
 - type: entity
   id: RandomHumanoidVisitorWarden
   name: visiting warden ghost role
@@ -124,7 +115,6 @@
       state: warden
     - type: RandomHumanoidSpawner
       settings: VisitorWarden
-
 
 # Cargo
 
@@ -515,7 +505,6 @@
     - type: RandomHumanoidSpawner
       settings: ChallengeVictimHeadOfPersonnel
 
-
 - type: entity
   id: RandomHumanoidChallengeVictimHOS
   parent: RandomHumanoidChallengeVictimCaptain
@@ -525,7 +514,6 @@
   components:
     - type: RandomHumanoidSpawner
       settings: ChallengeVictimHeadOfSecurity
-
 
 - type: entity
   id: RandomHumanoidChallengeVictimRD
@@ -537,7 +525,6 @@
     - type: RandomHumanoidSpawner
       settings: ChallengeVictimResearchDirector
 
-
 - type: entity
   id: RandomHumanoidChallengeVictimQM
   parent: RandomHumanoidChallengeVictimCaptain
@@ -547,7 +534,6 @@
   components:
     - type: RandomHumanoidSpawner
       settings: ChallengeVictimQuartermaster
-
 
 # Security
 
