@@ -472,7 +472,6 @@
     - type: RandomHumanoidSpawner
       settings: ChallengeVictimCaptain
 
-
 - type: entity
   id: RandomHumanoidChallengeVictimCE
   parent: RandomHumanoidChallengeVictimCaptain
@@ -483,7 +482,6 @@
     - type: RandomHumanoidSpawner
       settings: ChallengeVictimChiefEngineer
 
-
 - type: entity
   id: RandomHumanoidChallengeVictimCMO
   parent: RandomHumanoidChallengeVictimCaptain
@@ -493,7 +491,6 @@
   components:
     - type: RandomHumanoidSpawner
       settings: ChallengeVictimCMO
-
 
 - type: entity
   id: RandomHumanoidChallengeVictimHOP
