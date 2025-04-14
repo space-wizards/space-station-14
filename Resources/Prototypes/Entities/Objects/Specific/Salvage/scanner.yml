@@ -67,6 +67,8 @@
       shader: unshaded
       visible: false
       map: ["enum.ToggleVisuals.Layer"]
+  - type: Item
+    storedRotation: -90
   - type: MiningScanner
     range: 10
 
