@@ -16,7 +16,7 @@ namespace Content.Server.Power.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("powerLoad")]
-        public float Load { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
+        public override float Load { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
 
         public ApcPowerProviderComponent? Provider = null;
 
