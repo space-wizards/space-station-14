@@ -1,0 +1,228 @@
+# Thief
+
+- type: selectableSet
+  id: ThiefAnatomySet
+  name: selectable-set-thief-anatomy-name
+  description: selectable-set-thief-anatomy-description
+  sprite:
+    sprite: Objects/Specific/Medical/implanter.rsi
+    state: implanter0
+  content:
+  - StorageImplanter
+  - DnaScramblerImplanter
+  - ChemistryBottleEphedrine
+  - SoapOmega
+  - Syringe
+  - DrinkShaker
+
+- type: selectableSet
+  id: ThiefBreacherSet
+  name: selectable-set-thief-breacher-name
+  description: selectable-set-thief-breacher-description
+  sprite:
+    sprite: Objects/Tools/jaws_of_life.rsi
+    state: jaws_pry
+  content:
+  - WelderIndustrialAdvanced
+  - ClothingEyesGlassesMeson
+  - ClothingHandsGlovesColorYellow
+  - JawsOfLife
+  - RemoteSignaller
+  - Multitool
+  - C4
+  - C4
+
+- type: selectableSet
+  id: ThiefChameleonSet
+  name: selectable-set-thief-chameleon-name
+  description: selectable-set-thief-chameleon-description
+  sprite:
+    sprite: /Textures/Clothing/OuterClothing/Misc/black_hoodie.rsi
+    state: icon
+  content:
+  - ClothingBackpackChameleonFill
+  - ChameleonProjector
+  - FakeMindShieldImplanter
+  - AgentIDCard
+
+- type: selectableSet
+  id: ThiefSyndieSet
+  name: selectable-set-thief-syndie-name
+  description: selectable-set-thief-syndie-description
+  sprite:
+    sprite: Objects/Specific/Syndicate/telecrystal.rsi
+    state: telecrystal
+  content:
+  - RadioJammer
+  - TraitorCodePaper
+  - Emag
+  - AccessBreaker
+  - Lighter
+  - CigPackSyndicate
+  - Telecrystal10 # The thief cannot use them, but it may induce communication with traitors
+
+- type: selectableSet
+  id: ThiefSleeperSet
+  name: selectable-set-thief-sleeper-name
+  description: selectable-set-thief-sleeper-description
+  sprite:
+    sprite: Objects/Tanks/anesthetic.rsi
+    state: icon
+  content:
+  - ChemistryBottleNocturine
+  - ChemistryBottleNocturine
+  - HypopenBox
+  - NitrousOxideTankFilled
+
+- type: selectableSet
+  id: ThiefCommunicatorSet
+  name: selectable-set-thief-communicator-name
+  description: selectable-set-thief-communicator-description
+  sprite:
+    sprite: Objects/Tools/spy_device.rsi
+    state: icon
+  content:
+  - EncryptionKeyStationMaster
+  - CyberPen
+  - BriefcaseThiefBribingBundleFilled
+  - ClothingMaskGasVoiceChameleon
+  # TODO Chameleon stamp
+
+- type: selectableSet
+  id: ThiefSmugglerSet
+  name: selectable-set-thief-smuggler-name
+  description: selectable-set-thief-smuggler-description
+  sprite:
+    sprite: Clothing/Neck/Cloaks/void.rsi
+    state: icon
+  content:
+  - InvisibleCrate
+  - FultonBeacon
+  - Fulton
+  - SmokeGrenade
+  - SmokeGrenade
+  - SmokeGrenade
+
+# Syndicate
+
+- type: selectableSet
+  id: SyndicateSpySet
+  name: selectable-set-syndicate-spy-name
+  description: selectable-set-syndicate-spy-description
+  sprite:
+    sprite: Objects/Devices/jammer.rsi
+    state: jammer
+  content:
+  - EncryptionKeySyndie # 1 TC
+  - ClothingHandsChameleonThief # 5 TC-ish
+  - ClothingBackpackChameleonFill # 4 TC
+  - ClothingMaskGasVoiceChameleon # 2 TC
+  - AgentIDCard # 3 TC
+  - HypopenBox # 6 TC, useless without chemicals
+  - RadioJammer # 3 TC
+  - StealthBox # 5 TC
+  - SyndicateJawsOfLife # 2 TC
+
+- type: selectableSet
+  id: SyndicateHitmanSet
+  name: selectable-set-syndicate-hitman-name
+  description: selectable-set-syndicate-hitman-description
+  sprite:
+    sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
+    state: icon
+  content:
+  - EncryptionKeySyndie # 1 TC
+  - WeaponPistolCobra # 4 TC
+  - MagazinePistolCaselessRifle # 1 TC x 3
+  - MagazinePistolCaselessRifle
+  - MagazinePistolCaselessRifle
+  - ThrowingKnivesKit # 6 TC
+  - PenExplodingBox # 4 TC
+  - ClothingOuterVestWeb # 3 TC
+  - ClothingShoesChameleonNoSlips # 2 TC
+  - CigPackSyndicate # 2 TC as fluff
+  - MedkitCombatFilled # 5 TC
+  - ClothingUniformJumpsuitDetectiveGrey
+  - ClothingHandsGlovesCombat
+
+- type: selectableSet
+  id: SyndicateImplantsSet
+  name: selectable-set-syndicate-implants-name
+  description: selectable-set-syndicate-implants-description
+  sprite:
+    sprite: Objects/Specific/Medical/syndi_implanter.rsi
+    state: implanter0
+  content:
+  - RadioImplanter # 2 TC
+  - BoxHoloparasite # 14 TC
+  - EmpImplanter # 2 TC
+  - ScramImplanter # 6 TC
+  - StorageImplanter # 8 TC
+
+- type: selectableSet
+  id: SyndicateHackerSet
+  name: selectable-set-syndicate-hacker-name
+  description: selectable-set-syndicate-hacker-description
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  content:
+  - EncryptionKeySyndie # 1 TC
+  - AntimovCircuitBoard # 14 TC
+  - AccessBreaker # 4 TC
+  - Emag # 5 TC
+  - CameraBug # 4 TC
+  - ToolboxSyndicateFilled # 2 TC
+  - ClothingEyesGlassesOutlawGlasses
+  - EncryptionKeyBinarySyndicate # 1 TC
+
+- type: selectableSet
+  id: SyndicateDeswordSet
+  name: selectable-set-syndicate-desword-name
+  description: selectable-set-syndicate-desword-description
+  sprite:
+    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+    state: icon
+  content:
+  - EncryptionKeySyndie # 1 TC
+  - EnergySwordDouble # 21 TC-ish, why not
+  - StimkitFilled # 12 TC
+  - DrinkSpaceGlue
+  - ClothingNeckCloakVoid
+
+- type: selectableSet
+  id: SyndicateGrenadierSet
+  name: selectable-set-syndicate-grenadier-name
+  description: selectable-set-syndicate-grenadier-description
+  sprite:
+    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
+    state: icon
+  content:
+  - EncryptionKeySyndie # 1 TC
+  - SyndieMiniBomb # 6 TC
+  - ReinforcementRadioSyndicateSyndiCat # 6 TC
+  - ExGrenade # 4 TC
+  - GrenadeIncendiary # 4 TC
+  - GrenadeShrapnel # 4 TC
+  - EmpGrenade # 2 TC
+  - SingularityGrenade # 2 TC
+  - WhiteholeGrenade # 2 TC
+  - C4 # 2 TC
+
+- type: selectableSet
+  id: SyndicateFluclearSet
+  name: selectable-set-syndicate-fluclear-name
+  description: selectable-set-syndicate-fluclear-description
+  sprite:
+    sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
+    state: icon
+  content:
+  - ClothingHeadsetAltSyndicate # 1 TC
+  - ClothingBackpackDuffelSyndicateFilledSMG # 17 TC
+  - JetpackBlackFilled # 2 TC
+  - ClothingBackpackDuffelSyndicateHardsuitBundle # 8 TC
+  - ClothingUniformJumpsuitOperative
+  - SyndiPDA
+  - ClothingEyesHudSyndicate # 2 TC as fluff
+  - ClothingShoesBootsCombatFilled
+  - ClothingBeltMilitaryWebbing # 1 TC

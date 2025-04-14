@@ -30,3 +30,49 @@
   components:
     - type: SurplusBundle
       totalPrice: 125
+
+- type: entity
+  parent: [ BaseStructureDynamic, BaseSetSelector, BaseSyndicateContraband ]
+  id: CrateSyndicateUndetermined # Not actually a crate, just looks like one
+  name: undetermined Syndicate bundle crate
+  description: Contains a Syndicate bundle. Which one is yet to be determined.
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/syndicate.rsi
+    state: icon
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Storage/Crates/syndicate.rsi
+    layers:
+    - state: icon
+  - type: SetSelector
+    possibleSets:
+    - SyndicateSpySet
+    - SyndicateHitmanSet
+    - SyndicateImplantsSet
+    - SyndicateHackerSet
+    - SyndicateDeswordSet
+    - SyndicateGrenadierSet
+    - SyndicateFluclearSet
+    setsToSelect: 3
+    spawnedStoragePrototype: CrateSyndicate
+    spawnedStorageContainer: entity_storage
+    openSpawnedStorage: true
+    approveSound:
+      path: /Audio/Effects/closetopen.ogg
+  - type: InteractionOutline
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.29"
+        density: 50
+        mask:
+        - CrateMask
+        layer:
+        - MachineLayer
+  - type: StaticPrice
+    price: 5000

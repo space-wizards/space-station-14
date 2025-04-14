@@ -1,13 +1,13 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
 						xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
 						xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-						Title="{Loc 'thief-backpack-window-title'}"
+						Title="{Loc 'set-selector-window-title'}"
 						MinSize="700 700">
 	<BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
 		<!-- First Informational panel -->
 		<Label Name="Description" Margin="5 5"/>
 		<controls:HLine Color="#404040" Thickness="2" Margin="0 5"/>
-		<Label Name="SelectedSets" Text="{Loc 'thief-backpack-window-selected'}" Margin="5 5"/>
+		<Label Name="SelectedSets" Text="{Loc 'set-selector-window-selected'}" Margin="5 5"/>
 
 		<!-- Second sets panel -->
 		<PanelContainer Margin="5 5">
@@ -25,11 +25,11 @@
 				</BoxContainer>
 			</ScrollContainer>
 		</PanelContainer>
-		
+
 		<!-- Third approve button panel -->
 		<PanelContainer Margin="10">
 			<Button Name="ApproveButton"
-					Text="{Loc 'thief-backpack-window-approve-button'}"
+					Text="{Loc 'set-selector-window-approve-button'}"
 					Margin="0 5"
 					Access="Public"
 					HorizontalAlignment ="Right"
