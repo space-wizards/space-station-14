@@ -201,7 +201,7 @@
   - type: Item
     heldPrefix: blue
   - type: Crayon
-    color: lightblue
+    color: blue
   - type: Tag
     tags:
     - Write
