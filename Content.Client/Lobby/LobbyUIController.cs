@@ -169,9 +169,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         RefreshLobbyPreview();
         var (characterGui, profileEditor) = EnsureGui();
         characterGui.ReloadCharacterPickers();
-        profileEditor.SetProfile(
-            (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter,
-            _preferencesManager.Preferences?.SelectedCharacterIndex);
+        profileEditor.ResetToDefault();
         _jobPriorityEditor?.LoadJobPriorities(_preferencesManager.Preferences?.JobPriorities);
     }
 
