@@ -19,7 +19,7 @@ public sealed partial class DamagePopupComponent : Component
     /// <summary>
     /// Enum that will be used to determine the type of damage popup displayed.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField("damagePopupType"), AutoNetworkedField]
     public DamagePopupType Type = DamagePopupType.Combined;
 }
 
