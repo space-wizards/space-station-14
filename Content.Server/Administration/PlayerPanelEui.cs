@@ -8,6 +8,7 @@ using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Eui;
+using Content.Shared.Follower;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 
@@ -33,11 +34,13 @@ public sealed class PlayerPanelEui : BaseEui
     private bool _frozen;
     private bool _canFreeze;
     private bool _canAhelp;
+    private FollowerSystem _follower;
 
     public PlayerPanelEui(LocatedPlayerData player)
     {
         IoCManager.InjectDependencies(this);
         _targetPlayer = player;
+        _follower = _entity.System<FollowerSystem>();
     }
 
     public override void Opened()
@@ -141,6 +144,16 @@ public sealed class PlayerPanelEui : BaseEui
                     _entity.DeleteEntity(session.AttachedEntity);
                 }
                 break;
+            case PlayerPanelFollowMessage:
+                if (!_admins.HasAdminFlag(Player, AdminFlags.Admin) ||
+                    !_player.TryGetSessionById(_targetPlayer.UserId, out session) ||
+                    session.AttachedEntity == null ||
+                    Player.AttachedEntity is null ||
+                    session.AttachedEntity == Player.AttachedEntity)
+                    return;
+
+                _follower.StartFollowingEntity(Player.AttachedEntity.Value, session.AttachedEntity.Value);
+                break;
         }
     }
 
@@ -173,11 +186,11 @@ public sealed class PlayerPanelEui : BaseEui
         {
             _whitelisted = await _db.GetWhitelistStatusAsync(_targetPlayer.UserId);
             // This won't get associated ip or hwid bans but they were not placed on this account anyways
-            _bans = (await _db.GetServerBansAsync(null, _targetPlayer.UserId, null)).Count;
+            _bans = (await _db.GetServerBansAsync(null, _targetPlayer.UserId, null, null)).Count;
             // Unfortunately role bans for departments and stuff are issued individually. This means that a single role ban can have many individual role bans internally
             // The only way to distinguish whether a role ban is the same is to compare the ban time.
             // This is horrible and I would love to just erase the database and start from scratch instead but that's what I can do for now.
-            _roleBans = (await _db.GetServerRoleBansAsync(null, _targetPlayer.UserId, null)).DistinctBy(rb => rb.BanTime).Count();
+            _roleBans = (await _db.GetServerRoleBansAsync(null, _targetPlayer.UserId, null, null)).DistinctBy(rb => rb.BanTime).Count();
         }
         else
         {
