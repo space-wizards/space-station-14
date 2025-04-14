@@ -1,14 +1,13 @@
 using System.Linq;
-using Content.Server.Damage.Components;
-using Content.Server.Popups;
-using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 
-namespace Content.Server.Damage.Systems;
+namespace Content.Shared.Damage.Systems;
 
 public sealed class DamagePopupSystem : EntitySystem
 {
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -32,7 +31,8 @@ public sealed class DamagePopupSystem : EntitySystem
                 DamagePopupType.Hit => "!",
                 _ => "Invalid type",
             };
-            _popupSystem.PopupEntity(msg, uid);
+
+            _popupSystem.PopupPredicted(msg, uid, args.Origin);
         }
     }
 
@@ -40,15 +40,10 @@ public sealed class DamagePopupSystem : EntitySystem
     {
         if (component.AllowTypeChange)
         {
-            if (component.Type == Enum.GetValues(typeof(DamagePopupType)).Cast<DamagePopupType>().Last())
-            {
-                component.Type = Enum.GetValues(typeof(DamagePopupType)).Cast<DamagePopupType>().First();
-            }
-            else
-            {
-                component.Type = (DamagePopupType) (int) component.Type + 1;
-            }
-            _popupSystem.PopupEntity("Target set to type: " + component.Type.ToString(), uid);
+            var next = (DamagePopupType) (((int)component.Type + 1) % Enum.GetValues<DamagePopupType>().Length);
+            component.Type = next;
+            Dirty(uid, component);
+            _popupSystem.PopupPredicted("Target set to type: " + component.Type, uid, args.User);
         }
     }
 }
