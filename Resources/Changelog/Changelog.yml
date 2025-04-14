@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: MilenVolf
-  changes:
-  - message: Mouses, mothroaches, cockroaches and etc can be picked up once again.
-    type: Fix
-  id: 7671
-  time: '2024-12-01T22:09:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33602
 - author: JIPDawg
   changes:
   - message: Some Antag ghost roles now show their correct rules.
@@ -3895,3 +3888,10 @@
   id: 8170
   time: '2025-04-14T05:37:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35805
+- author: YoungThugSS14
+  changes:
+  - message: Binoculars can now be worn on the neck.
+    type: Tweak
+  id: 8171
+  time: '2025-04-14T06:34:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35759
