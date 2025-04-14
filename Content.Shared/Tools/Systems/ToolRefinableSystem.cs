@@ -9,7 +9,6 @@ namespace Content.Shared.Tools.Systems;
 
 public sealed class ToolRefinablSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
 
@@ -40,16 +39,13 @@ public sealed class ToolRefinablSystem : EntitySystem
         if (args.Cancelled)
             return;
 
-        if (_net.IsClient)
-            return;
-
         var xform = Transform(uid);
         var spawns = EntitySpawnCollection.GetSpawns(component.RefineResult, _random);
         foreach (var spawn in spawns)
         {
-            SpawnNextToOrDrop(spawn, uid, xform);
+            PredictedSpawnNextToOrDrop(spawn, uid, xform);
         }
 
-        Del(uid);
+        PredictedDel(uid);
     }
 }

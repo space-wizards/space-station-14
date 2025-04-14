@@ -10,9 +10,9 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Sandbox;
 using Robust.Server.Console;
-using Robust.Server.Placement;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
+using Robust.Shared.Placement;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -21,7 +21,7 @@ namespace Content.Server.Sandbox
     public sealed class SandboxSystem : SharedSandboxSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IPlacementManager _placementManager = default!;
+        [Dependency] private readonly SharedPlacementSystem _placementManager = default!;
         [Dependency] private readonly IConGroupController _conGroupController = default!;
         [Dependency] private readonly IServerConsoleHost _host = default!;
         [Dependency] private readonly SharedAccessSystem _access = default!;
@@ -62,8 +62,7 @@ namespace Content.Server.Sandbox
                     return true;
                 }
 
-                var channel = placement.MsgChannel;
-                var player = _playerManager.GetSessionByChannel(channel);
+                var player = placement.SenderSession;
 
                 if (_conGroupController.CanAdminPlace(player))
                 {
