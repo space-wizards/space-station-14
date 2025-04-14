@@ -4,7 +4,7 @@ desc = "Unofficial server for fans of RTVS featuring custom content. Come and se
 soft_max_players = 80
 # seconds
 # default 150
-lobbyduration = 520
+lobbyduration = 420
 
 [server]
 # TODO
