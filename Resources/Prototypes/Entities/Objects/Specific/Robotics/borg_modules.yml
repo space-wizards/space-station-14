@@ -666,7 +666,7 @@
     - AnomalyLocatorWideUnpowered
     - HandLabeler
     - SheetRGlassLingering0
-    - SheetPlasmaLingering0
+    - SheetRPGlassLingering0
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: anomaly-module }
 
