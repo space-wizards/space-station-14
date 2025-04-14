@@ -201,7 +201,7 @@ public sealed class ActionButton : Control, IEntityControl
         var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityName));
         var decr = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityDescription));
 
-        if (_entities.TryGetComponent(ActionId, out Shared.Charges.Components.LimitedChargesComponent? actionCharges))
+        if (_entities.TryGetComponent(ActionId, out LimitedChargesComponent? actionCharges))
         {
             var charges = _sharedChargesSys.GetCurrentCharges((ActionId.Value, actionCharges, null));
 

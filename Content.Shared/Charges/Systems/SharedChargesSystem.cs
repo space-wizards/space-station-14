@@ -180,8 +180,12 @@ public abstract class SharedChargesSystem : EntitySystem
         Dirty(action);
     }
 
+    /// <summary>
+    /// The next time a charge will be considered to be filled.
+    /// </summary>
+    /// <returns>0 timespan if invalid or no charges to generate.</returns>
     [Pure]
-    private TimeSpan GetNextRechargeTime(Entity<LimitedChargesComponent?, AutoRechargeComponent?> entity)
+    public TimeSpan GetNextRechargeTime(Entity<LimitedChargesComponent?, AutoRechargeComponent?> entity)
     {
         if (!Resolve(entity.Owner, ref entity.Comp1, ref entity.Comp2, false))
         {
