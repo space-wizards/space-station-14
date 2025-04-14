@@ -704,19 +704,16 @@ namespace Content.Shared.Cuffs
 
             _container.Remove(cuffsToRemove, cuffable.Container);
 
-            if (_net.IsServer)
+            if (cuff.BreakOnRemove)
             {
-                // Handles spawning broken cuffs on server to avoid client misprediction
-                if (cuff.BreakOnRemove)
-                {
-                    QueueDel(cuffsToRemove);
-                    var trash = Spawn(cuff.BrokenPrototype, Transform(cuffsToRemove).Coordinates);
-                    _hands.PickupOrDrop(user, trash);
-                }
-                else
-                {
-                    _hands.PickupOrDrop(user, cuffsToRemove);
-                }
+                PredictedQueueDel(cuffsToRemove);
+                var trash = Spawn(cuff.BrokenPrototype, Transform(cuffsToRemove).Coordinates);
+                EntityManager.FlagPredicted(trash);
+                _hands.PickupOrDrop(user, trash);
+            }
+            else
+            {
+                _hands.PickupOrDrop(user, cuffsToRemove);
             }
 
             var shoved = false;
