@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: JIPDawg
-  changes:
-  - message: Some Antag ghost roles now show their correct rules.
-    type: Fix
-  id: 7672
-  time: '2024-12-02T19:43:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32457
 - author: Southbridge, Flipsie27
   changes:
   - message: 'Added a new low-mid pop map: Amber Station'
@@ -3895,3 +3888,10 @@
   id: 8171
   time: '2025-04-14T06:34:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35759
+- author: K-Dynamic
+  changes:
+  - message: Drawings from blue and green crayons now match their colours.
+    type: Tweak
+  id: 8172
+  time: '2025-04-14T08:58:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36532
