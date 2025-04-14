@@ -22,7 +22,7 @@ public abstract class SharedPoweredLightSystem : EntitySystem
     [Dependency] private   readonly SharedAmbientSoundSystem _ambientSystem = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private   readonly SharedAudioSystem _audio = default!;
-    [Dependency] private   readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private   readonly SharedLightBulbSystem _bulbSystem = default!;
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
@@ -102,7 +102,7 @@ public abstract class SharedPoweredLightSystem : EntitySystem
             return false;
 
         // try to insert bulb in container
-        if (!_containerSystem.Insert(bulbUid, light.LightBulbContainer))
+        if (!ContainerSystem.Insert(bulbUid, light.LightBulbContainer))
             return false;
 
         UpdateLight(uid, light);
@@ -123,7 +123,7 @@ public abstract class SharedPoweredLightSystem : EntitySystem
             return null;
 
         // try to remove bulb from container
-        if (!_containerSystem.Remove(bulb, light.LightBulbContainer))
+        if (!ContainerSystem.Remove(bulb, light.LightBulbContainer))
             return null;
 
         // try to place bulb in hands

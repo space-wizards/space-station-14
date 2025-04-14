@@ -57,7 +57,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
         {
-            light.LightBulbContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, LightBulbContainer);
+            light.LightBulbContainer = ContainerSystem.EnsureContainer<ContainerSlot>(uid, LightBulbContainer);
             _signalSystem.EnsureSinkPorts(uid, light.OnPort, light.OffPort, light.TogglePort);
         }
 
@@ -67,7 +67,7 @@ namespace Content.Server.Light.EntitySystems
             if (light.HasLampOnSpawn != null)
             {
                 var entity = EntityManager.SpawnEntity(light.HasLampOnSpawn, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
-                _containerSystem.Insert(entity, light.LightBulbContainer);
+                ContainerSystem.Insert(entity, light.LightBulbContainer);
             }
             // need this to update visualizers
             UpdateLight(uid, light);
