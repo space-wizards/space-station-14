@@ -236,6 +236,7 @@
     - DoorBumpOpener
     - FootstepSound
     - CanPilot
+    - Unimplantable
   - type: Emoting
   - type: GuideHelp
     guides:
