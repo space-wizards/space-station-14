@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Southbridge, Flipsie27
-  changes:
-  - message: 'Added a new low-mid pop map: Amber Station'
-    type: Add
-  id: 7673
-  time: '2024-12-03T02:24:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33441
 - author: CheddaCheez
   changes:
   - message: Added recipes for Nachos, Cheesy Nachos, and Cuban Nachos.
@@ -3895,3 +3888,12 @@
   id: 8172
   time: '2025-04-14T08:58:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36532
+- author: PJB3005
+  changes:
+  - message: Fire extinguishers can now extinguish things like candles and cigarettes.
+    type: Add
+  - message: You can even use them to extinguish items that are held/worn!
+    type: Add
+  id: 8173
+  time: '2025-04-14T09:00:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36267
