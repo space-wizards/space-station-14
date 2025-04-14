@@ -8,12 +8,23 @@
   - type: SpriteFade
   - type: Clickable
   - type: Sprite
-    sprite: Structures/Decoration/containers.rsi
+    sprite: Structures/Storage/containers.rsi
     drawdepth: Overdoors
     state: container_blank
     offset: "0, 0.5"
   - type: Physics
     bodyType: Static
+  - type: Storage
+    grid:
+    - 0,0,19,9
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: InteractionOutline
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
   - type: Fixtures
     fixtures:
       fix1:
