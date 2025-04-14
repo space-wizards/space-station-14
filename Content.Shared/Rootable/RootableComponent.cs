@@ -51,7 +51,7 @@ public sealed partial class RootableComponent : Component
     public TimeSpan NextUpdate;
 
     /// <summary>
-    /// The max rate (in reagent units per TransferFrequency) at which chemicals are transferred from the puddle to the rooted entity.
+    /// The max rate (in reagent units per transfer) at which chemicals are transferred from the puddle to the rooted entity.
     /// </summary>
     [DataField]
     public FixedPoint2 TransferRate = 0.75;

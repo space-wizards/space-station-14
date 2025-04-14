@@ -63,17 +63,20 @@ public abstract class SharedRootableSystem : EntitySystem
 
     private void OnRootableToggle(Entity<RootableComponent> entity, ref ToggleActionEvent args)
     {
-        args.Handled = TryToggleRooting(entity);
+        args.Handled = TryToggleRooting((entity, entity));
     }
 
     private void OnMobStateChanged(Entity<RootableComponent> entity, ref MobStateChangedEvent args)
     {
         if (entity.Comp.Rooted)
-            TryToggleRooting(entity);
+            TryToggleRooting((entity, entity));
     }
 
-    public bool TryToggleRooting(Entity<RootableComponent> entity)
+    public bool TryToggleRooting(Entity<RootableComponent?> entity)
     {
+        if (!Resolve(entity, ref entity.Comp))
+            return false;
+
         entity.Comp.Rooted = !entity.Comp.Rooted;
         _movementSpeedModifier.RefreshMovementSpeedModifiers(entity);
         Dirty(entity);
