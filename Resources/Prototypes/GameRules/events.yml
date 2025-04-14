@@ -226,6 +226,8 @@
       - type: AutoImplant
         implants:
         - DeathAcidifierImplant
+      - type: RandomHumanoidAppearance
+        randomizeName: false
       - type: RandomMetadata
         nameSegments:
         - NamesNinjaTitle
@@ -313,6 +315,8 @@
       - type: NpcFactionMember
         factions:
         - Wizard
+      - type: RandomHumanoidAppearance
+        randomizeName: false
       - type: RandomMetadata
         nameSegments:
         - NamesWizardFirst
@@ -545,6 +549,8 @@
       roleLoadout:
       - RoleSurvivalNukie
       components:
+      - type: RandomHumanoidAppearance
+        randomizeName: false
       - type: NukeOperative
       - type: RandomMetadata
         nameSegments:
