@@ -45,7 +45,7 @@ public sealed class MaterialArbitrageTest
         var pricing = entManager.System<PricingSystem>();
         var stackSys = entManager.System<StackSystem>();
         var mapSystem = server.System<SharedMapSystem>();
-        var latheSys = server.System<SharedLatheSystem>();
+        var latheSys = server.System<LatheSystem>();
         var compFact = server.ResolveDependency<IComponentFactory>();
 
         Assert.That(mapSystem.IsInitialized(testMap.MapId));
@@ -64,7 +64,7 @@ public sealed class MaterialArbitrageTest
 
         foreach (var (_, lathe) in pair.GetPrototypesWithComponent<LatheComponent>())
         {
-            foreach (var recipe in LatheSystem.GetAllBaseRecipes(lathe))
+            foreach (var recipe in latheSys.GetAllPossibleRecipes(lathe))
             {
                 if (!minMultiplier.TryGetValue(recipe, out var min))
                     min = 1;
