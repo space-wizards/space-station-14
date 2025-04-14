@@ -4,8 +4,8 @@ meta:
   engineVersion: 253.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/14/2025 16:14:43
-  entityCount: 15489
+  time: 04/14/2025 16:24:20
+  entityCount: 15485
 maps:
 - 126
 grids:
@@ -9610,7 +9610,7 @@ entities:
       pos: 44.5,30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -3208.6338
+      secondsUntilStateChange: -3247.2131
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12120,11 +12120,6 @@ entities:
       parent: 2
 - proto: BoxFolderBlack
   entities:
-  - uid: 10293
-    components:
-    - type: Transform
-      pos: 19.70301,-2.360692
-      parent: 2
   - uid: 12101
     components:
     - type: Transform
@@ -12136,11 +12131,6 @@ entities:
     components:
     - type: Transform
       pos: 20.522104,32.67386
-      parent: 2
-  - uid: 10290
-    components:
-    - type: Transform
-      pos: 19.281136,-2.391942
       parent: 2
   - uid: 11892
     components:
@@ -12178,11 +12168,6 @@ entities:
     - type: Transform
       pos: 20.53773,30.345732
       parent: 2
-  - uid: 10291
-    components:
-    - type: Transform
-      pos: 19.374886,-2.470067
-      parent: 2
   - uid: 11890
     components:
     - type: Transform
@@ -12211,11 +12196,6 @@ entities:
     components:
     - type: Transform
       pos: 43.630394,20.021849
-      parent: 2
-  - uid: 10292
-    components:
-    - type: Transform
-      pos: 19.597303,-2.513713
       parent: 2
   - uid: 14766
     components:
@@ -12324,7 +12304,7 @@ entities:
   - uid: 10294
     components:
     - type: Transform
-      pos: 16.550428,-5.544963
+      pos: 16.57045,-5.442256
       parent: 2
 - proto: BriefcaseBrownFilled
   entities:
@@ -39831,11 +39811,10 @@ entities:
       parent: 2
 - proto: ComputerFundingAllocation
   entities:
-  - uid: 4017
+  - uid: 10270
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 15.5,-5.5
+      pos: 19.5,-2.5
       parent: 2
 - proto: ComputerId
   entities:
@@ -45169,6 +45148,11 @@ entities:
       parent: 2
 - proto: filingCabinetRandom
   entities:
+  - uid: 4017
+    components:
+    - type: Transform
+      pos: 15.5,-5.5
+      parent: 2
   - uid: 7834
     components:
     - type: Transform
@@ -70239,7 +70223,7 @@ entities:
   - uid: 11975
     components:
     - type: Transform
-      pos: 18.920185,-2.2376757
+      pos: 18.293547,-2.8643441
       parent: 2
   - uid: 11976
     components:
@@ -83153,11 +83137,6 @@ entities:
     components:
     - type: Transform
       pos: 18.5,-2.5
-      parent: 2
-  - uid: 10270
-    components:
-    - type: Transform
-      pos: 19.5,-2.5
       parent: 2
   - uid: 10277
     components:
