@@ -58,17 +58,6 @@
 
 - type: entity
   parent: BaseFigurine
-  id: ToyFigurineGreytider
-  name: greytider figure
-  description: A figurine depicting a dubious-looking assistant. Greytide worldwide!
-  components:
-  - type: Sprite
-    state: passenger_greytide
-  - type: SpeakOnTrigger
-    pack: FigurinesGreytider
-
-- type: entity
-  parent: BaseFigurine
   id: ToyFigurineClown
   name: clown figure
   description: A figurine depicting a clown. You shudder to think of what people have probably done to this figurine before.

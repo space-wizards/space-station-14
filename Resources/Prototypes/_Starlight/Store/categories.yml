@@ -1,0 +1,108 @@
+- type: storeCategory
+  id: SLPlushies
+  name: store-category-plushies
+
+- type: storeCategory
+  id: SLSpecies
+  name: store-category-plushie-species
+
+- type: storeCategory
+  id: SLChemistry
+  name: store-category-medical-chemistry
+
+- type: storeCategory
+  id: SLMedical
+  name: store-category-medical-medical
+
+- type: storeCategory
+  id: SLSurgery
+  name: store-category-medical-surgery
+
+- type: storeCategory
+  id: SLEnginery
+  name: store-category-enginery-main
+
+- type: storeCategory
+  id: SLClown
+  name: store-category-service-clown
+  
+- type: storeCategory
+  id: SLSecurity
+  name: store-category-security-main
+
+- type: storeCategory
+  id: SLBrigmedic
+  name: Medical
+
+- type: storeCategory
+  id: SLFahsionSkirt
+  name: Luxury dresses 
+
+- type: storeCategory
+  id: SLFahsionSuit
+  name: Elegant suits
+
+- type: storeCategory
+  id: SLFahsionOther
+  name: Other
+
+# shuttle build uplink
+- type: storeCategory
+  id: ShuttleUplinkEquipment
+  name: Space equipment
+  priority: 0
+
+- type: storeCategory
+  id: ShuttleUplinkResources
+  name: Materials
+  priority: 3
+
+- type: storeCategory
+  id: ShuttleUplinkShipbuilding
+  name: Shuttle utilities
+  priority: 4
+
+- type: storeCategory
+  id: ShuttleUplinkMedicine
+  name: Medical utilities
+  priority: 6
+
+- type: storeCategory
+  id: ShuttleUplinkExtra
+  name: Extra
+  priority: 7
+
+# menacing shuttle build uplink
+- type: storeCategory
+  id: MenacingShuttleUplinkEquipment
+  name: Syndicate equipment
+  priority: 1
+
+- type: storeCategory
+  id: MenacingShuttleUplinkWeapons
+  name: Weaponry
+  priority: 2
+
+- type: storeCategory
+  id: MenacingShuttleUplinkPirate
+  name: Pirate
+  priority: 5
+
+# agent uplink
+- type: storeCategory
+  id: UplinkCybernetics
+  name: Cybernetics
+  
+# salvage
+
+- type: storeCategory
+  id: SalvageEquipment
+  name: Equipment
+  
+- type: storeCategory
+  id: SalvageWeapons
+  name: Weapons
+  
+- type: storeCategory
+  id: SalvageConsumeables
+  name: Consumeables

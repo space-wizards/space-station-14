@@ -1,0 +1,15 @@
+- type: entity
+  parent: [BaseComputerCircuitboard, BaseGrandTheftContraband]
+  id: RecruitmentComputerCircuitboard
+  name: recruitment computer computer board
+  description: A computer printed circuit board for an recruitment computer.
+  components:
+    - type: Sprite
+      state: cpu_command
+    - type: ComputerBoard
+      prototype: RecruitmentComputer
+    - type: StaticPrice
+      price: 750
+    - type: Tag
+      tags:
+      - HighRiskItem

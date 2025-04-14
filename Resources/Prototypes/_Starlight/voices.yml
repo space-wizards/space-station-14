@@ -1,0 +1,1024 @@
+- type: voice
+  id: acorn
+  name: tts-voice-name-acorn
+  sex: Male
+  silicon: false
+  voice: 0
+
+- type: voice
+  id: geraltofrivia
+  name: tts-voice-name-geraltofrivia
+  sex: Male
+  silicon: false
+  voice: 13
+
+- type: voice
+  id: invoker
+  voice: 282
+  name: tts-voice-name-invoker
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: scout
+  voice: 67
+  name: tts-voice-name-scout
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: spy
+  voice: 71
+  name: tts-voice-name-spy
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: engineer
+  voice: 234
+  name: tts-voice-name-engineer
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: dan-heng
+  voice: 318
+  name: tts-voice-name-dan-heng
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: batman
+  voice: 643
+  name: tts-voice-name-batman
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: rick-sanchez
+  voice: 483
+  name: tts-voice-name-rick-sanchez
+  sex: Male
+  silicon: false
+  
+- type: voice
+  id: yoru
+  voice: 123
+  name: tts-voice-name-yoru
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: silverhand
+  voice: 28
+  name: tts-voice-name-silverhand
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: sidorovich
+  voice: 119
+  name: tts-voice-name-sidorovich
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: drekthar
+  voice: 268
+  name: tts-voice-name-drekthar
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: lyney
+  voice: 517
+  name: tts-voice-name-lyney
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: arataki
+  voice: 222
+  name: tts-voice-name-arataki
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: ordis
+  voice: 522
+  name: tts-voice-name-ordis
+  sex: Unsexed
+  silicon: true
+
+- type: voice
+  id: marauder
+  voice: 487
+  name: tts-voice-name-marauder
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: sin
+  voice: 493
+  name: tts-voice-name-sin
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: duelist
+  voice: 480
+  name: tts-voice-name-duelist
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: templar
+  voice: 494
+  name: tts-voice-name-templar
+  sex: Male
+  silicon: false
+
+- type: voice
+  id: witch
+  voice: 502
+  name: tts-voice-name-witch
+  sex: Female
+  silicon: false
+  
+- type: voice
+  id: scion
+  voice: 501
+  name: tts-voice-name-scion
+  sex: Female
+  silicon: false
+
+- type: voice
+  id: amber
+  voice: 484
+  name: tts-voice-name-amber
+  sex: Female
+  silicon: false
+
+- type: voice
+  id: venti
+  voice: 523
+  name: tts-voice-name-venti
+  sex: Female
+  silicon: false
+
+- type: voice
+  id: yaemiko
+  voice: 524
+  name: tts-voice-name-yaemiko
+  sex: Female
+  silicon: false
+
+- type: voice
+  id: klee
+  voice: 515
+  name: tts-voice-name-klee
+  sex: Female
+  silicon: false
+
+- type: voice
+  id: layla
+  voice: 299
+  name: tts-voice-name-layla
+  sex: Female
+  silicon: false
+
+- type: voice
+  id: march7
+  voice: 320
+  name: tts-voice-name-march7
+  sex: Female
+  silicon: false
+
+- type: voice
+  id: diona
+  voice: 498
+  name: tts-voice-name-diona
+  sex: Female
+  silicon: false
+
+- type: voice
+  id: yennefer
+  voice: 219
+  name: tts-voice-name-yennefer
+  sex: Female
+  silicon: false
+  
+- type: voice
+  id: triss
+  voice: 217
+  name: tts-voice-name-triss
+  sex: Female
+  silicon: false
+    
+- type: voice
+  id: lizzy
+  voice: 24
+  name: tts-voice-name-lizzy
+  sex: Female
+  silicon: false
+
+- type: voice
+  id: skippy
+  voice: 25
+  name: tts-voice-name-skippy
+  sex: Unsexed
+  silicon: true
+  
+- type: voice
+  id: judy
+  voice: 26
+  name: tts-voice-name-judy
+  sex: Female
+  silicon: false
+
+- type: voice
+  id: delamain
+  voice: 27
+  name: tts-voice-name-delamain
+  sex: Unsexed
+  silicon: true
+  
+- type: voice
+  id: cephalon
+  voice: 488
+  name: tts-voice-name-cephalon
+  sex: Unsexed
+  silicon: true
+
+- type: voice
+  id: lotus
+  voice: 510
+  name: tts-voice-name-lotus
+  sex: Unsexed
+  silicon: true
+
+- type: voice
+  id: heavy
+  name: tts-voice-name-heavy
+  sex: Male
+  silicon: false
+  voice: 7
+
+- type: voice
+  id: medic
+  name: tts-voice-name-medic
+  sex: Male
+  silicon: false
+  voice: 8
+
+- type: voice
+  id: g-man
+  name: tts-voice-name-g-man
+  sex: Male
+  silicon: false
+  voice: 16
+
+- type: voice
+  id: sniper
+  name: tts-voice-name-sniper
+  sex: Male
+  silicon: false
+  voice: 69
+  
+- type: voice
+  id: soldier
+  name: tts-voice-name-soldier
+  sex: Male
+  silicon: false
+  voice: 70
+
+- type: voice
+  id: darkwillow
+  name: tts-voice-name-darkwillow
+  sex: Female
+  silicon: false
+  voice: 112
+  
+- type: voice
+  id: dawnbreaker
+  name: tts-voice-name-dawnbreaker
+  sex: Female
+  silicon: false
+  voice: 113
+
+- type: voice
+  id: grimstroke
+  name: tts-voice-name-grimstroke
+  sex: Male
+  silicon: false
+  voice: 114
+
+
+- type: voice
+  id: hoodwink
+  name: tts-voice-name-hoodwink
+  sex: Female
+  silicon: false
+  voice: 115
+
+- type: voice
+  id: mars
+  name: tts-voice-name-mars
+  sex: Male
+  silicon: false
+  voice: 116
+
+- type: voice
+  id: medusa
+  name: tts-voice-name-medusa
+  sex: Female
+  silicon: false
+  voice: 117
+
+- type: voice
+  id: oracle
+  name: tts-voice-name-oracle
+  sex: Male
+  silicon: false
+  voice: 118
+
+- type: voice
+  id: puck
+  name: tts-voice-name-puck
+  sex: Unsexed
+  silicon: false
+  voice: 120
+
+- type: voice
+  id: snapfire
+  name: tts-voice-name-snapfire
+  sex: Female
+  silicon: false
+  voice: 121
+
+- type: voice
+  id: viper
+  name: tts-voice-name-viper
+  sex: Female
+  silicon: false
+  voice: 124
+
+- type: voice
+  id: voidspirit
+  name: tts-voice-name-voidspirit
+  sex: Male
+  silicon: false
+  voice: 125
+
+- type: voice
+  id: sova
+  name: tts-voice-name-sova
+  sex: Male
+  silicon: false
+  voice: 134
+
+- type: voice
+  id: skye-valorant
+  name: tts-voice-name-skye-valorant
+  sex: Female
+  silicon: false
+  voice: 137
+
+- type: voice
+  id: astra
+  name: tts-voice-name-astra
+  sex: Female
+  silicon: false
+  voice: 142
+
+- type: voice
+  id: breach
+  name: tts-voice-name-breach
+  sex: Male
+  silicon: false
+  voice: 143
+
+- type: voice
+  id: brimstone
+  name: tts-voice-name-brimstone
+  sex: Male
+  silicon: false
+  voice: 144
+
+- type: voice
+  id: chamber
+  name: tts-voice-name-chamber
+  sex: Male
+  silicon: false
+  voice: 145
+
+- type: voice
+  id: cypher
+  name: tts-voice-name-cypher
+  sex: Male
+  silicon: false
+  voice: 146
+
+- type: voice
+  id: fade
+  name: tts-voice-name-fade
+  sex: Female
+  silicon: false
+  voice: 147
+
+- type: voice
+  id: harbor
+  name: tts-voice-name-harbor
+  sex: Male
+  silicon: false
+  voice: 148
+
+- type: voice
+  id: kayo
+  name: tts-voice-name-kayo
+  sex: Unsexed
+  silicon: true
+  voice: 149
+
+- type: voice
+  id: killjoy
+  name: tts-voice-name-killjoy
+  sex: Female
+  silicon: false
+  voice: 150
+
+- type: voice
+  id: neon
+  name: tts-voice-name-neon
+  sex: Female
+  silicon: false
+  voice: 151
+
+- type: voice
+  id: omen
+  name: tts-voice-name-omen
+  sex: Male
+  silicon: false
+  voice: 152
+
+- type: voice
+  id: phoenix
+  name: tts-voice-name-phoenix
+  sex: Male
+  silicon: false
+  voice: 153
+
+- type: voice
+  id: raze
+  name: tts-voice-name-raze
+  sex: Female
+  silicon: false
+  voice: 154
+
+- type: voice
+  id: reyna
+  name: tts-voice-name-reyna
+  sex: Female
+  silicon: false
+  voice: 155
+
+- type: voice
+  id: sage
+  name: tts-voice-name-sage
+  sex: Female
+  silicon: false
+  voice: 156
+
+- type: voice
+  id: trollwarlord
+  name: tts-voice-name-trollwarlord
+  sex: Male
+  silicon: false
+  voice: 188
+
+- type: voice
+  id: pangolier
+  name: tts-voice-name-pangolier
+  sex: Male
+  silicon: false
+  voice: 191
+
+- type: voice
+  id: tinker
+  name: tts-voice-name-tinker
+  sex: Male
+  silicon: false
+  voice: 194
+
+- type: voice
+  id: xiao
+  name: tts-voice-name-xiao
+  sex: Male
+  silicon: false
+  voice: 200
+
+- type: voice
+  id: zhongli
+  name: tts-voice-name-zhongli
+  sex: Male
+  silicon: false
+  voice: 221
+
+- type: voice
+  id: eula
+  name: tts-voice-name-eula
+  sex: Female
+  silicon: false
+  voice: 223
+
+- type: voice
+  id: ganyu
+  name: tts-voice-name-ganyu
+  sex: Female
+  silicon: false
+  voice: 224
+
+- type: voice
+  id: hutao
+  name: tts-voice-name-hutao
+  sex: Female
+  silicon: false
+  voice: 225
+
+- type: voice
+  id: kamisatoayaka
+  name: tts-voice-name-kamisatoayaka
+  sex: Female
+  silicon: false
+  voice: 226
+
+- type: voice
+  id: keqing
+  name: tts-voice-name-keqing
+  sex: Female
+  silicon: false
+  voice: 227
+
+- type: voice
+  id: altairibn-laahad
+  name: tts-voice-name-altairibn-laahad
+  sex: Male
+  silicon: false
+  voice: 228
+
+- type: voice
+  id: homersimpson
+  name: tts-voice-name-homersimpson
+  sex: Male
+  silicon: false
+  voice: 229
+
+- type: voice
+  id: lisasimpson
+  name: tts-voice-name-lisasimpson
+  sex: Female
+  silicon: false
+  voice: 230
+
+- type: voice
+  id: charlesmontgomeryburns
+  name: tts-voice-name-charlesmontgomeryburns
+  sex: Male
+  silicon: false
+  voice: 231
+
+- type: voice
+  id: demoman
+  name: tts-voice-name-demoman
+  sex: Male
+  silicon: false
+  voice: 233
+
+- type: voice
+  id: lich
+  name: tts-voice-name-lich
+  sex: Male
+  silicon: false
+  voice: 271
+
+- type: voice
+  id: shadowshaman
+  name: tts-voice-name-shadowshaman
+  sex: Male
+  silicon: false
+  voice: 274
+
+- type: voice
+  id: tiny
+  name: tts-voice-name-tiny
+  sex: Male
+  silicon: false
+  voice: 278
+
+- type: voice
+  id: drowranger
+  name: tts-voice-name-drowranger
+  sex: Female
+  silicon: false
+  voice: 281
+
+- type: voice
+  id: bloodseeker
+  name: tts-voice-name-bloodseeker
+  sex: Male
+  silicon: false
+  voice: 285
+
+- type: voice
+  id: aoiasahina
+  name: tts-voice-name-aoiasahina
+  sex: Female
+  silicon: false
+  voice: 286
+
+- type: voice
+  id: kaedeharakazuha
+  name: tts-voice-name-kaedeharakazuha
+  sex: Male
+  silicon: false
+  voice: 298
+
+- type: voice
+  id: sangonomiyakokomi
+  name: tts-voice-name-sangonomiyakokomi
+  sex: Female
+  silicon: false
+  voice: 300
+
+- type: voice
+  id: shenhe
+  name: tts-voice-name-shenhe
+  sex: Female
+  silicon: false
+  voice: 301
+
+- type: voice
+  id: wanderer
+  name: tts-voice-name-wanderer
+  sex: Male
+  silicon: false
+  voice: 302
+
+- type: voice
+  id: bennett
+  name: tts-voice-name-bennett
+  sex: Unsexed
+  silicon: false
+  voice: 303
+
+- type: voice
+  id: marlon
+  name: tts-voice-name-marlon
+  sex: Male
+  silicon: false
+  voice: 304
+
+- type: voice
+  id: tennessee
+  name: tts-voice-name-tennessee
+  sex: Male
+  silicon: false
+  voice: 305
+
+- type: voice
+  id: violetepisode2
+  name: tts-voice-name-violetepisode2
+  sex: Female
+  silicon: false
+  voice: 306
+
+- type: voice
+  id: alvinjr
+  name: tts-voice-name-alvinjr
+  sex: Male
+  silicon: false
+  voice: 307
+
+- type: voice
+  id: clementine
+  name: tts-voice-name-clementine
+  sex: Female
+  silicon: false
+  voice: 308
+
+- type: voice
+  id: lilly
+  name: tts-voice-name-lilly
+  sex: Female
+  silicon: false
+  voice: 309
+
+- type: voice
+  id: louis
+  name: tts-voice-name-louis
+  sex: Male
+  silicon: false
+  voice: 310
+
+- type: voice
+  id: barneycalhoun
+  name: tts-voice-name-barneycalhoun
+  sex: Male
+  silicon: false
+  voice: 311
+
+- type: voice
+  id: elivance-hl-alyx
+  name: tts-voice-name-elivance-hl-alyx
+  sex: Male
+  silicon: false
+  voice: 312
+
+
+- type: voice
+  id: bronya
+  name: tts-voice-name-bronya
+  sex: Female
+  silicon: false
+  voice: 316
+
+- type: voice
+  id: clara
+  name: tts-voice-name-clara
+  sex: Female
+  silicon: false
+  voice: 317
+
+- type: voice
+  id: himeko
+  name: tts-voice-name-himeko
+  sex: Female
+  silicon: false
+  voice: 319
+
+- type: voice
+  id: natasha
+  name: tts-voice-name-natasha
+  sex: Female
+  silicon: false
+  voice: 321
+
+- type: voice
+  id: sampo
+  name: tts-voice-name-sampo
+  sex: Male
+  silicon: false
+  voice: 322
+
+- type: voice
+  id: celestialudenberg
+  name: tts-voice-name-celestialudenberg
+  sex: Female
+  silicon: false
+  voice: 327
+
+- type: voice
+  id: hajimehinata
+  name: tts-voice-name-hajimehinata
+  sex: Male
+  silicon: false
+  voice: 328
+
+- type: voice
+  id: hiyokosaionji
+  name: tts-voice-name-hiyokosaionji
+  sex: Female
+  silicon: false
+  voice: 329
+
+- type: voice
+  id: junkoenoshima
+  name: tts-voice-name-junkoenoshima
+  sex: Female
+  silicon: false
+  voice: 331
+
+- type: voice
+  id: kyokokirigiri
+  name: tts-voice-name-kyokokirigiri
+  sex: Female
+  silicon: false
+  voice: 332
+
+- type: voice
+  id: monokuma
+  name: tts-voice-name-monokuma
+  sex: Male
+  silicon: false
+  voice: 334
+
+- type: voice
+  id: pekopekoyama
+  name: tts-voice-name-pekopekoyama
+  sex: Female
+  silicon: false
+  voice: 335
+
+- type: voice
+  id: circusbaby
+  name: tts-voice-name-circusbaby
+  sex: Female
+  silicon: true
+  voice: 336
+
+- type: voice
+  id: zhin
+  name: tts-voice-name-zhin
+  sex: Male
+  silicon: false
+  voice: 479
+
+- type: voice
+  id: mortysmith
+  name: tts-voice-name-mortysmith
+  sex: Male
+  silicon: false
+  voice: 481
+
+- type: voice
+  id: barik
+  name: tts-voice-name-barik
+  sex: Male
+  silicon: false
+  voice: 485
+
+- type: voice
+  id: bettylabomba
+  name: tts-voice-name-bettylabomba
+  sex: Female
+  silicon: false
+  voice: 490
+
+- type: voice
+  id: cyno
+  name: tts-voice-name-cyno
+  sex: Male
+  silicon: false
+  voice: 491
+
+- type: voice
+  id: drogoz
+  name: tts-voice-name-drogoz
+  sex: Male
+  silicon: false
+  voice: 496
+
+- type: voice
+  id: freminet
+  name: tts-voice-name-freminet
+  sex: Male
+  silicon: false
+  voice: 508
+
+- type: voice
+  id: qiqi
+  name: tts-voice-name-qiqi
+  sex: Female
+  silicon: false
+  voice: 520
+
+- type: voice
+  id: francis
+  name: tts-voice-name-francis
+  sex: Male
+  silicon: false
+  voice: 10030
+
+- type: voice
+  id: nick
+  name: tts-voice-name-nick
+  sex: Male
+  silicon: false
+  voice: 10050
+
+- type: voice
+  id: l4d-louis
+  name: tts-voice-name-l4d-louis
+  sex: Male
+  silicon: false
+  voice: 10063
+
+- type: voice
+  id: ellis
+  name: tts-voice-name-ellis
+  sex: Male
+  silicon: false
+  voice: 10064
+
+- type: voice
+  id: rochelle
+  name: tts-voice-name-rochelle
+  sex: Female
+  silicon: false
+  voice: 10078
+
+- type: voice
+  id: zoey
+  name: tts-voice-name-zoey
+  sex: Female
+  silicon: false
+  voice: 10091
+
+- type: voice
+  id: jhin
+  name: tts-voice-name-jhin
+  sex: Male
+  silicon: false
+  voice: 20001
+  
+- type: voice
+  id: yasuo
+  name: tts-voice-name-yasuo
+  sex: Male
+  silicon: false
+  voice: 20002
+
+- type: voice
+  id: cavejohnson
+  name: tts-voice-name-cavejohnson
+  sex: Male
+  silicon: false
+  voice: 20003
+  
+- type: voice
+  id: gohan
+  name: tts-voice-name-gohan
+  sex: Male
+  silicon: false
+  voice: 20004
+  
+- type: voice
+  id: arthurmorgan
+  name: tts-voice-name-arthurmorgan
+  sex: Male
+  silicon: false
+  voice: 20005
+
+- type: voice
+  id: volition
+  name: tts-voice-name-volition
+  sex: Male
+  silicon: false
+  voice: 20006
+  
+- type: voice
+  id: halflight
+  name: tts-voice-name-halflight
+  sex: Male
+  silicon: false
+  voice: 20007
+    
+- type: voice
+  id: cuno
+  name: tts-voice-name-cuno
+  sex: Male
+  silicon: false
+  voice: 20008
+      
+- type: voice
+  id: kimkitsuragi
+  name: tts-voice-name-kimkitsuragi
+  sex: Male
+  silicon: false
+  voice: 20009
+      
+- type: voice
+  id: evrartclaire
+  name: tts-voice-name-evrartclaire
+  sex: Male
+  silicon: false
+  voice: 20010
+      
+- type: voice
+  id: klaasjeamandou
+  name: tts-voice-name-klaasjeamandou
+  sex: Female
+  silicon: false
+  voice: 20011
+      
+- type: voice
+  id: horrificnecktie
+  name: tts-voice-name-horrificnecktie
+  sex: Male
+  silicon: false
+  voice: 20012
+        
+- type: voice
+  id: ancientreptilianbrain
+  name: tts-voice-name-ancientreptilianbrain
+  sex: Male
+  silicon: false
+  voice: 20013
+          
+- type: voice
+  id: galadriel
+  name: tts-voice-name-galadriel
+  sex: Female
+  silicon: false
+  voice: 20014
+  

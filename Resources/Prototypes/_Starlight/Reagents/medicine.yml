@@ -1,0 +1,30 @@
+- type: reagent
+  id: Vodkizine
+  name: reagent-name-vodkizine
+  parent: BaseAlcohol
+  desc: reagent-desc-vodkizine
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: vodka
+  color: "#fcf7f955"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -4
+            Brute: -4

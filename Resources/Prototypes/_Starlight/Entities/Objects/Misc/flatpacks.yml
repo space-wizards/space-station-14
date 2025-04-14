@@ -1,0 +1,17 @@
+- type: entity
+  parent: BaseFlatpack
+  id: PrinterDocFlatpack
+  name: document printer flatpack
+  description: A flatpack used for constructing a document printer.
+  components:
+  - type: Flatpack
+    entity: PrinterDoc
+    
+- type: entity
+  parent: BaseFlatpack
+  id: KitchenOvenFlatpack
+  name: oven flatpack
+  description: A flatpack used for constructing an oven.
+  components:
+  - type: Flatpack
+    entity: KitchenOven

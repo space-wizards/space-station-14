@@ -1,0 +1,25 @@
+﻿- type: entity
+  id: OrganVulpkaninStomach
+  parent: [OrganAnimalStomach, BaseOrganStomach]
+  name: stomach
+  description: "Gross. This is hard to stomach." 
+  components:
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    state: stomach
+  - type: Item
+    size: Small
+    heldPrefix: stomach
+  - type: Stomach
+    updateInterval: 1.5
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Metabolizer
+    updateInterval: 1.5

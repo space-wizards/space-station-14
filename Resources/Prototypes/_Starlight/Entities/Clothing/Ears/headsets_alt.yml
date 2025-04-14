@@ -1,0 +1,30 @@
+- type: entity
+  parent: ClothingHeadsetAlt
+  id: ClothingHeadsetAltAbductor
+  name: abductor over-ear headset
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyStationMaster
+  - type: Sprite
+    sprite: _Starlight/Clothing/Ears/Headsets/abductor.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Ears/Headsets/abductor.rsi
+
+    
+- type: entity
+  parent: [ClothingHeadsetAlt, BaseCommandContraband]
+  id: ClothingHeadsetHoP
+  name: command over-ear headset
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyService
+      - EncryptionKeyCommand
+      - EncryptionKeyCommon
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/command.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/command.rsi

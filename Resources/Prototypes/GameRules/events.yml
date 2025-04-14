@@ -10,7 +10,7 @@
     - id: ClericalError
     - id: CockroachMigration
     - id: GasLeak
-    - id: GreytideVirus
+    - id: DoorLaggingVirus
     - id: IonStorm # its calm like 90% of the time smh
     - id: KudzuGrowth
     - id: MassHallucinations
@@ -641,7 +641,7 @@
   - type: MobReplacementRule
 
 - type: entity
-  id: GreytideVirus
+  id: DoorLaggingVirus
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent

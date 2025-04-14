@@ -1,0 +1,206 @@
+- type: latheRecipe
+  id: CartridgePistolRubber
+  result: CartridgePistolRubber
+  categories:
+  - Ammo
+  completetime: 2
+  materials:
+    Plastic: 5
+    Steel: 5
+
+############ MAGAZINES (.35) ############
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazinePistolEmpty
+  result: MagazinePistolEmpty
+  materials:
+    Steel: 25
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolSP
+  result: MagazinePistolSP
+  materials:
+    Steel: 145
+    
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolHP
+  result: MagazinePistolHP
+  materials:
+    Steel: 145
+    
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolFMJ
+  result: MagazinePistolFMJ
+  materials:
+    Steel: 145
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolPractice
+  result: MagazinePistolPractice
+  materials:
+    Steel: 85
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolIncendiary
+  result: MagazinePistolIncendiary
+  materials:
+    Steel: 25
+    Plastic: 120
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolUranium
+  result: MagazinePistolUranium
+  materials:
+    Steel: 25
+    Plastic: 65
+    Uranium: 120
+    
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistolAP
+  result: MagazinePistolAP
+  materials:
+    Steel: 225
+    Uranium: 225
+
+############ MAGAZINES (.40) ############
+
+- type: latheRecipe
+  parent: BaseEmptyAmmoRecipe
+  id: MagazinePistol40Empty
+  result: MagazinePistol40Empty
+  materials:
+    Steel: 37
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistol40SP
+  result: MagazinePistol40SP
+  materials:
+    Steel: 167
+    
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistol40HP
+  result: MagazinePistol40HP
+  materials:
+    Steel: 167
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistol40FMJ
+  result: MagazinePistol40FMJ
+  materials:
+    Steel: 167
+    
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazinePistol40AP
+  result: MagazinePistol40AP
+  materials:
+    Steel: 90
+    Uranium: 90
+    Plastic: 130
+
+############ BOXES (.35) ############
+
+- type: latheRecipe
+  id: MagazineBoxPistolRubber
+  result: MagazineBoxPistolRubber
+  categories:
+  - Ammo
+  completetime: 5
+  materials:
+    Steel: 350
+    Plastic: 300
+    
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBoxPistolSP
+  result: MagazineBoxPistolSP
+  materials:
+    Steel: 600
+        
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBoxPistolHP
+  result: MagazineBoxPistolHP
+  materials:
+    Steel: 600
+        
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBoxPistolFMJ
+  result: MagazineBoxPistolFMJ
+  materials:
+    Steel: 600
+    
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBoxPistolPractice
+  result: MagazineBoxPistolPractice
+  materials:
+    Steel: 300
+    
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBoxPistolIncendiary
+  result: MagazineBoxPistolIncendiary
+  materials:
+    Plastic: 600
+    
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBoxPistolUranium
+  result: MagazineBoxPistolUranium
+  materials:
+    Plastic: 300
+    Uranium: 600
+    
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBoxPistolAP
+  result: MagazineBoxPistolAP
+  materials:
+    Plastic: 300
+    Steel: 300
+    Uranium: 600
+
+############ BOXES (.40) ############
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBoxPistol40SP
+  result: MagazineBoxPistol40SP
+  materials:
+    Steel: 334
+    
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBoxPistol40HP
+  result: MagazineBoxPistol40HP
+  materials:
+    Steel: 334
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBoxPistol40FMJ
+  result: MagazineBoxPistol40FMJ
+  materials:
+    Steel: 334
+    
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: MagazineBoxPistol40AP
+  result: MagazineBoxPistol40AP
+  materials:
+    Steel: 180
+    Uranium: 180
+    Plastic: 260

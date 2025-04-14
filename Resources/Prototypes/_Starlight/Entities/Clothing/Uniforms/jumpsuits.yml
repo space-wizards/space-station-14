@@ -1,0 +1,318 @@
+- type: entity
+  parent: [UnsensoredClothingUniformBase, BaseSovietContraband]
+  id: ClothingUniformJumpsuitSoviet
+  name: soviet uniform
+  description: Uniform for elite Soviet comrades, completely uncomfortable and cheaply made.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/soviet.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/soviet.rsi
+
+- type: entity
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformJumpsuitAbductor
+  name: abductor uniform
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/abductor.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/abductor.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitAtmos
+  id: ClothingUniformJumpsuitAtmosSyndie
+  name: Contortionist's Jumpsuit
+  components:
+  - type: VentCrawClothing
+
+- type: entity
+  parent: ClothingUniformBase
+  id: MagistrateUniformSuit
+  name: Magistrate's Jumpsuit
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/magistrate.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/magistrate.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitNtrep
+  name: nt representive suit
+  description: That suit that is better not to see.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrep.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrep.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitNtrepFormal
+  name: nt representive formal suit
+  description: That suit that is better not to see.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrepformal.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrepformal.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitBlueShield
+  name: blueshield officer's suit
+  description: Suit of a glorified bodyguard
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/blueshield.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/blueshield.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitEliteBlueShield
+  name: Elite Blueshield Officer's Suit
+  description: Suit of an Elite Blueshield. To reach such a level, you must have protected command from a [REDACTED] threat.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/eliteblueshield.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/eliteblueshield.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMiningSpecialist
+  name: mining specialist's jumpsuit
+  description: A suit passed down through many generations. a fine layer of dust trails behind it.
+  components:
+  - type: RollUpSleeves
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/mining.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/mining.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseSecurityContraband]
+  id: ClothingUniformJumpsuitCorpsman
+  name: Corpsman's Suit
+  description: Die in style on the front lines!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/corpsman.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/corpsman.rsi 
+
+# Fashion-O-Mat, not obtainable any other way, unless mapped
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpsuitSuitCheckered
+  name: evening plaid suit
+  description: This plaid suit blends formality and style. The expertly tailored blazer and straight trousers create a modern silhouette, while the plaid pattern adds a fashionable touch. Perfect for office meetings and everyday business gatherings.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/suit_checkered.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/suit_checkered.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpsuitSuitTan
+  name: evening beige suit
+  description: This chocolate-colored evening suit embodies luxury and elegance. The fitted blazer and flared trousers create a refined silhouette, while the rich chocolate hue adds warmth and sophistication. Perfect for special evening events.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/suit_tan.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/suit_tan.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpsuitSuitWaiter
+  name: waiter's suit
+  description: This waiter uniform combines style and comfort. The collared blouse and cuffed trousers create a formal yet relaxed look. Additional details like the apron and bowtie add a playful touch, completing the stylish appearance of a waiter serving with grace and professionalism.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/suit_waiter.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/suit_waiter.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMimeSexyWhite
+  name: sexy mime costume with white pants
+  description: A sexy mime costume with white pants combines playful charm and allure. The outfit typically features a fitted top, suspenders, and white trousers, with bold black-and-white details. It's perfect for an entertaining yet chic look, exuding both mystery and flirtation.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sexy-mime.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sexy-mime.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitMimeSexyBlack
+  name: sexy mime costume with black pants
+  description: A sexy mime costume with black pants combines playful charm and allure. The outfit typically features a fitted top, suspenders, and white trousers, with bold black-and-white details. It's perfect for an entertaining yet chic look, exuding both mystery and flirtation.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sexy-mime-black.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/sexy-mime-black.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCargoAlt
+  name: cargo suit
+  description: A good suit for supply department workers combines practicality and professionalism. Featuring durable fabric, functional pockets, and a comfortable fit, it ensures ease of movement while maintaining a neat and polished appearance. Ideal for day-to-day operations and meetings.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/cargo.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/cargo.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCargoFormal
+  name: formal cargo jumpsuit
+  description: Designed for fashion shows on a conveyor belt, this sleek and structured cargo jumpsuit blends utility with high-fashion appeal. Perfect for showcasing bold, industrial-inspired looks with a refined edge.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/cargoformal.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/cargoformal.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSalvageFormal
+  name: formal salvage jumpsuit
+  description: A practical and durable outfit designed for waste management and reclamation tasks, combining functionality with a professional look. Perfect for those in the field, ensuring comfort, efficiency, and a polished appearance.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/salvageformal.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/salvageformal.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCoroner
+  name: coroner jumpsuit
+  description: Issued to qualified and trained professionals, this jumpsuit features the phrase "I don't just work with the dead, I dance with them on their final parade!" adding a unique touch of dark humor to the professional uniform.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/coroner.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/coroner.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCoronerAlt
+  name: surgical gown
+  description: Guaranteed to protect your wardrobe from bloody details, but we can't make any promises. Ideal for medical professionals who need both protection and a touch of uncertainty.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/coroneralt.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/coroneralt.rsi
+
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSuperstarCop
+  name: superstar cop uniform
+  description: Flare cut trousers and a dirty shirt that might have been classy before someone took a piss in the armpits. It's the dress of a superstar.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/disco.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/disco.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitAerostatic
+  name: aerostatic suit
+  description: A crisp and well-pressed suit; professional, comfortable and curiously authoritative.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/kim.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/kim.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCentcomOfficerBlack
+  name: special operations officer uniform
+  description: Special Operations Officer uniform, nothing like that. Although... If you have time to read this, it's too late...
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/centcom_officer_black.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/centcom_officer_black.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCentcomAdmiral
+  name: admiral's uniform
+  description: A uniform worn by those with the rank Admiral in the Nanotrasen Navy.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/centcom_admiral.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/centcom_admiral.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCapTurtleneck
+  name: captain's turtleneck
+  description: True captain's turtleneck.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/cap_turtleneck.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/cap_turtleneck.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHoPTurtleneck
+  name: head of personal's turtleneck
+  description: It's Head of Personal's turtleneck.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/hop_turtleneck.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/hop_turtleneck.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHoSBlack
+  name: head of security's black suit
+  description: It's Head of Security's black suit.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/hos_black.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/hos_black.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitRDClassical
+  name: research director's classical suit
+  description: It's Research Director's сlassical suit.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/rd_classical.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/rd_classical.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitFormalBlueShield
+  name: formal blueshield officer suit
+  description: A textile jumpsuit, reinforced with thick leather in some areas.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/formal_blueshield.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/formal_blueshield.rsi
+
+# Fashion-O-Mat END

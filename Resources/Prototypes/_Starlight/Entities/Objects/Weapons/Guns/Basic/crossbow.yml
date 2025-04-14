@@ -1,0 +1,63 @@
+- type: entity
+  name: energy crossbow
+  id: WeaponEnergyCrossbow
+  parent: BaseItem
+  description: Fires low-damage kinetic bolts at a short range.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Basic/large_crossbow.rsi
+    layers:
+    - state: icon
+      map: [ "icon" ]
+    - state: animation-icon
+      visible: false
+      map: [ "empty-icon" ]
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Guns/Basic/large_crossbow.rsi
+    size: Huge
+  - type: Gun
+    fireRate: 0.5
+    selectedMode: SemiAuto
+    angleDecay: 45
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+  - type: AmmoCounter
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AmmoVisuals.HasAmmo:
+        empty-icon:
+          True: { visible: False }
+          False: { visible: True }
+        icon:
+          True: { visible: True }
+          False: { visible: False }
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 2
+    rechargeSound:
+      path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+  - type: BasicEntityAmmoProvider
+    proto: BulletEnergyCrossbow
+    capacity: 1
+    count: 1
+  - type: UseDelay
+    delay: 1
+
+
+- type: entity
+  name: mini energy crossbow
+  id: WeaponMiniEnergyCrossbow
+  parent: WeaponEnergyCrossbow
+  description: Fires low-damage kinetic bolts at a short range.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Basic/mini_crossbow.rsi
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Guns/Basic/mini_crossbow.rsi
+    size: Normal
+  - type: BasicEntityAmmoProvider
+    proto: BulletMiniEnergyCrossbow
+    capacity: 1
+    count: 1

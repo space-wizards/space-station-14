@@ -3,7 +3,7 @@
   parent: BaseStructure
   id: BaseWall
   name: basewall
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   placement:
     mode: SnapgridCenter
     snap:
@@ -548,7 +548,7 @@
   id: WallPlastitaniumDiagonalIndestructible
   name: plastitanium wall
   suffix: diagonal, indestructible
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   placement:
     mode: SnapgridCenter
     snap:
@@ -839,7 +839,7 @@
   id: WallShuttleDiagonal
   name: shuttle wall
   suffix: Diagonal
-  description: Keeps the air in and the greytide out.
+  description: Keeps the air in and the assistants out.
   placement:
     mode: SnapgridCenter
     snap:
@@ -1182,7 +1182,7 @@
   parent: BaseWall
   id: WallWood
   name: wood wall
-  description: The traditional greytide defense.
+  description: The traditional assistant defense.
   components:
   - type: Ricochetable
     chance: 0
@@ -1223,7 +1223,7 @@
   parent: BaseWall
   id: WallWeb
   name: web wall
-  description: Keeps the spiders in and the greytide out.
+  description: Keeps the spiders in and the assistants out.
   components:
   - type: Ricochetable
     chance: 0

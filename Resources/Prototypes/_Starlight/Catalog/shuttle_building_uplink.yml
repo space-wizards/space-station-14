@@ -1,0 +1,427 @@
+﻿# Non combat/safe listing
+
+- type: listing
+  id: ClothingOuterHardsuitBasicSet
+  productEntity: ClothingOuterHardsuitBasic
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkEquipment
+
+- type: listing
+  id: ToySwordSetBotanySheetSteelSet
+  productEntity: SheetSteel
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkResources
+
+- type: listing
+  id: ToySwordSetBotanyPlasticSet
+  productEntity: SheetPlastic
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkResources
+
+- type: listing
+  id: ToySwordSetBotanyGlassSet
+  productEntity: SheetGlass
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkResources
+
+- type: listing
+  id: ToySwordSetBotanyPlasteelSet
+  productEntity: SheetPlasteel
+  cost:
+    BuildToken: 3
+  categories:
+  - ShuttleUplinkResources
+
+- type: listing
+  id: ToySwordSetBotanyIngotGoldSet
+  productEntity: IngotGold
+  cost:
+    BuildToken: 4
+  categories:
+  - ShuttleUplinkResources
+
+- type: listing
+  id: ToySwordSetBotanyIngotSilverSet
+  productEntity: IngotSilver
+  cost:
+    BuildToken: 4
+  categories:
+  - ShuttleUplinkResources
+
+- type: listing
+  id: ToySwordSetBotanySheetPlasmaSet
+  productEntity: SheetPlasma
+  cost:
+    BuildToken: 4
+  categories:
+  - ShuttleUplinkResources
+
+- type: listing
+  id: FoodPieBananaEngineeringSet
+  description: Utility belt filled with common tools.
+  productEntity: ClothingBeltUtilityEngineering
+  cost:
+    BuildToken: 5
+  categories:
+    - ShuttleUplinkEquipment
+
+- type: listing
+  id: FoodPieBananaChiefEngineerFilledSet
+  description: CE belt filled with advanced tools.
+  productEntity: ClothingBeltChiefEngineerFilled
+  cost:
+    BuildToken: 10
+  categories:
+    - ShuttleUplinkEquipment
+
+- type: listing
+  id: ChemDispenserEmptySet
+  productEntity: ChemDispenserEmpty
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkMedicine
+
+- type: listing
+  id: ChemMasterSet
+  productEntity: ChemMaster
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkMedicine
+
+- type: listing
+  id: VendingMachineChemicalsSet
+  productEntity: VendingMachineChemicals
+  cost:
+    BuildToken: 6
+  categories:
+  - ShuttleUplinkMedicine
+
+- type: listing
+  id: CrateChemistrySuppliesSet
+  productEntity: CrateChemistrySupplies
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkMedicine
+
+- type: listing
+  id: ChemistryHotplateSet
+  productEntity: ChemistryHotplate
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkMedicine
+
+- type: listing
+  id: MachineElectrolysisUnitSet
+  productEntity: MachineElectrolysisUnit
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkMedicine
+
+- type: listing
+  id: KitchenReagentGrinderSet
+  productEntity: KitchenReagentGrinder
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkMedicine
+
+- type: listing
+  id: MachineCentrifugeSet
+  productEntity: MachineCentrifuge
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkMedicine
+
+- type: listing
+  id: VendingMachineRestockChemVendSet
+  productEntity: VendingMachineRestockChemVend
+  cost:
+    BuildToken: 5
+  categories:
+  - ShuttleUplinkMedicine
+
+- type: listing
+  id: DefibrillatorSet
+  productEntity: Defibrillator
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkMedicine
+
+- type: listing
+  id: MedkitOxygenFilledSet
+  productEntity: MedkitOxygenFilled
+  cost:
+    BuildToken: 3
+  categories:
+  - ShuttleUplinkMedicine
+
+- type: listing
+  id: ToySwordSetBotanyMedkitFilledSet
+  productEntity: MedkitFilled
+  cost:
+    BuildToken: 5
+  categories:
+  - ShuttleUplinkMedicine
+
+- type: listing
+  id: ToySwordSetBotanyMedkitAdvancedFilledSet
+  productEntity: MedkitAdvancedFilled
+  cost:
+    BuildToken: 10
+  categories:
+  - ShuttleUplinkMedicine
+
+- type: listing
+  id: ToySwordSetBotanyMedkitCombatFilledSet
+  productEntity: MedkitCombatFilled
+  cost:
+    BuildToken: 15
+  categories:
+  - ShuttleUplinkMedicine
+
+- type: listing
+  id: SMESBasicSet
+  productEntity: SMESBasic
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkShipbuilding
+
+- type: listing
+  id: GravityGeneratorMiniSet
+  productEntity: GravityGeneratorMini
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkShipbuilding
+
+- type: listing
+  id: ThrusterSet
+  productEntity: Thruster
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkShipbuilding
+
+- type: listing
+  id: AutolatheSet
+  productEntity: Autolathe
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkShipbuilding
+
+- type: listing
+  id: ComputerRadarSet
+  productEntity: ComputerRadar
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkShipbuilding
+
+- type: listing
+  id: ComputerShuttleSet
+  productEntity: ComputerShuttle
+  cost:
+    BuildToken: 6
+  categories:
+  - ShuttleUplinkShipbuilding
+
+- type: listing
+  id: GeneratorBasic15kWSet
+  productEntity: GeneratorBasic15kW
+  cost:
+    BuildToken: 4
+  categories:
+  - ShuttleUplinkShipbuilding
+
+- type: listing
+  id: GyroscopeSet
+  productEntity: Gyroscope
+  cost:
+    BuildToken: 3
+  categories:
+  - ShuttleUplinkShipbuilding
+
+- type: listing
+  id: SubstationBasicSet
+  productEntity: SubstationBasic
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkShipbuilding
+
+- type: listing
+  id: CrateEngineeringCableBulkSet
+  productEntity: CrateEngineeringCableBulk
+  cost:
+    BuildToken: 4
+  categories:
+  - ShuttleUplinkShipbuilding
+
+- type: listing
+  id: DoorElectronicsSet
+  productEntity: DoorElectronics
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkShipbuilding
+
+- type: listing
+  id: APCElectronicsSet
+  productEntity: APCElectronics
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkShipbuilding
+
+- type: listing
+  id: ClothingHandsGlovesCombatSet
+  productEntity: ClothingHandsGlovesCombat
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkEquipment
+
+- type: listing
+  id: ClothingEyesGlassesMesonSet2
+  productEntity: ClothingEyesGlassesMeson
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkEquipment
+
+- type: listing
+  id: VendingMachineClothingSet
+  productEntity: VendingMachineClothing
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkExtra
+
+- type: listing
+  id: FlashlightSecliteSet
+  productEntity: FlashlightSeclite
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkExtra
+
+- type: listing
+  id: BoxFlareSet
+  productEntity: BoxFlare
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkExtra
+
+- type: listing
+  id: BoxMRESet
+  productEntity: BoxMRE
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkExtra
+
+- type: listing
+  id: OxygenCanisterSet
+  productEntity: OxygenCanister
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkExtra
+
+- type: listing
+  id: AirCanisterSet
+  productEntity: AirCanister
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkExtra
+
+- type: listing
+  id: NitrogenCanisterSet
+  productEntity: NitrogenCanister
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkExtra
+
+- type: listing
+  id: DoubleEmergencyOxygenTankFilledSet
+  productEntity: DoubleEmergencyOxygenTankFilled
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkExtra
+
+- type: listing
+  id: OxygenTankFilledSet
+  productEntity: OxygenTankFilled
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkExtra
+
+- type: listing
+  id: ExtendedEmergencyOxygenTankFilledSet
+  productEntity: ExtendedEmergencyOxygenTankFilled
+  cost:
+    BuildToken: 1
+  categories:
+  - ShuttleUplinkExtra
+
+- type: listing
+  id: HandHeldMassScannerSet
+  productEntity: HandHeldMassScanner
+  cost:
+    BuildToken: 9
+  categories:
+  - ShuttleUplinkExtra
+
+- type: listing
+  id: JetpackVoidFilledSet
+  productEntity: JetpackVoidFilled
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkEquipment
+
+- type: listing
+  id: JetpackBlueFilledSet
+  productEntity: JetpackBlueFilled
+  cost:
+    BuildToken: 3
+  categories:
+  - ShuttleUplinkEquipment
+
+- type: listing
+  id: ClothingShoesBootsMagSet
+  productEntity: ClothingShoesBootsMag
+  cost:
+    BuildToken: 2
+  categories:
+  - ShuttleUplinkEquipment
+
+- type: listing
+  id: ClothingShoesBootsMagAdvSet
+  productEntity: ClothingShoesBootsMagAdv
+  cost:
+    BuildToken: 4
+  categories:
+  - ShuttleUplinkEquipment

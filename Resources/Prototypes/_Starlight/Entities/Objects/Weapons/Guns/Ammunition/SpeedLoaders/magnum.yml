@@ -1,0 +1,17 @@
+- type: entity
+  id: SpeedLoaderMagnumRubber
+  name: "speed loader (.45 magnum rubber)"
+  parent: BaseSpeedLoaderMagnum
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumRubber
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    layers:
+      - state: base
+        map: [ "enum.GunVisualLayers.Base" ]
+      - state: base-6
+        map: [ "enum.GunVisualLayers.Mag" ]
+      - state: base-tip-6
+        map: [ "enum.GunVisualLayers.Tip" ]
+        color: "#00C1B8"

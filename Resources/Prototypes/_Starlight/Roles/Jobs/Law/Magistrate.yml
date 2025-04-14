@@ -1,0 +1,67 @@
+- type: job
+  id: Magistrate
+  name: job-name-magistrate
+  description: job-description-magistrate
+  playTimeTracker: JobMagistrate
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 180000 #50 hrs
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 36000 # 10h
+    - !type:AnyFlagsRequirement
+      flags:
+      - Staff
+      - Mentor
+      - ExtRoles
+      - Retiree
+  startingGear: MagistrateGear
+  icon: "JobIconMagistrate"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  setPreference: true
+  access:
+  - Magistrate
+  - Bar
+  - Kitchen
+  - Hydroponics
+  - Janitor
+  - Theatre
+  - Chapel
+  - Lawyer
+  - Brig
+  - Security
+  - Medical
+  - Research
+  - Engineering
+  - Cargo
+  - Salvage
+  - Command
+  - Maintenance
+  extendedAccess:
+  - Hydroponics
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff
+
+- type: startingGear
+  id: MagistrateGear
+  equipment:
+    jumpsuit: MagistrateUniformSuit
+    shoes: ClothingShoesBootsLaceup
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesColorWhite
+    outerClothing: ClothingOuterRobesJudge
+    id: MagistratePDA
+    ears: ClothingHeadsetMagistrate
+    head: ClothingHeadHatPwig
+  storage:
+    back:
+    - RubberStampMagistrate
+    - ClothingNeckLawyerbadge
+    - GavelHammer
+    - GavelBlock

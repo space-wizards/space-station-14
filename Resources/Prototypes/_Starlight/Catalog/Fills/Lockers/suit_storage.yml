@@ -1,0 +1,13 @@
+- type: entity
+  id: SuitStorageBlueShield
+  parent: SuitStorageBase
+  suffix: BlueShield
+  components:
+  - type: StorageFill
+    contents:
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitBlueshield
+        - id: ClothingMaskBreath
+        - id: ClothingShoesBootsMagBSO
+  - type: AccessReader
+    access: [["BlueShield"]]

@@ -1,0 +1,49 @@
+- type: entity
+  name: M492 Smart LMG
+  id: WeaponLightMachineGunM492
+  parent: [BaseWeaponLightMachineGun, BaseSecurityContraband]
+  description: A high tech non-traditional LMG built specifically for combating the big threats among us.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/LMGs/M492.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-3
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Guns/LMGs/M492.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: Gun
+    minAngle: 20
+    maxAngle: 35
+    angleIncrease: 2
+    angleDecay: 10
+    fireRate: 6  
+  - type: Appearance
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: LightRifleHeavyMagazineSP
+        whitelist:
+          tags:
+            - LightRifleHeavy
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLightRifleSP
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLightRifle

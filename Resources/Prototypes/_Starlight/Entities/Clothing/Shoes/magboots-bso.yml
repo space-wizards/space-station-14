@@ -1,0 +1,19 @@
+- type: entity
+  parent: [ClothingShoesBootsMagBase, BaseCommandContraband, ClothingShoesMilitaryBase]
+  id: ClothingShoesBootsMagBSO
+  name: blueshield magboots
+  description: A pair of standard magnetic boots, issued alongside the BSO Hardsuit.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Shoes/Boots/magboots-bso.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Starlight/Clothing/Shoes/Boots/magboots-bso.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.8
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: StaticPrice
+    price: 350

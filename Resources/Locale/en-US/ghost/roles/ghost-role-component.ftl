@@ -108,7 +108,7 @@ ghost-role-information-jonkbot-name = Jonkbot
 ghost-role-information-jonkbot-description = An artificial being of pure evil.
 
 ghost-role-information-mimebot-name = Mimebot
-ghost-role-information-mimebot-description = A Mimebot, act like a mime but don't act like a greytider.
+ghost-role-information-mimebot-description = A Mimebot, act like a mime but don't act like a assistant.
 
 ghost-role-information-supplybot-name = SupplyBot
 ghost-role-information-supplybot-description = Deliver goods around the station.

@@ -1,0 +1,66 @@
+- type: entity
+  id: ClothingAbductorBeltFilled
+  parent: ClothingAbductorBelt
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrowbarAbductor
+      - id: WrenchAbductor
+      - id: ScrewdriverAbductor
+      - id: WirecutterAbductor
+      - id: WelderAbductor
+      - id: MultitoolAbductor
+
+- type: entity
+  id: ClothingBeltBrigmedicFilled
+  parent: ClothingBeltBrigmedic
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Stunbaton
+      - id: Handcuffs    
+      - id: Brutepack
+      - id: Ointment
+      - id: Gauze
+
+- type: entity
+  id: ClothingBeltBrigmedicWebFilled
+  parent: ClothingBeltBrigmedicWeb
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Stunbaton
+      - id: Handcuffs    
+      - id: Brutepack
+      - id: Ointment
+      - id: Gauze
+
+- type: entity
+  id: ClothingBeltCorpsmanFilled
+  parent: ClothingBeltCorpsman
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Stunbaton
+      - id: Handcuffs    
+      - id: Brutepack
+      - id: Ointment
+      - id: Gauze
+
+- type: entity
+  id: ClothingBeltBlueShieldWebbingFilled
+  parent: ClothingBeltBlueShield
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: Handcuffs
+    - id: Handcuffs
+    - id: Stunbaton
+    - id: GrenadeFlashBang
+    - id: TearGasGrenade
+    - id: MedkitCombatFilled

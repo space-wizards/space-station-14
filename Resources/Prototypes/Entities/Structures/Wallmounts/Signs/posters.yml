@@ -115,15 +115,6 @@
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandGreyTide
-  name: "Grey Tide"
-  description: "A rebellious poster symbolizing assistant solidarity."
-  components:
-  - type: Sprite
-    state: poster8_contraband
-
-- type: entity
-  parent: PosterBase
   id: PosterContrabandMissingGloves
   name: "Missing Gloves"
   description: "This poster references the uproar that followed Nanotrasen's financial cuts toward insulated-glove purchases."

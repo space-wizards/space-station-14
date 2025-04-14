@@ -1,0 +1,99 @@
+- type: entity
+  parent: IDCardStandard
+  id: MagistrateIDCard
+  name: magistrate ID card
+  components:
+    - type: Sprite
+      sprite: _Starlight/Objects/Misc/id_cards.rsi
+      layers:
+        - state: silver
+        - state: idmagistrate
+    - type: PresetIdCard
+      job: Magistrate
+
+- type: entity
+  parent: IDCardStandard
+  id: BrigmedicIDCard
+  name: brigmedic ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idbrigmedic
+    - type: PresetIdCard
+      job: Brigmedic
+
+- type: entity
+  parent: IDCardStandard
+  id: CentcomIDCardOperator
+  name: centcomm operator ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+  - type: Item
+    heldPrefix: blue
+  - type: PresetIdCard
+    job: CentralCommandOperator
+
+- type: entity
+  parent: IDCardStandard
+  id: RoboticistIDCard
+  name: roboticist ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idroboticist
+  - type: PresetIdCard
+    job: Roboticist
+
+- type: entity
+  parent: IDCardStandard
+  id: NanoTrasenRepresentativeIDCard
+  name: NanoTrasen representative ID Card
+  components:
+  - type: Sprite
+    layers:
+    - state: ert_commander
+  - type: PresetIdCard
+    job: NanoTrasenRepresentative
+
+- type: entity
+  parent: IDCardStandard
+  id: IAAIDCard
+  name: internal affairs agent ID card
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/id_cards.rsi
+    layers:
+    - state: silver
+    - state: idiaa
+  - type: PresetIdCard
+    job: IAA
+
+- type: entity
+  parent: IDCardStandard
+  id: BlueShieldIDCard
+  name: blueshield officer's ID card
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/id_cards.rsi
+    layers:
+    - state: silver
+    - state: idblueshield
+  - type: PresetIdCard
+    job: BlueShield
+
+- type: entity
+  parent: IDCardStandard
+  id: MiningIDCard
+  name: mining ID card
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/id_cards.rsi
+    layers:
+    - state: default
+    - state: idstationminer
+  - type: PresetIdCard
+    job: MiningSpecialist

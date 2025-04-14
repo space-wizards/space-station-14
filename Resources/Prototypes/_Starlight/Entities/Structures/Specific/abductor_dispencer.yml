@@ -1,0 +1,33 @@
+- type: entity
+  id: AbductorDispencer
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: alien dispencer
+  description: Dispence something wrong?
+  components:
+  - type: AbductorDispencer
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.00"
+        density: 190
+        mask:
+          - MachineMask
+  - type: Sprite
+    noRot: true
+    sprite: _Starlight/Structures/abductor_dispencer.rsi
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: Appearance
+  - type: CollideOnAnchor

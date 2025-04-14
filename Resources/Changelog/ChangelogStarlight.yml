@@ -4785,4 +4785,40 @@ Entries:
   id: 662
   time: '2025-04-12T06:11:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/479
+- author: Happyrobot33
+  changes:
+  - message: Fixed Meta Station.
+    type: Fix
+  id: 663
+  time: '2025-04-13T06:31:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/484
+- author: Happyrobot33
+  changes:
+  - message: Fixed Saltern Station.
+    type: Fix
+  id: 664
+  time: '2025-04-13T06:31:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/484
+- author: PubliclyExecutedPig
+  changes:
+  - message: Removed Saltern from the map pool.
+    type: Remove
+  id: 665
+  time: '2025-04-13T06:32:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/482
+- author: STARLIGHT TEAM
+  changes:
+  - message: GreyTide removed(GreyTide virus -> DoorLagging virus, GreyTide Figurine
+      -> Removed, GreyTide Stump -> Removed, etc.)
+    type: Remove
+  id: 666
+  time: '2025-04-13T07:17:45.305835+00:00'
+  url: 'null'
+- author: RetSamphis
+  changes:
+  - message: Technology unlocks are broadcasted to relevant radio channels
+    type: Add
+  id: 667
+  time: '2025-04-13T07:20:33.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/481
 

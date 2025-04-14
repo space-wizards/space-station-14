@@ -1,0 +1,93 @@
+- type: entity
+  id: SpawnPointRoboticist
+  parent: SpawnPointJobBase
+  name: roboticist
+  components:
+  - type: SpawnPoint
+    job_id: Roboticist
+  - type: Sprite
+    layers:
+      - state: green
+      - state: roboticist
+
+- type: entity
+  id: SpawnPointMagistrate
+  parent: SpawnPointJobBase
+  name: Magistrate
+  components:
+  - type: SpawnPoint
+    job_id: Magistrate
+  - type: Sprite
+    sprite: _Starlight/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: magistrate
+      - state: jobicon
+
+- type: entity
+  id: SpawnPointNtrep
+  parent: SpawnPointJobBase
+  name: NanoTrasen representative
+  components:
+  - type: SpawnPoint
+    job_id: NanoTrasenRepresentative
+  - type: Sprite
+    sprite: _Starlight/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: ntrep
+      - state: jobicon
+
+- type: entity
+  id: SpawnPointIAA
+  parent: SpawnPointJobBase
+  name: internal affairs agent
+  components:
+  - type: SpawnPoint
+    job_id: IAA
+  - type: Sprite
+    sprite: _Starlight/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: iaa
+      - state: jobicon
+
+- type: entity
+  id: SpawnPointBlueShield
+  parent: SpawnPointJobBase
+  name: officer "blue shield"
+  components:
+  - type: SpawnPoint
+    job_id: BlueShield
+  - type: Sprite
+    sprite: _Starlight/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: obs
+      - state: jobicon
+
+- type: entity
+  id: SpawnPointminingspecialist
+  parent: SpawnPointJobBase
+  name: miningspecialist
+  components:
+  - type: SpawnPoint
+    job_id: MiningSpecialist
+  - type: Sprite
+    layers:
+      - state: green
+      - state: salvagespecialist
+
+- type: entity
+  id: SpawnPointSurgeon
+  parent: SpawnPointJobBase
+  name: surgeon
+  components:
+  - type: SpawnPoint
+    job_id: Surgeon
+  - type: Sprite
+    sprite: _Starlight/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: surgeon
+      - state: jobicon

@@ -1,0 +1,143 @@
+- type: entity
+  parent: BasePDA
+  id: RoboticistPDA
+  name: roboticist PDA
+  description: Covered in dirt and oil. The screen is covered in something sticky.
+  components:
+  - type: Pda
+    id: RoboticistIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-roboticist
+  - type: PdaBorderColor
+    borderColor: "#363636"
+    accentVColor: "#d33725"
+  - type: Icon
+    state: pda-roboticist
+  - type: HealthAnalyzer
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
+    damageContainers:
+    - Silicon
+
+- type: entity
+  parent: BasePDA
+  id: MagistratePDA
+  name: magistrate PDA
+  components:
+  - type: Pda
+    id: MagistrateIDCard
+    penSlot:
+      startingItem: Pen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-captain
+  - type: PdaBorderColor
+    borderColor: "#7C5D00"
+  - type: Icon
+    state: pda-captain
+
+- type: entity
+  parent: BasePDA
+  id: NanoTrasenRepresentativePDA
+  name: NanoTrasen representative PDA
+  components:
+  - type: Pda
+    id: NanoTrasenRepresentativeIDCard
+    penSlot:
+      startingItem: Pen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-ntrep
+  - type: PdaBorderColor
+    borderColor: "#1c1c1c"
+    accentHColor: "#ffce5b"
+  - type: Icon
+    state: pda-ntrep
+
+- type: entity
+  parent: CentcomPDA
+  id: CentCommOperatorPDA
+  suffix: CentComm Operator
+  components:
+  - type: Pda
+    id: CentcomIDCardOperator
+
+- type: entity
+  parent: BasePDA
+  id: IAAPDA
+  name: internal affairs agent PDA
+  description: Corporation and profit are best friends.
+  components:
+  - type: Pda
+    id: IAAIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-lawyer
+  - type: PdaBorderColor
+    borderColor: "#6f6192"
+  - type: Icon
+    state: pda-lawyer
+
+- type: entity
+  parent: BasePDA
+  id: BlueShieldPDA
+  name: blueshield officer's PDA
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Devices/pda.rsi
+  - type: Pda
+    id: BlueShieldIDCard
+  - type: Appearance
+    appearanceDataInit:
+     enum.PdaVisuals.PdaType:
+       !type:String
+       pda-blueshield
+  - type: Icon
+    sprite: _Starlight/Objects/Devices/pda.rsi
+    state: pda-blueshield
+
+- type: entity
+  parent: BasePDA
+  id: MiningPDA
+  name: mining PDA
+  description: there is dirt in every crack.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Devices/pda.rsi
+  - type: Pda
+    id: MiningIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-mining
+  - type: PdaBorderColor
+    borderColor: "#af9366"
+    accentVColor: "#3e3ac3"
+  - type: Icon
+    sprite: _Starlight/Objects/Devices/pda.rsi
+    state: pda-mining
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - AstroNavCartridge
