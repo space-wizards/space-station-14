@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: ScarKy0, GoldenCan
-  changes:
-  - message: The Derelict Cyborg - a broken cyborg with altered laws due to years
-      of exposure to ion storms - can now appear as a ghost role through a new midround
-      event.
-    type: Add
-  id: 7682
-  time: '2024-12-06T06:22:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33433
 - author: TheShuEd
   changes:
   - message: Fixed debris chunks loot spawning
@@ -3900,3 +3891,11 @@
   id: 8181
   time: '2025-04-14T19:10:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36547
+- author: SlamBamActionman
+  changes:
+  - message: Tracking implants no longer announce on radio when someone goes into
+      critical health.
+    type: Remove
+  id: 8182
+  time: '2025-04-14T20:23:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35995
