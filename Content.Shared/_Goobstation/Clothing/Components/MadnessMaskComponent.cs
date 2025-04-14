@@ -4,5 +4,9 @@ namespace Content.Shared.Clothing.Components;
 public sealed partial class MadnessMaskComponent : Component
 {
     public float UpdateAccumulator = 0f;
-    [DataField] public float UpdateTimer = 1f;
+    [DataField]
+    public float UpdateTimer = 1f;
+
+    [DataField]
+    public bool Equipped;
 }
