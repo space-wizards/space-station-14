@@ -47,7 +47,7 @@
   texturePaths:
   - "/Textures/Interface/NavMap/beveled_diamond_north_south.png"
   - "/Textures/Interface/NavMap/beveled_diamond_east_west.png"
-  - "/Textures/Interface/NavMap/beveled_diamond_north_south.png"   
+  - "/Textures/Interface/NavMap/beveled_diamond_north_south.png"
   - "/Textures/Interface/NavMap/beveled_diamond_east_west.png"
   placement: Offset
   

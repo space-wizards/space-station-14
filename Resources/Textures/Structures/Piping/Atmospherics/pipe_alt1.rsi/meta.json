@@ -43,7 +43,7 @@
          "name":"pipeBinaryConnectors",
          "directions":4
       },
-	    {
+      {
          "name":"pipeTrinaryConnectors",
          "directions":4
       }

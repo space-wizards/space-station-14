@@ -5,7 +5,7 @@
 - type: entity
   abstract: true
   id: GasPipeLayerAlt1
-  suffix: Alt 1 
+  suffix: Alt 1
   components:
   - type: AtmosPipeLayers
     pipeLayer: 1
