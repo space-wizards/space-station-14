@@ -4,8 +4,8 @@ meta:
   engineVersion: 253.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/14/2025 20:59:49
-  entityCount: 17810
+  time: 04/14/2025 22:52:39
+  entityCount: 17812
 maps:
 - 1
 grids:
@@ -7277,7 +7277,7 @@ entities:
       pos: -30.5,13.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -52415.324
+      secondsUntilStateChange: -52499.977
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -42131,11 +42131,11 @@ entities:
       parent: 2
 - proto: ComputerCargoOrdersService
   entities:
-  - uid: 5179
+  - uid: 17812
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: -30.5,63.5
+      pos: -55.5,51.5
       parent: 2
 - proto: ComputerCargoShuttle
   entities:
@@ -42227,6 +42227,14 @@ entities:
     components:
     - type: Transform
       pos: -16.5,75.5
+      parent: 2
+- proto: ComputerFundingAllocation
+  entities:
+  - uid: 5179
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -30.5,63.5
       parent: 2
 - proto: ComputerId
   entities:
@@ -43884,7 +43892,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -300170.88
+      secondsUntilStateChange: -300255.53
       state: Opening
   - uid: 6747
     components:
@@ -43892,7 +43900,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -300171.6
+      secondsUntilStateChange: -300256.25
       state: Opening
   - uid: 6749
     components:
@@ -43900,7 +43908,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -300170.16
+      secondsUntilStateChange: -300254.8
       state: Opening
   - uid: 6750
     components:
@@ -43908,7 +43916,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -300169.53
+      secondsUntilStateChange: -300254.2
       state: Opening
   - uid: 9721
     components:
@@ -53186,6 +53194,14 @@ entities:
     components:
     - type: Transform
       pos: -53.45894,65.60686
+      parent: 2
+- proto: FundingAllocationComputerCircuitboard
+  entities:
+  - uid: 17811
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -10.469555,74.37512
       parent: 2
 - proto: GameMasterCircuitBoard
   entities:
