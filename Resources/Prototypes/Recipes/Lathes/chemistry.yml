@@ -96,7 +96,7 @@
   completetime: 2
   materials:
     Glass: 50
-    Wood: 20
+#    Wood: 20 Harmony change
 
 - type: latheRecipe
   id: ClothingEyesGlassesChemical

@@ -55,7 +55,6 @@
             Lawyer: [ 2, 2 ]
             PermaPrisoner: [ 2, 0 ] # HARMONY
             #supply (9)
-            Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             CargoTechnician: [ 6, 6 ]
             #civilian (3+)
