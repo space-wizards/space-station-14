@@ -4,8 +4,8 @@ meta:
   engineVersion: 252.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/14/2025 05:23:13
-  entityCount: 17537
+  time: 04/14/2025 09:44:31
+  entityCount: 17539
 maps:
 - 1
 grids:
@@ -14332,7 +14332,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -417339.47
+      secondsUntilStateChange: -417590.6
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -16654,14 +16654,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 21.5,30.5
       parent: 2
-  - uid: 9401
-    components:
-    - type: MetaData
-      name: APC (Xenobiology)
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -26.5,34.5
-      parent: 2
   - uid: 9632
     components:
     - type: MetaData
@@ -16920,6 +16912,11 @@ entities:
     components:
     - type: Transform
       pos: 35.473713,-3.596447
+      parent: 2
+  - uid: 5521
+    components:
+    - type: Transform
+      pos: -27.285604,33.997902
       parent: 2
 - proto: AppraisalTool
   entities:
@@ -86480,13 +86477,6 @@ entities:
     - type: Transform
       pos: -11.115525,58.583477
       parent: 2
-- proto: OverlordCircuitBoard
-  entities:
-  - uid: 5521
-    components:
-    - type: Transform
-      pos: -42.49745,14.568014
-      parent: 2
 - proto: OxygenCanister
   entities:
   - uid: 1208
@@ -96821,6 +96811,11 @@ entities:
     - type: Transform
       pos: 1.5,10.5
       parent: 2
+  - uid: 17538
+    components:
+    - type: Transform
+      pos: -43.5,20.5
+      parent: 2
 - proto: SpaceVillainArcadeFilled
   entities:
   - uid: 13998
@@ -98525,6 +98520,19 @@ entities:
       - SurveillanceCameraCommand
       nameSet: True
       id: B03 - AI Upload
+  - uid: 9401
+    components:
+    - type: MetaData
+      name: camera (C21 - RD's Office)
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -21.5,26.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraCommand
+      nameSet: True
+      id: C21 - RD's Office
   - uid: 11153
     components:
     - type: MetaData
@@ -102452,6 +102460,13 @@ entities:
     components:
     - type: Transform
       pos: -42.691574,-36.72419
+      parent: 2
+- proto: ToyAi
+  entities:
+  - uid: 17539
+    components:
+    - type: Transform
+      pos: -33.676445,21.80497
       parent: 2
 - proto: ToyFigurineCaptain
   entities:
