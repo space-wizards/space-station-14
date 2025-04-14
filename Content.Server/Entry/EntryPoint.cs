@@ -32,6 +32,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Entry
@@ -41,6 +42,8 @@ namespace Content.Server.Entry
         internal const string ConfigPresetsDir = "/ConfigPresets/";
         private const string ConfigPresetsDirBuild = $"{ConfigPresetsDir}Build/";
 
+        [Dependency] private readonly ToolshedManager _toolshed = default!;
+
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
         private ServerUpdateManager _updateManager = default!;
@@ -49,6 +52,11 @@ namespace Content.Server.Entry
         private IServerDbManager? _dbManager;
         private IWatchlistWebhookManager _watchlistWebhookManager = default!;
         private IConnectionManager? _connectionManager;
+
+        public override void PreInit()
+        {
+            IoCManager.InjectDependencies(this);
+        }
 
         /// <inheritdoc />
         public override void Init()
@@ -129,8 +137,11 @@ namespace Content.Server.Entry
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             var resourceManager = IoCManager.Resolve<IResourceManager>();
             var dest = configManager.GetCVar(CCVars.DestinationFile);
+            _toolshed.Startup(snakeCase: true);
+
             if (!string.IsNullOrEmpty(dest))
             {
+                // Why is this part of the "base sever" initialization logic
                 var resPath = new ResPath(dest).ToRootedPath();
                 var file = resourceManager.UserData.OpenWriteText(resPath.WithName("chem_" + dest));
                 ChemistryJsonGenerator.PublishJson(file);
