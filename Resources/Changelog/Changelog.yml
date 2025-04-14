@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: mrjajkes, Piras314
-  changes:
-  - message: Added Nukemass by mrjajkes to the nuke songs for christmas!
-    type: Add
-  id: 7685
-  time: '2024-12-07T05:58:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33752
 - author: PJB3005
   changes:
   - message: Silicons now have a proper preview in the lobby/character editor.
@@ -3896,3 +3889,10 @@
   id: 8184
   time: '2025-04-14T21:02:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36155
+- author: Will-Oliver-Br
+  changes:
+  - message: Now you can see if there's a beaker in the chemmaster.
+    type: Tweak
+  id: 8185
+  time: '2025-04-14T23:27:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36472
