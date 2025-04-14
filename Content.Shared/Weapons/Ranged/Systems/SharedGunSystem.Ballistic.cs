@@ -257,6 +257,7 @@ public abstract partial class SharedGunSystem
                 component.UnspawnedCount--;
                 DirtyField(uid, component, nameof(BallisticAmmoProviderComponent.UnspawnedCount));
                 entity = Spawn(component.Proto, args.Coordinates);
+                EntityManager.FlagPredicted(entity);
                 args.Ammo.Add((entity, EnsureShootable(entity)));
             }
         }

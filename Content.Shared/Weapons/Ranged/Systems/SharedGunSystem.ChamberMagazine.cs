@@ -308,7 +308,16 @@ public abstract partial class SharedGunSystem
         if (entity == null)
             return false;
 
+        // TODO: Xform caching
         Containers.Remove(entity.Value, container);
+
+        // Normally it would attach to the place the firer is at, wait for server state to come in, then move
+        // This looks weird when moving and shooting so we'll just detach it on client.
+        if (_netManager.IsClient)
+        {
+            TransformSystem.DetachEntity(entity.Value, Transform(entity.Value));
+        }
+
         return true;
     }
 
