@@ -62,7 +62,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     /// <param name="ent"></param>
     /// <param name="localOnly">Include only materials held "locally", as determined by event subscribers</param>
     /// <returns></returns>
-    public Dictionary<ProtoId<MaterialPrototype>, int>GetStoredMaterials(Entity<MaterialStorageComponent?> ent, bool localOnly = false)
+    public Dictionary<ProtoId<MaterialPrototype>, int> GetStoredMaterials(Entity<MaterialStorageComponent?> ent, bool localOnly = false)
     {
         if (!Resolve(ent, ref ent.Comp, false))
             return new();
