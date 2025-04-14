@@ -22,6 +22,7 @@
   id: CartridgeMagnum
   name: cartridge (.45 magnum)
   parent: BaseCartridgeMagnum
+  description: Heavy magnum cartridge mostly used by revolvers. Standard kinetic ammunition is common and useful in most situations.
   components:
   - type: CartridgeAmmo
     proto: BulletMagnum
@@ -30,6 +31,7 @@
   id: CartridgeMagnumPractice
   name: cartridge (.45 magnum practice)
   parent: BaseCartridgeMagnum
+  description: Heavy magnum cartridge mostly used by revolvers. Chalk ammunition is generally non-harmful, used for practice.
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumPractice
@@ -45,6 +47,7 @@
   id: CartridgeMagnumIncendiary
   name: cartridge (.45 magnum incendiary)
   parent: BaseCartridgeMagnum
+  description: Heavy magnum cartridge mostly used by revolvers. Incendiary ammunition contains a self-igniting compound that sets the target ablaze.
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumIncendiary
@@ -60,6 +63,7 @@
   id: CartridgeMagnumAP
   name: cartridge (.45 magnum armor-piercing)
   parent: BaseCartridgeMagnum
+  description: Heavy magnum cartridge mostly used by revolvers. Armor piercing ammunition is renowned for its ability to cut straight through body armor.
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumAP
@@ -75,6 +79,7 @@
   id: CartridgeMagnumUranium
   name: cartridge (.45 magnum uranium)
   parent: BaseCartridgeMagnum
+  description: Heavy magnum cartridge mostly used by revolvers. Uranium ammunition replaces the lead core of the bullet with fissile material, irradiating the target from the inside.
   components:
   - type: CartridgeAmmo
     proto: BulletMagnumUranium
@@ -85,4 +90,3 @@
       - state: tip
         map: [ "enum.AmmoVisualLayers.Tip" ]
         color: "#65fe08"
-
