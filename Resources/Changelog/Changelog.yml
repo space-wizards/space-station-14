@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: Reindeer.
-    type: Add
-  - message: the legally distinct cookie monster.
-    type: Add
-  - message: cargo order for holiday light tubes.
-    type: Add
-  id: 7670
-  time: '2024-12-01T06:30:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33364
 - author: MilenVolf
   changes:
   - message: Mouses, mothroaches, cockroaches and etc can be picked up once again.
@@ -3899,3 +3888,10 @@
   id: 8169
   time: '2025-04-14T01:33:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36338
+- author: K-Dynamic
+  changes:
+  - message: Syndicate commander hardsuit now slows movement by 10%.
+    type: Tweak
+  id: 8170
+  time: '2025-04-14T05:37:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35805
