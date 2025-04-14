@@ -275,15 +275,12 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         PersonPrints.Text = stationRecord.Fingerprint ??  Loc.GetString("generic-not-available-shorthand");
         PersonDna.Text = stationRecord.DNA ??  Loc.GetString("generic-not-available-shorthand");
 
-        PersonStatusTX.SetFromSpriteSpecifier(specifier);
-        PersonStatusTX.DisplayRect.TextureScale = new Vector2(3f, 3f);
-
         if (criminalRecord.Status != SecurityStatus.None)
         {
             specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/security_icons.rsi"),  GetStatusIcon(criminalRecord.Status));
-            PersonStatusTX.SetFromSpriteSpecifier(specifier);
-            PersonStatusTX.DisplayRect.TextureScale = new Vector2(1.5f, 1.5f);
         }
+        PersonStatusTX.SetFromSpriteSpecifier(specifier);
+        PersonStatusTX.DisplayRect.TextureScale = new Vector2(3f, 3f);
 
         StatusOptionButton.SelectId((int)criminalRecord.Status);
         if (criminalRecord.Reason is { } reason)

@@ -12,7 +12,6 @@
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_discharged
-  scale: 0.5
 
 - type: securityIcon
   parent: SecurityIcon
@@ -20,7 +19,6 @@
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_incarcerated
-  scale: 0.5
 
 - type: securityIcon
   parent: SecurityIcon
@@ -28,7 +26,6 @@
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_paroled
-  scale: 0.5
 
 - type: securityIcon
   parent: SecurityIcon
@@ -36,7 +33,6 @@
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_suspected
-  scale: 0.5
   
 - type: securityIcon
   parent: SecurityIcon
@@ -44,7 +40,6 @@
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_hostile
-  scale: 0.5
 
 - type: securityIcon
   parent: SecurityIcon
@@ -52,7 +47,6 @@
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_eliminated
-  scale: 0.5
 
 - type: securityIcon
   parent: SecurityIcon
@@ -60,7 +54,6 @@
   icon:
     sprite: /Textures/Interface/Misc/security_icons.rsi
     state: hud_wanted
-  scale: 0.5
 
 - type: securityIcon
   id: MindShieldIcon
