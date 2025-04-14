@@ -724,7 +724,7 @@ namespace Content.Shared.Cuffs
             if (_combatMode.IsInCombatMode(user) && target != user && user != null)
             {
                 var eventArgs = new DisarmedEvent { Target = target, Source = user.Value, PushProbability = 1};
-                RaiseLocalEvent(target, eventArgs);
+                RaiseLocalEvent(target, ref eventArgs);
                 shoved = true;
             }
 

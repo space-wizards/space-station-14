@@ -118,7 +118,7 @@ public sealed partial class StaminaSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private void OnDisarmed(EntityUid uid, StaminaComponent component, DisarmedEvent args)
+    private void OnDisarmed(EntityUid uid, StaminaComponent component, ref DisarmedEvent args)
     {
         if (args.Handled)
             return;
