@@ -46,7 +46,7 @@ namespace Content.Shared.Light.Components
         public ContainerSlot LightBulbContainer = default!;
 
         [DataField, AutoNetworkedField]
-        public bool CurrentLit = true;
+        public bool CurrentLit;
 
         [DataField, AutoNetworkedField]
         public bool IsBlinking;
