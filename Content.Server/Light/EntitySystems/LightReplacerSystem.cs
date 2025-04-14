@@ -88,7 +88,7 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
             var targetUid = (EntityUid) eventArgs.Target;
 
             // replace broken light in fixture?
-            if (TryComp<Shared.Light.Components.PoweredLightComponent>(targetUid, out var fixture))
+            if (TryComp<PoweredLightComponent>(targetUid, out var fixture))
                 eventArgs.Handled = TryReplaceBulb(uid, targetUid, eventArgs.User, component, fixture);
             // add new bulb to light replacer container?
             else if (TryComp<LightBulbComponent>(targetUid, out var bulb))
@@ -113,11 +113,11 @@ public sealed class LightReplacerSystem : SharedLightReplacerSystem
 
     /// <summary>
     ///     Try to replace a light bulb in <paramref name="fixtureUid"/>
-    ///     using light replacer. Light fixture should have <see cref="Shared.Light.Components.PoweredLightComponent"/>.
+    ///     using light replacer. Light fixture should have <see cref="PoweredLightComponent"/>.
     /// </summary>
     /// <returns>True if successfully replaced light, false otherwise</returns>
     public bool TryReplaceBulb(EntityUid replacerUid, EntityUid fixtureUid, EntityUid? userUid = null,
-        LightReplacerComponent? replacer = null, Shared.Light.Components.PoweredLightComponent? fixture = null)
+        LightReplacerComponent? replacer = null, PoweredLightComponent? fixture = null)
     {
         if (!Resolve(replacerUid, ref replacer))
             return false;

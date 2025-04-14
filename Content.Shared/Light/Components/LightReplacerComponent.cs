@@ -8,7 +8,7 @@ using Robust.Shared.GameStates;
 namespace Content.Server.Light.Components;
 
 /// <summary>
-///     Device that allows user to quikly change bulbs in <see cref="Shared.Light.Components.PoweredLightComponent"/>
+///     Device that allows user to quikly change bulbs in <see cref="PoweredLightComponent"/>
 ///     Can be reloaded by new light tubes or light bulbs
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedLightReplacerSystem))]

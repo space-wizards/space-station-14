@@ -23,7 +23,7 @@ public sealed class LightFlickerArtifactSystem : EntitySystem
 
     private void OnActivated(EntityUid uid, LightFlickerArtifactComponent component, ArtifactActivatedEvent args)
     {
-        var lights = GetEntityQuery<Shared.Light.Components.PoweredLightComponent>();
+        var lights = GetEntityQuery<PoweredLightComponent>();
         foreach (var light in _lookup.GetEntitiesInRange(uid, component.Radius, LookupFlags.StaticSundries ))
         {
             if (!lights.HasComponent(light))
