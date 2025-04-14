@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Map
+  engineVersion: 247.2.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/07/2025 18:56:09
+  entityCount: 13931
+maps:
+- 473
+grids:
+- 4812
+orphans: []
+nullspace: []
 tilemap:
   0: Space
   7: FloorAsteroidSand
@@ -48,7 +59,6 @@ entities:
     - type: MovedGrids
     - type: Broadphase
     - type: OccluderTree
-    - type: LoadedMap
   - uid: 4812
     components:
     - type: MetaData
@@ -28268,6 +28278,13 @@ entities:
     components:
     - type: Transform
       pos: -46.5,18.5
+      parent: 4812
+- proto: CargoMailTeleporter
+  entities:
+  - uid: 13931
+    components:
+    - type: Transform
+      pos: 17.5,23.5
       parent: 4812
 - proto: Carpet
   entities:
