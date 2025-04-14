@@ -21,10 +21,7 @@ namespace Content.Client.Xenoarchaeology.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class AnalysisConsoleMenu : FancyWindow
 {
-    /// <summary> Time for which extract point messages going to stay on display before screen clear. </summary>
-    private static readonly TimeSpan ExtractNonEmptyShowDelaySpan = TimeSpan.FromSeconds(3);
-    /// <summary> Time for which zero extracted points message is going to stay on display before screen clear. </summary>
-    private static readonly TimeSpan ExtractEmptyShowDelaySpan = TimeSpan.FromSeconds(0.25);
+    private static readonly TimeSpan ExtractInfoDisplayForDuration = TimeSpan.FromSeconds(3);
 
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IResourceCache _resCache = default!;
@@ -33,15 +30,13 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     private readonly ArtifactAnalyzerSystem _artifactAnalyzer;
     private readonly XenoArtifactSystem _xenoArtifact;
     private readonly AudioSystem _audio;
+    private readonly MetaDataSystem _meta = default!;
 
     private Entity<AnalysisConsoleComponent> _owner;
     private Entity<XenoArtifactNodeComponent>? _currentNode;
 
-    /// <summary> Queue of node info to output into extraction window. </summary>
-    private readonly List<(string NodeId, int ExtractedPoints)> _nodeExtractionsToProcess = new();
-    private TimeSpan? _nextExtractStringTime;
+    private TimeSpan? _hideExtractInfoIn;
     private int _extractionSum;
-    private readonly FormattedMessage _extractionMessage = new();
 
     public event Action? OnServerSelectionButtonPressed;
     public event Action? OnExtractButtonPressed;
@@ -54,6 +49,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         _xenoArtifact = _ent.System<XenoArtifactSystem>();
         _artifactAnalyzer = _ent.System<ArtifactAnalyzerSystem>();
         _audio = _ent.System<AudioSystem>();
+        _meta = _ent.System<MetaDataSystem>();
 
         if (BackPanel.PanelOverride is StyleBoxTexture tex)
             tex.Texture = _resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
@@ -96,63 +92,50 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         ExtractContainer.Visible = true;
         NodeViewContainer.Visible = false;
 
-        _nodeExtractionsToProcess.Clear();
         _extractionSum = 0;
-        _extractionMessage.Clear();
-        _nextExtractStringTime = _timing.CurTime;
+        var extractionMessage = new FormattedMessage();
 
         var nodes = _xenoArtifact.GetAllNodes(artifact.Value);
+
+        var count = 0;
         foreach (var node in nodes)
         {
             var pointValue = _xenoArtifact.GetResearchValue(node);
             if (pointValue <= 0)
                 continue;
 
+            count++;
+
             var nodeId = _xenoArtifact.GetNodeId(node);
 
             var text = Loc.GetString("analysis-console-extract-value", ("id", nodeId), ("value", pointValue));
-            _nodeExtractionsToProcess.Add((text, pointValue));
+            extractionMessage.AddMarkupOrThrow(text);
+            extractionMessage.PushNewline();
         }
 
-        if (_nodeExtractionsToProcess.Count == 0)
-            _nodeExtractionsToProcess.Add((Loc.GetString("analysis-console-extract-none"), 0));
+        if (count == 0)
+            extractionMessage.AddMarkupOrThrow(Loc.GetString("analysis-console-extract-none"));
 
-        _nodeExtractionsToProcess.Sort((x, y) => x.ExtractedPoints.CompareTo(y.ExtractedPoints));
+        _hideExtractInfoIn = _timing.CurTime + ExtractInfoDisplayForDuration;
+
+        ExtractionResearchLabel.SetMessage(extractionMessage);
+
+        ExtractionSumLabel.SetMarkup(Loc.GetString("analysis-console-extract-sum", ("value", _extractionSum)));
+
+        _audio.PlayGlobal(_owner.Comp.ScanFinishedSound, _owner, AudioParams.Default.WithVolume(1f));
+        OnExtractButtonPressed?.Invoke();
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
-        if (_nextExtractStringTime == null || _timing.CurTime < _nextExtractStringTime)
+        if (_hideExtractInfoIn == null || _timing.CurTime + _meta.GetPauseTime(_owner) < _hideExtractInfoIn)
             return;
 
-        if (_nodeExtractionsToProcess.Count == 0)
-        {
-            ExtractContainer.Visible = false;
-            NodeViewContainer.Visible = true;
-            _nextExtractStringTime = null;
-
-            return;
-        }
-
-        var (message, value) = _nodeExtractionsToProcess.Pop();
-        _extractionMessage.AddMarkupOrThrow(message);
-        _extractionMessage.PushNewline();
-        ExtractionResearchLabel.SetMessage(_extractionMessage);
-
-        var delay = _nodeExtractionsToProcess.Count == 0
-            ? ExtractNonEmptyShowDelaySpan
-            : ExtractEmptyShowDelaySpan;
-        _nextExtractStringTime = _timing.CurTime + delay;
-        _extractionSum += value;
-        ExtractionSumLabel.SetMarkup(Loc.GetString("analysis-console-extract-sum", ("value", _extractionSum)));
-
-        var volume = _nodeExtractionsToProcess.Count == 0 ? 1f : -10f;
-        _audio.PlayGlobal(_owner.Comp.ScanFinishedSound, _owner, AudioParams.Default.WithVolume(volume));
-
-        if (_nodeExtractionsToProcess.Count == 0)
-            OnExtractButtonPressed?.Invoke();
+        ExtractContainer.Visible = false;
+        NodeViewContainer.Visible = true;
+        _hideExtractInfoIn = null;
     }
 
     public void Update(Entity<AnalysisConsoleComponent> ent)
