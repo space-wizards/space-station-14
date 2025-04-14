@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Now borgs get names on roundstart.
-    type: Fix
-  id: 7668
-  time: '2024-11-30T17:25:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33578
 - author: thetolbean
   changes:
   - message: The double-bladed esword now can only be activated when wielded.
@@ -3899,3 +3892,10 @@
   id: 8167
   time: '2025-04-13T17:23:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36394
+- author: Unisol
+  changes:
+  - message: added deathmatch map DM01 Entryway
+    type: Add
+  id: 8168
+  time: '2025-04-14T01:21:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31533
