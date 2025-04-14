@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Added a new "Logistics" access group, given to Cargo Technicians and
-      the Quartermaster.
-    type: Add
-  - message: Operating the Cargo shuttle or orders console now requires Logistics
-      access.
-    type: Tweak
-  - message: Salvagers and Couriers will recieve Logistics access during lowpop/extended
-      access shifts.
-    type: Tweak
-  id: 1020
-  time: '2025-01-30T22:32:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1500
 - author: honeyed-lemons
   changes:
   - message: Updates Synthesis Ship to have missing equipment
@@ -4107,3 +4093,12 @@
   id: 1519
   time: '2025-04-13T15:56:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2245
+- author: Darkmajia
+  changes:
+  - message: I have typed "7 minutes in seconds" into Google. The pre-round lobby
+      duration should be 7 minutes, as previously intended. We're all professionals
+      here.
+    type: Fix
+  id: 1520
+  time: '2025-04-14T02:07:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2257
