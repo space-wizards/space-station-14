@@ -24,7 +24,7 @@ public sealed partial class StaminaResistanceComponent : Component
 
     /// <summary>
     /// When true, resistances will be applied to the entity wearing this item.
-    /// When false, only this entity will get th resistance.
+    /// When false, only this entity will get the resistance.
     /// </summary>
     [DataField]
     public bool Worn = true;
