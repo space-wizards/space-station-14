@@ -15,5 +15,5 @@ public abstract partial class SharedApcPowerReceiverComponent : Component
     public virtual bool PowerDisabled { get; set; }
 
     // Doesn't actually do anything on the client just here for shared code.
-    public virtual float Load { get; set; }
+    public abstract float Load { get; set; }
 }
