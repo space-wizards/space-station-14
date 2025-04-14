@@ -201,11 +201,6 @@ public abstract class SharedVirtualItemSystem : EntitySystem
     /// <param name="slotName">Set this param if you have the name of the slot, it avoids unnecessary queries</param>
     public void DeleteInSlotMatching(EntityUid user, EntityUid matching, string? slotName = null)
     {
-        // Client can't currently predict deleting networked entities so we use this workaround, another
-        // problem can popup when the hands leave PVS for example and this avoids that too
-        if (_netManager.IsClient)
-            return;
-
         if (slotName != null)
         {
             if (!_inventorySystem.TryGetSlotEntity(user, slotName, out var slotEnt))

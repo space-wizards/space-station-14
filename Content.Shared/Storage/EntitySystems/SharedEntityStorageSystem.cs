@@ -216,8 +216,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         Dirty(uid, component);
         EmptyContents(uid, component);
         ModifyComponents(uid, component);
-        if (_net.IsClient && _timing.IsFirstTimePredicted)
-            _audio.PlayPvs(component.OpenSound, uid);
+        _audio.PlayPredicted(component.OpenSound, uid, );
         ReleaseGas(uid, component);
         var afterev = new StorageAfterOpenEvent();
         RaiseLocalEvent(uid, ref afterev);

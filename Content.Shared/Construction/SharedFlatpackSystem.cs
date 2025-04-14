@@ -89,8 +89,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
             return;
         }
 
-        var spawn = Spawn(comp.Entity, _map.GridTileToLocal(grid, gridComp, buildPos));
-        FlagPredicted(spawn);
+        var spawn = PredictedSpawnAttachedTo(comp.Entity, _map.GridTileToLocal(grid, gridComp, buildPos));
 
         _adminLogger.Add(LogType.Construction,
             LogImpact.Low,
