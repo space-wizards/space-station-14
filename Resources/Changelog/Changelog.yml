@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: notafet
-  changes:
-  - message: Fix sinks and toilets not draining.
-    type: Fix
-  id: 7675
-  time: '2024-12-04T02:42:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33691
 - author: PJB3005
   changes:
   - message: Fixed broken layout on some wire hacking UIs.
@@ -3898,3 +3891,11 @@
   id: 8174
   time: '2025-04-14T14:34:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35772
+- author: CheesePlated
+  changes:
+  - message: The ID card console now works properly when setting job presets for replacement
+      IDs
+    type: Fix
+  id: 8175
+  time: '2025-04-14T15:02:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34921
