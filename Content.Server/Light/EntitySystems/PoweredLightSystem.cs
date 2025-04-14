@@ -21,7 +21,6 @@ namespace Content.Server.Light.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<PoweredLightComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<PoweredLightComponent, MapInitEvent>(OnMapInit);
 
             SubscribeLocalEvent<PoweredLightComponent, GhostBooEvent>(OnGhostBoo);
@@ -55,9 +54,9 @@ namespace Content.Server.Light.EntitySystems
             args.Handled = true;
         }
 
-        private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
+        protected override void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
         {
-            light.LightBulbContainer = ContainerSystem.EnsureContainer<ContainerSlot>(uid, LightBulbContainer);
+            base.OnInit(uid, light, args);
             _signalSystem.EnsureSinkPorts(uid, light.OnPort, light.OffPort, light.TogglePort);
         }
 

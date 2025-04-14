@@ -9,6 +9,7 @@ using Content.Shared.Light.Components;
 using Content.Shared.Power;
 using Content.Shared.Power.Components;
 using Content.Shared.Power.EntitySystems;
+using Content.Shared.Storage.EntitySystems;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
@@ -28,6 +29,7 @@ public abstract class SharedPoweredLightSystem : EntitySystem
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private   readonly SharedPowerReceiverSystem _receiver = default!;
     [Dependency] private   readonly SharedPointLightSystem _pointLight = default!;
+    [Dependency] private   readonly SharedStorageSystem _storage = default!;
 
     private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
     public const string LightBulbContainer = "light_bulb";
@@ -35,25 +37,28 @@ public abstract class SharedPoweredLightSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<PoweredLightComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<PoweredLightComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<PoweredLightComponent, InteractHandEvent>(OnInteractHand);
-
-
         SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
-
         SubscribeLocalEvent<PoweredLightComponent, PoweredLightDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
     }
 
-    private void OnInteractUsing(EntityUid uid, Components.PoweredLightComponent component, InteractUsingEvent args)
+    protected virtual void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
+    {
+        light.LightBulbContainer = ContainerSystem.EnsureContainer<ContainerSlot>(uid, LightBulbContainer);
+    }
+
+    private void OnInteractUsing(EntityUid uid, PoweredLightComponent component, InteractUsingEvent args)
     {
         if (args.Handled)
             return;
 
-        args.Handled = InsertBulb(uid, args.Used, component);
+        args.Handled = InsertBulb(uid, args.Used, component, user: args.User, playAnimation: true);
     }
 
-    private void OnInteractHand(EntityUid uid, Components.PoweredLightComponent light, InteractHandEvent args)
+    private void OnInteractHand(EntityUid uid, PoweredLightComponent light, InteractHandEvent args)
     {
         if (args.Handled)
             return;
@@ -85,7 +90,7 @@ public abstract class SharedPoweredLightSystem : EntitySystem
     ///     Inserts the bulb if possible.
     /// </summary>
     /// <returns>True if it could insert it, false if it couldn't.</returns>
-    public bool InsertBulb(EntityUid uid, EntityUid bulbUid, PoweredLightComponent? light = null)
+    public bool InsertBulb(EntityUid uid, EntityUid bulbUid, PoweredLightComponent? light = null, EntityUid? user = null, bool playAnimation = false)
     {
         if (!Resolve(uid, ref light))
             return false;
@@ -105,7 +110,13 @@ public abstract class SharedPoweredLightSystem : EntitySystem
         if (!ContainerSystem.Insert(bulbUid, light.LightBulbContainer))
             return false;
 
-        UpdateLight(uid, light);
+        if (playAnimation && TryComp(user, out TransformComponent? xform))
+        {
+            var itemXform = Transform(uid);
+            _storage.PlayPickupAnimation(bulbUid, xform.Coordinates, itemXform.Coordinates, itemXform.LocalRotation, user: user);
+        }
+
+        UpdateLight(uid, light, user: user);
         return true;
     }
 
@@ -203,7 +214,8 @@ public abstract class SharedPoweredLightSystem : EntitySystem
     protected void UpdateLight(EntityUid uid,
         PoweredLightComponent? light = null,
         SharedApcPowerReceiverComponent? powerReceiver = null,
-        AppearanceComponent? appearance = null)
+        AppearanceComponent? appearance = null,
+        EntityUid? user = null)
     {
         if (!Resolve(uid, ref light, false))
             return;
@@ -235,7 +247,8 @@ public abstract class SharedPoweredLightSystem : EntitySystem
                     if (time > light.LastThunk + ThunkDelay)
                     {
                         light.LastThunk = time;
-                        _audio.PlayPvs(light.TurnOnSound, uid, light.TurnOnSound.Params.AddVolume(-10f));
+                        Dirty(uid, light);
+                        _audio.PlayPredicted(light.TurnOnSound, uid, user: user, light.TurnOnSound.Params.AddVolume(-10f));
                     }
                 }
                 else
@@ -287,6 +300,7 @@ public abstract class SharedPoweredLightSystem : EntitySystem
             return;
 
         light.IsBlinking = isNowBlinking;
+        Dirty(uid, light);
 
         if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             return;
@@ -299,7 +313,12 @@ public abstract class SharedPoweredLightSystem : EntitySystem
         if (!Resolve(uid, ref light))
             return;
 
-        light.CurrentLit = value;
+        if (light.CurrentLit != value)
+        {
+            light.CurrentLit = value;
+            Dirty(uid, light);
+        }
+
         _ambientSystem.SetAmbience(uid, value);
 
         if (_pointLight.TryGetLight(uid, out var pointLight))

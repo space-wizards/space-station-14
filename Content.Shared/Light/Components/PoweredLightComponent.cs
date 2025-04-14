@@ -54,7 +54,7 @@ namespace Content.Shared.Light.Components
         [DataField, AutoNetworkedField, AutoPausedField]
         public TimeSpan LastThunk;
 
-        [DataField, AutoNetworkedField, AutoPausedField]
+        [DataField, AutoPausedField]
         public TimeSpan? LastGhostBlink;
 
         [DataField]
