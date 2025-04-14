@@ -16,6 +16,8 @@ public sealed class MagicSystem : SharedMagicSystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
 
+    private static readonly ProtoId<TagPrototype> InvalidForSurvivorAntagTag = "InvalidForSurvivorAntag";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -48,8 +50,8 @@ public sealed class MagicSystem : SharedMagicSystem
         if (!ev.MakeSurvivorAntagonist)
             return;
 
-        if (_mind.TryGetMind(ev.Performer, out var mind, out _) && !_tag.HasTag(mind, "InvalidForSurvivorAntag"))
-            _tag.AddTag(mind, "InvalidForSurvivorAntag");
+        if (_mind.TryGetMind(ev.Performer, out var mind, out _) && !_tag.HasTag(mind, InvalidForSurvivorAntagTag))
+            _tag.AddTag(mind, InvalidForSurvivorAntagTag);
 
         EntProtoId survivorRule = "Survivor";
 

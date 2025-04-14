@@ -371,7 +371,7 @@ public abstract partial class SharedMindSystem : EntitySystem
 
         // garbage collection - only delete the objective entity if no mind uses it anymore
         // This comes up for stuff like paradox clones where the objectives share the same entity
-        var mindQuery = new AllEntityQueryEnumerator<MindComponent>();
+        var mindQuery = AllEntityQuery<MindComponent>();
         while (mindQuery.MoveNext(out _, out var queryComp))
         {
             if (queryComp.Objectives.Contains(objective))
