@@ -52,7 +52,22 @@ public sealed class ClientAlertsSystem : AlertsSystem
         if (args.Current is not AlertComponentState cast)
             return;
 
+        // Temporarily store all clientside alerts in another dictionary.
+        var clientAlertStorage = new Dictionary<AlertKey, AlertState>();
+        foreach (var clientAlert in alerts.Comp.Alerts)
+        {
+            if (clientAlert.Value.ClientOnly)
+                clientAlertStorage.Add(clientAlert.Key, clientAlert.Value);
+        }
+
         alerts.Comp.Alerts = new(cast.Alerts);
+
+        // Reapply the stored alerts after they have been removed.
+        foreach (var clientAlert in clientAlertStorage)
+        {
+            if (!alerts.Comp.Alerts.ContainsKey(clientAlert.Key))
+                alerts.Comp.Alerts[clientAlert.Key] = clientAlert.Value;
+        }
 
         UpdateHud(alerts);
     }
@@ -99,5 +114,32 @@ public sealed class ClientAlertsSystem : AlertsSystem
     public void AlertClicked(ProtoId<AlertPrototype> alertType)
     {
         RaisePredictiveEvent(new ClickAlertEvent(alertType));
+    }
+
+    /// <summary>
+    /// Show an alert that will only be visible on the client.
+    /// </summary>
+    public void ShowClientAlert(
+        Entity<AlertsComponent?> entity,
+        ProtoId<AlertPrototype> alertType,
+        short? severity = null,
+        (TimeSpan, TimeSpan)? cooldown = null,
+        bool autoRemove = false,
+        bool showCooldown = true)
+    {
+        if (!Resolve(entity, ref entity.Comp))
+            return;
+
+        ShowAlert(entity, alertType, severity, cooldown, autoRemove, showCooldown);
+
+        if (!TryGet(alertType, out var alert))
+            return;
+
+        if (!entity.Comp.Alerts.TryGetValue(alert.AlertKey, out var newAlertState))
+            return;
+
+        newAlertState.ClientOnly = true;
+
+        entity.Comp.Alerts[alert.AlertKey] = newAlertState;
     }
 }

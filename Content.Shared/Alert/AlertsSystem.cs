@@ -222,7 +222,8 @@ public abstract class AlertsSystem : EntitySystem
                 Cooldown = cooldown,
                 ShowCooldown = alert.Value.ShowCooldown,
                 AutoRemove = alert.Value.AutoRemove,
-                Type = alert.Value.Type
+                Type = alert.Value.Type,
+                ClientOnly = alert.Value.ClientOnly,
             };
             alertComp.Alerts[alert.Key] = state;
             dirty = true;
