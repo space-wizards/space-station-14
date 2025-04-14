@@ -43,7 +43,7 @@ public sealed class SolarFlareRule : StationEventSystem<SolarFlareRuleComponent>
         if (_effectTimer < 0)
         {
             _effectTimer += 1;
-            var lightQuery = EntityQueryEnumerator<PoweredLightComponent>();
+            var lightQuery = EntityQueryEnumerator<Shared.Light.Components.PoweredLightComponent>();
             while (lightQuery.MoveNext(out var lightEnt, out var light))
             {
                 if (RobustRandom.Prob(component.LightBreakChancePerSecond))

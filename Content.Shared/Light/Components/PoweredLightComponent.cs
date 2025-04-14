@@ -1,21 +1,20 @@
-using Content.Server.Light.EntitySystems;
-using Content.Shared.Damage;
 using Content.Shared.DeviceLinking;
-using Content.Shared.Light.Components;
+using Content.Shared.Light.EntitySystems;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Light.Components
+namespace Content.Shared.Light.Components
 {
     /// <summary>
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
-    [RegisterComponent, Access(typeof(PoweredLightSystem))]
+    [RegisterComponent, NetworkedComponent, Access(typeof(SharedPoweredLightSystem))]
     public sealed partial class PoweredLightComponent : Component
     {
-        [DataField("burnHandSound")]
+        [DataField]
         public SoundSpecifier BurnHandSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 
         [DataField("turnOnSound")]

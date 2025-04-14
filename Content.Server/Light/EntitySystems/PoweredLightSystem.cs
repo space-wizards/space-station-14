@@ -19,6 +19,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Damage.Components;
+using Content.Shared.Light.EntitySystems;
 using Content.Shared.Power;
 
 namespace Content.Server.Light.EntitySystems
@@ -26,7 +27,7 @@ namespace Content.Server.Light.EntitySystems
     /// <summary>
     ///     System for the PoweredLightComponents
     /// </summary>
-    public sealed class PoweredLightSystem : EntitySystem
+    public sealed class PoweredLightSystem : SharedPoweredLightSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
@@ -46,30 +47,30 @@ namespace Content.Server.Light.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<PoweredLightComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<PoweredLightComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<PoweredLightComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<PoweredLightComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<Shared.Light.Components.PoweredLightComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<Shared.Light.Components.PoweredLightComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<Shared.Light.Components.PoweredLightComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<Shared.Light.Components.PoweredLightComponent, InteractHandEvent>(OnInteractHand);
 
-            SubscribeLocalEvent<PoweredLightComponent, GhostBooEvent>(OnGhostBoo);
-            SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
+            SubscribeLocalEvent<Shared.Light.Components.PoweredLightComponent, GhostBooEvent>(OnGhostBoo);
+            SubscribeLocalEvent<Shared.Light.Components.PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
 
-            SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
-            SubscribeLocalEvent<PoweredLightComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
+            SubscribeLocalEvent<Shared.Light.Components.PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
+            SubscribeLocalEvent<Shared.Light.Components.PoweredLightComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
 
-            SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
+            SubscribeLocalEvent<Shared.Light.Components.PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
 
-            SubscribeLocalEvent<PoweredLightComponent, PoweredLightDoAfterEvent>(OnDoAfter);
-            SubscribeLocalEvent<PoweredLightComponent, EmpPulseEvent>(OnEmpPulse);
+            SubscribeLocalEvent<Shared.Light.Components.PoweredLightComponent, PoweredLightDoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<Shared.Light.Components.PoweredLightComponent, EmpPulseEvent>(OnEmpPulse);
         }
 
-        private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
+        private void OnInit(EntityUid uid, Shared.Light.Components.PoweredLightComponent light, ComponentInit args)
         {
             light.LightBulbContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, LightBulbContainer);
             _signalSystem.EnsureSinkPorts(uid, light.OnPort, light.OffPort, light.TogglePort);
         }
 
-        private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)
+        private void OnMapInit(EntityUid uid, Shared.Light.Components.PoweredLightComponent light, MapInitEvent args)
         {
             // TODO: Use ContainerFill dog
             if (light.HasLampOnSpawn != null)
@@ -81,48 +82,12 @@ namespace Content.Server.Light.EntitySystems
             UpdateLight(uid, light);
         }
 
-        private void OnInteractUsing(EntityUid uid, PoweredLightComponent component, InteractUsingEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            args.Handled = InsertBulb(uid, args.Used, component);
-        }
-
-        private void OnInteractHand(EntityUid uid, PoweredLightComponent light, InteractHandEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            // check if light has bulb to eject
-            var bulbUid = GetBulb(uid, light);
-            if (bulbUid == null)
-                return;
-
-            var userUid = args.User;
-            //removing a broken/burned bulb, so allow instant removal
-            if(TryComp<LightBulbComponent>(bulbUid.Value, out var bulb) && bulb.State != LightBulbState.Normal)
-            {
-                args.Handled = EjectBulb(uid, userUid, light) != null;
-                return;
-            }
-
-            // removing a working bulb, so require a delay
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, userUid, light.EjectBulbDelay, new PoweredLightDoAfterEvent(), uid, target: uid)
-            {
-                BreakOnMove = true,
-                BreakOnDamage = true,
-            });
-
-            args.Handled = true;
-        }
-
         #region Bulb Logic API
         /// <summary>
         ///     Inserts the bulb if possible.
         /// </summary>
         /// <returns>True if it could insert it, false if it couldn't.</returns>
-        public bool InsertBulb(EntityUid uid, EntityUid bulbUid, PoweredLightComponent? light = null)
+        public bool InsertBulb(EntityUid uid, EntityUid bulbUid, Shared.Light.Components.PoweredLightComponent? light = null)
         {
             if (!Resolve(uid, ref light))
                 return false;
@@ -149,7 +114,7 @@ namespace Content.Server.Light.EntitySystems
         ///     Ejects the bulb to a mob's hand if possible.
         /// </summary>
         /// <returns>Bulb uid if it was successfully ejected, null otherwise</returns>
-        public EntityUid? EjectBulb(EntityUid uid, EntityUid? userUid = null, PoweredLightComponent? light = null)
+        public EntityUid? EjectBulb(EntityUid uid, EntityUid? userUid = null, Shared.Light.Components.PoweredLightComponent? light = null)
         {
             if (!Resolve(uid, ref light))
                 return null;
@@ -172,7 +137,7 @@ namespace Content.Server.Light.EntitySystems
         /// <summary>
         ///     Replaces the spawned prototype of a pre-mapinit powered light with a different variant.
         /// </summary>
-        public bool ReplaceSpawnedPrototype(Entity<PoweredLightComponent> light, string bulb)
+        public bool ReplaceSpawnedPrototype(Entity<Shared.Light.Components.PoweredLightComponent> light, string bulb)
         {
             if (light.Comp.LightBulbContainer.ContainedEntity != null)
                 return false;
@@ -188,7 +153,7 @@ namespace Content.Server.Light.EntitySystems
         ///     Try to replace current bulb with a new one
         ///     If succeed old bulb just drops on floor
         /// </summary>
-        public bool ReplaceBulb(EntityUid uid, EntityUid bulb, PoweredLightComponent? light = null)
+        public bool ReplaceBulb(EntityUid uid, EntityUid bulb, Shared.Light.Components.PoweredLightComponent? light = null)
         {
             EjectBulb(uid, null, light);
             return InsertBulb(uid, bulb, light);
@@ -198,7 +163,7 @@ namespace Content.Server.Light.EntitySystems
         ///     Try to get light bulb inserted in powered light
         /// </summary>
         /// <returns>Bulb uid if it exist, null otherwise</returns>
-        public EntityUid? GetBulb(EntityUid uid, PoweredLightComponent? light = null)
+        public EntityUid? GetBulb(EntityUid uid, Shared.Light.Components.PoweredLightComponent? light = null)
         {
             if (!Resolve(uid, ref light))
                 return null;
@@ -209,7 +174,7 @@ namespace Content.Server.Light.EntitySystems
         /// <summary>
         ///     Try to break bulb inside light fixture
         /// </summary>
-        public bool TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null)
+        public bool TryDestroyBulb(EntityUid uid, Shared.Light.Components.PoweredLightComponent? light = null)
         {
             if (!Resolve(uid, ref light, false))
                 return false;
@@ -238,7 +203,7 @@ namespace Content.Server.Light.EntitySystems
         #endregion
 
         private void UpdateLight(EntityUid uid,
-            PoweredLightComponent? light = null,
+            Shared.Light.Components.PoweredLightComponent? light = null,
             ApcPowerReceiverComponent? powerReceiver = null,
             AppearanceComponent? appearance = null)
         {
@@ -294,7 +259,7 @@ namespace Content.Server.Light.EntitySystems
         /// <summary>
         ///     Destroy the light bulb if the light took any damage.
         /// </summary>
-        public void HandleLightDamaged(EntityUid uid, PoweredLightComponent component, DamageChangedEvent args)
+        public void HandleLightDamaged(EntityUid uid, Shared.Light.Components.PoweredLightComponent component, DamageChangedEvent args)
         {
             // Was it being repaired, or did it take damage?
             if (args.DamageIncreased)
@@ -304,7 +269,7 @@ namespace Content.Server.Light.EntitySystems
             }
         }
 
-        private void OnGhostBoo(EntityUid uid, PoweredLightComponent light, GhostBooEvent args)
+        private void OnGhostBoo(EntityUid uid, Shared.Light.Components.PoweredLightComponent light, GhostBooEvent args)
         {
             if (light.IgnoreGhostsBoo)
                 return;
@@ -328,7 +293,7 @@ namespace Content.Server.Light.EntitySystems
             args.Handled = true;
         }
 
-        private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, ref PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, Shared.Light.Components.PoweredLightComponent component, ref PowerChangedEvent args)
         {
             // TODO: Power moment
             var metadata = MetaData(uid);
@@ -339,7 +304,7 @@ namespace Content.Server.Light.EntitySystems
             UpdateLight(uid, component);
         }
 
-        public void ToggleBlinkingLight(EntityUid uid, PoweredLightComponent light, bool isNowBlinking)
+        public void ToggleBlinkingLight(EntityUid uid, Shared.Light.Components.PoweredLightComponent light, bool isNowBlinking)
         {
             if (light.IsBlinking == isNowBlinking)
                 return;
@@ -352,7 +317,7 @@ namespace Content.Server.Light.EntitySystems
             _appearance.SetData(uid, PoweredLightVisuals.Blinking, isNowBlinking, appearance);
         }
 
-        private void OnSignalReceived(EntityUid uid, PoweredLightComponent component, ref SignalReceivedEvent args)
+        private void OnSignalReceived(EntityUid uid, Shared.Light.Components.PoweredLightComponent component, ref SignalReceivedEvent args)
         {
             if (args.Port == component.OffPort)
                 SetState(uid, false, component);
@@ -366,7 +331,7 @@ namespace Content.Server.Light.EntitySystems
         /// Turns the light on or of when receiving a <see cref="DeviceNetworkConstants.CmdSetState"/> command.
         /// The light is turned on or of according to the <see cref="DeviceNetworkConstants.StateEnabled"/> value
         /// </summary>
-        private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, DeviceNetworkPacketEvent args)
+        private void OnPacketReceived(EntityUid uid, Shared.Light.Components.PoweredLightComponent component, DeviceNetworkPacketEvent args)
         {
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
             if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
@@ -374,7 +339,7 @@ namespace Content.Server.Light.EntitySystems
             SetState(uid, enabled, component);
         }
 
-        private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness = null)
+        private void SetLight(EntityUid uid, bool value, Color? color = null, Shared.Light.Components.PoweredLightComponent? light = null, float? radius = null, float? energy = null, float? softness = null)
         {
             if (!Resolve(uid, ref light))
                 return;
@@ -401,7 +366,7 @@ namespace Content.Server.Light.EntitySystems
                 _damageOnInteractSystem.SetIsDamageActiveTo((uid, damageOnInteractComp), value);
         }
 
-        public void ToggleLight(EntityUid uid, PoweredLightComponent? light = null)
+        public void ToggleLight(EntityUid uid, Shared.Light.Components.PoweredLightComponent? light = null)
         {
             if (!Resolve(uid, ref light))
                 return;
@@ -410,7 +375,7 @@ namespace Content.Server.Light.EntitySystems
             UpdateLight(uid, light);
         }
 
-        public void SetState(EntityUid uid, bool state, PoweredLightComponent? light = null)
+        public void SetState(EntityUid uid, bool state, Shared.Light.Components.PoweredLightComponent? light = null)
         {
             if (!Resolve(uid, ref light))
                 return;
@@ -419,7 +384,7 @@ namespace Content.Server.Light.EntitySystems
             UpdateLight(uid, light);
         }
 
-        private void OnDoAfter(EntityUid uid, PoweredLightComponent component, DoAfterEvent args)
+        private void OnDoAfter(EntityUid uid, Shared.Light.Components.PoweredLightComponent component, DoAfterEvent args)
         {
             if (args.Handled || args.Cancelled || args.Args.Target == null)
                 return;
@@ -429,7 +394,7 @@ namespace Content.Server.Light.EntitySystems
             args.Handled = true;
         }
 
-        private void OnEmpPulse(EntityUid uid, PoweredLightComponent component, ref EmpPulseEvent args)
+        private void OnEmpPulse(EntityUid uid, Shared.Light.Components.PoweredLightComponent component, ref EmpPulseEvent args)
         {
             if (TryDestroyBulb(uid, component))
                 args.Affected = true;

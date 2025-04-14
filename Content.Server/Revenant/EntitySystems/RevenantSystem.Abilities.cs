@@ -68,7 +68,7 @@ public sealed partial class RevenantSystem
             return;
         var target = args.Target;
 
-        if (HasComp<PoweredLightComponent>(target))
+        if (HasComp<Shared.Light.Components.PoweredLightComponent>(target))
         {
             args.Handled = _ghost.DoGhostBooEvent(target);
             return;
@@ -251,7 +251,7 @@ public sealed partial class RevenantSystem
         var tags = GetEntityQuery<TagComponent>();
         var entityStorage = GetEntityQuery<EntityStorageComponent>();
         var items = GetEntityQuery<ItemComponent>();
-        var lights = GetEntityQuery<PoweredLightComponent>();
+        var lights = GetEntityQuery<Shared.Light.Components.PoweredLightComponent>();
 
         foreach (var ent in lookup)
         {
@@ -293,7 +293,7 @@ public sealed partial class RevenantSystem
         args.Handled = true;
 
         var xform = Transform(uid);
-        var poweredLights = GetEntityQuery<PoweredLightComponent>();
+        var poweredLights = GetEntityQuery<Shared.Light.Components.PoweredLightComponent>();
         var mobState = GetEntityQuery<MobStateComponent>();
         var lookup = _lookup.GetEntitiesInRange(uid, component.OverloadRadius);
         //TODO: feels like this might be a sin and a half

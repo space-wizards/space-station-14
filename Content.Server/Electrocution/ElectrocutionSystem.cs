@@ -85,7 +85,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         SubscribeLocalEvent<ElectrifiedComponent, InteractHandEvent>(OnElectrifiedHandInteract);
         SubscribeLocalEvent<ElectrifiedComponent, InteractUsingEvent>(OnElectrifiedInteractUsing);
         SubscribeLocalEvent<RandomInsulationComponent, MapInitEvent>(OnRandomInsulationMapInit);
-        SubscribeLocalEvent<PoweredLightComponent, AttackedEvent>(OnLightAttacked);
+        SubscribeLocalEvent<Shared.Light.Components.PoweredLightComponent, AttackedEvent>(OnLightAttacked);
 
         UpdatesAfter.Add(typeof(PowerNetSystem));
     }
@@ -180,7 +180,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             TryDoElectrifiedAct(uid, args.User, 1, electrified);
     }
 
-    private void OnLightAttacked(EntityUid uid, PoweredLightComponent component, AttackedEvent args)
+    private void OnLightAttacked(EntityUid uid, Shared.Light.Components.PoweredLightComponent component, AttackedEvent args)
     {
         if (!component.CurrentLit || args.Used != args.User)
             return;
