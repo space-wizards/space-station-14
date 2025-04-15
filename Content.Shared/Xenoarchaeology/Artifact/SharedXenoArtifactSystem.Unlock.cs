@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Collections;
 using Robust.Shared.Random;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
@@ -113,7 +114,7 @@ public abstract partial class SharedXenoArtifactSystem
     )
     {
         node = null;
-        var potentialNodes = new List<Entity<XenoArtifactNodeComponent>>();
+        var potentialNodes = new ValueList<Entity<XenoArtifactNodeComponent>>();
 
         var artifactUnlockingComponent = ent.Comp1;
         foreach (var nodeIndex in GetAllNodeIndices((ent, ent)))

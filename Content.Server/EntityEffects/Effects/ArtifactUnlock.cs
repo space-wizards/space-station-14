@@ -8,14 +8,18 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityEffects.Effects;
 
+/// <summary>
+/// Sets an artifact into the unlocking state and marks the artifexium effect as true.
+/// This is a very specific behavior intended for a specific chem.
+/// </summary>
 [UsedImplicitly]
 public sealed partial class ArtifactUnlock : EntityEffect
 {
     public override void Effect(EntityEffectBaseArgs args)
     {
         var entMan = args.EntityManager;
-        var xenoArtifactSys = args.EntityManager.System<XenoArtifactSystem>();
-        var popupSys = args.EntityManager.System<PopupSystem>();
+        var xenoArtifactSys = entMan.System<XenoArtifactSystem>();
+        var popupSys = entMan.System<PopupSystem>();
 
         if (!entMan.TryGetComponent<XenoArtifactComponent>(args.TargetEntity, out var xenoArtifact))
             return;
