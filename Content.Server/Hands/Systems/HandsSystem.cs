@@ -15,10 +15,12 @@ using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Stacks;
+using Content.Shared.Standing;
 using Content.Shared.Throwing;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -52,6 +54,8 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
 
             SubscribeLocalEvent<HandsComponent, BeforeExplodeEvent>(OnExploded);
+
+            SubscribeLocalEvent<HandsComponent, DropHandItemsEvent>(OnDropHandItems);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
@@ -226,6 +230,36 @@ namespace Content.Server.Hands.Systems
             _throwingSystem.TryThrow(ev.ItemUid, ev.Direction, ev.ThrowSpeed, ev.PlayerUid, compensateFriction: !HasComp<LandAtCursorComponent>(ev.ItemUid));
 
             return true;
+        }
+
+        private void OnDropHandItems(Entity<HandsComponent> entity, ref DropHandItemsEvent args)
+        {
+            var direction = EntityManager.TryGetComponent(entity, out PhysicsComponent? comp) ? comp.LinearVelocity / 50 : Vector2.Zero;
+            var dropAngle = _random.NextFloat(0.8f, 1.2f);
+
+            var fellEvent = new FellDownEvent(entity);
+            RaiseLocalEvent(entity, fellEvent, false);
+
+            var worldRotation = TransformSystem.GetWorldRotation(entity).ToVec();
+            foreach (var hand in entity.Comp.Hands.Values)
+            {
+                if (hand.HeldEntity is not EntityUid held)
+                    continue;
+
+                var throwAttempt = new FellDownThrowAttemptEvent(entity);
+                RaiseLocalEvent(hand.HeldEntity.Value, ref throwAttempt);
+
+                if (throwAttempt.Cancelled)
+                    continue;
+
+                if (!TryDrop(entity, hand, null, checkActionBlocker: false, handsComp: entity.Comp))
+                    continue;
+
+                _throwingSystem.TryThrow(held,
+                    _random.NextAngle().RotateVec(direction / dropAngle + worldRotation / 50),
+                    0.5f * dropAngle * _random.NextFloat(-0.9f, 1.1f),
+                    entity, 0);
+            }
         }
 
         #endregion

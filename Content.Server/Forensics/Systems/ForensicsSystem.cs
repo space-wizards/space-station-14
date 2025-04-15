@@ -73,7 +73,6 @@ namespace Content.Server.Forensics
 
         private void OnDNAInit(Entity<DnaComponent> ent, ref MapInitEvent args)
         {
-            Log.Debug($"Init DNA {Name(ent.Owner)} {ent.Comp.DNA}");
             if (ent.Comp.DNA == null)
                 RandomizeDNA((ent.Owner, ent.Comp));
             else
@@ -327,7 +326,6 @@ namespace Content.Server.Forensics
             ent.Comp.DNA = GenerateDNA();
             Dirty(ent);
 
-            Log.Debug($"Randomize DNA {Name(ent.Owner)} {ent.Comp.DNA}");
             var ev = new GenerateDnaEvent { Owner = ent.Owner, DNA = ent.Comp.DNA };
             RaiseLocalEvent(ent.Owner, ref ev);
         }
