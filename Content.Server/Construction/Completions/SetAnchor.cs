@@ -12,9 +12,25 @@ namespace Content.Server.Construction.Completions
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
             var transform = entityManager.GetComponent<TransformComponent>(uid);
-#pragma warning disable CS0618 // Type or member is obsolete
-            transform.Anchored = Value; // Changing this fails on startup
-#pragma warning restore CS0618 // Type or member is obsolete
+
+            if (transform.Anchored == Value)
+                return;
+
+            var sys = entityManager.System<SharedTransformSystem>();
+            SetAnchoring((uid, transform), sys);
+
+        }
+
+        private void SetAnchoring(Entity<TransformComponent> ent, SharedTransformSystem transform)
+        {
+            if (Value)
+            {
+                transform.AnchorEntity(ent);
+            }
+            else
+            {
+                transform.Unanchor(ent);
+            }
         }
     }
 }
