@@ -2967,6 +2967,9 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 4
 
 - type: entity
   name: calico cat
@@ -3035,9 +3038,6 @@
         Slash: 6
         Piercing: 6
         Structural: 15
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 2
-    baseSprintSpeed: 4
 
 - type: entity
   name: space cat
