@@ -19,7 +19,6 @@ namespace Content.Shared.Gravity
             {
                 if (Enabled == value) return;
                 Enabled = value;
-                // Does this get fired twice on a change? Once here, once in <see cref="SharedGravitySystem.OnHandleState"/>?
                 var ev = new GravityChangedEvent(Owner, value);
                 IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(Owner, ref ev);
                 Dirty();
