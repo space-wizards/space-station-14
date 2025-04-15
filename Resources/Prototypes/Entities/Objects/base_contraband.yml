@@ -172,7 +172,6 @@
     allowedDepartments: [ Security ]
     allowedJobs: [ Bartender ]
 
-# contraband restricted by job by some degree
 - type: entity
   id: BaseSecurityBartenderZookeeperContraband
   parent: BaseRestrictedContraband
