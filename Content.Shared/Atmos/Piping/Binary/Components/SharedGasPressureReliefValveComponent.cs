@@ -23,16 +23,6 @@ public sealed class GasPressureReliefValveBoundUserInterfaceState : BoundUserInt
     public string ValveLabel { get; }
 
     /// <summary>
-    /// Gets the current transfer rate of the valve.
-    /// </summary>
-    public float TransferRate { get; }
-
-    /// <summary>
-    /// Gets a value indicating whether the valve is currently enabled (open or closed).
-    /// </summary>
-    public bool Enabled { get; }
-
-    /// <summary>
     /// Gets the threshold pressure of the valve.
     /// </summary>
     public float ThresholdPressure { get; }
@@ -41,18 +31,11 @@ public sealed class GasPressureReliefValveBoundUserInterfaceState : BoundUserInt
     /// Initializes a new instance of the <see cref="GasPressureReliefValveBoundUserInterfaceState"/> class.
     /// </summary>
     /// <param name="valveLabel">The label of the valve.</param>
-    /// <param name="transferRate">The transfer rate of the valve.</param>
     /// <param name="thresholdPressure">The threshold pressure of the valve.</param>
-    /// <param name="enabled">Indicates whether the valve is enabled.</param>
-    public GasPressureReliefValveBoundUserInterfaceState(string valveLabel,
-        float transferRate,
-        float thresholdPressure,
-        bool enabled)
+    public GasPressureReliefValveBoundUserInterfaceState(string valveLabel, float thresholdPressure)
     {
         ValveLabel = valveLabel;
-        TransferRate = transferRate;
         ThresholdPressure = thresholdPressure;
-        Enabled = enabled;
     }
 }
 

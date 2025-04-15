@@ -149,6 +149,53 @@
 
 - type: entity
   parent: GasBinaryBase
+  id: GasPressureReliefValve
+  name: pressure relief valve
+  description: A valve that releases gas when the pressure exceeds a certain threshold.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Rotatable
+  - type: Transform
+    noRot: false
+  - type: SubFloorHide
+    visibleLayers:
+    - enum.SubfloorLayers.FirstLayer
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      state: pipeStraight
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+    - state: pumpVolume
+      map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.GasVolumePumpVisuals.State:
+        enabled:
+          On: { state: pumpVolumeOn }
+          Off: { state: pumpVolume }
+  - type: PipeColorVisuals
+  - type: GasPressureReliefValve
+    enabled: false
+    threshold: 4500
+  - type: UserInterface
+    interfaces:
+      enum.GasPressureReliefValveUiKey.Key:
+        type: GasPressureReliefValveBoundUserInterface
+  - type: AmbientSound
+    enabled: false
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/gas_pump.ogg
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasFlowRegulator
+
+
+- type: entity
+  parent: GasBinaryBase
   id: GasPassiveGate
   name: passive gate
   description: A one-way air valve that does not require power.
