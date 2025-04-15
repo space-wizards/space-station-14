@@ -2,7 +2,6 @@ using Content.Server.AlertLevel;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Station.Systems;
 
-
 namespace Content.Server.AlertLevel.Systems;
 
 public sealed class AlertLevelChangeOnTriggerSystem : EntitySystem

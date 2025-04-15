@@ -116,6 +116,11 @@ public sealed class AlertLevelSystem : EntitySystem
         return alert.CurrentDelay;
     }
 
+    /// <summary>
+    /// Get the default alert level for a station entity.
+    /// Returns an empty string if the station has no alert levels defined.
+    /// </summary>
+    /// <param name="station">The station entity.</param>
     public string GetDefaultLevel(Entity<AlertLevelComponent?> station)
     {
         if (!Resolve(station.Owner, ref station.Comp) || station.Comp.AlertLevels == null)
