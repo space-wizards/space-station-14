@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: The blinding lens can now be found in the MedTech.
-    type: Add
-  id: 1022
-  time: '2025-01-30T22:31:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1505
 - author: DinnerCalzone
   changes:
   - message: Amber Station now features a tesla engine.
@@ -4104,3 +4097,10 @@
   id: 1521
   time: '2025-04-14T10:22:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2240
+- author: bigsantino1
+  changes:
+  - message: Smoking will now make smoke again.
+    type: Fix
+  id: 1522
+  time: '2025-04-15T14:32:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2263
