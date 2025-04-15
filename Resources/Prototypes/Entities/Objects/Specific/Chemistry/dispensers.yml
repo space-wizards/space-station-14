@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseAmmoProvider # idk man it just works and if we want filled versions it  only spawns them on demand.
   id: PillDispenserWeh
-  name: weh pill dispenser
+  name: wehz pill dispenser
   description: Dispenses 9 delicious snacks, its probably your happy pills.
   components:
   - type: Sprite
@@ -17,3 +17,4 @@
       - Pill
     proto: StrangePill
     capacity: 9
+    

@@ -8,13 +8,13 @@
   },
   "states": [
     {
-      "name": "base"
+        "name": "base"
     },
     {
-      "name": "weh"
+        "name": "weh"
     },
     {
-      "name": "wehdispenser"
+        "name": "wehdispenser"
     }
   ]
 }
