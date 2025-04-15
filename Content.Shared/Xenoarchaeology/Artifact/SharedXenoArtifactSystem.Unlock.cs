@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
 
@@ -93,14 +94,14 @@ public abstract partial class SharedXenoArtifactSystem
         }
 
         RemComp(ent, unlockingComponent);
-        RiseUnlockingFinished(ent, node);
+        RaiseUnlockingFinished(ent, node);
         artifactComponent.NextUnlockTime = _timing.CurTime + artifactComponent.UnlockStateRefractory;
     }
 
     public void CancelUnlockingState(Entity<XenoArtifactUnlockingComponent, XenoArtifactComponent> ent)
     {
         RemComp(ent, ent.Comp1);
-        RiseUnlockingFinished(ent, null);
+        RaiseUnlockingFinished(ent, null);
     }
 
     /// <summary>
@@ -112,9 +113,10 @@ public abstract partial class SharedXenoArtifactSystem
     )
     {
         node = null;
+        var potentialNodes = new List<Entity<XenoArtifactNodeComponent>>();
 
         var artifactUnlockingComponent = ent.Comp1;
-        foreach (var nodeIndex in artifactUnlockingComponent.TriggeredNodeIndexes)
+        foreach (var nodeIndex in GetAllNodeIndices((ent, ent)))
         {
             var artifactComponent = ent.Comp2;
             var curNode = GetNode((ent, artifactComponent), nodeIndex);
@@ -124,14 +126,28 @@ public abstract partial class SharedXenoArtifactSystem
             var requiredIndices = GetPredecessorNodes((ent, artifactComponent), nodeIndex);
             requiredIndices.Add(nodeIndex);
 
-            // Make sure the two sets are identical
-            if (requiredIndices.Count != artifactUnlockingComponent.TriggeredNodeIndexes.Count
-                || !artifactUnlockingComponent.TriggeredNodeIndexes.All(requiredIndices.Contains))
+            if (!ent.Comp1.ArtifexiumApplied)
+            {
+                // Make sure the two sets are identical
+                if (requiredIndices.Count != artifactUnlockingComponent.TriggeredNodeIndexes.Count
+                    || !artifactUnlockingComponent.TriggeredNodeIndexes.All(requiredIndices.Contains))
+                    continue;
+
+                node = curNode;
+                return true; // exit early
+            }
+
+            // If we apply artifexium, check that the sets are identical EXCEPT for one extra node.
+            // This node is a "wildcard" and we'll make a pool so we can pick one to actually unlock.
+            if (!artifactUnlockingComponent.TriggeredNodeIndexes.All(requiredIndices.Contains) ||
+                requiredIndices.Count - 1 != artifactUnlockingComponent.TriggeredNodeIndexes.Count)
                 continue;
 
-            node = curNode;
-            return true;
+            potentialNodes.Add(curNode);
         }
+
+        if (potentialNodes.Count != 0)
+            node = RobustRandom.Pick(potentialNodes);
 
         return node != null;
     }
@@ -142,7 +158,7 @@ public abstract partial class SharedXenoArtifactSystem
         RaiseLocalEvent(ent.Owner, ref unlockingStartedEvent);
     }
 
-    private void RiseUnlockingFinished(
+    private void RaiseUnlockingFinished(
         Entity<XenoArtifactUnlockingComponent, XenoArtifactComponent> ent,
         Entity<XenoArtifactNodeComponent>? node
     )
