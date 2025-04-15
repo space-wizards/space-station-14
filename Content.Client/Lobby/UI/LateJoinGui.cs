@@ -19,7 +19,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.LateJoin
+namespace Content.Client.Lobby.UI
 {
     public sealed class LateJoinGui : DefaultWindow
     {
