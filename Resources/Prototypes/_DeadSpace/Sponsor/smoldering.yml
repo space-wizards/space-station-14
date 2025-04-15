@@ -9,7 +9,7 @@
   parent: ClothingBackpack
   id: ClothingBackpackSmoldering
   name: Спринфирас
-  description: Небольшой разумный дракон с чешуёй, переливающейся глубокими фиолетовыми оттенками. Его глаза мерцают загадочным светом, а крылья трепещут, реагируя на малейшую угрозу. Он не просто спутник - он хранитель ваших тайн.
+  description: Небольшой разумный дракон с чешуёй, переливающейся глубокими фиолетовыми оттенками. Её глаза мерцают загадочным светом, а крылья трепещут, реагируя на малейшую угрозу. Она не просто спутник - она хранитель ваших тайн.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -35,6 +35,7 @@
     - id: ClothingHeadsetSmoldering
     - id: PDASmoldering
     - id: JetpackVoidFilledSmoldering
+    - id: PaperLawSmoldering
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -110,6 +111,23 @@
     clothingPrototype: ClothingHeadHelmetHardsuitSmoldering
   - type: Item
     size: Huge
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -129,6 +147,13 @@
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -389,3 +414,19 @@
     - Back
     - suitStorage
     - Belt
+
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawSmoldering
+  name: распечатанный документ
+  description: Лист бумаги с заголовком ЦентКома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-smoldering
