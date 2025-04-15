@@ -51,30 +51,20 @@ public sealed class GasPressureReliefValveSystem : EntitySystem
         ExaminedEvent args)
     {
         // No cool stuff provided if it's unable to be examined.
-        if (Transform(valveEntityUid).Anchored || !args.IsInDetailsRange)
+        if (!Transform(valveEntityUid).Anchored || !args.IsInDetailsRange)
             return;
 
-        // TODO: Obliterate this shitcode, holy shit. Wanted to write out this proof of concept before I go play SK5.
-        if (Loc.TryGetString("gas-pressure-relief-valve-system-examined",
-                out var str,
+        using (args.PushGroup(nameof(GasPressureReliefValveComponent)))
+        {
+            args.PushMarkup(Loc.GetString("gas-pressure-relief-valve-system-examined",
                 ("statusColor", valveComponent.Enabled ? "green" : "red"),
-                ("open", valveComponent.Enabled)))
-        {
-            args.PushMarkup(str);
-        }
+                ("open", valveComponent.Enabled)));
 
-        if (Loc.TryGetString("gas-pressure-relief-valve-examined-threshold-pressure",
-                out var str2,
-                ("threshold", $"{valveComponent.Threshold:0.#}")))
-        {
-            args.PushMarkup(str2);
-        }
+            args.PushMarkup(Loc.GetString("gas-pressure-relief-valve-examined-threshold-pressure",
+                ("threshold", $"{valveComponent.Threshold:0.#}")));
 
-        if (Loc.TryGetString("gas-pressure-relief-valve-examined-flow-rate",
-                out var str3,
-                ("flowRate", $"{valveComponent.FlowRate:0.#}")))
-        {
-            args.PushMarkup(str3);
+            args.PushMarkup(Loc.GetString("gas-pressure-relief-valve-examined-flow-rate",
+                ("flowRate", $"{valveComponent.FlowRate:0.#}")));
         }
     }
 

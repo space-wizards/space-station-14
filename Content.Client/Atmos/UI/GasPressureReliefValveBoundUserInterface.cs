@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Localizations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI;
