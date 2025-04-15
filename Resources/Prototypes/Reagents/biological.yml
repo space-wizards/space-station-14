@@ -6,6 +6,8 @@
   reactants:
     UncookedAnimalProteins:
       amount: 1
+    Carbon:
+      amount: 2
   products:
     Fluorine: 0.5
     
