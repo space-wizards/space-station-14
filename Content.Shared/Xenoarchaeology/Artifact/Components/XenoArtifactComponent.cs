@@ -1,3 +1,4 @@
+using Content.Shared.Actions;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
@@ -158,4 +159,15 @@ public sealed partial class XenoArtifactComponent : Component
             Variation = 0.1f
         }
     };
+
+    /// <summary>
+    /// Action that allows the artifact to self activate.
+    /// </summary>
+    [DataField]
+    public EntProtoId<InstantActionComponent> SelfActivateAction = "ActionArtifactActivate";
 }
+
+/// <summary>
+/// Event raised by sentient artifact to activate itself at no durability cost.
+/// </summary>
+public sealed partial class ArtifactSelfActivateEvent : InstantActionEvent;
