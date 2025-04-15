@@ -572,6 +572,7 @@ namespace Content.Server.Administration.Managers
                 return true; // Server console.
             }
 
+            var name = command.Cmd.Name;
             if (!TryGetCommandFlags(command, out var flags))
             {
                 // Command is missing permissions.
