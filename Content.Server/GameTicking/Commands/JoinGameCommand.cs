@@ -19,7 +19,7 @@ namespace Content.Server.GameTicking.Commands
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
+        [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
 
         public string Command => "joingame";
         public string Description => "";
@@ -31,7 +31,7 @@ namespace Content.Server.GameTicking.Commands
         }
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length != 3)
             {
                 shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
                 return;
@@ -51,7 +51,7 @@ namespace Content.Server.GameTicking.Commands
             {
                 //🌟Starlight🌟 start
                 var newLifeSystem = _entManager.System<NewLifeSystem>();
-                var slot = _prefsManager.GetPreferences(player.UserId).SelectedCharacterIndex; 
+                var slot = _preferencesManager.GetPreferences(player.UserId).SelectedCharacterIndex; 
 
                 if (!newLifeSystem.SlotIsAvailable(player.UserId, slot))
                 {
@@ -69,9 +69,13 @@ namespace Content.Server.GameTicking.Commands
             }
             else if (ticker.RunLevel == GameRunLevel.InRound)
             {
-                string id = args[0];
+                if (!int.TryParse(args[0], out var charSlot))
+                {
+                    shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
+                }
+                string id = args[1];
 
-                if (!int.TryParse(args[1], out var sid))
+                if (!int.TryParse(args[2], out var sid))
                 {
                     shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
                 }
@@ -84,12 +88,18 @@ namespace Content.Server.GameTicking.Commands
                     return;
                 }
 
+                if (!_preferencesManager.GetPreferences(player.UserId).TryGetHumanoidInSlot(charSlot, out var humanoid))
+                {
+                    shell.WriteLine("No profile in slot");
+                    return;
+                }
+
                 if (_adminManager.IsAdmin(player) && _cfg.GetCVar(CCVars.AdminDeadminOnJoin))
                 {
                     _adminManager.DeAdmin(player);
                 }
 
-                ticker.MakeJoinGame(player, station, id);
+                ticker.MakeJoinGame(player, humanoid, station, id);
                 return;
             }
 
