@@ -4,7 +4,7 @@ using Content.Shared.Timing;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-public sealed class PushPullOnTriggerSystem : EntitySystem
+public sealed class RepulseAttractOnTriggerSystem : EntitySystem
 {
     [Dependency] private readonly RepulseAttractSystem _repulse = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -12,10 +12,10 @@ public sealed class PushPullOnTriggerSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<PushPullOnTriggerComponent, TriggerEvent>(OnTrigger);
+        SubscribeLocalEvent<RepulseAttractOnTriggerComponent, TriggerEvent>(OnTrigger);
     }
 
-    private void OnTrigger(Entity<PushPullOnTriggerComponent> ent, ref TriggerEvent args)
+    private void OnTrigger(Entity<RepulseAttractOnTriggerComponent> ent, ref TriggerEvent args)
     {
         if (!TryComp<RepulseAttractComponent>(ent, out var repulseAttract)
             || !TryComp<UseDelayComponent>(ent, out var useDelay)
