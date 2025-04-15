@@ -228,7 +228,7 @@
       components:
       - MobMover
       - Item
-  - type: PushPullOnTrigger
+  - type: RepulseAttractOnTrigger
   - type: TriggerOnUse
   - type: SpawnOnTrigger
     proto: EffectGravityPulse
