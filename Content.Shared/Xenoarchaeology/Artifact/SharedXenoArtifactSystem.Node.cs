@@ -394,6 +394,6 @@ public abstract partial class SharedXenoArtifactSystem
             : 1f + durabilityEffect;
 
         var predecessorNodes = GetPredecessorNodes((artifact, artifact), node);
-        nodeComponent.ResearchValue = (int)(Math.Pow(1.25, predecessorNodes.Count) * nodeComponent.BasePointValue * durabilityMultiplier);
+        nodeComponent.ResearchValue = (int)(Math.Pow(1.25, Math.Pow(predecessorNodes.Count, 1.5f)) * nodeComponent.BasePointValue * durabilityMultiplier);
     }
 }

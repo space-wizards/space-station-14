@@ -592,3 +592,10 @@ MailAllAccessSpam: MailSpamLetter
 MailCentcommRetributionSpam: MailSpamLetter
 MailEvilLizardSpam: MailSpamLetter
 MailParentsNeedMoneySpam: MailSpamLetter
+
+# 2025-04-15
+SimpleXenoArtifact: ComplexXenoArtifact
+MediumXenoArtifact: ComplexXenoArtifact
+SimpleXenoArtifactItem: ComplexXenoArtifactItem
+MediumXenoArtifactItem: ComplexXenoArtifactItem
+VariedXenoArtifactItem: ComplexXenoArtifactItem
