@@ -1,11 +1,12 @@
-using Content.Server.Labels;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Forensics;
+using Content.Shared.Forensics.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
+using Content.Shared.Labels.EntitySystems;
 
 namespace Content.Server.Forensics
 {
