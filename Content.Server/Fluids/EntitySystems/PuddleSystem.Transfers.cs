@@ -15,7 +15,7 @@ public sealed partial class PuddleSystem
 
     private void OnRefillableDragged(Entity<RefillableSolutionComponent> entity, ref DragDropDraggedEvent args)
     {
-        if (!HasComp<HandsComponent>(args.User))
+        if (!_actionBlocker.CanComplexInteract(args.User))
         {
             _popups.PopupEntity(Loc.GetString("mopping-system-no-hands"), args.User, args.User);
             return;
