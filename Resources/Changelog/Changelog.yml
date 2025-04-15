@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Detectives are now required to start with outer clothing (armor) like
-      all other security roles.
-    type: Tweak
-  - message: Vox Detectives now spawn with their chosen outer clothing equipped. Previously
-      the tank harness would override this and your armor would start on the floor.
-    type: Fix
-  id: 7688
-  time: '2024-12-08T22:50:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33765
 - author: slarticodefast
   changes:
   - message: Fixed pipes still containing gas after unanchoring them.
@@ -3899,3 +3888,10 @@
   id: 8187
   time: '2025-04-15T03:38:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36571
+- author: Crazydave91920
+  changes:
+  - message: Fixed Zookeeper not being on the double barrel shotgun contraband list
+    type: Fix
+  id: 8188
+  time: '2025-04-15T18:27:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36583
