@@ -341,6 +341,9 @@
         !type:DamageTrigger
         damage: 50
       behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/poster_broken.ogg
       - !type:DoActsBehavior
         acts: ["Destruction"]
       - !type:SpawnEntitiesBehavior
