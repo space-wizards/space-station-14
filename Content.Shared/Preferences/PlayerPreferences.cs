@@ -95,6 +95,20 @@ namespace Content.Shared.Preferences
             return pool.Count == 0 ? null : random.Pick(pool);
         }
 
+        public Dictionary<int, HumanoidCharacterProfile> GetAllProfilesForJob(ProtoId<JobPrototype> job)
+        {
+            var result = new Dictionary<int, HumanoidCharacterProfile>();
+            foreach (var (slot, profile) in Characters)
+            {
+                if (profile is not HumanoidCharacterProfile { Enabled: true } humanoid)
+                    continue;
+                if (humanoid.JobPreferences.Contains(job))
+                    result.Add(slot, humanoid);
+            }
+
+            return result;
+        }
+
         public bool HasAntagPreference(ICollection<ProtoId<AntagPrototype>> antagList)
         {
             foreach (var profile in Characters.Values)
