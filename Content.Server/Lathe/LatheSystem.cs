@@ -19,6 +19,7 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Lathe;
+using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Materials;
 using Content.Shared.Power;
 using Content.Shared.ReagentSpeed;
@@ -57,6 +58,7 @@ namespace Content.Server.Lathe
         /// Per-tick cache
         /// </summary>
         private readonly List<GasMixture> _environments = new();
+        private readonly HashSet<ProtoId<LatheRecipePrototype>> _availableRecipes = new();
 
         public override void Initialize()
         {
@@ -156,17 +158,14 @@ namespace Content.Server.Lathe
 
         public List<ProtoId<LatheRecipePrototype>> GetAvailableRecipes(EntityUid uid, LatheComponent component, bool getUnavailable = false)
         {
+            _availableRecipes.Clear();
+            AddRecipesFromPacks(_availableRecipes, component.StaticPacks);
             var ev = new LatheGetRecipesEvent(uid, getUnavailable)
             {
-                Recipes = new HashSet<ProtoId<LatheRecipePrototype>>(component.StaticRecipes)
+                Recipes = _availableRecipes
             };
             RaiseLocalEvent(uid, ev);
             return ev.Recipes.ToList();
-        }
-
-        public static List<ProtoId<LatheRecipePrototype>> GetAllBaseRecipes(LatheComponent component)
-        {
-            return component.StaticRecipes.Union(component.DynamicRecipes).ToList();
         }
 
         public bool TryAddToQueue(EntityUid uid, LatheRecipePrototype recipe, LatheComponent? component = null)
@@ -277,35 +276,42 @@ namespace Content.Server.Lathe
             _uiSys.SetUiState(uid, LatheUiKey.Key, state);
         }
 
+        /// <summary>
+        /// Adds every unlocked recipe from each pack to the recipes list.
+        /// </summary>
+        public void AddRecipesFromDynamicPacks(ref LatheGetRecipesEvent args, TechnologyDatabaseComponent database, IEnumerable<ProtoId<LatheRecipePackPrototype>> packs)
+        {
+            foreach (var id in packs)
+            {
+                var pack = _proto.Index(id);
+                foreach (var recipe in pack.Recipes)
+                {
+                    if (args.getUnavailable || database.UnlockedRecipes.Contains(recipe))
+                        args.Recipes.Add(recipe);
+                }
+            }
+        }
+
         private void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, LatheGetRecipesEvent args)
         {
             if (uid != args.Lathe || !TryComp<LatheComponent>(uid, out var latheComponent))
                 return;
 
-            foreach (var recipe in latheComponent.DynamicRecipes)
-            {
-                if (!(args.getUnavailable || component.UnlockedRecipes.Contains(recipe)) || args.Recipes.Contains(recipe))
-                    continue;
-                args.Recipes.Add(recipe);
-            }
+            AddRecipesFromDynamicPacks(ref args, component, latheComponent.DynamicPacks);
         }
 
         private void GetEmagLatheRecipes(EntityUid uid, EmagLatheRecipesComponent component, LatheGetRecipesEvent args)
         {
-            if (uid != args.Lathe || !TryComp<TechnologyDatabaseComponent>(uid, out var technologyDatabase))
+            if (uid != args.Lathe)
                 return;
+
             if (!args.getUnavailable && !_emag.CheckFlag(uid, EmagType.Interaction))
                 return;
-            foreach (var recipe in component.EmagDynamicRecipes)
-            {
-                if (!(args.getUnavailable || technologyDatabase.UnlockedRecipes.Contains(recipe)) || args.Recipes.Contains(recipe))
-                    continue;
-                args.Recipes.Add(recipe);
-            }
-            foreach (var recipe in component.EmagStaticRecipes)
-            {
-                args.Recipes.Add(recipe);
-            }
+
+            AddRecipesFromPacks(args.Recipes, component.EmagStaticPacks);
+
+            if (TryComp<TechnologyDatabaseComponent>(uid, out var database))
+                AddRecipesFromDynamicPacks(ref args, database, component.EmagDynamicPacks);
         }
 
         private void OnHeatStartPrinting(EntityUid uid, LatheHeatProducingComponent component, LatheStartPrintingEvent args)

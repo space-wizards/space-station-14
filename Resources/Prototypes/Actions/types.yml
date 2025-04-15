@@ -153,6 +153,8 @@
   name: Scramble DNA
   description:  Randomly changes your name and appearance.
   components:
+  - type: ConfirmableAction
+    popup: dna-scrambler-action-popup
   - type: InstantAction
     charges: 1
     itemIconStyle: BigAction
@@ -213,18 +215,6 @@
   - type: InstantAction
     useDelay: 30
     event: !type:VendingMachineSelfDispenseEvent
-
-- type: entity
-  id: ActionArtifactActivate
-  name: Activate Artifact
-  description: Immediately activates your current artifact node.
-  components:
-  - type: InstantAction
-    icon:
-      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
-      state: ano01
-    useDelay: 60
-    event: !type:ArtifactSelfActivateEvent
 
 - type: entity
   id: ActionToggleBlock
@@ -340,3 +330,16 @@
     itemIconStyle: NoItem
     useDelay: 1
     event: !type:FakeMindShieldToggleEvent
+
+- type: entity
+  id: ActionToggleParamedicSiren
+  name: Toggle Paramedic Siren
+  description: Toggles the paramedic siren on and off.
+  components:
+  - type: InstantAction 
+    icon:
+      sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+      state: icon-siren
+    useDelay: 1
+    itemIconStyle: BigAction
+    event: !type:ToggleActionEvent

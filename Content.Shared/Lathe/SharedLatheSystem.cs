@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Lathe.Prototypes;
 using Content.Shared.Localizations;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
@@ -31,6 +32,18 @@ public abstract class SharedLatheSystem : EntitySystem
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
         BuildInverseRecipeDictionary();
+    }
+
+    /// <summary>
+    /// Add every recipe in the list of recipe packs to a single hashset.
+    /// </summary>
+    public void AddRecipesFromPacks(HashSet<ProtoId<LatheRecipePrototype>> recipes, IEnumerable<ProtoId<LatheRecipePackPrototype>> packs)
+    {
+        foreach (var id in packs)
+        {
+            var pack = _proto.Index(id);
+            recipes.UnionWith(pack.Recipes);
+        }
     }
 
     private void OnExamined(Entity<LatheComponent> ent, ref ExaminedEvent args)
