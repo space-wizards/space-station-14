@@ -19,12 +19,14 @@ namespace Content.Client.Guidebook.Controls;
 /// Control for embedding a microwave recipe into a guidebook.
 /// </summary>
 [UsedImplicitly, GenerateTypedNameReferences]
-public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, ISearchableControl
+public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, ISearchableControl, IPrototypeRepresentationControl
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
 
     private ISawmill _sawmill = default!;
+
+    public IPrototype? RepresentedPrototype { get; }
 
     public GuideMicrowaveEmbed()
     {
