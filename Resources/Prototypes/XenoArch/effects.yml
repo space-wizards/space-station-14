@@ -363,9 +363,6 @@
       mindRoles:
       - MindRoleGhostRoleFreeAgent
     - type: GhostTakeoverAvailable
-    - type: MovementSpeedModifier
-      baseWalkSpeed: 0.25
-      baseSprintSpeed: 0.5
 
 - type: entity
   id: XenoArtifactOmnitool
