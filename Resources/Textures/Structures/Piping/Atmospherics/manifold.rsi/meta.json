@@ -4,7 +4,7 @@
         "x": 32,
         "y": 32
     },
-    "copyright": "Base sprites taken from tgstation and edited by chromiumboy (github)",
+    "copyright": "Base sprites taken from tgstation at https://github.com/tgstation/tgstation/commit/662c08272acd7be79531550919f56f846726eabb and edited by chromiumboy (github)",
     "license": "CC-BY-SA-3.0",
     "states": [
         {
