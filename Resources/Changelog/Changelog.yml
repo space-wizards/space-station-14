@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed pipes still containing gas after unanchoring them.
-    type: Fix
-  id: 7689
-  time: '2024-12-08T23:20:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33774
 - author: Errant
   changes:
   - message: Signal timers now have a maximum countdown duration, which can be specified
@@ -3895,3 +3888,15 @@
   id: 8188
   time: '2025-04-15T18:27:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36583
+- author: Minemoder5000
+  changes:
+  - message: The Syndicate Elite Hardsuit and Cybersun Juggernaut Suit have been restricted
+      to Nuclear Operative uplinks.
+    type: Tweak
+  - message: The Elite Web Vest has been added to the uplink for 5 tc. It has reduced
+      pierce resistance, but increased heat, radiation, blunt, slash, and caustic
+      resistance compared to the normal web vest.
+    type: Add
+  id: 8189
+  time: '2025-04-15T21:39:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36225
