@@ -1,9 +1,0 @@
-- type: entity
-  parent: TelecomServer
-  id: TelecomServerFilledLaw
-  suffix: Law
-  components:
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeyLaw
