@@ -11,8 +11,6 @@ Evac:
 Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
 Command Meeting: Needs access to execution cameras
 Execution telescreens: Need access to execution cameras
-Weird color room in east service maints starts with lights on
-Chef's closets have stuff in 'em they shouldn't? Like, crowbars and N2 tanks.
 Cargo shuttle computer can't find the shuttle. Mass scanner says it's out there...
 Forms for things like borging, department access, psych prescriptions...
 	Make lots of forms for HoP, too
@@ -27,9 +25,6 @@ Forms for things like borging, department access, psych prescriptions...
 		No Access Request
 Custom books on lawyer shelves?
 Among Us "clues" on detective notice boards
-Put something in that space in the chapel's SE room
-	Something for Remilla to perch on or w/e?
-		Fruit for the fruit bat! Blood for the blood gods!
 Papers on the ground? for explaining things to
 	lawyers on spawn
 	Or maybe I just put one spawn in each office and
@@ -57,12 +52,6 @@ Move oxy miner to where the other gasses are?
 Set ejection chamber button access (cap and HoS)
 Nudge wall sign transform variables to make them line up better
 One missing Amogus camera: Admin (probably because of fix wiring)
-AI power isn't connected?
-	Double-check the internal wiring. It seems wrong.
-	Esp. how wires merge when it's all wired properly.
-	It was broken by a meteor anyway, though.
-		Needs more protection from that?
-	Also, some wires under walls in space. Not so great.
 Salvage space arm is getting sensed as part of the room by air sensors?
 Weapons north maints door stuck open
 Somewhere, there is a holopad with no label.
@@ -70,11 +59,6 @@ I'd really like the sec camera monitors to only see General if possible...
 	And I think I already have it on this list, but the Admin camera still no worky.
 Det/Prosc door bolt doesn't work. It bolts, then immediately unbolts.
 	nor instead of or gate?
-Not much vision of arti/anom hall
-	This is confusing, and I need to investigate more. The camera on the east side should see just fine, and the camera on the west side should get anything it misses.
-Vision of HoP/Bridge shortcut *does* see secret door.
-	Clearly, moving the camera off the corner wouldn't fix this, too, as it's on the other corner. :C
-		I can't really do that anyway.
 
 
 The big things:
@@ -83,7 +67,6 @@ Cafeteria firelocks
 Cafeteria floor
 Possibly move Evac farther out to make room for shuttle
 	at north dock.
-Check AI vision
 Grime everything up a bit again.
 
 Check this stuff:
@@ -114,16 +97,16 @@ Vision of service hall little room near caf through the window
 			Would moving cameras off of the corners of walls fix this?
 				no.
 		I moved it.
-Vision hole in middle of Atmos
-	Should be fixed now.
-Tiny one-tile vision hole right under doors below Weapons
-	Should be fixed.
-Tiny one-tile vision hole under HoP area
-	Moved camera from right by vent.
 Atmos waste system isn't set to right filters?
 	Should be set now
 Cargo computer shutter button seems not to be hooked up.
 	It is, though...? Does the directional window block it?
+Weird color room in east service maints starts with lights on
+	I turned them off. Did it work?
+Chef's closets have stuff in 'em they shouldn't? Like, crowbars and N2 tanks.
+	Double-check if this is even true
+Not much vision of arti/anom hall
+	This is confusing, and I need to investigate more. The camera on the east side should see just fine, and the camera on the west side should get anything it misses.
 
 
 THINGS I COULD MAKE:
@@ -238,7 +221,6 @@ DONE:
 /* 		Or maybe it never did, and closing the shutters blocked something else. */
 /* StationAiVisionComponent */
 /* 	-I should take this out of some holopads and call them "Private Holopad" */
-
 /* See screenshots */
 /* Science cams should be lower-case and not have Science prefix */
 /* Disable tider shop door bolt light? */
@@ -275,3 +257,23 @@ DONE:
 /* Why can AI see inside tider shop? Is the holopad in there anchored? Is there a camera? Do the shutters not block? */
 /* 	Holopad. I'll make it private with the otheres. */
 /* 		Or I won't bother. */
+/* Check AI vision */
+/* Vision hole in middle of Atmos */
+/* 	Should be fixed now. */
+/* Tiny one-tile vision hole right under doors below Weapons */
+/* 	Should be fixed. */
+/* Tiny one-tile vision hole under HoP area */
+/* 	Moved camera from right by vent. */
+/* Put something in that space in the chapel's SE room */
+/* 	Something for Remilla to perch on or w/e? */
+/* 		Fruit for the fruit bat! Blood for the blood gods! */
+/* AI power isn't connected? */
+/* 	Double-check the internal wiring. It seems wrong. */
+/* 	Esp. how wires merge when it's all wired properly. */
+/* 	It was broken by a meteor anyway, though. */
+/* 		Needs more protection from that? */
+/* 	Also, some wires under walls in space. Not so great. */
+/* Vision of HoP/Bridge shortcut *does* see secret door. */
+/* 	Clearly, moving the camera off the corner wouldn't fix this, too, as it's on the other corner. :C */
+/* 		I can't really do that anyway. */
+/* 	I just took it out entirely. Eh. */
