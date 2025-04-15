@@ -51,6 +51,7 @@ namespace Content.Shared.Entry
             IoCManager.Resolve<MarkingManager>().Initialize();
 
 #if DEBUG
+            // Damn if only we had some kind of development cvars file, that'd be neat.
             var configMan = IoCManager.Resolve<IConfigurationManager>();
             configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
             configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);
