@@ -17,7 +17,7 @@ public sealed partial class Emote : EntityEffect
     public string? EmoteId;
 
     [DataField]
-    public bool ShowInChat;
+    public bool ShowInChat = true;
 
     [DataField]
     public bool Force = false;
