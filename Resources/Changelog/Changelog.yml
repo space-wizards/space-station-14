@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: You can now use Interact (E by default) to toggle radiation collectors,
-      field generators, and emitters. Previously you had to click with an empty hand.
-    type: Fix
-  id: 7687
-  time: '2024-12-08T22:37:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33762
 - author: ArtisticRoomba
   changes:
   - message: Detectives are now required to start with outer clothing (armor) like
@@ -3900,3 +3892,10 @@
   id: 8186
   time: '2025-04-15T00:34:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33370
+- author: EmoGarbage404
+  changes:
+  - message: Skeletons once again become living skulls on death.
+    type: Fix
+  id: 8187
+  time: '2025-04-15T03:38:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36571
