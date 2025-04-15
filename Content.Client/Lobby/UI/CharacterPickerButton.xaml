@@ -15,7 +15,8 @@
                ClipText="True"
                HorizontalExpand="True"/>
         <Button Name="DeleteButton"
-                Text="{Loc 'character-setup-gui-character-picker-button-delete-button'}"/>
+                Text="{Loc 'character-setup-gui-character-picker-button-delete-button'}"
+                Visible="False"/>
         <Button Name="ConfirmDeleteButton"
                 Text="{Loc 'character-setup-gui-character-picker-button-confirm-delete-button'}"
                 Visible="False"

@@ -36,7 +36,8 @@ public sealed partial class CharacterPickerButton : ContainerButton
         IPrototypeManager prototypeManager,
         ButtonGroup group,
         ICharacterProfile profile,
-        bool isSelected)
+        bool isSelected,
+        bool simple = false)
     {
         RobustXamlLoader.Load(this);
         _entManager = entityManager;
@@ -65,28 +66,36 @@ public sealed partial class CharacterPickerButton : ContainerButton
         }
 
         Pressed = isSelected;
-        DeleteButton.Visible = !isSelected;
 
         View.SetEntity(_previewDummy);
         DescriptionLabel.Text = description;
 
-        ConfirmDeleteButton.OnPressed += _ =>
-        {
-            Parent?.RemoveChild(this);
-            Parent?.RemoveChild(ConfirmDeleteButton);
-            OnDeletePressed?.Invoke();
-        };
-
-        DeleteButton.OnPressed += _ =>
+        if (simple)
         {
             DeleteButton.Visible = false;
-            ConfirmDeleteButton.Visible = true;
-        };
-
-        EnabledCheck.OnToggled += args =>
+            EnabledCheck.Visible = false;
+        }
+        else
         {
-            OnEnableToggled?.Invoke(args.Pressed);
-        };
+            DeleteButton.Visible = !isSelected;
+            ConfirmDeleteButton.OnPressed += _ =>
+            {
+                Parent?.RemoveChild(this);
+                Parent?.RemoveChild(ConfirmDeleteButton);
+                OnDeletePressed?.Invoke();
+            };
+
+            DeleteButton.OnPressed += _ =>
+            {
+                DeleteButton.Visible = false;
+                ConfirmDeleteButton.Visible = true;
+            };
+
+            EnabledCheck.OnToggled += args =>
+            {
+                OnEnableToggled?.Invoke(args.Pressed);
+            };
+        }
     }
 
     protected override void Dispose(bool disposing)
