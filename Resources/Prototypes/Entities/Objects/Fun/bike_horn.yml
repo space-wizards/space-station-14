@@ -220,15 +220,13 @@
     sound: "/Audio/Items/Toys/pushHornFloor.ogg"
   - type: UseDelay
     delay: 6
-  - type: UseDelayOnMeleeHit
-  - type: RepulseAttract
+  - type: TriggerOnUse
+  - type: RepulseAttractOnTrigger
     speed: 50
     range: 2
     whitelist:
       components:
       - MobMover
       - Item
-  - type: RepulseAttractOnTrigger
-  - type: TriggerOnUse
   - type: SpawnOnTrigger
     proto: EffectGravityPulse

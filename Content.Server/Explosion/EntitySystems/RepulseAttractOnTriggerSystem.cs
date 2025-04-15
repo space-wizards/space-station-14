@@ -17,12 +17,11 @@ public sealed class RepulseAttractOnTriggerSystem : EntitySystem
 
     private void OnTrigger(Entity<RepulseAttractOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (!TryComp<RepulseAttractComponent>(ent, out var repulseAttract)
-            || !TryComp<UseDelayComponent>(ent, out var useDelay)
-            || _delay.IsDelayed((ent, useDelay)))
+        if (TryComp<UseDelayComponent>(ent, out var useDelay)
+            && _delay.IsDelayed((ent, useDelay)))
             return;
 
         var position = _transform.GetMapCoordinates(ent);
-        _repulse.TryRepulseAttract(position, args.User, repulseAttract.Speed, repulseAttract.Range, repulseAttract.Whitelist, repulseAttract.CollisionMask);
+        _repulse.TryRepulseAttract(position, args.User, ent.Comp.Speed, ent.Comp.Range, ent.Comp.Whitelist, ent.Comp.CollisionMask);
     }
 }
