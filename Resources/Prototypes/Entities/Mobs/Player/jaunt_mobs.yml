@@ -41,8 +41,8 @@
 
 - type: entity
   parent: [Incorporeal, BaseMob]
-  id: DesyncronizedPocket
-  name: desyncronized pocket
+  id: DesynchronizedPocket
+  name: desynchronized pocket
   description: A pocket in spacetime, keeping the user a fraction of a second in the future.
   suffix: Desynchronizer
   components:

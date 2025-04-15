@@ -7,13 +7,10 @@
   - type: Sprite
     sprite: Objects/Devices/desynchronizer.rsi
     state: icon
-  - type: TriggerOnActivate
+  - type: TriggerOnUse
   - type: PolymorphOnTrigger
     polymorph: VoidPocket
+  - type: SpawnOnTrigger
+    proto: EffectDesynchronizer
   - type: UseDelay
     delay: 220 # long delay to ensure it can't be spammed, use it wisely
-# This doesnt' work and just deletes the desynchronizer when it's used.
-# TODO: Make this play when you polymorph with it
-#  - type: SpawnItemsOnUse
-#    items:
-#      - id: EffectDesynchronizer
