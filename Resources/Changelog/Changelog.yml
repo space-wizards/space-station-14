@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Signal timers now have a maximum countdown duration, which can be specified
-      in yaml. The default maximum is one hour, to prevent the displayed time from
-      overflowing into hh:mm .
-    type: Tweak
-  id: 7690
-  time: '2024-12-09T03:41:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33781
 - author: Plykiya
   changes:
   - message: You are now notified of who is pulling you when being pulled.
@@ -3900,3 +3891,12 @@
   id: 8189
   time: '2025-04-15T21:39:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36225
+- author: EmoGarbage404
+  changes:
+  - message: Sentient artifacts can once again activate themselves.
+    type: Tweak
+  - message: Increased sentient artifact self activation cooldown.
+    type: Tweak
+  id: 8190
+  time: '2025-04-15T22:24:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36598
