@@ -32,7 +32,7 @@ namespace Content.Client.Lobby.UI
         [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
 
-        public event Action<(NetEntity, string)> SelectedId;
+        public event Action<(NetEntity, int, string)> SelectedId;
 
         private readonly ClientGameTicker _gameTicker;
         private readonly SpriteSystem _sprites;
@@ -57,9 +57,9 @@ namespace Content.Client.Lobby.UI
 
             SelectedId += x =>
             {
-                var (station, jobId) = x;
+                var (station, slot, jobId) = x;
                 Logger.InfoS("latejoin", $"Late joining as ID: {jobId}");
-                _consoleHost.ExecuteCommand($"joingame {CommandParsing.Escape(jobId)} {station}");
+                _consoleHost.ExecuteCommand($"joingame {slot} {CommandParsing.Escape(jobId)} {station}");
                 Close();
             };
 
@@ -273,7 +273,7 @@ namespace Content.Client.Lobby.UI
                         jobButton.AddChild(jobSelector);
                         category.AddChild(jobButton);
 
-                        jobButton.OnPressed += _ => SelectedId.Invoke((id, jobButton.JobId));
+                        jobButton.OnPressed += _ => SelectedId.Invoke((id, _selectedSlot ?? -1, jobButton.JobId));
 
                         if (!_jobRequirements.IsAllowed(prototype, humanoid, out var reason))
                         {

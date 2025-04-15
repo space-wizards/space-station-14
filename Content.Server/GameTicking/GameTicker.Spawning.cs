@@ -350,6 +350,17 @@ namespace Content.Server.GameTicking
             SpawnPlayer(player, station, jobId, silent: silent);
         }
 
+        public void MakeJoinGame(ICommonSession player, HumanoidCharacterProfile profile, EntityUid station, string? jobId = null, bool silent = false)
+        {
+            if (!_playerGameStatuses.ContainsKey(player.UserId))
+                return;
+
+            if (!_userDb.IsLoadComplete(player))
+                return;
+
+            SpawnPlayer(player, profile, station, jobId, silent: silent);
+        }
+
         /// <summary>
         /// Causes the given player to join the current game as observer ghost. See also <see cref="SpawnObserver"/>
         /// </summary>
