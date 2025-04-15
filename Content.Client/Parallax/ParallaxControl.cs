@@ -1,7 +1,9 @@
 ﻿using System.Numerics;
+using Content.Client.Parallax.Data;
 using Content.Client.Parallax.Managers;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -17,27 +19,50 @@ public sealed class ParallaxControl : Control
     [Dependency] private readonly IParallaxManager _parallaxManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
+    private string _parallaxPrototype = "FastSpace";
+
     [ViewVariables(VVAccess.ReadWrite)] public Vector2 Offset { get; set; }
+    [ViewVariables(VVAccess.ReadWrite)] public float SpeedX { get; set; } = 0.0f;
+    [ViewVariables(VVAccess.ReadWrite)] public float SpeedY { get; set; } = 0.0f;
+    [ViewVariables(VVAccess.ReadWrite)] public float ScaleX { get; set; } = 1.0f;
+    [ViewVariables(VVAccess.ReadWrite)] public float ScaleY { get; set; } = 1.0f;
+    [ViewVariables(VVAccess.ReadWrite)] public string ParallaxPrototype
+    {
+        get => _parallaxPrototype;
+        set
+        {
+            _parallaxPrototype = value;
+            _parallaxManager.LoadParallaxByName(value);
+        }
+    }
 
     public ParallaxControl()
     {
         IoCManager.InjectDependencies(this);
 
         Offset = new Vector2(_random.Next(0, 1000), _random.Next(0, 1000));
+
         RectClipContent = true;
-        _parallaxManager.LoadParallaxByName("FastSpace");
+        _parallaxManager.LoadParallaxByName(_parallaxPrototype);
     }
 
     protected override void Draw(DrawingHandleScreen handle)
     {
-        foreach (var layer in _parallaxManager.GetParallaxLayers("FastSpace"))
+        var currentTime = (float) _timing.RealTime.TotalSeconds;
+        var offset = Offset + new Vector2(currentTime * SpeedX, currentTime * SpeedY);
+
+        foreach (var layer in _parallaxManager.GetParallaxLayers(_parallaxPrototype))
         {
             var tex = layer.Texture;
-            var texSize = (tex.Size.X * (int) Size.X, tex.Size.Y * (int) Size.X) * layer.Config.Scale.Floored() / 1920;
+            var texSize = new Vector2i(
+                (int)(tex.Size.X * Size.X * layer.Config.Scale.X / 1920 * ScaleX),
+                (int)(tex.Size.Y * Size.X * layer.Config.Scale.Y / 1920 * ScaleY)
+            );
             var ourSize = PixelSize;
 
-            var currentTime = (float) _timing.RealTime.TotalSeconds;
-            var offset = Offset + new Vector2(currentTime * 100f, currentTime * 0f);
+            //Protection from division by zero.
+            texSize.X = Math.Max(texSize.X, 1);
+            texSize.Y = Math.Max(texSize.Y, 1);
 
             if (layer.Config.Tiled)
             {
