@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 249.0.0
+  engineVersion: 253.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/23/2025 23:18:42
-  entityCount: 8266
+  time: 04/15/2025 00:05:25
+  entityCount: 8275
 maps:
 - 1
 grids:
@@ -2385,7 +2385,7 @@ entities:
       pos: -1.5,-10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -1127.8197
+      secondsUntilStateChange: -1703.8033
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -2511,7 +2511,7 @@ entities:
       pos: 0.5,-10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -1130.8864
+      secondsUntilStateChange: -1706.87
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -2708,7 +2708,7 @@ entities:
       pos: 51.5,22.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -51017.41
+      secondsUntilStateChange: -51593.395
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14443,6 +14443,75 @@ entities:
     - type: Transform
       pos: 33.5,12.5
       parent: 2
+- proto: ChemistryBottleEphedrine
+  entities:
+  - uid: 7456
+    components:
+    - type: Transform
+      pos: 12.5,13.5
+      parent: 2
+- proto: ChemistryBottleEpinephrine
+  entities:
+  - uid: 7304
+    components:
+    - type: Transform
+      pos: 31.5,16.5
+      parent: 2
+  - uid: 7327
+    components:
+    - type: Transform
+      pos: 32.5,16.5
+      parent: 2
+- proto: ChemistryBottleEthanol
+  entities:
+  - uid: 7321
+    components:
+    - type: Transform
+      pos: 31.5,16.5
+      parent: 2
+- proto: ChemistryBottleMuteToxin
+  entities:
+  - uid: 7322
+    components:
+    - type: Transform
+      pos: 31.5,16.5
+      parent: 2
+- proto: ChemistryBottleNocturine
+  entities:
+  - uid: 2063
+    components:
+    - type: Transform
+      pos: 63.5,29.5
+      parent: 2
+  - uid: 7320
+    components:
+    - type: Transform
+      pos: 31.5,16.5
+      parent: 2
+  - uid: 7328
+    components:
+    - type: Transform
+      pos: 32.5,16.5
+      parent: 2
+- proto: ChemistryBottleOmnizine
+  entities:
+  - uid: 2369
+    components:
+    - type: Transform
+      pos: 63.5,29.5
+      parent: 2
+  - uid: 7122
+    components:
+    - type: Transform
+      pos: 33.5,-5.5
+      parent: 2
+- proto: ChemistryBottlePotassium
+  entities:
+  - uid: 7447
+    components:
+    - type: Transform
+      pos: 15.5,13.5
+      parent: 2
 - proto: ChemistryHotplate
   entities:
   - uid: 536
@@ -15018,15 +15087,15 @@ entities:
       parent: 2
 - proto: ComputerAnalysisConsole
   entities:
-  - uid: 1540
+  - uid: 8267
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: 52.5,3.5
+      pos: 54.5,3.5
       parent: 2
     - type: DeviceLinkSource
       linkedPorts:
-        1539:
+        77:
         - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
 - proto: ComputerAtmosMonitoring
   entities:
@@ -18489,32 +18558,6 @@ entities:
     - type: Transform
       pos: 28.42001,14.909441
       parent: 2
-- proto: EphedrineChemistryBottle
-  entities:
-  - uid: 7456
-    components:
-    - type: Transform
-      pos: 12.5,13.5
-      parent: 2
-- proto: EpinephrineChemistryBottle
-  entities:
-  - uid: 7304
-    components:
-    - type: Transform
-      pos: 31.5,16.5
-      parent: 2
-  - uid: 7327
-    components:
-    - type: Transform
-      pos: 32.5,16.5
-      parent: 2
-- proto: EthanolChemistryBottle
-  entities:
-  - uid: 7321
-    components:
-    - type: Transform
-      pos: 31.5,16.5
-      parent: 2
 - proto: ExosuitFabricator
   entities:
   - uid: 1555
@@ -20451,6 +20494,18 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 24.5,27.5
+      parent: 2
+  - uid: 8274
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 51.5,1.5
+      parent: 2
+  - uid: 8275
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 52.5,1.5
       parent: 2
 - proto: GasPipeBend
   entities:
@@ -28853,6 +28908,18 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 8.5,15.5
       parent: 2
+  - uid: 8272
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 51.5,2.5
+      parent: 2
+  - uid: 8273
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 52.5,2.5
+      parent: 2
 - proto: GasPipeTJunction
   entities:
   - uid: 464
@@ -30109,6 +30176,16 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 23.5,25.5
       parent: 2
+  - uid: 8268
+    components:
+    - type: Transform
+      pos: 51.5,4.5
+      parent: 2
+  - uid: 8269
+    components:
+    - type: Transform
+      pos: 52.5,4.5
+      parent: 2
 - proto: GasPressurePump
   entities:
   - uid: 56
@@ -30136,6 +30213,17 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#0055CCFF'
+  - uid: 8270
+    components:
+    - type: Transform
+      pos: 51.5,3.5
+      parent: 2
+  - uid: 8271
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 52.5,3.5
+      parent: 2
 - proto: GasThermoMachineFreezer
   entities:
   - uid: 682
@@ -36249,10 +36337,10 @@ entities:
       parent: 2
 - proto: MachineArtifactAnalyzer
   entities:
-  - uid: 1539
+  - uid: 77
     components:
     - type: Transform
-      pos: 52.5,0.5
+      pos: 53.5,0.5
       parent: 2
 - proto: MagazinePistolSubMachineGunUranium
   entities:
@@ -36575,13 +36663,6 @@ entities:
     - type: Transform
       pos: 10.5,-8.5
       parent: 2
-- proto: MuteToxinChemistryBottle
-  entities:
-  - uid: 7322
-    components:
-    - type: Transform
-      pos: 31.5,16.5
-      parent: 2
 - proto: NitrogenCanister
   entities:
   - uid: 6602
@@ -36614,23 +36695,6 @@ entities:
       parent: 2
     - type: Physics
       bodyType: Static
-- proto: NocturineChemistryBottle
-  entities:
-  - uid: 2063
-    components:
-    - type: Transform
-      pos: 63.5,29.5
-      parent: 2
-  - uid: 7320
-    components:
-    - type: Transform
-      pos: 31.5,16.5
-      parent: 2
-  - uid: 7328
-    components:
-    - type: Transform
-      pos: 32.5,16.5
-      parent: 2
 - proto: NTDefaultCircuitBoard
   entities:
   - uid: 3806
@@ -36651,18 +36715,6 @@ entities:
     components:
     - type: Transform
       pos: 30.5,51.5
-      parent: 2
-- proto: OmnizineChemistryBottle
-  entities:
-  - uid: 2369
-    components:
-    - type: Transform
-      pos: 63.5,29.5
-      parent: 2
-  - uid: 7122
-    components:
-    - type: Transform
-      pos: 33.5,-5.5
       parent: 2
 - proto: OperatingTable
   entities:
@@ -37042,13 +37094,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 32.5,-13.5
-      parent: 2
-- proto: PotassiumChemistryBottle
-  entities:
-  - uid: 7447
-    components:
-    - type: Transform
-      pos: 15.5,13.5
       parent: 2
 - proto: PottedPlant28
   entities:
@@ -40216,7 +40261,7 @@ entities:
   - uid: 4742
     components:
     - type: Transform
-      pos: 48.5,2.5
+      pos: 48.5,3.5
       parent: 2
   - uid: 7693
     components:
@@ -40227,6 +40272,13 @@ entities:
     components:
     - type: Transform
       pos: 45.5,19.5
+      parent: 2
+- proto: SheetPlasma10
+  entities:
+  - uid: 1539
+    components:
+    - type: Transform
+      pos: 48.5,2.5
       parent: 2
 - proto: SheetPlasteel10
   entities:
@@ -40250,7 +40302,7 @@ entities:
   - uid: 4738
     components:
     - type: Transform
-      pos: 48.5,3.5
+      pos: 48.5,4
       parent: 2
   - uid: 7696
     components:
@@ -40379,6 +40431,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: 16.5,9.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         1891:
@@ -40399,11 +40453,15 @@ entities:
         1897:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7005
     components:
     - type: Transform
       pos: 2.5,10.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2243:
@@ -40418,11 +40476,15 @@ entities:
         2372:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7430
     components:
     - type: Transform
       pos: 24.5,12.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         146:
@@ -40440,12 +40502,16 @@ entities:
         1916:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7435
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,10.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         7330:
@@ -40454,11 +40520,15 @@ entities:
         3182:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7459
     components:
     - type: Transform
       pos: 58.5,26.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2501:
@@ -40470,12 +40540,16 @@ entities:
         2500:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7461
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 56.5,27.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2514:
@@ -40490,23 +40564,31 @@ entities:
         2517:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7462
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 55.5,40.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2499:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7467
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 56.5,35.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         152:
@@ -40518,12 +40600,16 @@ entities:
         2468:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7471
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 55.5,58.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2742:
@@ -40532,12 +40618,16 @@ entities:
         2754:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7473
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 48.5,23.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2618:
@@ -40546,23 +40636,31 @@ entities:
         2632:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7475
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 48.5,27.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2615:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7479
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 36.5,21.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2616:
@@ -40571,12 +40669,16 @@ entities:
         2623:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7480
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 42.5,14.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2621:
@@ -40585,12 +40687,16 @@ entities:
         2619:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7481
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 47.5,2.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2494:
@@ -40602,23 +40708,31 @@ entities:
         2624:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7484
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 40.5,5.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2633:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7488
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 45.5,-6.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2477:
@@ -40627,22 +40741,30 @@ entities:
         2476:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7489
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 36.5,-7.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2475:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7490
     components:
     - type: Transform
       pos: 34.5,3.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2474:
@@ -40651,23 +40773,31 @@ entities:
         2479:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7491
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 40.5,-3.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2478:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7493
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 32.5,3.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         1914:
@@ -40676,11 +40806,15 @@ entities:
         1913:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7499
     components:
     - type: Transform
       pos: 0.5,19.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2382:
@@ -40689,11 +40823,15 @@ entities:
         2383:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7502
     components:
     - type: Transform
       pos: 1.5,8.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2340:
@@ -40702,12 +40840,16 @@ entities:
         2360:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7503
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 3.5,1.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2339:
@@ -40722,31 +40864,43 @@ entities:
         2361:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7507
     components:
     - type: Transform
       pos: 9.5,4.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2273:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7508
     components:
     - type: Transform
       pos: 13.5,4.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2264:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7509
     components:
     - type: Transform
       pos: 6.5,-4.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2324:
@@ -40758,22 +40912,30 @@ entities:
         2336:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7556
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,-12.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2362:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7557
     components:
     - type: Transform
       pos: 18.5,-13.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2381:
@@ -40782,11 +40944,15 @@ entities:
         2242:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7558
     components:
     - type: Transform
       pos: 18.5,-9.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2453:
@@ -40795,11 +40961,15 @@ entities:
         2461:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7562
     components:
     - type: Transform
       pos: 45.5,-13.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2486:
@@ -40811,12 +40981,16 @@ entities:
         2485:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7563
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 38.5,-13.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2235:
@@ -40831,23 +41005,31 @@ entities:
         2488:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7565
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 24.5,-1.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         217:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7569
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 16.5,-9.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2251:
@@ -40859,23 +41041,31 @@ entities:
         2252:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7570
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 21.5,-0.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2254:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7575
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 51.5,9.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2437:
@@ -40890,11 +41080,15 @@ entities:
         2390:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7576
     components:
     - type: Transform
       pos: 60.5,3.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2490:
@@ -40906,23 +41100,31 @@ entities:
         2491:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7580
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 59.5,5.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2168:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7590
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 60.5,11.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2498:
@@ -40931,11 +41133,15 @@ entities:
         2497:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7591
     components:
     - type: Transform
       pos: 25.5,20.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2473:
@@ -40947,11 +41153,15 @@ entities:
         2387:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7592
     components:
     - type: Transform
       pos: 14.5,29.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2470:
@@ -40963,23 +41173,31 @@ entities:
         2472:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7593
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 14.5,29.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2471:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7594
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 45.5,18.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2604:
@@ -40988,23 +41206,31 @@ entities:
         2606:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7595
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 53.5,21.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2620:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7598
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 29.5,24.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2531:
@@ -41019,12 +41245,16 @@ entities:
         2536:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7599
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 22.5,36.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         7113:
@@ -41033,12 +41263,16 @@ entities:
         6708:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7600
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 15.5,33.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2563:
@@ -41047,22 +41281,30 @@ entities:
         2534:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7601
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 35.5,30.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2605:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7602
     components:
     - type: Transform
       pos: 32.5,39.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         7028:
@@ -41074,22 +41316,30 @@ entities:
         2579:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7604
     components:
     - type: Transform
       pos: 45.5,35.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2571:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7605
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 45.5,35.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2588:
@@ -41098,11 +41348,15 @@ entities:
         2577:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7623
     components:
     - type: Transform
       pos: 42.5,52.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2642:
@@ -41117,12 +41371,16 @@ entities:
         2670:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7626
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 31.5,49.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2635:
@@ -41131,12 +41389,16 @@ entities:
         2636:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7627
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 15.5,56.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2640:
@@ -41157,12 +41419,16 @@ entities:
         2637:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 7828
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 4.5,-10.5
       parent: 2
+    - type: SignalSwitch
+      state: True
     - type: DeviceLinkSource
       linkedPorts:
         2322:
@@ -41174,6 +41440,8 @@ entities:
         2318:
         - On: On
         - Off: Off
+      lastSignals:
+        Status: True
   - uid: 8262
     components:
     - type: Transform
@@ -42114,10 +42382,10 @@ entities:
       parent: 2
 - proto: SpawnMobSmile
   entities:
-  - uid: 7555
+  - uid: 141
     components:
     - type: Transform
-      pos: 54.5,1.5
+      pos: 52.5,0.5
       parent: 2
 - proto: SpawnPointAtmos
   entities:
@@ -44031,11 +44299,14 @@ entities:
       color: '#FF3300FF'
     - type: ExplodeOnTrigger
     - type: Explosive
-      explosionType: HardBomb  # normally Default and max 5 total 60
-      maxIntensity: 10 # about a ~67.5 total damage
-      totalIntensity: 30 # about a ~3 tile radius
-      canCreateVacuum: false
+      canCreateVacuum: False
+      totalIntensity: 30
+      maxIntensity: 10
+      explosionType: HardBomb
     - type: TriggerOnSignal
+    - type: DeviceLinkSink
+      ports:
+      - Trigger
 - proto: TelecomServerCircuitboard
   entities:
   - uid: 2173
@@ -51581,14 +51852,9 @@ entities:
     - type: Transform
       pos: 10.5,-7.5
       parent: 2
-- proto: WeaponTurretSyndicateBroken
+- proto: WeaponEnergyTurretAI
   entities:
-  - uid: 77
-    components:
-    - type: Transform
-      pos: 31.5,55.5
-      parent: 2
-  - uid: 141
+  - uid: 1540
     components:
     - type: Transform
       pos: 33.5,55.5
@@ -51596,17 +51862,17 @@ entities:
   - uid: 1920
     components:
     - type: Transform
-      pos: 34.5,50.5
+      pos: 31.5,55.5
       parent: 2
   - uid: 2188
     components:
     - type: Transform
-      pos: 27.5,49.5
+      pos: 34.5,50.5
       parent: 2
   - uid: 2607
     components:
     - type: Transform
-      pos: 20.5,57.5
+      pos: 27.5,49.5
       parent: 2
   - uid: 2762
     components:
@@ -51616,14 +51882,19 @@ entities:
   - uid: 2764
     components:
     - type: Transform
-      pos: 19.5,49.5
+      pos: 20.5,57.5
       parent: 2
   - uid: 2766
     components:
     - type: Transform
-      pos: 23.5,49.5
+      pos: 19.5,49.5
       parent: 2
   - uid: 2767
+    components:
+    - type: Transform
+      pos: 23.5,49.5
+      parent: 2
+  - uid: 7555
     components:
     - type: Transform
       pos: 25.5,57.5
@@ -51641,12 +51912,12 @@ entities:
   - uid: 7629
     components:
     - type: Transform
-      pos: 49.5,50.5
+      pos: 50.5,49.5
       parent: 2
   - uid: 7630
     components:
     - type: Transform
-      pos: 50.5,49.5
+      pos: 49.5,50.5
       parent: 2
 - proto: Welder
   entities:
@@ -51926,7 +52197,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -117524.16
+      secondsUntilStateChange: -118100.14
       state: Opening
     - type: Airlock
       autoClose: False
