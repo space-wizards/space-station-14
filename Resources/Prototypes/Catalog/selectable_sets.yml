@@ -199,7 +199,7 @@
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
     state: icon
   content:
-  - EMPGrenade # 2 TC
+  - EmpGrenade # 2 TC
   - SingularityGrenade # 2 TC
   - WhiteholeGrenade # 2 TC
   - ExGrenade # 4 TC
