@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 250.0.0
+  engineVersion: 253.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/29/2025 04:10:56
-  entityCount: 28717
+  time: 04/15/2025 12:07:35
+  entityCount: 28727
 maps:
 - 951
 grids:
@@ -12395,7 +12395,7 @@ entities:
       pos: 11.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -4233.237
+      secondsUntilStateChange: -4655.149
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14953,7 +14953,7 @@ entities:
       pos: -4.5,53.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -112816.266
+      secondsUntilStateChange: -113238.18
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -23541,7 +23541,7 @@ entities:
   - uid: 10464
     components:
     - type: Transform
-      pos: 6.437557,39.584892
+      pos: 6.495946,38.206287
       parent: 5350
   - uid: 13521
     components:
@@ -69608,6 +69608,43 @@ entities:
     - type: Transform
       pos: -9.5,2.5
       parent: 5350
+- proto: ComputerCargoOrdersEngineering
+  entities:
+  - uid: 28719
+    components:
+    - type: Transform
+      pos: 53.5,16.5
+      parent: 5350
+- proto: ComputerCargoOrdersMedical
+  entities:
+  - uid: 28720
+    components:
+    - type: Transform
+      pos: -14.5,-40.5
+      parent: 5350
+- proto: ComputerCargoOrdersScience
+  entities:
+  - uid: 28721
+    components:
+    - type: Transform
+      pos: 8.5,-43.5
+      parent: 5350
+- proto: ComputerCargoOrdersSecurity
+  entities:
+  - uid: 19141
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 6.5,39.5
+      parent: 5350
+- proto: ComputerCargoOrdersService
+  entities:
+  - uid: 18537
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 33.5,-7.5
+      parent: 5350
 - proto: ComputerCargoShuttle
   entities:
   - uid: 28195
@@ -69726,6 +69763,14 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 37.5,-30.5
+      parent: 5350
+- proto: ComputerFundingAllocation
+  entities:
+  - uid: 3472
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -16.5,-3.5
       parent: 5350
 - proto: ComputerId
   entities:
@@ -71360,6 +71405,46 @@ entities:
           showEnts: False
           occludes: True
           ent: null
+- proto: CrateLockBoxEngineering
+  entities:
+  - uid: 8377
+    components:
+    - type: Transform
+      pos: 49.5,20.5
+      parent: 5350
+- proto: CrateLockBoxMedical
+  entities:
+  - uid: 28723
+    components:
+    - type: Transform
+      pos: -30.5,-42.5
+      parent: 5350
+- proto: CrateLockBoxScience
+  entities:
+  - uid: 28724
+    components:
+    - type: Transform
+      pos: 4.5,-31.5
+      parent: 5350
+- proto: CrateLockBoxSecurity
+  entities:
+  - uid: 28725
+    components:
+    - type: Transform
+      pos: 12.5,35.5
+      parent: 5350
+- proto: CrateLockBoxService
+  entities:
+  - uid: 28726
+    components:
+    - type: Transform
+      pos: 34.5,-28.5
+      parent: 5350
+  - uid: 28727
+    components:
+    - type: Transform
+      pos: 42.5,-5.5
+      parent: 5350
 - proto: CrateMaterialSteel
   entities:
   - uid: 28057
@@ -82358,11 +82443,6 @@ entities:
       parent: 5350
 - proto: filingCabinetDrawer
   entities:
-  - uid: 8377
-    components:
-    - type: Transform
-      pos: -16.5,-3.5
-      parent: 5350
   - uid: 9062
     components:
     - type: Transform
@@ -82448,6 +82528,11 @@ entities:
     components:
     - type: Transform
       pos: 10.5,23.5
+      parent: 5350
+  - uid: 28718
+    components:
+    - type: Transform
+      pos: -18.5,-1.5
       parent: 5350
 - proto: filingCabinetTallRandom
   entities:
@@ -84587,7 +84672,7 @@ entities:
       pos: 31.5,-33.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -35655.312
+      secondsUntilStateChange: -36077.227
       state: Closing
   - uid: 9615
     components:
@@ -134508,11 +134593,6 @@ entities:
         If you are not satisfied with your Cargo service, please contact 1(800)-ASS-HOLE
     - type: Physics
       canCollide: False
-  - uid: 3472
-    components:
-    - type: Transform
-      pos: -14.3798685,33.603416
-      parent: 5350
   - uid: 6607
     components:
     - type: MetaData
@@ -134538,25 +134618,20 @@ entities:
         Just as Central Command Intended.
     - type: Physics
       canCollide: False
+  - uid: 8299
+    components:
+    - type: Transform
+      pos: -14.289667,33.613827
+      parent: 5350
   - uid: 18531
     components:
     - type: Transform
-      pos: -14.3173685,33.603416
-      parent: 5350
-  - uid: 18537
-    components:
-    - type: Transform
-      pos: -14.3017435,33.61904
+      pos: -14.399042,33.738827
       parent: 5350
   - uid: 19140
     components:
     - type: Transform
-      pos: -14.3173685,33.61904
-      parent: 5350
-  - uid: 19141
-    components:
-    - type: Transform
-      pos: -14.3173685,33.61904
+      pos: -14.336542,33.676327
       parent: 5350
   - uid: 19853
     components:
@@ -134984,6 +135059,11 @@ entities:
         Higher will burn the engine out and eventually make it explode. Don't.
 
         Don't forget to refuel it, it tends to stop at the worst possible time.
+  - uid: 28722
+    components:
+    - type: Transform
+      pos: -14.367792,33.707577
+      parent: 5350
 - proto: PaperRolling
   entities:
   - uid: 17306
@@ -135139,7 +135219,7 @@ entities:
   - uid: 24478
     components:
     - type: Transform
-      pos: -14.6298685,33.49404
+      pos: -14.680292,33.520077
       parent: 5350
   - uid: 24499
     components:
@@ -157149,11 +157229,6 @@ entities:
     components:
     - type: Transform
       pos: 10.5,37.5
-      parent: 5350
-  - uid: 8299
-    components:
-    - type: Transform
-      pos: 6.5,39.5
       parent: 5350
   - uid: 8300
     components:
@@ -185231,7 +185306,7 @@ entities:
       pos: -28.5,-5.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -41367.223
+      secondsUntilStateChange: -41789.137
       state: Opening
   - uid: 17570
     components:
