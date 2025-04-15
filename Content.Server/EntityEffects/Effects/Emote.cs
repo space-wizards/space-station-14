@@ -33,9 +33,9 @@ public sealed partial class Emote : EntityEffect
 
         var chatSys = args.EntityManager.System<ChatSystem>();
         if (ShowInChat)
-            chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.GhostRangeLimit, forceEmote: Force);
+            chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, forceEmote: true);
         else
-            chatSys.TryEmoteWithoutChat(args.TargetEntity, EmoteId);
+            chatSys.TryEmoteWithChat(args.TargetEntity, EmoteId, ChatTransmitRange.HideChat, forceEmote: true);
 
     }
 }
