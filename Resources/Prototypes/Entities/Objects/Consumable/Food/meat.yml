@@ -368,7 +368,6 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
         reagents:
         - ReagentId: Rororium
           Quantity: 5
