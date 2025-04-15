@@ -1,20 +1,18 @@
 {
-  "version":1,
-  "size":
-  {
-    "x":32,
-    "y":32
-  },
-  "copyright":"Base sprites taken from tgstation and edited chromiumboy (github)",
-  "license":"CC-BY-SA-3.0",
-  "states":
-  [
-    {
-      "name":"pipeManifold",
-      "directions":4
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name":"storageManifold"
-    }
-  ]
+    "copyright": "Base sprites taken from tgstation and edited by chromiumboy (github)",
+    "license": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "pipeManifold",
+            "directions": 4
+        },
+        {
+            "name": "storageManifold"
+        }
+    ]
 }
