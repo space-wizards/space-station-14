@@ -380,7 +380,6 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         }
 
         var activeQuery = EntityManager.GetEntityQuery<ActiveInstrumentComponent>();
-        var metadataQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
         var transformQuery = EntityManager.GetEntityQuery<TransformComponent>();
 
         var query = AllEntityQuery<ActiveInstrumentComponent, InstrumentComponent>();
