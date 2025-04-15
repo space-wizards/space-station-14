@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You are now notified of who is pulling you when being pulled.
-    type: Add
-  id: 7691
-  time: '2024-12-09T03:51:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33612
 - author: Bhijn and Myr
   changes:
   - message: The Admin Message system now contains an introductory message as the
@@ -3900,3 +3893,15 @@
   id: 8190
   time: '2025-04-15T22:24:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36598
+- author: EmoGarbage404
+  changes:
+  - message: When an artifact's node is unlocked, the effect will now also occur.
+      Effects can still be triggered manually through interaction.
+    type: Add
+  - message: Artifacts will now have more nodes on average.
+    type: Tweak
+  - message: Higher-class artifact nodes now grant significantly more points.
+    type: Tweak
+  id: 8191
+  time: '2025-04-15T22:38:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36604
