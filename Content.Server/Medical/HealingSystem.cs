@@ -115,7 +115,9 @@ public sealed class HealingSystem : EntitySystem
                 $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
         }
 
-        _audio.PlayPvs(healing.HealingEndSound, entity.Owner, AudioParams.Default.WithVariation(0.125f).WithVolume(1f));
+        var healingEndSoundSpecifier = healing.HealingEndSound;
+        healingEndSoundSpecifier?.Params.WithVariation(0.125f).WithVolume(1f);
+        _audio.PlayPvs(healingEndSoundSpecifier, entity.Owner);
 
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = (HasDamage(entity, healing) && !dontRepeat);
@@ -198,7 +200,9 @@ public sealed class HealingSystem : EntitySystem
             return false;
         }
 
-        _audio.PlayPvs(component.HealingBeginSound, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(1f));
+        var healingBeginSoundSpecifier = component.HealingBeginSound;
+        healingBeginSoundSpecifier?.Params.WithVariation(0.125f).WithVolume(1f);
+        _audio.PlayPvs(healingBeginSoundSpecifier, uid);
 
         var isNotSelf = user != target;
 
