@@ -127,5 +127,14 @@ namespace Content.Shared.Preferences
             var random = IoCManager.Resolve<IRobustRandom>();
             return pool.Count == 0 ? null : random.Pick(pool);
         }
+
+        public bool TryGetHumanoidInSlot(int slot, out HumanoidCharacterProfile? humanoid)
+        {
+            humanoid = null;
+            if (!Characters.TryGetValue(slot, out var profile))
+                return false;
+            humanoid = profile as HumanoidCharacterProfile;
+            return humanoid != null;
+        }
     }
 }
