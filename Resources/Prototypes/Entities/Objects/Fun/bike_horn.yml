@@ -232,5 +232,3 @@
   - type: TriggerOnUse
   - type: SpawnOnTrigger
     proto: EffectGravityPulse
-
-
