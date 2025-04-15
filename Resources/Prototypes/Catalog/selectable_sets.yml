@@ -113,15 +113,15 @@
     sprite: Objects/Devices/jammer.rsi
     state: jammer
   content:
-  - ClothingHandsChameleonThief
-  - ClothingBackpackChameleonFill
-  - ClothingMaskGasVoiceChameleon
-  - AgentIDCard
-  - EnergyDaggerBox
-  - RadioJammer
-  - StealthBox
-  - SyndicateJawsOfLife
-  - EncryptionKeySyndie
+  - ClothingHandsChameleonThief # 5 TC-ish
+  - ClothingBackpackChameleonFill # 4 TC
+  - ClothingMaskGasVoiceChameleon # 2 TC
+  - AgentIDCard # 3 TC
+  - HypopenBox # 6 TC, useless without chemicals
+  - RadioJammer # 3 TC
+  - StealthBox # 5 TC
+  - SyndicateJawsOfLife # 2 TC
+  - EncryptionKeySyndie # 1 TC
 
 - type: selectableSet
   id: SyndicateHitmanSet
@@ -131,15 +131,20 @@
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
     state: icon
   content:
-  - WeaponPistolCobra
+  - WeaponPistolCobra # 4 TC
+  - MagazinePistolCaselessRifle # 1 TC x 3
   - MagazinePistolCaselessRifle
   - MagazinePistolCaselessRifle
-  - MagazinePistolCaselessRifle
-  - ClothingOuterVestWeb
-  - ThrowingKnivesKit
-  - MedkitCombatFilled
-  - StimkitFilled
-  - EncryptionKeySyndie
+  - ThrowingKnivesKit # 6 TC
+  - EnergyDaggerBox # 2 TC
+  - ClothingOuterVestWeb # 3 TC
+  - ClothingHeadHelmetSwatSyndicate # 2 TC-ish
+  - ClothingShoesChameleonNoSlips # 2 TC
+  - CigPackSyndicate # 2 TC as fluff
+  - MedkitCombatFilled # 5 TC
+  - ClothingUniformJumpsuitDetectiveGrey
+  - ClothingHandsGlovesCombat
+  - EncryptionKeySyndie # 1 TC
 
 - type: selectableSet
   id: SyndicateImplantsSet
@@ -149,13 +154,11 @@
     sprite: Objects/Specific/Medical/syndi_implanter.rsi
     state: implanter0
   content:
-  - EmpImplanter
-  - FreedomImplanter
-  - ScramImplanter
-  - StorageImplanter
-  - FakeMindShieldImplanter
-  - DnaScramblerImplanter
-  - RadioImplanter
+  - BoxHoloparasite # 14 TC
+  - EmpImplanter # 2 TC
+  - ScramImplanter # 6 TC
+  - StorageImplanter # 8 TC
+  - RadioImplanter # 2 TC
 
 - type: selectableSet
   id: SyndicateHackerSet
@@ -165,13 +168,13 @@
     sprite: Objects/Misc/module.rsi
     state: std_mod
   content:
-  - AntimovCircuitBoard
-  - AccessBreaker
-  - Emag
-  - CameraBug
-  - ToolboxSyndicateFilled
-  - EncryptionKeyBinarySyndicate
-  - EncryptionKeySyndie
+  - AntimovCircuitBoard # 14 TC
+  - AccessBreaker # 4 TC
+  - Emag # 5 TC
+  - CameraBug # 4 TC
+  - ToolboxSyndicateFilled # 2 TC
+  - EncryptionKeyBinarySyndicate # 1 TC
+  - EncryptionKeySyndie # 1 TC
 
 - type: selectableSet
   id: SyndicateDeswordSet
@@ -181,9 +184,10 @@
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
     state: icon
   content:
-  - EnergySwordDouble # why not
-  - ClothingShoesChameleonNoSlips
-  - EncryptionKeySyndie
+  - EnergySwordDouble # 21 TC-ish, why not
+  - StimkitFilled # 12 TC
+  - DrinkSpaceGlue
+  - EncryptionKeySyndie # 1 TC
 
 - type: selectableSet
   id: SyndicateGrenadierSet
@@ -193,13 +197,16 @@
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
     state: icon
   content:
-  - C4
-  - ExGrenade
-  - GrenadeIncendiary
-  - GrenadeShrapnel
-  - SyndieMiniBomb
-  - ClusterGrenade
-  - EncryptionKeySyndie
+  - EMPGrenade # 2 TC
+  - SingularityGrenade # 2 TC
+  - WhiteholeGrenade # 2 TC
+  - ExGrenade # 4 TC
+  - GrenadeIncendiary # 4 TC
+  - GrenadeShrapnel # 4 TC
+  - C4 # 2 TC
+  - SyndieMiniBomb # 6 TC
+  - ReinforcementRadioSyndicateSyndiCat # 6 TC
+  - EncryptionKeySyndie # 1 TC
 
 - type: selectableSet
   id: SyndicateFluclearSet
@@ -209,17 +216,12 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
     state: icon
   content:
-  - ClothingBackpackDuffelSyndicateHardsuitBundle
-  - WeaponPistolViper
-  - MagazinePistol
-  - MagazinePistol
-  - MagazinePistol
-  - EnergySword
-  - SyndiPDA
-  - ClothingEyesHudSyndicate
+  - ClothingBackpackDuffelSyndicateFilledSMG # 17 TC
+  - ClothingBackpackDuffelSyndicateHardsuitBundle # 8 TC
   - ClothingUniformJumpsuitOperative
+  - SyndiPDA
+  - ClothingHeadsetAltSyndicate # 1 TC
+  - ClothingEyesHudSyndicate # 2 TC as fluff
   - ClothingShoesBootsCombatFilled
-  - ClothingBeltMilitaryWebbing
-  - JetpackBlackFilled
-  - NukeDiskFake
-  - ClothingHeadsetAltSyndicate
+  - ClothingBeltMilitaryWebbing # 1 TC
+  - JetpackBlackFilled # 2 TC

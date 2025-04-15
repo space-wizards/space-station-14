@@ -1,6 +1,6 @@
 using System.Linq;
+using Content.Server.Storage.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Item;
 using Content.Shared.SetSelector;
 using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
@@ -18,15 +18,15 @@ public sealed class SetSelectorSystem : EntitySystem
 {
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly SharedEntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedStorageSystem _storage = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-
         SubscribeLocalEvent<SetSelectorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SetSelectorComponent, BoundUIOpenedEvent>(OnUIOpened);
         SubscribeLocalEvent<SetSelectorComponent, SetSelectorApproveMessage>(OnApprove);
@@ -57,14 +57,13 @@ public sealed class SetSelectorSystem : EntitySystem
         if (selector.Comp.SelectedSets.Count != selector.Comp.MaxSelectedSets)
             return;
 
-        List<EntityUid> spawnedEntities = [];
         var storagePrototype = selector.Comp.SpawnedStoragePrototype;
-        var coordinates = _transform.GetMapCoordinates(selector.Owner);
+        var coordinates = _transform.GetMapCoordinates(selector.Comp.SpawnAtActor ? args.Actor : selector.Owner);
 
-        // Spawn the contents of the chosen sets and add them to spawnedEntities list
+        // Spawn the contents of the chosen sets and add them to spawnedEntities
+        List<EntityUid> spawnedEntities = [];
         spawnedEntities.AddRange(selector.Comp.SelectedSets.Select(i => _proto.Index(selector.Comp.AvailableSets[i]))
-            .SelectMany(set => set.Content.Select(item => Spawn(item,
-                _transform.GetMapCoordinates(selector.Owner)))));
+                       .SelectMany(set => set.Content.Select(item => Spawn(item, coordinates))));
 
         // Since we immediately delete the selector, the sound played on it would get deleted too,
         // so we play the sound on coordinates of the selector instead.
@@ -76,22 +75,21 @@ public sealed class SetSelectorSystem : EntitySystem
             return;
 
         var spawnedStorage = Spawn(storagePrototype, coordinates);
-        _hands.TryPickupAnyHand(args.Actor, spawnedStorage);
+        if (selector.Comp.SpawnAtActor)
+            _hands.TryPickupAnyHand(args.Actor, spawnedStorage);
 
-        if (!HasComp<StorageComponent>(spawnedStorage))
-            return;
-
-        foreach (var ent in spawnedEntities.Where(HasComp<ItemComponent>))
-        {
-            _storage.Insert(spawnedStorage, ent, out _, playSound: false);
-        }
+        // Try to insert all spawnedEntities to spawnedStorage
+        if (HasComp<StorageComponent>(spawnedStorage))
+            spawnedEntities.ForEach(ent => _storage.Insert(spawnedStorage, ent, out _, playSound: false));
+        else if (TryComp<EntityStorageComponent>(spawnedStorage, out var entityStorage))
+            spawnedEntities.ForEach(ent => _entityStorage.Insert(ent, spawnedStorage, entityStorage));
     }
 
     private void OnChangeSet(Entity<SetSelectorComponent> selector, ref SetSelectorChangeSetMessage args)
     {
         // Switch selecting set
         if (!selector.Comp.SelectedSets.Remove(args.SetNumber))
-            selector.Comp.SelectedSets.Add(args.SetNumber);
+             selector.Comp.SelectedSets.Add(args.SetNumber);
 
         UpdateUI(selector.Owner, selector.Comp);
     }

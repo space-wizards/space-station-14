@@ -42,6 +42,12 @@ public sealed partial class SetSelectorComponent : Component
     [DataField]
     public EntProtoId? SpawnedStoragePrototype;
 
+    /// <summary>
+    /// If true, will spawn contents at the actor, else at the selector.
+    /// </summary>
+    [DataField]
+    public bool SpawnAtActor;
+
     [DataField]
     public SoundSpecifier? ApproveSound;
 }
