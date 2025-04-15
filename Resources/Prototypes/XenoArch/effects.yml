@@ -1066,7 +1066,7 @@
   description: Creates anomaly
   components:
   - type: XenoArtifactNode
-    maxDurability: 2
+    maxDurability: 1
     maxDurabilityCanDecreaseBy:
       min: 0
       max: 1
