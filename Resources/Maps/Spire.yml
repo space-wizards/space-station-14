@@ -4,8 +4,8 @@ meta:
   engineVersion: 248.0.2
   forkId: harmony
   forkVersion: 259d600d2331f3bb25b51a698cd4b3a52dd39600
-  time: 04/15/2025 01:43:50
-  entityCount: 25094
+  time: 04/15/2025 01:58:38
+  entityCount: 25042
 maps:
 - 1
 grids:
@@ -275,7 +275,7 @@ entities:
           version: 6
         -5,-1:
           ind: -5,-1
-          tiles: hAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAYQAAAAAAEAAAAAAAEAAAAAAAgwAAAAAAgwAAAAAAgwAAAAAAhAAAAAAAhAAAAAAAIAAAAAACIAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAYAAAAAADYQAAAAAAYQAAAAAAEAAAAAAAEAAAAAAAgwAAAAAAgwAAAAAAgwAAAAAAhAAAAAAAIAAAAAACIAAAAAAChAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAYAAAAAAAYAAAAAADYQAAAAAAYQAAAAAAEAAAAAAAEAAAAAAAgwAAAAAAgwAAAAAAgwAAAAAAhAAAAAAAIAAAAAAChAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAYAAAAAAAYAAAAAAAYQAAAAAAEAAAAAAAEAAAAAAAEAAAAAAAEAAAAAAAEAAAAAAAgwAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAYAAAAAAAYQAAAAAAEAAAAAAAYQAAAAAAYQAAAAAAYQAAAAAAEAAAAAAAEAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAYAAAAAAFhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAEAAAAAAAEAAAAAAAEAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAABAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAEAAAAAAAEAAAAAAAEAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAhAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAhAAAAAAAfwAAAAADfwAAAAAAfwAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAhAAAAAAABAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAfwAAAAABfwAAAAADfwAAAAAChAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAfwAAAAADfwAAAAAAfwAAAAAAfwAAAAABcwAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAfwAAAAADfwAAAAADfwAAAAACBAAAAAAABAAAAAAABAAAAAAABAAAAAAAhAAAAAAAfwAAAAABfwAAAAACfwAAAAAAfwAAAAACcwAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAfwAAAAAAfwAAAAAAfwAAAAABhAAAAAAABAAAAAAABAAAAAAABAAAAAAAhAAAAAAAfwAAAAACfwAAAAAAfwAAAAABfwAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAfwAAAAAChAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAABAAAAAAAhAAAAAAAhAAAAAAAfwAAAAAAfwAAAAADfwAAAAAAfwAAAAABBAAAAAAABAAAAAAAhAAAAAAAfwAAAAABfwAAAAABfwAAAAAAfwAAAAAAfwAAAAADMAAAAAACIAAAAAAAMAAAAAABfwAAAAABfwAAAAAAfwAAAAACfwAAAAABfwAAAAAA
+          tiles: hAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAYQAAAAAAEAAAAAAAEAAAAAAAgwAAAAAAgwAAAAAAgwAAAAAAhAAAAAAAhAAAAAAAIAAAAAACIAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAYAAAAAADYQAAAAAAYQAAAAAAEAAAAAAAEAAAAAAAgwAAAAAAgwAAAAAAgwAAAAAAhAAAAAAAIAAAAAACIAAAAAAChAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAYAAAAAAAYAAAAAADYQAAAAAAYQAAAAAAEAAAAAAAEAAAAAAAgwAAAAAAgwAAAAAAgwAAAAAAhAAAAAAAIAAAAAAChAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAYAAAAAAAYAAAAAAAYQAAAAAAEAAAAAAAEAAAAAAAEAAAAAAAEAAAAAAAEAAAAAAAgwAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAYAAAAAAAYQAAAAAAEAAAAAAAYQAAAAAAYQAAAAAAYQAAAAAAEAAAAAAAEAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAYAAAAAAFhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAEAAAAAAAEAAAAAAAEAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAABAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAABAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAEAAAAAAAEAAAAAAAEAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAhAAAAAAABAAAAAAABAAAAAAABAAAAAAABAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAhAAAAAAAfwAAAAADfwAAAAAAfwAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAhAAAAAAABAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAcwAAAAAAcwAAAAAAhAAAAAAAfwAAAAABfwAAAAADfwAAAAAChAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAfwAAAAADfwAAAAAAfwAAAAAAfwAAAAABcwAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAfwAAAAADfwAAAAADfwAAAAACBAAAAAAABAAAAAAABAAAAAAABAAAAAAAhAAAAAAAfwAAAAABfwAAAAACfwAAAAAAfwAAAAACcwAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAfwAAAAAAfwAAAAAAfwAAAAABhAAAAAAABAAAAAAABAAAAAAABAAAAAAAhAAAAAAAfwAAAAACfwAAAAAAfwAAAAABfwAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAAfwAAAAAChAAAAAAAhAAAAAAAhAAAAAAAhAAAAAAABAAAAAAAhAAAAAAAhAAAAAAAfwAAAAAAfwAAAAADfwAAAAAAfwAAAAABBAAAAAAABAAAAAAAhAAAAAAAfwAAAAABfwAAAAABfwAAAAAAfwAAAAAAfwAAAAADMAAAAAACIAAAAAAAMAAAAAABfwAAAAABfwAAAAAAfwAAAAACfwAAAAABfwAAAAAA
           version: 6
         -5,0:
           ind: -5,0
@@ -8754,7 +8754,7 @@ entities:
       pos: 26.5,7.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -2185.7659
+      secondsUntilStateChange: -3044.2644
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8786,7 +8786,7 @@ entities:
       pos: -33.5,31.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -153787.4
+      secondsUntilStateChange: -154645.9
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8943,7 +8943,7 @@ entities:
       pos: -51.5,-11.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -89103.414
+      secondsUntilStateChange: -89961.91
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10375,7 +10375,7 @@ entities:
       pos: -74.5,30.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -112116.766
+      secondsUntilStateChange: -112975.26
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -16704,7 +16704,7 @@ entities:
         This is a thriller about a poor researcher and a robotic Nar'Sie cultist. Due to some mystical phenomena, they playfully win a game of chess against a syndicate agent while trapped inside a crate.
 
 
-        The ending of the story is sad as the station has code epsilon declared causing all of them to try and flee the deathsquad that comes, the researcher dying alone in maints, due to the wounds they sustained in the attempted escape 
+        The ending of the story is sad as the station has code epsilon declared causing all of them to try and flee the deathsquad that comes, the researcher dying alone in maints, due to the wounds they sustained in the attempted escape
 
 
         on the back page it is noted that while this is a fictional work (according to nanotressen), the cause of its ban being that the author is an employee of the syndicate (according to nanotressen)
@@ -64271,66 +64271,6 @@ entities:
       parent: 2
 - proto: DisposalRouter
   entities:
-  - uid: 17263
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -56.5,-0.5
-      parent: 2
-    - type: DisposalRouter
-      tags:
-      - Library
-  - uid: 17423
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -36.5,26.5
-      parent: 2
-    - type: DisposalRouter
-      tags:
-      - Chemistry
-  - uid: 17538
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -1.5,-7.5
-      parent: 2
-    - type: DisposalRouter
-      tags:
-      - Sec Outpost
-  - uid: 21751
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -11.5,15.5
-      parent: 2
-    - type: DisposalRouter
-      tags:
-      - Cargo
-  - uid: 23497
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -4.5,-42.5
-      parent: 2
-    - type: DisposalRouter
-      tags:
-      - Med Outpost
-  - uid: 24040
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -17.5,-18.5
-      parent: 2
-  - uid: 24114
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -9.5,-18.5
-      parent: 2
-    - type: DisposalRouter
-      tags:
-      - Mail
   - uid: 24199
     components:
     - type: Transform
@@ -64340,43 +64280,6 @@ entities:
     - type: DisposalRouter
       tags:
       - Hydroponics
-  - uid: 24201
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 0.5,-34.5
-      parent: 2
-    - type: DisposalRouter
-      tags:
-      - Science
-- proto: DisposalRouterFlipped
-  entities:
-  - uid: 21050
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -17.5,16.5
-      parent: 2
-    - type: DisposalRouter
-      tags:
-      - Mail Room
-  - uid: 23455
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 9.5,-38.5
-      parent: 2
-    - type: DisposalRouter
-      tags:
-      - Science
-  - uid: 23638
-    components:
-    - type: Transform
-      pos: -76.5,8.5
-      parent: 2
-    - type: DisposalRouter
-      tags:
-      - Mail
 - proto: DisposalTagger
   entities:
   - uid: 8475
@@ -64708,188 +64611,6 @@ entities:
     components:
     - type: Transform
       pos: 11.5,-26.5
-      parent: 2
-- proto: DisposalUnit
-  entities:
-  - uid: 970
-    components:
-    - type: Transform
-      pos: -26.5,-36.5
-      parent: 2
-  - uid: 975
-    components:
-    - type: Transform
-      pos: -40.5,-29.5
-      parent: 2
-  - uid: 1947
-    components:
-    - type: Transform
-      pos: 9.5,-32.5
-      parent: 2
-  - uid: 4442
-    components:
-    - type: Transform
-      pos: -12.5,-7.5
-      parent: 2
-  - uid: 5560
-    components:
-    - type: Transform
-      pos: -26.5,-20.5
-      parent: 2
-  - uid: 5718
-    components:
-    - type: Transform
-      pos: -35.5,-16.5
-      parent: 2
-  - uid: 7673
-    components:
-    - type: Transform
-      pos: -8.5,-52.5
-      parent: 2
-  - uid: 8683
-    components:
-    - type: Transform
-      pos: 10.5,-38.5
-      parent: 2
-  - uid: 11291
-    components:
-    - type: Transform
-      pos: -66.5,1.5
-      parent: 2
-  - uid: 12521
-    components:
-    - type: Transform
-      pos: -22.5,43.5
-      parent: 2
-  - uid: 12565
-    components:
-    - type: Transform
-      pos: -31.5,30.5
-      parent: 2
-  - uid: 13903
-    components:
-    - type: Transform
-      pos: -46.5,-30.5
-      parent: 2
-  - uid: 16374
-    components:
-    - type: Transform
-      pos: 22.5,-20.5
-      parent: 2
-  - uid: 17324
-    components:
-    - type: Transform
-      pos: -12.5,5.5
-      parent: 2
-  - uid: 17325
-    components:
-    - type: Transform
-      pos: -30.5,13.5
-      parent: 2
-  - uid: 17332
-    components:
-    - type: Transform
-      pos: -54.5,32.5
-      parent: 2
-  - uid: 17411
-    components:
-    - type: Transform
-      pos: -23.5,25.5
-      parent: 2
-  - uid: 17496
-    components:
-    - type: Transform
-      pos: -2.5,22.5
-      parent: 2
-  - uid: 17502
-    components:
-    - type: Transform
-      pos: -7.5,18.5
-      parent: 2
-  - uid: 22140
-    components:
-    - type: Transform
-      pos: 30.5,7.5
-      parent: 2
-  - uid: 22191
-    components:
-    - type: Transform
-      pos: 24.5,14.5
-      parent: 2
-  - uid: 22202
-    components:
-    - type: Transform
-      pos: 14.5,6.5
-      parent: 2
-  - uid: 22417
-    components:
-    - type: Transform
-      pos: -14.5,2.5
-      parent: 2
-  - uid: 23348
-    components:
-    - type: Transform
-      pos: -45.5,-3.5
-      parent: 2
-  - uid: 23486
-    components:
-    - type: Transform
-      pos: 0.5,-57.5
-      parent: 2
-  - uid: 23554
-    components:
-    - type: Transform
-      pos: -42.5,20.5
-      parent: 2
-  - uid: 23626
-    components:
-    - type: Transform
-      pos: -90.5,6.5
-      parent: 2
-  - uid: 23698
-    components:
-    - type: Transform
-      pos: -66.5,16.5
-      parent: 2
-  - uid: 23723
-    components:
-    - type: Transform
-      pos: -76.5,4.5
-      parent: 2
-  - uid: 23841
-    components:
-    - type: Transform
-      pos: -68.5,24.5
-      parent: 2
-  - uid: 23902
-    components:
-    - type: Transform
-      pos: -55.5,-21.5
-      parent: 2
-  - uid: 24074
-    components:
-    - type: Transform
-      pos: -11.5,-15.5
-      parent: 2
-  - uid: 24226
-    components:
-    - type: Transform
-      pos: 18.5,-17.5
-      parent: 2
-  - uid: 24227
-    components:
-    - type: Transform
-      pos: 32.5,-17.5
-      parent: 2
-  - uid: 24301
-    components:
-    - type: Transform
-      pos: 8.5,-52.5
-      parent: 2
-  - uid: 24315
-    components:
-    - type: Transform
-      pos: 19.5,-48.5
       parent: 2
 - proto: DisposalYJunction
   entities:
@@ -67707,7 +67428,7 @@ entities:
       pos: -23.5,28.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -13207.437
+      secondsUntilStateChange: -14065.936
       state: Closing
   - uid: 16668
     components:
@@ -110100,6 +109821,11 @@ entities:
       parent: 2
 - proto: hydroponicsTray
   entities:
+  - uid: 975
+    components:
+    - type: Transform
+      pos: 15.5,-29.5
+      parent: 2
   - uid: 1906
     components:
     - type: Transform
@@ -110233,11 +109959,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,-29.5
-      parent: 2
-  - uid: 25089
-    components:
-    - type: Transform
-      pos: 15.5,-29.5
       parent: 2
 - proto: IDComputerCircuitboard
   entities:
@@ -111856,16 +111577,6 @@ entities:
     - type: InsideEntityStorage
 - proto: MailingUnit
   entities:
-  - uid: 1922
-    components:
-    - type: Transform
-      pos: 11.5,-26.5
-      parent: 2
-    - type: MailingUnit
-      tag: Hydroponics
-    - type: Configuration
-      config:
-        tag: Hydroponics
   - uid: 4080
     components:
     - type: Transform
@@ -111876,71 +111587,6 @@ entities:
     - type: Configuration
       config:
         tag: Sec Outpost
-  - uid: 5977
-    components:
-    - type: Transform
-      pos: -21.5,-42.5
-      parent: 2
-    - type: MailingUnit
-      tag: Security
-    - type: Configuration
-      config:
-        tag: Security
-  - uid: 6584
-    components:
-    - type: Transform
-      pos: -34.5,30.5
-      parent: 2
-    - type: MailingUnit
-      tag: Chemistry
-    - type: Configuration
-      config:
-        tag: Chemistry
-  - uid: 8682
-    components:
-    - type: Transform
-      pos: 7.5,-37.5
-      parent: 2
-  - uid: 17249
-    components:
-    - type: Transform
-      pos: -19.5,14.5
-      parent: 2
-    - type: MailingUnit
-      tag: Mail Room
-    - type: Configuration
-      config:
-        tag: Mail Room
-  - uid: 19335
-    components:
-    - type: Transform
-      pos: -7.5,16.5
-      parent: 2
-    - type: MailingUnit
-      tag: Cargo
-    - type: Configuration
-      config:
-        tag: Cargo
-  - uid: 23480
-    components:
-    - type: Transform
-      pos: -2.5,-45.5
-      parent: 2
-    - type: MailingUnit
-      tag: Med Outpost
-    - type: Configuration
-      config:
-        tag: Med Outpost
-  - uid: 23714
-    components:
-    - type: Transform
-      pos: -67.5,-2.5
-      parent: 2
-    - type: MailingUnit
-      tag: Library
-    - type: Configuration
-      config:
-        tag: Library
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 3358
@@ -113787,7 +113433,7 @@ entities:
 
         Congratulations on being positioned to a Spire Forward Operating Base. Please make productive use of your time.
 
-        This document will detail everything that is needed to know about your security department. 
+        This document will detail everything that is needed to know about your security department.
 
 
         Head of Security Office
@@ -113835,7 +113481,7 @@ entities:
 
          ││├3 Laser Carbines model 77
 
-         ││└2 Disabler model 1984 
+         ││└2 Disabler model 1984
 
          │├Armor
 
@@ -113847,7 +113493,7 @@ entities:
 
          │├Auxiliary items
 
-         ││├Tracking implant box of eight 
+         ││├Tracking implant box of eight
 
          ││├4 Flashbangs contained in a box
 
@@ -113903,7 +113549,7 @@ entities:
 
         Congratulations on being positioned to a Spire Forward Operating Base. Please make productive use of your time.
 
-        This document will detail everything that is needed to know about your security department. 
+        This document will detail everything that is needed to know about your security department.
 
 
         Head of Security Office
@@ -113951,7 +113597,7 @@ entities:
 
          ││├3 Laser Carbines model 77
 
-         ││└2 Disabler model 1984 
+         ││└2 Disabler model 1984
 
          │├Armor
 
@@ -113963,7 +113609,7 @@ entities:
 
          │├Auxiliary items
 
-         ││├Tracking implant box of eight 
+         ││├Tracking implant box of eight
 
          ││├4 Flashbangs contained in a box
 
@@ -130067,6 +129713,11 @@ entities:
       parent: 2
 - proto: SuitStorageEngi
   entities:
+  - uid: 970
+    components:
+    - type: Transform
+      pos: -68.5,-9.5
+      parent: 2
   - uid: 4256
     components:
     - type: Transform
@@ -135352,33 +135003,6 @@ entities:
     components:
     - type: Transform
       pos: -46.5,-27.5
-      parent: 2
-- proto: ToiletDirtyWater
-  entities:
-  - uid: 7090
-    components:
-    - type: Transform
-      pos: -15.5,-51.5
-      parent: 2
-  - uid: 9472
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -62.5,24.5
-      parent: 2
-    - type: DisposalUnit
-      recentlyEjected:
-      - invalid
-  - uid: 9473
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -60.5,24.5
-      parent: 2
-  - uid: 10630
-    components:
-    - type: Transform
-      pos: -64.5,25.5
       parent: 2
 - proto: ToiletGoldenDirtyWater
   entities:
