@@ -15471,6 +15471,8 @@ entities:
       parent: 2
     - type: NavMapBeacon
       text: Air Tunnel
+    - type: WarpPoint
+      location: Air Tunnel
   - uid: 7740
     components:
     - type: Transform
@@ -15478,6 +15480,8 @@ entities:
       parent: 2
     - type: NavMapBeacon
       text: AI Foyer
+    - type: WarpPoint
+      location: AI Foyer
 - proto: DefaultStationBeaconAICore
   entities:
   - uid: 7738
@@ -15543,6 +15547,8 @@ entities:
       parent: 2
     - type: NavMapBeacon
       text: Nightclub
+    - type: WarpPoint
+      location: Nightclub
 - proto: DefaultStationBeaconBotany
   entities:
   - uid: 7750
@@ -15746,6 +15752,8 @@ entities:
       parent: 2
     - type: NavMapBeacon
       text: Solars North
+    - type: WarpPoint
+      location: Solars North
   - uid: 7742
     components:
     - type: Transform
@@ -15753,6 +15761,8 @@ entities:
       parent: 2
     - type: NavMapBeacon
       text: Solars South
+    - type: WarpPoint
+      location: Solars South
 - proto: DefaultStationBeaconTechVault
   entities:
   - uid: 7777
@@ -44019,6 +44029,13 @@ entities:
       parent: 2
     - type: PointLight
       color: '#FF3300FF'
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: HardBomb  # normally Default and max 5 total 60
+      maxIntensity: 10 # about a ~67.5 total damage
+      totalIntensity: 30 # about a ~3 tile radius
+      canCreateVacuum: false
+    - type: TriggerOnSignal
 - proto: TelecomServerCircuitboard
   entities:
   - uid: 2173
