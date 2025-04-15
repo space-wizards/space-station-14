@@ -20,7 +20,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
     private const float ScaleModifier = 4f;
 
     private readonly float[] _layerFraction = { 0.5f, 0.75f, 0.25f };
-    private readonly float _lineThickness = 0.05f;
+    private const float LineThickness = 0.05f;
 
     private readonly Color _basePipeNetColor = Color.LightGray;
     private readonly Color _unfocusedPipeNetColor = Color.DimGray;
@@ -99,23 +99,23 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
             foreach (var chunkedLine in atmosPipeNetwork)
             {
                 var leftTop = ScalePosition(new Vector2
-                    (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - _lineThickness,
-                    Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - _lineThickness)
+                    (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - LineThickness,
+                    Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - LineThickness)
                     - offset);
 
                 var rightTop = ScalePosition(new Vector2
-                    (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + _lineThickness,
-                    Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - _lineThickness)
+                    (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + LineThickness,
+                    Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - LineThickness)
                     - offset);
 
                 var leftBottom = ScalePosition(new Vector2
-                    (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - _lineThickness,
-                    Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + _lineThickness)
+                    (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - LineThickness,
+                    Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + LineThickness)
                     - offset);
 
                 var rightBottom = ScalePosition(new Vector2
-                    (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + _lineThickness,
-                    Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + _lineThickness)
+                    (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + LineThickness,
+                    Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + LineThickness)
                     - offset);
 
                 if (!pipeVertexUVs.TryGetValue(chunkedLine.Color, out var pipeVertexUV))

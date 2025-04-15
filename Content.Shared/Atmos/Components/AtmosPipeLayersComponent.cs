@@ -26,7 +26,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// Only pipes on the same layer can connect with each other.
     /// </summary>
     [DataField("pipeLayer"), AutoNetworkedField]
-    public byte CurrentPipeLayer = 0;
+    public byte CurrentPipeLayer;
 
     /// <summary>
     /// The RSI path that the entity sprite will use for each pipe layer.
@@ -37,7 +37,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// (from 0 to <see cref="NumberOfPipeLayers"/> - 1).
     /// </remarks>
     [DataField]
-    public string[]? SpriteRsiPaths = null;
+    public string[]? SpriteRsiPaths;
 
     /// <summary>
     /// A dictionary of entity sprite layers that have their
@@ -54,7 +54,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// The pipe layers of this entity cannot be changed when this value is true. 
     /// </summary>
     [DataField]
-    public bool PipeLayersLocked = false;
+    public bool PipeLayersLocked;
 
     /// <summary>
     /// Tool quality required to cause a pipe to change layers

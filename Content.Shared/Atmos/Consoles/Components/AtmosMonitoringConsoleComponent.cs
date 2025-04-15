@@ -117,8 +117,13 @@ public struct AtmosDeviceNavMapData
     /// <summary>
     /// Populate the atmos monitoring console nav map with a single entity
     /// </summary>
-    public AtmosDeviceNavMapData
-        (NetEntity netEntity, NetCoordinates netCoordinates, int netId, ProtoId<NavMapBlipPrototype> navMapBlip, Direction direction, Color pipeColor, byte pipeLayer)
+    public AtmosDeviceNavMapData(NetEntity netEntity,
+        NetCoordinates netCoordinates,
+        int netId,
+        ProtoId<NavMapBlipPrototype> navMapBlip,
+        Direction direction,
+        Color pipeColor,
+        byte pipeLayer)
     {
         NetEntity = netEntity;
         NetCoordinates = netCoordinates;
