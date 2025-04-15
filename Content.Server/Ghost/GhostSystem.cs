@@ -72,6 +72,8 @@ namespace Content.Server.Ghost
         private EntityQuery<GhostComponent> _ghostQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
 
+        private static readonly ProtoId<TagPrototype> AllowGhostShownByEventTag = "AllowGhostShownByEvent";
+
         public override void Initialize()
         {
             base.Initialize();
@@ -403,7 +405,7 @@ namespace Content.Server.Ghost
             var entityQuery = EntityQueryEnumerator<GhostComponent, VisibilityComponent>();
             while (entityQuery.MoveNext(out var uid, out var _, out var vis))
             {
-                if (!_tag.HasTag(uid, "AllowGhostShownByEvent"))
+                if (!_tag.HasTag(uid, AllowGhostShownByEventTag))
                     continue;
 
                 if (visible)
@@ -440,7 +442,7 @@ namespace Content.Server.Ghost
             if (spawnPosition?.IsValid(EntityManager) != true)
                 return false;
 
-            var mapUid = spawnPosition?.GetMapUid(EntityManager);
+            var mapUid = _transformSystem.GetMap(spawnPosition.Value);
             var gridUid = spawnPosition?.EntityId;
             // Test if the map is being deleted
             if (mapUid == null || TerminatingOrDeleted(mapUid.Value))
