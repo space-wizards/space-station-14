@@ -206,7 +206,7 @@
     sprite: _DeadSpace/Objects/Consumable/Food/mega-sandwich.rsi
     state: icon
   - type: SliceableFood
-    count: 12
+    count: 4
     slice: FoodMegaSandwichSlice
   - type: Tag
     tags:
