@@ -384,15 +384,6 @@ namespace Content.Server.Preferences.Managers
             }), prefs.SelectedCharacterIndex, prefs.AdminOOCColor, priorities);
         }
 
-        public IEnumerable<KeyValuePair<NetUserId, ICharacterProfile>> GetSelectedProfilesForPlayers(
-            List<NetUserId> usernames)
-        {
-            return usernames
-                .Select(p => (_cachedPlayerPrefs[p].Prefs, p))
-                .Where(p => p.Prefs != null)
-                .Select(p => new KeyValuePair<NetUserId, ICharacterProfile>(p.p, p.Prefs!.SelectedCharacter));
-        }
-
         internal static bool ShouldStorePrefs(LoginType loginType)
         {
             return loginType.HasStaticUserId();

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -128,7 +129,7 @@ namespace Content.Shared.Preferences
             return pool.Count == 0 ? null : random.Pick(pool);
         }
 
-        public bool TryGetHumanoidInSlot(int slot, out HumanoidCharacterProfile? humanoid)
+        public bool TryGetHumanoidInSlot(int slot, [NotNullWhen(true)] out HumanoidCharacterProfile? humanoid)
         {
             humanoid = null;
             if (!Characters.TryGetValue(slot, out var profile))

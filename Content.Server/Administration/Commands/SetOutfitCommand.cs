@@ -91,10 +91,6 @@ namespace Content.Server.Administration.Commands
             if (entityManager.TryGetComponent(target, out ActorComponent? actorComponent))
             {
                 session = actorComponent.PlayerSession;
-                var userId = actorComponent.PlayerSession.UserId;
-                var preferencesManager = IoCManager.Resolve<IServerPreferencesManager>();
-                var prefs = preferencesManager.GetPreferences(userId);
-                profile = prefs.SelectedCharacter as HumanoidCharacterProfile;
             }
 
             var invSystem = entityManager.System<InventorySystem>();
