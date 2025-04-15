@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Client.Guidebook.Controls;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -66,6 +68,78 @@ public static class ControlExtension
         }
 
         return controlList;
+    }
+
+    public static (List<IPrototypeRepresentationControl>, List<IPrototypeLinkControl>) GetLinkableControlsAndLinks(this Control parent)
+    {
+        List<IPrototypeRepresentationControl> linkableList = new();
+        List<IPrototypeLinkControl> linkList = new();
+
+        foreach (var child in parent.Children)
+        {
+            var hasChildren = child.ChildCount > 0;
+
+            if (child is IPrototypeLinkControl linkChild)
+                linkList.Add(linkChild);
+            else if (child is IPrototypeRepresentationControl linkableChild)
+                linkableList.Add(linkableChild);
+
+            if (!hasChildren)
+                continue;
+
+            var (childLinkableList, childLinkList) = child.GetLinkableControlsAndLinks();
+
+            linkableList.AddRange(childLinkableList);
+            linkList.AddRange(childLinkList);
+        }
+
+        return (linkableList, linkList);
+    }
+
+    /// <summary>
+    /// Search the control’s tree for a parent node of type T
+    /// E.g. to find the control implementing some event handling interface.
+    /// </summary>
+    public static bool TryGetParentHandler<T>(this Control child, [NotNullWhen(true)] out T? result)
+    {
+        for (var control = child; control is not null; control = control.Parent)
+        {
+            if (control is not T handler)
+                continue;
+
+            result = handler;
+            return true;
+        }
+
+        result = default;
+        return false;
+    }
+
+    /// <summary>
+    /// Find the control’s offset relative to its closest ScrollContainer
+    /// Returns null if the control is not in the tree or not visible.
+    /// </summary>
+    public static Vector2? GetControlScrollPosition(this Control child)
+    {
+        if (!child.VisibleInTree)
+            return null;
+
+        var position = new Vector2();
+        var control = child;
+
+        while (control is not null)
+        {
+            // The scroll container's direct child is re-positioned while scrolling,
+            // so we need to ignore its position.
+            if (control.Parent is ScrollContainer)
+                break;
+
+            position += control.Position;
+
+            control = control.Parent;
+        }
+
+        return position;
     }
 
     public static bool ChildrenContainText(this Control parent, string search)
