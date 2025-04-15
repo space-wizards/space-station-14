@@ -41,22 +41,22 @@
       price: 20
 
 - type: entity
+  parent: [BaseItem, BaseSecurityEngineeringContraband]
   id: CartridgeRocketSingularityBuster
   name: rocket-propelled anti-singularity grenade
-  parent: [BaseItem, BaseSecurityEngineeringContraband]
   description: A warhead containing a large amount of anti-particles. Upon hitting a singularity, the anti-particles are released, decomposing the singularity. Warrenty void if rocket hits anything beside a singularity or tesla.
   components:
-  - type: Tag
-    tags:
-    - CartridgeRocket
-  - type: Item
-    size: Small
   - type: CartridgeAmmo
     proto: BulletSingularityBusterRocket
     deleteOnSpawn: true
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     state: buster
+  - type: Item
+    size: Small
+  - type: Tag
+    tags:
+    - CartridgeRocket
   - type: StaticPrice
     price: 20
 

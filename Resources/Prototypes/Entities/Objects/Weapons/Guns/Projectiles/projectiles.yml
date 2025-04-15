@@ -721,16 +721,17 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 200
+    totalIntensity: 300
     intensitySlope: 6
-    maxIntensity: 40 # same as regular rocket
+    maxIntensity: 50
     maxTileBreak: 1
   - type: PointLight
     radius: 3.5
     color: orange
     energy: 0.5
   - type: SinguloFood
-    energy: -500
+    energy: -200
+    energyFactor: 0.1
 
 - type: entity
   id: BulletGrenadeBaton

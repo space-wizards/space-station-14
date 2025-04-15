@@ -98,7 +98,13 @@
             "name": "shard"
         },
         {
-            "name": "buster"
+            "name": "buster",
+            "delays": [
+                [
+                    0.05,
+                    0.05
+                ]
+            ]
         }
     ]
 }
