@@ -372,6 +372,10 @@
         reagents:
         - ReagentId: Rororium
           Quantity: 5
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
   - type: Item
     size: Normal
   - type: Perishable
