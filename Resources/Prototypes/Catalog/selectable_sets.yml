@@ -173,6 +173,7 @@
   - Emag # 5 TC
   - CameraBug # 4 TC
   - ToolboxSyndicateFilled # 2 TC
+  - ClothingEyesGlassesOutlaw
   - EncryptionKeyBinarySyndicate # 1 TC
   - EncryptionKeySyndie # 1 TC
 
@@ -187,6 +188,7 @@
   - EnergySwordDouble # 21 TC-ish, why not
   - StimkitFilled # 12 TC
   - DrinkSpaceGlue
+  - ClothingNeckCloakVoid
   - EncryptionKeySyndie # 1 TC
 
 - type: selectableSet

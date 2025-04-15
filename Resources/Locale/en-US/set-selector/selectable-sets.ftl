@@ -80,7 +80,7 @@ selectable-set-syndicate-desword-name = Dark Lord Bundle
 selectable-set-syndicate-desword-description =
     Turn your anger into hate and your hate into suffering with this lightsaber.
     Contains: double-bladed energy sword, hyperzine microinjector kit,
-    a tube of glue, some fancy dress and a syndicate encryption key.
+    a tube of glue, a fancy cloak and a syndicate encryption key.
 
 selectable-set-syndicate-grenadier-name = Grenadier Bundle
 selectable-set-syndicate-grenadier-description =
