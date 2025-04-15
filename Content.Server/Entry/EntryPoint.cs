@@ -14,8 +14,6 @@ using Content.Server.Info;
 using Content.Server.IoC;
 using Content.Server.Maps;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.Objectives;
-using Content.Server.Players;
 using Content.Server.Players.JobWhitelist;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Players.RateLimiting;
@@ -32,7 +30,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Entry
@@ -41,8 +38,6 @@ namespace Content.Server.Entry
     {
         internal const string ConfigPresetsDir = "/ConfigPresets/";
         private const string ConfigPresetsDirBuild = $"{ConfigPresetsDir}Build/";
-
-        [Dependency] private readonly ToolshedManager _toolshed = default!;
 
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
@@ -137,7 +132,6 @@ namespace Content.Server.Entry
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             var resourceManager = IoCManager.Resolve<IResourceManager>();
             var dest = configManager.GetCVar(CCVars.DestinationFile);
-            _toolshed.Startup(snakeCase: true);
 
             if (!string.IsNullOrEmpty(dest))
             {

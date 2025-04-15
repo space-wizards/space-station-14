@@ -12,6 +12,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Sequence;
 using Robust.Shared.Serialization.Markdown.Value;
+using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Entry
@@ -21,6 +22,7 @@ namespace Content.Shared.Entry
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IResourceManager _resMan = default!;
+        [Dependency] private readonly ToolshedManager _toolshed = default!;
 
         private readonly ResPath _ignoreFileDirectory = new("/IgnoredPrototypes/");
 
@@ -44,6 +46,7 @@ namespace Content.Shared.Entry
         {
             base.PostInit();
 
+            _toolshed.Startup(snakeCase: true);
             InitTileDefinitions();
             IoCManager.Resolve<MarkingManager>().Initialize();
 
