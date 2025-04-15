@@ -1,5 +1,7 @@
+using Content.Server.Popups;
 using Content.Server.Xenoarchaeology.Artifact;
 using Content.Shared.EntityEffects;
+using Content.Shared.Popups;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -13,6 +15,7 @@ public sealed partial class ArtifactUnlock : EntityEffect
     {
         var entMan = args.EntityManager;
         var xenoArtifactSys = args.EntityManager.System<XenoArtifactSystem>();
+        var popupSys = args.EntityManager.System<PopupSystem>();
 
         if (!entMan.TryGetComponent<XenoArtifactComponent>(args.TargetEntity, out var xenoArtifact))
             return;
@@ -22,6 +25,13 @@ public sealed partial class ArtifactUnlock : EntityEffect
             xenoArtifactSys.TriggerXenoArtifact((args.TargetEntity, xenoArtifact), null, force: true);
             unlocking = entMan.EnsureComponent<XenoArtifactUnlockingComponent>(args.TargetEntity);
         }
+        else if (!unlocking.ArtifexiumApplied)
+        {
+            popupSys.PopupEntity(Loc.GetString("artifact-activation-artifexium"), args.TargetEntity, PopupType.Medium);
+        }
+
+        if (unlocking.ArtifexiumApplied)
+            return;
 
         xenoArtifactSys.SetArtifexiumApplied((args.TargetEntity, unlocking), true);
     }
