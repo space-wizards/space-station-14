@@ -11,7 +11,7 @@
         </controls:StripeBack>
         <BoxContainer Orientation="Horizontal">
             <Label Name="NoActiveNodeDataLabel" Text="{Loc 'node-scan-no-data'}" Margin="45 25 0 0" MinHeight="47" />
-            <GridContainer Name="ActiveNodesList" Columns="4" Rows="2" Visible="True" MinHeight="47" />
+            <GridContainer Name="ActiveNodesList" Columns="4" Rows="2" Visible="True" MinHeight="72" />
         </BoxContainer>
         <controls:StripeBack>
             <Label Name="ArtifactStateLabel" HorizontalAlignment="Center" StyleClasses="LabelSubText" Margin="4 0 0 4" />
