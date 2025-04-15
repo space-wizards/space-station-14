@@ -31,6 +31,7 @@
     inherentRadioChannels:
     - Common
     - Binary
+    - AIlistening
 
 - type: entity
   id: BorgChassisGeneric

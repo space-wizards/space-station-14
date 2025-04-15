@@ -235,6 +235,7 @@
       - IntercomElectronics
       key_slots:
       - EncryptionKeyCommon
+      - EncryptionKeyBinary
 
 - type: entity
   id: IntercomCommand
@@ -249,6 +250,7 @@
       key_slots:
       - EncryptionKeyCommon
       - EncryptionKeyCommand
+      - EncryptionKeyBinary
 
 - type: entity
   id: IntercomEngineering
@@ -262,6 +264,7 @@
       key_slots:
       - EncryptionKeyCommon
       - EncryptionKeyEngineering
+      - EncryptionKeyBinary
 
 - type: entity
   id: IntercomMedical
@@ -275,6 +278,7 @@
       key_slots:
       - EncryptionKeyCommon
       - EncryptionKeyMedical
+      - EncryptionKeyBinary
 
 - type: entity
   id: IntercomScience
@@ -288,6 +292,7 @@
       key_slots:
       - EncryptionKeyCommon
       - EncryptionKeyScience
+      - EncryptionKeyBinary
 
 - type: entity
   id: IntercomSecurity
@@ -302,6 +307,7 @@
       key_slots:
       - EncryptionKeyCommon
       - EncryptionKeySecurity
+      - EncryptionKeyBinary
 
 - type: entity
   id: IntercomService
@@ -315,6 +321,7 @@
       key_slots:
       - EncryptionKeyCommon
       - EncryptionKeyService
+      - EncryptionKeyBinary
 
 - type: entity
   id: IntercomSupply
@@ -328,6 +335,7 @@
       key_slots:
       - EncryptionKeyCommon
       - EncryptionKeyCargo
+      - EncryptionKeyBinary
 
 - type: entity
   id: IntercomAll
@@ -341,6 +349,7 @@
       key_slots:
       - EncryptionKeyCommon
       - EncryptionKeyStationMaster
+      - EncryptionKeyBinary
 
 - type: entity
   id: IntercomFreelance

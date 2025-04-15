@@ -22,10 +22,12 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Binary
+    - AIlistening
   - type: ActiveRadio
     channels:
     - Binary
     - Common
+    - AIlistening
   - type: NameIdentifier
     group: MMI
   - type: DoAfter
@@ -103,10 +105,12 @@
     - type: IntrinsicRadioTransmitter
       channels:
       - Binary
+      - AIlistening
     - type: ActiveRadio
       channels:
       - Binary
       - Common
+      - AIlistening
     - type: NameIdentifier
       group: PositronicBrain
     - type: DoAfter

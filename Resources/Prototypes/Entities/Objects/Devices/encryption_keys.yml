@@ -223,6 +223,7 @@
   - type: EncryptionKey
     channels:
     - Binary
+    - AIlistening
     defaultChannel: Binary
   - type: Sprite
     layers:
@@ -238,6 +239,7 @@
   - type: EncryptionKey
     channels:
     - Binary
+    - AIlistening
     defaultChannel: Binary
   - type: Sprite
     layers:
