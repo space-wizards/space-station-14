@@ -48,11 +48,6 @@ namespace Content.Server.Entry
         private IWatchlistWebhookManager _watchlistWebhookManager = default!;
         private IConnectionManager? _connectionManager;
 
-        public override void PreInit()
-        {
-            IoCManager.InjectDependencies(this);
-        }
-
         /// <inheritdoc />
         public override void Init()
         {
@@ -132,10 +127,8 @@ namespace Content.Server.Entry
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             var resourceManager = IoCManager.Resolve<IResourceManager>();
             var dest = configManager.GetCVar(CCVars.DestinationFile);
-
             if (!string.IsNullOrEmpty(dest))
             {
-                // Why is this part of the "base sever" initialization logic
                 var resPath = new ResPath(dest).ToRootedPath();
                 var file = resourceManager.UserData.OpenWriteText(resPath.WithName("chem_" + dest));
                 ChemistryJsonGenerator.PublishJson(file);
