@@ -182,22 +182,21 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     /// </summary>
     private void RefreshLobbyPreview()
     {
-        if (PreviewPanel == null)
-            return;
+        PreviewPanel?.Refresh();
 
-        // Get selected character, load it, then set it
-        var character = _preferencesManager.Preferences?.SelectedCharacter;
-
-        if (character is not HumanoidCharacterProfile humanoid)
-        {
-            PreviewPanel.SetSprite(EntityUid.Invalid);
-            PreviewPanel.SetSummaryText(string.Empty);
-            return;
-        }
-
-        var dummy = LoadProfileEntity(humanoid, null, true);
-        PreviewPanel.SetSprite(dummy);
-        PreviewPanel.SetSummaryText(humanoid.Summary);
+        // // Get selected character, load it, then set it
+        // var character = _preferencesManager.Preferences?.SelectedCharacter;
+        //
+        // if (character is not HumanoidCharacterProfile humanoid)
+        // {
+        //     PreviewPanel.SetSprite(EntityUid.Invalid);
+        //     PreviewPanel.SetSummaryText(string.Empty);
+        //     return;
+        // }
+        //
+        // var dummy = LoadProfileEntity(humanoid, null, true);
+        // PreviewPanel.SetSprite(dummy);
+        // PreviewPanel.SetSummaryText(humanoid.Summary);
     }
 
     private void RefreshProfileEditor()
@@ -355,21 +354,6 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     }
 
     #region Helpers
-
-    /// <summary>
-    /// Applies the highest priority job's clothes to the dummy.
-    /// </summary>
-    public void GiveDummyJobClothesLoadout(EntityUid dummy, JobPrototype? jobProto, HumanoidCharacterProfile profile)
-    {
-        var job = jobProto ?? GetPreferredJob(profile);
-        GiveDummyJobClothes(dummy, profile, job);
-
-        if (_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
-        {
-            var loadout = profile.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), _playerManager.LocalSession, profile.Species, EntityManager, _prototypeManager);
-            GiveDummyLoadout(dummy, loadout);
-        }
-    }
 
     /// <summary>
     /// Gets the highest priority job for the profile.
