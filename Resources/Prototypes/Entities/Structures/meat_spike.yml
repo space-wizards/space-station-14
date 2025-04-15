@@ -1,5 +1,4 @@
-﻿# Yummers
-- type: entity
+﻿- type: entity
   id: KitchenSpikeAssembly
   parent: BaseMachine
   name: meat spike assembly
@@ -43,7 +42,6 @@
     layers:
     - state: spike
       map: ["base"]
-
 
 - type: entity
   id: KitchenSpike
