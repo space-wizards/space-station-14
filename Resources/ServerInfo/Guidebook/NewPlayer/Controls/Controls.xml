@@ -1,105 +1,106 @@
 <Document>
-# Controls
+  # Controls
 
-<Box>You can change your keybinds at any time here:</Box>
-<Box Orientation="Vertical"><CommandButton Text="ui-options-tab-controls" Command="options 2"/></Box>
+  <Box>You can change your keybinds at any time here:</Box>
+  <Box Orientation="Vertical"><CommandButton Text="ui-options-tab-controls" Command="options 2"/></Box>
 
-## Movement
-To move your character around, use [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][keybind="MoveDown"][keybind="MoveRight"][/bold][/color].
+  ## Movement
+  To move your character around, use [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][keybind="MoveDown"][keybind="MoveRight"][/bold][/color].
 
-If you run onto slippery objects (like soap or banana peels) or liquids spilt on the ground, your character will [color=cyan]slip[/color] and become momentarily stunned.
-Different hazards have different slip thresholds.
-If you're moving slower than the threshold, you won't slip.
-\nHold [color=yellow][bold][keybind="Walk"][/bold][/color] to move slower and avoid slipping on everything except for [bold]space lube[/bold].
-\n[italic]Note: walking can be switched to a [color=cyan]toggle[/color] in the controls menu.[/italic]
+  Movement speed is affected by carried objects and afflictions, but you can also hold [color=yellow][bold][keybind="Walk"][/bold][/color] to [color=cyan]walk[/color] slower.
+  This helps you avoid [color=cyan]slipping[/color] and falling over when walking over hazards.
+  \n[italic]Note: walking can be switched to a [bolditalic]toggle[/bolditalic] in the controls menu.[/italic]
 
-Use [color=yellow][bold][keybind="TryPullObject"][/bold][/color] to start [color=cyan]pulling[/color] movable [bold]entities[/bold].
-(Entities consist of [bold]objects and mobs[/bold] (mobile entities), including players.)
-\nWhile pulling an entity, you can [color=cyan]push[/color] it to your cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
-This will prove useful for objects that are too heavy to carry.
-\nTo [color=cyan]let go[/color], press [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] or pull the same entity again.
+  If you find yourself in [color=#EB2D3A]zero gravity[/color], you'll still be able to control your movement as long as you're within reach of any structure.
+  But if you drift completely off station and into [color=#EB2D3A][bold]space[/bold][/color], you'll need to [bold]throw objects[/bold] in the opposite direction or [bold]spray a fire extinguisher[/bold] to propel yourself.
 
-If you find yourself in [color=#EB2D3A][bold]zero gravity[/bold][/color], you'll still be able to control your movement as long as you're within reach of any structure.
-But if you drift completely off station and into space, you'll need to [bold]throw objects[/bold] or [bold]spray a fire extinguisher[/bold] to propel yourself according to the laws of motion.
+  ## Pulling
+  Use [color=yellow][bold][keybind="TryPullObject"][/bold][/color] to start [color=cyan]pulling[/color] movable [bold]entities[/bold] — items, objects, and mobs such as players.
+  \nWhile pulling an entity, you can [color=cyan]push[/color] it to your cursor with [color=yellow][bold][keybind="MovePulledObject"][/bold][/color].
+  This will prove useful for objects that are too heavy to carry.
+  \nTo [color=cyan]release[/color], press [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color] or pull the same entity again.
 
-## Hands
-Your character’s hands are represented by [bold]hand slots[/bold], which are centered along the bottom of the screen.
-One of your hands is always the [color=cyan]active hand[/cyan].
-\n[color=cyan]Pick up[/color] items into your active, empty hand with [color=yellow][bold][keybind="Use"][/bold][/color].
-\n[color=cyan]Swap[/color] between hands with [color=yellow][bold][keybind="SwapHands"][/bold][/color] to control which one is active.
-\nPay attention to the active hand when interacting with the world to prevent accidents.
+  ## Hands
+  Your character’s hands are represented by [bold]hand slots[/bold], which are centered along the bottom of the screen.
+  One of your hands is always the [color=cyan]active hand[/color].
+  \n[color=cyan]Take[/color] items into your active, empty hand with [color=yellow][bold][keybind="Use"][/bold][/color].
+  \n[color=cyan]Swap[/color] between hands with [color=yellow][bold][keybind="SwapHands"][/bold][/color] to control which one is active.
+  \n[italic]Tip: pay attention to your active hand when interacting with the world to prevent accidents.[/italic]
 
-Use [color=yellow][bold][keybind="Drop"][/bold][/color] to [color=cyan]drop[/color] (or place) an item from your hand within arm's reach.
-\n[color=cyan]Throw[/color] items to your cursor with [color=yellow][bold][keybind="ThrowItemInHand"][/bold][/color].
-\n[italic]Note: you can also use [color=yellow][bolditalic][keybind="Drop"][/bolditalic][/color] to stop pulling entities.[/italic]
+  Use [color=yellow][bold][keybind="Drop"][/bold][/color] to [color=cyan]drop[/color] (or place) an item from your hand within arm's reach.
+  \n[color=cyan]Throw[/color] items to your cursor with [color=yellow][bold][keybind="ThrowItemInHand"][/bold][/color].
+  \n[italic]Note: you can also use [color=yellow][keybind="Drop"][/color] to release pulled entities.[/italic]
 
-## Inventory
-Positioned around the hand slots, you’ll find the [color=cyan]inventory bar[/color], which contains all the icons related to your equipment and storage.
-It includes the [bold]clothing inventory[/bold] icon in the left corner, followed by slots for your [bold]PDA[/bold], [bold]belt[/bold], and the [bold]back[/bold] slot (for bags, guns, etc.).
-On the right side, you'll find your [bold]pockets[/bold], useful for storing items for quick use, and the special [bold]suit storage slot[/bold], used only when wearing a space suit, hardsuit or armor, which can store items like oxygen tanks or guns.
-\n[italic]Note: this may slightly vary for nonhumanoid races.[/italic]
+  ## Inventory
+  Positioned around the hand slots, you’ll find the [color=cyan]inventory bar[/color], which contains all the icons related to your equipment and storage.
+  It includes the [bold]clothing inventory[/bold] icon in the left corner, followed by slots for your [bold]PDA[/bold], [bold]belt[/bold], and the [bold]back[/bold] slot (for bags, guns, etc.)
+  On the right side, you'll find your [bold]pockets[/bold], useful for storing items for quick use, and the special [bold]suit storage slot[/bold], used only when wearing a space suit, hardsuit or armor, which can store items like oxygen tanks or guns.
+  \n[italic]Note: this may slightly vary for nonhumanoid races.[/italic]
 
-The [color=cyan]clothing inventory[/color] (press [color=yellow][bold][keybind="OpenInventoryMenu"][/bold][/color] or click the icon) has slots for eyes, head, neck, face, ears, body, external, hands, and shoes.
+  The [color=cyan]clothing inventory[/color], opened with [color=yellow][bold][keybind="OpenInventoryMenu"][/bold][/color] or by clicking on the icon, has slots for eyes, head, neck, face, ears, body, external, hands, and shoes.
 
-To [color=cyan]wear[/color] a piece of clothing, have it in your active hand, then press [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] or click on it.
-\nSimilarly, [color=cyan]unequip[/color] items by clicking on them, and equip by clicking the appropriate slot.
+  To [color=cyan]wear[/color] a piece of clothing, have it in your active hand, then press [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] or click on it.
+  \nSimilarly, [color=cyan]unequip[/color] items by clicking on them, and equip by clicking the appropriate slot.
 
-Open your bag and belt by using [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] on their slots or by clicking the mini-icons in the [bold]bottom right[/bold] of their icons.
-To access them quickly, use the hotkeys [color=yellow][bold][keybind="OpenBackpack"][/bold][/color] and [color=yellow][bold][keybind="OpenBelt"][/bold][/color], respectively.
-\n[italic]Tip: you can sacrifice your bag to use the back slot for storing guns and other items that would normally fit in the suit storage slot.[/italic]
+    To [color=cyan]halve[/color] a stack of items, use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
 
-[color=yellow][bold][keybind="SmartEquipBackpack"][/bold][/color] stores the item from your active hand into your bag, or if your hand is empty, takes the most recently added item from the bag into your hand.
-\n[color=yellow][bold][keybind="SmartEquipBelt"][/bold][/color] does the same for your belt, making tool access faster.
-\n[italic]Tip: if you're using the back slot for storing single items, [color=yellow][bolditalic][keybind="SmartEquipBackpack"][/bolditalic][/color] also allows quick access to them.[/italic]
+  ## Interactions
+  The game features [bold]five[/bold] main types of context-sensitive interactions, accessible through different methods.
 
-You can organize grid inventories (containers such as bags and belts) by [color=cyan]dragging[/color] items from one spot to another [bold]within the same container[/bold] by holding [color=yellow][bold][keybind="MoveStoredItem"][/bold][/color], and [color=cyan]rotate[/color] them on the grid with [color=yellow][bold][keybind="RotateStoredItem"][/bold][/color].
-Clicking [color=yellow][bold][keybind="MoveStoredItem"][/bold][/color] on an item in a container will just [color=cyan]take it out[/color].
+  Clicking [color=yellow][bold][keybind="Use"][/bold][/color] performs standard interactions.
+  They heavily depend on the item you're holding and what you click on.
 
-To [color=cyan]halve[/color] a stack of items, use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
+  Some items have [color=cyan]alternative interactions[/color] — use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] to lock lockers, eject sub-items such as batteries from other items, etc.
 
-## Interactions
-The game features [bold]five[/bold] main types of context-sensitive interactions, accessible through different methods.
+  Interact with objects such as containers even when your hands are full by performing [color=cyan]activation interactions[/color] with [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
+  This allows you to for example [bold]open containers[/bold] without picking them up, [bold]open doors[/bold] without using the item you're holding, and [bold]reload guns[/bold].
 
-Clicking [color=yellow][bold][keybind="Use"][/bold][/color] performs standard interactions.
-They heavily depend on the item you're holding and what you click on.
+  You can also perform regular interactions with items stored in an inventory.
 
-Some items have [color=cyan]alternative interactions[/color] — use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] to lock lockers, eject sub-items such as batteries from other items, etc.
+  Many items also have [color=cyan]standard use-in-hand interactions[/color], such as opening bottles, or wielding two-handed guns and big melee weapons with both hands (clubs, spears, axes, mops, shotguns, etc.)
+  \nTo activate or use a held item, press the [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] hotkey (or click [color=yellow][bold][keybind="Use"][/bold][/color] on it).
+  \nFor [color=cyan]alternative use-in-hand interactions[/color], use the [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] hotkey (or click [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] on it).
 
-Interact with objects such as containers even when your hands are full by performing [color=cyan]activation interactions[/color] with [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color].
-This allows you to for example [bold]open containers[/bold] without picking them up, [bold]open doors[/bold] without using the item you're holding, and [bold]reload guns[/bold].
+  In conclusion, all the main interactions are: [bolditalic]standard[/bolditalic] (click), [italic]alternative[/italic] (alt+click), [bold]activation[/bold] (use), [bolditalic]use-in-hand[/bolditalic] (click), and [italic]alternative use-in-hand[/italic] (alt+click).
+  Don't worry about having to memorize them — they're usually intuitive and consistent across entity categories, and most entities support far fewer than five.
 
-You can also perform regular interactions with items stored in an inventory.
+  ## Advanced Interactions
+  Open your bag and belt by using [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] on their slots or by clicking the mini-icons in the [bold]bottom right[/bold] of their icons.
+  To access them quickly, use the hotkeys [color=yellow][bold][keybind="OpenBackpack"][/bold][/color] and [color=yellow][bold][keybind="OpenBelt"][/bold][/color], respectively.
+  \n[italic]Tip: you can sacrifice your bag to use the back slot for storing guns and other items that would normally fit in the suit storage slot.[/italic]
 
-Many items also have [color=cyan]standard use-in-hand interactions[/color], such as opening bottles, or wielding two-handed guns and big melee weapons with both hands (clubs, spears, axes, mops, shotguns, etc.)
-\nTo activate or use a held item, press the [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] hotkey (or click [color=yellow][bold][keybind="Use"][/bold][/color] on it).
-\nFor [color=cyan]alternative use-in-hand interactions[/color], use the [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] hotkey (or click [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] on it).
+  [color=yellow][bold][keybind="SmartEquipBackpack"][/bold][/color] quick-swaps items: it stores the item from your active hand into your bag, or if your hand is empty, takes the most recently added item from the bag into your hand.
+  \n[color=yellow][bold][keybind="SmartEquipBelt"][/bold][/color] does the same for your belt, making tool access faster.
+  \n[italic]Tip: if you're using the back slot for storing a single item, [color=yellow][bolditalic][keybind="SmartEquipBackpack"][/bolditalic][/color] also allows quick access to it.[/italic]
 
-In conclusion, all the main interactions are: [bolditalic]standard[/bolditalic] (click), [italic]alternative[/italic] (alt+click), [bold]activation[/bold] (use), [bolditalic]use-in-hand[/bolditalic] (click), and [italic]alternative use-in-hand[/italic] (alt+click).
-Don't worry about having to memorize them — they're usually intuitive and consistent across entity categories, and most entities support far fewer than five.
+  Clicking [color=yellow][bold][keybind="SaveItemLocation"][/bold][/color] saves an item's position in a container, making sure that it always goes back to that saved position when stored.
 
-## Menus
-Click [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on any interactive entity to open the [color=cyan]context menu[/color], which (most of time time) shows you every possible interaction you can currently perform, including the [bolditalic]Standard Interaction[/bolditalic], [bold]Activation Interaction[/bold], and [italic]Alternative Interaction[/italic], usually formatted like that.
-If you use it on a pile of items, you'll open the [color=cyan]entity menu[/color], listing the overlapping entities you can interact with.
+  You can organize grid inventories (containers such as bags and belts) by [color=cyan]dragging[/color] items from one spot to another [bold]within the same container[/bold] by holding [color=yellow][bold][keybind="MoveStoredItem"][/bold][/color], and [color=cyan]rotate[/color] them on the grid with [color=yellow][bold][keybind="RotateStoredItem"][/bold][/color].
+  Clicking [color=yellow][bold][keybind="MoveStoredItem"][/bold][/color] on an item in a container will just [color=cyan]take it out[/color].
 
-If you're ever unsure about any entity, whether it's an object or a mob, [color=cyan]examine[/color] it with [color=yellow][bold][keybind="ExamineEntity"][/bold][/color].
-You can also examine items in the entity menu.
-This action opens a window displaying the entity's name, a brief description, relevant details, and sometimes a question mark icon that links to the guidebook.
+  ## Menus
+  Click [color=yellow][bold][keybind="UIRightClick"/][/bold][/color] on any interactive entity to open the [color=cyan]context menu[/color], which (most of time time) shows you every possible interaction you can currently perform, including the [bolditalic]Standard Interaction[/bolditalic], [bold]Activation Interaction[/bold], and [italic]Alternative Interaction[/italic], usually formatted like that.
+  If you use it on a pile of items, you'll open the [color=cyan]entity menu[/color], listing the overlapping entities you can interact with.
 
-## Drag and drop
-The action of "using" mobs on entities incorporates a unique type of interaction: [bold]holding down[/bold] [color=yellow][bold][keybind="Use"][/bold][/color] and dragging a mob onto an object.
-(Not to be confused with [italic]pulling[/italic].)
+  If you're ever unsure about any entity, whether it's an object or a mob, [color=cyan]examine[/color] it with [color=yellow][bold][keybind="ExamineEntity"][/bold][/color].
+  You can also examine items in the entity menu.
+  This action opens a window displaying the entity's name, a brief description, relevant details, and sometimes a question mark icon that links to the guidebook.
 
-- Drag a mob onto a chair, a bed or objects like the medical scanner to place them onto it.
- 
-- Drag yourself onto a table to climb it (or use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] on it).
+  ## Drag and drop
+  The action of "using" mobs on entities incorporates a unique type of interaction: [bold]holding down[/bold] [color=yellow][bold][keybind="Use"][/bold][/color] and dragging a mob onto an object.
+  (Not to be confused with [italic]pulling[/italic].)
 
-- Drag another player onto yourself to open the [bold]strip menu[/bold], allowing you to view their equipment and optionally try to steal it (alternatively, use [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color]).
+  - Drag a mob onto a chair, a bed or objects like the medical scanner to place them onto it.
 
-For more details about controls, please refer to the [color=cyan]Wiki[/color].
+  - Drag yourself onto a table to climb it (or use [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color] on it).
 
-## Camera
-[color=cyan]Zoom[/color] the camera in and out with [color=yellow][bold][keybind="ZoomIn"][/bold][/color] and [color=yellow][bold][keybind="ZoomOut"][/bold][/color] and reset with [color=yellow][bold][keybind="ResetZoom"][/bold][/color].
-\n[color=cyan]Rotate[/color] it with [color=yellow][bold][keybind="CameraRotateLeft"][/bold][/color] and [color=yellow][bold][keybind="CameraRotateRight"][/bold][/color] and reset with [color=yellow][bold][keybind="CameraReset"][/bold][/color].
-\n[italic]Note: maps are generally designed to be played with default camera rotation.[/italic]
+  - Drag another player onto yourself to open the [bold]strip menu[/bold], allowing you to view their equipment and optionally try to steal it (alternatively, use [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color]).
+
+  For more details about controls, please refer to the [color=cyan]Wiki[/color].
+
+  ## Camera
+  [color=cyan]Zoom[/color] the camera in and out with [color=yellow][bold][keybind="ZoomIn"][/bold][/color] and [color=yellow][bold][keybind="ZoomOut"][/bold][/color] and reset with [color=yellow][bold][keybind="ResetZoom"][/bold][/color].
+  \n[color=cyan]Rotate[/color] it with [color=yellow][bold][keybind="CameraRotateLeft"][/bold][/color] and [color=yellow][bold][keybind="CameraRotateRight"][/bold][/color] and reset with [color=yellow][bold][keybind="CameraReset"][/bold][/color].
+  \n[italic]Note: maps are generally designed to be played with default camera rotation.[/italic]
 
 </Document>
