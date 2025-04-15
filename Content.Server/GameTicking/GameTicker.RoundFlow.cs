@@ -387,15 +387,6 @@ namespace Content.Server.GameTicking
 #endif
 
                 readyPlayers.Add(session);
-                HumanoidCharacterProfile profile;
-                if (_prefsManager.TryGetCachedPreferences(userId, out var preferences))
-                {
-                    profile = (HumanoidCharacterProfile) preferences.SelectedCharacter;
-                }
-                else
-                {
-                    profile = HumanoidCharacterProfile.Random();
-                }
                 readyPlayerIds.Add(userId);
             }
 

@@ -220,12 +220,11 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         if (EditedProfile == null || EditedSlot == null)
             return;
 
-        var selected = _preferencesManager.Preferences?.SelectedCharacterIndex;
+        var fixedProfile = EditedProfile.Clone();
+        if(_preferencesManager.Preferences!.TryGetHumanoidInSlot(EditedSlot.Value, out var humanoid))
+            fixedProfile = new HumanoidCharacterProfile(EditedProfile) { Enabled = humanoid.Enabled };
 
-        if (selected == null)
-            return;
-
-        _preferencesManager.UpdateCharacter(EditedProfile, EditedSlot.Value);
+        _preferencesManager.UpdateCharacter(fixedProfile, EditedSlot.Value);
         _profileEditor?.SetProfile(EditedSlot.Value);
         ReloadCharacterSetup();
     }
