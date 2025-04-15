@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: PJB3005
   changes:
-  - message: Silicons now have a proper preview in the lobby/character editor.
-    type: Tweak
-  id: 7686
-  time: '2024-12-08T01:46:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33763
-- author: PJB3005
-  changes:
   - message: You can now use Interact (E by default) to toggle radiation collectors,
       field generators, and emitters. Previously you had to click with an empty hand.
     type: Fix
@@ -3896,3 +3889,14 @@
   id: 8185
   time: '2025-04-14T23:27:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36472
+- author: EmoGarbage404, Fildrance
+  changes:
+  - message: new ui for analysis console, new ui for node scanner. Artifact node activation
+      is now different.
+    type: Add
+  - message: artifacts cannot create massive distruction events, become guns or music
+      instruments. Sentient artifacts cannot activate nodes.
+    type: Remove
+  id: 8186
+  time: '2025-04-15T00:34:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33370
