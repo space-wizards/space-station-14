@@ -27,6 +27,9 @@ namespace Content.Client.Lobby.UI
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private readonly Button _createNewCharacterButton;
+        private readonly HumanoidProfileEditor _humanoidProfileEditor;
+        private readonly JobPriorityEditor _jobPriorityEditor;
+        public int? SelectedCharacterSlot;
 
         public event Action<int>? SelectCharacter;
         public event Action<int>? DeleteCharacter;
@@ -34,6 +37,8 @@ namespace Content.Client.Lobby.UI
 
         public CharacterSetupGui(HumanoidProfileEditor profileEditor, JobPriorityEditor jobPriorityEditor)
         {
+            _humanoidProfileEditor = profileEditor;
+            _jobPriorityEditor = jobPriorityEditor;
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
@@ -100,24 +105,26 @@ namespace Content.Client.Lobby.UI
                 Loc.GetString("character-setup-gui-create-new-character-button-tooltip",
                     ("maxCharacters", _preferencesManager.Settings!.MaxCharacterSlots));
 
-            var selectedSlot = _preferencesManager.Preferences?.SelectedCharacterIndex;
-
+            var first = !SelectedCharacterSlot.HasValue;
             foreach (var (slot, character) in _preferencesManager.Preferences!.Characters)
             {
+                var isSelected = SelectedCharacterSlot.HasValue ? slot == SelectedCharacterSlot : first;
                 numberOfFullSlots++;
                 var characterPickerButton = new CharacterPickerButton(_entManager,
                     _protomanager,
                     characterButtonsGroup,
                     character,
-                    slot == selectedSlot);
+                    isSelected);
 
                 Characters.AddChild(characterPickerButton);
 
                 characterPickerButton.OnPressed += args =>
                 {
+                    SelectedCharacterSlot = slot;
                     SelectCharacter?.Invoke(slot);
                     CharEditor.Visible = true;
                     JobPriorityEditor.Visible = false;
+                    _humanoidProfileEditor.SetProfile(slot);
                 };
 
                 characterPickerButton.OnDeletePressed += () =>
@@ -129,6 +136,8 @@ namespace Content.Client.Lobby.UI
                 {
                     SetCharacterEnable?.Invoke((slot, pressed));
                 };
+                if(first)
+                    first = false;
             }
 
             _createNewCharacterButton.Disabled = numberOfFullSlots >= _preferencesManager.Settings.MaxCharacterSlots;

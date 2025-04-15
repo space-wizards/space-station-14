@@ -87,6 +87,8 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         public HumanoidCharacterProfile? Profile;
 
+        private HumanoidCharacterProfile? _savedProfile;
+
         private List<SpeciesPrototype> _species = new();
 
         private List<(string, RequirementsSelector)> _jobPriorities = new();
@@ -686,7 +688,7 @@ namespace Content.Client.Lobby.UI
         private void SetDirty()
         {
             // If it equals default then reset the button.
-            if (Profile == null || _preferencesManager.Preferences?.SelectedCharacter.MemberwiseEquals(Profile) == true)
+            if (Profile == null || _savedProfile?.MemberwiseEquals(Profile) == true)
             {
                 IsDirty = false;
                 return;
@@ -720,6 +722,7 @@ namespace Content.Client.Lobby.UI
 
             PreviewDummy = _controller.LoadProfileEntity(Profile, JobOverride, ShowClothes.Pressed);
             SpriteView.SetEntity(PreviewDummy);
+            SpriteView.InvalidateMeasure();
             _entManager.System<MetaDataSystem>().SetEntityName(PreviewDummy, Profile.Name);
 
             // Check and set the dirty flag to enable the save/reset buttons as appropriate.
@@ -731,9 +734,7 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         public void ResetToDefault()
         {
-            SetProfile(
-                (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter,
-                _preferencesManager.Preferences?.SelectedCharacterIndex);
+            SetProfile(_savedProfile, CharacterSlot);
         }
 
         /// <summary>
@@ -772,6 +773,15 @@ namespace Content.Client.Lobby.UI
             {
                 PreferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
             }
+        }
+
+        public void SetProfile(int slot)
+        {
+            if(!_preferencesManager.Preferences!.TryGetHumanoidInSlot(slot, out var humanoid))
+                return;
+            if(humanoid != null)
+                _savedProfile = humanoid.Clone();
+            SetProfile(humanoid, slot);
         }
 
 
