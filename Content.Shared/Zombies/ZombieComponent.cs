@@ -89,7 +89,7 @@ public sealed partial class ZombieComponent : Component
     public TimeSpan NextTick;
 
     [DataField("zombieStatusIcon")]
-    public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "ZombieFaction";
+    public ProtoId<FactionIconPrototype> StatusIcon { get; set; } = "ZombieFaction";
 
     /// <summary>
     /// Healing each second
@@ -124,6 +124,20 @@ public sealed partial class ZombieComponent : Component
             { "Blunt", -2 },
             { "Slash", -2 },
             { "Piercing", -2 }
+        }
+    };
+
+    /// <summary>
+    /// The damage dealt on bite, dehardcoded for your enjoyment
+    /// </summary>
+    [DataField]
+    public DamageSpecifier DamageOnBite = new()
+    {
+        DamageDict = new()
+        {
+            { "Slash", 13 },
+            { "Piercing", 7 },
+            { "Structural", 10 }
         }
     };
 

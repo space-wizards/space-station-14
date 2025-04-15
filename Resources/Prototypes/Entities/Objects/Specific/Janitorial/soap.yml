@@ -21,8 +21,6 @@
     sprite: Objects/Specific/Janitorial/soap.rsi
     storedRotation: -90
   - type: Slippery
-    paralyzeTime: 2
-    launchForwardsMultiplier: 1.5
   - type: StepTrigger
     intersectRatio: 0.2
   - type: CollisionWake
@@ -119,7 +117,7 @@
 - type: entity
   name: soap
   id: SoapSyndie
-  parent: Soap
+  parent: [Soap, BaseSyndicateContraband]
   description: An untrustworthy bar of soap. Smells of fear.
   components:
   - type: Sprite
@@ -129,8 +127,8 @@
   - type: SolutionContainerVisuals
     fillBaseName: syndie-
   - type: Slippery
-    paralyzeTime: 5
-    launchForwardsMultiplier: 2.5
+    paralyzeTime: 3
+    launchForwardsMultiplier: 3
   - type: Item
     heldPrefix: syndie
   - type: FlavorProfile
@@ -146,7 +144,7 @@
 - type: entity
   name: soaplet
   id: SoapletSyndie
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: Soap
   description: A tiny piece of syndicate soap.
   components:
@@ -154,8 +152,8 @@
     layers:
     - state: syndie-soaplet
   - type: Slippery
-    paralyzeTime: 5
-    launchForwardsMultiplier: 2.5
+    paralyzeTime: 1.5 # these things are tiny
+    launchForwardsMultiplier: 1.5
   - type: StepTrigger
     intersectRatio: 0.04
   - type: Item
@@ -196,7 +194,6 @@
   - type: SolutionContainerVisuals
     fillBaseName: gibs-
   - type: Slippery
-    paralyzeTime: 2
   - type: StepTrigger
   - type: Item
     heldPrefix: gibs
@@ -221,8 +218,8 @@
   - type: SolutionContainerVisuals
     fillBaseName: omega-
   - type: Slippery
-    paralyzeTime: 7
-    launchForwardsMultiplier: 3
+    paralyzeTime: 5.0
+    launchForwardsMultiplier: 3.0
   - type: Item
     heldPrefix: omega
   - type: SolutionContainerManager

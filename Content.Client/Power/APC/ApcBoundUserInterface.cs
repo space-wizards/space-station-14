@@ -1,7 +1,9 @@
-﻿using Content.Client.Power.APC.UI;
+using Content.Client.Power.APC.UI;
+using Content.Shared.Access.Systems;
 using Content.Shared.APC;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
+using Robust.Shared.Player;
 
 namespace Content.Client.Power.APC
 {
@@ -18,10 +20,17 @@ namespace Content.Client.Power.APC
         protected override void Open()
         {
             base.Open();
+            _menu = this.CreateWindow<ApcMenu>();
+            _menu.SetEntity(Owner);
+            _menu.OnBreaker += BreakerPressed;
 
-            _menu = new ApcMenu(this);
-            _menu.OnClose += Close;
-            _menu.OpenCentered();
+            var hasAccess = false;
+            if (PlayerManager.LocalEntity != null)
+            {
+                var accessReader = EntMan.System<AccessReaderSystem>();
+                hasAccess = accessReader.IsAllowed((EntityUid)PlayerManager.LocalEntity, Owner);
+            }
+            _menu?.SetAccessEnabled(hasAccess);
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -35,16 +44,6 @@ namespace Content.Client.Power.APC
         public void BreakerPressed()
         {
             SendMessage(new ApcToggleMainBreakerMessage());
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (disposing)
-            {
-                _menu?.Dispose();
-            }
         }
     }
 }

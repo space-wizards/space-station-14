@@ -1,6 +1,6 @@
 - type: entity
   name: dart
-  description: light throwing dart for playing darts. Don't get in the eye!
+  description: Light throwing dart for playing darts. Don't get in the eye!
   parent: BaseItem
   id: Dart
   components:
@@ -84,6 +84,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: BalloonPopper
 
 - type: entity
   parent: Dart
@@ -190,11 +191,11 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseSyndicateContraband ]
   id: HypoDartBox
   name: hypodart box
   suffix: HypoDart
-  description: A small box containing an hypodart. Packaging disintegrates when opened, leaving no evidence behind.
+  description: A small box containing a hypodart. Packaging disintegrates when opened, leaving no evidence behind.
   components:
   - type: Sprite
     sprite: Objects/Fun/Darts/dartbox.rsi

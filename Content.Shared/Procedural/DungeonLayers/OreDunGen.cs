@@ -8,7 +8,8 @@ namespace Content.Shared.Procedural.DungeonLayers;
 /// <remarks>
 /// Generates on top of existing entities for sanity reasons moreso than performance.
 /// </remarks>
-public sealed partial class OreDunGen : IDunGenLayer
+[Virtual]
+public partial class OreDunGen : IDunGenLayer
 {
     /// <summary>
     /// If the vein generation should occur on top of existing entities what are we replacing.

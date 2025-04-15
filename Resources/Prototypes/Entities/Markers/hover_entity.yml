@@ -1,7 +1,7 @@
 ﻿- type: entity
   name: hover entity
   id: hoverentity
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: Sprite
       layers:

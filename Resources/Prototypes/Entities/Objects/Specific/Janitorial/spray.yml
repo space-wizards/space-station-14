@@ -104,7 +104,7 @@
 - type: entity
   id: Vapor
   name: "vapor"
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: SolutionContainerManager
     solutions:
@@ -130,13 +130,15 @@
         mask:
         - FullTileMask
         - Opaque
+        layer:
+        - ItemMask
   - type: Appearance
   - type: VaporVisuals
 
 - type: entity
   id: BigVapor
   parent: Vapor
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Effects/chempuff.rsi

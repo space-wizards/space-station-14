@@ -54,9 +54,9 @@ public sealed partial class LockComponent : Component
     /// <summary>
     /// Whether or not an emag disables it.
     /// </summary>
-    [DataField("breakOnEmag")]
+    [DataField]
     [AutoNetworkedField]
-    public bool BreakOnEmag = true;
+    public bool BreakOnAccessBreaker = true;
 
     /// <summary>
     /// Amount of do-after time needed to lock the entity.
@@ -85,6 +85,13 @@ public sealed partial class LockComponent : Component
 /// </summary>
 [ByRefEvent]
 public record struct LockToggleAttemptEvent(EntityUid User, bool Silent = false, bool Cancelled = false);
+
+/// <summary>
+/// Event raised on the user when a toggle is attempted.
+/// Can be cancelled to prevent it.
+/// </summary>
+[ByRefEvent]
+public record struct UserLockToggleAttemptEvent(EntityUid Target, bool Silent = false, bool Cancelled = false);
 
 /// <summary>
 /// Event raised on a lock after it has been toggled.

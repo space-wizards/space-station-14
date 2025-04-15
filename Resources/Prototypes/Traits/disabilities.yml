@@ -1,3 +1,5 @@
+# If you add a new trait, make sure to add the corresponding component to the whitelist in \Resources\Prototypes\Entities\Mobs\Player\clone.yml so it gets copied to clones correctly!
+
 - type: trait
   id: Blindness
   name: trait-blindness-name
@@ -34,20 +36,13 @@
       durationOfIncident: 10, 30
 
 - type: trait
-  id: Pacifist
-  name: trait-pacifist-name
-  description: trait-pacifist-desc
-  category: Disabilities
-  components:
-    - type: Pacified
-
-- type: trait
   id: Unrevivable
   name: trait-unrevivable-name
   description: trait-unrevivable-desc
   category: Disabilities
   components:
     - type: Unrevivable
+      cloneable: true
 
 - type: trait
   id: Muted
@@ -59,15 +54,6 @@
       - BorgChassis
   components:
     - type: Muted
-
-- type: trait
-  id: LightweightDrunk
-  name: trait-lightweight-name
-  description: trait-lightweight-desc
-  category: Disabilities
-  components:
-    - type: LightweightDrunk
-      boozeStrengthMultiplier: 2
 
 - type: trait
   id: Paracusia
@@ -83,9 +69,9 @@
         collection: Paracusia
 
 - type: trait
-  id: Snoring
-  name: trait-snoring-name
-  description: trait-snoring-desc
+  id: PainNumbness
+  name: trait-painnumbness-name
+  description: trait-painnumbness-desc
   category: Disabilities
   components:
-    - type: Snoring
+  - type: PainNumbness

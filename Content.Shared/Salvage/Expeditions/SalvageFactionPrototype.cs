@@ -2,12 +2,12 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Salvage.Expeditions;
 
-[Prototype("salvageFaction")]
+[Prototype]
 public sealed partial class SalvageFactionPrototype : IPrototype
 {
-    [IdDataField] public string ID { get; } = default!;
+    [IdDataField] public string ID { get; private set; } = default!;
 
-    [DataField("desc")] public string Description { get; private set; } = string.Empty;
+    [DataField("desc")] public LocId Description { get; private set; } = string.Empty;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("entries", required: true)]
     public List<SalvageMobEntry> MobGroups = new();

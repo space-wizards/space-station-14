@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Localization;
 
 namespace Content.Server.GameTicking;
 
@@ -71,6 +72,16 @@ public sealed partial class GameTicker
         var ruleEntity = Spawn(ruleId, MapCoordinates.Nullspace);
         _sawmill.Info($"Added game rule {ToPrettyString(ruleEntity)}");
         _adminLogger.Add(LogType.EventStarted, $"Added game rule {ToPrettyString(ruleEntity)}");
+        var str = Loc.GetString("station-event-system-run-event", ("eventName", ToPrettyString(ruleEntity)));
+#if DEBUG
+        _chatManager.SendAdminAlert(str);
+#else
+        if (RunLevel == GameRunLevel.InRound) // avoids telling admins the round type before it starts so that can be handled elsewhere.
+        {
+            _chatManager.SendAdminAlert(str);
+        }
+#endif
+        Log.Info(str);
 
         var ev = new GameRuleAddedEvent(ruleEntity, ruleId);
         RaiseLocalEvent(ruleEntity, ref ev, true);
@@ -324,6 +335,13 @@ public sealed partial class GameTicker
 
         foreach (var rule in args)
         {
+            if (!_prototypeManager.HasIndex(rule))
+            {
+                shell.WriteError($"Invalid game rule {rule} was skipped.");
+
+                continue;
+            }
+
             if (shell.Player != null)
             {
                 _adminLogger.Add(LogType.EventStarted, $"{shell.Player} tried to add game rule [{rule}] via command");

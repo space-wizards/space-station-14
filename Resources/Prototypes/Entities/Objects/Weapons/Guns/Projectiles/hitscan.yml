@@ -1,7 +1,7 @@
 # Used to animate the hitscan effects because effectsystem doesn't support it
 - type: entity
   id: HitscanEffect
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 2.0

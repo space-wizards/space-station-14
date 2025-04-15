@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: DisposalMachine
   start: start
   graph:
@@ -64,7 +64,7 @@
         - to: frame_mailing
           steps:
             - tag: MailingUnitElectronics
-              name: Mailing Unit Electronics
+              name: mailing unit electronics
               icon:
                 sprite: "Objects/Misc/module.rsi"
                 state: "net_wired"

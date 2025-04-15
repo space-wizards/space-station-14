@@ -1,5 +1,6 @@
 using Content.Shared.Construction.Components;
 using JetBrains.Annotations;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Construction.UI
 {
@@ -17,8 +18,8 @@ namespace Content.Client.Construction.UI
         {
             base.Open();
 
-            _menu = new FlatpackCreatorMenu(Owner);
-            _menu.OnClose += Close;
+            _menu = this.CreateWindow<FlatpackCreatorMenu>();
+            _menu.SetEntity(Owner);
 
             _menu.PackButtonPressed += () =>
             {
@@ -26,15 +27,6 @@ namespace Content.Client.Construction.UI
             };
 
             _menu.OpenCentered();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-            if (!disposing)
-                return;
-
-            _menu?.Dispose();
         }
     }
 }

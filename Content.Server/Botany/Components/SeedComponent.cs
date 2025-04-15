@@ -24,7 +24,7 @@ namespace Content.Server.Botany.Components
         /// <summary>
         ///     Name of a base seed prototype that is used if <see cref="Seed"/> is null.
         /// </summary>
-        [DataField("seedId", customTypeSerializer:typeof(PrototypeIdSerializer<SeedPrototype>))]
+        [DataField("seedId", customTypeSerializer: typeof(PrototypeIdSerializer<SeedPrototype>))]
         public string? SeedId;
     }
 }

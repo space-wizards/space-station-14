@@ -1,28 +1,16 @@
 # Jumpsuit
 - type: loadout
   id: MusicianJumpsuit
-  equipment: MusicianJumpsuit
-
-- type: startingGear
-  id: MusicianJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitMusician
 
 - type: loadout
-  id: MusicianJumpskirt
-  equipment: MusicianJumpskirt
-
-- type: startingGear
   id: MusicianJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtMusician
 
 # Outerclothing
 - type: loadout
-  id: MusicianWintercoat
-  equipment: MusicianWintercoat
-
-- type: startingGear
   id: MusicianWintercoat
   equipment:
     outerClothing: ClothingOuterWinterMusician

@@ -1,14 +1,14 @@
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.Station.Components;
+using Content.Server.Fluids.EntitySystems;
+using Content.Server.StationEvents.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.GameTicking.Components;
+using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 using System.Linq;
-using Content.Server.Fluids.EntitySystems;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.StationEvents.Components;
-using Content.Shared.GameTicking.Components;
+using Content.Shared.Chemistry.Reaction;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -48,7 +48,7 @@ public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
             var quantity = weak ? component.WeakReagentQuantity : component.ReagentQuantity;
             solution.AddReagent(reagent, quantity);
 
-            var foamEnt = Spawn("Foam", transform.Coordinates);
+            var foamEnt = Spawn(ChemicalReactionSystem.FoamReaction, transform.Coordinates);
             var spreadAmount = weak ? component.WeakSpread : component.Spread;
             _smoke.StartSmoke(foamEnt, solution, component.Time, spreadAmount);
             Audio.PlayPvs(component.Sound, transform.Coordinates);

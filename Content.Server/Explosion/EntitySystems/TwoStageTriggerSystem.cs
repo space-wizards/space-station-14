@@ -30,13 +30,12 @@ public sealed class TwoStageTriggerSystem : EntitySystem
     {
         foreach (var (name, entry) in component.SecondStageComponents)
         {
-            var comp = (Component) _factory.GetComponent(name);
-            var temp = (object) comp;
+            var comp = (Component)_factory.GetComponent(name);
+            var temp = (object)comp;
 
             if (EntityManager.TryGetComponent(uid, entry.Component.GetType(), out var c))
                 RemComp(uid, c);
 
-            comp.Owner = uid;
             _serializationManager.CopyTo(entry.Component, ref temp);
             EntityManager.AddComponent(uid, comp);
         }

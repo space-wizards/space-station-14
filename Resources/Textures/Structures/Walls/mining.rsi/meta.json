@@ -7,40 +7,72 @@
     "y": 32
   },
   "states": [
-	  {
+    {
       "name": "full"
     }, 
-	  {
+    {
       "name": "mining0",
-	    "directions": 4
+        "directions": 4
     },
-	  {
+    {
       "name": "mining1",
-	    "directions": 4
+        "directions": 4
     },
-	  {
+    {
       "name": "mining2",
-	    "directions": 4
+        "directions": 4
     },
-	  {
+    {
       "name": "mining3",
-	    "directions": 4
+        "directions": 4
     },
-	  {
+    {
       "name": "mining4",
-	    "directions": 4
+        "directions": 4
     },
-	  {
+    {
       "name": "mining5",
-	    "directions": 4
+        "directions": 4
     },
-	  {
+    {
       "name": "mining6",
-	    "directions": 4
+        "directions": 4
     },
-	  {
+    {
       "name": "mining7",
-	    "directions": 4
+        "directions": 4
+    }, 
+    {
+      "name": "miningB0",
+        "directions": 4
+    },
+    {
+      "name": "miningB1",
+        "directions": 4
+    },
+    {
+      "name": "miningB2",
+        "directions": 4
+    },
+    {
+      "name": "miningB3",
+        "directions": 4
+    },
+    {
+      "name": "miningB4",
+        "directions": 4
+    },
+    {
+      "name": "miningB5",
+        "directions": 4
+    },
+    {
+      "name": "miningB6",
+        "directions": 4
+    },
+    {
+      "name": "miningB7",
+        "directions": 4
     }
   ]
 }

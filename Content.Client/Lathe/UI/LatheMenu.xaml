@@ -59,6 +59,7 @@
                         PlaceHolder="0"
                         Text="1"
                         HorizontalExpand="True" />
+                    <Label Name="RecipeCount" Margin="8 0 8 0" MinWidth="90" Align="Right" />
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
@@ -100,11 +101,9 @@
                             Margin="5 0 0 0"
                             Text="{Loc 'lathe-menu-fabricating-message'}">
                         </Label>
-                        <EntityPrototypeView
-                            Name="FabricatingEntityProto"
-                            HorizontalAlignment="Left"
-                            Margin="100 0 0 0"
-                             />
+                        <BoxContainer Name="FabricatingDisplayContainer"
+                                      HorizontalAlignment="Left"
+                                      Margin="100 0 0 0"/>
                         <Label
                             Name="NameLabel"
                             RectClipContent="True"

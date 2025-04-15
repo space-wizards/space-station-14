@@ -1,6 +1,6 @@
 - type: entity
   name: stun prod
-  parent: BaseItem
+  parent: [BaseItem, BaseMinorContraband]
   id: Stunprod
   description: A stun prod for illegal incapacitation.
   components:
@@ -41,6 +41,7 @@
   - type: StaminaDamageOnCollide
     damage: 35
     sound: /Audio/Weapons/egloves.ogg
+  - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
     maxCharge: 360
     startingCharge: 360

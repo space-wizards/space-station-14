@@ -4,7 +4,7 @@
     "x": 32,
     "y": 32
   },
-  "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), n2_door state modified by Flareguy from fire_door, using sprites from /vg/station at https://github.com/vgstation-coders/vgstation13/commit/02b9f6894af4419c9f7e699a22c402b086d8067e",
+  "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), n2 sprites based on fire and emergency sprites",
   "license": "CC-BY-SA-3.0",
   "states": [
     {
@@ -309,6 +309,9 @@
       "name": "freezer"
     },
     {
+      "name": "freezer_icon"
+    },
+    {
       "name": "freezer_door"
     },
     {
@@ -397,6 +400,12 @@
     },
     {
       "name": "mixed_door"
+    },
+    {
+      "name": "n2"
+    },
+    {
+      "name": "n2_open"
     },
     {
       "name": "n2_door"

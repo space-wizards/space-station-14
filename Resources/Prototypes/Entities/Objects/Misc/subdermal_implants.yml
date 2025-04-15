@@ -17,7 +17,7 @@
   id: SadTromboneImplant
   name: sad trombone implant
   description: This implant plays a sad tune when the user dies.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       whitelist:
@@ -37,7 +37,7 @@
   id: LightImplant
   name: light implant
   description: This implant emits light from the user's skin on activation.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       implantAction: ActionToggleLight
@@ -59,7 +59,7 @@
   id: BikeHornImplant
   name: bike horn implant
   description: This implant lets the user honk anywhere at any time.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateHonkImplant
@@ -79,8 +79,8 @@
   parent: BaseSubdermalImplant
   id: TrackingImplant
   name: tracking implant
-  description: This implant has a tracking device attached to the suit sensor network, as well as a condition monitor for the Security radio channel.
-  noSpawn: true
+  description: This implant has a tracking device attached to the suit sensor network.
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       whitelist:
@@ -97,11 +97,6 @@
     - type: StationLimitedNetwork
     - type: WirelessNetworkConnection
       range: 500
-    - type: TriggerOnMobstateChange
-      mobState:
-      - Critical
-    - type: Rattle
-      radioChannel: "Security"
 
 #Traitor implants
 
@@ -110,7 +105,7 @@
   id: StorageImplant
   name: storage implant
   description: This implant grants hidden storage within a person's body using bluespace technology.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       implantAction: ActionOpenStorageImplant
@@ -119,7 +114,10 @@
         - Hands # no use giving a mouse a storage implant, but a monkey is another story...
     - type: Storage
       grid:
-      - 0,0,2,2
+      - 0,0,0,1
+      - 1,0,1,0
+      - 1,2,1,2
+      - 2,1,2,2
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
@@ -134,7 +132,7 @@
   id: FreedomImplant
   name: freedom implant
   description: This implant lets the user break out of hand restraints up to three times before ceasing to function anymore.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateFreedomImplant
@@ -143,11 +141,23 @@
         - Cuffable # useless if you cant be cuffed
 
 - type: entity
+  parent: BaseSubdermalImplant
+  id: RadioImplant
+  name: radio implant
+  description: This implant grants access to the Syndicate channel without a headset.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: RadioImplant
+    radioChannels:
+    - Syndicate
+
+- type: entity
   parent: [ BaseSubdermalImplant, StorePresetUplink ]
   id: UplinkImplant
   name: uplink implant
   description: This implant lets the user access a hidden Syndicate uplink at will.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
     implantAction: ActionOpenUplinkImplant
@@ -167,13 +177,13 @@
   id: EmpImplant
   name: EMP implant
   description: This implant creates an electromagnetic pulse when activated.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateEmpImplant
     - type: TriggerImplantAction
     - type: EmpOnTrigger
-      range: 1.75
+      range: 2.75
       energyConsumption: 50000
       disableDuration: 10
 
@@ -182,7 +192,7 @@
   id: ScramImplant
   name: scram implant
   description: This implant randomly teleports the user within a large radius when activated.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateScramImplant
@@ -194,7 +204,7 @@
   id: DnaScramblerImplant
   name: DNA scrambler implant
   description: This implant lets the user randomly change their appearance and name once.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       implantAction: ActionActivateDnaScramblerImplant
@@ -209,7 +219,7 @@
   id: MicroBombImplant
   name: micro-bomb implant
   description: This implant detonates the user upon activation or upon death.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       permanent: true
@@ -239,7 +249,7 @@
   id: MacroBombImplant
   name: macro-bomb implant
   description: This implant creates a large explosion on death after a preprogrammed countdown.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       permanent: true
@@ -274,7 +284,7 @@
   id: DeathAcidifierImplant
   name: death-acidifier implant
   description: This implant melts the user and their equipment upon death.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: SubdermalImplant
     permanent: true
@@ -298,7 +308,7 @@
   id: DeathRattleImplant
   name: death rattle implant
   description: This implant will inform the Syndicate radio channel should the user fall into critical condition or die.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: SubdermalImplant
       permanent: true
@@ -311,6 +321,17 @@
       - Dead
     - type: Rattle
 
+- type: entity
+  parent: BaseSubdermalImplant
+  id: FakeMindShieldImplant
+  name: fake mindshield implant
+  description: This implant allows the implanter to produce a fake signal that NT security huds use to identify individuals implanted with a mindshield.
+  categories: [ HideSpawnMenu ]
+  components:
+      - type: SubdermalImplant
+        implantAction: FakeMindShieldToggleAction
+      - type: FakeMindShieldImplant
+
 # Sec and Command implants
 
 - type: entity
@@ -318,10 +339,34 @@
   id: MindShieldImplant
   name: mindshield implant
   description: This implant will ensure loyalty to Nanotrasen and prevent mind control devices.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
    - type: SubdermalImplant
-     permanent: true
+   - type: MindShieldImplant
    - type: Tag
      tags:
        - MindShield
+
+# Centcomm implants
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: RadioImplantCentcomm
+  name: radio implant
+  description: This implant grants access to the Centcomm channel without a headset. Only authorized for Centcomm employees.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: RadioImplant
+    radioChannels:
+    - CentCom
+
+- type: entity
+  parent: DeathRattleImplant
+  id: DeathRattleImplantCentcomm
+  name: centcomm death rattle implant
+  description: This implant will inform the Centcomm radio channel should the user fall into critical condition or die.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Rattle
+    radioChannel: CentCom

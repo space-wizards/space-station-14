@@ -7,6 +7,8 @@
     folded: true
   - type: Mask
     isToggled: true
+    enabled: false
+    disableOnFolded: true
   - type: IngestionBlocker
     enabled: false
   - type: IdentityBlocker
@@ -20,9 +22,12 @@
     - state: icon_mask
       map: [ "unfoldedLayer" ]
       visible: false
+  - type: HideLayerClothing # needed since head bandana inherits from mask bandana
+    slots: []
   - type: Tag
     tags:
     - Bandana
+    - ClothMade
 
 - type: entity
   parent: [ClothingHeadBandBase, ClothingMaskBandBlack]

@@ -1,7 +1,5 @@
-using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.DeviceLinking.Systems;
-using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Stack;
@@ -11,27 +9,26 @@ using Content.Shared.Administration.Logs;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
+using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Paper;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Robust.Shared.Random;
 
 namespace Content.Server.Cargo.Systems;
 
 public sealed partial class CargoSystem : SharedCargoSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly DeviceLinkSystem _linker = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IdCardSystem _idCardSystem = default!;
     [Dependency] private readonly ItemSlotsSystem _slots = default!;
     [Dependency] private readonly PaperSystem _paperSystem = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -67,32 +64,46 @@ public sealed partial class CargoSystem : SharedCargoSystem
         InitializeShuttle();
         InitializeTelepad();
         InitializeBounty();
+        InitializeFunds();
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        UpdateConsole(frameTime);
+        UpdateConsole();
         UpdateTelepad(frameTime);
         UpdateBounty();
     }
 
+    /// <summary>
+    /// Adds or removes funds from the <see cref="StationBankAccountComponent"/>.
+    /// </summary>
+    /// <param name="ent">The station.</param>
+    /// <param name="balanceAdded">The amount of funds to add or remove.</param>
+    /// <param name="accountDistribution">The distribution between individual <see cref="CargoAccountPrototype"/>.</param>
+    /// <param name="dirty">Whether to mark the bank accoujnt component as dirty.</param>
     [PublicAPI]
-    public void UpdateBankAccount(EntityUid uid, StationBankAccountComponent component, int balanceAdded)
+    public void UpdateBankAccount(
+        Entity<StationBankAccountComponent?> ent,
+        int balanceAdded,
+        Dictionary<ProtoId<CargoAccountPrototype>, double> accountDistribution,
+        bool dirty = true)
     {
-        component.Balance += balanceAdded;
-        var query = EntityQueryEnumerator<CargoOrderConsoleComponent>();
+        if (!Resolve(ent, ref ent.Comp))
+            return;
 
-        while (query.MoveNext(out var oUid, out var _))
+        foreach (var (account, percent) in accountDistribution)
         {
-            if (!_uiSystem.IsUiOpen(oUid, CargoConsoleUiKey.Orders))
-                continue;
-
-            var station = _station.GetOwningStation(oUid);
-            if (station != uid)
-                continue;
-
-            UpdateOrderState(oUid, station);
+            var accountBalancedAdded = (int) Math.Round(percent * balanceAdded);
+            ent.Comp.Accounts[account] += accountBalancedAdded;
         }
+
+        var ev = new BankBalanceUpdatedEvent(ent, ent.Comp.Accounts);
+        RaiseLocalEvent(ent, ref ev, true);
+
+        if (!dirty)
+            return;
+
+        Dirty(ent);
     }
 }

@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Kezu",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "locked"
+    },
+    {
+      "name": "unlocked"
+    },
+    {
+      "name": "closed"
+    },
+    {
+      "name": "open"
+    },
+    {
+      "name": "chem-0"
+    },
+    {
+      "name": "chem-1"
+    },
+    {
+      "name": "chem-2"
+    },
+    {
+      "name": "chem-3"
+    },
+    {
+      "name": "chem-4"
+    },
+    {
+      "name": "chem-5"
+    },
+    {
+      "name": "chem-6"
+    }
+  ]
+}

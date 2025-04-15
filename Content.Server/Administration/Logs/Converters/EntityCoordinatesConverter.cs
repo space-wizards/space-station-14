@@ -1,5 +1,5 @@
-﻿using System.Text.Json;
-using Content.Server.Station.Components;
+using System.Text.Json;
+using Content.Shared.Station.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
@@ -72,6 +72,6 @@ public readonly struct SerializableEntityCoordinates
         EntityUid = coordinates.EntityId;
         X = coordinates.X;
         Y = coordinates.Y;
-        MapUid = coordinates.GetMapUid(entityManager);
+        MapUid = entityManager.System<SharedTransformSystem>().GetMap(coordinates);
     }
 }

@@ -5,6 +5,9 @@
   setPreference: true
   objective: roles-antag-syndicate-agent-objective
   guides: [ Traitors ]
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 3600 # 1h
 
 - type: antag
   id: TraitorSleeper
@@ -12,6 +15,10 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-syndicate-agent-sleeper-objective
+  guides: [ Traitors ]
+  requirements:
+  - !type:OverallPlaytimeRequirement
+    time: 3600 # 1h
 
 # Syndicate Operative Outfit - Monkey
 - type: startingGear
@@ -31,10 +38,44 @@
     gloves: ClothingHandsGlovesColorBlack
   storage:
     back:
-    - BoxSurvivalSyndicate
     - WeaponPistolViper
     - PinpointerSyndicateNuclear
     - DeathAcidifierImplanter
+
+- type: startingGear
+  id: SyndicateOperativeClothing
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackSyndicate
+    shoes: ClothingShoesBootsSyndieFilled
+    gloves: ClothingHandsGlovesColorBlack
+
+- type: startingGear
+  id: SyndicateReinforcementMedic
+  parent: SyndicateOperativeClothing
+  equipment:
+    pocket1: WeaponPistolViper
+  inhand:
+    - MedkitCombatFilled
+
+- type: startingGear
+  id: SyndicateReinforcementSpy
+  parent: SyndicateOperativeClothing
+  equipment:
+    id: AgentIDCard
+    mask: ClothingMaskGasVoiceChameleon
+    pocket1: WeaponPistolViper
+
+- type: startingGear
+  id: SyndicateReinforcementThief
+  parent: SyndicateOperativeClothing
+  equipment:
+    pocket1: WeaponPistolViper
+  inhand:
+    - ToolboxSyndicateFilled
+  storage:
+    back:
+    - SyndicateJawsOfLife
 
 #Syndicate Operative Outfit - Basic
 - type: startingGear

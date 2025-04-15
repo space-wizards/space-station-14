@@ -1,4 +1,3 @@
-using System;
 using System.Numerics;
 using Content.Client.Examine;
 using Content.Client.Resources;
@@ -12,10 +11,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Animations;
 using Robust.Shared.Input;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using Robust.Shared.Random;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Wires.UI
@@ -23,8 +18,6 @@ namespace Content.Client.Wires.UI
     public sealed class WiresMenu : BaseWindow
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
-
-        public WiresBoundUserInterface Owner { get; }
 
         private readonly Control _wiresHBox;
         private readonly Control _topContainer;
@@ -35,11 +28,12 @@ namespace Content.Client.Wires.UI
 
         public TextureButton CloseButton { get; set; }
 
-        public WiresMenu(WiresBoundUserInterface owner)
+        public event Action<int, WiresAction>? OnAction;
+
+        public WiresMenu()
         {
             IoCManager.InjectDependencies(this);
 
-            Owner = owner;
             var rootContainer = new LayoutContainer {Name = "WireRoot"};
             AddChild(rootContainer);
 
@@ -212,8 +206,7 @@ namespace Content.Client.Wires.UI
                             (_statusContainer = new GridContainer
                             {
                                 Margin = new Thickness(8, 4),
-                                // TODO: automatically change columns count.
-                                Columns = 3
+                                Rows = 2
                             })
                         }
                     }
@@ -233,7 +226,8 @@ namespace Content.Client.Wires.UI
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
             });
             CloseButton.OnPressed += _ => Close();
-            SetSize = new Vector2(320, 200);
+            SetHeight = 200;
+            MinWidth = 320;
         }
 
 
@@ -257,12 +251,12 @@ namespace Content.Client.Wires.UI
 
                 control.WireClicked += () =>
                 {
-                    Owner.PerformAction(wire.Id, wire.IsCut ? WiresAction.Mend : WiresAction.Cut);
+                    OnAction?.Invoke(wire.Id, wire.IsCut ? WiresAction.Mend : WiresAction.Cut);
                 };
 
                 control.ContactsClicked += () =>
                 {
-                    Owner.PerformAction(wire.Id, WiresAction.Pulse);
+                    OnAction?.Invoke(wire.Id, WiresAction.Pulse);
                 };
             }
 
@@ -509,6 +503,8 @@ namespace Content.Client.Wires.UI
 
             public StatusLight(StatusLightData data, IResourceCache resourceCache)
             {
+                HorizontalAlignment = HAlignment.Right;
+
                 var hsv = Color.ToHsv(data.Color);
                 hsv.Z /= 2;
                 var dimColor = Color.FromHsv(hsv);
@@ -590,17 +586,10 @@ namespace Content.Client.Wires.UI
 
         private sealed class HelpPopup : Popup
         {
-            private const string Text = "Click on the gold contacts with a multitool in hand to pulse their wire.\n" +
-                                        "Click on the wires with a pair of wirecutters in hand to cut/mend them.\n\n" +
-                                        "The lights at the top show the state of the machine, " +
-                                        "messing with wires will probably do stuff to them.\n" +
-                                        "Wire layouts are different each round, " +
-                                        "but consistent between machines of the same type.";
-
             public HelpPopup()
             {
                 var label = new RichTextLabel();
-                label.SetMessage(Text);
+                label.SetMessage(Loc.GetString("wires-menu-help-popup"));
                 AddChild(new PanelContainer
                 {
                     StyleClasses = {ExamineSystem.StyleClassEntityTooltip},

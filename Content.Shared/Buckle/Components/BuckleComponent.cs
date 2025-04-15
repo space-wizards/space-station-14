@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Alert;
 using Content.Shared.Interaction;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -9,7 +10,7 @@ namespace Content.Shared.Buckle.Components;
 /// <summary>
 /// This component allows an entity to be buckled to an entity with a <see cref="StrapComponent"/>.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 [Access(typeof(SharedBuckleSystem))]
 public sealed partial class BuckleComponent : Component
 {
@@ -19,7 +20,7 @@ public sealed partial class BuckleComponent : Component
     /// across a table two tiles away" problem.
     /// </summary>
     [DataField]
-    public float Range = SharedInteractionSystem.InteractionRange / 1.4f;
+    public float Range = SharedInteractionSystem.InteractionRange;
 
     /// <summary>
     /// True if the entity is buckled, false otherwise.
@@ -30,7 +31,7 @@ public sealed partial class BuckleComponent : Component
     /// <summary>
     /// Whether or not collisions should be possible with the entity we are strapped to
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool DontCollide;
 
     /// <summary>
@@ -49,13 +50,13 @@ public sealed partial class BuckleComponent : Component
     /// <summary>
     /// The time that this entity buckled at.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
     public TimeSpan? BuckleTime;
 
     /// <summary>
     /// The strap that this component is buckled to.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? BuckledTo;
 
     /// <summary>
@@ -71,14 +72,7 @@ public sealed partial class BuckleComponent : Component
     [ViewVariables] public int? OriginalDrawDepth;
 }
 
-[Serializable, NetSerializable]
-public sealed class BuckleState(NetEntity? buckledTo, bool dontCollide, TimeSpan? buckleTime) : ComponentState
-{
-    public readonly NetEntity? BuckledTo = buckledTo;
-    public readonly bool DontCollide = dontCollide;
-    public readonly TimeSpan? BuckleTime = buckleTime;
-}
-
+public sealed partial class UnbuckleAlertEvent : BaseAlertEvent;
 
 /// <summary>
 /// Event raised directed at a strap entity before some entity gets buckled to it.

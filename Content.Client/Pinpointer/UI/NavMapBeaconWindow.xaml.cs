@@ -10,36 +10,35 @@ namespace Content.Client.Pinpointer.UI;
 [GenerateTypedNameReferences]
 public sealed partial class NavMapBeaconWindow : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-
     private string? _defaultLabel;
     private bool _defaultEnabled;
     private Color _defaultColor;
 
     public event Action<string?, bool, Color>? OnApplyButtonPressed;
 
-    public NavMapBeaconWindow(EntityUid beaconEntity)
+    public NavMapBeaconWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        if (!_entityManager.TryGetComponent<NavMapBeaconComponent>(beaconEntity, out var navMap))
-            return;
+
+        VisibleButton.OnPressed += args => UpdateVisibleButton(args.Button.Pressed);
+        LabelLineEdit.OnTextChanged += OnTextChanged;
+        ColorSelector.OnColorChanged += _ => TryEnableApplyButton();
+
+        TryEnableApplyButton();
+        ApplyButton.OnPressed += OnApplyPressed;
+    }
+
+    public void SetEntity(EntityUid uid, NavMapBeaconComponent navMap)
+    {
         _defaultLabel = navMap.Text;
         _defaultEnabled = navMap.Enabled;
         _defaultColor = navMap.Color;
 
         UpdateVisibleButton(navMap.Enabled);
-        VisibleButton.OnPressed += args => UpdateVisibleButton(args.Button.Pressed);
-
         LabelLineEdit.Text = navMap.Text ?? string.Empty;
-        LabelLineEdit.OnTextChanged += OnTextChanged;
-
         ColorSelector.Color = navMap.Color;
-        ColorSelector.OnColorChanged += _ => TryEnableApplyButton();
-
-        TryEnableApplyButton();
-        ApplyButton.OnPressed += OnApplyPressed;
     }
 
     private void UpdateVisibleButton(bool value)

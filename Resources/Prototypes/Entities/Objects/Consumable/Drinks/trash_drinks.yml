@@ -76,6 +76,7 @@
     materialComposition:
       Glass: 100
   - type: SpaceGarbage
+  - type: DnaSubstanceTrace
 
 - type: entity
   name: base empty bottle

@@ -1,11 +1,12 @@
 - type: entity
   id: BodyBag
-  parent: BaseFoldable
+  parent: BaseDeployFoldable
   name: body bag
   description: A plastic bag designed for the storage and transportation of cadavers to stop body decomposition.
   components:
   - type: Item
     size: Small
+    heldPrefix: bag
   - type: Sprite
     drawdepth: SmallObjects # I guess body bags need appear above a coroner's table?
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
@@ -44,6 +45,10 @@
   - type: EntityStorage
     capacity: 1
     isCollidableWhenOpen: true
+    whitelist: # Use a tag whitelist rather than filtering for PerishableComponent to avoid chefs using body bags for food preservation
+      tags:
+        - VimPilot # Pets
+        - CanPilot # People
     closeSound:
       path: /Audio/Misc/zip.ogg
     openSound:
@@ -51,11 +56,14 @@
   - type: EntityStorageLayingDownOverride
   - type: PaperLabel
     labelSlot:
-      insertVerbText: Attach Label
-      ejectVerbText: Remove Label
+      insertVerbText: comp-paper-label-insert
+      ejectVerbText: comp-paper-label-eject
       whitelist:
         components:
         - Paper
+      blacklist:
+        tags:
+        - Book
   - type: Appearance
   - type: EntityStorageVisuals
     stateDoorOpen: open_overlay

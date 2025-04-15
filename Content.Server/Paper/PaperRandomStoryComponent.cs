@@ -1,3 +1,4 @@
+using Content.Shared.Paper;
 using Content.Shared.StoryGen;
 using Robust.Shared.Prototypes;
 

@@ -63,8 +63,13 @@ public sealed class HTNPlanJob : Job<HTNPlan>
         // How many primitive tasks we've added since last record.
         var primitiveCount = 0;
 
+        int tasksProcessed = 0;
+
         while (tasksToProcess.TryDequeue(out var currentTask))
         {
+            if (tasksProcessed++ > _rootTask.MaximumTasks)
+                throw new Exception("HTN Planner exceeded maximum tasks");
+
             switch (currentTask)
             {
                 case HTNCompoundTask compound:
@@ -160,9 +165,9 @@ public sealed class HTNPlanJob : Job<HTNPlan>
     {
         var compound = _protoManager.Index<HTNCompoundPrototype>(compoundId.Task);
 
-        for (var i = mtrIndex; i < compound.Branches.Count; i++)
+        for (; mtrIndex < compound.Branches.Count; mtrIndex++)
         {
-            var branch = compound.Branches[i];
+            var branch = compound.Branches[mtrIndex];
             var isValid = true;
 
             foreach (var con in branch.Preconditions)

@@ -519,7 +519,7 @@ public sealed partial class ShuttleMapControl : BaseShuttleControl
             if (mapO is not ShuttleBeaconObject beacon)
                 continue;
 
-            var beaconCoords = EntManager.GetCoordinates(beacon.Coordinates).ToMap(EntManager, _xformSystem);
+            var beaconCoords = _xformSystem.ToMapCoordinates(EntManager.GetCoordinates(beacon.Coordinates));
             var position = Vector2.Transform(beaconCoords.Position, mapTransform);
             var localPos = ScalePosition(position with {Y = -position.Y});
 

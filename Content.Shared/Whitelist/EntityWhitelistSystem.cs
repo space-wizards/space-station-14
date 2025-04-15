@@ -24,14 +24,38 @@ public sealed class EntityWhitelistSystem : EntitySystem
     }
 
     /// <summary>
+    /// Checks whether a given entity is allowed by a whitelist and not blocked by a blacklist.
+    /// If a blacklist is provided and it matches then this returns false.
+    /// If a whitelist is provided and it does not match then this returns false.
+    /// If either list is null it does not get checked.
+    /// </summary>
+    public bool CheckBoth([NotNullWhen(true)] EntityUid? uid, EntityWhitelist? blacklist = null, EntityWhitelist? whitelist = null)
+    {
+        if (uid == null)
+            return false;
+
+        if (blacklist != null && IsValid(blacklist, uid))
+            return false;
+
+        return whitelist == null || IsValid(whitelist, uid);
+    }
+
+    /// <summary>
     /// Checks whether a given entity satisfies a whitelist.
     /// </summary>
     public bool IsValid(EntityWhitelist list, EntityUid uid)
     {
         if (list.Components != null)
-            EnsureRegistrations(list);
+        {
+            if (list.Registrations == null)
+            {
+                var regs = StringsToRegs(list.Components);
+                list.Registrations = new List<ComponentRegistration>();
+                list.Registrations.AddRange(regs);
+            }
+        }
 
-        if (list.Registrations != null)
+        if (list.Registrations != null && list.Registrations.Count > 0)
         {
             foreach (var reg in list.Registrations)
             {
@@ -136,7 +160,7 @@ public sealed class EntityWhitelistSystem : EntitySystem
         return IsWhitelistPassOrNull(blacklist, uid);
     }
 
-    /// <summary>                                        
+    /// <summary>
     /// Helper function to determine if Blacklist is either null or the entity is not on the list
     /// Duplicate of equivalent Whitelist function
     /// </summary>
@@ -145,24 +169,27 @@ public sealed class EntityWhitelistSystem : EntitySystem
         return IsWhitelistFailOrNull(blacklist, uid);
     }
 
-    private void EnsureRegistrations(EntityWhitelist list)
+    private List<ComponentRegistration> StringsToRegs(string[]? input)
     {
-        if (list.Components == null)
-            return;
+        var list = new List<ComponentRegistration>();
 
-        list.Registrations = new List<ComponentRegistration>();
-        foreach (var name in list.Components)
+        if (input == null || input.Length == 0)
+            return list;
+
+        foreach (var name in input)
         {
             var availability = _factory.GetComponentAvailability(name);
             if (_factory.TryGetRegistration(name, out var registration)
                 && availability == ComponentAvailability.Available)
             {
-                list.Registrations.Add(registration);
+                list.Add(registration);
             }
             else if (availability == ComponentAvailability.Unknown)
             {
-                Log.Warning($"Unknown component name {name} passed to EntityWhitelist!");
+                Log.Error($"StringsToRegs failed: Unknown component name {name} passed to EntityWhitelist!");
             }
         }
+
+        return list;
     }
 }
