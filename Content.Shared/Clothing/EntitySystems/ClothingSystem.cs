@@ -121,6 +121,8 @@ public abstract class ClothingSystem : EntitySystem
     {
         if (args.Current is not ClothingComponentState state)
             return;
+
+        SetEquippedPrefix(uid, state.EquippedPrefix, component);
     }
 
     /// imp start
