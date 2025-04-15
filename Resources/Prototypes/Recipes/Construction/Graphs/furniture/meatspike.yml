@@ -15,14 +15,14 @@
             - !type:AdminLog # Needs a log for start of attempt in addition to the completion log
               message: "Construction"
               impact: High
-      steps:
-      - material: Steel
-        amount: 15
-        doAfter: 2
           steps:
-            - material: Steel
-              amount: 15
-              doAfter: 2
+          - material: Steel
+            amount: 15
+            doAfter: 2
+              steps:
+                - material: Steel
+                  amount: 15
+                  doAfter: 2
 
     - node: assembly
       entity: KitchenSpikeAssembly
