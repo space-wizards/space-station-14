@@ -728,7 +728,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkDarkandStormyGlass
-  suffix: dark & stormy
+  suffix: dark and stormy
   components:
   - type: SolutionContainerManager
     solutions:

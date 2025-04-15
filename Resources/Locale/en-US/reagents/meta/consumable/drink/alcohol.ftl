@@ -61,7 +61,7 @@ reagent-desc-champagne = A premium sparkling wine
 reagent-name-acid-spit = acidspit
 reagent-desc-acid-spit = A drink for the daring, can be deadly if incorrectly prepared!
 
-reagent-name-alien-brain-hemorrhage = Alien Brain Hemorrhage
+reagent-name-alien-brain-hemorrhage = alien brain hemorrhage
 reagent-desc-alien-brain-hemorrhage = You might want to get that checked out at Med.
 
 reagent-name-allies-cocktail = allies cocktail
@@ -121,13 +121,13 @@ reagent-desc-coconut-rum = Rum with coconut for that tropical feel.
 reagent-name-cosmopolitan = cosmopolitan
 reagent-desc-cosmopolitan = Even in the worst situations, nothing beats a fresh cosmopolitan.
 
-reagent-name-crush-depth = Crush Depth
+reagent-name-crush-depth = crush depth
 reagent-desc-crush-depth = A stygian drink, harkening back to the abyssopelagic. Dark and Cold, it serves as a reminder that the most ancient emotion is fear, and the strongest type of fear is that of the unknown.
 
 reagent-name-cuba-libre = Cuba libre
 reagent-desc-cuba-libre = Rum, mixed with cola. Viva la revolucion.
 
-reagent-name-dark-and-stormy = Dark & Stormy
+reagent-name-dark-and-stormy = dark & stormy
 reagent-desc-dark-and-stormy = You can almost hear the thunder.
 
 reagent-name-demons-blood = Demon's Blood
@@ -142,7 +142,7 @@ reagent-desc-doctors-delight = A gulp a day keeps the MediBot away. That's proba
 reagent-name-driest-martini = driest martini
 reagent-desc-driest-martini = Only for the experienced. You think you see sand floating in the glass.
 
-reagent-name-electric-shark = Electric Shark
+reagent-name-electric-shark = electric shark
 reagent-desc-electric-shark = Fun Shark fact: Selachians make up 20% of Space Station 16’s Engineering staff!
 
 reagent-name-erika-surprise = Erika surprise
@@ -181,13 +181,13 @@ reagent-desc-irish-cream = Whiskey-imbued cream. What else could you expect from
 reagent-name-irish-coffee = Irish coffee
 reagent-desc-irish-coffee = Coffee served with irish cream. Regular cream just isn't the same!
 
-reagent-name-jack-rose = Jack Rose
+reagent-name-jack-rose = Jack rose
 reagent-desc-jack-rose = Excessively Red.
 
-reagent-name-jungle-bird = Jungle Bird
+reagent-name-jungle-bird = jungle bird
 reagent-desc-jungle-bird = Despite the name, it’s not exceptionally popular among Voxes.
 
-reagent-name-kalimotxo = Kalimotxo
+reagent-name-kalimotxo = kalimotxo
 reagent-desc-kalimotxo = A high-class Cuba Libre, for the discerning alcoholic.
 
 reagent-name-kira-special = Kira special
@@ -223,7 +223,7 @@ reagent-desc-mead = A Viking's drink, though a cheap one.
 reagent-name-mojito = Mojito
 reagent-desc-mojito = If it's good enough for Spesscuba, it's good enough for you.
 
-reagent-name-monkey-business = Monkey Business
+reagent-name-monkey-business = monkey business
 reagent-desc-monkey-business = You’ve got to wonder how the monkeys feel about this drink.
 
 reagent-name-moonshine = moonshine
@@ -241,7 +241,7 @@ reagent-desc-patron = Tequila with silver in it, a favorite of alcoholic women i
 reagent-name-pina-colada = Piña Colada
 reagent-desc-pina-colada = For getting lost in the rain.
 
-reagent-name-radler = Radler
+reagent-name-radler = radler
 reagent-desc-radler = A simple but staple classic, straight out of Space-Germany
 
 reagent-name-red-mead = red mead
@@ -283,7 +283,7 @@ reagent-desc-three-mile-island = "Made for a woman, strong enough for a man."
 reagent-name-toxins-special = toxins special
 reagent-desc-toxins-special = This thing is ON FIRE! CALL THE DAMN SHUTTLE!
 
-reagent-name-vampiro = Vampiro
+reagent-name-vampiro = vampiro
 reagent-desc-vampiro = Popular in Mexico and Transylvania.
 
 reagent-name-vodka-martini = vodka martini
