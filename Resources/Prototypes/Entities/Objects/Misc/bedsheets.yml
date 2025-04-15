@@ -10,7 +10,7 @@
     - Bed
   components:
   - type: Sprite
-    drawdepth: Overdoors # DS14
+    drawdepth: OverMobs # DS14
     sprite: Objects/Misc/bedsheets.rsi
     noRot: true
   - type: Item

@@ -8,7 +8,7 @@
     - Bed
   components:
   - type: Sprite
-    drawdepth: Overdoors
+    drawdepth: OverMobs
     sprite: _DeadSpace/Objects/Misc/bedsheets.rsi
     noRot: true
   - type: Item
