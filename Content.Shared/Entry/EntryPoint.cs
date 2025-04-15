@@ -12,7 +12,6 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Sequence;
 using Robust.Shared.Serialization.Markdown.Value;
-using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Entry
@@ -22,7 +21,6 @@ namespace Content.Shared.Entry
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IResourceManager _resMan = default!;
-        [Dependency] private readonly ToolshedManager _toolshed = default!;
 
         private readonly ResPath _ignoreFileDirectory = new("/IgnoredPrototypes/");
 
@@ -46,12 +44,10 @@ namespace Content.Shared.Entry
         {
             base.PostInit();
 
-            _toolshed.Startup(snakeCase: true);
             InitTileDefinitions();
             IoCManager.Resolve<MarkingManager>().Initialize();
 
 #if DEBUG
-            // Damn if only we had some kind of development cvars file, that'd be neat.
             var configMan = IoCManager.Resolve<IConfigurationManager>();
             configMan.OverrideDefault(CVars.NetFakeLagMin, 0.075f);
             configMan.OverrideDefault(CVars.NetFakeLoss, 0.005f);

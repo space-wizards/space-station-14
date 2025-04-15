@@ -61,3 +61,6 @@ enabled = true
 privacy_policy_link = "https://spacestation14.com/about/privacy/#game-server-privacy-policy"
 privacy_policy_identifier = "wizden"
 privacy_policy_version = "2025-01-19"
+
+[toolshed]
+snake_case = true
