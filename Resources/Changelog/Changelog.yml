@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Bhijn and Myr
-  changes:
-  - message: The Admin Message system now contains an introductory message as the
-      very first message shown to a user, before any messages are written or received.
-      This message serves primarily to remind ahelping players (whom are likely to
-      be experiencing strong emotion) to remember that admins are humans, too.
-    type: Add
-  id: 7692
-  time: '2024-12-09T08:54:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33348
 - author: ScarKy0
   changes:
   - message: You can now pet the AI Core.
@@ -3905,3 +3895,12 @@
   id: 8191
   time: '2025-04-15T22:38:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36604
+- author: EmoGarbage404
+  changes:
+  - message: Restored Artifexium's interaction with artifacts. Now, a single spray
+      will randomly activate one of the triggers for a node, allowing you to subvert
+      puzzling artifacts.
+    type: Add
+  id: 8192
+  time: '2025-04-15T22:49:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36595
