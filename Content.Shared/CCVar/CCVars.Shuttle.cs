@@ -1,9 +1,17 @@
-﻿using Robust.Shared.Configuration;
+﻿using Content.Shared.Administration;
+using Content.Shared.CCVar.CVarAccess;
+using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
 public sealed partial class CCVars
 {
+    /// <summary>
+    ///     Delay for auto-orientation. Used for people arriving via arrivals.
+    /// </summary>
+    public static readonly CVarDef<double> AutoOrientDelay =
+        CVarDef.Create("shuttle.auto_orient_delay", 2.0, CVar.SERVER | CVar.REPLICATED);
+
     /// <summary>
     ///     If true then the camera will match the grid / map and is unchangeable.
     ///     - When traversing grids it will snap to 0 degrees rotation.
@@ -164,6 +172,7 @@ public sealed partial class CCVars
     /// <summary>
     ///     Time in minutes after round start to auto-call the shuttle. Set to zero to disable.
     /// </summary>
+    [CVarControl(AdminFlags.Server | AdminFlags.Mapping, min: 0, max: int.MaxValue)]
     public static readonly CVarDef<int> EmergencyShuttleAutoCallTime =
         CVarDef.Create("shuttle.auto_call_time", 90, CVar.SERVERONLY);
 
