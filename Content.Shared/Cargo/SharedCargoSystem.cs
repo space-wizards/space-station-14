@@ -3,11 +3,27 @@ using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Cargo;
 
 public abstract class SharedCargoSystem : EntitySystem
 {
+    [Dependency] protected readonly IGameTiming Timing = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<StationBankAccountComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(Entity<StationBankAccountComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextIncomeTime = Timing.CurTime + ent.Comp.IncomeDelay;
+        Dirty(ent);
+    }
+
     /// <summary>
     /// For a given station, retrieves the balance in a specific account.
     /// </summary>
