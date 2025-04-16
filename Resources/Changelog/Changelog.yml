@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: The A.P.E. guidebook entry now contains information about Sigma particles
-      and transformation effects.
-    type: Tweak
-  id: 7700
-  time: '2024-12-12T14:24:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33558
 - author: lzk228
   changes:
   - message: Disabled evac after declaring nuke war is increased from 15 to 25 minutes.
@@ -3909,3 +3901,11 @@
   id: 8199
   time: '2025-04-16T18:21:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36485
+- author: ScarKy0
+  changes:
+  - message: A basic sheet crate can now be ordered for 1660 spesos. It contains 30
+      steel, glass and plastic.
+    type: Add
+  id: 8200
+  time: '2025-04-16T19:20:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36419
