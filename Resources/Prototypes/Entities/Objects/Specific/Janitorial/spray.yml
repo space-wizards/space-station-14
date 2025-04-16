@@ -130,6 +130,8 @@
         mask:
         - FullTileMask
         - Opaque
+        layer:
+        - ItemMask
   - type: Appearance
   - type: VaporVisuals
 
