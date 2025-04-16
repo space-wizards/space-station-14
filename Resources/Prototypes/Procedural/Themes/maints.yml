@@ -164,6 +164,7 @@
   name: Maints interior marker
   components:
   - type: RoomFill
+    clearExisting: false
     roomWhitelist:
       tags:
       - Maints
