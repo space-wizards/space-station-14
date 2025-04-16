@@ -31,7 +31,6 @@ public sealed class HealingSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly StackSystem _stacks = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
@@ -115,9 +114,7 @@ public sealed class HealingSystem : EntitySystem
                 $"{EntityManager.ToPrettyString(args.User):user} healed themselves for {total:damage} damage");
         }
 
-        var healingEndSoundSpecifier = healing.HealingEndSound;
-        healingEndSoundSpecifier?.Params.WithVariation(0.125f).WithVolume(1f);
-        _audio.PlayPvs(healingEndSoundSpecifier, entity.Owner);
+        _audio.PlayPvs(healing.HealingEndSound, entity.Owner);
 
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = (HasDamage(entity, healing) && !dontRepeat);
@@ -200,9 +197,7 @@ public sealed class HealingSystem : EntitySystem
             return false;
         }
 
-        var healingBeginSoundSpecifier = component.HealingBeginSound;
-        healingBeginSoundSpecifier?.Params.WithVariation(0.125f).WithVolume(1f);
-        _audio.PlayPvs(healingBeginSoundSpecifier, uid);
+        _audio.PlayPvs(component.HealingBeginSound, uid);
 
         var isNotSelf = user != target;
 
