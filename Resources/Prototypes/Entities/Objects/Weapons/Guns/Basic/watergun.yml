@@ -101,7 +101,7 @@
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
     size: Large
     shape:
-    - 0,0,3,1
+    - 0,0,2,1
   - type: RandomSprite
     getAllGroups: true
     available:
@@ -140,7 +140,7 @@
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
     size: Large
     shape:
-    - 0,0,3,1
+    - 0,0,2,1
   - type: RandomSprite
     getAllGroups: true
     available:

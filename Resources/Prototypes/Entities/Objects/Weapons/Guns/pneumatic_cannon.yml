@@ -13,6 +13,8 @@
       visible: false
   - type: Item
     size: Huge
+    shape:
+    - 0,0,3,2
   - type: Clothing
     quickEquip: false
     slots:
@@ -93,7 +95,8 @@
   - type: ContainerAmmoProvider
     container: storagebase
   - type: Item
-    size: Normal
+    size: Large
+    storedRotation: -180
   - type: Clothing
     sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
     quickEquip: false
@@ -103,7 +106,7 @@
     containers:
       storagebase: !type:Container
         ents: []
-        
+
 - type: entity
   name: syringe gun
   parent: BaseStorageItem
@@ -135,7 +138,9 @@
   - type: ContainerAmmoProvider
     container: storagebase
   - type: Item
-    size: Normal
+    size: Large
+    shape:
+    - 0,0,2,1
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

@@ -223,8 +223,7 @@
   - type: Item
     size: Small
     shape:
-    - 0,0,0,1
-    storedRotation: 90
+    - 0,0,1,0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/hm_pistol.rsi
   - type: Clothing

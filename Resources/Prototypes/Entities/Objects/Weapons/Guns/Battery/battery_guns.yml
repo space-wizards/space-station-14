@@ -178,6 +178,8 @@
   id: WeaponTeslaGun
   description: The power of the primordial element of lightning in your hands.
   components:
+  - type: Item
+    size: Large
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/tesla_gun.rsi
     layers:
@@ -205,12 +207,12 @@
   name: practice laser carbine
   parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponLaserCarbinePractice
-  description: This modified laser rifle fires nearly harmless beams in the 40-watt range, for target practice.
+  description: This modified laser carbine fires nearly harmless beams in the 40-watt range, for target practice.
   components:
   - type: Item
     size: Huge
     shape:
-    - 0,0,4,1
+    - 0,0,3,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     layers:
@@ -291,7 +293,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,4,1
+    - 0,0,3,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
     layers:
@@ -331,7 +333,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,5,1
+    - 0,0,4,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
     layers:
@@ -367,7 +369,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,5,1
+    - 0,0,4,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
     layers:
@@ -434,7 +436,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,5,1
+    - 0,0,4,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
     layers:
@@ -607,6 +609,7 @@
   description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with a mahogany grip and chrome filigree. The object menaces with spikes of energy. On the item is an image of a captain and a clown. The clown is dead. The captain is striking a heroic pose.
   components:
   - type: Item
+    size: Normal
     shape:
     - 0,0,1,1
   - type: Sprite
