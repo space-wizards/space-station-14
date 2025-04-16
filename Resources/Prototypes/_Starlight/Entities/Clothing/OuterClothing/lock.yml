@@ -1,9 +1,0 @@
-- type: entity
-  parent: ClothingOuterHardsuitJuggernaut
-  id: ClothingOuterHardsuitJuggernautLocked
-  suffix: Locked
-  components:
-  - type: AccessReader
-    access: [[ "NuclearOperative" ]]
-  - type: AccessClothingBlocker
-    access: NuclearOperative

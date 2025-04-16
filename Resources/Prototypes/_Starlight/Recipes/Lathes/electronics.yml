@@ -1,4 +1,0 @@
-- type: latheRecipe
-  parent: BaseCircuitboardRecipe
-  id: OvenMachineCircuitboard
-  result: OvenMachineCircuitboard

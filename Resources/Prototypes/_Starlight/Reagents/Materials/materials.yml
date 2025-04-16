@@ -1,7 +1,0 @@
-- type: material
-  id: SheetPrinter
-  stackEntity: SheetPrinter1
-  name: materials-paper
-  icon: { sprite: Objects/Misc/bureaucracy.rsi, state: paper }
-  color: "#ffffff"
-  price: 0.05
