@@ -29,7 +29,6 @@ namespace Content.Client.Lobby
         {
             _netManager.RegisterNetMessage<MsgPreferencesAndSettings>(HandlePreferencesAndSettings);
             _netManager.RegisterNetMessage<MsgUpdateCharacter>();
-            _netManager.RegisterNetMessage<MsgSelectCharacter>();
             _netManager.RegisterNetMessage<MsgDeleteCharacter>();
             _netManager.RegisterNetMessage<MsgSetCharacterEnable>();
 
