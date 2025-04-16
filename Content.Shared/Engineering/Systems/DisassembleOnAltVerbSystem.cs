@@ -6,11 +6,10 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Engineering.Systems;
 
-public sealed partial class DisassembleOnAltVerbSystem : EntitySystem
+public sealed class DisassembleOnAltVerbSystem : EntitySystem
 {
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -50,12 +49,9 @@ public sealed partial class DisassembleOnAltVerbSystem : EntitySystem
 
     private void OnDisassembleDoAfter(Entity<DisassembleOnAltVerbComponent> entity, ref DisassembleDoAfterEvent args)
     {
-        if (!_net.IsServer) // This is odd but it works :)
-            return;
-
-        if (TrySpawnNextTo(entity.Comp.PrototypeToSpawn, entity.Owner, out var spawnedEnt))
+        if (PredictedTrySpawnNextTo(entity.Comp.PrototypeToSpawn, entity.Owner, out var spawnedEnt))
             _handsSystem.TryPickup(args.User, spawnedEnt.Value);
 
-        QueueDel(entity.Owner);
+        PredictedQueueDel(entity.Owner);
     }
 }

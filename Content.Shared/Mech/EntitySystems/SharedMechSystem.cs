@@ -126,9 +126,6 @@ public abstract class SharedMechSystem : EntitySystem
         rider.Mech = mech;
         Dirty(pilot, rider);
 
-        if (_net.IsClient)
-            return;
-
         _actions.AddAction(pilot, ref component.MechCycleActionEntity, component.MechCycleAction, mech);
         _actions.AddAction(pilot, ref component.MechUiActionEntity, component.MechUiAction, mech);
         _actions.AddAction(pilot, ref component.MechEjectActionEntity, component.MechEjectAction, mech);

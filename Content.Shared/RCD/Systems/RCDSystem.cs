@@ -31,8 +31,6 @@ namespace Content.Shared.RCD.Systems;
 [Virtual]
 public class RCDSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] private readonly FloorTileSystem _floors = default!;
@@ -146,9 +144,6 @@ public class RCDSystem : EntitySystem
         if (!IsRCDOperationStillValid(uid, component, mapGridData.Value, args.Target, args.User))
             return;
 
-        if (!_net.IsServer)
-            return;
-
         // Get the starting cost, delay, and effect from the prototype
         var cost = component.CachedPrototype.Cost;
         var delay = component.CachedPrototype.Delay;
@@ -205,7 +200,7 @@ public class RCDSystem : EntitySystem
         #endregion
 
         // Try to start the do after
-        var effect = Spawn(effectPrototype, mapGridData.Value.Location);
+        var effect = PredictedSpawnAttachedTo(effectPrototype, mapGridData.Value.Location);
         var ev = new RCDDoAfterEvent(GetNetCoordinates(mapGridData.Value.Location), component.ConstructionDirection, component.ProtoId, cost, EntityManager.GetNetEntity(effect));
 
         var doAfterArgs = new DoAfterArgs(EntityManager, user, delay, ev, uid, target: args.Target, used: uid)
@@ -221,7 +216,7 @@ public class RCDSystem : EntitySystem
         args.Handled = true;
 
         if (!_doAfter.TryStartDoAfter(doAfterArgs))
-            QueueDel(effect);
+            PredictedQueueDel(effect);
     }
 
     private void OnDoAfterAttempt(EntityUid uid, RCDComponent component, DoAfterAttemptEvent<RCDDoAfterEvent> args)
@@ -251,10 +246,10 @@ public class RCDSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, RCDComponent component, RCDDoAfterEvent args)
     {
-        if (args.Cancelled && _net.IsServer)
-            QueueDel(EntityManager.GetEntity(args.Effect));
+        if (args.Cancelled)
+            PredictedQueueDel(EntityManager.GetEntity(args.Effect));
 
-        if (args.Handled || args.Cancelled || !_timing.IsFirstTimePredicted)
+        if (args.Handled || args.Cancelled)
             return;
 
         args.Handled = true;
@@ -502,9 +497,6 @@ public class RCDSystem : EntitySystem
 
     private void FinalizeRCDOperation(EntityUid uid, RCDComponent component, MapGridData mapGridData, Direction direction, EntityUid? target, EntityUid user)
     {
-        if (!_net.IsServer)
-            return;
-
         if (component.CachedPrototype.Prototype == null)
             return;
 
@@ -517,6 +509,7 @@ public class RCDSystem : EntitySystem
 
             case RcdMode.ConstructObject:
                 var ent = Spawn(component.CachedPrototype.Prototype, _mapSystem.GridTileToLocal(mapGridData.GridUid, mapGridData.Component, mapGridData.Position));
+                FlagPredicted(ent);
 
                 switch (component.CachedPrototype.Rotation)
                 {
@@ -547,7 +540,7 @@ public class RCDSystem : EntitySystem
                 {
                     // Deconstruct object
                     _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to delete {ToPrettyString(target):target}");
-                    QueueDel(target);
+                    PredictedQueueDel(target);
                 }
 
                 break;

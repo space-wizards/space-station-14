@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
@@ -7,6 +8,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -84,9 +86,7 @@ public sealed class InteractionPopupSystem : EntitySystem
         var msg = ""; // Stores the text to be shown in the popup message
         SoundSpecifier? sfx = null; // Stores the filepath of the sound to be played
 
-        var predict = component.SuccessChance is 0 or 1
-                      && component.InteractSuccessSpawn == null
-                      && component.InteractFailureSpawn == null;
+        var predict = component.SuccessChance is 0 or 1;
 
         if (_netMan.IsClient && !predict)
             return;
@@ -100,7 +100,7 @@ public sealed class InteractionPopupSystem : EntitySystem
                 sfx = component.InteractSuccessSound;
 
             if (component.InteractSuccessSpawn != null)
-                Spawn(component.InteractSuccessSpawn, _transform.GetMapCoordinates(uid));
+                PredictedSpawnAtPosition(component.InteractSuccessSpawn, new EntityCoordinates(uid, Vector2.Zero));
 
             var ev = new InteractionSuccessEvent(user);
             RaiseLocalEvent(target, ref ev);
@@ -114,7 +114,7 @@ public sealed class InteractionPopupSystem : EntitySystem
                 sfx = component.InteractFailureSound;
 
             if (component.InteractFailureSpawn != null)
-                Spawn(component.InteractFailureSpawn, _transform.GetMapCoordinates(uid));
+                PredictedSpawnAtPosition(component.InteractSuccessSpawn, new EntityCoordinates(uid, Vector2.Zero));
 
             var ev = new InteractionFailureEvent(user);
             RaiseLocalEvent(target, ref ev);

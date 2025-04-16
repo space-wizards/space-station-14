@@ -184,7 +184,7 @@ public abstract partial class SharedGunSystem
                     // The problem is client will dump the cartridge on the ground and the new server state
                     // won't correspond due to randomness so looks weird
                     // but we also need to always take it from the chamber or else ammocount won't be correct.
-                    TransformSystem.DetachParentToNull(chambered.Value, Transform(chambered.Value));
+                    TransformSystem.DetachEntity(chambered.Value, Transform(chambered.Value));
                 }
 
                 UpdateAmmoCount(uid);
@@ -232,24 +232,9 @@ public abstract partial class SharedGunSystem
                 var ammoEv = new GetAmmoCountEvent();
                 RaiseLocalEvent(magEnt.Value, ref ammoEv);
                 FinaliseMagazineTakeAmmo(uid, component, ammoEv.Count, ammoEv.Capacity, user, appearance);
-                UpdateAmmoCount(uid);
-
-                // Clientside reconciliation things
-                if (_netManager.IsClient)
-                {
-                    foreach (var (ent, _) in relayedArgs.Ammo)
-                    {
-                        if (!IsClientSide(ent!.Value))
-                            continue;
-
-                        Del(ent.Value);
-                    }
-                }
             }
-            else
-            {
-                UpdateAmmoCount(uid);
-            }
+
+            UpdateAmmoCount(uid);
 
             result = true;
         }
@@ -308,7 +293,16 @@ public abstract partial class SharedGunSystem
         if (entity == null)
             return false;
 
+        // TODO: Xform caching
         Containers.Remove(entity.Value, container);
+
+        // Normally it would attach to the place the firer is at, wait for server state to come in, then move
+        // This looks weird when moving and shooting so we'll just detach it on client.
+        if (_netManager.IsClient)
+        {
+            TransformSystem.DetachEntity(entity.Value, Transform(entity.Value));
+        }
+
         return true;
     }
 

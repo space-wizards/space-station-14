@@ -58,13 +58,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
             _hands.PickupOrDrop(args.User, ent, dropNear: true);
         }
 
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
-        // TODO add predicted pop-up overrides.
-        if (_net.IsServer)
-            _popup.PopupEntity(Loc.GetString("encryption-keys-all-extracted"), uid, args.User);
-
+        _popup.PopupPredicted(Loc.GetString("encryption-keys-all-extracted"), uid, args.User);
         _audio.PlayPredicted(component.KeyExtractionSound, uid, args.User);
     }
 

@@ -320,10 +320,7 @@ public sealed partial class StaminaSystem : EntitySystem
             _color.RaiseEffect(Color.Aqua, new List<EntityUid>() { uid }, Filter.Pvs(uid, entityManager: EntityManager));
         }
 
-        if (_net.IsServer)
-        {
-            _audio.PlayPvs(sound, uid);
-        }
+        _audio.PlayPredicted(sound, uid, user: source);
     }
 
     public override void Update(float frameTime)

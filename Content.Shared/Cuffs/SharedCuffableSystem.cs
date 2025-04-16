@@ -341,6 +341,7 @@ namespace Content.Shared.Cuffs
             if (!args.Cancelled && TryAddNewCuffs(target, user, uid, cuffable))
             {
                 component.Used = true;
+                Dirty(uid, component);
                 _audio.PlayPredicted(component.EndCuffSound, uid, user);
 
                 var popupText = (user == target)
@@ -700,23 +701,21 @@ namespace Content.Shared.Cuffs
 
             cuff.Removing = true;
             cuff.Used = false;
+            Dirty(cuffsToRemove, cuff);
             _audio.PlayPredicted(cuff.EndUncuffSound, target, user);
 
             _container.Remove(cuffsToRemove, cuffable.Container);
 
-            if (_net.IsServer)
+            if (cuff.BreakOnRemove)
             {
-                // Handles spawning broken cuffs on server to avoid client misprediction
-                if (cuff.BreakOnRemove)
-                {
-                    QueueDel(cuffsToRemove);
-                    var trash = Spawn(cuff.BrokenPrototype, Transform(cuffsToRemove).Coordinates);
-                    _hands.PickupOrDrop(user, trash);
-                }
-                else
-                {
-                    _hands.PickupOrDrop(user, cuffsToRemove);
-                }
+                PredictedQueueDel(cuffsToRemove);
+                var trash = Spawn(cuff.BrokenPrototype, Transform(cuffsToRemove).Coordinates);
+                EntityManager.FlagPredicted(trash);
+                _hands.PickupOrDrop(user, trash);
+            }
+            else
+            {
+                _hands.PickupOrDrop(user, cuffsToRemove);
             }
 
             var shoved = false;

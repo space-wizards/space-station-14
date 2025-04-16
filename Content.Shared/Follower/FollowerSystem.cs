@@ -270,14 +270,8 @@ public sealed class FollowerSystem : EntitySystem
         if (xform.MapUid != null)
             return;
 
-        if (_netMan.IsClient)
-        {
-            _transform.DetachEntity(uid, xform);
-            return;
-        }
-
         Log.Warning($"A follower has been detached to null-space and will be deleted. Follower: {ToPrettyString(uid)}. Followed: {ToPrettyString(target)}");
-        QueueDel(uid);
+        PredictedQueueDel(uid);
     }
 
     /// <summary>

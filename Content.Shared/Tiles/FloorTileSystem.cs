@@ -86,8 +86,7 @@ public sealed class FloorTileSystem : EntitySystem
 
         if (!state.inRange)
         {
-            if (_netManager.IsClient && _timing.IsFirstTimePredicted)
-                _popup.PopupEntity(Loc.GetString("invalid-floor-placement"), args.User);
+            _popup.PopupClient(Loc.GetString("invalid-floor-placement"), args.User);
 
             return;
         }

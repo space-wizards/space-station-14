@@ -216,8 +216,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         Dirty(uid, component);
         EmptyContents(uid, component);
         ModifyComponents(uid, component);
-        if (_net.IsClient && _timing.IsFirstTimePredicted)
-            _audio.PlayPvs(component.OpenSound, uid);
+        _audio.PlayPredicted(component.OpenSound, uid, );
         ReleaseGas(uid, component);
         var afterev = new StorageAfterOpenEvent();
         RaiseLocalEvent(uid, ref afterev);
@@ -401,8 +400,8 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             var newCoords = new EntityCoordinates(target, component.EnteringOffset);
             if (!_interaction.InRangeUnobstructed(target, newCoords, 0, collisionMask: component.EnteringOffsetCollisionFlags))
             {
-                if (!silent && _net.IsServer)
-                    Popup.PopupEntity(Loc.GetString("entity-storage-component-cannot-open-no-space"), target);
+                if (!silent)
+                    Popup.PopupClient(Loc.GetString("entity-storage-component-cannot-open-no-space"), target);
                 return false;
             }
         }
