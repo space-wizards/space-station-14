@@ -40,8 +40,6 @@
   - type: ProjectileGrenade
     fillPrototype: PelletClusterRubber
     capacity: 30
-  - type: FlashOnTrigger
-    range: 7
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"

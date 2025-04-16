@@ -58,7 +58,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly SpeedModifierContactsSystem _speedModContacts = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+
 
     [ValidatePrototypeId<ReagentPrototype>]
     private const string Blood = "Blood";
@@ -629,7 +630,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return false;
         }
 
-        var gridUid = coordinates.GetGridUid(EntityManager);
+        var gridUid = _transform.GetGrid(coordinates);
+
         if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
         {
             puddleUid = EntityUid.Invalid;
