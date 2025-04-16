@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Litraxx
-  changes:
-  - message: Renamed the Dungeon Master lawset to Game Master lawset
-    type: Fix
-  id: 7706
-  time: '2024-12-16T11:52:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33678
 - author: psykana
   changes:
   - message: Zombies can now see initial infected
@@ -3909,3 +3902,11 @@
   id: 8205
   time: '2025-04-16T23:14:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34121
+- author: SpaceRox1244
+  changes:
+  - message: Cargo can now order handheld artifact containers for transporting small
+      artifacts.
+    type: Add
+  id: 8206
+  time: '2025-04-16T23:35:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33327
