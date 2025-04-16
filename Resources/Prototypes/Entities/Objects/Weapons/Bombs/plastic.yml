@@ -112,6 +112,7 @@
   description: It finds this situation quite hilarious.
   parent: [BasePlasticExplosive, BaseSyndicateContraband]
   id: CluwneBomb
+  suffix: Real
   components:
   - type: Sprite
     sprite: Objects/Weapons/Bombs/cluwne_bomb.rsi
@@ -145,8 +146,9 @@
   description: It finds this situation quite hilarious.
   parent: [BasePlasticExplosive, BaseSyndicateContraband, CluwneBomb]
   id: FakeCluwneBomb
+  suffix: Decoy
   components:
-  - type: Explosive 
+  - type: Explosive
     explosionType: Radioactive
     totalIntensity: 0.1
     intensitySlope: 0.1
