@@ -32,6 +32,7 @@ internal sealed class AdminNameOverlay : Overlay
     private float _ghostHideDistance;
     private int _overlayStackMax;
     private float _overlayMergeDistance;
+    private AdminOverlayStackSortBy _overlayStackSortBy;
 
     //TODO make this adjustable via GUI
     private readonly ProtoId<RoleTypePrototype>[] _filter =
@@ -65,6 +66,15 @@ internal sealed class AdminNameOverlay : Overlay
         config.OnValueChanged(CCVars.AdminOverlayGhostFadeDistance, (f) => { _ghostFadeDistance = f; }, true);
         config.OnValueChanged(CCVars.AdminOverlayStackMax, (i) => { _overlayStackMax = i; }, true);
         config.OnValueChanged(CCVars.AdminOverlayMergeDistance, (f) => { _overlayMergeDistance = f; }, true);
+        config.OnValueChanged(CCVars.AdminOverlayStackSortBy, (show) => { _overlayStackSortBy = UpdateOverlaySortBy(show); }, true);
+    }
+
+    private AdminOverlayStackSortBy UpdateOverlaySortBy(string sortString)
+    {
+        if (!Enum.TryParse<AdminOverlayStackSortBy>(sortString, out var sort))
+            sort = AdminOverlayStackSortBy.Character;
+
+        return sort;
     }
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
@@ -100,8 +110,24 @@ internal sealed class AdminNameOverlay : Overlay
             sortable.Add((info, aabb, entity.Value, screenCoordinates));
         }
 
-        // Draw overlays for visible players, starting from the top of the screen
-        foreach (var info in sortable.OrderBy(s => s.Item4.Y).ToList())
+        // Determine the order  in which overlays will be stacked
+        var sorted = sortable;
+        switch (_overlayStackSortBy)
+        {
+            case AdminOverlayStackSortBy.User:
+                sorted = sortable.OrderBy(s => s.Item1.Username).ToList();
+                break;
+            case AdminOverlayStackSortBy.Vertical: //TODO causes flickering of the order in some cases
+                sorted = sortable.OrderBy(s => s.Item4.Y).ToList();
+                break;
+            default:
+            case AdminOverlayStackSortBy.Character:
+                sorted = sortable.OrderBy(s => s.Item1.CharacterName).ToList();
+                break;
+        }
+
+        // Draw overlays in the provided order
+        foreach (var info in sorted)
         {
             var playerInfo = info.Item1;
             var aabb = info.Item2;

@@ -99,6 +99,12 @@ public sealed partial class CCVars
         CVarDef.Create("ui.admin_overlay_merge_distance", 0.33f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     /// <summary>
+    /// Determines the order in which overlay entries are stacked
+    /// </summary>
+    public static readonly CVarDef<string> AdminOverlayStackSortBy =
+        CVarDef.Create("ui.admin_overlay_stack_sort_by", "Character", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+    /// <summary>
     /// The maximum size that an overlay stack can reach. Additional overlays will be superimposed over the last one.
     /// </summary>
     public static readonly CVarDef<int> AdminOverlayStackMax =
