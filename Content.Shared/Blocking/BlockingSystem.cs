@@ -313,7 +313,7 @@ public sealed partial class BlockingSystem : EntitySystem
 
     private void OnVerbExamine(EntityUid uid, BlockingComponent component, GetVerbsEvent<ExamineVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess || !_net.IsServer)
+        if (!args.CanInteract || !args.CanAccess)
             return;
 
         var fraction = component.IsBlocking ? component.ActiveBlockFraction : component.PassiveBlockFraction;
