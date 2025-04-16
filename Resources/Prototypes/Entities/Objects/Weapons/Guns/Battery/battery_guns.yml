@@ -212,7 +212,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,3,1
+    - 0,0,3,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     layers:
@@ -293,7 +293,7 @@
   - type: Item
     size: Huge
     shape:
-    - 0,0,3,1
+    - 0,0,3,2
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
     layers:
