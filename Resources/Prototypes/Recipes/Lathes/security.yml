@@ -90,14 +90,6 @@
 
 - type: latheRecipe
   parent: BaseWeaponRecipeLong
-  id: WeaponLaserSvalinn
-  result: WeaponLaserSvalinn
-  materials:
-    Steel: 2000
-    Gold: 500
-
-- type: latheRecipe
-  parent: BaseWeaponRecipeLong
   id: WeaponTemperatureGun
   result: WeaponTemperatureGun
   materials:
