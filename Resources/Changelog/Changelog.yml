@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Disabled evac after declaring nuke war is increased from 15 to 25 minutes.
-    type: Tweak
-  id: 7701
-  time: '2024-12-13T03:10:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33628
 - author: LevitatingTree
   changes:
   - message: Lizards can now eat the Five Alarm Burger!
@@ -3909,3 +3902,11 @@
   id: 8200
   time: '2025-04-16T19:20:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36419
+- author: sowelipililimute
+  changes:
+  - message: The medical and security techfabs now announce new recipes that they
+      can fabricate as they are researched
+    type: Add
+  id: 8201
+  time: '2025-04-16T19:29:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34959
