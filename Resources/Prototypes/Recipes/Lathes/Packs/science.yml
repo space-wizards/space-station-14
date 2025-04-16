@@ -29,6 +29,7 @@
   - HoloprojectorField
   - SignallerAdvanced
   - DeviceQuantumSpinInverter
+  - DeviceDesynchronizer
 
 - type: latheRecipePack
   id: ScienceClothing
