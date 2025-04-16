@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix blank newlines on examine tooltips (e.g. tables).
-    type: Fix
-  id: 7696
-  time: '2024-12-10T13:45:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33813
 - author: slarticodefast
   changes:
   - message: Fixed the greytide virus event affecting non-station maps.
@@ -3903,3 +3896,10 @@
   id: 8195
   time: '2025-04-16T11:54:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36625
+- author: metalgearsloth
+  changes:
+  - message: Fixes tippy messages being too sh-
+    type: Fix
+  id: 8196
+  time: '2025-04-16T12:23:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36616
