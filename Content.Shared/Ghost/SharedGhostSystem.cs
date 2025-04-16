@@ -19,6 +19,8 @@ namespace Content.Shared.Ghost
         [Dependency] protected readonly EntityLookupSystem Lookup = default!;
         [Dependency] protected readonly IRobustRandom Random = default!;
 
+        private HashSet<EntityUid> _entitiesInRange = new();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -47,12 +49,10 @@ namespace Content.Shared.Ghost
             if (args.Handled)
                 return;
 
-            var entities = Lookup.GetEntitiesInRange(args.Performer, component.BooRadius).ToList();
-            // Shuffle the possible targets so we don't favor any particular entities
-            Random.Shuffle(entities);
+            Lookup.GetEntitiesInRange(args.Performer, component.BooRadius, _entitiesInRange);
 
             var booCounter = 0;
-            foreach (var ent in entities)
+            foreach (var ent in _entitiesInRange)
             {
                 var handled = DoGhostBooEvent(ent);
 
@@ -64,7 +64,7 @@ namespace Content.Shared.Ghost
             }
 
             if (booCounter == 0)
-                Popup.PopupEntity(Loc.GetString("ghost-component-boo-action-failed"), uid, uid);
+                Popup.PopupPredicted(Loc.GetString("ghost-component-boo-action-failed"), uid, uid);
 
             args.Handled = true;
         }
