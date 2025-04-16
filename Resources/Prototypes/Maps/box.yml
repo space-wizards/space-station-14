@@ -15,7 +15,7 @@
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_box.yml
         - type: StationJobs
-          availableJobs: # 63 jobs total w/o latejoins & interns, 81 jobs total w/ latejoins & interns
+          availableJobs: # 63 jobs total w/o latejoins & interns, 82 jobs total w/ latejoins & interns
             #Command (7)
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
