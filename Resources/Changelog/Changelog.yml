@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: BramvanZijp
-  changes:
-  - message: The Head of Security's Energy Shotgun has regained its ability to self
-      recharge, but only if the weapon has not been discharged in the last 10 seconds.
-    type: Add
-  - message: The Head of Security's Energy Shotgun now has a varying amount of shots
-      depending on the firing mode.
-    type: Tweak
-  - message: Energy based weapons with differing energy consumption depending on the
-      fire-mode will now update the ammo counter on the HUD when switching between
-      fire-modes.
-    type: Fix
-  id: 7699
-  time: '2024-12-11T16:21:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32104
 - author: Winkarst-cpu
   changes:
   - message: The A.P.E. guidebook entry now contains information about Sigma particles
@@ -3906,3 +3891,21 @@
   id: 8198
   time: '2025-04-16T17:58:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35447
+- author: UpAndLeaves
+  changes:
+  - message: Most clothing will no longer provide protection against zombification
+    type: Tweak
+  - message: Blunt/Slash/Piercing resistance will now provide weak protection against
+      zombification.
+    type: Tweak
+  - message: Winter coats are now moderately effective against zombification.
+    type: Tweak
+  - message: Bio suits are now very effective against zombification.
+    type: Tweak
+  - message: Security bio suits are now lightly armored.
+    type: Tweak
+  - message: Bio suits now only have 5% slowdown.
+    type: Tweak
+  id: 8199
+  time: '2025-04-16T18:21:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36485
