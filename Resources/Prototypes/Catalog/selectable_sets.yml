@@ -113,6 +113,7 @@
     sprite: Objects/Devices/jammer.rsi
     state: jammer
   content:
+  - EncryptionKeySyndie # 1 TC
   - ClothingHandsChameleonThief # 5 TC-ish
   - ClothingBackpackChameleonFill # 4 TC
   - ClothingMaskGasVoiceChameleon # 2 TC
@@ -121,7 +122,6 @@
   - RadioJammer # 3 TC
   - StealthBox # 5 TC
   - SyndicateJawsOfLife # 2 TC
-  - EncryptionKeySyndie # 1 TC
 
 - type: selectableSet
   id: SyndicateHitmanSet
@@ -131,6 +131,7 @@
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
     state: icon
   content:
+  - EncryptionKeySyndie # 1 TC
   - WeaponPistolCobra # 4 TC
   - MagazinePistolCaselessRifle # 1 TC x 3
   - MagazinePistolCaselessRifle
@@ -144,7 +145,6 @@
   - MedkitCombatFilled # 5 TC
   - ClothingUniformJumpsuitDetectiveGrey
   - ClothingHandsGlovesCombat
-  - EncryptionKeySyndie # 1 TC
 
 - type: selectableSet
   id: SyndicateImplantsSet
@@ -154,11 +154,11 @@
     sprite: Objects/Specific/Medical/syndi_implanter.rsi
     state: implanter0
   content:
+  - RadioImplanter # 2 TC
   - BoxHoloparasite # 14 TC
   - EmpImplanter # 2 TC
   - ScramImplanter # 6 TC
   - StorageImplanter # 8 TC
-  - RadioImplanter # 2 TC
 
 - type: selectableSet
   id: SyndicateHackerSet
@@ -168,6 +168,7 @@
     sprite: Objects/Misc/module.rsi
     state: std_mod
   content:
+  - EncryptionKeySyndie # 1 TC
   - AntimovCircuitBoard # 14 TC
   - AccessBreaker # 4 TC
   - Emag # 5 TC
@@ -175,7 +176,6 @@
   - ToolboxSyndicateFilled # 2 TC
   - ClothingEyesGlassesOutlawGlasses
   - EncryptionKeyBinarySyndicate # 1 TC
-  - EncryptionKeySyndie # 1 TC
 
 - type: selectableSet
   id: SyndicateDeswordSet
@@ -185,11 +185,11 @@
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
     state: icon
   content:
+  - EncryptionKeySyndie # 1 TC
   - EnergySwordDouble # 21 TC-ish, why not
   - StimkitFilled # 12 TC
   - DrinkSpaceGlue
   - ClothingNeckCloakVoid
-  - EncryptionKeySyndie # 1 TC
 
 - type: selectableSet
   id: SyndicateGrenadierSet
@@ -199,16 +199,16 @@
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
     state: icon
   content:
-  - EmpGrenade # 2 TC
-  - SingularityGrenade # 2 TC
-  - WhiteholeGrenade # 2 TC
+  - EncryptionKeySyndie # 1 TC
+  - SyndieMiniBomb # 6 TC
+  - ReinforcementRadioSyndicateSyndiCat # 6 TC
   - ExGrenade # 4 TC
   - GrenadeIncendiary # 4 TC
   - GrenadeShrapnel # 4 TC
+  - EmpGrenade # 2 TC
+  - SingularityGrenade # 2 TC
+  - WhiteholeGrenade # 2 TC
   - C4 # 2 TC
-  - SyndieMiniBomb # 6 TC
-  - ReinforcementRadioSyndicateSyndiCat # 6 TC
-  - EncryptionKeySyndie # 1 TC
 
 - type: selectableSet
   id: SyndicateFluclearSet
@@ -218,11 +218,11 @@
     sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
     state: icon
   content:
+  - ClothingHeadsetAltSyndicate # 1 TC
   - ClothingBackpackDuffelSyndicateFilledSMG # 17 TC
   - ClothingBackpackDuffelSyndicateHardsuitBundle # 8 TC
   - ClothingUniformJumpsuitOperative
   - SyndiPDA
-  - ClothingHeadsetAltSyndicate # 1 TC
   - ClothingEyesHudSyndicate # 2 TC as fluff
   - ClothingShoesBootsCombatFilled
   - ClothingBeltMilitaryWebbing # 1 TC

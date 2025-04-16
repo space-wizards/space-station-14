@@ -60,21 +60,21 @@ selectable-set-syndicate-spy-description =
 selectable-set-syndicate-hitman-name = Hitman Bundle
 selectable-set-syndicate-hitman-description =
     Find and eliminate your targets quietly and effectively with this bundle.
-    Contains: Cobra, 3 extra mags, throwing knives kit, energy dagger,
+    Contains: Cobra pistol, 3 extra mags, throwing knives kit, energy dagger,
     web vest, SWAT helmet, no-slip shoes, Interdyne herbals packet,
     combat medkit, a stylish look and a syndicate encryption key.
 
 selectable-set-syndicate-implants-name = Cyberpsychosis Bundle
 selectable-set-syndicate-implants-description =
     A few implants to give you some options for when you inevitably get arrested.
-    Contains: holoparasite kit, EMP, scram, storage and syndicate radio implanters.
+    Contains: holoparasite, EMP, scram, storage and syndicate radio implanters.
 
 selectable-set-syndicate-hacker-name = Hacker Bundle
 selectable-set-syndicate-hacker-description =
     A bundle with everything you need to hack into and disrupt the Station itself,
     the station AI, its cyborgs and the Security team. HACK THE PLANET!
     Contains: Antimov law circuit, authentication disruptor, EMAG, camera bug,
-    suspicious toolbox, cool eyeglasses and both binary and syndicate encryption keys.
+    filled toolbox, cool glasses and both binary and syndicate encryption keys.
 
 selectable-set-syndicate-desword-name = Dark Lord Bundle
 selectable-set-syndicate-desword-description =
@@ -85,10 +85,10 @@ selectable-set-syndicate-desword-description =
 selectable-set-syndicate-grenadier-name = Grenadier Bundle
 selectable-set-syndicate-grenadier-description =
     Some explosives to ensure you can blast your way through any situation.
-    Contains: EMP, whitehole, singularity, explosive, incendiary, shrapnel grenades,
-    C4, minibomb, syndicat reinforcement radio and a syndicate encryption key.
+    Contains: minibomb, syndicat reinforcement radio, syndicate encryption key,
+    explosive, incendiary, shrapnel, EMP, whitehole, singularity grenades and a C4.
 
 selectable-set-syndicate-fluclear-name = Nuclear Wannabe Bundle
 selectable-set-syndicate-fluclear-description =
     Declare your allegiance to the Syndicate with this bundle, get dat fuckin' disk!
-    Contains: C-20R, 2 extra mags, basic nuclear operative gear, and a black jetpack.
+    Contains: C-20R SMG, 2 extra mags, jetpack and basic nuclear operative gear.

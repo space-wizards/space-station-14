@@ -36,17 +36,22 @@ public sealed partial class SetSelectorComponent : Component
     public int SetsToSelect = -1;
 
     /// <summary>
-    /// What entity all the spawned items will appear inside of
-    /// If null, will instead drop on the ground.
+    /// What entity all the spawned items will appear inside, if any.
     /// </summary>
     [DataField]
     public EntProtoId? SpawnedStoragePrototype;
 
     /// <summary>
-    /// If true, will spawn contents at the actor, else at the selector.
+    /// Container ID of the spawned storage.
     /// </summary>
     [DataField]
-    public bool SpawnAtActor;
+    public string? SpawnedStorageContainer;
+
+    /// <summary>
+    /// If true, will try to open spawned storage as EntityStorage.
+    /// </summary>
+    [DataField]
+    public bool OpenSpawnedStorage;
 
     [DataField]
     public SoundSpecifier? ApproveSound;

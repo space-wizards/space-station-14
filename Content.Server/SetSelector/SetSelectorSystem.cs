@@ -1,11 +1,8 @@
 using System.Linq;
-using Content.Server.Storage.Components;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.SetSelector;
-using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
-using Robust.Server.Audio;
-using Robust.Server.GameObjects;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.SetSelector;
@@ -16,13 +13,12 @@ namespace Content.Server.SetSelector;
 /// </summary>
 public sealed class SetSelectorSystem : EntitySystem
 {
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedEntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedStorageSystem _storage = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
     public override void Initialize()
     {
@@ -33,7 +29,7 @@ public sealed class SetSelectorSystem : EntitySystem
         SubscribeLocalEvent<SetSelectorComponent, SetSelectorChangeSetMessage>(OnChangeSet);
     }
 
-    private void OnMapInit(Entity<SetSelectorComponent> selector, ref MapInitEvent args)
+    private static void OnMapInit(Entity<SetSelectorComponent> selector, ref MapInitEvent args)
     {
         if (selector.Comp.SetsToSelect == -1)
         {
@@ -43,7 +39,7 @@ public sealed class SetSelectorSystem : EntitySystem
 
         // Randomize sets available for selection
         selector.Comp.AvailableSets = new List<ProtoId<SelectableSetPrototype>>(selector.Comp.PossibleSets
-            .OrderBy(_ => new Random().Next())
+            .OrderBy(_ => new System.Random().Next())
             .Take(selector.Comp.SetsToSelect));
     }
 
@@ -57,8 +53,14 @@ public sealed class SetSelectorSystem : EntitySystem
         if (selector.Comp.SelectedSets.Count != selector.Comp.MaxSelectedSets)
             return;
 
+        EntityUid spawnedStorage = default;
         var storagePrototype = selector.Comp.SpawnedStoragePrototype;
-        var coordinates = _transform.GetMapCoordinates(selector.Comp.SpawnAtActor ? args.Actor : selector.Owner);
+        var spawnedStorageContainer =  selector.Comp.SpawnedStorageContainer;
+        var openSpawnedStorage = selector.Comp.OpenSpawnedStorage;
+        var coordinates = _transform.GetMapCoordinates(selector.Owner);
+        _container.TryGetContainingContainer(selector, out var target);
+        List<string> ignoredContainers = [];
+        ignoredContainers.AddRange(["implant", "pocket1", "pocket2", "pocket3", "pocket4"]);
 
         // Spawn the contents of the chosen sets and add them to spawnedEntities
         List<EntityUid> spawnedEntities = [];
@@ -71,18 +73,33 @@ public sealed class SetSelectorSystem : EntitySystem
         Del(selector);
 
         // We do this after deleting the selector so the spawned storage does not collide with it
-        if (storagePrototype == null)
-            return;
+        if (storagePrototype != null && spawnedStorageContainer != null)
+        {
+            spawnedStorage = Spawn(storagePrototype, coordinates);
+            RecursiveInsert(spawnedStorage, target, ignoredContainers);
+            _container.TryGetContainer(spawnedStorage, spawnedStorageContainer, out target);
+        }
 
-        var spawnedStorage = Spawn(storagePrototype, coordinates);
-        if (selector.Comp.SpawnAtActor)
-            _hands.TryPickupAnyHand(args.Actor, spawnedStorage);
+        ignoredContainers.AddRange(["body_part_slot_right hand", "body_part_slot_left hand"]);
+        spawnedEntities.ForEach(ent => RecursiveInsert(ent, target, ignoredContainers));
 
-        // Try to insert all spawnedEntities to spawnedStorage
-        if (HasComp<StorageComponent>(spawnedStorage))
-            spawnedEntities.ForEach(ent => _storage.Insert(spawnedStorage, ent, out _, playSound: false));
-        else if (TryComp<EntityStorageComponent>(spawnedStorage, out var entityStorage))
-            spawnedEntities.ForEach(ent => _entityStorage.Insert(ent, spawnedStorage, entityStorage));
+        if (openSpawnedStorage)
+            _entityStorage.OpenStorage(spawnedStorage);
+    }
+
+    private bool RecursiveInsert(EntityUid ent, BaseContainer? container, List<string> ignoredContainers)
+    {
+        if (container == null)
+            return false;
+
+        if (!ignoredContainers.Contains(container.ID) && _container.Insert((ent, null, null, null), container))
+            return true;
+
+        if (Transform(container.Owner).ParentUid.IsValid()
+        && _container.TryGetContainingContainer(container.Owner, out var newContainer))
+            return RecursiveInsert(ent, newContainer, ignoredContainers);
+
+        return false;
     }
 
     private void OnChangeSet(Entity<SetSelectorComponent> selector, ref SetSelectorChangeSetMessage args)

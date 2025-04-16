@@ -55,7 +55,9 @@
     - SyndicateGrenadierSet
     - SyndicateFluclearSet
     setsToSelect: 3
-    spawnedStoragePrototype: CrateSyndicateOpen
+    spawnedStoragePrototype: CrateSyndicate
+    spawnedStorageContainer: entity_storage
+    openSpawnedStorage: true
     approveSound:
       path: /Audio/Effects/closetopen.ogg
   - type: InteractionOutline

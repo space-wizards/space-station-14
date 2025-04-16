@@ -785,14 +785,6 @@
     sprite: Structures/Storage/Crates/syndicate.rsi
 
 - type: entity
-  id: CrateSyndicateOpen
-  parent: CrateSyndicate
-  suffix: Open
-  components:
-  - type: EntityStorage
-    open: true
-
-- type: entity
   parent: [StructureWheeled, CrateBaseWeldable]
   id: CrateTrashCart
   name: trash cart

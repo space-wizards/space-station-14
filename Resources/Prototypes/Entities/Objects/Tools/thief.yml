@@ -73,6 +73,6 @@
     storedRotation: 90
   - type: SetSelector
     spawnedStoragePrototype: ClothingBackpackSatchelSmugglerUnanchored
-    spawnAtActor: true
+    spawnedStorageContainer: storagebase
     approveSound:
       collection: storageRustle
