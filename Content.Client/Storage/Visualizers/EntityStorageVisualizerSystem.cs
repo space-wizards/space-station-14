@@ -8,6 +8,7 @@ namespace Content.Client.Storage.Visualizers;
 public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStorageVisualsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
     public override void Initialize()
     {
@@ -31,37 +32,44 @@ public sealed class EntityStorageVisualizerSystem : VisualizerSystem<EntityStora
         sprite.LayerSetState(StorageVisualLayers.Door, comp.StateDoorClosed ?? comp.StateBaseClosed);
     }
 
-    protected override void OnAppearanceChange(EntityUid uid, EntityStorageVisualsComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid,
+        EntityStorageVisualsComponent comp,
+        ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null
-        || !AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var open, args.Component))
+            || !AppearanceSystem.TryGetData<bool>(uid, StorageVisuals.Open, out var open, args.Component))
             return;
 
         if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.BaseRSI, out var prototype1, args.Component))
         {
-            var proto = Spawn(prototype1);
+            if (!_prototypeManager.TryIndex(prototype1, out var proto))
+                return;
 
-            if (TryComp<SpriteComponent>(proto, out var sprite))
-                foreach (var layer in args.Sprite.AllLayers)
-                {
-                    if (layer.RsiState.Name == "paper")
-                        continue;
+            if (!proto.TryGetComponent(out SpriteComponent? sprite, _componentFactory))
+                return;
 
-                    layer.Rsi = sprite.BaseRSI;
-                }
-
-            Del(proto);
-        } else if (AppearanceSystem.TryGetData<string>(uid, PaintableVisuals.LockerRSI, out var prototype2, args.Component))
-        {
-            var proto = Spawn(prototype2);
-
-            if (TryComp<EntityStorageVisualsComponent>(proto, out var visuals))
+            foreach (var layer in args.Sprite.AllLayers)
             {
-                args.Sprite.LayerSetState(StorageVisualLayers.Base, visuals.StateBaseClosed);
-                args.Sprite.LayerSetState(StorageVisualLayers.Door, visuals.StateDoorClosed);
-            }
+                if (layer.RsiState.Name == "paper")
+                    continue;
 
-            Del(proto);
+                layer.Rsi = sprite.BaseRSI;
+            }
+        }
+        else if (AppearanceSystem.TryGetData<string>(uid,
+                     PaintableVisuals.LockerRSI,
+                     out var prototype2,
+                     args.Component))
+        {
+            if (!_prototypeManager.TryIndex(prototype1, out var proto))
+                return;
+
+            if (!proto.TryGetComponent(out EntityStorageVisualsComponent? visuals, _componentFactory))
+                return;
+
+            args.Sprite.LayerSetState(StorageVisualLayers.Base, visuals.StateBaseClosed);
+            args.Sprite.LayerSetState(StorageVisualLayers.Door, visuals.StateDoorClosed);
+
             return;
         }
 

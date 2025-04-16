@@ -3,14 +3,15 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.SprayPainter.Prototypes;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Client.ResourceManagement;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Doors;
 
 public sealed class DoorSystem : SharedDoorSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animationSystem = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
     public override void Initialize()
     {
@@ -140,13 +141,15 @@ public sealed class DoorSystem : SharedDoorSystem
 
     private void UpdateSpriteLayers(SpriteComponent old, string prototype)
     {
-        // and why did I replace it with an essence spawn? I wish I could remember....
-        var proto = Spawn(prototype);
+        if (!_prototypeManager.TryIndex(prototype, out var proto))
+            return;
 
-        if (TryComp<SpriteComponent>(proto, out var sprite))
-            foreach (var layer in old.AllLayers)
-                layer.Rsi = sprite.BaseRSI;
+        if (!proto.TryGetComponent(out SpriteComponent? sprite, _componentFactory))
+            return;
 
-        Del(proto);
+        foreach (var layer in old.AllLayers)
+        {
+            layer.Rsi = sprite.BaseRSI;
+        }
     }
 }

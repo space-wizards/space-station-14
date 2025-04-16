@@ -11,7 +11,6 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.SprayPainter;
 using Content.Shared.SprayPainter.Components;
-using Content.Shared.SprayPainter.Prototypes;
 using Robust.Server.Audio;
 
 namespace Content.Server.SprayPainter;
