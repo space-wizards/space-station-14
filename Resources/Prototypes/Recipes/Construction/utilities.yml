@@ -390,40 +390,54 @@
   startNode: start
   targetNode: half
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeHalf
-    
+  alternativePrototypes:
+  - GasPipeHalf
+  - GasPipeHalfAlt1
+  - GasPipeHalfAlt2
+  
 - type: construction
-  name: gas pipe half [alt. 1]
+  name: gas pipe half
   id: GasPipeHalfAlt1
   description: Half of a gas pipe. No skateboards.
+  hide: true
   graph: GasPipe
   startNode: start
   targetNode: halfAlt1
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
     state: pipeHalf
-
+  alternativePrototypes:
+  - GasPipeHalf
+  - GasPipeHalfAlt1
+  - GasPipeHalfAlt2
+  
 - type: construction
-  name: gas pipe half [alt. 2]
+  name: gas pipe half
   id: GasPipeHalfAlt2
   description: Half of a gas pipe. No skateboards.
+  hide: true
   graph: GasPipe
   startNode: start
   targetNode: halfAlt2
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
     state: pipeHalf
-
+  alternativePrototypes:
+  - GasPipeHalf
+  - GasPipeHalfAlt1
+  - GasPipeHalfAlt2
+  
 - type: construction
   name: gas pipe straight
   id: GasPipeStraight
@@ -432,40 +446,54 @@
   startNode: start
   targetNode: straight
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeStraight
-    
+  alternativePrototypes:
+  - GasPipeStraight
+  - GasPipeStraightAlt1
+  - GasPipeStraightAlt2
+  
 - type: construction
-  name: gas pipe straight [alt. 1]
+  name: gas pipe straight
   id: GasPipeStraightAlt1
   description: A straight pipe segment.
+  hide: true
   graph: GasPipe
   startNode: start
   targetNode: straightAlt1
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
     state: pipeStraight
-
+  alternativePrototypes:
+  - GasPipeStraight
+  - GasPipeStraightAlt1
+  - GasPipeStraightAlt2
+  
 - type: construction
-  name: gas pipe straight [alt. 2]
+  name: gas pipe straight
   id: GasPipeStraightAlt2
   description: A straight pipe segment.
+  hide: true
   graph: GasPipe
   startNode: start
   targetNode: straightAlt2
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
     state: pipeStraight
-
+  alternativePrototypes:
+  - GasPipeStraight
+  - GasPipeStraightAlt1
+  - GasPipeStraightAlt2
+  
 - type: construction
   name: gas pipe bend
   id: GasPipeBend
@@ -474,40 +502,54 @@
   startNode: start
   targetNode: bend
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeBend
-
+  alternativePrototypes:
+  - GasPipeBend
+  - GasPipeBendAlt1
+  - GasPipeBendAlt2
+  
 - type: construction
-  name: gas pipe bend [alt. 1]
+  name: gas pipe bend
   id: GasPipeBendAlt1
   description: A pipe segment bent at a 90 degree angle.
+  hide: true
   graph: GasPipe
   startNode: start
   targetNode: bendAlt1
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
     state: pipeBend
-
+  alternativePrototypes:
+  - GasPipeBend
+  - GasPipeBendAlt1
+  - GasPipeBendAlt2
+  
 - type: construction
-  name: gas pipe bend [alt. 2]
+  name: gas pipe bend
   id: GasPipeBendAlt2
   description: A pipe segment bent at a 90 degree angle.
+  hide: true
   graph: GasPipe
   startNode: start
   targetNode: bendAlt2
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
     state: pipeBend
-
+  alternativePrototypes:
+  - GasPipeBend
+  - GasPipeBendAlt1
+  - GasPipeBendAlt2
+  
 - type: construction
   name: gas pipe T junction
   id: GasPipeTJunction
@@ -516,40 +558,54 @@
   startNode: start
   targetNode: tjunction
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeTJunction
-
+  alternativePrototypes:
+  - GasPipeTJunction
+  - GasPipeTJunctionAlt1
+  - GasPipeTJunctionAlt2
+  
 - type: construction
-  name: gas pipe T junction [alt. 1]
+  name: gas pipe T junction
   id: GasPipeTJunctionAlt1
   description: A pipe segment with a T junction.
+  hide: true
   graph: GasPipe
   startNode: start
   targetNode: tjunctionAlt1
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
     state: pipeTJunction
-
+  alternativePrototypes:
+  - GasPipeTJunction
+  - GasPipeTJunctionAlt1
+  - GasPipeTJunctionAlt2
+  
 - type: construction
-  name: gas pipe T junction [alt. 2]
+  name: gas pipe T junction
   id: GasPipeTJunctionAlt2
   description: A pipe segment with a T junction.
+  hide: true
   graph: GasPipe
   startNode: start
   targetNode: tjunctionAlt2
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
     state: pipeTJunction
-
+  alternativePrototypes:
+  - GasPipeTJunction
+  - GasPipeTJunctionAlt1
+  - GasPipeTJunctionAlt2
+  
 - type: construction
   name: gas pipe fourway
   id: GasPipeFourway
@@ -558,39 +614,53 @@
   startNode: start
   targetNode: fourway
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     state: pipeFourway
-
+  alternativePrototypes:
+  - GasPipeFourway
+  - GasPipeFourwayAlt1
+  - GasPipeFourwayAlt2
+  
 - type: construction
-  name: gas pipe fourway [alt. 1]
+  name: gas pipe fourway
   id: GasPipeFourwayAlt1
   description: A pipe segment with a fourway junction.
+  hide: true
   graph: GasPipe
   startNode: start
   targetNode: fourwayAlt1
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe_alt1.rsi
     state: pipeFourway
-
+  alternativePrototypes:
+  - GasPipeFourway
+  - GasPipeFourwayAlt1
+  - GasPipeFourwayAlt2
+  
 - type: construction
-  name: gas pipe fourway [alt. 2]
+  name: gas pipe fourway
   id: GasPipeFourwayAlt2
   description: A pipe segment with a fourway junction.
+  hide: true
   graph: GasPipe
   startNode: start
   targetNode: fourwayAlt2
   category: construction-category-utilities
-  placementMode: SnapgridCenter
+  placementMode: AlignAtmosPipeLayers
   canBuildInImpassable: true
   icon:
     sprite: Structures/Piping/Atmospherics/pipe_alt2.rsi
     state: pipeFourway
+  alternativePrototypes:
+  - GasPipeFourway
+  - GasPipeFourwayAlt1
+  - GasPipeFourwayAlt2
   
 - type: construction
   name: gas pipe manifold
