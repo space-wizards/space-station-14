@@ -17,20 +17,12 @@ namespace Content.Server.Construction.Completions
                 return;
 
             var sys = entityManager.System<SharedTransformSystem>();
-            SetAnchoring((uid, transform), sys);
 
-        }
-
-        private void SetAnchoring(Entity<TransformComponent> ent, SharedTransformSystem transform)
-        {
             if (Value)
-            {
-                transform.AnchorEntity(ent);
-            }
+                sys.AnchorEntity(uid, transform);
             else
-            {
-                transform.Unanchor(ent);
-            }
+                sys.Unanchor(uid, transform);
+
         }
     }
 }
