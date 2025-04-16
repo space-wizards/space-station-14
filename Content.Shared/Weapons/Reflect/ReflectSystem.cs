@@ -118,11 +118,7 @@ public sealed class ReflectSystem : EntitySystem
         var newRot = rotation.RotateVec(locRot.ToVec());
         _transform.SetLocalRotation(projectile, newRot.ToAngle());
 
-        if (_netManager.IsServer)
-        {
-            _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
-            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioParams.Default.WithVariation(0.05f));
-        }
+        PlayAudioAndPopup(reflect, user);
 
         if (Resolve(projectile, ref projectileComp, false))
         {
@@ -155,6 +151,16 @@ public sealed class ReflectSystem : EntitySystem
         }
     }
 
+    private void PlayAudioAndPopup(ReflectComponent reflect, EntityUid user)
+    {
+        // Can probably be changed for prediction
+        if (_netManager.IsServer)
+        {
+            _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
+            _audio.PlayPvs(reflect.SoundOnReflect, user);
+        }
+    }
+
     private bool TryReflectHitscan(
         EntityUid user,
         EntityUid reflector,
@@ -171,11 +177,7 @@ public sealed class ReflectSystem : EntitySystem
             return false;
         }
 
-        if (_netManager.IsServer)
-        {
-            _popup.PopupEntity(Loc.GetString("reflect-shot"), user);
-            _audio.PlayPvs(reflect.SoundOnReflect, user, AudioParams.Default.WithVariation(0.05f));
-        }
+        PlayAudioAndPopup(reflect, user);
 
         var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
         newDirection = -spread.RotateVec(direction);
