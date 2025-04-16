@@ -81,6 +81,12 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Audio.PlayPredicted(ent.Comp.SpraySound, ent, args.Args.User);
         Charges.UseCharges(ent, args.Cost);
 
+        if (HasComp<PaintedComponent>(target))
+            RemComp<PaintedComponent>(target);
+
+        Dirty(target, AddComp<PaintedComponent>(target));
+
+
         if (args.Visuals is PaintableVisuals.Canister)
         {
             RaiseLocalEvent(ent,
@@ -138,13 +144,17 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    private void OnDecalAnglePicked(EntityUid uid, SprayPainterComponent component, SprayPainterDecalAnglePickedMessage args)
+    private void OnDecalAnglePicked(EntityUid uid,
+        SprayPainterComponent component,
+        SprayPainterDecalAnglePickedMessage args)
     {
         component.SelectedDecalAngle = args.Angle;
         Dirty(uid, component);
     }
 
-    private void OnDecalColorPicked(EntityUid uid, SprayPainterComponent component, SprayPainterDecalColorPickedMessage args)
+    private void OnDecalColorPicked(EntityUid uid,
+        SprayPainterComponent component,
+        SprayPainterDecalColorPickedMessage args)
     {
         component.SelectedDecalColor = args.Color;
         Dirty(uid, component);

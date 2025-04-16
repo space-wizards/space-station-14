@@ -4,6 +4,7 @@ spray-painter-ammo-on-examine = It holds {$charges} charges.
 spray-painter-ammo-after-interact-full = The spray painter is full!
 spray-painter-ammo-after-interact-refilled = You refill the spray painter.
 spray-painter-interact-no-charges = There's not enough charge.
+spray-painter-on-examined-painted-message = It seems to have been freshly painted.
 
 spray-painter-style-not-available = Cannot apply the selected style to this type of airlock
 spray-painter-selected-style = Selected style:
