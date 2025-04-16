@@ -4,6 +4,7 @@ using Content.Shared.Administration.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
+using Content.Shared.CombatMode;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -53,6 +54,7 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly UseDelaySystem _delay = default!;
+        [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
 
         public override void Initialize()
         {
@@ -717,10 +719,31 @@ namespace Content.Shared.Cuffs
                 }
             }
 
+            var shoved = false;
+            // if combat mode is on, shove the person.
+            if (_combatMode.IsInCombatMode(user) && target != user && user != null)
+            {
+                var eventArgs = new DisarmedEvent { Target = target, Source = user.Value, PushProbability = 1};
+                RaiseLocalEvent(target, eventArgs);
+                shoved = true;
+            }
+
             if (cuffable.CuffedHandCount == 0)
             {
                 if (user != null)
-                    _popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-success-message"), user.Value, user.Value);
+                {
+                    if (shoved)
+                    {
+                        _popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-push-success-message",
+                            ("otherName", Identity.Name(user.Value, EntityManager, user))),
+                            user.Value,
+                            user.Value);
+                    }
+                    else
+                    {
+                        _popup.PopupClient(Loc.GetString("cuffable-component-remove-cuffs-success-message"), user.Value, user.Value);
+                    }
+                }
 
                 if (target != user && user != null)
                 {
