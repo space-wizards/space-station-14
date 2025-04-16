@@ -51,7 +51,6 @@
   recipes:
   - WeaponPistolCHIMP
   - WeaponForceGun
-  - WeaponLaserSvalinn
   - WeaponProtoKineticAccelerator
   - WeaponTetherGun
   - WeaponGauntletGorilla
