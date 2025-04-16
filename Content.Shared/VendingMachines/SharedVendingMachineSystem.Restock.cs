@@ -1,4 +1,5 @@
 using Content.Shared.DoAfter;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Wires;
@@ -72,8 +73,10 @@ public abstract partial class SharedVendingMachineSystem
         if (!_doAfter.TryStartDoAfter(doAfterArgs))
             return;
 
-        Popup.PopupPredicted(Loc.GetString("vending-machine-restock-start", ("this", uid), ("user", args.User),
-                ("target", target)),
+        var selfMessage = Loc.GetString("vending-machine-restock-start-self", ("target", target));
+        var othersMessage = Loc.GetString("vending-machine-restock-start-others", ("user", Identity.Entity(args.User, EntityManager)), ("target", target));
+        Popup.PopupPredicted(selfMessage,
+            othersMessage,
             uid,
             args.User,
             PopupType.Medium);
