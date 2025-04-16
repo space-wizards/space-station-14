@@ -19,7 +19,6 @@ namespace Content.Shared.Clothing.EntitySystems;
 public sealed class ToggleableClothingSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
@@ -172,8 +171,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
         _actionsSystem.RemoveAction(component.ActionEntity);
 
-        if (component.ClothingUid != null && !_netMan.IsClient)
-            QueueDel(component.ClothingUid.Value);
+        PredictedQueueDel(component.ClothingUid);
     }
 
     private void OnAttachedUnequipAttempt(EntityUid uid, AttachedClothingComponent component, BeingUnequippedAttemptEvent args)

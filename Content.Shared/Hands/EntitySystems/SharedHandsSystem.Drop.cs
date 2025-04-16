@@ -35,7 +35,7 @@ public abstract partial class SharedHandsSystem
         RaiseLocalEvent(uid, didUnequip);
 
         if (TryComp(args.Entity, out VirtualItemComponent? @virtual))
-            _virtualSystem.DeleteVirtualItem((args.Entity, @virtual), uid);
+            VirtualSystem.DeleteVirtualItem((args.Entity, @virtual), uid);
     }
 
     private bool ShouldIgnoreRestrictions(EntityUid user)
@@ -118,7 +118,7 @@ public abstract partial class SharedHandsSystem
 
         // if item is a fake item (like with pulling), just delete it rather than bothering with trying to drop it into the world
         if (TryComp(entity, out VirtualItemComponent? @virtual))
-            _virtualSystem.DeleteVirtualItem((entity, @virtual), uid);
+            VirtualSystem.DeleteVirtualItem((entity, @virtual), uid);
 
         if (TerminatingOrDeleted(entity))
             return true;

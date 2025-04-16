@@ -38,7 +38,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
     private void OnInsert(EntityUid uid, SubdermalImplantComponent component, EntGotInsertedIntoContainerMessage args)
     {
-        if (component.ImplantedEntity == null || _net.IsClient)
+        if (component.ImplantedEntity == null)
             return;
 
         if (!string.IsNullOrWhiteSpace(component.ImplantAction))
@@ -54,7 +54,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
                 if (_tag.HasTag(implant, MicroBombTag))
                 {
                     _container.Remove(implant, implantContainer);
-                    QueueDel(implant);
+                    PredictedQueueDel(implant);
                 }
             }
         }
