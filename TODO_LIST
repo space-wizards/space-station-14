@@ -14,23 +14,19 @@ Execution telescreens: Need access to execution cameras
 Cargo shuttle computer can't find the shuttle. Mass scanner says it's out there...
 Forms for things like borging, department access, psych prescriptions...
 	Make lots of forms for HoP, too
-		Hall/Bathroom Pass
-		Official requisition form requisition form
-		Complaints
-		Opinion Registration
+		/* Hall/Bathroom Pass */
+		/* Official requisition form requisition form */
+		/* Complaints */
+		/* Opinion Registration */
 		Tattle Form
 		ID Card Alteration Request
 		All Access Request
 		Some Access Request
 		No Access Request
+		Borg Legal Waiver
+		Contraband Authorization
 Custom books on lawyer shelves?
 Among Us "clues" on detective notice boards
-Papers on the ground? for explaining things to
-	lawyers on spawn
-	Or maybe I just put one spawn in each office and
-	let them figure it out from there. Maybe a paper
-	on each table. Like, a "congrats! You've passed the
-	NT bar exam for: Defense Attorney!"
 Shrink or move HoP tunnel to expand Atmos a bit more?
 Would it be too radical to totally left/right swap the Atmos
 	gas chambers so that the disposal pipeline linkup is less terrible?
@@ -277,3 +273,11 @@ DONE:
 /* 	Clearly, moving the camera off the corner wouldn't fix this, too, as it's on the other corner. :C */
 /* 		I can't really do that anyway. */
 /* 	I just took it out entirely. Eh. */
+/* Papers on the ground? for explaining things to */
+/* 	lawyers on spawn */
+/* 	Or maybe I just put one spawn in each office and */
+/* 	let them figure it out from there. Maybe a paper */
+/* 	on each table. Like, a "congrats! You've passed the */
+/* 	NT bar exam for: Defense Attorney!" */
+/* Remove chasms */
+/* 	I covered them in catwalks instead... is that good enough, I hope? */
