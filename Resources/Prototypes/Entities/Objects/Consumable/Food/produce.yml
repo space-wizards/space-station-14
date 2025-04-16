@@ -2602,6 +2602,7 @@
   components:
   - type: Appearance
   - type: Sprite
+    noRot: true
     sprite: Objects/Specific/Hydroponics/bloonion.rsi
     state: produce
   - type: Item
