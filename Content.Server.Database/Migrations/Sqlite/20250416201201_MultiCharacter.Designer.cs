@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Content.Server.Database.Migrations.Sqlite
 {
     [DbContext(typeof(SqliteServerDbContext))]
-    [Migration("20250410003139_SlotPriorities")]
-    partial class SlotPriorities
+    [Migration("20250416201201_MultiCharacter")]
+    partial class MultiCharacter
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -775,10 +775,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("admin_ooc_color");
-
-                    b.Property<int>("SelectedCharacterSlot")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("selected_character_slot");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT")

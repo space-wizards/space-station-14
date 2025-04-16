@@ -15,8 +15,8 @@ using NpgsqlTypes;
 namespace Content.Server.Database.Migrations.Postgres
 {
     [DbContext(typeof(PostgresServerDbContext))]
-    [Migration("20250410003143_SlotPriorities")]
-    partial class SlotPriorities
+    [Migration("20250416201208_MultiCharacter")]
+    partial class MultiCharacter
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -823,10 +823,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("admin_ooc_color");
-
-                    b.Property<int>("SelectedCharacterSlot")
-                        .HasColumnType("integer")
-                        .HasColumnName("selected_character_slot");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")

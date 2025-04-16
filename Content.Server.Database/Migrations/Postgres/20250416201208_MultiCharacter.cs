@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Content.Server.Database.Migrations.Postgres
 {
     /// <inheritdoc />
-    public partial class SlotPriorities : Migration
+    public partial class MultiCharacter : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,6 +14,10 @@ namespace Content.Server.Database.Migrations.Postgres
             migrationBuilder.DropIndex(
                 name: "IX_job_one_high_priority",
                 table: "job");
+
+            migrationBuilder.DropColumn(
+                name: "selected_character_slot",
+                table: "preference");
 
             migrationBuilder.DropColumn(
                 name: "priority",
@@ -69,6 +73,13 @@ namespace Content.Server.Database.Migrations.Postgres
             migrationBuilder.DropColumn(
                 name: "enabled",
                 table: "profile");
+
+            migrationBuilder.AddColumn<int>(
+                name: "selected_character_slot",
+                table: "preference",
+                type: "integer",
+                nullable: false,
+                defaultValue: 0);
 
             migrationBuilder.AddColumn<int>(
                 name: "priority",
