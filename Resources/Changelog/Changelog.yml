@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix battery self-recharging items like the antique laser gun from mispredicting.
-    type: Fix
-  id: 7698
-  time: '2024-12-11T15:58:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33384
 - author: BramvanZijp
   changes:
   - message: The Head of Security's Energy Shotgun has regained its ability to self
@@ -3903,3 +3896,13 @@
   id: 8197
   time: '2025-04-16T14:12:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36627
+- author: Flareguy, ArtisticRoomba
+  changes:
+  - message: Added the Temperature Gun. It can shoot body-temperature-changing bolts.
+      Unlock them through arsenal science today!
+    type: Add
+  - message: Experimental Battery Ammo technology is no longer available to research..
+    type: Remove
+  id: 8198
+  time: '2025-04-16T17:58:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35447
