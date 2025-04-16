@@ -315,8 +315,6 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
         _characterSetup.SelectCharacter += args =>
         {
-            // TODO: We don't care about the "selected character" anymore
-            _preferencesManager.SelectCharacter(args);
             _profileEditor.SetProfile(args);
             if (_characterSetup != null)
                 _characterSetup.SelectedCharacterSlot = args;
