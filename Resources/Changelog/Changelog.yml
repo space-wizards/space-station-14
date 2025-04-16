@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Nimfar11
-  changes:
-  - message: Changes the colour of the Borg binary channel to a different shade of
-      blue.
-    type: Tweak
-  id: 7705
-  time: '2024-12-14T16:03:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33841
 - author: Litraxx
   changes:
   - message: Renamed the Dungeon Master lawset to Game Master lawset
@@ -3910,3 +3902,10 @@
   id: 8204
   time: '2025-04-16T22:15:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35997
+- author: DissidentBullet
+  changes:
+  - message: Monkeys can now wear juggernaut suits
+    type: Add
+  id: 8205
+  time: '2025-04-16T23:14:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34121
