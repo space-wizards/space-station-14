@@ -90,6 +90,7 @@
     - id: FoodMeatGoliath
       amount: 3
     - id: MaterialGoliathHide1
+      amount: 3
 
 - type: entity
   id: ActionGoliathTentacle
