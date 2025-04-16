@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: psykana
-  changes:
-  - message: Zombies can now see initial infected
-    type: Add
-  id: 7707
-  time: '2024-12-16T11:53:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33665
 - author: Plykiya
   changes:
   - message: Bombs like stingers and clustergrenades now trigger when destroyed due
@@ -3910,3 +3903,10 @@
   id: 8206
   time: '2025-04-16T23:35:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33327
+- author: ScarKy0
+  changes:
+  - message: Hydroponics tray flatpacks can now be bought for 750 spesos.
+    type: Add
+  id: 8207
+  time: '2025-04-16T23:51:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36630
