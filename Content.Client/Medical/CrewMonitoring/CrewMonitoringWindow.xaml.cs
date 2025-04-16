@@ -79,10 +79,28 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
         NoServerLabel.Visible = false;
 
+        // Collect one status per user, using the sensor with the most data available.
+        Dictionary<NetEntity, SuitSensorStatus> uniqueSensorsMap = new();
+        foreach (var sensor in sensors)
+        {
+            if (uniqueSensorsMap.TryGetValue(sensor.OwnerUid, out var existingSensor))
+            {
+                // Skip if we already have a sensor with more data for this mob.
+                if (existingSensor.Coordinates != null && sensor.Coordinates == null)
+                    continue;
+
+                if (existingSensor.DamagePercentage != null && sensor.DamagePercentage == null)
+                    continue;
+            }
+
+            uniqueSensorsMap[sensor.OwnerUid] = sensor;
+        }
+        var uniqueSensors = uniqueSensorsMap.Values.ToList();
+
         // Order sensor data
-        var orderedSensors = sensors.OrderBy(n => n.Name).OrderBy(j => j.Job);
+        var orderedSensors = uniqueSensors.OrderBy(n => n.Name).OrderBy(j => j.Job);
         var assignedSensors = new HashSet<SuitSensorStatus>();
-        var departments = sensors.SelectMany(d => d.JobDepartments).Distinct().OrderBy(n => n);
+        var departments = uniqueSensors.SelectMany(d => d.JobDepartments).Distinct().OrderBy(n => n);
 
         // Create department labels and populate lists
         foreach (var department in departments)
