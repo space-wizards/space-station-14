@@ -2105,7 +2105,6 @@
     - Chef
     - Mime
 
-
 - type: listing
   id: UplinkSmugglerSatchel
   name: uplink-smuggler-satchel-name
