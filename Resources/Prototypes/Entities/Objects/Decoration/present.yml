@@ -159,6 +159,21 @@
         orGroup: GiftPool
       - id: PlushieLilaMarrnes
         orGroup: GiftPool
+      - id: PlushieSilAily
+        orGroup: GiftPool
+      - id: PlushieSilAizek
+        orGroup: GiftPool
+      - id: PlushieSilAzrail
+        orGroup: GiftPool
+      - id: PlushieSilEmilia
+        orGroup: GiftPool
+      - id: PlushieSilEva
+        orGroup: GiftPool
+      - id: PlushieSilKrivazora
+        orGroup: GiftPool
+      - id: PlushieSilAzrailHardsuit
+        orGroup: GiftPool
+      - id: PlushieSilSharp
       - id: PlushieDragonFoxMedTech
         orGroup: GiftPool
       - id: PlushieDragonFoxMadParadox
