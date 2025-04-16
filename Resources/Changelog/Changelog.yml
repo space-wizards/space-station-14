@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: joshepvodka
-  changes:
-  - message: Added flavor profiles to beverages that missed them.
-    type: Add
-  - message: Tweaked some drink flavor profiles.
-    type: Tweak
-  - message: Soda/Booze dispenser will now always eject the shaker/glass before any
-      bottle or jug.
-    type: Tweak
-  id: 7694
-  time: '2024-12-09T17:12:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33505
 - author: ArtisticRoomba
   changes:
   - message: SMES now gives visual feedback for if the maintenance panel is open.
@@ -3908,3 +3896,10 @@
   id: 8193
   time: '2025-04-16T01:33:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35752
+- author: RedBookcase
+  changes:
+  - message: Minor blueprint tweaks and a new stored sprite for blueprints.
+    type: Tweak
+  id: 8194
+  time: '2025-04-16T10:12:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36609
