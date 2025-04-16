@@ -1,37 +1,4 @@
 ﻿Entries:
-- author: joshepvodka
-  changes:
-  - message: Added flavor profiles to beverages that missed them.
-    type: Add
-  - message: Tweaked some drink flavor profiles.
-    type: Tweak
-  - message: Soda/Booze dispenser will now always eject the shaker/glass before any
-      bottle or jug.
-    type: Tweak
-  id: 7694
-  time: '2024-12-09T17:12:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33505
-- author: ArtisticRoomba
-  changes:
-  - message: SMES now gives visual feedback for if the maintenance panel is open.
-    type: Fix
-  id: 7695
-  time: '2024-12-10T10:00:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33808
-- author: metalgearsloth
-  changes:
-  - message: Fix blank newlines on examine tooltips (e.g. tables).
-    type: Fix
-  id: 7696
-  time: '2024-12-10T13:45:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33813
-- author: slarticodefast
-  changes:
-  - message: Fixed the greytide virus event affecting non-station maps.
-    type: Fix
-  id: 7697
-  time: '2024-12-11T14:30:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33806
 - author: metalgearsloth
   changes:
   - message: Fix battery self-recharging items like the antique laser gun from mispredicting.
@@ -3908,3 +3875,31 @@
   id: 8193
   time: '2025-04-16T01:33:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35752
+- author: RedBookcase
+  changes:
+  - message: Minor blueprint tweaks and a new stored sprite for blueprints.
+    type: Tweak
+  id: 8194
+  time: '2025-04-16T10:12:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36609
+- author: SlamBamActionman
+  changes:
+  - message: Unfolded bandanas/lab coats now fit in crates again.
+    type: Fix
+  id: 8195
+  time: '2025-04-16T11:54:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36625
+- author: metalgearsloth
+  changes:
+  - message: Fixes tippy messages being too sh-
+    type: Fix
+  id: 8196
+  time: '2025-04-16T12:23:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36616
+- author: SlamBamActionman
+  changes:
+  - message: Closed pet carriers no longer push players or lockers.
+    type: Fix
+  id: 8197
+  time: '2025-04-16T14:12:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36627
