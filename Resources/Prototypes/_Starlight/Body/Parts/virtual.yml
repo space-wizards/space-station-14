@@ -1,5 +1,0 @@
-﻿- type: entity
-  id: PartVirtual
-  parent: BaseItem
-  components:
-  - type: BodyPart
