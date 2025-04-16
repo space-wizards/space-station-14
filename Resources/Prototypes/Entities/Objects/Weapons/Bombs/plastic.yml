@@ -109,7 +109,6 @@
 
 - type: entity
   name: cluwne bomb
-  suffix: Real
   description: It finds this situation quite hilarious.
   parent: [BasePlasticExplosive, BaseSyndicateContraband]
   id: CluwneBomb
@@ -144,7 +143,6 @@
 
 - type: entity
   name: cluwne bomb
-  suffix: Decoy
   description: It finds this situation quite hilarious.
   parent: [BasePlasticExplosive, BaseSyndicateContraband, CluwneBomb]
   id: FakeCluwneBomb
