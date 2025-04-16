@@ -2,7 +2,6 @@ using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Emp;
-using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Audio;
@@ -20,6 +19,7 @@ using Robust.Shared.Audio.Systems;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Damage.Components;
 using Content.Shared.Power;
+using Content.Shared.Ghost;
 
 namespace Content.Server.Light.EntitySystems
 {
