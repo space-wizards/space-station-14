@@ -227,7 +227,7 @@
 - type: polymorph
   id: VoidPocket
   configuration:
-    entity: DesyncronizedPocket
+    entity: DesynchronizedPocket
     transferName: false
     inventory: None
     forced: false
@@ -236,3 +236,4 @@
     polymorphSound: /Audio/Magic/ethereal_enter.ogg
     exitPolymorphSound: /Audio/Magic/ethereal_exit.ogg
     duration: 120
+    effectProto: EffectDesynchronizer

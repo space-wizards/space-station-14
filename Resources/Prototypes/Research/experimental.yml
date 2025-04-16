@@ -161,4 +161,4 @@
   tier: 3
   cost: 10000
   recipeUnlocks:
-  - DeviceQuantumSpinInverter
+  - DeviceDesynchronizer

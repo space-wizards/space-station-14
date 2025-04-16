@@ -10,7 +10,5 @@
   - type: TriggerOnUse
   - type: PolymorphOnTrigger
     polymorph: VoidPocket
-  - type: SpawnOnTrigger
-    proto: EffectDesynchronizer
   - type: UseDelay
     delay: 220 # long delay to ensure it can't be spammed, use it wisely

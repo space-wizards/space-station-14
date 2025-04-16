@@ -44,7 +44,6 @@
   id: DesynchronizedPocket
   name: desynchronized pocket
   description: A pocket in spacetime, keeping the user a fraction of a second in the future.
-  suffix: Desynchronizer
   components:
   - type: Spectral
   - type: MovementSpeedModifier
