@@ -2,6 +2,7 @@ using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Starlight.TextToSpeech;
 using Content.Shared.Inventory;
+using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -101,6 +102,8 @@ public sealed partial class HumanoidAppearanceComponent : Component
 
     [DataField]
     public ProtoId<MarkingPrototype>? UndergarmentBottom = new ProtoId<MarkingPrototype>("UndergarmentBottomBoxers");
+
+    public HumanoidCharacterProfile? BaseProfile;
     
     public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
     {
