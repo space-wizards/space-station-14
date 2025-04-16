@@ -1057,5 +1057,13 @@ Entries:
   id: 128
   time: '2025-04-16T17:04:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35359
+- author: Errant
+  changes:
+  - message: Antag tags on admin notices now show exactly what kind of antag that
+      mob is.
+    type: Tweak
+  id: 129
+  time: '2025-04-16T22:59:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36640
 Name: Admin
 Order: 1
