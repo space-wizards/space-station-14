@@ -1038,5 +1038,12 @@ Entries:
   id: 126
   time: '2025-04-14T15:37:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33548
+- author: Samuka
+  changes:
+  - message: Added a Bluespace Instant Effect to the spawn menu
+    type: Add
+  id: 127
+  time: '2025-04-16T02:26:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36607
 Name: Admin
 Order: 1
