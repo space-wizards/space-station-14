@@ -13,8 +13,6 @@ namespace Content.Client.Lobby
         GameSettings? Settings { get; }
         PlayerPreferences? Preferences { get; }
         void Initialize();
-        void SelectCharacter(ICharacterProfile profile);
-        void SelectCharacter(int slot);
         void SetCharacterEnable(int slot, bool enable);
         void UpdateCharacter(ICharacterProfile profile, int slot);
         void CreateCharacter(ICharacterProfile profile);

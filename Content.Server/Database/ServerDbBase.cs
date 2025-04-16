@@ -69,16 +69,7 @@ namespace Content.Server.Database
 
             var jobPreferences = prefs.JobPreferences.ToDictionary(j => new ProtoId<JobPrototype>(j.JobName), j => (JobPriority) j.Priority);
 
-            return new PlayerPreferences(profiles, prefs.SelectedCharacterSlot, Color.FromHex(prefs.AdminOOCColor), jobPreferences);
-        }
-
-        public async Task SaveSelectedCharacterIndexAsync(NetUserId userId, int index)
-        {
-            await using var db = await GetDb();
-
-            await SetSelectedCharacterSlotAsync(userId, index, db.DbContext);
-
-            await db.DbContext.SaveChangesAsync();
+            return new PlayerPreferences(profiles, Color.FromHex(prefs.AdminOOCColor), jobPreferences);
         }
 
         public async Task SaveCharacterSlotAsync(NetUserId userId, ICharacterProfile? profile, int slot)
@@ -177,7 +168,6 @@ namespace Content.Server.Database
             var prefs = new Preference
             {
                 UserId = userId.UserId,
-                SelectedCharacterSlot = 0,
                 AdminOOCColor = Color.Red.ToHex(),
                 JobPreferences = dbPriorities,
             };
@@ -190,20 +180,9 @@ namespace Content.Server.Database
 
             return new PlayerPreferences(
                 new[] {new KeyValuePair<int, ICharacterProfile>(0, defaultProfile)},
-                0,
                 Color.FromHex(prefs.AdminOOCColor),
                 priorities
                 );
-        }
-
-        public async Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot)
-        {
-            await using var db = await GetDb();
-
-            await DeleteCharacterSlot(db.DbContext, userId, deleteSlot);
-            await SetSelectedCharacterSlotAsync(userId, newSlot, db.DbContext);
-
-            await db.DbContext.SaveChangesAsync();
         }
 
         public async Task SaveAdminOOCColorAsync(NetUserId userId, Color color)
@@ -216,13 +195,6 @@ namespace Content.Server.Database
             prefs.AdminOOCColor = color.ToHex();
 
             await db.DbContext.SaveChangesAsync();
-
-        }
-
-        private static async Task SetSelectedCharacterSlotAsync(NetUserId userId, int newSlot, ServerDbContext db)
-        {
-            var prefs = await db.Preference.SingleAsync(p => p.UserId == userId.UserId);
-            prefs.SelectedCharacterSlot = newSlot;
         }
 
         private static HumanoidCharacterProfile ConvertProfiles(Profile profile)

@@ -18,10 +18,9 @@ namespace Content.Shared.Preferences
     {
         private Dictionary<int, ICharacterProfile> _characters;
 
-        public PlayerPreferences(IEnumerable<KeyValuePair<int, ICharacterProfile>> characters, int selectedCharacterIndex, Color adminOOCColor, Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
+        public PlayerPreferences(IEnumerable<KeyValuePair<int, ICharacterProfile>> characters, Color adminOOCColor, Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
         {
             _characters = new Dictionary<int, ICharacterProfile>(characters);
-            SelectedCharacterIndex = selectedCharacterIndex;
             AdminOOCColor = adminOOCColor;
             JobPriorities = jobPriorities;
         }
@@ -36,15 +35,6 @@ namespace Content.Shared.Preferences
             return _characters[index];
         }
 
-        /// <summary>
-        ///     Index of the currently selected character.
-        /// </summary>
-        public int SelectedCharacterIndex { get; }
-
-        /// <summary>
-        ///     The currently selected character.
-        /// </summary>
-        public ICharacterProfile SelectedCharacter => Characters[SelectedCharacterIndex];
         public Dictionary<ProtoId<JobPrototype>, JobPriority> JobPriorities { get; set; }
 
         public Color AdminOOCColor { get; set; }
