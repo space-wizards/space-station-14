@@ -9,6 +9,8 @@ namespace Content.Client.Administration.UI.CustomControls;
 [Virtual]
 public class CommandButton : Button, IDocumentTag
 {
+    [Dependency] private readonly IClientConGroupController _conGroup = default!;
+    [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
     private ConfirmWindow? _window;
 
     public string? Command { get; set; }
@@ -16,13 +18,13 @@ public class CommandButton : Button, IDocumentTag
 
     public CommandButton()
     {
+        IoCManager.InjectDependencies(this);
         OnPressed += TryExecute;
     }
 
     protected virtual bool CanPress()
     {
-        return string.IsNullOrEmpty(Command) ||
-            IoCManager.Resolve<IClientConGroupController>().CanCommand(Command.Split(' ')[0]);
+        return string.IsNullOrEmpty(Command) || _conGroup.CanCommand(Command.Split(' ')[0]);
     }
 
     protected override void EnteredTree()
@@ -69,7 +71,7 @@ public class CommandButton : Button, IDocumentTag
         if (string.IsNullOrEmpty(Command))
             return;
 
-        IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(Command);
+        _consoleHost.ExecuteCommand(Command);
     }
 
     public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
