@@ -1,38 +1,47 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Xenoarchaeology.Equipment.Components;
 
 /// <summary>
 /// Component for managing data stored on NodeScanner hand-held device.
-/// Can store snapshot list of currently triggered artifact nodes.
+/// Can link to artifact and show currently triggered artifact nodes.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), Access(typeof(SharedNodeScannerSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
+[Access(typeof(NodeScannerSystem))]
 public sealed partial class NodeScannerComponent : Component
 {
     /// <summary>
-    /// Identity-names (3-digit codes) of nodes that are triggered on scanned artifact.
+    /// Xeno artifact entity, to which scanner is attached currently.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public HashSet<string> TriggeredNodesSnapshot = new();
+    public NetEntity? AttachedTo;
 
     /// <summary>
-    /// State of artifact on the moment of scanning.
+    /// Maximum range for keeping connection to artifact.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public ArtifactState ArtifactState;
+    [DataField]
+    public int MaxLinkedRange = 5;
 
     /// <summary>
-    /// Time until next unlocking of scanned artifact can be started.
+    /// Next update tick gametime.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan? WaitTime;
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
+    public TimeSpan NextUpdate = TimeSpan.Zero;
 
     /// <summary>
-    /// Moment of gametime, at which last artifact scanning was done.
+    /// Update interval for link info.
     /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan? ScannedAt;
+    [DataField]
+    public TimeSpan LinkUpdateInterval = TimeSpan.FromSeconds(1);
+
+    /// <summary>
+    /// Update interval for link info.
+    /// </summary>
+    [DataField]
+    public TimeSpan DisplayDataUpdateInterval = TimeSpan.FromSeconds(1);
 }
 
 /// <summary>
