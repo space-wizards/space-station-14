@@ -40,7 +40,7 @@
       offset: 0.0
 
 - type: entity
-  name: salvage loot spawner
+  name: salvage crusher spawner
   id: SalvageLootSpawner
   parent: MarkerBase
   components:
@@ -49,6 +49,25 @@
         - state: red
         - sprite: Objects/Weapons/Melee/crusher.rsi
           state: icon
+    - type: RandomSpawner
+      prototypes:
+      - WeaponCrusher
+      - WeaponCrusherGlaive
+      rarePrototypes:
+      - WeaponCrusherDagger
+      rareChance: 0.1
+      offset: 0.0
+
+- type: entity
+  name: salvage tool spawner
+  id: SalvageToolSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Tools/handdrill.rsi
+          state: handdrill
     - type: RandomSpawner
       prototypes:
       - WeaponCrusher
