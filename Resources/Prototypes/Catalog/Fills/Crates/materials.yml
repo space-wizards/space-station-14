@@ -157,7 +157,7 @@
   id: CrateMaterialBasicResource
   parent: CrateGenericSteel
   name: basic sheet crate
-  description: 30 sheets of steel, glass and plastic.
+  description: 30 sheets of steel, glass, and plastic.
   components:
   - type: StorageFill
     contents:
