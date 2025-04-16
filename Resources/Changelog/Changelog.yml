@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: LevitatingTree
-  changes:
-  - message: Lizards can now eat the Five Alarm Burger!
-    type: Fix
-  id: 7702
-  time: '2024-12-13T13:53:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33848
 - author: Southbridge
   changes:
   - message: Paper documents now support the [mono] tag.
@@ -3910,3 +3903,10 @@
   id: 8201
   time: '2025-04-16T19:29:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34959
+- author: Linkbro1
+  changes:
+  - message: changed MV and HV cable item sprites, changed MV cable structure sprites
+    type: Tweak
+  id: 8202
+  time: '2025-04-16T20:26:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34955
