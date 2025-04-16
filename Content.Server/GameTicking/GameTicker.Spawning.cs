@@ -149,26 +149,23 @@ namespace Content.Server.GameTicking
             bool lateJoin = true,
             bool silent = false)
         {
-            _sawmill.Warning("Attempted to spawn a player without a character profile");
-            // var character = GetPlayerProfile(player);
-            //
-            // var jobBans = _banManager.GetJobBans(player.UserId);
-            // if (jobBans == null || jobId != null && jobBans.Contains(jobId))
-            //     return;
-            //
-            // if (jobId != null)
-            // {
-            //     var ev = new IsJobAllowedEvent(player, new ProtoId<JobPrototype>(jobId));
-            //     RaiseLocalEvent(ref ev);
-            //     if (ev.Cancelled)
-            //         return;
-            // }
-            //
-            // SpawnPlayer(player, character, station, jobId, lateJoin, silent);
+            var jobBans = _banManager.GetJobBans(player.UserId);
+            if (jobBans == null || jobId != null && jobBans.Contains(jobId))
+                return;
+
+            if (jobId != null)
+            {
+                var ev = new IsJobAllowedEvent(player, new ProtoId<JobPrototype>(jobId));
+                RaiseLocalEvent(ref ev);
+                if (ev.Cancelled)
+                    return;
+            }
+
+            SpawnPlayer(player, null, station, jobId, lateJoin, silent);
         }
 
         private void SpawnPlayer(ICommonSession player,
-            HumanoidCharacterProfile character,
+            HumanoidCharacterProfile? character,
             EntityUid station,
             string? jobId = null,
             bool lateJoin = true,
@@ -236,8 +233,21 @@ namespace Content.Server.GameTicking
                     Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
                 return;
             }
-            var slot = _prefsManager.GetPreferences(player.UserId).SelectedCharacterIndex; //🌟Starlight🌟
-            _newLifeSystem.SaveCharacterToUsed(player.UserId, slot);     //🌟Starlight🌟
+
+            // Job has been selected concretely, let's make sure the character profile is concrete
+            character ??= playerPreferences.SelectProfileForJob(jobId);
+            if (character == null)
+            {
+                if (!LobbyEnabled)
+                {
+                    JoinAsObserver(player);
+                }
+                _chatManager.DispatchServerMessage(player,
+                    Loc.GetString("game-ticker-player-no-character-for-job-available-when-joining", ("job", jobId)));
+                return;
+            }
+
+            _newLifeSystem.SaveCharacterToUsed(player.UserId, character.Slot);     //🌟Starlight🌟
             PlayerJoinGame(player, silent);
 
             var data = player.ContentData();
