@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: You can now pet the AI Core.
-    type: Add
-  id: 7693
-  time: '2024-12-09T16:10:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33788
 - author: joshepvodka
   changes:
   - message: Added flavor profiles to beverages that missed them.
@@ -3904,3 +3897,14 @@
   id: 8192
   time: '2025-04-15T22:49:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36595
+- author: slarticodefast, Flareguy
+  changes:
+  - message: Added the Desynchronizer, an experimental device that allows the user
+      to temporarily make themselves invincible, invisible, & immobile. Unlock it
+      through experimental science today!
+    type: Add
+  - message: Gravity Manipulation technology is now a tier 2 technology.
+    type: Tweak
+  id: 8193
+  time: '2025-04-16T01:33:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35752
