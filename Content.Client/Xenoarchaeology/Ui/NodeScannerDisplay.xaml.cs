@@ -71,19 +71,15 @@ public sealed partial class NodeScannerDisplay : FancyWindow
             return;
 
         _ent.TryGetComponent(attachedArtifactEnt, out XenoArtifactUnlockingComponent? unlockingComponent);
-        
+
+        _triggeredNodeNames.Clear();
         ArtifactState artifactState;
         if (unlockingComponent == null)
         {
             var timeToUnlockAvailable = artifactComponent.NextUnlockTime - _timing.CurTime;
-            if (timeToUnlockAvailable > TimeSpan.Zero)
-            {
-                artifactState = ArtifactState.Cooldown;
-            }
-            else
-            {
-                artifactState = ArtifactState.Ready;
-            }
+            artifactState = timeToUnlockAvailable > TimeSpan.Zero
+                ? ArtifactState.Cooldown
+                : ArtifactState.Ready;
         }
         else
         {
