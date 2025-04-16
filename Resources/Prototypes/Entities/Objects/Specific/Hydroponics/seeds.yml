@@ -738,10 +738,10 @@
 
 - type: entity
   parent: SeedBase
-  name: packet of bonioon seeds
-  id: BonioonSeeds
+  name: packet of bloonion seeds
+  id: BloonionSeeds
   components:
   - type: Seed
-    seedId: bonioon
+    seedId: bloonion
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/bonioon.rsi
+    sprite: Objects/Specific/Hydroponics/bloonion.rsi
