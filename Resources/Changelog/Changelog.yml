@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed the greytide virus event affecting non-station maps.
-    type: Fix
-  id: 7697
-  time: '2024-12-11T14:30:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33806
 - author: metalgearsloth
   changes:
   - message: Fix battery self-recharging items like the antique laser gun from mispredicting.
@@ -3903,3 +3896,10 @@
   id: 8196
   time: '2025-04-16T12:23:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36616
+- author: SlamBamActionman
+  changes:
+  - message: Closed pet carriers no longer push players or lockers.
+    type: Fix
+  id: 8197
+  time: '2025-04-16T14:12:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36627
