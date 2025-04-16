@@ -1,5 +1,4 @@
-using System.ComponentModel;
-using Content.Server.DeviceLinking.Events;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Power.Generator;
 
 namespace Content.Server.Power.Generator;

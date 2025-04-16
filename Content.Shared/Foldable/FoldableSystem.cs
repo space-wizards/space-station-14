@@ -9,6 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Foldable;
 
+// TODO: This system could arguably be refactored into a general state system, as it is being utilized for a lot of different objects with various needs.
 public sealed class FoldableSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -24,7 +25,6 @@ public sealed class FoldableSystem : EntitySystem
 
         SubscribeLocalEvent<FoldableComponent, ComponentInit>(OnFoldableInit);
         SubscribeLocalEvent<FoldableComponent, ContainerGettingInsertedAttemptEvent>(OnInsertEvent);
-        SubscribeLocalEvent<FoldableComponent, InsertIntoEntityStorageAttemptEvent>(OnStoreThisAttempt);
         SubscribeLocalEvent<FoldableComponent, StorageOpenAttemptEvent>(OnFoldableOpenAttempt);
 
         SubscribeLocalEvent<FoldableComponent, StrapAttemptEvent>(OnStrapAttempt);
@@ -43,12 +43,6 @@ public sealed class FoldableSystem : EntitySystem
     private void OnFoldableOpenAttempt(EntityUid uid, FoldableComponent component, ref StorageOpenAttemptEvent args)
     {
         if (component.IsFolded)
-            args.Cancelled = true;
-    }
-
-    public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, ref InsertIntoEntityStorageAttemptEvent args)
-    {
-        if (comp.IsFolded)
             args.Cancelled = true;
     }
 
