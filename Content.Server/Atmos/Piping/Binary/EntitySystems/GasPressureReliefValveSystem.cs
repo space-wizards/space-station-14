@@ -45,6 +45,11 @@ public sealed class GasPressureReliefValveSystem : EntitySystem
         // Bound UI subscriptions
         SubscribeLocalEvent<GasPressureReliefValveComponent, GasPressureReliefValveChangeThresholdMessage>(OnThresholdChangeMessage);
     }
+    // TODO!!!!!!!
+    // TLDR this entire shit isn't predicted. The UI isn't predicted, the visuals aren't predicted, none of it is
+    // predicted.
+    // So it all needs to be changed to mirror the prediction done in the pressure pump.
+    // Working implementation so far but it's a long ways off.
 
     private void OnExamined(EntityUid valveEntityUid,
         GasPressureReliefValveComponent valveComponent,
