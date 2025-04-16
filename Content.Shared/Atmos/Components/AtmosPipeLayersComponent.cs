@@ -26,6 +26,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// Only pipes on the same layer can connect with each other.
     /// </summary>
     [DataField("pipeLayer"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadOnly)]
     public byte CurrentPipeLayer;
 
     /// <summary>
@@ -37,7 +38,7 @@ public sealed partial class AtmosPipeLayersComponent : Component
     /// (from 0 to <see cref="NumberOfPipeLayers"/> - 1).
     /// </remarks>
     [DataField]
-    public string[]? SpriteRsiPaths;
+    public string[] SpriteRsiPaths = [];
 
     /// <summary>
     /// A dictionary of entity sprite layers that have their

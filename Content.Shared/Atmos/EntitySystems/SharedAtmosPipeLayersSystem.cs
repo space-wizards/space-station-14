@@ -4,6 +4,7 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
+using Content.Shared.Tag;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
@@ -23,8 +24,10 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     private readonly DrawDepth.DrawDepth[] _pipeLayerDrawDepths = { DrawDepth.DrawDepth.ThinPipe, DrawDepth.DrawDepth.ThinPipeAlt1, DrawDepth.DrawDepth.ThinPipeAlt2 };
+    private readonly ProtoId<TagPrototype> _instantDoAftersTag = "InstantDoAfters";
 
     public override void Initialize()
     {
@@ -56,8 +59,38 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
         var user = args.User;
 
-        // The player requires a tool to adjust the pipe layer
-        if (!TryGetHeldTool(user, ent.Comp.Tool, out var tool))
+        // Player either require a tool to adjust the pipe layer or the instant do afters tag
+        if (TryGetHeldTool(user, ent.Comp.Tool, out var tool) || _tag.HasTag(user, _instantDoAftersTag))
+        {
+            for (var i = 0; i < ent.Comp.NumberOfPipeLayers; i++)
+            {
+                var index = i;
+                var layerName = Loc.GetString("atmos-pipe-layers-component-layer-" + index);
+                var label = Loc.GetString("atmos-pipe-layers-component-select-layer", ("layerName", layerName));
+
+                var v = new Verb
+                {
+                    Priority = 1,
+                    Category = VerbCategory.Adjust,
+                    Text = label,
+                    Disabled = index == ent.Comp.CurrentPipeLayer,
+                    Impact = LogImpact.Low,
+                    DoContactInteraction = true,
+                    Act = () =>
+                    {
+                        if (tool == null)
+                            RaiseLocalEvent(ent, new TrySettingPipeLayerCompletedEvent(index));
+
+                        else
+                            _tool.UseTool(tool.Value, user, ent, ent.Comp.Delay, tool.Value.Comp.Qualities, new TrySettingPipeLayerCompletedEvent(index));
+                    }
+                };
+
+                args.Verbs.Add(v);
+            }
+        }
+
+        else
         {
             var toolName = Loc.GetString(toolProto.ToolName).ToLower();
             var label = Loc.GetString("atmos-pipe-layers-component-tool-missing", ("toolName", toolName));
@@ -69,35 +102,6 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
                 Text = label,
                 Disabled = true,
                 Impact = LogImpact.Low,
-            };
-
-            args.Verbs.Add(v);
-
-            return;
-        }
-
-        // List all the layers that the pipe can be shifted to
-        for (var i = 0; i < ent.Comp.NumberOfPipeLayers; i++)
-        {
-            var index = i;
-            var layerName = Loc.GetString("atmos-pipe-layers-component-layer-" + index);
-            var label = Loc.GetString("atmos-pipe-layers-component-select-layer", ("layerName", layerName));
-
-            var v = new Verb
-            {
-                Priority = 1,
-                Category = VerbCategory.Adjust,
-                Text = label,
-                Disabled = index == ent.Comp.CurrentPipeLayer,
-                Impact = LogImpact.Low,
-                DoContactInteraction = true,
-                Act = () =>
-                {
-                    if (!TryGetHeldTool(user, ent.Comp.Tool, out var tool))
-                        return;
-
-                    _tool.UseTool(tool.Value, user, ent, ent.Comp.Delay, tool.Value.Comp.Qualities, new TrySettingPipeLayerCompletedEvent(index));
-                }
             };
 
             args.Verbs.Add(v);
@@ -183,7 +187,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
                 _appearance.SetData(ent, AtmosPipeLayerVisuals.DrawDepth, (int)_pipeLayerDrawDepths[ent.Comp.CurrentPipeLayer], appearance);
             }
 
-            if (ent.Comp.SpriteRsiPaths != null && ent.Comp.CurrentPipeLayer < ent.Comp.SpriteRsiPaths.Length)
+            if (ent.Comp.CurrentPipeLayer < ent.Comp.SpriteRsiPaths.Length)
                 _appearance.SetData(ent, AtmosPipeLayerVisuals.Sprite, ent.Comp.SpriteRsiPaths[ent.Comp.CurrentPipeLayer], appearance);
 
             if (ent.Comp.SpriteLayersRsiPaths.Count > 0)

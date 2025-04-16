@@ -332,7 +332,7 @@
         - state: gasCanisterPort
           map: [ "enum.SubfloorLayers.FirstLayer" ]
     - type: AtmosPipeLayers
-      spriteRsiPaths: null
+      spriteRsiPaths: []
     - type: Appearance
     - type: PipeColorVisuals
     - type: GasPort
@@ -372,7 +372,7 @@
         - state: vent_off
           map: [ "enabled", "enum.SubfloorLayers.FirstLayer" ]
     - type: AtmosPipeLayers
-      spriteRsiPaths: null
+      spriteRsiPaths: []
     - type: GenericVisualizer
       visuals:
         enum.VentPumpVisuals.State:
@@ -435,7 +435,11 @@
     - state: unlit
       shader: unshaded
   - type: AtmosPipeLayers
-    spriteRsiPaths: null
+    spriteLayersRsiPaths:
+      enum.PipeVisualLayers.Pipe:
+        - Structures/Piping/Atmospherics/pipe.rsi
+        - Structures/Piping/Atmospherics/pipe_alt1.rsi
+        - Structures/Piping/Atmospherics/pipe_alt2.rsi
   - type: Appearance
   - type: GenericVisualizer
     visuals:
@@ -503,7 +507,7 @@
     - state: heStraight
       map: [ "enum.SubfloorLayers.FirstLayer" ]
   - type: AtmosPipeLayers
-    spriteRsiPaths: null
+    spriteRsiPaths: []
     numberOfPipeLayers: 1
   - type: SubFloorHide
     visibleLayers:
