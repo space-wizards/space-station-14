@@ -1,12 +1,12 @@
-﻿using Content.Server.Atmos.Piping.Binary.EntitySystems;
-using Content.Shared.Atmos;
+﻿using Content.Shared.Atmos.EntitySystems;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Atmos.Piping.Binary.Components;
+namespace Content.Shared.Atmos.Components;
 
 /// <summary>
-/// Component side of the <see cref="GasPressureReliefValveSystem"/>.
+/// Shared component side for the <see cref="SharedGasPressureReliefValveSystem"/>
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class GasPressureReliefValveComponent : Component
 {
     [DataField]
@@ -15,7 +15,13 @@ public sealed partial class GasPressureReliefValveComponent : Component
     [DataField]
     public string OutletName = "outlet";
 
-    [DataField]
+    /// <summary>
+    /// Sets the opening threshold of the valve.
+    /// <example>If set to 500 kPa, the valve will only
+    /// open if the pressure in the inlet side is above
+    /// 500 kPa.</example>
+    /// </summary>
+    [DataField, AutoNetworkedField]
     public float Threshold;
 
     /// <summary>
@@ -23,7 +29,7 @@ public sealed partial class GasPressureReliefValveComponent : Component
     /// Used for showing the valve animation, the UI,
     /// and on examine.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Enabled;
 
     /// <summary>
@@ -38,6 +44,6 @@ public sealed partial class GasPressureReliefValveComponent : Component
     /// and on examine.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float FlowRate;
 }

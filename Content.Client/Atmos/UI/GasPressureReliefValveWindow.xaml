@@ -1,7 +1,7 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            SetSize="300 90"
-            MinSize="300 90"
+            SetSize="300 200"
+            MinSize="300 200"
             Title="Pressure Relief Valve"
             Resizable="False">
     <BoxContainer Orientation="Vertical" Margin="5 5 5 5" SeparationOverride="10">
@@ -10,6 +10,18 @@
             <Label Text="Threshold Pressure:" Margin="0 0 5 0"/>
             <LineEdit Name="ThresholdInput" HorizontalExpand="True" MinSize="70 0"/>
             <Button Name="SetThresholdButton" Text="Set" Disabled="True" Margin="5 0 0 0"/>
+        </BoxContainer>
+
+        <!-- Current Flow Rate -->
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Text="Current Flow Rate:" Margin="0 0 5 0"/>
+            <Label Name="FlowRateLabel" Text="0.0 L/s" HorizontalExpand="True"/>
+        </BoxContainer>
+
+        <!-- Valve Open Status -->
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Text="Valve Open Status:" Margin="0 0 5 0"/>
+            <Label Name="ValveStatusLabel" Text="Closed" HorizontalExpand="True"/>
         </BoxContainer>
     </BoxContainer>
 </DefaultWindow>

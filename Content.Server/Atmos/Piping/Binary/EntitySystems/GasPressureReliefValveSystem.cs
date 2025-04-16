@@ -1,20 +1,12 @@
-﻿using Content.Server.Administration.Logs;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Piping.Binary.Components;
+﻿using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
-using Content.Shared.Atmos.Piping;
-using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Audio;
-using Content.Shared.Database;
-using Content.Shared.Examine;
-using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
 
@@ -24,59 +16,23 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
 /// See https://en.wikipedia.org/wiki/Relief_valve
 /// </summary>
 [UsedImplicitly]
-public sealed class GasPressureReliefValveSystem : EntitySystem
+public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GasPressureReliefValveComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<GasPressureReliefValveComponent, AtmosDeviceUpdateEvent>(OnReliefValveUpdated);
-        SubscribeLocalEvent<GasPressureReliefValveComponent, ExaminedEvent>(OnExamined);
-        SubscribeLocalEvent<GasPressureReliefValveComponent, ActivateInWorldEvent>(OnValveActivate);
 
-        // Bound UI subscriptions
-        SubscribeLocalEvent<GasPressureReliefValveComponent, GasPressureReliefValveChangeThresholdMessage>(OnThresholdChangeMessage);
+        SubscribeLocalEvent<GasPressureReliefValveComponent, AtmosDeviceUpdateEvent>(OnReliefValveUpdated);
     }
     // TODO!!!!!!!
     // TLDR this entire shit isn't predicted. The UI isn't predicted, the visuals aren't predicted, none of it is
     // predicted.
     // So it all needs to be changed to mirror the prediction done in the pressure pump.
     // Working implementation so far but it's a long ways off.
-
-    private void OnExamined(EntityUid valveEntityUid,
-        GasPressureReliefValveComponent valveComponent,
-        ExaminedEvent args)
-    {
-        // No cool stuff provided if it's unable to be examined.
-        if (!Transform(valveEntityUid).Anchored || !args.IsInDetailsRange)
-            return;
-
-        using (args.PushGroup(nameof(GasPressureReliefValveComponent)))
-        {
-            args.PushMarkup(Loc.GetString("gas-pressure-relief-valve-system-examined",
-                ("statusColor", valveComponent.Enabled ? "green" : "red"),
-                ("open", valveComponent.Enabled)));
-
-            args.PushMarkup(Loc.GetString("gas-pressure-relief-valve-examined-threshold-pressure",
-                ("threshold", $"{valveComponent.Threshold:0.#}")));
-
-            args.PushMarkup(Loc.GetString("gas-pressure-relief-valve-examined-flow-rate",
-                ("flowRate", $"{valveComponent.FlowRate:0.#}")));
-        }
-    }
-
-    private void OnInit(EntityUid valveEntityUid, GasPressureReliefValveComponent valveComponent, ComponentInit args)
-    {
-        UpdateAppearance(valveEntityUid, valveComponent);
-    }
 
 /// <summary>
 /// Handles the updating logic for the pressure relief valve.
@@ -87,7 +43,7 @@ public sealed class GasPressureReliefValveSystem : EntitySystem
 /// It should also not release more gas than it would take to equalize the pressure.
 /// </summary>
 /// <param name="valveEntityUid"> the <see cref="EntityUid"/> of the pressure relief valve</param>
-/// <param name="valveComponent"> the <see cref="GasPressureReliefValveComponent"/> component of the valve</param>
+/// <param name="valveComponent"> the <see cref="Shared.Atmos.Components.GasPressureReliefValveComponent"/> component of the valve</param>
 /// <param name="args"> Args provided to us via <see cref="AtmosDeviceUpdateEvent"/></param>
     private void OnReliefValveUpdated(EntityUid valveEntityUid,
         GasPressureReliefValveComponent valveComponent,
@@ -131,7 +87,6 @@ public sealed class GasPressureReliefValveSystem : EntitySystem
             return;
 
         // guess we're doing work now
-        UpdateAppearance(valveEntityUid, valveComponent);
         _ambientSoundSystem.SetAmbience(valveEntityUid, true);
         valveComponent.Enabled = true;
 
@@ -171,57 +126,13 @@ public sealed class GasPressureReliefValveSystem : EntitySystem
         // TODO: This math is wrong as shit. Figure out how to fix it later.
     }
 
-    private void UpdateAppearance(EntityUid valveEntityUid,
-        GasPressureReliefValveComponent? valveComponent = null,
-        AppearanceComponent? appearance = null)
-    {
-        if (!Resolve(valveEntityUid, ref valveComponent, ref appearance, false))
-            return;
-
-        _appearance.SetData(valveEntityUid, FilterVisuals.Enabled, valveComponent.Enabled, appearance);
-    }
-
-    private void OnThresholdChangeMessage(EntityUid valveEntityUid,
-        GasPressureReliefValveComponent valveComponent,
-        GasPressureReliefValveChangeThresholdMessage args)
-    {
-        valveComponent.Threshold = Math.Max(0f, args.ThresholdPressure);
-        _adminLogger.Add(LogType.AtmosVolumeChanged,
-            LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set the pressure threshold on {ToPrettyString(valveEntityUid):device} to {args.ThresholdPressure}");
-        DirtyUI(valveEntityUid, valveComponent);
-    }
-
-    private void DirtyUI(EntityUid valveEntityUid, GasPressureReliefValveComponent? valveComponent)
-    {
-        if (!Resolve(valveEntityUid, ref valveComponent))
-            return;
-
-        _userInterfaceSystem.SetUiState(valveEntityUid,
-            GasPressureReliefValveUiKey.Key,
-            new GasPressureReliefValveBoundUserInterfaceState(Name(valveEntityUid), valveComponent.Threshold));
-    }
-
-    private void OnValveActivate(EntityUid valveEntityUid, GasPressureReliefValveComponent valveComponent, ActivateInWorldEvent args)
-    {
-        if (args.Handled || !args.Complex)
-            return;
-
-        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
-            return;
-
-        if (Transform(valveEntityUid).Anchored)
-        {
-            _userInterfaceSystem.OpenUi(valveEntityUid, GasPressureReliefValveUiKey.Key, actor.PlayerSession);
-            DirtyUI(valveEntityUid, valveComponent);
-        }
-        else
-        {
-            _popup.PopupCursor(Loc.GetString("comp-gas-pump-ui-needs-anchor"), args.User);
-        }
-
-        args.Handled = true;
-    }
-
-
+    // private void DirtyUI(EntityUid valveEntityUid, GasPressureReliefValveComponent? valveComponent)
+    // {
+    //     if (!Resolve(valveEntityUid, ref valveComponent))
+    //         return;
+    //
+    //     _userInterfaceSystem.SetUiState(valveEntityUid,
+    //         GasPressureReliefValveUiKey.Key,
+    //         new GasPressureReliefValveBoundUserInterfaceState(Name(valveEntityUid), valveComponent.Threshold));
+    // }
 }

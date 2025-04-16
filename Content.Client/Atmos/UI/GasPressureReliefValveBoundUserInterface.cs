@@ -21,6 +21,9 @@ public sealed class GasPressureReliefValveBoundUserInterface : BoundUserInterfac
         _window.ThresholdPressureChanged += OnThresholdChanged;
     }
 
+    // TODO: This needs an Update() method to update the UI when the state changes.
+    // This will allow us to provide flow rate and opening/closing info.
+
     private void OnThresholdChanged(string newThreshold)
     {
         var sentThreshold = UserInputParser.TryFloat(newThreshold, out var parsedNewThreshold)
@@ -29,7 +32,7 @@ public sealed class GasPressureReliefValveBoundUserInterface : BoundUserInterfac
         if (parsedNewThreshold < 0)
             sentThreshold = 0;
 
-        SendMessage(new GasPressureReliefValveChangeThresholdMessage(sentThreshold));
+        SendPredictedMessage(new GasPressureReliefValveChangeThresholdMessage(sentThreshold));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

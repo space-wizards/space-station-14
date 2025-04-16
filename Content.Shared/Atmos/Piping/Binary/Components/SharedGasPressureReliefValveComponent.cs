@@ -28,14 +28,28 @@ public sealed class GasPressureReliefValveBoundUserInterfaceState : BoundUserInt
     public float ThresholdPressure { get; }
 
     /// <summary>
+    /// The current flow rate of the valve in L/S.
+    /// </summary>
+    public float FlowRate { get; }
+
+    /// <summary>
+    /// Whether the valve is opened or closed.
+    /// </summary>
+    public bool Enabled { get; }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="GasPressureReliefValveBoundUserInterfaceState"/> class.
     /// </summary>
     /// <param name="valveLabel">The label of the valve.</param>
     /// <param name="thresholdPressure">The threshold pressure of the valve.</param>
-    public GasPressureReliefValveBoundUserInterfaceState(string valveLabel, float thresholdPressure)
+    /// <param name="flowRate">The current flow rate of the valve in L/S.</param>
+    /// <param name="enabled">The current position of the valve.</param>
+    public GasPressureReliefValveBoundUserInterfaceState(string valveLabel, float thresholdPressure, float flowRate, bool enabled)
     {
         ValveLabel = valveLabel;
         ThresholdPressure = thresholdPressure;
+        FlowRate = flowRate;
+        Enabled = enabled;
     }
 }
 
