@@ -1,5 +1,6 @@
 - type: entity
   id: BaseXenoArtifact
+  parent: BaseMob # we use this since it can technically get inhabited
   name: artifact
   description: A strange artifact from time unknown. Looks like a good time.
   abstract: true
@@ -29,6 +30,9 @@
   - type: Actions
   - type: Physics
     bodyType: Dynamic
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0.25
+    baseSprintSpeed: 0.5
   - type: UseDelay
   - type: StealTarget
     stealGroup: XenoArtifact
@@ -41,3 +45,19 @@
   # These components are needed for certain triggers to work.
   - type: RadiationReceiver
   - type: Reactive
+    groups:
+      Flammable: [Touch]
+      Extinguish: [Touch]
+      Acidic: [Touch]
+
+- type: entity
+  id: ActionArtifactActivate
+  name: Activate Artifact
+  description: Activate yourself, causing chaos to those near you.
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+      state: ano29
+    useDelay: 300
+    event: !type:ArtifactSelfActivateEvent

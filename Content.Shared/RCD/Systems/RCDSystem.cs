@@ -45,6 +45,7 @@ public class RCDSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tags = default!;
 
     private readonly int _instantConstructionDelay = 0;
@@ -561,12 +562,12 @@ public class RCDSystem : EntitySystem
     public bool TryGetMapGridData(EntityCoordinates location, [NotNullWhen(true)] out MapGridData? mapGridData)
     {
         mapGridData = null;
-        var gridUid = location.GetGridUid(EntityManager);
+        var gridUid = _transform.GetGrid(location);
 
         if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
         {
             location = location.AlignWithClosestGridTile(1.75f, EntityManager);
-            gridUid = location.GetGridUid(EntityManager);
+            gridUid = _transform.GetGrid(location);
 
             // Check if we got a grid ID the second time round
             if (!TryComp(gridUid, out mapGrid))
