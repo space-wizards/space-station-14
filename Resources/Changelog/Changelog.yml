@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Southbridge
-  changes:
-  - message: Paper documents now support the [mono] tag.
-    type: Add
-  id: 7703
-  time: '2024-12-13T14:24:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33830
 - author: yuitop
   changes:
   - message: Anchoring now has higher priority over stashing.
@@ -3910,3 +3903,10 @@
   id: 8202
   time: '2025-04-16T20:26:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34955
+- author: ciaran
+  changes:
+  - message: Fixed duplicate crew monitor console entries for crew with tracking implants
+    type: Fix
+  id: 8203
+  time: '2025-04-16T21:14:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35918
