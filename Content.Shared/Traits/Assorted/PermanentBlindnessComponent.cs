@@ -8,7 +8,10 @@ namespace Content.Shared.Traits.Assorted;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class PermanentBlindnessComponent : Component
 {
+    /// <summary>
+    /// How damaged should their eyes be? Set 0 for maximum damage.
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public int Blindness = 0; // How damaged should their eyes be. Set 0 for maximum damage.
+    public int Blindness = 0;
 }
 
