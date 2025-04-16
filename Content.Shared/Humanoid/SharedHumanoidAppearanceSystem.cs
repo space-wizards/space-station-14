@@ -375,6 +375,8 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             return;
         }
 
+        SaveBaseProfile((uid, humanoid), profile);
+
         SetSpecies(uid, profile.Species, false, humanoid);
         SetSex(uid, profile.Sex, false, humanoid);
         humanoid.EyeColor = profile.Appearance.EyeColor;
@@ -444,6 +446,22 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.Age = profile.Age;
 
         Dirty(uid, humanoid);
+    }
+
+    private void SaveBaseProfile(Entity<HumanoidAppearanceComponent?> ent, HumanoidCharacterProfile profile)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return;
+
+        ent.Comp.BaseProfile = profile.Clone();
+    }
+
+    public HumanoidCharacterProfile? GetBaseProfile(Entity<HumanoidAppearanceComponent?> ent)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return null;
+
+        return ent.Comp.BaseProfile;
     }
 
     /// <summary>

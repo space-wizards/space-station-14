@@ -140,21 +140,22 @@ namespace Content.Server.GameTicking
             bool lateJoin = true,
             bool silent = false)
         {
-            var character = GetPlayerProfile(player);
-
-            var jobBans = _banManager.GetJobBans(player.UserId);
-            if (jobBans == null || jobId != null && jobBans.Contains(jobId))
-                return;
-
-            if (jobId != null)
-            {
-                var ev = new IsJobAllowedEvent(player, new ProtoId<JobPrototype>(jobId));
-                RaiseLocalEvent(ref ev);
-                if (ev.Cancelled)
-                    return;
-            }
-
-            SpawnPlayer(player, character, station, jobId, lateJoin, silent);
+            _sawmill.Warning("Attempted to spawn a player without a character profile");
+            // var character = GetPlayerProfile(player);
+            //
+            // var jobBans = _banManager.GetJobBans(player.UserId);
+            // if (jobBans == null || jobId != null && jobBans.Contains(jobId))
+            //     return;
+            //
+            // if (jobId != null)
+            // {
+            //     var ev = new IsJobAllowedEvent(player, new ProtoId<JobPrototype>(jobId));
+            //     RaiseLocalEvent(ref ev);
+            //     if (ev.Cancelled)
+            //         return;
+            // }
+            //
+            // SpawnPlayer(player, character, station, jobId, lateJoin, silent);
         }
 
         private void SpawnPlayer(ICommonSession player,
@@ -387,7 +388,7 @@ namespace Content.Server.GameTicking
             Entity<MindComponent?>? mind = player.GetMind();
             if (mind == null)
             {
-                var name = GetPlayerProfile(player).Name;
+                var name = player.Name;
                 var (mindId, mindComp) = _mind.CreateMind(player.UserId, name);
                 mind = (mindId, mindComp);
                 _mind.SetUserId(mind.Value, player.UserId);
