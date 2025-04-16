@@ -3,6 +3,12 @@
   entity: ClothingBackpackDragonFox
   sponsorOnly: true
 
+- type: sponsorLoadout
+  id: DragonFoxHypospray
+  entity: HypoDragonfox
+  sponsorOnly: true
+  whitelistJobs: [ChiefMedicalOfficer, MedicalDoctor, Chemist]
+
 # Backpack
 - type: entity
   parent: ClothingBackpack
@@ -60,6 +66,7 @@
       - id: JawsOfLife
       - id: WelderExperimental
       - id: Multitool
+      - id: RCDDragonfox
 
 # Jumpsuit
 - type: entity
@@ -136,7 +143,7 @@
   parent: ClothingOuterHardsuitAtmos
   id: ClothingOuterHardsuitDragonFoxEvent
   name: силовой доспех эгида
-  description:  Доспех изготавливают из самых продвинутых сплавов керамита, адамантия и некоторых других металлов. Точный состав сплава хранится в строжайшей тайне. Все элементы доспеха покрываются гексаграммными оберегами, омываются священными маслами и заклинаются древними защитными заклинаниями.
+  description: Доспех изготавливают из самых продвинутых сплавов керамита, адамантия и некоторых других металлов. Точный состав сплава хранится в строжайшей тайне. Все элементы доспеха покрываются гексаграммными оберегами, омываются священными маслами и заклинаются древними защитными заклинаниями.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/hardsuit.rsi
@@ -641,6 +648,48 @@
   sprites:
   - sprite: _DeadSpace/Sponsor/DragonFox/ninetails.rsi
     state: nine_tail_icon
+
+# РСУ
+
+- type: entity
+  id: RCDDragonfox
+  parent: RCDCE
+  name: РСУ МедТех-Элит
+  description: Улучшенная версия базового РСУ которая самовосстанавливет заряды, может быстро размещать и демонтировать стены, полы и шлюзы.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/rcd.rsi
+    layers:
+    - state: icon
+  - type: AutoRecharge
+    rechargeDuration: 4
+
+# Гипоспрей
+
+- type: entity
+  name: гипоспрей МедТех-Элит
+  parent: BaseItem
+  description: Гипоспрей МедТех-Элит является современным и эффективным инструментом для медицинской практики, обеспечивающим комфорт как для медицинского персонала, так и для пациентов. Устройство позволяет быстро и безболезненно вводить необходимые препараты.
+  id: HypoDragonfox
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/hypo.rsi
+    state: hypo
+  - type: Item
+    sprite: _DeadSpace/Sponsor/DragonFox/hypo.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 5
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+    onlyAffectsMobs: false
+  - type: UseDelay
+    delay: 0.5
 
 # Plushie toys
 
