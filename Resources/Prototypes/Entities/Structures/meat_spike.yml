@@ -16,16 +16,10 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
+        damage: 25
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
@@ -52,20 +46,17 @@
   - type: Appearance
   - type: Construction
     node: spike
+  - type: ContainerFill
+    containers:
+      knives: [ KitchenKnife, KitchenKnife, KitchenKnife ]
   - type: Destructible
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
-        acts: ["Destruction"]
+        acts: [ "Destruction" ]
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
