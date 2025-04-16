@@ -2,3 +2,8 @@
 - type: nameIdentifierGroup
   id: NanoChat
   maxValue: 9999
+
+- type: nameIdentifierGroup
+  id: ApidCryopod
+  prefix: Nuc
+  maxValue: 9999

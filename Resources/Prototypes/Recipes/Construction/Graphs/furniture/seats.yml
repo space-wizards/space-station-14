@@ -87,6 +87,11 @@
               doAfter: 1
             - material: Cloth
               amount: 1
+        - to: chairapid #imp start
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1 #imp end
 
     - node: chair
       entity: Chair
@@ -276,3 +281,15 @@
               doAfter: 1
             - tool: Screwing
               doAfter: 1
+
+    - node: chairapid #imp start
+      entity: ChairApid
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+          steps:
+            - tool: Screwing
+              doAfter: 1 #imp end

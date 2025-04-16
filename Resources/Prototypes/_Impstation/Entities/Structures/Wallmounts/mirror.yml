@@ -1,0 +1,10 @@
+- type: entity
+  id: MirrorApid
+  name: mirror
+  suffix: apid
+  parent: Mirror
+  description: It's you! #imp
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Wallmounts/apidmirror.rsi
+    state: mirror
