@@ -13,13 +13,9 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
-using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Blocking;
@@ -35,8 +31,6 @@ public sealed partial class BlockingSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -194,12 +188,7 @@ public sealed partial class BlockingSystem : EntitySystem
             return false;
         }
         _actionsSystem.SetToggled(component.BlockingToggleActionEntity, true);
-        if (_gameTiming.IsFirstTimePredicted)
-        {
-            _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
-            if (_gameTiming.InPrediction)
-                _popupSystem.PopupEntity(msgUser, user, user);
-        }
+        _popupSystem.PopupPredicted(msgUser, msgOther, user, user);
 
         if (TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
@@ -220,13 +209,13 @@ public sealed partial class BlockingSystem : EntitySystem
     private void CantBlockError(EntityUid user)
     {
         var msgError = Loc.GetString("action-popup-blocking-user-cant-block");
-        _popupSystem.PopupEntity(msgError, user, user);
+        _popupSystem.PopupClient(msgError, user, user);
     }
 
     private void TooCloseError(EntityUid user)
     {
         var msgError = Loc.GetString("action-popup-blocking-user-too-close");
-        _popupSystem.PopupEntity(msgError, user, user);
+        _popupSystem.PopupClient(msgError, user, user);
     }
 
     /// <summary>
@@ -260,12 +249,7 @@ public sealed partial class BlockingSystem : EntitySystem
             _actionsSystem.SetToggled(component.BlockingToggleActionEntity, false);
             _fixtureSystem.DestroyFixture(user, BlockingComponent.BlockFixtureID, body: physicsComponent);
             _physics.SetBodyType(user, blockingUserComponent.OriginalBodyType, body: physicsComponent);
-            if (_gameTiming.IsFirstTimePredicted)
-            {
-                _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
-                if (_gameTiming.InPrediction)
-                    _popupSystem.PopupEntity(msgUser, user, user);
-            }
+            _popupSystem.PopupPredicted(msgUser, msgOther, user, user);
         }
 
         component.IsBlocking = false;
