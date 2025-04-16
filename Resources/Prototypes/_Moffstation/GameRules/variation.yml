@@ -1,0 +1,11 @@
+- type: entity
+  id: SolarPanelDamageVariationPass
+  parent: BaseVariationPass
+  components:
+  - type: SolarPanelReplaceVariationPass
+  - type: EntityReplaceVariationPass
+    entitiesPerReplacementAverage: 30
+    entitiesPerReplacementStdDev: 5
+    replacements:
+    - id: SolarPanelBroken
+    - id: SolarAssembly
