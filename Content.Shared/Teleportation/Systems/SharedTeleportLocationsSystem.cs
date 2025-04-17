@@ -9,9 +9,10 @@ namespace Content.Shared.Teleportation.Systems;
 /// </summary>
 public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem _xForm = default!;
-    [Dependency] protected readonly UseDelaySystem _delay = default!;
-    [Dependency] private readonly SharedUserInterfaceSystem _uI = default!;
+    [Dependency] protected readonly UseDelaySystem Delay = default!;
+
+    [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     protected const string TeleportDelay = "TeleportDelay";
 
@@ -25,7 +26,7 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 
     private void OnUiOpenAttempt(Entity<TeleportLocationsComponent> ent, ref ActivatableUIOpenAttemptEvent args)
     {
-        if (_delay.IsDelayed(ent.Owner, TeleportDelay))
+        if (Delay.IsDelayed(ent.Owner, TeleportDelay))
         {
             args.Cancel();
             return;
@@ -36,7 +37,7 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 
     protected virtual void OnTeleportToLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationDestinationMessage args)
     {
-        if (ent.Comp.User is null || !TryGetEntity(args.NetEnt, out var telePointEnt) || _delay.IsDelayed(ent.Owner, TeleportDelay))
+        if (ent.Comp.User is null || !TryGetEntity(args.NetEnt, out var telePointEnt) || Delay.IsDelayed(ent.Owner, TeleportDelay))
             return;
 
         var comp = ent.Comp;
@@ -45,16 +46,16 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 
         SpawnAtPosition(comp.TeleportEffect, Transform(originEnt).Coordinates);
 
-        _xForm.SetCoordinates(originEnt, destination);
+        _xform.SetCoordinates(originEnt, destination);
 
         SpawnAtPosition(comp.TeleportEffect, destination);
 
-        _delay.TryResetDelay(ent.Owner, true, id: TeleportDelay);
+        Delay.TryResetDelay(ent.Owner, true, id: TeleportDelay);
 
         if (!ent.Comp.CloseAfterTeleport)
             return;
 
         // Teleport's done, now tell the BUI to close if needed.
-        _uI.CloseUi(ent.Owner, TeleportLocationUiKey.Key);
+        _ui.CloseUi(ent.Owner, TeleportLocationUiKey.Key);
     }
 }

@@ -51,7 +51,7 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
 
     protected override void OnTeleportToLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationDestinationMessage args)
     {
-        if (ent.Comp.User is null || string.IsNullOrWhiteSpace(ent.Comp.Speech) || _delay.IsDelayed(ent.Owner, TeleportDelay))
+        if (ent.Comp.User is null || string.IsNullOrWhiteSpace(ent.Comp.Speech) || Delay.IsDelayed(ent.Owner, TeleportDelay))
             return;
 
         _chat.TrySendInGameICMessage(ent.Comp.User.Value, $"{ent.Comp.Speech.Trim()} ({args.PointName})", InGameICChatType.Speak, ChatTransmitRange.Normal);
