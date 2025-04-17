@@ -15,11 +15,11 @@ namespace Content.Shared.Coordinates.Helpers
             if (gridId == null)
             {
                 var xformSys = entMan.System<SharedTransformSystem>();
-                var mapPos = coordinates.ToMap(entMan, xformSys);
+                var mapPos = xformSys.ToMapCoordinates(coordinates);
                 var mapX = (int)Math.Floor(mapPos.X) + 0.5f;
                 var mapY = (int)Math.Floor(mapPos.Y) + 0.5f;
                 mapPos = new MapCoordinates(new Vector2(mapX, mapY), mapPos.MapId);
-                return EntityCoordinates.FromMap(coordinates.EntityId, mapPos, xformSys);
+                return xformSys.ToCoordinates(coordinates.EntityId, mapPos);
             }
 
             var grid = entMan.GetComponent<MapGridComponent>(gridId.Value);

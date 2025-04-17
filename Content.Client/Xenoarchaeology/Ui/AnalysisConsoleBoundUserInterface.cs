@@ -1,66 +1,50 @@
-using Content.Shared.Xenoarchaeology.Equipment;
-using JetBrains.Annotations;
-using Robust.Client.GameObjects;
+using Content.Shared.Research.Components;
+using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Robust.Client.UserInterface;
+using JetBrains.Annotations;
 
 namespace Content.Client.Xenoarchaeology.Ui;
 
+/// <summary>
+/// BUI for artifact analysis console, proxies server-provided UI updates
+/// (related to device, connected artifact analyzer, and artifact lying on it).
+/// </summary>
 [UsedImplicitly]
-public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
+public sealed class AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private AnalysisConsoleMenu? _consoleMenu;
 
-    public AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
-
+    /// <inheritdoc />
     protected override void Open()
     {
         base.Open();
 
         _consoleMenu = this.CreateWindow<AnalysisConsoleMenu>();
+        _consoleMenu.SetOwner(owner);
+
+        _consoleMenu.OnClose += Close;
+        _consoleMenu.OpenCentered();
 
         _consoleMenu.OnServerSelectionButtonPressed += () =>
         {
-            SendMessage(new AnalysisConsoleServerSelectionMessage());
-        };
-        _consoleMenu.OnScanButtonPressed += () =>
-        {
-            SendMessage(new AnalysisConsoleScanButtonPressedMessage());
-        };
-        _consoleMenu.OnPrintButtonPressed += () =>
-        {
-            SendMessage(new AnalysisConsolePrintButtonPressedMessage());
+            SendMessage(new ConsoleServerSelectionMessage());
         };
         _consoleMenu.OnExtractButtonPressed += () =>
         {
             SendMessage(new AnalysisConsoleExtractButtonPressedMessage());
         };
-        _consoleMenu.OnUpBiasButtonPressed += () =>
-        {
-            SendMessage(new AnalysisConsoleBiasButtonPressedMessage(false));
-        };
-        _consoleMenu.OnDownBiasButtonPressed += () =>
-        {
-            SendMessage(new AnalysisConsoleBiasButtonPressedMessage(true));
-        };
     }
 
-    protected override void UpdateState(BoundUserInterfaceState state)
+    /// <summary>
+    /// Update UI state based on corresponding component.
+    /// </summary>
+    public void Update(Entity<AnalysisConsoleComponent> ent)
     {
-        base.UpdateState(state);
-
-        switch (state)
-        {
-            case AnalysisConsoleUpdateState msg:
-                _consoleMenu?.SetButtonsDisabled(msg);
-                _consoleMenu?.UpdateInformationDisplay(msg);
-                _consoleMenu?.UpdateProgressBar(msg);
-                break;
-        }
+        _consoleMenu?.Update(ent);
     }
 
+    /// <inheritdoc />
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);

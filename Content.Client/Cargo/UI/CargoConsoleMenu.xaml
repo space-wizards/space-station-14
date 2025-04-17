@@ -30,7 +30,7 @@
 
                         <PanelContainer StyleClasses="LowDivider" Margin="0 -2"/>
 
-                        <Label Name="AccountNameLabel"
+                        <RichTextLabel Name="AccountNameLabel"
                             Text="{Loc 'cargo-console-menu-account-name-none-text'}"
                             Margin="4 0"/>
 
@@ -40,7 +40,7 @@
 
                         <PanelContainer StyleClasses="LowDivider" Margin="0 -2"/>
 
-                        <Label Name="PointsLabel"
+                        <RichTextLabel Name="PointsLabel"
                             Text="$0"
                             Margin="4 0" />
 

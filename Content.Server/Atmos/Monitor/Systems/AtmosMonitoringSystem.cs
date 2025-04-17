@@ -9,8 +9,11 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.Atmos.Piping.Components;
+using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Power;
 using Content.Shared.Tag;
@@ -24,6 +27,7 @@ namespace Content.Server.Atmos.Monitor.Systems;
 // a danger), and atmos (which triggers based on set thresholds).
 public sealed class AtmosMonitorSystem : EntitySystem
 {
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly AtmosDeviceSystem _atmosDeviceSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
@@ -32,10 +36,11 @@ public sealed class AtmosMonitorSystem : EntitySystem
 
     // Commands
     public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
+    public const string AtmosMonitorSetAllThresholdsCmd = "atmos_monitor_set_all_thresholds";
 
     // Packet data
     public const string AtmosMonitorThresholdData = "atmos_monitor_threshold_data";
-
+    public const string AtmosMonitorAllThresholdData = "atmos_monitor_all_threshold_data";
     public const string AtmosMonitorThresholdDataType = "atmos_monitor_threshold_type";
 
     public const string AtmosMonitorThresholdGasType = "atmos_monitor_threshold_gas";
@@ -137,7 +142,12 @@ public sealed class AtmosMonitorSystem : EntitySystem
                     args.Data.TryGetValue(AtmosMonitorThresholdGasType, out Gas? gas);
                     SetThreshold(uid, thresholdType.Value, thresholdData, gas);
                 }
-
+                break;
+            case AtmosMonitorSetAllThresholdsCmd:
+                if (args.Data.TryGetValue(AtmosMonitorAllThresholdData, out AtmosSensorData? allThresholdData))
+                {
+                    SetAllThresholds(uid, allThresholdData);
+                }
                 break;
             case AtmosDeviceNetworkSystem.SyncData:
                 var payload = new NetworkPayload();
@@ -386,20 +396,89 @@ public sealed class AtmosMonitorSystem : EntitySystem
         if (!Resolve(uid, ref monitor))
             return;
 
+        // Used for logging after the switch statement
+        string logPrefix = "";
+        string logValueSuffix = "";
+        AtmosAlarmThreshold? logPreviousThreshold = null;
+
         switch (type)
         {
             case AtmosMonitorThresholdType.Pressure:
+                logPrefix = "pressure";
+                logValueSuffix = "kPa";
+                logPreviousThreshold = monitor.PressureThreshold;
+
                 monitor.PressureThreshold = threshold;
                 break;
             case AtmosMonitorThresholdType.Temperature:
+                logPrefix = "temperature";
+                logValueSuffix = "K";
+                logPreviousThreshold = monitor.TemperatureThreshold;
+
                 monitor.TemperatureThreshold = threshold;
                 break;
             case AtmosMonitorThresholdType.Gas:
                 if (gas == null || monitor.GasThresholds == null)
                     return;
+
+                logPrefix = ((Gas) gas).ToString();
+                logValueSuffix = "kPa";
+                monitor.GasThresholds.TryGetValue((Gas) gas, out logPreviousThreshold);
+
                 monitor.GasThresholds[(Gas) gas] = threshold;
                 break;
         }
 
+        // Admin log each change separately rather than logging the whole state
+        if (logPreviousThreshold != null)
+        {
+            if (threshold.Ignore != logPreviousThreshold.Ignore)
+            {
+                string enabled = threshold.Ignore ? "disabled" : "enabled";
+                _adminLogger.Add(
+                    LogType.AtmosDeviceSetting,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(uid)} {logPrefix} thresholds {enabled}"
+                );
+            }
+
+            foreach (var change in threshold.GetChanges(logPreviousThreshold))
+            {
+                if (change.Current.Enabled != change.Previous?.Enabled)
+                {
+                    string enabled = change.Current.Enabled ? "enabled" : "disabled";
+                    _adminLogger.Add(
+                        LogType.AtmosDeviceSetting,
+                        LogImpact.Medium,
+                        $"{ToPrettyString(uid)} {logPrefix} {change.Type} {enabled}"
+                    );
+                }
+
+                if (change.Current.Value != change.Previous?.Value)
+                {
+                    _adminLogger.Add(
+                        LogType.AtmosDeviceSetting,
+                        LogImpact.Medium,
+                        $"{ToPrettyString(uid)} {logPrefix} {change.Type} changed from {change.Previous?.Value} {logValueSuffix} to {change.Current.Value} {logValueSuffix}"
+                    );
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Sets all of a monitor's thresholds at once according to the incoming
+    ///     AtmosSensorData object's thresholds.
+    /// </summary>
+    /// <param name="uid">The entity's uid</param>
+    /// <param name="allThresholdData">An AtmosSensorData object from which the thresholds will be loaded.</param>
+    public void SetAllThresholds(EntityUid uid, AtmosSensorData allThresholdData)
+    {
+        SetThreshold(uid, AtmosMonitorThresholdType.Temperature, allThresholdData.TemperatureThreshold);
+        SetThreshold(uid, AtmosMonitorThresholdType.Pressure, allThresholdData.PressureThreshold);
+        foreach (var gas in Enum.GetValues<Gas>())
+        {
+            SetThreshold(uid, AtmosMonitorThresholdType.Gas, allThresholdData.GasThresholds[gas], gas);
+        }
     }
 }

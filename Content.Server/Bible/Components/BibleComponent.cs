@@ -1,11 +1,23 @@
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Bible.Components
 {
     [RegisterComponent]
     public sealed partial class BibleComponent : Component
     {
+        /// <summary>
+        /// Default sound when bible hits somebody.
+        /// </summary>
+        private static readonly ProtoId<SoundCollectionPrototype> DefaultBibleHit = new("BibleHit");
+
+        /// <summary>
+        /// Sound to play when bible hits somebody.
+        /// </summary>
+        [DataField]
+        public SoundSpecifier BibleHitSound = new SoundCollectionSpecifier(DefaultBibleHit, AudioParams.Default.WithVolume(-4f));
+
         /// <summary>
         /// Damage that will be healed on a success
         /// </summary>
