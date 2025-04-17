@@ -27,9 +27,6 @@ public sealed class BugReportManager : IBugReportManager
     [Dependency] private readonly IGameMapManager _map = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
-    private GameTicker _ticker = default!;
-    private bool _tickerInitialized;
-
     // Listen to this event handler if you want to get alerted anytime a players valid bug report comes in!
     public event EventHandler<ValidPlayerBugReportReceivedEvent>? ValidPlayerBugReportReceived;
 
@@ -45,15 +42,6 @@ public sealed class BugReportManager : IBugReportManager
 
     private void ReceivedPlayerBugReport(BugReportMessage message)
     {
-        // This is the only way I know to get entity systems in a manager, and it's needed for the round number and stuff.
-        // I'm using this approach to "avoid" nullability of _ticker.
-        // The code gets ugly if I have to constantly check for it being null.
-        if (!_tickerInitialized)
-        {
-            _tickerInitialized = true;
-            _ticker = _entity.System<GameTicker>();
-        }
-
         var netId = message.MsgChannel.UserId;
 
         if (!CheckIfValid(message, netId))
@@ -130,6 +118,8 @@ public sealed class BugReportManager : IBugReportManager
     /// <returns>A <see cref="ValidPlayerBugReportReceivedEvent"/> based of the user report.</returns>
     private ValidPlayerBugReportReceivedEvent CreateBugReport(BugReportMessage message)
     {
+        var _ticker = _entity.System<GameTicker>();
+
         var metaData = new BugReportMetaData
         {
             Username = message.MsgChannel.UserName,

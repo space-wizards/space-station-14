@@ -29,6 +29,7 @@ public struct BugReportMetaData
     /// <summary>
     ///     Players SS14 username.
     /// </summary>
+    /// <example>piggylongsnout</example>
     public string Username;
 
     /// <summary>
@@ -39,11 +40,13 @@ public struct BugReportMetaData
     /// <summary>
     ///     Name of the server the player was playing on when submitting the report.
     /// </summary>
+    /// <example>DeltaV</example>>
     public string ServerName;
 
     /// <summary>
     ///     The round the player submitted the bug report.
     /// </summary>
+    /// <example>1311</example>
     public int RoundNumber;
 
     /// <summary>
@@ -54,11 +57,13 @@ public struct BugReportMetaData
     /// <summary>
     ///     The type of round that is being played.
     /// </summary>
+    /// <example>Sandbox</example>
     public string RoundType;
 
     /// <summary>
     ///     The map being played.
     /// </summary>
+    /// <example>"Dev"</example>>
     public string Map;
 
     /// <summary>
@@ -74,5 +79,6 @@ public struct BugReportMetaData
     /// <summary>
     ///     Engine version of the game.
     /// </summary>
+    /// <example>253.0.0</example>
     public string EngineVersion;
 }
