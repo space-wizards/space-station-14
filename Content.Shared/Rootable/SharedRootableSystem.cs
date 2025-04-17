@@ -133,7 +133,7 @@ public abstract class SharedRootableSystem : EntitySystem
         entity.Comp.PuddleEntity = args.OtherEntity;
 
         if (entity.Comp.NextUpdate < _timing.CurTime) // To prevent constantly moving to new puddles resetting the timer
-            entity.Comp.NextUpdate = _timing.CurTime + entity.Comp.TransferFrequency;
+            entity.Comp.NextUpdate = _timing.CurTime;
     }
 
     private void OnEndCollide(Entity<RootableComponent> entity, ref EndCollideEvent args)
