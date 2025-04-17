@@ -33,6 +33,14 @@ public sealed partial class GasPressureReliefValveComponent : Component
     public bool Enabled;
 
     /// <summary>
+    /// Stores the previous state of the valve. If the current valve state
+    /// is different from the previous state, the valve will be dirtied.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
+    public bool PreviousValveState;
+
+    /// <summary>
     /// The max transfer rate of the valve.
     /// </summary>
     [DataField]
@@ -44,6 +52,6 @@ public sealed partial class GasPressureReliefValveComponent : Component
     /// and on examine.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField, AutoNetworkedField]
+    [DataField] // TODO: We can predict flowrate using deltafields. Do that later.
     public float FlowRate;
 }

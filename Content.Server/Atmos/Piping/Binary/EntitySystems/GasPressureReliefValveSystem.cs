@@ -61,7 +61,13 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
             // Valve is not connected to any nodes, so we disable it.
             _ambientSoundSystem.SetAmbience(valveEntityUid, false);
             valveComponent.Enabled = false;
-            Dirty(valveEntityUid, valveComponent);
+
+            if (valveComponent.PreviousValveState != valveComponent.Enabled)
+            {
+                valveComponent.PreviousValveState = valveComponent.Enabled;
+                Dirty(valveEntityUid, valveComponent);
+            }
+
             return;
         }
 
@@ -87,11 +93,18 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         // Inlet pressure is below the threshold, so we don't need to do anything.
         // We also check if the outlet pressure is higher than the inlet pressure,
         // as gas transfer is not possible in that case.
-        if (P1 < valveComponent.Threshold || P2 > P1)
+        if (P1 <= valveComponent.Threshold || P2 > P1)
         {
             _ambientSoundSystem.SetAmbience(valveEntityUid, false);
             valveComponent.Enabled = false;
             Dirty(valveEntityUid, valveComponent);
+
+            if (valveComponent.PreviousValveState != valveComponent.Enabled)
+            {
+                valveComponent.PreviousValveState = valveComponent.Enabled;
+                Dirty(valveEntityUid, valveComponent);
+            }
+
             return;
         }
 
@@ -132,16 +145,12 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         // Oh, and set the flow rate (L/S) to the actual volume we transferred.
         // This is used for examine.
         valveComponent.FlowRate = desiredVolumeToTransfer * args.dt;
-        Dirty(valveEntityUid, valveComponent);
-    }
 
-    // private void DirtyUI(EntityUid valveEntityUid, GasPressureReliefValveComponent? valveComponent)
-    // {
-    //     if (!Resolve(valveEntityUid, ref valveComponent))
-    //         return;
-    //
-    //     _userInterfaceSystem.SetUiState(valveEntityUid,
-    //         GasPressureReliefValveUiKey.Key,
-    //         new GasPressureReliefValveBoundUserInterfaceState(Name(valveEntityUid), valveComponent.Threshold));
-    // }
+        if (valveComponent.PreviousValveState != valveComponent.Enabled)
+        {
+            // The valve state has changed, so we need to dirty it.
+            valveComponent.PreviousValveState = valveComponent.Enabled;
+            Dirty(valveEntityUid, valveComponent);
+        }
+    }
 }

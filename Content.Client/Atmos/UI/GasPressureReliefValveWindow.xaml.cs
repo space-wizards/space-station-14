@@ -24,15 +24,53 @@ public sealed partial class GasPressureReliefValveWindow : DefaultWindow
             SetThresholdButton.Disabled = true;
         };
 
+        SetToCurrentPressureButton.OnPressed += _ =>
+        {
+            if (ThresholdPressureLabel.Text != null)
+            {
+                ThresholdInput.Text = ThresholdPressureLabel.Text;
+            }
+
+            SetThresholdButton.Disabled = false;
+        };
+
+        ZeroThresholdButton.OnPressed += _ =>
+        {
+            ThresholdInput.Text = "0";
+            SetThresholdButton.Disabled = false;
+        };
+
+        Add1000Button.OnPressed += _ => AdjustThreshold(1000);
+        Add100Button.OnPressed += _ => AdjustThreshold(100);
+        Add10Button.OnPressed += _ => AdjustThreshold(10);
+        Subtract10Button.OnPressed += _ => AdjustThreshold(-10);
+        Subtract100Button.OnPressed += _ => AdjustThreshold(-100);
+        Subtract1000Button.OnPressed += _ => AdjustThreshold(-1000);
+        return;
+
+        void AdjustThreshold(float adjustment)
+        {
+            if (float.TryParse(ThresholdInput.Text, out var currentValue))
+            {
+                ThresholdInput.Text = (currentValue + adjustment).ToString(CultureInfo.CurrentCulture);
+                SetThresholdButton.Disabled = false;
+            }
+        }
     }
-    public void SetThreshold(float threshold)
+
+    /// <summary>
+    /// Sets the current threshold pressure label. This is not setting the threshold input box.
+    /// </summary>
+    /// <param name="threshold"> Threshold to set.</param>
+    public void SetThresholdPressureLabel(float threshold)
     {
-        ThresholdInput.Text = threshold.ToString(CultureInfo.CurrentCulture);
+        ThresholdPressureLabel.Text = threshold.ToString(CultureInfo.CurrentCulture);
     }
 
     public void SetValveStatus(bool enabled)
     {
-        ValveStatusLabel.Text = enabled ? "Closed" : "Open";
+        ValveStatusLabel.Text = enabled ? "Open" : "Closed";
+        ValveStatusLabel.Modulate = enabled ? Color.Green : Color.Red;
     }
 
     public void SetFlowRate(float flowRate)
