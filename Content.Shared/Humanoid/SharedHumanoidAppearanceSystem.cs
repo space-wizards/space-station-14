@@ -9,6 +9,7 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects.Components.Localization;
@@ -70,6 +71,23 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
         var root = yamlStream.Documents[0].RootNode;
         var export = _serManager.Read<HumanoidProfileExport>(root.ToDataNode(), notNullableOverride: true);
+
+        switch (export.Version)
+        {
+            case 1:
+                var jobPriorities = root["profile"]["_jobPriorities"] as YamlMappingNode ?? new YamlMappingNode();
+                var jobPreferences = new HashSet<ProtoId<JobPrototype>>();
+                foreach (var (job, prio) in jobPriorities)
+                {
+                    if (!_proto.TryIndex<JobPrototype>(job.AsString(), out var jobProto))
+                        continue;
+                    if (prio.AsEnum<JobPriority>() != JobPriority.Never)
+                        jobPreferences.Add(jobProto);
+                }
+
+                export.Profile = export.Profile.WithJobPreferences(jobPreferences);
+                break;
+        }
 
         /*
          * Add custom handling here for forks / version numbers if you care.
