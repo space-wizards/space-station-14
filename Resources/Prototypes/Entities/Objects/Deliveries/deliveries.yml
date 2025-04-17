@@ -75,6 +75,7 @@
     size: Huge
   - type: Delivery
     baseSpesoReward: 800
+    baseSpesoPenalty: 400
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
@@ -112,6 +113,7 @@
     storedRotation: 90
   - type: Delivery
     baseSpesoReward: 400
+    baseSpesoPenalty: 200
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
