@@ -22,11 +22,13 @@ namespace Content.Shared.Guardian
         /// <summary>
         /// Container which holds the guardian
         /// </summary>
-        [ViewVariables] public ContainerSlot GuardianContainer = default!;
+        [ViewVariables]
+        public ContainerSlot GuardianContainer = default!;
 
         [DataField]
         public EntProtoId Action = "ActionToggleGuardian";
 
-        [DataField] public EntityUid? ActionEntity;
+        [DataField]
+        public EntityUid? ActionEntity;
     }
 }
