@@ -86,6 +86,24 @@ namespace Content.Server.Preferences.Managers
                 await _db.SaveCharacterSlotAsync(userId, profile, slot);
         }
 
+        public async Task SetJobPriorities(NetUserId userId, Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
+        {
+
+            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
+            {
+                _sawmill.Warning("prefs", $"User {userId} tried to modify preferences before they loaded.");
+                return;
+            }
+
+            var curPrefs = prefsData.Prefs!;
+            var session = _playerManager.GetSessionById(userId);
+
+            prefsData.Prefs = new PlayerPreferences(curPrefs.Characters, curPrefs.AdminOOCColor, jobPriorities);
+
+            if (ShouldStorePrefs(session.Channel.AuthType))
+                await _db.SaveJobPrioritiesAsync(userId, jobPriorities);
+        }
+
         private async void HandleDeleteCharacterMessage(MsgDeleteCharacter message)
         {
             var slot = message.Slot;
@@ -156,21 +174,7 @@ namespace Content.Server.Preferences.Managers
         {
             var userId = message.MsgChannel.UserId;
 
-            if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
-            {
-                Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");
-                return;
-            }
-
-            var curPrefs = prefsData.Prefs!;
-            var session = _playerManager.GetSessionById(userId);
-
-            prefsData.Prefs = new PlayerPreferences(curPrefs.Characters,
-                curPrefs.AdminOOCColor,
-                message.JobPriorities);
-
-            if (ShouldStorePrefs(session.Channel.AuthType))
-                await _db.SaveJobPrioritiesAsync(userId, message.JobPriorities);
+            await SetJobPriorities(userId, message.JobPriorities);
         }
 
         // Should only be called via UserDbDataManager.
@@ -288,7 +292,7 @@ namespace Content.Server.Preferences.Managers
             var prefs = await _db.GetPlayerPreferencesAsync(userId, cancel);
             if (prefs is null)
             {
-                return await _db.InitPrefsAsync(userId, HumanoidCharacterProfile.Random(), cancel);
+                return await _db.InitPrefsAsync(userId, HumanoidCharacterProfile.Random().AsEnabled(), cancel);
             }
 
             return prefs;

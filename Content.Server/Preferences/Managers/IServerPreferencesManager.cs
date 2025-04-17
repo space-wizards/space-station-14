@@ -2,8 +2,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Preferences.Managers
 {
@@ -21,5 +23,6 @@ namespace Content.Server.Preferences.Managers
         bool HavePreferencesLoaded(ICommonSession session);
 
         Task SetProfile(NetUserId userId, int slot, ICharacterProfile profile);
+        Task SetJobPriorities(NetUserId userId, Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities);
     }
 }
