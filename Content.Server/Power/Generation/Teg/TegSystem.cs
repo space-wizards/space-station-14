@@ -268,8 +268,8 @@ public sealed class TegSystem : EntitySystem
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
-            
-        var (uid, circ) = ent;
+
+        var circ = ent.Comp;
 
         TegCirculatorSpeed speed;
         if (powered && circ.LastPressureDelta > 0 && circ.LastMolesTransferred > 0)
@@ -284,13 +284,13 @@ public sealed class TegSystem : EntitySystem
             speed = TegCirculatorSpeed.SpeedStill;
         }
 
-        _appearance.SetData(uid, TegVisuals.CirculatorSpeed, speed);
-        _appearance.SetData(uid, TegVisuals.CirculatorPower, powered);
+        _appearance.SetData(ent, TegVisuals.CirculatorSpeed, speed);
+        _appearance.SetData(ent, TegVisuals.CirculatorPower, powered);
 
-        if (_pointLight.TryGetLight(uid, out var pointLight))
+        if (_pointLight.TryGetLight(ent, out var pointLight))
         {
-            _pointLight.SetEnabled(uid, powered, pointLight);
-            _pointLight.SetColor(uid, speed == TegCirculatorSpeed.SpeedFast ? circ.LightColorFast : circ.LightColorSlow, pointLight);
+            _pointLight.SetEnabled(ent, powered, pointLight);
+            _pointLight.SetColor(ent, speed == TegCirculatorSpeed.SpeedFast ? circ.LightColorFast : circ.LightColorSlow, pointLight);
         }
     }
 
