@@ -75,6 +75,7 @@
   id: SteelLunchboxApid
   name: lunchbox
   description: A steel lunchbox for Apids, ready for when they wake up.
+  suffix: Apid
   parent: SteelLunchbox
   components:
   - type: Sprite
@@ -87,7 +88,7 @@
   id: SteelLunchboxApidFilled
   name: lunchbox
   description: A steel lunchbox for Apids, ready for when they wake up.
-  suffix: Filled
+  suffix: Apid, Filled
   parent: SteelLunchboxApid
   components:
   - type: StorageFill
