@@ -253,7 +253,10 @@
   id: WeaponGrapplingGun
   components:
     - type: Item
-      size: Normal
+      size: Small
+      shape:
+      - 0,0,1,0
+      - 0,1,0,1
     - type: AmmoCounter
     - type: GrapplingGun
     - type: Gun

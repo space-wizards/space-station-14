@@ -180,6 +180,8 @@
   components:
   - type: Item
     size: Large
+    shape:
+    - 0,0,2,1
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/tesla_gun.rsi
     layers:
