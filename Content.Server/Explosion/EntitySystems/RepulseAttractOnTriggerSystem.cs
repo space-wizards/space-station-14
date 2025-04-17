@@ -17,8 +17,7 @@ public sealed class RepulseAttractOnTriggerSystem : EntitySystem
 
     private void OnTrigger(Entity<RepulseAttractOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (TryComp<UseDelayComponent>(ent, out var useDelay)
-            && _delay.IsDelayed((ent, useDelay)))
+        if (_delay.IsDelayed((ent.Owner)))
             return;
 
         var position = _transform.GetMapCoordinates(ent);
