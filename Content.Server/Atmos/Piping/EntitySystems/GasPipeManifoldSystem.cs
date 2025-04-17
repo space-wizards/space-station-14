@@ -1,7 +1,10 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
+using Content.Shared.Atmos;
+using System.Linq;
 
 namespace Content.Server.Atmos.Piping.EntitySystems;
 
@@ -14,6 +17,7 @@ public sealed partial class GasPipeManifoldSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GasPipeManifoldComponent, ComponentInit>(OnCompInit);
+        SubscribeLocalEvent<GasPipeManifoldComponent, GasAnalyzerScanEvent>(OnAnalyzed);
     }
 
     private void OnCompInit(Entity<GasPipeManifoldComponent> ent, ref ComponentInit args)
@@ -34,6 +38,31 @@ public sealed partial class GasPipeManifoldSystem : EntitySystem
                 inlet.AddAlwaysReachable(outlet);
                 outlet.AddAlwaysReachable(inlet);
             }
+        }
+    }
+
+    private void OnAnalyzed(Entity<GasPipeManifoldComponent> ent, ref GasAnalyzerScanEvent args)
+    {
+        // All inlets and outlets have the same gas mixture
+
+        args.GasMixtures = new List<(string, GasMixture?)>();
+
+        if (!TryComp<NodeContainerComponent>(ent, out var nodeContainer))
+            return;
+
+        var pipeNames = ent.Comp.InletNames.Union(ent.Comp.OutletNames);
+
+        foreach (var pipeName in pipeNames)
+        {
+            if (!_nodeContainer.TryGetNode(nodeContainer, pipeName, out PipeNode? pipe))
+                continue;
+
+            var pipeLocal = pipe.Air.Clone();
+            pipeLocal.Multiply(pipe.Volume / pipe.Air.Volume);
+            pipeLocal.Volume = pipe.Volume;
+
+            args.GasMixtures.Add((Name(ent), pipeLocal));
+            break;
         }
     }
 }
