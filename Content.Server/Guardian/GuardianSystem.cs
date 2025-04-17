@@ -59,6 +59,8 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianHostComponent, GuardianToggleActionEvent>(OnPerformAction);
 
             SubscribeLocalEvent<GuardianComponent, AttackAttemptEvent>(OnGuardianAttackAttempt);
+
+            SubscribeLocalEvent<GuardianComponent, AttackHostContainerEvent>(OnAttackHostContainer);
         }
 
         private void OnGuardianShutdown(EntityUid uid, GuardianComponent component, ComponentShutdown args)
@@ -146,6 +148,12 @@ namespace Content.Server.Guardian
             _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), uid, PopupType.LargeCaution);
             args.Cancel();
         }
+
+        private void OnAttackHostContainer(EntityUid uid, GuardianComponent comp, ref AttackHostContainerEvent args)
+        {
+            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), uid, PopupType.LargeCaution);
+        }
+
 
         public void ToggleGuardian(EntityUid user, GuardianHostComponent hostComponent)
         {

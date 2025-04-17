@@ -181,8 +181,13 @@ namespace Content.Shared.Damage
                 return null;
             }
 
+            // Don't take damage if the holoparasite tries to hit the host
             if (origin != null && TryComp<GuardianComponent>(origin, out var guardian) && guardian.Host == uid)
+            {
+                var ev = new AttackHostContainerEvent();
+                RaiseLocalEvent(origin.Value, ref ev);
                 return null;
+            }
 
             if (damage.Empty)
             {
@@ -241,11 +246,6 @@ namespace Content.Shared.Damage
 
             if (delta.DamageDict.Count > 0)
                 DamageChanged(uid.Value, damageable, delta, interruptsDoAfters, origin);
-
-            if (origin != null) {
-                Log.Debug($"[TCD] {ToPrettyString(uid):user}, origin: {ToPrettyString(origin)}");
-                Log.Debug(Environment.StackTrace);
-            }
 
             return delta;
         }
