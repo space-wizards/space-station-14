@@ -1,4 +1,14 @@
 # Rooms
+# Massive
+#21x19
+- type: dungeonRoom
+  id: SyndicateBase21x19a
+  size: 21,19
+  atlas: /Maps/Dungeon/syndicate_base.yml
+  offset: 20,50
+  tags:
+    - SalvageSyndicateBase
+
 # Large
 #19x11
 - type: dungeonRoom

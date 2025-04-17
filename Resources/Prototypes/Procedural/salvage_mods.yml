@@ -257,12 +257,12 @@
   biomes:
     - Caves
 
-- type: salvageDungeonMod
-  id: SnowyLabs
-  desc: salvage-dungeon-mod-snowy-labs
-  proto: SnowyLabs
-  biomes:
-    - Snow
+#- type: salvageDungeonMod
+#  id: SnowyLabs
+#  desc: salvage-dungeon-mod-snowy-labs
+#  proto: SnowyLabs
+#  biomes:
+#    - Snow
 
 - type: salvageDungeonMod
   id: Haunted
