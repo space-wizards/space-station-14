@@ -661,10 +661,19 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             }
         }
 
+        // check if they're on CentComm
+        var centcomms = GetCentcommMaps();
+        if (xform.MapUid != null && centcomms.Contains(xform.MapUid.Value))
+        {
+            return true;
+        }
+
+        // check if they're on a pod, if need be
         if (!evacShuttleOnly)
         {
-            var query = AllEntityQuery<EscapePodComponent>();
-            while (query.MoveNext(out var podUid, out var _))
+            var podQuery = AllEntityQuery<EscapePodComponent>();
+
+            while (podQuery.MoveNext(out var podUid, out var _))
             {
                 if (IsOnGrid(xform, podUid))
                 {

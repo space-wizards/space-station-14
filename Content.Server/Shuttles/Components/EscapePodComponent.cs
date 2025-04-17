@@ -12,4 +12,10 @@ public sealed partial class EscapePodComponent : Component
     [DataField(customTypeSerializer:typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan? LaunchTime;
+
+    /// <summary>
+    /// Whether the pod has launched to CentComm or not.
+    /// </summary>
+    [DataField]
+    public bool Launched;
 }
