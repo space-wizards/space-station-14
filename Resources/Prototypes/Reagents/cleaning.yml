@@ -23,6 +23,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.15
+        showInChat: true
 
 - type: reagent
   id: SpaceCleaner
