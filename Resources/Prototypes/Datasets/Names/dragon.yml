@@ -2,10 +2,10 @@
   id: NamesDragon
   values:
     prefix: names-dragon-dataset-
-    count: 28
+    count: 30
 
 - type: localizedDataset
   id: NamesDragonTitle
   values:
     prefix: names-dragon-title-dataset-
-    count: 28
+    count: 30
