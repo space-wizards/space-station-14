@@ -39,19 +39,15 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     {
         _container.EnsureContainer<Container>(ent, ent.Comp.Container);
 
-        var stationId = _station.GetStationInMap(Transform(ent).MapID);
-
-        if (stationId == null)
+        if (_station.GetStationInMap(Transform(ent).MapID) is not EntityUid stationId)
             return;
 
-        _records.TryGetRandomRecord<GeneralStationRecord>(stationId.Value, out var entry);
-
-        if (entry == null)
+        if (!_records.TryGetRandomRecord<GeneralStationRecord>(stationId, out var entry))
             return;
 
         ent.Comp.RecipientName = entry.Name;
         ent.Comp.RecipientJobTitle = entry.JobTitle;
-        ent.Comp.RecipientStation = stationId.Value;
+        ent.Comp.RecipientStation = stationId;
 
         _appearance.SetData(ent, DeliveryVisuals.JobIcon, entry.JobIcon);
 
@@ -75,7 +71,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
 
         _cargo.UpdateBankAccount(
             (ent.Comp.RecipientStation.Value, account),
-            ent.Comp.SpesoReward,
+            ent.Comp.BaseSpesoReward,
             _cargo.CreateAccountDistribution(account.PrimaryAccount, account, account.PrimaryCut));
     }
 
