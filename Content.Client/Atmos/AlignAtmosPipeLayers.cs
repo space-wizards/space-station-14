@@ -21,7 +21,6 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
 
     private readonly SharedMapSystem _mapSystem;
     private readonly SharedTransformSystem _transformSystem;
@@ -82,7 +81,7 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
             UpdatePlacer(layer);
     }
 
-    public void UpdateHijackedPlacer(int layer, ScreenCoordinates mouseScreen)
+    private void UpdateHijackedPlacer(int layer, ScreenCoordinates mouseScreen)
     {
         // Try to get alternative prototypes from the construction prototype
         var constructionSystem = (pManager.Hijack as ConstructionPlacementHijack)?.CurrentConstructionSystem;
@@ -119,12 +118,7 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
         constructionSystem.GetGuide(newProto);
     }
 
-    public void RefreshGrid(ScreenCoordinates mouseScreen)
-    {
-        base.AlignPlacementMode(mouseScreen);
-    }
-
-    public void UpdatePlacer(int layer)
+    private void UpdatePlacer(int layer)
     {
         // Try to get alternative prototypes from the entity atmos pipe layer component
         if (pManager.CurrentPermission?.EntityType == null)
@@ -160,5 +154,10 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
                 pManager.CurrentTextures = textures;
             }
         }
+    }
+
+    private void RefreshGrid(ScreenCoordinates mouseScreen)
+    {
+        base.AlignPlacementMode(mouseScreen);
     }
 }
