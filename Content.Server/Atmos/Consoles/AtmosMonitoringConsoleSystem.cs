@@ -364,7 +364,9 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
             if (!TryComp<NodeContainerComponent>(ent, out var entNodeContainer))
                 continue;
 
-            UpdateAtmosPipeChunk(ent, entNodeContainer, entAtmosPipeColor, tileIdx, ref chunk);
+            var showAbsentConnections = TryComp<AtmosMonitoringConsoleDeviceComponent>(ent, out var device) ? device.ShowAbsentConnections : true;
+
+            UpdateAtmosPipeChunk(ent, entNodeContainer, entAtmosPipeColor, tileIdx, ref chunk, showAbsentConnections);
         }
 
         // Add or update the chunk on the associated grid
@@ -386,7 +388,13 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         }
     }
 
-    private void UpdateAtmosPipeChunk(EntityUid uid, NodeContainerComponent nodeContainer, AtmosPipeColorComponent pipeColor, int tileIdx, ref AtmosPipeChunk chunk)
+    private void UpdateAtmosPipeChunk
+        (EntityUid uid,
+        NodeContainerComponent nodeContainer,
+        AtmosPipeColorComponent pipeColor,
+        int tileIdx,
+        ref AtmosPipeChunk chunk,
+        bool showAbsentConnections = true)
     {
         // Entities that are actively being deleted are not to be drawn
         if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
@@ -394,10 +402,12 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
 
         foreach ((var id, var node) in nodeContainer.Nodes)
         {
-            if (node is not PipeNode)
+            if (node is not PipeNode { } pipeNode)
                 continue;
 
-            var pipeNode = (PipeNode)node;
+            if (!showAbsentConnections && !pipeNode.ReachableNodes.Any(x => x.Owner != uid))
+                continue;
+
             var netId = GetPipeNodeNetId(pipeNode);
             var pipeDirection = pipeNode.CurrentPipeDirection;
 

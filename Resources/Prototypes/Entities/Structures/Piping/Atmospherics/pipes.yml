@@ -353,6 +353,9 @@
     graph: GasPipe
     node: manifold
   - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
     storedSprite:
       sprite: Structures/Piping/Atmospherics/manifold.rsi
       state: storageManifold
@@ -391,6 +394,7 @@
   - type: GasPipeManifold
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasPipeManifold
+    showAbsentConnections: false
   - type: AtmosDevice
   - type: Tag
     tags:
