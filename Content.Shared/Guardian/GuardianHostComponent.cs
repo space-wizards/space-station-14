@@ -1,4 +1,5 @@
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Guardian
@@ -6,7 +7,7 @@ namespace Content.Shared.Guardian
     /// <summary>
     /// Given to guardian users upon establishing a guardian link with the entity
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed partial class GuardianHostComponent : Component
     {
         /// <summary>
