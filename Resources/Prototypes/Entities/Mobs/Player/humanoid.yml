@@ -11,9 +11,7 @@
   id: EventHumanoidMindShielded
   parent: EventHumanoid
   components:
-    - type: AutoImplant
-      implants:
-      - MindShieldImplant
+    - type: MindShield
     - type: AntagImmune
 
 - type: randomHumanoidSettings
