@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: EpicToast
-  changes:
-  - message: Add visitor ghost roles for couriers, brigmedics and roboticists.
-    type: Add
-  - message: Visitor ghost roles now spawn with their respective job access.
-    type: Tweak
-  - message: Some visitor ghost roles (command, security, and others) now come with
-      playtime requirements.
-    type: Tweak
-  - message: Visitor ghost roles can now spawn with new cosmetics, such as the BROS
-      blazer or the circus clown outfit.
-    type: Tweak
-  id: 1025
-  time: '2025-01-30T23:42:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1499
 - author: mqole
   changes:
   - message: A minor addition to the examples of antag rule 4. Peruse keb pages.
@@ -4101,3 +4086,10 @@
   id: 1524
   time: '2025-04-16T12:09:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2266
+- author: Oberonics
+  changes:
+  - message: You can freely tie your jumpsuit around your waist once again.
+    type: Tweak
+  id: 1525
+  time: '2025-04-17T02:38:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2265
