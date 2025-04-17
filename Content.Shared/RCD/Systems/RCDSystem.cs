@@ -41,6 +41,7 @@ public sealed class RCDSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
@@ -48,6 +49,7 @@ public sealed class RCDSystem : EntitySystem
     private readonly EntProtoId _instantConstructionFx = "EffectRCDConstruct0";
     private readonly ProtoId<RCDPrototype> _deconstructTileProto = "DeconstructTile";
     private readonly ProtoId<RCDPrototype> _deconstructLatticeProto = "DeconstructLattice";
+    private static readonly ProtoId<TagPrototype> CatwalkTag = "Catwalk";
 
     private HashSet<EntityUid> _intersectingEntities = new();
 
@@ -429,7 +431,7 @@ public sealed class RCDSystem : EntitySystem
             if (isWindow && HasComp<SharedCanBuildWindowOnTopComponent>(ent))
                 continue;
 
-            if (isCatwalk && _tags.HasTag(ent, "Catwalk"))
+            if (isCatwalk && _tags.HasTag(ent, CatwalkTag))
             {
                 if (popMsgs)
                     _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-on-occupied-tile-message"), uid, user);
@@ -576,6 +578,28 @@ public sealed class RCDSystem : EntitySystem
     #endregion
 
     #region Utility functions
+
+    public bool TryGetMapGridData(EntityCoordinates location, [NotNullWhen(true)] out MapGridData? mapGridData)
+    {
+        mapGridData = null;
+        var gridUid = _transform.GetGrid(location);
+
+        if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
+        {
+            location = location.AlignWithClosestGridTile(1.75f, EntityManager);
+            gridUid = _transform.GetGrid(location);
+
+            // Check if we got a grid ID the second time round
+            if (!TryComp(gridUid, out mapGrid))
+                return false;
+        }
+
+        var tile = _mapSystem.GetTileRef(gridUid.Value, mapGrid, location);
+        var position = _mapSystem.TileIndicesFor(gridUid.Value, mapGrid, location);
+        mapGridData = new MapGridData(gridUid.Value, mapGrid, location, tile, position);
+
+        return true;
+    }
 
     private bool DoesCustomBoundsIntersectWithFixture(PolygonShape boundingPolygon, Transform boundingTransform, EntityUid fixtureOwner, Fixture fixture)
     {

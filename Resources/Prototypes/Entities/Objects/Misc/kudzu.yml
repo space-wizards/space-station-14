@@ -247,8 +247,10 @@
       solutions:
         food:
           reagents:
-          - ReagentId: Protein
+          - ReagentId: Razorium
             Quantity: 2
+          - ReagentId: Protein
+            Quantity: 1
     - type: Respirator
       damage:
         types:
@@ -256,6 +258,9 @@
       damageRecovery:
         types:
           Asphyxiation: -0.25
+    - type: Tag
+      tags:
+      - Meat
 
 - type: entity
   name: dark haze
