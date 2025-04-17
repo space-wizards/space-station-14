@@ -10,6 +10,8 @@
     state: icon
   - type: Item
     size: Normal
+  - type: RockableItem
+    chance: 1
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
