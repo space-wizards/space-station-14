@@ -10,4 +10,4 @@
         amount: 4
         doAfter: 5
   - node: done
-    entity: VariedXenoArtifactItem
+    entity: ComplexXenoArtifactItem
