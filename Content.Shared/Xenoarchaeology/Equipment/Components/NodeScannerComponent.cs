@@ -5,8 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Xenoarchaeology.Equipment.Components;
 
 /// <summary>
-/// Component for managing data stored on NodeScanner hand-held device.
-/// Can link to artifact and show currently triggered artifact nodes.
+/// Component for NodeScanner hand-held device settings.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(NodeScannerSystem))]
