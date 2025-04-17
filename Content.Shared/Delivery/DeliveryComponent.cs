@@ -25,19 +25,19 @@ public sealed partial class DeliveryComponent : Component
     public bool IsLocked = true;
 
     /// <summary>
-    /// The amount of spesos that gets added to the station bank account on unlock.
+    /// The base amount of spesos that gets added to the station bank account on unlock.
     /// </summary>
     [DataField, AutoNetworkedField]
     public int BaseSpesoReward = 500;
 
     /// <summary>
-    /// The amount of spesos that will be removed from the station bank account on a penalized delivery
+    /// The base amount of spesos that will be removed from the station bank account on a penalized delivery
     /// </summary>
     [DataField, AutoNetworkedField]
     public int BaseSpesoPenalty = 250;
 
     /// <summary>
-    /// The intial multiplier to add onto the reward or penalty upon delivery
+    /// The base multiplier to add onto the reward or penalty upon delivery.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float BaseSpesoMultiplier = 1.0f;
@@ -69,10 +69,11 @@ public sealed partial class DeliveryComponent : Component
     public ProtoId<CargoAccountPrototype> PenaltyBankAccount = "Cargo";
 
     /// <summary>
-    /// Has this delivery already taken a penalty from the respective organisation?
+    /// Whether this delivery has already received a penalty.
+    /// Used to avoid getting penalized several times.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool WasPenalized = false;
+    public bool WasPenalized;
 
     /// <summary>
     /// The sound to play when the delivery is unlocked.
