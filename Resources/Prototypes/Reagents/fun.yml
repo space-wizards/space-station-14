@@ -332,7 +332,7 @@
       effects:
       - !type:Emote
         emote: Weh
-        showInChat: true
+        showInChat: false
         force: true
         probability: 0.5
       - !type:Polymorph
@@ -364,7 +364,7 @@
       effects:
       - !type:Emote
         emote: Hew
-        showInChat: true
+        showInChat: false
         force: true
         probability: 0.5
       - !type:Polymorph
