@@ -97,7 +97,7 @@ public sealed partial class BugReportWindow : DefaultWindow
             return false;
         }
 
-        if (TimeSpan.FromHours(_cfg.GetCVar(CCVars.MinimumPlaytimeBugReports)) > _job.FetchOverallPlaytime())
+        if (TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MinimumPlaytimeBugReports)) > _job.FetchOverallPlaytime())
         {
             errorMessage = Loc.GetString("bug-report-window-disabled-playtime");
             return false;

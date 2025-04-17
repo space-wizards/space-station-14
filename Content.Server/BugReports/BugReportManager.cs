@@ -88,7 +88,7 @@ public sealed class BugReportManager : IBugReportManager
         if (!_cfg.GetCVar(CCVars.EnablePlayerBugReports))
             return false;
 
-        if (TimeSpan.FromHours(_cfg.GetCVar(CCVars.MinimumPlaytimeBugReports)) > playtime)
+        if (TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MinimumPlaytimeBugReports)) > playtime)
             return false;
 
         if (_bugReportsPerPlayerThisRound.GetValueOrDefault(netId) >= _cfg.GetCVar(CCVars.MaximumBugReportsPerRound))
