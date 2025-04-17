@@ -10,14 +10,14 @@ namespace Content.Server.Warps
         public string? Location;
 
         /// <summary>
-        ///     If true, ghosts warping to this entity will begin following it.
+        /// If true, ghosts warping to this entity will begin following it.
         /// </summary>
         [DataField]
         public bool Follow;
 
         /// <summary>
-        ///     Should this warp point be accessable to ghosts only?
-        ///     Useful where you want things like a ghost to reach only like CentComm
+        /// Should this warp point be accessable to ghosts only?
+        /// Useful where you want things like a ghost to reach only like CentComm
         /// </summary>
         [DataField]
         public bool GhostOnly;

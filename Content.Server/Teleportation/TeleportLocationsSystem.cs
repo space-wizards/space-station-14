@@ -6,6 +6,9 @@ using Content.Shared.Teleportation.Systems;
 
 namespace Content.Server.Teleportation;
 
+/// <summary>
+/// <inheritdoc cref="SharedTeleportLocationsSystem"/>
+/// </summary>
 public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;

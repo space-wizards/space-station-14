@@ -9,7 +9,7 @@ public enum TeleportLocationUiKey : byte
 }
 
 /// <summary>
-///     Sends message to request available teleport points
+/// Sends message to request available teleport points
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class TeleportLocationRequestPointsMessage : BoundUserInterfaceMessage
@@ -17,7 +17,7 @@ public sealed class TeleportLocationRequestPointsMessage : BoundUserInterfaceMes
 }
 
 /// <summary>
-///     Sends message to request that the clicker teleports to the requested location
+/// Sends message to request that the clicker teleports to the requested location
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class TeleportLocationDestinationMessage(NetEntity netEnt, string pointName) : BoundUserInterfaceMessage

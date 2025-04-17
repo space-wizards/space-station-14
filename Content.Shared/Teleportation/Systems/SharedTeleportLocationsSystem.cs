@@ -4,6 +4,9 @@ using Content.Shared.UserInterface;
 
 namespace Content.Shared.Teleportation.Systems;
 
+/// <summary>
+/// <inheritdoc cref="TeleportLocationsComponent"/>
+/// </summary>
 public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _xForm = default!;
