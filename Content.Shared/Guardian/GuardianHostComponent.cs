@@ -1,7 +1,7 @@
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Guardian
+namespace Content.Shared.Guardian
 {
     /// <summary>
     /// Given to guardian users upon establishing a guardian link with the entity

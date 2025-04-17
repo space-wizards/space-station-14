@@ -1,7 +1,7 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Guardian
+namespace Content.Shared.Guardian
 {
     /// <summary>
     /// Creates a GuardianComponent attached to the user's GuardianHost.

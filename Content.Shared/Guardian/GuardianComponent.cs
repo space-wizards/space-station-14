@@ -1,4 +1,4 @@
-namespace Content.Server.Guardian
+namespace Content.Shared.Guardian
 {
     /// <summary>
     /// Given to guardians to monitor their link with the host

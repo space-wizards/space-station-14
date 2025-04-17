@@ -1,4 +1,4 @@
-namespace Content.Server.Guardian;
+namespace Content.Shared.Guardian;
 
 [RegisterComponent]
 public sealed partial class CanHostGuardianComponent : Component
