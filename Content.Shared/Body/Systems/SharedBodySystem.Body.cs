@@ -285,7 +285,7 @@ public partial class SharedBodySystem
 
     public virtual HashSet<EntityUid> GibBody(
         EntityUid bodyId,
-        bool gibOrgans = false,
+        bool acidify = false,
         BodyComponent? body = null,
         bool launchGibs = true,
         Vector2? splatDirection = null,
@@ -312,7 +312,7 @@ public partial class SharedBodySystem
                 playAudio: false, launchGibs:true, launchDirection:splatDirection, launchImpulse: GibletLaunchImpulse * splatModifier,
                 launchImpulseVariance:GibletLaunchImpulseVariance, launchCone: splatCone);
 
-            if (!gibOrgans)
+            if (!acidify)
                 continue;
 
             foreach (var organ in GetPartOrgans(part.Id, part.Component))
@@ -324,6 +324,11 @@ public partial class SharedBodySystem
         }
 
         var bodyTransform = Transform(bodyId);
+        _audioSystem.PlayPredicted(gibSoundOverride, bodyTransform.Coordinates, null);
+
+        if (acidify)
+            return gibs;
+
         if (TryComp<InventoryComponent>(bodyId, out var inventory))
         {
             foreach (var item in _inventory.GetHandOrInventoryEntities(bodyId))
@@ -332,7 +337,7 @@ public partial class SharedBodySystem
                 gibs.Add(item);
             }
         }
-        _audioSystem.PlayPredicted(gibSoundOverride, bodyTransform.Coordinates, null);
+
         return gibs;
     }
 }
