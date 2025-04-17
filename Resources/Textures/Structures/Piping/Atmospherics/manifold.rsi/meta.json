@@ -13,6 +13,18 @@
         },
         {
             "name": "storageManifold"
+        },
+        {
+            "name": "pipeConnector",
+            "directions": 4
+        },
+        {
+            "name": "pipeConnector_alt1",
+            "directions": 4
+        },
+        {
+            "name": "pipeConnector_alt2",
+            "directions": 4
         }
     ]
 }
