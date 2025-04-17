@@ -11,6 +11,12 @@
   
 - type: Tag
   id: CartridgePistolDP
+
+- type: Tag
+  id: CartridgePistolImprovised
+
+- type: Tag
+  id: CartridgeMagnumImprovised
   
 - type: Tag
   id: Diona
@@ -29,6 +35,9 @@
   
 - type: Tag
   id: MagazinePistolDP
+
+- type: Tag
+  id: MagazinePistolImprovised
   
 - type: Tag
   id: MagazineRifleM52

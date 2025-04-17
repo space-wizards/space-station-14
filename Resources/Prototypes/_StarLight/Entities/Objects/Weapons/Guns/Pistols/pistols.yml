@@ -298,6 +298,22 @@
   - type: Construction
     graph: MakeshiftPistolCraftedGraph
     node: shotgun
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 0.20
+    selfDamage:
+      types:
+        Blunt: 6
+        Heat: 6
+    items:
+      - id: GasPipeStraight
+        launchAngle: 0
+        prob: 1
+      - id: ModularReceiver
+        launchAngle: 90
+        prob: 0.10
+      - id: RifleStock
+        launchAngle: 180
+        prob: 0.80
 
 - type: entity
   name: improvised pistol
@@ -329,10 +345,38 @@
       tags:
       - CartridgePistol
   - type: Item
-    size: Small
+    size: Small #Magazine location makes it bigger but should still fit in a pocket. (This basically serves to keep people from putting it in a boot/stacking them as easily)
+    shape:
+    - 0,0,1,0
+    - 0,1,1,1
   - type: Construction
     graph: ImprovisedPistolGraph
     node: shotgun
+  - type: WeaponDismantleOnShoot
+    dismantleChance: 0.10
+    selfDamage:
+      types:
+        Blunt: 6
+        Heat: 6
+    items:
+      - id: GasPipeStraight
+        launchAngle: 0
+        prob: 1
+      - id: ModularReceiver
+        launchAngle: 90
+        prob: 0.10
+      - id: SheetSteel1
+        launchAngle: 67
+        prob: 0.20
+      - id: SheetSteel1
+        launchAngle: 87
+        prob: 0.20
+      - id: SheetSteel1
+        launchAngle: 270
+        prob: 0.20
+      - id: RifleStock
+        launchAngle: 180
+        prob: 0.80
 
 - type: entity
   name: forged pistol
@@ -349,6 +393,15 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: _Starlight/Objects/Weapons/Guns/Pistols/forged_pistol.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 3
+    zeroVisible: true  
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    - 0,1,1,1  
   - type: Gun
     fireRate: 4
     minAngle: 1
@@ -363,15 +416,16 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazinePistolSP
+        startingItem: null
         whitelist:
           tags:
-            - MagazinePistol
+            - MagazinePistolImprovised
         whitelistFailPopup: gun-magazine-whitelist-fail
       gun_chamber:
         name: Chamber
-        startingItem: CartridgePistolSP
+        startingItem: null
         priority: 1
         whitelist:
           tags:
             - CartridgePistol
+            - CartridgePistolImprovised

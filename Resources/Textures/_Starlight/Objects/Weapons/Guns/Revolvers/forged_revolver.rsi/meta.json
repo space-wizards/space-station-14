@@ -11,19 +11,7 @@
             "name": "icon"
         },
         {
-            "name": "base"
-        },
-        {
             "name": "bolt-open"
-        },
-        {
-            "name": "mag-0"
-        },
-        {
-            "name": "mag-1"
-        },
-        {
-            "name": "mag-2"
         },
         {
             "name": "unfinished"
@@ -40,7 +28,7 @@
             "name": "equipped-BELT",
             "directions": 4
         },
-		{
+        {
             "name": "equipped-SUITSTORAGE",
             "directions": 4
         }

@@ -49,3 +49,94 @@
   icon:
     sprite: _Starlight/Objects/Weapons/Guns/Pistols/forged_pistol.rsi
     state: icon
+
+- type: construction
+  name: improvised pistol bullet
+  id: CartridgePistolImprovised
+  graph: ImprovisedPistolBulletGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: Better than nothing. Low-quality propellant means it won't hit as hard as a normal bullet.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/improvised_casing.rsi
+    state: base
+
+- type: construction
+  name: improvised pistol magazine
+  id: MagazinePistolImprovised
+  graph: ImprovisedPistolMagazineGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: A compact 6-round clipazine.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/improvised_pistol_magazine.rsi
+    state: base
+
+- type: construction
+  name: makeshift revolver
+  id: WeaponRevolverMakeshift
+  graph: MakeshiftRevolverGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: Hastily built revolver that has a good chance of backfiring into your face.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Revolvers/makeshift_revolver.rsi
+    state: icon
+
+- type: construction
+  name: improvised revolver
+  id: WeaponRevolverImprovised
+  graph: ImprovisedRevolverGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: An odd double-barrel revolver with no cylinder. The unique construction lowers the chance of a backfire, but does not eliminate it.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Revolvers/improvised_revolver.rsi
+    state: icon
+
+- type: construction
+  name: forged revolver
+  id: WeaponRevolverForged
+  graph: ForgedRevolverGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: The best Tider Engineering can provide. Has 4 shots and will NOT blow up in your face, but needs welding supplies to make.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Revolvers/forged_revolver.rsi
+    state: icon
+
+- type: construction
+  name: improvised magnum bullet
+  id: CartridgeMagnumImprovised
+  graph: ImprovisedMagnumBulletGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: Better than nothing. Stuffed to the brim with phosphorus but still won't hit as hard.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Casings/improvised_casing.rsi
+    state: base
+
+- type: construction
+  name: improvised magnum speedloader
+  id: SpeedLoaderMagnumImprovised
+  graph: ImprovisedMagnumSpeedLoaderGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: A simple speedloader capable of holding 4 shots.
+  icon:
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/improvised_magnum_speed_loader.rsi
+    state: base

@@ -41,3 +41,24 @@
   - type: Construction
     graph: ForgedPistolGraph
     node: shotgun
+
+- type: entity
+  parent: BaseItem
+  id: UnfinishedRevolverForged
+  name: forged revolver parts
+  description: Some assembly may be reqiured. Needs welding.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Revolvers/forged_revolver.rsi
+    state: unfinished
+  - type: ToolRefinable
+    refineResult:
+    - id: WeaponRevolverForged
+  - type: Tag
+    tags:
+    - Metal
+  - type: Construction
+    graph: ForgedRevolverGraph
+    node: shotgun

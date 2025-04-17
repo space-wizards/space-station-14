@@ -140,3 +140,27 @@
       map: ["enum.GunVisualLayers.Base"]  
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazinePistolImprovised
+  name: "Improvised Pistol Magazine (.35)"
+  parent: BaseMagazinePistol
+  components:
+  - type: Item
+    size: Tiny  
+  - type: BallisticAmmoProvider
+    proto: null
+    capacity: 6
+  - type: Sprite
+    sprite: _Starlight/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/improvised_pistol_magazine.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]  
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Tag
+    tags:
+      - MagazinePistolImprovised
+  - type: Construction
+    graph: ImprovisedPistolMagazineGraph
+    node: shell
