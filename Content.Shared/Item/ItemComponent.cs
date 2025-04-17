@@ -61,8 +61,10 @@ public sealed partial class ItemComponent : Component
     [DataField, AutoNetworkedField]
     public Vector2i StoredOffset;
 
+    //starlight start
     [DataField, AutoNetworkedField]
     public bool AllowDirectHandPickup = true;
+    //starlight end
 }
 
 /// <summary>
