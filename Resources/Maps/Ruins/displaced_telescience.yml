@@ -1890,8 +1890,8 @@ entities:
       minPointsPerSecond: 40
       maxPointsPerSecond: 170
       growingPointMultiplier: 0
-      corePrototype: AnomalyBluespace
-      coreInertPrototype: MobAbomination
+      corePrototype: PortalRed
+      coreInertPrototype: AnomalyBluespace
       animationTime: 7
       offset: 0,0.05
     - type: AmbientSound
