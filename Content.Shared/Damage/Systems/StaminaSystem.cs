@@ -328,14 +328,7 @@ public sealed partial class StaminaSystem : EntitySystem
         var query = EntityQueryEnumerator<ActiveStaminaComponent>();
         var curTime = _timing.CurTime;
 
-        var activeEntities = new List<EntityUid>();
         while (query.MoveNext(out var uid, out _))
-        {
-            activeEntities.Add(uid);
-        }
-
-        // Iterate over the temporary list to avoid modifying the collection during iteration
-        foreach (var uid in activeEntities)
         {
             // Just in case we have active but not stamina we'll check and account for it.
             if (!stamQuery.TryGetComponent(uid, out var comp) ||
@@ -402,7 +395,6 @@ public sealed partial class StaminaSystem : EntitySystem
         component.NextUpdate = _timing.CurTime;
 
         SetStaminaAlert(uid, component);
-        RemComp<ActiveStaminaComponent>(uid);
         Dirty(uid, component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Low, $"{ToPrettyString(uid):user} recovered from stamina crit");
     }
@@ -447,7 +439,6 @@ public sealed partial class StaminaSystem : EntitySystem
         {
             // Recover the full speed if the closest threshold is zero
             _stunSystem.UpdateStunModifiers(uid, 1f, comp);
-            RemComp<ActiveStaminaComponent>(uid);
         }
     }
 }
