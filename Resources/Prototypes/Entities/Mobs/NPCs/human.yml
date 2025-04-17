@@ -117,13 +117,13 @@
 
 - type: entity
   name: syndicate repairman
-  parent: MobSyndicateRepairmanSalvage
+  parent: MobSyndicateRepairman
   id: MobSyndicateRepairmanSalvage
   suffix: "Salvage, Suspicious Toolbox"
   components:
     - type: Loadout
       prototypes:
-        - SyndicateRepairmanGearRuinToolbox
+        - SyndicateRepairmanGearRuinSalvage
 
 - type: entity
   parent: BaseMobHuman
