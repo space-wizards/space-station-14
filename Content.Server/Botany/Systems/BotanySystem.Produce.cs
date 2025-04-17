@@ -41,14 +41,18 @@ public sealed partial class BotanySystem
 
     public void OnProduceExamined(EntityUid uid, ProduceComponent comp, ExaminedEvent args)
     {
-        if (comp.Seed == null || comp.Seed.Mutations == null)
+        if (comp.Seed == null)
             return;
 
         using (args.PushGroup(nameof(ProduceComponent)))
         {
             foreach (var m in comp.Seed.Mutations)
             {
-                if (m.Description != "")
+                // Don't show mutations that have no effect on produce (sentience)
+                if (!m.AppliesToProduce)
+                    continue;
+
+                if (m.Description != null)
                     args.PushMarkup(Loc.GetString(m.Description));
             }
         }

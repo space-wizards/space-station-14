@@ -26,7 +26,7 @@ public sealed partial class RandomPlantMutation
     /// The text to display to players when examining something with this mutation.
     /// </summary>
     [DataField]
-    public string Description = "";
+    public LocId? Description;
 
     /// <summary>
     /// The actual EntityEffect to apply to the target

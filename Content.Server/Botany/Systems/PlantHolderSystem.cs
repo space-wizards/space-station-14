@@ -111,6 +111,8 @@ public sealed class PlantHolderSystem : EntitySystem
                                 : "plant-holder-component-plant-unhealthy-adjective"))));
                 }
 
+                // For future reference, mutations should only appear on examine if they apply to a plant, not to produce.
+
                 if (component.Seed.Ligneous)
                     args.PushMarkup(Loc.GetString("mutation-plant-ligneous"));
 
