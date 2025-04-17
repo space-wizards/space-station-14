@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: thetolbean
-  changes:
-  - message: Teleporting or dashing now causes you to stop pulling objects.
-    type: Tweak
-  id: 7711
-  time: '2024-12-16T14:09:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33252
 - author: KieueCaprie
   changes:
   - message: The lizard plushie will now be visible when held in your hands!
@@ -3906,3 +3899,11 @@
   id: 8210
   time: '2025-04-17T10:12:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36644
+- author: Beck Thompson, SlamBamActionman
+  changes:
+  - message: Fixed trash bag visuals. The appearance will now update correctly depending
+      on how many items it contains!
+    type: Fix
+  id: 8211
+  time: '2025-04-17T10:36:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32386
