@@ -4,8 +4,8 @@ meta:
   engineVersion: 253.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/17/2025 11:42:47
-  entityCount: 465
+  time: 04/17/2025 12:46:40
+  entityCount: 469
 maps: []
 grids:
 - 1
@@ -1821,7 +1821,7 @@ entities:
       pos: -1.5,-7.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -1242.0472
+      secondsUntilStateChange: -2831.3032
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1890,8 +1890,8 @@ entities:
       minPointsPerSecond: 40
       maxPointsPerSecond: 170
       growingPointMultiplier: 0
-      corePrototype: PortalRed
-      coreInertPrototype: AnomalyBluespace
+      corePrototype: AnomalyBluespace
+      coreInertPrototype: MobAbomination
       animationTime: 7
       offset: 0,0.05
     - type: AmbientSound
@@ -1937,10 +1937,13 @@ entities:
     - type: NameModifier
       baseName: vial
     - type: InsideEntityStorage
-- proto: BaseComputerAiAccess
+- proto: BaseComputer
   entities:
   - uid: 19
     components:
+    - type: MetaData
+      desc: The monitor displays readings from an array of sensors. They're all flashing red.
+      name: telepad computer
     - type: Transform
       pos: 0.5,-5.5
       parent: 1
@@ -3816,14 +3819,6 @@ entities:
       - 3
     - type: AtmosPipeColor
       color: '#990000FF'
-- proto: GeigerCounter
-  entities:
-  - uid: 309
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 2.4592962,-5.6144123
-      parent: 1
 - proto: GeneratorRTG
   entities:
   - uid: 310
@@ -3913,6 +3908,19 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,1.5
       parent: 1
+- proto: HeadHuman
+  entities:
+  - uid: 456
+    components:
+    - type: MetaData
+      desc: You swear that you can see it blinking when you look away. It still looks fresh no matter how much time passes.
+      name: severed human head
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.4745088,-4.8270464
+      parent: 1
+    - type: StaticPrice
+      price: 1200
 - proto: HeatExchanger
   entities:
   - uid: 322
@@ -3955,6 +3963,17 @@ entities:
       parent: 461
     - type: Physics
       canCollide: False
+- proto: IntercomAll
+  entities:
+  - uid: 469
+    components:
+    - type: MetaData
+      desc: An intercom for emergency situations. It's in pristine condition.
+      name: emergency intercom
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 0.5,-9.5
+      parent: 1
 - proto: LeftArmHuman
   entities:
   - uid: 327
@@ -4024,11 +4043,21 @@ entities:
       parent: 1
 - proto: NTFlag
   entities:
-  - uid: 349
+  - uid: 309
     components:
     - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 3.5,-9.5
+      parent: 1
+- proto: OrganHumanHeart
+  entities:
+  - uid: 353
+    components:
+    - type: MetaData
+      desc: It's still beating, with blood flowing out of it.
+    - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 0.5,-9.5
+      pos: -2.7069983,0.47162783
       parent: 1
 - proto: Paper
   entities:
@@ -4122,6 +4151,13 @@ entities:
     - type: Transform
       pos: 1.7905452,-5.500127
       parent: 1
+- proto: PhoneInstrument
+  entities:
+  - uid: 468
+    components:
+    - type: Transform
+      pos: 2.330452,-5.4928937
+      parent: 1
 - proto: PlasmaReinforcedWindowDirectional
   entities:
   - uid: 345
@@ -4142,6 +4178,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-5.5
       parent: 1
+- proto: PosterBroken
+  entities:
+  - uid: 466
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 6.482854,-4.201713
+      parent: 1
 - proto: PosterLegit50thAnniversaryVintageReprint
   entities:
   - uid: 350
@@ -4153,11 +4197,11 @@ entities:
       parent: 1
 - proto: PosterLegitHelpOthers
   entities:
-  - uid: 353
+  - uid: 349
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 0.98868203,-9.483023
+      rot: 3.141592653589793 rad
+      pos: 1.3414617,-9.541878
       parent: 1
 - proto: PosterLegitJustAWeekAway
   entities:
@@ -4508,14 +4552,6 @@ entities:
         178:
         - On: On
         - Off: Off
-- proto: SignAnomaly2
-  entities:
-  - uid: 460
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -1.6025984,2.5089068
-      parent: 1
 - proto: SignRadiationMed
   entities:
   - uid: 391
@@ -4523,6 +4559,13 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,0.5
+      parent: 1
+- proto: SignScience
+  entities:
+  - uid: 467
+    components:
+    - type: Transform
+      pos: -1.5797484,-9.469645
       parent: 1
 - proto: SignSecureSmallRed
   entities:
@@ -4908,12 +4951,13 @@ entities:
       parent: 1
 - proto: ZiptiesBroken
   entities:
-  - uid: 456
+  - uid: 460
     components:
     - type: MetaData
-      desc: There's blood on it. Distinctively smells like burning plastic, yet it's cold.
+      desc: They smell like burning plastic, yet are cold to the touch.
+      name: twisted zipties
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 3.289602,-3.5741024
+      pos: 3.358805,-3.7183802
       parent: 1
 ...
