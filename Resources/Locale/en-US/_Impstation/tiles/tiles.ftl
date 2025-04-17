@@ -1,1 +1,1 @@
-tiles-apid-floor = apid hex plating
+tiles-apid-floor = apid hex tile

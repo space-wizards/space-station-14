@@ -1,0 +1,6 @@
+- type: latheRecipe
+  id: FloorTileItemApid
+  result: FloorTileItemApid
+  completetime: 1
+  materials:
+    Steel: 50

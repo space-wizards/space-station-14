@@ -1,0 +1,5 @@
+- type: stack
+  id: FloorTileApid
+  name: apid hex tile
+  spawn: FloorTileItemApid
+  maxCount: 30
