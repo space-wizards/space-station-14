@@ -66,8 +66,8 @@ public sealed class NukeOpsTest
         await pair.RunTicksSync(5);
 
         // Opt into the nukies role.
-        await pair.SetAntagPreference("NukeopsCommander", true);
-        await pair.SetAntagPreference("NukeopsMedic", true, dummies[1].UserId);
+        await pair.SetAntagPreferences(["NukeopsCommander"]);
+        await pair.SetAntagPreferences(dummies[1], ["NukeopsMedic"]);
 
         // Initially, the players have no attached entities
         Assert.That(pair.Player?.AttachedEntity, Is.Null);

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Database;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.UnitTesting;
 
@@ -161,74 +164,82 @@ public sealed partial class TestPair
         return list;
     }
 
-    /// <summary>
-    /// Set a user's antag preferences. Modified preferences are automatically reset at the end of the test.
-    /// </summary>
-    public async Task SetAntagPreference(ProtoId<AntagPrototype> id, bool value, NetUserId? user = null)
+    [PublicAPI]
+    public Task<IEnumerable<ICommonSession>> AddDummyPlayers(Dictionary<ProtoId<JobPrototype>,JobPriority> jobPriorities, int count=1)
     {
-        user ??= Client.User!.Value;
-        if (user is not {} userId)
-            return;
-
-        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
-        var prefs = prefMan.GetPreferences(userId);
-
-        // Automatic preference resetting only resets slot 0.
-        // Assert.That(prefs.SelectedCharacterIndex, Is.EqualTo(0));
-
-        var profile = (HumanoidCharacterProfile) prefs.Characters[0];
-        var newProfile = profile.WithAntagPreference(id, value);
-        _modifiedProfiles.Add(userId);
-        await Server.WaitPost(() => prefMan.SetProfile(userId, 0, newProfile).Wait());
+        return AddDummyPlayers(jobPriorities, jobPriorities.Keys, count);
     }
 
-    /// <summary>
-    /// Set a user's job preferences.  Modified preferences are automatically reset at the end of the test.
-    /// </summary>
-    public async Task SetJobPriority(ProtoId<JobPrototype> id, JobPriority value, NetUserId? user = null)
+    [PublicAPI]
+    public async Task<IEnumerable<ICommonSession>> AddDummyPlayers(
+        Dictionary<ProtoId<JobPrototype>,JobPriority> jobPriorities,
+        IEnumerable<ProtoId<JobPrototype>> jobPreferences,
+        int count=1)
     {
-        user ??= Client.User!.Value;
-        if (user is { } userId)
-            await SetJobPriorities(userId, (id, value));
+        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
+        var dbMan = Server.ResolveDependency<UserDbDataManager>();
+
+        var sessions = await Server.AddDummySessions(count);
+        await RunTicksSync(5);
+        var tasks = sessions.Select(s =>
+        {
+            // dbMan.ClientConnected(s);
+            dbMan.WaitLoadComplete(s).Wait();
+            var newProfile = HumanoidCharacterProfile.Random().WithJobPreferences(jobPreferences).AsEnabled();
+            return Task.WhenAll(
+                prefMan.SetJobPriorities(s.UserId, jobPriorities),
+                prefMan.SetProfile(s.UserId, 0, newProfile));
+        });
+        _modifiedSessions.UnionWith(sessions.ToHashSet());
+        await Server.WaitPost(() => Task.WhenAll(tasks).Wait());
+        await RunTicksSync(5);
+
+        return sessions;
     }
 
-    /// <inheritdoc cref="SetJobPriority"/>
-    public async Task SetJobPriorities(params (ProtoId<JobPrototype>, JobPriority)[] priorities)
-        => await SetJobPriorities(Client.User!.Value, priorities);
-
-    /// <inheritdoc cref="SetJobPriority"/>
-    public async Task SetJobPriorities(NetUserId user, params (ProtoId<JobPrototype>, JobPriority)[] priorities)
+    public async Task SetJobPriorities(ICommonSession player,
+        Dictionary<ProtoId<JobPrototype>,JobPriority> jobPriorities)
     {
-        var highCount = priorities.Count(x => x.Item2 == JobPriority.High);
-        Assert.That(highCount, Is.LessThanOrEqualTo(1), "Cannot have more than one high priority job");
-
+        _modifiedSessions.Add(player);
         var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
-        var prefs = prefMan.GetPreferences(user);
-        var profile = (HumanoidCharacterProfile) prefs.Characters[0];
-        var dictionary = new Dictionary<ProtoId<JobPrototype>, JobPriority>(prefs.JobPriorities);
-
-        // Automatic preference resetting only resets slot 0.
-        // Assert.That(prefs.SelectedCharacterIndex, Is.EqualTo(0));
-
-        if (highCount != 0)
+        await Server.WaitPost(() =>
         {
-            foreach (var (key, priority) in dictionary)
-            {
-                if (priority == JobPriority.High)
-                    dictionary[key] = JobPriority.Medium;
-            }
-        }
+            prefMan.SetJobPriorities(player.UserId, jobPriorities).Wait();
+        });
+        await RunTicksSync(5);
+    }
 
-        foreach (var (job, priority) in priorities)
+    public Task SetJobPriorities(Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
+    {
+        return SetJobPriorities(Player!, jobPriorities);
+    }
+
+    public async Task SetJobPreferences(HashSet<ProtoId<JobPrototype>> jobPreferences)
+    {
+        _modifiedSessions.Add(Player!);
+        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
+        await Server.WaitPost(() =>
         {
-            if (priority == JobPriority.Never)
-                dictionary.Remove(job);
-            else
-                dictionary[job] = priority;
-        }
+            var profile = prefMan.GetPreferences(Player!.UserId).Characters[0] as HumanoidCharacterProfile;
+            prefMan.SetProfile(Player!.UserId, 0, profile!.WithJobPreferences(jobPreferences)).Wait();
+        });
+        await RunTicksSync(5);
+    }
 
-        _modifiedProfiles.Add(user);
-        await Server.WaitPost(() => prefMan.SetJobPriorities(user, dictionary).Wait());
-        await Server.WaitPost(() => prefMan.SetProfile(user, 0, profile.WithJobPreferences(dictionary.Keys)).Wait());
+    public async Task SetAntagPreferences(ICommonSession player, HashSet<ProtoId<AntagPrototype>> antagPreferences)
+    {
+        _modifiedSessions.Add(player);
+        var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
+        await Server.WaitPost(() =>
+        {
+            var profile = prefMan.GetPreferences(player.UserId).Characters[0] as HumanoidCharacterProfile;
+            prefMan.SetProfile(player.UserId, 0, profile!.WithAntagPreferences(antagPreferences)).Wait();
+        });
+        await RunTicksSync(5);
+    }
+
+    public Task SetAntagPreferences(HashSet<ProtoId<AntagPrototype>> antagPreferences)
+    {
+        return SetAntagPreferences(Player!, antagPreferences);
     }
 }
