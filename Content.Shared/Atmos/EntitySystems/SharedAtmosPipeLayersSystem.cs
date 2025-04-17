@@ -79,7 +79,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
                     Act = () =>
                     {
                         if (tool == null)
-                            RaiseLocalEvent(ent, new TrySettingPipeLayerCompletedEvent(index));
+                            SetPipeLayer(ent, index, user);
 
                         else
                             _tool.UseTool(tool.Value, user, ent, ent.Comp.Delay, tool.Value.Comp.Qualities, new TrySettingPipeLayerCompletedEvent(index));
@@ -135,11 +135,6 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             return;
 
         CyclePipeLayer(ent, args.User);
-
-        var layerName = Loc.GetString("atmos-pipe-layers-component-layer-" + ent.Comp.CurrentPipeLayer);
-        var message = Loc.GetString("atmos-pipe-layers-component-change-layer", ("layerName", layerName));
-
-        _popup.PopupPredicted(message, ent, args.User);
     }
 
     private void OnSettingPipeLayerCompleted(Entity<AtmosPipeLayersComponent> ent, ref TrySettingPipeLayerCompletedEvent args)
@@ -148,11 +143,6 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
             return;
 
         SetPipeLayer(ent, args.PipeLayer, args.User);
-
-        var layerName = Loc.GetString("atmos-pipe-layers-component-layer-" + ent.Comp.CurrentPipeLayer);
-        var message = Loc.GetString("atmos-pipe-layers-component-change-layer", ("layerName", layerName));
-
-        _popup.PopupPredicted(message, ent, args.User);
     }
 
     /// <summary>
@@ -202,6 +192,14 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
                 _appearance.SetData(ent, AtmosPipeLayerVisuals.SpriteLayers, data, appearance);
             }
+        }
+
+        if (user != null)
+        {
+            var layerName = Loc.GetString("atmos-pipe-layers-component-layer-" + ent.Comp.CurrentPipeLayer);
+            var message = Loc.GetString("atmos-pipe-layers-component-change-layer", ("layerName", layerName));
+
+            _popup.PopupPredicted(message, ent, user);
         }
     }
 
