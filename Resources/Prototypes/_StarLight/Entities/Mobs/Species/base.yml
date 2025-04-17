@@ -5,6 +5,7 @@
   components:
   - type: Item
     size: Huge
+    allowDirectHandPickup: false #we do this to disallow directly picking them up from the ground
     shape:
     - 0, 0, 6, 4
   - type: RestrictNestingItem

@@ -90,6 +90,10 @@ public abstract class SharedItemSystem : EntitySystem
     {
         if (args.Handled)
             return;
+        
+        //check if we WANT to allow direct pickup
+        if (!component.AllowDirectHandPickup)
+            return;
 
         args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
     }
@@ -100,7 +104,8 @@ public abstract class SharedItemSystem : EntitySystem
             args.Using != null ||
             !args.CanAccess ||
             !args.CanInteract ||
-            !_handsSystem.CanPickupAnyHand(args.User, args.Target, handsComp: args.Hands, item: component))
+            !_handsSystem.CanPickupAnyHand(args.User, args.Target, handsComp: args.Hands, item: component) ||
+            !component.AllowDirectHandPickup)
             return;
 
         InteractionVerb verb = new();

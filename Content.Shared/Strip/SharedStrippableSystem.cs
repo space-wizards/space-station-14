@@ -181,6 +181,15 @@ public abstract class SharedStrippableSystem : EntitySystem
             return false;
         }
 
+        var ev = new StripInsertAttemptEvent(user, target, held, slot);
+        RaiseLocalEvent(target, ref ev, true);
+
+        if (ev.Cancelled)
+        {
+            _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-equip-message", ("owner", targetIdentity)));
+            return false;
+        }
+
         return true;
     }
 
@@ -375,6 +384,15 @@ public abstract class SharedStrippableSystem : EntitySystem
 
         if (!_handsSystem.TryGetHand(target, handName, out var handSlot, target.Comp) ||
             !_handsSystem.CanPickupToHand(target, user.Comp.ActiveHandEntity.Value, handSlot, checkActionBlocker: false, target.Comp))
+        {
+            _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-put-message", ("owner", Identity.Entity(target, EntityManager))));
+            return false;
+        }
+
+        var ev = new StripInsertAttemptEvent(user, target, held, handName);
+        RaiseLocalEvent(target, ref ev, true);
+
+        if (ev.Cancelled)
         {
             _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-put-message", ("owner", Identity.Entity(target, EntityManager))));
             return false;

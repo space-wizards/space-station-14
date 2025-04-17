@@ -60,6 +60,9 @@ public sealed partial class ItemComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public Vector2i StoredOffset;
+
+    [DataField, AutoNetworkedField]
+    public bool AllowDirectHandPickup = true;
 }
 
 /// <summary>
