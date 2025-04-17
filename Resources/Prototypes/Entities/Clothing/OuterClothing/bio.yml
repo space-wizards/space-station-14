@@ -15,10 +15,12 @@
       outerClothing-reptilian:
       - state: equipped-OUTERCLOTHING
       - state: equipped-OUTERCLOTHING-tail
+  - type: HideLayerClothing
+    slots:
+      - Tail
   - type: Armor
     modifiers:
       coefficients:
-        Caustic: 0.5
         Caustic: 0.75
   - type: ZombificationResistance
     zombificationResistanceCoefficient: 0.35
@@ -26,9 +28,6 @@
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 0.95
-  - type: HideLayerClothing
-    slots:
-       - Tail
 
 - type: entity
   parent: ClothingOuterBioGeneral
