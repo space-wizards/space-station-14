@@ -30,6 +30,7 @@ public sealed class BugReportManager : IBugReportManager
     private GameTicker _ticker = default!;
     private bool _tickerInitialized;
 
+    // Listen to this event handler if you want to get alerted anytime a players valid bug report comes in!
     public event EventHandler<ValidPlayerBugReportReceivedEvent>? ValidPlayerBugReportReceived;
 
     /// <summary>
@@ -120,6 +121,7 @@ public sealed class BugReportManager : IBugReportManager
 
         return true;
     }
+
     /// <summary>
     ///     Create a bug report out of the given message. This function will extra metadata that could be useful, along with
     ///     the original text report from the user.

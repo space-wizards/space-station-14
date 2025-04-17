@@ -13,7 +13,7 @@ namespace Content.Shared.BugReport;
 /// </remarks>
 public sealed class BugReportMessage : NetMessage
 {
-    public override MsgGroups MsgGroup => MsgGroups.EntityEvent;
+    public override MsgGroups MsgGroup => MsgGroups.Command;
 
     public PlayerBugReportInformation ReportInformation = new();
 
