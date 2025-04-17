@@ -2,7 +2,7 @@
 # Massive
 #21x19
 - type: dungeonRoom
-  id: SyndicateBase21x19a
+  id: SyndicateBase21x19a #cargo room; optional 2way and 3way connections
   size: 21,19
   atlas: /Maps/Dungeon/syndicate_base.yml
   offset: 20,50
@@ -12,7 +12,7 @@
 # Large
 #19x11
 - type: dungeonRoom
-  id: SyndicateBase19x11a
+  id: SyndicateBase19x11a #armory
   size: 19,11
   atlas: /Maps/Dungeon/syndicate_base.yml
   offset: 0,58
@@ -21,7 +21,7 @@
 
 # 11x7
 - type: dungeonRoom
-  id: SyndicateBase11x7a
+  id: SyndicateBase11x7a #normal junction; 2junction, 3junction, 4junction
   size: 11,7
   atlas: /Maps/Dungeon/syndicate_base.yml
   offset: 0,50
@@ -30,7 +30,7 @@
 
 # - 17x5
 - type: dungeonRoom
-  id: SyndicateBase17x5a
+  id: SyndicateBase17x5a #blast door checkpoint; 2junction, 3junction, 4junction
   size: 17,5
   atlas: /Maps/Dungeon/syndicate_base.yml
   offset: 0,0
@@ -45,9 +45,10 @@
   tags:
     - SalvageSyndicateBase
 
+# - 18x5
 - type: dungeonRoom
-  id: SyndicateBase17x5c
-  size: 17,5
+  id: SyndicateBase18x5c
+  size: 18,5
   atlas: /Maps/Dungeon/syndicate_base.yml
   offset: 36,0
   tags:
@@ -97,7 +98,7 @@
     - SalvageSyndicateBase
 
 - type: dungeonRoom
-  id: SyndicateBase11x5b
+  id: SyndicateBase11x5b #o2 + defib/extinguisher hallway; 2junction, 3junction, 4junction
   size: 11,5
   atlas: /Maps/Dungeon/syndicate_base.yml
   offset: 12,6
@@ -105,7 +106,7 @@
     - SalvageSyndicateBase
 
 - type: dungeonRoom
-  id: SyndicateBase11x5c
+  id: SyndicateBase11x5c #double turret checkpoint; 2junction, 3junction, 4junction
   size: 11,5
   atlas: /Maps/Dungeon/syndicate_base.yml
   offset: 24,6
@@ -130,7 +131,7 @@
     - SalvageSyndicateBase
 
 - type: dungeonRoom
-  id: SyndicateBase7x5c
+  id: SyndicateBase7x5c #4junction
   size: 7,5
   atlas: /Maps/Dungeon/syndicate_base.yml
   offset: 16,12
@@ -163,7 +164,7 @@
 
 # - 13x3
 - type: dungeonRoom
-  id: SyndicateBase13x3a
+  id: SyndicateBase13x3a #snowy chasm; 2junction, 3junction, 4junction
   size: 13,3
   atlas: /Maps/Dungeon/syndicate_base.yml
   offset: 0,30
@@ -173,7 +174,7 @@
 - type: dungeonRoom
   id: SyndicateBase13x3b
   size: 13,3
-  atlas: /Maps/Dungeon/syndicate_base.yml
+  atlas: /Maps/Dungeon/syndicate_base.yml #stairwell; 2junction, 3junction, 4junction
   offset: 14,30
   tags:
     - SalvageSyndicateBase
@@ -196,7 +197,7 @@
     - SalvageSyndicateBase
 
 - type: dungeonRoom
-  id: SyndicateBase11x3b
+  id: SyndicateBase11x3b #landmine trap; 2junction, 3junction, 4junction
   size: 11,3
   atlas: /Maps/Dungeon/syndicate_base.yml
   offset: 12,34
@@ -213,7 +214,7 @@
 
 # - 7x3
 - type: dungeonRoom
-  id: SyndicateBase7x3a
+  id: SyndicateBase7x3a #small turret checkpoint; 2junction, 3junction, 4junction
   size: 7,3
   atlas: /Maps/Dungeon/syndicate_base.yml
   offset: 0,38
@@ -221,7 +222,7 @@
     - SalvageSyndicateBase
 
 - type: dungeonRoom
-  id: SyndicateBase7x3b
+  id: SyndicateBase7x3b #small turret checkpoint; 2junction, 3junction, 4junction
   size: 7,3
   atlas: /Maps/Dungeon/syndicate_base.yml
   offset: 8,38
@@ -312,7 +313,7 @@
 
 # - 3x5
 - type: dungeonRoom
-  id: SyndicateBase3x5a
+  id: SyndicateBase3x5a #small turret checkpoint; 2junction, 3junction, 4junction
   size: 3,5
   atlas: /Maps/Dungeon/syndicate_base.yml
   offset: 0,24
@@ -322,7 +323,7 @@
 - type: dungeonRoom
   id: SyndicateBase3x5b
   size: 3,5
-  atlas: /Maps/Dungeon/syndicate_base.yml
+  atlas: /Maps/Dungeon/syndicate_base.yml #small turret checkpoint; 2junction, 3junction, 4junction
   offset: 4,24
   tags:
     - SalvageSyndicateBase
