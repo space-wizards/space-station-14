@@ -35,12 +35,12 @@ namespace Content.Server.Popups
                 RaiseNetworkEvent(new PopupCursorEvent(message, type), actor.PlayerSession);
         }
 
-        public override void PopupCursorPredicted(string? message, ICommonSession recipient, PopupType type = PopupType.Small)
+        public override void PopupPredictedCursor(string? message, ICommonSession recipient, PopupType type = PopupType.Small)
         {
             // Do nothing, since the client already predicted the popup.
         }
 
-        public override void PopupCursorPredicted(string? message, EntityUid recipient, PopupType type = PopupType.Small)
+        public override void PopupPredictedCursor(string? message, EntityUid recipient, PopupType type = PopupType.Small)
         {
             // Do nothing, since the client already predicted the popup.
         }

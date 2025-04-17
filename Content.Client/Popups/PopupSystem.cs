@@ -173,12 +173,12 @@ namespace Content.Client.Popups
                 PopupCursor(message, type);
         }
 
-        public override void PopupCursorPredicted(string? message, ICommonSession recipient, PopupType type = PopupType.Small)
+        public override void PopupPredictedCursor(string? message, ICommonSession recipient, PopupType type = PopupType.Small)
         {
             PopupCursor(message, recipient, type);
         }
 
-        public override void PopupCursorPredicted(string? message, EntityUid recipient, PopupType type = PopupType.Small)
+        public override void PopupPredictedCursor(string? message, EntityUid recipient, PopupType type = PopupType.Small)
         {
             PopupCursor(message, recipient, type);
         }

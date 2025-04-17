@@ -36,13 +36,13 @@ namespace Content.Shared.Popups
         /// Variant of <see cref="PopupCursor(string?, ICommonSession, PopupType)"/> for use with prediction.
         /// The local client will show the popup to the recipient. Does nothing on the server.
         /// </summary>
-        public abstract void PopupCursorPredicted(string? message, ICommonSession recipient, PopupType type = PopupType.Small);
+        public abstract void PopupPredictedCursor(string? message, ICommonSession recipient, PopupType type = PopupType.Small);
 
         /// <summary>
         /// Variant of <see cref="PopupCursor(string?, EntityUid, PopupType)"/> for use with prediction.
         /// The local client will show the popup to the recipient. Does nothing on the server.
         /// </summary>
-        public abstract void PopupCursorPredicted(string? message, EntityUid recipient, PopupType type = PopupType.Small);
+        public abstract void PopupPredictedCursor(string? message, EntityUid recipient, PopupType type = PopupType.Small);
 
         /// <summary>
         ///     Shows a popup at a world location to every entity in PVS range.
