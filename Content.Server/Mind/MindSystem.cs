@@ -215,7 +215,7 @@ public sealed class MindSystem : SharedMindSystem
             // not implicitly via optional arguments.
 
             var position = Deleted(mind.OwnedEntity)
-                ? _gameTicker.GetObserverSpawnPoint().ToMap(EntityManager, _transform)
+                ? _transform.ToMapCoordinates(_gameTicker.GetObserverSpawnPoint())
                 : _transform.GetMapCoordinates(mind.OwnedEntity.Value);
 
             entity = Spawn(GameTicker.ObserverPrototypeName, position);
@@ -336,7 +336,7 @@ public sealed class MindSystem : SharedMindSystem
         if (_players.TryGetSessionById(userId.Value, out var ret))
         {
             mind.Session = ret;
-            _pvsOverride.AddSessionOverride(netMind, ret);
+            _pvsOverride.AddSessionOverride(mindId, ret);
             _players.SetAttachedEntity(ret, mind.CurrentEntity);
         }
     }
