@@ -242,6 +242,16 @@
     Plastic: 250
     Gold: 100
 
+- type: latheRecipe
+  parent: BaseWeaponRecipeLong
+  id: WeaponTemperatureGun
+  result: WeaponTemperatureGun
+  materials:
+    Steel: 2000
+    Glass: 500
+    Plastic: 500
+    Gold: 500
+
 # Sidearms
 - type: latheRecipe
   parent: BaseSidearmWeaponRecipe
