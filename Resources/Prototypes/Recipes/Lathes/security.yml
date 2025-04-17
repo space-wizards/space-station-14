@@ -26,13 +26,13 @@
 - type: latheRecipe
   abstract: true
   parent: BaseWeaponRecipe
-  id: BaseMeleeWeaponRecipe
+  id: BaseWeaponRecipeMelee
   completetime: 2
 
 - type: latheRecipe
   abstract: true
   parent: BaseWeaponRecipe
-  id: BasePracticeWeaponRecipe
+  id: BaseWeaponRecipePractice
   completetime: 4
 
 - type: latheRecipe
@@ -44,7 +44,7 @@
 - type: latheRecipe
   abstract: true
   parent: BaseWeaponRecipe
-  id: BaseSidearmWeaponRecipe
+  id: BaseWeaponRecipeSidearm
   completetime: 6
 
 ## Recipes
@@ -162,7 +162,7 @@
 
 # Melee
 - type: latheRecipe
-  parent: BaseMeleeWeaponRecipe
+  parent: BaseWeaponRecipeMelee
   id: Stunbaton
   result: Stunbaton
   materials:
@@ -170,7 +170,7 @@
     Plastic: 300
 
 - type: latheRecipe
-  parent: BaseMeleeWeaponRecipe
+  parent: BaseWeaponRecipeMelee
   id: Truncheon
   result: Truncheon
   materials:
@@ -178,16 +178,16 @@
     Plastic: 300
 
 - type: latheRecipe
-  parent: BaseMeleeWeaponRecipe
+  parent: BaseWeaponRecipeMelee
   id: CombatKnife
   result: CombatKnife
   materials:
     Steel: 250
     Plastic: 100
 
-# Practice guns
+# Practice weapons
 - type: latheRecipe
-  parent: BasePracticeWeaponRecipe
+  parent: BaseWeaponRecipePractice
   id: WeaponDisablerPractice
   result: WeaponDisablerPractice
   materials:
@@ -196,7 +196,7 @@
     Plastic: 200
 
 - type: latheRecipe
-  parent: BasePracticeWeaponRecipe
+  parent: BaseWeaponRecipePractice
   id: WeaponLaserCarbinePractice
   result: WeaponLaserCarbinePractice
   materials:
@@ -254,7 +254,7 @@
 
 # Sidearms
 - type: latheRecipe
-  parent: BaseSidearmWeaponRecipe
+  parent: BaseWeaponRecipeSidearm
   id: WeaponDisabler
   result: WeaponDisabler
   materials:
@@ -263,7 +263,7 @@
     Plastic: 200
 
 - type: latheRecipe
-  parent: BaseSidearmWeaponRecipe
+  parent: BaseWeaponRecipeSidearm
   id: WeaponDisablerSMG
   result: WeaponDisablerSMG
   materials:
@@ -272,7 +272,7 @@
     Plastic: 500
 
 - type: latheRecipe
-  parent: BaseSidearmWeaponRecipe
+  parent: BaseWeaponRecipeSidearm
   id: WeaponLaserSvalinn
   result: WeaponLaserSvalinn
   materials:
@@ -280,7 +280,7 @@
     Gold: 500
 
 - type: latheRecipe
-  parent: BaseSidearmWeaponRecipe
+  parent: BaseWeaponRecipeSidearm
   id: WeaponFlareGunSecurity
   result: WeaponFlareGunSecurity
   materials:
