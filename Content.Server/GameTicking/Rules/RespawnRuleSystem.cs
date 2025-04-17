@@ -82,7 +82,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
 
         ActorComponent? actor = null;
         HumanoidAppearanceComponent? appearance = null;
-        if (!Resolve(args.Target, ref actor, ref appearance))
+        if (!Resolve(args.Target, ref actor, ref appearance, logMissing: false))
             return;
 
         var query = EntityQueryEnumerator<RespawnDeadRuleComponent, RespawnTrackerComponent, GameRuleComponent>();

@@ -204,8 +204,7 @@ public sealed partial class TestPair
 
         var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
         var prefs = prefMan.GetPreferences(user);
-        // TODO: Fix after multi-slot
-        // var profile = (HumanoidCharacterProfile) prefs.Characters[0];
+        var profile = (HumanoidCharacterProfile) prefs.Characters[0];
         var dictionary = new Dictionary<ProtoId<JobPrototype>, JobPriority>(prefs.JobPriorities);
 
         // Automatic preference resetting only resets slot 0.
@@ -228,9 +227,8 @@ public sealed partial class TestPair
                 dictionary[job] = priority;
         }
 
-        // var newProfile = profile.WithJobPriorities(dictionary);
-        // _modifiedProfiles.Add(user);
-        prefs.JobPriorities = dictionary;
-        // await Server.WaitPost(() => prefMan.SetProfile(user, 0, newProfile).Wait());
+        _modifiedProfiles.Add(user);
+        await Server.WaitPost(() => prefMan.SetJobPriorities(user, dictionary).Wait());
+        await Server.WaitPost(() => prefMan.SetProfile(user, 0, profile.WithJobPreferences(dictionary.Keys)).Wait());
     }
 }

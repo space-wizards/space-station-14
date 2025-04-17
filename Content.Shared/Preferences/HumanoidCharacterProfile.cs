@@ -412,6 +412,11 @@ namespace Content.Shared.Preferences
             };
         }
 
+        public HumanoidCharacterProfile AsEnabled(bool enabled = true)
+        {
+            return new(this) { Enabled = enabled };
+        }
+
         public string Summary =>
             Loc.GetString(
                 "humanoid-character-profile-summary",
