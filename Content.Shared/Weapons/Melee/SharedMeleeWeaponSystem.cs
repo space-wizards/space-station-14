@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
-using Content.Server.CombatMode.Disarm;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.Events;
 using Content.Shared.Administration.Components;
@@ -816,7 +815,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return Math.Clamp(chance, 0f, 1f);
     }
 
-    protected bool DoDisarm(EntityUid user, DisarmAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
+    private bool DoDisarm(EntityUid user, DisarmAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
     {
         var target = GetEntity(ev.Target);
 
@@ -826,13 +825,14 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return false;
         }
 
-        if (!TryComp<CombatModeComponent>(user, out var combatMode) ||
-            combatMode.CanDisarm != true)
+
+        if (MobState.IsIncapacitated(target.Value))
         {
             return false;
         }
 
-        if (MobState.IsIncapacitated(target.Value))
+        if (!TryComp<CombatModeComponent>(user, out var combatMode) ||
+            combatMode.CanDisarm != true)
         {
             return false;
         }
@@ -845,10 +845,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             {
                 // Notify disarmable
                 if (HasComp<MobStateComponent>(target.Value))
-                {
                     PopupSystem.PopupClient(Loc.GetString("disarm-action-disarmable", ("targetName", target.Value)), target.Value);
-                    return false;
-                }
 
                 return false;
             }

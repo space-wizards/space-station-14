@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Server.CombatMode.Disarm;
+namespace Content.Shared.CombatMode;
 
 /// <summary>
 /// Applies a malus to disarm attempts against this item.

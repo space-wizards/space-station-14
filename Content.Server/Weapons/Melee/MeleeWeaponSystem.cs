@@ -1,26 +1,13 @@
 using Content.Server.Chat.Systems;
-using Content.Server.CombatMode.Disarm;
 using Content.Server.Movement.Systems;
-using Content.Shared.Actions.Events;
-using Content.Shared.Administration.Components;
-using Content.Shared.CombatMode;
 using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
-using Content.Shared.Database;
 using Content.Shared.Effects;
-using Content.Shared.Hands.Components;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Mobs.Systems;
-using Content.Shared.Popups;
 using Content.Shared.Speech.Components;
-using Content.Shared.StatusEffect;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using System.Linq;
 using System.Numerics;
 
