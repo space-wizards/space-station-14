@@ -58,9 +58,7 @@ public sealed class ThirstSystem : EntitySystem
         // TODO: Check all thresholds make sense and throw if they don't.
         UpdateEffects(uid, component);
 
-        DirtyField(uid, component, nameof(ThirstComponent.NextUpdateTime));
-        DirtyField(uid, component, nameof(ThirstComponent.CurrentThirstThreshold));
-        DirtyField(uid, component, nameof(ThirstComponent.LastThirstThreshold));
+        DirtyFields(uid, component, null, nameof(ThirstComponent.NextUpdateTime), nameof(ThirstComponent.CurrentThirstThreshold), nameof(ThirstComponent.LastThirstThreshold));
 
         TryComp(uid, out MovementSpeedModifierComponent? moveMod);
             _movement.RefreshMovementSpeedModifiers(uid, moveMod);
