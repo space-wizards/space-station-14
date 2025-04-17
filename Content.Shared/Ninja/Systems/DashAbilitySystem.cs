@@ -71,7 +71,7 @@ public sealed class DashAbilitySystem : EntitySystem
         }
 
         var origin = _transform.GetMapCoordinates(user);
-        var target = args.Target.ToMap(EntityManager, _transform);
+        var target = _transform.ToMapCoordinates(args.Target);
         if (!_examine.InRangeUnOccluded(origin, target, SharedInteractionSystem.MaxRaycastRange, null))
         {
             // can only dash if the destination is visible on screen

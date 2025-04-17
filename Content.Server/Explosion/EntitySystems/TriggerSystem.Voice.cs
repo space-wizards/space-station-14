@@ -50,7 +50,7 @@ namespace Content.Server.Explosion.EntitySystems
 
             if (!string.IsNullOrWhiteSpace(component.KeyPhrase) && message.Contains(component.KeyPhrase, StringComparison.InvariantCultureIgnoreCase))
             {
-                _adminLogger.Add(LogType.Trigger, LogImpact.High,
+                _adminLogger.Add(LogType.Trigger, LogImpact.Medium,
                         $"A voice-trigger on {ToPrettyString(ent):entity} was triggered by {ToPrettyString(args.Source):speaker} speaking the key-phrase {component.KeyPhrase}.");
                 Trigger(ent, args.Source);
 
