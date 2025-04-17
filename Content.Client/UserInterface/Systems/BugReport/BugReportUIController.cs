@@ -47,8 +47,16 @@ public sealed class BugReportUIController : UIController, IOnStateEntered<Gamepl
     {
         _bugReportWindow = UIManager.CreateWindow<BugReportWindow>();
         // This is to make sure the hotbar button gets checked and unchecked when the window is opened / closed.
-        _bugReportWindow.OnClose += () => BugReportButton!.Pressed = false;
-        _bugReportWindow.OnOpen += () => BugReportButton!.Pressed = true;
+        _bugReportWindow.OnClose += () =>
+        {
+            if (BugReportButton != null)
+                BugReportButton.Pressed = false;
+        };
+        _bugReportWindow.OnOpen += () =>
+        {
+            if (BugReportButton != null)
+                BugReportButton.Pressed = true;
+        };
 
         _bugReportWindow.OnBugReportSubmitted += OnBugReportSubmitted;
     }
