@@ -139,7 +139,7 @@
     sprite: Objects/Fun/Instruments/guitarlessfrets.rsi
 
 - type: entity
-  parent: BaseStringInstrument
+  parent: BaseStringInstrumentClothing
   id: BanjoInstrument
   name: banjo
   components:
@@ -147,7 +147,6 @@
     program: 105
   - type: Sprite
     sprite: Objects/Fun/Instruments/banjo.rsi
-    state: icon
 
 - type: entity
   parent: BaseStringInstrument
