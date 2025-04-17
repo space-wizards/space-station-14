@@ -10,9 +10,9 @@ namespace Content.Client.Teleportation.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class TeleportMenu : DefaultWindow
 {
-    public HashSet<TeleportPoint> _warps = new();
+    public string SearchText = "";
 
-    public string _searchText = "";
+    public HashSet<TeleportPoint> Warps = new();
 
     public event Action<NetEntity, string>? TeleportClicked;
 
@@ -26,7 +26,7 @@ public sealed partial class TeleportMenu : DefaultWindow
 
     public void AddTeleportButtons()
     {
-        foreach (var (name, teleportPoint) in _warps)
+        foreach (var (name, teleportPoint) in Warps)
         {
             var currentButtonRef = new Button
             {
@@ -48,8 +48,8 @@ public sealed partial class TeleportMenu : DefaultWindow
 
     private bool ButtonIsVisible(Button button)
     {
-        return string.IsNullOrEmpty(_searchText) || button.Text == null ||
-               button.Text.Contains(_searchText, StringComparison.OrdinalIgnoreCase);
+        return string.IsNullOrEmpty(SearchText) || button.Text == null ||
+               button.Text.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
     }
 
     private void UpdateVisibleButtons()
@@ -63,7 +63,7 @@ public sealed partial class TeleportMenu : DefaultWindow
 
     public void OnSearchTextChanged(LineEdit.LineEditEventArgs args)
     {
-        _searchText = args.Text;
+        SearchText = args.Text;
         UpdateVisibleButtons();
         // Very funny it's called TeleportScroll
         TeleportScroll.SetScrollValue(Vector2.Zero);
