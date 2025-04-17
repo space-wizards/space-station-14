@@ -7,7 +7,7 @@ namespace Content.Shared.Guardian
     /// <summary>
     /// Creates a GuardianComponent attached to the user's GuardianHost.
     /// </summary>
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class GuardianCreatorComponent : Component
     {
         /// <summary>
@@ -21,13 +21,13 @@ namespace Content.Shared.Guardian
         /// <summary>
         /// The prototype of the guardian entity which will be created
         /// </summary>
-        [DataField("guardianProto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
+        [DataField("guardianProto", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>), required: true), AutoNetworkedField]
         public string GuardianProto { get; set; } = default!;
 
         /// <summary>
         /// How long it takes to inject someone.
         /// </summary>
-        [DataField("delay")]
+        [DataField("delay"), AutoNetworkedField]
         public float InjectionDelay = 5f;
     }
 }
