@@ -4,7 +4,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Labels;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
@@ -20,6 +19,7 @@ using Content.Shared.Fax.Systems;
 using Content.Shared.Fax.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Labels.Components;
+using Content.Shared.Labels.EntitySystems;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Paper;
 using Robust.Server.GameObjects;
@@ -451,6 +451,9 @@ public sealed class FaxSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        if (component.SendTimeoutRemaining > 0)
+            return;
+
         var sendEntity = component.PaperSlot.Item;
         if (sendEntity == null)
             return;
@@ -493,6 +496,9 @@ public sealed class FaxSystem : EntitySystem
     public void Send(EntityUid uid, FaxMachineComponent? component, FaxSendMessage args)
     {
         if (!Resolve(uid, ref component))
+            return;
+
+        if (component.SendTimeoutRemaining > 0)
             return;
 
         var sendEntity = component.PaperSlot.Item;

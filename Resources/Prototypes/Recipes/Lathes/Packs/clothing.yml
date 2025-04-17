@@ -5,6 +5,7 @@
   recipes:
   - ClothingUniformJumpsuitColorGrey
   - ClothingUniformJumpskirtColorGrey
+  - ClothingUniformJumpsuitLoungewear
 
 - type: latheRecipePack
   id: ClothingCargo
