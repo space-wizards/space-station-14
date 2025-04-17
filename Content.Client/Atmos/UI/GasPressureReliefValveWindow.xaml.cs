@@ -25,9 +25,18 @@ public sealed partial class GasPressureReliefValveWindow : DefaultWindow
         };
 
     }
-
     public void SetThreshold(float threshold)
     {
         ThresholdInput.Text = threshold.ToString(CultureInfo.CurrentCulture);
+    }
+
+    public void SetValveStatus(bool enabled)
+    {
+        ValveStatusLabel.Text = enabled ? "Closed" : "Open";
+    }
+
+    public void SetFlowRate(float flowRate)
+    {
+        FlowRateLabel.Text = float.IsNaN(flowRate) ? "0" : flowRate.ToString(CultureInfo.CurrentCulture);
     }
 }

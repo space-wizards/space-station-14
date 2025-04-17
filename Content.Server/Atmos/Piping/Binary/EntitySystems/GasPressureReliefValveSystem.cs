@@ -49,6 +49,9 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         GasPressureReliefValveComponent valveComponent,
         ref AtmosDeviceUpdateEvent args)
     {
+        // TODO: ValveStatus and Enabled are used interchangeably in this implementation. Bad! Needs to be differentiated.
+
+
         if (!_nodeContainer.TryGetNodes(valveEntityUid,
                 valveComponent.InletName,
                 valveComponent.OutletName,
@@ -58,6 +61,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
             // Valve is not connected to any nodes, so we disable it.
             _ambientSoundSystem.SetAmbience(valveEntityUid, false);
             valveComponent.Enabled = false;
+            Dirty(valveEntityUid, valveComponent);
             return;
         }
 
@@ -84,7 +88,12 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         // We also check if the outlet pressure is higher than the inlet pressure,
         // as gas transfer is not possible in that case.
         if (P1 < valveComponent.Threshold || P2 > P1)
+        {
+            _ambientSoundSystem.SetAmbience(valveEntityUid, false);
+            valveComponent.Enabled = false;
+            Dirty(valveEntityUid, valveComponent);
             return;
+        }
 
         // guess we're doing work now
         _ambientSoundSystem.SetAmbience(valveEntityUid, true);
@@ -122,8 +131,8 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
         // Oh, and set the flow rate (L/S) to the actual volume we transferred.
         // This is used for examine.
-        valveComponent.FlowRate = desiredVolumeToTransfer / args.dt;
-        // TODO: This math is wrong as shit. Figure out how to fix it later.
+        valveComponent.FlowRate = desiredVolumeToTransfer * args.dt;
+        Dirty(valveEntityUid, valveComponent);
     }
 
     // private void DirtyUI(EntityUid valveEntityUid, GasPressureReliefValveComponent? valveComponent)

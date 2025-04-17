@@ -1,4 +1,6 @@
-﻿using Content.Shared.Atmos.Piping.Binary.Components;
+﻿using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Localizations;
 using Robust.Client.UserInterface;
 
@@ -19,10 +21,23 @@ public sealed class GasPressureReliefValveBoundUserInterface : BoundUserInterfac
         _window = this.CreateWindow<GasPressureReliefValveWindow>();
 
         _window.ThresholdPressureChanged += OnThresholdChanged;
+        Update();
     }
 
-    // TODO: This needs an Update() method to update the UI when the state changes.
-    // This will allow us to provide flow rate and opening/closing info.
+    public override void Update()
+    {
+        if (_window == null)
+            return;
+
+        _window.Title = Identity.Name(Owner, EntMan);
+
+        if (!EntMan.TryGetComponent(Owner, out GasPressureReliefValveComponent? valveComponent))
+            return;
+
+        _window.SetThreshold(valveComponent.Threshold);
+        _window.SetValveStatus(valveComponent.Enabled);
+        _window.SetFlowRate(valveComponent.FlowRate);
+    }
 
     private void OnThresholdChanged(string newThreshold)
     {
