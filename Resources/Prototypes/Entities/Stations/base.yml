@@ -63,8 +63,8 @@
         ruins: !type:GridSpawnGroup
           hide: true
           nameGrid: true
-          minCount: 15
-          maxCount: 15
+          minCount: 2
+          maxCount: 2
           stationGrid: false
           paths:
           - /Maps/Ruins/abandoned_outpost.yml
