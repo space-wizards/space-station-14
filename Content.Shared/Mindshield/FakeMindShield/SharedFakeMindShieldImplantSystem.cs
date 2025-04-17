@@ -2,6 +2,7 @@
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Mindshield.Components;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.Mindshield.FakeMindShield;
 
@@ -13,7 +14,9 @@ public sealed class SharedFakeMindShieldImplantSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<SubdermalImplantComponent, FakeMindShieldToggleEvent>(OnFakeMindShieldToggle);
         SubscribeLocalEvent<FakeMindShieldImplantComponent, ImplantImplantedEvent>(ImplantCheck);
+        SubscribeLocalEvent<FakeMindShieldImplantComponent, EntGotRemovedFromContainerMessage>(ImplantDraw);
     }
+
     /// <summary>
     /// Raise the Action of a Implanted user toggling their implant to the FakeMindshieldComponent on their entity
     /// </summary>
@@ -32,5 +35,10 @@ public sealed class SharedFakeMindShieldImplantSystem : EntitySystem
     {
         if (ev.Implanted != null)
             EnsureComp<FakeMindShieldComponent>(ev.Implanted.Value);
+    }
+
+    private void ImplantDraw(Entity<FakeMindShieldImplantComponent> ent, ref EntGotRemovedFromContainerMessage ev)
+    {
+        RemComp<FakeMindShieldComponent>(ev.Container.Owner);
     }
 }

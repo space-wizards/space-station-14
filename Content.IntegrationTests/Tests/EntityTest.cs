@@ -10,6 +10,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -40,6 +41,7 @@ namespace Content.IntegrationTests.Tests
                     .Where(p => !p.Abstract)
                     .Where(p => !pair.IsTestPrototype(p))
                     .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
+                    .Where(p => !p.Components.ContainsKey("RoomFill")) // This comp can delete all entities, and spawn others
                     .Select(p => p.ID)
                     .ToList();
 
@@ -102,6 +104,7 @@ namespace Content.IntegrationTests.Tests
                     .Where(p => !p.Abstract)
                     .Where(p => !pair.IsTestPrototype(p))
                     .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
+                    .Where(p => !p.Components.ContainsKey("RoomFill")) // This comp can delete all entities, and spawn others
                     .Select(p => p.ID)
                     .ToList();
                 foreach (var protoId in protoIds)
@@ -343,6 +346,33 @@ namespace Content.IntegrationTests.Tests
             return sb.ToString();
         }
 
+        private static bool HasRequiredDataField(Component component)
+        {
+            foreach (var field in component.GetType().GetFields())
+            {
+                foreach (var attribute in field.GetCustomAttributes(true))
+                {
+                    if (attribute is not DataFieldAttribute dataField)
+                        continue;
+
+                    if (dataField.Required)
+                        return true;
+                }
+            }
+            foreach (var property in component.GetType().GetProperties())
+            {
+                foreach (var attribute in property.GetCustomAttributes(true))
+                {
+                    if (attribute is not DataFieldAttribute dataField)
+                        continue;
+
+                    if (dataField.Required)
+                        return true;
+                }
+            }
+            return false;
+        }
+
         [Test]
         public async Task AllComponentsOneToOneDeleteTest()
         {
@@ -353,6 +383,7 @@ namespace Content.IntegrationTests.Tests
                 "DebugExceptionInitialize",
                 "DebugExceptionStartup",
                 "GridFill",
+                "RoomFill",
                 "Map", // We aren't testing a map entity in this test
                 "MapGrid",
                 "Broadphase",
@@ -365,9 +396,6 @@ namespace Content.IntegrationTests.Tests
                 "BiomeSelection", // Whaddya know, requires config.
                 "ActivatableUI", // Requires enum key
             };
-
-            // TODO TESTS
-            // auto ignore any components that have a "required" data field.
 
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
@@ -386,8 +414,11 @@ namespace Content.IntegrationTests.Tests
 
                     foreach (var type in componentFactory.AllRegisteredTypes)
                     {
-                        var component = (Component) componentFactory.GetComponent(type);
+                        var component = (Component)componentFactory.GetComponent(type);
                         var name = componentFactory.GetComponentName(type);
+
+                        if (HasRequiredDataField(component))
+                            continue;
 
                         // If this component is ignored
                         if (skipComponents.Contains(name))
