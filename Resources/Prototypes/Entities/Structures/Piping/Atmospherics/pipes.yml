@@ -50,6 +50,7 @@
     drawdepth: ThinPipe
     visible: false
   - type: Appearance
+  - type: PipeAppearance
   - type: PipeColorVisuals
   - type: NodeContainer
   - type: PipeRestrictOverlap
@@ -69,27 +70,10 @@
   abstract: true  
   parent: GasPipeSansLayers
   id: GasPipeBase
-  components:  
-  - type: PipeAppearance
+  components:
   - type: AtmosPipeLayers
     spriteLayersRsiPaths:
       enum.PipeVisualLayers.Pipe:
-        - Structures/Piping/Atmospherics/pipe.rsi
-        - Structures/Piping/Atmospherics/pipe_alt1.rsi
-        - Structures/Piping/Atmospherics/pipe_alt2.rsi
-      enum.PipeConnectionLayer.NorthConnection:
-        - Structures/Piping/Atmospherics/pipe.rsi
-        - Structures/Piping/Atmospherics/pipe_alt1.rsi
-        - Structures/Piping/Atmospherics/pipe_alt2.rsi
-      enum.PipeConnectionLayer.SouthConnection:
-        - Structures/Piping/Atmospherics/pipe.rsi
-        - Structures/Piping/Atmospherics/pipe_alt1.rsi
-        - Structures/Piping/Atmospherics/pipe_alt2.rsi
-      enum.PipeConnectionLayer.EastConnection:
-        - Structures/Piping/Atmospherics/pipe.rsi
-        - Structures/Piping/Atmospherics/pipe_alt1.rsi
-        - Structures/Piping/Atmospherics/pipe_alt2.rsi
-      enum.PipeConnectionLayer.WestConnection:
         - Structures/Piping/Atmospherics/pipe.rsi
         - Structures/Piping/Atmospherics/pipe_alt1.rsi
         - Structures/Piping/Atmospherics/pipe_alt2.rsi
@@ -358,6 +342,13 @@
     layers:
     - state: pipeManifold
       map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: AtmosPipeLayers
+    pipeLayersLocked: true
+  - type: PipeAppearance
+    sprite:
+    - { sprite: Structures/Piping/Atmospherics/manifold.rsi, state: pipeConnector }
+    - { sprite: Structures/Piping/Atmospherics/manifold.rsi, state: pipeConnector_alt1 }
+    - { sprite: Structures/Piping/Atmospherics/manifold.rsi, state: pipeConnector_alt2 }
   - type: Construction
     graph: GasPipe
     node: manifold
