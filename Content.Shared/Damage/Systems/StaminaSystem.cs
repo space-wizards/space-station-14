@@ -426,7 +426,7 @@ public sealed partial class StaminaSystem : EntitySystem
         // Use a dictionary with default 'damage - speed' pairs if the entity doesn't have a component with an already existing one
         var thresholds = HasComp<SlowOnDamageComponent>(uid)
             ? Comp<SlowOnDamageComponent>(uid).SpeedModifierThresholds
-            : new Dictionary<FixedPoint2, float> { { 60, 0.7f }, { 80, 0.5f } };
+            : comp.StunModifierThresholds;
 
         var closest = FixedPoint2.Zero;
 

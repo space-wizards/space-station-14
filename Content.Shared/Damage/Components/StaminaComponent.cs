@@ -1,4 +1,5 @@
 using Content.Shared.Alert;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -68,4 +69,10 @@ public sealed partial class StaminaComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public float AfterCritDecayMultiplier = 5f;
+
+    /// <summary>
+    /// Thresholds that determine an entity's slowdown as a function of stamina damage. Only used if thresholds are not defined for the same entity in <see cref="SlowOnDamageComponent"/>
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly), DataField("stunModifierThresholds")]
+    public Dictionary<FixedPoint2, float> StunModifierThresholds = new() { { 60, 0.7f }, { 80, 0.5f } };
 }
