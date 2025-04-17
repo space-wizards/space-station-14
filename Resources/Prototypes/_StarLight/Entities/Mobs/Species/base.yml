@@ -1,0 +1,12 @@
+- type: entity
+  save: false
+  id: BaseSpeciesPickupable
+  abstract: true
+  components:
+  - type: Item
+    size: Huge
+    shape:
+    - 0, 0, 6, 4
+  - type: RestrictNestingItem
+  - type: MultiHandedItem
+  - type: CanEscapeInventory
