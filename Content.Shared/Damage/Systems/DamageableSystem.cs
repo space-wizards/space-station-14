@@ -3,6 +3,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.Guardian;
 using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
@@ -180,6 +181,9 @@ namespace Content.Shared.Damage
                 return null;
             }
 
+            if (origin != null && TryComp<GuardianComponent>(origin, out var guardian) && guardian.Host == uid)
+                return null;
+
             if (damage.Empty)
             {
                 return damage;
@@ -237,6 +241,11 @@ namespace Content.Shared.Damage
 
             if (delta.DamageDict.Count > 0)
                 DamageChanged(uid.Value, damageable, delta, interruptsDoAfters, origin);
+
+            if (origin != null) {
+                Log.Debug($"[TCD] {ToPrettyString(uid):user}, origin: {ToPrettyString(origin)}");
+                Log.Debug(Environment.StackTrace);
+            }
 
             return delta;
         }
