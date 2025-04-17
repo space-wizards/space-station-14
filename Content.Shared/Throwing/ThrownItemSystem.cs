@@ -145,6 +145,12 @@ namespace Content.Shared.Throwing
         {
             base.Update(frameTime);
 
+            // TODO predicted throwing - remove this check
+            // We don't want to predict landing or stopping, since throwing isn't actually predicted.
+            // If we do, the landing/stop will occur prematurely on the client.
+            if (_gameTiming.InPrediction)
+                return;
+
             var query = EntityQueryEnumerator<ThrownItemComponent, PhysicsComponent>();
             while (query.MoveNext(out var uid, out var thrown, out var physics))
             {
