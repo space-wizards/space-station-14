@@ -211,7 +211,6 @@ namespace Content.Server.Explosion.EntitySystems
         {
             if (!TryComp(uid, out TransformComponent? xform))
                 return;
-
             _body.GibBody(xform.ParentUid, true);
             args.Handled = true;
         }
