@@ -2722,6 +2722,7 @@
   components:
   - type: Appearance
   - type: Sprite
+    drawdepth: Items
     noRot: true
     sprite: Objects/Specific/Hydroponics/bloonion.rsi
     state: produce
@@ -2742,7 +2743,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 13
         canReact: false
         reagents:
         - ReagentId: Potassium
