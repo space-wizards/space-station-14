@@ -4090,8 +4090,6 @@ entities:
     - type: RadiationGridResistance
     - type: SpreaderGrid
     - type: GridPathfinding
-    - type: DungeonAtlasTemplate
-      path: /Maps/Dungeon/syndicate_base.yml
 - proto: AccessConfigurator
   entities:
   - uid: 2
@@ -10276,7 +10274,6 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - invalid
           - 1145
           - 1146
         paper_label: !type:ContainerSlot
@@ -17563,9 +17560,6 @@ entities:
       exemptAccessLevels:
       - SyndicateAgent
       - NuclearOperative
-    - type: DeviceNetwork
-      configurators:
-      - invalid
 - proto: WeaponGrapplingGun
   entities:
   - uid: 2272
