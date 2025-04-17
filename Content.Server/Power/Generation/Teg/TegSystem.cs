@@ -268,10 +268,8 @@ public sealed class TegSystem : EntitySystem
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
-
+            
         var (uid, circ) = ent;
-
-        DebugTools.Assert(circ is not null);
 
         TegCirculatorSpeed speed;
         if (powered && circ.LastPressureDelta > 0 && circ.LastMolesTransferred > 0)
