@@ -55,11 +55,16 @@ public abstract class SharedItemSystem : EntitySystem
         Dirty(uid, component);
     }
 
+    /// <summary>
+    /// Sets the offset used for the item's sprite inside the storage UI.
+    /// Dirties.
+    /// </summary>
+    [PublicAPI]
     public void SetStoredOffset(EntityUid uid, Vector2i newOffset, ItemComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
             return;
-        
+
         component.StoredOffset = newOffset;
         Dirty(uid, component);
     }
