@@ -1,7 +1,6 @@
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.BugReport.Windows;
-using Content.Client.UserInterface.Systems.Character;
 using Content.Shared.BugReport;
 using Content.Shared.Input;
 using JetBrains.Annotations;

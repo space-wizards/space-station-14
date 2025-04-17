@@ -11,17 +11,24 @@ public sealed partial class CCVars
         CVarDef.Create("bug_reports.enable_player_bug_reports", true, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
-    ///     Minimum playtime that players need to have to summit bug reports.
+    ///     Minimum playtime that players need to have played to summit bug reports.
     /// </summary>
     /// <remarks>In minutes!</remarks>
     public static readonly CVarDef<int> MinimumPlaytimeBugReports =
         CVarDef.Create("bug_reports.minimum_playtime_bug_reports", 120, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
-    ///     Maximum number of bug reports a user can submit per round
+    ///     Maximum number of bug reports a user can submit per round.
     /// </summary>
     public static readonly CVarDef<int> MaximumBugReportsPerRound =
-        CVarDef.Create("bug_reports.maximum_bug_reports_per_round", 3, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("bug_reports.maximum_bug_reports_per_round", 5, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
+    ///     Minimum time between bug reports.
+    /// </summary>
+    /// <remarks>In minutes!</remarks>
+    public static readonly CVarDef<int> MinimumTimeBetweenBugReports =
+        CVarDef.Create("bug_reports.minimum_time_between_bug_reports", 2, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
     ///     Maximum length of a bug report title.

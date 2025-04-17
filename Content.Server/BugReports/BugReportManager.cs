@@ -16,7 +16,7 @@ namespace Content.Server.BugReports;
 /// <summary>
 ///     Simple manager to handle players bug reports. Will forward valid reports through <see cref="ValidPlayerBugReportReceived"/>
 /// </summary>
-public sealed class BugReportManager : IBugReportManager
+public sealed class BugReportManager : IBugReportManager, IPostInjectInit
 {
     [Dependency] private readonly IServerNetManager _net = default!;
     [Dependency] private readonly IEntityManager _entity = default!;
@@ -26,14 +26,18 @@ public sealed class BugReportManager : IBugReportManager
     [Dependency] private readonly IAdminLogManager _admin = default!;
     [Dependency] private readonly IGameMapManager _map = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ILogManager _log = default!;
+
+    private ISawmill _sawmill = default!;
 
     // Listen to this event handler if you want to get alerted anytime a players valid bug report comes in!
     public event EventHandler<ValidPlayerBugReportReceivedEvent>? ValidPlayerBugReportReceived;
 
     /// <summary>
     ///     List of player NetIds and the number of bug reports they have submitted this round.
+    ///     UserId -> (bug reports this round, last submitted bug report)
     /// </summary>
-    private readonly Dictionary<NetUserId, int> _bugReportsPerPlayerThisRound = new();
+    private readonly Dictionary<NetUserId, (int, DateTime)> _bugReportsPerPlayerThisRound = new();
 
     public void Initialize()
     {
@@ -47,7 +51,7 @@ public sealed class BugReportManager : IBugReportManager
         if (!CheckIfValid(message, netId))
             return;
 
-        _bugReportsPerPlayerThisRound[netId] = _bugReportsPerPlayerThisRound.GetValueOrDefault(netId) + 1;
+        _bugReportsPerPlayerThisRound[netId] = (_bugReportsPerPlayerThisRound.GetValueOrDefault(netId).Item1 + 1, DateTime.UtcNow);
 
         var title = message.ReportInformation.BugReportTitle;
         var description = message.ReportInformation.BugReportDescription;
@@ -73,6 +77,9 @@ public sealed class BugReportManager : IBugReportManager
     {
         var session = _player.GetSessionById(netId);
         var playtime = _playTime.GetOverallPlaytime(session);
+        var playerInfo = _bugReportsPerPlayerThisRound.GetValueOrDefault(netId);
+        var timeSinceLastReport = DateTime.UtcNow - playerInfo.Item2;
+        var timeBetweenBugReports = TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MinimumTimeBetweenBugReports));
 
         if (!_cfg.GetCVar(CCVars.EnablePlayerBugReports))
             return false;
@@ -80,9 +87,15 @@ public sealed class BugReportManager : IBugReportManager
         if (TimeSpan.FromMinutes(_cfg.GetCVar(CCVars.MinimumPlaytimeBugReports)) > playtime)
             return false;
 
-        if (_bugReportsPerPlayerThisRound.GetValueOrDefault(netId) >= _cfg.GetCVar(CCVars.MaximumBugReportsPerRound))
+        if (playerInfo.Item1 >= _cfg.GetCVar(CCVars.MaximumBugReportsPerRound))
         {
-            _admin.Add(LogType.BugReport, LogImpact.High, $"{message.MsgChannel.UserName}, {netId}: has tried to submit more than {_cfg.GetCVar(CCVars.MaximumBugReportsPerRound)} bug reports this round.");
+            _sawmill.Warning($"{message.MsgChannel.UserName}, {netId}: has tried to submit more than {_cfg.GetCVar(CCVars.MaximumBugReportsPerRound)} bug reports this round.");
+            return false;
+        }
+
+        if (timeSinceLastReport <= timeBetweenBugReports)
+        {
+            _sawmill.Warning($"{message.MsgChannel.UserName}, {netId}: has tried to submit a bug report. Last bug report was {timeSinceLastReport.TotalMinutes:F2} minutes ago. The limit is {timeBetweenBugReports} minutes.");
             return false;
         }
 
@@ -97,13 +110,13 @@ public sealed class BugReportManager : IBugReportManager
         // These should only happen if there is a hacked client or a glitch!
         if (titleLen < titleMinLen || titleLen > titleMaxLen)
         {
-            _admin.Add(LogType.BugReport, LogImpact.High, $"{message.MsgChannel.UserName}, {netId}: has tried to submit a bug report with a title of {titleLen} characters, min/max: {titleMinLen}/{titleMaxLen}.");
+            _sawmill.Warning($"{message.MsgChannel.UserName}, {netId}: has tried to submit a bug report with a title of {titleLen} characters, min/max: {titleMinLen}/{titleMaxLen}.");
             return false;
         }
 
         if (descriptionLen < descriptionMinLen || descriptionLen > descriptionMaxLen)
         {
-            _admin.Add(LogType.BugReport, LogImpact.High, $"{message.MsgChannel.UserName}, {netId}: has tried to submit a bug report with a description of {descriptionLen} characters, min/max: {descriptionMinLen}/{descriptionMaxLen}.");
+            _sawmill.Warning($"{message.MsgChannel.UserName}, {netId}: has tried to submit a bug report with a description of {descriptionLen} characters, min/max: {descriptionMinLen}/{descriptionMaxLen}.");
             return false;
         }
 
@@ -136,5 +149,10 @@ public sealed class BugReportManager : IBugReportManager
         };
 
         return new ValidPlayerBugReportReceivedEvent(message.ReportInformation.BugReportTitle, message.ReportInformation.BugReportDescription, metaData);
+    }
+
+    void IPostInjectInit.PostInject()
+    {
+        _sawmill = _log.GetSawmill("BugReport");
     }
 }
