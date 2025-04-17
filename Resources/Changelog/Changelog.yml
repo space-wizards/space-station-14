@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: dragonryan06
-  changes:
-  - message: 'New cocktail: the Zombie.'
-    type: Add
-  id: 7714
-  time: '2024-12-16T15:25:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32802
 - author: SlamBamActionman
   changes:
   - message: Added Holy damage to the Chaplain's bible, holy water and the gohei,
@@ -3905,3 +3898,13 @@
   id: 8213
   time: '2025-04-17T11:24:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30463
+- author: Centronias
+  changes:
+  - message: Tank harnesses can be made at lathes, similar to utility belts.
+    type: Add
+  - message: Tank harnesses take up a 1x2 space in inventories, half of their previous
+      2x2.
+    type: Tweak
+  id: 8214
+  time: '2025-04-17T12:33:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35590
