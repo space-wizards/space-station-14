@@ -4,8 +4,8 @@ meta:
   engineVersion: 250.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/12/2025 04:27:06
-  entityCount: 23443
+  time: 04/16/2025 07:53:49
+  entityCount: 23445
 maps:
 - 1
 grids:
@@ -16651,6 +16651,12 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -20.5,-47.5
+      parent: 2
+  - uid: 23146
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 47.5,21.5
       parent: 2
 - proto: ButtonFrameCautionSecurity
   entities:
@@ -120590,6 +120596,16 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         15737:
+        - Pressed: Toggle
+  - uid: 23445
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 47.5,21.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        1074:
         - Pressed: Toggle
 - proto: SignalSwitch
   entities:
