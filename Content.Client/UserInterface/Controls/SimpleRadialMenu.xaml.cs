@@ -7,7 +7,6 @@ using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Input;
-using Robust.Shared.Collections;
 
 namespace Content.Client.UserInterface.Controls;
 
@@ -174,7 +173,7 @@ public partial class SimpleRadialMenu : RadialMenu
 
     private void ClearExistingChildrenRadialButtons()
     {
-        var toRemove = new ValueList<Control>(ChildCount);
+        var toRemove = new List<Control>(ChildCount);
         foreach (var child in Children)
         {
             if (child != ContextualButton && child != MenuOuterAreaButton)
