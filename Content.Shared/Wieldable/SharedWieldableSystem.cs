@@ -9,6 +9,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -27,6 +28,7 @@ namespace Content.Shared.Wieldable;
 
 public abstract class SharedWieldableSystem : EntitySystem
 {
+    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -56,6 +58,9 @@ public abstract class SharedWieldableSystem : EntitySystem
         SubscribeLocalEvent<GunWieldBonusComponent, ItemUnwieldedEvent>(OnGunUnwielded);
         SubscribeLocalEvent<GunWieldBonusComponent, GunRefreshModifiersEvent>(OnGunRefreshModifiers);
         SubscribeLocalEvent<GunWieldBonusComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<SpeedModifiedOnWieldComponent, ItemWieldedEvent>(OnSpeedModifierWielded);
+        SubscribeLocalEvent<SpeedModifiedOnWieldComponent, ItemUnwieldedEvent>(OnSpeedModifierUnwielded);
+        SubscribeLocalEvent<SpeedModifiedOnWieldComponent, HeldRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnRefreshSpeedWielded);
 
         SubscribeLocalEvent<IncreaseDamageOnWieldComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
     }
@@ -119,9 +124,27 @@ public abstract class SharedWieldableSystem : EntitySystem
         }
     }
 
+    private void OnSpeedModifierWielded(EntityUid uid, SpeedModifiedOnWieldComponent component, ItemWieldedEvent args)
+    {
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
+    }
+
+    private void OnSpeedModifierUnwielded(EntityUid uid, SpeedModifiedOnWieldComponent component, ItemUnwieldedEvent args)
+    {
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(args.User);
+    }
+
+    private void OnRefreshSpeedWielded(EntityUid uid, SpeedModifiedOnWieldComponent component, ref HeldRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
+    {
+        if (TryComp<WieldableComponent>(uid, out var wield) && wield.Wielded)
+        {
+            args.Args.ModifySpeed(component.WalkModifier, component.SprintModifier);
+        }
+    }
+
     private void OnExamineRequires(Entity<GunRequiresWieldComponent> entity, ref ExaminedEvent args)
     {
-        if(entity.Comp.WieldRequiresExamineMessage != null)
+        if (entity.Comp.WieldRequiresExamineMessage != null)
             args.PushText(Loc.GetString(entity.Comp.WieldRequiresExamineMessage));
     }
 
@@ -166,6 +189,9 @@ public abstract class SharedWieldableSystem : EntitySystem
             args.Handled = TryWield(uid, component, args.User);
         else if (component.UnwieldOnUse)
             args.Handled = TryUnwield(uid, component, args.User);
+
+        if (HasComp<UseDelayComponent>(uid) && !component.UseDelayOnWield)
+            args.ApplyDelay = false;
     }
 
     public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet = false)
@@ -210,9 +236,11 @@ public abstract class SharedWieldableSystem : EntitySystem
         if (!CanWield(used, component, user))
             return false;
 
-        if (TryComp(used, out UseDelayComponent? useDelay)
-            && !_delay.TryResetDelay((used, useDelay), true))
-            return false;
+        if (TryComp(used, out UseDelayComponent? useDelay) && component.UseDelayOnWield)
+        {
+            if (!_delay.TryResetDelay((used, useDelay), true))
+                return false;
+        }
 
         var attemptEv = new WieldAttemptEvent(user);
         RaiseLocalEvent(used, ref attemptEv);
