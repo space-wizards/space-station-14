@@ -6,7 +6,7 @@ namespace Content.Shared.Atmos.Components;
 /// <summary>
 /// Shared component side for the <see cref="SharedGasPressureReliefValveSystem"/>
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true, true)]
 public sealed partial class GasPressureReliefValveComponent : Component
 {
     [DataField]
@@ -52,6 +52,6 @@ public sealed partial class GasPressureReliefValveComponent : Component
     /// and on examine.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField] // TODO: We can predict flowrate using deltafields. Do that later.
+    [DataField, AutoNetworkedField]
     public float FlowRate;
 }

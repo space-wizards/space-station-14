@@ -65,7 +65,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
             if (valveComponent.PreviousValveState != valveComponent.Enabled)
             {
                 valveComponent.PreviousValveState = valveComponent.Enabled;
-                Dirty(valveEntityUid, valveComponent);
+                DirtyField(valveEntityUid, valveComponent, nameof(valveComponent.Enabled));
             }
 
             return;
@@ -97,12 +97,16 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         {
             _ambientSoundSystem.SetAmbience(valveEntityUid, false);
             valveComponent.Enabled = false;
-            Dirty(valveEntityUid, valveComponent);
 
             if (valveComponent.PreviousValveState != valveComponent.Enabled)
             {
                 valveComponent.PreviousValveState = valveComponent.Enabled;
-                Dirty(valveEntityUid, valveComponent);
+                valveComponent.FlowRate = 0;
+                DirtyFields(valveEntityUid,
+                    valveComponent,
+                    MetaData(valveEntityUid),
+                    nameof(valveComponent.FlowRate),
+                    nameof(valveComponent.Enabled));
             }
 
             return;
@@ -144,13 +148,14 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
         // Oh, and set the flow rate (L/S) to the actual volume we transferred.
         // This is used for examine.
-        valveComponent.FlowRate = desiredVolumeToTransfer * args.dt;
+        valveComponent.FlowRate = MathF.Round(desiredVolumeToTransfer * args.dt, 1);
+        DirtyField(valveEntityUid, valveComponent, nameof(valveComponent.FlowRate));
 
         if (valveComponent.PreviousValveState != valveComponent.Enabled)
         {
             // The valve state has changed, so we need to dirty it.
             valveComponent.PreviousValveState = valveComponent.Enabled;
-            Dirty(valveEntityUid, valveComponent);
+            DirtyField(valveEntityUid, valveComponent, nameof(valveComponent.Enabled));
         }
     }
 }
