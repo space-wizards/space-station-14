@@ -18,7 +18,7 @@
 
 - type: randomHumanoidSettings
   id: VisitorCaptain
-  parent: EventHumanoidPermaMindShielded
+  parent: EventHumanoidCentcomMindShielded
   components:
     - type: GhostRole
       name: job-name-captain

@@ -15,7 +15,7 @@
     - type: AntagImmune
 
 - type: randomHumanoidSettings
-  id: EventHumanoidPermaMindShielded
+  id: EventHumanoidCentcomMindShielded
   parent: EventHumanoid
   components:
   - type: AutoImplant
@@ -42,7 +42,7 @@
 
 - type: randomHumanoidSettings
   id: DeathSquad
-  parent: EventHumanoidPermaMindShielded
+  parent: EventHumanoidCentcomMindShielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -81,7 +81,7 @@
 
 - type: randomHumanoidSettings
   id: ERTLeader
-  parent: EventHumanoidPermaMindShielded
+  parent: EventHumanoidCentcomMindShielded
   randomizeName: false
   components:
     - type: GhostRole
@@ -509,7 +509,7 @@
 
 - type: randomHumanoidSettings
   id: CBURNAgent
-  parent: EventHumanoidPermaMindShielded
+  parent: EventHumanoidCentcomMindShielded
   components:
     - type: Loadout
       prototypes: [CBURNGear]
@@ -539,7 +539,7 @@
 
 - type: randomHumanoidSettings
   id: CentcomOfficial
-  parent: EventHumanoidPermaMindShielded
+  parent: EventHumanoidCentcomMindShielded
   components:
     - type: GhostRole
       name: ghost-role-information-centcom-official-name
