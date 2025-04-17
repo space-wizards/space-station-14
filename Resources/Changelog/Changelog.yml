@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Vexerot
-  changes:
-  - message: Security Belts and Security Carriers now provide 10% reduced explosion
-      damage to contents.
-    type: Tweak
-  id: 7716
-  time: '2024-12-16T16:27:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33253
 - author: goet
   changes:
   - message: Spaceshrooms can now be cooked on the electric grill.
@@ -3907,3 +3899,10 @@
   id: 8215
   time: '2025-04-17T13:43:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36650
+- author: Hoodie42
+  changes:
+  - message: The banjo can now be worn on the back or suit storage slots.
+    type: Tweak
+  id: 8216
+  time: '2025-04-17T14:05:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34057
