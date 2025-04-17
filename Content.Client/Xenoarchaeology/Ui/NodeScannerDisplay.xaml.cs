@@ -57,16 +57,13 @@ public sealed partial class NodeScannerDisplay : FancyWindow
 
         _nextUpdate = _timing.CurTime + _updateFromAttachedFrequency;
 
-        if (!_ent.TryGetComponent(_owner, out NodeScannerComponent? scannerComponent))
-            return;
-        
-        EntityUid? attachedArtifactEnt;
-        if (scannerComponent.AttachedTo == null || (attachedArtifactEnt = _ent.GetEntity(scannerComponent.AttachedTo)) == null)
+        if (!_ent.TryGetComponent(_owner, out NodeScannerConnectedComponent? connectedScanner))
         {
             Update(false, ArtifactState.None);
             return;
         }
 
+        var attachedArtifactEnt = connectedScanner.AttachedTo;
         if (!_ent.TryGetComponent(attachedArtifactEnt, out XenoArtifactComponent? artifactComponent))
             return;
 
@@ -87,7 +84,7 @@ public sealed partial class NodeScannerDisplay : FancyWindow
 
             foreach (var triggeredIndex in triggeredIndexes)
             {
-                var node = _artifact.GetNode((attachedArtifactEnt.Value, artifactComponent), triggeredIndex);
+                var node = _artifact.GetNode((attachedArtifactEnt, artifactComponent), triggeredIndex);
                 var triggeredNodeName = (_ent.GetComponentOrNull<NameIdentifierComponent>(node)?.Identifier ?? 0).ToString("D3");
                 _triggeredNodeNames.Add(triggeredNodeName);
             }

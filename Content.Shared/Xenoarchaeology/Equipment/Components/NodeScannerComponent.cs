@@ -8,21 +8,35 @@ namespace Content.Shared.Xenoarchaeology.Equipment.Components;
 /// Component for managing data stored on NodeScanner hand-held device.
 /// Can link to artifact and show currently triggered artifact nodes.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(NodeScannerSystem))]
 public sealed partial class NodeScannerComponent : Component
 {
-    /// <summary>
-    /// Xeno artifact entity, to which scanner is attached currently.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public NetEntity? AttachedTo;
-
     /// <summary>
     /// Maximum range for keeping connection to artifact.
     /// </summary>
     [DataField]
     public int MaxLinkedRange = 5;
+
+    /// <summary>
+    /// Update interval for link info.
+    /// </summary>
+    [DataField]
+    public TimeSpan DisplayDataUpdateInterval = TimeSpan.FromSeconds(1);
+}
+
+/// <summary>
+/// Component-marker that node scanner device (<see cref="NodeScannerComponent"/>) is connected to artifact.
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true), AutoGenerateComponentPause]
+public sealed partial class NodeScannerConnectedComponent : Component
+{
+    /// <summary>
+    /// Xeno artifact entity, to which scanner is attached currently.
+    /// Upon detaching this component should be removed.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntityUid AttachedTo;
 
     /// <summary>
     /// Next update tick gametime.
@@ -36,12 +50,6 @@ public sealed partial class NodeScannerComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan LinkUpdateInterval = TimeSpan.FromSeconds(1);
-
-    /// <summary>
-    /// Update interval for link info.
-    /// </summary>
-    [DataField]
-    public TimeSpan DisplayDataUpdateInterval = TimeSpan.FromSeconds(1);
 }
 
 /// <summary>

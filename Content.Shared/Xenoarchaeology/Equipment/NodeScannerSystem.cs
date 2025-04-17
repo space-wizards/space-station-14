@@ -25,28 +25,20 @@ public sealed class NodeScannerSystem : EntitySystem
     /// <inheritdoc />
     public override void Update(float frameTime)
     {
-        var scannerQuery = EntityQueryEnumerator<NodeScannerComponent, TransformComponent>();
-        while (scannerQuery.MoveNext(out var uid, out var component, out var transform))
+        var scannerQuery = EntityQueryEnumerator<NodeScannerConnectedComponent, NodeScannerComponent, TransformComponent>();
+        while (scannerQuery.MoveNext(out var uid, out var connected, out var scanner, out var transform))
         {
-            if(component.AttachedTo == null)
+            if (connected.NextUpdate > _timing.CurTime)
                 continue;
 
-            if (component.NextUpdate > _timing.CurTime)
-                continue;
+            connected.NextUpdate = _timing.CurTime + connected.LinkUpdateInterval;
 
-            component.NextUpdate = _timing.CurTime + component.LinkUpdateInterval;
-
-            var attachedArtifact = EntityManager.GetEntity(component.AttachedTo);
-            if(!attachedArtifact.HasValue)
-                return;
-
-            var artifactCoordinates = Transform(attachedArtifact.Value).Coordinates;
-
-            if (!_transform.InRange(artifactCoordinates, transform.Coordinates, component.MaxLinkedRange))
+            var attachedArtifact = connected.AttachedTo;
+            var artifactCoordinates = Transform(attachedArtifact).Coordinates;
+            if (!_transform.InRange(artifactCoordinates, transform.Coordinates, scanner.MaxLinkedRange))
             {
                 //scanner is too far, disconnect
-                component.AttachedTo = null;
-                Dirty(uid, component);
+                RemCompDeferred(uid, connected);
             }
         }
     }
@@ -95,11 +87,12 @@ public sealed class NodeScannerSystem : EntitySystem
             && !_useDelay.TryResetDelay((device, useDelay), true))
             return;
 
-        var artifactNetEntity = EntityManager.GetNetEntity(unlockingEnt.Owner);
-        if (device.Comp.AttachedTo != artifactNetEntity)
+        var connected = EnsureComp<NodeScannerConnectedComponent>(device);
+        EntityUid artifact = unlockingEnt;
+        if (connected.AttachedTo != artifact)
         {
-            device.Comp.AttachedTo = artifactNetEntity;
-            Dirty(device);
+            connected.AttachedTo = artifact;
+            Dirty(device, connected);
         }
 
         _ui.TryOpenUi((device, null), NodeScannerUiKey.Key, actor, predicted: true);
