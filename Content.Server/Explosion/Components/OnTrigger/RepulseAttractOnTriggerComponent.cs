@@ -9,15 +9,29 @@ namespace Content.Server.Explosion.Components.OnTrigger;
 [RegisterComponent]
 public sealed partial class RepulseAttractOnTriggerComponent : Component
 {
-    [DataField, AutoNetworkedField]
-    public float Speed = 0;
+    /// <summary>
+    ///     How fast should the Repulsion/Attraction be?
+    ///     A positive value will repulse objects, a negative value will attract
+    /// </summary>
+    [DataField]
+    public float Speed = 0f;
 
-    [DataField, AutoNetworkedField]
-    public float Range = 0;
+    /// <summary>
+    ///     How close do the entities need to be?
+    /// </summary>
+    [DataField]
+    public float Range = 0f;
 
-    [DataField, AutoNetworkedField]
+    /// <summary>
+    ///     What kind of entities should this effect apply to?
+    /// </summary>
+    [DataField]
     public EntityWhitelist? Whitelist;
 
-    [DataField, AutoNetworkedField]
+    /// <summary>
+    ///     What collision layers should be excluded?
+    ///     The default excludes ghost mobs, revenants, the AI camera etc.
+    /// </summary>
+    [DataField]
     public CollisionGroup CollisionMask = CollisionGroup.GhostImpassable;
 }
