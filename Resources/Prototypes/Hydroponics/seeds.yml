@@ -2008,7 +2008,7 @@
   lifespan: 25
   maturation: 15
   production: 3
-  yield: 4
+  yield: 3
   potency: 10
   growthStages: 4
   waterConsumption: 0.60
