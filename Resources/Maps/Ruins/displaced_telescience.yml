@@ -1942,8 +1942,8 @@ entities:
   - uid: 19
     components:
     - type: MetaData
-      desc: The monitor displays readings from an array of sensors. They're all flashing red.
-      name: telepad computer
+      desc: The monitor is displaying readings from an array of sensors. They're all flashing red.
+      name: telescience computer
     - type: Transform
       pos: 0.5,-5.5
       parent: 1
