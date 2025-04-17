@@ -158,7 +158,7 @@
     nameSegments:
     - NamesDragon
     - NamesDragonTitle
-    nameFormat: name-format-ninja
+    nameFormat: name-format-dragon
 
 - type: entity
   parent: BaseMobDragon
