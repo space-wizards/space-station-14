@@ -1,8 +1,6 @@
-using Robust.Shared.GameStates;
-
 namespace Content.Shared.Guardian;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed partial class CanHostGuardianComponent : Component
 {
 }
