@@ -4,8 +4,8 @@ meta:
   engineVersion: 253.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/17/2025 12:46:40
-  entityCount: 469
+  time: 04/17/2025 14:09:50
+  entityCount: 470
 maps: []
 grids:
 - 1
@@ -1821,7 +1821,7 @@ entities:
       pos: -1.5,-7.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -2831.3032
+      secondsUntilStateChange: -3068.5754
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1855,7 +1855,7 @@ entities:
   - uid: 11
     components:
     - type: MetaData
-      desc: An impossible object. Arcs flash between it and the telepad. It seems exceptionally stable.
+      desc: An impossible object. Arcs flash between it and the telepad. There's a slight blue glow around it.
     - type: Transform
       pos: 2.5000086,-1.333174
       parent: 1
@@ -1908,6 +1908,9 @@ entities:
           pitch: 1
           volume: 0
         path: /Audio/Ambience/ambiruin5.ogg
+    - type: RadiationSource
+      slope: 0.7
+      intensity: 4.5
 - proto: APCBasic
   entities:
   - uid: 12
@@ -3838,11 +3841,6 @@ entities:
     - type: Transform
       pos: -5.5,1.5
       parent: 1
-  - uid: 313
-    components:
-    - type: Transform
-      pos: -7.5,-0.5
-      parent: 1
 - proto: Girder
   entities:
   - uid: 314
@@ -3856,7 +3854,7 @@ entities:
     - type: Transform
       anchored: False
       rot: -0.4829698940131326 rad
-      pos: -2.983442,-0.07056725
+      pos: -2.9930477,-0.07659909
       parent: 1
     - type: Physics
       bodyType: Dynamic
@@ -4056,9 +4054,11 @@ entities:
     - type: MetaData
       desc: It's still beating, with blood flowing out of it.
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -2.7069983,0.47162783
+      rot: -1.9273808757450919 rad
+      pos: -2.6602058,0.56129754
       parent: 1
+    - type: Physics
+      sleepTime: 0.049999952
 - proto: Paper
   entities:
   - uid: 332
@@ -4465,10 +4465,11 @@ entities:
       parent: 1
 - proto: ScrapFireExtinguisher
   entities:
-  - uid: 383
+  - uid: 470
     components:
     - type: Transform
-      pos: 4.4787025,-4.740599
+      rot: 3.141592653589793 rad
+      pos: 4.492197,-6.3380527
       parent: 1
 - proto: ScrapFirelock3
   entities:
@@ -4477,6 +4478,13 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.3577194,-6.0863066
+      parent: 1
+- proto: ScrapGeneratorUraniumLeaking
+  entities:
+  - uid: 383
+    components:
+    - type: Transform
+      pos: -5.5,-3.5
       parent: 1
 - proto: ScrapSteel
   entities:
@@ -4554,6 +4562,12 @@ entities:
         - Off: Off
 - proto: SignRadiationMed
   entities:
+  - uid: 313
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 5.5,-5.5
+      parent: 1
   - uid: 391
     components:
     - type: Transform
@@ -4590,6 +4604,8 @@ entities:
   entities:
   - uid: 395
     components:
+    - type: MetaData
+      name: main substation
     - type: Transform
       pos: -6.5,-4.5
       parent: 1
