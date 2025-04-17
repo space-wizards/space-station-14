@@ -22,7 +22,7 @@ public sealed partial class RootableComponent : Component
     /// <summary>
     /// Entity to hold the action prototype.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ActionEntity;
 
     /// <summary>
@@ -40,13 +40,13 @@ public sealed partial class RootableComponent : Component
     /// <summary>
     /// The puddle that is currently affecting this entity.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? PuddleEntity;
 
     /// <summary>
     /// The time at which the next absorption metabolism will occur.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     [AutoPausedField]
     public TimeSpan NextUpdate;
 
@@ -71,5 +71,6 @@ public sealed partial class RootableComponent : Component
     /// <summary>
     /// Sound that plays when rooting is toggled.
     /// </summary>
+    [DataField]
     public SoundSpecifier RootSound = new SoundPathSpecifier("/Audio/Voice/Diona/diona_salute.ogg");
 }

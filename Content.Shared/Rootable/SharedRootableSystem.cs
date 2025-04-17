@@ -18,6 +18,7 @@ namespace Content.Shared.Rootable;
 
 /// <summary>
 /// Adds an action to toggle rooting to the ground, primarily for the Diona species.
+/// Being rooted prevents weighlessness and slipping, but causes any floor contents to transfer its reagents to the bloodstream.
 /// </summary>
 public abstract class SharedRootableSystem : EntitySystem
 {
@@ -82,9 +83,18 @@ public abstract class SharedRootableSystem : EntitySystem
         Dirty(entity);
 
         if (entity.Comp.Rooted)
+        {
             _alerts.ShowAlert(entity, entity.Comp.RootedAlert);
+            var curTime = _timing.CurTime;
+            if (curTime > entity.Comp.NextUpdate)
+            {
+                entity.Comp.NextUpdate = curTime;
+            }
+        }
         else
+        {
             _alerts.ClearAlert(entity, entity.Comp.RootedAlert);
+        }
 
         _audio.PlayPredicted(entity.Comp.RootSound, entity.Owner.ToCoordinates(), entity);
 
@@ -123,7 +133,7 @@ public abstract class SharedRootableSystem : EntitySystem
         entity.Comp.PuddleEntity = args.OtherEntity;
 
         if (entity.Comp.NextUpdate < _timing.CurTime) // To prevent constantly moving to new puddles resetting the timer
-            entity.Comp.NextUpdate = _timing.CurTime + TimeSpan.FromSeconds(1);
+            entity.Comp.NextUpdate = _timing.CurTime + entity.Comp.TransferFrequency;
     }
 
     private void OnEndCollide(Entity<RootableComponent> entity, ref EndCollideEvent args)
