@@ -22,64 +22,12 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "build - Tools",
-            "command": "dotnet",
-            "type": "shell",
-            "args": [
-                "build",
-                "--configuration",
-                "Tools",
-                "/property:GenerateFullPaths=true", // Ask dotnet build to generate full paths for file names.
-                "/consoleloggerparameters:'ForceNoAlign;NoSummary'", // Do not generate summary otherwise it leads to duplicate errors in Problems panel
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            },
-            "presentation": {
-                "reveal": "silent"
-            },
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "build - Release",
-            "command": "dotnet",
-            "type": "shell",
-            "args": [
-                "build",
-                "--configuration",
-                "Release",
-                "/property:GenerateFullPaths=true", // Ask dotnet build to generate full paths for file names.
-                "/consoleloggerparameters:'ForceNoAlign;NoSummary'", // Do not generate summary otherwise it leads to duplicate errors in Problems panel
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            },
-            "presentation": {
-                "reveal": "silent"
-            },
-            "problemMatcher": "$msCompile"
-        },
-        {
             "label": "build-yaml-linter",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
                 "${workspaceFolder}/Content.YAMLLinter/Content.YAMLLinter.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:'ForceNoAlign;NoSummary'"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "build-discord-bot",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/Content.DiscordBot/Content.DiscordBot.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:'ForceNoAlign;NoSummary'"
             ],
