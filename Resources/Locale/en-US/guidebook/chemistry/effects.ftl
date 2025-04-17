@@ -357,6 +357,12 @@ reagent-effect-guidebook-add-to-solution-reaction =
         *[other] cause
     } chemicals applied to an object to be added to its internal solution container
 
+reagent-effect-guidebook-artifact-unlock =
+    { $chance ->
+        [1] Helps
+        *[other] help
+        } unlock an alien artifact.
+
 reagent-effect-guidebook-plant-attribute =
     { $chance ->
         [1] Adjusts
