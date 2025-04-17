@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KieueCaprie
-  changes:
-  - message: The lizard plushie will now be visible when held in your hands!
-    type: Add
-  id: 7712
-  time: '2024-12-16T14:14:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32583
 - author: Bhijn and Myr
   changes:
   - message: Admins no longer count towards the playercount cap, meaning you no longer
@@ -3907,3 +3900,10 @@
   id: 8211
   time: '2025-04-17T10:36:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32386
+- author: Callmore
+  changes:
+  - message: Cyborgs now require being pryed to open/close the panel instead of screwed.
+    type: Tweak
+  id: 8212
+  time: '2025-04-17T10:38:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32796
