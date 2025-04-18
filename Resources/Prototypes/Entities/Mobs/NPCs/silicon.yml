@@ -69,6 +69,7 @@
     tags:
     - DoorBumpOpener
     - Bot
+    - Unimplantable
   - type: MobState
     allowedStates:
       - Alive
@@ -476,11 +477,7 @@
     - DoorBumpOpener
     - FootstepSound
     - Bot
-  - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Common
-    - Supply
+    - Unimplantable
   - type: ActiveRadio
     channels:
     - Common

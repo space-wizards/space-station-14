@@ -14,7 +14,7 @@
       - state: icon
       - state: scanner
         shader: unshaded
-        visible: true
+        visible: false
         map: [ "enum.PowerDeviceVisualLayers.Powered" ]
   - type: RadarConsole
     maxRange: 256

@@ -976,5 +976,28 @@ Entries:
   id: 118
   time: '2025-03-27T17:42:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35417
+- author: Minemoder
+  changes:
+  - message: Admin PDA Health Analyzer now has infinite range.
+    type: Tweak
+  id: 119
+  time: '2025-04-06T08:31:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36347
+- author: ScarKy0
+  changes:
+  - message: Aghosts now load biome terrain.
+    type: Tweak
+  id: 120
+  time: '2025-04-06T12:10:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36325
+- author: slarticodefast
+  changes:
+  - message: Fixed the rmobjective command.
+    type: Fix
+  - message: Added completion hints to the rmobjective command.
+    type: Tweak
+  id: 121
+  time: '2025-04-08T14:54:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36396
 Name: Admin
 Order: 1

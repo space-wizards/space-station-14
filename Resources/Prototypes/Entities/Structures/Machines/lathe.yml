@@ -410,6 +410,8 @@
     - SecurityWeaponsStatic
     - SteelBriefcaseImp # Imp
     dynamicPacks:
+    - SalvageSecurityBoards
+    - SalvageSecurityWeapons
     - SecurityEquipment
     - SecurityBoards
     - SecurityExplosives

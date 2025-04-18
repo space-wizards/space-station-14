@@ -45,7 +45,7 @@
             # medical - 6-8
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
-            MedicalIntern: [ 2, 2 ]
+            MedicalIntern: [ 2, 2 ] #intern, not counted
             Paramedic: [ 1, 1 ]
             # science - 5-7
             Borg: [ 1, 1 ]
