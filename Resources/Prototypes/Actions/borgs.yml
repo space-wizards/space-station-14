@@ -4,6 +4,8 @@
   description: View the laws that you must follow.
   components:
   - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
     itemIconStyle: NoItem
     icon:
       sprite: Interface/Actions/actions_borg.rsi

@@ -35,9 +35,9 @@ public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
     /// Currently selected crewmember record key.
     /// </summary>
     public uint? SelectedKey = null;
-
     public CriminalRecord? CriminalRecord = null;
     public GeneralStationRecord? StationRecord = null;
+    public SecurityStatus FilterStatus = SecurityStatus.None;
     public readonly Dictionary<uint, string>? RecordListing;
     public readonly StationRecordsFilter? Filter;
 
@@ -100,3 +100,20 @@ public sealed class CriminalRecordDeleteHistory : BoundUserInterfaceMessage
         Index = index;
     }
 }
+
+/// <summary>
+/// Used to set what status to filter by index.
+///
+/// </summary>
+///
+[Serializable, NetSerializable]
+
+public sealed class CriminalRecordSetStatusFilter : BoundUserInterfaceMessage
+{
+    public readonly SecurityStatus FilterStatus;
+    public CriminalRecordSetStatusFilter(SecurityStatus newFilterStatus)
+    {
+        FilterStatus = newFilterStatus;
+    }
+}
+
