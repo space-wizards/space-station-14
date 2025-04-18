@@ -1051,36 +1051,36 @@ public abstract class SharedActionsSystem : EntitySystem
     }
     #endregion
 
-    public void SetEntityIcon(Entity<ActionComponent> ent, EntityUid? icon)
+    public void SetEntityIcon(Entity<ActionComponent?> ent, EntityUid? icon)
     {
-        if (ent.Comp.EntityIcon == icon)
+        if (!_query.Resolve(ref ent) || ent.Comp.EntityIcon == icon)
             return;
 
         ent.Comp.EntityIcon = icon;
         DirtyField(ent, nameof(ActionComponent.EntIcon));
     }
 
-    public void SetIcon(Entity<ActionComponent> ent, SpriteSpecifier? icon)
+    public void SetIcon(Entity<ActionComponent?> ent, SpriteSpecifier? icon)
     {
-        if (ent.Comp.Icon == icon)
+        if (!_query.Resolve(ref ent) || ent.Comp.Icon == icon)
             return;
 
         ent.Comp.Icon = icon;
         DirtyField(ent, nameof(ActionComponent.Icon));
     }
 
-    public void SetIconOn(Entity<ActionComponent> ent, SpriteSpecifier? iconOn)
+    public void SetIconOn(Entity<ActionComponent?> ent, SpriteSpecifier? iconOn)
     {
-        if (ent.Comp.IconOn == iconOn)
+        if (!_query.Resolve(ref ent) || ent.Comp.IconOn == iconOn)
             return;
 
         ent.Comp.IconOn = iconOn;
         DirtyField(ent, nameof(ActionComponent.IconOn));
     }
 
-    public void SetIconColor(Entity<ActionComponent> ent, Color color)
+    public void SetIconColor(Entity<ActionComponent?> ent, Color color)
     {
-        if (ent.Comp.IconColor == color)
+        if (!_query.Resolve(ref ent) || ent.Comp.IconColor == color)
             return;
 
         ent.Comp.IconColor = color;
