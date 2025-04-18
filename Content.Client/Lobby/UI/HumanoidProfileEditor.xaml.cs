@@ -87,6 +87,8 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         public HumanoidCharacterProfile? Profile;
 
+        private HumanoidCharacterProfile? _savedProfile;
+
         private List<SpeciesPrototype> _species = new();
 
         private List<(string, RequirementsSelector)> _jobPriorities = new();
@@ -153,7 +155,7 @@ namespace Content.Client.Lobby.UI
 
             ResetButton.OnPressed += args =>
             {
-                SetProfile((HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter, _preferencesManager.Preferences?.SelectedCharacterIndex);
+                ResetToDefault();
             };
 
             SaveButton.OnPressed += args =>
@@ -652,7 +654,7 @@ namespace Content.Client.Lobby.UI
                 selector.Select(Profile?.AntagPreferences.Contains(antag.ID) == true ? 0 : 1);
 
                 var requirements = _entManager.System<SharedRoleSystem>().GetAntagRequirement(antag);
-                if (!_requirements.CheckRoleRequirements(requirements, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
+                if (!_requirements.CheckRoleRequirements(requirements, Profile, out var reason))
                 {
                     selector.LockRequirements(reason);
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
@@ -686,7 +688,7 @@ namespace Content.Client.Lobby.UI
         private void SetDirty()
         {
             // If it equals default then reset the button.
-            if (Profile == null || _preferencesManager.Preferences?.SelectedCharacter.MemberwiseEquals(Profile) == true)
+            if (Profile == null || _savedProfile?.MemberwiseEquals(Profile) == true)
             {
                 IsDirty = false;
                 return;
@@ -720,6 +722,7 @@ namespace Content.Client.Lobby.UI
 
             PreviewDummy = _controller.LoadProfileEntity(Profile, JobOverride, ShowClothes.Pressed);
             SpriteView.SetEntity(PreviewDummy);
+            SpriteView.InvalidateMeasure();
             _entManager.System<MetaDataSystem>().SetEntityName(PreviewDummy, Profile.Name);
 
             // Check and set the dirty flag to enable the save/reset buttons as appropriate.
@@ -731,9 +734,7 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         public void ResetToDefault()
         {
-            SetProfile(
-                (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter,
-                _preferencesManager.Preferences?.SelectedCharacterIndex);
+            SetProfile(_savedProfile, CharacterSlot);
         }
 
         /// <summary>
@@ -772,6 +773,15 @@ namespace Content.Client.Lobby.UI
             {
                 PreferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
             }
+        }
+
+        public void SetProfile(int slot)
+        {
+            if(!_preferencesManager.Preferences!.TryGetHumanoidInSlot(slot, out var humanoid))
+                return;
+            if(humanoid != null)
+                _savedProfile = humanoid.Clone();
+            SetProfile(humanoid, slot);
         }
 
 
@@ -834,10 +844,8 @@ namespace Content.Client.Lobby.UI
 
             var items = new[]
             {
-                ("humanoid-profile-editor-job-priority-never-button", (int) JobPriority.Never),
-                ("humanoid-profile-editor-job-priority-low-button", (int) JobPriority.Low),
-                ("humanoid-profile-editor-job-priority-medium-button", (int) JobPriority.Medium),
-                ("humanoid-profile-editor-job-priority-high-button", (int) JobPriority.High),
+                ("humanoid-profile-editor-antag-preference-yes-button", 0),
+                ("humanoid-profile-editor-antag-preference-no-button", 1)
             };
 
             foreach (var department in departments)
@@ -912,41 +920,23 @@ namespace Content.Client.Lobby.UI
                     icon.Texture = _sprite.Frame0(jobIcon.Icon);
                     selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
 
-                    if (!_requirements.IsAllowed(job, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
+                    if (!_requirements.IsAllowed(job, Profile, out var reason))
                     {
                         selector.LockRequirements(reason);
+                        Profile = Profile?.WithoutJob(job);
+                        SetDirty();
                     }
                     else
                     {
                         selector.UnlockRequirements();
                     }
 
-                    selector.OnSelected += selectedPrio =>
+                    selector.OnSelected += selection =>
                     {
-                        var selectedJobPrio = (JobPriority) selectedPrio;
-                        Profile = Profile?.WithJobPriority(job.ID, selectedJobPrio);
+                        var include = selection == 0;
+                        Profile = Profile?.WithJob(job.ID, include);
 
-                        foreach (var (jobId, other) in _jobPriorities)
-                        {
-                            // Sync other selectors with the same job in case of multiple department jobs
-                            if (jobId == job.ID)
-                            {
-                                other.Select(selectedPrio);
-                                continue;
-                            }
-
-                            if (selectedJobPrio != JobPriority.High || (JobPriority) other.Selected != JobPriority.High)
-                                continue;
-
-                            // Lower any other high priorities to medium.
-                            other.Select((int)JobPriority.Medium);
-                            Profile = Profile?.WithJobPriority(jobId, JobPriority.Medium);
-                        }
-
-                        // TODO: Only reload on high change (either to or from).
-                        ReloadPreview();
-
-                        UpdateJobPriorities();
+                        UpdateJobPreferences();
                         SetDirty();
                     };
 
@@ -994,7 +984,7 @@ namespace Content.Client.Lobby.UI
                 }
             }
 
-            UpdateJobPriorities();
+            UpdateJobPreferences();
         }
 
         private void OpenLoadout(JobPrototype? jobProto, RoleLoadout roleLoadout, RoleLoadoutPrototype roleLoadoutProto)
@@ -1053,7 +1043,7 @@ namespace Content.Client.Lobby.UI
             if (Profile is null)
                 return;
 
-            UpdateJobPriorities();
+            UpdateJobPreferences();
         }
 
         private void OnFlavorTextChange(string content)
@@ -1263,12 +1253,11 @@ namespace Content.Client.Lobby.UI
         /// <summary>
         /// Updates selected job priorities to the profile's.
         /// </summary>
-        private void UpdateJobPriorities()
+        private void UpdateJobPreferences()
         {
             foreach (var (jobId, prioritySelector) in _jobPriorities)
             {
-                var priority = Profile?.JobPriorities.GetValueOrDefault(jobId, JobPriority.Never) ?? JobPriority.Never;
-                prioritySelector.Select((int) priority);
+                prioritySelector.Select((Profile?.JobPreferences.Contains(jobId) ?? false) ? 0 : 1);
             }
         }
 

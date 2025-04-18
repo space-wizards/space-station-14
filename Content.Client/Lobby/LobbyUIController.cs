@@ -46,6 +46,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
     private CharacterSetupGui? _characterSetup;
     private HumanoidProfileEditor? _profileEditor;
+    private JobPriorityEditor? _jobPriorityEditor;
     private CharacterSetupGuiSavePanel? _savePanel;
 
     /// <summary>
@@ -137,23 +138,31 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         if (_stateManager.CurrentState is not LobbyState)
             return;
 
+        if (_characterSetup != null)
+            _characterSetup.SelectedCharacterSlot = null;
         ReloadCharacterSetup();
     }
 
     public void OnStateEntered(LobbyState state)
     {
         PreviewPanel?.SetLoaded(_preferencesManager.ServerDataLoaded);
+        if (_characterSetup != null)
+            _characterSetup.SelectedCharacterSlot = null;
         ReloadCharacterSetup();
     }
 
     public void OnStateExited(LobbyState state)
     {
         PreviewPanel?.SetLoaded(false);
-        _profileEditor?.Dispose();
-        _characterSetup?.Dispose();
+
+        if (_stateManager.CurrentState is LobbyState lobby)
+        {
+            lobby.Lobby?.CharacterSetupState.RemoveAllChildren();
+        }
 
         _characterSetup = null;
         _profileEditor = null;
+        _jobPriorityEditor = null;
     }
 
     /// <summary>
@@ -164,9 +173,8 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         RefreshLobbyPreview();
         var (characterGui, profileEditor) = EnsureGui();
         characterGui.ReloadCharacterPickers();
-        profileEditor.SetProfile(
-            (HumanoidCharacterProfile?) _preferencesManager.Preferences?.SelectedCharacter,
-            _preferencesManager.Preferences?.SelectedCharacterIndex);
+        profileEditor.ResetToDefault();
+        _jobPriorityEditor?.LoadJobPriorities(_preferencesManager.Preferences?.JobPriorities);
     }
 
     /// <summary>
@@ -174,22 +182,21 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     /// </summary>
     private void RefreshLobbyPreview()
     {
-        if (PreviewPanel == null)
-            return;
+        PreviewPanel?.Refresh();
 
-        // Get selected character, load it, then set it
-        var character = _preferencesManager.Preferences?.SelectedCharacter;
-
-        if (character is not HumanoidCharacterProfile humanoid)
-        {
-            PreviewPanel.SetSprite(EntityUid.Invalid);
-            PreviewPanel.SetSummaryText(string.Empty);
-            return;
-        }
-
-        var dummy = LoadProfileEntity(humanoid, null, true);
-        PreviewPanel.SetSprite(dummy);
-        PreviewPanel.SetSummaryText(humanoid.Summary);
+        // // Get selected character, load it, then set it
+        // var character = _preferencesManager.Preferences?.SelectedCharacter;
+        //
+        // if (character is not HumanoidCharacterProfile humanoid)
+        // {
+        //     PreviewPanel.SetSprite(EntityUid.Invalid);
+        //     PreviewPanel.SetSummaryText(string.Empty);
+        //     return;
+        // }
+        //
+        // var dummy = LoadProfileEntity(humanoid, null, true);
+        // PreviewPanel.SetSprite(dummy);
+        // PreviewPanel.SetSummaryText(humanoid.Summary);
     }
 
     private void RefreshProfileEditor()
@@ -199,6 +206,12 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         _profileEditor?.RefreshLoadouts();
     }
 
+    private void SaveJobPriorities(Dictionary<ProtoId<JobPrototype>, JobPriority> newJobPriorities)
+    {
+        _preferencesManager.UpdateJobPriorities(newJobPriorities);
+        _jobPriorityEditor?.LoadJobPriorities();
+    }
+
     private void SaveProfile()
     {
         DebugTools.Assert(EditedProfile != null);
@@ -206,12 +219,12 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         if (EditedProfile == null || EditedSlot == null)
             return;
 
-        var selected = _preferencesManager.Preferences?.SelectedCharacterIndex;
+        var fixedProfile = EditedProfile.Clone();
+        if(_preferencesManager.Preferences!.TryGetHumanoidInSlot(EditedSlot.Value, out var humanoid))
+            fixedProfile = new HumanoidCharacterProfile(EditedProfile) { Enabled = humanoid.Enabled };
 
-        if (selected == null)
-            return;
-
-        _preferencesManager.UpdateCharacter(EditedProfile, EditedSlot.Value);
+        _preferencesManager.UpdateCharacter(fixedProfile, EditedSlot.Value);
+        _profileEditor?.SetProfile(EditedSlot.Value);
         ReloadCharacterSetup();
     }
 
@@ -276,9 +289,13 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             _requirements,
             _markings);
 
+        _jobPriorityEditor = new JobPriorityEditor(_preferencesManager, _prototypeManager, _requirements);
+
+        _jobPriorityEditor.Save += SaveJobPriorities;
+
         _profileEditor.OnOpenGuidebook += _guide.OpenHelp;
 
-        _characterSetup = new CharacterSetupGui(_profileEditor);
+        _characterSetup = new CharacterSetupGui(_profileEditor, _jobPriorityEditor);
 
         _characterSetup.CloseButton.OnPressed += _ =>
         {
@@ -298,7 +315,9 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
 
         _characterSetup.SelectCharacter += args =>
         {
-            _preferencesManager.SelectCharacter(args);
+            _profileEditor.SetProfile(args);
+            if (_characterSetup != null)
+                _characterSetup.SelectedCharacterSlot = args;
             ReloadCharacterSetup();
         };
 
@@ -318,6 +337,12 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
             }
         };
 
+        _characterSetup.SetCharacterEnable += args =>
+        {
+            _preferencesManager.SetCharacterEnable(args.Item1, args.Item2);
+            _characterSetup?.ReloadCharacterPickers();
+        };
+
         if (_stateManager.CurrentState is LobbyState lobby)
         {
             lobby.Lobby?.CharacterSetupState.AddChild(_characterSetup);
@@ -329,26 +354,25 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     #region Helpers
 
     /// <summary>
-    /// Applies the highest priority job's clothes to the dummy.
-    /// </summary>
-    public void GiveDummyJobClothesLoadout(EntityUid dummy, JobPrototype? jobProto, HumanoidCharacterProfile profile)
-    {
-        var job = jobProto ?? GetPreferredJob(profile);
-        GiveDummyJobClothes(dummy, profile, job);
-
-        if (_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
-        {
-            var loadout = profile.GetLoadoutOrDefault(LoadoutSystem.GetJobPrototype(job.ID), _playerManager.LocalSession, profile.Species, EntityManager, _prototypeManager);
-            GiveDummyLoadout(dummy, loadout);
-        }
-    }
-
-    /// <summary>
     /// Gets the highest priority job for the profile.
     /// </summary>
     public JobPrototype GetPreferredJob(HumanoidCharacterProfile profile)
     {
-        var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
+        ProtoId<JobPrototype> highPriorityJob = default;
+        if (profile.JobPreferences.Count == 1)
+        {
+            highPriorityJob = profile.JobPreferences.First();
+        }
+        else
+        {
+            var priorities = _preferencesManager.Preferences?.JobPriorities ?? [];
+            foreach (var priority in new List<JobPriority>{JobPriority.High, JobPriority.Medium, JobPriority.Low})
+            {
+                highPriorityJob = profile.JobPreferences.FirstOrDefault(p => priorities.GetValueOrDefault(p) == priority);
+                if (highPriorityJob.Id != null)
+                    break;
+            }
+        }
         // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract (what is resharper smoking?)
         return _prototypeManager.Index<JobPrototype>(highPriorityJob.Id ?? SharedGameTicker.FallbackOverflowJob);
     }

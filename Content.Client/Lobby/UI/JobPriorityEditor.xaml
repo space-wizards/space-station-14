@@ -1,0 +1,11 @@
+﻿<BoxContainer
+    xmlns="https://spacestation14.io"
+    HorizontalExpand="True">
+    <BoxContainer Orientation="Vertical" MaxHeight="100" VerticalAlignment="Center">
+        <Button Name="SaveButton" Text="{Loc 'humanoid-profile-editor-save-button'}"/>
+        <Button Name="ResetButton" Text="{Loc 'humanoid-profile-editor-reset-button'}"/>
+    </BoxContainer>
+    <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+        <BoxContainer Name="JobList" Orientation="Vertical" />
+    </ScrollContainer>
+</BoxContainer>

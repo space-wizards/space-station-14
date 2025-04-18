@@ -5,6 +5,7 @@
                   HorizontalExpand="True"
                   SeparationOverride="0"
                   Name="InternalHBox">
+        <Button Name="EnabledCheck" Text="Enabled" ToggleMode="True"/>
         <SpriteView Scale="2 2"
                     Margin="0 4 4 4"
                     OverrideDirection="South"
@@ -14,7 +15,8 @@
                ClipText="True"
                HorizontalExpand="True"/>
         <Button Name="DeleteButton"
-                Text="{Loc 'character-setup-gui-character-picker-button-delete-button'}"/>
+                Text="{Loc 'character-setup-gui-character-picker-button-delete-button'}"
+                Visible="False"/>
         <Button Name="ConfirmDeleteButton"
                 Text="{Loc 'character-setup-gui-character-picker-button-confirm-delete-button'}"
                 Visible="False"

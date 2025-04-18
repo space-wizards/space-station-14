@@ -29,12 +29,15 @@ public sealed partial class CharacterPickerButton : ContainerButton
     /// </summary>
     public event Action? OnDeletePressed;
 
+    public event Action<bool>? OnEnableToggled;
+
     public CharacterPickerButton(
         IEntityManager entityManager,
         IPrototypeManager prototypeManager,
         ButtonGroup group,
         ICharacterProfile profile,
-        bool isSelected)
+        bool isSelected,
+        bool simple = false)
     {
         RobustXamlLoader.Load(this);
         _entManager = entityManager;
@@ -52,32 +55,47 @@ public sealed partial class CharacterPickerButton : ContainerButton
             _previewDummy = UserInterfaceManager.GetUIController<LobbyUIController>()
                 .LoadProfileEntity(humanoid, null, true);
 
-            var highPriorityJob = humanoid.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
-            if (highPriorityJob != default)
-            {
-                var jobName = prototypeManager.Index(highPriorityJob).LocalizedName;
-                description = $"{description}\n{jobName}";
-            }
+            // TODO: Fix dummy character rendering
+            // var highPriorityJob = humanoid.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
+            // if (highPriorityJob != default)
+            // {
+            //     var jobName = prototypeManager.Index(highPriorityJob).LocalizedName;
+            //     description = $"{description}\n{jobName}";
+            // }
+            EnabledCheck.Pressed = humanoid.Enabled;
         }
 
         Pressed = isSelected;
-        DeleteButton.Visible = !isSelected;
 
         View.SetEntity(_previewDummy);
         DescriptionLabel.Text = description;
 
-        ConfirmDeleteButton.OnPressed += _ =>
-        {
-            Parent?.RemoveChild(this);
-            Parent?.RemoveChild(ConfirmDeleteButton);
-            OnDeletePressed?.Invoke();
-        };
-
-        DeleteButton.OnPressed += _ =>
+        if (simple)
         {
             DeleteButton.Visible = false;
-            ConfirmDeleteButton.Visible = true;
-        };
+            EnabledCheck.Visible = false;
+        }
+        else
+        {
+            DeleteButton.Visible = !isSelected;
+            ConfirmDeleteButton.OnPressed += _ =>
+            {
+                Parent?.RemoveChild(this);
+                Parent?.RemoveChild(ConfirmDeleteButton);
+                OnDeletePressed?.Invoke();
+            };
+
+            DeleteButton.OnPressed += _ =>
+            {
+                DeleteButton.Visible = false;
+                ConfirmDeleteButton.Visible = true;
+            };
+
+            EnabledCheck.OnToggled += args =>
+            {
+                OnEnableToggled?.Invoke(args.Pressed);
+            };
+        }
     }
 
     protected override void Dispose(bool disposing)

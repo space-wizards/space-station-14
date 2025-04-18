@@ -201,7 +201,8 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             playTimes = new Dictionary<string, TimeSpan>();
         }
 
-        return JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter);
+        var allProfilesForJob = _preferencesManager.GetPreferences(player.UserId).GetAllProfilesForJob(job);
+        return allProfilesForJob.Values.Any(profile => JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, profile));
     }
 
     public HashSet<ProtoId<JobPrototype>> GetDisallowedJobs(ICommonSession player)
@@ -218,7 +219,8 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
         foreach (var job in _prototypes.EnumeratePrototypes<JobPrototype>())
         {
-            if (JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(player.UserId).SelectedCharacter))
+            var allProfilesForJob = _preferencesManager.GetPreferences(player.UserId).GetAllProfilesForJob(job);
+            if (allProfilesForJob.Values.All(profile => !JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, profile)))
                 roles.Add(job.ID);
         }
 
@@ -238,16 +240,14 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             playTimes ??= new Dictionary<string, TimeSpan>();
         }
 
-        for (var i = 0; i < jobs.Count; i++)
+        foreach (var job in jobs.ShallowClone())
         {
-            if (_prototypes.TryIndex(jobs[i], out var job)
-                && JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes, (HumanoidCharacterProfile?) _preferencesManager.GetPreferences(userId).SelectedCharacter))
-            {
+            if(!_prototypes.TryIndex(job, out var jobToRemove))
                 continue;
-            }
-
-            jobs.RemoveSwap(i);
-            i--;
+            var allProfilesForJob = _preferencesManager.GetPreferences(player.UserId).GetAllProfilesForJob(job);
+            if (allProfilesForJob.Values.All(profile =>
+                    !JobRequirements.TryRequirementsMet(jobToRemove, playTimes, out _, EntityManager, _prototypes, profile)))
+                jobs.Remove(job);
         }
     }
 

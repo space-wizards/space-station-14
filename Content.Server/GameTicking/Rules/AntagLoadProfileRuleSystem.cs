@@ -27,11 +27,15 @@ public sealed class AntagLoadProfileRuleSystem : GameRuleSystem<AntagLoadProfile
         if (args.Handled)
             return;
 
-        var profile = args.Session != null
-            ? _prefs.GetPreferences(args.Session.UserId).SelectedCharacter as HumanoidCharacterProfile
-            : HumanoidCharacterProfile.RandomWithSpecies();
+        HumanoidCharacterProfile? profile = null;
+        if (args.Session != null)
+        {
+            var roles = args.Def.PrefRoles;
+            var prefs = _prefs.GetPreferences(args.Session.UserId);
+            profile = prefs.SelectProfileForAntag(roles);
+        }
 
-
+        profile ??= HumanoidCharacterProfile.RandomWithSpecies();
         if (profile?.Species is not { } speciesId || !_proto.TryIndex(speciesId, out var species))
         {
             species = _proto.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies);

@@ -1,8 +1,10 @@
 using System.Linq;
 using Content.Shared.Preferences;
+using Content.Shared.Roles;
 using Robust.Client;
 using Robust.Client.Player;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Lobby
@@ -27,8 +29,8 @@ namespace Content.Client.Lobby
         {
             _netManager.RegisterNetMessage<MsgPreferencesAndSettings>(HandlePreferencesAndSettings);
             _netManager.RegisterNetMessage<MsgUpdateCharacter>();
-            _netManager.RegisterNetMessage<MsgSelectCharacter>();
             _netManager.RegisterNetMessage<MsgDeleteCharacter>();
+            _netManager.RegisterNetMessage<MsgSetCharacterEnable>();
 
             _baseClient.RunLevelChanged += BaseClientOnRunLevelChanged;
         }
@@ -42,17 +44,23 @@ namespace Content.Client.Lobby
             }
         }
 
-        public void SelectCharacter(ICharacterProfile profile)
+        public void SetCharacterEnable(int slot, bool enable = true)
         {
-            SelectCharacter(Preferences.IndexOfCharacter(profile));
-        }
+            if (!Preferences.Characters.TryGetValue(slot, out var characterProfile))
+                return;
+            if (characterProfile is not HumanoidCharacterProfile profile)
+                return;
 
-        public void SelectCharacter(int slot)
-        {
-            Preferences = new PlayerPreferences(Preferences.Characters, slot, Preferences.AdminOOCColor);
-            var msg = new MsgSelectCharacter
+            var characters = new Dictionary<int, ICharacterProfile>(Preferences.Characters)
             {
-                SelectedCharacterIndex = slot
+                [slot] = new HumanoidCharacterProfile(profile) {Enabled = enable},
+            };
+            Preferences = new PlayerPreferences(characters, Preferences.AdminOOCColor, Preferences.JobPriorities);
+
+            var msg = new MsgSetCharacterEnable
+            {
+                CharacterIndex = slot,
+                EnabledValue = enable,
             };
             _netManager.ClientSendMessage(msg);
         }
@@ -62,7 +70,7 @@ namespace Content.Client.Lobby
             var collection = IoCManager.Instance!;
             profile.EnsureValid(_playerManager.LocalSession!, collection);
             var characters = new Dictionary<int, ICharacterProfile>(Preferences.Characters) {[slot] = profile};
-            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
+            Preferences = new PlayerPreferences(characters, Preferences.AdminOOCColor, Preferences.JobPriorities);
             var msg = new MsgUpdateCharacter
             {
                 Profile = profile,
@@ -85,7 +93,7 @@ namespace Content.Client.Lobby
 
             var l = lowest.Value;
             characters.Add(l, profile);
-            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
+            Preferences = new PlayerPreferences(characters, Preferences.AdminOOCColor, Preferences.JobPriorities);
 
             UpdateCharacter(profile, l);
         }
@@ -98,10 +106,22 @@ namespace Content.Client.Lobby
         public void DeleteCharacter(int slot)
         {
             var characters = Preferences.Characters.Where(p => p.Key != slot);
-            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
+            Preferences = new PlayerPreferences(characters, Preferences.AdminOOCColor, Preferences.JobPriorities);
             var msg = new MsgDeleteCharacter
             {
                 Slot = slot
+            };
+            _netManager.ClientSendMessage(msg);
+        }
+
+        public void UpdateJobPriorities(Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
+        {
+            Preferences = new PlayerPreferences(Preferences.Characters,
+                Preferences.AdminOOCColor,
+                jobPriorities);
+            var msg = new MsgUpdateJobPriorities
+            {
+                JobPriorities = jobPriorities,
             };
             _netManager.ClientSendMessage(msg);
         }
