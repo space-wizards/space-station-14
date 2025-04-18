@@ -19,6 +19,6 @@ public sealed partial class SlotBasedConnectedContainerComponent : Component
     /// <summary>
     /// A whitelist for determining whether container is valid or not .
     /// </summary>
-    [DataField("providerWhitelist")]
+    [DataField]
     public EntityWhitelist? ContainerWhitelist;
 }

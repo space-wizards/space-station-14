@@ -26,7 +26,7 @@
   - type: ClothingSlotAmmoProvider
   - type: SlotBasedConnectedContainer
     targetSlot: BACK
-    providerWhitelist:
+    containerWhitelist:
       tags:
       - NozzleBackTank
   - type: UseDelay
