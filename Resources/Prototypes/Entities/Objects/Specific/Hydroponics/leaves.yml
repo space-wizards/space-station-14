@@ -70,11 +70,13 @@
   name: rainbow cannabis leaves
   parent: LeavesCannabis
   id: LeavesCannabisRainbow
-  #description: "Is it supposed to be glowing like that...?"
-  description: "Wasn't it supposed to be glowing...?"
+  description: "Is it supposed to be glowing like that...?"
   components:
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+    layers:
+    - sprite: Objects/Specific/Hydroponics/rainbow_cannabis.rsi
+      state: produce
+      shader: unshaded
   - type: Produce
     seedId: rainbowCannabis
   # disabled because 50 morbillion point lights still break the lighting engine
