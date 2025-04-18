@@ -4893,4 +4893,11 @@ Entries:
   id: 677
   time: '2025-04-18T16:18:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/395
+- author: Happyrobot33
+  changes:
+  - message: Added ability to hold Felionoids and Resomi as items.
+    type: Add
+  id: 678
+  time: '2025-04-18T23:49:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/497
 
