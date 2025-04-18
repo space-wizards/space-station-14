@@ -62,6 +62,24 @@
       "name": "bio_door"
     },
     {
+      "name": "bio_cmo"
+    },
+    {
+      "name": "bio_cmo_door"
+    },
+    {
+      "name": "bio_cmo_open"
+    },
+    {
+        "name": "bio_sci"
+    },
+    {
+        "name": "bio_sci_door"
+    },
+    {
+        "name": "bio_sci_open"
+    },
+    {
       "name": "bio_jan"
     },
     {

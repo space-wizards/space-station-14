@@ -31,6 +31,17 @@
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/cmo.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75
+        Slash: 0.8
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.25
+  - type: GroupExamine
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
 
 - type: entity
   parent: ClothingOuterBioGeneral
