@@ -17,7 +17,7 @@
     displayName: Mask
     whitelist:
       tags:
-        - PetWearable
+      - PetWearable
   - name: suitstorage
     slotTexture: suit_storage
     slotFlags: SUITSTORAGE
@@ -27,7 +27,7 @@
     displayName: Suit Storage
     whitelist:
       components:
-        - GasTank
+      - GasTank
   - name: id
     slotTexture: id
     fullTextureName: template_small
@@ -46,7 +46,7 @@
     displayName: Suit
     whitelist:
       tags:
-        - CorgiWearable
+      - CorgiWearable
   - name: eyes
     slotTexture: glasses
     slotFlags: EYES
@@ -55,7 +55,7 @@
     displayName: Eyes
     whitelist:
       tags:
-        - CorgiWearable
+      - CorgiWearable
   - name: head
     slotTexture: head
     slotFlags: HEAD
@@ -64,4 +64,4 @@
     displayName: Head
     whitelist:
       tags:
-        - CorgiWearable
+      - CorgiWearable
