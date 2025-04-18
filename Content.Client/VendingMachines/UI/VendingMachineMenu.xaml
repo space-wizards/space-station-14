@@ -2,10 +2,11 @@
     xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    xmlns:co="clr-namespace:Content.Client.UserInterface.Controls">
+    xmlns:co="clr-namespace:Content.Client.UserInterface.Controls"
+    MinHeight="210">
     <BoxContainer Name="MainContainer" Orientation="Vertical">
         <LineEdit Name="SearchBar" PlaceHolder="{Loc 'vending-machine-component-search-filter'}" HorizontalExpand="True"  Margin ="4 4"/>
-        <co:SearchListContainer Name="VendingContents" VerticalExpand="True" Margin="4 0"/>
+        <co:SearchListContainer Name="VendingContents" VerticalExpand="True" Margin="4 4"/>
          <!-- Footer -->
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />

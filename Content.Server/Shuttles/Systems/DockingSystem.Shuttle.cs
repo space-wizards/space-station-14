@@ -17,7 +17,7 @@ public sealed partial class DockingSystem
 
     private const int DockRoundingDigits = 2;
 
-    public Angle GetAngle(EntityUid uid, TransformComponent xform, EntityUid targetUid, TransformComponent targetXform, EntityQuery<TransformComponent> xformQuery)
+    public Angle GetAngle(EntityUid uid, TransformComponent xform, EntityUid targetUid, TransformComponent targetXform)
     {
         var (shuttlePos, shuttleRot) = _transform.GetWorldPositionRotation(xform);
         var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform);
@@ -79,7 +79,7 @@ public sealed partial class DockingSystem
             return false;
 
         shuttleDockedAABB = matty.TransformBox(shuttleAABB);
-        gridRotation = (targetGridRotation + offsetAngle).Reduced();
+        gridRotation = offsetAngle.Reduced();
         return true;
     }
 
@@ -125,7 +125,8 @@ public sealed partial class DockingSystem
     public DockingConfig? GetDockingConfigAt(EntityUid shuttleUid,
         EntityUid targetGrid,
         EntityCoordinates coordinates,
-        Angle angle)
+        Angle angle,
+        bool fallback = true)
     {
         var gridDocks = GetDocks(targetGrid);
         var shuttleDocks = GetDocks(shuttleUid);
@@ -138,6 +139,11 @@ public sealed partial class DockingSystem
             {
                 return config;
             }
+        }
+
+        if (fallback && configs.Count > 0)
+        {
+            return configs.First();
         }
 
         return null;
@@ -288,9 +294,7 @@ public sealed partial class DockingSystem
 
         // Prioritise by priority docks, then by maximum connected ports, then by most similar angle.
         validDockConfigs = validDockConfigs
-           .OrderByDescending(x => x.Docks.Any(docks =>
-               TryComp<PriorityDockComponent>(docks.DockBUid, out var priority) &&
-               priority.Tag?.Equals(priorityTag) == true))
+           .OrderByDescending(x => IsConfigPriority(x, priorityTag))
            .ThenByDescending(x => x.Docks.Count)
            .ThenBy(x => Math.Abs(Angle.ShortestDistance(x.Angle.Reduced(), targetGridAngle).Theta)).ToList();
 
@@ -299,6 +303,13 @@ public sealed partial class DockingSystem
         // TODO: Ideally do a hyperspace warpin, just have it run on like a 10 second timer.
 
         return location;
+    }
+
+    public bool IsConfigPriority(DockingConfig config, string? priorityTag)
+    {
+        return config.Docks.Any(docks =>
+            TryComp<PriorityDockComponent>(docks.DockBUid, out var priority)
+            && priority.Tag?.Equals(priorityTag) == true);
     }
 
     /// <summary>
@@ -318,7 +329,9 @@ public sealed partial class DockingSystem
             // If it's a map check no hard collidable anchored entities overlap
             if (isMap)
             {
-                foreach (var tile in _mapSystem.GetLocalTilesIntersecting(gridEntity.Owner, gridEntity.Comp, aabb))
+                var localTiles = _mapSystem.GetLocalTilesEnumerator(gridEntity.Owner, gridEntity.Comp, aabb);
+
+                while (localTiles.MoveNext(out var tile))
                 {
                     var anchoredEnumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridEntity.Owner, gridEntity.Comp, tile.GridIndices);
 

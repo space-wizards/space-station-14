@@ -1,7 +1,7 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Server.Forensics;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
@@ -17,13 +17,14 @@ using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using System.Linq;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
     public sealed partial class SmokingSystem : EntitySystem
     {
         [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
@@ -48,10 +49,17 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<SmokableComponent, IsHotEvent>(OnSmokableIsHotEvent);
             SubscribeLocalEvent<SmokableComponent, ComponentShutdown>(OnSmokableShutdownEvent);
             SubscribeLocalEvent<SmokableComponent, GotEquippedEvent>(OnSmokeableEquipEvent);
+            Subs.SubscribeWithRelay<SmokableComponent, ExtinguishEvent>(OnExtinguishEvent);
 
             InitializeCigars();
             InitializePipes();
             InitializeVapes();
+        }
+
+        private void OnExtinguishEvent(Entity<SmokableComponent> ent, ref ExtinguishEvent args)
+        {
+            if (ent.Comp.State == SmokableState.Lit)
+                SetSmokableState(ent, SmokableState.Burnt, ent);
         }
 
         public void SetSmokableState(EntityUid uid, SmokableState state, SmokableComponent? smokable = null,
@@ -74,9 +82,19 @@ namespace Content.Server.Nutrition.EntitySystems
             _items.SetHeldPrefix(uid, newState);
 
             if (state == SmokableState.Lit)
+            {
+                var igniteEvent = new IgnitedEvent();
+                RaiseLocalEvent(uid, ref igniteEvent);
+
                 _active.Add(uid);
+            }
             else
+            {
+                var igniteEvent = new ExtinguishedEvent();
+                RaiseLocalEvent(uid, ref igniteEvent);
+
                 _active.Remove(uid);
+            }
         }
 
         private void OnSmokableIsHotEvent(Entity<SmokableComponent> entity, ref IsHotEvent args)

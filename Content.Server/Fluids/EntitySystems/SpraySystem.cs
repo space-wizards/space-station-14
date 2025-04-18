@@ -10,12 +10,14 @@ using Content.Shared.Fluids;
 using Content.Shared.Interaction;
 using Content.Shared.Timing;
 using Content.Shared.Vapor;
+using Content.Shared.Chemistry.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using System.Numerics;
+using Robust.Shared.Map;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -40,7 +42,20 @@ public sealed class SpraySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SprayComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<SprayComponent, UserActivateInWorldEvent>(OnActivateInWorld);
         Subs.CVar(_cfg, CCVars.GridImpulseMultiplier, UpdateGridMassMultiplier, true);
+    }
+
+    private void OnActivateInWorld(Entity<SprayComponent> entity, ref UserActivateInWorldEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+
+        var targetMapPos = _transform.GetMapCoordinates(GetEntityQuery<TransformComponent>().GetComponent(args.Target));
+
+        Spray(entity, args.User, targetMapPos);
     }
 
     private void UpdateGridMassMultiplier(float value)
@@ -55,29 +70,36 @@ public sealed class SpraySystem : EntitySystem
 
         args.Handled = true;
 
+        var clickPos = _transform.ToMapCoordinates(args.ClickLocation);
+
+        Spray(entity, args.User, clickPos);
+    }
+
+    public void Spray(Entity<SprayComponent> entity, EntityUid user, MapCoordinates mapcoord)
+    {
         if (!_solutionContainer.TryGetSolution(entity.Owner, SprayComponent.SolutionName, out var soln, out var solution))
             return;
 
-        var ev = new SprayAttemptEvent(args.User);
+        var ev = new SprayAttemptEvent(user);
         RaiseLocalEvent(entity, ref ev);
         if (ev.Cancelled)
             return;
 
-        if (!TryComp<UseDelayComponent>(entity, out var useDelay)
-            || _useDelay.IsDelayed((entity, useDelay)))
+        if (TryComp<UseDelayComponent>(entity, out var useDelay)
+            && _useDelay.IsDelayed((entity, useDelay)))
             return;
 
         if (solution.Volume <= 0)
         {
-            _popupSystem.PopupEntity(Loc.GetString("spray-component-is-empty-message"), entity.Owner, args.User);
+            _popupSystem.PopupEntity(Loc.GetString("spray-component-is-empty-message"), entity.Owner, user);
             return;
         }
 
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var userXform = xformQuery.GetComponent(args.User);
+        var userXform = xformQuery.GetComponent(user);
 
         var userMapPos = _transform.GetMapCoordinates(userXform);
-        var clickMapPos = _transform.ToMapCoordinates(args.ClickLocation);
+        var clickMapPos = mapcoord;
 
         var diffPos = clickMapPos.Position - userMapPos.Position;
         if (diffPos == Vector2.Zero || diffPos == Vector2Helpers.NaN)
@@ -99,8 +121,6 @@ public sealed class SpraySystem : EntitySystem
 
         var amount = Math.Max(Math.Min((solution.Volume / entity.Comp.TransferAmount).Int(), entity.Comp.VaporAmount), 1);
         var spread = entity.Comp.VaporSpread / amount;
-        // TODO: Just use usedelay homie.
-        var cooldownTime = 0f;
 
         for (var i = 0; i < amount; i++)
         {
@@ -142,21 +162,20 @@ public sealed class SpraySystem : EntitySystem
             // impulse direction is defined in world-coordinates, not local coordinates
             var impulseDirection = rotation.ToVec();
             var time = diffLength / entity.Comp.SprayVelocity;
-            cooldownTime = MathF.Max(time, cooldownTime);
 
-            _vapor.Start(ent, vaporXform, impulseDirection * diffLength, entity.Comp.SprayVelocity, target, time, args.User);
+            _vapor.Start(ent, vaporXform, impulseDirection * diffLength, entity.Comp.SprayVelocity, target, time, user);
 
-            if (TryComp<PhysicsComponent>(args.User, out var body))
+            if (TryComp<PhysicsComponent>(user, out var body))
             {
-                if (_gravity.IsWeightless(args.User, body))
+                if (_gravity.IsWeightless(user, body))
                 {
                     // push back the player
-                    _physics.ApplyLinearImpulse(args.User, -impulseDirection * entity.Comp.PushbackAmount, body: body);
+                    _physics.ApplyLinearImpulse(user, -impulseDirection * entity.Comp.PushbackAmount, body: body);
                 }
                 else
                 {
                     // push back the grid the player is standing on
-                    var userTransform = Transform(args.User);
+                    var userTransform = Transform(user);
                     if (userTransform.GridUid != null)
                     {
                         // apply both linear and angular momentum depending on the player position
@@ -169,7 +188,7 @@ public sealed class SpraySystem : EntitySystem
 
         _audio.PlayPvs(entity.Comp.SpraySound, entity, entity.Comp.SpraySound.Params.WithVariation(0.125f));
 
-        _useDelay.SetLength(entity.Owner, TimeSpan.FromSeconds(cooldownTime));
-        _useDelay.TryResetDelay((entity, useDelay));
+        if (useDelay != null)
+            _useDelay.TryResetDelay((entity, useDelay));
     }
 }

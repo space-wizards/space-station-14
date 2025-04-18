@@ -1,18 +1,12 @@
 using Content.Server.Antag;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Mind;
-using Content.Server.Objectives;
 using Content.Server.Roles;
 using Content.Shared.Humanoid;
-using Content.Shared.Mind;
-using Content.Shared.Objectives.Components;
-using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
 public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
 {
-    [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
 
     public override void Initialize()
@@ -24,32 +18,33 @@ public sealed class ThiefRuleSystem : GameRuleSystem<ThiefRuleComponent>
         SubscribeLocalEvent<ThiefRoleComponent, GetBriefingEvent>(OnGetBriefing);
     }
 
-    private void AfterAntagSelected(Entity<ThiefRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
+    // Greeting upon thief activation
+    private void AfterAntagSelected(Entity<ThiefRuleComponent> mindId, ref AfterAntagEntitySelectedEvent args)
     {
-        if (!_mindSystem.TryGetMind(args.EntityUid, out var mindId, out var mind))
-            return;
-
-        //Generate objectives
-        _antag.SendBriefing(args.EntityUid, MakeBriefing(args.EntityUid), null, null);
+        var ent = args.EntityUid;
+        _antag.SendBriefing(ent, MakeBriefing(ent), null, null);
     }
 
-    //Add mind briefing
-    private void OnGetBriefing(Entity<ThiefRoleComponent> thief, ref GetBriefingEvent args)
+    // Character screen briefing
+    private void OnGetBriefing(Entity<ThiefRoleComponent> role, ref GetBriefingEvent args)
     {
-        if (!TryComp<MindComponent>(thief.Owner, out var mind) || mind.OwnedEntity == null)
-            return;
+        var ent = args.Mind.Comp.OwnedEntity;
 
-        args.Append(MakeBriefing(mind.OwnedEntity.Value));
+        if (ent is null)
+            return;
+        args.Append(MakeBriefing(ent.Value));
     }
 
-    private string MakeBriefing(EntityUid thief)
+    private string MakeBriefing(EntityUid ent)
     {
-        var isHuman = HasComp<HumanoidAppearanceComponent>(thief);
+        var isHuman = HasComp<HumanoidAppearanceComponent>(ent);
         var briefing = isHuman
             ? Loc.GetString("thief-role-greeting-human")
             : Loc.GetString("thief-role-greeting-animal");
 
-        briefing += "\n \n" + Loc.GetString("thief-role-greeting-equipment") + "\n";
+        if (isHuman)
+            briefing += "\n \n" + Loc.GetString("thief-role-greeting-equipment") + "\n";
+
         return briefing;
     }
 }

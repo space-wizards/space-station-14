@@ -1,4 +1,4 @@
-﻿command-description-visualize =
+command-description-visualize =
     Takes the input list of entities and puts them into a UI window for easy browsing.
 command-description-runverbas =
     Runs a verb over the input entities with the given user.
@@ -58,6 +58,8 @@ command-description-rejuvenate =
     Rejuvenates the given entities, restoring them to full health, clearing status effects, etc.
 command-description-tag-list =
     Lists tags on the given entities.
+command-description-tag-with =
+    Returns only the entities with the given tag from the piped list of entities.
 command-description-tag-add =
     Adds a tag to the given entities.
 command-description-tag-rm =
@@ -82,3 +84,13 @@ command-description-addaccesslog =
     Adds an access log to this entity. Do note that this bypasses the log's default limit and pause check.
 command-description-stationevent-simulate =
     Simulates N number of rounds in which events will occur and prints the occurrences of every event after.
+command-description-xenoartifact-list =
+    List all EntityUids of spawned artifacts.
+command-description-xenoartifact-printMatrix =
+    Prints out matrix that displays all edges between nodes.
+command-description-xenoartifact-totalResearch =
+    Gets all research points that can be extracted from artifact currently.
+command-description-xenoartifact-averageResearch =
+    Calculates amount of research points average generated xeno artifact will output when fully activated.
+command-description-xenoartifact-unlockAllNodes =
+    Unlocks all nodes of artifact.

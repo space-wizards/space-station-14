@@ -1,5 +1,5 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Glue;
 using Content.Shared.Hands;
@@ -19,7 +19,7 @@ public sealed class GlueSystem : SharedGlueSystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
