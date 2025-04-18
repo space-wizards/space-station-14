@@ -53,10 +53,10 @@ namespace Content.Client.Jittering
             if (!args.Finished)
                 return;
 
-            if (HasComp<AnimationPlayerComponent>(uid)
+            if (TryComp(uid, out AnimationPlayerComponent? player)
                 && TryComp(uid, out SpriteComponent? sprite)
                 && !_animationPlayer.HasRunningAnimation(uid, _jitterAnimationKey))
-                _animationPlayer.Play(uid, GetAnimation(jittering, sprite), _jitterAnimationKey);
+                _animationPlayer.Play((uid, player), GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
         private Animation GetAnimation(JitteringComponent jittering, SpriteComponent sprite)
