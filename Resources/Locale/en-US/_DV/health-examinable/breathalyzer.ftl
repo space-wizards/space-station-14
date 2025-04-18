@@ -1,6 +1,9 @@
 breathalyzer-verb-text = Breathalyzer
 breathalyzer-verb-message = Test {THE($target)}'s breath with breathalyzer
 
+breathalyzer-last-read = Last value: ~{$lastReadValue}
+breathalyzer-no-last-read = Last value: NONE
+
 breathalyzer-cannot-breathe = Target cannot exhale
 
 breathalyzer-sober = Completely sober (~{$approximateDrunkenness})

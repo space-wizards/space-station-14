@@ -2,18 +2,18 @@ using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.DoAfter;
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.Inventory;
 using Content.Shared.Medical.Breathalyzer.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Medical.Breathalyzer;
@@ -44,6 +44,18 @@ public sealed class BreathalyzerSystem : EntitySystem
         SubscribeLocalEvent<BreathalyzerComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<BreathalyzerComponent, BreathalyzerActionEvent>(OnBreathalyzerAction);
         SubscribeLocalEvent<BreathalyzerComponent, BreathalyzerDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<BreathalyzerComponent, ExaminedEvent>(OnExamined);
+    }
+
+    private void OnExamined(Entity<BreathalyzerComponent> ent, ref ExaminedEvent args)
+    {
+        var msg = new FormattedMessage();
+        if (ent.Comp.LastReadValue is { } lastReadValue)
+            msg.AddMarkupPermissive(Loc.GetString("breathalyzer-last-read", ("lastReadValue", FormatRemainingTimeSpan(lastReadValue))));
+        else
+            msg.AddMarkupPermissive(Loc.GetString("breathalyzer-no-last-read"));
+
+        args.PushMessage(msg, 1);
     }
 
     private void OnBreathalyzerAction(Entity<BreathalyzerComponent> ent, ref BreathalyzerActionEvent args)
@@ -80,11 +92,17 @@ public sealed class BreathalyzerSystem : EntitySystem
     private bool StartChecking(Entity<BreathalyzerComponent> ent, EntityUid target)
     {
         if (!_container.TryGetContainingContainer((ent, null, null), out var container))
+        {
+            ent.Comp.LastReadValue = null;
             return false;
+        }
 
         var user = container.Owner;
         if (!TryGetDrunkenness(user, target, out _))
+        {
+            ent.Comp.LastReadValue = null;
             return false;
+        }
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, ent.Comp.Delay, new BreathalyzerDoAfterEvent(), ent, target, ent)
         {
@@ -148,10 +166,12 @@ public sealed class BreathalyzerSystem : EntitySystem
             else
                 break;
         }
+        var readValue = TimeSpan.FromSeconds(approximateDrunkenness);
+        breathalyzer.Comp.LastReadValue = readValue;
         _popup.PopupPredicted(
             Loc.GetString(
                 chosenLocId,
-                ("approximateDrunkenness", FormatRemainingTimeSpan(TimeSpan.FromSeconds(approximateDrunkenness)))
+                ("approximateDrunkenness", FormatRemainingTimeSpan(readValue))
             ),
             target,
             user

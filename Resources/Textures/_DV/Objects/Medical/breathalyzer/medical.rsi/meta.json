@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "license": "MIT",
+    "copyright": "Created by SS14 user bunnygirlhyacinth",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}
