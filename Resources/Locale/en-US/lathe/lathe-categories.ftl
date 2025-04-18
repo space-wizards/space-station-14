@@ -1,6 +1,6 @@
 # Generic
-lathe-category-ammo = Ammo
 lathe-category-circuitry = Circuitry
+lathe-category-clothing = Clothing
 lathe-category-lights = Lights
 lathe-category-machines = Machines
 lathe-category-parts = Parts
@@ -25,6 +25,11 @@ lathe-category-supply = Supply
 
 # Science
 lathe-category-mechs = Mechs
+
+# Sec
+lathe-category-ammo = Ammo
+lathe-category-boxes = Boxes
+lathe-category-magazines = Magazines
 
 # Uniform
 lathe-category-bedsheets = Bedsheets
