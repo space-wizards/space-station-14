@@ -5,9 +5,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
-using Content.Shared.Atmos.Piping;
 using Content.Shared.Atmos.Piping.Binary.Visuals;
-using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
 
@@ -33,11 +31,6 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         SubscribeLocalEvent<GasPressureReliefValveComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<GasPressureReliefValveComponent, AtmosDeviceUpdateEvent>(OnReliefValveUpdated);
     }
-    // TODO!!!!!!!
-    // TLDR this entire shit isn't predicted. The UI isn't predicted, the visuals aren't predicted, none of it is
-    // predicted.
-    // So it all needs to be changed to mirror the prediction done in the pressure pump.
-    // Working implementation so far but it's a long ways off.
 
     private void OnInit(Entity<GasPressureReliefValveComponent> valveEntity, ref ComponentInit args)
     {
