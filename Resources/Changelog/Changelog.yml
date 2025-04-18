@@ -3868,14 +3868,6 @@
   id: 8220
   time: '2025-04-18T01:59:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36209
-- author: metalgearsloth
-  changes:
-  - message: Toggleable items such as stunbatons and eswords can no longer be toggled
-      in storage.
-    type: Tweak
-  id: 8221
-  time: '2025-04-18T02:11:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/36533
 - author: lzk228
   changes:
   - message: Borgs, clowns and mimes now can choose a custom name in loadouts.
