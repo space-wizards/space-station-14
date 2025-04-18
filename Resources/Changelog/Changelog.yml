@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Redbookcase
-  changes:
-  - message: Standardized Mercenary gear's contraband status.
-    type: Tweak
-  id: 7730
-  time: '2024-12-18T15:13:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33647
 - author: ArtisticRoomba
   changes:
   - message: New plushie, named "drazil plushie". Based on an inverted lizard plushie.
@@ -3912,3 +3905,10 @@
   id: 8230
   time: '2025-04-18T14:12:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36479
+- author: IProduceWidgets
+  changes:
+  - message: Holobarrier projectors are now more power efficient.
+    type: Tweak
+  id: 8231
+  time: '2025-04-18T16:10:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34473
