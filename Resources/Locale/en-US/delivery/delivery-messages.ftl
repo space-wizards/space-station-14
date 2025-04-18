@@ -1,0 +1,1 @@
+delivery-penalty-message = {$reason}! INVOKING A PENALTY OF {$spesos} ON {$account}!

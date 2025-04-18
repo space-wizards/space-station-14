@@ -76,6 +76,8 @@
   - type: Delivery
     baseSpesoReward: 800
     baseSpesoPenalty: 400
+  - type: Speech
+    speechVerb: Robotic
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
@@ -114,6 +116,8 @@
   - type: Delivery
     baseSpesoReward: 400
     baseSpesoPenalty: 200
+  - type: Speech
+    speechVerb: Robotic
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
