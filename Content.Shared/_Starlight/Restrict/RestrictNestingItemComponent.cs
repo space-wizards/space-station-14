@@ -4,10 +4,10 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Starlight.Restrict;
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class RestrictNestingItemComponent : Component
 {
     //doafter time
     [DataField]
-    public TimeSpan DoAfter = TimeSpan.FromSeconds(2.0);
+    public TimeSpan DoAfter = TimeSpan.FromSeconds(5.0);
 }
