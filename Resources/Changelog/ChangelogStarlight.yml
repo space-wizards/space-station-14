@@ -4835,4 +4835,19 @@ Entries:
   id: 669
   time: '2025-04-18T15:51:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/494
+- author: Killer Tamashi
+  changes:
+  - message: Changed Super Synths. They now fit on your neck.
+    type: Tweak
+  id: 670
+  time: '2025-04-18T15:51:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/490
+- author: Killer Tamashi
+  changes:
+  - message: Fixed Admeme Super Synth not having any distinction that it's the Admeme
+      one.
+    type: Fix
+  id: 671
+  time: '2025-04-18T15:51:56.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/490
 
