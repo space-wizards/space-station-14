@@ -7,7 +7,8 @@ namespace Content.Shared.Guardian
     /// <summary>
     /// Given to guardian users upon establishing a guardian link with the entity
     /// </summary>
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    // TODO improve networking
+    [RegisterComponent, NetworkedComponent]
     public sealed partial class GuardianHostComponent : Component
     {
         /// <summary>
@@ -16,19 +17,19 @@ namespace Content.Shared.Guardian
         /// <remarks>
         /// Can be null if the component is added at any time.
         /// </remarks>
-        [DataField, AutoNetworkedField]
+        [DataField]
         public EntityUid? HostedGuardian;
 
         /// <summary>
         /// Container which holds the guardian
         /// </summary>
-        [ViewVariables, AutoNetworkedField]
+        [ViewVariables]
         public ContainerSlot GuardianContainer = default!;
 
-        [DataField, AutoNetworkedField]
+        [DataField]
         public EntProtoId Action = "ActionToggleGuardian";
 
-        [DataField, AutoNetworkedField]
+        [DataField]
         public EntityUid? ActionEntity;
     }
 }
