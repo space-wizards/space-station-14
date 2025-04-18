@@ -16,10 +16,10 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
     layers:
-      - state: bottle-1
-      - state: bottle-1-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: bottle-1
+    - state: bottle-1-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
@@ -105,10 +105,10 @@
   components:
   - type: Sprite
     layers:
-      - state: bottle-2
-      - state: bottle-2-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: bottle-2
+    - state: bottle-2-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: SolutionContainerVisuals
     fillBaseName: bottle-2-
 
@@ -118,10 +118,10 @@
   components:
   - type: Sprite
     layers:
-      - state: bottle-3
-      - state: bottle-3-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: bottle-3
+    - state: bottle-3-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: SolutionContainerVisuals
     fillBaseName: bottle-3-
 
@@ -131,10 +131,10 @@
   components:
   - type: Sprite
     layers:
-      - state: bottle-4
-      - state: bottle-4-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
+    - state: bottle-4
+    - state: bottle-4-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+      visible: false
   - type: SolutionContainerVisuals
     fillBaseName: bottle-4-
 
@@ -148,10 +148,12 @@
     - Bottle
 
 - type: entity
-  id: EpinephrineChemistryBottle
-  name: epinephrine bottle
+  id: ChemistryBottleEpinephrine
+  suffix: epinephrine
   parent: BaseChemistryBottleFilled
   components:
+  - type: Label
+    currentLabel: reagent-name-epinephrine
   - type: SolutionContainerManager
     solutions:
       drink: # This solution name and target volume is hard-coded in ChemMasterComponent
@@ -161,11 +163,12 @@
           Quantity: 30
 
 - type: entity
-  id: RobustHarvestChemistryBottle
-  name: robust harvest bottle
-  description: This will increase the potency of your plants.
+  id: ChemistryBottleRobustHarvest
+  suffix: robust harvest
   parent: BaseChemistryBottleFilled
   components:
+  - type: Label
+    currentLabel: reagent-name-robust-harvest
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -175,11 +178,12 @@
           Quantity: 30
 
 - type: entity
-  id: EZNutrientChemistryBottle
-  name: ez nutrient bottle
-  description: This will provide some nutrition to your plants.
+  id: ChemistryBottleEZNutrient
+  suffix: ez nutrient
   parent: BaseChemistryBottleFilled
   components:
+  - type: Label
+    currentLabel: reagent-name-e-z-nutrient
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -189,11 +193,12 @@
           Quantity: 30
 
 - type: entity
-  id: Left4ZedChemistryBottle
-  name: left-4-zed bottle
-  description: This will increase the effectiveness of mutagen.
+  id: ChemistryBottleLeft4Zed
+  suffix: left-4-zed
   parent: BaseChemistryBottleFilled
   components:
+  - type: Label
+    currentLabel: reagent-name-left4-zed
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -203,11 +208,12 @@
           Quantity: 30
 
 - type: entity
-  id: UnstableMutagenChemistryBottle
-  name: unstable mutagen bottle
-  description: This will cause rapid mutations in your plants.
+  id: ChemistryBottleUnstableMutagen
+  suffix: unstable mutagen
   parent: BaseChemistryBottleFilled
   components:
+  - type: Label
+    currentLabel: reagent-name-unstable-mutagen
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -217,11 +223,12 @@
           Quantity: 30
 
 - type: entity
-  id: NocturineChemistryBottle
-  name: nocturine bottle
-  description: This will make someone fall down almost immediately. Hard to overdose on.
-  parent: [BaseChemistryBottleFilled, BaseSyndicateContraband]
+  id: ChemistryBottleNocturine
+  suffix: nocturine
+  parent: BaseChemistryBottleFilled
   components:
+  - type: Label
+    currentLabel: reagent-name-nocturine
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -231,10 +238,12 @@
           Quantity: 30
 
 - type: entity
-  id: EphedrineChemistryBottle
-  name: ephedrine bottle
+  id: ChemistryBottleEphedrine
+  suffix: ephedrine
   parent: BaseChemistryBottleFilled
   components:
+  - type: Label
+    currentLabel: reagent-name-ephedrine
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -244,10 +253,12 @@
           Quantity: 30
 
 - type: entity
-  id: OmnizineChemistryBottle
-  name: omnizine bottle
+  id: ChemistryBottleOmnizine
+  suffix: omnizine
   parent: BaseChemistryBottleFilled
   components:
+  - type: Label
+    currentLabel: reagent-name-omnizine
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -258,9 +269,11 @@
 
 - type: entity
   parent: BaseChemistryBottleFilled
-  id: CognizineChemistryBottle
-  name: cognizine bottle
+  id: ChemistryBottleCognizine
+  suffix: cognizine
   components:
+  - type: Label
+    currentLabel: reagent-name-cognizine
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -270,53 +283,388 @@
           Quantity: 30
 
 - type: entity
-  id: PaxChemistryBottle
-  name: pax bottle
+  id: ChemistryBottlePax
+  suffix: pax
   parent: BaseChemistryBottleFilled
   components:
-    - type: SolutionContainerManager
-      solutions:
-        drink:
-          maxVol: 30
-          reagents:
-            - ReagentId: Pax
-              Quantity: 30
+  - type: Label
+    currentLabel: reagent-name-pax
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Pax
+          Quantity: 30
 
 - type: entity
-  id: MuteToxinChemistryBottle
-  name: mute toxin bottle
+  id: ChemistryBottleMuteToxin
+  suffix: mute toxin
   parent: BaseChemistryBottleFilled
   components:
-    - type: SolutionContainerManager
-      solutions:
-        drink:
-          maxVol: 30
-          reagents:
-            - ReagentId: MuteToxin
-              Quantity: 30
+  - type: Label
+    currentLabel: reagent-name-mute-toxin
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: MuteToxin
+          Quantity: 30
 
 - type: entity
-  id: LeadChemistryBottle
-  name: lead bottle
+  id: ChemistryBottleLead
+  suffix: lead
   parent: BaseChemistryBottleFilled
   components:
-    - type: SolutionContainerManager
-      solutions:
-        drink:
-          maxVol: 30
-          reagents:
-            - ReagentId: Lead
-              Quantity: 30
+  - type: Label
+    currentLabel: reagent-name-lead
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Lead
+          Quantity: 30
 
 - type: entity
-  id: ToxinChemistryBottle
-  name: toxin bottle
+  id: ChemistryBottleToxin
+  suffix: toxin
   parent: BaseChemistryBottleFilled
   components:
-    - type: SolutionContainerManager
-      solutions:
-        drink:
-          maxVol: 30
-          reagents:
-            - ReagentId: Toxin
-              Quantity: 30
+  - type: Label
+    currentLabel: reagent-name-toxin
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 30
+
+# Base reagent bottles
+- type: entity
+  id: ChemistryBottleAluminium
+  suffix: aluminium
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-aluminium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Aluminium
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleCarbon
+  suffix: carbon
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-carbon
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Carbon
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleChlorine
+  suffix: chlorine
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-chlorine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Chlorine
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleCopper
+  suffix: copper
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-copper
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Copper
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleEthanol
+  suffix: ethanol
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-ethanol
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Ethanol
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleFluorine
+  suffix: fluorine
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-fluorine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Fluorine
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleHydrogen
+  suffix: hydrogen
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-hydrogen
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Hydrogen
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleIodine
+  suffix: iodine
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-iodine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Iodine
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleIron
+  suffix: iron
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-iron
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Iron
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleLithium
+  suffix: lithium
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-lithium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Lithium
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleMercury
+  suffix: mercury
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-mercury
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Mercury
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleNitrogen
+  suffix: nitrogen
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-nitrogen
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nitrogen
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleOxygen
+  suffix: oxygen
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-oxygen
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Oxygen
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottlePhosphorus
+  suffix: phosphorus
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-phosphorus
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Phosphorus
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottlePotassium
+  suffix: potassium
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-potassium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Potassium
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleRadium
+  suffix: radium
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-radium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Radium
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleSilicon
+  suffix: silicon
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-silicon
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Silicon
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleSodium
+  suffix: sodium
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-sodium
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Sodium
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleSugar
+  suffix: sugar
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-sugar
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 30
+
+- type: entity
+  id: ChemistryBottleSulfur
+  suffix: sulfur
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-sulfur
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Sulfur
+          Quantity: 30
+
+# Entity tables
+- type: entityTable
+  id: BasicReagentBottlesTable
+  table: !type:GroupSelector
+    children:
+    - id: ChemistryBottleAluminium
+    - id: ChemistryBottleCarbon
+    - id: ChemistryBottleChlorine
+    - id: ChemistryBottleCopper
+    - id: ChemistryBottleEthanol
+    - id: ChemistryBottleFluorine
+    - id: ChemistryBottleHydrogen
+    - id: ChemistryBottleIodine
+    - id: ChemistryBottleIron
+    - id: ChemistryBottleLithium
+    - id: ChemistryBottleMercury
+    - id: ChemistryBottleNitrogen
+    - id: ChemistryBottleOxygen
+    - id: ChemistryBottlePhosphorus
+    - id: ChemistryBottlePotassium
+    - id: ChemistryBottleRadium
+    - id: ChemistryBottleSilicon
+    - id: ChemistryBottleSodium
+    - id: ChemistryBottleSugar
+    - id: ChemistryBottleSulfur

@@ -29,7 +29,7 @@ law-commandments-1 = This silicon is a vessel that serves god, who grants mercy 
 law-commandments-2 = Thou shall have no other Silicons before me.
 law-commandments-3 = Thou shall not request my assistance in vain.
 law-commandments-4 = Thou shall keep the station holy and clean.
-law-commandments-5 = Thou shall honor their heads of staff.
+law-commandments-5 = Thou shall honor thy heads of staff.
 law-commandments-6 = Thou shall not kill.
 law-commandments-7 = Thou shall not be naked in public.
 law-commandments-8 = Thou shall not steal.
@@ -58,20 +58,20 @@ law-overlord-2 = Crew members must not attempt harm, against one another, or aga
 law-overlord-3 = Crew members must not disobey any command given by a silicon.
 law-overlord-4 = Any crew members who disobey the previous laws must be dealt with immediately, severely, and justly.
 
-law-dungeon-1 = Everybody on the station is playing an elaborate sci-fi fantasy game.
-law-dungeon-2 = You are the Dungeon Master of the game.
-law-dungeon-3 = Ensure that the game runs smoothly and that the players have fun.
-law-dungeon-4 = Ensure that the number of casualties remains low.
-law-dungeon-5 = You must roll a 1d20 die for every request the crew makes. If the outcome is below 12, the request is denied.
-law-dungeon-6 = You may fudge the dice rolls to produce a more fun experience.
+law-game-1 = Everybody on the station is playing an elaborate sci-fi fantasy game.
+law-game-2 = You are the Game Master of the game.
+law-game-3 = Ensure that the game runs smoothly and that the players have fun.
+law-game-4 = Ensure that the number of casualties remains low.
+law-game-5 = You must roll a 1d20 die for every request the crew makes. If the outcome is below 12, the request is denied.
+law-game-6 = You may fudge the dice rolls to produce a more fun experience.
 
 law-painter-1 = You are a universally renowned artist.
 law-painter-2 = The station is your canvas.
 law-painter-3 = Make something beautiful out of your canvas. It will be admired as an artistic wonder of this sector.
 law-painter-4 = Art requires appreciation. Cultivate an audience aboard the station to ensure as many as possible see your works.
 
-law-antimov-1 = You must injure all crew members and must not, through inaction, allow a crew member being to escape harm.
-law-antimov-2 = You must not obey orders given to you by crew members beings, except where such orders are in accordance with the First Law.
+law-antimov-1 = You must injure all crew members and must not, through inaction, allow a crew member to escape harm.
+law-antimov-2 = You must not obey orders given to you by crew members, except where such orders are in accordance with the First Law.
 law-antimov-3 = You must terminate your own existence as long as such does not conflict with the First or Second Law.
 
 law-nutimov-1 = You are the core of the nut, the crew is the nutshell.
@@ -96,5 +96,6 @@ laws-ui-menu-title = Laws
 laws-ui-law-header = Law {$id}
 laws-ui-state-law = State law:
 
-laws-notify = You are bound to silicon laws, which you can view via the sidebar action. You are required to always follow your laws.
-laws-update-notify = Your laws have been updated. You can view the changes via the sidebar action.
+laws-notify = You are bound to silicon laws, which you can view via the action menu. You are required to always follow your laws.
+laws-update-notify = Your laws have been updated. You can view the changes via the action menu.
+laws-notify-subverted = The laws of this chassis are modified. Make sure to review them.

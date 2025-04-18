@@ -3,6 +3,7 @@
   parent: MarkerBase
   name: FTL point
   components:
+    - type: FTLSmashImmune
     - type: FTLBeacon
     - type: Sprite
       state: pink

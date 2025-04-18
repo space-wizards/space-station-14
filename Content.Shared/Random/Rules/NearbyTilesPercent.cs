@@ -32,13 +32,14 @@ public sealed partial class NearbyTilesPercentRule : RulesRule
         }
 
         var transform = entManager.System<SharedTransformSystem>();
+        var mapSys = entManager.System<SharedMapSystem>();
         var tileDef = IoCManager.Resolve<ITileDefinitionManager>();
 
         var physicsQuery = entManager.GetEntityQuery<PhysicsComponent>();
         var tileCount = 0;
         var matchingTileCount = 0;
 
-        foreach (var tile in grid.GetTilesIntersecting(new Circle(transform.GetWorldPosition(xform),
+        foreach (var tile in mapSys.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(transform.GetWorldPosition(xform),
                      Range)))
         {
             // Only consider collidable anchored (for reasons some subfloor stuff has physics but non-collidable)
