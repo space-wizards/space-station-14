@@ -4900,4 +4900,11 @@ Entries:
   id: 678
   time: '2025-04-18T23:49:57.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/497
+- author: Happyrobot33
+  changes:
+  - message: Reworked abductor grav gland to not be horrible.
+    type: Tweak
+  id: 679
+  time: '2025-04-18T23:56:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/493
 
