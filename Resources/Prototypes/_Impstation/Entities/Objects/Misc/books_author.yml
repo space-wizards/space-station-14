@@ -82,6 +82,23 @@
 
 - type: entity
   parent: BookBase
+  id: BookJarvisBayCulture
+  name: Suns Among the Void, A Cultural Guide to Medical
+  description: A freshly-made, off-white book with a medical cross etched into the cover. It is surrounded by a ring of gold, from which Rods of Asclepius branch out.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/book.rsi
+    layers:
+    - state: culturebay
+  - type: Paper
+    content: book-text-jarvisbay
+  - type: Tag
+    tags:
+    - Book
+    - Guidebook
+
+- type: entity
+  parent: BookBase
   id: BookKeelBayWorn
   name: Keel-Ree's guide to medical
   description: This copy seems less than pristine, the margins are filled with illegible notes and some diagrams depicting medibot placements have been scratched out entirely.
@@ -157,7 +174,7 @@
       color: "#2b0000"
   - type: Paper
     content: book-text-mansus
-    
+
 
 - type: entity
   parent: BookBase
