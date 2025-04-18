@@ -62,7 +62,7 @@
   - type: Breathalyzer
     delay: 5
     specificity: 1
-    variance: 1
+    # variance: 1
     thresholds:
       0: breathalyzer-sober
       5: breathalyzer-tipsy
@@ -100,7 +100,7 @@
   - type: Breathalyzer
     delay: 1
     specificity: 10
-    variance: 15
+    # variance: 15
     thresholds:
       0: breathalyzer-sober
       5: breathalyzer-tipsy

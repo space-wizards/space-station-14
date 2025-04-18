@@ -174,8 +174,12 @@ public sealed class BreathalyzerSystem : EntitySystem
     {
         if (!TryGetDrunkenness(user, target, out var maybeBoozeTime) || maybeBoozeTime is not { } boozeTime)
             return;
+
+        // Praying for https://github.com/space-wizards/RobustToolbox/pull/5849 to make this usable
         // Get remaining time of drunkenness, offset with random value based on accuracy
-        var drunkenness = _random.NextGaussian(boozeTime, breathalyzer.Comp.Variance);
+        // var drunkenness = _random.NextGaussian(boozeTime, breathalyzer.Comp.Variance);
+        var drunkenness = boozeTime;
+
         // Round to closest multiple of Specificity
         var approximateDrunkenness = (ulong)(Math.Round(drunkenness / breathalyzer.Comp.Specificity) * breathalyzer.Comp.Specificity);
 
