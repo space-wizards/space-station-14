@@ -306,9 +306,6 @@ public abstract partial class SharedMoverController : VirtualController
 
         wishDir *= weightlessModifier;
 
-        if (!weightless && velocity.Length() < MovementSpeedModifierComponent.MinStoppingSpeed)
-            velocity = Vector2.Zero;
-
         if (!weightless || touching)
             Accelerate(ref velocity, in wishDir, accel, frameTime);
 

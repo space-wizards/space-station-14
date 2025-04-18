@@ -11,7 +11,6 @@ public sealed class SlidingSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
 
     private readonly HashSet<EntityUid> _toUpdate = new();
-    private readonly HashSet<EntityUid> _toRemove = new();
     public override void Initialize()
     {
         base.Initialize();
@@ -22,20 +21,26 @@ public sealed class SlidingSystem : EntitySystem
         SubscribeLocalEvent<SlidingComponent, RefreshFrictionModifiersEvent>(OnRefreshFrictionModifiers);
     }
 
-    //TODO: Check if you can make the movementSpeedModifier shit event based
-    //TESTED WORKS: Test if entering knockdown without touching a puddle breaks this
-    //TESTED IT'S FUCKED: Ensure friction for items and crawling players matches
-    //TESTED IT'S FUCKED: Test with Ice_Crust and see if shit breaks, fix Ice_Crust
-    //TESTED IT'S FUCKED: Why the fuck does slipping prediction suck ass?
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        foreach (var ent in _toUpdate)
+        {
+            _speedModifierSystem.RefreshFrictionModifiers(ent);
+        }
+
+        _toUpdate.Clear();
+    }
 
     /// <summary>
     ///     Remove the component when the entity stands up again, and reset friction.
     /// </summary>
-    private void OnStand(EntityUid entity, SlidingComponent component, ref StoodEvent args)
+    private void OnStand(Entity<SlidingComponent> entity, ref StoodEvent args)
     {
         RemComp<SlidingComponent>(entity);
         if (HasComp<MovementSpeedModifierComponent>(entity))
-            _speedModifierSystem.RefreshFrictionModifiers(entity);
+            _toUpdate.Add(entity);
     }
 
     /// <summary>
@@ -48,12 +53,12 @@ public sealed class SlidingSystem : EntitySystem
         // Add colliding entity so it can be tracked.
         entity.Comp.CollidingEntities.Add(args.OtherEntity);
         // Set friction modifier for sliding to the friction modifier stored in the slipperyComponent.
-        RecalculateFriction(entity, slippery);
+        //RecalculateFriction(entity, slippery);
         entity.Comp.FrictionModifier = slippery.SlipData.SlipFriction;
         Dirty(entity, entity.Comp);
         // If this entity has a MovementSpeedModifierComponent we better edit the friction for that too.
         if (HasComp<MovementSpeedModifierComponent>(entity))
-            _speedModifierSystem.RefreshFrictionModifiers(entity);
+            _toUpdate.Add(entity);
     }
 
     /// <summary>
@@ -69,11 +74,10 @@ public sealed class SlidingSystem : EntitySystem
         // If we aren't colliding with any superSlippery Entities, stop sliding
         if (component.CollidingEntities.Count == 0)
         {
-            if (HasComp<MovementSpeedModifierComponent>(entity))
-                _speedModifierSystem.RefreshFrictionModifiers(entity);
             RemComp<SlidingComponent>(entity);
         }
 
+        _toUpdate.Add(entity);
         Dirty(entity, component);
     }
 
@@ -88,6 +92,6 @@ public sealed class SlidingSystem : EntitySystem
         if (!TryComp<MovementSpeedModifierComponent>(entity, out var move))
             return;
         args.ModifyFriction(entity.Comp.FrictionModifier, entity.Comp.FrictionModifier);
-        args.ModifyAcceleration(entity.Comp.FrictionModifier * move.BaseFriction);
+        args.ModifyAcceleration(entity.Comp.FrictionModifier);
     }
 }

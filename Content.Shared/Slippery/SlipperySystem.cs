@@ -115,6 +115,7 @@ public sealed class SlipperySystem : EntitySystem
         {
             _physics.SetLinearVelocity(other, physics.LinearVelocity * component.SlipData.LaunchForwardsMultiplier, body: physics);
 
+            // This is causing a stack overflow somehow...
             if (requiresContact)
             {
                 var sliding = EnsureComp<SlidingComponent>(other);

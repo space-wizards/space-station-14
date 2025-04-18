@@ -58,7 +58,8 @@ public sealed class FrictionContactsSystem : EntitySystem
 
         component.MobFriction = mobFriction;
         component.MobFrictionNoInput = mobFrictionNoInput;
-        component.MobAcceleration = acceleration;
+        if (acceleration.HasValue)
+            component.MobAcceleration = acceleration.Value;
         Dirty(uid, component);
         _toUpdate.UnionWith(_physics.GetContactingEntities(uid));
     }
@@ -79,7 +80,7 @@ public sealed class FrictionContactsSystem : EntitySystem
 
         var friction = 0.0f;
         float? frictionNoInput = null;
-        float? acceleration = null;
+        var acceleration = 0.0f;
 
         bool remove = true;
         var entries = 0;
@@ -91,7 +92,7 @@ public sealed class FrictionContactsSystem : EntitySystem
             {
                 friction += contacts.MobFriction;
                 frictionNoInput = frictionNoInput == null ? contacts.MobFrictionNoInput : frictionNoInput + contacts.MobFrictionNoInput;
-                acceleration = acceleration == null ? contacts.MobAcceleration : acceleration + contacts.MobAcceleration;
+                acceleration += contacts.MobAcceleration;
                 modified = true;
             }
 
@@ -104,18 +105,18 @@ public sealed class FrictionContactsSystem : EntitySystem
 
         if (entries > 0)
         {
-            if (!MathHelper.CloseTo(friction, entries))
-                friction /= entries;
-            if (frictionNoInput != null)
-                frictionNoInput /= entries;
-
-            args.ModifyFriction(friction, frictionNoInput);
-            if (acceleration != null)
+            if (!MathHelper.CloseTo(friction, entries) || frictionNoInput != null)
             {
-                acceleration /= entries;
-                args.Acceleration = acceleration;
+                friction /= entries;
+                frictionNoInput /= entries;
+                args.ModifyFriction(friction, frictionNoInput);
             }
 
+            if (!MathHelper.CloseTo(acceleration, entries))
+            {
+                acceleration /= entries;
+                args.ModifyAcceleration(acceleration);
+            }
         }
 
         // no longer colliding with anything

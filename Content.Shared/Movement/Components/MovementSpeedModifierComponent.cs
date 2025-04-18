@@ -11,27 +11,26 @@ namespace Content.Shared.Movement.Components
     [Access(typeof(MovementSpeedModifierSystem))]
     public sealed partial class MovementSpeedModifierComponent : Component
     {
-        // Weightless
+        #region defaults
+
+        // weightless
         public const float DefaultMinimumFrictionSpeed = 0.05f;
-        public const float MinStoppingSpeed = 0.5f;
         public const float DefaultWeightlessFriction = 1f;
         public const float DefaultWeightlessFrictionNoInput = 0.2f;
         public const float DefaultOffGridFriction = 0.05f;
         public const float DefaultWeightlessModifier = 0.7f;
         public const float DefaultWeightlessAcceleration = 1f;
 
+        // friction
         public const float DefaultAcceleration = 30f;
         public const float DefaultFriction = 2.5f;
         public const float DefaultFrictionNoInput = 1f;
 
+        // movement
         public const float DefaultBaseWalkSpeed = 2.5f;
         public const float DefaultBaseSprintSpeed = 4.5f;
 
-        [AutoNetworkedField, ViewVariables]
-        public float WalkSpeedModifier = 1.0f;
-
-        [AutoNetworkedField, ViewVariables]
-        public float SprintSpeedModifier = 1.0f;
+        #endregion
 
         [ViewVariables(VVAccess.ReadWrite)]
         private float _baseWalkSpeedVV
@@ -55,13 +54,72 @@ namespace Content.Shared.Movement.Components
             }
         }
 
-        #region Weightless
+        #region base values
+
+        [DataField, AutoNetworkedField]
+        public float BaseWalkSpeed = DefaultBaseWalkSpeed;
+
+        [DataField, AutoNetworkedField]
+        public float BaseSprintSpeed = DefaultBaseSprintSpeed;
+
+        /// <summary>
+        /// The acceleration applied to mobs when moving. If this is ever less than Friction the mob will be slower.
+        /// </summary>
+        [AutoNetworkedField, DataField]
+        public float BaseAcceleration = DefaultAcceleration;
 
         /// <summary>
         /// The negative velocity applied for friction.
         /// </summary>
         [AutoNetworkedField, DataField]
         public float BaseFriction = DefaultFriction;
+
+        /// <summary>
+        /// Minimum speed a mob has to be moving before applying movement friction.
+        /// </summary>
+        [DataField]
+        public float MinimumFrictionSpeed = DefaultMinimumFrictionSpeed;
+
+        #endregion
+
+        #region calculated values
+
+        [ViewVariables]
+        public float CurrentWalkSpeed => WalkSpeedModifier * BaseWalkSpeed;
+        [ViewVariables]
+        public float CurrentSprintSpeed => SprintSpeedModifier * BaseSprintSpeed;
+
+        /// <summary>
+        /// The acceleration applied to mobs when moving. If this is ever less than Friction the mob will be slower.
+        /// </summary>
+        [AutoNetworkedField, DataField]
+        public float Acceleration;
+
+        /// <summary>
+        /// Modifier to the negative velocity applied for friction.
+        /// </summary>
+        [AutoNetworkedField, DataField]
+        public float Friction;
+
+        /// <summary>
+        /// The negative velocity applied for friction.
+        /// </summary>
+        [AutoNetworkedField, DataField]
+        public float? FrictionNoInput;
+
+        #endregion
+
+        #region movement modifiers
+
+        [AutoNetworkedField, ViewVariables]
+        public float WalkSpeedModifier = 1.0f;
+
+        [AutoNetworkedField, ViewVariables]
+        public float SprintSpeedModifier = 1.0f;
+
+        #endregion
+
+        #region Weightless
 
         /// <summary>
         /// The negative velocity applied for friction when weightless and providing inputs.
@@ -111,40 +169,5 @@ namespace Content.Shared.Movement.Components
         public float WeightlessFrictionNoInput;
 
         #endregion
-
-        /// <summary>
-        /// Minimum speed a mob has to be moving before applying movement friction.
-        /// </summary>
-        [DataField]
-        public float MinimumFrictionSpeed = DefaultMinimumFrictionSpeed;
-
-        /// <summary>
-        /// The acceleration applied to mobs when moving. If this is ever less than Friction the mob will be slower.
-        /// </summary>
-        [AutoNetworkedField, DataField]
-        public float Acceleration = DefaultAcceleration;
-
-        /// <summary>
-        /// Modifier to the negative velocity applied for friction.
-        /// </summary>
-        [AutoNetworkedField, DataField]
-        public float Friction;
-
-        /// <summary>
-        /// The negative velocity applied for friction.
-        /// </summary>
-        [AutoNetworkedField, DataField]
-        public float? FrictionNoInput;
-
-        [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
-        public float BaseWalkSpeed { get; set; } = DefaultBaseWalkSpeed;
-
-        [ViewVariables(VVAccess.ReadWrite), DataField, AutoNetworkedField]
-        public float BaseSprintSpeed { get; set; } = DefaultBaseSprintSpeed;
-
-        [ViewVariables]
-        public float CurrentWalkSpeed => WalkSpeedModifier * BaseWalkSpeed;
-        [ViewVariables]
-        public float CurrentSprintSpeed => SprintSpeedModifier * BaseSprintSpeed;
     }
 }

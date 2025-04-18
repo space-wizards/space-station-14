@@ -27,5 +27,5 @@ public sealed partial class FrictionContactsComponent : Component
     /// </summary>
     [AutoNetworkedField]
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float? MobAcceleration = 2.0f;
+    public float MobAcceleration = 0.1f;
 }

@@ -45,5 +45,6 @@ public sealed class SkatesSystem : EntitySystem
         ref InventoryRelayedEvent<RefreshFrictionModifiersEvent> args)
     {
         args.Args.ModifyFriction(ent.Comp.Friction, ent.Comp.FrictionNoInput);
+        args.Args.ModifyAcceleration(ent.Comp.Acceleration);
     }
 }

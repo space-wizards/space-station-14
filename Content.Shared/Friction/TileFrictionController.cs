@@ -157,6 +157,7 @@ namespace Content.Shared.Friction
         {
             // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
 
+
             if (_gravity.IsWeightless(uid, body, xform))
                 return _airDamping;
 

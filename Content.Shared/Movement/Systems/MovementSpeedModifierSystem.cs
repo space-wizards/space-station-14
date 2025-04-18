@@ -24,6 +24,7 @@ namespace Content.Shared.Movement.Systems
             ent.Comp.WeightlessFriction = ent.Comp.BaseWeightlessFriction;
             ent.Comp.WeightlessFrictionNoInput = ent.Comp.BaseWeightlessFrictionNoInput;
             ent.Comp.Friction = ent.Comp.BaseFriction;
+            ent.Comp.Acceleration = ent.Comp.BaseAcceleration;
             Dirty(ent);
         }
 
@@ -101,15 +102,18 @@ namespace Content.Shared.Movement.Systems
 
             var ev = new RefreshFrictionModifiersEvent()
             {
-                Friction = move.BaseFriction
+                Friction = move.BaseFriction,
+                Acceleration = move.BaseAcceleration
             };
             RaiseLocalEvent(uid, ref ev);
 
-            if (MathHelper.CloseTo(ev.Friction, move.Friction) && ev.FrictionNoInput == null)
+            if (MathHelper.CloseTo(ev.Friction, move.Friction) && ev.FrictionNoInput == null && ev.Acceleration == null)
                 return;
 
             move.Friction = ev.Friction;
             move.FrictionNoInput = ev.FrictionNoInput * move.BaseFriction;
+            move.Acceleration = ev.Acceleration;
+
             Dirty(uid, move);
         }
 
@@ -120,7 +124,7 @@ namespace Content.Shared.Movement.Systems
 
             move.BaseFriction = friction;
             move.FrictionNoInput = frictionNoInput;
-            move.Acceleration = acceleration;
+            move.BaseAcceleration = acceleration;
             Dirty(uid, move);
         }
 
@@ -170,7 +174,7 @@ namespace Content.Shared.Movement.Systems
     {
         public float Friction;
         public float? FrictionNoInput;
-        public float? Acceleration;
+        public float Acceleration;
 
         public void ModifyFriction(float friction, float? noInput = null)
         {
@@ -181,7 +185,7 @@ namespace Content.Shared.Movement.Systems
 
         public void ModifyAcceleration(float acceleration)
         {
-            Acceleration = acceleration;
+            Acceleration *= acceleration;
         }
         SlotFlags IInventoryRelayEvent.TargetSlots =>  ~SlotFlags.POCKET;
     }

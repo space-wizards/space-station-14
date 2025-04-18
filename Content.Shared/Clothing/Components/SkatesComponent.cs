@@ -24,7 +24,7 @@ public sealed partial class SkatesComponent : Component
     /// Sets the speed in which the wearer accelerates to full speed, higher the number the quicker the acceleration.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float Acceleration = 5f;
+    public float Acceleration = 0.2f;
 
     /// <summary>
     /// The minimum speed the wearer needs to be traveling to take damage from collision.

@@ -119,7 +119,7 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
             }
         }
 
-        if (entries > 0 && !MathHelper.CloseTo(walkSpeed, entries) && !MathHelper.CloseTo(sprintSpeed, entries))
+        if (entries > 0 && (!MathHelper.CloseTo(walkSpeed, entries) || !MathHelper.CloseTo(sprintSpeed, entries)))
         {
             walkSpeed /= entries;
             sprintSpeed /= entries;
