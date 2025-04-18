@@ -181,6 +181,17 @@ public abstract class SharedStrippableSystem : EntitySystem
             return false;
         }
 
+        //starlight start
+        var ev = new StripInsertAttemptEvent(user, target, held, slot);
+        RaiseLocalEvent(target, ref ev, true);
+
+        if (ev.Cancelled)
+        {
+            _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-equip-message", ("owner", targetIdentity)));
+            return false;
+        }
+        //starlight end
+
         return true;
     }
 
@@ -379,6 +390,17 @@ public abstract class SharedStrippableSystem : EntitySystem
             _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-put-message", ("owner", Identity.Entity(target, EntityManager))));
             return false;
         }
+
+        //starlight start
+        var ev = new StripInsertAttemptEvent(user, target, held, handName);
+        RaiseLocalEvent(target, ref ev, true);
+
+        if (ev.Cancelled)
+        {
+            _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-put-message", ("owner", Identity.Entity(target, EntityManager))));
+            return false;
+        }
+        //starlight end
 
         return true;
     }
