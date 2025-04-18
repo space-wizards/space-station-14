@@ -67,29 +67,39 @@
   name: seeds crate
   description: Big things have small beginnings. Contains twenty-four different seeds.
   components:
-    - type: StorageFill
-      contents:
-        - id: ChiliSeeds
-        - id: CornSeeds
-        - id: EggplantSeeds
-        - id: TomatoSeeds
-        - id: WheatSeeds
-        - id: CarrotSeeds
-        - id: CabbageSeeds
-        - id: GarlicSeeds
-        - id: ChanterelleSeeds
-        - id: PotatoSeeds
-        - id: PomegranateSeeds
-        - id: SugarcaneSeeds
-        - id: LemonSeeds
-        - id: LimeSeeds
-        - id: OrangeSeeds
-        - id: OatSeeds
-        - id: OnionSeeds
-        - id: OnionRedSeeds
-        - id: RiceSeeds
-        - id: SoybeanSeeds
-        - id: GrapeSeeds
-        - id: WatermelonSeeds
-        - id: PeaSeeds
-        - id: CherrySeeds
+  - type: StorageFill
+    contents:
+      - id: ChiliSeeds
+      - id: CornSeeds
+      - id: EggplantSeeds
+      - id: TomatoSeeds
+      - id: WheatSeeds
+      - id: CarrotSeeds
+      - id: CabbageSeeds
+      - id: GarlicSeeds
+      - id: ChanterelleSeeds
+      - id: PotatoSeeds
+      - id: PomegranateSeeds
+      - id: SugarcaneSeeds
+      - id: LemonSeeds
+      - id: LimeSeeds
+      - id: OrangeSeeds
+      - id: OatSeeds
+      - id: OnionSeeds
+      - id: OnionRedSeeds
+      - id: RiceSeeds
+      - id: SoybeanSeeds
+      - id: GrapeSeeds
+      - id: WatermelonSeeds
+      - id: PeaSeeds
+      - id: CherrySeeds
+
+- type: entity
+  id: CrateHydroponicsTray
+  parent: CrateHydroponics
+  name: hydroponics tray crate
+  description: Contains a hydroponics tray flatpack.
+  components:
+  - type: StorageFill
+    contents:
+    - id: HydroponicsTrayFlatpack
