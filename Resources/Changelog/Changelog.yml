@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Crotalus, ArtisticRoomba
-  changes:
-  - message: Battery levels of applicable devices are now shown in the Power Monitoring
-      Console!
-    type: Add
-  id: 7733
-  time: '2024-12-19T00:46:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33854
 - author: TytosB
   changes:
   - message: 'added new mid pop map: loop'
@@ -3908,3 +3900,10 @@
   id: 8233
   time: '2025-04-18T17:12:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36382
+- author: IProduceWidgets
+  changes:
+  - message: filing cabinets no longer have whitelists.
+    type: Tweak
+  id: 8234
+  time: '2025-04-18T17:37:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36185
