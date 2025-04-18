@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.ActionBlocker;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -27,11 +28,14 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     public override void Initialize()
     {
         //register a new verb for picking up the mob
         SubscribeLocalEvent<RestrictNestingItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
         SubscribeLocalEvent<RestrictNestingItemComponent, RestrictNestingItemPickupDoAfterEvent>(FinishPickup);
+        SubscribeLocalEvent<RestrictNestingItemComponent, DoAfterAttemptEvent<RestrictNestingItemPickupDoAfterEvent>>(DuringPickup);
         SubscribeLocalEvent<RestrictNestingItemComponent, StripInsertAttemptEvent>(StripInsertAttempt);
     }
 
@@ -41,8 +45,11 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
         if (args.Target == args.User)
             return;
         
+        if (!InRange(args.User, args.Target))
+            return;
+
         //make sure we arent in a container, if we are, skip showing the verb
-        if(_containerSystem.TryGetContainingContainer((args.User, null, null), out var container))
+        if (_containerSystem.TryGetContainingContainer((args.User, null, null), out var container))
             return;
 
         var user = args.User;
@@ -55,6 +62,14 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
         };
 
         args.Verbs.Add(verb);
+    }
+
+    private bool InRange(EntityUid user, EntityUid target)
+    {
+        //check if nearby
+        if (!_interactionSystem.InRangeAndAccessible(user, target) || !_actionBlockerSystem.CanInteract(user, target))
+            return false;
+        return true;
     }
 
     private void StripInsertAttempt(Entity<RestrictNestingItemComponent> ent, ref StripInsertAttemptEvent args)
@@ -75,6 +90,10 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
     {
         if(_containerSystem.TryGetContainingContainer((user, null, null), out var container))
             return;
+        
+        //check range
+        if (!InRange(user, target))
+            return;
 
         //we need to recursively check inventory to see if the item being picked up has any other items that prevent nesting
         if (RecursivelyCheckForNesting(ent, true))
@@ -89,7 +108,14 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
             user,
             ent.Comp.DoAfter,
             new RestrictNestingItemPickupDoAfterEvent(),
-            ent);
+            ent)
+            {
+                AttemptFrequency = AttemptFrequency.EveryTick,
+                BreakOnDamage = true,
+                BreakOnMove = true,
+                NeedHand = true,
+                BreakOnHandChange = false
+            };
 
         if(_doAfter.TryStartDoAfter(doAfterEvent))
         {
@@ -98,10 +124,37 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
         }
     }
 
+    private void DuringPickup(Entity<RestrictNestingItemComponent> ent, ref DoAfterAttemptEvent<RestrictNestingItemPickupDoAfterEvent> ev)
+    {
+        var args = ev.Event.Args;
+
+        //check if we are in a container, if we are, cancel the pickup
+        if (_containerSystem.TryGetContainingContainer((args.User, null, null), out var container))
+        {
+            ev.Cancel();
+            return;
+        }
+
+        //check range
+        if (!InRange(args.User, ent))
+        {
+            ev.Cancel();
+            return;
+        }
+    }
+
     private void FinishPickup(Entity<RestrictNestingItemComponent> ent, ref RestrictNestingItemPickupDoAfterEvent args)
     {
+        //check if cancelled
+        if (args.Cancelled || args.Handled)
+            return;
+
         //hacky solution for now, but if we are already in a container, then cancel
         if(_containerSystem.TryGetContainingContainer((args.User, null, null), out var container))
+            return;
+        
+        //check range
+        if (!InRange(args.User, ent))
             return;
 
         //run the same check again incase inventory changed during the doafter
