@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: MilenVolf
-  changes:
-  - message: Clicking on a buckled mob now unbuckles it, rather than hugging/petting
-      it.
-    type: Fix
-  id: 7728
-  time: '2024-12-18T14:26:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33635
 - author: SlamBamActionman
   changes:
   - message: Slimes no longer deal Cellular damage.
@@ -3912,3 +3904,11 @@
   id: 8228
   time: '2025-04-18T12:09:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36252
+- author: slarticodefast
+  changes:
+  - message: Punching lights while wearing insulated gloves will no longer electrocute
+      you.
+    type: Fix
+  id: 8229
+  time: '2025-04-18T12:26:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36686
