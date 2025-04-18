@@ -11,3 +11,4 @@
   - type: RestrictNestingItem
   - type: MultiHandedItem
   - type: CanEscapeInventory
+    baseResistTime: 2
