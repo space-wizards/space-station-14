@@ -78,7 +78,7 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
         if(_containerSystem.TryGetContainingContainer((args.Target, null, null), out var container))
         {
             //check if the thing we are trying to insert is a nesting item
-            if (RecursivelyCheckForNesting(args.Held, false))
+            if (RecursivelyCheckForNesting(args.Held, initialItem: false))
             {
                 //if it is, cancel the insert
                 args.Cancel();
@@ -96,7 +96,7 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
             return;
 
         //we need to recursively check inventory to see if the item being picked up has any other items that prevent nesting
-        if (RecursivelyCheckForNesting(ent, true))
+        if (RecursivelyCheckForNesting(ent, initialItem: true))
         {
             //if we find any, we need to cancel the pickup and show a popup message
             _popup.PopupClient(Loc.GetString("restrict-nesting-item-cant-pickup", ("user", ent)), user, user);
@@ -142,7 +142,7 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
             return;
         }
 
-        if (RecursivelyCheckForNesting(ent, true))
+        if (RecursivelyCheckForNesting(ent, initialItem: true))
         {
             _popup.PopupEntity(Loc.GetString("restrict-nesting-item-cant-pickup", ("user", ent)), args.User, args.User);
             ev.Cancel();
@@ -165,7 +165,7 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
             return;
 
         //run the same check again incase inventory changed during the doafter
-        if (RecursivelyCheckForNesting(ent, true))
+        if (RecursivelyCheckForNesting(ent, initialItem: true))
         {
             _popup.PopupClient(Loc.GetString("restrict-nesting-item-cant-pickup", ("user", ent)), args.User, args.User);
             return;
@@ -175,9 +175,21 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
         _handsSystem.TryPickup(args.User, ent, animateUser: false);
     }
 
-    private bool RecursivelyCheckForNesting(EntityUid item, bool initialItem = false)
+    private bool RecursivelyCheckForNesting(EntityUid item, int depth = 0, bool initialItem = false)
     {
+        //check if we have hit the max depth, if so just as a safety return false.
+        //This does mean if someone finds something that can possibly fit a resomi at our max depth,
+        // they will be able to pick the person carrying the resomi up again,
+        // but generally this should be mostly impossible due to the size of a resomi
         //only do this check if the initial item is a mob. This allows duffelbags to work
+
+        if (depth > 20)
+        {
+            //log a warning
+            Log.Warning($"{nameof(RecursivelyCheckForNesting)} hit max depth of {depth} for item {item}");
+            return false;
+        }
+        
         if (initialItem && !TryComp<MobMoverComponent>(item, out var mobMover))
             return false;
 
@@ -196,7 +208,7 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
         foreach (var itemInInventory in items)
         {
             //run recursive check
-            if (RecursivelyCheckForNesting(itemInInventory))
+            if (RecursivelyCheckForNesting(itemInInventory, depth + 1))
             {
                 return true;
             }
