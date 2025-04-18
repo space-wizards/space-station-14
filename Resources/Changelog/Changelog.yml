@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Slimes no longer deal Cellular damage.
-    type: Tweak
-  id: 7729
-  time: '2024-12-18T15:05:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33104
 - author: Redbookcase
   changes:
   - message: Standardized Mercenary gear's contraband status.
@@ -3912,3 +3905,10 @@
   id: 8229
   time: '2025-04-18T12:26:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36686
+- author: Minemoder
+  changes:
+  - message: Rainbow Cannabis Leaves no longer emit light due to a renderer limitation.
+    type: Remove
+  id: 8230
+  time: '2025-04-18T14:12:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36479
