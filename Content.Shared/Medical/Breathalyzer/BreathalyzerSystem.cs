@@ -108,7 +108,7 @@ public sealed class BreathalyzerSystem : EntitySystem
     private bool StartChecking(Entity<BreathalyzerComponent> ent, EntityUid target)
     {
         // Milon assured me that this obsolete warning is fake
-        if (!_container.TryGetContainingContainer(ent.Owner, out var container))
+        if (!_container.TryGetContainingContainer(ent, out var container))
         {
             ent.Comp.LastReadValue = null;
             return false;
@@ -116,6 +116,7 @@ public sealed class BreathalyzerSystem : EntitySystem
 
         var user = container.Owner;
 
+        // If this returns false, they are incapable of getting drunk, so we stop here.
         if (!TryGetDrunkenness(user, target, out _))
         {
             ent.Comp.LastReadValue = null;
@@ -154,7 +155,11 @@ public sealed class BreathalyzerSystem : EntitySystem
             return false;
         }
 
-        return _drunk.TryGetDrunkennessTime(target, out boozeTime);
+        // Don't fail if the target is not drunk, just treat as sober.
+        if (!_drunk.TryGetDrunkennessTime(target, out boozeTime))
+            boozeTime = 0;
+
+        return true;
     }
 
     /// <summary>
@@ -162,13 +167,13 @@ public sealed class BreathalyzerSystem : EntitySystem
     /// </summary>
     private void ExamineWithBreathalyzer(Entity<BreathalyzerComponent> breathalyzer, EntityUid user, EntityUid target)
     {
-        if (!TryGetDrunkenness(user, target, out var maybeBoozeTime) || maybeBoozeTime is not { } boozeTime)
-            return;
+        // Don't fail if the target is not drunk, just treat as sober.
+        _drunk.TryGetDrunkennessTime(target, out var drunkTime);
 
         // Praying for https://github.com/space-wizards/RobustToolbox/pull/5849 to make this usable
         // Get remaining time of drunkenness, offset with random value based on accuracy
-        // var drunkenness = _random.NextGaussian(boozeTime, breathalyzer.Comp.Variance);
-        var drunkenness = boozeTime;
+        // var drunkenness = _random.NextGaussian(drunkTime, breathalyzer.Comp.Variance);
+        var drunkenness = drunkTime ?? 0;
 
         // Round to closest multiple of Specificity
         var approximateDrunkenness = (ulong)(Math.Round(drunkenness / breathalyzer.Comp.Specificity) * breathalyzer.Comp.Specificity);
