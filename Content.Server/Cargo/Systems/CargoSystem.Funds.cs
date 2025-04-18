@@ -28,7 +28,7 @@ public sealed partial class CargoSystem
             args.Amount > GetBalanceFromAccount((station, bank), ent.Comp.Account) * ent.Comp.TransferLimit)
             return;
 
-        if (_timing.CurTime < ent.Comp.NextAccountActionTime)
+        if (Timing.CurTime < ent.Comp.NextAccountActionTime)
             return;
 
         if (!_accessReaderSystem.IsAllowed(args.Actor, ent))
@@ -38,7 +38,7 @@ public sealed partial class CargoSystem
             return;
         }
 
-        ent.Comp.NextAccountActionTime = _timing.CurTime + ent.Comp.AccountActionDelay;
+        ent.Comp.NextAccountActionTime = Timing.CurTime + ent.Comp.AccountActionDelay;
         Dirty(ent);
         UpdateBankAccount((station, bank), -args.Amount, CreateAccountDistribution(ent.Comp.Account, bank));
         _audio.PlayPvs(ApproveSound, ent);
