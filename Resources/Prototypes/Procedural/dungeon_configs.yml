@@ -227,9 +227,6 @@
   id: MineshaftWalls
   entries:
   # Ore
-  - id: WallRockSalt
-    prob: 0.6
-    orGroup: content
   - id: WallRockCoal
     prob: 0.6
     orGroup: content
