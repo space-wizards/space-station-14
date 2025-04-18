@@ -175,12 +175,6 @@
   - type: DisarmMalus
   - type: Prying
   # imp edits #
-  - type: Clothing
-    sprite: Objects/Weapons/Melee/crusher.rsi
-    quickEquip: false
-    slots:
-    - Back
-    - suitStorage
   - type: DamageOtherOnHit
     staminaCost: 8
   # end imp edits #
@@ -203,11 +197,6 @@
         Slash: 10
     offset: -0.15,0.0
   - type: LandAtCursor
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Slash: 10
-    soundHit:
   - type: Tag
     tags:
     - Knife
@@ -251,15 +240,6 @@
     tags:
       - Pickaxe
       - Crusher
-  - type: Item
-    size: Ginormous
-    sprite: Objects/Weapons/Melee/crusher_glaive-inhands.rsi
-  - type: Clothing # Imp
-    sprite: Objects/Weapons/Melee/crusher_glaive.rsi
-    quickEquip: false
-    slots:
-    - Back
-    - suitStorage
   # imp edits #
   - type: EmbeddableProjectile
   - type: EmbedPassiveDamage

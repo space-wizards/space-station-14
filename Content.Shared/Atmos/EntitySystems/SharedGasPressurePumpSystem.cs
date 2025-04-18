@@ -108,6 +108,6 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
         if (!pump.StartEnabled)
             return;
         pump.Enabled = true;
-        UpdateAppearance(uid, pump);
+        UpdateAppearance((uid, pump));
     }
 }

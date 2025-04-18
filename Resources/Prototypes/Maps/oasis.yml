@@ -67,15 +67,3 @@
             SupplyAssistant: [ 3, 3 ] # imp
             # civilian
             Passenger: [ -1, -1 ]
-            Reporter: [ 1, 1 ]
-            #engineering (8)
-            AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 5, 5 ]
-            TechnicalAssistant: [ 4, 4 ] #intern, not counted
-            #medical (11)
-            Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 6, 6 ]
-            Paramedic: [ 2, 2 ]
-            MedicalIntern: [ 4, 4 ] #intern, not counted
-            Psychologist: [ 1, 1 ]
-            #science (5)
