@@ -34,8 +34,6 @@ public sealed class GasPressureReliefValveBoundUserInterface : BoundUserInterfac
         if (!EntMan.TryGetComponent(Owner, out GasPressureReliefValveComponent? valveComponent))
             return;
 
-        // TODO: This bulldozes the window title we set when making the window in the first place,
-        // remember to nuke that when finished
         _window.SetThresholdPressureLabel(valveComponent.Threshold);
         _window.SetValveStatus(valveComponent.Enabled);
         _window.SetFlowRate(valveComponent.FlowRate);
