@@ -60,8 +60,8 @@
       state: icon
     priority: -1
     itemIconStyle: BigAction
-  - type: TargetAction
     checkCanInteract: false
+  - type: TargetAction
   - type: EntityTargetAction
     event: !type:StethoscopeActionEvent
 

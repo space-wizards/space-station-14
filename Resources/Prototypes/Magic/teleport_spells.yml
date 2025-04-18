@@ -29,7 +29,6 @@
   components:
   - type: Action
     useDelay: 15
-    range: 16
     sound: !type:SoundPathSpecifier
       path: /Audio/Magic/Eldritch/voidblink.ogg
     icon:
@@ -38,6 +37,7 @@
   - type: TargetAction
     checkCanAccess: false
     repeat: false
+    range: 16
   - type: EntityTargetAction
     event: !type:VoidApplauseSpellEvent
       effect: EffectVoidBlink

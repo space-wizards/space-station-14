@@ -316,11 +316,11 @@
   description: Stop sleeping.
   components:
   - type: Action
+    startDelay: true
+    useDelay: 2
     icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
   - type: InstantAction
     event: !type:WakeActionEvent
-    startDelay: true
-    useDelay: 2
 
 - type: entity
   parent: BaseImplantAction

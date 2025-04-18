@@ -14,13 +14,13 @@
   description: Accept your fate.
   components:
   - type: Action
+    startDelay: true
+    useDelay: 10
     icon:
       sprite: Mobs/Ghosts/ghost_human.rsi
       state: icon
   - type: InstantAction
     event: !type:CritSuccumbEvent
-    startDelay: true
-    useDelay: 10
 
 - type: entity
   parent: BaseCritAction
@@ -37,7 +37,7 @@
     event: !type:CritFakeDeathEvent
 
 - type: entity
-  parent: BaseCritAction
+  parent: ActionCritSuccumb # for use delay
   id: ActionCritLastWords
   name: Say Last Words
   description: Whisper your last words to anyone nearby, and then succumb to your fate. You only have 30 characters to work with.
@@ -48,5 +48,3 @@
       state: lastwords
   - type: InstantAction
     event: !type:CritLastWordsEvent
-    startDelay: true
-    useDelay: 10
