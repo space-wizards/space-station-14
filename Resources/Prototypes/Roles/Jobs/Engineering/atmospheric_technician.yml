@@ -4,8 +4,8 @@
   description: job-description-atmostech
   playTimeTracker: JobAtmosphericTechnician
   requirements:
-  - !type:RoleTimeRequirement
-    role: JobStationEngineer
+  - !type:DepartmentTimeRequirement
+    department: Engineering
     time: 9000 #2.5 hrs
   startingGear: AtmosphericTechnicianGear
   icon: "JobIconAtmosphericTechnician"

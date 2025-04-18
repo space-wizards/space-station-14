@@ -18,7 +18,7 @@
       time: 9000 # 2.5 hrs
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 18000 # 5 hours
+      time: 9000 # 2.5 hours
   weight: 20
   startingGear: HoPGear
   icon: "JobIconHeadOfPersonnel"
