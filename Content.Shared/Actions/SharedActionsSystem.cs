@@ -106,14 +106,14 @@ public abstract class SharedActionsSystem : EntitySystem
     private void OnActionShutdown(Entity<ActionComponent> ent, ref ComponentShutdown args)
     {
         if (ent.Comp.AttachedEntity is {} user && !TerminatingOrDeleted(user))
-            RemoveAction(user, ent);
+            RemoveAction(user, (ent, ent));
     }
 
     private void OnShutdown(Entity<ActionsComponent> ent, ref ComponentShutdown args)
     {
         foreach (var actionId in ent.Comp.Actions)
         {
-            RemoveAction(ent, actionId);
+            RemoveAction((ent, ent), actionId);
         }
     }
 
@@ -131,7 +131,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return null;
 
         _actionQuery.Resolve(ref ent, logError);
-        return ent;
+        return (ent, ent);
     }
 
     public void SetCooldown(Entity<ActionComponent?>? action, TimeSpan start, TimeSpan end)
@@ -194,7 +194,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (ent.Comp.Cooldown?.End > end)
             return;
 
-        SetCooldown(ent, start, end);
+        SetCooldown((ent, ent), start, end);
     }
 
     /// <summary>
@@ -206,7 +206,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (GetAction(action) is not {} ent || ent.Comp.UseDelay is not {} delay)
             return;
 
-        SetCooldown(ent, delay);
+        SetCooldown((ent, ent), delay);
     }
 
     public void SetUseDelay(Entity<ActionComponent?>? action, TimeSpan? delay)
@@ -383,7 +383,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         // TODO: Replace with individual charge recovery when we have the visuals to aid it
         if (ShouldResetCharges(action))
-            ResetCharges(action, true);
+            ResetCharges((action, action), true);
 
         // Validate request by checking action blockers and the like
         var provider = action.Comp.Container ?? user;
@@ -655,22 +655,22 @@ public abstract class SharedActionsSystem : EntitySystem
 
         // play sound, reduce charges, start cooldown
         if (ev?.Toggle == true)
-            SetToggled(action, !action.Comp.Toggled);
+            SetToggled((action, action), !action.Comp.Toggled);
 
         _audio.PlayPredicted(action.Comp.Sound, performer, predicted ? performer : null);
 
         // TODO: use LimitedCharges?
         if (action.Comp.Charges != null)
         {
-            RemoveCharges(action, 1);
+            RemoveCharges((action, action), 1);
             if (ShouldResetCharges(action))
-                SetEnabled(action, false);
+                SetEnabled((action, action), false);
         }
 
         // TODO: move to ActionCooldown ActionPerformedEvent?
-        RemoveCooldown(action);
+        RemoveCooldown((action, action));
         if (action.Comp is { Charges: null or < 1 })
-            StartUseDelay(action);
+            StartUseDelay((action, action));
 
         UpdateAction(action);
 
@@ -744,7 +744,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return false;
         }
 
-        return AddActionDirect(performer, ent);
+        return AddActionDirect(performer, (ent, ent));
     }
 
     /// <summary>
@@ -762,11 +762,11 @@ public abstract class SharedActionsSystem : EntitySystem
                            && containerComp.Container.Contains(ent)));
 
         if (ent.Comp.AttachedEntity is {} user)
-            RemoveAction(user, ent);
+            RemoveAction(user, (ent, ent));
 
         // TODO: make this an event bruh
         if (ent.Comp.StartDelay && ent.Comp.UseDelay != null)
-            SetCooldown(ent, ent.Comp.UseDelay.Value);
+            SetCooldown((ent, ent), ent.Comp.UseDelay.Value);
 
         DebugTools.AssertOwner(performer, performer.Comp);
         performer.Comp ??= EnsureComp<ActionsComponent>(performer);
@@ -774,7 +774,7 @@ public abstract class SharedActionsSystem : EntitySystem
         DirtyField(ent, nameof(ActionComponent.AttachedEntity));
         performer.Comp.Actions.Add(ent);
         Dirty(performer, performer.Comp);
-        ActionAdded(performer, ent);
+        ActionAdded(performer, (ent, ent));
         return true;
     }
 
@@ -824,7 +824,7 @@ public abstract class SharedActionsSystem : EntitySystem
         foreach (var actionId in container.Comp.Container.ContainedEntities)
         {
             if (GetAction(actionId) is {} action)
-                AddActionDirect(performer, action);
+                AddActionDirect(performer, (action, action));
         }
     }
 
@@ -873,7 +873,7 @@ public abstract class SharedActionsSystem : EntitySystem
                 return;
 
             if (ent.Comp.Container == container)
-                RemoveAction((performer, comp), ent);
+                RemoveAction((performer, comp), (ent, ent));
         }
     }
 
@@ -886,7 +886,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
 
         if (ent.Comp.Container == container)
-            RemoveAction((performer, comp), ent);
+            RemoveAction((performer, comp), (ent, ent));
     }
 
     /// <summary>
@@ -900,7 +900,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!_actionsQuery.TryComp(actions, out var comp))
             return;
 
-        RemoveAction((actions, comp), ent);
+        RemoveAction((actions, comp), (ent, ent));
     }
 
     public void RemoveAction(Entity<ActionsComponent?> performer, Entity<ActionComponent?>? action)
@@ -919,7 +919,7 @@ public abstract class SharedActionsSystem : EntitySystem
             return;
         }
 
-        if (!_actionsQuery.Resolve(ref performer, false))
+        if (!_actionsQuery.Resolve(performer, ref performer.Comp, false))
         {
             DebugTools.Assert(performer == null || TerminatingOrDeleted(performer));
             ent.Comp.AttachedEntity = null;
@@ -931,7 +931,7 @@ public abstract class SharedActionsSystem : EntitySystem
         Dirty(performer, performer.Comp);
         ent.Comp.AttachedEntity = null;
         DirtyField(ent, nameof(ActionComponent.AttachedEntity));
-        ActionRemoved(performer, ent);
+        ActionRemoved((performer, performer), ent);
 
         if (ent.Comp.Temporary)
             QueueDel(ent);
@@ -1017,7 +1017,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (ev.Actions.Count == 0)
             return;
 
-        GrantActions(ent, ev.Actions, args.Equipment);
+        GrantActions((ent, ent), ev.Actions, args.Equipment);
     }
 
     private void OnHandEquipped(Entity<ActionsComponent> ent, ref DidEquipHandEvent args)
@@ -1031,7 +1031,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (ev.Actions.Count == 0)
             return;
 
-        GrantActions(ent, ev.Actions, args.Equipped);
+        GrantActions((ent, ent), ev.Actions, args.Equipped);
     }
 
     private void OnDidUnequip(EntityUid uid, ActionsComponent component, DidUnequipEvent args)
@@ -1053,7 +1053,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public void SetEntityIcon(Entity<ActionComponent?> ent, EntityUid? icon)
     {
-        if (!_actionQuery.Resolve(ref ent) || ent.Comp.EntityIcon == icon)
+        if (!_actionQuery.Resolve(ent, ref ent.Comp) || ent.Comp.EntityIcon == icon)
             return;
 
         ent.Comp.EntityIcon = icon;
@@ -1062,7 +1062,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public void SetIcon(Entity<ActionComponent?> ent, SpriteSpecifier? icon)
     {
-        if (!_actionQuery.Resolve(ref ent) || ent.Comp.Icon == icon)
+        if (!_actionQuery.Resolve(ent, ref ent.Comp) || ent.Comp.Icon == icon)
             return;
 
         ent.Comp.Icon = icon;
@@ -1071,7 +1071,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public void SetIconOn(Entity<ActionComponent?> ent, SpriteSpecifier? iconOn)
     {
-        if (!_actionQuery.Resolve(ref ent) || ent.Comp.IconOn == iconOn)
+        if (!_actionQuery.Resolve(ent, ref ent.Comp) || ent.Comp.IconOn == iconOn)
             return;
 
         ent.Comp.IconOn = iconOn;
@@ -1080,7 +1080,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
     public void SetIconColor(Entity<ActionComponent?> ent, Color color)
     {
-        if (!_actionQuery.Resolve(ref ent) || ent.Comp.IconColor == color)
+        if (!_actionQuery.Resolve(ent, ref ent.Comp) || ent.Comp.IconColor == color)
             return;
 
         ent.Comp.IconColor = color;

@@ -247,7 +247,7 @@ public sealed class ActionContainerSystem : EntitySystem
             return false;
 
         if (ent.Comp.Container != null)
-            RemoveAction(ent);
+            RemoveAction((ent, ent));
 
         DebugTools.AssertOwner(uid, comp);
         comp ??= EnsureComp<ActionsContainerComponent>(uid);
@@ -291,7 +291,7 @@ public sealed class ActionContainerSystem : EntitySystem
         // However, if the action was granted without ever being placed in an action container, it will not have been removed.
         // Therefore, to ensure that the behaviour of the method is consistent we will also explicitly remove the action.
         if (ent.Comp.AttachedEntity is {} actions)
-            _actions.RemoveAction(actions, ent);
+            _actions.RemoveAction(actions, (ent, ent));
     }
 
     private void OnInit(EntityUid uid, ActionsContainerComponent component, ComponentInit args)
