@@ -19,6 +19,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     /// <inheritdoc/>
@@ -59,11 +60,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         if (_timing.CurTime < ent.Comp.NextPassTime)
             return;
 
-        var xform = Transform(ent);
-        var otherXform = Transform(args.OtherEntity);
-
-        var moveDir = xform.LocalPosition - otherXform.LocalPosition;
-        if (moveDir.GetDir() == xform.LocalRotation.GetDir())
+        if (CanPassDirection(ent, args.OtherEntity))
         {
             if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 return;
@@ -90,10 +87,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
     {
         if (!ent.Comp.CollideExceptions.Contains(args.OtherEntity))
         {
-            var xform = Transform(ent);
-            var otherXform = Transform(args.OtherEntity);
-            var moveDir = xform.LocalPosition - otherXform.LocalPosition;
-            if (moveDir.GetDir() == xform.LocalRotation.GetDir())
+            if (CanPassDirection(ent, args.OtherEntity))
             {
                 if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 {
@@ -118,6 +112,21 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
             Dirty(ent);
         }
     }
+
+    protected bool CanPassDirection(Entity<TurnstileComponent> ent, EntityUid other)
+    {
+        var xform = Transform(ent);
+        var otherXform = Transform(other);
+
+        var (pos, rot) = _transform.GetWorldPositionRotation(xform);
+        var otherPos = _transform.GetWorldPosition(otherXform);
+
+        var approachVec = pos - otherPos;
+        var rotVec = rot.ToWorldVec();
+        Log.Debug($"app: {approachVec.ToAngle()}, rot: {rotVec.ToAngle()}");
+        return Math.Abs(approachVec.ToAngle().Reduced().Theta - rotVec.ToAngle().Reduced().Theta) < Math.PI / 4;
+    }
+
 
     protected virtual void PlayAnimation(EntityUid uid, string stateId)
     {
