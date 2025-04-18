@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Centronias
-  changes:
-  - message: Fixed a bug where the B input on logic gates would get stuck in a high
-      state
-    type: Fix
-  id: 7735
-  time: '2024-12-19T11:31:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33792
 - author: Plykiya
   changes:
   - message: Cargo armor crate now correctly indicates that it contains bulletproof
@@ -3907,3 +3899,10 @@
   id: 8235
   time: '2025-04-18T19:52:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36693
+- author: Nox38
+  changes:
+  - message: Nuclear operative agent is renamed to nuclear operative corpsman.
+    type: Tweak
+  id: 8236
+  time: '2025-04-18T19:56:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34627
