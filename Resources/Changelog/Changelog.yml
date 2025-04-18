@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Cargo armor crate now correctly indicates that it contains bulletproof
-      vests.
-    type: Fix
-  id: 7736
-  time: '2024-12-19T17:21:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33414
 - author: Piras314
   changes:
   - message: Removed the nuke song "Clearly Nuclear" on request of the author.
@@ -3906,3 +3898,11 @@
   id: 8236
   time: '2025-04-18T19:56:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34627
+- author: Ilya246
+  changes:
+  - message: The actions hotbar now has up to 10 more hotkeys accessible through the
+      shift key.
+    type: Add
+  id: 8237
+  time: '2025-04-18T22:45:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33872
