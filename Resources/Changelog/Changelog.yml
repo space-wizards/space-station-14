@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TiniestShark
-  changes:
-  - message: Adds in-hand sprites to the Anomaly Scanner.
-    type: Add
-  id: 7723
-  time: '2024-12-17T13:35:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33427
 - author: chromiumboy
   changes:
   - message: Holopads are now available, allowing you to communicate holographically
@@ -3913,3 +3906,10 @@
   id: 8222
   time: '2025-04-18T02:32:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35170
+- author: DogZeroX
+  changes:
+  - message: Added Experiment plushie from the game Scav Prototype!
+    type: Add
+  id: 8223
+  time: '2025-04-18T02:38:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36663
