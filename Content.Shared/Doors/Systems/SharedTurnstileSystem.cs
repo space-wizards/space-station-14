@@ -123,7 +123,6 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
 
         var approachVec = pos - otherPos;
         var rotVec = rot.ToWorldVec();
-        Log.Debug($"app: {approachVec.ToAngle()}, rot: {rotVec.ToAngle()}");
         return Math.Abs(approachVec.ToAngle().Reduced().Theta - rotVec.ToAngle().Reduced().Theta) < Math.PI / 4;
     }
 
