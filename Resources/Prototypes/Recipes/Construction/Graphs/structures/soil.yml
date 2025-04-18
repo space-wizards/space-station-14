@@ -20,4 +20,4 @@
                 sprite: Objects/Misc/spaceshroom.rsi
                 state: object
     - node: fungalSoil
-      entity: dryHydroponicsSoil
+      entity: FungalSoil
