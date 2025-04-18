@@ -1,7 +1,6 @@
-using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Medical.Breathalyzer.Components;
+namespace Content.Shared.Medical.Breathalyzer;
 
 /// <summary>
 ///     Adds a verb and action that allows the user to check to the entity's drunkenness.
@@ -19,7 +18,7 @@ public sealed partial class BreathalyzerComponent : Component
     /// The last read value, used for examine string.
     /// </summary>
     [DataField]
-    public TimeSpan? LastReadValue;
+    public double? LastReadValue;
 
     /// <summary>
     /// Drunkenness gets rounded to the nearest multiple of this when measuring.
