@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 250.0.0
+  engineVersion: 253.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/27/2025 06:48:27
-  entityCount: 25710
+  time: 04/14/2025 14:08:28
+  entityCount: 25721
 maps:
 - 943
 grids:
@@ -64048,6 +64048,44 @@ entities:
     - type: Transform
       pos: 43.5,10.5
       parent: 60
+- proto: ComputerCargoOrdersEngineering
+  entities:
+  - uid: 1921
+    components:
+    - type: Transform
+      pos: -1.5,21.5
+      parent: 60
+- proto: ComputerCargoOrdersMedical
+  entities:
+  - uid: 22116
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 47.5,-10.5
+      parent: 60
+- proto: ComputerCargoOrdersScience
+  entities:
+  - uid: 7070
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -45.5,-9.5
+      parent: 60
+- proto: ComputerCargoOrdersSecurity
+  entities:
+  - uid: 9618
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -28.5,-6.5
+      parent: 60
+- proto: ComputerCargoOrdersService
+  entities:
+  - uid: 9591
+    components:
+    - type: Transform
+      pos: 21.5,-26.5
+      parent: 60
 - proto: ComputerCargoShuttle
   entities:
   - uid: 21024
@@ -64164,6 +64202,14 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -64.5,46.5
+      parent: 60
+- proto: ComputerFundingAllocation
+  entities:
+  - uid: 278
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 3.5,-30.5
       parent: 60
 - proto: ComputerId
   entities:
@@ -65323,6 +65369,46 @@ entities:
     components:
     - type: Transform
       pos: 33.5,-37.5
+      parent: 60
+- proto: CrateLockBoxEngineering
+  entities:
+  - uid: 22134
+    components:
+    - type: Transform
+      pos: 4.5,17.5
+      parent: 60
+- proto: CrateLockBoxMedical
+  entities:
+  - uid: 22133
+    components:
+    - type: Transform
+      pos: 49.5,-20.5
+      parent: 60
+- proto: CrateLockBoxScience
+  entities:
+  - uid: 22135
+    components:
+    - type: Transform
+      pos: -49.5,-4.5
+      parent: 60
+- proto: CrateLockBoxSecurity
+  entities:
+  - uid: 22136
+    components:
+    - type: Transform
+      pos: -31.5,-16.5
+      parent: 60
+- proto: CrateLockBoxService
+  entities:
+  - uid: 22137
+    components:
+    - type: Transform
+      pos: 13.5,-39.5
+      parent: 60
+  - uid: 22138
+    components:
+    - type: Transform
+      pos: 34.5,-41.5
       parent: 60
 - proto: CrateMaterialSteel
   entities:
@@ -72377,15 +72463,15 @@ entities:
     - type: Transform
       pos: -49.5,-15.5
       parent: 60
-  - uid: 4359
-    components:
-    - type: Transform
-      pos: 3.5,-30.5
-      parent: 60
   - uid: 5297
     components:
     - type: Transform
       pos: -22.5,-29.5
+      parent: 60
+  - uid: 10369
+    components:
+    - type: Transform
+      pos: 3.5,-28.5
       parent: 60
 - proto: filingCabinetTallRandom
   entities:
@@ -115496,7 +115582,7 @@ entities:
   - uid: 9425
     components:
     - type: Transform
-      pos: -45.496006,-9.58335
+      pos: -45.038364,-10.503761
       parent: 60
   - uid: 9474
     components:
@@ -115506,7 +115592,7 @@ entities:
   - uid: 13014
     components:
     - type: Transform
-      pos: -45.404285,-9.838601
+      pos: -44.96024,-10.316261
       parent: 60
   - uid: 19181
     components:
@@ -118528,11 +118614,6 @@ entities:
           showEnts: False
           occludes: True
           ent: 4540
-  - uid: 9618
-    components:
-    - type: Transform
-      pos: -1.5,21.5
-      parent: 60
 - proto: PottedPlant4
   entities:
   - uid: 15519
@@ -118833,6 +118914,11 @@ entities:
     components:
     - type: Transform
       pos: 38.5,11.5
+      parent: 60
+  - uid: 22117
+    components:
+    - type: Transform
+      pos: -1.5,17.5
       parent: 60
 - proto: PottedPlantRD
   entities:
@@ -135805,12 +135891,6 @@ entities:
       parent: 60
 - proto: StoolBar
   entities:
-  - uid: 1921
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 21.5,-27.5
-      parent: 60
   - uid: 1922
     components:
     - type: Transform
@@ -135914,6 +135994,11 @@ entities:
     components:
     - type: Transform
       pos: 35.5,18.5
+      parent: 60
+  - uid: 22120
+    components:
+    - type: Transform
+      pos: 18.5,-27.5
       parent: 60
   - uid: 23459
     components:
@@ -138755,6 +138840,12 @@ entities:
     - type: Transform
       pos: 53.5,-36.5
       parent: 60
+  - uid: 4359
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 49.5,-13.5
+      parent: 60
   - uid: 4577
     components:
     - type: Transform
@@ -138874,11 +138965,6 @@ entities:
     components:
     - type: Transform
       pos: -45.5,-4.5
-      parent: 60
-  - uid: 7070
-    components:
-    - type: Transform
-      pos: 49.5,-13.5
       parent: 60
   - uid: 7079
     components:
@@ -139060,11 +139146,6 @@ entities:
     - type: Transform
       pos: -49.5,-7.5
       parent: 60
-  - uid: 9591
-    components:
-    - type: Transform
-      pos: -45.5,-9.5
-      parent: 60
   - uid: 9595
     components:
     - type: Transform
@@ -139089,11 +139170,6 @@ entities:
     components:
     - type: Transform
       pos: -18.5,32.5
-      parent: 60
-  - uid: 10369
-    components:
-    - type: Transform
-      pos: 21.5,-26.5
       parent: 60
   - uid: 10620
     components:
@@ -139579,6 +139655,11 @@ entities:
     components:
     - type: Transform
       pos: 13.5,-26.5
+      parent: 60
+  - uid: 22119
+    components:
+    - type: Transform
+      pos: 18.5,-26.5
       parent: 60
   - uid: 23424
     components:
@@ -157264,11 +157345,6 @@ entities:
       parent: 60
 - proto: WaterCooler
   entities:
-  - uid: 278
-    components:
-    - type: Transform
-      pos: -28.5,-6.5
-      parent: 60
   - uid: 1382
     components:
     - type: Transform
@@ -157313,6 +157389,11 @@ entities:
     components:
     - type: Transform
       pos: -36.5,21.5
+      parent: 60
+  - uid: 22118
+    components:
+    - type: Transform
+      pos: -28.5,-3.5
       parent: 60
 - proto: WaterTankFull
   entities:
