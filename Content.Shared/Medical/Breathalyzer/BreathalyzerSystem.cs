@@ -2,17 +2,15 @@ using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.DoAfter;
+using Content.Shared.Drunk;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.Medical.Breathalyzer.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
-using Content.Shared.StatusEffect;
 using Content.Shared.Verbs;
-using Robust.Shared.Containers;
-using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 
@@ -20,21 +18,15 @@ namespace Content.Shared.Medical.Breathalyzer;
 
 public sealed class BreathalyzerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDrunkSystem _drunk = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     /// <summary>
     /// Damage type to check if the target is capable of breathing into a breathalyzer, since RespiratorSystem is server-only
     /// </summary>
-    [ValidatePrototypeId<DamageTypePrototype>]
-    private const string BreathDamageType = "Asphyxiation";
-
-    [ValidatePrototypeId<StatusEffectPrototype>]
-    public const string DrunkKey = "Drunk";
+    private readonly ProtoId<DamageTypePrototype> _breathDamageType = "Asphyxiation";
 
     public override void Initialize()
     {
@@ -48,19 +40,18 @@ public sealed class BreathalyzerSystem : EntitySystem
     }
 
     #region Event handlers
-    private void OnUtilityVerb(EntityUid uid, BreathalyzerComponent component, GetVerbsEvent<UtilityVerb> args)
+    private void OnUtilityVerb(Entity<BreathalyzerComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Using == null)
             return;
 
+        // Put target into a var because you can't use the ref value args in the Act-lambda
+        var target = args.Target;
         var verb = new UtilityVerb()
         {
-            Act = () =>
-            {
-                StartChecking((uid, component), args.Target);
-            },
+            Act = () => StartChecking(ent, target),
             Text = Loc.GetString("breathalyzer-verb-text"),
-            Message = Loc.GetString("breathalyzer-verb-message", ("target", Identity.Entity(args.Target, EntityManager)))
+            Message = Loc.GetString("breathalyzer-verb-message", ("target", Identity.Entity(target, EntityManager)))
         };
 
         args.Verbs.Add(verb);
@@ -75,7 +66,7 @@ public sealed class BreathalyzerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Starts repeatedly checking <see cref="args.Target"/>'s drunkenness
+    /// Starts repeatedly checking args.Target's drunkenness
     /// </summary>
     private void OnBreathalyzerAction(Entity<BreathalyzerComponent> ent, ref BreathalyzerActionEvent args)
     {
@@ -83,7 +74,7 @@ public sealed class BreathalyzerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks <see cref="args.Target"/>'s drunkenness once.<br/>
+    /// Checks args.Target's drunkenness once.<br/>
     /// Gets called repeatedly after <see cref="StartChecking"/> is called
     /// </summary>
     private void OnDoAfter(Entity<BreathalyzerComponent> ent, ref BreathalyzerDoAfterEvent args)
@@ -100,7 +91,7 @@ public sealed class BreathalyzerSystem : EntitySystem
     {
         var msg = new FormattedMessage();
         if (ent.Comp.LastReadValue is { } lastReadValue)
-            msg.AddMarkupPermissive(Loc.GetString("breathalyzer-last-read", ("lastReadValue", FormatRemainingTimeSpan(lastReadValue))));
+            msg.AddMarkupPermissive(Loc.GetString("breathalyzer-last-read", ("lastReadValue", FormatRemainingTimeSpan(TimeSpan.FromSeconds(lastReadValue)))));
         else
             msg.AddMarkupPermissive(Loc.GetString("breathalyzer-no-last-read"));
 
@@ -113,13 +104,8 @@ public sealed class BreathalyzerSystem : EntitySystem
     /// </summary>
     private bool StartChecking(Entity<BreathalyzerComponent> ent, EntityUid target)
     {
-        if (!_container.TryGetContainingContainer((ent, null, null), out var container))
-        {
-            ent.Comp.LastReadValue = null;
-            return false;
-        }
+        var user = ent.Owner;
 
-        var user = container.Owner;
         if (!TryGetDrunkenness(user, target, out _))
         {
             ent.Comp.LastReadValue = null;
@@ -151,22 +137,14 @@ public sealed class BreathalyzerSystem : EntitySystem
         if (!TryComp<MobStateComponent>(target, out var mobState) ||
             !TryComp<DamageableComponent>(target, out var damageComp) ||
             _mobState.IsDead(target, mobState) ||
-            !damageComp.Damage.DamageDict.ContainsKey(BreathDamageType))
+            !damageComp.Damage.DamageDict.ContainsKey(_breathDamageType))
         {
             _popup.PopupPredicted(Loc.GetString("breathalyzer-cannot-breathe"), target, user);
             boozeTime = null;
             return false;
         }
 
-        if (!_statusEffects.TryGetTime(target, DrunkKey, out var boozeTimeNullable))
-        {
-            boozeTime = 0;
-            return true;
-        }
-
-        var endTime = boozeTimeNullable.Value.Item2;
-        boozeTime = (endTime - _timing.CurTime).TotalSeconds;
-        return true;
+        return _drunk.TryGetDrunkennessTime(target, out boozeTime);
     }
 
     /// <summary>
@@ -194,12 +172,11 @@ public sealed class BreathalyzerSystem : EntitySystem
             else
                 break;
         }
-        var readValue = TimeSpan.FromSeconds(approximateDrunkenness);
-        breathalyzer.Comp.LastReadValue = readValue;
+        breathalyzer.Comp.LastReadValue = approximateDrunkenness;
         _popup.PopupPredicted(
             Loc.GetString(
                 chosenLocId,
-                ("approximateDrunkenness", FormatRemainingTimeSpan(readValue))
+                ("approximateDrunkenness", FormatRemainingTimeSpan(TimeSpan.FromSeconds(approximateDrunkenness)))
             ),
             target,
             user
