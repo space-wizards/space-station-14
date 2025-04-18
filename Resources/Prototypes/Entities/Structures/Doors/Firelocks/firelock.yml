@@ -119,6 +119,11 @@
       enabled: false
       castShadows: false
     - type: NavMapDoor
+    - type: GuideHelp
+      guides:
+      - FireAndGasControl
+      - Fires
+      - Spacing
 
 - type: entity
   id: Firelock

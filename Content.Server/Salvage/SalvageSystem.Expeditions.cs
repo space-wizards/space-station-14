@@ -69,8 +69,7 @@ public sealed partial class SalvageSystem
 
     private void OnExpeditionMapInit(EntityUid uid, SalvageExpeditionComponent component, MapInitEvent args)
     {
-        var selectedFile = _audio.GetSound(component.Sound);
-        component.SelectedSong = new SoundPathSpecifier(selectedFile, component.Sound.Params);
+        component.SelectedSong = _audio.ResolveSound(component.Sound);
     }
 
     private void OnExpeditionShutdown(EntityUid uid, SalvageExpeditionComponent component, ComponentShutdown args)

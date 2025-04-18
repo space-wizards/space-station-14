@@ -53,7 +53,7 @@ public sealed partial class CableSystem : EntitySystem
         if (_electrocutionSystem.TryDoElectrifiedAct(uid, args.User))
             return;
 
-        _adminLogger.Add(LogType.CableCut, LogImpact.Medium, $"The {ToPrettyString(uid)} at {xform.Coordinates} was cut by {ToPrettyString(args.User)}.");
+        _adminLogger.Add(LogType.CableCut, LogImpact.High, $"The {ToPrettyString(uid)} at {xform.Coordinates} was cut by {ToPrettyString(args.User)}.");
 
         Spawn(cable.CableDroppedOnCutPrototype, xform.Coordinates);
         QueueDel(uid);
@@ -69,7 +69,7 @@ public sealed partial class CableSystem : EntitySystem
 
         // anchor state can change as a result of deletion (detach to null).
         // We don't want to spawn an entity when deleted.
-        if (!TryLifeStage(uid, out var life) || life >= EntityLifeStage.Terminating)
+        if (TerminatingOrDeleted(uid))
             return;
 
         // This entity should not be un-anchorable. But this can happen if the grid-tile is deleted (RCD, explosion,

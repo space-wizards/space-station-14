@@ -191,7 +191,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             commandList.Add(id);
         }
 
-        return IsGroupDetainedOrDead(commandList, true, true);
+        return IsGroupDetainedOrDead(commandList, true, true, true);
     }
 
     private void OnHeadRevMobStateChanged(EntityUid uid, HeadRevolutionaryComponent comp, MobStateChangedEvent ev)
@@ -216,7 +216,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         // If no Head Revs are alive all normal Revs will lose their Rev status and rejoin Nanotrasen
         // Cuffing Head Revs is not enough - they must be killed.
-        if (IsGroupDetainedOrDead(headRevList, false, false))
+        if (IsGroupDetainedOrDead(headRevList, false, false, false))
         {
             var rev = AllEntityQuery<RevolutionaryComponent, MindContainerComponent>();
             while (rev.MoveNext(out var uid, out _, out var mc))
@@ -253,34 +253,45 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <param name="list">The list of the entities</param>
     /// <param name="checkOffStation">Bool for if you want to check if someone is in space and consider them missing in action. (Won't check when emergency shuttle arrives just in case)</param>
     /// <param name="countCuffed">Bool for if you don't want to count cuffed entities.</param>
+    /// <param name="countRevolutionaries">Bool for if you want to count revolutionaries.</param>
     /// <returns></returns>
-    private bool IsGroupDetainedOrDead(List<EntityUid> list, bool checkOffStation, bool countCuffed)
+    private bool IsGroupDetainedOrDead(List<EntityUid> list, bool checkOffStation, bool countCuffed, bool countRevolutionaries)
     {
         var gone = 0;
+
         foreach (var entity in list)
         {
             if (TryComp<CuffableComponent>(entity, out var cuffed) && cuffed.CuffedHandCount > 0 && countCuffed)
             {
                 gone++;
+                continue;
             }
-            else
+
+            if (TryComp<MobStateComponent>(entity, out var state))
             {
-                if (TryComp<MobStateComponent>(entity, out var state))
-                {
-                    if (state.CurrentState == MobState.Dead || state.CurrentState == MobState.Invalid)
-                    {
-                        gone++;
-                    }
-                    else if (checkOffStation && _stationSystem.GetOwningStation(entity) == null && !_emergencyShuttle.EmergencyShuttleArrived)
-                    {
-                        gone++;
-                    }
-                }
-                //If they don't have the MobStateComponent they might as well be dead.
-                else
+                if (state.CurrentState == MobState.Dead || state.CurrentState == MobState.Invalid)
                 {
                     gone++;
+                    continue;
                 }
+
+                if (checkOffStation && _stationSystem.GetOwningStation(entity) == null && !_emergencyShuttle.EmergencyShuttleArrived)
+                {
+                    gone++;
+                    continue;
+                }
+            }
+            //If they don't have the MobStateComponent they might as well be dead.
+            else
+            {
+                gone++;
+                continue;
+            }
+
+            if ((HasComp<RevolutionaryComponent>(entity) || HasComp<HeadRevolutionaryComponent>(entity)) && countRevolutionaries)
+            {
+                gone++;
+                continue;
             }
         }
 
