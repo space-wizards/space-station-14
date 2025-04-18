@@ -3,13 +3,16 @@ using Content.Shared.Shuttles.Components;
 using Content.Shared.Examine;
 using Content.Shared.FingerprintReader;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.NameModifier.EntitySystems;
+using Content.Shared.Objectives.Components;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Delivery;
 
@@ -27,6 +30,9 @@ public abstract class SharedDeliverySystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly NameModifierSystem _nameModifier = default!;
+
+    private static readonly ProtoId<TagPrototype> TrashTag = "Trash";
+    private static readonly ProtoId<TagPrototype> RecyclableTag = "Recyclable";
 
     public override void Initialize()
     {
@@ -107,7 +113,8 @@ public abstract class SharedDeliverySystem : EntitySystem
         if (rewardMoney)
             GrantSpesoReward(ent.AsNullable());
 
-        _popup.PopupPredicted(Loc.GetString("delivery-unlocked", ("delivery", deliveryName)), user, user);
+        _popup.PopupPredicted(Loc.GetString("delivery-unlocked-self", ("delivery", deliveryName)),
+            Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
         return true;
     }
 
@@ -126,12 +133,14 @@ public abstract class SharedDeliverySystem : EntitySystem
         ent.Comp.IsOpened = true;
         _appearance.SetData(ent, DeliveryVisuals.IsTrash, ent.Comp.IsOpened);
 
-        _tag.AddTags(ent, "Trash", "Recyclable");
+        _tag.AddTags(ent, TrashTag, RecyclableTag);
         EnsureComp<SpaceGarbageComponent>(ent);
+        RemComp<StealTargetComponent>(ent); // opened mail should not count for the objective
 
         DirtyField(ent.Owner, ent.Comp, nameof(DeliveryComponent.IsOpened));
 
-        _popup.PopupPredicted(Loc.GetString("delivery-opened", ("delivery", deliveryName)), user, user);
+        _popup.PopupPredicted(Loc.GetString("delivery-opened-self", ("delivery", deliveryName)),
+            Loc.GetString("delivery-opened-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
 
         if (!_container.TryGetContainer(ent, ent.Comp.Container, out var container))
             return;

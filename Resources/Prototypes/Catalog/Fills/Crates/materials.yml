@@ -153,6 +153,18 @@
           # for some reason, the selector here adds 1 to whatever value it generates,
           # so this is actually 2-4
 
+- type: entity
+  id: CrateMaterialBasicResource
+  parent: CrateGenericSteel
+  name: basic sheet crate
+  description: 30 sheets of steel, glass, and plastic.
+  components:
+  - type: StorageFill
+    contents:
+    - id: SheetSteel
+    - id: SheetGlass
+    - id: SheetPlastic
+
 #- type: entity
 #  id: CrateMaterialHFuelTank
 #  name: fueltank crate
