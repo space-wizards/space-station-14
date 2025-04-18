@@ -251,7 +251,7 @@
   description: This modified TD-95 laser carbine fires nearly harmless beams at 5-watts for target practice. Best to wear eye protection. #imp
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_gun.rsi #imp
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_practice.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -264,14 +264,17 @@
     zeroVisible: false
   - type: Appearance
   - type: Clothing
-    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_gun.rsi #imp
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_practice.rsi #imp
+  - type: Battery #imp
+    maxCharge: 160 #imp
+    startingCharge: 160 #imp
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
   - type: HitscanBatteryAmmoProvider
     proto: RedLaserPractice
-    fireCost: 62.5
+    fireCost: 10 #imp
   - type: StaticPrice
     price: 300
 #imp edit begin; weapon melee
@@ -296,6 +299,24 @@
   id: WeaponLaserCarbine
   description: A laser-based energy carbine with familiar ergonomics and controls to its kinetic counterparts. Favored by Nanotrasen for security forces, as they are cheap and easy to use. #imp
   components:
+  - type: Sprite #imp edits start
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_gun.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: false
+  - type: Appearance
+  - type: Battery
+    maxCharge: 1000
+    startingCharge: 1000
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/laser_gun.rsi #imp edits end
   - type: StaticPrice
     price: 420
   - type: HitscanBatteryAmmoProvider
@@ -588,7 +609,7 @@
   description: A self-defense weapon that exhausts organic targets, weakening them until they collapse. This one has been undertuned for cadets making it mostly harmless.
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Weapons/Guns/Battery/disabler.rsi #imp
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/disablerpractice.rsi #imp
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -596,11 +617,14 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: Clothing
-    sprite: _Impstation/Objects/Weapons/Guns/Battery/disabler.rsi #imp
+    sprite: _Impstation/Objects/Weapons/Guns/Battery/disablerpractice.rsi #imp
     quickEquip: false
     slots:
     - Belt
   - type: Appearance
+  - type: Battery #imp
+    maxCharge: 100 #imp
+    startingCharge: 100 #imp
   - type: MagazineVisuals
     magState: mag
     steps: 6 #impstation
@@ -613,7 +637,7 @@
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisablerPractice
-    fireCost: 100
+    fireCost: 10
   - type: Tag
     tags:
     - Taser
@@ -641,6 +665,9 @@
     slots:
       - suitStorage
       - Belt
+  - type: Battery #imp
+    maxCharge: 1000 #imp
+    startingCharge: 1000 #imp
   - type: ProjectileBatteryAmmoProvider
     proto: BulletDisabler
     fireCost: 100
