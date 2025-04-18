@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: VlaDOS1408
-  changes:
-  - message: The Communication Console UI is now resizable.
-    type: Fix
-  id: 7738
-  time: '2024-12-20T16:17:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33655
 - author: RatIRL
   changes:
   - message: Added All-Hostile ballistic turret.
@@ -3907,3 +3900,10 @@
   id: 8238
   time: '2025-04-18T22:52:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33888
+- author: YoungThugSS14
+  changes:
+  - message: The Diona and Gingerbread species now get unique typing indicators
+    type: Add
+  id: 8239
+  time: '2025-04-18T23:19:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36126
