@@ -1,10 +1,11 @@
-- type: latheCategory
-  id: Ammo
-  name: lathe-category-ammo
-
+# Generic
 - type: latheCategory
   id: Circuitry
   name: lathe-category-circuitry
+
+- type: latheCategory
+  id: Clothing
+  name: lathe-category-clothing
 
 - type: latheCategory
   id: Lights
@@ -31,7 +32,6 @@
   name: lathe-category-weapons
 
 # Biogen
-
 - type: latheCategory
   id: Food
   name: lathe-category-food
@@ -43,3 +43,45 @@
 - type: latheCategory
   id: Materials
   name: lathe-category-materials
+
+# Sec
+- type: latheCategory
+  id: Ammo
+  name: lathe-category-ammo
+
+- type: latheCategory
+  id: Boxes
+  name: lathe-category-boxes
+
+- type: latheCategory
+  id: Magazines
+  name: lathe-category-magazines
+
+# Uniform printer
+- type: latheCategory
+  id: Bedsheets
+  name: lathe-category-bedsheets
+
+- type: latheCategory
+  id: Carpets
+  name: lathe-category-carpets
+
+- type: latheCategory
+  id: Coats
+  name: lathe-category-coats
+
+- type: latheCategory
+  id: Command
+  name: lathe-category-command
+
+- type: latheCategory
+  id: Hats
+  name: lathe-category-hats
+
+- type: latheCategory
+  id: Jumpsuits
+  name: lathe-category-jumpsuits
+
+- type: latheCategory
+  id: Neck
+  name: lathe-category-neck
