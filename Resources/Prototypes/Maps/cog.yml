@@ -2,8 +2,7 @@
   id: Cog
   mapName: 'Cog Station'
   mapPath: /Maps/cog.yml
-  minPlayers: 40
-  maxPlayers: 80 #big map
+  minPlayers: 45
   stations:
     Cog:
       stationProto: StandardNanotrasenStation
@@ -28,7 +27,7 @@
             Reporter: [ 2, 2 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 3, 3 ]
-            Zookeeper: [ 1, 1 ] 
+            Zookeeper: [ 1, 1 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]

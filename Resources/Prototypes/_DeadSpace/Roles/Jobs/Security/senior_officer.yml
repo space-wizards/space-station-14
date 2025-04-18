@@ -43,10 +43,9 @@
   id: SeniorOfficerGear
   equipment:
     eyes: ClothingEyesGlassesSecurity
-    head: ClothingHeadHatBeretSecurity
+    head: ClothingHeadHatBeretSeniorOfficer
     ears: ClothingHeadsetSecurity
     pocket1: WeaponRevolverDeckard
-    socks: ClothingUnderwearSocksSeniorOfficer
   storage:
     back:
     - Flash
@@ -55,3 +54,4 @@
     - SpeedLoaderMagnum
     - HyperLinkBookCorporateLaw
     - HyperLinkBookSOPSecurity
+    - RubberStampSeniorOfficer # DS14

@@ -35,11 +35,10 @@
   id: SecurityCadetGear
   equipment:
     shoes: ClothingShoesBootsJackSecFilled # Corvax-Resprite-MRP
-    outerClothing: ClothingOuterArmorBasic
+    outerClothing: ClothingOuterVestArmorSec
     id: SecurityCadetPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
-    socks: ClothingUnderwearSocksCadet
   storage:
     back:
     - HyperLinkBookCorporateLaw

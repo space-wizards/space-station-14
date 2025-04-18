@@ -374,7 +374,7 @@
   parent: WeaponRevolverMateba
   id: WeaponRevolverMatebaMaelstorm
   name: почётное революционное оружие
-  description: Великая награда героям СССП времён революций. На нем выгравировано "От КПСС - Отто фон Евпатоивичу". Использует патроны калибра .44 магнум.
+  description: Великая награда героям СССП времён революций. На нем выгравировано "От КПСС - Отто фон Евпатоивичу". Использует патроны калибра .45 магнум.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
@@ -390,7 +390,7 @@
   parent: WeaponRevolverMateba
   id: WeaponRevolverMatebaUSSP
   name: советская Матеба
-  description: Наградной пистолет СССП. Использует патроны калибра .44 магнум.
+  description: Наградной пистолет СССП. Использует патроны калибра .45 магнум.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite

@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/ca674eff9d23e04357b7609ef7e07eadfc1a993f, modified by ps3moira (github), resprited by dakone22 (github) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "mag-1"
+    },
+    {
+      "name": "mag-2"
+    },
+    {
+      "name": "mag-3"
+    },
+    {
+      "name": "incendiary"
+    },
+    {
+      "name": "practice"
+    },
+    {
+      "name": "uranium"
+    }
+  ]
+}

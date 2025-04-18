@@ -1,0 +1,41 @@
+- type: reaction
+  id: BluespaceHot
+  reactants:
+    Vodka:
+      amount: 3
+    SpaceUp:
+      amount: 3
+    Licoxide:
+      amount: 1
+    Ice:
+      amount: 3
+  products:
+    BluespaceHot: 10
+
+- type: reaction
+  id: Sontse
+  reactants:
+    WeldingFuel:
+      amount: 1
+    Coffee:
+      amount: 1
+    JuiceOrange:
+      amount: 1
+    Mead:
+      amount: 1
+  products:
+    Sontse: 4
+
+- type: reaction
+  id: UplinkDrink
+  reactants:
+    NuclearCola:
+      amount: 1
+    Rum:
+      amount: 1
+    Iron:
+      amount: 1
+    WeldingFuel:
+      amount: 1
+  products:
+    UplinkDrink: 4

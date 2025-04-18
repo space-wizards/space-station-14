@@ -1,6 +1,8 @@
 - type: latheRecipe
   abstract: true
   id: BaseBedsheetRecipe
+  categories:
+  - Bedsheets
   completetime: 2
   materials:
     Cloth: 150
@@ -111,3 +113,15 @@
   parent: BaseSpecifiedBedsheetRecipe
   id: BedsheetSyndie
   result: BedsheetSyndie
+
+# DS14-start
+
+- type: latheRecipe
+  parent: BaseSpecifiedBedsheetRecipe
+  id: BedsheetChaplain
+  result: BedsheetChaplain
+
+- type: latheRecipe
+  parent: BaseSpecifiedBedsheetRecipe
+  id: BedsheetRuntime
+  result: BedsheetRuntime

@@ -1,0 +1,138 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation, sheetbrigmedic sprited by RudeyCoolLeet#3875, edited by andrew_fenriz for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "double_sheetrd"
+    },
+    {
+      "name": "double_sheetred"
+    },
+    {
+      "name": "double_sheetruntime"
+    },
+    {
+      "name": "double_sheetsyndie"
+    },
+    {
+      "name": "double_sheetUSA"
+    },
+    {
+      "name": "double_sheetwhite"
+    },
+    {
+      "name": "double_sheetwiz"
+    },
+    {
+      "name": "double_sheetyellow"
+    },
+    {
+      "name": "random_doublesheet"
+    },
+    {
+      "name": "sheetchap"
+    },
+    {
+      "name": "sheetclockwork"
+    },
+    {
+      "name": "sheetpirate"
+    },
+    {
+      "name": "sheetruntime"
+    },
+    {
+      "name": "double_sheetblack"
+    },
+    {
+      "name": "double_sheetblue"
+    },
+    {
+      "name": "double_sheetbrigmedic"
+    },
+    {
+      "name": "double_sheetbrown"
+    },
+    {
+      "name": "double_sheetcaptain"
+    },
+    {
+      "name": "double_sheetce"
+    },
+    {
+      "name": "double_sheetcentcom"
+    },
+    {
+      "name": "double_sheetchap"
+    },
+    {
+      "name": "double_sheetclockwork"
+    },
+    {
+      "name": "double_sheetclown"
+    },
+    {
+      "name": "double_sheetcmo"
+    },
+    {
+      "name": "double_sheetcosmos",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "double_sheetcult"
+    },
+    {
+      "name": "double_sheetgreen"
+    },
+    {
+      "name": "double_sheetgrey"
+    },
+    {
+      "name": "double_sheethop"
+    },
+    {
+      "name": "double_sheethos"
+    },
+    {
+      "name": "double_sheetian"
+    },
+    {
+      "name": "double_sheetmedical"
+    },
+    {
+      "name": "double_sheetmime"
+    },
+    {
+      "name": "double_sheetNT"
+    },
+    {
+      "name": "double_sheetorange"
+    },
+    {
+      "name": "double_sheetpirate"
+    },
+    {
+      "name": "double_sheetpurple"
+    },
+    {
+      "name": "double_sheetqm"
+    },
+    {
+      "name": "double_sheetrainbow"
+    }
+  ]
+}

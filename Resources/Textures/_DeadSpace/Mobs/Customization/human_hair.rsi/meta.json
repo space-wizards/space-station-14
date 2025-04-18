@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "grandenotail taken from Skyrat-tg at https://github.com/Skyrat-SS13/Skyrat-tg/commit/ad654e76b4c5dd3972cd2a07eb2d4f9658965807 resprite by aywei11. (discord) for Space Station 14 server Мёртвый Космос, braid and braid2 taken from https://github.com/dead-space-server/space-station-14-fobos/blob/e0a4735fe2d1f727e83f250f867d51465b725fe5/Resources/Textures/Mob/human_hair.rsi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "grandenotail",
+      "directions": 4
+    },
+    {
+      "name": "braid",
+      "directions": 4
+    },
+    {
+      "name": "braid2",
+      "directions": 4
+    }
+  ]
+}

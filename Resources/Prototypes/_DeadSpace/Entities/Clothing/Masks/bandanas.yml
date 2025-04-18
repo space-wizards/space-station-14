@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingMaskBandanaBase
+  id: ClothingMaskBandSecurity
+  name: бандана СБ
+  description: Плотная тканевая бандана тёмно-синего цвета, принадлежащая станционной службе безопасности NanoTrasen.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Bandanas/sec.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Bandanas/sec.rsi

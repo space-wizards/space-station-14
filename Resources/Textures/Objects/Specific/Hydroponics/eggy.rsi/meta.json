@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/696dfcc59c9e65e7bbe3923d1f7e880ea384783f and recolor white",
+  "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/commit/1dbcf389b0ec6b2c51b002df5fef8dd1519f8068, seed.png modified from https://github.com/space-wizards/space-station-14/pull/23210/files#diff-13896c37cf761a5782bb95bbc433bb738dd59ed89276af17dccd606adb759ee5 by Chaoticaa (GitHub), Growth stages, dead, and harvest sprites created by Chaoticaa (GitHub)",
   "size": {
     "x": 32,
     "y": 32

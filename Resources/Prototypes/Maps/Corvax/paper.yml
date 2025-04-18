@@ -2,8 +2,8 @@
   id: CorvaxPaper
   mapName: 'Paper Station'
   mapPath: /Maps/corvax_paper.yml
-  minPlayers: 14
-  maxPlayers: 65
+  minPlayers: 15
+  maxPlayers: 40
   stations:
     CorvaxPaper:
       stationProto: StandardNanotrasenStation
@@ -37,7 +37,7 @@
             IAA: [ 1, 1 ]
             # engineering
             ChiefEngineer: [ 1, 1 ]
-            AtmosphericTechnician: [ 2, 3 ]
+            AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 4, 5 ]
             TechnicalAssistant: [ 3, 3 ]
             # medical

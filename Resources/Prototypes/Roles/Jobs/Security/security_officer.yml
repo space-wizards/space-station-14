@@ -33,7 +33,6 @@
   equipment:
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetSecurity
-    socks: ClothingUnderwearSocksSecurityOfficer
   storage:
     back:
     - Flash

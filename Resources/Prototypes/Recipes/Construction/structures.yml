@@ -761,6 +761,44 @@
   objectType: Structure
   placementMode: SnapgridCenter
 
+# DS14-start
+- type: construction
+  name: directional uranium window
+  id: UraniumWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: uraniumWindowDirectional
+  category: construction-category-structures
+  description: Clear.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: uranium_window
+  objectType: Structure
+  placementMode: SnapgridCenter
+
+- type: construction
+  name: directional reinforced uranium window
+  id: uraniumReinforcedWindowDirectional
+  graph: WindowDirectional
+  startNode: start
+  targetNode: uraniumReinforcedWindowDirectional
+  category: construction-category-structures
+  description: Clear.
+  canBuildInImpassable: true
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/directional.rsi
+    state: uranium_reinforced_window
+  objectType: Structure
+  placementMode: SnapgridCenter
+# DS14-end
+
 - type: construction
   name: firelock
   id: Firelock

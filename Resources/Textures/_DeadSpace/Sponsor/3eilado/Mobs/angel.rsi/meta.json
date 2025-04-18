@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by andrew_fenriz (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 54,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "angel",
+      "directions": 4
+    }
+  ]
+}

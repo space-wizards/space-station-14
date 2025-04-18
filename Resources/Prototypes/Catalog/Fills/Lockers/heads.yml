@@ -18,6 +18,7 @@
     - id: RubberStampDenied
     - id: RubberStampQm
     - id: AstroNavCartridge
+    - id: MailTeleporterMachineCircuitboard
     - id: ADTtelescopicBaton # ADT
     - id: BoxPhotocopierToners # DS14
 
@@ -289,6 +290,7 @@
     - id: AsimovCircuitBoard # DS14
     - id: CorporateCircuitBoard # DS14
     - id: NTDefaultCircuitBoard # DS14
+    - id: EncryptionKeyBinary # DS14
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable

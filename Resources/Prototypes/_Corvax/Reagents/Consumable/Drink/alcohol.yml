@@ -39,26 +39,6 @@
         amount: 0.07
 
 - type: reagent
-  id: Daiquiri
-  name: reagent-name-daiquiri
-  parent: BaseAlcohol
-  desc: reagent-desc-daiquiri
-  physicalDesc: reagent-physical-desc-bubbly
-  flavor: alcohol
-  color: "#f7f3eb"
-  metamorphicSprite:
-    sprite: _Corvax/Objects/Consumable/Drinks/daiquiri.rsi
-    state: icon
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.07
-
-- type: reagent
   id: Campari
   name: reagent-name-campari
   parent: BaseAlcohol
@@ -85,26 +65,6 @@
   color: "#af1700"
   metamorphicSprite:
     sprite: _Corvax/Objects/Consumable/Drinks/negroni.rsi
-    state: icon
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.12
-
-- type: reagent
-  id: EspressoMartini
-  name: reagent-name-espressoMartini
-  parent: BaseAlcohol
-  desc: reagent-desc-espressoMartini
-  physicalDesc: reagent-physical-desc-bubbly
-  flavor: alcohol
-  color: "#4c2f11"
-  metamorphicSprite:
-    sprite: _Corvax/Objects/Consumable/Drinks/espressoMartini.rsi
     state: icon
   metabolisms:
     Drink:
@@ -214,26 +174,6 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.1
-
-- type: reagent
-  id: MoscowMule
-  name: reagent-name-moscowMule
-  parent: BaseAlcohol
-  desc: reagent-desc-moscowMule
-  physicalDesc: reagent-physical-desc-bubbly
-  flavor: alcohol
-  color: "#d5dcd3"
-  metamorphicSprite:
-    sprite: _Corvax/Objects/Consumable/Drinks/moscowMule.rsi
-    state: icon
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-      - !type:AdjustReagent
-        reagent: Ethanol
-        amount: 0.07
 
 - type: reagent
   id: Paloma

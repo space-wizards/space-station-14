@@ -313,8 +313,8 @@
     - Flare
     - WeaponDisabler
     - HandheldHealthAnalyzer
-    - OmnizineChemistryBottle
-    - EpinephrineChemistryBottle
+    - ChemistryBottleOmnizine
+    - ChemistryBottleEpinephrine
     - Cautery
     - FlashlightLantern
     - CrowbarRed
@@ -353,10 +353,10 @@
     pocket1: DoubleEmergencyOxygenTankFilled
   storage:
     back:
-    - OmnizineChemistryBottle
-    - OmnizineChemistryBottle
-    - EpinephrineChemistryBottle
-    - EpinephrineChemistryBottle
+    - ChemistryBottleOmnizine
+    - ChemistryBottleOmnizine
+    - ChemistryBottleEpinephrine
+    - ChemistryBottleEpinephrine
     - Cautery
     - CrowbarRed
     - Flare
@@ -402,12 +402,12 @@
     pocket1: DoubleEmergencyOxygenTankFilled
   storage:
     back:
-    - OmnizineChemistryBottle
-    - OmnizineChemistryBottle
-    - OmnizineChemistryBottle
-    - EpinephrineChemistryBottle
-    - EpinephrineChemistryBottle
-    - EpinephrineChemistryBottle
+    - ChemistryBottleOmnizine
+    - ChemistryBottleOmnizine
+    - ChemistryBottleOmnizine
+    - ChemistryBottleEpinephrine
+    - ChemistryBottleEpinephrine
+    - ChemistryBottleEpinephrine
     - Cautery
     - CrowbarRed
     - ADTCombatHypo

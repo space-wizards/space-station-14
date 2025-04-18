@@ -1,0 +1,128 @@
+- type: entity
+  name: теневая бабочка
+  parent: [ BaseShadowMob, FlyingMobBase ]
+  id: MobButterflyShadow
+  description: Маленький сгусток тьмы, бесшумно машущий крылышками с замысловатым узором.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _DeadSpace/Sponsor/3eilado/Mobs/dark_butterfly.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: butterfly
+  - type: Physics
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 6
+
+- type: entity
+  name: теневой кролик
+  parent: BaseShadowMob
+  id: MobRabbitShadow
+  description: Концентрированное умиление и тьма. Не кусается.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _DeadSpace/Sponsor/3eilado/Mobs/rabbit.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: rabbit
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: rabbit-moving
+    noMovementLayers:
+      movement:
+        state: rabbit
+  - type: Physics
+  - type: InteractionPopup
+    successChance: 0.01
+    interactSuccessString: petting-success-cat
+    interactFailureString: petting-failure-shadow
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/raccoon_chatter.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 4
+
+- type: entity
+  name: теневая медуза
+  parent: [ BaseShadowMob, FlyingMobBase ]
+  id: MobJellyfishShadow
+  description: Левитирует в пространсте, ощупывая воздух своими щупальцами.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _DeadSpace/Sponsor/3eilado/Mobs/jellyfish.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: jellyfish
+  - type: Physics
+  - type: InteractionPopup
+    successChance: 0.01
+    interactSuccessString: petting-success-cat
+    interactFailureString: petting-failure-shadow
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/sloth_squeak.ogg
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 4
+
+- type: entity
+  name: тень ангела
+  parent: [ BaseShadowMob, FlyingMobBase ]
+  id: MobAngelShadow
+  description: Мрачное существо, что словно пришло из библейских рассказов.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _DeadSpace/Sponsor/3eilado/Mobs/angel.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: angel
+  - type: Physics
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2
+    baseSprintSpeed : 4
+
+- type: entity
+  name: тень джентльмена
+  parent: BaseShadowMob
+  id: MobSmokingShadow
+  description: Тёмный силует мужчины в дорогом костюме. Вблизи может показаться, что он хочет что-то сказать.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _DeadSpace/Sponsor/3eilado/Mobs/smoking.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: smoking
+    - state: eye
+      shader: unshaded
+      color: white
+  - type: Physics
+  - type: Grammar
+    attributes:
+      gender: epicene
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 4
+  - type: AmbientSound
+    range: 5
+    volume: -5
+    sound:
+      path: /Audio/Ambience/anomaly_scary.ogg

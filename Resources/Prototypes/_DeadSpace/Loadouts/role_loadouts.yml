@@ -110,6 +110,7 @@
   - SurvivalBrigmedic
   - Trinkets
   - GroupSpeciesBreathTool
+  - BrigmedicSocks # DS14-Underwear
   - BrigmedicUnderwear # DS14-Underwear
 
 - type: roleLoadout
@@ -118,19 +119,22 @@
   - GroupTankHarness
   - SeniorOfficerJumpsuit
   - SeniorOfficerBackpack
-  - SecurityOuterClothing
+  - SeniorOfficerOuterClothing
   - SecurityShoes
   - SeniorOfficerPDA
   - SecurityBelt
   - SurvivalSecurity
   - Trinkets
   - GroupSpeciesBreathTool
+  - SeniorOfficerNeck
+  - SeniorOfficerSocks # DS14-Underwear
   - SeniorOfficerUnderwear # DS14-Underwear
 
 - type: roleLoadout
   id: JobSecurityPilot
   groups:
   - GroupTankHarness
+  - SecurityHead
   - SecurityJumpsuit
   - SecurityBackpack
   - SecurityShoes
@@ -138,6 +142,7 @@
   - SurvivalSecurity
   - Trinkets
   - GroupSpeciesBreathTool
+  - SecuritySocks # DS14-Underwear
   - SecurityUnderwear # DS14-Underwear
 
 # Medical

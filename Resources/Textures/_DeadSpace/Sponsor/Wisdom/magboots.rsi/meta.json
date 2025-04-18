@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "created by hq._.dishka (discord) for Space Station 14 server Мёртвый Космос",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "equipped-FEET",
+      "directions": 4
+    },
+    {
+      "name": "on-equipped-FEET",
+      "directions": 4
+    },
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon-on"
+    }
+  ]
+}

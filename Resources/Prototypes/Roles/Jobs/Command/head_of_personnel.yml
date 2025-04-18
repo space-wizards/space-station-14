@@ -75,7 +75,6 @@
 - type: startingGear
   id: HoPGear
   equipment:
-    shoes: ClothingShoesColorBrown
     id: HoPPDA
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesHop

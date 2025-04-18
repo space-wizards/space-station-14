@@ -10,6 +10,7 @@
           state: random_bedsheet
     - type: RandomSpawner
       rarePrototypes:
+        - BedsheetRuntime # DS14
         - BedsheetIan
         - BedsheetCosmos
       rareChance: 0.03

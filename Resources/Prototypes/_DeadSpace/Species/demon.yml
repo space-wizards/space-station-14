@@ -8,11 +8,10 @@
   markingLimits: MobDemonMarkingLimits
   dollPrototype: MobDemonDummy
   skinColoration: Hues
-  maleFirstNames: names_first_male
-  femaleFirstNames: names_first_female
-  maleLastNames: names_last_male
-  femaleLastNames: names_last_female
-  naming: firstlast
+  maleFirstNames: NamesFirstMale
+  femaleFirstNames: NamesFirstFemale
+  maleLastNames: NamesLastMale
+  femaleLastNames: NamesLastFemale
 
 - type: speciesBaseSprites
   id: MobDemonSprites

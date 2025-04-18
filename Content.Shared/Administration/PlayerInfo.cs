@@ -13,6 +13,7 @@ public sealed record PlayerInfo(
     bool Antag,
     RoleTypePrototype RoleProto,
     bool Sponsor,
+    int SortWeight,
     NetEntity? NetEntity,
     NetUserId SessionId,
     bool Connected,

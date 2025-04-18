@@ -81,6 +81,7 @@
         - ClothingHeadHelmetBasic
         - ClothingHeadHelmetRiot
         - ClothingOuterArmorBasic
+        - ClothingOuterVestArmorSec # DS14
         - ClothingOuterArmorRiot
         - ClothingOuterArmorBulletproof
 #        - WeaponSubMachineGunWt550
@@ -142,6 +143,7 @@
         - ClothingHeadHelmetBasic
         - ClothingHeadHelmetRiot
         - ClothingOuterArmorBasic
+        - ClothingOuterVestArmorSec # DS14
         - ClothingOuterArmorRiot
         - ClothingOuterArmorBulletproof
       chance: 0.95

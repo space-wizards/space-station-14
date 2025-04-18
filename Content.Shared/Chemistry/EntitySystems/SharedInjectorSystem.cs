@@ -24,13 +24,30 @@ public abstract class SharedInjectorSystem : EntitySystem
     [Dependency] protected readonly SharedCombatModeSystem Combat = default!;
     [Dependency] protected readonly SharedDoAfterSystem DoAfter = default!;
     [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
+    [Dependency] protected readonly SharedUserInterfaceSystem Ui = default!; // DS14-transfer-amount-ui-for-injector-component
 
     public override void Initialize()
     {
         SubscribeLocalEvent<InjectorComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
         SubscribeLocalEvent<InjectorComponent, ComponentStartup>(OnInjectorStartup);
         SubscribeLocalEvent<InjectorComponent, UseInHandEvent>(OnInjectorUse);
+        SubscribeLocalEvent<InjectorComponent, TransferAmountSetValueMessage>(OnTransferAmountSetValueMessage); // DS14-transfer-amount-ui-for-injector-component
     }
+
+    // DS14-transfer-amount-ui-for-injector-component-start
+    private void OnTransferAmountSetValueMessage(Entity<InjectorComponent> ent, ref TransferAmountSetValueMessage message)
+    {
+        var (uid, comp) = ent;
+
+        var newTransferAmount = FixedPoint2.Clamp(message.Value, comp.MinimumTransferAmount, comp.MaximumTransferAmount);
+        comp.TransferAmount = newTransferAmount;
+
+        if (message.Actor is { Valid: true } user)
+            Popup.PopupEntity(Loc.GetString("comp-solution-transfer-set-amount", ("amount", newTransferAmount)), uid, user);
+
+        Dirty(uid, comp);
+    }
+    // DS14-transfer-amount-ui-for-injector-component-end
 
     private void AddSetTransferVerbs(Entity<InjectorComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
     {
@@ -46,6 +63,24 @@ public abstract class SharedInjectorSystem : EntitySystem
         var toggleAmount = cur == max ? min : max;
 
         var priority = 0;
+
+        // DS14-transfer-amount-ui-for-injector-component-start
+        AlternativeVerb toggleeVerb = new()
+        {
+            Text = Loc.GetString("comp-solution-transfer-verb-custom-amount"),
+            Category = VerbCategory.SetTransferAmount,
+            Act = () =>
+            {
+                Ui.OpenUi(entity.Owner, TransferAmountUiKey.Key, user);
+            },
+
+            Priority = priority
+        };
+        args.Verbs.Add(toggleeVerb);
+
+        priority -= 1;
+        // DS14-transfer-amount-ui-for-injector-component-end
+
         AlternativeVerb toggleVerb = new()
         {
             Text = Loc.GetString("comp-solution-transfer-verb-toggle", ("amount", toggleAmount)),

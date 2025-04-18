@@ -1,0 +1,15 @@
+names-regal-rat-kingdom-dataset-1 = Чумной
+names-regal-rat-kingdom-dataset-2 = Туннельный
+names-regal-rat-kingdom-dataset-3 = Хламовый
+names-regal-rat-kingdom-dataset-4 = Мусорный
+names-regal-rat-kingdom-dataset-5 = Крысиный
+names-regal-rat-kingdom-dataset-6 = Паразитный
+names-regal-rat-kingdom-dataset-7 = Сырный
+names-regal-rat-kingdom-dataset-8 = Жующий
+names-regal-rat-kingdom-dataset-9 = Большой
+names-regal-rat-kingdom-dataset-10 = Грязный
+names-regal-rat-kingdom-dataset-11 = Водосточный
+names-regal-rat-kingdom-dataset-12 = Помойный
+names-regal-rat-kingdom-dataset-13 = Сервисный
+names-regal-rat-kingdom-dataset-14 = Конкретный
+names-regal-rat-kingdom-dataset-15 = Стальной

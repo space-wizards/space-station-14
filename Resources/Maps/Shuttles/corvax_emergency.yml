@@ -136,57 +136,57 @@ entities:
           decals:
             66: -3,5
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: BrickTileWhiteCornerNe
           decals:
             75: 2,14
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: BrickTileWhiteCornerNw
           decals:
             74: -1,14
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: BrickTileWhiteCornerSe
           decals:
             76: 2,11
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: BrickTileWhiteCornerSw
           decals:
             77: -1,11
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: BrickTileWhiteLineE
           decals:
             80: 2,12
             81: 2,13
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: BrickTileWhiteLineN
           decals:
             82: 0,14
             83: 1,14
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: BrickTileWhiteLineS
           decals:
             78: 0,11
             79: 1,11
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: BrickTileWhiteLineW
           decals:
             72: -1,12
             73: -1,13
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: CheckerNESW
           decals:
             68: -3,12
             70: -3,14
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: CheckerNWSE
           decals:
             67: -3,11

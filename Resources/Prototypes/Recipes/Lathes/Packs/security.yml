@@ -79,6 +79,13 @@
   - PowerCageSmall
   - TelescopicShield
 
+# DS14-start
+- type: latheRecipePack
+  id: NightVisionTech
+  recipes:
+  - ClothingEyesPNV
+# DS14-end
+
 - type: latheRecipePack
   id: SecurityBoards
   recipes:
@@ -133,9 +140,13 @@
   recipes:
   - Truncheon
   - WeaponAdvancedLaser
-  - WeaponDisabler
-  - WeaponDisablerSMG
   - WeaponLaserCannon
   - WeaponLaserCarbine
   - WeaponXrayCannon
   - WeaponLaserRifle # DS14
+
+- type: latheRecipePack
+  id: SecurityDisablers
+  recipes:
+  - WeaponDisabler
+  - WeaponDisablerSMG

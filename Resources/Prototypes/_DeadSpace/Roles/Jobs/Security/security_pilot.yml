@@ -35,11 +35,10 @@
   id: SecurityPilotGear
   equipment:
     eyes: ClothingEyesGlassesSecurity
-    head: ClothingHeadHatBeret
+    head: ClothingHeadHatBeretSecurity
     outerClothing: ClothingOuterWinterSec
     id: SecurityPilotPDA
     ears: ClothingHeadsetSecurity
-    socks: ClothingUnderwearSocksSecurityPilot
   storage:
     back:
     - Flash

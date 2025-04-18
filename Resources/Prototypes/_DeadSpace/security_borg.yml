@@ -172,7 +172,7 @@
     autoRechargeRate: 20
 
 - type: entity
-  parent: WeaponDisabler
+  parent: BaseWeaponBatterySmall
   id: WeaponDisablerBorg
   name: станнер киборга
   description: Оружие для самозащиты, которое изнуряет органические цели, пока они не свалятся с ног.
@@ -185,6 +185,14 @@
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 10
+  - type: Gun
+    fireRate: 2
+    projectileSpeed: 35 # any higher and this causes issues in lag
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 50
 
 - type: entity
   parent: Stunbaton
@@ -461,7 +469,8 @@
 - type: latheRecipe
   id: LeftArmBorgSec
   result: LeftArmBorgSec
-  category: Robotics
+  categories:
+  - Robotics
   completetime: 3
   materials:
     Steel: 300
@@ -472,7 +481,8 @@
 - type: latheRecipe
   id: RightArmBorgSec
   result: RightArmBorgSec
-  category: Robotics
+  categories:
+  - Robotics
   completetime: 3
   materials:
     Steel: 300
@@ -483,7 +493,8 @@
 - type: latheRecipe
   id: LeftLegBorgSec
   result: LeftLegBorgSec
-  category: Robotics
+  categories:
+  - Robotics
   completetime: 3
   materials:
     Steel: 300
@@ -494,7 +505,8 @@
 - type: latheRecipe
   id: RightLegBorgSec
   result: RightLegBorgSec
-  category: Robotics
+  categories:
+  - Robotics
   completetime: 3
   materials:
     Steel: 300
@@ -505,7 +517,8 @@
 - type: latheRecipe
   id: HeadBorgSec
   result: HeadBorgSec
-  category: Robotics
+  categories:
+  - Robotics
   completetime: 3
   materials:
     Steel: 500
@@ -516,7 +529,8 @@
 - type: latheRecipe
   id: TorsoBorgSec
   result: TorsoBorgSec
-  category: Robotics
+  categories:
+  - Robotics
   completetime: 3
   materials:
     Steel: 500
@@ -527,7 +541,8 @@
 - type: latheRecipe
   id: CyborgEndoskeletonSec
   result: CyborgEndoskeletonSec
-  category: Robotics
+  categories:
+  - Robotics
   completetime: 5
   materials:
     Steel: 2500

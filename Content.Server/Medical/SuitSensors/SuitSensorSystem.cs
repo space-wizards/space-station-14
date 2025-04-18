@@ -15,6 +15,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -44,6 +45,7 @@ public sealed class SuitSensorSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
@@ -344,6 +346,20 @@ public sealed class SuitSensorSystem : EntitySystem
         {
             var msg = Loc.GetString("suit-sensor-mode-state", ("mode", GetModeName(mode)));
             _popupSystem.PopupEntity(msg, sensors, userUid.Value);
+        }
+    }
+
+    /// <summary>
+    ///     Set all suit sensors on the equipment someone is wearing to the specified mode.
+    /// </summary>
+    public void SetAllSensors(EntityUid target, SuitSensorMode mode, SlotFlags slots = SlotFlags.All )
+    {
+        // iterate over all inventory slots
+        var slotEnumerator = _inventory.GetSlotEnumerator(target, slots);
+        while (slotEnumerator.NextItem(out var item, out _))
+        {
+            if (TryComp<SuitSensorComponent>(item, out var sensorComp))
+                SetSensor((item, sensorComp), mode);
         }
     }
 

@@ -1,5 +1,4 @@
 using Content.Server.Objectives.Components;
-using Content.Server.Objectives.Components.Targets;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;

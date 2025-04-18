@@ -1,5 +1,5 @@
 ent-RubberStampBase = универсальная печать
-    .desc = Печать из резины, для проставления печатей на важных документах.
+    .desc = Печать из резины для проставления печатей на важных документах.
 ent-RubberStampBaseAlt = альтернативная печать
     .desc = { ent-RubberStampBase.desc }
 ent-RubberStampCaptain = печать капитана
@@ -42,3 +42,5 @@ ent-RubberStampGreytide = печать грейтайда
     .desc = Резиновая печать для проставления штампов на важных документах. От одного взгляда на неё вас окатывает серая волна...
 ent-RubberStampPsychologist = печать психолога
     .desc = Резиновая печать для проставления штампов на важных документах. Назначьте эти лекарства!
+ent-RubberStampWizard = wizard's rubber stamp
+    .desc = A chaotic wizard stamp for serving unchaotic paperwork, how ironic.

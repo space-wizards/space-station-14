@@ -37,6 +37,7 @@ research-technology-portable-microfusion-weaponry = Portable Microfusion Weaponr
 research-technology-experimental-battery-ammo = Experimental Battery Ammo
 research-technology-basic-shuttle-armament = Shuttle basic armament
 research-technology-advanced-shuttle-weapon = Advanced shuttle weapons
+research-technology-night-vision-technology = Night vision technology
 
 research-technology-basic-robotics = Basic Robotics
 research-technology-basic-anomalous-research = Basic Anomalous Research

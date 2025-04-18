@@ -273,6 +273,9 @@
     - id: FoodPizzaCotton
       prob: 0.10
       orGroup: Pizza
+    - id: FoodPizzaWorldpeas
+      prob: 0.05
+      orGroup: Pizza
     - id: KnifePlastic
   
 - type: entity
@@ -498,8 +501,8 @@
     heldPrefix: box
   - type: Storage
     maxItemSize: Normal
-    grid:
-    - 0,0,3,3
+    # grid: # DS14
+    # - 0,0,3,3
   - type: Tag
     tags:
     - Trash
@@ -622,9 +625,9 @@
   suffix: Toy Unsafe, Snacks
   name: syndicate snack box
   components:
-  - type: Storage
-    grid:
-    - 0,0,5,2
+  # - type: Storage # DS14
+  #   grid:
+  #   - 0,0,5,2
   - type: StorageFill
     contents:
     # toy
@@ -655,15 +658,15 @@
       orGroup: Drink2Pool
     - id: DrinkColaCan
       orGroup: Drink2Pool
-    - id: DrinkColaCan
-      amount: 2
+    # - id: DrinkColaCan # DS14
+    #   amount: 2
     # food
-    - id: FoodSaladValid
-      prob: 0.05
-      amount: 4
-      orGroup: FoodPool
+    # - id: FoodSaladValid # DS14
+    #   prob: 0.05
+    #   amount: 4
+    #   orGroup: FoodPool
     - id: FoodSnackSyndi
-      amount: 4
+      amount: 3 # DS14
       orGroup: FoodPool
 
 - type: entity
@@ -752,8 +755,8 @@
         orGroup: GiftPool
       - id: PersonalAI
         orGroup: GiftPool
-      - id: CrayonBox
-        orGroup: GiftPool
+      # - id: CrayonBox # DS14
+      #   orGroup: GiftPool
       - id: ToySword
         orGroup: GiftPool
       - id: RevolverCapGun

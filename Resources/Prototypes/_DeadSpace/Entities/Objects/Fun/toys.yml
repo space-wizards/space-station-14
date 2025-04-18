@@ -48,6 +48,36 @@
   - type: Sprite
     sprite: _DeadSpace/Items/Toys/jokerge.rsi
     state: jokerge
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieFloran
+  name: плюшевый флоран
+  description: Интересно, откуда они тут взялись?
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+    state: floran
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieJuggernaut
+  name: плюшевый джаггернаут
+  description: Мягкая игрушка, напоминающая джаггернаута ядерных оперативников Синдиката. На бирке указано, что оперативники это полнейшая выдумка.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+    state: juggernaut
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieIps
+  name: плюшевый КПС
+  description: Милый плюшевый КПС.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+    state: ips
     
 - type: entity
   name: двухклинковый игрушечный меч
@@ -74,45 +104,320 @@
   - type: StaminaDamageOnHit
     damage: 10
 
+#Plushie base (фигурка + плюшевая игрушка)
 - type: entity
-  parent: BasePlushie
-  id: PlushieFloran
-  name: плюшевый флоран
-  description: Интересно, откуда они тут взялись?
+  parent: BaseItem
+  id: BasePlushieDeadSpaceMisc
+  abstract: true
   components:
   - type: Sprite
-    sprite: _DeadSpace/Items/Toys/floran.rsi
-    state: floran
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+  - type: Tag
+    tags:
+    - Figurine
+    - Payload
+    - ClothMade
+  - type: UseDelay
+    delay: 10
+  - type: TriggerOnActivate
+  - type: TriggerOnSignal
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: Speech
+  - type: EmitSoundOnLand
+    sound:
+      collection: ToyFall
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: ToySqueak
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 100
+  - type: StaticPrice
+    price: 5
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      collection: ToySqueak
+    delay: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
+  - type: SecretStash
+    secretStashName: secret-stash-plushie
+    blacklist:
+      components:
+      - SecretStash
+      - NukeDisk
+      tags:
+      - QuantumSpinInverter
+      - FakeNukeDisk
+  - type: ToolOpenable
+    openToolQualityNeeded: Slicing
+    closeToolQualityNeeded: Slicing
+    name: secret-stash-plushie
 
+#Admin Staff
 - type: entity
-  parent: BasePlushie
-  id: PlushieJuggernaut
-  name: плюшевый джаггернаут
-  description: Мягкая игрушка, напоминающая джаггернаута ядерных оперативников Синдиката. На бирке указано, что оперативники это полнейшая выдумка.
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieBoich
+  name: плюшевый Boich
+  description: Великий и прекрасный, всемогущий Боич. Преклони колено перед отцом всего и вся
   components:
   - type: Sprite
-    sprite: _DeadSpace/Items/Toys/juggernaut.rsi
-    state: juggernaut
+    state: boich
 
 - type: entity
-  parent: BasePlushie
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieCyberFox
+  name: плюшевый Юрий Кривда
+  description: Плюшевая игрушка могучего, но доброго мага. На бирке написано "CyberBoich"
+  components:
+  - type: Sprite
+    state: cyberfox
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieAhahaahahaha
+  name: плюшевый Ахахаахич
+  description: Всеми любимый главный разработчик!
+  components:
+  - type: Sprite
+    state: ahahaahahaha
+  - type: TTS
+    voice: Clockwerk
+  - type: SpeakOnTrigger
+    pack: PlushieAhahaahahahaSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieKriss
+  name: плюшевая Кристина
+  description: От игрушки пахнет егерьмейстером
+  components:
+  - type: Sprite
+    state: kriss
+  - type: TTS
+    voice: Kerrigan
+  - type: SpeakOnTrigger
+    pack: PlushieKrissSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieOstwind
+  name: плюшевый Ostwind
+  description: Ходят слухи, что он всё ещё в запое
+  components:
+  - type: Sprite
+    state: ostwind
+  - type: TTS
+    voice: Volskaya
+  - type: SpeakOnTrigger
+    pack: PlushieOstwindSpeech
+  
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieJeleshka
+  name: плюшевый Инспектор Желешка
+  description: 
+  components:
+  - type: Sprite
+    state: jeleshka
+  - type: TTS
+    voice: Nick
+  - type: SpeakOnTrigger
+    pack: PlushieJeleshkaSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieDobryash
+  name: плюшевый Лоуд Хернет
+  description: плюшевая игрушка одного из определённо НЕ подозрительных ассистентов.
+  components:
+  - type: Sprite
+    state: dobryash
+  - type: TTS
+    voice: DreadT
+  - type: SpeakOnTrigger
+    pack: PlushieDobryashSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieHqdishka
+  name: игрушечная Айрис Луа
+  description:  Это привлекательная игрушка, несмотря на то что она выглядит мило, когда вы её видите вы ощущаете удар палкой. "Осторожно, оно дерется и любит".
+  components:
+  - type: Sprite
+    state: iris
+  - type: TTS
+    voice: Templar
+  - type: SpeakOnTrigger
+    pack: FigurinesHqdishkaSpeech
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineHqdishka
+  name: игрушечная Айрис Луа
+  description: Фигурка, изображающая Айрис Луа
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+    state: hqdishka
+  - type: SpeakOnTrigger
+    pack: FigurinesHqdishkaSpeech
+  - type: TTS
+    voice: Templar
+
+- type: entity
+  parent: BaseFigurine
+  id: ToyFigurineHacksLua
+  name: игрушечный Хакс Луа
+  description: Фигурка, изображающая Хакса Луа
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Items/Toys/misc.rsi
+    state: hackslua
+  - type: SpeakOnTrigger
+    pack: FigurinesHacksLuaSpeech
+  - type: TTS
+    voice: Annah
+
+#Sponsor Staff
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieWillie
+  name: плюшевый Вилли Айрон
+  description: Взяв данную мягкую игрушку в руки, вы сразу можете обратить своё внимания на большое подобие шрама на левой части лица игрушки, а осмотрев со спины данное чудо, можно заметить короткий хвостик, которым удобно крутить данную игрушку в руках. Если у вас появиться острое желание понюхать данную плюшку, то иногда вы можете почувствовать запах различной руды, иногда денег, а иногда мармелада...
+  components:
+  - type: Sprite
+    state: willie
+  - type: TTS
+    voice: Lancer
+  - type: SpeakOnTrigger
+    pack: PlushieWillieSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieAinnete
+  name: плюшевый Ирвин Ван’Астрея
+  description: Плюшевая игрушка представителя расы аркан. На бирке надпись гласит, что эта игрушка создана корпорацией 1’А. От неё пахнет цветком ириса.
+  components:
+  - type: Sprite
+    state: ainnetel
+  - type: TTS
+    voice: Valerian
+  - type: SpeakOnTrigger
+    pack: PlushieAinnetelSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieAlex
+  name: плюшевый Алекс Спектр
+  description: Плюшевая игрушка, приобретённая на средства, сэкономленные благодаря оптимизации поставок ручек в юридический отдел, выглядит слегка уставшей.
+  components:
+  - type: Sprite
+    state: alex
+  - type: TTS
+    voice: P3
+  - type: SpeakOnTrigger
+    pack: PlushieAlexSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieElizabeth
+  name: плюшевая Элизабет Фламар
+  description: Милая плюшевая игрушка розоволосей фелинидки. Она похожа на маленького ангелочка, но, возможно, это не так.
+  components:
+  - type: Sprite
+    state: elizabeth
+  - type: TTS
+    voice: Neeko
+  - type: SpeakOnTrigger
+    pack: PlushieElizabethSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieEllis
+  name: плюшевый Эллис Ар’Еви
+  description: Плюшевая игрушка белого вульпканина в форме офицера "синий щит". При виде плюшки внутри вас появляется ощущение спокойствия и надежности, будто эта игрушка способна вас защитить от любой угрозы. Пахнет омнизином и метом
+  components:
+  - type: Sprite
+    state: ellis
+  - type: TTS
+    voice: Ellis
+  - type: SpeakOnTrigger
+    pack: PlushieEllisSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieKermuth
+  name: плюшевый Кемлухт К’Хфнг 
+  description: ППлюшевая игрушка представителя расы Ниан. Его глаза словно смотрят вам в душу. Пахнет сигаретным дымом
+  components:
+  - type: Sprite
+    state: kermuth
+  - type: TTS
+    voice: Zenyatta
+  - type: SpeakOnTrigger
+    pack: PlushieKermuthSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieLucius
+  name: плюшевый Люций Ван'Астрея
+  description: Плюшевая игрушка представителя расы аркан. На бирке надпись гласит, что эта игрушка создана корпорацией 1’А. На ощупь такой мягкий, что с ним можно спать в обнинку.
+  components:
+  - type: Sprite
+    state: lucius
+  - type: TTS
+    voice: Guillaume
+  - type: SpeakOnTrigger
+    pack: PlushieLuciusSpeech
+
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
+  id: PlushieEvelina
+  name: плюшевая Эвелиина Ридницохккаль Синаиккало
+  description: Плюшевая игрушка полуночно-синей арканы. Даже в виде плюшки выглядит так, словно вот-вот провалится в сон. На ощупь такая мягкая, что с ней можно спать в обнинку.
+  components:
+  - type: Sprite
+    state: evelina
+  - type: TTS
+    voice: Guillaume
+  - type: SpeakOnTrigger
+    pack: PlushieEvelinaSpeech
+
+#Mics with speech
+- type: entity
+  parent: BasePlushieDeadSpaceMisc
   id: PlushieLieutenant
   name: плюшевый лейтенант хома
   description: Хладнокровный и расчётливы, специализирующийся на управлении специальными операциями. Способен принимать взвешенные решения в критических ситуациях не смотря на то что он хомяк.
   components:
   - type: Sprite
-    sprite: _DeadSpace/Items/Toys/lieutenant.rsi
     state: lieutenant
-
-- type: entity
-  parent: BasePlushie
-  id: PlushieIps
-  name: плюшевый КПС
-  description: Милый плюшевый КПС.
-  components:
-  - type: Sprite
-    sprite: _DeadSpace/Items/Toys/plushie_ips.rsi
-    state: ips
+  - type: TTS
+    voice: Spy
+  - type: SpeakOnTrigger
+    pack: PlushieLieutenantSpeech
 
 - type: entity
   id: MagazineTommyCapGun

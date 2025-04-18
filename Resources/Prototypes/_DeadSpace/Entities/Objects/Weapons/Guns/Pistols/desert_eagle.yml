@@ -33,7 +33,7 @@
 - type: entity
   parent: BaseMagazineEagle
   id: MagazineEagle
-  name: пистолетный магазин пустынного орла (.44 магнум)
+  name: пистолетный магазин пустынного орла (.45 магнум)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
@@ -47,7 +47,7 @@
 - type: entity
   parent: BaseMagazineEagle
   id: MagazineEagleAP
-  name: пистолетный магазин пустынного орла (.44 магнум бронебойные)
+  name: пистолетный магазин пустынного орла (.45 магнум бронебойные)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumAP

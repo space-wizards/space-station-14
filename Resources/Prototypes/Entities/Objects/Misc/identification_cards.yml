@@ -928,20 +928,6 @@
   - type: PresetIdCard
     job: CBURNLeader
 
-- type: entity
-  parent: CBURNIDcard
-  id: CBURNSierraIDcard
-  components:
-  - type: PresetIdCard
-    job: CBURNSierraAgent
-
-- type: entity
-  parent: CBURNLeaderIDcard
-  id: CBURNSierraLeaderIDcard
-  components:
-  - type: PresetIdCard
-    job: CBURNSierraLeader
-
 # DS14-cburn-end
 
 - type: entity
@@ -1020,6 +1006,21 @@
 
 - type: entity
   parent: IDCardStandard
+  id: WizardIDCard
+  name: wizard ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: wizard
+    - state: idwizard
+  - type: Access
+    tags:
+    - Wizard
+    - External
+    - Maintenance
+
+- type: entity
+  parent: IDCardStandard
   id: UniversalIDCard
   name: universal ID card
   suffix: Admin
@@ -1040,6 +1041,7 @@
   - type: Access
     groups:
     - AllAccess
+    - Silicon
     tags:
     - CentralCommand
     - NuclearOperative
@@ -1048,3 +1050,11 @@
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
+  - type: AgentIDCard
+  - type: ActivatableUI
+    key: enum.AgentIDCardUiKey.Key
+    inHandsOnly: true
+  - type: UserInterface
+    interfaces:
+      enum.AgentIDCardUiKey.Key:
+        type: AgentIDCardBoundUserInterface

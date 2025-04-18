@@ -31,4 +31,4 @@
 
 "Changes: C#":
 - changed-files:
-  - all-globs-to-all-files: "**/*.cs"
+  - any-glob-to-any-file: "**/*.cs"

@@ -48,11 +48,18 @@
       head:
       - state: equipped-head-light
         shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
   - type: Clothing
     clothingVisuals:
       head:
       - state: equipped-head
       - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
         shader: unshaded
   - type: PointLight
     color: "#adffe6"
@@ -151,11 +158,18 @@
       head:
       - state: equipped-head-light
         shader: unshaded
+      head-vox:
+      - state: equipped-head-light-vox
+        shader: unshaded
   - type: Clothing
     clothingVisuals:
       head:
       - state: equipped-head
       - state: equipped-head-unshaded
+        shader: unshaded
+      head-vox:
+      - state: equipped-head-vox
+      - state: equipped-head-unshaded-vox
         shader: unshaded
   - type: PointLight
     radius: 6
@@ -197,7 +211,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security.rsi
   - type: PointLight
-    color: "#ffeead"
+    color: '#3fb594'
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
@@ -247,7 +261,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security-warden.rsi
   - type: PointLight
-    color: "#ffeead"
+    color: "#3fb594"
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 1000
@@ -339,7 +353,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security-red.rsi
   - type: PointLight
-    color: "#ffeead"
+    color: '#3fb594'
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 1000

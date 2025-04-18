@@ -3160,6 +3160,35 @@ entities:
     - type: Transform
       pos: -8.966801,10.694164
       parent: 1
+- proto: PirateCaptainScoonerSpawner
+  entities:
+  - uid: 553
+    components:
+    - type: Transform
+      pos: -8.5,9.5
+      parent: 1
+- proto: PirateScoonerSpawner
+  entities:
+  - uid: 550
+    components:
+    - type: Transform
+      pos: -7.5,2.5
+      parent: 1
+  - uid: 551
+    components:
+    - type: Transform
+      pos: -7.5,5.5
+      parent: 1
+  - uid: 552
+    components:
+    - type: Transform
+      pos: 2.5,5.5
+      parent: 1
+  - uid: 554
+    components:
+    - type: Transform
+      pos: 2.5,2.5
+      parent: 1
 - proto: PosterContrabandRevolt
   entities:
   - uid: 477
@@ -3726,53 +3755,6 @@ entities:
           showEnts: False
           occludes: True
           ents: []
-- proto: SpawnPointPirates
-  entities:
-  - uid: 550
-    components:
-    - type: Transform
-      pos: 0.5,-3.5
-      parent: 1
-  - uid: 551
-    components:
-    - type: Transform
-      pos: -8.5,9.5
-      parent: 1
-  - uid: 552
-    components:
-    - type: Transform
-      pos: -7.5,2.5
-      parent: 1
-  - uid: 553
-    components:
-    - type: Transform
-      pos: -7.5,5.5
-      parent: 1
-  - uid: 554
-    components:
-    - type: Transform
-      pos: -2.5,10.5
-      parent: 1
-  - uid: 555
-    components:
-    - type: Transform
-      pos: 2.5,2.5
-      parent: 1
-  - uid: 556
-    components:
-    - type: Transform
-      pos: -8.5,-2.5
-      parent: 1
-  - uid: 557
-    components:
-    - type: Transform
-      pos: 2.5,6.5
-      parent: 1
-  - uid: 558
-    components:
-    - type: Transform
-      pos: -3.5,-3.5
-      parent: 1
 - proto: StoolBar
   entities:
   - uid: 559
@@ -3839,26 +3821,6 @@ entities:
     components:
     - type: Transform
       pos: -4.5,1.5
-      parent: 1
-  - uid: 570
-    components:
-    - type: Transform
-      pos: 4.5,1.5
-      parent: 1
-  - uid: 571
-    components:
-    - type: Transform
-      pos: 4.5,3.5
-      parent: 1
-  - uid: 572
-    components:
-    - type: Transform
-      pos: 5.5,3.5
-      parent: 1
-  - uid: 573
-    components:
-    - type: Transform
-      pos: 5.5,1.5
       parent: 1
 - proto: SuitStoragePirateCap
   entities:

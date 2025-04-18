@@ -2,8 +2,8 @@
   id: Core
   mapName: 'Core Station'
   mapPath: /Maps/core.yml
-  minPlayers: 35
-  maxPlayers: 70
+  minPlayers: 45
+  maxPlayers: 75
   stations:
     Core:
       stationProto: StandardNanotrasenStation

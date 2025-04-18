@@ -1,19 +1,6 @@
 # "funny" placeholders of extremely minor/non-crimes for wanted reason dialog
-- type: dataset
+- type: localizedDataset
   id: CriminalRecordsWantedReasonPlaceholders
   values:
-  - За то, что клоун
-  - За то, что мим
-  - Дышал не в ту сторону
-  - Смотрел не в ту сторону
-  - Вломился в закрытое помещение
-  - Буквально ни за что
-  - Не поздоровался со мной
-  - Поскользнул ГСБ
-  - Рассказал несмешную шутку
-  - Носит противогаз
-  - За то, что делает свою работу
-  - Имеет два ящика для инструментов, слишком много
-  - Залил холл смазкой вплоть до отбытия
-  - Быстро собрал ДАМ
-  - Носит боксёрские перчатки
+    prefix: placeholders-criminal-records-wanted-reason-
+    count: 15

@@ -1,6 +1,8 @@
 // Мёртвый Космос, Licensed under custom terms with restrictions on public hosting and commercial use, full text: https://raw.githubusercontent.com/dead-space-server/space-station-14-fobos/master/LICENSE.TXT
 // Official port from the BACKMEN project. Make sure to review the original repository to avoid license violations.
 
+using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.Atmos.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
@@ -10,6 +12,8 @@ using Content.Shared.DeadSpace.LieDown;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Gravity;
+using Robust.Shared.CPUJob.JobQueues;
+using Robust.Shared.CPUJob.JobQueues.Queues;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -32,38 +36,69 @@ public sealed class FootPrintsSystem : EntitySystem
     private EntityQuery<AppearanceComponent> _appearanceQuery;
     private EntityQuery<LieDownComponent> _layingQuery;
 
-   public override void Initialize()
-   {
-       base.Initialize();
+    public override void Initialize()
+    {
+        base.Initialize();
 
        _transformQuery = GetEntityQuery<TransformComponent>();
        _mobThresholdQuery = GetEntityQuery<MobThresholdsComponent>();
        _appearanceQuery = GetEntityQuery<AppearanceComponent>();
        _layingQuery = GetEntityQuery<LieDownComponent>();
 
-       SubscribeLocalEvent<FootPrintsComponent, ComponentStartup>(OnStartupComponent);
-       SubscribeLocalEvent<FootPrintsComponent, MoveEvent>(OnMove);
-       SubscribeLocalEvent<FootPrintComponent, ComponentGetState>(OnGetState);
-   }
+        SubscribeLocalEvent<FootPrintsComponent, ComponentStartup>(OnStartupComponent);
+        SubscribeLocalEvent<FootPrintsComponent, MoveEvent>(OnMove);
+        SubscribeLocalEvent<FootPrintComponent, ComponentGetState>(OnGetState);
+    }
 
-   private void OnGetState(Entity<FootPrintComponent> ent, ref ComponentGetState args)
-   {
-       args.State = new FootPrintState(TerminatingOrDeleted(ent.Comp.PrintOwner) ? NetEntity.Invalid : GetNetEntity(ent.Comp.PrintOwner));
-   }
 
-   private void OnStartupComponent(EntityUid uid, FootPrintsComponent comp, ComponentStartup args)
+    private const double ActionJobTime = 0.005;
+    private readonly JobQueue _actionJobQueue = new(ActionJobTime);
+
+    private void OnGetState(Entity<FootPrintComponent> ent, ref ComponentGetState args)
+    {
+        args.State = new FootPrintState(TerminatingOrDeleted(ent.Comp.PrintOwner)
+            ? NetEntity.Invalid
+            : GetNetEntity(ent.Comp.PrintOwner));
+    }
+
+    private void OnStartupComponent(EntityUid uid, FootPrintsComponent comp, ComponentStartup args)
     {
         comp.StepSize += _random.NextFloat(-0.05f, 0.05f);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        _actionJobQueue.Process();
+    }
+
+    public sealed class FootprintsMoveProcess(
+        Entity<FootPrintsComponent> ent,
+        FootPrintsSystem system,
+        double maxTime,
+        CancellationToken cancellation = default)
+        : Job<object>(maxTime, cancellation)
+    {
+        protected override async Task<object?> Process()
+        {
+            system.MoveProccessing(ent);
+            return null;
+        }
     }
 
     private void OnMove(EntityUid uid, FootPrintsComponent comp, ref MoveEvent args)
     {
         // Less resource expensive checks first
-        if (comp.PrintsColor.A <= 0f)
+        if (comp.PrintsColor.A <= 0f || TerminatingOrDeleted(uid))
             return;
 
-        if (TerminatingOrDeleted(uid) || !_transformQuery.TryComp(uid, out var transform))
-            return;
+        _actionJobQueue.EnqueueJob(new FootprintsMoveProcess((uid, comp), this, ActionJobTime));
+    }
+
+    private void MoveProccessing(Entity<FootPrintsComponent> ent)
+    {
+        var (uid, comp) = ent;
+        var transform = Transform(uid);
 
         if (_gravity.IsWeightless(uid, xform: transform))
             return;
@@ -72,7 +107,8 @@ public sealed class FootPrintsSystem : EntitySystem
             !_map.TryFindGridAt(_transform.GetMapCoordinates((uid, transform)), out var gridUid, out _))
             return;
 
-        var dragging = mobThreshHolds.CurrentThresholdState is MobState.Critical or MobState.Dead || _layingQuery.TryComp(uid, out var laying) && laying.DrawDowned;
+        var dragging = mobThreshHolds.CurrentThresholdState is MobState.Critical or MobState.Dead ||
+                       _layingQuery.TryComp(uid, out var laying) && laying.DrawDowned;
         var distance = (transform.LocalPosition - comp.StepPos).Length();
         var stepSize = dragging ? comp.DragSize : comp.StepSize;
 
@@ -82,7 +118,8 @@ public sealed class FootPrintsSystem : EntitySystem
         comp.RightStep = !comp.RightStep;
 
         var entity = Spawn(comp.StepProtoId, CalcCoords(gridUid, comp, transform, dragging));
-        var footPrintComponent = Comp<FootPrintComponent>(entity); // There's NO way there's no footprint component in a FOOTPRINT
+        var footPrintComponent =
+            Comp<FootPrintComponent>(entity); // There's NO way there's no footprint component in a FOOTPRINT
 
         footPrintComponent.PrintOwner = uid;
         Dirty(entity, footPrintComponent);
@@ -104,14 +141,20 @@ public sealed class FootPrintsSystem : EntitySystem
         comp.StepPos = transform.LocalPosition;
 
         if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutionContainer)
-            || !_solutionSystem.ResolveSolution((entity, solutionContainer), footPrintComponent.SolutionName, ref footPrintComponent.Solution, out var solution)
+            || !_solutionSystem.ResolveSolution((entity, solutionContainer),
+                footPrintComponent.SolutionName,
+                ref footPrintComponent.Solution,
+                out var solution)
             || string.IsNullOrWhiteSpace(comp.ReagentToTransfer) || solution.Volume >= 1)
             return;
 
         _solutionSystem.TryAddReagent(footPrintComponent.Solution.Value, comp.ReagentToTransfer, 1, out _);
     }
 
-    private EntityCoordinates CalcCoords(EntityUid uid, FootPrintsComponent comp, TransformComponent transform, bool state)
+    private EntityCoordinates CalcCoords(EntityUid uid,
+        FootPrintsComponent comp,
+        TransformComponent transform,
+        bool state)
     {
         if (state)
             return new EntityCoordinates(uid, transform.LocalPosition);
@@ -132,7 +175,8 @@ public sealed class FootPrintsSystem : EntitySystem
             state = FootPrintVisuals.ShoesPrint;
         }
 
-        if (_inventorySystem.TryGetSlotEntity(uid, "outerClothing", out var suit) && TryComp<PressureProtectionComponent>(suit, out _))
+        if (_inventorySystem.TryGetSlotEntity(uid, "outerClothing", out var suit) &&
+            TryComp<PressureProtectionComponent>(suit, out _))
         {
             state = FootPrintVisuals.SuitPrint;
         }

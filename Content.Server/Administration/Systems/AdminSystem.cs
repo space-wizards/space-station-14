@@ -225,7 +225,9 @@ public sealed class AdminSystem : EntitySystem
         var name = data.UserName;
         var entityName = string.Empty;
         var identityName = string.Empty;
+        var sortWeight = 0;
 
+        // Visible (identity) name can be different from real name
         if (session?.AttachedEntity != null)
         {
             entityName = EntityManager.GetComponent<MetaDataComponent>(session.AttachedEntity.Value).EntityName;
@@ -234,10 +236,13 @@ public sealed class AdminSystem : EntitySystem
 
         var antag = false;
 
+        // Starting role, antagonist status and role type
         RoleTypePrototype roleType = new();
         var startingRole = string.Empty;
-        if (_minds.TryGetMind(session, out var mindId, out var mindComp))
+        if (_minds.TryGetMind(session, out var mindId, out var mindComp) && mindComp is not null)
         {
+            sortWeight = _role.GetRoleCompByTime(mindComp)?.Comp.SortWeight ?? 0;
+
             if (_proto.TryIndex(mindComp.RoleType, out var role))
                 roleType = role;
             else
@@ -247,8 +252,13 @@ public sealed class AdminSystem : EntitySystem
             startingRole = _jobs.MindTryGetJobName(mindId);
         }
 
+        // Connection status and playtime
         var connected = session != null && session.Status is SessionStatus.Connected or SessionStatus.InGame;
-        TimeSpan? overallPlaytime = null;
+
+        // Start with the last available playtime data
+        var cachedInfo = GetCachedPlayerInfo(data.UserId);
+        var overallPlaytime = cachedInfo?.OverallPlaytime;
+        // Overwrite with current playtime data, unless it's null (such as if the player just disconnected)
         if (session != null &&
             _playTime.TryGetTrackerTimes(session, out var playTimes) &&
             playTimes.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out var playTime))
@@ -258,8 +268,20 @@ public sealed class AdminSystem : EntitySystem
 
         var sponsor = _sponsorsManager?.TryGetInfo(data.UserId, out var sponsorInfo) == true && (sponsorInfo.HavePriorityJoin || sponsorInfo.HavePriorityAntag);
 
-        return new PlayerInfo(name, entityName, identityName, startingRole, antag, roleType, sponsor, GetNetEntity(session?.AttachedEntity), data.UserId,
-            connected, _roundActivePlayers.Contains(data.UserId), overallPlaytime);
+        return new PlayerInfo(
+            name,
+            entityName,
+            identityName,
+            startingRole,
+            antag,
+            roleType,
+            sponsor,
+            sortWeight,
+            GetNetEntity(session?.AttachedEntity),
+            data.UserId,
+            connected,
+            _roundActivePlayers.Contains(data.UserId),
+            overallPlaytime);
     }
 
     private void OnPanicBunkerChanged(bool enabled)

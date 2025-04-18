@@ -119,7 +119,7 @@ public abstract class SharedIdCardSystem : EntitySystem
     /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
     /// Actually works with the LocalizedJobTitle DataField and not with JobTitle.
     /// </remarks>
-    public bool TryChangeJobTitle(EntityUid uid, string? jobTitle, IdCardComponent? id = null, EntityUid? player = null, bool force = false)
+    public bool TryChangeJobTitle(EntityUid uid, string? jobTitle, IdCardComponent? id = null, EntityUid? player = null)
     {
         if (!Resolve(uid, ref id))
             return false;
@@ -128,7 +128,7 @@ public abstract class SharedIdCardSystem : EntitySystem
         {
             jobTitle = jobTitle.Trim();
 
-            if (jobTitle.Length > IdCardConsoleComponent.MaxJobTitleLength && !force)
+            if (jobTitle.Length > IdCardConsoleComponent.MaxJobTitleLength)
                 jobTitle = jobTitle[..IdCardConsoleComponent.MaxJobTitleLength];
         }
         else

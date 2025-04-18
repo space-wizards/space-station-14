@@ -1,0 +1,23 @@
+- type: localizedDataset
+  id: NamesFirstMale
+  values:
+    prefix: names-first-male-dataset-
+    count: 339 # DS14
+
+- type: localizedDataset
+  id: NamesFirstFemale
+  values:
+    prefix: names-first-female-dataset-
+    count: 443 # DS14
+
+- type: localizedDataset
+  id: NamesLastMale # DS14
+  values:
+    prefix: names-last-male-dataset-
+    count: 150
+
+- type: localizedDataset
+  id: NamesLastFemale # DS14
+  values:
+    prefix: names-last-female-dataset-
+    count: 150

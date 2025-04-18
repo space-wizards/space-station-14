@@ -180,86 +180,86 @@ entities:
             215: 6,7
             216: 6,6
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: LoadingArea
           decals:
             272: 9,-12
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: MiniTileCheckerAOverlay
           decals:
             252: 8,-10
             253: 8,-11
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: MiniTileCheckerBOverlay
           decals:
             254: 9,-10
             255: 9,-11
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: MiniTileWhiteBox
           decals:
             271: 8,-9
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: MiniTileWhiteCornerNe
           decals:
             258: 10,-9
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: MiniTileWhiteCornerNw
           decals:
             259: 7,-9
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: MiniTileWhiteCornerSe
           decals:
             257: 10,-11
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: MiniTileWhiteCornerSw
           decals:
             256: 7,-12
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: MiniTileWhiteEndS
           decals:
             263: 8,-13
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: MiniTileWhiteInnerNe
           decals:
             268: 8,-9
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: MiniTileWhiteInnerNw
           decals:
             267: 8,-9
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: MiniTileWhiteInnerSw
           decals:
             269: 8,-12
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: MiniTileWhiteLineE
           decals:
             264: 8,-12
             265: 10,-10
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: MiniTileWhiteLineN
           decals:
             266: 9,-9
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: MiniTileWhiteLineW
           decals:
             260: 7,-10
             261: 7,-11
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: OffsetCheckerAOverlay
           decals:
             270: 8,-9

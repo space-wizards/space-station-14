@@ -1,0 +1,14 @@
+names-hologram-dataset-1 = Аполлон
+names-hologram-dataset-2 = Дата
+names-hologram-dataset-3 = ГЛИММЕР
+names-hologram-dataset-4 = Эль Рой
+names-hologram-dataset-5 = Гефест
+names-hologram-dataset-6 = Голо-ИИ
+names-hologram-dataset-7 = Голо-Друг
+names-hologram-dataset-8 = Голограмма
+names-hologram-dataset-9 = Одиссей
+names-hologram-dataset-10 = Персефона
+names-hologram-dataset-11 = Петра
+names-hologram-dataset-12 = Процессор
+names-hologram-dataset-13 = Прометей
+names-hologram-dataset-14 = Тесей

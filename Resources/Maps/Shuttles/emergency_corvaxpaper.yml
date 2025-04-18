@@ -78,7 +78,7 @@ entities:
             59: 7,1
             60: 5,3
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: BrickTileWhiteCornerNe
           decals:
             27: 3,13
@@ -103,7 +103,7 @@ entities:
           decals:
             50: 5,3
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: BrickTileWhiteCornerSe
           decals:
             28: 3,12
@@ -113,7 +113,7 @@ entities:
           decals:
             53: 7,1
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: BrickTileWhiteCornerSw
           decals:
             24: 1,12
@@ -128,12 +128,12 @@ entities:
           decals:
             52: 5,1
         - node:
-            color: '#008CA0C6'
+            color: '#285A9196'
             id: BrickTileWhiteEndN
           decals:
             48: 1,14
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: BrickTileWhiteInnerNe
           decals:
             25: 1,13
@@ -170,7 +170,7 @@ entities:
           decals:
             51: 6,1
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: BrickTileWhiteLineW
           decals:
             26: 1,13
@@ -199,12 +199,12 @@ entities:
           decals:
             57: 8,12
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: WarnLineGreyscaleN
           decals:
             30: 2,13
         - node:
-            color: '#008CA0C9'
+            color: '#285A9196'
             id: WarnLineGreyscaleS
           decals:
             29: 2,12

@@ -13,6 +13,15 @@
   - type: NightVisionClothing
     color: "#41af0e"
 
+- type: latheRecipe
+  id: ClothingEyesPNV
+  result: ClothingEyesPNV
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 500
+    Silver: 100
+
 - type: entity
   parent: [ClothingEyesBase, ShowSecurityIcons]
   id: ClothingEyesPNVAdv

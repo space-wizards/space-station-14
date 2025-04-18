@@ -31,3 +31,5 @@
         maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teapot.rsi
+  - type: Item
+    size: Normal # DS14

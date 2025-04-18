@@ -1,0 +1,370 @@
+- type: entity
+  name: китайский фонарь
+  parent: BaseItem
+  id: LanternChineseDragonFox
+  description: Этот фонарь освещает путь, символизируя надежду и защиту.
+  components:
+  - type: ItemToggle
+    predictable: false
+    soundActivate:
+      collection: lighterOnSounds
+    soundDeactivate:
+      path: /Audio/Items/candle_blowing.ogg
+      params:
+        variation: 0.05
+        volume: 10
+  - type: ItemToggleHot
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/chinese_lantern.rsi
+    layers:
+    - state: icon
+    - state: fire_icon
+      shader: unshaded
+      visible: false
+      map: ["enum.ToggleVisuals.Layer"]
+  - type: Item
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/chinese_lantern.rsi
+    heldPrefix: lamp
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Appearance
+  - type: ToggleableLightVisuals
+    spriteLayer: flame
+    inhandVisuals:
+      left:
+      - state: inhand-left-flame
+        shader: unshaded
+      right:
+      - state: inhand-right-flame
+        shader: unshaded
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 25
+        maxVol: 25
+  - type: SolutionTransfer
+    transferAmount: 5
+    canChangeTransferAmount: false
+  - type: Spillable
+    solution: Welder
+  - type: DrawableSolution
+    solution: Welder
+  - type: RefillableSolution
+    solution: Welder
+  - type: DrainableSolution
+    solution: Welder
+  - type: ExaminableSolution
+    solution: Welder
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/welder_drop.ogg
+  - type: Welder
+    fuelConsumption: 0.05
+    fuelLitCost: 0.05
+    tankSafe: true
+  - type: PointLight
+    enabled: false
+    netsync: false
+    radius: 5
+    color: orange
+  - type: ItemTogglePointLight
+
+- type: entity
+  name: китайский светильник
+  parent: LanternChineseDragonFox
+  id: LampChineseDragonFox
+  description: Наполняет пространство теплым светом, создавая уютную атмосферу.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/chinese_lamp.rsi
+    layers:
+    - state: lantern
+    - state: lantern-on
+      shader: unshaded
+      visible: false
+      map: ["enum.ToggleVisuals.Layer"]
+  - type: Item
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/chinese_lamp.rsi
+    heldPrefix: off
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: off-inhand-left
+      right:
+      - state: off-inhand-right
+  - type: ToggleableLightVisuals
+    spriteLayer: flame
+    inhandVisuals:
+      left:
+      - state: on-inhand-left
+        shader: unshaded
+      right:
+      - state: on-inhand-right
+        shader: unshaded
+    clothingVisuals:
+      belt:
+      - state: on-equipped-BELT
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/chinese_lamp.rsi
+    equippedPrefix: off
+    quickEquip: false
+    slots:
+    - Belt
+
+- type: entity
+  id: PottedKumquatDragonFox
+  name: кумкват
+  description: Вечнозелёное дерево, символизирующее удачу и достаток. В период китайского Нового года его украшают красными лентами и фонариками, веря, что оно принесёт благополучие в дом.
+  parent: BaseStructureDynamic
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/plant.rsi
+    state: plant
+  - type: SpriteFade
+  - type: Transform
+    noRot: true
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 1000
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Pullable
+  - type: Damageable
+    damageContainer: StructuralInorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/plant_rustle.ogg
+  - type: ContainerContainer
+    containers:
+      bin-container: !type:Container
+  - type: Bin
+    initialContents:
+    - FoodCookieFortune
+    - FoodCookieFortune
+    - FoodCookieFortune
+    - FoodCookieFortune
+    - FoodCookieFortune
+    - FoodCookieFortune
+    - FoodCookieFortune
+    - FoodCookieFortune
+    - FoodCookieFortune
+    - FoodCookieFortune
+    whitelist:
+      tags:
+      - Trash
+
+- type: entity
+  parent: PaintingBase
+  id: PosterSuccessDragonFox
+  name: свиток удачи и благополучия
+  description: Традиционный новогодний свиток, символизирующий удачу и благополучие.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/poster.rsi
+    state: success
+
+- type: entity
+  parent: PaintingBase
+  id: PosterRichesDragonFox
+  name: свиток богатства и процветания
+  description: Яркий праздничный постер с пожеланием богатства и процветания. Говорят, что его присутствие в доме приносит финансовый успех в наступающем году.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/poster.rsi
+    state: riches
+
+- type: entity
+  parent: ClothingUniformJumpsuitKimono
+  id: ClothingUniformHanfuRedMDragonFox
+  name: мужское красное ханьфу
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/man_hanfu_RB1.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/man_hanfu_RB1.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitKimono
+  id: ClothingUniformHanfuBlackMDragonFox
+  name: мужское чёрное ханьфу
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/man_hanfu_RB2.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/man_hanfu_RB2.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitKimono
+  id: ClothingUniformHanfuWhiteMDragonFox
+  name: мужское белое ханьфу
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/man_hanfu_WB.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/man_hanfu_WB.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitKimono
+  id: ClothingUniformHanfuRedFDragonFox
+  name: женское красное ханьфу
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/woman_hanfu_R.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/woman_hanfu_R.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitKimono
+  id: ClothingUniformHanfuWhiteFDragonFox
+  name: женское белое ханьфу
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/woman_hanfu_W.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/woman_hanfu_W.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitKimono
+  id: ClothingUniformHanfuRedWhiteFDragonFox
+  name: женское бело-красное ханьфу
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/woman_hanfu_WR.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/woman_hanfu_WR.rsi
+
+- type: entity
+  parent: ClothingOuterBaseToggleable
+  id: ClothingOuterDragonSuitDragonFox
+  name: костюм дракона
+  description: Традиционный праздничный костюм, сотканный из яркой, прочной ткани.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/dragon_red_jumpsuit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/dragon_red_jumpsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatDragonSuitDragonFox
+    slot: head
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatDragonSuitDragonFox
+  name: маска дракона
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/dragon_red_head.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/dragon_red_head.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+
+- type: entity
+  name: меч цзянь
+  parent: BaseSword
+  id: JianDragonFox
+  description: Изящный меч с золотой гардой и навершием, инкрустированным сверкающим рубином. Лезвие, закаленное в огне, обладает легкостью и гибкостью, позволяя наносить быстрые и мощные удары.
+  components:
+  - type: Tag
+    tags:
+    - JianDragonFox
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/chinese_dagger.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 15
+    soundHit:
+      path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/chinese_dagger.rsi
+  - type: DisarmMalus
+
+- type: Tag
+  id: JianDragonFox
+
+- type: entity
+  parent: [ClothingBeltBase, ClothingSlotBase]
+  id: ClothingBeltSheathJianDragonFox
+  name: ножны цзянь
+  description:  Искусно обработанные ножны выполнены из прочной кожи, украшены золотыми символами удачи и защиты.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/sheath.rsi
+    state: sheath
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/sheath.rsi
+  - type: Item
+    size: Ginormous
+  - type: ItemSlots
+    slots:
+      item:
+        name: Sabre
+        insertVerbText: sheath-insert-verb
+        ejectVerbText: sheath-eject-verb
+        insertSound: /Audio/Items/sheath.ogg
+        ejectSound: /Audio/Items/unsheath.ogg
+        whitelist:
+          tags:
+          - JianDragonFox
+  - type: ItemMapper
+    mapLayers:
+      sheath-sabre:
+        whitelist:
+          tags:
+          - JianDragonFox
+  - type: Appearance
+
+- type: entity
+  id: ClothingBeltSheathJianDragonFoxFilled
+  parent: ClothingBeltSheathJianDragonFox
+  suffix: Filled
+  components:
+  - type: ContainerFill
+    containers:
+      item:
+      - JianDragonFox
+
+- type: entity
+  parent: SnapPop
+  id: ChinesePetardDragonFox
+  name: китайские петарды
+  description: Яркий набор петард, связанный прочной нитью. Каждая петарда украшена традиционными красными и золотыми узорами, символизирующими удачу и благополучие
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/petard.rsi
+    state: icon
+  - type: Item
+    sprite: _DeadSpace/Sponsor/DragonFox/Chinese/petard.rsi
+    size: Small

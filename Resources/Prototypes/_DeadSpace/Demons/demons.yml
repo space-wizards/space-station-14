@@ -43,8 +43,9 @@
   - type: Appearance
   - type: Bloodstream
     bloodReagent: DemonsBlood
-    bloodMaxVolume: 150
-    bloodlossThreshold: 0.4
+    bloodMaxVolume: 200
+    bloodlossThreshold: 0.3
+    bloodRefreshAmount: 2
   - type: CombatMode
   - type: MeleeWeapon
     altDisarm: false

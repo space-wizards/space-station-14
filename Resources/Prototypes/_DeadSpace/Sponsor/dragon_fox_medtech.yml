@@ -4,7 +4,7 @@
   name: автодробовик 9000 Альфа
   parent: WeaponShotgunBulldog
   id: WeaponShotgun9000Alpha
-  description: Автоматический дробовик 50 калибра. Настолько же стильный, насколько и убойный.
+  description: Автоматический дробовик калибра 12х70. Настолько же стильный, насколько и убойный.
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/MedTech/weapons/Auto9000Alfa.rsi
@@ -87,7 +87,7 @@
 
 - type: entity
   id: MagazineShotgunSlug9000Alpha
-  name: барабан 9000 Альфа (12х70 пуля)
+  name: барабан 9000 Альфа (12х70 пули)
   parent: MagazineShotgun9000Alpha
   components:
   - type: BallisticAmmoProvider
@@ -213,6 +213,8 @@
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
   id: MagazinePistolSubMachineGunPP9000Practice

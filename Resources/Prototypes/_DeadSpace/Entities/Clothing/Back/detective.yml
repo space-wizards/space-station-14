@@ -1,0 +1,17 @@
+- type: entity
+  parent: [ClothingBackpackSatchel, BaseSecurityContraband]
+  id: ClothingBackpackSatchelDetective
+  name: сумка детектива
+  description: Стильная и функциональная сумка из синтетической кожи, с удобными отделениями для инструментов расследования.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Back/Satchels/detective.rsi
+
+- type: entity
+  parent: [ClothingBackpackSatchel, BaseSecurityContraband]
+  id: ClothingBackpackSatchelDetectiveGrey
+  name: нуарная сумка детектива
+  description: Стильная и функциональная сумка из чёрной синтетической кожи, с удобными отделениями для инструментов расследования.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Back/Satchels/detective_nuar.rsi

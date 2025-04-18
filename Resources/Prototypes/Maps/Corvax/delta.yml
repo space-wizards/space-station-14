@@ -2,7 +2,7 @@
   id: CorvaxDelta
   mapName: 'Delta Station'
   mapPath: /Maps/corvax_delta.yml
-  minPlayers: 40
+  minPlayers: 41
   stations:
     Delta:
       stationProto: StandardNanotrasenStation
@@ -42,7 +42,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             Musician: [ 2, 2 ]
-            AtmosphericTechnician: [ 2, 3 ]
+            AtmosphericTechnician: [ 3, 3 ]
             TechnicalAssistant: [ 3, 3 ]
             ResearchAssistant: [ 3, 3 ]
             Reporter: [ 2, 2 ]

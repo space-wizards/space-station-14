@@ -85,7 +85,7 @@ public sealed class StationGoalPaperSystem : EntitySystem
         if (!TryComp(station, out StationBankAccountComponent? bank))
             return false;
 
-        _cargo.UpdateBankAccount(station, bank, (int) amount);
+        _cargo.UpdateBankAccount((station, bank), (int)amount);
 
         return true;
     }

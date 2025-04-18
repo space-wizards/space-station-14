@@ -21,6 +21,7 @@
   - HoPJumpsuit
   - HoPBackpack
   - HoPOuterClothing
+  - HoPShoes
   # - Glasses
   - Survival
   - Trinkets
@@ -115,7 +116,7 @@
   id: JobLawyer
   groups:
   - GroupTankHarness
-  # - LawyerNeck
+  - LawyerNeck
   - LawyerJumpsuit
   - CommonBackpack
   - Glasses
@@ -367,22 +368,26 @@
 - type: roleLoadout
   id: JobHeadOfSecurity
   groups:
+  - GroupTankHarness
   - HeadofSecurityHead
+  - SecurityMask
   - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
   - SecurityBackpack
   - SecurityBelt
   - HeadofSecurityOuterClothing
-  - SecurityShoes
+  - HeadofSecurityShoes
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
+  - HeadofSecuritySocks # DS14-Underwear
   - HeadofSecurityUnderwear # DS14-Underwear
 
 - type: roleLoadout
   id: JobWarden
   groups:
+  - GroupTankHarness
   - WardenHead
   - WardenJumpsuit
   - SecurityBackpack
@@ -393,12 +398,15 @@
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
+  - WardenSocks # DS14-Underwear
   - WardenUnderwear # DS14-Underwear
 
 - type: roleLoadout
   id: JobSecurityOfficer
   groups:
+  - GroupTankHarness
   - SecurityHead
+  - SecurityMask
   - SecurityJumpsuit
   - SecurityBackpack
   - SecurityOuterClothing
@@ -409,31 +417,36 @@
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
+  - SecuritySocks # DS14-Underwear
   - SecurityUnderwear # DS14-Underwear
 
 - type: roleLoadout
   id: JobDetective
   groups:
+  - GroupTankHarness
   - DetectiveHead
   - DetectiveNeck
   - DetectiveJumpsuit
-  - SecurityBackpack
+  - DetectiveBackpack
   - DetectiveOuterClothing
-  - SecurityShoes
+  - DetectiveShoes
   - SurvivalSecurity
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
+  - DetectiveSocks # DS14-Underwear
   - DetectiveUnderwear # DS14-Underwear
 
 - type: roleLoadout
   id: JobSecurityCadet
   groups:
+  - GroupTankHarness
   - SecurityCadetJumpsuit
   - SecurityBackpack
   - SurvivalSecurity
   - Trinkets
   - GroupSpeciesBreathToolSecurity
+  - SecurityCadetSocks # DS14-Underwear
   - SecurityCadetUnderwear # DS14-Underwear
 
 # Medical
@@ -587,11 +600,20 @@
 # These loadouts are used for non-crew spawns, like off-station antags and event mobs
 # They will be used without player configuration, thus they will only ever apply what is forced by MinLimit
 
+# gives vox a harness and breathing mask
+# nitrogen tank not included
 - type: roleLoadout
   id: RoleSurvivalVoxSupport
   groups:
   - GroupSpeciesBreathTool
   - GroupTankHarness
+
+# gives vox a nitrogen breathing tank
+# other species get nothing
+- type: roleLoadout
+  id: RoleSurvivalVoxTank
+  groups:
+  - GroupEVATankVox
 
 - type: roleLoadout
   id: RoleSurvivalStandard

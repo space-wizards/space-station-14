@@ -177,24 +177,6 @@
       sprite: _Corvax/Clothing/Hands/Accessories/watch.rsi
     - type: Clock
 
-- type: marking
-  id: AugmentsRoboticRightArm
-  bodyPart: RArm
-  markingCategory: Arms
-  sponsorOnly: true
-  sprites:
-    - sprite: _Corvax/Mobs/Customization/augments.rsi
-      state: robotic_r_arm
-
-- type: marking
-  id: AugmentsRoboticRightHand
-  bodyPart: RHand
-  markingCategory: Arms
-  sponsorOnly: true
-  sprites:
-    - sprite: _Corvax/Mobs/Customization/augments.rsi
-      state: robotic_r_hand
-
 # jesuisunfou
 - type: entity
   parent: ClothingHandsGlovesCombat

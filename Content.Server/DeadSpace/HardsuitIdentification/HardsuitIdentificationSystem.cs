@@ -57,6 +57,17 @@ public sealed class HardsuitIdentificationSystem : EntitySystem
                 return;
             }
         }
+        
+        if (comp.Nonlethal)
+        {
+            Timer.Spawn(0000,
+                () =>
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("Ошибка идентификации пользователя"), args.Equipee, args.Equipee);
+                    _inventory.TryUnequip(args.Equipee, "outerClothing", true, true);
+                });
+            return;
+        }
 
         comp.Activated = true;
 
@@ -172,7 +183,7 @@ public sealed class HardsuitIdentificationSystem : EntitySystem
         }
         else
         {
-            if (TryComp(args.Performer, out DnaComponent? dna))
+            if (TryComp(args.Performer, out DnaComponent? dna) && dna.DNA != null)
             {
                 comp.DNA = dna.DNA;
                 comp.DNAWasStored = true;

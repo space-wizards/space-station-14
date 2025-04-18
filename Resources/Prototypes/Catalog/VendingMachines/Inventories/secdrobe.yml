@@ -8,17 +8,21 @@
     ClothingShoesBootsJack: 4
     ClothingHeadHatBeretSecurity: 4
     ClothingHeadHatSecsoft: 4
-    ClothingHeadBandRed: 4
-    ClothingMaskNeckGaiterRed: 2
+    # ClothingHeadBandRed: 4 # DS14-disabled
+    ClothingMaskBandSecurity: 4 # DS14
+    ClothingHeadHatSecurityTrooper: 2 # DS14
+    # ClothingMaskNeckGaiterRed: 2 # DS14-disabled
     ClothingHandsGlovesColorBlack: 8
     ClothingHandsGlovesFingerless: 6
     ClothingUniformJumpskirtSec: 4
     ClothingUniformJumpsuitSecGrey: 6
     ClothingUniformJumpskirtSecGrey: 6
     ClothingUniformJumpsuitSecBlue: 4
+    ClothingUniformSecurityTrooper: 2 # DS14
     ClothingHeadsetSecurity: 4
     ClothingOuterWinterSec: 4
-    ClothingOuterArmorBasic: 4
+    # ClothingOuterArmorBasic: 4 # DS14-disabled
+    ClothingOuterVestArmorSec: 4 # DS14
     ClothingNeckScarfStripedRed: 3
     ClothingOuterArmorBasicSlim: 4
     ClothingEyesBlindfold: 2

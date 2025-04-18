@@ -44,8 +44,6 @@ cargo-gift-spider-terror-medical-supply = крупную партию медиц
 
 ## Admin verb
 
-admin-verb-text-make-spider-terror = Засунуть яйцо.
-admin-verb-make-spider-terror = Засунуть яйцо паука ужаса.
 spider-terror-win = пауки ужаса захватили станцию!
 spider-terror-loose = пауки ужаса не смогли захватить станцию!
 objective-condition-capture-spiderterror-title =

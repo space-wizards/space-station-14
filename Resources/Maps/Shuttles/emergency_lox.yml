@@ -174,7 +174,7 @@ entities:
           decals:
             59: -5,11
         - node:
-            color: '#008CA093'
+            color: '#285A9196'
             id: BrickTileWhiteCornerNw
           decals:
             211: -7,-5
@@ -189,7 +189,7 @@ entities:
           decals:
             58: -7,11
         - node:
-            color: '#008CA093'
+            color: '#285A9196'
             id: BrickTileWhiteCornerSe
           decals:
             206: -4,-6
@@ -205,7 +205,7 @@ entities:
             60: -5,10
             61: -6,9
         - node:
-            color: '#008CA093'
+            color: '#285A9196'
             id: BrickTileWhiteCornerSw
           decals:
             212: -7,-6
@@ -220,7 +220,7 @@ entities:
           decals:
             62: -7,9
         - node:
-            color: '#008CA093'
+            color: '#285A9196'
             id: BrickTileWhiteEndN
           decals:
             208: -4,-4
@@ -231,7 +231,7 @@ entities:
             110: -3,-1
             111: -7,-1
         - node:
-            color: '#008CA093'
+            color: '#285A9196'
             id: BrickTileWhiteInnerNw
           decals:
             209: -4,-5
@@ -259,7 +259,7 @@ entities:
             100: 1,5
             101: -3,5
         - node:
-            color: '#008CA093'
+            color: '#285A9196'
             id: BrickTileWhiteLineE
           decals:
             207: -4,-5
@@ -285,7 +285,7 @@ entities:
             20: -3,6
             21: -4,6
         - node:
-            color: '#008CA093'
+            color: '#285A9196'
             id: BrickTileWhiteLineN
           decals:
             210: -5,-5
@@ -310,7 +310,7 @@ entities:
             178: -1,-1
             179: -5,-1
         - node:
-            color: '#008CA093'
+            color: '#285A9196'
             id: BrickTileWhiteLineS
           decals:
             213: -6,-6
@@ -442,7 +442,7 @@ entities:
             17: -3,6
             18: -2,6
         - node:
-            color: '#008CA093'
+            color: '#285A9196'
             id: MiniTileOverlay
           decals:
             200: -3,-6
@@ -550,12 +550,12 @@ entities:
           decals:
             153: -5,-9
         - node:
-            color: '#008CA093'
+            color: '#285A9196'
             id: WarnLineGreyscaleN
           decals:
             215: -6,-5
         - node:
-            color: '#008CA093'
+            color: '#285A9196'
             id: WarnLineGreyscaleS
           decals:
             216: -6,-3
@@ -908,6 +908,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 2.5,-2.5
+      parent: 1
+- proto: BackmenVendingMachineCigs
+  entities:
+  - uid: 552
+    components:
+    - type: Transform
+      pos: -1.5,8.5
       parent: 1
 - proto: BedsheetMedical
   entities:
@@ -4008,13 +4015,6 @@ entities:
     components:
     - type: Transform
       pos: 0.5,14.5
-      parent: 1
-- proto: VendingMachineCigs
-  entities:
-  - uid: 552
-    components:
-    - type: Transform
-      pos: -1.5,8.5
       parent: 1
 - proto: VendingMachineMedical
   entities:

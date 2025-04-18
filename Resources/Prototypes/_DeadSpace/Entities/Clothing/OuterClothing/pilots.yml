@@ -21,9 +21,9 @@
   description: For keepers of order among the stars.
   components:
   - type: Sprite
-    sprite: _ADT/Clothing/OuterClothing/Hardsuits/pilotsuitsec.rsi
+    sprite: _DeadSpace/Clothing/OuterClothing/Hardsuits/pilotsuitsec.rsi
   - type: Clothing
-    sprite: _ADT/Clothing/OuterClothing/Hardsuits/pilotsuitsec.rsi
+    sprite: _DeadSpace/Clothing/OuterClothing/Hardsuits/pilotsuitsec.rsi
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8

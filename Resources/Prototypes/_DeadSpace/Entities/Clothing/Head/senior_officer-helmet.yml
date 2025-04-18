@@ -1,0 +1,11 @@
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSecurity
+  id: ClothingHeadHelmetHardsuitSeniorOfficer
+  categories: [ HideSpawnMenu ]
+  name: шлем скафандра инструктора СБ
+  description: Шлем скафандра инструктора службы безопасности, на лицевой части шлема есть четыре ярко голубых визора, что словно смотрят вам в душу?
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Head/Hardsuits/senior_officer.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Head/Hardsuits/senior_officer.rsi

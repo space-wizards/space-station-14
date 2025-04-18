@@ -20,6 +20,7 @@
     - id: UnknownShuttleMeatZone
     - id: UnknownShuttleMicroshuttle
     - id: UnknownShuttleSpacebus
+    - id: UnknownShuttlePirate # DS14
 
 - type: entityTable
   id: UnknownShuttlesFreelanceTable
@@ -182,6 +183,7 @@
     startAnnouncement: null #dont nark on antags
     weight: 1 #  lower because antags.
     earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly (3) and because antags
+    minimumPlayers: 45 # DS14
   - type: LoadMapRule
     preloadedGrid: Instigator
 
@@ -211,6 +213,7 @@
     startAnnouncement: station-event-unknown-shuttle-incoming #Leaving this one because theyre like primitives and its funnier
     weight: 1 # lower because antags
     earliestStart: 50 # late to hopefully have enough ghosts to fill all roles quickly. (4) & antags
+    minimumPlayers: 35 # DS14
   - type: LoadMapRule
     preloadedGrid: ManOWar
 
@@ -243,3 +246,13 @@
   - type: LoadMapRule
     preloadedGrid: Spacebus
 
+# DS14-start
+
+- type: entity
+  id: UnknownShuttlePirate
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: null
+  - type: LoadMapRule
+    preloadedGrid: Pirate

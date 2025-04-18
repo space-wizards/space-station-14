@@ -113,6 +113,20 @@
 
 - type: entity
   parent: BaseThiefStealCollectionObjective
+  id: MailStealCollectionObjective
+  components:
+  - type: NotJobRequirement
+    job: CargoTechnician
+  - type: StealCondition
+    stealGroup: Mail
+    minCollectionSize: 4
+    maxCollectionSize: 8
+    verifyMapExistence: false
+  - type: Objective
+    difficulty: 0.8
+
+- type: entity
+  parent: BaseThiefStealCollectionObjective
   id: IDCardsStealCollectionObjective
   components:
   - type: StealCondition

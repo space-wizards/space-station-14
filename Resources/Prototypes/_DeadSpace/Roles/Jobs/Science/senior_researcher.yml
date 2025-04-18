@@ -27,3 +27,6 @@
   equipment:
     ears: ClothingHeadsetScience
     socks: ClothingUnderwearSocksSeniorResearcher
+  storage:
+    back:
+    - RubberStampSeniorResearcher # DS14

@@ -51,7 +51,6 @@
     id: HoSPDA
     gloves: ClothingHandsGlovesCombat
     ears: ClothingHeadsetAltSecurity
-    socks: ClothingUnderwearSocksHeadOfSecurity
   storage:
     back:
     - Flash

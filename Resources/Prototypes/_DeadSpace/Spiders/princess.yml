@@ -49,7 +49,7 @@
     bloodMaxVolume: 250
     bloodlossThreshold: 0.4
   - type: SpawnAgainst
-    duration: 15
+    duration: 5
     spawnAgainstAction: ActionSpawnAgainst
     spawnedEntities:
       - CocoonSpider # Что спавнить

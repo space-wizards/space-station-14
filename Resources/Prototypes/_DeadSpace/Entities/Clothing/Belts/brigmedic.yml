@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingBeltMedical
+  id: ClothingBeltMedicalSecurityWebbing
+  name: разгрузка бригмедика
+  description: Специализированная разгрузка, предназначенная для быстрого доступа к медицинским препаратам и материалам в условиях полевых работ. На задней части разгрузки, есть белый крест. С внутренней части вещи есть надпись "Произведено компанией Speysov Weapons Company по заказу NanoTresen".
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Belt/medsecuritywebbing.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Belt/medsecuritywebbing.rsi

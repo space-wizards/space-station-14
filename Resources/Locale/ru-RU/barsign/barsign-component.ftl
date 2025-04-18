@@ -57,7 +57,7 @@ barsign-prototype-description-ale-nath = По какой-то причине п�
 ## The Net
 
 barsign-prototype-name-the-net = Сеть
-barsign-prototype-description-the-net = Незаметишь как затянет на пару часов.
+barsign-prototype-description-the-net = Не заметишь, как затянет на пару часов.
 
 ## Maid Cafe
 
@@ -121,7 +121,11 @@ barsign-prototype-description-spacebucks = От них нельзя скрыть
 
 ## EmpBarSign
 
+barsign-prototype-name-maltroach = Maltroach
+barsign-prototype-description-maltroach = Squeak!
 barsign-prototype-description-empbarsign = Что-то пошло совсем не так.
+barsign-prototype-name-whiskeyechoes = Whiskey Echoes
+barsign-prototype-description-whiskeyechoes = An elite bar for elite oper-wait, this is a Nanotrasen station. Why's this sign in the database?
 
 ## SignOff
 

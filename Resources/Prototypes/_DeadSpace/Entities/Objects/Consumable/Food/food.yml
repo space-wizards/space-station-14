@@ -147,7 +147,7 @@
   - type: Sprite
     sprite: /Textures/_DeadSpace/Objects/Consumable/Food/caviar.rsi
     state: icon
-  
+
 - type: entity
   parent: FoodBurgerBase
   id: FoodCaviarBurger
@@ -189,4 +189,85 @@
   - type: FlavorProfile
     flavors:
       - sweetdough
-      
+
+- type: entity
+  name: мегасэндвич
+  parent: FoodBreadBaguette
+  id: FoodMegaSandwich
+  description: Это как бы должен быть МЕГА-сэндвич... Но от названия вкус не менее сочный и вкусный.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - bun
+    - meaty
+    - cheesy
+    - vegetables
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/mega-sandwich.rsi
+    state: icon
+  - type: SliceableFood
+    count: 4
+    slice: FoodMegaSandwichSlice
+  - type: Tag
+    tags:
+    - Meat
+  - type: Clothing
+    sprite: _DeadSpace/Objects/Consumable/Food/mega-sandwich.rsi
+    equippedPrefix: mega-sandwich
+    slots:
+    - BELT
+    - HEAD
+    quickEquip: false
+    clothingVisuals:
+      belt:
+      - state: equipped-BELT
+      head:
+      - state: equipped-HEAD
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 6
+        - ReagentId: Protein
+          Quantity: 8
+        - ReagentId: Vitamin
+          Quantity: 6
+
+- type: entity
+  name: ломтик мегасэндвича
+  parent: FoodBreadSliceBase
+  id: FoodMegaSandwichSlice
+  description: Мини мега-сэндвич. Не менее сочный и вкусный.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Objects/Consumable/Food/mega-sandwich.rsi
+    state: icon-cut
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-CUT
+      right:
+      - state: inhand-right-CUT
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 0.4
+        - ReagentId: Vitamin
+          Quantity: 0.1
+        - ReagentId: Protein
+          Quantity: 0.5
+  - type: Tag
+    tags:
+    - Meat
+    - Slice

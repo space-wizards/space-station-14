@@ -198,7 +198,7 @@
 - type: entity
   parent: ClothingShoesBootsMag
   id: ClothingShoesBootsMagdrippenwagenAlt
-  name: черно-белые сапоги
+  name: чёрно-белые сапоги
   description: Изготовлено на заказ организацией LaFleur Wear.
   categories: [ HideSpawnMenu ]
   components:

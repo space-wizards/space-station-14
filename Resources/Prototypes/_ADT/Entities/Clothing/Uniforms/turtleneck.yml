@@ -34,7 +34,7 @@
   parent: ClothingUniformBase
   id: ADTClothingUniformTurleneckBlack
   name: чёрная водолазка
-  description: Практичная и удобная водолазка черного цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  description: Практичная и удобная водолазка чёрного цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
   components:
   - type: Sprite
     sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_black.rsi
@@ -45,7 +45,7 @@
   parent: ClothingUniformBase
   id: ADTClothingUniformTurleneckBlackWomen
   name: чёрная водолазка с юбкой
-  description: Практичная и удобная водолазка черного цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
+  description: Практичная и удобная водолазка чёрного цвета. На лейбле можно заметить "Modeling Agency Dar-Vaxed".
   components:
   - type: Sprite
     sprite: _ADT/Clothing/Uniforms/Turleneck/turleneck_black_women.rsi

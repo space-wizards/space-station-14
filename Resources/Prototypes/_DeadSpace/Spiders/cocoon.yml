@@ -17,14 +17,14 @@
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: Damageable
     damageContainer: Biological
-  - type: Destructible
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 100
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+      0: Alive
+      100: Dead
   - type: Appearance
   - type: Evolution
     createGhostRole: true
@@ -56,14 +56,14 @@
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: Damageable
     damageContainer: Biological
-  - type: Destructible
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Dead
+  - type: MobThresholds
     thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 200
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+      0: Alive
+      200: Dead
   - type: Appearance
   - type: Evolution
     createGhostRole: true

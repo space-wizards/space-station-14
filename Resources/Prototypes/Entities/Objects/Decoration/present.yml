@@ -159,6 +159,57 @@
         orGroup: GiftPool
       - id: PlushieLilaMarrnes
         orGroup: GiftPool
+      - id: PlushieSilAily
+        orGroup: GiftPool
+      - id: PlushieSilAizek
+        orGroup: GiftPool
+      - id: PlushieSilAzrail
+        orGroup: GiftPool
+      - id: PlushieSilEmilia
+        orGroup: GiftPool
+      - id: PlushieSilEva
+        orGroup: GiftPool
+      - id: PlushieSilKrivazora
+        orGroup: GiftPool
+      - id: PlushieSilAzrailHardsuit
+        orGroup: GiftPool
+      - id: PlushieSilSharp
+      - id: PlushieDragonFoxMedTech
+        orGroup: GiftPool
+      - id: PlushieDragonFoxMadParadox
+        orGroup: GiftPool
+      - id: PlushieBoich
+        orGroup: GiftPool
+      - id: PlushieCyberFox
+        orGroup: GiftPool
+      - id: PlushieAhahaahahaha
+        orGroup: GiftPool
+      - id: PlushieKriss
+        orGroup: GiftPool
+      - id: PlushieOstwind
+        orGroup: GiftPool
+      - id: PlushieJeleshka
+        orGroup: GiftPool
+      - id: PlushieDobryash
+        orGroup: GiftPool
+      - id: PlushieHqdishka
+        orGroup: GiftPool
+      - id: PlushieWillie
+        orGroup: GiftPool
+      - id: PlushieAinnete
+        orGroup: GiftPool
+      - id: PlushieAlex
+        orGroup: GiftPool
+      - id: PlushieElizabeth
+        orGroup: GiftPool
+      - id: PlushieEllis
+        orGroup: GiftPool
+      - id: PlushieKermuth
+        orGroup: GiftPool
+      - id: PlushieLucius
+        orGroup: GiftPool
+      - id: PlushieEvelina
+        orGroup: GiftPool
 
 - type: entity
   id: PresentFigurine
@@ -267,6 +318,10 @@
       - id: ToyFigurineChemist
         orGroup: GiftPool
       - id: ToyFigurineNukieElite
+        orGroup: GiftPool
+      - id: ToyFigurineHqdishka
+        orGroup: GiftPool
+      - id: ToyFigurineHacksLua
         orGroup: GiftPool
 
 - type: entity

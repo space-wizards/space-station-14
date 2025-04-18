@@ -7,6 +7,7 @@
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
       time: 36000 # 10 hours
+  weight: 5
   startingGear: WardenGear
   icon: "JobIconWarden"
   supervisors: job-supervisors-hos
@@ -37,7 +38,6 @@
     eyes: ClothingEyesGlassesSecurity
     id: WardenPDA
     ears: ClothingHeadsetSecurity
-    socks: ClothingUnderwearSocksWarden
   storage:
     back:
     - Flash

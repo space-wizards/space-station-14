@@ -19,7 +19,7 @@
   id: DraconicMunitions
   name: research-technology-draconic-munitions
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi
+    sprite: _DeadSpace/Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi # DS14-texture-localization
     state: incendiarydisplay
   discipline: Arsenal
   tier: 1
@@ -179,6 +179,20 @@
   - ShuttleGunFriendshipCircuitboard
   technologyPrerequisites:
   - SalvageWeapons
+  
+# DS14-start
+- type: technology
+  id: NightVisionTechnology
+  name: research-technology-night-vision-technology
+  icon:
+    sprite: _DeadSpace/Clothing/Eyes/Hud/pnv.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - ClothingEyesPNV
+# DS14-end
 
 # Tier 3
 

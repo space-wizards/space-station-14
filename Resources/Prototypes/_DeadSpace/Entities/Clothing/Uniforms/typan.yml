@@ -90,7 +90,7 @@
   parent: ClothingUniformBase
   id: ClothingUniformScienceTypan
   name: комбинезон ученого синдиката
-  description: Черный тактический комбинезон, подходящий для всех видов исследований.
+  description: Чёрный тактический комбинезон, подходящий для всех видов исследований.
   components:
   - type: Sprite
     sprite: _ADT/Clothing/Uniforms/Jumpsuit/investigator_suit.rsi

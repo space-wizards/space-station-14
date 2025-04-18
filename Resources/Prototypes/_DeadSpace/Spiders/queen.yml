@@ -153,7 +153,7 @@
     thresholds:
       0: Alive
       350: Critical
-      450: Dead
+      600: Dead
   - type: Fixtures
     fixtures:
       fix1:
@@ -166,14 +166,14 @@
         layer:
         - MobLayer
   - type: MovementSpeedModifier
-    baseWalkSpeed: 3
-    baseSprintSpeed: 3
+    baseWalkSpeed: 5
+    baseSprintSpeed: 5
   - type: Bloodstream
     bloodReagent: CopperBlood
     bloodMaxVolume: 250
     bloodlossThreshold: 0.4
   - type: SpawnAgainst
-    duration: 15
+    duration: 5
     spawnAgainstAction: ActionSpawnAgainst
     spawnedEntities:
       - SpiderTomb
@@ -202,7 +202,7 @@
   - type: NeededBloodForSpawnAgainst # Пример
     defaultCost: 50 # Стандартная цена на не заданный результат
     bloodCosts: # Цены
-      SpiderTomb: 100
+      SpiderTomb: 50
       TelecomServerSpiderTerror: 200
       CocoonKingBloodSpider: 250
       CocoonSpider: 10

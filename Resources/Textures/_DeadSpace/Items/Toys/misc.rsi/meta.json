@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "Made by inspector_jeleshka (discord) for Space Station 14 server Мёртвый Космос; plushie_hampter by RenLou#4333, resprite by inspector_jeleshka (discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ahahaahahaha"
+    },
+    {
+      "name": "ainnetel"
+    },
+    {
+      "name": "alex"
+    },
+    {
+      "name": "boich"
+    },
+    {
+      "name": "cyberfox"
+    },
+    {
+      "name": "dobryash"
+    },
+    {
+      "name": "elizabeth"
+    },
+    {
+      "name": "ellis"
+    },
+    {
+      "name": "floran"
+    },
+    {
+      "name": "ips"
+    },
+    {
+      "name": "jeleshka"
+    },
+    {
+      "name": "juggernaut"
+    },
+    {
+      "name": "kermuth"
+    },
+    {
+      "name": "kriss"
+    },
+    {
+      "name": "lieutenant"
+    }
+    ,
+    {
+      "name": "ostwind"
+    },
+    {
+      "name": "willie"
+    },
+    {
+      "name": "lucius",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "evelina"
+    },
+    {
+      "name": "hqdishka"
+    },
+    {
+      "name": "hackslua"
+    },
+    {
+      "name": "iris"
+    }
+  ]
+}    

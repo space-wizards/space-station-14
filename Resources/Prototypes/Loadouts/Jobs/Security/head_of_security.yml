@@ -83,6 +83,17 @@
   equipment:
     outerClothing: ClothingOuterWinterHoS
 
+# Socks
+- type: loadout
+  id: UnderwearSocksHeadOfSecurity
+  equipment:
+    socks: ClothingUnderwearSocksHeadOfSecurity
+
+- type: loadout
+  id: UnderwearWomenSocksHeadOfSecurity
+  equipment:
+    socks: ClothingUnderwearWomenSocksHeadOfSecurity
+
 # Underwear
 - type: loadout
   id: UnderwearBottomBoxersHeadofSecurity

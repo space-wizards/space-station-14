@@ -60,3 +60,27 @@
     sprite: _DeadSpace/Clothing/OuterClothing/Coats/letterman_s.rsi
   - type: Clothing
     sprite: _DeadSpace/Clothing/OuterClothing/Coats/letterman_s.rsi
+
+- type: entity
+  parent: ClothingOuterCoatDetective
+  id: ClothingOuterCoatDetectiveAlt
+  name: куртка следователя
+  description: Лёгкая куртка следователя, сделанная из серой ткани внутри куртки вшит лёгкий бронежилет, на левом плече куртки пришита нашивка "Детектив".
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/detective_punk.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/detective_punk.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 1 #its a coat. it doesnt do shit
+
+- type: entity
+  parent: ClothingOuterCoatSecurityOvercoat
+  id: ClothingOuterCoatSeniorOfficerTrench
+  name: шинель инструктора СБ
+  description: Шинель из плотной ткани с вшитым под ней кевларом, так же виден бронежилет первого класса защиты.
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/senior_officer_leather.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/OuterClothing/Coats/senior_officer_leather.rsi

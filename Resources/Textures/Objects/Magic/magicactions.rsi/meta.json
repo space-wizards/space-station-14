@@ -36,6 +36,9 @@
     },
     {
       "name": "item_recall"
+    },
+    {
+      "name": "repulse"
     }
   ]
 }

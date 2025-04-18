@@ -3,7 +3,8 @@
 - type: latheRecipe
   abstract: true
   id: BaseLightRecipe
-  category: Lights
+  categories:
+  - Lights
   completetime: 2
   materials:
     Steel: 50
@@ -242,7 +243,8 @@
 - type: latheRecipe
   id: CassetteTape
   result: CassetteTape
-  category: Tools
+  categories:
+  - Tools
   completetime: 2
   materials:
     Steel: 50
@@ -251,7 +253,8 @@
 - type: latheRecipe
   id: TapeRecorder
   result: TapeRecorder
-  category: Tools
+  categories:
+  - Tools
   completetime: 3
   materials:
     Steel: 250

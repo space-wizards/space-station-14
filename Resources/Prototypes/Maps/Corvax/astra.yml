@@ -2,7 +2,8 @@
   id: CorvaxAstra
   mapName: 'Astra Station'
   mapPath: /Maps/corvax_astra.yml
-  minPlayers: 30
+  minPlayers: 45
+  maxPlayers: 65
   stations:
     Astra:
       stationProto: StandardNanotrasenStation
@@ -35,7 +36,7 @@
             Captain: [ 1, 1 ]
             # engineering
             ChiefEngineer: [ 1, 1 ]
-            AtmosphericTechnician: [ 2, 3 ]
+            AtmosphericTechnician: [ 3, 3 ]
             StationEngineer: [ 4, 5 ]
             TechnicalAssistant: [ 3, 4 ]
             # medical

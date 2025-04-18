@@ -9,3 +9,11 @@ lathe-category-weapons = Вооружение
 lathe-category-food = Пища
 lathe-category-chemicals = Химикаты
 lathe-category-materials = Материалы
+# Uniform
+lathe-category-bedsheets = Bedsheets
+lathe-category-carpets = Carpets
+lathe-category-coats = Coats
+lathe-category-command = Command
+lathe-category-hats = Hats
+lathe-category-jumpsuits = Jumpsuits
+lathe-category-neck = Neck

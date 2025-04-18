@@ -69,6 +69,12 @@
   equipment:
     outerClothing: ClothingOuterWinterHoP
 
+# Shoes
+- type: loadout
+  id: ShoesBootsLaceup
+  equipment:
+    shoes: ClothingShoesBootsLaceup
+
 # Underwear
 - type: loadout
   id: UnderwearBottomBoxersHeadofPersonnel

@@ -1,0 +1,25 @@
+## Static
+
+- type: latheRecipePack
+  id: DoubleBedsheets
+  recipes:
+  - DoubleBedsheetBlack
+  - DoubleBedsheetBlue
+  - DoubleBedsheetBrown
+  - DoubleBedsheetGreen
+  - DoubleBedsheetGrey
+  - DoubleBedsheetOrange
+  - DoubleBedsheetPurple
+  - DoubleBedsheetRed
+  - DoubleBedsheetWhite
+  - DoubleBedsheetYellow
+  - DoubleBedsheetClown
+  - DoubleBedsheetCosmos
+  - DoubleBedsheetIan
+  - DoubleBedsheetMedical
+  - DoubleBedsheetMime
+  - DoubleBedsheetNT
+  - DoubleBedsheetRainbow
+  - DoubleBedsheetBrigmedic
+  - DoubleBedsheetRuntime
+  - DoubleBedsheetChaplain

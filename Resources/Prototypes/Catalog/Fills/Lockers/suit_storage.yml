@@ -160,6 +160,20 @@
   - type: AccessReader
     access: [["Security"]]
 
+#Senior officer hardsuit
+- type: entity
+  id: SuitStorageSeniorOfficer
+  parent: SuitStorageBase
+  suffix: Security
+  components:
+  - type: StorageFill
+    contents:
+        - id: OxygenTankFilled
+        - id: ClothingOuterHardsuitSeniorOfficer
+        - id: ClothingMaskBreath
+  - type: AccessReader
+    access: [["Security"]]
+
 #CE's hardsuit
 - type: entity
   id: SuitStorageCE
@@ -303,3 +317,4 @@
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitWizard
         - id: ClothingMaskBreath
+        - id: JetpackVoidFilled

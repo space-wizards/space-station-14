@@ -50,35 +50,3 @@
         RandomHumanoidSpawnerCBURNAgent: 8
       mustApproveAdmin: true
       requiredRoundDuration: 5 # min
-    cburn-sierra:
-      name: ert-team-name-cburn-sierra
-      announcementAfterCall: ert-call-announcement-cburn-sierra
-      shuttle: /Maps/Shuttles/ERT/sierra.yml
-      timeToSpawn: 300 # 5 min
-      humansList:
-        RandomHumanoidSpawnerCBURNSierraLeader: 1
-        RandomHumanoidSpawnerCBURNSierraAgent: 8
-      mustApproveAdmin: true
-      requiredRoundDuration: 5 # min
-    engineers:
-      name: ert-team-name-engineers
-      announcementAfterCall: ert-call-announcement-engineers
-      shuttle: /Maps/Shuttles/ERT/engineers.yml
-      timeToSpawn: 300 # 5 min
-      humansList:
-        RandomHumanoidSpawnerERTLeaderRed: 1
-        RandomHumanoidSpawnerERTMedicalRed: 1
-        RandomHumanoidSpawnerERTEngineerRed: 6
-      mustApproveAdmin: true
-      requiredRoundDuration: 30 # min
-    janitors:
-      name: ert-team-name-janitors
-      announcementAfterCall: ert-call-announcement-janitors
-      shuttle: /Maps/Shuttles/ERT/janitors.yml
-      timeToSpawn: 300 # 5 min
-      humansList:
-        RandomHumanoidSpawnerERTLeaderRed: 1
-        RandomHumanoidSpawnerERTMedicalRed: 1
-        RandomHumanoidSpawnerERTJanitorRed: 6
-      mustApproveAdmin: true
-      requiredRoundDuration: 30 # min

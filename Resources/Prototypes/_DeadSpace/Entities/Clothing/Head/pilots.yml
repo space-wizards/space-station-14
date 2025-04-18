@@ -20,8 +20,8 @@
   description: Looks like something that inspires order.
   components:
   - type: Sprite
-    sprite: _ADT/Clothing/Head/Hardsuits/pilotsuithelmsec.rsi
+    sprite: _DeadSpace/Clothing/Head/Hardsuits/pilotsuithelmsec.rsi
   - type: Clothing
-    sprite: _ADT/Clothing/Head/Hardsuits/pilotsuithelmsec.rsi
+    sprite: _DeadSpace/Clothing/Head/Hardsuits/pilotsuithelmsec.rsi
   - type: PointLight
-    color: white
+    color: '#3fb594'

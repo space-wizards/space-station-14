@@ -2,7 +2,7 @@
 
 - type: entity
   name: implanter
-  description: A syringe exclusively designed for the injection and extraction of subdermal implants.
+  description: A syringe exclusively designed for the injection and extraction of subdermal implants. Use care when extracting implants, as incorrect draw settings may injure the user.
   id: BaseImplanter
   parent: BaseItem
   abstract: true
@@ -28,6 +28,29 @@
         whitelist:
           tags:
             - SubdermalImplant
+      allowDeimplantAll: false
+      deimplantWhitelist:
+      - SadTromboneImplant
+      - LightImplant
+      - BikeHornImplant
+      - TrackingImplant
+      - StorageImplant
+      - FreedomImplant
+      - UplinkImplant
+      - EmpImplant
+      - ScramImplant
+      - DnaScramblerImplant
+      - MicroBombImplant
+      - MacroBombImplant
+      - DeathAcidifierImplant
+      - DeathRattleImplant
+      - MindShieldImplant
+      - FakeMindShieldImplant
+      - RadioImplant
+      deimplantFailureDamage:
+        types:
+          Cellular: 50
+          Heat: 10
     - type: Sprite
       sprite: Objects/Specific/Medical/implanter.rsi
       state: implanter0
@@ -40,7 +63,7 @@
           visible: false
     - type: Item
       sprite: Objects/Specific/Medical/implanter.rsi
-      heldPrefix: 0
+      heldPrefix: implanter
       size: Small
     - type: Appearance
     - type: GenericVisualizer
@@ -53,6 +76,10 @@
           implantOnly:
             True: {state: broken}
             False: {state: implanter0}
+    - type: UserInterface
+      interfaces:
+        enum.DeimplantUiKey.Key:
+          type: DeimplantBoundUserInterface
 
 - type: entity
   id: Implanter
@@ -103,6 +130,7 @@
   components:
     - type: Item
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
+      heldPrefix: implanter
     - type: Sprite
       sprite: Objects/Specific/Medical/syndi_implanter.rsi
       state: implanter1

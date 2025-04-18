@@ -11,6 +11,13 @@
   - type: Construction
     graph: bed
     node: adtdoublebedtop
+  - type: Strap
+    position: Down
+    rotation: -90
+    buckleOffset: "0,-0.42"
+  - type: PlaceableSurface
+    placeCentered: true
+    positionOffset: "0,-0.60"
 
 - type: entity
   parent: Bed
@@ -25,3 +32,10 @@
   - type: Construction
     graph: bed
     node: adtdoublebedbottom
+  - type: Strap
+    position: Down
+    rotation: -90
+    buckleOffset: "0,0.3"
+  - type: PlaceableSurface
+    placeCentered: true
+    positionOffset: "0,0.40"

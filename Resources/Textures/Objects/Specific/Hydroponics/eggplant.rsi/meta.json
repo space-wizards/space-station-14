@@ -1,41 +1,40 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/696dfcc59c9e65e7bbe3923d1f7e880ea384783f",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "dead"
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/vgstation-coders/vgstation13/commit/1dbcf389b0ec6b2c51b002df5fef8dd1519f8068, inhands by mubururu_ (github), produce modified from https://github.com/space-wizards/space-station-14/commit/484eb0bba44d3e014873e7d7026a99d7ba56f7b9#diff-5b9a7a38ef618b5f482f5baf4bb8db27dc87f9af7602d67cae9133e624aa3f91 by Chaoticaa (GitHub), Growth, harvest, and dead created by Chaoticaa (GitHub)",
+    "size": {
+        "x": 32,
+        "y": 32
     },
-    {
-      "name": "harvest"
-    },
-    {
-      "name": "produce"
-    },
-    {
-      "name": "seed"
-    },
-    {
-      "name": "stage-1"
-    },
-    {
-      "name": "stage-2"
-    },
-    {
-      "name": "stage-3"
-    },
-    {
-      "name": "stage-4"
-    },
-    {
-      "name": "stage-5"
-    },
-    {
-      "name": "stage-6"
-    }
-  ]
+    "states": [
+        {
+            "name": "dead"
+        },
+        {
+            "name": "harvest"
+        },
+        {
+            "name": "produce"
+        },
+        {
+            "name": "seed"
+        },
+        {
+            "name": "stage-1"
+        },
+        {
+            "name": "stage-2"
+        },
+        {
+            "name": "stage-3"
+        },
+        {
+            "name": "produce-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "produce-inhand-right",
+            "directions": 4
+        }
+    ]
 }

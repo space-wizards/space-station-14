@@ -39,7 +39,7 @@
 - type: entity # Halloween
   parent: ClothingNeckBase
   id: ClothingNeckWingsSkeletonBlack
-  name: черные скелетные крылья
+  name: чёрные скелетные крылья
   description: Зловеще стильный аксессуар, который подчеркивает вашу индивидуальность.
   components:
   - type: Sprite

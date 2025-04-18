@@ -1,0 +1,119 @@
+- type: microwaveMealRecipe
+  id: RecipeLasanga
+  name: lasanga recipe
+  result: Lasanga
+  time: 20
+  solids:
+    FoodTomato: 1
+    FoodMeat: 1
+    FoodCheeseSlice: 2
+  reagents:
+    Milk: 5
+    Egg: 10
+
+- type: microwaveMealRecipe
+  id: RecipeNotsandwich
+  name: notsandwich recipe
+  result: NotSandwich
+  time: 10
+  solids:
+    ClothingMaskItalianMoustache: 1
+    FoodBreadPlainSlice: 2
+
+- type: microwaveMealRecipe
+  id: RecipeChawanmushi
+  name: chawanmushi recipe
+  result: Chawanmushi
+  time: 15
+  reagents:
+    Milk: 5
+    Egg: 10
+    Water: 5
+
+- type: microwaveMealRecipe
+  id: RecipeBoneSoup1
+  name: bone soup recipe
+  result: FoodSoupBone
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    HandsAnimal: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBoneSoup2
+  name: bone soup recipe
+  result: FoodSoupBone
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    LegsAnimal: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBoneSoup3
+  name: bone soup recipe
+  result: FoodSoupBone
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    FoodBowlBig: 1
+    FeetAnimal: 1
+
+- type: microwaveMealRecipe
+  id: RecipeBoneSoup4
+  name: bone soup recipe
+  result: FoodSoupBone
+  time: 10
+  reagents:
+    Water: 10
+  solids:
+    TorsoAnimal: 1
+    FoodBowlBig: 1
+
+- type: microwaveMealRecipe
+  id: RecipeSawdustSoup
+  name: sawdust soup recipe
+  result: FoodSoupSawdust
+  time: 20
+  reagents:
+    Water: 30
+    Cellulose: 20
+  solids:
+    FoodBowlBig: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCaviarBurger
+  name: caviar burger recipe
+  result: FoodCaviarBurger
+  time: 5
+  solids:
+    FoodBreadPlainSlice: 1
+    FoodCaviar: 1
+
+- type: microwaveMealRecipe
+  id: RecipeHoneyCake
+  name: honey cake recipe
+  result: FoodHoneyCake
+  time: 15
+  reagents:
+    Sugar: 20
+  solids:
+    FoodCakePlain: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFoodMegaSandwich
+  name: megasandwich recipe
+  result: FoodMegaSandwich
+  time: 15
+  reagents:
+    Mayo: 10
+  solids:
+    FoodBreadBaguette: 1
+    FoodMeatCutlet: 3
+    FoodCheeseSlice: 2
+    FoodTomato: 2
+    FoodCabbage: 1

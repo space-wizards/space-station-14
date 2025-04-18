@@ -83,16 +83,17 @@
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-      - map: [ "underwearb" ] #Sirena
-      - map: [ "underweart" ] #Sirena
-      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-      - map: [ "socks" ] #Sirena
-      - map: [ "jumpsuit" ]
+      - map: [ "underwearb" ] # Sirena-Underwear
+      - map: [ "underweart" ] # Sirena-Underwear
+      - map: [ "enum.HumanoidVisualLayers.UndergarmentBottom" ]
+      - map: [ "enum.HumanoidVisualLayers.UndergarmentTop" ]
+      # - map: [ "jumpsuit" ]
       - map: [ "enum.HumanoidVisualLayers.LHand" ]
       - map: [ "enum.HumanoidVisualLayers.RHand" ]
-      # - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-      # - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+      - map: [ "socks" ] # Sirena-Underwear
+      - map: ["jumpsuit"]
       - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
         color: "#ffffff"
         sprite: Objects/Misc/handcuffs.rsi
@@ -106,8 +107,8 @@
       - map: [ "belt" ]
       - map: [ "id" ]
       - map: [ "enum.HumanoidVisualLayers.Tail" ] #in the utopian future we should probably have a wings enum inserted here so everyhting doesn't break
-      - map: [ "neck" ]
       - map: [ "back" ]
+      - map: [ "neck" ]
       - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
       - map: [ "enum.HumanoidVisualLayers.Hair" ]
       - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
@@ -121,6 +122,7 @@
         state: "creampie_moth"
         visible: false
   - type: Inventory
+    speciesId: moth 
     femaleDisplacements:
       jumpsuit:
         sizeMaps:
@@ -138,6 +140,7 @@
   - type: HumanoidAppearance
     species: Moth
   - type: Inventory
+    speciesId: moth 
     femaleDisplacements:
       jumpsuit:
         sizeMaps:

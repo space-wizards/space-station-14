@@ -1,0 +1,357 @@
+- type: sponsorLoadout
+  id: nikitafuji1515
+  entity: ClothingBackpacknikitafuji1515
+  sponsorOnly: true
+
+- type: sponsorLoadout
+  id: nikitafuji1515Hypospray
+  entity: Hypospraynikitafuji1515
+  sponsorOnly: true
+  whitelistJobs: [ChiefMedicalOfficer, MedicalDoctor, Chemist]
+
+# Backpack
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpacknikitafuji1515
+  name: специализированная медицинская сумка
+  description: Рюкзак использующий технологию блюспейса для увелечения своего максимального объёма. Принадлежат члену экипажа, находящемуся под покровительством спонсорской организации.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/holding.rsi
+    state: holding
+    layers:
+    - state: holding
+    - state: holding-unlit
+      shader: unshaded
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,0,13,5
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesnikitafuji1515
+      - id: ClothingHeadsetnikitafuji1515
+      - id: JetpackVoidFilleddnikitafuji1515
+      - id: ClothingBeltnikitafuji1515
+      - id: ClothingUniformJumpskirtnikitafuji1515
+      - id: ClothingEyesHudnikitafuji1515
+      - id: ClothingOuterHardsuitnikitafuji1515
+
+# Ears
+
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetnikitafuji1515
+  name: серая гарнитура
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/ears.rsi
+
+# Gloves
+
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesnikitafuji1515
+  name: стерильные медико-боевые перчатки
+  description: Специально модифицированная версия боевых перчаток для само-обеззараживания и дезинфекции рук и инструментов.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/gloves.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/gloves.rsi
+
+# Hypospray
+
+- type: entity
+  name: гипоспрей медицинской службы
+  parent: [BaseItem, BaseGrandTheftContraband]
+  description: Специально разработанный гипоспрей для полевых медиков.
+  categories: [ HideSpawnMenu ]
+  id: Hypospraynikitafuji1515
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/hypo.rsi
+    state: hypo
+  - type: Item
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/hypo.rsi
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 5
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+    onlyAffectsMobs: false
+  - type: UseDelay
+    delay: 0.5
+  - type: StaticPrice
+    price: 750
+  - type: StealTarget
+    stealGroup: Hypospray
+
+# instruments
+
+- type: entity
+  parent: BaseItem
+  id: PowerDrillnikitafuji1515
+  name: именная электродрель
+  description: обычная электродрель покрашенная особой космокраской, переливается перламутром.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Tag
+    tags:
+    - Powerdrill
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/instr/drill.rsi
+    state: drill_screw
+  - type: Item
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/instr/drill.rsi
+    size: Small
+  - type: Tool
+    qualities:
+      - Screwing
+    speedModifier: 1.5
+    useSound: /Audio/Items/drill_use.ogg
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Screwing
+        sprite:
+          sprite: _DeadSpace/Sponsor/nikitafuji1515/instr/drill.rsi
+          state: drill_screw
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Anchoring
+        sprite:
+          sprite: _DeadSpace/Sponsor/nikitafuji1515/instr/drill.rsi
+          state: drill_bolt
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300
+      Plastic: 100
+  - type: StaticPrice
+    price: 100
+  - type: MeleeWeapon
+    wideAnimationRotation: -90
+    attackRate: 1.5
+    damage:
+      types:
+        Piercing: 10
+    soundHit:
+      path: "/Audio/Items/drill_hit.ogg"
+
+# JawsOfLife
+- type: entity
+  parent: SyndicateJawsOfLife
+  id: SyndicateJawsOfLifenikitafuji1515
+  name: именные челюсти жизни
+  description: Обычные челюсти жизни покрашеные особой космокраской, переливается перламутром.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/instr/jaw.rsi
+    state: jaws_pry
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+    size: Normal
+  - type: MultipleTool
+    entries:
+      - behavior: Prying
+        sprite:
+          sprite: _DeadSpace/Sponsor/nikitafuji1515/instr/jaw.rsi
+          state: jaws_pry
+        useSound: /Audio/Items/jaws_pry.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: _DeadSpace/Sponsor/nikitafuji1515/instr/jaw.rsi
+          state: jaws_cutter
+        useSound: /Audio/Items/jaws_cut.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14
+
+# WelderExperimental
+
+- type: entity
+  parent: WelderExperimental
+  id: WelderExperimentalnikitafuji1515
+  name: сварочный аппарат
+  description: Изготовлено на заказ организацией LaFleur Wear.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/instr/welder.rsi
+  - type: Item
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/instr/welder.rsi
+
+# Jetpack
+- type: entity
+  parent: JetpackVoidFilled
+  id: JetpackVoidFilleddnikitafuji1515
+  name: пустотный джетпак медецинского отдела
+  description: Прыжковый ранец, модифицированный для открытого космоса, созданный специально по заказу медицинского отдела.
+  suffix: Filled
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Item
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/jet.rsi
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/jet.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/jet.rsi
+    slots:
+      - Back
+      - suitStorage
+      - Belt
+
+# Belt
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltnikitafuji1515
+  name: медико-Армейская РПС
+  description: Ременно-поясная система тактических ремней, которую носят военные фельдшера.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Storage
+    grid:
+    - 0,0,9,1
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/rps.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/rps.rsi
+  - type: Item
+    size: Huge
+  - type: StorageFill
+    contents:
+      - id: WelderExperimentalnikitafuji1515
+      - id: SyndicateJawsOfLifenikitafuji1515
+      - id: PowerDrillnikitafuji1515
+      - id: Multitool
+
+# Юбка
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtnikitafuji1515
+  name: юбка-комбинезон лейтенанта медицинской службы
+  description: Она изготовлена из специального волокна, обеспечивающего слабую защиту от биологических опасностей. На груди имеется крест, обозначающий, что носитель является медицинским работником..
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/nikitafuji1515/scirt.rsi
+    - type: Clothing
+      sprite: _DeadSpace/Sponsor/nikitafuji1515/scirt.rsi
+
+# HardSuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseEngineeringContraband]
+  id: ClothingOuterHardsuitnikitafuji1515
+  name: скафандр медицинской службы
+  description: Этот скафандр используется полевыми медиками, на пластинах также нанесена эмблема Красного Креста, а наплечные пластины и задняя часть шлема имеют маркировку ODE 27 и литеру А в круге, нанесенную через трафарет.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/hardsuit/suit.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/hardsuit/suit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: FireProtection
+    reduction: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.8
+        Radiation: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitnikitafuji1515
+  - type: Item
+    size: Huge
+
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitnikitafuji1515
+  name: шлем скафандра медецинской службы
+  description: Гораздо легче чем шлема других скафандров, с боку также нанесена эмблема Красного Креста.
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Sprite
+      sprite: _DeadSpace/Sponsor/nikitafuji1515/hardsuit/suit_helmet.rsi
+      layers:
+      - state: icon
+      - state: icon-unshaded
+        shader: unshaded
+      - state: light-overlay
+        visible: false
+        shader: unshaded
+        map: [ "light" ]
+    - type: HandheldLight
+      addPrefix: false
+    - type: ToggleableLightVisuals
+      spriteLayer: light
+      clothingVisuals:
+        head:
+        - state: equipped-head-light
+          shader: unshaded
+    - type: Clothing
+      clothingVisuals:
+        head:
+        - state: equipped-head
+        - state: equipped-head-unshaded
+          shader: unshaded
+    - type: PointLight
+      color: "#adffe6"
+    - type: PressureProtection
+      highPressureMultiplier: 0.08
+      lowPressureMultiplier: 1000
+    - type: TemperatureProtection
+      heatingCoefficient: 0.005
+      coolingCoefficient: 0.005
+    - type: FireProtection
+      reduction: 0.2
+
+# Очки-визор
+
+- type: entity
+  parent: [ClothingEyesBase, ShowMedicalIcons]
+  id: ClothingEyesHudnikitafuji1515
+  name: очки ЗенниОптикал-Мед
+  description: Очки от известного бренда, со встроенным медицинским визором, сделанные на заказ.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/glass.rsi
+  - type: Clothing
+    sprite: _DeadSpace/Sponsor/nikitafuji1515/glass.rsi
