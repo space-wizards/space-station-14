@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: pcaessayrs
-  changes:
-  - message: Anomaly hosts keep their anomaly when turning into a zombie.
-    type: Tweak
-  id: 7722
-  time: '2024-12-17T11:56:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33867
 - author: TiniestShark
   changes:
   - message: Adds in-hand sprites to the Anomaly Scanner.
@@ -3913,3 +3906,10 @@
   id: 8221
   time: '2025-04-18T02:11:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36533
+- author: lzk228
+  changes:
+  - message: Borgs, clowns and mimes now can choose a custom name in loadouts.
+    type: Tweak
+  id: 8222
+  time: '2025-04-18T02:32:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35170
