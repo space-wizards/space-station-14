@@ -5,6 +5,8 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Atmos.Piping;
+using Content.Shared.Atmos.Piping.Binary.Visuals;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
@@ -173,8 +175,8 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
             return;
 
         _appearance.SetData(valveEntityUid,
-            GasVolumePumpVisuals.State,
-            valveComponent.Enabled ? GasVolumePumpState.On : GasVolumePumpState.Off,
+            PressureReliefValveVisuals.State,
+            valveComponent.Enabled ? PressureReliefValveState.On : PressureReliefValveState.Off,
             appearance);
     }
 }

@@ -167,15 +167,15 @@
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
       state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
-    - state: pumpVolume
+    - state: pumpPressureValve
       map: [ "enum.SubfloorLayers.FirstLayer", "enabled" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.GasVolumePumpVisuals.State:
+      enum.PressureReliefValveVisuals.State:
         enabled:
-          On: { state: pumpVolumeOn }
-          Off: { state: pumpVolume }
+          On: { state: pumpPressureValveOn }
+          Off: { state: pumpPressureValve }
   - type: PipeColorVisuals
   - type: GasPressureReliefValve
     enabled: false
