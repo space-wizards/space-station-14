@@ -140,6 +140,7 @@
     stateDoorOpen: bio_cmo_open
     stateDoorClosed: bio_cmo_door
   - type: AccessReader
+    access: [ [ "ChiefMedicalOfficer" ] ]
 
 
 # Security variant

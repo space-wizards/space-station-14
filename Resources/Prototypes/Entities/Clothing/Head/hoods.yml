@@ -27,7 +27,7 @@
     - HeadSide
 
 - type: entity
-  parent: ClothingHeadHatHoodBioGeneral
+  parent: [ ClothingHeadHatHoodBioGeneral, BaseCommandContraband ]
   id: ClothingHeadHatHoodBioCmo
   name: bio hood
   suffix: CMO

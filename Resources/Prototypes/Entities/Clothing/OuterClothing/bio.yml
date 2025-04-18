@@ -21,7 +21,7 @@
     sprintModifier: 0.95
 
 - type: entity
-  parent: ClothingOuterBioGeneral
+  parent: [ ClothingOuterBioGeneral, BaseCommandContraband ]
   id: ClothingOuterBioCmo
   name: bio suit
   suffix: CMO
@@ -38,7 +38,6 @@
         Slash: 0.8
   - type: ZombificationResistance
     zombificationResistanceCoefficient: 0.25
-  - type: GroupExamine
   - type: ClothingSpeedModifier
     walkModifier: 0.9
     sprintModifier: 0.9
