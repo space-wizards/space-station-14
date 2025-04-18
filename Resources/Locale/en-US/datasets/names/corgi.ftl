@@ -1,9 +1,0 @@
-names-corgi-1 = Ian but Smarter
-names-corgi-2 = Braindog
-names-corgi-3 = Speaks-In-Bork
-names-corgi-4 = Head of Pets
-names-corgi-5 = Hop's Best Friend
-names-corgi-6 = Super Corgi
-names-corgi-7 = Paws
-names-corgi-8 = Bingus
-names-corgi-9 = Bongus
