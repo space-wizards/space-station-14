@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: J C Denton
-  changes:
-  - message: Syndicate and NanoTrasen NPCs and turrets are now hostile to Dragons
-      and Carps
-    type: Tweak
-  id: 7741
-  time: '2024-12-20T21:38:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32515
 - author: lzk228
   changes:
   - message: Item's tool function now shows on examine.
@@ -3912,3 +3904,11 @@
   id: 8241
   time: '2025-04-18T23:34:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34223
+- author: EmoGarbage404
+  changes:
+  - message: Added the material silo. This machine allows nearby machines to share
+      a pool of resources, cutting down on micromanagement.
+    type: Add
+  id: 8242
+  time: '2025-04-18T23:43:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36492
