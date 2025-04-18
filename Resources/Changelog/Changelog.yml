@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TytosB
-  changes:
-  - message: 'added new mid pop map: loop'
-    type: Add
-  id: 7734
-  time: '2024-12-19T09:38:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33697
 - author: Centronias
   changes:
   - message: Fixed a bug where the B input on logic gates would get stuck in a high
@@ -3907,3 +3900,10 @@
   id: 8234
   time: '2025-04-18T17:37:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36185
+- author: aada
+  changes:
+  - message: Egg-plants now have 6 reagent per egg at 20 potency, up from 3.
+    type: Tweak
+  id: 8235
+  time: '2025-04-18T19:52:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36693
