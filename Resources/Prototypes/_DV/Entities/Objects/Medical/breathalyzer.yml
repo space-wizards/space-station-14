@@ -23,7 +23,6 @@
   - type: Tag
     tags:
     - Sidearm
-    - ConcealCarry
   - type: Breathalyzer
     thresholds: # I chose these threshold values arbitrarily
       0: breathalyzer-sober

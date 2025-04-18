@@ -12,7 +12,6 @@ using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 
@@ -25,7 +24,6 @@ public sealed class BreathalyzerSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <summary>
     /// Damage type to check if the target is capable of breathing into a breathalyzer, since RespiratorSystem is server-only
