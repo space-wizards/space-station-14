@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Added new map Gate
-    type: Add
-  id: 7721
-  time: '2024-12-17T10:06:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32032
 - author: pcaessayrs
   changes:
   - message: Anomaly hosts keep their anomaly when turning into a zombie.
@@ -3912,3 +3905,11 @@
   id: 8220
   time: '2025-04-18T01:59:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36209
+- author: metalgearsloth
+  changes:
+  - message: Toggleable items such as stunbatons and eswords can no longer be toggled
+      in storage.
+    type: Tweak
+  id: 8221
+  time: '2025-04-18T02:11:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36533
