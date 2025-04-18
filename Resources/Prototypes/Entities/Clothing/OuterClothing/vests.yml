@@ -19,6 +19,34 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
+#Elite web vest
+- type: entity
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSyndicateContraband]
+  id: ClothingOuterVestWebElite
+  name: elite web vest
+  description: A synthetic armor vest. This one has added webbing and heat resistant fibers.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/elitevest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/elitevest.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 0.1
+    coolingCoefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.7
+        Heat: 0.3
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: FireProtection
+    reduction: 0.85
+
 #Mercenary web vest
 - type: entity
   parent: [ BaseMajorContraband, ClothingOuterVestWeb] #web vest so it should have some pockets for ammo
@@ -99,3 +127,7 @@
     sprite: Clothing/OuterClothing/Vests/tankharness.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/tankharness.rsi
+  - type: Item
+    size: Normal # Make smaller than typical outer clothing
+    shape:
+    - 0, 0, 0, 1
