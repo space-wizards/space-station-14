@@ -47,22 +47,7 @@ public sealed class BreathalyzerSystem : EntitySystem
         SubscribeLocalEvent<BreathalyzerComponent, ExaminedEvent>(OnExamined);
     }
 
-    private void OnExamined(Entity<BreathalyzerComponent> ent, ref ExaminedEvent args)
-    {
-        var msg = new FormattedMessage();
-        if (ent.Comp.LastReadValue is { } lastReadValue)
-            msg.AddMarkupPermissive(Loc.GetString("breathalyzer-last-read", ("lastReadValue", FormatRemainingTimeSpan(lastReadValue))));
-        else
-            msg.AddMarkupPermissive(Loc.GetString("breathalyzer-no-last-read"));
-
-        args.PushMessage(msg, 1);
-    }
-
-    private void OnBreathalyzerAction(Entity<BreathalyzerComponent> ent, ref BreathalyzerActionEvent args)
-    {
-        StartChecking(ent, args.Target);
-    }
-
+    #region Event handlers
     private void OnUtilityVerb(EntityUid uid, BreathalyzerComponent component, GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Using == null)
@@ -89,6 +74,43 @@ public sealed class BreathalyzerSystem : EntitySystem
         args.Handled = StartChecking(entity, target);
     }
 
+    /// <summary>
+    /// Starts repeatedly checking <see cref="args.Target"/>'s drunkenness
+    /// </summary>
+    private void OnBreathalyzerAction(Entity<BreathalyzerComponent> ent, ref BreathalyzerActionEvent args)
+    {
+        StartChecking(ent, args.Target);
+    }
+
+    /// <summary>
+    /// Checks <see cref="args.Target"/>'s drunkenness once.<br/>
+    /// Gets called repeatedly after <see cref="StartChecking"/> is called
+    /// </summary>
+    private void OnDoAfter(Entity<BreathalyzerComponent> ent, ref BreathalyzerDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled || args.Target is not { } target)
+            return;
+
+        args.Repeat = true;
+        args.Handled = true;
+        ExamineWithBreathalyzer(ent, args.Args.User, target);
+    }
+
+    private void OnExamined(Entity<BreathalyzerComponent> ent, ref ExaminedEvent args)
+    {
+        var msg = new FormattedMessage();
+        if (ent.Comp.LastReadValue is { } lastReadValue)
+            msg.AddMarkupPermissive(Loc.GetString("breathalyzer-last-read", ("lastReadValue", FormatRemainingTimeSpan(lastReadValue))));
+        else
+            msg.AddMarkupPermissive(Loc.GetString("breathalyzer-no-last-read"));
+
+        args.PushMessage(msg, 1);
+    }
+    #endregion
+
+    /// <summary>
+    /// Fire off the DoAfter for repeatedly checking <see cref="target"/>'s drunkenness
+    /// </summary>
     private bool StartChecking(Entity<BreathalyzerComponent> ent, EntityUid target)
     {
         if (!_container.TryGetContainingContainer((ent, null, null), out var container))
@@ -116,16 +138,12 @@ public sealed class BreathalyzerSystem : EntitySystem
         return true;
     }
 
-    private void OnDoAfter(Entity<BreathalyzerComponent> ent, ref BreathalyzerDoAfterEvent args)
-    {
-        if (args.Cancelled || args.Handled || args.Target is not { } target)
-            return;
-
-        args.Repeat = true;
-        args.Handled = true;
-        ExamineWithBreathalyzer(ent, args.Args.User, target);
-    }
-
+    /// <summary>
+    /// Tries to get <see cref="target"/>'s drunkenness.
+    /// </summary>
+    /// <param name="target">The <see cref="EntityUid"/> to check the drunkenness of</param>
+    /// <param name="boozeTime">The remaining time in seconds that the target will be drunk for, <see langword="null"/> if getting the value failed, <c>0</c> if not drunk.</param>
+    /// <returns>Whether <see cref="target"/> is capable of getting their drunkenness checked</returns>
     private bool TryGetDrunkenness(EntityUid user, EntityUid target, [NotNullWhen(true)] out double? boozeTime)
     {
         // TODO: Add check for respirator component when it gets moved to shared.
@@ -149,6 +167,9 @@ public sealed class BreathalyzerSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Calculates the approximate drunkenness value and shows it to the user
+    /// </summary>
     private void ExamineWithBreathalyzer(Entity<BreathalyzerComponent> breathalyzer, EntityUid user, EntityUid target)
     {
         if (!TryGetDrunkenness(user, target, out var maybeBoozeTime) || maybeBoozeTime is not { } boozeTime)
@@ -159,6 +180,7 @@ public sealed class BreathalyzerSystem : EntitySystem
         var approximateDrunkenness = (ulong)(Math.Round(drunkenness / breathalyzer.Comp.Specificity) * breathalyzer.Comp.Specificity);
 
         LocId chosenLocId = "breathalyzer-sober";
+        // Go through all reached thresholds and pick the last one.
         foreach (var (threshold, locId) in breathalyzer.Comp.Thresholds)
         {
             if (approximateDrunkenness >= threshold)
