@@ -43,11 +43,16 @@
       map: ["enum.DoorVisualLayers.BaseEmergencyAccess"]
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: electrified
+    - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
       shader: unshaded
       visible: false
       map: ["enum.ElectrifiedLayers.HUD"]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.Sparks"]
   - type: AnimationPlayer
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
@@ -142,6 +147,12 @@
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ElectrifiedVisuals.ShowSparks:
+        enum.ElectrifiedLayers.Sparks:
+          True: { visible: True }
+          False: { visible: False }
   - type: WiresVisuals
   - type: ElectrocutionHUDVisuals
   - type: Airtight
@@ -183,11 +194,16 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
-    - state: electrified
+    - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
       shader: unshaded
       visible: false
       map: [ "enum.ElectrifiedLayers.HUD" ]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
   - type: Damageable
     damageModifierSet: RGlass
   - type: Destructible
@@ -249,11 +265,16 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
-    - state: electrified
+    - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
       shader: unshaded
       visible: false
       map: [ "enum.ElectrifiedLayers.HUD" ]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
   - type: Destructible
     thresholds:
     - trigger:
@@ -310,11 +331,16 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
-    - state: electrified
+    - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
       shader: unshaded
       visible: false
-      map: ["enum.ElectrifiedLayers.HUD"]
+      map: [ "enum.ElectrifiedLayers.HUD" ]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
   - type: Destructible
     thresholds:
     - trigger:
@@ -376,11 +402,16 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
-    - state: electrified
+    - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
       shader: unshaded
       visible: false
       map: [ "enum.ElectrifiedLayers.HUD" ]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
   - type: Destructible
     thresholds:
     - trigger:
@@ -437,11 +468,16 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
-    - state: electrified
+    - state: electrified_ai
       sprite: Interface/Misc/ai_hud.rsi
       shader: unshaded
       visible: false
       map: [ "enum.ElectrifiedLayers.HUD" ]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      shader: unshaded
+      visible: false
+      map: [ "enum.ElectrifiedLayers.Sparks" ]
   - type: Destructible
     thresholds:
     - trigger:

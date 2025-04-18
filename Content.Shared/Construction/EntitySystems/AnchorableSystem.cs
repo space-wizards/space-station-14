@@ -31,6 +31,7 @@ public sealed partial class AnchorableSystem : EntitySystem
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private   readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
 
@@ -47,6 +48,18 @@ public sealed partial class AnchorableSystem : EntitySystem
         SubscribeLocalEvent<AnchorableComponent, TryAnchorCompletedEvent>(OnAnchorComplete);
         SubscribeLocalEvent<AnchorableComponent, TryUnanchorCompletedEvent>(OnUnanchorComplete);
         SubscribeLocalEvent<AnchorableComponent, ExaminedEvent>(OnAnchoredExamine);
+        SubscribeLocalEvent<AnchorableComponent, ComponentStartup>(OnAnchorStartup);
+        SubscribeLocalEvent<AnchorableComponent, AnchorStateChangedEvent>(OnAnchorStateChange);
+    }
+
+    private void OnAnchorStartup(EntityUid uid, AnchorableComponent comp, ComponentStartup args)
+    {
+        _appearance.SetData(uid, AnchorVisuals.Anchored, Transform(uid).Anchored);
+    }
+
+    private void OnAnchorStateChange(EntityUid uid, AnchorableComponent comp, AnchorStateChangedEvent args)
+    {
+        _appearance.SetData(uid, AnchorVisuals.Anchored, args.Anchored);
     }
 
     /// <summary>
@@ -267,7 +280,7 @@ public sealed partial class AnchorableSystem : EntitySystem
     private bool TileFree(EntityCoordinates coordinates, PhysicsComponent anchorBody)
     {
         // Probably ignore CanCollide on the anchoring body?
-        var gridUid = coordinates.GetGridUid(EntityManager);
+        var gridUid = _transformSystem.GetGrid(coordinates);
 
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
@@ -316,7 +329,7 @@ public sealed partial class AnchorableSystem : EntitySystem
 
     public bool AnyUnstackablesAnchoredAt(EntityCoordinates location)
     {
-        var gridUid = location.GetGridUid(EntityManager);
+        var gridUid = _transformSystem.GetGrid(location);
 
         if (!TryComp<MapGridComponent>(gridUid, out var grid))
             return false;
@@ -342,4 +355,10 @@ public sealed partial class AnchorableSystem : EntitySystem
     private sealed partial class TryAnchorCompletedEvent : SimpleDoAfterEvent
     {
     }
+}
+
+[Serializable, NetSerializable]
+public enum AnchorVisuals : byte
+{
+    Anchored
 }

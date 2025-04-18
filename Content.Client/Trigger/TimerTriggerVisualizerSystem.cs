@@ -33,7 +33,7 @@ public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTrigger
         {
             comp.PrimingAnimation.AnimationTracks.Add(
                 new AnimationTrackPlaySound() {
-                    KeyFrames = { new AnimationTrackPlaySound.KeyFrame(_audioSystem.GetSound(comp.PrimingSound), 0) }
+                    KeyFrames = { new AnimationTrackPlaySound.KeyFrame(_audioSystem.ResolveSound(comp.PrimingSound), 0) }
                 }
             );
         }
@@ -52,7 +52,7 @@ public sealed class TimerTriggerVisualizerSystem : VisualizerSystem<TimerTrigger
         {
             case TriggerVisualState.Primed:
                 if (!AnimationSystem.HasRunningAnimation(uid, animPlayer, TimerTriggerVisualsComponent.AnimationKey))
-                    AnimationSystem.Play(uid, animPlayer, comp.PrimingAnimation, TimerTriggerVisualsComponent.AnimationKey);
+                    AnimationSystem.Play((uid, animPlayer), comp.PrimingAnimation, TimerTriggerVisualsComponent.AnimationKey);
                 break;
             case TriggerVisualState.Unprimed:
                 args.Sprite.LayerSetState(TriggerVisualLayers.Base, comp.UnprimedSprite);
