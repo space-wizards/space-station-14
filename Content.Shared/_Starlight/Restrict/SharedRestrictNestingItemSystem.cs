@@ -141,6 +141,13 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
             ev.Cancel();
             return;
         }
+
+        if (RecursivelyCheckForNesting(ent, true))
+        {
+            _popup.PopupEntity(Loc.GetString("restrict-nesting-item-cant-pickup", ("user", ent)), args.User, args.User);
+            ev.Cancel();
+            return;
+        }
     }
 
     private void FinishPickup(Entity<RestrictNestingItemComponent> ent, ref RestrictNestingItemPickupDoAfterEvent args)
@@ -161,7 +168,6 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
         if (RecursivelyCheckForNesting(ent, true))
         {
             _popup.PopupClient(Loc.GetString("restrict-nesting-item-cant-pickup", ("user", ent)), args.User, args.User);
-            //_popup.PopupClient(Loc.GetString("restrict-nesting-item-cant-pickup"), args.User, args.User);
             return;
         }
 
