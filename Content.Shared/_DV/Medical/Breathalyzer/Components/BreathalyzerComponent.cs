@@ -27,11 +27,12 @@ public sealed partial class BreathalyzerComponent : Component
     [DataField]
     public int Specificity = 5;
 
+    // Praying for https://github.com/space-wizards/RobustToolbox/pull/5849 to make this usable
     /// <summary>
     /// Standard deviation for the gaussian random offset when measuring drunkenness.
     /// </summary>
-    [DataField]
-    public int Variance = 5;
+    // [DataField]
+    // public int Variance = 5;
 
     /// <summary>
     /// The drunkenness values and their associated message.<br/>
