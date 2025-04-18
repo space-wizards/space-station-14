@@ -14,7 +14,7 @@
             "stopAtEntry": false
         },
         {
-            "name": "Client - (Compatibility renderer)",
+            "name": "Client (Compatibility renderer)",
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
@@ -43,7 +43,7 @@
             "stopAtEntry": false
         },
         {
-            "name": "Client - Tools - (Compatibility renderer)",
+            "name": "Client - Tools (Compatibility renderer)",
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
@@ -72,7 +72,7 @@
             "stopAtEntry": false
         },
         {
-            "name": "Client - Release - (Compatibility renderer)",
+            "name": "Client - Release (Compatibility renderer)",
             "type": "coreclr",
             "request": "launch",
             "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
