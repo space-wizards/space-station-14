@@ -59,15 +59,22 @@
 
 #Prisoner EVA
 - type: entity
-  parent: ClothingOuterSuitEmergency
+  parent: ClothingOuterEVASuitBase
   id:  ClothingOuterHardsuitEVAPrisoner
   name: prisoner EVA suit
-  description: An emergency EVA suit with a built-in helmet meant for prisoners. It's horribly slow and lacking in temperature protection, but enough to buy you time from the harsh vacuum of space.
+  description: An emergency EVA suit meant for prisoners. It's horribly slow and lacking in temperature protection, but enough to buy you time from the harsh vacuum of space.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: HeldSpeedModifier
+  - type: TemperatureProtection
+    heatingCoefficient: 0.75
+    coolingCoefficient: 0.5
   - type: Tag
     tags:
     - SuitEVA

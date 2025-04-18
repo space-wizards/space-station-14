@@ -47,6 +47,7 @@
     contents:
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitEVAPrisoner
+        - id: ClothingHeadHelmetEVALarge
         - id: ClothingMaskBreath
 
 #Syndicate EVA
