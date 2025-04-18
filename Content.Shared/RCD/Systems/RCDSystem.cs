@@ -43,7 +43,6 @@ public sealed class RCDSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tags = default!;
-    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     private readonly int _instantConstructionDelay = 0;
     private readonly EntProtoId _instantConstructionFx = "EffectRCDConstruct0";
@@ -133,7 +132,7 @@ public sealed class RCDSystem : EntitySystem
         if (!location.IsValid(EntityManager))
             return;
 
-        var gridUid = _transformSystem.GetGrid(location);
+        var gridUid = _transform.GetGrid(location);
 
         if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
         {
@@ -239,7 +238,7 @@ public sealed class RCDSystem : EntitySystem
         // Ensure the RCD operation is still valid
         var location = GetCoordinates(args.Event.Location);
 
-        var gridUid = _transformSystem.GetGrid(location);
+        var gridUid = _transform.GetGrid(location);
 
         if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
         {
@@ -272,7 +271,7 @@ public sealed class RCDSystem : EntitySystem
 
         var location = GetCoordinates(args.Location);
 
-        var gridUid = _transformSystem.GetGrid(location);
+        var gridUid = _transform.GetGrid(location);
 
         if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
             return;
@@ -332,7 +331,7 @@ public sealed class RCDSystem : EntitySystem
             return false;
         }
 
-        if (_charges.HasInsufficientCharges(uid, prototype.Cost, charges))
+        if (prototype.Cost > charges)
         {
             if (popMsgs)
                 _popup.PopupClient(Loc.GetString("rcd-component-insufficient-ammo-message"), uid, user);
