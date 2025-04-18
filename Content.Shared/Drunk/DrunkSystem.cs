@@ -48,6 +48,7 @@ public abstract class SharedDrunkSystem : EntitySystem
         _statusEffectsSystem.TryRemoveTime(uid, DrunkKey, TimeSpan.FromSeconds(timeRemoved));
     }
 
+    /// <returns><see langword="true"/> if the target is drunk, <see langword="false"/> if the target is not drunk or incapable of it</returns>
     public bool TryGetDrunkennessTime(EntityUid uid, [NotNullWhen(true)] out double? drunkTime)
     {
         if (!_statusEffectsSystem.TryGetTime(uid, DrunkKey, out var boozeTimes))
