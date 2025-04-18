@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: A minor addition to the examples of antag rule 4. Peruse keb pages.
-    type: Tweak
-  id: 1026
-  time: '2025-01-31T02:54:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1521
-- author: formlessnameless
-  changes:
-  - message: Space ticks and carp will no longer be sleeping in every single maint
-      locker.
-    type: Fix
-  id: 1027
-  time: '2025-01-31T07:58:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1527
 - author: DinnerCalzone
   changes:
   - message: Oasis has been updated to feature the supermatter engine, a service breakroom,
@@ -4093,3 +4078,21 @@
   id: 1525
   time: '2025-04-17T02:38:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2265
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: Practice Laser and Disabler have updated light sprites and now recharge
+      a lot faster.
+    type: Tweak
+  - message: Blasters and the Emergency Laser all have appropriate contraband tags
+      now.
+    type: Fix
+  id: 1526
+  time: '2025-04-18T04:54:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2271
+- author: dayne, crocodilecarousel
+  changes:
+  - message: New medical guidebook, in a library near you!
+    type: Add
+  id: 1527
+  time: '2025-04-18T04:53:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2270
