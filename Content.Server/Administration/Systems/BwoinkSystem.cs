@@ -227,7 +227,7 @@ namespace Content.Server.Administration.Systems
 
             // Create the message parameters for Discord
             var messageParams = new AHelpMessageParams(
-                session.Name,
+                _playerManager.GetTruthfulNameString(session),
                 message,
                 true,
                 roundTime,
@@ -244,7 +244,7 @@ namespace Content.Server.Administration.Systems
                 PlayerStatusType.Banned => Color.Orange.ToHex(),
                 _ => Color.Gray.ToHex(),
             };
-            var inGameMessage = $"[color={color}]{session.Name} {message}[/color]";
+            var inGameMessage = $"[color={color}]{_playerManager.GetTruthfulNameString(session)} {message}[/color]";
 
             var bwoinkMessage = new BwoinkTextMessage(
                 userId: session.UserId,
@@ -655,26 +655,28 @@ namespace Content.Server.Administration.Systems
             string bwoinkText;
             string adminPrefix = "";
 
+            // Determine the name color, if any
+            string? adminColor = null;
+            if (senderAdmin is not null &&
+                senderAdmin.Flags ==
+                AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
+            {
+                adminColor = "purple";
+            }
+            else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
+            {
+                adminColor = "red";
+            }
+
             //Getting an administrator position
             if (_config.GetCVar(CCVars.AhelpAdminPrefix) && senderAdmin is not null && senderAdmin.Title is not null)
             {
                 adminPrefix = $"[bold]\\[{senderAdmin.Title}\\][/bold] ";
             }
-
-            if (senderAdmin is not null &&
-                senderAdmin.Flags ==
-                AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
-            {
-                bwoinkText = $"[color=purple]{adminPrefix}{senderSession.Name}[/color]";
-            }
-            else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
-            {
-                bwoinkText = $"[color=red]{adminPrefix}{senderSession.Name}[/color]";
-            }
-            else
-            {
-                bwoinkText = $"{senderSession.Name}";
-            }
+            bwoinkText = $"{(adminColor != null ? $"[color={adminColor}]" : "")}" +
+                         $"{adminPrefix}" +
+                         $"{_playerManager.GetTruthfulNameString(senderSession)}" +
+                         $"{(adminColor != null ? $"[/color]" : "")}";
 
             bwoinkText = $"{(message.AdminOnly ? Loc.GetString("bwoink-message-admin-only") : !message.PlaySound ? Loc.GetString("bwoink-message-silent") : "")} {bwoinkText}: {escapedText}";
 
@@ -692,49 +694,33 @@ namespace Content.Server.Administration.Systems
                 RaiseNetworkEvent(msg, channel);
             }
 
-            string adminPrefixWebhook = "";
-
-            if (_config.GetCVar(CCVars.AhelpAdminPrefixWebhook) && senderAdmin is not null && senderAdmin.Title is not null)
-            {
-                adminPrefixWebhook = $"[bold]\\[{senderAdmin.Title}\\][/bold] ";
-            }
 
             // Notify player
             if (_playerManager.TryGetSessionById(message.UserId, out var session) && !message.AdminOnly)
             {
                 if (!admins.Contains(session.Channel))
                 {
-                    // If _overrideClientName is set, we generate a new message with the override name. The admins name will still be the original name for the webhooks.
-                    if (_overrideClientName != string.Empty)
-                    {
-                        string overrideMsgText;
-                        // Doing the same thing as above, but with the override name. Theres probably a better way to do this.
-                        if (senderAdmin is not null &&
-                            senderAdmin.Flags ==
-                            AdminFlags.Adminhelp) // Mentor. Not full admin. That's why it's colored differently.
-                        {
-                            overrideMsgText = $"[color=purple]{adminPrefixWebhook}{_overrideClientName}[/color]";
-                        }
-                        else if (senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp))
-                        {
-                            overrideMsgText = $"[color=red]{adminPrefixWebhook}{_overrideClientName}[/color]";
-                        }
-                        else
-                        {
-                            overrideMsgText = $"{senderSession.Name}"; // Not an admin, name is not overridden.
-                        }
+                    bwoinkText = $"{(adminColor != null ? $"[color={adminColor}]" : "")}" +
+                                 $"{adminPrefix}" +
+                                 $"{(_overrideClientName != string.Empty ? _overrideClientName : _playerManager.GetDisplayName(senderSession))}" +
+                                 $"{(adminColor != null ? $"[/color]" : "")}";
 
-                        overrideMsgText = $"{(message.PlaySound ? "" : "(S) ")}{overrideMsgText}: {escapedText}";
+                    bwoinkText = $"{(!message.PlaySound ? Loc.GetString("bwoink-message-silent") : "")} {bwoinkText}: {escapedText}";
 
-                        RaiseNetworkEvent(new BwoinkTextMessage(message.UserId,
-                                senderSession.UserId,
-                                overrideMsgText,
-                                playSound: playSound),
+                    RaiseNetworkEvent(new BwoinkTextMessage(message.UserId,
+                            senderSession.UserId,
+                            bwoinkText,
+                            playSound: playSound),
                             session.Channel);
-                    }
-                    else
-                        RaiseNetworkEvent(msg, session.Channel);
                 }
+            }
+
+
+            var adminPrefixWebhook = "";
+
+            if (_config.GetCVar(CCVars.AhelpAdminPrefixWebhook) && senderAdmin is not null && senderAdmin.Title is not null)
+            {
+                adminPrefixWebhook = $" [{senderAdmin.Title}]";
             }
 
             var sendsWebhook = _webhookUrl != string.Empty;
@@ -744,7 +730,7 @@ namespace Content.Server.Administration.Systems
                     _messageQueues[msg.UserId] = new Queue<DiscordRelayedData>();
 
                 var str = message.Text;
-                var unameLength = senderSession.Name.Length;
+                var unameLength = (_playerManager.GetTruthfulNameString(senderSession) + adminPrefixWebhook).Length;
 
                 if (unameLength + str.Length + _maxAdditionalChars > DescriptionMax)
                 {
@@ -753,7 +739,7 @@ namespace Content.Server.Administration.Systems
 
                 var nonAfkAdmins = GetNonAfkAdmins();
                 var messageParams = new AHelpMessageParams(
-                    senderSession.Name,
+                    _playerManager.GetTruthfulNameString(senderSession) + adminPrefixWebhook,
                     str,
                     !personalChannel,
                     _gameTicker.RoundDuration().ToString("hh\\:mm\\:ss"),

@@ -1,0 +1,116 @@
+﻿using System.Linq;
+using Content.Server.Administration.Logs;
+using Content.Shared.Administration;
+using Content.Shared.Database;
+using Content.Shared.Dataset;
+using Content.Shared.Ghost;
+using Robust.Server.Player;
+using Robust.Shared.Console;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+
+namespace Content.Server.Administration.Commands;
+
+/// <summary>
+/// Randomizes the DisplayName for a given user's session, anonymizing the user in non-admin UI.
+/// The names are selected from the dataset provided in RandomNamesPrototypeId.
+/// </summary>
+/// <remarks>
+/// The current implementation targets admins specifically with the given name dataset.
+/// </remarks>
+[AdminCommand(AdminFlags.Admin)]
+public sealed class RandomDisplayNameCommand : LocalizedCommands
+{
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
+    [ValidatePrototypeId<LocalizedDatasetPrototype>]
+    public const string RandomNamesPrototypeId = "NamesAdmin";
+
+    public override string Command => "randomizedisplayname";
+    public override string Description => Loc.GetString("cmd-displayname-randomize-description");
+    public override string Help => Loc.GetString("cmd-displayname-randomize-help");
+
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            var names = _playerManager.Sessions.OrderBy(c => c.Name).Select(c => c.Name);
+            return CompletionResult.FromHintOptions(names, Loc.GetString("shell-argument-username-optional-hint"));
+        }
+
+        return CompletionResult.Empty;
+    }
+
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
+    {
+        if (args.Length > 1)
+        {
+            shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
+            return;
+        }
+
+        var player = shell.Player;
+        if (player == null)
+        {
+            // If you are not a player, you require a player argument.
+            if (args.Length == 0)
+            {
+                shell.WriteError(Loc.GetString("shell-need-exactly-one-argument"));
+                return;
+            }
+
+            var didFind = _playerManager.TryGetSessionByUsername(args[0], out player);
+            if (!didFind)
+            {
+                shell.WriteError(Loc.GetString("shell-target-player-does-not-exist"));
+                return;
+            }
+        }
+
+        // If you are a player and a username is provided, a lookup is done to find the target player.
+        if (args.Length == 1)
+        {
+            var didFind = _playerManager.TryGetSessionByUsername(args[0], out player);
+            if (!didFind)
+            {
+                shell.WriteError(Loc.GetString("shell-target-player-does-not-exist"));
+                return;
+            }
+        }
+
+        if (!_protoManager.TryIndex(RandomNamesPrototypeId, out LocalizedDatasetPrototype? nameData))
+        {
+            shell.WriteError(Loc.GetString("cmd-displayname-proto-fail", ("id", RandomNamesPrototypeId)));
+            return;
+        }
+
+        var list = nameData.Values.Select(c => Loc.GetString(c)).Except(_playerManager.Sessions.Select(c => c.DisplayName)).ToList();
+
+        if (list.Count == 0)
+        {
+            shell.WriteError(Loc.GetString("cmd-displayname-all-names-taken"));
+            return;
+        }
+
+        var displayName = _random.Pick(list);
+
+        // Admin ghosts
+        if (player!.AttachedEntity != null &&
+            _entityManager.HasComponent<GhostComponent>(player.AttachedEntity) &&
+            _entityManager.TrySystem(out MetaDataSystem? metaDataSystem) &&
+            _entityManager.TryGetComponent<MetaDataComponent>(player.AttachedEntity, out var metaData) &&
+            (metaData.EntityName == player.Name || metaData.EntityName == player.DisplayName))
+        {
+            metaDataSystem.SetEntityName(player.AttachedEntity.Value, displayName);
+        }
+
+        _playerManager.SetDisplayName(player, displayName);
+        _adminLogManager.Add(LogType.AdminCommands,
+            LogImpact.Extreme,
+            $"{player!.Name} ({player!.UserId}) had their display name randomized to {displayName}.");
+    }
+}

@@ -2,6 +2,7 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Shared.Administration;
+using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Utility;
 
@@ -17,6 +18,7 @@ public sealed class AdminWhoCommand : IConsoleCommand
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         var adminMgr = IoCManager.Resolve<IAdminManager>();
+        var playerMgr = IoCManager.Resolve<IPlayerManager>();
         var afk = IoCManager.Resolve<IAfkManager>();
 
         var seeStealth = true;
@@ -43,7 +45,7 @@ public sealed class AdminWhoCommand : IConsoleCommand
                 sb.Append('\n');
             first = false;
 
-            sb.Append(admin.Name);
+            sb.Append(playerMgr.GetTruthfulNameString(admin));
             if (adminData.Title is { } title)
                 sb.Append($": [{title}]");
 
