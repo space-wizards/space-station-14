@@ -1,68 +1,4 @@
 ﻿Entries:
-- author: Redbookcase
-  changes:
-  - message: Standardized Mercenary gear's contraband status.
-    type: Tweak
-  id: 7730
-  time: '2024-12-18T15:13:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33647
-- author: ArtisticRoomba
-  changes:
-  - message: New plushie, named "drazil plushie". Based on an inverted lizard plushie.
-      It can be rarely found in maints lockers. Hew!
-    type: Add
-  - message: New reagent, Juice that makes you Hew. It can be made from juicing inverted
-      lizard plushies. Hew!
-    type: Add
-  id: 7731
-  time: '2024-12-18T16:31:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33776
-- author: FairlySadPanda August-Sun Eric156
-  changes:
-  - message: Smite Cranberry is now available wherever lemon-lime soda is sold, just
-      for the holidays. This includes a certain jolly anomaly.
-    type: Add
-  id: 7732
-  time: '2024-12-19T00:11:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33922
-- author: Crotalus, ArtisticRoomba
-  changes:
-  - message: Battery levels of applicable devices are now shown in the Power Monitoring
-      Console!
-    type: Add
-  id: 7733
-  time: '2024-12-19T00:46:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33854
-- author: TytosB
-  changes:
-  - message: 'added new mid pop map: loop'
-    type: Add
-  id: 7734
-  time: '2024-12-19T09:38:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33697
-- author: Centronias
-  changes:
-  - message: Fixed a bug where the B input on logic gates would get stuck in a high
-      state
-    type: Fix
-  id: 7735
-  time: '2024-12-19T11:31:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33792
-- author: Plykiya
-  changes:
-  - message: Cargo armor crate now correctly indicates that it contains bulletproof
-      vests.
-    type: Fix
-  id: 7736
-  time: '2024-12-19T17:21:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33414
-- author: Piras314
-  changes:
-  - message: Removed the nuke song "Clearly Nuclear" on request of the author.
-    type: Remove
-  id: 7737
-  time: '2024-12-20T14:35:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33971
 - author: VlaDOS1408
   changes:
   - message: The Communication Console UI is now resizable.
@@ -3912,3 +3848,62 @@
   id: 8230
   time: '2025-04-18T14:12:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36479
+- author: IProduceWidgets
+  changes:
+  - message: Holobarrier projectors are now more power efficient.
+    type: Tweak
+  id: 8231
+  time: '2025-04-18T16:10:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34473
+- author: K-Dynamic
+  changes:
+  - message: Removed egg-plant from MegaSeed Servitor. (Egg-plant seeds can still
+      be obtained by mutation or exotic seed crate.)
+    type: Remove
+  id: 8232
+  time: '2025-04-18T16:42:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36579
+- author: Failed, Centronias
+  changes:
+  - message: The drink shaker now has in-hand sprites
+    type: Tweak
+  id: 8233
+  time: '2025-04-18T17:12:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36382
+- author: IProduceWidgets
+  changes:
+  - message: filing cabinets no longer have whitelists.
+    type: Tweak
+  id: 8234
+  time: '2025-04-18T17:37:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36185
+- author: aada
+  changes:
+  - message: Egg-plants now have 6 reagent per egg at 20 potency, up from 3.
+    type: Tweak
+  id: 8235
+  time: '2025-04-18T19:52:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36693
+- author: Nox38
+  changes:
+  - message: Nuclear operative agent is renamed to nuclear operative corpsman.
+    type: Tweak
+  id: 8236
+  time: '2025-04-18T19:56:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34627
+- author: Ilya246
+  changes:
+  - message: The actions hotbar now has up to 10 more hotkeys accessible through the
+      shift key.
+    type: Add
+  id: 8237
+  time: '2025-04-18T22:45:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33872
+- author: lzk228
+  changes:
+  - message: Fixed breaking small mobs (e.g. mice) mask after getting into an air
+      flow.
+    type: Fix
+  id: 8238
+  time: '2025-04-18T22:52:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33888
