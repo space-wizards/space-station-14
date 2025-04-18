@@ -35,7 +35,7 @@ entities:
       chunks:
         0,0:
           ind: 0,0
-          tiles: eQAAAAAAWQAAAAACWQAAAAACWQAAAAABeQAAAAAAeQAAAAAAeQAAAAAAbAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAWQAAAAAAWQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAWQAAAAABWQAAAAABXAAAAAAAXAAAAAAAeQAAAAAAXAAAAAAAXAAAAAAAXAAAAAAAeQAAAAAAXAAAAAAAXAAAAAAAWQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAXgAAAAAAWQAAAAAAXAAAAAAAXAAAAAAAAwAAAAAAXAAAAAAAXAAAAAAAXAAAAAAAAwAAAAAAXAAAAAAAXAAAAAAAWQAAAAACeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAXgAAAAAAWQAAAAACXAAAAAAAXAAAAAAAAwAAAAAAXAAAAAAAXAAAAAAAXAAAAAAAAwAAAAAAXAAAAAAAXAAAAAAAWQAAAAADWQAAAAAAWQAAAAACWQAAAAABeQAAAAAAXgAAAAAAWQAAAAADXAAAAAAAXAAAAAAAAwAAAAAAXAAAAAAAXAAAAAAAXAAAAAAAAwAAAAAAXAAAAAAAXAAAAAAAWQAAAAABWQAAAAABWQAAAAACWQAAAAABeQAAAAAAXgAAAAAAWQAAAAADXAAAAAAAXAAAAAAAeQAAAAAAXAAAAAAAXAAAAAAAXAAAAAAAeQAAAAAAXAAAAAAAXAAAAAAAWQAAAAAAWQAAAAAAWQAAAAABWQAAAAAAeQAAAAAAXgAAAAAAWQAAAAABWQAAAAACWQAAAAACWQAAAAABWQAAAAABWQAAAAADWQAAAAAAWQAAAAABWQAAAAABWQAAAAACWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAACeQAAAAAAWQAAAAADWQAAAAABXgAAAAAAXgAAAAAAXgAAAAAAXgAAAAAAWQAAAAADXgAAAAAAXgAAAAAAXgAAAAAAXgAAAAAAXgAAAAAAXgAAAAAAWQAAAAADWQAAAAAAeQAAAAAAWQAAAAABWQAAAAADHgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAWQAAAAAAeQAAAAAAXgAAAAAAXgAAAAAAXgAAAAAAXgAAAAAAeQAAAAAAIgAAAAACeQAAAAAAeQAAAAAAHgAAAAAAHgAAAAAAHgAAAAAAHgAAAAAAWQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAHgAAAAAAWwAAAAAAWwAAAAAAeQAAAAAAHgAAAAAAHgAAAAAAHgAAAAAAHgAAAAAAWQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAeQAAAAAAWwAAAAAAWwAAAAAAeQAAAAAAHgAAAAAAHgAAAAAAHgAAAAAAHgAAAAAAXQAAAAADAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAHgAAAAACWwAAAAAAWwAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+          tiles: eQAAAAAAWQAAAAACWQAAAAACWQAAAAABeQAAAAAAeQAAAAAAeQAAAAAAbAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAWQAAAAAAWQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAWQAAAAABWQAAAAABXAAAAAAAXAAAAAAAeQAAAAAAXAAAAAAAXAAAAAAAXAAAAAAAeQAAAAAAXAAAAAAAXAAAAAAAWQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAXgAAAAAAWQAAAAAAXAAAAAAAXAAAAAAAAwAAAAAAXAAAAAAAXAAAAAAAXAAAAAAAAwAAAAAAXAAAAAAAXAAAAAAAWQAAAAACeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAXgAAAAAAWQAAAAACXAAAAAAAXAAAAAAAAwAAAAAAXAAAAAAAXAAAAAAAXAAAAAAAAwAAAAAAXAAAAAAAXAAAAAAAWQAAAAADWQAAAAAAWQAAAAACWQAAAAABeQAAAAAAXgAAAAAAWQAAAAADXAAAAAAAXAAAAAAAAwAAAAAAXAAAAAAAXAAAAAAAXAAAAAAAAwAAAAAAXAAAAAAAXAAAAAAAWQAAAAABWQAAAAABWQAAAAACWQAAAAABeQAAAAAAXgAAAAAAWQAAAAADXAAAAAAAXAAAAAAAeQAAAAAAXAAAAAAAXAAAAAAAXAAAAAAAeQAAAAAAXAAAAAAAXAAAAAAAWQAAAAAAWQAAAAAAWQAAAAABWQAAAAAAeQAAAAAAXgAAAAAAWQAAAAABWQAAAAACWQAAAAACWQAAAAABWQAAAAABWQAAAAADWQAAAAAAWQAAAAABWQAAAAABWQAAAAACWQAAAAAAWQAAAAAAWQAAAAAAWQAAAAACeQAAAAAAWQAAAAADWQAAAAABXgAAAAAAXgAAAAAAXgAAAAAAXgAAAAAAWQAAAAADXgAAAAAAXgAAAAAAXgAAAAAAXgAAAAAAXgAAAAAAXgAAAAAAWQAAAAADWQAAAAAAeQAAAAAAWQAAAAABWQAAAAADHgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAQAAAAAAeQAAAAAAXgAAAAAAXgAAAAAAXgAAAAAAXgAAAAAAeQAAAAAAIgAAAAACeQAAAAAAeQAAAAAAHgAAAAAAHgAAAAAAHgAAAAAAHgAAAAAAWQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAHgAAAAAAWwAAAAAAWwAAAAAAeQAAAAAAHgAAAAAAHgAAAAAAHgAAAAAAHgAAAAAAWQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAeQAAAAAAWwAAAAAAWwAAAAAAeQAAAAAAHgAAAAAAHgAAAAAAHgAAAAAAHgAAAAAAXQAAAAADAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAAQAAAAAAHgAAAAACWwAAAAAAWwAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeQAAAAAAeQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
           version: 6
         0,-1:
           ind: 0,-1
@@ -638,6 +638,40 @@ entities:
     - type: RadiationGridResistance
     - type: NavMap
     - type: EmergencyShuttle
+- proto: AirAlarm
+  entities:
+  - uid: 838
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 18.5,-2.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 829
+      - 828
+      - 833
+      - 827
+      - 835
+      - 836
+      - 837
+      - 832
+      - 830
+      - 831
+      - 843
+      - 834
+      - 839
+      - 842
+      - 841
+      - 840
+      - 844
+      - 371
+      - 369
+      - 367
+      - 370
+      - 368
+      - 373
+      - 372
 - proto: AirCanister
   entities:
   - uid: 3
@@ -754,13 +788,78 @@ entities:
     - type: Transform
       pos: 2.5,8.5
       parent: 2
-- proto: AirlockServiceLocked
+- proto: AirSensor
   entities:
-  - uid: 18
+  - uid: 834
     components:
     - type: Transform
-      pos: 7.5,8.5
+      rot: -1.5707963267948966 rad
+      pos: 7.5,3.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+  - uid: 839
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,3.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+  - uid: 840
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 12.5,3.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+  - uid: 841
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 8.5,10.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+  - uid: 842
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,10.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+  - uid: 843
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 7.5,-1.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+  - uid: 844
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 15.5,-2.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
 - proto: APCSuperCapacity
   entities:
   - uid: 19
@@ -2453,6 +2552,33 @@ entities:
     - type: Transform
       pos: 2.5,-2.5
       parent: 2
+- proto: FireAlarm
+  entities:
+  - uid: 845
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 13.5,-1.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 829
+      - 828
+      - 833
+      - 827
+      - 835
+      - 836
+      - 837
+      - 832
+      - 830
+      - 831
+      - 843
+      - 834
+      - 839
+      - 842
+      - 841
+      - 840
+      - 844
 - proto: FireAxeCabinetFilled
   entities:
   - uid: 812
@@ -2461,6 +2587,106 @@ entities:
       rot: 3.141592653589793 rad
       pos: 21.5,5.5
       parent: 2
+- proto: Firelock
+  entities:
+  - uid: 827
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 7.5,8.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+  - uid: 828
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,8.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+  - uid: 829
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 7.5,0.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+  - uid: 830
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 16.5,6.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+  - uid: 831
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 16.5,4.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+  - uid: 832
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 13.5,-2.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+- proto: FirelockEdge
+  entities:
+  - uid: 833
+    components:
+    - type: Transform
+      pos: 9.5,9.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+  - uid: 835
+    components:
+    - type: Transform
+      pos: 10.5,9.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+  - uid: 836
+    components:
+    - type: Transform
+      pos: 11.5,9.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
+  - uid: 837
+    components:
+    - type: Transform
+      pos: 12.5,9.5
+      parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 845
+      - 838
 - proto: FloorDrain
   entities:
   - uid: 293
@@ -3072,6 +3298,9 @@ entities:
     - type: Transform
       pos: 3.5,10.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 838
     - type: VentCrawTube
       connected: True
   - uid: 368
@@ -3080,6 +3309,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: 2.5,-1.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 838
     - type: VentCrawTube
       connected: True
   - uid: 369
@@ -3088,6 +3320,9 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 9.5,10.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 838
     - type: VentCrawTube
       connected: True
   - uid: 370
@@ -3095,6 +3330,9 @@ entities:
     - type: Transform
       pos: 2.5,6.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 838
     - type: VentCrawTube
       connected: True
   - uid: 371
@@ -3103,6 +3341,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: 14.5,4.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 838
     - type: VentCrawTube
       connected: True
   - uid: 372
@@ -3111,6 +3352,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: 12.5,-3.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 838
     - type: VentCrawTube
       connected: True
   - uid: 373
@@ -3119,6 +3363,9 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 6.5,-2.5
       parent: 2
+    - type: DeviceNetwork
+      deviceLists:
+      - 838
     - type: VentCrawTube
       connected: True
   - uid: 374
@@ -3460,6 +3707,13 @@ entities:
     components:
     - type: Transform
       pos: 1.4410307,11.043619
+      parent: 2
+- proto: LockerSteelLarge
+  entities:
+  - uid: 167
+    components:
+    - type: Transform
+      pos: 6.5,11.5
       parent: 2
 - proto: LootSpawnerMedicalClassy
   entities:
@@ -4440,6 +4694,104 @@ entities:
     - type: Transform
       pos: 23.5,11.5
       parent: 2
+- proto: SurveillanceCameraGeneral
+  entities:
+  - uid: 168
+    components:
+    - type: Transform
+      pos: 2.5,-1.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: main area south
+  - uid: 169
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 2.5,11.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: security
+  - uid: 819
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 12.5,2.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: main area west
+  - uid: 820
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 10.5,11.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: bar
+  - uid: 821
+    components:
+    - type: Transform
+      pos: 15.5,9.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: command external
+  - uid: 822
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 21.5,7.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: command internal
+  - uid: 823
+    components:
+    - type: Transform
+      pos: 19.5,3.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: corridor
+  - uid: 824
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 22.5,1.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: waiting backroom
+  - uid: 825
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 17.5,-1.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: engineering
 - proto: Table
   entities:
   - uid: 573
@@ -5569,11 +5921,30 @@ entities:
       parent: 2
 - proto: WindoorSecureSecurityLocked
   entities:
+  - uid: 170
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 1.5,9.5
+      parent: 2
   - uid: 769
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,11.5
+      parent: 2
+- proto: WindoorServiceLocked
+  entities:
+  - uid: 18
+    components:
+    - type: Transform
+      pos: 7.5,8.5
+      parent: 2
+  - uid: 826
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 7.5,8.5
       parent: 2
 - proto: WindowReinforcedDirectional
   entities:
