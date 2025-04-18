@@ -599,3 +599,13 @@ MediumXenoArtifact: ComplexXenoArtifact
 SimpleXenoArtifactItem: ComplexXenoArtifactItem
 MediumXenoArtifactItem: ComplexXenoArtifactItem
 VariedXenoArtifactItem: ComplexXenoArtifactItem
+
+# 2025-04-18
+SaltOre: null
+AsteroidRockSalt: AsteroidRock
+IronRockSalt: IronRock
+WallRockBasaltSalt: WallRockBasalt
+WallRockSnowSalt: WallRockSnow
+WallRockSandSalt: WallRockSand
+WallRockChromiteSalt: WallRockChromite
+WallRockAndesiteSalt: WallRockAndesite
