@@ -25,7 +25,7 @@ public sealed partial class BreathalyzerComponent : Component
     /// Drunkenness gets rounded to the nearest multiple of this when measuring.
     /// </summary>
     [DataField]
-    public int Specificity = 5;
+    public ulong Specificity = 5;
 
     // Praying for https://github.com/space-wizards/RobustToolbox/pull/5849 to make this usable
     /// <summary>
