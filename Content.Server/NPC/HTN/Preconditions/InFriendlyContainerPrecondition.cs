@@ -11,7 +11,6 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// </summary>
 public sealed partial class InFriendlyContainerPrecondition : HTNPrecondition
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
     private ContainerSystem _container = default!;
     private NpcFactionSystem _npcFaction = default!;
 
