@@ -8,7 +8,7 @@ namespace Content.Client.Remotes.UI;
 public sealed class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     private static readonly Color SelectedOptionColor = new Color(62, 108, 69, 128);
-    private static readonly Color SelectedOptionHoverColor = new Color(82, 128, 89, 128);
+    private static readonly Color SelectedOptionHoverColor = new Color(49, 132, 62, 128);
 
     private SimpleRadialMenu? _menu;
     
