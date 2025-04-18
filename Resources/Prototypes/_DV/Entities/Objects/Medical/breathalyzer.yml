@@ -19,7 +19,9 @@
     - Belt
   - type: PhysicalComposition
     materialComposition:
-      Steel: 250 # FIXME: Adjust cost
+      Glass: 25
+      Plastic: 25
+      Steel: 25
   - type: Tag
     tags:
     - Sidearm

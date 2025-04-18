@@ -216,3 +216,14 @@
   materials:
     Steel: 100
     Plastic: 100
+
+- type: latheRecipe
+  id: BreathalyzerMedical
+  result: BreathalyzerMedical
+  categories:
+  - Tools
+  completetime: 4
+  materials:
+    Glass: 50
+    Plastic: 50
+    Steel: 50
