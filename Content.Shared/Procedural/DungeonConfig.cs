@@ -49,7 +49,7 @@ public partial class DungeonConfig
 }
 
 [Prototype]
-public sealed class DungeonConfigPrototype : DungeonConfig, IPrototype
+public sealed partial class DungeonConfigPrototype : DungeonConfig, IPrototype
 {
     [IdDataField]
     public string ID { get; private set; } = default!;

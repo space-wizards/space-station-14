@@ -18,6 +18,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using System.Linq;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -45,10 +46,17 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<SmokableComponent, IsHotEvent>(OnSmokableIsHotEvent);
             SubscribeLocalEvent<SmokableComponent, ComponentShutdown>(OnSmokableShutdownEvent);
             SubscribeLocalEvent<SmokableComponent, GotEquippedEvent>(OnSmokeableEquipEvent);
+            Subs.SubscribeWithRelay<SmokableComponent, ExtinguishEvent>(OnExtinguishEvent);
 
             InitializeCigars();
             InitializePipes();
             InitializeVapes();
+        }
+
+        private void OnExtinguishEvent(Entity<SmokableComponent> ent, ref ExtinguishEvent args)
+        {
+            if (ent.Comp.State == SmokableState.Lit)
+                SetSmokableState(ent, SmokableState.Burnt, ent);
         }
 
         public void SetSmokableState(EntityUid uid, SmokableState state, SmokableComponent? smokable = null,
@@ -71,15 +79,19 @@ namespace Content.Server.Nutrition.EntitySystems
             _items.SetHeldPrefix(uid, newState);
 
             if (state == SmokableState.Lit)
+            {
                 EnsureComp<BurningComponent>(uid);
+                _audio.PlayPvs(smokable.LightSound, uid);
+                var igniteEvent = new IgnitedEvent();
+                RaiseLocalEvent(uid, ref igniteEvent);
+            }
             else
+            {
                 RemComp<BurningComponent>(uid);
-
-            var sound = state == SmokableState.Lit
-                ? smokable.LightSound
-                : smokable.SnuffSound;
-
-            _audio.PlayPvs(sound, uid);
+                _audio.PlayPvs(smokable.SnuffSound, uid);
+                var extinguishEvent = new ExtinguishedEvent();
+                RaiseLocalEvent(uid, ref extinguishEvent);
+            }
         }
 
         private void OnSmokableIsHotEvent(Entity<SmokableComponent> entity, ref IsHotEvent args)

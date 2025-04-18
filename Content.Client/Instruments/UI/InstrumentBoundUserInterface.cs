@@ -39,6 +39,8 @@ namespace Content.Client.Instruments.UI
 
         protected override void Open()
         {
+            base.Open();
+
             _instrumentMenu = this.CreateWindow<InstrumentMenu>();
             _instrumentMenu.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
 
