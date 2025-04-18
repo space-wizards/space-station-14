@@ -13,9 +13,9 @@
     - !type:DepartmentTimeRequirement
       department: Science
       time: 18000 # 5 hours
-    - !type:RoleTimeRequirement
-      role: JobWarden
-      time: 9000 #2.5 hrs, minimum 12.5 hours security. Captain may end up having to fulfill the role of capcurity and knowing how to sentence someone is important.
+    - !type:DepartmentTimeRequirement
+      role: Security
+      time: 18000 # 5 hours
     - !type:DepartmentTimeRequirement
       department: Command
       time: 36000 # 10 hours
