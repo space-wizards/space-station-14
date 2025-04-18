@@ -242,7 +242,7 @@ reagent-name-pina-colada = Piña Colada
 reagent-desc-pina-colada = For getting lost in the rain.
 
 reagent-name-radler = radler
-reagent-desc-radler = A simple but staple classic, straight out of Space-Germany
+reagent-desc-radler = A simple but staple classic, straight out of Space-Germany.
 
 reagent-name-red-mead = red mead
 reagent-desc-red-mead = The true Viking's drink! Even though it has a strange red color.
