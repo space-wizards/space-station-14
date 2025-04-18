@@ -780,7 +780,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
     /// <summary>
     /// Tries to validate an action and use it. If it's not valid or can't be used it blocks the action from being used.
-    /// This is its own method so that NPCs may use it without having to make a whole new method exclusively for them.
+    /// This is its own method so that both NPCs and Players don't have two different systems to do the same thing.
     /// </summary>
     public void TryValidAction(EntityUid user,
         EntityUid actionEnt,
