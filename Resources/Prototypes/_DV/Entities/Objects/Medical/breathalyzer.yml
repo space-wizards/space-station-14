@@ -1,0 +1,76 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseBreathalyzer
+  name: breathalyzer
+  description: A breath analyzer, able to approximate how long it takes for an individual to return to sobriety
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/appraisal-tool.rsi # FIXME: ADD SPRITES!!!!!!!!!
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/appraisal-tool.rsi # FIXME: ADD SPRITES!!!!!!!!!
+  - type: UseDelay
+    delay: 3
+  - type: Clothing
+    sprite: Objects/Tools/appraisal-tool.rsi # FIXME: ADD SPRITES!!!!!!!!!
+    quickEquip: false
+    slots:
+    - Belt
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 250 # FIXME: Adjust cost
+  - type: Tag
+    tags:
+    - Sidearm
+    - ConcealCarry
+  - type: Breathalyzer
+    thresholds: # I chose these threshold values arbitrarily
+      0: breathalyzer-sober
+      5: breathalyzer-tipsy
+      15: breathalyzer-inebriated
+      30: breathalyzer-intoxicated
+      120: breathalyzer-dangerously-drunk
+      600: breathalyzer-alcohol-poisoning
+
+- type: entity
+  parent: BaseBreathalyzer
+  id: BreathalyzerMedical
+  name: precision breath analyzer
+  description: A state of the art high-precision breath analyzer, able to accurately predict how long it takes for an individual to return to sobriety
+  components:
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
+  - type: Breathalyzer
+    delay: 5
+    specificity: 1
+    variance: 1
+    thresholds:
+      0: breathalyzer-sober
+      5: breathalyzer-tipsy
+      15: breathalyzer-inebriated
+      30: breathalyzer-intoxicated
+      120: breathalyzer-dangerously-drunk
+      600: breathalyzer-alcohol-poisoning
+
+- type: entity
+  parent: BaseBreathalyzer
+  id: BreathalyzerBarkeep
+  name: worn-out breathalyzer
+  description: An old, shitty breath analyzer, able to tell you how sloshed a patron is
+  components:
+  - type: GuideHelp
+    guides:
+    - Bartender
+  - type: Breathalyzer
+    delay: 1
+    specificity: 10
+    variance: 15
+    thresholds:
+      0: breathalyzer-sober
+      5: breathalyzer-tipsy
+      15: breathalyzer-drunk
+      30: breathalyzer-sloshed
+      120: breathalyzer-shitfaced
+      600: breathalyzer-alcohol-poisoning
