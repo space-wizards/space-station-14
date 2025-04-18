@@ -50,7 +50,7 @@ public sealed partial class OreSiloMenu : FancyWindow
             });
 
         var entTextDict = state.Clients.Select(t => (t.Item1, t.Item2)).ToDictionary();
-        var enumerator = ClientList.GetEnumerator();
+        using var enumerator = ClientList.GetEnumerator();
         while (enumerator.MoveNext())
         {
             if (enumerator.Current.Metadata is not NetEntity ent)
@@ -59,7 +59,6 @@ public sealed partial class OreSiloMenu : FancyWindow
             if (entTextDict.TryGetValue(ent, out var text))
                 enumerator.Current.Text = text;
         }
-        enumerator.Dispose();
     }
 }
 

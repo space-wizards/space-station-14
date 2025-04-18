@@ -21,8 +21,6 @@ public sealed class OreSiloBoundUserInterface(EntityUid owner, Enum uiKey) : Bou
         {
             SendPredictedMessage(new ToggleOreSiloClientMessage(netEnt));
         };
-
-        _menu.OnClose += Close;
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

@@ -17,6 +17,7 @@ public sealed class OreSiloSystem : SharedOreSiloSystem
     private const float OreSiloPreloadRangeSquared = 225f; // ~1 screen
 
     private readonly HashSet<Entity<OreSiloClientComponent>> _clientLookup = new();
+    private readonly HashSet<(NetEntity, string, string)> _clientInformation = new();
     private readonly HashSet<EntityUid> _silosToAdd = new();
     private readonly HashSet<EntityUid> _silosToRemove = new();
 
@@ -25,8 +26,8 @@ public sealed class OreSiloSystem : SharedOreSiloSystem
         if (!_userInterface.IsUiOpen(ent.Owner, OreSiloUiKey.Key))
             return;
         _clientLookup.Clear();
+        _clientInformation.Clear();
 
-        var clients = new HashSet<(NetEntity, string, string)>();
         var xform = Transform(ent);
 
         // Sneakily uses override with TComponent parameter
@@ -48,7 +49,7 @@ public sealed class OreSiloSystem : SharedOreSiloSystem
                 ("linked", ent.Comp.Clients.Contains(client)),
                 ("inRange", true));
 
-            clients.Add((netEnt, txt, beacon));
+            _clientInformation.Add((netEnt, txt, beacon));
         }
 
         // Get all clients of this silo, including those out of range.
@@ -65,10 +66,10 @@ public sealed class OreSiloSystem : SharedOreSiloSystem
                 ("linked", ent.Comp.Clients.Contains(client)),
                 ("inRange", inRange));
 
-            clients.Add((netEnt, txt, beacon));
+            _clientInformation.Add((netEnt, txt, beacon));
         }
 
-        _userInterface.SetUiState(ent.Owner, OreSiloUiKey.Key, new OreSiloBuiState(clients));
+        _userInterface.SetUiState(ent.Owner, OreSiloUiKey.Key, new OreSiloBuiState(_clientInformation));
     }
 
     public override void Update(float frameTime)
