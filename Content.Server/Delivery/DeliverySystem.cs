@@ -86,9 +86,9 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
             HandlePenalization(ent!, stationAccountEnt); // After the Resolve above, we know it's not null
 
         _cargo.UpdateBankAccount(
-            stationAccountEnt,
-            delivery.BaseSpesoReward,
-            _cargo.CreateAccountDistribution(account.PrimaryAccount, account, account.PrimaryCut));
+            (ent.Comp.RecipientStation.Value, account),
+            ent.Comp.SpesoReward,
+            _cargo.CreateAccountDistribution((ent.Comp.RecipientStation.Value, account)));
     }
 
     /// <summary>

@@ -759,8 +759,8 @@
     speechSounds: Cat
     speechVerb: SmallMob
   - type: MovementSpeedModifier
-    baseWalkSpeed : 5
-    baseSprintSpeed : 3
+    baseWalkSpeed : 3
+    baseSprintSpeed : 5
   - type: Tag
     tags:
     - VimPilot

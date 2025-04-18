@@ -1,101 +1,4 @@
 ﻿Entries:
-- author: goet
-  changes:
-  - message: Spaceshrooms can now be cooked on the electric grill.
-    type: Tweak
-  id: 7717
-  time: '2024-12-16T17:53:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31872
-- author: Beck Thompson
-  changes:
-  - message: Figures can now be activated with signals!
-    type: Add
-  id: 7718
-  time: '2024-12-16T18:52:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32769
-- author: TheShuEd
-  changes:
-  - message: Christmas anomaly added
-    type: Add
-  - message: Christmas anomaly infection added
-    type: Add
-  id: 7719
-  time: '2024-12-16T19:23:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33889
-- author: chromiumboy
-  changes:
-  - message: Added the atmospheric network monitor. Use these consoles to monitor
-      the network of pipes that supply the crew with a breathable atmosphere
-    type: Add
-  id: 7720
-  time: '2024-12-17T03:53:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32294
-- author: TheShuEd
-  changes:
-  - message: Added new map Gate
-    type: Add
-  id: 7721
-  time: '2024-12-17T10:06:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32032
-- author: pcaessayrs
-  changes:
-  - message: Anomaly hosts keep their anomaly when turning into a zombie.
-    type: Tweak
-  id: 7722
-  time: '2024-12-17T11:56:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33867
-- author: TiniestShark
-  changes:
-  - message: Adds in-hand sprites to the Anomaly Scanner.
-    type: Add
-  id: 7723
-  time: '2024-12-17T13:35:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33427
-- author: chromiumboy
-  changes:
-  - message: Holopads are now available, allowing you to communicate holographically
-      with the rest of the crew
-    type: Add
-  id: 7724
-  time: '2024-12-17T19:18:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32711
-- author: Golinth
-  changes:
-  - message: AMEs larger than 2 cores now produce more power, instead of less.
-    type: Tweak
-  id: 7725
-  time: '2024-12-17T23:56:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32825
-- author: ArtisticRoomba, AugustSun
-  changes:
-  - message: New Advanced SMES, an SMES with a 16 MJ capacity. It can be researched
-      at Industrial T2, Advanced Powercells.
-    type: Add
-  id: 7726
-  time: '2024-12-17T23:58:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33757
-- author: Allen, lzk228
-  changes:
-  - message: Made Gun Safes a craftable object (10 steel, 5 lv cable, 10 plasteel)
-    type: Add
-  id: 7727
-  time: '2024-12-18T11:26:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32694
-- author: MilenVolf
-  changes:
-  - message: Clicking on a buckled mob now unbuckles it, rather than hugging/petting
-      it.
-    type: Fix
-  id: 7728
-  time: '2024-12-18T14:26:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33635
-- author: SlamBamActionman
-  changes:
-  - message: Slimes no longer deal Cellular damage.
-    type: Tweak
-  id: 7729
-  time: '2024-12-18T15:05:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33104
 - author: Redbookcase
   changes:
   - message: Standardized Mercenary gear's contraband status.
@@ -3906,3 +3809,106 @@
   id: 8216
   time: '2025-04-17T14:05:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34057
+- author: muburu
+  changes:
+  - message: Space Dragons now have randomly generated names.
+    type: Add
+  id: 8217
+  time: '2025-04-17T21:05:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36656
+- author: archee1
+  changes:
+  - message: Cats can walk slowly to avoid slipping on puddles.
+    type: Tweak
+  - message: Cak's (cake cats) previously incorrect sprinting and walking speeds have
+      been corrected
+    type: Fix
+  id: 8218
+  time: '2025-04-18T01:15:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36542
+- author: Killerqu00
+  changes:
+  - message: Contraband examine icon now shows whether or not you are allowed to possess
+      the item.
+    type: Add
+  - message: Contraband examine activates by hovering instead of clicking.
+    type: Tweak
+  id: 8219
+  time: '2025-04-18T01:23:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36032
+- author: mjarduk
+  changes:
+  - message: Torches can now be refueled.
+    type: Tweak
+  - message: Burnt torches/glowsticks names' can now display if they're glued, cluwnified,
+      etc.
+    type: Fix
+  id: 8220
+  time: '2025-04-18T01:59:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36209
+- author: lzk228
+  changes:
+  - message: Borgs, clowns and mimes now can choose a custom name in loadouts.
+    type: Tweak
+  id: 8222
+  time: '2025-04-18T02:32:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35170
+- author: DogZeroX
+  changes:
+  - message: Added Experiment plushie from the game Scav Prototype!
+    type: Add
+  id: 8223
+  time: '2025-04-18T02:38:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36663
+- author: slarticodefast
+  changes:
+  - message: Fire extinguishers and sprays now allow you to push the grids you are
+      standing on when you have magboots on.
+    type: Add
+  id: 8224
+  time: '2025-04-18T03:41:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31754
+- author: aada
+  changes:
+  - message: Filter categories added to the security techfab.
+    type: Add
+  id: 8225
+  time: '2025-04-18T03:52:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35594
+- author: Fildrance
+  changes:
+  - message: returned deconstruct to the top level option on RCD
+    type: Fix
+  id: 8226
+  time: '2025-04-18T04:50:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36486
+- author: ciaran
+  changes:
+  - message: Added a button to scroll back to the bottom of the chat box
+    type: Add
+  id: 8227
+  time: '2025-04-18T07:43:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35913
+- author: Tayrtahn
+  changes:
+  - message: The popup when pointing at an item in a character's inventory now mentions
+      that character.
+    type: Tweak
+  id: 8228
+  time: '2025-04-18T12:09:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36252
+- author: slarticodefast
+  changes:
+  - message: Punching lights while wearing insulated gloves will no longer electrocute
+      you.
+    type: Fix
+  id: 8229
+  time: '2025-04-18T12:26:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36686
+- author: Minemoder
+  changes:
+  - message: Rainbow Cannabis Leaves no longer emit light due to a renderer limitation.
+    type: Remove
+  id: 8230
+  time: '2025-04-18T14:12:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36479
