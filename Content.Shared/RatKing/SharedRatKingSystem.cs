@@ -61,12 +61,12 @@ public abstract class SharedRatKingSystem : EntitySystem
         if (!TryComp(uid, out ActionsComponent? comp))
             return;
 
-        _action.RemoveAction(uid, component.ActionRaiseArmyEntity, comp);
-        _action.RemoveAction(uid, component.ActionDomainEntity, comp);
-        _action.RemoveAction(uid, component.ActionOrderStayEntity, comp);
-        _action.RemoveAction(uid, component.ActionOrderFollowEntity, comp);
-        _action.RemoveAction(uid, component.ActionOrderCheeseEmEntity, comp);
-        _action.RemoveAction(uid, component.ActionOrderLooseEntity, comp);
+        _action.RemoveAction((uid, comp), component.ActionRaiseArmyEntity);
+        _action.RemoveAction((uid, comp), component.ActionDomainEntity);
+        _action.RemoveAction((uid, comp), component.ActionOrderStayEntity);
+        _action.RemoveAction((uid, comp), component.ActionOrderFollowEntity);
+        _action.RemoveAction((uid, comp), component.ActionOrderCheeseEmEntity);
+        _action.RemoveAction((uid, comp), component.ActionOrderLooseEntity);
     }
 
     private void OnOrderAction(EntityUid uid, RatKingComponent component, RatKingOrderActionEvent args)

@@ -59,7 +59,7 @@ public sealed class SpellbookSystem : EntitySystem
 
         if (!ent.Comp.LearnPermanently)
         {
-            _actions.GrantActions(args.Args.User, ent.Comp.Spells, ent);
+            _actions.GrantActions(args.Args.User, ent.Comp.Spells, ent.Owner);
             return;
         }
 

@@ -1,4 +1,3 @@
-﻿using System.Diagnostics.CodeAnalysis;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
@@ -13,6 +12,7 @@ using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Mind;
 
@@ -85,11 +85,11 @@ public sealed class MindSystem : SharedMindSystem
     {
         if (base.TryGetMind(user, out mindId, out mind))
         {
-            DebugTools.Assert(_players.GetPlayerData(user).ContentData() is not { } data || data.Mind == mindId);
+            DebugTools.Assert(!_players.TryGetPlayerData(user, out var playerData) || playerData.ContentData() is not { } data || data.Mind == mindId);
             return true;
         }
 
-        DebugTools.Assert(_players.GetPlayerData(user).ContentData()?.Mind == null);
+        DebugTools.Assert(!_players.TryGetPlayerData(user, out var pData) || pData.ContentData()?.Mind == null);
         return false;
     }
 
@@ -194,7 +194,7 @@ public sealed class MindSystem : SharedMindSystem
             component = EnsureComp<MindContainerComponent>(entity.Value);
 
             if (component.HasMind)
-                _gameTicker.OnGhostAttempt(component.Mind.Value, false);
+                _ghosts.OnGhostAttempt(component.Mind.Value, false);
 
             if (TryComp<ActorComponent>(entity.Value, out var actor))
             {
@@ -215,7 +215,7 @@ public sealed class MindSystem : SharedMindSystem
             // not implicitly via optional arguments.
 
             var position = Deleted(mind.OwnedEntity)
-                ? _gameTicker.GetObserverSpawnPoint().ToMap(EntityManager, _transform)
+                ? _transform.ToMapCoordinates(_gameTicker.GetObserverSpawnPoint())
                 : _transform.GetMapCoordinates(mind.OwnedEntity.Value);
 
             entity = Spawn(GameTicker.ObserverPrototypeName, position);
@@ -336,18 +336,18 @@ public sealed class MindSystem : SharedMindSystem
         if (_players.TryGetSessionById(userId.Value, out var ret))
         {
             mind.Session = ret;
-            _pvsOverride.AddSessionOverride(netMind, ret);
+            _pvsOverride.AddSessionOverride(mindId, ret);
             _players.SetAttachedEntity(ret, mind.CurrentEntity);
         }
     }
 
-    public void ControlMob(EntityUid user, EntityUid target)
+    public override void ControlMob(EntityUid user, EntityUid target)
     {
         if (TryComp(user, out ActorComponent? actor))
             ControlMob(actor.PlayerSession.UserId, target);
     }
 
-    public void ControlMob(NetUserId user, EntityUid target)
+    public override void ControlMob(NetUserId user, EntityUid target)
     {
         var (mindId, mind) = GetOrCreateMind(user);
 

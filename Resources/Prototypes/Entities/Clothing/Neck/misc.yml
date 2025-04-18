@@ -32,16 +32,38 @@
       path: /Audio/Items/flashlight_off.ogg
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: Clothing
   id: ClothingNeckStethoscope
   name: stethoscope
   description: An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing.
   components:
+  - type: Item
+    size: Small
   - type: Sprite
     sprite: Clothing/Neck/Misc/stethoscope.rsi
+    state: icon
   - type: Clothing
     sprite: Clothing/Neck/Misc/stethoscope.rsi
+    quickEquip: true
+    slots:
+    - neck
   - type: Stethoscope
+
+- type: entity
+  parent: BaseAction
+  id: ActionStethoscope
+  name: Listen with stethoscope
+  components:
+  - type: Action
+    icon:
+      sprite: Clothing/Neck/Misc/stethoscope.rsi
+      state: icon
+    priority: -1
+    itemIconStyle: BigAction
+  - type: TargetAction
+    checkCanInteract: false
+  - type: EntityTargetAction
+    event: !type:StethoscopeActionEvent
 
 - type: entity
   parent: ClothingNeckBase
@@ -52,6 +74,8 @@
   - type: Sprite
     sprite: Clothing/Neck/Misc/bling.rsi
   - type: Clothing
+    sprite: Clothing/Neck/Misc/bling.rsi
+  - type: Item
     sprite: Clothing/Neck/Misc/bling.rsi
 
 - type: entity
@@ -68,16 +92,17 @@
     proto: lawyer
 
 - type: entity
-  parent: BaseAction
-  id: ActionStethoscope
-  name: Listen with stethoscope
+  parent: ClothingNeckBase
+  id: Dinkystar
+  name: star sticker
+  description: A dinky lil star for only the hardest working security officers! It's not even sticky anymore.
   components:
-  - type: Action
-    icon:
-      sprite: Clothing/Neck/Misc/stethoscope.rsi
-      state: icon
-    checkCanInteract: false
-    priority: -1
-  - type: TargetAction
-  - type: EntityTargetAction
-    event: !type:StethoscopeActionEvent
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/dinkystar.rsi
+    state: icon
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - Trash
+    - WhitelistChameleon

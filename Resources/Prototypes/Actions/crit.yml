@@ -19,6 +19,8 @@
       state: icon
   - type: InstantAction
     event: !type:CritSuccumbEvent
+    startDelay: true
+    useDelay: 10
 
 - type: entity
   parent: BaseCritAction
@@ -46,3 +48,5 @@
       state: lastwords
   - type: InstantAction
     event: !type:CritLastWordsEvent
+    startDelay: true
+    useDelay: 10

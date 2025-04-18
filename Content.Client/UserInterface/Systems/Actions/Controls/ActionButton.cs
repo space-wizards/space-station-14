@@ -327,16 +327,9 @@ public sealed class ActionButton : Control, IEntityControl
 
     public void UpdateData(EntityUid? actionId, ActionsSystem system)
     {
-        if (system.TryGetActionData(actionId, out var comp))
-        {
-            Action = (actionId.Value, comp);
-        }
-        else
-        {
-            Action = null;
-        }
+        Action = system.GetAction(actionId);
 
-        Label.Visible = actionId != null;
+        Label.Visible = Action != null;
         UpdateIcons();
     }
 

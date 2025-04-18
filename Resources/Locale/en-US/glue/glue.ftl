@@ -1,4 +1,4 @@
-glue-success = {THE($target)} has been covered in glue!
+glue-success = { CAPITALIZE(THE($target))} has been covered in glue!
 glued-name-prefix = glued {$baseName}
 glue-failure = Can't cover {THE($target)} in glue!
 glue-verb-text = Apply Glue

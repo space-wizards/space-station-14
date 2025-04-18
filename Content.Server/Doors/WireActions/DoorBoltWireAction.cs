@@ -2,7 +2,6 @@ using Content.Server.Doors.Systems;
 using Content.Server.Wires;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
-using Content.Shared.Doors.Systems;
 using Content.Shared.Wires;
 
 namespace Content.Server.Doors;

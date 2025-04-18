@@ -16,6 +16,7 @@ namespace Content.Shared.Actions.Components;
 /// </remarks>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedActionsSystem))]
 [EntityCategory("Actions")]
+[AutoGenerateComponentState]
 public sealed partial class EntityTargetActionComponent : Component
 {
     /// <summary>
@@ -29,12 +30,19 @@ public sealed partial class EntityTargetActionComponent : Component
     /// Determines which entities are valid targets for this action.
     /// </summary>
     /// <remarks>No whitelist check when null.</remarks>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityWhitelist? Whitelist;
+
+    /// <summary>
+    /// Determines which entities cannot be valid targets for this action, even if matching the whitelist.
+    /// </summary>
+    /// <remarks>No blacklist check when null.</remarks>
+    [DataField, AutoNetworkedField]
+    public EntityWhitelist? Blacklist;
 
     /// <summary>
     /// Whether this action considers the user as a valid target entity when using this action.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool CanTargetSelf = true;
 }

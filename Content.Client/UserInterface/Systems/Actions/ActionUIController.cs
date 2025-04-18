@@ -122,7 +122,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             var boundKey = hotbarKeys[i];
             builder = builder.Bind(boundKey, new PointerInputCmdHandler((in PointerInputCmdArgs args) =>
             {
-                if (args.State != BoundKeyState.Up)
+                if (args.State != BoundKeyState.Down)
                     return false;
 
                 TriggerAction(boundId);
@@ -166,16 +166,14 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (!_entMan.TryGetComponent<ActionsComponent>(user, out var comp))
             return false;
 
-        if (!_actionsSystem.TryGetActionData(actionId, out var action) ||
-            !_entMan.TryGetComponent<TargetActionComponent>(actionId, out var target))
+        if (_actionsSystem.GetAction(actionId) is not {} action ||
+            !_entMan.TryGetComponent<TargetActionComponent>(action, out var target))
         {
             return false;
         }
 
         // Is the action currently valid?
-        if (!action.Enabled
-            || action is { Charges: 0, RenewCharges: false }
-            || action.Cooldown is {} cooldown && cooldown.End > _timing.CurTime)
+        if (!_actionsSystem.ValidAction(action))
         {
             // The user is targeting with this action, but it is not valid. Maybe mark this click as
             // handled and prevent further interactions.
@@ -183,10 +181,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         }
 
         var ev = new ActionTargetAttemptEvent(args, (user, comp), action);
-        _entMan.EventBus.RaiseLocalEvent(actionId, ref ev);
+        _entMan.EventBus.RaiseLocalEvent(action, ref ev);
         if (!ev.Handled)
         {
-            Logger.Error($"Action {actionId} did not handle ActionTargetAttemptEvent!");
+            Logger.Error($"Action {_entMan.ToPrettyString(actionId)} did not handle ActionTargetAttemptEvent!");
             return false;
         }
 
@@ -194,7 +192,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (ev.FoundTarget ? !target.Repeat : target.DeselectOnMiss)
             StopTargeting();
 
-        return ev.FoundTarget || !target.InteractOnMiss;
+        return true;
     }
 
     public void UnloadButton()
@@ -235,36 +233,33 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void TriggerAction(int index)
     {
-        if (_actionsSystem == null ||
-            !_actions.TryGetValue(index, out var actionId) ||
-            !_actionsSystem.TryGetActionData(actionId, out var action))
+        if (!_actions.TryGetValue(index, out var actionId) ||
+            _actionsSystem?.GetAction(actionId) is not {} action)
         {
             return;
         }
 
         // TODO: probably should have a clientside event raised for flexibility
-        if (_entMan.TryGetComponent<TargetActionComponent>(actionId, out var target))
-            ToggleTargeting((actionId.Value, action, target));
+        if (_entMan.TryGetComponent<TargetActionComponent>(action, out var target))
+            ToggleTargeting((action, action, target));
         else
-            _actionsSystem?.TriggerAction(actionId.Value, action);
+            _actionsSystem?.TriggerAction(action);
     }
 
     private void OnActionAdded(EntityUid actionId)
     {
-        if (_actionsSystem == null ||
-            !_actionsSystem.TryGetActionData(actionId, out var action))
-        {
+        if (_actionsSystem?.GetAction(actionId) is not {} action)
             return;
-        }
 
+        // TODO: event
         // if the action is toggled when we add it, start targeting
-        if (action.Toggled && _entMan.TryGetComponent<TargetActionComponent>(actionId, out var target))
-            StartTargeting((actionId, action, target));
+        if (action.Comp.Toggled && _entMan.TryGetComponent<TargetActionComponent>(actionId, out var target))
+            StartTargeting((action, action, target));
 
-        if (_actions.Contains(actionId))
+        if (_actions.Contains(action))
             return;
 
-        _actions.Add(actionId);
+        _actions.Add(action);
     }
 
     private void OnActionRemoved(EntityUid actionId)
@@ -281,10 +276,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     private void OnActionsUpdated()
     {
         QueueWindowUpdate();
-
-        // TODO ACTIONS allow buttons to persist across state applications
-        // Then we don't have to interrupt drags any time the buttons get rebuilt.
-        _menuDragHelper.EndDrag();
 
         if (_actionsSystem != null)
             _container?.SetActionData(_actionsSystem, _actions.ToArray());
@@ -521,8 +512,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
             return;
 
-        _menuDragHelper.MouseDown(action);
-        args.Handle();
+        HandleActionPressed(args, action);
     }
 
     private void OnWindowActionUnPressed(GUIBoundKeyEventArgs args, ActionButton dragged)
@@ -530,8 +520,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (args.Function != EngineKeyFunctions.UIClick && args.Function != EngineKeyFunctions.Use)
             return;
 
-        DragAction();
-        args.Handle();
+        HandleActionUnpressed(args, dragged);
     }
 
     private void OnWindowActionFocusExisted(ActionButton button)
@@ -551,6 +540,11 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (args.Function != EngineKeyFunctions.UIClick)
             return;
 
+        HandleActionPressed(args, button);
+    }
+
+    private void HandleActionPressed(GUIBoundKeyEventArgs args, ActionButton button)
+    {
         args.Handle();
         if (button.Action != null)
         {
@@ -563,7 +557,15 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void OnActionUnpressed(GUIBoundKeyEventArgs args, ActionButton button)
     {
-        if (args.Function != EngineKeyFunctions.UIClick || _actionsSystem == null)
+        if (args.Function != EngineKeyFunctions.UIClick)
+            return;
+
+        HandleActionUnpressed(args, button);
+    }
+
+    private void HandleActionUnpressed(GUIBoundKeyEventArgs args, ActionButton button)
+    {
+        if (_actionsSystem == null)
             return;
 
         args.Handle();
@@ -579,9 +581,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (button.Action is not {} action)
             return;
 
+        // TODO: make this an event
         if (!_entMan.TryGetComponent<TargetActionComponent>(action, out var target))
         {
-            _actionsSystem?.TriggerAction(action, action.Comp);
+            _actionsSystem?.TriggerAction(action);
             return;
         }
 
@@ -598,16 +601,16 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         // TODO ACTIONS
         // The dragging icon shuld be based on the entity's icon style. I.e. if the action has a large icon texture,
         // and a small item/provider sprite, then the dragged icon should be the big texture, not the provider.
-        if (_actionsSystem != null && _actionsSystem.TryGetActionData(_menuDragHelper.Dragged?.Action, out var action))
+        if (_actionsSystem?.GetAction(_menuDragHelper.Dragged?.Action) is {} action)
         {
-            if (EntityManager.TryGetComponent(action.EntityIcon, out SpriteComponent? sprite)
+            if (EntityManager.TryGetComponent(action.Comp.EntityIcon, out SpriteComponent? sprite)
                 && sprite.Icon?.GetFrame(RsiDirection.South, 0) is {} frame)
             {
                 _dragShadow.Texture = frame;
             }
-            else if (action.Icon != null)
+            else if (action.Comp.Icon is {} icon)
             {
-                _dragShadow.Texture = _spriteSystem.Frame0(action.Icon);
+                _dragShadow.Texture = _spriteSystem.Frame0(icon);
             }
             else
             {
@@ -840,7 +843,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         var range = target.CheckCanAccess ? target.Range : -1;
 
         _interactionOutline?.SetEnabled(false);
-        _targetOutline?.Enable(range, target.CheckCanAccess, predicate, entity.Whitelist, null);
+        _targetOutline?.Enable(range, target.CheckCanAccess, predicate, entity.Whitelist, entity.Blacklist, null);
     }
 
     /// <summary>

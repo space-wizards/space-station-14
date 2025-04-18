@@ -1,33 +1,33 @@
-- action: ActionMappingSpace
+- tileId: Space
   assignments:
   - 0: 8
 - action: ActionMappingEraser
   assignments:
   - 0: 9
-- action: ActionMappingPlating
+- tileId: Plating
   assignments:
   - 0: 7
-- action: ActionMappingSteelFloor
+- tileId: FloorSteel
   assignments:
   - 0: 6
+- entity: Firelock
+  assignments:
+  - 0: 5
 - entity: Grille
   assignments:
   - 0: 4
-- entity: WallSolid
+- entity: ReinforcedWindow
   assignments:
-  - 0: 0
+  - 0: 3
 - entity: Window
   assignments:
   - 0: 2
 - entity: WallReinforced
   assignments:
   - 0: 1
-- entity: ReinforcedWindow
+- entity: WallSolid
   assignments:
-  - 0: 3
-- entity: Firelock
-  assignments:
-  - 0: 5
+  - 0: 0
 - entity: GasPipeStraight
   assignments:
   - 1: 0

@@ -1,5 +1,5 @@
 ﻿- type: entity
-  parent: BaseAction
+  parent: BaseMentalAction # allow reading laws when crit
   id: ActionViewLaws
   name: View Laws
   description: View the laws that you must follow.
@@ -15,12 +15,14 @@
 
 - type: entity
   parent: BaseAction
-  id: ActionBorgSwapModule
-  name: Swap Module
-  description: Select this module, enabling you to use the tools it provides.
+  id: ActionSelectBorgType
+  name: Select Cyborg Type
   components:
   - type: Action
-    itemIconStyle: BigItem
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_borg.rsi
+      state: select-type
     useDelay: 0.5
   - type: InstantAction
-    event: !type:BorgModuleActionSelectedEvent
+    event: !type:BorgToggleSelectTypeEvent

@@ -1,3 +1,4 @@
+using Content.Shared.Actions.Components;
 using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -172,5 +173,10 @@ public abstract partial class BaseActionEvent : HandledEntityEventArgs
     /// <summary>
     ///     The action the event belongs to.
     /// </summary>
-    public EntityUid Action;
+    public Entity<ActionComponent> Action;
+
+    /// <summary>
+    /// Should we toggle the action entity?
+    /// </summary>
+    public bool Toggle;
 }

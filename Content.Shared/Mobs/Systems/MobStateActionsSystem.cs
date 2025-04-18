@@ -15,9 +15,26 @@ public sealed class MobStateActionsSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MobStateActionsComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<MobStateComponent, ComponentInit>(OnMobStateComponentInit);
     }
 
     private void OnMobStateChanged(EntityUid uid, MobStateActionsComponent component, MobStateChangedEvent args)
+    {
+        ComposeActions(uid, component, args.NewMobState);
+    }
+
+    private void OnMobStateComponentInit(EntityUid uid, MobStateComponent component, ComponentInit args)
+    {
+        if (!TryComp<MobStateActionsComponent>(uid, out var mobStateActionsComp))
+            return;
+
+        ComposeActions(uid, mobStateActionsComp, component.CurrentState);
+    }
+
+    /// <summary>
+    /// Adds or removes actions from a mob based on mobstate.
+    /// </summary>
+    private void ComposeActions(EntityUid uid, MobStateActionsComponent component, MobState newMobState)
     {
         if (!TryComp<ActionsComponent>(uid, out var action))
             return;
@@ -28,7 +45,7 @@ public sealed class MobStateActionsSystem : EntitySystem
         }
         component.GrantedActions.Clear();
 
-        if (!component.Actions.TryGetValue(args.NewMobState, out var toGrant))
+        if (!component.Actions.TryGetValue(newMobState, out var toGrant))
             return;
 
         foreach (var id in toGrant)

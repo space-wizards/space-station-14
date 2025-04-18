@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Mapping;
+using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
@@ -26,7 +27,6 @@ namespace Content.Client.Actions
     {
         public delegate void OnActionReplaced(EntityUid actionId);
 
-        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
@@ -44,6 +44,8 @@ namespace Content.Client.Actions
         private readonly List<EntityUid> _removed = new();
         private readonly List<Entity<ActionComponent>> _added = new();
 
+        public static readonly EntProtoId MappingEntityAction = "BaseMappingEntityAction";
+
         public override void Initialize()
         {
             base.Initialize();
@@ -58,18 +60,28 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<WorldTargetActionComponent, ActionTargetAttemptEvent>(OnWorldTargetAttempt);
         }
 
-        private void OnActionAutoHandleState(Entity<ActionComponent> ent, ref AfterAutoHandleStateEvent args)
+        public override void FrameUpdate(float frameTime)
         {
-            UpdateAction(ent, ent.Comp);
+            base.FrameUpdate(frameTime);
+
+            var query = EntityQueryEnumerator<ActionComponent>();
+            while (query.MoveNext(out var uid, out var comp))
+            {
+                UpdateAction((uid, comp));
+            }
         }
 
-        protected override void UpdateAction(EntityUid? actionId, ActionComponent? action = null)
+        private void OnActionAutoHandleState(Entity<ActionComponent> ent, ref AfterAutoHandleStateEvent args)
         {
-            if (!ResolveActionData(actionId, ref action))
-                return;
+            UpdateAction(ent);
+        }
 
-            base.UpdateAction(actionId, action);
-            if (_playerManager.LocalEntity != action.AttachedEntity)
+        public override void UpdateAction(Entity<ActionComponent> ent)
+        {
+            ent.Comp.IconColor = ent.Comp.Charges < 1 ? ent.Comp.DisabledIconColor : ent.Comp.OriginalIconColor;
+
+            base.UpdateAction(ent);
+            if (_playerManager.LocalEntity != ent.Comp.AttachedEntity)
                 return;
 
             ActionsUpdated?.Invoke();
@@ -99,8 +111,8 @@ namespace Content.Client.Actions
                 if (!comp.Actions.Add(actionId))
                     continue;
 
-                if (TryGetActionData(actionId, out var action))
-                    _added.Add((actionId, action));
+                if (GetAction(actionId) is {} action)
+                    _added.Add(action);
             }
 
             if (_playerManager.LocalEntity != uid)
@@ -133,20 +145,20 @@ namespace Content.Client.Actions
             return priorityA - priorityB;
         }
 
-        protected override void ActionAdded(EntityUid performer, EntityUid actionId, ActionsComponent comp, ActionComponent action)
+        protected override void ActionAdded(Entity<ActionsComponent> performer, Entity<ActionComponent> action)
         {
-            if (_playerManager.LocalEntity != performer)
+            if (_playerManager.LocalEntity != performer.Owner)
                 return;
 
-            OnActionAdded?.Invoke(actionId);
+            OnActionAdded?.Invoke(action);
         }
 
-        protected override void ActionRemoved(EntityUid performer, EntityUid actionId, ActionsComponent comp, ActionComponent action)
+        protected override void ActionRemoved(Entity<ActionsComponent> performer, Entity<ActionComponent> action)
         {
-            if (_playerManager.LocalEntity != performer)
+            if (_playerManager.LocalEntity != performer.Owner)
                 return;
 
-            OnActionRemoved?.Invoke(actionId);
+            OnActionRemoved?.Invoke(action);
         }
 
         public IEnumerable<Entity<ActionComponent>> GetClientActions()
@@ -174,13 +186,13 @@ namespace Content.Client.Actions
 
         public void LinkAllActions(ActionsComponent? actions = null)
         {
-             if (_playerManager.LocalEntity is not { } user ||
-                 !Resolve(user, ref actions, false))
-             {
-                 return;
-             }
+            if (_playerManager.LocalEntity is not { } user ||
+                !Resolve(user, ref actions, false))
+            {
+                return;
+            }
 
-             LinkActions?.Invoke(actions);
+            LinkActions?.Invoke(actions);
         }
 
         public override void Shutdown()
@@ -189,31 +201,99 @@ namespace Content.Client.Actions
             CommandBinds.Unregister<ActionsSystem>();
         }
 
-        public void TriggerAction(EntityUid actionId, ActionComponent action)
+        public void TriggerAction(Entity<ActionComponent> action)
         {
-            if (_playerManager.LocalEntity is not { } user ||
-                !TryComp(user, out ActionsComponent? actions))
-            {
-                return;
-            }
-
-            if (!TryComp<InstantActionComponent>(actionId, out var instantAction))
+            if (_playerManager.LocalEntity is not { } user)
                 return;
 
-            if (action.ClientExclusive)
-            {
-                if (instantAction.Event != null)
-                {
-                    instantAction.Event.Performer = user;
-                    instantAction.Event.Action = actionId;
-                }
+            // TODO: unhardcode this somehow
 
-                PerformAction(user, actions, actionId, action, instantAction.Event, GameTiming.CurTime);
+            if (!HasComp<InstantActionComponent>(action))
+                return;
+
+            if (action.Comp.ClientExclusive)
+            {
+                PerformAction(user, action);
             }
             else
             {
-                var request = new RequestPerformActionEvent(GetNetEntity(actionId));
+                var request = new RequestPerformActionEvent(GetNetEntity(action));
                 EntityManager.RaisePredictiveEvent(request);
+            }
+        }
+
+        /// <summary>
+        ///     Load actions and their toolbar assignments from a file.
+        /// </summary>
+        public void LoadActionAssignments(string path, bool userData)
+        {
+            if (_playerManager.LocalEntity is not { } user)
+                return;
+
+            var file = new ResPath(path).ToRootedPath();
+            TextReader reader = userData
+                ? _resources.UserData.OpenText(file)
+                : _resources.ContentFileReadText(file);
+
+            var yamlStream = new YamlStream();
+            yamlStream.Load(reader);
+
+            if (yamlStream.Documents[0].RootNode.ToDataNode() is not SequenceDataNode sequence)
+                return;
+
+            var actions = EnsureComp<ActionsComponent>(user);
+
+            ClearAssignments?.Invoke();
+
+            var assignments = new List<SlotAssignment>();
+            foreach (var entry in sequence.Sequence)
+            {
+                if (entry is not MappingDataNode map)
+                    continue;
+
+                if (!map.TryGet("assignments", out var assignmentNode))
+                    continue;
+
+                var actionId = EntityUid.Invalid;
+                if (map.TryGet<ValueDataNode>("action", out var actionNode))
+                {
+                    var id = new EntProtoId(actionNode.Value);
+                    actionId = Spawn(id);
+                }
+                else if (map.TryGet<ValueDataNode>("entity", out var entityNode))
+                {
+                    var id = new EntProtoId(entityNode.Value);
+                    var proto = _proto.Index(id);
+                    actionId = Spawn(MappingEntityAction);
+                    SetIcon(actionId, new SpriteSpecifier.EntityPrototype(id));
+                    SetEvent(actionId, new StartPlacementActionEvent()
+                    {
+                        PlacementOption = "SnapgridCenter",
+                        EntityType = id
+                    });
+                    _metaData.SetEntityName(actionId, proto.Name);
+                }
+                else if (map.TryGet<ValueDataNode>("tileId", out var tileNode))
+                {
+                    var id = new ProtoId<ContentTileDefinition>(tileNode.Value);
+                    var proto = _proto.Index(id);
+                    actionId = Spawn(MappingEntityAction);
+                    if (proto.Sprite is {} sprite)
+                        SetIcon(actionId, new SpriteSpecifier.Texture(sprite));
+                    SetEvent(actionId, new StartPlacementActionEvent()
+                    {
+                        PlacementOption = "AlignTileAny",
+                        TileId = id
+                    });
+                    _metaData.SetEntityName(actionId, Loc.GetString(proto.Name));
+                }
+                else
+                {
+                    Log.Error($"Mapping actions from {path} had unknown action data!");
+                    continue;
+                }
+
+                AddActionDirect((user, actions), actionId);
             }
         }
 
@@ -250,7 +330,7 @@ namespace Content.Client.Actions
                     ev.Entity = targetEnt;
                 }
 
-                PerformAction(user, user.Comp, uid, action, comp.Event, _timing.CurTime);
+                PerformAction(user, (uid, action));
             }
             else
                 RaisePredictiveEvent(new RequestPerformActionEvent(GetNetEntity(uid), GetNetEntity(targetEnt), GetNetCoordinates(coords)));
@@ -283,10 +363,12 @@ namespace Content.Client.Actions
             {
                 ev.Target = entity;
 
-                PerformAction(user, user.Comp, uid, action, comp.Event, _timing.CurTime);
+                PerformAction(user, (uid, action));
             }
             else
+            {
                 RaisePredictiveEvent(new RequestPerformActionEvent(GetNetEntity(uid), GetNetEntity(entity)));
+            }
 
             args.FoundTarget = true;
         }

@@ -25,12 +25,6 @@ public struct ActionValidateEvent
     public EntityUid Provider;
 
     /// <summary>
-    /// The action to raise on the performer if all validation was successful.
-    /// Typically this is stored on the handling system's respective component and reused.
-    /// </summary>
-    public BaseActionEvent? Event;
-
-    /// <summary>
     /// If set to true, the client sent invalid event data and this should be logged as an error.
     /// For functioning input that happens to not be allowed this should not be set, for example a range check.
     /// </summary>

@@ -1,0 +1,21 @@
+- type: entity
+  parent: BaseEntitySpellAction
+  id: ActionMindSwap
+  name: Mind Swap
+  description: Exchange bodies with another person!
+  components:
+  - type: Action
+    useDelay: 300
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/staff_animation.ogg
+    icon:
+      sprite: Mobs/Species/Human/organs.rsi
+      state: brain
+  - type: EntityTargetAction
+    whitelist:
+      requireAll: true
+      components:
+      - Body
+      - MindContainer
+    event: !type:MindSwapSpellEvent
+      speech: action-speech-spell-mind-swap

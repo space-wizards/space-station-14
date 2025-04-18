@@ -11,6 +11,15 @@
     Bleach: 5
 
 - type: reaction
+  id: AmmoniaFromBlood
+  minTemp: 370
+  reactants:
+    AmmoniaBlood:
+      amount: 2
+  products:
+    Ammonia: 1
+
+- type: reaction
   id: SpaceCleaner
   reactants:
     Ammonia:

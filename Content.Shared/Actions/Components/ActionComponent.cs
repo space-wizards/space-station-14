@@ -12,7 +12,7 @@ namespace Content.Shared.Actions.Components;
 /// Component all actions are required to have.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedActionsSystem))]
-[AutoGenerateComponentState(true)]
+[AutoGenerateComponentState(true, true)]
 [EntityCategory("Actions")]
 public sealed partial class ActionComponent : Component
 {
@@ -46,6 +46,17 @@ public sealed partial class ActionComponent : Component
     public Color IconColor = Color.White;
 
     /// <summary>
+    ///     The original <see cref="IconColor"/> this action was.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public Color OriginalIconColor;
+
+    /// <summary>
+    ///     The color the action should turn to when disabled
+    /// </summary>
+    [DataField] public Color DisabledIconColor = Color.DimGray;
+
+    /// <summary>
     ///     Keywords that can be used to search for this action in the action menu.
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -72,6 +83,11 @@ public sealed partial class ActionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public ActionCooldown? Cooldown;
+
+    /// <summary>
+    ///     If true, the action will have an initial cooldown applied upon addition.
+    /// </summary>
+    [DataField] public bool StartDelay = false;
 
     /// <summary>
     ///     Time interval between action uses.
@@ -168,6 +184,14 @@ public sealed partial class ActionComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool RaiseOnUser;
+
+    /// <summary>
+    ///     If true, this will cause the the action event to always be raised directed at the action itself instead of the action's container/provider.
+    ///     Takes priority over RaiseOnUser.
+    /// </summary>
+    [DataField]
+    [Obsolete("This datafield will be reworked in an upcoming action refactor")]
+    public bool RaiseOnAction;
 
     /// <summary>
     ///     Whether or not to automatically add this action to the action bar when it becomes available.

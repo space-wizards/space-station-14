@@ -10,7 +10,7 @@
             "args": [
                 "build",
                 "/property:GenerateFullPaths=true", // Ask dotnet build to generate full paths for file names.
-                "/consoleloggerparameters:NoSummary" // Do not generate summary otherwise it leads to duplicate errors in Problems panel
+                "/consoleloggerparameters:'ForceNoAlign;NoSummary'" // Do not generate summary otherwise it leads to duplicate errors in Problems panel
             ],
             "group": {
                 "kind": "build",
@@ -29,7 +29,7 @@
                 "build",
                 "${workspaceFolder}/Content.YAMLLinter/Content.YAMLLinter.csproj",
                 "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "/consoleloggerparameters:'ForceNoAlign;NoSummary'"
             ],
             "problemMatcher": "$msCompile"
         }
