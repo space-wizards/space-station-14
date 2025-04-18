@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: Holopads are now available, allowing you to communicate holographically
-      with the rest of the crew
-    type: Add
-  id: 7724
-  time: '2024-12-17T19:18:15.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32711
 - author: Golinth
   changes:
   - message: AMEs larger than 2 cores now produce more power, instead of less.
@@ -3913,3 +3905,11 @@
   id: 8223
   time: '2025-04-18T02:38:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36663
+- author: slarticodefast
+  changes:
+  - message: Fire extinguishers and sprays now allow you to push the grids you are
+      standing on when you have magboots on.
+    type: Add
+  id: 8224
+  time: '2025-04-18T03:41:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31754
