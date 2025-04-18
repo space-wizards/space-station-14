@@ -448,3 +448,4 @@
     - id: SmugglerStashVariationPass
       prob: 0.90
     - id: SolarPanelDamageVariationPass # Moffstation - Roundstart Solar Panel variation
+    - id: SolarPanelEmptyVariationPass # Moffstation - Roundstart Solar Panel variation
