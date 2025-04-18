@@ -25,8 +25,7 @@ namespace Content.Server.NodeContainer.EntitySystems
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly INodeGroupFactory _nodeGroupFactory = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
-
-        private SharedMapSystem MapSystem => EntityManager.System<SharedMapSystem>();
+        [Dependency] private readonly SharedMapSystem _map = default!;
 
         private readonly List<int> _visDeletes = new();
         private readonly List<BaseNodeGroup> _visSends = new();
@@ -358,7 +357,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
             var gridQuery = GetEntityQuery<MapGridComponent>();
 
-            foreach (var reachable in node.GetReachableNodes(node.Owner, nodeQuery, xformQuery, gridQuery, EntityManager, MapSystem))
+            foreach (var reachable in node.GetReachableNodes(node.Owner, nodeQuery, xformQuery, gridQuery, EntityManager, _map))
             {
                 DebugTools.Assert(reachable != node, "GetReachableNodes() should not include self.");
 
