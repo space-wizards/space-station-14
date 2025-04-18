@@ -156,7 +156,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
         // Oh, and set the flow rate (L/S) to the actual volume we transferred.
         // This is used for player examine.
-        valveEntity.Comp.FlowRate = MathF.Round(desiredVolumeToTransfer * args.dt, 1);
+        valveEntity.Comp.FlowRate = MathF.Round(actualVolumeToTransfer * args.dt, 1);
         DirtyField(valveEntity, valveEntity.Comp, nameof(valveEntity.Comp.FlowRate));
 
         if (valveEntity.Comp.PreviousValveState != valveEntity.Comp.Enabled)
