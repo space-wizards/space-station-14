@@ -1,3 +1,4 @@
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Medical.Breathalyzer.Components;
@@ -13,6 +14,12 @@ public sealed partial class BreathalyzerComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan Delay = TimeSpan.FromSeconds(1);
+
+    /// <summary>
+    /// The last read value, used for examine string.
+    /// </summary>
+    [DataField]
+    public TimeSpan? LastReadValue;
 
     /// <summary>
     /// Drunkenness gets rounded to the nearest multiple of this when measuring.

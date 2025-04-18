@@ -3,8 +3,8 @@
     "license": "MIT",
     "copyright": "Created by SS14 user bunnygirlhyacinth",
     "size": {
-        "x": 8,
-        "y": 8
+        "x": 32,
+        "y": 32
     },
     "states": [
         {
@@ -17,12 +17,6 @@
         {
             "name": "inhand-right",
             "directions": 4
-        },
-        {
-            "name": "ready"
-        },
-        {
-            "name": "screen"
         }
     ]
 }
