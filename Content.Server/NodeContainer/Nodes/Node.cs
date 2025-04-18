@@ -94,10 +94,11 @@ namespace Content.Server.NodeContainer.Nodes
         /// of this asymmetric relation are made to manually update with <see cref="NodeGroupSystem.QueueReflood"/>.
         /// </para>
         /// </remarks>
-        public abstract IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+        public abstract IEnumerable<Node> GetReachableNodes(
+            EntityUid uid,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            MapGridComponent? grid,
+            EntityQuery<MapGridComponent> gridQuery,
             IEntityManager entMan,
             SharedMapSystem mapSystem);
     }

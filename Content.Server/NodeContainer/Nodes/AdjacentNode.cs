@@ -9,16 +9,20 @@ namespace Content.Server.NodeContainer.Nodes
     [DataDefinition]
     public sealed partial class AdjacentNode : Node
     {
-        public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+        public override IEnumerable<Node> GetReachableNodes(
+            EntityUid uid,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            MapGridComponent? grid,
+            EntityQuery<MapGridComponent> gridQuery,
             IEntityManager entMan,
             SharedMapSystem mapSystem)
         {
-            if (!xform.Anchored
-                || xform.GridUid == null
-                || grid == null)
+            if (!xformQuery.TryGetComponent(uid, out var xform)
+                || !xform.Anchored
+                || xform.GridUid == null)
+                yield break;
+
+            if (!gridQuery.TryGetComponent(xform.GridUid.Value, out var grid))
                 yield break;
 
             var gridIndex = mapSystem.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);

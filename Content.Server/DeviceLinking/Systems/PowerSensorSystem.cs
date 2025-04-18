@@ -28,6 +28,7 @@ public sealed class PowerSensorSystem : EntitySystem
 
     private EntityQuery<NodeContainerComponent> _nodeQuery;
     private EntityQuery<TransformComponent> _xformQuery;
+    private EntityQuery<MapGridComponent> _gridQuery;
 
     public override void Initialize()
     {
@@ -35,6 +36,7 @@ public sealed class PowerSensorSystem : EntitySystem
 
         _nodeQuery = GetEntityQuery<NodeContainerComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
+        _gridQuery = GetEntityQuery<MapGridComponent>();
 
         SubscribeLocalEvent<PowerSensorComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<PowerSensorComponent, ExaminedEvent>(OnExamined);
@@ -102,12 +104,7 @@ public sealed class PowerSensorSystem : EntitySystem
         var chargingState = false;
         var dischargingState = false;
 
-        // update state based on the power stats retrieved from the selected power network
-        var xform = _xformQuery.GetComponent(uid);
-        if (!TryComp(xform.GridUid, out MapGridComponent? grid))
-            return;
-
-        var cables = deviceNode.GetReachableNodes(xform, _nodeQuery, _xformQuery, grid, EntityManager, _map);
+        var cables = deviceNode.GetReachableNodes(uid, _nodeQuery, _xformQuery, _gridQuery, EntityManager, _map);
         foreach (var node in cables)
         {
             if (node.NodeGroup == null)

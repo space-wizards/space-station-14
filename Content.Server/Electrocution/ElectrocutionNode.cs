@@ -13,10 +13,11 @@ namespace Content.Server.Electrocution
         [DataField("node")]
         public string? NodeName;
 
-        public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+        public override IEnumerable<Node> GetReachableNodes(
+            EntityUid uid,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            MapGridComponent? grid,
+            EntityQuery<MapGridComponent> gridQuery,
             IEntityManager entMan,
             SharedMapSystem mapSystem)
         {
