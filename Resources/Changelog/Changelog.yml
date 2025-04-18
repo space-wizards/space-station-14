@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Defibrillator cooldowns are now clearly visible.
-    type: Tweak
-  id: 7740
-  time: '2024-12-20T21:26:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31251
 - author: J C Denton
   changes:
   - message: Syndicate and NanoTrasen NPCs and turrets are now hostile to Dragons
@@ -3912,3 +3905,10 @@
   id: 8240
   time: '2025-04-18T23:26:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32396
+- author: ScarKy0
+  changes:
+  - message: Changed the air vent and scrubber sprites.
+    type: Tweak
+  id: 8241
+  time: '2025-04-18T23:34:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34223
