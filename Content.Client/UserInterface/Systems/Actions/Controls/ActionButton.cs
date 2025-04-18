@@ -5,6 +5,8 @@ using Content.Client.Cooldown;
 using Content.Client.Stylesheets;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.Charges.Components;
+using Content.Shared.Charges.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -23,9 +25,12 @@ public sealed class ActionButton : Control, IEntityControl
     private IEntityManager _entities;
     private SpriteSystem? _spriteSys;
     private ActionUIController? _controller;
+    private SharedChargesSystem _sharedChargesSys;
     private bool _beingHovered;
     private bool _depressed;
     private bool _toggled;
+
+    private int _lastCharges;
 
     public BoundKeyFunction? KeyBind
     {
@@ -65,6 +70,7 @@ public sealed class ActionButton : Control, IEntityControl
 
         _entities = entities;
         _spriteSys = spriteSys;
+        _sharedChargesSys = _entities.System<SharedChargesSystem>();
         _controller = controller;
 
         MouseFilter = MouseFilterMode.Pass;
@@ -194,14 +200,22 @@ public sealed class ActionButton : Control, IEntityControl
 
         var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityName));
         var decr = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityDescription));
+        FormattedMessage? chargesText = null;
 
-        if (Action?.Comp is {} action && action.Charges is {} charges)
+        // TODO: Don't touch this use an event make callers able to add their own shit for actions or I kill you.
+        if (_entities.TryGetComponent(Action, out LimitedChargesComponent? actionCharges))
         {
-            var tooltip = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {charges}/{action.MaxCharges}"));
-            return new ActionAlertTooltip(name, decr, charges: tooltip);
+            var charges = _sharedChargesSys.GetCurrentCharges((Action.Value, actionCharges, null));
+            chargesText = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {charges.ToString()}/{actionCharges.MaxCharges}"));
+
+            if (_entities.TryGetComponent(Action, out AutoRechargeComponent? autoRecharge))
+            {
+                var chargeTimeRemaining = _sharedChargesSys.GetNextRechargeTime((Action.Value, actionCharges, autoRecharge));
+                chargesText.AddText(Loc.GetString($"{Environment.NewLine}Time Til Recharge: {chargeTimeRemaining}"));
+            }
         }
 
-        return new ActionAlertTooltip(name, decr);
+        return new ActionAlertTooltip(name, decr, charges: chargesText);
     }
 
     protected override void ControlFocusExited()

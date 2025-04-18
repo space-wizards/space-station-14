@@ -60,8 +60,9 @@
   parent: BaseAction
   id: ActionRgbLight
   components:
+  - type: LimitedCharges
+    maxCharges: 25
   - type: Action
-    charges: 25
     sound: /Audio/Magic/blink.ogg
   - type: TargetAction
   - type: EntityTargetAction

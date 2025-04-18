@@ -184,9 +184,9 @@ namespace Content.Shared.Examine
         /// <summary>
         ///     Adds an icon aligned to the left of examine window that gives you info on hover.
         /// </summary>
-        public void AddHoverExamineVerb(GetVerbsEvent<ExamineVerb> verbsEvent, Component component, string hoverMessage, string iconTexture = DefaultIconTexture)
+        public void AddHoverExamineVerb(GetVerbsEvent<ExamineVerb> verbsEvent, Component component, string verbText, string hoverMessage, string iconTexture = DefaultIconTexture)
         {
-            AddDetailedExamineVerb(verbsEvent, component, FormattedMessage.Empty, "", iconTexture, hoverMessage, true);
+            AddDetailedExamineVerb(verbsEvent, component, FormattedMessage.Empty, verbText, iconTexture, hoverMessage, true);
         }
     }
 }

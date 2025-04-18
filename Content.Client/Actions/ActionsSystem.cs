@@ -2,6 +2,7 @@ using System.IO;
 using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
+using Content.Shared.Charges.Systems;
 using Content.Shared.Mapping;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
@@ -27,6 +28,7 @@ namespace Content.Client.Actions
     {
         public delegate void OnActionReplaced(EntityUid actionId);
 
+        [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
@@ -60,16 +62,6 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<WorldTargetActionComponent, ActionTargetAttemptEvent>(OnWorldTargetAttempt);
         }
 
-        public override void FrameUpdate(float frameTime)
-        {
-            base.FrameUpdate(frameTime);
-
-            var query = EntityQueryEnumerator<ActionComponent>();
-            while (query.MoveNext(out var uid, out var comp))
-            {
-                UpdateAction((uid, comp));
-            }
-        }
 
         private void OnActionAutoHandleState(Entity<ActionComponent> ent, ref AfterAutoHandleStateEvent args)
         {
@@ -78,8 +70,8 @@ namespace Content.Client.Actions
 
         public override void UpdateAction(Entity<ActionComponent> ent)
         {
-            ent.Comp.IconColor = ent.Comp.Charges < 1 ? ent.Comp.DisabledIconColor : ent.Comp.OriginalIconColor;
-
+            // TODO: Decouple this.
+            ent.Comp.IconColor = _sharedCharges.GetCurrentCharges(ent.Owner) == 0 ? ent.Comp.DisabledIconColor : ent.Comp.OriginalIconColor;
             base.UpdateAction(ent);
             if (_playerManager.LocalEntity != ent.Comp.AttachedEntity)
                 return;

@@ -95,28 +95,6 @@ public sealed partial class ActionComponent : Component
     [DataField, AutoNetworkedField]
     public TimeSpan? UseDelay;
 
-    // TODO: reuse limited charges probably
-    /// <summary>
-    ///     Convenience tool for actions with limited number of charges. Automatically decremented on use, and the
-    ///     action is disabled when it reaches zero. Does NOT automatically remove the action from the action bar.
-    ///     However, charges will regenerate if <see cref="RenewCharges"/> is enabled and the action will not disable
-    ///     when charges reach zero.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public int? Charges;
-
-    /// <summary>
-    ///     The max charges this action has. If null, this is set automatically from <see cref="Charges"/> on mapinit.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public int? MaxCharges;
-
-    /// <summary>
-    ///     If enabled, charges will regenerate after a <see cref="Cooldown"/> is complete
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool RenewCharges;
-
     /// <summary>
     /// The entity that contains this action. If the action is innate, this may be the user themselves.
     /// This should almost always be non-null.

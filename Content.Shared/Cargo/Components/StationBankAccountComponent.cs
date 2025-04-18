@@ -45,10 +45,10 @@ public sealed partial class StationBankAccountComponent : Component
     {
         { "Cargo",       0.00 },
         { "Engineering", 0.25 },
-        { "Medical",     0.30 },
+        { "Medical",     0.25 },
         { "Science",     0.15 },
         { "Security",    0.20 },
-        { "Service",     0.10 },
+        { "Service",     0.15 },
     };
 
     /// <summary>

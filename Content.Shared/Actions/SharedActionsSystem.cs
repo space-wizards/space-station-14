@@ -21,19 +21,19 @@ namespace Content.Shared.Actions;
 
 public abstract class SharedActionsSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
     [Dependency] protected readonly IGameTiming GameTiming = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly RotateToFaceSystem _rotateToFace = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private   readonly ActionBlockerSystem _actionBlocker = default!;
+    [Dependency] private   readonly ActionContainerSystem _actionContainer = default!;
+    [Dependency] private   readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private   readonly RotateToFaceSystem _rotateToFace = default!;
+    [Dependency] private   readonly SharedAudioSystem _audio = default!;
+    [Dependency] private   readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private   readonly SharedTransformSystem _transform = default!;
 
     private EntityQuery<ActionComponent> _actionQuery;
     private EntityQuery<ActionsComponent> _actionsQuery;
-    private EntityQuery<MindComponent> _mindQuery = default!;
+    private EntityQuery<MindComponent> _mindQuery;
 
     public override void Initialize()
     {
@@ -76,31 +76,11 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<ActionComponent>();
-        while (query.MoveNext(out var uid, out var action))
-        {
-            if (IsCooldownActive(action) || !ShouldResetCharges(action))
-                continue;
-
-            ResetCharges((uid, action));
-        }
-    }
-
     private void OnActionMapInit(Entity<ActionComponent> ent, ref MapInitEvent args)
     {
         var comp = ent.Comp;
         comp.OriginalIconColor = comp.IconColor;
         DirtyField(ent, nameof(ActionComponent.OriginalIconColor));
-
-        if (comp.Charges == comp.MaxCharges || comp.Charges is not {} charges)
-            return;
-
-        comp.MaxCharges ??= charges;
-        DirtyField(ent, nameof(ActionComponent.MaxCharges));
     }
 
     private void OnActionShutdown(Entity<ActionComponent> ent, ref ComponentShutdown args)
@@ -268,71 +248,6 @@ public abstract class SharedActionsSystem : EntitySystem
         DirtyField(ent, nameof(ActionComponent.Enabled));
     }
 
-    public void SetCharges(Entity<ActionComponent?>? action, int? charges)
-    {
-        if (GetAction(action) is not {} ent || ent.Comp.Charges == charges)
-            return;
-
-        ent.Comp.Charges = charges;
-        UpdateAction(ent);
-        DirtyField(ent, nameof(ActionComponent.Charges));
-    }
-
-    public int? GetCharges(Entity<ActionComponent?>? action)
-    {
-        return GetAction(action)?.Comp?.Charges;
-    }
-
-    /// <summary>
-    /// Add a number of charges to an action.
-    /// This is allowed to exceed its <c>MaxCharges</c>, but cannot be used with negative charges.
-    /// Use <see cref="RemoveCharges"/> to remove them.
-    /// </summary>
-    public void AddCharges(Entity<ActionComponent?>? action, int addCharges)
-    {
-        if (GetAction(action) is not {} ent || ent.Comp.Charges == null || addCharges < 1)
-            return;
-
-        ent.Comp.Charges += addCharges;
-        UpdateAction(ent);
-        DirtyField(ent, nameof(ActionComponent.Charges));
-    }
-
-    /// <summary>
-    /// Removes a number of charges from an action.
-    /// If <c>Charges</c> becomes negative this will set it to null.
-    /// </summary>
-    public void RemoveCharges(Entity<ActionComponent?>? action, int removeCharges)
-    {
-        if (GetAction(action) is not {} ent || ent.Comp.Charges == null || removeCharges < 1)
-            return;
-
-        ent.Comp.Charges -= removeCharges;
-
-        if (ent.Comp.Charges < 0)
-            ent.Comp.Charges = null;
-
-        UpdateAction(ent);
-        DirtyField(ent, nameof(ActionComponent.Charges));
-    }
-
-    /// <summary>
-    /// Resets an action's charges to its max charges.
-    /// </summary>
-    public void ResetCharges(Entity<ActionComponent?>? action, bool update = false)
-    {
-        if (GetAction(action) is not {} ent || ent.Comp.Charges == ent.Comp.MaxCharges)
-            return;
-
-        ent.Comp.Charges = ent.Comp.MaxCharges;
-
-        // TODO: is there any reason you wouldn't want this
-        if (update)
-            UpdateAction(ent);
-
-        DirtyField(ent, nameof(ActionComponent.Charges));
-    }
-
     #endregion
 
     #region Execution
@@ -370,20 +285,16 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!action.Comp.Enabled)
             return;
 
+        var curTime = GameTiming.CurTime;
+        if (IsCooldownActive(action, curTime))
+            return;
+
         // check for action use prevention
         // TODO: make code below use this event with a dedicated component
         var attemptEv = new ActionAttemptEvent(user);
         RaiseLocalEvent(action, ref attemptEv);
         if (attemptEv.Cancelled)
             return;
-
-        var curTime = GameTiming.CurTime;
-        if (IsCooldownActive(action, curTime))
-            return;
-
-        // TODO: Replace with individual charge recovery when we have the visuals to aid it
-        if (ShouldResetCharges(action))
-            ResetCharges((action, action), true);
 
         // Validate request by checking action blockers and the like
         var provider = action.Comp.Container ?? user;
@@ -659,18 +570,9 @@ public abstract class SharedActionsSystem : EntitySystem
 
         _audio.PlayPredicted(action.Comp.Sound, performer, predicted ? performer : null);
 
-        // TODO: use LimitedCharges?
-        if (action.Comp.Charges != null)
-        {
-            RemoveCharges((action, action), 1);
-            if (ShouldResetCharges(action))
-                SetEnabled((action, action), false);
-        }
-
         // TODO: move to ActionCooldown ActionPerformedEvent?
         RemoveCooldown((action, action));
-        if (action.Comp is { Charges: null or < 1 })
-            StartUseDelay((action, action));
+        StartUseDelay((action, action));
 
         UpdateAction(action);
 
@@ -951,9 +853,6 @@ public abstract class SharedActionsSystem : EntitySystem
         if (!comp.Enabled)
             return false;
 
-        if (comp.Charges.HasValue && comp.Charges <= 0 && !comp.RenewCharges)
-            return false;
-
         var curTime = GameTiming.CurTime;
         if (comp.Cooldown.HasValue && comp.Cooldown.Value.End > curTime)
             return false;
@@ -1120,15 +1019,9 @@ public abstract class SharedActionsSystem : EntitySystem
     /// <summary>
     ///     Checks if the action has a cooldown and if it's still active
     /// </summary>
-    protected bool IsCooldownActive(ActionComponent action, TimeSpan? curTime = null)
+    public bool IsCooldownActive(ActionComponent action, TimeSpan? curTime = null)
     {
-        curTime ??= GameTiming.CurTime;
         // TODO: Check for charge recovery timer
         return action.Cooldown.HasValue && action.Cooldown.Value.End > curTime;
-    }
-
-    protected bool ShouldResetCharges(ActionComponent action)
-    {
-        return action is { Charges: < 1, RenewCharges: true };
     }
 }

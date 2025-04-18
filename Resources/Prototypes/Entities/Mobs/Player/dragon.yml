@@ -154,6 +154,11 @@
     - DoorBumpOpener
   - type: Puller
     needsHands: false
+  - type: RandomMetadata
+    nameSegments:
+    - NamesDragon
+    - NamesDragonTitle
+    nameFormat: name-format-dragon
 
 - type: entity
   parent: BaseMobDragon
