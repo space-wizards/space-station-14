@@ -144,13 +144,37 @@
 - type: entity
   name: cluwne bomb
   description: It finds this situation quite hilarious.
-  parent: [BasePlasticExplosive, BaseSyndicateContraband, CluwneBomb]
+  parent: [BasePlasticExplosive, BaseSyndicateContraband]
   id: FakeCluwneBomb
   suffix: Decoy
   components:
-  - type: Explosive
-    explosionType: Radioactive
-    totalIntensity: 0.1
-    intensitySlope: 0.1
-    maxIntensity: 0.1
-    canCreateVacuum: false
+  - type: Sprite
+    sprite: Objects/Weapons/Bombs/cluwne_bomb.rsi
+    state: icon
+    layers:
+    - state: icon
+      map: [ "base" ]
+  - type: Item
+    storedRotation: -90
+  - type: DeviceLinkSink
+    ports:
+    - Timer
+  - type: TimerStartOnSignal
+  - type: OnUseTimerTrigger
+    delay: 10
+    delayOptions: [ 10, 30, 60, 120, 300 ]
+    beepInterval: 2
+    beepSound: /Audio/Voice/Cluwne/cluwnelaugh1.ogg
+    startOnStick: true
+    canToggleStartOnStick: true
+  - type: DeleteOnTrigger
+  - type: SpawnOnTrigger
+    proto: EffectConfetti
+  - type: SoundOnTrigger
+    sound:
+      path: /Audio/Effects/Emotes/parp1.ogg
+  - type: Destructible
+    thresholds:
+    - trigger:
+      behaviors:
+      - !type:TriggerBehavior
