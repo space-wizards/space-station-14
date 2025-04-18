@@ -11,7 +11,7 @@ namespace Content.Shared.Doors.Components;
 /// This is used for a condition door that allows entry only through a single side.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
-[Access(typeof(TurnstileSystem))]
+[Access(typeof(SharedTurnstileSystem))]
 public sealed partial class TurnstileComponent : Component
 {
     /// <summary>
@@ -44,6 +44,12 @@ public sealed partial class TurnstileComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public HashSet<EntityUid> CollideExceptions = new();
+
+    /// <summary>
+    /// default state of the turnstile sprite.
+    /// </summary>
+    [DataField]
+    public string DefaultState = "turnstile";
 
     /// <summary>
     /// animation state of the turnstile spinning.

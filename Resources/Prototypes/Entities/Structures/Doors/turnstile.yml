@@ -11,6 +11,7 @@
     layers:
     - state: turnstile
       map: [ "enum.TurnstileVisualLayers.Base" ]
+  - type: AnimationPlayer
   - type: Fixtures
     fixtures:
       fix1:
@@ -45,12 +46,12 @@
   - type: Appearance
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: FlimsyMetallic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 350
+        damage: 500
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]

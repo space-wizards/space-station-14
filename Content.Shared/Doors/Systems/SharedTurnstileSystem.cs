@@ -3,9 +3,7 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
-using Robust.Shared.Animations;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Network;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
@@ -14,12 +12,10 @@ namespace Content.Shared.Doors.Systems;
 /// <summary>
 /// This handles logic and interactions related to <see cref="TurnstileComponent"/>
 /// </summary>
-public sealed class TurnstileSystem : EntitySystem
+public abstract partial class SharedTurnstileSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-    [Dependency] private readonly SharedAnimationPlayerSystem _animationPlayer = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityWhitelistSystem _entityWhitelist = default!;
     [Dependency] private readonly PullingSystem _pulling = default!;
@@ -102,8 +98,7 @@ public sealed class TurnstileSystem : EntitySystem
                 if (!_accessReader.IsAllowed(args.OtherEntity, ent))
                 {
                     _audio.PlayPredicted(ent.Comp.DenySound, ent, args.OtherEntity);
-                    if (_net.IsClient)
-                        _animationPlayer.Flick(ent, ent.Comp.DenyState, TurnstileVisualLayers.Base);
+                    PlayAnimation(ent, ent.Comp.DenyState);
                 }
             }
 
@@ -111,8 +106,7 @@ public sealed class TurnstileSystem : EntitySystem
         }
         // if they passed through:
         ent.Comp.NextPassTime = _timing.CurTime + ent.Comp.PassDelay;
-        if (_net.IsClient)
-            _animationPlayer.Flick(ent, ent.Comp.SpinState, TurnstileVisualLayers.Base);
+        PlayAnimation(ent, ent.Comp.SpinState);
         _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity);
     }
 
@@ -123,5 +117,10 @@ public sealed class TurnstileSystem : EntitySystem
             ent.Comp.CollideExceptions.Remove(args.OtherEntity);
             Dirty(ent);
         }
+    }
+
+    protected virtual void PlayAnimation(EntityUid uid, string stateId)
+    {
+
     }
 }
