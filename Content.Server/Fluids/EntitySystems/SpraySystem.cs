@@ -175,7 +175,7 @@ public sealed class SpraySystem : EntitySystem
                 {
                     // push back the grid the player is standing on
                     var userTransform = Transform(user);
-                    if (userTransform.GridUid != null)
+                    if (userTransform.GridUid == userTransform.ParentUid)
                     {
                         // apply both linear and angular momentum depending on the player position
                         // multiply by a cvar because grid mass is currently extremely small compared to all other masses
