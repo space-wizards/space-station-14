@@ -4850,4 +4850,40 @@ Entries:
   id: 671
   time: '2025-04-18T15:51:56.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/490
+- author: walksanatora
+  changes:
+  - message: Moproaches have been rescued from the ATS surpluss.
+    type: Add
+  id: 672
+  time: '2025-04-18T16:03:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/486
+- author: lzk228
+  changes:
+  - message: Moproaches can be bought from the ATS
+    type: Add
+  id: 673
+  time: '2025-04-18T16:03:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/486
+- author: lzk228
+  changes:
+  - message: Custodial closets now contain Moproaches
+    type: Tweak
+  id: 674
+  time: '2025-04-18T16:03:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/486
+- author: lzk228
+  changes:
+  - message: Moproaches can spawn as a vent critter migration spawn
+    type: Add
+  id: 675
+  time: '2025-04-18T16:03:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/486
+- author: lzk228
+  changes:
+  - message: Moproaches. a mothroach with mopshoes one. doesn't make it any less of
+      a pest. perfect for stations without a janitor.
+    type: Add
+  id: 676
+  time: '2025-04-18T16:03:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/486
 
