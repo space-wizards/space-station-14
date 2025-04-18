@@ -5,6 +5,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Atmos.Visuals;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
 
@@ -21,11 +22,13 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
     [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<GasPressureReliefValveComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<GasPressureReliefValveComponent, AtmosDeviceUpdateEvent>(OnReliefValveUpdated);
     }
     // TODO!!!!!!!
@@ -34,38 +37,39 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
     // So it all needs to be changed to mirror the prediction done in the pressure pump.
     // Working implementation so far but it's a long ways off.
 
-/// <summary>
-/// Handles the updating logic for the pressure relief valve.
-///
-/// In summary, the valve should only open if the pressure on the inlet side is above a certain threshold.
-/// When releasing gas, it should only release enough gas to tip under the threshold,
-/// or the max atmospherics flow rate.
-/// It should also not release more gas than it would take to equalize the pressure.
-/// </summary>
-/// <param name="valveEntityUid"> the <see cref="EntityUid"/> of the pressure relief valve</param>
-/// <param name="valveComponent"> the <see cref="Shared.Atmos.Components.GasPressureReliefValveComponent"/> component of the valve</param>
-/// <param name="args"> Args provided to us via <see cref="AtmosDeviceUpdateEvent"/></param>
-    private void OnReliefValveUpdated(EntityUid valveEntityUid,
-        GasPressureReliefValveComponent valveComponent,
+    private void OnInit(Entity<GasPressureReliefValveComponent> valveEntity, ref ComponentInit args)
+    {
+        UpdateAppearance(valveEntity);
+    }
+
+    /// <summary>
+    /// Handles the updating logic for the pressure relief valve.
+    ///
+    /// In summary, the valve should only open if the pressure on the inlet side is above a certain threshold.
+    /// When releasing gas, it should only release enough gas to tip under the threshold,
+    /// or the max atmospherics flow rate.
+    /// It should also not release more gas than it would take to equalize the pressure.
+    /// </summary>
+    /// <param name="valveEntity"> the <see cref="Entity{T}"/> of the pressure relief valve</param>
+    /// <param name="args"> Args provided to us via <see cref="AtmosDeviceUpdateEvent"/></param>
+    private void OnReliefValveUpdated(Entity<GasPressureReliefValveComponent> valveEntity,
         ref AtmosDeviceUpdateEvent args)
     {
-        // TODO: ValveStatus and Enabled are used interchangeably in this implementation. Bad! Needs to be differentiated.
-
-
-        if (!_nodeContainer.TryGetNodes(valveEntityUid,
-                valveComponent.InletName,
-                valveComponent.OutletName,
+        if (!_nodeContainer.TryGetNodes(valveEntity.Owner,
+                valveEntity.Comp.InletName,
+                valveEntity.Comp.OutletName,
                 out PipeNode? inletPipeNode,
                 out PipeNode? outletPipeNode))
         {
-            // Valve is not connected to any nodes, so we disable it.
-            _ambientSoundSystem.SetAmbience(valveEntityUid, false);
-            valveComponent.Enabled = false;
+            _ambientSoundSystem.SetAmbience(valveEntity, false);
+            valveEntity.Comp.Enabled = false;
+            UpdateAppearance(valveEntity);
 
-            if (valveComponent.PreviousValveState != valveComponent.Enabled)
+            // Avoid it network spamming dirtying constantly by only checking if the state has actually changed.
+            if (valveEntity.Comp.PreviousValveState != valveEntity.Comp.Enabled)
             {
-                valveComponent.PreviousValveState = valveComponent.Enabled;
-                DirtyField(valveEntityUid, valveComponent, nameof(valveComponent.Enabled));
+                valveEntity.Comp.PreviousValveState = valveEntity.Comp.Enabled;
+                DirtyField(valveEntity!, nameof(valveEntity.Comp.Enabled));
             }
 
             return;
@@ -93,28 +97,30 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         // Inlet pressure is below the threshold, so we don't need to do anything.
         // We also check if the outlet pressure is higher than the inlet pressure,
         // as gas transfer is not possible in that case.
-        if (P1 <= valveComponent.Threshold || P2 > P1)
+        if (P1 <= valveEntity.Comp.Threshold || P2 > P1)
         {
-            _ambientSoundSystem.SetAmbience(valveEntityUid, false);
-            valveComponent.Enabled = false;
+            valveEntity.Comp.Enabled = false;
+            _ambientSoundSystem.SetAmbience(valveEntity, false);
+            UpdateAppearance(valveEntity);
 
-            if (valveComponent.PreviousValveState != valveComponent.Enabled)
+            if (valveEntity.Comp.PreviousValveState != valveEntity.Comp.Enabled)
             {
-                valveComponent.PreviousValveState = valveComponent.Enabled;
-                valveComponent.FlowRate = 0;
-                DirtyFields(valveEntityUid,
-                    valveComponent,
-                    MetaData(valveEntityUid),
-                    nameof(valveComponent.FlowRate),
-                    nameof(valveComponent.Enabled));
+                valveEntity.Comp.PreviousValveState = valveEntity.Comp.Enabled;
+                valveEntity.Comp.FlowRate = 0;
+                DirtyFields(valveEntity,
+                    valveEntity.Comp,
+                    MetaData(valveEntity),
+                    nameof(valveEntity.Comp.FlowRate),
+                    nameof(valveEntity.Comp.Enabled));
             }
 
             return;
         }
 
         // guess we're doing work now
-        _ambientSoundSystem.SetAmbience(valveEntityUid, true);
-        valveComponent.Enabled = true;
+        valveEntity.Comp.Enabled = true;
+        _ambientSoundSystem.SetAmbience(valveEntity, true);
+        UpdateAppearance(valveEntity);
 
         // Prepare the army!
         var n1 = inletPipeNode.Air.TotalMoles;
@@ -125,7 +131,7 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         var T2 = outletPipeNode.Air.Temperature;
 
         // First, calculate the amount of gas we need to transfer to bring us below the threshold.
-        var deltaMolesToPressureThreshold = n1 - (valveComponent.Threshold * V1) / (Atmospherics.R * T1);
+        var deltaMolesToPressureThreshold = n1 - (valveEntity.Comp.Threshold * V1) / (Atmospherics.R * T1);
 
         // Second, calculate the moles required to equalize the pressure.
         var numerator = n1 * T1 * V2 - n2 * T2 * V1;
@@ -140,22 +146,35 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
         // And finally, limit the transfer volume to the max flow rate of the valve.
         var actualVolumeToTransfer = Math.Min(desiredVolumeToTransfer,
-            valveComponent.MaxTransferRate * _atmosphereSystem.PumpSpeedup() * args.dt);
+            valveEntity.Comp.MaxTransferRate * _atmosphereSystem.PumpSpeedup() * args.dt);
 
         // We remove the gas from the inlet and merge it into the outlet.
         var removed = inletPipeNode.Air.RemoveVolume(actualVolumeToTransfer);
         _atmosphereSystem.Merge(outletPipeNode.Air, removed);
 
         // Oh, and set the flow rate (L/S) to the actual volume we transferred.
-        // This is used for examine.
-        valveComponent.FlowRate = MathF.Round(desiredVolumeToTransfer * args.dt, 1);
-        DirtyField(valveEntityUid, valveComponent, nameof(valveComponent.FlowRate));
+        // This is used for player examine.
+        valveEntity.Comp.FlowRate = MathF.Round(desiredVolumeToTransfer * args.dt, 1);
+        DirtyField(valveEntity, valveEntity.Comp, nameof(valveEntity.Comp.FlowRate));
 
-        if (valveComponent.PreviousValveState != valveComponent.Enabled)
+        if (valveEntity.Comp.PreviousValveState != valveEntity.Comp.Enabled)
         {
             // The valve state has changed, so we need to dirty it.
-            valveComponent.PreviousValveState = valveComponent.Enabled;
-            DirtyField(valveEntityUid, valveComponent, nameof(valveComponent.Enabled));
+            valveEntity.Comp.PreviousValveState = valveEntity.Comp.Enabled;
+            DirtyField(valveEntity, valveEntity.Comp, nameof(valveEntity.Comp.Enabled));
         }
+    }
+
+    private void UpdateAppearance(EntityUid valveEntityUid,
+        GasPressureReliefValveComponent? valveComponent = null,
+        AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(valveEntityUid, ref valveComponent, ref appearance, false))
+            return;
+
+        _appearance.SetData(valveEntityUid,
+            GasVolumePumpVisuals.State,
+            valveComponent.Enabled ? GasVolumePumpState.On : GasVolumePumpState.Off,
+            appearance);
     }
 }
