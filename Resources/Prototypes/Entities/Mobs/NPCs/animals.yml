@@ -3708,7 +3708,6 @@
     tags:
     - VimPilot
     - CanPilot
-    - AnomalyHost
     - DoorBumpOpener
   - type: Storage #Slime-type storage; probably replace if it's deemed sensible to let corgis wear regular bags, or if a custom 'dog bag' is made
     clickInsert: false
