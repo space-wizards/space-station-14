@@ -4,8 +4,8 @@ meta:
   engineVersion: 253.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/17/2025 14:09:50
-  entityCount: 470
+  time: 04/18/2025 10:22:28
+  entityCount: 475
 maps: []
 grids:
 - 1
@@ -1821,7 +1821,7 @@ entities:
       pos: -1.5,-7.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -3068.5754
+      secondsUntilStateChange: -3205.4084
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -1987,6 +1987,23 @@ entities:
     - type: Transform
       anchored: True
       pos: -5.5,-7.5
+      parent: 1
+- proto: BlueprintFulton
+  entities:
+  - uid: 382
+    components:
+    - type: MetaData
+      name: blueprint
+    - type: Transform
+      pos: 1.579378,-6.642523
+      parent: 1
+- proto: BluespaceBeaker
+  entities:
+  - uid: 471
+    components:
+    - type: Transform
+      rot: -2.9363906402140856 rad
+      pos: -7.7862644,1.4986467
       parent: 1
 - proto: ButtonFrameCaution
   entities:
@@ -3283,6 +3300,14 @@ entities:
       rot: 3.9097657833244788 rad
       pos: -3.4943893,-8.840513
       parent: 1
+- proto: FultonBeacon
+  entities:
+  - uid: 474
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 10.177677,-3.9586577
+      parent: 1
 - proto: GasPipeBend
   entities:
   - uid: 239
@@ -4057,8 +4082,6 @@ entities:
       rot: -1.9273808757450919 rad
       pos: -2.6602058,0.56129754
       parent: 1
-    - type: Physics
-      sleepTime: 0.049999952
 - proto: Paper
   entities:
   - uid: 332
@@ -4458,10 +4481,17 @@ entities:
     - type: Transform
       pos: -5.5,2.5
       parent: 1
-  - uid: 382
+  - uid: 473
     components:
     - type: Transform
-      pos: -8.5,-3.5
+      pos: -8.5,-4.5
+      parent: 1
+- proto: SalvageSpawnerTreasureValuable
+  entities:
+  - uid: 475
+    components:
+    - type: Transform
+      pos: 11.5,-8.5
       parent: 1
 - proto: ScrapFireExtinguisher
   entities:
@@ -4643,6 +4673,14 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -3.5,-4.5
+      parent: 1
+- proto: SyringeBluespace
+  entities:
+  - uid: 472
+    components:
+    - type: Transform
+      rot: -2.750853778794408 rad
+      pos: -8.11958,1.5495695
       parent: 1
 - proto: TableReinforced
   entities:
@@ -4953,7 +4991,7 @@ entities:
   - uid: 454
     components:
     - type: Transform
-      pos: -8.906612,2.2132316
+      pos: -8.9164915,2.2247021
       parent: 1
     - type: Pullable
       prevFixedRotation: True
