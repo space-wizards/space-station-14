@@ -3,6 +3,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Cargo.Components;
+using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Delivery;
 using Content.Shared.FingerprintReader;
 using Content.Shared.Labels.EntitySystems;
@@ -82,13 +83,18 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
 
         var stationAccountEnt = (delivery.RecipientStation.Value, account);
 
-        if (delivery.WasPenalized)
-            HandlePenalization(ent!, stationAccountEnt); // After the Resolve above, we know it's not null
+        var ev = new GetDeliveryMultiplierEvent();
+        RaiseLocalEvent(ent, ref ev);
+
+        var multiplier = ev.Multiplier += ent.Comp.BaseSpesoMultiplier;
+
+        if (!delivery.WasPenalized && delivery.ShouldBePenalized)
+            HandlePenalization(ent!, stationAccountEnt, multiplier); // After the Resolve above, we know it's not null
 
         _cargo.UpdateBankAccount(
-            (ent.Comp.RecipientStation.Value, account),
-            ent.Comp.SpesoReward,
-            _cargo.CreateAccountDistribution((ent.Comp.RecipientStation.Value, account)));
+            stationAccountEnt,
+            (int)(delivery.BaseSpesoReward * multiplier),
+           _cargo.CreateAccountDistribution((delivery.RecipientStation.Value, account)));
     }
 
     /// <summary>
@@ -96,7 +102,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     /// </summary>
     /// <param name="ent"><see cref="DeliveryComponent"/> entity.</param>
     /// <param name="stationAccountEnt"><see cref="StationBankAccountComponent"/> entity.</param>
-    private void HandlePenalization(Entity<DeliveryComponent> ent, Entity<StationBankAccountComponent> stationAccountEnt)
+    private void HandlePenalization(Entity<DeliveryComponent> ent, Entity<StationBankAccountComponent?> stationAccountEnt, float multiplier)
     {
         var delivery = ent.Comp;
         var accountName = UnknownAccount;
@@ -106,13 +112,18 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         // Extract reason from components...
         _chat.TrySendInGameICMessage(ent, GetMessage("wah", delivery.BaseSpesoPenalty, accountName), InGameICChatType.Speak, hideChat: true);
 
+        var dist = new Dictionary<ProtoId<CargoAccountPrototype>, double>()
+        {
+            { delivery.PenaltyBankAccount, 1.0 }
+        };
+
         _cargo.UpdateBankAccount(
-            // Recasting as nullable, it's this or using .Comp! for CreateAccountDistribution and trusting it's always resolved before calling.
-            // I'm not Resolving again in here
-            (stationAccountEnt, stationAccountEnt.Comp),
-            -delivery.BaseSpesoPenalty, // Subtracting
-            _cargo.CreateAccountDistribution(delivery.PenaltyBankAccount, stationAccountEnt.Comp)
+            stationAccountEnt,
+            -((int)(delivery.BaseSpesoPenalty * multiplier)), // Subtracting
+            dist
             );
+
+        ent.Comp.WasPenalized = true;
     }
 
     private string GetMessage(string reason, int penalty, string accountName)
@@ -127,3 +138,6 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         UpdateSpawner(frameTime);
     }
 }
+
+[ByRefEvent]
+public record struct GetDeliveryMultiplierEvent(float Multiplier = 0.0f);

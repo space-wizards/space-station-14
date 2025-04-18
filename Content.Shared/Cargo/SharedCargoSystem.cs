@@ -49,7 +49,11 @@ public abstract class SharedCargoSystem : EntitySystem
 
         foreach (var (account, percentage) in stationBank.Comp.RevenueDistribution)
         {
-            distribution.Add(account, remaining * percentage);
+            if (!distribution.TryAdd(account, remaining * percentage))
+            {
+                Log.Warning($"Tried to add an account [{account}] that already was present in AccountDistribution dictionary");
+                continue;
+            }
         }
         return distribution;
     }
