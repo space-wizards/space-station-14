@@ -56,7 +56,8 @@ public sealed class ContrabandSystem : EntitySystem
         // one, the actual informative 'this is restricted'
         // then, the 'you can/shouldn't carry this around' based on the ID the user is wearing
         var localizedDepartments = component.AllowedDepartments.Select(p => Loc.GetString("contraband-department-plural", ("department", Loc.GetString(_proto.Index(p).Name))));
-        var localizedJobs = component.AllowedJobs.Select(p => Loc.GetString("contraband-job-plural", ("job", _proto.Index(p).LocalizedName)));
+        var jobs = component.AllowedJobs.Select(p => _proto.Index(p).LocalizedName).ToArray();
+        var localizedJobs = jobs.Select(p => Loc.GetString("contraband-job-plural", ("job", p)));
         var severity = _proto.Index(component.Severity);
         String departmentExamineMessage;
         if (severity.ShowDepartmentsAndJobs)
@@ -83,26 +84,21 @@ public sealed class ContrabandSystem : EntitySystem
             }
         }
 
-        String carryingMessage;
-        // either its fully restricted, you have no departments, or your departments dont intersect with the restricted departments
+        // if it is fully restricted, you're department-less, or your department isn't in the allowed list, you cannot carry it. Otherwise, you can.
+        var carryingMessage = Loc.GetString("contraband-examine-text-avoid-carrying-around");
+        var iconTexture = "/Textures/Interface/VerbIcons/lock-red.svg.192dpi.png";
         if (departments.Intersect(component.AllowedDepartments).Any()
-            || localizedJobs.Contains(jobId))
+            || jobs.Contains(jobId))
         {
             carryingMessage = Loc.GetString("contraband-examine-text-in-the-clear");
+            iconTexture = "/Textures/Interface/VerbIcons/unlock-green.svg.192dpi.png";
         }
-        else
-        {
-            // otherwise fine to use :tm:
-            carryingMessage = Loc.GetString("contraband-examine-text-avoid-carrying-around");
-        }
-
         var examineMarkup = GetContrabandExamine(departmentExamineMessage, carryingMessage);
-        _examine.AddDetailedExamineVerb(args,
+        _examine.AddHoverExamineVerb(args,
             component,
-            examineMarkup,
             Loc.GetString("contraband-examinable-verb-text"),
-            "/Textures/Interface/VerbIcons/lock.svg.192dpi.png",
-            Loc.GetString("contraband-examinable-verb-message"));
+            examineMarkup.ToMarkup(),
+            iconTexture);
     }
 
     private FormattedMessage GetContrabandExamine(String deptMessage, String carryMessage)

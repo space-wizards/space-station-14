@@ -5,6 +5,7 @@ using Content.Client.Interaction;
 using Content.Client.Storage;
 using Content.Client.Storage.Systems;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
+using Content.Client.UserInterface.Systems.Info;
 using Content.Client.UserInterface.Systems.Storage.Controls;
 using Content.Client.Verbs.UI;
 using Content.Shared.CCVar;
@@ -37,6 +38,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly CloseRecentWindowUIController _closeRecentWindowUIController = default!;
     [UISystemDependency] private readonly StorageSystem _storage = default!;
     [UISystemDependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -61,37 +63,9 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     {
         base.Initialize();
 
-        UIManager.OnScreenChanged += OnScreenChange;
-
         _configuration.OnValueChanged(CCVars.StaticStorageUI, OnStaticStorageChanged, true);
         _configuration.OnValueChanged(CCVars.OpaqueStorageWindow, OnOpaqueWindowChanged, true);
         _configuration.OnValueChanged(CCVars.StorageWindowTitle, OnStorageWindowTitle, true);
-    }
-
-    private void OnScreenChange((UIScreen? Old, UIScreen? New) obj)
-    {
-        // Handle reconnects with hotbargui.
-
-        // Essentially HotbarGui / the screen gets loaded AFTER gamestates at the moment (because clientgameticker manually changes it via event)
-        // and changing this may be a massive change.
-        // So instead we'll just manually reload it for now.
-        if (!StaticStorageUIEnabled ||
-            obj.New == null ||
-            !EntityManager.TryGetComponent(_player.LocalEntity, out UserInterfaceUserComponent? userComp))
-        {
-            return;
-        }
-
-        // UISystemDependency not injected at this point so do it the old fashion way, I love ordering issues.
-        var uiSystem = EntityManager.System<SharedUserInterfaceSystem>();
-
-        foreach (var bui in uiSystem.GetActorUis((_player.LocalEntity.Value, userComp)))
-        {
-            if (!uiSystem.TryGetOpenUi<StorageBoundUserInterface>(bui.Entity, StorageComponent.StorageUiKey.Key, out var storageBui))
-                continue;
-
-            storageBui.ReOpen();
-        }
     }
 
     private void OnStorageWindowTitle(bool obj)
@@ -126,6 +100,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
         if (StaticStorageUIEnabled)
         {
             UIManager.GetActiveUIWidgetOrNull<HotbarGui>()?.StorageContainer.AddChild(window);
+            _closeRecentWindowUIController.SetMostRecentlyInteractedWindow(window);
         }
         else
         {
@@ -294,12 +269,19 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
                 var position = targetStorage.GetMouseGridPieceLocation(dragEnt, dragLoc);
                 var newLocation = new ItemStorageLocation(DraggingRotation, position);
 
-                EntityManager.RaisePredictiveEvent(new StorageSetItemLocationEvent(
-                    EntityManager.GetNetEntity(draggingGhost.Entity),
-                    EntityManager.GetNetEntity(sourceStorage),
-                    newLocation));
+                if (!_storage.ItemFitsInGridLocation(dragEnt, sourceStorage, newLocation))
+                {
+                    window.Reclaim(control.Location, control);
+                }
+                else
+                {
+                    EntityManager.RaisePredictiveEvent(new StorageSetItemLocationEvent(
+                        EntityManager.GetNetEntity(draggingGhost.Entity),
+                        EntityManager.GetNetEntity(sourceStorage),
+                        newLocation));
 
-                window.Reclaim(newLocation, control);
+                    window.Reclaim(newLocation, control);
+                }
             }
             // Dragging to new storage
             else if (targetStorage?.StorageEntity != null && targetStorage != window)
@@ -360,6 +342,17 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     {
         if (DraggingGhost == null)
             return false;
+
+        var player = _player.LocalEntity;
+
+        // If the attached storage is closed then stop dragging
+        if (player == null ||
+            !_storage.TryGetStorageLocation(DraggingGhost.Entity, out var container, out _, out _) ||
+            !_ui.IsUiOpen(container.Owner, StorageComponent.StorageUiKey.Key, player.Value))
+        {
+            DraggingGhost.Orphan();
+            return false;
+        }
 
         SetDraggingRotation();
         return true;
