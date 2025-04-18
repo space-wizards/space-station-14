@@ -1,0 +1,115 @@
+- type: entity
+  name: moproach
+  parent: MobMothroach
+  id: MobMoproach
+  description: This little mothroach has mopshoes on its feet! How adorable!
+  components:
+  - type: GhostRole
+    name: ghost-role-information-moproach-name
+    description: ghost-role-information-moproach-description
+  - type: Sprite
+    sprite: Mobs/Animals/mothroach/moproach.rsi
+  - type: MovementSpeedModifier
+    baseSprintSpeed : 5 # extra speed for that moppin'!
+  - type: HTN
+    rootTask:
+      task: MoproachCompound
+  - type: Absorbent
+    pickupAmount: 5 # small feet
+  - type: UseDelay
+    delay: 0.5 # quick feet
+  - type: SolutionRegeneration
+    solution: absorbed
+    generated:
+      reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: SolutionPurge
+    solution: absorbed
+    preserve:
+      - Water
+    quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      absorbed:
+        maxVol: 50
+      food:
+        reagents:
+        - ReagentId: Slime
+          Quantity: 5
+  - type: DrainableSolution
+    solution: drainBuffer
+  - type: InteractionPopup
+    interactSuccessString: petting-success-cleanbot
+    interactFailureString: petting-failure-cleanbot
+
+- type: entity
+  parent: MobMoproach
+  id: MobMoproachHat
+  suffix: hat
+  components:
+  - type: Loadout
+    prototypes: [ MoproachGear ]
+
+- type: startingGear
+  id: MoproachGear
+  equipment:
+    head: ClothingHeadHatPurplesoft
+
+- type: htnCompound
+  id: MoproachCompound
+  branches:
+  - tasks:
+    - !type:HTNCompoundTask
+      task: FoodCompound
+  - tasks:
+    - !type:HTNCompoundTask
+      task: BufferNearbyPuddlesCompound
+  - tasks:
+    - !type:HTNCompoundTask
+      task: IdleCompound
+
+- type: entity
+  parent: BoxCardboard
+  name: moproach kit
+  id: MoproachBox
+  description: A kit to quickly get two moproaches ready to work.
+  components:
+  - type: StorageFill
+    contents:
+    - id: MoproachCubeWrapped
+      amount: 2
+    - id: ClothingHeadHatPurplesoft
+      amount: 2
+    - id: PaperMoproachManual
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: box_moproach
+
+- type: entity
+  parent: MonkeyCubeWrapped
+  name: moproach cube
+  suffix: Wrapped
+  id: MoproachCubeWrapped
+  description: Unwrap this to get a moproach cube.
+  components:
+  - type: SpawnItemsOnUse
+    items:
+    - id: MoproachCube
+
+- type: entity
+  parent: MonkeyCube
+  id: MoproachCube
+  name: moproach cube
+  components:
+  - type: Rehydratable
+    possibleSpawns:
+    - MobMoproach
+
+- type: entity
+  parent: Paper
+  id: PaperMoproachManual
+  suffix: moproach manual
+  components:
+  - type: Paper
+    content: book-text-moproach
