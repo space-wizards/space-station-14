@@ -642,6 +642,9 @@
   id: Handcuffs
 
 - type: Tag
+  id: HandGrenade
+
+- type: Tag
   id: HappyHonk
 
 - type: Tag
@@ -875,9 +878,6 @@
 
 - type: Tag
   id: Mineshaft
-
-- type: Tag
-  id: ModularGrenade
 
 - type: Tag
   id: ModularReceiver

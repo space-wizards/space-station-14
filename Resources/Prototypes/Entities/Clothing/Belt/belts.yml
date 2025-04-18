@@ -481,7 +481,7 @@
         - MagazineMagnum
         - CombatKnife
         - Truncheon
-        - ModularGrenade
+        - HandGrenade
       components:
         - Stunbaton
         - FlashOnTrigger
@@ -493,7 +493,6 @@
         - DoorRemote
         - Whistle
         - BalloonPopper
-        - PayloadCase
   - type: ItemMapper
     mapLayers:
       flashbang:
