@@ -15,6 +15,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
+using Content.Shared.Inventory;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -44,6 +45,7 @@ public sealed class SuitSensorSystem : EntitySystem
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
 
     public override void Initialize()
     {
@@ -347,6 +349,20 @@ public sealed class SuitSensorSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    ///     Set all suit sensors on the equipment someone is wearing to the specified mode.
+    /// </summary>
+    public void SetAllSensors(EntityUid target, SuitSensorMode mode, SlotFlags slots = SlotFlags.All )
+    {
+        // iterate over all inventory slots
+        var slotEnumerator = _inventory.GetSlotEnumerator(target, slots);
+        while (slotEnumerator.NextItem(out var item, out _))
+        {
+            if (TryComp<SuitSensorComponent>(item, out var sensorComp))
+                SetSensor((item, sensorComp), mode);
+        }
+    }
+
     public SuitSensorStatus? GetSensorState(EntityUid uid, SuitSensorComponent? sensor = null, TransformComponent? transform = null)
     {
         if (!Resolve(uid, ref sensor, ref transform))
@@ -390,7 +406,7 @@ public sealed class SuitSensorSystem : EntitySystem
             totalDamageThreshold = critThreshold.Value.Int();
 
         // finally, form suit sensor status
-        var status = new SuitSensorStatus(GetNetEntity(uid), userName, userJob, userJobIcon, userJobDepartments);
+        var status = new SuitSensorStatus(GetNetEntity(sensor.User.Value), GetNetEntity(uid), userName, userJob, userJobIcon, userJobDepartments);
         switch (sensor.Mode)
         {
             case SuitSensorMode.SensorBinary:
@@ -445,6 +461,7 @@ public sealed class SuitSensorSystem : EntitySystem
             [SuitSensorConstants.NET_JOB_DEPARTMENTS] = status.JobDepartments,
             [SuitSensorConstants.NET_IS_ALIVE] = status.IsAlive,
             [SuitSensorConstants.NET_SUIT_SENSOR_UID] = status.SuitSensorUid,
+            [SuitSensorConstants.NET_OWNER_UID] = status.OwnerUid,
         };
 
         if (status.TotalDamage != null)
@@ -475,13 +492,14 @@ public sealed class SuitSensorSystem : EntitySystem
         if (!payload.TryGetValue(SuitSensorConstants.NET_JOB_DEPARTMENTS, out List<string>? jobDepartments)) return null;
         if (!payload.TryGetValue(SuitSensorConstants.NET_IS_ALIVE, out bool? isAlive)) return null;
         if (!payload.TryGetValue(SuitSensorConstants.NET_SUIT_SENSOR_UID, out NetEntity suitSensorUid)) return null;
+        if (!payload.TryGetValue(SuitSensorConstants.NET_OWNER_UID, out NetEntity ownerUid)) return null;
 
         // try get total damage and cords (optionals)
         payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
         payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE_THRESHOLD, out int? totalDamageThreshold);
         payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out NetCoordinates? coords);
 
-        var status = new SuitSensorStatus(suitSensorUid, name, job, jobIcon, jobDepartments)
+        var status = new SuitSensorStatus(ownerUid, suitSensorUid, name, job, jobIcon, jobDepartments)
         {
             IsAlive = isAlive.Value,
             TotalDamage = totalDamage,

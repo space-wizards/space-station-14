@@ -1,6 +1,6 @@
 <Document>
   # Thieves
-  
+
   <Box>
     [color=#999999][italic]"Yoink! I'll be taking that! And that! Ooh, don't mind if I do!"[/italic][/color]
   </Box>
@@ -25,7 +25,7 @@
   </Box>
 
   ## Tools of the Trade
-  You've got two more aces up your stolen sleeves: your [color=cyan]beacon[/color] and your [color=cyan]toolbox.[/color]
+  You've got two more aces up your stolen sleeves: your [color=cyan]beacon[/color] and your [color=cyan]satchel.[/color]
 
   Your [color=cyan]beacon[/color] provides safe passage home for trinkets that may not be easy to carry with you on the evac shuttle. Simply find a secluded part of the station to unfold the beacon, then set its coordinates to your hideout.
   Any shinies near it will be [bold]teleported to your vault when the shift ends,[/bold] fulfilling your objectives.
@@ -36,11 +36,10 @@
     <GuideEntityEmbed Entity="ThiefBeacon"/>
   </Box>
 
-  Your [color=cyan]toolbox[/color] contains... well, whatever you remembered to pack. [bold]You can select two pre-made kits[/bold] to help you complete grander heists.
-  Approve your choices in a safe place, as the toolbox will dissolve and the gear will drop at your feet.
+  Your [color=cyan]satchel[/color] contains... well, whatever you remembered to pack. [bold]You can select two pre-made kits[/bold] to help you complete grander heists.
 
   <Box>
-    <GuideEntityEmbed Entity="ToolboxThief"/>
+    <GuideEntityEmbed Entity="SatchelThief"/>
   </Box>
   <Box>
     <GuideEntityEmbed Entity="StorageImplanter" Caption="Anatomy"/>
@@ -56,7 +55,7 @@
 
   ## Centerpiece of the Collection
   Your kleptomania will take you places. One day, you'll feel like stealing a few figurines. Another day, you'll feel like stealing an industrial machine.
-  
+
   No matter. They'll all be a part of your collection within a matter of time.
 
   You can steal items by [bold]having them on your person[/bold] when you get to CentComm. Failing this, you can steal larger items by [bold]leaving them by your beacon.[/bold]
@@ -64,12 +63,12 @@
   Some of the more [italic]animate[/italic] objectives may not cooperate with you. Make sure they're alive and with you or your beacon when the shift ends.
 
   Things that you may desire include but are not limited to:
-  
+
   <Box>
    <GuideEntityEmbed Entity="ToyFigurineGreytider" Caption="Figurines"/>
    <GuideEntityEmbed Entity="PassengerIDCard" Caption="ID cards"/>
    <GuideEntityEmbed Entity="ChemDispenser" Caption="Structures"/>
    <GuideEntityEmbed Entity="MobCorgiIan" Caption="Animals/Pets"/>
   </Box>
-  
+
 </Document>
