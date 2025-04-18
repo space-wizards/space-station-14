@@ -93,3 +93,51 @@
   values:
     prefix: plushies-lieutenant-
     count: 5
+
+- type: localizedDataset
+  id: PlushieAzrailSpeech
+  values:
+    prefix: plushies-azrail-
+    count: 5
+
+- type: localizedDataset
+  id: PlushieKrivazoraSpeech
+  values:
+    prefix: plushies-krivazora-
+    count: 5
+
+- type: localizedDataset
+  id: PlushieEmiliaSpeech
+  values:
+    prefix: plushies-emilia-
+    count: 5
+
+- type: localizedDataset
+  id: PlushieAilySpeech
+  values:
+    prefix: plushies-aily-
+    count: 5
+
+- type: localizedDataset
+  id: PlushieEvaSpeech
+  values:
+    prefix: plushies-eva-
+    count: 5
+
+- type: localizedDataset
+  id: PlushieAizekSpeech
+  values:
+    prefix: plushies-aizek-
+    count: 5
+
+- type: localizedDataset
+  id: PlushieAzrailHardsuitSpeech
+  values:
+    prefix: plushies-azrail-hardsuit-
+    count: 5
+
+- type: localizedDataset
+  id: PlushieSharpSpeech
+  values:
+    prefix: plushies-sharp-
+    count: 5
