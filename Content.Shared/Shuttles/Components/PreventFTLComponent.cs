@@ -6,7 +6,4 @@ namespace Content.Shared.Shuttles.Components;
 /// Add to grids that you do not want to FTL, but still might want to pilot.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class PreventFTLComponent : Component
-{
-
-}
+public sealed partial class PreventFTLComponent : Component;
