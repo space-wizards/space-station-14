@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: New plushie, named "drazil plushie". Based on an inverted lizard plushie.
-      It can be rarely found in maints lockers. Hew!
-    type: Add
-  - message: New reagent, Juice that makes you Hew. It can be made from juicing inverted
-      lizard plushies. Hew!
-    type: Add
-  id: 7731
-  time: '2024-12-18T16:31:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33776
 - author: FairlySadPanda August-Sun Eric156
   changes:
   - message: Smite Cranberry is now available wherever lemon-lime soda is sold, just
@@ -3912,3 +3901,11 @@
   id: 8231
   time: '2025-04-18T16:10:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34473
+- author: K-Dynamic
+  changes:
+  - message: Removed egg-plant from MegaSeed Servitor. (Egg-plant seeds can still
+      be obtained by mutation or exotic seed crate.)
+    type: Remove
+  id: 8232
+  time: '2025-04-18T16:42:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36579
