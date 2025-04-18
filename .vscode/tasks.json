@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "build", // debug build
             "command": "dotnet",
             "type": "shell",
             "args": [
@@ -15,6 +15,46 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build - Tools",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "build",
+                "--configuration",
+                "Tools",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:'ForceNoAlign;NoSummary'",
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build - Release",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "build",
+                "--configuration",
+                "Release",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:'ForceNoAlign;NoSummary'",
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
             },
             "presentation": {
                 "reveal": "silent"

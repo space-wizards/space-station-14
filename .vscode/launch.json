@@ -8,15 +8,17 @@
             "name": "Client",
             "type": "coreclr",
             "request": "launch",
+            //"preLaunchTask": "build", // dont remove this
             "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
             "args": [],
             "console": "internalConsole",
             "stopAtEntry": false
         },
         {
-            "name": "Client (Compatibility renderer)",
+            "name": "Client - (Compatibility renderer)",
             "type": "coreclr",
             "request": "launch",
+            //"preLaunchTask": "build",
             "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
             "args": "--cvar display.compat=true",
             "console": "internalConsole",
@@ -26,11 +28,76 @@
             "name": "Server",
             "type": "coreclr",
             "request": "launch",
+            //"preLaunchTask": "build",
             "program": "${workspaceFolder}/bin/Content.Server/Content.Server.dll",
             "args": [],
             "console": "integratedTerminal",
             "stopAtEntry": false
         },
+
+
+        {
+            "name": "Client - Tools",
+            "type": "coreclr",
+            "request": "launch",
+            //"preLaunchTask": "build - Tools",
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "args": [],
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Client - Tools - (Compatibility renderer)",
+            "type": "coreclr",
+            "request": "launch",
+            //"preLaunchTask": "build - Tools",
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "args": ["--cvar display.compat=true"],
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Server - Tools",
+            "type": "coreclr",
+            "request": "launch",
+            //"preLaunchTask": "build - Tools", // dont remove this
+            "program": "${workspaceFolder}/bin/Content.Server/Content.Server.dll",
+            "args": [""],
+            "console": "integratedTerminal",
+            "stopAtEntry": false
+        },
+
+
+        {
+            "name": "Client - Release",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "args": [],
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Client - Release - (Compatibility renderer)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "args": ["--cvar display.compat=true"],
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Server - Release",
+            "type": "coreclr",
+            "request": "launch",
+            //"preLaunchTask": "build - Release",
+            "program": "${workspaceFolder}/bin/Content.Server/Content.Server.dll",
+            "args": [""],
+            "console": "integratedTerminal",
+            "stopAtEntry": false
+        },
+
+
         {
             "name": "YAML Linter",
             "type": "coreclr",
@@ -40,7 +107,7 @@
             "cwd": "${workspaceFolder}/Content.YAMLLinter",
             "console": "internalConsole",
             "stopAtEntry": false
-        }
+        },
     ],
     "compounds": [
         {
@@ -49,7 +116,23 @@
                 "Server",
                 "Client"
             ],
-            "preLaunchTask": "build"
+            "preLaunchTask": "build" // debug build
+        },
+        {
+            "name": "Server/Client - Tools",
+            "configurations": [
+                "Server - Tools",
+                "Client - Tools"
+            ],
+            "preLaunchTask": "build - Tools"
+        },
+        {
+            "name": "Server/Client - Release",
+            "configurations": [
+                "Server - Release",
+                "Client - Release"
+            ],
+            "preLaunchTask": "build - Release"
         }
     ]
 }
