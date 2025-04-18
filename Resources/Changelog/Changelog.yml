@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: FairlySadPanda August-Sun Eric156
-  changes:
-  - message: Smite Cranberry is now available wherever lemon-lime soda is sold, just
-      for the holidays. This includes a certain jolly anomaly.
-    type: Add
-  id: 7732
-  time: '2024-12-19T00:11:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33922
 - author: Crotalus, ArtisticRoomba
   changes:
   - message: Battery levels of applicable devices are now shown in the Power Monitoring
@@ -3909,3 +3901,10 @@
   id: 8232
   time: '2025-04-18T16:42:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36579
+- author: Failed, Centronias
+  changes:
+  - message: The drink shaker now has in-hand sprites
+    type: Tweak
+  id: 8233
+  time: '2025-04-18T17:12:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36382
