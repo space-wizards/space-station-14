@@ -10,11 +10,6 @@
     state: icon
   - type: Item
     sprite: _DV/Objects/Medical/breathalyzer/medical.rsi
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      right:
-      - state: inhand-right
   - type: UseDelay
     delay: 3
   - type: Clothing
@@ -45,14 +40,14 @@
   description: A state of the art high-precision breath analyzer, able to accurately predict how long it takes for an individual to return to sobriety
   components:
   - type: Sprite
-    sprite: _DV/Objects/Medical/breathalyzer/medical.rsi # FIXME: ADD SPRITES!!!!!!!!!
+    sprite: _DV/Objects/Medical/breathalyzer/medical.rsi
     state: icon
   - type: Item
-    sprite: _DV/Objects/Medical/breathalyzer/medical.rsi # FIXME: ADD SPRITES!!!!!!!!!
+    sprite: _DV/Objects/Medical/breathalyzer/medical.rsi
   - type: UseDelay
     delay: 3
   - type: Clothing
-    sprite: _DV/Objects/Medical/breathalyzer/medical.rsi # FIXME: ADD SPRITES!!!!!!!!!
+    sprite: _DV/Objects/Medical/breathalyzer/medical.rsi
     quickEquip: false
     slots:
     - Belt
@@ -82,11 +77,6 @@
     state: icon
   - type: Item
     sprite: _DV/Objects/Medical/breathalyzer/barkeep.rsi
-    inhandVisuals:
-      left:
-      - state: inhand-left
-      right:
-      - state: inhand-right
   - type: UseDelay
     delay: 3
   - type: Clothing
