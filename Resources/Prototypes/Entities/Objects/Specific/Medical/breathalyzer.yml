@@ -6,14 +6,14 @@
   description: A breath analyzer, able to approximate how long it takes for an individual to return to sobriety
   components:
   - type: Sprite
-    sprite: Objects/Medical/breathalyzer/medical.rsi
+    sprite: Objects/Specific/Medical/Breathalyzer/medical.rsi
     state: icon
   - type: Item
-    sprite: Objects/Medical/breathalyzer/medical.rsi
+    sprite: Objects/Specific/Medical/Breathalyzer/medical.rsi
   - type: UseDelay
     delay: 3
   - type: Clothing
-    sprite: Objects/Medical/breathalyzer/medical.rsi
+    sprite: Objects/Specific/Medical/Breathalyzer/medical.rsi
     quickEquip: false
     slots:
     - Belt
@@ -41,14 +41,14 @@
   description: A state of the art high-precision breath analyzer, able to accurately predict how long it takes for an individual to return to sobriety
   components:
   - type: Sprite
-    sprite: Objects/Medical/breathalyzer/medical.rsi
+    sprite: Objects/Specific/Medical/Breathalyzer/medical.rsi
     state: icon
   - type: Item
-    sprite: Objects/Medical/breathalyzer/medical.rsi
+    sprite: Objects/Specific/Medical/Breathalyzer/medical.rsi
   - type: UseDelay
     delay: 3
   - type: Clothing
-    sprite: Objects/Medical/breathalyzer/medical.rsi
+    sprite: Objects/Specific/Medical/Breathalyzer/medical.rsi
     quickEquip: false
     slots:
     - Belt
@@ -74,14 +74,14 @@
   description: An old, shitty breathalyzer, able to tell you how sloshed a patron is
   components:
   - type: Sprite
-    sprite: Objects/Medical/breathalyzer/barkeep.rsi
+    sprite: Objects/Specific/Medical/Breathalyzer/barkeep.rsi
     state: icon
   - type: Item
-    sprite: Objects/Medical/breathalyzer/barkeep.rsi
+    sprite: Objects/Specific/Medical/Breathalyzer/barkeep.rsi
   - type: UseDelay
     delay: 3
   - type: Clothing
-    sprite: Objects/Medical/breathalyzer/barkeep.rsi
+    sprite: Objects/Specific/Medical/Breathalyzer/barkeep.rsi
     quickEquip: false
     slots:
     - Belt
