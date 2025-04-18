@@ -29,6 +29,7 @@ public sealed class TextToSpeechSystem : EntitySystem
     private float _volume;
     private float _radioVolume;
     private float _volumeAnnounce;
+    private bool _ttsQueueEnabled;
 
     public override void Initialize()
     {
@@ -36,6 +37,7 @@ public sealed class TextToSpeechSystem : EntitySystem
         _cfg.OnValueChanged(StarlightCCVars.TTSVolume, OnTtsVolumeChanged, true);
         _cfg.OnValueChanged(StarlightCCVars.TTSAnnounceVolume, OnTtsAnnounceVolumeChanged, true);
         _cfg.OnValueChanged(StarlightCCVars.TTSRadioVolume, OnTtsRadioVolumeChanged, true);
+        _cfg.OnValueChanged(StarlightCCVars.TTSRadioQueueEnabled, OnTtsRadioQueueChanged, true);
         _cfg.OnValueChanged(StarlightCCVars.TTSClientEnabled, OnTtsClientOptionChanged, true);
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
         SubscribeNetworkEvent<AnnounceTtsEvent>(OnAnnounceTTSPlay);
@@ -47,6 +49,7 @@ public sealed class TextToSpeechSystem : EntitySystem
         _cfg.UnsubValueChanged(StarlightCCVars.TTSVolume, OnTtsVolumeChanged);
         _cfg.UnsubValueChanged(StarlightCCVars.TTSAnnounceVolume, OnTtsAnnounceVolumeChanged);
         _cfg.UnsubValueChanged(StarlightCCVars.TTSRadioVolume, OnTtsRadioVolumeChanged);
+        _cfg.UnsubValueChanged(StarlightCCVars.TTSRadioQueueEnabled, OnTtsRadioQueueChanged);
         _cfg.UnsubValueChanged(StarlightCCVars.TTSClientEnabled, OnTtsClientOptionChanged);
         _contentRoot.Dispose();
     }
@@ -59,6 +62,9 @@ public sealed class TextToSpeechSystem : EntitySystem
 
     private void OnTtsRadioVolumeChanged(float volume)
         => _radioVolume = volume;
+    
+    private void OnTtsRadioQueueChanged(bool enabled)
+        => _ttsQueueEnabled = enabled;
 
     private void OnTtsAnnounceVolumeChanged(float volume)
         => _volumeAnnounce = volume;
@@ -86,7 +92,7 @@ public sealed class TextToSpeechSystem : EntitySystem
     {
         var volume = ev.IsRadio ? _radioVolume : _volume;
 
-        if (ev.IsRadio)
+        if (ev.IsRadio && _ttsQueueEnabled)
             _ttsQueue.Enqueue((ev.Data, null));
         else
         {
