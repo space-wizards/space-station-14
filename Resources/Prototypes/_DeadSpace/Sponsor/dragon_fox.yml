@@ -656,7 +656,6 @@
   parent: RCDCE
   name: РСУ МедТех-Элит
   description: Улучшенная версия базового РСУ которая самовосстанавливет заряды, может быстро размещать и демонтировать стены, полы и шлюзы.
-  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/DragonFox/rcd.rsi
