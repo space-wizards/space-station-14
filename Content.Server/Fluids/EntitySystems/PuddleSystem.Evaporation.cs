@@ -1,3 +1,5 @@
+using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
@@ -33,30 +35,41 @@ public sealed partial class PuddleSystem
     private void TickEvaporation()
     {
         var query = EntityQueryEnumerator<EvaporationComponent, PuddleComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
         var curTime = _timing.CurTime;
         while (query.MoveNext(out var uid, out var evaporation, out var puddle))
         {
             if (evaporation.NextTick > curTime)
                 continue;
 
-            evaporation.NextTick += EvaporationCooldown;
+            var tileMix = _atmosphereSystem.GetContainingMixture(uid, true);
+            var hasEnoughVapor = tileMix?.GetMoles(Gas.WaterVapor) >= 1.0f;
 
-            if (!_solutionContainerSystem.ResolveSolution(uid, puddle.SolutionName, ref puddle.Solution, out var puddleSolution))
-                continue;
+            if (hasEnoughVapor)
+                EnsureComp<PreventEvaporationComponent>(uid).Active = true;
+            else
+                RemComp<PreventEvaporationComponent>(uid);
 
-            var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds;
-            puddleSolution.SplitSolutionWithOnly(reagentTick, EvaporationReagents);
-
-            // Despawn if we're done
-            if (puddleSolution.Volume == FixedPoint2.Zero)
+            if (!hasEnoughVapor)
             {
-                // Spawn a *sparkle*
-                Spawn("PuddleSparkle", xformQuery.GetComponent(uid).Coordinates);
-                QueueDel(uid);
-            }
+                evaporation.NextTick = _timing.CurTime + EvaporationCooldown;
+                Dirty(uid, evaporation);
 
-            _solutionContainerSystem.UpdateChemicals(puddle.Solution.Value);
+                if (_solutionContainerSystem.ResolveSolution(uid, puddle.SolutionName, 
+                    ref puddle.Solution, out var puddleSolution))
+                {
+                    var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds;
+                    puddleSolution.SplitSolutionWithOnly(reagentTick, EvaporationReagents);
+
+                    if (puddleSolution.Volume == FixedPoint2.Zero)
+                    {
+                        // Spawn a *sparkle*
+                        Spawn("PuddleSparkle", Transform(uid).Coordinates);
+                        QueueDel(uid);
+                    }
+
+                    _solutionContainerSystem.UpdateChemicals(puddle.Solution.Value);
+                }
+            }
         }
     }
 }
