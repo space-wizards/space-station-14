@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Figures can now be activated with signals!
-    type: Add
-  id: 7718
-  time: '2024-12-16T18:52:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32769
 - author: TheShuEd
   changes:
   - message: Christmas anomaly added
@@ -3906,3 +3899,13 @@
   id: 8217
   time: '2025-04-17T21:05:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36656
+- author: archee1
+  changes:
+  - message: Cats can walk slowly to avoid slipping on puddles.
+    type: Tweak
+  - message: Cak's (cake cats) previously incorrect sprinting and walking speeds have
+      been corrected
+    type: Fix
+  id: 8218
+  time: '2025-04-18T01:15:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36542
