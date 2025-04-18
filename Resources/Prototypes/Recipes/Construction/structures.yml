@@ -1758,7 +1758,7 @@
   description: A mix of organic matter and fungal root creating a soil to grow your plant in space. Seems to be dry.
   icon:
     sprite: Structures/Hydroponics/misc.rsi
-    state: soil
+    state: fungal_soil
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
