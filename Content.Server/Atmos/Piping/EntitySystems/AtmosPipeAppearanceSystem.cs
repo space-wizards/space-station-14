@@ -64,6 +64,9 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
 
         foreach (var (neighbour, pipeLayer) in connected)
         {
+            if (pipeLayer >= numberOfPipeLayers)
+                continue;
+
             var otherTile = _map.TileIndicesFor(xform.GridUid.Value, grid, Transform(neighbour).Coordinates);
             var pipeLayerDirections = connectedDirections[pipeLayer];
 
@@ -83,7 +86,7 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         var netConnectedDirections = 0;
 
         for (var i = numberOfPipeLayers - 1; i >= 0; i--)
-            netConnectedDirections += (int)connectedDirections[i] << (4 * i);
+            netConnectedDirections += (int)connectedDirections[i] << (PipeDirectionHelpers.PipeDirections * i);
 
         _appearance.SetData(uid, PipeVisuals.VisualState, netConnectedDirections, appearance);
     }

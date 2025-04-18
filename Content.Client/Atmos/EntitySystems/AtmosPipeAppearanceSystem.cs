@@ -83,7 +83,7 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
         for (byte i = 0; i < numberOfPipeLayers; i++)
         {
             // Extract the pipe direction for the current layer 
-            var pipeLayerConnectedDirections = (PipeDirection)(15 & (worldConnectedDirections >> (4 * i)));
+            var pipeLayerConnectedDirections = (PipeDirection)(15 & (worldConnectedDirections >> (PipeDirectionHelpers.PipeDirections * i)));
 
             // Transform the connected directions to local-coordinates
             var rotatedConnectedDirections = pipeLayerConnectedDirections.RotatePipeDirection(-Transform(uid).LocalRotation);
