@@ -371,12 +371,12 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: SilverIDStealObjective
+  id: HeadIDStealObjective
   components:
   - type: NotJobRequirement
     job: HeadOfPersonnel
   - type: StealCondition
-    stealGroup: SilverID
+    stealGroup: HeadID
   - type: Objective
     difficulty: 1.4
 
@@ -618,7 +618,7 @@
   description: You don't want your illegal activities to be discovered by anyone, do you?
   components:
   - type: Objective
-    difficulty: 0
+    difficulty: 1.3
     icon:
       sprite: Structures/Furniture/chairs.rsi
       state: shuttle

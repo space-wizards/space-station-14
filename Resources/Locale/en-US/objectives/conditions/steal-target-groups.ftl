@@ -46,7 +46,7 @@ steal-target-groups-bible = bible
 steal-target-groups-butchers-cleaver = butcher's cleaver
 steal-target-groups-clothing-neck-goldmedal = gold medal of crewmanship
 steal-target-groups-clothing-neck-clownmedal = clown medal
-steal-target-groups-silver-id = Any Head ID card
+steal-target-groups-head-id = any head ID card
 steal-target-groups-access-configurator = access configurator
 steal-target-groups-toolbox-golden = golden toolbox
 
@@ -65,7 +65,6 @@ steal-target-groups-telecomm = telecomms server
 
 # Thief Animal
 steal-target-groups-animal-named-cat = CMO's Cat
-
 steal-target-groups-animal-ian = Ian
 steal-target-groups-animal-mc-griff = McGriff
 steal-target-groups-animal-walter = Walter

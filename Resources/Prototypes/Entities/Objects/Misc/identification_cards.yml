@@ -232,7 +232,7 @@
     - type: PresetIdCard
       job: Quartermaster
     - type: StealTarget
-      stealGroup: SilverID
+      stealGroup: HeadID
 
 - type: entity
   parent: IDCardStandard
@@ -384,7 +384,7 @@
   - type: PresetIdCard
     job: HeadOfPersonnel
   - type: StealTarget
-    stealGroup: SilverID
+    stealGroup: HeadID
 
 
 - type: entity
@@ -401,7 +401,7 @@
   - type: PresetIdCard
     job: ChiefEngineer
   - type: StealTarget
-    stealGroup: SilverID
+    stealGroup: HeadID
 
 - type: entity
   parent: IDCardStandard
@@ -417,7 +417,7 @@
   - type: PresetIdCard
     job: ChiefMedicalOfficer
   - type: StealTarget
-    stealGroup: SilverID
+    stealGroup: HeadID
 
 - type: entity
   parent: IDCardStandard
@@ -433,7 +433,7 @@
   - type: PresetIdCard
     job: ResearchDirector
   - type: StealTarget
-    stealGroup: SilverID
+    stealGroup: HeadID
 
 - type: entity
   parent: IDCardStandard
@@ -449,7 +449,7 @@
   - type: PresetIdCard
     job: HeadOfSecurity
   - type: StealTarget
-    stealGroup: SilverID
+    stealGroup: HeadID
 
 - type: entity
   parent: IDCardStandard
