@@ -94,7 +94,7 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
         if(_doAfter.TryStartDoAfter(doAfterEvent))
         {
             //send a message to the player being picked up that someone is picking them up
-            _popup.PopupEntity(Loc.GetString("restrict-nesting-item-pickup-start", ("user", user)), target, target);
+            _popup.PopupEntity(Loc.GetString("restrict-nesting-item-pickup-start", ("user", user)), target, target, PopupType.Large);
         }
     }
 
