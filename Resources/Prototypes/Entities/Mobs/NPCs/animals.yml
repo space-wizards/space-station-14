@@ -1326,8 +1326,8 @@
       state: body-overlay-2
       visible: false
     - map: [ "ears" ]
-    - map: [ "id" ]
     - map: [ "outerClothing" ]
+    - map: [ "id" ]
     - map: [ "mask" ]
     - map: [ "head" ]
     - map: [ "clownedon" ]
