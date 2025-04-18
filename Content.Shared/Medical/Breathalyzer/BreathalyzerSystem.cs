@@ -10,6 +10,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
@@ -18,10 +19,12 @@ namespace Content.Shared.Medical.Breathalyzer;
 
 public sealed class BreathalyzerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDrunkSystem _drunk = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedDrunkSystem _drunk = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+
 
     /// <summary>
     /// Damage type to check if the target is capable of breathing into a breathalyzer, since RespiratorSystem is server-only
@@ -104,7 +107,14 @@ public sealed class BreathalyzerSystem : EntitySystem
     /// </summary>
     private bool StartChecking(Entity<BreathalyzerComponent> ent, EntityUid target)
     {
-        var user = ent.Owner;
+        // Milon assured me that this obsolete warning is fake
+        if (!_container.TryGetContainingContainer(ent.Owner, out var container))
+        {
+            ent.Comp.LastReadValue = null;
+            return false;
+        }
+
+        var user = container.Owner;
 
         if (!TryGetDrunkenness(user, target, out _))
         {
