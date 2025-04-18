@@ -4886,4 +4886,11 @@ Entries:
   id: 676
   time: '2025-04-18T16:03:37.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/486
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added a new station, Orwell "Citadel" Station! Comply, comply, comply.
+    type: Add
+  id: 677
+  time: '2025-04-18T16:18:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/395
 
