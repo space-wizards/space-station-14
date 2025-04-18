@@ -147,7 +147,6 @@
     slots:
     - neck
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
-    state: equipped-NECK
   - type: Item
     heldPrefix: super
     size: Normal
