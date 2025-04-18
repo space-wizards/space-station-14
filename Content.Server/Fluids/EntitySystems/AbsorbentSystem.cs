@@ -20,6 +20,8 @@ namespace Content.Server.Fluids.EntitySystems;
 /// <inheritdoc/>
 public sealed class AbsorbentSystem : SharedAbsorbentSystem
 {
+    private static readonly EntProtoId Sparkles = "PuddleSparkle";
+
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
@@ -320,7 +322,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             if (puddleSolution.Volume == FixedPoint2.Zero)
             {
                 // Spawn a *sparkle*
-                Spawn("PuddleSparkle", GetEntityQuery<TransformComponent>().GetComponent(target).Coordinates);
+                Spawn(Sparkles, GetEntityQuery<TransformComponent>().GetComponent(target).Coordinates);
                 QueueDel(target);
             }
         }

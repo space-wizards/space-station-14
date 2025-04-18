@@ -17,22 +17,22 @@ public sealed partial class AbsorbentComponent : Component
     /// Name for solution container, that should be used for absorbed solution storage and as source of absorber solution.
     /// Default is 'absorbed'.
     /// </summary>
-    [DataField("solutionName")]
+    [DataField]
     public string SolutionName = "absorbed";
 
     /// <summary>
     /// How much solution we can transfer in one interaction.
     /// </summary>
-    [DataField("pickupAmount")]
+    [DataField]
     public FixedPoint2 PickupAmount = FixedPoint2.New(100);
 
-    [DataField("pickupSound")]
+    [DataField]
     public SoundSpecifier PickupSound = new SoundPathSpecifier("/Audio/Effects/Fluids/watersplash.ogg")
     {
         Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation),
     };
 
-    [DataField("transferSound")] public SoundSpecifier TransferSound =
+    [DataField] public SoundSpecifier TransferSound =
         new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg")
         {
             Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-3f),
@@ -48,6 +48,6 @@ public sealed partial class AbsorbentComponent : Component
     /// Marker that absorbent component owner should try to use 'absorber solution' to replace solution to be absorbed.
     /// Target solution will be simply consumed into container if set to false.
     /// </summary>
-    [DataField("useAbsorberSolution")]
+    [DataField]
     public bool UseAbsorberSolution = true;
 }
