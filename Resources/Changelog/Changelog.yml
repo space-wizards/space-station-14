@@ -3904,3 +3904,10 @@
   id: 8226
   time: '2025-04-18T04:50:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36486
+- author: ciaran
+  changes:
+  - message: Added a button to scroll back to the bottom of the chat box
+    type: Add
+  id: 8227
+  time: '2025-04-18T07:43:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35913
