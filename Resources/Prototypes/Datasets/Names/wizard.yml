@@ -1,0 +1,11 @@
+﻿- type: localizedDataset
+  id: NamesWizardFirst
+  values:
+    prefix: names-wizard-first-dataset-
+    count: 30
+
+- type: localizedDataset
+  id: NamesWizardLast
+  values:
+    prefix: names-wizard-last-dataset-
+    count: 46
