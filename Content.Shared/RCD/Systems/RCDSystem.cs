@@ -446,11 +446,6 @@ public sealed class RCDSystem : EntitySystem
                     if (!fixture.Hard || fixture.CollisionLayer <= 0 || (fixture.CollisionLayer & (int) prototype.CollisionMask) == 0)
                         continue;
 
-                    // Continue if our custom collision bounds are not intersected
-                    if (prototype.CollisionPolygon != null &&
-                        !DoesCustomBoundsIntersectWithFixture(prototype.CollisionPolygon, component.ConstructionTransform, ent, fixture))
-                        continue;
-
                     // Collision was detected
                     if (popMsgs)
                         _popup.PopupClient(Loc.GetString("rcd-component-cannot-build-on-occupied-tile-message"), uid, user);
@@ -572,18 +567,6 @@ public sealed class RCDSystem : EntitySystem
 
                 break;
         }
-    }
-
-    #endregion
-
-    #region Utility functions
-
-    private bool DoesCustomBoundsIntersectWithFixture(PolygonShape boundingPolygon, Transform boundingTransform, EntityUid fixtureOwner, Fixture fixture)
-    {
-        var entXformComp = Transform(fixtureOwner);
-        var entXform = new Transform(new(), entXformComp.LocalRotation);
-
-        return boundingPolygon.ComputeAABB(boundingTransform, 0).Intersects(fixture.Shape.ComputeAABB(entXform, 0));
     }
 
     #endregion
