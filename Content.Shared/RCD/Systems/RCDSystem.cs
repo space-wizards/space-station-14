@@ -579,28 +579,6 @@ public sealed class RCDSystem : EntitySystem
 
     #region Utility functions
 
-    public bool TryGetMapGridData(EntityCoordinates location, [NotNullWhen(true)] out MapGridData? mapGridData)
-    {
-        mapGridData = null;
-        var gridUid = _transform.GetGrid(location);
-
-        if (!TryComp<MapGridComponent>(gridUid, out var mapGrid))
-        {
-            location = location.AlignWithClosestGridTile(1.75f, EntityManager);
-            gridUid = _transform.GetGrid(location);
-
-            // Check if we got a grid ID the second time round
-            if (!TryComp(gridUid, out mapGrid))
-                return false;
-        }
-
-        var tile = _mapSystem.GetTileRef(gridUid.Value, mapGrid, location);
-        var position = _mapSystem.TileIndicesFor(gridUid.Value, mapGrid, location);
-        mapGridData = new MapGridData(gridUid.Value, mapGrid, location, tile, position);
-
-        return true;
-    }
-
     private bool DoesCustomBoundsIntersectWithFixture(PolygonShape boundingPolygon, Transform boundingTransform, EntityUid fixtureOwner, Fixture fixture)
     {
         var entXformComp = Transform(fixtureOwner);
