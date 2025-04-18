@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: Christmas anomaly added
-    type: Add
-  - message: Christmas anomaly infection added
-    type: Add
-  id: 7719
-  time: '2024-12-16T19:23:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33889
 - author: chromiumboy
   changes:
   - message: Added the atmospheric network monitor. Use these consoles to monitor
@@ -3909,3 +3900,13 @@
   id: 8218
   time: '2025-04-18T01:15:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36542
+- author: Killerqu00
+  changes:
+  - message: Contraband examine icon now shows whether or not you are allowed to possess
+      the item.
+    type: Add
+  - message: Contraband examine activates by hovering instead of clicking.
+    type: Tweak
+  id: 8219
+  time: '2025-04-18T01:23:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36032
