@@ -39,8 +39,7 @@ public sealed partial class CargoSystem
         }
 
         ent.Comp.NextAccountActionTime = Timing.CurTime + ent.Comp.AccountActionDelay;
-        Dirty(ent);
-        UpdateBankAccount((station, bank), -args.Amount, CreateAccountDistribution(ent.Comp.Account, bank));
+        UpdateBankAccount((station, bank), -args.Amount,  ent.Comp.Account, dirty: false);
         _audio.PlayPvs(ApproveSound, ent);
 
         var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(ent, args.Actor);
@@ -65,7 +64,7 @@ public sealed partial class CargoSystem
         else
         {
             var otherAccount = _protoMan.Index(args.Account.Value);
-            UpdateBankAccount((station, bank), args.Amount, CreateAccountDistribution(args.Account.Value, bank));
+            UpdateBankAccount((station, bank), args.Amount, args.Account.Value);
 
             if (!_emag.CheckFlag(ent, EmagType.Interaction))
             {
