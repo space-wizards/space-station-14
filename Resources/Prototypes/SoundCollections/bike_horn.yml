@@ -19,6 +19,11 @@
   - /Audio/Items/desk_bell_ring.ogg
 
 - type: soundCollection
+  id: DeskBuzzer
+  files:
+  - /Audio/Items/ring.ogg
+
+- type: soundCollection
   id: BoxingBell
   files:
   - /Audio/Weapons/boxingbell.ogg

@@ -72,5 +72,16 @@
   targetNode: deskBuzzerNode
   category: construction-category-tools
   description: A buzzer for getting someone's attention.
-  icon: { sprite: Objects/Misc/desk_bell.rsi, state: icon_bell }
+  icon: { sprite: Objects/Misc/desk_bell.rsi, state: icon_buzzer }
+  objectType: Item
+
+- type: construction
+  name: desk horn
+  id: DeskHorn
+  graph: BellGraph
+  startNode: start
+  targetNode: deskHornNode
+  category: construction-category-tools
+  description: A horn for getting someone's attention.
+  icon: { sprite: Objects/Misc/desk_bell.rsi, state: icon_buzzer }
   objectType: Item

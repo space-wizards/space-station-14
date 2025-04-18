@@ -23,6 +23,14 @@
             - material: Cable
               amount: 2
               doAfter: 1
+        - to: deskHornNode
+          steps:
+            - tag: BikeHorn
+              name: bike horn
+              icon:
+                sprite: Objects/Fun/bikehorn.rsi
+                state: icon
+              doAfter: 1
         - to: start
           completed:
             - !type:SpawnPrototype
@@ -53,6 +61,18 @@
             - !type:SpawnPrototype
               prototype: CableApcStack1
               amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: deskHornNode
+      entity: DeskHorn
+      edges:
+        - to: unfinishedDeskBellNode
+          completed:
+            - !type:SpawnPrototype
+              prototype: BikeHorn
+              amount: 1
           steps:
             - tool: Screwing
               doAfter: 1
