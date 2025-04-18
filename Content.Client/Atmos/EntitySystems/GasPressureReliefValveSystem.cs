@@ -9,10 +9,10 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<GasPressureReliefValveComponent, AfterAutoHandleStateEvent>(OnPumpUpdate);
+        SubscribeLocalEvent<GasPressureReliefValveComponent, AfterAutoHandleStateEvent>(OnValveUpdate);
     }
 
-    private void OnPumpUpdate(Entity<GasPressureReliefValveComponent> ent, ref AfterAutoHandleStateEvent args)
+    private void OnValveUpdate(Entity<GasPressureReliefValveComponent> ent, ref AfterAutoHandleStateEvent args)
     {
         UpdateUi(ent);
     }

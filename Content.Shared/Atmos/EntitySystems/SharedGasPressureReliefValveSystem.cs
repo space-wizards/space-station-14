@@ -38,28 +38,25 @@ public abstract class SharedGasPressureReliefValveSystem : EntitySystem
     /// <summary>
     /// Presents predicted examine information to the person examining the valve.
     /// </summary>
-    /// <param name="valveEntityUid"> The <see cref="EntityUid"/> of the valve</param>
-    /// <param name="valveComponent"> The <see cref="GasPressureReliefValveComponent"/></param>
-    /// <param name="args"> Args provided by <see cref="ExaminedEvent"/></param>
-    private void OnExamined(EntityUid valveEntityUid,
-        GasPressureReliefValveComponent valveComponent,
-        ExaminedEvent args)
+    /// <param name="valveEntity">Entity reference containing the valve component</param>
+    /// <param name="args">Event arguments for examination</param>
+    private void OnExamined(Entity<GasPressureReliefValveComponent> valveEntity, ref ExaminedEvent args)
     {
         // No cool stuff provided if it's unable to be examined.
-        if (!Transform(valveEntityUid).Anchored || !args.IsInDetailsRange)
+        if (!Transform(valveEntity).Anchored || !args.IsInDetailsRange)
             return;
 
         using (args.PushGroup(nameof(GasPressureReliefValveComponent)))
         {
             args.PushMarkup(Loc.GetString("gas-pressure-relief-valve-system-examined",
-                ("statusColor", valveComponent.Enabled ? "green" : "red"),
-                ("open", valveComponent.Enabled)));
+                ("statusColor", valveEntity.Comp.Enabled ? "green" : "red"),
+                ("open", valveEntity.Comp.Enabled)));
 
             args.PushMarkup(Loc.GetString("gas-pressure-relief-valve-examined-threshold-pressure",
-                ("threshold", $"{valveComponent.Threshold:0.#}")));
+                ("threshold", $"{valveEntity.Comp.Threshold:0.#}")));
 
             args.PushMarkup(Loc.GetString("gas-pressure-relief-valve-examined-flow-rate",
-                ("flowRate", $"{valveComponent.FlowRate:0.#}")));
+                ("flowRate", $"{valveEntity.Comp.FlowRate:0.#}")));
         }
     }
 
@@ -72,17 +69,17 @@ public abstract class SharedGasPressureReliefValveSystem : EntitySystem
     }
 
 
-    private void OnValveActivate(EntityUid valveEntityUid, GasPressureReliefValveComponent valveComponent, ActivateInWorldEvent args)
+    private void OnValveActivate(Entity<GasPressureReliefValveComponent> valveEntity, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)
             return;
 
-        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
+        if (!TryComp(args.User, out ActorComponent? actor))
             return;
 
-        if (Transform(valveEntityUid).Anchored)
+        if (Transform(valveEntity).Anchored)
         {
-            UserInterfaceSystem.OpenUi(valveEntityUid, GasPressureReliefValveUiKey.Key, actor.PlayerSession);
+            UserInterfaceSystem.OpenUi(valveEntity.Owner, GasPressureReliefValveUiKey.Key, actor.PlayerSession);
         }
         else
         {
@@ -96,12 +93,15 @@ public abstract class SharedGasPressureReliefValveSystem : EntitySystem
     private void OnThresholdChangeMessage(Entity<GasPressureReliefValveComponent> valveEntity,
         ref GasPressureReliefValveChangeThresholdMessage args)
     {
+        // TODO: Do we need to do this threshold validation twice? It's implemented on the UI. I guess for a hacked client...?
         valveEntity.Comp.Threshold = Math.Max(0f, args.ThresholdPressure);
         _adminLogger.Add(LogType.AtmosVolumeChanged,
             LogImpact.Medium,
             $"{ToPrettyString(args.Actor):player} set the pressure threshold on {ToPrettyString(valveEntity):device} to {args.ThresholdPressure}");
+        // TODO: Do we really need to dirty the entire entity/comp here?
         Dirty(valveEntity);
         UpdateUi(valveEntity);
+        // TODO: Also, dirty before we update the UI or after? Check other code.
     }
 
 
