@@ -162,8 +162,6 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeAllEvent<StorageInsertItemIntoLocationEvent>(OnInsertItemIntoLocation);
         SubscribeAllEvent<StorageSaveItemLocationEvent>(OnSaveItemLocation);
 
-        SubscribeLocalEvent<ItemComponent, ItemToggleActivateAttemptEvent>(OnToggleAttempt);
-        SubscribeLocalEvent<ItemComponent, ItemToggleDeactivateAttemptEvent>(OnToggleDeattempt);
         SubscribeLocalEvent<ItemSizeChangedEvent>(OnItemSizeChanged);
 
         CommandBinds.Builder
@@ -174,24 +172,6 @@ public abstract class SharedStorageSystem : EntitySystem
         Subs.CVar(_cfg, CCVars.NestedStorage, OnNestedStorageCvar, true);
 
         UpdatePrototypeCache();
-    }
-
-    private void OnToggleDeattempt(Entity<ItemComponent> ent, ref ItemToggleDeactivateAttemptEvent args)
-    {
-        if (!TryGetStorageLocation(ent.Owner, out _, out _, out _))
-            return;
-
-        args.Silent = true;
-        args.Cancelled = true;
-    }
-
-    private void OnToggleAttempt(Entity<ItemComponent> ent, ref ItemToggleActivateAttemptEvent args)
-    {
-        if (!TryGetStorageLocation(ent.Owner, out _, out _, out _))
-            return;
-
-        args.Silent = true;
-        args.Cancelled = true;
     }
 
     private void OnItemSizeChanged(ref ItemSizeChangedEvent ev)
