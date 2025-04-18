@@ -39,7 +39,7 @@ public sealed class SpiderTerrorRuleSystem : GameRuleSystem<SpiderTerrorRuleComp
     private const int SpidersBreeding = 30;
     private const int SpidersNukeCode = 55;
     private const float ProgressBreeding = 0.45f;
-    private const float ProgressNukeCode = 0.65f;
+    private const float ProgressNukeCode = 0.7f;
     private const float ProgressCaptureStation = 0.98f;
 
     private bool voteSend = false;
@@ -349,13 +349,6 @@ public sealed class SpiderTerrorRuleSystem : GameRuleSystem<SpiderTerrorRuleComp
             component.IsDeadSquadArrival = true;
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("station-event-response-team-arrival"), playSound: true, colorOverride: Color.Green);
             GameTicker.AddGameRule("ShuttleCBURNSCST");
-        }
-
-        if (_timing.CurTime >= component.TimeUtilErtAnnouncement && !component.IsCodeEpsilon && component.IsStationCaptureActive(station))
-        {
-            _alertLevel.SetLevel(station, "epsilon", true, true, true);
-
-            component.IsCodeEpsilon = true;
         }
 
         if (component.IsStationCaptureActive(station))

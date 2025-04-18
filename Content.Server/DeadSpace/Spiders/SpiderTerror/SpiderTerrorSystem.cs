@@ -13,6 +13,7 @@ public sealed class SpiderTerrorSystem : SharedBloodsuckerSystem
 {
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly RoleSystem _role = default!;
+    private ISawmill _logger = default!;
 
     public override void Initialize()
     {
@@ -32,7 +33,11 @@ public sealed class SpiderTerrorSystem : SharedBloodsuckerSystem
 
     private void OnMindRemoved(EntityUid uid, SpiderTerrorComponent component, MindRemovedMessage args)
     {
-        DelObjective(args.Mind, args.Mind.Comp, component);
+        // DelObjective(args.Mind, args.Mind.Comp, component);
+        var mindComp = args.Mind.Comp;
+
+        if (_mind.TryFindObjective((args.Mind, mindComp), component.Proto, out var objective))
+            args.Mind.Comp.Objectives.Remove(objective.Value);
 
         _role.MindTryRemoveRole<SpiderTerrorRoleComponent>(args.Mind);
     }
@@ -47,13 +52,35 @@ public sealed class SpiderTerrorSystem : SharedBloodsuckerSystem
 
     private void DelObjective(EntityUid mindId, MindComponent mindComp, SpiderTerrorComponent component)
     {
+        if (mindComp.Objectives == null)
+        {
+            _logger.Error($"Objectives is null for mindId: {mindId}");
+            return;
+        }
+
         if (_mind.TryFindObjective((mindId, mindComp), component.Proto, out var objective))
         {
-            var objectiveIndex = mindComp.Objectives.IndexOf(objective.Value);
-            if (objectiveIndex != -1)
+            if (objective.HasValue)
             {
-                _mind.TryRemoveObjective(mindId, mindComp, objectiveIndex);
+                var objectiveIndex = mindComp.Objectives.IndexOf(objective.Value);
+
+                if (objectiveIndex != -1)
+                {
+                    _mind.TryRemoveObjective(mindId, mindComp, objectiveIndex);
+                }
+                else
+                {
+                    _logger.Warning($"Objective index not found for mindId: {mindId}, objective: {objective.Value}");
+                }
             }
+            else
+            {
+                _logger.Warning($"Objective not found for mindId: {mindId}, component: {component.Proto}");
+            }
+        }
+        else
+        {
+            _logger.Warning($"Failed to find objective for mindId: {mindId}, component: {component.Proto}");
         }
     }
 }

@@ -45,7 +45,7 @@
   - type: PressureProtection
     highPressureMultiplier: 0.02
     lowPressureMultiplier: 1000
-  - type: TemperatureProtection   
+  - type: TemperatureProtection
     heatingCoefficient: 0.001
     coolingCoefficient: 0.001
   - type: ExplosionResistance
@@ -53,8 +53,8 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.4
-        Slash: 0.4
+        Blunt: 0.6
+        Slash: 0.6
         Poison: 0.6
         Piercing: 0.8
         Heat: 0.1
@@ -63,8 +63,8 @@
         Radiation: 0.1
         Caustic: 0.6
   - type: ClothingSpeedModifier
-    walkModifier: 1.2
-    sprintModifier: 1.2
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURNSCSTLeader
   - type: AutoInjectReagentClothingOnAllowedState # Автоиньектор при смене состояния сущности

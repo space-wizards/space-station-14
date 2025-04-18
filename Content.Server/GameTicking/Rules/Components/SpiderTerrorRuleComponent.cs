@@ -60,9 +60,6 @@ public sealed partial class SpiderTerrorRuleComponent : Component
     public bool IsDeadSquadArrival = false;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool IsCodeEpsilon = false;
-
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool IsErtSend = false;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
