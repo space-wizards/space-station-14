@@ -2,48 +2,55 @@ using Content.Client.UserInterface.Controls;
 using Content.Shared.Remotes.Components;
 using Content.Shared.Remotes.EntitySystems;
 using Robust.Client.UserInterface;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Remotes.UI;
 
 public sealed class DoorRemoteBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
-    private SimpleRadialMenu? _menu;
+    private static readonly Color SelectedOptionColor = new Color(62, 108, 69, 128);
+    private static readonly Color SelectedOptionHoverColor = new Color(82, 128, 89, 128);
 
+    private SimpleRadialMenu? _menu;
+    
     protected override void Open()
     {
         base.Open();
 
-        if (!EntMan.HasComponent<DoorRemoteComponent>(Owner))
+        if (!EntMan.TryGetComponent<DoorRemoteComponent>(Owner, out var remote))
             return;
 
         _menu = this.CreateWindow<SimpleRadialMenu>();
-        var models = CreateButtons();
+        var models = CreateButtons(remote.Mode, remote.Options);
         _menu.SetButtons(models);
 
         _menu.OpenOverMouseScreenPosition();
     }
 
-    private RadialMenuOption[] CreateButtons()
+    private RadialMenuOption[] CreateButtons(OperatingMode selectedMode, List<DoorRemoteModeInfo> modeOptions)
     {
-        return new[]
+        var options = new RadialMenuOption[modeOptions.Count];
+        for (var i = 0; i < modeOptions.Count; i++)
         {
-            new RadialMenuActionOption<OperatingMode>(HandleRadialMenuClick, OperatingMode.OpenClose)
+            var modeOption = modeOptions[i];
+
+            Color? optionCustomColor = null;
+            Color? optionHoverCustomColor = null;
+            if (modeOption.Mode == selectedMode)
             {
-                Sprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Structures/Doors/Airlocks/Standard/basic.rsi"), "assembly"),
-                ToolTip = Loc.GetString("door-remote-open-close-text")
-            },
-            new RadialMenuActionOption<OperatingMode>(HandleRadialMenuClick, OperatingMode.ToggleBolts)
+                optionCustomColor = SelectedOptionColor;
+                optionHoverCustomColor = SelectedOptionHoverColor;
+            }
+
+            options[i] = new RadialMenuActionOption<OperatingMode>(HandleRadialMenuClick, modeOption.Mode)
             {
-                Sprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_ai.rsi"), "bolt_door"),
-                ToolTip = Loc.GetString("door-remote-toggle-bolt-text")
-            },
-            new RadialMenuActionOption<OperatingMode>(HandleRadialMenuClick, OperatingMode.ToggleEmergencyAccess)
-            {
-                Sprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_ai.rsi"), "emergency_on"),
-                ToolTip = Loc.GetString("door-remote-emergency-access-text")
-            },
-        };
+                Sprite = modeOption.Icon,
+                ToolTip = Loc.GetString(modeOption.Tooltip),
+                BackgroundColor = optionCustomColor,
+                HoverBackgroundColor = optionHoverCustomColor
+            };
+        }
+
+        return options;
     }
 
     private void HandleRadialMenuClick(OperatingMode mode)
