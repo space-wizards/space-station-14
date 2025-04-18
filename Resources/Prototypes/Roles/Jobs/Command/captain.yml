@@ -14,7 +14,7 @@
       department: Science
       time: 14400 # 4 hours
     - !type:DepartmentTimeRequirement
-      role: Security
+      department: Security
       time: 14400 # 4 hours
     - !type:DepartmentTimeRequirement
       department: Command
