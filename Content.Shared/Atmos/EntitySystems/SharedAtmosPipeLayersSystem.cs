@@ -2,6 +2,7 @@ using Content.Shared.Atmos.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
@@ -24,10 +25,8 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
     [Dependency] private readonly SharedToolSystem _tool = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
 
     private readonly DrawDepth.DrawDepth[] _pipeLayerDrawDepths = { DrawDepth.DrawDepth.ThinPipe, DrawDepth.DrawDepth.ThinPipeAlt1, DrawDepth.DrawDepth.ThinPipeAlt2 };
-    private readonly ProtoId<TagPrototype> _instantDoAftersTag = "InstantDoAfters";
 
     public override void Initialize()
     {
@@ -35,6 +34,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
         SubscribeLocalEvent<AtmosPipeLayersComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<AtmosPipeLayersComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+        SubscribeLocalEvent<AtmosPipeLayersComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<AtmosPipeLayersComponent, UseInHandEvent>(OnUseInHandEvent);
         SubscribeLocalEvent<AtmosPipeLayersComponent, TryCyclingPipeLayerCompletedEvent>(OnCyclingPipeLayerCompleted);
         SubscribeLocalEvent<AtmosPipeLayersComponent, TrySettingPipeLayerCompletedEvent>(OnSettingPipeLayerCompleted);
@@ -60,7 +60,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
         var user = args.User;
 
         // Player either require a tool to adjust the pipe layer or the instant do afters tag
-        if (TryGetHeldTool(user, ent.Comp.Tool, out var tool) || _tag.HasTag(user, _instantDoAftersTag))
+        if (TryGetHeldTool(user, ent.Comp.Tool, out var tool))
         {
             for (var i = 0; i < ent.Comp.NumberOfPipeLayers; i++)
             {
@@ -78,11 +78,7 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
                     DoContactInteraction = true,
                     Act = () =>
                     {
-                        if (tool == null)
-                            SetPipeLayer(ent, index, user);
-
-                        else
-                            _tool.UseTool(tool.Value, user, ent, ent.Comp.Delay, tool.Value.Comp.Qualities, new TrySettingPipeLayerCompletedEvent(index));
+                        _tool.UseTool(tool.Value, user, ent, ent.Comp.Delay, tool.Value.Comp.Qualities, new TrySettingPipeLayerCompletedEvent(index));
                     }
                 };
 
@@ -106,6 +102,15 @@ public abstract partial class SharedAtmosPipeLayersSystem : EntitySystem
 
             args.Verbs.Add(v);
         }
+    }
+
+    private void OnInteractUsing(Entity<AtmosPipeLayersComponent> ent, ref InteractUsingEvent args)
+    {
+        if (ent.Comp.NumberOfPipeLayers <= 1 || ent.Comp.PipeLayersLocked)
+            return;
+
+        if (TryComp<ToolComponent>(args.Used, out var tool) && _tool.HasQuality(args.Used, ent.Comp.Tool, tool))
+            _tool.UseTool(args.Used, args.User, ent, ent.Comp.Delay, tool.Qualities, new TryCyclingPipeLayerCompletedEvent());
     }
 
     private void OnUseInHandEvent(Entity<AtmosPipeLayersComponent> ent, ref UseInHandEvent args)
