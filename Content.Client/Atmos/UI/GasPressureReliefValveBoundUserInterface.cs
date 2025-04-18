@@ -59,7 +59,6 @@ public sealed class GasPressureReliefValveBoundUserInterface : BoundUserInterfac
         if (state is not GasPressureReliefValveBoundUserInterfaceState valveState || _window == null)
             return;
 
-        _window.Title = valveState.ValveLabel;
         _window.SetThresholdPressureLabel(valveState.ThresholdPressure);
     }
 }

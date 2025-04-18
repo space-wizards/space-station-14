@@ -17,10 +17,6 @@ public enum GasPressureReliefValveUiKey : byte
 [Serializable, NetSerializable]
 public sealed class GasPressureReliefValveBoundUserInterfaceState : BoundUserInterfaceState
 {
-    /// <summary>
-    /// Gets the label of the valve.
-    /// </summary>
-    public string ValveLabel { get; }
 
     /// <summary>
     /// Gets the threshold pressure of the valve.
@@ -40,13 +36,13 @@ public sealed class GasPressureReliefValveBoundUserInterfaceState : BoundUserInt
     /// <summary>
     /// Initializes a new instance of the <see cref="GasPressureReliefValveBoundUserInterfaceState"/> class.
     /// </summary>
-    /// <param name="valveLabel">The label of the valve.</param>
     /// <param name="thresholdPressure">The threshold pressure of the valve.</param>
     /// <param name="flowRate">The current flow rate of the valve in L/S.</param>
     /// <param name="enabled">The current position of the valve.</param>
-    public GasPressureReliefValveBoundUserInterfaceState(string valveLabel, float thresholdPressure, float flowRate, bool enabled)
+    public GasPressureReliefValveBoundUserInterfaceState(float thresholdPressure, float flowRate, bool enabled)
     {
-        ValveLabel = valveLabel;
+        // The title of the window is provided by the identity system providing the label
+        // of the valve. This is done on every UI update. Hence, why we don't have a title here.
         ThresholdPressure = thresholdPressure;
         FlowRate = flowRate;
         Enabled = enabled;

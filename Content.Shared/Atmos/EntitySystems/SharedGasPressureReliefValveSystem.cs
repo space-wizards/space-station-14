@@ -42,7 +42,6 @@ public abstract class SharedGasPressureReliefValveSystem : EntitySystem
     /// <param name="args">Event arguments for examination</param>
     private void OnExamined(Entity<GasPressureReliefValveComponent> valveEntity, ref ExaminedEvent args)
     {
-        // No cool stuff provided if it's unable to be examined.
         if (!Transform(valveEntity).Anchored || !args.IsInDetailsRange)
             return;
 
@@ -89,21 +88,22 @@ public abstract class SharedGasPressureReliefValveSystem : EntitySystem
         args.Handled = true;
     }
 
-
+    /// <summary>
+    /// Validates, logs, and updates the pressure threshold of the valve.
+    /// </summary>
+    /// <param name="valveEntity">The <see cref="Entity{T}"/> of the valve.</param>
+    /// <param name="args">The recieved pressure from the <see cref="GasPressurePumpChangeOutputPressureMessage"/>message.</param>
     private void OnThresholdChangeMessage(Entity<GasPressureReliefValveComponent> valveEntity,
         ref GasPressureReliefValveChangeThresholdMessage args)
     {
-        // TODO: Do we need to do this threshold validation twice? It's implemented on the UI. I guess for a hacked client...?
         valveEntity.Comp.Threshold = Math.Max(0f, args.ThresholdPressure);
         _adminLogger.Add(LogType.AtmosVolumeChanged,
             LogImpact.Medium,
             $"{ToPrettyString(args.Actor):player} set the pressure threshold on {ToPrettyString(valveEntity):device} to {args.ThresholdPressure}");
-        // TODO: Do we really need to dirty the entire entity/comp here?
+        // Dirty the entire entity to ensure we get all of that Fresh:tm: UI info from the server.
         Dirty(valveEntity);
         UpdateUi(valveEntity);
-        // TODO: Also, dirty before we update the UI or after? Check other code.
     }
-
 
     protected virtual void UpdateUi(Entity<GasPressureReliefValveComponent> ent)
     {
