@@ -204,6 +204,9 @@
   - type: HideLayerClothing
     slots:
     - Hair
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: ClothingHeadBase

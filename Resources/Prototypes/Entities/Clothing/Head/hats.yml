@@ -419,6 +419,9 @@
     sprite: Clothing/Head/Hats/redwizard.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/redwizard.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -534,6 +537,9 @@
     sprite: Clothing/Head/Hats/violetwizard.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/violetwizard.rsi
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: ClothingHeadBase
@@ -600,6 +606,7 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
+    - CorgiWearable
 
 - type: entity
   parent: ClothingHeadBase

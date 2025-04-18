@@ -65,6 +65,9 @@
   - type: EyeProtection
   - type: IdentityBlocker
     coverage: EYES
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: ClothingEyesBase
@@ -138,6 +141,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - CorgiWearable
     - WhitelistChameleon
   - type: IdentityBlocker
     coverage: EYES
@@ -154,6 +158,7 @@
   - type: Tag
     tags:
     - Sunglasses
+    - CorgiWearable
     - HamsterWearable
     - WhitelistChameleon
 
@@ -176,6 +181,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - CorgiWearable
     - WhitelistChameleon
   - type: GuideHelp
     guides:
@@ -200,6 +206,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - CorgiWearable
     - WhitelistChameleon
   - type: IdentityBlocker
     coverage: EYES
@@ -253,6 +260,9 @@
     - type: SolutionScanner
     - type: IdentityBlocker
       coverage: EYES
+    - type: Tag
+      tags:
+      - CorgiWearable
 
 - type: entity
   parent: [ClothingEyesBase, BaseMajorContraband]

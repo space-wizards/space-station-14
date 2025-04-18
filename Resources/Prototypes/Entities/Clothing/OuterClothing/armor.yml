@@ -22,6 +22,9 @@
         Heat: 0.80
   - type: ExplosionResistance
     damageCoefficient: 0.90
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 #Standard armor vest, allowed for security and bartenders
 - type: entity
@@ -295,6 +298,9 @@
   - type: ExplosionResistance
     damageCoefficient: 0.65
   - type: GroupExamine
+  - type: Tag
+    tags:
+    - CorgiWearable
 
 - type: entity
   parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]
