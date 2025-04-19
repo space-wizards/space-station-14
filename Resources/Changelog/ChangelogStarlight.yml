@@ -4943,4 +4943,11 @@ Entries:
   id: 684
   time: '2025-04-19T05:39:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/501
+- author: Happyrobot33
+  changes:
+  - message: Added ability to turn off the TTS queue on radio messages.
+    type: Add
+  id: 685
+  time: '2025-04-19T05:40:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/498
 
