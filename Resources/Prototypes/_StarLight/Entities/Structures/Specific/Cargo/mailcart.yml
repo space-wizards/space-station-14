@@ -7,9 +7,18 @@
   components:
     - type: Sprite
       noRot: true
-      sprite: Objects/Specific/Janitorial/janitorial_cart.rsi
+      sprite: _Starlight/Objects/Specific/Cargo/mail_cart.rsi
       layers:
-        - state: cart
+      - state: cart
+      - state: cart_boxes1
+        map: ["cart_boxes1"]
+        visible: false
+      - state: cart_boxes2
+        map: ["cart_boxes2"]
+        visible: false
+      - state: cart_boxes3
+        map: ["cart_boxes3"]
+        visible: false
     - type: Rotatable
     - type: InteractionOutline
     - type: Storage
@@ -29,6 +38,14 @@
         - Normal
         - Small
         - Tiny
+    - type: ItemCounter
+      count:
+        components:
+        - Delivery
+      layerStates:
+      - cart_boxes1
+      - cart_boxes2
+      - cart_boxes3
     - type: Fixtures
       fixtures:
         fix1:
@@ -70,7 +87,4 @@
       containers:
         storagebase: !type:Container
           ents: []
-    - type: GuideHelp
-      guides:
-      - Janitorial
     - type: DnaSubstanceTrace
