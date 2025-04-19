@@ -24,6 +24,7 @@
     back: ClothingBackpackERTLeader
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetERTLeader
+    neck: ClothingNeckCentcomSecurityBadge
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterArmorBasicSlim
@@ -47,6 +48,7 @@
     jumpsuit: ClothingUniformJumpsuitERTLeader
     back: ClothingBackpackERTLeader
     shoes: ClothingShoesBootsMagAdv
+    neck: ClothingNeckCentcomSecurityBadge
     mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
@@ -71,6 +73,7 @@
     jumpsuit: ClothingUniformJumpsuitERTLeader
     back: ClothingBackpackERTLeader
     shoes: ClothingShoesBootsMagAdv
+    neck: ClothingNeckCentcomSecurityBadge
     mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
@@ -276,6 +279,7 @@
     back: ClothingBackpackERTSecurity
     shoes: ClothingShoesBootsCombatFilled
     head: ClothingHeadHelmetERTSecurity
+    neck: ClothingNeckCentcomSecurityBadge
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterArmorBasicSlim
@@ -299,6 +303,7 @@
     jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurity
     shoes: ClothingShoesBootsMag
+    neck: ClothingNeckCentcomSecurityBadge
     mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
@@ -323,6 +328,7 @@
     jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurity
     shoes: ClothingShoesBootsMag
+    neck: ClothingNeckCentcomSecurityBadge
     mask: ClothingMaskGasERT
     eyes: ClothingEyesGlassesSecurity
     gloves: ClothingHandsGlovesCombat
