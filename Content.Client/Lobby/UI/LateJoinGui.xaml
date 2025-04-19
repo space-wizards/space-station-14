@@ -3,11 +3,11 @@
                xmlns:xNamespace="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:style="clr-namespace:Content.Client.Stylesheets"
                Title="{Loc 'late-join-gui-title'}"
-               SetSize="685 560" MinSize="685 560">
+               SetSize="685 560">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
-            <ScrollContainer VerticalExpand="True" HorizontalExpand="True" MinSize="325 0">
-                <BoxContainer Name="CharacterList" Orientation="Vertical"/>
-            </ScrollContainer>
+        <ScrollContainer VerticalExpand="True" HorizontalExpand="True" SizeFlagsStretchRatio="1">
+            <BoxContainer Name="CharacterList" Orientation="Vertical"/>
+        </ScrollContainer>
 
         <PanelContainer MinSize="2 0">
             <PanelContainer.PanelOverride>
@@ -15,7 +15,8 @@
             </PanelContainer.PanelOverride>
         </PanelContainer>
 
-        <BoxContainer Name="JobList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" MinSize="360 0" />
+        <BoxContainer Name="JobList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"
+                      SizeFlagsStretchRatio="1.3" Margin="5 5 0 0"/>
 
     </BoxContainer>
 </DefaultWindow>
