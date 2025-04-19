@@ -665,7 +665,7 @@
 
 - type: entity
   id: TowelColorNT
-  name: NanoTrasen brand towel
+  name: Nanotrasen brand towel # imp edit; lower-case t
   parent: BaseTowel
   components:
   - type: Sprite

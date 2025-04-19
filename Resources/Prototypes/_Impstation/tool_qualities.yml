@@ -1,0 +1,6 @@
+- type: tool
+  id: Derusting
+  name: tool-quality-derusting-name
+  toolName: tool-quality-derusting-tool-name
+  spawn: Welder
+  icon: { sprite: Objects/Tools/welder.rsi, state: icon }

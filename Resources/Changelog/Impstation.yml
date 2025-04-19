@@ -1,80 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: A minor addition to the examples of antag rule 4. Peruse keb pages.
-    type: Tweak
-  id: 1026
-  time: '2025-01-31T02:54:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1521
-- author: formlessnameless
-  changes:
-  - message: Space ticks and carp will no longer be sleeping in every single maint
-      locker.
-    type: Fix
-  id: 1027
-  time: '2025-01-31T07:58:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1527
-- author: DinnerCalzone
-  changes:
-  - message: Oasis has been updated to feature the supermatter engine, a service breakroom,
-      and a vox box.
-    type: Add
-  id: 1028
-  time: '2025-01-31T15:59:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1523
-- author: DinnerCalzone
-  changes:
-  - message: Origin's armory has gotten more stuff added to it along with some other
-      fixes.
-    type: Tweak
-  id: 1029
-  time: '2025-01-31T15:59:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1524
-- author: DinnerCalzone
-  changes:
-  - message: Amber has been updated to incorporate its latest upstream changes.
-    type: Tweak
-  id: 1030
-  time: '2025-01-31T18:35:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1526
-- author: TheGrimbeeper
-  changes:
-  - message: rarest artifact effect that tweaks your doll will now not update the
-      records computer
-    type: Tweak
-  id: 1031
-  time: '2025-01-31T22:46:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1528
-- author: hivehum
-  changes:
-  - message: You can now properly restock the CourierDrobe.
-    type: Tweak
-  id: 1032
-  time: '2025-01-31T22:45:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1533
-- author: hivehum
-  changes:
-  - message: The Head of Personnel can now grant Courier access.
-    type: Tweak
-  id: 1033
-  time: '2025-01-31T22:45:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1532
-- author: Pinkbat5
-  changes:
-  - message: Security jetpacks are now smaller in the inventory, and can be equipped
-      in the tank slot.
-    type: Tweak
-  id: 1034
-  time: '2025-01-31T22:49:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1522
-- author: TheGrimbeeper
-  changes:
-  - message: clownspiders no longer throw an error every frame, should very very very
-      slightly improve performance
-    type: Fix
-  id: 1035
-  time: '2025-02-01T00:52:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1537
 - author: hivehum
   changes:
   - message: Thieves now have the correct amount of beacons.
@@ -4093,3 +4017,91 @@
   id: 1525
   time: '2025-04-17T02:38:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2265
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: Practice Laser and Disabler have updated light sprites and now recharge
+      a lot faster.
+    type: Tweak
+  - message: Blasters and the Emergency Laser all have appropriate contraband tags
+      now.
+    type: Fix
+  id: 1526
+  time: '2025-04-18T04:54:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2271
+- author: dayne, crocodilecarousel
+  changes:
+  - message: New medical guidebook, in a library near you!
+    type: Add
+  id: 1527
+  time: '2025-04-18T04:53:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2270
+- author: heirdragonair
+  changes:
+  - message: Supply Assistant's may or may not have been randomly promoted!
+    type: Tweak
+  id: 1528
+  time: '2025-04-19T07:13:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2283
+- author: ultramario1998
+  changes:
+  - message: Willow's brain experiments were a success! You'll be able to inhabit
+      her body every round.
+    type: Tweak
+  id: 1529
+  time: '2025-04-19T07:15:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2262
+- author: jtfg-dev
+  changes:
+  - message: Nanotrasen is Nanotrasen. Cybersun is Cybersun. Gorlex is Gorlex. Baba
+      is You.
+    type: Fix
+  - message: Some descriptions have been refreshed and/or spiced.
+    type: Tweak
+  - message: Item names, descriptions, and flavor text throughout the game have been
+      cleaned up, per the request of the Intergalactic Standards Association.
+    type: Fix
+  id: 1530
+  time: '2025-04-19T12:44:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2231
+- author: ATDoop
+  changes:
+  - message: Added .45 stun bullets! The detective's revolver now comes loaded with
+      stun ammunition by default.
+    type: Add
+  - message: Detectives now also have a portable criminal records computer in their
+      closet.
+    type: Add
+  - message: Removed the detective's SecLink.
+    type: Remove
+  id: 1531
+  time: '2025-04-19T12:50:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2246
+- author: DinnerCalzone
+  changes:
+  - message: Added the janitorial welding tool; a welding tool with a weaker flame
+      that can only be used for derusting rusted walls.
+    type: Add
+  id: 1532
+  time: '2025-04-19T12:51:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2259
+- author: wendyribstonpippin
+  changes:
+  - message: buncha fucking chibis on your lobby and shit
+    type: Add
+  id: 1533
+  time: '2025-04-19T22:44:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2256
+- author: AvianMaiden
+  changes:
+  - message: Brigmedical lockers can now be accessed by the brigmedic's superiors.
+    type: Add
+  id: 1534
+  time: '2025-04-19T22:44:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2287
+- author: TheGrimbeeper
+  changes:
+  - message: minuscule chance that the vent slimes discovered how to be made of drugs
+    type: Tweak
+  id: 1535
+  time: '2025-04-19T22:55:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2276

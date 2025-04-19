@@ -22,7 +22,7 @@
   parent: [ClothingHeadBase, Tier1Contraband]
   id: ClothingHeadHatSurgcapCybersun
   name: surgical cap
-  description: A surgical cap worn by members of Cybersun's Biotechnology division.
+  description: A surgical cap worn by members of Cybersun's biotechnology division. # imp caps fix
   components:
   - type: Sprite
     sprite: _DV/Clothing/Head/Hats/surgcap_cybersun.rsi

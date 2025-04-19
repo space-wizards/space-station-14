@@ -228,6 +228,7 @@
         - WetFloorSign
         - HolosignProjector
         - Plunger
+        - JanitorialWelder #imp edit
       components:
         - LightReplacer
         - SmokeOnTrigger

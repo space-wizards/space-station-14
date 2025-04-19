@@ -14,6 +14,7 @@
     - id: BookHowToKeepStationClean #how to keep station clean
     - id: BookHowToRockAndStone #how to rock and stone
     - id: BookHowToSurvive #how to survive
+    - id: BookJarvisBayCulture # cultural guide to medical (imp)
     - id: BookKeelBay #Keel-Ree's guide to medical (imp)
     - id: BookLeafLoversSecret #leaf lover's secret
     - id: BookMedicalReferenceBook #medical reference book

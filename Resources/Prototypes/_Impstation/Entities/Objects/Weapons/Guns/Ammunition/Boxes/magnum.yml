@@ -1,0 +1,15 @@
+- type: entity
+  id: MagazineBoxMagnumStun
+  parent: BaseMagazineBoxMagnum
+  name: ammunition box (.45 magnum stun)
+  description: A box made for 12 rounds of .45 magnum ammunition, labeled as stun bullets.
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumStun
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: rubber

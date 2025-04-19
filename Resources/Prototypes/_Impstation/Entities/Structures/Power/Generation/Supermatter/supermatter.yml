@@ -2,7 +2,7 @@
   parent: Supermatter
   id: SupermatterNoAnnouncement
   name: supermatter crystal
-  description: A strangely translucent and iridescent crystal. It lacks the NanoTrasen integrated delamination detection announcement system.
+  description: A strangely translucent and iridescent crystal. It lacks the Nanotrasen integrated delamination detection announcement system.
   suffix: no announcement
   components:
     - type: Speech

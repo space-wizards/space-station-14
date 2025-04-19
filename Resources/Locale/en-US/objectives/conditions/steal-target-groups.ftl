@@ -46,7 +46,8 @@ steal-target-groups-wanted-list-cartridge = wanted list cartridge
 # Thief structures
 steal-target-groups-teg = teg generator part
 steal-target-groups-freezer-heater = freezer or heater
-steal-target-groups-altar-nanotrasen = nanotrasen altar (any)
+steal-target-groups-altar-nanotrasen = altar of prayer (any will do)
+# imp edit; what the hell is a "nanotrasen altar (any)"
 
 steal-target-groups-nuclear-bomb = nuclear fission explosive
 steal-target-groups-fax-machine-captain = captain long range fax machine

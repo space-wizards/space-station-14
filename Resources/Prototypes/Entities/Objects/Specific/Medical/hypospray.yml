@@ -30,9 +30,9 @@
     stealGroup: Hypospray
 
 - type: entity
-  name: gorlex hypospray
+  name: Gorlex hypospray # imp edit; preferential to capitalizing company names
   parent: BaseItem
-  description: Using reverse engineered designs from NT, Cybersun produced these in limited quantities for Gorlex Marauder operatives.
+  description: A sterile injector for rapid administration of drugs to patients, secretly produced in limited quantities for use by Gorlex Marauders. The fine print reads, "Pain is weakness leaving the body." # imp rewrite
   id: SyndiHypo
   components:
   - type: Sprite

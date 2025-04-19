@@ -1,4 +1,5 @@
-traitor-corporations-dataset-1 = "CyberSun Industries"
+# imp edit; lower-case s
+traitor-corporations-dataset-1 = "Cybersun Industries"
 traitor-corporations-dataset-2 = "Gorlex Marauders"
 traitor-corporations-dataset-3 = "MI13"
 traitor-corporations-dataset-4 = "Tiger Cooperative"
@@ -7,7 +8,7 @@ traitor-corporations-dataset-6 = "Animal Rights Consortium"
 traitor-corporations-dataset-7 = "Donk Corporation"
 traitor-corporations-dataset-8 = "Waffle Corporation"
 traitor-corporations-dataset-9 = "Interdyne Pharmaceutics"
-#Everything below are Imp edits
+# Everything below are Imp edits
 traitor-corporations-dataset-10 = "ABSLTN Corp."
 traitor-corporations-dataset-11 = "Architect & Babel"
 traitor-corporations-dataset-12 = "Blackburn & Sons Solutions"
