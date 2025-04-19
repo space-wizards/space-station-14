@@ -261,9 +261,9 @@
   description: Goggles that can scan the chemical composition of a solution and have the scanning capabilities of a medical hud.
   components:
     - type: Sprite
-      sprite: Clothing/Eyes/Glasses/science.rsi
+      sprite: Clothing/Eyes/Glasses/medical.rsi
     - type: Clothing
-      sprite: Clothing/Eyes/Glasses/science.rsi
+      sprite: Clothing/Eyes/Glasses/medical.rsi
     - type: SolutionScanner
     - type: IdentityBlocker
       coverage: EYES
