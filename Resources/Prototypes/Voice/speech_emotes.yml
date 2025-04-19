@@ -200,6 +200,25 @@
    - click
    - clicks
 
+- type: emote
+  id: ClearsThroat
+  name: chat-emote-name-clearsthroat
+  category: Vocal
+  icon: Interface/Emotes/clearsthroat.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-clearsthroat"]
+  chatTriggers:
+    - Clears throat
+    - Clear throat
+    - clears his throat
+    - clears her throat
+    - harumph
+
 # hand emotes
 - type: emote
   id: Clap
