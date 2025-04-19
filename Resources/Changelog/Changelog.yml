@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PopGamer46
-  changes:
-  - message: Fixed borgs not being able to check their laws in crit
-    type: Fix
-  id: 7765
-  time: '2024-12-31T11:10:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34133
 - author: amatwiedle
   changes:
   - message: The A/V Communication technology now unlocks holopad circuit boards.
@@ -3908,3 +3901,10 @@
   id: 8265
   time: '2025-04-19T15:31:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36666
+- author: Fildrance
+  changes:
+  - message: fixed spessman getting stuck after unlocking portal node
+    type: Fix
+  id: 8266
+  time: '2025-04-19T17:07:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36719
