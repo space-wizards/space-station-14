@@ -771,7 +771,7 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         private void ReloadProfilePreview()
         {
-            if (Profile == null || !_entManager.EntityExists(PreviewDummy))
+            if (Profile == null || !_entManager.EntityExists(PreviewDummy) || !_entManager.HasComponent<HumanoidAppearanceComponent>(PreviewDummy))
                 return;
 
             _entManager.System<HumanoidAppearanceSystem>().LoadProfile(PreviewDummy, Profile);
