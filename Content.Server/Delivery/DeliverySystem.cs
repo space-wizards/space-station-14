@@ -1,13 +1,16 @@
 using Content.Server.Cargo.Systems;
+using Content.Server.Chat.Systems;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Cargo.Components;
+using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Delivery;
 using Content.Shared.FingerprintReader;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.StationRecords;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Delivery;
 
@@ -25,6 +28,13 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     [Dependency] private readonly FingerprintReaderSystem _fingerprintReader = default!;
     [Dependency] private readonly LabelSystem _label = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
+
+    /// <summary>
+    /// Name to use if the <see cref="DeliveryComponent.PenaltyBankAccount"/> is not set
+    /// </summary>
+    private const string UnknownAccount = "Unknown Account";
 
     public override void Initialize()
     {
@@ -39,19 +49,15 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     {
         _container.EnsureContainer<Container>(ent, ent.Comp.Container);
 
-        var stationId = _station.GetStationInMap(Transform(ent).MapID);
-
-        if (stationId == null)
+        if (_station.GetStationInMap(Transform(ent).MapID) is not EntityUid stationId)
             return;
 
-        _records.TryGetRandomRecord<GeneralStationRecord>(stationId.Value, out var entry);
-
-        if (entry == null)
+        if (!_records.TryGetRandomRecord<GeneralStationRecord>(stationId, out var entry))
             return;
 
         ent.Comp.RecipientName = entry.Name;
         ent.Comp.RecipientJobTitle = entry.JobTitle;
-        ent.Comp.RecipientStation = stationId.Value;
+        ent.Comp.RecipientStation = stationId;
 
         _appearance.SetData(ent, DeliveryVisuals.JobIcon, entry.JobIcon);
 
@@ -70,13 +76,59 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (!TryComp<StationBankAccountComponent>(ent.Comp.RecipientStation, out var account))
+        var delivery = ent.Comp;
+
+        if (!TryComp<StationBankAccountComponent>(delivery.RecipientStation, out var account))
             return;
 
+        var stationAccountEnt = (delivery.RecipientStation.Value, account);
+
+        var ev = new GetDeliveryMultiplierEvent();
+        RaiseLocalEvent(ent, ref ev);
+
+        var multiplier = ev.Multiplier += ent.Comp.BaseSpesoMultiplier;
+
+        if (!delivery.WasPenalized && delivery.ShouldBePenalized)
+            HandlePenalization(ent!, stationAccountEnt, multiplier); // After the Resolve above, we know it's not null
+
         _cargo.UpdateBankAccount(
-            (ent.Comp.RecipientStation.Value, account),
-            ent.Comp.SpesoReward,
-            _cargo.CreateAccountDistribution((ent.Comp.RecipientStation.Value, account)));
+            stationAccountEnt,
+            (int)(delivery.BaseSpesoReward * multiplier),
+           _cargo.CreateAccountDistribution((delivery.RecipientStation.Value, account)));
+    }
+
+    /// <summary>
+    /// Allows the delivery to speak with the message and handles the charging of the penalized account
+    /// </summary>
+    /// <param name="ent"><see cref="DeliveryComponent"/> entity.</param>
+    /// <param name="stationAccountEnt"><see cref="StationBankAccountComponent"/> entity.</param>
+    private void HandlePenalization(Entity<DeliveryComponent> ent, Entity<StationBankAccountComponent?> stationAccountEnt, float multiplier)
+    {
+        var delivery = ent.Comp;
+        var accountName = UnknownAccount;
+        if (_protoMan.TryIndex(delivery.PenaltyBankAccount, out var accountInfo))
+            accountName = Loc.GetString(accountInfo.Name);
+
+        // Extract reason from components...
+        _chat.TrySendInGameICMessage(ent, GetMessage("wah", delivery.BaseSpesoPenalty, accountName), InGameICChatType.Speak, hideChat: true);
+
+        var dist = new Dictionary<ProtoId<CargoAccountPrototype>, double>()
+        {
+            { delivery.PenaltyBankAccount, 1.0 }
+        };
+
+        _cargo.UpdateBankAccount(
+            stationAccountEnt,
+            -((int)(delivery.BaseSpesoPenalty * multiplier)), // Subtracting
+            dist
+            );
+
+        ent.Comp.WasPenalized = true;
+    }
+
+    private string GetMessage(string reason, int penalty, string accountName)
+    {
+        return Loc.GetString("delivery-penalty-message", ("reason", reason), ("spesos", penalty), ("account", accountName));
     }
 
     public override void Update(float frameTime)
@@ -86,3 +138,6 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         UpdateSpawner(frameTime);
     }
 }
+
+[ByRefEvent]
+public record struct GetDeliveryMultiplierEvent(float Multiplier = 0.0f);

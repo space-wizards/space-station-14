@@ -74,7 +74,10 @@
   - type: Item
     size: Huge
   - type: Delivery
-    spesoReward: 800
+    baseSpesoReward: 800
+    baseSpesoPenalty: 400
+  - type: Speech
+    speechVerb: Robotic
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
@@ -111,7 +114,10 @@
   - type: Item
     storedRotation: 90
   - type: Delivery
-    spesoReward: 400
+    baseSpesoReward: 400
+    baseSpesoPenalty: 200
+  - type: Speech
+    speechVerb: Robotic
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
