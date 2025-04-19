@@ -199,6 +199,9 @@
       path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasFlowRegulator
+  - type: GuideHelp
+    guides:
+    - PressureReliefValve
 
 
 - type: entity
