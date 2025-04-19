@@ -88,23 +88,28 @@ public sealed partial class TestPair : IAsyncDisposable
 
     private async Task ResetModifiedPreferences()
     {
+        if (Player == null)
+            return;
+        await Server.WaitIdleAsync();
         var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
-        foreach (var session in _modifiedSessions)
+
+        var prefs = prefMan.GetPreferences(Player.UserId);
+
+        foreach(var slot in prefs.Characters.Keys)
         {
+            if (slot == 0)
+                continue;
             await Server.WaitPost(() =>
             {
-                var prefs = prefMan.GetPreferences(session.UserId);
-                while (prefs.Characters.Any())
-                {
-                    prefMan.DeleteProfile(session.UserId, prefs.Characters.First().Key).Wait();
-                    prefs = prefMan.GetPreferences(session.UserId);
-                }
-
-                prefMan.SetProfile(session.UserId, 0, new HumanoidCharacterProfile().AsEnabled()).Wait();
+                prefMan.DeleteProfile(Player.UserId, slot).Wait();
             });
-            await Server.WaitPost(() => prefMan.SetJobPriorities(session.UserId, new() { { SharedGameTicker.FallbackOverflowJob, JobPriority.High } }));
         }
-        _modifiedSessions.Clear();
+
+        await Server.WaitPost(() =>
+        {
+            prefMan.SetProfile(Player.UserId, 0, new HumanoidCharacterProfile().AsEnabled()).Wait();
+            prefMan.SetJobPriorities(Player.UserId, new () { { SharedGameTicker.FallbackOverflowJob, JobPriority.High } }).Wait();
+        });
     }
 
     public async ValueTask CleanReturnAsync()

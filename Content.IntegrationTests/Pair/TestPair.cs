@@ -27,7 +27,6 @@ public sealed partial class TestPair
     public readonly List<string> TestHistory = new();
     public PoolSettings Settings = default!;
     public TestMapData? TestMap;
-    private HashSet<ICommonSession> _modifiedSessions = new();
 
     private int _nextServerSeed;
     private int _nextClientSeed;
