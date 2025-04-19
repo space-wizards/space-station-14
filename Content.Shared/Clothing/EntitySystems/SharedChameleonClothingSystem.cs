@@ -1,12 +1,19 @@
+using System.Linq;
 using Content.Shared.Access.Components;
+using Content.Shared.Actions;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Contraband;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.Light;
+using Content.Shared.Light.Components;
+using Content.Shared.Prototypes;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
+using Microsoft.Extensions.ObjectPool;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -17,9 +24,11 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ClothingSystem _clothingSystem = default!;
     [Dependency] private readonly ContrabandSystem _contraband = default!;
+    [Dependency] private readonly SharedHandheldLightSystem _handheldLight = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
 
@@ -53,9 +62,6 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             !_proto.TryIndex(component.Default, out EntityPrototype? proto))
             return;
 
-        // world sprite icon
-        UpdateSprite(uid, proto);
-
         // copy name and description, unless its an ID card
         if (!HasComp<IdCardComponent>(uid))
         {
@@ -64,12 +70,8 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             _metaData.SetEntityDescription(uid, proto.Description, meta);
         }
 
-        // item sprite logic
-        if (TryComp(uid, out ItemComponent? item) &&
-            proto.TryGetComponent(out ItemComponent? otherItem, _factory))
-        {
-            _itemSystem.CopyVisuals(uid, otherItem, item);
-        }
+        EnsureCompAndCopyDetails<HandheldLightComponent>(uid, proto);
+        EnsureCompAndCopyDetails<AppearanceComponent>(uid, proto);
 
         // clothing sprite logic
         if (TryComp(uid, out ClothingComponent? clothing) &&
@@ -78,24 +80,11 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
         }
 
-        // appearance data logic
-        if (TryComp(uid, out AppearanceComponent? appearance) &&
-            proto.TryGetComponent("Appearance", out AppearanceComponent? appearanceOther))
-        {
-            _appearance.AppendData(appearanceOther, uid);
-            Dirty(uid, appearance);
-        }
+        EnsureCompAndCopyDetails<ItemComponent>(uid, proto);
+        EnsureCompAndCopyDetails<ContrabandComponent>(uid, proto);
 
-        // properly mark contraband
-        if (proto.TryGetComponent("Contraband", out ContrabandComponent? contra))
-        {
-            EnsureComp<ContrabandComponent>(uid, out var current);
-            _contraband.CopyDetails(uid, contra, current);
-        }
-        else
-        {
-            RemComp<ContrabandComponent>(uid);
-        }
+        // world sprite icon
+        UpdateSprite(uid, proto);
     }
 
     private void OnVerb(Entity<ChameleonClothingComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
@@ -119,7 +108,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     /// <summary>
     ///     Check if this entity prototype is valid target for chameleon item.
     /// </summary>
-    public bool IsValidTarget(EntityPrototype proto, SlotFlags chameleonSlot = SlotFlags.NONE, string? requiredTag = null)
+    public bool IsValidTarget(EntityPrototype proto, SlotFlags chameleonSlot = SlotFlags.NONE, HashSet<ProtoId<TagPrototype>>? requiredTags = null)
     {
         // check if entity is valid
         if (proto.Abstract || proto.HideSpawnMenu)
@@ -129,7 +118,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         if (!proto.TryGetComponent(out TagComponent? tag, _factory) || !_tag.HasTag(tag, WhitelistChameleonTag))
             return false;
 
-        if (requiredTag != null && !_tag.HasTag(tag, requiredTag))
+        if (requiredTags != null && requiredTags.Any() && requiredTags.All(requiredTag => !_tag.HasTag(tag, requiredTag)))
             return false;
 
         // check if it's valid clothing
@@ -139,5 +128,32 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             return false;
 
         return true;
+    }
+
+    protected void EnsureCompAndCopyDetails<T>(EntityUid uid, EntityPrototype proto, Action<T, T?>? afterAddAction = null) where T : IComponent, new()
+    {
+        // if the new proto does not have the component, remove it from the entity
+        if (TryComp<T>(uid, out var previousComponent) && !proto.HasComponent<T>(_factory))
+            RemComp<T>(uid);
+        // if the new proto has the component, but the entity does not, add it to the entity
+        else if (!HasComp<T>(uid) && proto.TryGetComponent<T>(out var protoComonent, _factory))
+        {
+            var newComponent = _factory.GetComponent<T>();
+            _serialization.CopyTo(protoComonent, ref newComponent);
+            AddComp(uid, newComponent);
+        }
+        // if the new proto has the component and the entity does too, copy the data from the proto to the entity
+        else if (TryComp<T>(uid, out var currentComponent) && proto.TryGetComponent<T>(out var otherComponent, _factory))
+            _serialization.CopyTo(otherComponent, ref currentComponent);
+
+
+        if (TryComp(uid, out T? component))
+        {
+            if (component.NetSyncEnabled)
+                Dirty(uid, component);
+
+            if (afterAddAction != null)
+                afterAddAction(component, previousComponent);
+        }
     }
 }
