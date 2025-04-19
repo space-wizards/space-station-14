@@ -18,7 +18,7 @@
 #Syndicate EVA
 - type: entity
   parent: [ ClothingOuterEVASuitBase, BaseSyndicateContraband ]
-  id: ClothingOuterHardsuitSyndicate # TODO: rename to ClothingOuterEVASuitSyndicate
+  id: ClothingOuterEVASuitSyndicate # TODO: rename to ClothingOuterEVASuitSyndicate
   name: syndicate EVA suit
   description: "Has a tag on the back that reads: 'Totally not property of an enemy corporation, honest!'"
   components:
@@ -59,7 +59,7 @@
 
 #Prisoner EVA
 - type: entity
-  parent: ClothingOuterEVASuitBase
+  parent: ClothingOuterSuitEmergency
   id:  ClothingOuterHardsuitEVAPrisoner
   name: prisoner EVA suit
   description: A lightweight space suit for prisoners to protect them from the vacuum of space during emergencies.
@@ -68,6 +68,34 @@
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
+  - type: Tag
+    tags:
+    - SuitEVA
+    - MonkeyWearable
+    - WhitelistChameleon
+
+#Science EVA
+- type: entity
+  parent: ClothingOuterSuitEmergency
+  id: ClothingOuterEVASuitScience
+  name: science EVA suit
+  description: A space suit designed to protect scientists from the vacuum of space and some other hazards associated with their jobs.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/eva_science.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/eva_science.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.90
+        Radiation: 0.75
+        Caustic: 0.75
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: ClothingSpeedModifier
+    walkModifier: 0.6
+    sprintModifier: 0.6
   - type: Tag
     tags:
     - SuitEVA
