@@ -3,10 +3,12 @@
   id: JobCaptain
   groups:
   - CaptainHead
+  - CaptainEars
   - CaptainNeck
   - CaptainJumpsuit
   - CaptainBackpack
   - CaptainOuterClothing
+  - CaptainShoes
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -16,11 +18,12 @@
   groups:
   - GroupTankHarness
   - HoPHead
+  - HoPEars
   - HoPNeck
   - HoPJumpsuit
   - HoPBackpack
   - HoPOuterClothing
-  - Glasses
+  - HoPShoes
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
@@ -205,6 +208,7 @@
   groups:
   - GroupTankHarness
   - QuartermasterHead
+  - QuartermasterEars
   - QuartermasterNeck
   - QuartermasterJumpsuit
   - CargoTechnicianBackpack
@@ -233,6 +237,8 @@
   id: JobSalvageSpecialist
   groups:
   - GroupTankHarness
+  - SalvageSpecialistEars
+  - SalvageSpecialistNeck
   - SalvageSpecialistBackpack
   - SalvageSpecialistOuterClothing
   - SalvageSpecialistShoes
@@ -247,6 +253,7 @@
   groups:
   - GroupTankHarness
   - ChiefEngineerHead
+  - ChiefEngineerEars
   - ChiefEngineerJumpsuit
   - StationEngineerBackpack
   - ChiefEngineerNeck
@@ -298,6 +305,7 @@
   groups:
   - GroupTankHarness
   - ResearchDirectorHead
+  - ResearchDirectorEars
   - ResearchDirectorNeck
   - ResearchDirectorJumpsuit
   - ScientistBackpack
@@ -342,6 +350,7 @@
   id: JobHeadOfSecurity
   groups:
   - HeadofSecurityHead
+  - HeadofSecurityEars
   - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
   - SecurityBackpack
@@ -411,6 +420,8 @@
   groups:
   - GroupTankHarness
   - ChiefMedicalOfficerHead
+  - MedicalDoctorEyes
+  - ChiefMedicalOfficerEars
   - MedicalMask
   - ChiefMedicalOfficerJumpsuit
   - MedicalGloves
@@ -418,7 +429,6 @@
   - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerNeck
   - ChiefMedicalOfficerShoes
-  - Glasses
   - SurvivalMedical
   - Trinkets
   - GroupSpeciesBreathToolMedical
@@ -429,13 +439,13 @@
   - GroupTankHarness
   - MedicalDoctorHead
   - MedicalMask
+  - MedicalDoctorEyes
   - MedicalDoctorJumpsuit
   - MedicalGloves
   - MedicalBackpack
   - MedicalDoctorOuterClothing
   - MedicalShoes
   - MedicalDoctorPDA
-  - Glasses
   - SurvivalMedical
   - Trinkets
   - GroupSpeciesBreathToolMedical
@@ -470,13 +480,13 @@
   groups:
   - GroupTankHarness
   - ParamedicHead
+  - MedicalDoctorEyes
   - MedicalMask
   - ParamedicJumpsuit
   - MedicalGloves
   - MedicalBackpack
   - ParamedicOuterClothing
   - ParamedicShoes
-  - Glasses
   - SurvivalMedical
   - Trinkets
   - GroupSpeciesBreathToolMedical
