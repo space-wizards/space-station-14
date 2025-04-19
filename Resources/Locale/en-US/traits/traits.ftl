@@ -60,5 +60,8 @@ trait-french-desc = Your accent seems to have a certain «je ne sais quoi».
 trait-spanish-name = Spanish accent
 trait-spanish-desc = Hola señor, donde esta la biblioteca.
 
+trait-scandinavian-name = Scandinavian accent
+trait-scandinavian-desc = You have to assemble the sentence yourself.
+
 trait-painnumbness-name = Numb
 trait-painnumbness-desc = You lack any sense of feeling pain, being unaware of how hurt you may be.
