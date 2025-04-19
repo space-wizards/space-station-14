@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Temperature.Components;
 
 /// <summary>
-/// Modifies amount of temperature change on entity.
+/// Modifies amount of heat transferred to or from an entity.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedTemperatureSystem))]

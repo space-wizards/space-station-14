@@ -6,7 +6,7 @@ namespace Content.Server.Temperature.Systems;
 
 public sealed class TemperatureSystem : SharedTemperatureSystem
 {
-    [Dependency] private readonly AtmosphereSystem _serverAtmos = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -14,18 +14,18 @@ public sealed class TemperatureSystem : SharedTemperatureSystem
         SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
     }
 
-    private void OnAtmosExposedUpdate(EntityUid uid, TemperatureComponent temperature,
-        ref AtmosExposedUpdateEvent args)
+    private void OnAtmosExposedUpdate(Entity<TemperatureComponent> ent, ref AtmosExposedUpdateEvent args)
     {
         var transform = args.Transform;
         if (transform.MapUid == null)
             return;
 
+        TemperatureComponent temperature = ent;
         var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
-        var airHeatCapacity = _serverAtmos.GetHeatCapacity(args.GasMixture, false);
-        var heatCapacity = GetHeatCapacity(uid, temperature);
+        var airHeatCapacity = _atmosphere.GetHeatCapacity(args.GasMixture, false);
+        var heatCapacity = GetHeatCapacity((ent, ent, null));
         var heat = temperatureDelta * (airHeatCapacity * heatCapacity /
                                        (airHeatCapacity + heatCapacity));
-        ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
+        ChangeHeat((ent, ent), heat * temperature.AtmosTemperatureTransferEfficiency);
     }
 }

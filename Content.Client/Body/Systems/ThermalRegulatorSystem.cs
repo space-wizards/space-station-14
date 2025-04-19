@@ -1,7 +1,5 @@
-﻿using Content.Shared.Body.Systems;
+using Content.Shared.Body.Systems;
 
 namespace Content.Client.Body.Systems;
 
-public sealed class ThermalRegulatorSystem : SharedThermalRegulatorSystem
-{
-}
+public sealed partial class ThermalRegulatorSystem : SharedThermalRegulatorSystem;

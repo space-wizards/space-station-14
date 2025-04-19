@@ -86,7 +86,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
 
             // exchange heat between inside and surface
             comp.Temperature += degrees;
-            Dirty(uid,comp);
+            Dirty(uid, comp);
             ForceChangeTemperature((uid, temp), temp.CurrentTemperature - degrees);
         }
 
@@ -106,15 +106,15 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         if (ShouldUpdateDamage.Count == 0)
             return;
 
-        foreach (var comp in ShouldUpdateDamage)
+        foreach (var ent in ShouldUpdateDamage)
         {
             MetaDataComponent? metaData = null;
 
-            var uid = comp.Owner;
+            var uid = ent.Owner;
             if (Deleted(uid, metaData) || Paused(uid, metaData))
                 continue;
 
-            ChangeDamage(uid, comp);
+            ChangeDamage(uid, ent);
         }
 
         ShouldUpdateDamage.Clear();
@@ -145,7 +145,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         {
             var modifyChangedTempEvent = new ModifyChangedTemperatureEvent(heatAmount);
             RaiseLocalEvent(target, modifyChangedTempEvent);
-            heatAmount = modifyChangedTempEvent.TemperatureDelta;
+            heatAmount = modifyChangedTempEvent.HeatDelta;
         }
 
         var lastTemp = target.Comp.CurrentTemperature;
@@ -169,38 +169,38 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         return target.Comp1.SpecificHeat * target.Comp2.FixturesMass;
     }
 
-    private void OnInit(EntityUid uid, InternalTemperatureComponent comp, MapInitEvent args)
+    private void OnInit(Entity<InternalTemperatureComponent> ent, ref MapInitEvent args)
     {
-        if (!TryComp<TemperatureComponent>(uid, out var temp))
+        if (!_temperatureQuery.TryComp(ent, out var temp))
             return;
 
-        comp.Temperature = temp.CurrentTemperature;
-        Dirty(uid, comp);
+        ent.Comp.Temperature = temp.CurrentTemperature;
+        Dirty(ent);
     }
 
-    private void OnRejuvenate(EntityUid uid, TemperatureComponent comp, RejuvenateEvent args)
+    private void OnRejuvenate(Entity<TemperatureComponent> ent, ref RejuvenateEvent args)
     {
         //Set internal temperature to normal body temp if there is a thermal regulator.
         //Just in case the species has a higher than normal healthy body temp (plasmamen say hi :P)
-        var temperature = TryComp(uid, out ThermalRegulatorComponent? thermalReg)
+        var temperature = TryComp(ent, out ThermalRegulatorComponent? thermalReg)
             ? thermalReg.NormalBodyTemperature
             : Atmospherics.T20C;
-        ForceChangeTemperature((uid, comp), temperature);
+        ForceChangeTemperature((ent, ent), temperature);
     }
 
-    private void ServerAlert(EntityUid uid, AlertsComponent status, OnTemperatureChangeEvent args)
+    private void ServerAlert(Entity<AlertsComponent> ent, ref OnTemperatureChangeEvent args)
     {
         ProtoId<AlertPrototype> type;
         float threshold;
         float idealTemp;
 
-        if (!TryComp<TemperatureComponent>(uid, out var temperature))
+        if (!_temperatureQuery.TryComp(ent, out var temperature))
         {
-            Alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
+            Alerts.ClearAlertCategory(ent, TemperatureAlertCategory);
             return;
         }
 
-        if (TryComp<ThermalRegulatorComponent>(uid, out var regulator) &&
+        if (TryComp<ThermalRegulatorComponent>(ent, out var regulator) &&
             regulator.NormalBodyTemperature > temperature.ColdDamageThreshold &&
             regulator.NormalBodyTemperature < temperature.HeatDamageThreshold)
         {
@@ -228,19 +228,19 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         switch (tempScale)
         {
             case <= 0f:
-                Alerts.ShowAlert(uid, type, 3);
+                Alerts.ShowAlert(ent, type, 3);
                 break;
 
             case <= 0.4f:
-                Alerts.ShowAlert(uid, type, 2);
+                Alerts.ShowAlert(ent, type, 2);
                 break;
 
             case <= 0.66f:
-                Alerts.ShowAlert(uid, type, 1);
+                Alerts.ShowAlert(ent, type, 1);
                 break;
 
             case > 0.66f:
-                Alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
+                Alerts.ClearAlertCategory(ent, TemperatureAlertCategory);
                 break;
         }
     }
@@ -301,19 +301,19 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
     }
 
     private void OnTemperatureChangeAttempt(
-        EntityUid uid,
-        TemperatureProtectionComponent component,
-        InventoryRelayedEvent<ModifyChangedTemperatureEvent> args
+        Entity<TemperatureProtectionComponent> ent,
+        ref InventoryRelayedEvent<ModifyChangedTemperatureEvent> args
     )
     {
-        var coefficient = args.Args.TemperatureDelta < 0
-            ? component.CoolingCoefficient
-            : component.HeatingCoefficient;
+        TemperatureProtectionComponent protection = ent;
+        var coefficient = args.Args.HeatDelta < 0
+            ? protection.CoolingCoefficient
+            : protection.HeatingCoefficient;
 
         var ev = new GetTemperatureProtectionEvent(coefficient);
-        RaiseLocalEvent(uid, ref ev);
+        RaiseLocalEvent(ent, ref ev);
 
-        args.Args.TemperatureDelta *= ev.Coefficient;
+        args.Args.HeatDelta *= ev.Coefficient;
     }
 
     private void ChangeTemperatureOnCollide(Entity<ChangeTemperatureOnCollideComponent> ent, ref ProjectileHitEvent args)
@@ -321,28 +321,28 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         ChangeHeat((args.Target, null), ent.Comp.Heat, ent.Comp.IgnoreHeatResistance); // adjust the temperature
     }
 
-    private void OnParentChange(EntityUid uid, TemperatureComponent component, ref EntParentChangedMessage args)
+    private void OnParentChange(Entity<TemperatureComponent> ent, ref EntParentChangedMessage args)
     {
         // We only need to update thresholds if the thresholds changed for the entity's ancestors.
         var oldThresholds = args.OldParent != null
             ? RecalculateParentThresholds(args.OldParent.Value)
             : (null, null);
-        var newThresholds = RecalculateParentThresholds(_transformQuery.GetComponent(uid).ParentUid);
+        var newThresholds = RecalculateParentThresholds(_transformQuery.GetComponent(ent).ParentUid);
 
         if (oldThresholds == newThresholds)
             return;
 
-        RecursiveThresholdUpdate(uid);
+        RecursiveThresholdUpdate(ent);
     }
 
-    private void OnParentThresholdStartup(EntityUid uid, ContainerTemperatureDamageThresholdsComponent component, ComponentStartup args)
+    private void OnParentThresholdStartup(Entity<ContainerTemperatureDamageThresholdsComponent> ent, ref ComponentStartup args)
     {
-        RecursiveThresholdUpdate(uid);
+        RecursiveThresholdUpdate(ent);
     }
 
-    private void OnParentThresholdShutdown(EntityUid uid, ContainerTemperatureDamageThresholdsComponent component, ComponentShutdown args)
+    private void OnParentThresholdShutdown(Entity<ContainerTemperatureDamageThresholdsComponent> ent, ref ComponentShutdown args)
     {
-        RecursiveThresholdUpdate(uid);
+        RecursiveThresholdUpdate(ent);
     }
 
     /// <summary>
