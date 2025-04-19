@@ -8,8 +8,8 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage.Components;
 
-[NetworkedComponent]
-public abstract partial class SharedEntityStorageComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed partial class EntityStorageComponent : Component
 {
     public readonly float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
 
@@ -63,6 +63,12 @@ public abstract partial class SharedEntityStorageComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float EnteringRange = 0.18f;
+
+    /// <summary>
+    /// If true, there may be mobs inside the container, even if the container is an Item
+    /// </summary>
+    [DataField]
+    public bool ItemCanStoreMobs = false;
 
     /// <summary>
     /// Whether or not to show the contents when the storage is closed
@@ -148,6 +154,9 @@ public sealed class EntityStorageComponentState : ComponentState
 
 [ByRefEvent]
 public record struct InsertIntoEntityStorageAttemptEvent(EntityUid ItemToInsert, bool Cancelled = false);
+
+[ByRefEvent]
+public record struct StoreMobInItemContainerAttemptEvent(bool Handled, bool Cancelled = false);
 
 [ByRefEvent]
 public record struct StorageOpenAttemptEvent(EntityUid User, bool Silent, bool Cancelled = false);

@@ -108,6 +108,7 @@
   - type: ResistLocker
   - type: EntityStorage
     capacity: 1
+  - type: InternalAir
   - type: ContainerContainer
     containers:
       machine_board: !type:Container

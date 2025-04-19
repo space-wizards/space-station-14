@@ -130,6 +130,7 @@
       tags:
       - CanPilot # People
       - VimPilot # Pets
+  - type: InternalAir
   - type: Appearance
   - type: GenericVisualizer
     visuals:

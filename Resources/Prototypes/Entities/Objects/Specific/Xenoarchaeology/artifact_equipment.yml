@@ -47,6 +47,7 @@
       whitelist:
         components:
         - XenoArtifact
+    - type: InternalAir
     - type: Weldable
     - type: SuppressArtifactContainer
     - type: RadiationBlockingContainer
