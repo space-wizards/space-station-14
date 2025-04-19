@@ -33,24 +33,23 @@
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: RandomSatchelGenericTable
+      tableId: RandomSatchelGenericTable # Max two 1x2 items
     - !type:NestedSelector
-      tableId: RandomSatchelFunnyTable
+      tableId: RandomSatchelFunnyTable # Max five 1x2 items
     - !type:NestedSelector
-      tableId: RandomSatchelClothingTable
+      tableId: RandomSatchelClothingTable # Max one 1x2 item
     - !type:NestedSelector
-      tableId: RandomSatchelCannabisTable
+      tableId: RandomSatchelCannabisTable # Max seven 1x1 items
     - !type:NestedSelector
-      tableId: RandomSatchelGizmosTable
+      tableId: RandomSatchelGizmosTable # Max two 1x2 items
     - !type:NestedSelector
-      tableId: RandomSatchelChemsTable
+      tableId: RandomSatchelChemsTable # Max five 1x1 items
 
+# Max five 1x2 items
 - type: entityTable
   id: RandomSatchelFunnyTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 20
     - id: WhoopieCushion
     - id: RubberChicken
     - id: PlasticBanana
@@ -63,12 +62,11 @@
       amount: !type:RangeNumberSelector
         range: 1, 5
 
+# Max seven 1x1 items
 - type: entityTable
   id: RandomSatchelCannabisTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 4
     - id: Joint
       amount: !type:RangeNumberSelector
         range: 1, 5
@@ -80,14 +78,13 @@
         range: 1, 5
     - id: GroundCannabis
       amount: !type:RangeNumberSelector
-        range: 1, 15
+        range: 1, 7
 
+# Max two 1x2 item
 - type: entityTable
   id: RandomSatchelGizmosTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 40
     - id: TimerTrigger
       amount: !type:RangeNumberSelector
         range: 1, 2
@@ -99,12 +96,11 @@
         range: 1, 2
     - id: ProximitySensor
 
+# Max five 1x1 items
 - type: entityTable
   id: RandomSatchelChemsTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 20
     - id: ChemistryBottleUnstableMutagen
       amount: !type:RangeNumberSelector
         range: 1, 5
@@ -134,22 +130,21 @@
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: RandomSatchelTobaccoTable
+      tableId: RandomSatchelTobaccoTable # Max one 2x3 item
     - !type:NestedSelector
-      tableId: RandomSatchelPartyTable
+      tableId: RandomSatchelPartyTable # Max five 1x2 item
     - !type:NestedSelector
-      tableId: RandomSatchelClothingTable
+      tableId: RandomSatchelClothingTable # Max one 1x2 item
     - !type:NestedSelector
-      tableId: RandomSatchelPayloadTable
+      tableId: RandomSatchelPayloadTable # Max one 1x2 item
     - !type:NestedSelector
-      tableId: RandomSatchelCircuitboardsTable
+      tableId: RandomSatchelCircuitboardsTable # Max one 1x2 item
 
+# Max one 2x3 item
 - type: entityTable
   id: RandomSatchelTobaccoTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 8
     - id: CigPackSyndicate
       weight: 0.5
     - id: CigCartonGreen
@@ -157,19 +152,14 @@
     - id: CigCartonGreen
     - id: CigCartonBlack
     - id: CigarCase
-      amount: !type:RangeNumberSelector
-        range: 1, 2
     - id: CigarGoldCase
       weight: 0.25
-      amount: !type:RangeNumberSelector
-        range: 1, 2
 
+# Max five 1x2 item
 - type: entityTable
   id: RandomSatchelPartyTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 2
     - id: GlowstickBase
       amount: !type:RangeNumberSelector
         range: 1, 5
@@ -186,12 +176,11 @@
       amount: !type:RangeNumberSelector
         range: 1, 5
 
+# Max one 1x2 item
 - type: entityTable
   id: RandomSatchelClothingTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 3
     - id: ClothingEyesGlassesOutlawGlasses
     - id: ClothingEyesEyepatch
     - id: ClothingHandsGlovesNitrile
@@ -200,12 +189,11 @@
     - id: ClothingHandsGlovesCombat
     - id: ClothingNeckScarfStripedSyndieRed
 
+# Max one 1x2 item
 - type: entityTable
   id: RandomSatchelPayloadTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 45
     - id: FlashPayload
       amount: !type:RangeNumberSelector
         range: 1, 2
@@ -216,12 +204,11 @@
       amount: !type:RangeNumberSelector
         range: 1, 2
 
+# Max one 1x2 item
 - type: entityTable
   id: RandomSatchelCircuitboardsTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 15
     - id: ChemDispenserMachineCircuitboard
     - id: SyndicateMicrowaveMachineCircuitboard
     - id: HydroponicsTrayMachineCircuitboard
@@ -245,24 +232,23 @@
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: RandomSatchelPresentsOrToysTable
+      tableId: RandomSatchelPresentsOrToysTable # Max three 1x2 items
     - !type:NestedSelector
-      tableId: RandomSatchelCashTable
+      tableId: RandomSatchelCashTable # Max four 1x2 items
     - !type:NestedSelector
-      tableId: RandomSatchelWeaponTable
+      tableId: RandomSatchelWeaponTable # Max one 2x2 item
     - !type:NestedSelector
-      tableId: RandomSatchelBurgerTable
+      tableId: RandomSatchelBurgerTable # Max three 1x2 items
     - !type:NestedSelector
-      tableId: RandomSatchelGenericTable
+      tableId: RandomSatchelGenericTable # Max two 1x2 items
     - !type:NestedSelector
-      tableId: RandomSatchelKeysTable
+      tableId: RandomSatchelKeysTable # Max one 1x2 item
 
+# Max three 1x2 items
 - type: entityTable
   id: RandomSatchelPresentsOrToysTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 5
     - id: PresentRandom
       amount: !type:RangeNumberSelector
         range: 1, 3
@@ -271,6 +257,7 @@
     - id: ToyFigurineQueen
     - id: ToyFigurineRatKing
 
+# Max four 1x2 items
 - type: entityTable
   id: RandomSatchelCashTable
   table: !type:GroupSelector
@@ -296,47 +283,40 @@
         range: 1, 4
     - id: SpaceCash1000000
       prob: 0.0001
-    - id: SpaceCash
-      weight: 0.01
-      amount: !type:RangeNumberSelector
-        range: 1, 10
 
+# Max one 2x2 item
 - type: entityTable
   id: RandomSatchelWeaponTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 100
     - id: Katana
     - id: ThrowingStar
       amount: !type:RangeNumberSelector
-        range: 1, 5
+        range: 1, 2
 
+# Max three 1x2 items
 - type: entityTable
   id: RandomSatchelBurgerTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 10
     - id: FoodBurgerAppendix
       amount: !type:RangeNumberSelector
-        range: 1, 5
+        range: 1, 3
     - id: FoodBurgerEmpowered
       amount: !type:RangeNumberSelector
-        range: 1, 5
+        range: 1, 3
     - id: FoodBurgerClown
       amount: !type:RangeNumberSelector
-        range: 1, 5
+        range: 1, 3
     - id: FoodBurgerGhost
       amount: !type:RangeNumberSelector
-        range: 1, 5
+        range: 1, 3
 
+# Max two 1x2 items
 - type: entityTable
   id: RandomSatchelGenericTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 15
     - id: RemoteSignaller
     - id: PersonalAI
     - id: WeaponFlareGun
@@ -352,12 +332,11 @@
       amount: !type:RangeNumberSelector
         range: 1, 2
 
+# Max one 1x2 item
 - type: entityTable
   id: RandomSatchelKeysTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 50
     - id: EncryptionKeyCommon
     - id: EncryptionKeyCargo
     - id: EncryptionKeyService
@@ -377,22 +356,21 @@
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: RandomSatchelMaterialsTable
+      tableId: RandomSatchelMaterialsTable # Max one 2x2 item
     - !type:NestedSelector
-      tableId: RandomSatchelImplantersTable
+      tableId: RandomSatchelImplantersTable # Max one 1x2 item
     - !type:NestedSelector
-      tableId: RandomSatchelCellsTable
+      tableId: RandomSatchelCellsTable # Max one 1x2 item
     - !type:NestedSelector
-      tableId: RandomSatchelSyndicateTable
+      tableId: RandomSatchelSyndicateTable # Max one 2x2 item
     - !type:NestedSelector
-      tableId: RandomSatchelToolsTable
+      tableId: RandomSatchelToolsTable # Max one 1x2 item
 
+# Max one 2x2 item
 - type: entityTable
   id: RandomSatchelMaterialsTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 6
     - !type:GroupSelector
       children:
       - id: MaterialDiamond1
@@ -424,32 +402,29 @@
         weight: 2
       - id: SheetUranium
 
+# Max one 1x2 item
 - type: entityTable
   id: RandomSatchelImplantersTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 3
     - id: LightImplanter
     - id: BikeHornImplanter
     - id: SadTromboneImplanter
 
+# Max one 1x2 item
 - type: entityTable
   id: RandomSatchelCellsTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 15
     - id: PowerCellHyper
     - id: PowerCellMicroreactor
     - id: PowerCellHigh
 
+# Max one 2x2 item
 - type: entityTable
   id: RandomSatchelSyndicateTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 50
     - id: Telecrystal1
       amount: !type:RangeNumberSelector
         range: 1, 3
@@ -460,6 +435,7 @@
     - id: SoapSyndie
     - id: SingularityToy
 
+# Max one 1x2 item
 - type: entityTable
   id: RandomSatchelToolsTable
   table: !type:GroupSelector
@@ -477,20 +453,19 @@
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: RandomSatchelAlcoholTable
+      tableId: RandomSatchelAlcoholTable # Max four 2x2 items
     - !type:NestedSelector
-      tableId: RandomSatchelInstrumentTable
+      tableId: RandomSatchelInstrumentTable # Max one 2x2 item
     - !type:NestedSelector
-      tableId: RandomSatchelMedsTable
+      tableId: RandomSatchelMedsTable # Max five 1x1 items
     - !type:NestedSelector
-      tableId: RandomSatchelMysteriesTable
+      tableId: RandomSatchelMysteriesTable # Max three 1x1 items
 
+# Max four 2x2 items
 - type: entityTable
   id: RandomSatchelAlcoholTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 5
     - id: DrinkCognacBottleFull
       amount: !type:RangeNumberSelector
         range: 1, 4
@@ -504,12 +479,11 @@
       amount: !type:RangeNumberSelector
         range: 1, 4
 
+# Max one 2x2 item
 - type: entityTable
   id: RandomSatchelInstrumentTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 15
     - id: SeashellInstrument
     - id: MusicalLungInstrument
     - id: HelicopterInstrument
@@ -517,12 +491,11 @@
     - id: RockGuitarInstrument
     - id: BassGuitarInstrument
 
+# Max five 1x1 items
 - type: entityTable
   id: RandomSatchelMedsTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 10
     - id: SyringeAmbuzol
     - id: SyringeHyronalin
     - id: SyringeDermaline
@@ -552,18 +525,13 @@
     - id: Stimpack
     - id: CombatMedipen
 
+# Max three 1x1 items
 - type: entityTable
   id: RandomSatchelMysteriesTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 15
     - id: EggSpider
       weight: 5
-    - id: ArtifactFragment1
-      amount: !type:RangeNumberSelector
-        range: 1, 2
-      weight: 10
     - id: AnomalyCorePyroclastic
       amount: !type:RangeNumberSelector
         range: 1, 3
@@ -597,30 +565,28 @@
   table: !type:AllSelector
     children:
     - !type:NestedSelector
-      tableId: RandomSatchelGearTable
+      tableId: RandomSatchelGearTable # Usually one 1x2 items, max one 4x4 item
     - !type:NestedSelector
-      tableId: RandomSatchelGadgetsTable
+      tableId: RandomSatchelGadgetsTable # Usually one 1x2 items, max two 1x2 items
     - !type:NestedSelector
-      tableId: CubeTable
+      tableId: CubeTable # From 1-10 1x1 items (tiny)
 
+# Usually one 1x2 item, max one 4x4 item
 - type: entityTable
   id: RandomSatchelGearTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 8
     - id: JetpackMiniFilled
     - id: HandheldGPSBasic
     - id: WelderIndustrialAdvanced
     - id: HandheldStationMap
     - id: PinpointerStation
 
+# Usually one 1x2 items, max two 1x2 items
 - type: entityTable
   id: RandomSatchelGadgetsTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 30
     - id: HolofanProjector
     - id: HoloprojectorField
     - id: HoloprojectorSecurity
@@ -633,12 +599,11 @@
     - id: ChameleonProjector
       weight: 0.25
 
+# From 1-10 1x1 items
 - type: entityTable
   id: CubeTable
   table: !type:GroupSelector
     children:
-    - id: SpaceCash100
-      weight: 8
     - id: MonkeyCube
       amount: !type:RangeNumberSelector
         range: 1, 10
