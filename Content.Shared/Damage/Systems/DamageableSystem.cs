@@ -3,6 +3,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.Guardian;
 using Content.Shared.Inventory;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
@@ -177,6 +178,14 @@ namespace Content.Shared.Damage
             if (!uid.HasValue || !_damageableQuery.Resolve(uid.Value, ref damageable, false))
             {
                 // TODO BODY SYSTEM pass damage onto body system
+                return null;
+            }
+
+            // Don't take damage if the holoparasite tries to hit the host
+            if (origin != null && TryComp<GuardianComponent>(origin, out var guardian) && guardian.Host == uid)
+            {
+                var ev = new AttackHostContainerEvent();
+                RaiseLocalEvent(origin.Value, ref ev);
                 return null;
             }
 

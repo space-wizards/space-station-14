@@ -1,9 +1,12 @@
-namespace Content.Server.Guardian
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Guardian
 {
     /// <summary>
     /// Given to guardians to monitor their link with the host
     /// </summary>
-    [RegisterComponent]
+    // TODO improve networking
+    [RegisterComponent, NetworkedComponent]
     public sealed partial class GuardianComponent : Component
     {
         /// <summary>
