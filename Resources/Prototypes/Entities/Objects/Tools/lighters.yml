@@ -88,6 +88,7 @@
     radius: 1.1 #smallest possible
     color: orange
   - type: ItemTogglePointLight
+  - type: PhysicalComposition
 
 - type: entity
   name: cheap lighter
