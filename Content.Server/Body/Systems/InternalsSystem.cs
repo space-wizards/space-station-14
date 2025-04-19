@@ -80,39 +80,51 @@ public sealed class InternalsSystem : EntitySystem
 
         InteractionVerb verb = new()
         {
-            Act = () =>
-            {
-                ToggleInternals(ent, user, force: false, ent);
-            },
-            Message = Loc.GetString("action-description-internals-toggle"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/dot.svg.192dpi.png")),
-            Text = Loc.GetString("action-name-internals-toggle"),
         };
+
+        if (AreInternalsWorking(ent))
+        {
+            verb.Act = () => ToggleInternals(ent, user, force: false, ent, ToggleMode.Off);
+            verb.Message = Loc.GetString("action-description-internals-toggle-off");
+            verb.Text = Loc.GetString("action-name-internals-toggle-off");
+        }
+        else
+        {
+            verb.Act = () => ToggleInternals(ent, user, force: false, ent, ToggleMode.On);
+            verb.Message = Loc.GetString("action-description-internals-toggle-on");
+            verb.Text = Loc.GetString("action-name-internals-toggle-on");
+        }
 
         args.Verbs.Add(verb);
     }
 
-    public void ToggleInternals(
+    private void ToggleInternals(
         EntityUid uid,
         EntityUid user,
         bool force,
-        InternalsComponent? internals = null)
+        InternalsComponent? internals = null,
+        ToggleMode mode = ToggleMode.Toggle)
     {
         if (!Resolve(uid, ref internals, logMissing: false))
             return;
 
-        // Toggle off if they're on
         if (AreInternalsWorking(internals))
         {
-            if (force)
-            {
-                DisconnectTank((uid, internals));
+            if (mode == ToggleMode.On)
                 return;
-            }
 
-            StartToggleInternalsDoAfter(user, (uid, internals));
+            if (force)
+                DisconnectTank((uid, internals));
+            else
+                StartToggleInternalsDoAfter(user, (uid, internals), mode);
+
             return;
         }
+
+        // If the intent was to disable internals there’s nothing left to do
+        if (mode == ToggleMode.Off)
+            return;
 
         // If they're not on then check if we have a mask to use
         if (internals.BreathTools.Count == 0)
@@ -131,20 +143,20 @@ public sealed class InternalsSystem : EntitySystem
 
         if (!force)
         {
-            StartToggleInternalsDoAfter(user, (uid, internals));
+            StartToggleInternalsDoAfter(user, (uid, internals), mode);
             return;
         }
 
         _gasTank.ConnectToInternals(tank.Value);
     }
 
-    private void StartToggleInternalsDoAfter(EntityUid user, Entity<InternalsComponent> targetEnt)
+    private void StartToggleInternalsDoAfter(EntityUid user, Entity<InternalsComponent> targetEnt, ToggleMode mode)
     {
         // Is the target not you? If yes, use a do-after to give them time to respond.
         var isUser = user == targetEnt.Owner;
         var delay = !isUser ? targetEnt.Comp.Delay : TimeSpan.Zero;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new InternalsDoAfterEvent(), targetEnt, target: targetEnt)
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new InternalsDoAfterEvent(mode), targetEnt, target: targetEnt)
         {
             BreakOnDamage = true,
             BreakOnMove =  true,
@@ -157,7 +169,7 @@ public sealed class InternalsSystem : EntitySystem
         if (args.Cancelled || args.Handled)
             return;
 
-        ToggleInternals(ent, args.User, force: true, ent);
+        ToggleInternals(ent, args.User, force: true, ent, args.ToggleMode);
 
         args.Handled = true;
     }
