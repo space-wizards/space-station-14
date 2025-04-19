@@ -543,6 +543,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.2
+        showInChat: true
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -1162,6 +1163,7 @@
           min: 20
         emote: Scream
         probability: 0.2
+        showInChat: true
 
 - type: reagent
   id: Insuzine
@@ -1380,7 +1382,6 @@
       effects:
       - !type:Emote
         emote: Yawn
-        showInChat: true
         probability: 0.1
       - !type:GenericStatusEffect
         key: Drowsiness
