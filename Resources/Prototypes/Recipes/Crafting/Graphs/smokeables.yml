@@ -110,3 +110,25 @@
             doAfter: 5
     - node: ground
       entity: GroundTobacco
+
+- type: constructionGraph
+  id: smokeableCigarBombHarmless
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: cigarBombHarmless
+          steps:
+            - tag: CigarBombHarmlessCrafter
+              name: cigar
+              icon:
+                sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
+                state: unlit-icon
+            - tag: SnapPop
+              name: snap pop
+              icon: 
+                sprite: Objects/Fun/toys.rsi
+                state: snappop
+              doAfter: 3
+    - node: cigarBombHarmless
+      entity: CigarBombHarmless
