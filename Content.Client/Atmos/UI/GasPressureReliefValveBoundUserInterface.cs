@@ -18,6 +18,10 @@ public sealed class GasPressureReliefValveBoundUserInterface(EntityUid owner, En
         _window = this.CreateWindow<GasPressureReliefValveWindow>();
 
         _window.ThresholdPressureChanged += OnThresholdChanged;
+
+        if (EntMan.TryGetComponent(Owner, out GasPressureReliefValveComponent? valveComponent))
+            _window.SetThresholdPressureInput(valveComponent.Threshold);
+
         Update();
     }
 
@@ -41,8 +45,12 @@ public sealed class GasPressureReliefValveBoundUserInterface(EntityUid owner, En
         var sentThreshold = UserInputParser.TryFloat(newThreshold, out var parsedNewThreshold)
             ? parsedNewThreshold
             : 0f;
-        if (parsedNewThreshold < 0)
+        if (parsedNewThreshold < 0 || float.IsInfinity(parsedNewThreshold))
             sentThreshold = 0;
+
+        // If the goober user ever inputs a wacky value in the window, it won't stay like that, and it'll just
+        // autofill to zero.
+        _window?.SetThresholdPressureInput(sentThreshold);
 
         SendPredictedMessage(new GasPressureReliefValveChangeThresholdMessage(sentThreshold));
     }

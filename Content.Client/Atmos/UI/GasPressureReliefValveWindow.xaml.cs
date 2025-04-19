@@ -79,4 +79,15 @@ public sealed partial class GasPressureReliefValveWindow : DefaultWindow
     {
         FlowRateLabel.Text = float.IsNaN(flowRate) ? "0" : flowRate.ToString(CultureInfo.CurrentCulture);
     }
+
+    /// <summary>
+    /// Sets the threshold pressure input field with the given value.
+    ///
+    /// When the client opens the UI the field will be autofilled with the current threshold pressure.
+    /// </summary>
+    /// <param name="input">The threshold pressure value to autofill into the input field.</param>
+    public void SetThresholdPressureInput(float input)
+    {
+        ThresholdInput.Text = input.ToString(CultureInfo.CurrentCulture);
+    }
 }
