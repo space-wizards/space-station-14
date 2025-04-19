@@ -92,6 +92,8 @@
       Male: MaleDiona
       Female: FemaleDiona
       Unsexed: MaleDiona
+  - type: TypingIndicator
+    proto: diona
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
   - type: IgnoreKudzu

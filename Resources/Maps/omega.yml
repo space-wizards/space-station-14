@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 247.2.0
+  engineVersion: 253.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/07/2025 18:56:09
-  entityCount: 13931
+  time: 04/14/2025 14:30:33
+  entityCount: 13940
 maps:
 - 473
 grids:
@@ -4865,6 +4865,17 @@ entities:
     - type: Transform
       pos: -49.383278,-8.450993
       parent: 4812
+- proto: ActionStethoscope
+  entities:
+  - uid: 917
+    mapInit: true
+    paused: true
+    components:
+    - type: Transform
+      parent: 7580
+    - type: EntityTargetAction
+      originalIconColor: '#FFFFFFFF'
+      container: 7580
 - proto: ActionToggleBlock
   entities:
   - uid: 12052
@@ -33527,8 +33538,16 @@ entities:
   - uid: 7580
     components:
     - type: Transform
-      pos: -18.561977,-20.380136
+      pos: -18.519077,-23.380693
       parent: 4812
+    - type: Stethoscope
+      actionEntity: 917
+    - type: ActionsContainer
+    - type: ContainerContainer
+      containers:
+        actions: !type:Container
+          ents:
+          - 917
 - proto: ClothingNeckTieRed
   entities:
   - uid: 10922
@@ -34174,6 +34193,44 @@ entities:
       rot: 3.141592653589793 rad
       pos: 16.5,29.5
       parent: 4812
+- proto: ComputerCargoOrdersEngineering
+  entities:
+  - uid: 13932
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -38.5,-5.5
+      parent: 4812
+- proto: ComputerCargoOrdersMedical
+  entities:
+  - uid: 13157
+    components:
+    - type: Transform
+      pos: -15.5,-15.5
+      parent: 4812
+- proto: ComputerCargoOrdersScience
+  entities:
+  - uid: 13936
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 29.5,-27.5
+      parent: 4812
+- proto: ComputerCargoOrdersSecurity
+  entities:
+  - uid: 10759
+    components:
+    - type: Transform
+      pos: -38.5,12.5
+      parent: 4812
+- proto: ComputerCargoOrdersService
+  entities:
+  - uid: 13337
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -6.5,9.5
+      parent: 4812
 - proto: ComputerCargoShuttle
   entities:
   - uid: 2760
@@ -34286,6 +34343,13 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,-44.5
+      parent: 4812
+- proto: ComputerFundingAllocation
+  entities:
+  - uid: 2514
+    components:
+    - type: Transform
+      pos: 7.5,26.5
       parent: 4812
 - proto: ComputerId
   entities:
@@ -34888,6 +34952,46 @@ entities:
     - type: Transform
       pos: -19.5,-28.5
       parent: 4812
+- proto: CrateLockBoxEngineering
+  entities:
+  - uid: 9118
+    components:
+    - type: Transform
+      pos: -35.5,-11.5
+      parent: 4812
+- proto: CrateLockBoxMedical
+  entities:
+  - uid: 6250
+    components:
+    - type: Transform
+      pos: -16.5,-28.5
+      parent: 4812
+- proto: CrateLockBoxScience
+  entities:
+  - uid: 2511
+    components:
+    - type: Transform
+      pos: 12.5,-23.5
+      parent: 4812
+- proto: CrateLockBoxSecurity
+  entities:
+  - uid: 13937
+    components:
+    - type: Transform
+      pos: -31.5,23.5
+      parent: 4812
+- proto: CrateLockBoxService
+  entities:
+  - uid: 13938
+    components:
+    - type: Transform
+      pos: -15.5,5.5
+      parent: 4812
+  - uid: 13939
+    components:
+    - type: Transform
+      pos: 1.5,13.5
+      parent: 4812
 - proto: CrateMedicalSurgery
   entities:
   - uid: 4926
@@ -34936,29 +35040,6 @@ entities:
         - 0
 - proto: CrateScienceSecure
   entities:
-  - uid: 6250
-    components:
-    - type: Transform
-      pos: 12.5,-23.5
-      parent: 4812
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14957
-        moles:
-        - 1.6033952
-        - 6.031821
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
   - uid: 6251
     components:
     - type: Transform
@@ -38430,11 +38511,6 @@ entities:
       parent: 4812
 - proto: DogBed
   entities:
-  - uid: 2511
-    components:
-    - type: Transform
-      pos: 5.5,26.5
-      parent: 4812
   - uid: 2610
     components:
     - type: MetaData
@@ -38458,6 +38534,11 @@ entities:
     components:
     - type: Transform
       pos: -36.5,14.5
+      parent: 4812
+  - uid: 13933
+    components:
+    - type: Transform
+      pos: 7.5,25.5
       parent: 4812
 - proto: DonkpocketBoxSpawner
   entities:
@@ -38718,7 +38799,7 @@ entities:
   - uid: 8435
     components:
     - type: Transform
-      pos: -38.614426,12.463839
+      pos: -37.616684,10.457129
       parent: 4812
   - uid: 10760
     components:
@@ -38742,7 +38823,7 @@ entities:
   - uid: 8434
     components:
     - type: Transform
-      pos: -38.3488,12.713839
+      pos: -37.31981,10.691504
       parent: 4812
 - proto: DrinkRootBeerGlass
   entities:
@@ -39298,10 +39379,10 @@ entities:
       parent: 4812
 - proto: filingCabinetDrawer
   entities:
-  - uid: 2514
+  - uid: 2512
     components:
     - type: Transform
-      pos: 7.5,26.5
+      pos: 5.5,26.5
       parent: 4812
 - proto: filingCabinetTall
   entities:
@@ -65387,12 +65468,6 @@ entities:
       parent: 4812
     - type: Physics
       canCollide: False
-  - uid: 13157
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -15.5,-15.5
-      parent: 4812
   - uid: 13162
     components:
     - type: Transform
@@ -65403,6 +65478,12 @@ entities:
     components:
     - type: Transform
       pos: -43.5,-18.5
+      parent: 4812
+  - uid: 13935
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -18.5,-20.5
       parent: 4812
 - proto: PowerDrill
   entities:
@@ -73695,9 +73776,10 @@ entities:
       parent: 4812
 - proto: SolidSecretDoor
   entities:
-  - uid: 13337
+  - uid: 8425
     components:
     - type: Transform
+      rot: 1.5707963267948966 rad
       pos: -41.5,-17.5
       parent: 4812
 - proto: SpaceHeater
@@ -73742,10 +73824,10 @@ entities:
       parent: 4812
 - proto: SpawnMobCorgi
   entities:
-  - uid: 2512
+  - uid: 13934
     components:
     - type: Transform
-      pos: 5.5,26.5
+      pos: 7.5,25.5
       parent: 4812
 - proto: SpawnMobCow
   entities:
@@ -76281,11 +76363,6 @@ entities:
     - type: Transform
       pos: -27.5,26.5
       parent: 4812
-  - uid: 8425
-    components:
-    - type: Transform
-      pos: -38.5,12.5
-      parent: 4812
   - uid: 8426
     components:
     - type: Transform
@@ -76570,11 +76647,6 @@ entities:
     components:
     - type: Transform
       pos: -40.5,-34.5
-      parent: 4812
-  - uid: 9118
-    components:
-    - type: Transform
-      pos: -15.5,-15.5
       parent: 4812
   - uid: 10659
     components:
@@ -78301,13 +78373,6 @@ entities:
       parent: 4812
 - proto: VendingMachineCigs
   entities:
-  - uid: 917
-    components:
-    - type: MetaData
-      name: cigarette machine
-    - type: Transform
-      pos: -6.5,9.5
-      parent: 4812
   - uid: 2672
     components:
     - type: MetaData
@@ -78352,6 +78417,11 @@ entities:
     components:
     - type: Transform
       pos: -27.5,8.5
+      parent: 4812
+  - uid: 13940
+    components:
+    - type: Transform
+      pos: -5.5,10.5
       parent: 4812
 - proto: VendingMachineClothing
   entities:
@@ -87473,11 +87543,6 @@ entities:
     components:
     - type: Transform
       pos: -39.5,10.5
-      parent: 4812
-  - uid: 10759
-    components:
-    - type: Transform
-      pos: -38.5,-5.5
       parent: 4812
   - uid: 13496
     components:
