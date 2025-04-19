@@ -150,7 +150,7 @@ public abstract class SharedPortalSystem : EntitySystem
 
     private void OnEndCollide(EntityUid uid, PortalComponent component, ref EndCollideEvent args)
     {
-        if (!ShouldCollide(args.OurFixtureId, args.OtherFixtureId,args.OurFixture, args.OtherFixture))
+        if (!ShouldCollide(args.OurFixtureId, args.OtherFixtureId, args.OurFixture, args.OtherFixture))
             return;
 
         var subject = args.OtherEntity;
@@ -162,7 +162,7 @@ public abstract class SharedPortalSystem : EntitySystem
         }
     }
 
-    private void TeleportEntity(EntityUid portal, EntityUid subject, EntityCoordinates target, EntityUid? targetEntity=null, bool playSound=true,
+    private void TeleportEntity(EntityUid portal, EntityUid subject, EntityCoordinates target, EntityUid? targetEntity = null, bool playSound = true,
         PortalComponent? portalComponent = null)
     {
         if (!Resolve(portal, ref portalComponent))
