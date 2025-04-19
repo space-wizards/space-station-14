@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba, JuneSzalkowska
-  changes:
-  - message: New cotton dough slices and cotton dough rolls.
-    type: Add
-  - message: New cotton baguette, cotton crostini, cotton chevre-chaud, cotton bagel,
-      and cotton croissant recipes. You can make them by following the recipes for
-      regular baguettes, bagels, etc, but use cotton dough instead.
-    type: Add
-  - message: Slicing dough into thirds now divides the nutriment value into thirds.
-      Previously you could slice dough to triple your nutriment.
-    type: Fix
-  id: 7761
-  time: '2024-12-29T02:02:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33508
 - author: Velcroboy
   changes:
   - message: Rolling joints no longer requires a cigarette filter.
@@ -3915,3 +3901,10 @@
   id: 8261
   time: '2025-04-19T14:29:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35908
+- author: metalgearsloth
+  changes:
+  - message: Fix detailed examine buttons sometimes showing up incorrectly.
+    type: Fix
+  id: 8262
+  time: '2025-04-19T14:37:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33814
