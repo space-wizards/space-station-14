@@ -1,0 +1,4 @@
+- type: nameIdentifierGroup
+  id: ApidCryopod
+  prefix: Nuc
+  maxValue: 9999
