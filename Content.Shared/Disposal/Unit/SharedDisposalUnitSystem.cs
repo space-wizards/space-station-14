@@ -92,7 +92,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         SubscribeLocalEvent<DisposalUnitComponent, ContainerRelayMovementEntityEvent>(OnMovement);
     }
 
-    private void AddDisposalAltVerbs(Entity<DisposalUnitComponent> ent, GetVerbsEvent<AlternativeVerb> args)
+    private void AddDisposalAltVerbs(Entity<DisposalUnitComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
