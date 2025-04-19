@@ -1,7 +1,7 @@
 - type: gameMap
   id: Saltern2
   mapName: 'Saltern-II'
-  mapPath: /Maps/Ronstation/saltern-2.yml
+  mapPath: /Maps/_Ronstation/saltern-2.yml
   minPlayers: 0
   maxPlayers: 35
   fallback: true
