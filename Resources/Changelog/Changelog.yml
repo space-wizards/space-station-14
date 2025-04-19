@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: The holoapd UI has been updated to include a text-based filter for the
-      contacts list, and also to specify the name of the holopad that incoming calls
-      originate from
-    type: Tweak
-  id: 7758
-  time: '2024-12-28T23:33:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34055
 - author: zHonys
   changes:
   - message: Smile can now use hats
@@ -3913,3 +3904,13 @@
   id: 8258
   time: '2025-04-19T13:43:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34668
+- author: ArtisticRoomba
+  changes:
+  - message: The Go Go Hat now checks if your message matches either the name of the
+      item or the label of the item. This allows people with accents to name their
+      items according to how their character would say the item, or for a faster retrieval
+      without having to type out the full name.
+    type: Tweak
+  id: 8259
+  time: '2025-04-19T14:11:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35658
