@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: psykana
-  changes:
-  - message: Traitor can no longer get multiple objectives to save/help/kill the same
-      person
-    type: Fix
-  id: 7757
-  time: '2024-12-28T14:49:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33704
 - author: chromiumboy
   changes:
   - message: The holoapd UI has been updated to include a text-based filter for the
@@ -3914,3 +3906,10 @@
   id: 8257
   time: '2025-04-19T13:10:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34878
+- author: Quantus
+  changes:
+  - message: Fixed the unusual delay in production after de-aging a plant with cryoxadone.
+    type: Fix
+  id: 8258
+  time: '2025-04-19T13:43:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34668
