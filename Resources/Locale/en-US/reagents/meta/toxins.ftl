@@ -81,3 +81,6 @@ reagent-desc-lipolicide = A powerful toxin that will destroy fat cells, massivel
 
 reagent-name-mechanotoxin = mechanotoxin
 reagent-desc-mechanotoxin = A neurotoxin used as venom by some species of spider. Degrades movement when built up.
+
+reagent-name-nollazine = nollazine
+reagent-desc-nollazine = A deeply unsettling "omnitoxin", extremely deadly to all forms of life. Should not be ingested under any circumstances.
