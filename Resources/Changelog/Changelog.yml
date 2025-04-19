@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ewokswagger
-  changes:
-  - message: Pizza deliveries are now guaranteed to have at least one cotton pizza.
-    type: Tweak
-  id: 7760
-  time: '2024-12-29T01:50:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33997
 - author: ArtisticRoomba, JuneSzalkowska
   changes:
   - message: New cotton dough slices and cotton dough rolls.
@@ -3914,3 +3907,11 @@
   id: 8260
   time: '2025-04-19T14:25:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34769
+- author: claustro305
+  changes:
+  - message: Fixed a bug where dragged objects would collide with wall mounted lights
+      and cameras.
+    type: Fix
+  id: 8261
+  time: '2025-04-19T14:29:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35908
