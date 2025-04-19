@@ -27,6 +27,7 @@ namespace Content.Benchmarks;
 // This makes the benchmark run noticeably slower.
 
 [Virtual]
+[ShortRunJob]
 public class PvsBenchmark
 {
     public const string Map = "Maps/box.yml";
@@ -41,6 +42,13 @@ public class PvsBenchmark
     public int _cycleOffset = 0;
     private SharedTransformSystem _sys = default!;
     private EntityCoordinates[] _locations = default!;
+
+    [GlobalCleanup]
+    public async Task Cleanup()
+    {
+        await _pair.DisposeAsync();
+        PoolManager.Shutdown();
+    }
 
     [GlobalSetup]
     public void Setup()
