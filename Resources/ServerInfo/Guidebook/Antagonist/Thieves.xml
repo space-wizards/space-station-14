@@ -42,7 +42,6 @@
     <GuideEntityEmbed Entity="SatchelThief"/>
   </Box>
   <Box>
-    <GuideEntityEmbed Entity="StorageImplanter" Caption="Anatomy"/>
     <GuideEntityEmbed Entity="C4" Caption="Breacher"/>
     <GuideEntityEmbed Entity="ChameleonProjector" Caption="Chameleon"/>
     <GuideEntityEmbed Entity="EncryptionKeyStationMaster" Caption="Communicator"/>
