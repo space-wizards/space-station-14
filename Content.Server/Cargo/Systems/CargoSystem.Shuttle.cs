@@ -334,13 +334,13 @@ public sealed partial class CargoSystem
         if (!SellPallets(gridUid, out var goods))
             return;
 
-        var baseDistribution = CreateAccountDistribution(bankAccount.PrimaryAccount, bankAccount, bankAccount.PrimaryCut);
+        var baseDistribution = CreateAccountDistribution((station, bankAccount));
         foreach (var (_, sellComponent, value) in goods)
         {
             Dictionary<ProtoId<CargoAccountPrototype>, double> distribution;
             if (sellComponent != null)
             {
-                distribution = new Dictionary<ProtoId<CargoAccountPrototype>, double>()
+                distribution = new Dictionary<ProtoId<CargoAccountPrototype>, double>
                 {
                     { sellComponent.OverrideAccount, bankAccount.PrimaryCut },
                     { bankAccount.PrimaryAccount, 1.0 - bankAccount.PrimaryCut },
