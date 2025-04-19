@@ -45,6 +45,45 @@
   - type: Shakeable
 
 - type: entity
+  parent: DrinkBase
+  id: DrinkBottleSmallBaseFull
+  suffix: Full
+  components:
+  - type: Item
+    size: Small
+  - type: Tag
+    tags:
+      - DrinkCup
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: FitsInDispenser
+    solution: drink
+  - type: Openable
+    sound:
+      collection: bottleOpenSounds
+    closeable: true
+    closeSound:
+      collection: bottleCloseSounds
+  - type: Sprite
+    state: icon
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+       - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+       - !type:SpillBehavior { }
+  - type: DnaSubstanceTrace
+  - type: Sealable
+
+- type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkBottleGlassBaseFull
   abstract: true
@@ -531,6 +570,67 @@
     - Wine
     - DrinkBottle
 
+# Large Plastic Bottles
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
+  id: DrinkSodaWaterBottleFull
+  name: soda water bottle
+  description: Like water, but angry!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: SodaWater
+          Quantity: 150
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/sodawater-bottle.rsi
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
+  id: DrinkTonicWaterBottleFull
+  name: tonic water bottle
+  description: Like soda water, but angrier maybe? Often sweeter.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 150
+        reagents:
+        - ReagentId: TonicWater
+          Quantity: 150
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/tonic_bottle.rsi
+
+# Small Plastic Bottles
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottleSmallBaseFull]
+  id: DrinkWaterBottleFull
+  name: water bottle
+  description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Water
+          Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi
+  - type: SolutionContainerVisuals
+    inHandsMaxFillLevels: 2
+    inHandsFillBaseName: -fill-
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 100
+  - type: PressurizedSolution
+  - type: Shakeable
+
 # Small Bottles
 
 - type: entity
@@ -624,72 +724,6 @@
     sprite: Objects/Consumable/Drinks/alebottle.rsi
   - type: Openable
     closeable: false
-
-- type: entity
-  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
-  id: DrinkWaterBottleFull
-  name: water bottle
-  description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
-  components:
-  - type: Item
-    size: Small
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Water
-          Quantity: 30
-  - type: Label
-    currentLabel: reagent-name-water
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/waterbottle.rsi
-    layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
-      - state: icon-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-        visible: false
-  - type: Appearance
-  - type: SolutionContainerVisuals
-    maxFillLevels: 5
-    fillBaseName: icon-
-    inHandsMaxFillLevels: 2
-    inHandsFillBaseName: -fill-
-  - type: Sealable
-
-- type: entity
-  parent: DrinkWaterBottleFull
-  id: DrinkSodaWaterBottleFull
-  name: soda water bottle
-  description: Like water, but angry!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: SodaWater
-          Quantity: 150
-  - type: Label
-    currentLabel: reagent-name-soda-water
-
-- type: entity
-  parent: DrinkWaterBottleFull
-  id: DrinkTonicWaterBottleFull
-  name: tonic water bottle
-  description: Like soda water, but angrier maybe? Often sweeter.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 150
-        reagents:
-        - ReagentId: TonicWater
-          Quantity: 150
-  - type: Label
-    currentLabel: reagent-name-tonic-water
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
