@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: crazybrain
-  changes:
-  - message: Bluespace lockers and quantum spin inverters can no longer go on the
-      arrivals shuttle.
-    type: Tweak
-  id: 7754
-  time: '2024-12-27T12:34:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34072
 - author: Plykiya
   changes:
   - message: You now see a popup when being cuffed or uncuffed again.
@@ -3915,3 +3907,10 @@
   id: 8254
   time: '2025-04-19T05:14:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32920
+- author: metalgearsloth
+  changes:
+  - message: Virtual items (e.g. wielding) are now predicted.
+    type: Add
+  id: 8255
+  time: '2025-04-19T06:51:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36617
