@@ -291,6 +291,74 @@
         Structural: 50
 
 - type: entity
+  id: ProjectileIceShard
+  parent: BaseBulletTrigger
+  name: ice shard
+  description: Brrrrr.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 60
+        Structural: 20
+  - type: ChangeTemperatureOnCollide
+    heat: -30000
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
+  - type: ProjectileGrenade
+    fillPrototype: ProjectileIceShardSecondary
+    capacity: 20
+  - type: SpawnOnTrigger
+    proto: IceCrust
+
+- type: entity
+  id: ProjectileIceShardII
+  parent: ProjectileIceShard
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ChangeTemperatureOnCollide
+    heat: -40000
+  - type: ProjectileGrenade
+    capacity: 30
+
+- type: entity
+  id: ProjectileIceShardIII
+  parent: ProjectileIceShard
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: ChangeTemperatureOnCollide
+    heat: -50000
+  - type: ProjectileGrenade
+    capacity: 40
+
+- type: entity
+  id: ProjectileIceShardSecondary
+  parent: BaseBulletTrigger
+  name: ice shard
+  description: Brrrrr.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 35
+        Cold: 15 # cold currently isn't resisted by any armor apart from like... CBURN.
+  - type: ChangeTemperatureOnCollide
+    heat: -15000
+  - type: TimedDespawn
+    lifetime: 0.15 # projectiles travel about 3 tiles away from the hit point before despawning
+  - type: SpawnOnDespawn
+    prototype: IceCrust
+  - type: SpawnOnTrigger
+    proto: IceCrust
+
+- type: entity
   parent: ProjectilePolyboltBase
   id: ProjectilePolyboltBread
   name: bread polybolt
