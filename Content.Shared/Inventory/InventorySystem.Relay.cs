@@ -4,6 +4,7 @@ using Content.Shared.Chat;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Hypospray.Events;
 using Content.Shared.Climbing.Events;
+using Content.Shared.Contraband;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Electrocution;
@@ -45,7 +46,9 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, SelfBeforeGunShotEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, SelfBeforeClimbEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, CoefficientQueryEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, GetContrabandDetailsEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ZombificationResistanceQueryEvent>(RelayInventoryEvent);
+
 
         // by-ref events
         SubscribeLocalEvent<InventoryComponent, BeforeStaminaDamageEvent>(RefRelayInventoryEvent);

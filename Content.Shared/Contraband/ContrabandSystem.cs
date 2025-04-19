@@ -1,4 +1,3 @@
-﻿using System.Linq;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
@@ -8,6 +7,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Shared.Contraband;
 
@@ -22,6 +22,7 @@ public sealed class ContrabandSystem : EntitySystem
     [Dependency] private readonly ExamineSystemShared _examine = default!;
 
     private bool _contrabandExamineEnabled;
+    private bool _contrabandExamineOnlyInHudEnabled;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -29,6 +30,7 @@ public sealed class ContrabandSystem : EntitySystem
         SubscribeLocalEvent<ContrabandComponent, GetVerbsEvent<ExamineVerb>>(OnDetailedExamine);
 
         Subs.CVar(_configuration, CCVars.ContrabandExamine, SetContrabandExamine, true);
+        Subs.CVar(_configuration, CCVars.ContrabandExamineOnlyInHUD, SetContrabandExamineOnlyInHUD, true);
     }
 
     public void CopyDetails(EntityUid uid, ContrabandComponent other, ContrabandComponent? contraband = null)
@@ -42,11 +44,24 @@ public sealed class ContrabandSystem : EntitySystem
         Dirty(uid, contraband);
     }
 
-    private void OnDetailedExamine(EntityUid ent,ContrabandComponent component, ref GetVerbsEvent<ExamineVerb> args)
+    private void OnDetailedExamine(EntityUid ent, ContrabandComponent component, ref GetVerbsEvent<ExamineVerb> args)
     {
 
         if (!_contrabandExamineEnabled)
             return;
+
+        // Checking if contraband is only shown in the HUD
+        if (_contrabandExamineOnlyInHudEnabled)
+        {
+            // Check if Examiner has ShowContrabandDetailsComponent (aghost for example), if false then check if the contraband is only shown in the HUD
+            if (HasComp<ShowContrabandDetailsComponent>(args.User) == false)
+            {
+                var ev = new GetContrabandDetailsEvent();
+                RaiseLocalEvent(args.User, ev);
+                if (!ev.CanShowContraband)
+                    return;
+            }
+        }
 
         // CanAccess is not used here, because we want people to be able to examine legality in strip menu.
         if (!args.CanInteract)
@@ -113,5 +128,10 @@ public sealed class ContrabandSystem : EntitySystem
     private void SetContrabandExamine(bool val)
     {
         _contrabandExamineEnabled = val;
+    }
+
+    private void SetContrabandExamineOnlyInHUD(bool val)
+    {
+        _contrabandExamineOnlyInHudEnabled = val;
     }
 }
