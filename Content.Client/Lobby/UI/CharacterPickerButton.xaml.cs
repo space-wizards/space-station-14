@@ -3,6 +3,7 @@ using System.Numerics;
 using Content.Client.Humanoid;
 using Content.Client.Stylesheets;
 using Content.Shared.Clothing;
+using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
@@ -55,16 +56,16 @@ public sealed partial class CharacterPickerButton : ContainerButton
         }
         else
         {
-            _previewDummy = UserInterfaceManager.GetUIController<LobbyUIController>()
-                .LoadProfileEntity(humanoid, null, true);
+            var uiController = UserInterfaceManager.GetUIController<LobbyUIController>();
+            var job = uiController.GetPreferredJob(humanoid);
+            _previewDummy = uiController.LoadProfileEntity(humanoid, job, true);
 
-            // TODO: Fix dummy character rendering
-            // var highPriorityJob = humanoid.JobPriorities.SingleOrDefault(p => p.Value == JobPriority.High).Key;
-            // if (highPriorityJob != default)
-            // {
-            //     var jobName = prototypeManager.Index(highPriorityJob).LocalizedName;
-            //     description = $"{description}\n{jobName}";
-            // }
+            if (job != prototypeManager.Index<JobPrototype>(SharedGameTicker.FallbackOverflowJob))
+            {
+                var jobName = job.LocalizedName;
+                description = $"{description}\n{jobName}";
+            }
+
             EnabledCheck.Pressed = humanoid.Enabled;
         }
 
