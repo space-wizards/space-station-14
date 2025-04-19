@@ -220,7 +220,7 @@
   - type: StorageFill
     contents:
       - id: ClothingHeadHelmetSyndicate
-      - id: ClothingOuterHardsuitSyndicate
+      - id: ClothingOuterEVASuitSyndicate
       - id: ClothingMaskGasSyndicate
       - id: ClothingHandsGlovesColorYellowBudget
       - id: DoubleEmergencyOxygenTankFilled
