@@ -12,7 +12,7 @@ namespace Content.Shared.Maps;
 /// <summary>
 ///     Handles server-side tile manipulation like prying/deconstructing tiles.
 /// </summary>
-public sealed class TileSystem : EntitySystem
+public sealed partial class TileSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -162,10 +162,7 @@ public sealed class TileSystem : EntitySystem
         {
             _decal.RemoveDecal(tileRef.GridUid, id);
         }
-
-        var plating = _tileDefinitionManager[tileDef.BaseTurf];
-        _maps.SetTile(gridUid, mapGrid, tileRef.GridIndices, new Tile(plating.TileId));
-
+        EnsureRemoveLayer(tileRef.GridIndices, gridUid, mapGrid);
         return true;
     }
 }

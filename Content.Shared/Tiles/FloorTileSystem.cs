@@ -141,7 +141,7 @@ public sealed class FloorTileSystem : EntitySystem
                     if (!_stackSystem.Use(uid, 1, stack))
                         continue;
 
-                    PlaceAt(args.User, gridUid, mapGrid, location, currentTileDefinition.TileId, component.PlaceTileSound);
+                    PlaceAt(args.User, gridUid, mapGrid, location, currentTileDefinition.TileId, component.PlaceTileSound, 0F, HasPossibleBaseTurfs(currentTileDefinition, baseTurf.ID));
                     args.Handled = true;
                     return;
                 }
@@ -167,17 +167,35 @@ public sealed class FloorTileSystem : EntitySystem
 
     public bool HasBaseTurf(ContentTileDefinition tileDef, string baseTurf)
     {
-        return tileDef.BaseTurf == baseTurf;
+        return tileDef.BaseTurf == baseTurf || HasPossibleBaseTurfs(tileDef, baseTurf);
     }
 
-    private void PlaceAt(EntityUid user, EntityUid gridUid, MapGridComponent mapGrid, EntityCoordinates location,
-        ushort tileId, SoundSpecifier placeSound, float offset = 0)
+    public bool HasPossibleBaseTurfs(ContentTileDefinition tileDef, string baseTurf)
+    {
+        return tileDef.PossibleBaseTurfs.Contains(baseTurf);
+    }
+
+    private void PlaceAt(EntityUid user,
+        EntityUid gridUid,
+        MapGridComponent mapGrid,
+        EntityCoordinates location,
+        ushort tileId,
+        SoundSpecifier placeSound,
+        float offset = 0,
+        bool isLayering=false)
     {
         _adminLogger.Add(LogType.Tile, LogImpact.Low, $"{ToPrettyString(user):actor} placed tile {_tileDefinitionManager[tileId].Name} at {ToPrettyString(gridUid)} {location}");
 
         var random = new System.Random((int) _timing.CurTick.Value);
         var variant = _tile.PickVariant((ContentTileDefinition) _tileDefinitionManager[tileId], random);
-        _map.SetTile(gridUid, mapGrid,location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
+        if (isLayering)
+        {
+            _tile.EnsureAddLayer(location.Offset(new Vector2(offset, offset)).ToVector2i(EntityManager, _mapManager, _transform), gridUid, mapGrid, new Tile(tileId, 0, variant));
+        }
+        else
+        {
+            _map.SetTile(gridUid, mapGrid,location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
+        }
 
         _audio.PlayPredicted(placeSound, location, user);
     }
