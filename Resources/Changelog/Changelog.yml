@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Toolshed console commands have been reworked. Some old commands may no
-      longer work.
-    type: Tweak
-  id: 7746
-  time: '2024-12-21T06:45:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33598
 - author: muburu
   changes:
   - message: Space Ninjas now have silent footsteps.
@@ -3910,3 +3902,13 @@
   id: 8246
   time: '2025-04-19T00:26:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36697
+- author: IProduceWidgets
+  changes:
+  - message: Vox are no longer immune to the zombie virus under certain circumstances
+    type: Fix
+  - message: The zombie virus no longer provides non-Initial Infected an undue grace
+      period before poisoning them.
+    type: Fix
+  id: 8247
+  time: '2025-04-19T00:38:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34472
