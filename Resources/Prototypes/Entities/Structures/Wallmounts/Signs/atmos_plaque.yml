@@ -3,18 +3,7 @@
   id: PlaqueAtmos
   name: atmos plaque
   components:
-  - type: WallMount
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.3,-0.3,0.3,0.3"
-        layer:
-        - MidImpassable
   - type: Sprite
-    drawdepth: WallMountedItems
     layers:
       - state: atmosplaque
         map: ["plaque"]

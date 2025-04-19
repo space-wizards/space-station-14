@@ -16,7 +16,6 @@
     - Structure
   - type: Sprite
     drawdepth: WallMountedItems
-    snapCardinals: false
 
 - type: entity
   parent: BaseWallmount
