@@ -1043,7 +1043,7 @@
     sprite: Structures/Doors/Airlocks/Standard/maint.rsi
 
 - type: entity
-  parent: AirlockHeadOfPersonnelLocked
+  parent: AirlockHeadOfSecurityLocked
   id: AirlockMaintHeadOfSecurityLocked
   components:
   - type: Sprite
