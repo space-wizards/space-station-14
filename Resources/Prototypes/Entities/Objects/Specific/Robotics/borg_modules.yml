@@ -475,7 +475,7 @@
 
 # janitorial modules (this gets its own unique things because janis are epic)
 - type: entity
-  id: BorgModuleCustodial
+  id: BorgModuleLightReplacer
   parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
   name: custodial cyborg module
   components:
@@ -642,7 +642,7 @@
   - type: ItemBorgModule
     items:
     - NodeScanner
-    - FireExtinguisherMini
+    - SprayBottle
     - GasAnalyzer
     - BorgDropper
     - BorgVial

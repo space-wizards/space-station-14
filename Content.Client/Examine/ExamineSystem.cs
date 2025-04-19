@@ -30,6 +30,9 @@ namespace Content.Client.Examine
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly VerbSystem _verbSystem = default!;
+        [Dependency] private readonly SpriteSystem _sprite = default!;
+
+        private List<Verb> _verbList = new();
 
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
@@ -157,13 +160,13 @@ namespace Content.Client.Examine
             var entity = GetEntity(ev.EntityUid);
 
             OpenTooltip(player.Value, entity, ev.CenterAtCursor, ev.OpenAtOldTooltip, ev.KnowTarget);
-            UpdateTooltipInfo(player.Value, entity, ev.Message, ev.Verbs);
+            UpdateTooltipInfo(player.Value, entity, ev.Message, ev.Verbs, getVerbs: false);
         }
 
         public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor)
         {
-            OpenTooltip(player, target, centerAtCursor, false);
-            UpdateTooltipInfo(player, target, message);
+            OpenTooltip(player, target, centerAtCursor);
+            UpdateTooltipInfo(player, target, message, getVerbs: getVerbs);
         }
 
         /// <summary>
@@ -258,7 +261,7 @@ namespace Content.Client.Examine
         /// <summary>
         ///     Fills the examine tooltip with a message and buttons if applicable.
         /// </summary>
-        public void UpdateTooltipInfo(EntityUid player, EntityUid target, FormattedMessage message, List<Verb>? verbs=null)
+        public void UpdateTooltipInfo(EntityUid player, EntityUid target, FormattedMessage message, List<Verb>? verbs=null, bool getVerbs = true)
         {
             var vBox = _examineTooltipOpen?.GetChild(0).GetChild(0);
             if (vBox == null)
@@ -282,9 +285,29 @@ namespace Content.Client.Examine
                 break;
             }
 
-            verbs ??= new List<Verb>();
             var totalVerbs = _verbSystem.GetLocalVerbs(target, player, typeof(ExamineVerb));
-            totalVerbs.UnionWith(verbs);
+
+            // We still need client-exclusive verbs even when the server sends its data in so if that's the case
+            // we remove any non-client-exclusive verbs.
+            if (!getVerbs)
+            {
+                _verbList.AddRange(totalVerbs);
+
+                foreach (var verb in _verbList)
+                {
+                    if (!verb.ClientExclusive)
+                    {
+                        totalVerbs.Remove(verb);
+                    }
+                }
+
+                _verbList.Clear();
+            }
+
+            if (verbs != null)
+            {
+                totalVerbs.UnionWith(verbs);
+            }
 
             AddVerbsToTooltip(totalVerbs);
         }
@@ -332,7 +355,7 @@ namespace Content.Client.Examine
                 if (!examine.ShowOnExamineTooltip)
                     continue;
 
-                var button = new ExamineButton(examine);
+                var button = new ExamineButton(examine, _sprite);
 
                 if (examine.HoverVerb)
                 {

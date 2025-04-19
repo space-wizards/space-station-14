@@ -124,8 +124,8 @@
   - BorgModuleCustodial
 
   radioChannels:
-  - Service
   - Science
+  - Service
 
   # Visual
   inventoryTemplateId: borgShort

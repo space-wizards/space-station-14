@@ -6,12 +6,16 @@ using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem
 {
     [Dependency] private readonly TagSystem _tagSystem = default!;
+
+    private static readonly ProtoId<TagPrototype> BypassDropChecksTag = "BypassDropChecks";
+
     private void InitializeDrop()
     {
         SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
@@ -37,7 +41,7 @@ public abstract partial class SharedHandsSystem
     private bool ShouldIgnoreRestrictions(EntityUid user)
     {
         //Checks if the Entity is something that shouldn't care about drop distance or walls ie Aghost
-        return !_tagSystem.HasTag(user, "BypassDropChecks");
+        return !_tagSystem.HasTag(user, BypassDropChecksTag);
     }
 
     /// <summary>
