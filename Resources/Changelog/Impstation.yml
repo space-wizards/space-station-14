@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Thieves now have the correct amount of beacons.
-    type: Fix
-  id: 1036
-  time: '2025-02-02T16:59:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1543
 - author: honeyed-lemons
   changes:
   - message: Adjusts lots of mail penalties and bonuses
@@ -4105,3 +4098,10 @@
   id: 1535
   time: '2025-04-19T22:55:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2276
+- author: horseplinko
+  changes:
+  - message: changed gray poison resistance to radiation resistance
+    type: Tweak
+  id: 1536
+  time: '2025-04-19T23:04:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2278
