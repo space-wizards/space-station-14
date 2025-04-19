@@ -4,7 +4,7 @@ meta:
   engineVersion: 250.0.0
   forkId: Starlight
   forkVersion: 1732131340
-  time: 04/19/2025 01:27:22
+  time: 04/19/2025 02:16:44
   entityCount: 17579
 maps:
 - 1
@@ -7963,7 +7963,7 @@ entities:
       pos: 54.5,-19.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -34298.53
+      secondsUntilStateChange: -34350.504
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8301,7 +8301,7 @@ entities:
       pos: 20.5,-31.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -279909.6
+      secondsUntilStateChange: -279961.56
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -42005,7 +42005,7 @@ entities:
       pos: 54.5,-5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -13753.307
+      secondsUntilStateChange: -13805.278
       state: Opening
 - proto: CurtainsRedOpen
   entities:
@@ -98906,11 +98906,6 @@ entities:
     - type: Transform
       pos: -42.5,4.5
       parent: 2
-  - uid: 12112
-    components:
-    - type: Transform
-      pos: -47.5,3.5
-      parent: 2
   - uid: 12113
     components:
     - type: Transform
@@ -98933,6 +98928,18 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -3.5,-8.5
+      parent: 2
+- proto: SpawnPointRoboticist
+  entities:
+  - uid: 12112
+    components:
+    - type: Transform
+      pos: -47.5,3.5
+      parent: 2
+  - uid: 12126
+    components:
+    - type: Transform
+      pos: -46.5,3.5
       parent: 2
 - proto: SpawnPointSalvageSpecialist
   entities:
@@ -98982,11 +98989,6 @@ entities:
     components:
     - type: Transform
       pos: -26.5,2.5
-      parent: 2
-  - uid: 12126
-    components:
-    - type: Transform
-      pos: -46.5,3.5
       parent: 2
   - uid: 12127
     components:
@@ -115479,7 +115481,7 @@ entities:
       - - Chemistry
       - - Security
     - type: Door
-      secondsUntilStateChange: -177914.25
+      secondsUntilStateChange: -177966.22
       state: Opening
   - uid: 14580
     components:
@@ -115624,7 +115626,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -279986.75
+      secondsUntilStateChange: -280038.72
       state: Opening
   - uid: 14602
     components:
