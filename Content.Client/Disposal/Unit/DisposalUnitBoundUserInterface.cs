@@ -3,7 +3,6 @@ using Content.Client.Power.EntitySystems;
 using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
-using static Content.Shared.Disposal.Components.DisposalUnitComponent;
 
 namespace Content.Client.Disposal.Unit
 {
@@ -19,9 +18,9 @@ namespace Content.Client.Disposal.Unit
         {
         }
 
-        private void ButtonPressed(UiButton button)
+        private void ButtonPressed(DisposalUnitComponent.UiButton button)
         {
-            SendPredictedMessage(new UiButtonPressedMessage(button));
+            SendPredictedMessage(new DisposalUnitComponent.UiButtonPressedMessage(button));
             // If we get client-side power stuff then we can predict the button presses but for now we won't as it stuffs
             // the pressure lerp up.
         }
@@ -34,9 +33,9 @@ namespace Content.Client.Disposal.Unit
 
             _disposalUnitWindow.OpenCenteredRight();
 
-            _disposalUnitWindow.Eject.OnPressed += _ => ButtonPressed(UiButton.Eject);
-            _disposalUnitWindow.Engage.OnPressed += _ => ButtonPressed(UiButton.Engage);
-            _disposalUnitWindow.Power.OnPressed += _ => ButtonPressed(UiButton.Power);
+            _disposalUnitWindow.Eject.OnPressed += _ => ButtonPressed(DisposalUnitComponent.UiButton.Eject);
+            _disposalUnitWindow.Engage.OnPressed += _ => ButtonPressed(DisposalUnitComponent.UiButton.Engage);
+            _disposalUnitWindow.Power.OnPressed += _ => ButtonPressed(DisposalUnitComponent.UiButton.Power);
 
             if (EntMan.TryGetComponent(Owner, out DisposalUnitComponent? component))
             {
@@ -59,16 +58,6 @@ namespace Content.Client.Disposal.Unit
             _disposalUnitWindow.Power.Pressed = EntMan.System<PowerReceiverSystem>().IsPowered(Owner);
             _disposalUnitWindow.Engage.Pressed = entity.Comp.Engaged;
             _disposalUnitWindow.FullPressure = disposalSystem.EstimatedFullPressure(entity.Owner, entity.Comp);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (!disposing)
-                return;
-
-            _disposalUnitWindow?.Dispose();
         }
     }
 }

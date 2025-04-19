@@ -4,7 +4,6 @@ using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using MailingUnitComponent = Content.Shared.Disposal.Components.MailingUnitComponent;
 
 namespace Content.Client.Disposal.Mailing;
 
@@ -76,15 +75,5 @@ public sealed class MailingUnitBoundUserInterface : BoundUserInterface
         {
             MailingUnitWindow.TargetListContainer.AddItem(target);
         }
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-
-        if (!disposing)
-            return;
-
-        MailingUnitWindow?.Dispose();
     }
 }

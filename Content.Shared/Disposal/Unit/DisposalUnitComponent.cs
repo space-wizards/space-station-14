@@ -8,11 +8,17 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Disposal.Components;
 
+/// <summary>
+/// Takes in entities and flushes them out to attached disposals tubes after a timer.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class DisposalUnitComponent : Component
 {
     public const string ContainerId = "disposals";
 
+    /// <summary>
+    /// Air contained in the disposal unit.
+    /// </summary>
     [DataField]
     public GasMixture Air = new(Atmospherics.CellVolume);
 
@@ -49,7 +55,7 @@ public sealed partial class DisposalUnitComponent : Component
     /// <summary>
     /// Next time the disposal unit will be pressurized.
     /// </summary>
-    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan NextPressurized = TimeSpan.Zero;
 
     /// <summary>
@@ -67,7 +73,7 @@ public sealed partial class DisposalUnitComponent : Component
     /// <summary>
     /// Removes the pressure requirement for flushing.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool DisablePressure;
 
     /// <summary>
@@ -85,7 +91,6 @@ public sealed partial class DisposalUnitComponent : Component
     /// <summary>
     /// Delay from trying to enter disposals ourselves.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public float EntryDelay = 0.5f;
 
@@ -109,7 +114,7 @@ public sealed partial class DisposalUnitComponent : Component
     /// <summary>
     /// Next time this unit will flush. Is the lesser of <see cref="FlushDelay"/> and <see cref="AutomaticEngageTime"/>
     /// </summary>
-    [DataField(customTypeSerializer:typeof(TimeOffsetSerializer)), AutoNetworkedField]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     public TimeSpan? NextFlush;
 
     [Serializable, NetSerializable]

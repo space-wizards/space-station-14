@@ -1,15 +1,9 @@
-using Content.Client.Power.EntitySystems;
-using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Unit;
-using Content.Shared.DragDrop;
-using Content.Shared.Emag.Systems;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Physics.Events;
-using static Content.Shared.Disposal.Components.DisposalUnitComponent;
 
 namespace Content.Client.Disposal.Unit;
 
@@ -41,50 +35,50 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     protected override void UpdateUI(Entity<DisposalUnitComponent> entity)
     {
-        if (_uiSystem.TryGetOpenUi<DisposalUnitBoundUserInterface>(entity.Owner, DisposalUnitUiKey.Key, out var bui))
+        if (_uiSystem.TryGetOpenUi<DisposalUnitBoundUserInterface>(entity.Owner, DisposalUnitComponent.DisposalUnitUiKey.Key, out var bui))
         {
             bui.Refresh(entity);
         }
     }
 
-    protected override void OnDisposalInit(EntityUid uid, DisposalUnitComponent disposalUnit, ComponentInit args)
+    protected override void OnDisposalInit(Entity<DisposalUnitComponent> ent, ref ComponentInit args)
     {
-        base.OnDisposalInit(uid, disposalUnit, args);
+        base.OnDisposalInit(ent, ref args);
 
-        if (!TryComp<SpriteComponent>(uid, out var sprite) || !TryComp<AppearanceComponent>(uid, out var appearance))
+        if (!TryComp<SpriteComponent>(ent, out var sprite) || !TryComp<AppearanceComponent>(ent, out var appearance))
             return;
 
-        UpdateState(uid, disposalUnit, sprite, appearance);
+        UpdateState(ent, sprite, appearance);
     }
 
-    private void OnAppearanceChange(EntityUid uid, DisposalUnitComponent unit, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(Entity<DisposalUnitComponent> ent, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        UpdateState(uid, unit, args.Sprite, args.Component);
+        UpdateState(ent, args.Sprite, args.Component);
     }
 
     /// <summary>
     /// Update visuals and tick animation
     /// </summary>
-    private void UpdateState(EntityUid uid, DisposalUnitComponent unit, SpriteComponent sprite, AppearanceComponent appearance)
+    private void UpdateState(Entity<DisposalUnitComponent> ent, SpriteComponent sprite, AppearanceComponent appearance)
     {
-        if (!_appearanceSystem.TryGetData<VisualState>(uid, Visuals.VisualState, out var state, appearance))
+        if (!_appearanceSystem.TryGetData<DisposalUnitComponent.VisualState>(ent, DisposalUnitComponent.Visuals.VisualState, out var state, appearance))
             return;
 
-        sprite.LayerSetVisible(DisposalUnitVisualLayers.Unanchored, state == VisualState.UnAnchored);
-        sprite.LayerSetVisible(DisposalUnitVisualLayers.Base, state == VisualState.Anchored);
-        sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayFlush, state is VisualState.OverlayFlushing or VisualState.OverlayCharging);
+        sprite.LayerSetVisible(DisposalUnitVisualLayers.Unanchored, state == DisposalUnitComponent.VisualState.UnAnchored);
+        sprite.LayerSetVisible(DisposalUnitVisualLayers.Base, state == DisposalUnitComponent.VisualState.Anchored);
+        sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayFlush, state is DisposalUnitComponent.VisualState.OverlayFlushing or DisposalUnitComponent.VisualState.OverlayCharging);
 
         var chargingState = sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseCharging, out var chargingLayer)
             ? sprite.LayerGetState(chargingLayer)
             : new RSI.StateId(DefaultChargeState);
 
         // This is a transient state so not too worried about replaying in range.
-        if (state == VisualState.OverlayFlushing)
+        if (state == DisposalUnitComponent.VisualState.OverlayFlushing)
         {
-            if (!_animationSystem.HasRunningAnimation(uid, AnimationKey))
+            if (!_animationSystem.HasRunningAnimation(ent, AnimationKey))
             {
                 var flushState = sprite.LayerMapTryGet(DisposalUnitVisualLayers.OverlayFlush, out var flushLayer)
                     ? sprite.LayerGetState(flushLayer)
@@ -93,7 +87,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                 // Setup the flush animation to play
                 var anim = new Animation
                 {
-                    Length = unit.FlushDelay,
+                    Length = ent.Comp.FlushDelay,
                     AnimationTracks =
                     {
                         new AnimationTrackSpriteFlick
@@ -106,46 +100,46 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                                 // Return to base state (though, depending on how the unit is
                                 // configured we might get an appearance change event telling
                                 // us to go to charging state)
-                                new AnimationTrackSpriteFlick.KeyFrame(chargingState, (float) unit.FlushDelay.TotalSeconds)
+                                new AnimationTrackSpriteFlick.KeyFrame(chargingState, (float) ent.Comp.FlushDelay.TotalSeconds)
                             }
                         },
                     }
                 };
 
-                if (unit.FlushSound != null)
+                if (ent.Comp.FlushSound != null)
                 {
                     anim.AnimationTracks.Add(
                         new AnimationTrackPlaySound
                         {
                             KeyFrames =
                             {
-                                new AnimationTrackPlaySound.KeyFrame(_audioSystem.ResolveSound(unit.FlushSound), 0)
+                                new AnimationTrackPlaySound.KeyFrame(_audioSystem.ResolveSound(ent.Comp.FlushSound), 0)
                             }
                         });
                 }
 
-                _animationSystem.Play(uid, anim, AnimationKey);
+                _animationSystem.Play(ent, anim, AnimationKey);
             }
         }
-        else if (state == VisualState.OverlayCharging)
+        else if (state == DisposalUnitComponent.VisualState.OverlayCharging)
             sprite.LayerSetState(DisposalUnitVisualLayers.OverlayFlush, chargingState);
         else
-            _animationSystem.Stop(uid, AnimationKey);
+            _animationSystem.Stop(ent.Owner, AnimationKey);
 
-        if (!_appearanceSystem.TryGetData<HandleState>(uid, Visuals.Handle, out var handleState, appearance))
-            handleState = HandleState.Normal;
+        if (!_appearanceSystem.TryGetData<DisposalUnitComponent.HandleState>(ent, DisposalUnitComponent.Visuals.Handle, out var handleState, appearance))
+            handleState = DisposalUnitComponent.HandleState.Normal;
 
-        sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayEngaged, handleState != HandleState.Normal);
+        sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayEngaged, handleState != DisposalUnitComponent.HandleState.Normal);
 
-        if (!_appearanceSystem.TryGetData<LightStates>(uid, Visuals.Light, out var lightState, appearance))
-            lightState = LightStates.Off;
+        if (!_appearanceSystem.TryGetData<DisposalUnitComponent.LightStates>(ent, DisposalUnitComponent.Visuals.Light, out var lightState, appearance))
+            lightState = DisposalUnitComponent.LightStates.Off;
 
         sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayCharging,
-                (lightState & LightStates.Charging) != 0);
+                (lightState & DisposalUnitComponent.LightStates.Charging) != 0);
         sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayReady,
-                (lightState & LightStates.Ready) != 0);
+                (lightState & DisposalUnitComponent.LightStates.Ready) != 0);
         sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayFull,
-                (lightState & LightStates.Full) != 0);
+                (lightState & DisposalUnitComponent.LightStates.Full) != 0);
     }
 }
 

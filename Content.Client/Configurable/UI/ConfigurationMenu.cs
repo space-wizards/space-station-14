@@ -13,7 +13,7 @@ namespace Content.Client.Configurable.UI
         public readonly BoxContainer Column;
         public readonly BoxContainer Row;
 
-        public readonly List<(string  name, LineEdit input)> Inputs;
+        public readonly List<(string name, LineEdit input)> Inputs;
 
         [ViewVariables]
         public Regex? Validation { get; internal set; }

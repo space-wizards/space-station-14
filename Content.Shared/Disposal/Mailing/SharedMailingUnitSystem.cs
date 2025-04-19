@@ -3,12 +3,12 @@ using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
+using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Unit;
 using Content.Shared.Disposal.Unit.Events;
 using Content.Shared.Interaction;
 using Content.Shared.Power.EntitySystems;
 using Robust.Shared.Player;
-using MailingUnitComponent = Content.Shared.Disposal.Components.MailingUnitComponent;
 
 namespace Content.Shared.Disposal.Mailing;
 
@@ -46,7 +46,7 @@ public abstract class SharedMailingUnitSystem : EntitySystem
         UpdateTargetList(uid, component);
     }
 
-    private void OnPacketReceived(EntityUid uid, MailingUnitComponent component,  DeviceNetworkPacketEvent args)
+    private void OnPacketReceived(EntityUid uid, MailingUnitComponent component, DeviceNetworkPacketEvent args)
     {
         if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || !_power.IsPowered(uid))
             return;

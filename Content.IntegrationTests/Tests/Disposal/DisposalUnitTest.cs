@@ -4,13 +4,11 @@ using System.Numerics;
 using Content.Server.Disposal.Unit;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
+using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
-using DisposalEntryComponent = Content.Shared.Disposal.Tube.DisposalEntryComponent;
-using DisposalHolderComponent = Content.Server.Disposal.Unit.DisposalHolderComponent;
 
 namespace Content.IntegrationTests.Tests.Disposal
 {
@@ -31,7 +29,6 @@ namespace Content.IntegrationTests.Tests.Disposal
                 {
                     var (_, toInsert, unit) = ev;
                     var insertTransform = EntityManager.GetComponent<TransformComponent>(toInsert);
-                    var unitTransform = EntityManager.GetComponent<TransformComponent>(unit);
                     // Not in a tube yet
                     Assert.That(insertTransform.ParentUid, Is.EqualTo(unit));
                 }, after: new[] { typeof(SharedDisposalUnitSystem) });

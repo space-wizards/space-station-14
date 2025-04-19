@@ -6,7 +6,6 @@ using Content.Shared.Climbing.Systems;
 using Content.Shared.Containers;
 using Content.Shared.Database;
 using Content.Shared.Disposal.Components;
-using Content.Shared.Disposal.Tube.Components;
 using Content.Shared.Disposal.Unit.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -26,7 +25,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -44,7 +42,6 @@ public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent
 public abstract class SharedDisposalUnitSystem : EntitySystem
 {
     [Dependency] protected readonly ActionBlockerSystem ActionBlockerSystem = default!;
-    [Dependency] protected readonly EntityLookupSystem Lookup = default!;
     [Dependency] private   readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] protected readonly MetaDataSystem Metadata = default!;
     [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
@@ -95,10 +92,13 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         SubscribeLocalEvent<DisposalUnitComponent, ContainerRelayMovementEntityEvent>(OnMovement);
     }
 
-    private void AddDisposalAltVerbs(EntityUid uid, DisposalUnitComponent component, GetVerbsEvent<AlternativeVerb> args)
+    private void AddDisposalAltVerbs(Entity<DisposalUnitComponent> ent, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract)
             return;
+
+        var uid = ent.Owner;
+        var component = ent.Comp;
 
         // Behavior for if the disposals bin has items in it
         if (component.Container.ContainedEntities.Count > 0)
@@ -225,9 +225,9 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
         args.Handled = true;
     }
 
-    protected virtual void OnDisposalInit(EntityUid uid, DisposalUnitComponent component, ComponentInit args)
+    protected virtual void OnDisposalInit(Entity<DisposalUnitComponent> ent, ref ComponentInit args)
     {
-        component.Container = Containers.EnsureContainer<Container>(uid, DisposalUnitComponent.ContainerId);
+        ent.Comp.Container = Containers.EnsureContainer<Container>(ent, DisposalUnitComponent.ContainerId);
     }
 
     private void OnPowerChange(EntityUid uid, DisposalUnitComponent component, ref PowerChangedEvent args)
@@ -406,7 +406,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         var pauseTime = Metadata.GetPauseTime(uid, metadata);
         return MathF.Min(1f,
-            (float) (GameTiming.CurTime - pauseTime - component.NextPressurized).TotalSeconds / PressurePerSecond);
+            (float)(GameTiming.CurTime - pauseTime - component.NextPressurized).TotalSeconds / PressurePerSecond);
     }
 
     protected void OnPreventCollide(EntityUid uid, DisposalUnitComponent component,
