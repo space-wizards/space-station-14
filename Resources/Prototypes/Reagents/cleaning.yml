@@ -68,17 +68,16 @@
   id: SpaceLube
   name: reagent-name-space-lube
   desc: reagent-desc-space-lube
-  slippery: true
+  slipData:
+    requiredSlipSpeed: 1
+    superSlippery: true
   physicalDesc: reagent-physical-desc-shiny
   flavor: funny
   color: "#77b58e"
   recognizable: true
   boilingPoint: 290.0 # Glycerin
   meltingPoint: 18.2
-  tileReactions:
-    - !type:SpillTileReaction
-      requiredSlipSpeed: 1
-      superSlippery: true
+  friction: 0.0
 
 - type: reagent
   id: SpaceGlue
@@ -90,8 +89,6 @@
   boilingPoint: 250.0
   meltingPoint: 380.0
   viscosity: 0.5
-  tileReactions:
-    - !type:SpillTileReaction
   reactiveEffects:
     Acidic:
       methods: [ Touch ]

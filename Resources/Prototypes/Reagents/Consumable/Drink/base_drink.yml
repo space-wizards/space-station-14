@@ -2,7 +2,8 @@
   id: BaseDrink
   group: Drinks
   abstract: true
-  slippery: true
+  slipData:
+    requiredSlipSpeed: 3.5
   metabolisms:
     Drink:
       effects:
@@ -18,7 +19,6 @@
     amount: 1
   tileReactions:
   - !type:ExtinguishTileReaction { }
-  - !type:SpillIfPuddlePresentTileReaction { }
 
 - type: reagent
   id: BaseSoda
@@ -46,6 +46,9 @@
   id: BaseAlcohol
   group: Drinks
   abstract: true
+  slipData:
+    requiredSlipSpeed: 3.5
+  friction: 0.4
   metabolisms:
     Drink:
       effects:
