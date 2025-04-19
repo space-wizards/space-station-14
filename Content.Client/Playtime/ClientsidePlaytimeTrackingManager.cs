@@ -6,7 +6,7 @@ using Content.Shared.Ghost;
 
 namespace Content.Client.Playtime;
 
-public sealed class ClientsidePlaytimeTrackingManager
+public sealed partial class ClientsidePlaytimeTrackingManager
 {
     [Dependency] private readonly IClientNetManager _clientNetManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
