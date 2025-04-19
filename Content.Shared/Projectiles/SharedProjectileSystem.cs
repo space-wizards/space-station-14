@@ -6,6 +6,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Throwing;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -38,6 +39,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
+        SubscribeLocalEvent<EmbeddableProjectileComponent, GetVerbsEvent<InteractionVerb>>(AddPullOutVerb);
         SubscribeLocalEvent<EmbeddableProjectileComponent, RemoveEmbeddedProjectileEvent>(OnEmbedRemove);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ComponentShutdown>(OnEmbeddableCompShutdown);
 
@@ -62,6 +64,31 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             new RemoveEmbeddedProjectileEvent(),
             eventTarget: embeddable,
             target: embeddable));
+    }
+
+    private void AddPullOutVerb(Entity<EmbeddableProjectileComponent> embeddable, ref GetVerbsEvent<InteractionVerb> args)
+    {
+        // As above so below
+        if (embeddable.Comp.RemovalTime == null)
+            return;
+
+        if (!args.CanAccess ||
+            !args.CanComplexInteract ||
+            !TryComp<PhysicsComponent>(embeddable, out var physics) ||
+            physics.BodyType != BodyType.Static)
+            return;
+
+        var User = args.User;
+        args.Verbs.Add(new()
+        {
+            Act = () =>
+            {
+                _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, User, embeddable.Comp.RemovalTime.Value,
+                    new RemoveEmbeddedProjectileEvent(), eventTarget: embeddable, target: embeddable));
+            },
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/pickup.svg.192dpi.png")),
+            Text = Loc.GetString("pull-out-verb-get-data-text"),
+        });
     }
 
     private void OnEmbedRemove(Entity<EmbeddableProjectileComponent> embeddable, ref RemoveEmbeddedProjectileEvent args)
