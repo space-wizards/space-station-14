@@ -227,8 +227,9 @@ namespace Content.IntegrationTests.Tests.Disposal
             await server.WaitAssertion(() =>
             {
                 // Remove power need
-                Assert.That(entityManager.TryGetComponent(disposalUnit, out ApcPowerReceiverComponent power));
-                power!.NeedsPower = false;
+                Assert.That(entityManager.TryGetComponent(disposalUnit, out ApcPowerReceiverComponent powerComp));
+                power.SetNeedsPower(disposalUnit, false);
+                powerComp.Powered = true;
 
                 // Flush with a mob and an item
                 Flush(disposalUnit, unitComponent, true, disposalSystem, human, wrench);
