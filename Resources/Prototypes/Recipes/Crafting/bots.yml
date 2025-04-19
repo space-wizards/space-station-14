@@ -12,6 +12,19 @@
     state: cleanbot
 
 - type: construction
+  name: firebot
+  id: firebot
+  graph: FireBot
+  startNode: start
+  targetNode: bot
+  category: construction-category-utilities
+  objectType: Item
+  description: This bot puts out fires wherever it goes.
+  icon:
+    sprite: Mobs/Silicon/Bots/firebot.rsi
+    state: firebot
+
+- type: construction
   name: honkbot
   id: honkbot
   graph: HonkBot

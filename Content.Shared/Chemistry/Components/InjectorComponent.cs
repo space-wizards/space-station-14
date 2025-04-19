@@ -1,7 +1,9 @@
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Chemistry.Components;
@@ -42,6 +44,15 @@ public sealed partial class InjectorComponent : Component
     /// </remarks>
     [DataField]
     public bool IgnoreMobs;
+
+    /// <summary>
+    /// Whether or not the injector is able to draw from or inject into containers that are closed/sealed
+    /// </summary>
+    /// <remarks>
+    ///     for example: droppers can not inject into cans, but syringes can
+    /// </remarks>
+    [DataField]
+    public bool IgnoreClosed = true;
 
     /// <summary>
     ///     The minimum amount of solution that can be transferred at once from this solution.
@@ -87,6 +98,14 @@ public sealed partial class InjectorComponent : Component
     [AutoNetworkedField]
     [DataField]
     public InjectorToggleMode ToggleState = InjectorToggleMode.Draw;
+
+    /// <summary>
+    /// Reagents that are allowed to be within this injector.
+    /// If a solution has both allowed and non-allowed reagents, only allowed reagents will be drawn into this injector.
+    /// A null ReagentWhitelist indicates all reagents are allowed.
+    /// </summary>
+    [DataField]
+    public List<ProtoId<ReagentPrototype>>? ReagentWhitelist = null;
 
     #region Arguments for injection doafter
 

@@ -42,6 +42,16 @@
 
 - type: entity
   parent: Airlock
+  id: AirlockHydroponics
+  suffix: Hydroponics
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/hydroponics.rsi
+  - type: Wires
+    layoutId: AirlockService
+
+- type: entity
+  parent: Airlock
   id: AirlockMedical
   suffix: Medical
   components:
@@ -196,6 +206,16 @@
     department: Cargo
   - type: Wires
     layoutId: AirlockCargo
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockHydroponicsGlass
+  suffix: Hydroponics
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/hydroponics.rsi
+  - type: Wires
+    layoutId: AirlockService
 
 - type: entity
   parent: AirlockGlass

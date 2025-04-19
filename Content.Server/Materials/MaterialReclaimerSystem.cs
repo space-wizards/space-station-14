@@ -24,6 +24,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Shared.Humanoid;
 
 namespace Content.Server.Materials;
 
@@ -186,7 +187,8 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 
         if (CanGib(uid, item, component))
         {
-            _adminLogger.Add(LogType.Gib, LogImpact.Extreme, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
+            var logImpact = HasComp<HumanoidAppearanceComponent>(item) ? LogImpact.Extreme : LogImpact.Medium;
+            _adminLogger.Add(LogType.Gib, logImpact, $"{ToPrettyString(item):victim} was gibbed by {ToPrettyString(uid):entity} ");
             SpawnChemicalsFromComposition(uid, item, completion, false, component, xform);
             _body.GibBody(item, true);
             _appearance.SetData(uid, RecyclerVisuals.Bloody, true);
@@ -258,9 +260,22 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         }
 
         // if the item we inserted has reagents, add it in.
-        if (_solutionContainer.TryGetDrainableSolution(item, out _, out var drainableSolution))
+
+        if (reclaimerComponent.OnlyReclaimDrainable)
         {
-            totalChemicals.AddSolution(drainableSolution, _prototype);
+            // Are we a recycler? Only use drainable solution.
+            if (_solutionContainer.TryGetDrainableSolution(item, out _, out var drainableSolution))
+            {
+                totalChemicals.AddSolution(drainableSolution, _prototype);
+            }
+        }
+        else
+        {
+            // Are we an industrial reagent grinder? Use extractable solution.
+            if (_solutionContainer.TryGetExtractableSolution(item, out _, out var extractableSolution))
+            {
+                totalChemicals.AddSolution(extractableSolution, _prototype);
+            }
         }
 
         if (!_solutionContainer.TryGetSolution(reclaimer, reclaimerComponent.SolutionContainerId, out var outputSolution) ||
