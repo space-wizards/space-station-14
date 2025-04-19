@@ -890,7 +890,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return false;
         }
 
-        var eventArgs = new DisarmedEvent { Target = target.Value, Source = user, PushProbability = 1 - chance };
+        var eventArgs = new DisarmedEvent(target.Value, user, 1 - chance);
         RaiseLocalEvent(target.Value, ref eventArgs);
 
         // Nothing handled it so abort.
