@@ -29,7 +29,7 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
     public const float AmbientMusicMultiplier = 3f;
     public const float LobbyMultiplier = 3f;
     public const float InterfaceMultiplier = 2f;
-    
+
     public override void Initialize()
     {
         base.Initialize();
@@ -116,6 +116,7 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
     {
         _fadeToRemove.Clear();
 
+        // Fade-outs
         foreach (var (stream, change) in _fadingOut)
         {
             if (!TryComp(stream, out AudioComponent? component))
@@ -142,6 +143,7 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 
         _fadeToRemove.Clear();
 
+        // Fade-ins
         foreach (var (stream, (change, target)) in _fadingIn)
         {
             // Cancelled elsewhere
