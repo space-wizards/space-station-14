@@ -1,0 +1,26 @@
+- type: entity
+  id: WeaponEnergyTurretStationControlPanelElectronics
+  parent: BaseElectronics
+  name: sentry turret control panel electronics
+  description: An electronics board used in a sentry turret control panel.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: security
+  - type: ElectronicsBoard
+    prototype: WeaponEnergyTurretStationControlPanel
+  - type: Tag
+    tags:
+    - TurretControlElectronics
+
+- type: entity
+  id: WeaponEnergyTurretAIControlPanelElectronics
+  parent: WeaponEnergyTurretStationControlPanelElectronics
+  name: AI sentry turret control panel electronics
+  description: An electronics board used in an AI sentry turret control panel.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: command
+  - type: ElectronicsBoard
+    prototype: WeaponEnergyTurretAIControlPanel
