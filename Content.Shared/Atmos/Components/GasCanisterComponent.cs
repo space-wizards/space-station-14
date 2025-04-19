@@ -2,10 +2,11 @@ using Content.Shared.Atmos;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Guidebook;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Atmos.Piping.Unary.Components
+namespace Content.Shared.Atmos.Components
 {
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed partial class GasCanisterComponent : Component, IGasMixtureHolder
     {
         [ViewVariables(VVAccess.ReadWrite)]

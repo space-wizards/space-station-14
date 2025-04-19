@@ -1,0 +1,45 @@
+- type: paintableGroupCategory
+  id: Canisters
+  cost: 2
+
+- type: paintableGroup
+  category: Canisters
+  iconPriority: 100
+  visuals: Canister
+  id: Canisters
+  styles:
+    storage:               StorageCanister
+    air:                   AirCanister
+    oxygen:                OxygenCanister
+    liquid-oxygen:         LiquidOxygenCanister
+    nitrogen:              NitrogenCanister
+    liquid-nitrogen:       LiquidNitrogenCanister
+    carbon-dioxide:        CarbonDioxideCanister
+    liquid-carbon-dioxide: LiquidCarbonDioxideCanister
+    plasma:                PlasmaCanister
+    tritium:               TritiumCanister
+    water-vapor:           WaterVaporCanister
+    ammonia:               AmmoniaCanister
+    nitrous-oxide:         NitrousOxideCanister
+    frezon:                FrezonCanister
+
+- type: paintableGroup
+  category: Canisters
+  iconPriority: 90
+  visuals: Canister
+  id: CanistersBroken
+  styles:
+    storage:               StorageCanisterBroken
+    air:                   AirCanisterBroken
+    oxygen:                OxygenCanisterBroken
+    nitrogen:              NitrogenCanisterBroken
+    carbon-dioxide:        CarbonDioxideCanisterBroken
+    liquid-oxygen:         OxygenCanisterBroken
+    liquid-nitrogen:       NitrogenCanisterBroken
+    liquid-carbon-dioxide: CarbonDioxideCanisterBroken
+    plasma:                PlasmaCanisterBroken
+    tritium:               TritiumCanisterBroken
+    water-vapor:           WaterVaporCanisterBroken
+    ammonia:               AmmoniaCanisterBroken
+    nitrous-oxide:         NitrousOxideCanisterBroken
+    frezon:                FrezonCanisterBroken
