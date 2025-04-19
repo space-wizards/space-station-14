@@ -48,7 +48,7 @@ namespace Content.Server.Preferences.Managers
             _sawmill = _log.GetSawmill("prefs");
         }
 
-        private void HandleUpdateCharacterMessage(MsgUpdateCharacter message)
+        private async void HandleUpdateCharacterMessage(MsgUpdateCharacter message)
         {
             var userId = message.MsgChannel.UserId;
 
@@ -56,7 +56,7 @@ namespace Content.Server.Preferences.Managers
             if (message.Profile == null)
                 _sawmill.Error($"User {userId} sent a {nameof(MsgUpdateCharacter)} with a null profile in slot {message.Slot}.");
             else
-                SetProfile(userId, message.Slot, message.Profile).Wait();
+                await SetProfile(userId, message.Slot, message.Profile);
         }
 
         public async Task SetProfile(NetUserId userId, int slot, ICharacterProfile profile)
@@ -104,12 +104,12 @@ namespace Content.Server.Preferences.Managers
                 await _db.SaveJobPrioritiesAsync(userId, jobPriorities);
         }
 
-        private void HandleDeleteCharacterMessage(MsgDeleteCharacter message)
+        private async void HandleDeleteCharacterMessage(MsgDeleteCharacter message)
         {
             var slot = message.Slot;
             var userId = message.MsgChannel.UserId;
 
-            DeleteProfile(userId, slot).Wait();
+            await DeleteProfile(userId, slot);
         }
 
         public async Task DeleteProfile(NetUserId userId, int slot)
@@ -139,7 +139,7 @@ namespace Content.Server.Preferences.Managers
             }
         }
 
-        private void HandleSetCharacterEnableMessage(MsgSetCharacterEnable message)
+        private async void HandleSetCharacterEnableMessage(MsgSetCharacterEnable message)
         {
             var slot = message.CharacterIndex;
             var val = message.EnabledValue;
@@ -173,14 +173,14 @@ namespace Content.Server.Preferences.Managers
             prefsData.Prefs = new PlayerPreferences(profiles, curPrefs.AdminOOCColor, curPrefs.JobPriorities);
 
             if (ShouldStorePrefs(session.Channel.AuthType))
-                _db.SaveCharacterSlotAsync(userId, profile, slot).Wait();
+                await _db.SaveCharacterSlotAsync(userId, profile, slot);
         }
 
-        public void HandleUpdateJobPrioritiesMessage(MsgUpdateJobPriorities message)
+        public async void HandleUpdateJobPrioritiesMessage(MsgUpdateJobPriorities message)
         {
             var userId = message.MsgChannel.UserId;
 
-            SetJobPriorities(userId, message.JobPriorities).Wait();
+            await SetJobPriorities(userId, message.JobPriorities);
         }
 
         // Should only be called via UserDbDataManager.
