@@ -214,8 +214,11 @@ public abstract partial class SharedMoverController : VirtualController
         var (walkDir, sprintDir) = GetVelocityInput(mover);
         var touching = false;
 
+        //if weightless or in air do a different function
+        //else do another different function
+
         // Handle wall-pushes.
-        if (weightless)
+        if (weightless || physicsComponent.BodyStatus == BodyStatus.InAir)
         {
             if (xform.GridUid != null)
                 touching = true;
@@ -230,6 +233,10 @@ public abstract partial class SharedMoverController : VirtualController
                 if (!touching && MobMoverQuery.TryComp(uid, out var mobMover))
                     touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, uid, physicsComponent);
             }
+        }
+        else
+        {
+
         }
 
         // Get current tile def for things like speed/friction mods

@@ -12,14 +12,14 @@ public sealed partial class JetpackUserComponent : Component
     public EntityUid Jetpack;
 
     [DataField, AutoNetworkedField]
-    public float WeightlessAcceleration = 1f;
+    public float WeightlessAcceleration;
 
     [DataField, AutoNetworkedField]
-    public float WeightlessFriction = 0.3f;
+    public float WeightlessFriction;
 
     [DataField, AutoNetworkedField]
-    public float WeightlessFrictionNoInput = 0.3f;
+    public float WeightlessFrictionNoInput;
 
     [DataField, AutoNetworkedField]
-    public float WeightlessModifier = 1.2f;
+    public float WeightlessModifier;
 }

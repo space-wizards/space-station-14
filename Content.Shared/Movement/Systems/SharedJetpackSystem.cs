@@ -89,7 +89,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         }
     }
 
-    private void SetupUser(EntityUid user, EntityUid jetpackUid)
+    private void SetupUser(EntityUid user, EntityUid jetpackUid, JetpackComponent component)
     {
         var userComp = EnsureComp<JetpackUserComponent>(user);
 
@@ -97,6 +97,10 @@ public abstract class SharedJetpackSystem : EntitySystem
             _physics.SetBodyStatus(user, physics, BodyStatus.InAir);
 
         userComp.Jetpack = jetpackUid;
+        userComp.WeightlessAcceleration = component.Acceleration;
+        userComp.WeightlessModifier = component.WeightlessModifier;
+        userComp.WeightlessFriction = component.Friction;
+        userComp.WeightlessFrictionNoInput = component.Friction;
         _movementSpeedModifier.RefreshWeightlessModifiers(user);
     }
 
@@ -175,7 +179,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         {
             if (enabled)
             {
-                SetupUser(user.Value, uid);
+                SetupUser(user.Value, uid, component);
             }
             else
             {
