@@ -256,9 +256,9 @@
 
 - type: entity
   parent: [ClothingEyesBase, ShowMedicalIcons]
-  id: ClothingEyesGlassesMedChem
+  id: ClothingEyesGlassesMedical
   name: medical analysis goggles
-  description: Goggles that can scan the chemical composition of a solution and have the scanning capabilities of a medical hud.
+  description: Goggles that can scan the chemical composition of a solution and have the health scanning capabilities of a medical hud.
   components:
     - type: Sprite
       sprite: Clothing/Eyes/Glasses/medical.rsi
