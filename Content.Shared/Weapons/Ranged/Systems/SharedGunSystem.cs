@@ -425,10 +425,9 @@ public abstract partial class SharedGunSystem : EntitySystem
         Physics.SetLinearVelocity(uid, finalLinear, body: physics);
 
         var projectile = EnsureComp<ProjectileComponent>(uid);
-        if (!TerminatingOrDeleted(gunUid))
-            projectile.Weapon = gunUid;
+        projectile.Weapon = gunUid;
         var shooter = user ?? gunUid;
-        if (!TerminatingOrDeleted(shooter))
+        if (shooter != null)
             Projectiles.SetShooter(uid, projectile, shooter!.Value);
 
         TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle() + projectile.Angle);
