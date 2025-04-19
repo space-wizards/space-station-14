@@ -4,6 +4,7 @@ using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.IdentityManagement;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
+using Content.Shared.Toggleable;
 
 namespace Content.Client.Atmos.UI;
 
@@ -40,7 +41,7 @@ public sealed class GasPressurePumpBoundUserInterface(EntityUid owner, Enum uiKe
         if (!EntMan.TryGetComponent(Owner, out GasPressurePumpComponent? pump))
             return;
 
-        _window.SetPumpStatus(pump.Enabled);
+        _window.SetPumpStatus(pump.ToggleableComponent.Enabled);
         _window.MaxPressure = pump.MaxTargetPressure;
         _window.SetOutputPressure(pump.TargetPressure);
     }

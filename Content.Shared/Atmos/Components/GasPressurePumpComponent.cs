@@ -1,4 +1,7 @@
+using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Guidebook;
+using Content.Shared.Toggleable;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Atmos.Components;
@@ -6,8 +9,14 @@ namespace Content.Shared.Atmos.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class GasPressurePumpComponent : Component
 {
-    [DataField, AutoNetworkedField]
-    public bool Enabled = true;
+    [Access(typeof(SharedGasPressurePumpSystem))]
+    public ToggleableComponent ToggleableComponent;
+
+    /// <summary>
+    ///     The default Enabled value for this comp's ToggleableComponent. Only used on init.
+    /// </summary>
+    [DataField("enabled"), AutoNetworkedField]
+    public bool DefaultEnabled = false;
 
     [DataField("inlet")]
     public string InletName = "inlet";
