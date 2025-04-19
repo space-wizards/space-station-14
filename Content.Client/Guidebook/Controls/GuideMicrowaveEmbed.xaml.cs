@@ -103,7 +103,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
             solidNameMsg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-solid-name-display", ("ingredient", ingredient.Name)));
             solidNameMsg.Pop();
 
-            var solidNameLabel = new GuidebookAnchor();
+            var solidNameLabel = new GuidebookRichPrototypeLink();
             solidNameLabel.SetMessage(solidNameMsg);
             solidNameLabel.LinkedPrototype = ingredient;
 
@@ -134,7 +134,7 @@ public sealed partial class GuideMicrowaveEmbed : PanelContainer, IDocumentTag, 
             liquidColorMsg.AddMarkupOrThrow(Loc.GetString("guidebook-microwave-reagent-color-display", ("color", reagent.SubstanceColor)));
             liquidColorMsg.Pop();
 
-            var liquidColorLabel = new GuidebookAnchor();
+            var liquidColorLabel = new GuidebookRichPrototypeLink();
             liquidColorLabel.SetMessage(liquidColorMsg);
             liquidColorLabel.HorizontalAlignment = Control.HAlignment.Center;
             liquidColorLabel.LinkedPrototype = reagent;
