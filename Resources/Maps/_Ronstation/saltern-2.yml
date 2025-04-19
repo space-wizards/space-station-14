@@ -4,7 +4,7 @@ meta:
   engineVersion: 254.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/19/2025 06:18:19
+  time: 04/19/2025 12:33:08
   entityCount: 14585
 maps:
 - 12082
@@ -882,10 +882,10 @@ entities:
           8,6:
             0: 257
             2: 14
-            4: 17408
+            3: 17408
           8,7:
             2: 65297
-            4: 4
+            3: 4
           7,8:
             2: 136
           1,9:
@@ -945,10 +945,10 @@ entities:
             0: 53759
           11,2:
             0: 4319
-            3: 49152
+            4: 49152
           11,3:
             0: 61457
-            3: 204
+            4: 204
           11,-1:
             0: 30583
           11,4:
@@ -959,9 +959,9 @@ entities:
             0: 61559
           12,2:
             0: 255
-            3: 28672
+            4: 28672
           12,3:
-            3: 119
+            4: 119
             0: 61440
           12,-1:
             0: 29311
@@ -992,7 +992,7 @@ entities:
             2: 65528
           14,4:
             2: 15
-            3: 60928
+            4: 60928
           15,0:
             0: 5393
             2: 34952
@@ -1439,28 +1439,28 @@ entities:
           9,6:
             2: 15
             5: 4352
-            3: 17408
+            4: 17408
           9,7:
             5: 1
             2: 65280
-            3: 4
+            4: 4
           10,5:
             0: 4095
           10,6:
             2: 15
-            3: 4352
+            4: 4352
             6: 17408
           10,7:
-            3: 1
+            4: 1
             2: 65280
             6: 4
           11,5:
             0: 4095
           11,6:
             2: 15
-            3: 21760
+            4: 21760
           11,7:
-            3: 5
+            4: 5
             2: 65280
           12,5:
             0: 4095
@@ -1484,7 +1484,7 @@ entities:
           14,6:
             2: 119
           14,5:
-            3: 14
+            4: 14
             2: 50176
           15,5:
             2: 61672
@@ -1721,7 +1721,7 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -1736,7 +1736,7 @@ entities:
           temperature: 293.15
           moles:
           - 0
-          - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -4356,10 +4356,6 @@ entities:
             2318: -27,8
             3361: 4,-12
             4100: 4,-23
-        - node:
-            color: '#8080807F'
-            id: WarnCornerGreyscaleSE
-          decals:
             4473: -29,16
         - node:
             color: '#9FED5896'
@@ -4667,10 +4663,6 @@ entities:
             3961: -29,-21
             3962: -29,-26
             3998: -20,-29
-        - node:
-            color: '#8080807F'
-            id: WarnFullGreyscale
-          decals:
             4474: -28,16
         - node:
             color: '#8C347F96'
@@ -7986,7 +7978,7 @@ entities:
       pos: 26.5,-19.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -173090.73
+      secondsUntilStateChange: -173333.4
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -65663,6 +65655,13 @@ entities:
     - type: Transform
       pos: -3.5,-43.5
       parent: 31
+- proto: MachineMaterialSilo
+  entities:
+  - uid: 2288
+    components:
+    - type: Transform
+      pos: -7.5,-28.5
+      parent: 31
 - proto: MagazinePistol
   entities:
   - uid: 4977
@@ -67870,11 +67869,6 @@ entities:
       parent: 31
 - proto: PottedPlantRandomPlastic
   entities:
-  - uid: 2288
-    components:
-    - type: Transform
-      pos: -7.5,-28.5
-      parent: 31
   - uid: 2316
     components:
     - type: Transform
