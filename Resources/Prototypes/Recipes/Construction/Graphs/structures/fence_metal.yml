@@ -7,33 +7,21 @@
     - !type:DeleteEntity { }
     edges:
     - to: straight
-      completed:
-      - !type:SnapToGrid
-        southRotation: true
       steps:
       - material: MetalRod
         amount: 5
         doAfter: 6
     - to: corner
-      completed:
-      - !type:SnapToGrid
-        southRotation: true
       steps:
       - material: MetalRod
         amount: 5
         doAfter: 6
     - to: end
-      completed:
-      - !type:SnapToGrid
-        southRotation: true
       steps:
       - material: MetalRod
         amount: 5
         doAfter: 6
     - to: gate
-      completed:
-      - !type:SnapToGrid
-        southRotation: true
       steps:
       - material: MetalRod
         amount: 5

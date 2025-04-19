@@ -271,9 +271,6 @@
               doAfter: 1
 
         - to: diagonalshuttleWall
-          completed:
-            - !type:SnapToGrid
-              southRotation: false
           conditions:
             - !type:EntityAnchored { }
           steps:
