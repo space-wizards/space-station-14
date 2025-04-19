@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5
-  changes:
-  - message: Diona can now chirp.
-    type: Add
-  - message: Nymphs can scream and laugh like adult diona.
-    type: Add
-  id: 7743
-  time: '2024-12-20T22:34:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32511
 - author: ScarKy0
   changes:
   - message: Syndicate uplinks now have 6 discounts instead of 3.
@@ -3912,3 +3903,10 @@
   id: 8243
   time: '2025-04-19T00:04:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34169
+- author: Alpaccalypse
+  changes:
+  - message: The cocktail "Irish slammer" has been renamed to "Grenade Penguin".
+    type: Tweak
+  id: 8244
+  time: '2025-04-19T00:24:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34181
