@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: justdie12
-  changes:
-  - message: Flipped signal disposal routers sprite
-    type: Fix
-  id: 7767
-  time: '2024-12-31T13:25:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34139
 - author: ArtisticRoomba
   changes:
   - message: Shotgun crate now comes with 4 lethal shell boxes.
@@ -3908,3 +3901,11 @@
   id: 8267
   time: '2025-04-19T20:20:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34036
+- author: coffeeware, MilenVolf
+  changes:
+  - message: Most common mobs without hands now can't dump containers wtih solution
+      by drag and dropping.
+    type: Tweak
+  id: 8268
+  time: '2025-04-19T20:32:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33350
