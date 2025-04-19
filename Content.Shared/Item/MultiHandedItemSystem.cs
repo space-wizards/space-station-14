@@ -36,21 +36,21 @@ public sealed class MultiHandedItemSystem : EntitySystem
         _virtualItem.DeleteInHandsMatching(args.User, ent.Owner);
     }
 
-    private void OnAttemptPickup(EntityUid uid, MultiHandedItemComponent component, GettingPickedUpAttemptEvent args)
+    private void OnAttemptPickup(Entity<MultiHandedItemComponent> ent, ref GettingPickedUpAttemptEvent args)
     {
-        if (TryComp<HandsComponent>(args.User, out var hands) && hands.CountFreeHands() >= component.HandsNeeded)
+        if (TryComp<HandsComponent>(args.User, out var hands) && hands.CountFreeHands() >= ent.Comp.HandsNeeded)
             return;
 
         args.Cancel();
         _popup.PopupPredictedCursor(Loc.GetString("multi-handed-item-pick-up-fail",
-            ("number", component.HandsNeeded - 1), ("item", uid)), args.User);
+            ("number", ent.Comp.HandsNeeded - 1), ("item", ent.Owner)), args.User);
     }
 
-    private void OnVirtualItemDeleted(EntityUid uid, MultiHandedItemComponent component, VirtualItemDeletedEvent args)
+    private void OnVirtualItemDeleted(Entity<MultiHandedItemComponent> ent, ref VirtualItemDeletedEvent args)
     {
-        if (args.BlockingEntity != uid || _timing.ApplyingState)
+        if (args.BlockingEntity != ent.Owner || _timing.ApplyingState)
             return;
 
-        _hands.TryDrop(args.User, uid);
+        _hands.TryDrop(args.User, ent.Owner);
     }
 }
