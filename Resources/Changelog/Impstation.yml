@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: clownspiders no longer throw an error every frame, should very very very
-      slightly improve performance
-    type: Fix
-  id: 1035
-  time: '2025-02-01T00:52:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1537
 - author: hivehum
   changes:
   - message: Thieves now have the correct amount of beacons.
@@ -4106,3 +4098,10 @@
   id: 1534
   time: '2025-04-19T22:44:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2287
+- author: TheGrimbeeper
+  changes:
+  - message: minuscule chance that the vent slimes discovered how to be made of drugs
+    type: Tweak
+  id: 1535
+  time: '2025-04-19T22:55:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2276
