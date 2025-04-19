@@ -133,7 +133,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     }
 
-    public abstract void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null);
+    public abstract void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid? user, SharedDisposalUnitComponent? disposal = null, bool doContainerInsert = false, bool doAfterInsert = true);
 
     [Serializable, NetSerializable]
     protected sealed class DisposalUnitComponentState : ComponentState
