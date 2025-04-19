@@ -1,7 +1,7 @@
 ﻿- type: soundCollection
   id: ChangelingDevourConsume
   files:
-  - /Audio/Effects/Changeling/devour_suck.ogg
+  - /Audio/Effects/Changeling/devour_consume.ogg
 
 - type: soundCollection
   id: ChangelingDevourWindup
@@ -11,4 +11,4 @@
 - type: soundCollection
   id: ChangelingTransformAttempt
   files:
-  - /Audio/Items/Toys/weh.ogg
+  - /Audio/Effects/Changeling/changeling_transform.ogg

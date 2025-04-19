@@ -169,7 +169,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
         // Make sure the target Identity has a Typing indicator, if the identity is human or dwarf and never had a mind it'll never have a typingIndicatorComponent
         if (!EnsureComp<TypingIndicatorComponent>(targetIdentity, out _))
-            return;
+            EnsureComp<TypingIndicatorComponent>(targetIdentity);
 
         TryCopyComponents(targetIdentity, ent, MetaData(ent), typeof(VocalComponent), typeof(SpeechComponent), typeof(TypingIndicatorComponent));
 
