@@ -7,7 +7,6 @@ using Content.Server.Popups;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Tube;
-using Content.Shared.Disposal.Tube.Components;
 using Content.Shared.Disposal.Unit;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
