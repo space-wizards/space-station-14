@@ -20,6 +20,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
@@ -58,6 +59,8 @@ public abstract partial class SharedMoverController : VirtualController
     protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
     protected EntityQuery<FootstepModifierComponent> FootstepModifierQuery;
     protected EntityQuery<MapGridComponent> MapGridQuery;
+
+    private static readonly ProtoId<TagPrototype> FootstepSoundTag = "FootstepSound";
 
     /// <summary>
     /// <see cref="CCVars.StopSpeed"/>
@@ -431,7 +434,7 @@ public abstract partial class SharedMoverController : VirtualController
     {
         sound = null;
 
-        if (!CanSound() || !_tags.HasTag(uid, "FootstepSound"))
+        if (!CanSound() || !_tags.HasTag(uid, FootstepSoundTag))
             return false;
 
         var coordinates = xform.Coordinates;
