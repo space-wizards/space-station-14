@@ -52,9 +52,10 @@
   - PetsNT
   - Zombie
   - Revolutionary
+  - Dragon
+  - Xeno
   - AllHostile
   - Wizard
-  - Dragon
 
 - type: npcFaction
   id: SimpleNeutral
