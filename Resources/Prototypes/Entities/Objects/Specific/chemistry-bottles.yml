@@ -642,3 +642,29 @@
         reagents:
         - ReagentId: Sulfur
           Quantity: 30
+
+# Entity tables
+- type: entityTable
+  id: BasicReagentBottlesTable
+  table: !type:GroupSelector
+    children:
+    - id: ChemistryBottleAluminium
+    - id: ChemistryBottleCarbon
+    - id: ChemistryBottleChlorine
+    - id: ChemistryBottleCopper
+    - id: ChemistryBottleEthanol
+    - id: ChemistryBottleFluorine
+    - id: ChemistryBottleHydrogen
+    - id: ChemistryBottleIodine
+    - id: ChemistryBottleIron
+    - id: ChemistryBottleLithium
+    - id: ChemistryBottleMercury
+    - id: ChemistryBottleNitrogen
+    - id: ChemistryBottleOxygen
+    - id: ChemistryBottlePhosphorus
+    - id: ChemistryBottlePotassium
+    - id: ChemistryBottleRadium
+    - id: ChemistryBottleSilicon
+    - id: ChemistryBottleSodium
+    - id: ChemistryBottleSugar
+    - id: ChemistryBottleSulfur
