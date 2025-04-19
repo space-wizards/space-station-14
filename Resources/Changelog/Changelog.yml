@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Alpaccalypse
-  changes:
-  - message: Power monitoring computer boards can no longer be researched or printed,
-      as originally intended.
-    type: Remove
-  id: 7756
-  time: '2024-12-28T10:13:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34078
 - author: psykana
   changes:
   - message: Traitor can no longer get multiple objectives to save/help/kill the same
@@ -3914,3 +3906,11 @@
   id: 8256
   time: '2025-04-19T08:49:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36714
+- author: Boaz1111
+  changes:
+  - message: Reduced the range at which security radios pick up noise from 4 tiles
+      to 1 tile.
+    type: Tweak
+  id: 8257
+  time: '2025-04-19T13:10:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34878
