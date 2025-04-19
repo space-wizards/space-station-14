@@ -180,6 +180,27 @@
     state: icon
 
 - type: stealTargetGroup
+  id: WantedListCartridge
+  name: steal-target-groups-wanted-list-cartridge
+  sprite:
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-sec
+
+- type: stealTargetGroup
+  id: InterrogatorLamp
+  name: steal-target-groups-interrogator-lamp
+  sprite:
+    sprite: Objects/Misc/Lights/lampint.rsi
+    state: lamp-int
+
+- type: stealTargetGroup
+  id: LawyerBadge
+  name: steal-target-groups-clothing-neck-lawyer-badge
+  sprite:
+    sprite: Clothing/Neck/Misc/lawyerbadge.rsi
+    state: icon
+
+- type: stealTargetGroup
   id: ClothingOuterHardsuitVoidParamed
   name: steal-target-groups-clothing-outer-hardsuit-void-paramed
   sprite:
@@ -201,11 +222,11 @@
     state: icon_alt
 
 - type: stealTargetGroup
-  id: ResearchAndDevelopmentServerMachineCircuitboard
-  name: steal-target-groups-research-and-development-server-machine-circuitboard
+  id: CrewMonitorServerBoard
+  name: steal-target-groups-crew-monitor-server-board
   sprite:
     sprite: Objects/Misc/module.rsi
-    state: science
+    state: cpu_medical
 
 - type: stealTargetGroup
   id: FireAxe
@@ -236,6 +257,13 @@
     state: cpuboard
 
 - type: stealTargetGroup
+  id: AstroNavCartridge
+  name: steal-target-groups-astro-nav-cartridge
+  sprite:
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-nav
+
+- type: stealTargetGroup
   id: ClothingEyesHudBeer
   name: steal-target-groups-clothing-eyes-hud-beer
   sprite:
@@ -248,6 +276,13 @@
   sprite:
     sprite: Objects/Specific/Chapel/bible.rsi
     state: icon
+
+- type: stealTargetGroup
+  id: Cleaver
+  name: steal-target-groups-butchers-cleaver
+  sprite:
+    sprite: Objects/Weapons/Melee/cleaver.rsi
+    state: butch
 
 - type: stealTargetGroup
   id: ClothingNeckGoldmedal
@@ -264,11 +299,25 @@
     state: icon
 
 - type: stealTargetGroup
-  id: WantedListCartridge
-  name: steal-target-groups-wanted-list-cartridge
+  id: SilverID
+  name: steal-target-groups-silver-id
   sprite:
-    sprite: Objects/Devices/cartridge.rsi
-    state: cart-sec
+    sprite: Objects/Misc/id_cards.rsi
+    state: silver
+
+- type: stealTargetGroup
+  id: AccessConfigurator
+  name: steal-target-groups-access-configurator
+  sprite:
+    sprite: Objects/Tools/access_configurator.rsi
+    state: icon
+
+- type: stealTargetGroup
+  id: ToolboxGolden
+  name: steal-target-groups-toolbox-golden
+  sprite:
+    sprite: Objects/Tools/Toolboxes/toolbox_gold.rsi
+    state: icon
 
 #Thief structures
 
@@ -341,6 +390,13 @@
   sprite:
     sprite: Structures/Furniture/golden_toilet.rsi
     state: condisposal
+
+- type: stealTargetGroup
+  id: TelecommsServer
+  name: steal-target-groups-telecomm
+  sprite:
+    sprite: Structures/Machines/telecomms.rsi
+    state: icon
 
 # Thief Animal
 

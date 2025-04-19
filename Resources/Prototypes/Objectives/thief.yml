@@ -43,7 +43,7 @@
   id: BaseThiefStealAnimalObjective
   components:
   - type: StealCondition
-    verifyMapExistence: false
+    verifyMapExistence: true
     checkAlive: true
     objectiveNoOwnerText: objective-condition-steal-title-alive-no-owner
     descriptionText: objective-condition-thief-animal-description
@@ -136,8 +136,6 @@
   - type: Objective
     difficulty: 0.7
 
-
-
 - type: entity
   parent: BaseThiefStealCollectionObjective
   id: LAMPStealCollectionObjective
@@ -195,6 +193,28 @@
   - type: Objective
     difficulty: 1
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: InterrogatorLampStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Detective
+  - type: StealCondition
+    stealGroup: InterrogatorLamp
+  - type: Objective
+    difficulty: 1.2
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ClothingNeckLawyerBadgeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Lawyer
+  - type: StealCondition
+    stealGroup: LawyerBadge
+  - type: Objective
+    difficulty: .8
+
 - type: entity                                      #Medical subgroup
   parent: BaseThiefStealObjective
   id: ClothingOuterHardsuitVoidParamedStealObjective
@@ -227,6 +247,17 @@
     stealGroup: ClothingHeadsetAltMedical
   - type: Objective
     difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: CrewMonitorServerBoardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: ResearchDirector
+  - type: StealCondition
+    stealGroup: CrewMonitorServerBoard
+  - type: Objective
+    difficulty: 1.5 # Typically in RD's office
 
 - type: entity                                      #Engineering subgroup
   parent: BaseThiefStealObjective
@@ -272,6 +303,17 @@
   - type: Objective
     difficulty: 0.7
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: AstroNavCartridgeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SalvageSpecialist
+  - type: StealCondition
+    stealGroup: AstroNavCartridge
+  - type: Objective
+    difficulty: 1
+
 - type: entity                                      #Service subgroup
   parent: BaseThiefStealObjective
   id: ClothingEyesHudBeerStealObjective
@@ -294,6 +336,17 @@
   - type: Objective
     difficulty: 0.4
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ButcherCleaverStealObjective
+  components:
+    - type: NotJobRequirement
+      job: Chef
+    - type: StealCondition
+      stealGroup: Cleaver
+    - type: Objective
+      difficulty: 1 # Do you really think Chef'll be happy?
+
 - type: entity                                      #Other subgroup
   parent: BaseThiefStealObjective
   id: ClothingNeckGoldmedalStealObjective
@@ -315,6 +368,37 @@
     stealGroup: ClothingNeckClownmedal
   - type: Objective
     difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: SilverIDStealObjective
+  components:
+  - type: NotJobRequirement
+    job: HeadOfPersonnel
+  - type: StealCondition
+    stealGroup: SilverID
+  - type: Objective
+    difficulty: 1.4
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: AccessConfiguratorStealObjective
+  components:
+  - type: NotJobRequirement
+    job: HeadOfPersonnel
+  - type: StealCondition
+    stealGroup: AccessConfigurator
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ToolboxGoldenStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: ToolboxGolden
+  - type: Objective
+    difficulty: .8
 
 # Structures
 
@@ -428,6 +512,17 @@
   - type: Objective
     difficulty: 2
 
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: TelecommsServerStealObjective
+  components:
+    - type: NotJobRequirement
+      job: ResearchDirector
+    - type: StealCondition
+      stealGroup: TelecommsServer
+    - type: Objective
+      difficulty: 1.3
+
 # Animal
 
 - type: entity
@@ -523,7 +618,7 @@
   description: You don't want your illegal activities to be discovered by anyone, do you?
   components:
   - type: Objective
-    difficulty: 1.3
+    difficulty: 0
     icon:
       sprite: Structures/Furniture/chairs.rsi
       state: shuttle

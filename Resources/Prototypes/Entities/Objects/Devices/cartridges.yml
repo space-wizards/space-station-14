@@ -173,3 +173,5 @@
         sprite: Objects/Devices/gps.rsi
         state: icon
     - type: AstroNavCartridge
+    - type: StealTarget
+      stealGroup: AstroNavCartridge
