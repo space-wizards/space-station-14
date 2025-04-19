@@ -170,6 +170,7 @@
       - id: ClothingUniformJumpsuitFamilyGuy
       - id: WristwatchGold
       - id: RubberStampGreytide
+      - id: MysteryLighterBox
 
 - type: entity
   name: Maint Loot Spawner

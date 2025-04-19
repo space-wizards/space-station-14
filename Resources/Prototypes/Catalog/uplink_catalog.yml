@@ -2153,7 +2153,7 @@
   description: uplink-combat-bakery-desc
   icon: { sprite:  Objects/Consumable/Food/Baked/bread.rsi, state: baguette}
   productEntity: CombatBakeryKit
-  discountCategory: usualDiscounts
+  discountCategory: rareDiscounts
   discountDownTo:
     Telecrystal: 2
   cost:
@@ -2165,6 +2165,17 @@
     whitelist:
     - Chef
     - Mime
+
+- type: listing
+  id: UplinkContrabandLighter
+  name: uplink-contraband-lighter-name
+  description: uplink-contraband-lighter-desc
+  icon: { sprite:  Objects/Tools/Lighters/syndielighter.rsi, state: icon}
+  productEntity: UplinkLighterBox
+  cost:
+    Telecrystal: 1
+  categories:
+  - UplinkPointless
 
 - type: listing
   id: UplinkSmugglerSatchel
