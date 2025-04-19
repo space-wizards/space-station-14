@@ -120,6 +120,7 @@
   - SignalValve
   - PneumaticValve
   - PassiveGate
+  - PressureReliefValve
 
 - type: guideEntry
   id: ManualValve
@@ -140,6 +141,11 @@
   id: PassiveGate
   name: guide-entry-passivegate
   text: "/ServerInfo/Guidebook/Engineering/PassiveGate.xml"
+
+- type: guideEntry
+  id: PressureReliefValve
+  name: guide-entry-pressurereliefvalve
+  text: "/ServerInfo/Guidebook/Engineering/PressureReliefValve.xml"
 
 - type: guideEntry
   id: MixingAndFiltering

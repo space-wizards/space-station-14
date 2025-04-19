@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Atmos.EntitySystems;
+using Content.Shared.Guidebook;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Atmos.Components;
@@ -43,6 +44,7 @@ public sealed partial class GasPressureReliefValveComponent : Component
     /// <summary>
     /// The max transfer rate of the valve.
     /// </summary>
+    [GuidebookData]
     [DataField]
     public float MaxTransferRate = Atmospherics.MaxTransferRate;
 

@@ -180,6 +180,9 @@
   - type: GasPressureReliefValve
     enabled: false
     threshold: 4500
+  - type: Construction
+    graph: GasBinary
+    node: reliefvalve
   - type: ActivatableUI
     key: enum.GasPressureReliefValveUiKey.Key
     blockSpectators: true
