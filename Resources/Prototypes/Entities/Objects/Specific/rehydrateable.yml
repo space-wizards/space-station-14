@@ -3,6 +3,22 @@
   id: RehydratableItem
   abstract: true
   components:
+  - type: Item
+    size: Tiny
+  - type: SolutionContainerManager
+    solutions:
+      cube:
+        maxVol: 1 # needs room for water
+  - type: RefillableSolution
+    solution: cube
+  - type: Reactive
+    reactions:
+    - reagents: [Water]
+      methods: [Touch, Ingestion, Injection]
+      effects:
+      - !type:AddToSolutionReaction
+        solution: cube
+  - type: Rehydratable
   - type: CollisionWake
     enabled: false
   - type: Fixtures
@@ -21,22 +37,7 @@
         hard: false
         layer:
         - LowImpassable
-  - type: Item
-    size: Tiny
-  - type: SolutionContainerManager
-    solutions:
-      cube:
-        maxVol: 1 # needs room for water
-  - type: RefillableSolution
-    solution: cube
-  - type: Reactive
-    reactions:
-    - reagents: [Water]
-      methods: [Touch, Ingestion, Injection]
-      effects:
-      - !type:AddToSolutionReaction
-        solution: cube
-  - type: Rehydratable
+
 
 - type: entity
   parent: RehydratableItem
@@ -192,6 +193,10 @@
   name: dehydrated space carp
   description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
   components:
+  - type: SolutionContainerManager
+    solutions:
+      cube:
+        maxVol: 1 # needs room for water
   - type: Fixtures # BaseItem from PlushieCarp overrides fixtures, making carp not react to extinguishers
     fixtures:
       fix1:
@@ -208,17 +213,13 @@
         hard: false
         layer:
         - LowImpassable
-  - type: EmitSoundOnUse
-    handle: false # have to make it inedible because this causes petting and chewing trigger together
-  - type: SolutionContainerManager
-    solutions:
-      cube:
-        maxVol: 1 # needs room for water
   # pet fish before rehydrating and he will be nice to you
   - type: FactionException
   - type: PettableFriend
     successString: petting-success-dehydrated-carp
     failureString: petting-failure-dehydrated-carp
+  - type: EmitSoundOnUse
+    handle: false # have to make it inedible because this causes petting and chewing trigger together
   - type: Rehydratable
     possibleSpawns:
     - MobCarp

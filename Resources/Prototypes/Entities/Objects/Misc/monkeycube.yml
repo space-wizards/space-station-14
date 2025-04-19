@@ -34,7 +34,7 @@
   components:
   - type: SpawnItemsOnUse
     items:
-      - id: MonkeyCube
+    - id: MonkeyCube
   - type: Sprite
     state: wrapper
   - type: Tag
