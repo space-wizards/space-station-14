@@ -707,6 +707,8 @@
         orGroup: DrinkPool
       - id: DrinkLemonLimeCranberryCan
         orGroup: DrinkPool
+      - id: DrinkLemonLimeClownJuiceCup
+        orGroup: DrinkPool
       - id: DrinkIcedTeaCan
         orGroup: DrinkPool
       - id: ToyMouse
