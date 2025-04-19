@@ -31,8 +31,8 @@
       roleLoadout: [ RoleSurvivalEVA ]
     - type: RandomMetadata
       nameSegments:
-        - NamesFirstMilitaryLeader
-        - NamesLastMilitary
+        - NamesMilitaryFirst
+        - NamesMilitaryLast
 
 ## Central Command
 
