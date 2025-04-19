@@ -11,6 +11,17 @@
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckEpaulettesCap
+  name: captain's epaulettes
+  description: Expensive epaulettes befitting of the Master of Command. Awarded to only the best captains.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/capepaulettes.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/capepaulettes.rsi
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckMantleCE
   name: chief engineer's manica
   description: A segmented arm covering for the experienced Chief Engineer, to signify the hazards of the job and the dangers faced to earn it.
