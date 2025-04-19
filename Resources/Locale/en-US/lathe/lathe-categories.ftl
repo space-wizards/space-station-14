@@ -1,6 +1,6 @@
 # Generic
-lathe-category-ammo = Ammo
 lathe-category-circuitry = Circuitry
+lathe-category-clothing = Clothing
 lathe-category-lights = Lights
 lathe-category-mechs = Mechs
 lathe-category-parts = Parts
@@ -12,6 +12,11 @@ lathe-category-weapons = Weapons
 lathe-category-food = Food
 lathe-category-chemicals = Chemicals
 lathe-category-materials = Materials
+
+# Sec
+lathe-category-ammo = Ammo
+lathe-category-boxes = Boxes
+lathe-category-magazines = Magazines
 
 # Uniform
 lathe-category-bedsheets = Bedsheets
