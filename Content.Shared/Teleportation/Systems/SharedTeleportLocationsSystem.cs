@@ -27,8 +27,7 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 
     private void OnUiOpen(Entity<TeleportLocationsComponent> ent, ref AfterActivatableUIOpenEvent args)
     {
-        if (ent.Comp.User is null || ent.Comp.User != args.User)
-            ent.Comp.User = args.User;
+        ent.Comp.User = args.User;
     }
 
     private void OnUiOpenAttempt(Entity<TeleportLocationsComponent> ent, ref ActivatableUIOpenAttemptEvent args)
