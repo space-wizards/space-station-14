@@ -802,6 +802,10 @@
       {
         "name": "longbow",
         "directions": 4
+      },
+      {
+        "name": "longwithbangs",
+        "directions": 4
       }
     ]
   }
