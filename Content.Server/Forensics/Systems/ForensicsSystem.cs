@@ -301,7 +301,7 @@ namespace Content.Server.Forensics
                     component.Fibers.Add(string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
             }
 
-            if (TryComp<FingerprintComponent>(user, out var fingerprint) && CanAccessFingerprint(user, out var _))
+            if (TryComp<FingerprintComponent>(user, out var fingerprint) && CanAccessFingerprint(user, out _))
                 component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
         }
 
@@ -363,7 +363,7 @@ namespace Content.Server.Forensics
         }
 
         /// <summary>
-        /// Checks if there's an access to the fingerprint of the target entity.
+        /// Checks if there's a way to access the fingerprint of the target entity.
         /// </summary>
         /// <param name="target">The entity with the fingerprint</param>
         /// <param name="blocker">The entity that blocked accessing the fingerprint</param>
