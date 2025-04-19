@@ -282,6 +282,56 @@
         - ReagentId: Vitamin
           Quantity: 1
 
+- type: entity
+  name: knafeh
+  parent: FoodBakedBase
+  id: FoodKnafeh
+  description: A delicious desert of shredded pastry around a creamy cheese base, topped with pistachios and soaked in honey.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - sweet
+    - nutty
+    - syrupy
+    - creamy
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+  - type: Sprite
+    layers:
+    - state: knafeh
+
+- type: entity
+  name: mothfeh
+  parent: FoodBakedBase
+  id: FoodMothfeh
+  description: A delicious desert of spun cotton pastry around a fibrous base, topped with decorative pistachio-like fibers.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - sweet
+    - fiber
+    - nutty
+  - type: Tag
+    tags:
+    - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 21
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7.5
+        - ReagentId: Fiber
+          Quantity: 7.5
+  - type: Sprite
+    layers:
+    - state: mothfeh
+
 # Waffles/Pancakes
 
 # Once StackVisuals is updated you should be able to mix/match stacks of pancakes.
