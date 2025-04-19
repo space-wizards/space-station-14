@@ -124,9 +124,9 @@
     suffix: false
 
 - type: entity
+  parent: BaseGrenade
   id: GrenadeCleanade
   name: cleanade grenade round
-  parent: BaseGrenade
   components:
   - type: CartridgeAmmo
     proto: BulletGrenadeCleanade
@@ -134,7 +134,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     layers:
     - state: cleanade
-      map: ["enum.AmmoVisualLayers.Base"]
+      map: [ "enum.AmmoVisualLayers.Base" ]
   - type: Appearance
   - type: SpentAmmoVisuals
     state: frag

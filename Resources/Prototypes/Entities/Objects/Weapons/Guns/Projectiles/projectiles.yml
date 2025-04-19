@@ -754,15 +754,15 @@
     maxIntensity: 10
 
 - type: entity
+  parent: BaseBulletTrigger
   id: BulletGrenadeCleanade
   name: cleanade grenade round
-  parent: BaseBulletTrigger
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     layers:
-      - state: cleanade
+    - state: cleanade
   - type: ActiveTimerTrigger
     timeRemaining: 0.3
   - type: SmokeOnTrigger

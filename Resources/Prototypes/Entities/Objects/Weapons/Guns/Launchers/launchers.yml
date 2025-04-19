@@ -54,16 +54,16 @@
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
 
 - type: entity
-  name: hydra
-  parent: [BaseWeaponLauncher, BaseGunWieldable, BaseMajorContraband]
+  parent: [ BaseWeaponLauncher, BaseGunWieldable, BaseMajorContraband ]
   id: WeaponLauncherHydra
+  name: hydra
   description: PLOOP... FSSSSSS
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Launchers/hydra_launcher.rsi
     layers:
     - state: icon
-      map: ["enum.GunVisualLayers.Base"]
+      map: [ "enum.GunVisualLayers.Base" ]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Launchers/hydra_launcher.rsi
     slots:
