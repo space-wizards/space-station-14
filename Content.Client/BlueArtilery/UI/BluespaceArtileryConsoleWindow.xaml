@@ -1,8 +1,8 @@
 <ui:FancyWindow xmlns="https://spacestation14.io"
     xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
-    Title="{Loc 'ui-bsa'}"
+    Title="Bluespace artillery control"
     Resizable="False">
-    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
-        <Button Name="FireBSA" Text="{Loc 'ui-bsa-fire'}" />
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="500">
+        <Button Name="FireBSA" Text="Fire" />
     </BoxContainer>
 </ui:FancyWindow>
