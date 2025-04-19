@@ -1,0 +1,29 @@
+- type: nanoTaskDepartment
+  id: Cargo
+  name: nano-task-ui-department-cargo
+  access: [ Cargo ]
+
+- type: nanoTaskDepartment
+  id: Command
+  name: nano-task-ui-department-command
+  access: [ Command ]
+
+- type: nanoTaskDepartment
+  id: Engineering
+  name: nano-task-ui-department-engineering
+  access: [ Engineering ]
+
+- type: nanoTaskDepartment
+  id: Medical
+  name: nano-task-ui-department-medical
+  access: [ Medical ]
+
+- type: nanoTaskDepartment
+  id: Research
+  name: nano-task-ui-department-research
+  access: [ Research ]
+
+- type: nanoTaskDepartment
+  id: Service
+  name: nano-task-ui-department-service
+  access: [ Service ]

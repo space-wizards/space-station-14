@@ -1,0 +1,10 @@
+<cartridges:NanoTaskTableHeader xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+                                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                                xmlns="https://spacestation14.io">
+                    <PanelContainer SetWidth="7" Margin="0 0 8 0" Access="Public" Name="PanelContainer">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#e93d58" />
+                        </PanelContainer.PanelOverride>
+                    </PanelContainer>
+                    <Label Name="HeaderLabel" StyleClasses="LabelHeading" Access="Public" Text="Header" />
+</cartridges:NanoTaskTableHeader>

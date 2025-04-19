@@ -1,0 +1,37 @@
+<cartridges:NanoTaskTable xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+                          xmlns="https://spacestation14.io">
+    <ScrollContainer HorizontalExpand="True">
+        <BoxContainer HorizontalExpand="True" Orientation="Vertical" Margin="8"
+                      SeparationOverride="8">
+            <!-- Heading for High Priority Items -->
+            <cartridges:NanoTaskTableHeader Name="HighPriority" Access="Public" />
+
+            <!-- Location for High Priority Items -->
+            <GridContainer Name="HighContainer"
+                           HorizontalExpand="True"
+                           Access="Public"
+                           Columns="2" />
+
+            <!-- Heading for Medium Priority Items -->
+            <cartridges:NanoTaskTableHeader Name="MediumPriority" Access="Public" />
+
+            <!-- Location for Medium Priority Items -->
+            <GridContainer Name="MediumContainer"
+                           HorizontalExpand="True"
+                           Access="Public"
+                           Columns="2" />
+
+            <!-- Location for Low Priority Items -->
+            <cartridges:NanoTaskTableHeader Name="LowPriority" Access="Public" />
+
+            <!-- Location for Low Priority Items -->
+            <GridContainer Name="LowContainer"
+                           HorizontalExpand="True"
+                           Access="Public"
+                           Columns="2" />
+
+            <Button Name="NewTaskButton" Access="Public" Text="{Loc 'nano-task-ui-new-task'}"
+                    HorizontalAlignment="Right" />
+        </BoxContainer>
+    </ScrollContainer>
+</cartridges:NanoTaskTable>
