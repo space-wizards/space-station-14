@@ -5,7 +5,7 @@
                   HorizontalExpand="True"
                   SeparationOverride="0"
                   Name="InternalHBox">
-        <Button Name="EnabledCheck" Text="character-setup-gui-character-picker-button-enabled-button" ToggleMode="True"/>
+        <Button Name="EnabledCheck" Text="{Loc 'character-setup-gui-character-picker-button-enabled-button'}" ToggleMode="True"/>
         <SpriteView Scale="2 2"
                     Margin="0 4 4 4"
                     OverrideDirection="South"
