@@ -29,9 +29,14 @@ public sealed partial class GridInRangeRule : RulesRule
         var worldPos = transform.GetWorldPosition(xform);
         var gridRange = new Vector2(Range, Range);
 
+        var gridFound = false;
         mapManager.FindGridsIntersecting(xform.MapID, new Box2(worldPos - gridRange, worldPos + gridRange),
-            (uid, grid) => { return !Inverted; });
+            (uid, grid) =>
+            {
+                gridFound = true;
+                return false;
+            });
 
-        return Inverted;
+        return gridFound ? !Inverted : Inverted;
     }
 }
