@@ -35,6 +35,9 @@
         enum.ConstructionVisuals.Layer:
           Primed: { state: primed }
           Unprimed: { state: icon }
+  - type: Tag
+    tags:
+    - HandGrenade
 
 - type: entity
   name: explosive grenade
@@ -83,6 +86,7 @@
     - Antagonists
   - type: Tag
     tags:
+    - HandGrenade
     - GrenadeFlashBang
 
 - type: entity
@@ -201,7 +205,7 @@
         sound:
           path: /Audio/Effects/Grenades/Supermatter/supermatter_loop.ogg
       - type: GravityWell
-        maxRange: 10
+        maxRange: 7
         baseRadialAcceleration: 5
         baseTangentialAcceleration: .5
         gravPulsePeriod: 0.03
@@ -248,10 +252,10 @@
         sound:
           path: /Audio/Effects/Grenades/Supermatter/whitehole_loop.ogg
       - type: GravityWell
-        maxRange: 10
-        baseRadialAcceleration: -180
-        baseTangentialAcceleration: -5
-        gravPulsePeriod: 0.01
+        maxRange: 7
+        baseRadialAcceleration: -10
+        baseTangentialAcceleration: -1
+        gravPulsePeriod: 0.03
       - type: SingularityDistortion
         intensity: -200
         falloffPower: 1.5
@@ -312,6 +316,9 @@
       map: [ "enum.ConstructionVisuals.Layer" ]
   - type: Item
     size: Small
+  - type: Tag
+    tags:
+    - HandGrenade
   - type: PayloadCase
   - type: Construction
     graph: ModularGrenadeGraph

@@ -41,7 +41,6 @@ namespace Content.Server.Power.Components
         /// <summary>
         ///     When true, causes this to never appear powered.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("powerDisabled")]
         public override bool PowerDisabled
         {

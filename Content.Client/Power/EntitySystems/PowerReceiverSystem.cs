@@ -27,11 +27,14 @@ public sealed class PowerReceiverSystem : SharedPowerReceiverSystem
         if (args.Current is not ApcPowerReceiverComponentState state)
             return;
 
+        var powerChanged = component.Powered != state.Powered;
         component.Powered = state.Powered;
         component.NeedsPower = state.NeedsPower;
         component.PowerDisabled = state.PowerDisabled;
         // SO client systems can handle it. The main reason for this is we can't guarantee compstate ordering.
-        RaisePower((uid, component));
+
+        if (powerChanged)
+            RaisePower((uid, component));
     }
 
     protected override void RaisePower(Entity<SharedApcPowerReceiverComponent> entity)

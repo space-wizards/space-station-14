@@ -41,6 +41,7 @@
   - Xeno
   - AllHostile
   - Wizard
+  - Dragon
 
 - type: npcFaction
   id: SimpleHostile
@@ -51,6 +52,8 @@
   - PetsNT
   - Zombie
   - Revolutionary
+  - Dragon
+  - Xeno
   - AllHostile
   - Wizard
 
@@ -80,6 +83,7 @@
   - Revolutionary
   - AllHostile
   - Wizard
+  - Dragon
 
 - type: npcFaction
   id: Zombie
@@ -93,6 +97,7 @@
   - Revolutionary
   - AllHostile
   - Wizard
+  - Dragon
 
 - type: npcFaction
   id: Revolutionary
