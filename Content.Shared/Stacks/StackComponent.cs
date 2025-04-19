@@ -78,6 +78,13 @@ namespace Content.Shared.Stacks
         [DataField("layerStates")]
         [ViewVariables(VVAccess.ReadWrite)]
         public List<string> LayerStates = new();
+
+        /// <summary>
+        /// Offset applied to the sprite index when selecting which sprite to display from LayerStates.
+        /// Useful for correcting sprite selection in cases where there's a 1:1 mapping between count and sprite states.
+        /// </summary>
+        [DataField]
+        public int SpriteIndexOffset;
     }
 
     [Serializable, NetSerializable]
