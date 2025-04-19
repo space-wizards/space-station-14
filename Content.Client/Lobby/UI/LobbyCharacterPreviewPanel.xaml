@@ -8,8 +8,6 @@
             <ScrollContainer VerticalExpand="True" HorizontalExpand="True" MinSize="0 100">
                 <BoxContainer Name="JobList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"/>
             </ScrollContainer>
-            <!-- <Label Name="Summary" HorizontalAlignment="Center" Margin="3 3"/> -->
-            <!-- <BoxContainer Name="ViewBox" Orientation="Horizontal" HorizontalAlignment="Center" /> -->
             <controls:VSpacer/>
             <Button Name="CharacterSetup" Text="{Loc 'lobby-character-preview-panel-character-setup-button'}"
                     HorizontalAlignment="Center"

@@ -101,6 +101,9 @@ public sealed partial class HumanoidAppearanceComponent : Component
     [DataField]
     public ProtoId<MarkingPrototype>? UndergarmentBottom = new ProtoId<MarkingPrototype>("UndergarmentBottomBoxers");
 
+    /// <summary>
+    /// The profile that this entity was originally spawned with.
+    /// </summary>
     public HumanoidCharacterProfile? BaseProfile;
 }
 

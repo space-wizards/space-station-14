@@ -362,6 +362,14 @@ namespace Content.Server.GameTicking
             SpawnPlayer(player, station, jobId, silent: silent);
         }
 
+        /// <summary>
+        /// Makes a player join into the game and spawn on a station
+        /// </summary>
+        /// <param name="player">The player joining</param>
+        /// <param name="profile">The humanoid profile they're spawning with</param>
+        /// <param name="station">The station they're spawning on</param>
+        /// <param name="jobId">An optional job for them to spawn as</param>
+        /// <param name="silent">Whether or not the player should be greeted upon joining</param>
         public void MakeJoinGame(ICommonSession player, HumanoidCharacterProfile profile, EntityUid station, string? jobId = null, bool silent = false)
         {
             if (!_playerGameStatuses.ContainsKey(player.UserId))

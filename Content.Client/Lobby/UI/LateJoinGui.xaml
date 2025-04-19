@@ -17,6 +17,5 @@
 
         <BoxContainer Name="JobList" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True"
                       SizeFlagsStretchRatio="1.3" Margin="5 5 0 0"/>
-
     </BoxContainer>
 </DefaultWindow>

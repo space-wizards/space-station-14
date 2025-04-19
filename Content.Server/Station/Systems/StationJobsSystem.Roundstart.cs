@@ -291,7 +291,7 @@ public sealed partial class StationJobsSystem
     /// </summary>
     /// <param name="weight">Weight to find, if any.</param>
     /// <param name="selectedPriority">Priority to find, if any.</param>
-    /// <param name="profiles">Profiles to look in.</param>
+    /// <param name="players">Players to select from</param>
     /// <returns>Players and a list of their matching jobs.</returns>
     private Dictionary<NetUserId, List<string>> GetPlayersJobCandidates(int? weight, JobPriority? selectedPriority, ICollection<NetUserId> players)
     {

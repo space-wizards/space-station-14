@@ -17,19 +17,17 @@
         <BoxContainer Orientation="Vertical" VerticalAlignment="Center" VerticalExpand="True" SeparationOverride="4">
                 <PanelContainer Name="EnabledCheckOutline">
                     <PanelContainer.PanelOverride>
-                        <gfx:StyleBoxTexture
-                            Modulate="#1E1E22"
-                            />
+                        <gfx:StyleBoxTexture />
                     </PanelContainer.PanelOverride>
-                    <Button Name="EnabledCheck" Text="{Loc 'character-setup-gui-character-picker-button-enabled-button'}" ToggleMode="True"/>
+                    <Button Name="EnabledCheck" ToggleMode="True"
+                            Text="{Loc 'character-setup-gui-character-picker-button-enabled-button'}"/>
                 </PanelContainer>
                 <PanelContainer Name="DeleteButtonOutline" Visible="False">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxTexture/>
                     </PanelContainer.PanelOverride>
                     <Button Name="DeleteButton"
-                            Text="{Loc 'character-setup-gui-character-picker-button-delete-button'}"
-                            />
+                            Text="{Loc 'character-setup-gui-character-picker-button-delete-button'}"/>
                 </PanelContainer>
                 <PanelContainer Name="ConfirmDeleteButtonOutline" Visible="False">
                     <PanelContainer.PanelOverride>

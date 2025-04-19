@@ -32,6 +32,9 @@ namespace Content.Client.Lobby.UI
         [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
 
+        /// <summary>
+        /// Action invoked when a job is pressed
+        /// </summary>
         public event Action<(NetEntity, int, string)> SelectedId;
 
         private readonly ClientGameTicker _gameTicker;
@@ -66,6 +69,9 @@ namespace Content.Client.Lobby.UI
             _gameTicker.LobbyJobsAvailableUpdated += JobsAvailableUpdated;
         }
 
+        /// <summary>
+        /// Rebuild all of the character picker buttons
+        /// </summary>
         private void RebuildCharacterList()
         {
             CharacterList.RemoveAllChildren();

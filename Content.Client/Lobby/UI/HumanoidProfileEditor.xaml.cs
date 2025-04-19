@@ -87,6 +87,9 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         public HumanoidCharacterProfile? Profile;
 
+        /// <summary>
+        /// The last saved profile, should match the server's copy, used for dirty state and "reset"
+        /// </summary>
         private HumanoidCharacterProfile? _savedProfile;
 
         private List<SpeciesPrototype> _species = new();
@@ -755,6 +758,10 @@ namespace Content.Client.Lobby.UI
             ReloadPreview();
         }
 
+        /// <summary>
+        /// Load the profile located at the slot into the profile editor
+        /// </summary>
+        /// <param name="slot">slot's profile to load</param>
         public void SetProfile(int slot)
         {
             if (_preferencesManager.Preferences == null)
@@ -771,7 +778,8 @@ namespace Content.Client.Lobby.UI
         /// </summary>
         private void ReloadProfilePreview()
         {
-            if (Profile == null || !_entManager.EntityExists(PreviewDummy) || !_entManager.HasComponent<HumanoidAppearanceComponent>(PreviewDummy))
+            if (Profile == null || !_entManager.EntityExists(PreviewDummy) ||
+                !_entManager.HasComponent<HumanoidAppearanceComponent>(PreviewDummy))
                 return;
 
             _entManager.System<HumanoidAppearanceSystem>().LoadProfile(PreviewDummy, Profile);
@@ -1232,7 +1240,7 @@ namespace Content.Client.Lobby.UI
         }
 
         /// <summary>
-        /// Updates selected job priorities to the profile's.
+        /// Updates selected job preferences to the priority selectors
         /// </summary>
         private void UpdateJobPreferences()
         {

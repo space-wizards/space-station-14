@@ -32,32 +32,6 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         Unloaded.Visible = !value;
     }
 
-    // public void SetSummaryText(string value)
-    // {
-    //     Summary.Text = value;
-    // }
-
-    // public void SetSprite(EntityUid uid)
-    // {
-    //     if (_previewDummy != null)
-    //     {
-    //         _entManager.DeleteEntity(_previewDummy);
-    //     }
-    //
-    //     _previewDummy = uid;
-    //
-    //     ViewBox.DisposeAllChildren();
-    //     var spriteView = new SpriteView
-    //     {
-    //         OverrideDirection = Direction.South,
-    //         Scale = new Vector2(4f, 4f),
-    //         MaxSize = new Vector2(112, 112),
-    //         Stretch = SpriteView.StretchMode.Fill,
-    //     };
-    //     spriteView.SetEntity(uid);
-    //     ViewBox.AddChild(spriteView);
-    // }
-
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
@@ -65,6 +39,9 @@ public sealed partial class LobbyCharacterPreviewPanel : Control
         _previewDummy = null;
     }
 
+    /// <summary>
+    /// Refresh the selected character summary
+    /// </summary>
     public void Refresh()
     {
         JobList.DisposeAllChildren();

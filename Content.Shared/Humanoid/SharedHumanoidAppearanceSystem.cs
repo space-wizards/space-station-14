@@ -466,6 +466,11 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         Dirty(uid, humanoid);
     }
 
+    /// <summary>
+    /// Save the humanoid profile used to create this entity
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <param name="profile"></param>
     private void SaveBaseProfile(Entity<HumanoidAppearanceComponent?> ent, HumanoidCharacterProfile profile)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -474,6 +479,11 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         ent.Comp.BaseProfile = profile.Clone();
     }
 
+    /// <summary>
+    /// Retrieve the humanoid profile used to create this entity
+    /// </summary>
+    /// <param name="ent"></param>
+    /// <returns></returns>
     public HumanoidCharacterProfile? GetBaseProfile(Entity<HumanoidAppearanceComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))

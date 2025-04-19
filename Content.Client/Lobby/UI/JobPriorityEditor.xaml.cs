@@ -31,6 +31,12 @@ public sealed partial class JobPriorityEditor : BoxContainer
 
     public event Action<Dictionary<ProtoId<JobPrototype>, JobPriority>>? Save;
 
+    /// <summary>
+    /// Create a new job priority editor
+    /// </summary>
+    /// <param name="preferencesManager"></param>
+    /// <param name="prototypeManager"></param>
+    /// <param name="requirements"></param>
     public JobPriorityEditor(
         IClientPreferencesManager preferencesManager,
         IPrototypeManager prototypeManager,
@@ -216,7 +222,7 @@ public sealed partial class JobPriorityEditor : BoxContainer
     }
 
     /// <summary>
-    /// Updates selected job priorities to the profile's.
+    /// Updates selected job priorities to the priority selectors.
     /// </summary>
     private void UpdateJobPriorities()
     {
@@ -226,6 +232,9 @@ public sealed partial class JobPriorityEditor : BoxContainer
         }
     }
 
+    /// <summary>
+    /// Check if the selected priorities are different than the saved ones
+    /// </summary>
     private void SetDirty()
     {
         // If it equals default then reset the button.
@@ -269,6 +278,9 @@ public sealed partial class JobPriorityEditor : BoxContainer
         ResetButton.Disabled = !IsDirty;
     }
 
+    /// <summary>
+    /// Load the job priorities from the preferences manager into the editor
+    /// </summary>
     public void LoadJobPriorities()
     {
         SelectedJobPriorities = _preferencesManager.Preferences?.JobPriorities.ShallowClone() ??  new Dictionary<ProtoId<JobPrototype>, JobPriority>();
@@ -276,6 +288,10 @@ public sealed partial class JobPriorityEditor : BoxContainer
         SetDirty();
     }
 
+    /// <summary>
+    /// Load the given priorities into the editor
+    /// </summary>
+    /// <param name="jobPriorities"></param>
     public void LoadJobPriorities(Dictionary<ProtoId<JobPrototype>,JobPriority>? jobPriorities)
     {
         SelectedJobPriorities = jobPriorities?.ShallowClone() ?? new Dictionary<ProtoId<JobPrototype>, JobPriority>();
