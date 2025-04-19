@@ -182,7 +182,7 @@ public abstract class SharedStrippableSystem : EntitySystem
         }
 
         //starlight start
-        var ev = new StripInsertAttemptEvent(user, target, held, slot);
+        var ev = new StripAttemptEvent(user, target, held, slot);
         RaiseLocalEvent(target, ref ev, true);
 
         if (ev.Cancelled)
@@ -282,6 +282,16 @@ public abstract class SharedStrippableSystem : EntitySystem
             _popupSystem.PopupCursor(Loc.GetString(reason));
             return false;
         }
+
+        //starlight start
+        var ev = new StripAttemptEvent(user, target, item, slot);
+        RaiseLocalEvent(target, ref ev, true);
+
+        if (ev.Cancelled)
+        {
+            return false;
+        }
+        //starlight end
 
         return true;
     }
@@ -392,7 +402,7 @@ public abstract class SharedStrippableSystem : EntitySystem
         }
 
         //starlight start
-        var ev = new StripInsertAttemptEvent(user, target, held, handName);
+        var ev = new StripAttemptEvent(user, target, held, handName);
         RaiseLocalEvent(target, ref ev, true);
 
         if (ev.Cancelled)
@@ -503,6 +513,16 @@ public abstract class SharedStrippableSystem : EntitySystem
             _popupSystem.PopupCursor(Loc.GetString("strippable-component-cannot-drop-message", ("owner", Identity.Entity(target, EntityManager))));
             return false;
         }
+
+        //starlight start
+        var ev = new StripAttemptEvent(user, target, item, handName);
+        RaiseLocalEvent(target, ref ev, true);
+
+        if (ev.Cancelled)
+        {
+            return false;
+        }
+        //starlight end
 
         return true;
     }

@@ -36,7 +36,7 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
         SubscribeLocalEvent<RestrictNestingItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
         SubscribeLocalEvent<RestrictNestingItemComponent, RestrictNestingItemPickupDoAfterEvent>(FinishPickup);
         SubscribeLocalEvent<RestrictNestingItemComponent, DoAfterAttemptEvent<RestrictNestingItemPickupDoAfterEvent>>(DuringPickup);
-        SubscribeLocalEvent<RestrictNestingItemComponent, StripInsertAttemptEvent>(StripInsertAttempt);
+        SubscribeLocalEvent<RestrictNestingItemComponent, StripAttemptEvent>(StripAttempt);
     }
 
     private void AddPickupVerb(Entity<RestrictNestingItemComponent> ent, ref GetVerbsEvent<InteractionVerb> args)
@@ -72,13 +72,14 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
         return true;
     }
 
-    private void StripInsertAttempt(Entity<RestrictNestingItemComponent> ent, ref StripInsertAttemptEvent args)
+    private void StripAttempt(Entity<RestrictNestingItemComponent> ent, ref StripAttemptEvent args)
     {
         //if we are already in a container
-        if(_containerSystem.TryGetContainingContainer((args.Target, null, null), out var container))
+        if(_containerSystem.TryGetContainingContainer((args.Target, null, null), out var container) || 
+           _containerSystem.TryGetContainingContainer((args.User, null, null), out var container2))
         {
             //check if the thing we are trying to insert is a nesting item
-            if (RecursivelyCheckForNesting(args.Held, initialItem: false))
+            if (RecursivelyCheckForNesting(args.Item, initialItem: false))
             {
                 //if it is, cancel the insert
                 args.Cancel();
