@@ -5,12 +5,12 @@
 
 - files: ["devour_windup.ogg "]
   license: "CC-BY-SA-3.0"
-  copyright: "Made by @DarkIcedCoffee on Discord for SS14, utilizing sounds from jedg from freesound"
+  copyright: "Made by @DarkIcedCoffee on Discord for SS14, utilizing sounds from Caitlin_100, jedg and EricsSoundschmiede on freesound"
   source: "https://1.1.1.1/" # TODO: FIX THIS
 
 - files: ["devour_consume.ogg"]
   license: "CC-BY-SA-3.0"
-  copyright: "Made by @DarkIcedCoffee on Discord for SS14"
+  copyright: "Made by @DarkIcedCoffee on Discord for SS14, utilizing sounds from jedg and reg7783 on freesound."
   source: "https://1.1.1.1" # TODO: FIX THIS
 
 - files: ["changeling_transform.ogg"]
