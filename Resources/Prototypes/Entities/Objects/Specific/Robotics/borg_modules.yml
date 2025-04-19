@@ -475,7 +475,7 @@
 
 # janitorial modules (this gets its own unique things because janis are epic)
 - type: entity
-  id: BorgModuleLightReplacer
+  id: BorgModuleCustodial
   parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
   name: custodial cyborg module
   components:
@@ -720,10 +720,9 @@
     - state: icon-gardening
   - type: ItemBorgModule
     items:
-    - HydroponicsToolSpade
     - HydroponicsToolMiniHoe
-    - Syringe
-    - BorgDropper
+    - HydroponicsToolSpade
+    - HydroponicsToolClippers
     - Bucket
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: gardening-module }
@@ -741,7 +740,6 @@
     items:
     - HydroponicsToolScythe
     - HydroponicsToolHatchet
-    - HydroponicsToolClippers
     - PlantBag
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: harvesting-module }
