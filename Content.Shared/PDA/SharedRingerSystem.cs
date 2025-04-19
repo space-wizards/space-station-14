@@ -1,16 +1,13 @@
-using System.Linq;
 using Content.Shared.Mind;
 using Content.Shared.PDA.Ringer;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
 using Content.Shared.Store;
-using Content.Shared.Store.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -170,11 +167,11 @@ public abstract class SharedRingerSystem : EntitySystem
     {
         // Prevent ringtone spam by checking the last time this ringtone was set
         var curTime = _timing.CurTime;
-        if (ent.Comp.LastRingtoneSetTime > curTime - ent.Comp.Cooldown)
+        if (ent.Comp.NextRingtoneSetTime > curTime)
             return;
 
-        ent.Comp.LastRingtoneSetTime = curTime;
-        DirtyField(ent.AsNullable(), nameof(RingerComponent.LastRingtoneSetTime));
+        ent.Comp.NextRingtoneSetTime = curTime + ent.Comp.Cooldown;
+        DirtyField(ent.AsNullable(), nameof(RingerComponent.NextRingtoneSetTime));
 
         // Client sent us an updated ringtone so set it to that.
         if (args.Ringtone.Length != RingtoneLength)

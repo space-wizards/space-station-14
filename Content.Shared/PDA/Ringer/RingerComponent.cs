@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.PDA.Ringer;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedRingerSystem))]
-[AutoGenerateComponentState(true, true), AutoGenerateComponentPause]
+[AutoGenerateComponentState(true, fieldDeltas: true), AutoGenerateComponentPause]
 public sealed partial class RingerComponent : Component
 {
     /// <summary>
@@ -17,7 +17,7 @@ public sealed partial class RingerComponent : Component
     /// The last time this ringer's ringtone was set.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField, AutoNetworkedField]
-    public TimeSpan LastRingtoneSetTime;
+    public TimeSpan NextRingtoneSetTime;
 
     /// <summary>
     /// The time when the next note should play.

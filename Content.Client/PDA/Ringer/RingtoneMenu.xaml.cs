@@ -11,7 +11,7 @@ namespace Content.Client.PDA.Ringer
     public sealed partial class RingtoneMenu : FancyWindow
     {
         public string[] PreviousNoteInputs = new[] { "A", "A", "A", "A", "A", "A" };
-        public LineEdit[] RingerNoteInputs = default!;
+        public LineEdit[] RingerNoteInputs;
 
         public event Action? SetRingtoneButtonPressed;
         public event Action? TestRingtoneButtonPressed;
