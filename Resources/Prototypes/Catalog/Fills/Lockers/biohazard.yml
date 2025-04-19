@@ -19,6 +19,16 @@
        - id: ClothingHeadHatHoodBioVirology
 
  - type: entity
+   id: ClosetL3CMOFilled
+   suffix: Filled, CMO
+   parent: ClosetL3CMO
+   components:
+   - type: EntityTableContainerFill
+     containers:
+       entity_storage: !type:NestedSelector
+         tableId: FillChiefMedicalOfficerBiosuit
+
+ - type: entity
    id: ClosetL3SecurityFilled
    suffix: Filled, Security
    parent: ClosetL3Security
@@ -41,7 +51,7 @@
  - type: entity
    id: ClosetL3ScienceFilled
    suffix: Filled, Science
-   parent: ClosetL3Virology
+   parent: ClosetL3Science
    components:
    - type: StorageFill
      contents:

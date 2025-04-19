@@ -204,7 +204,7 @@
         - !type:NestedSelector
           tableId: FillChiefEngineerHardsuit
 
-# No hardsuit table
+# Standard fill table
 - type: entityTable
   id: LockerFillChiefMedicalOfficerNoHardsuit
   table: !type:AllSelector
@@ -235,7 +235,15 @@
     - id: ClothingOuterHardsuitMedical
     - id: OxygenTankFilled
 
-# No hardsuit locker
+# Biosuit table
+- type: entityTable
+  id: FillChiefMedicalOfficerBiosuit
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterBioCmo
+    - id: ClothingHeadHatHoodBioCmo
+
+# Standard fill locker
 - type: entity
   id: LockerChiefMedicalOfficerFilled
   suffix: Filled
@@ -246,7 +254,7 @@
       entity_storage: !type:NestedSelector
         tableId: LockerFillChiefMedicalOfficerNoHardsuit
 
-# No hardsuit + Hardsuit locker
+# Standard fill + Hardsuit locker
 - type: entity
   id: LockerChiefMedicalOfficerFilledHardsuit
   suffix: Filled, Hardsuit
@@ -260,6 +268,36 @@
           tableId: LockerFillChiefMedicalOfficerNoHardsuit
         - !type:NestedSelector
           tableId: FillChiefMedicalOfficerHardsuit
+
+- type: entity
+  id: LockerChiefMedicalOfficerFilledBiosuit
+  suffix: Filled, Biosuit
+  parent: LockerChiefMedicalOfficer
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: LockerFillChiefMedicalOfficerNoHardsuit
+        - !type:NestedSelector
+          tableId: FillChiefMedicalOfficerBiosuit
+
+- type: entity
+  id: LockerChiefMedicalOfficerFilledBothSuits
+  suffix: Filled, Both Suits
+  parent: LockerChiefMedicalOfficer
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: LockerFillChiefMedicalOfficerNoHardsuit
+        - !type:NestedSelector
+          tableId: FillChiefMedicalOfficerHardsuit
+        - !type:NestedSelector
+          tableId: FillChiefMedicalOfficerBiosuit
 
 # No hardsuit table
 - type: entityTable
