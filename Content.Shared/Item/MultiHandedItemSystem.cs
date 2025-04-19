@@ -23,17 +23,17 @@ public sealed class MultiHandedItemSystem : EntitySystem
         SubscribeLocalEvent<MultiHandedItemComponent, GotUnequippedHandEvent>(OnUnequipped);
     }
 
-    private void OnEquipped(EntityUid uid, MultiHandedItemComponent component, GotEquippedHandEvent args)
+    private void OnEquipped(Entity<MultiHandedItemComponent> ent, ref GotEquippedHandEvent args)
     {
-        for (var i = 0; i < component.HandsNeeded - 1; i++)
+        for (var i = 0; i < ent.Comp.HandsNeeded - 1; i++)
         {
-            _virtualItem.TrySpawnVirtualItemInHand(uid, args.User);
+            _virtualItem.TrySpawnVirtualItemInHand(ent.Owner, args.User);
         }
     }
 
-    private void OnUnequipped(EntityUid uid, MultiHandedItemComponent component, GotUnequippedHandEvent args)
+    private void OnUnequipped(Entity<MultiHandedItemComponent> ent, ref GotUnequippedHandEvent args)
     {
-        _virtualItem.DeleteInHandsMatching(args.User, uid);
+        _virtualItem.DeleteInHandsMatching(args.User, ent.Owner);
     }
 
     private void OnAttemptPickup(EntityUid uid, MultiHandedItemComponent component, GettingPickedUpAttemptEvent args)
