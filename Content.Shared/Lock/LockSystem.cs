@@ -118,7 +118,7 @@ public sealed class LockSystem : EntitySystem
         if (!CanToggleLock(uid, user, quiet: false))
             return false;
 
-        if (!HasUserAccess(uid, user, quiet: false))
+        if (lockComp.UseAccess && !HasUserAccess(uid, user, quiet: false))
             return false;
 
         if (!skipDoAfter && lockComp.LockTime != TimeSpan.Zero)
@@ -143,6 +143,9 @@ public sealed class LockSystem : EntitySystem
     public void Lock(EntityUid uid, EntityUid? user, LockComponent? lockComp = null)
     {
         if (!Resolve(uid, ref lockComp))
+            return;
+
+        if (lockComp.Locked)
             return;
 
         if (user is { Valid: true })
@@ -173,6 +176,9 @@ public sealed class LockSystem : EntitySystem
     public void Unlock(EntityUid uid, EntityUid? user, LockComponent? lockComp = null)
     {
         if (!Resolve(uid, ref lockComp))
+            return;
+
+        if (!lockComp.Locked)
             return;
 
         if (user is { Valid: true })
@@ -211,7 +217,7 @@ public sealed class LockSystem : EntitySystem
         if (!CanToggleLock(uid, user, quiet: false))
             return false;
 
-        if (!HasUserAccess(uid, user, quiet: false))
+        if (lockComp.UseAccess && !HasUserAccess(uid, user, quiet: false))
             return false;
 
         if (!skipDoAfter && lockComp.UnlockTime != TimeSpan.Zero)
