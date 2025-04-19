@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: You can now select candles in trinkets loadout
-    type: Add
-  id: 7751
-  time: '2024-12-24T00:24:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33193
 - author: lzk228
   changes:
   - message: Now you are allowed to paint multiple airlocks with the spray painter.
@@ -3916,3 +3909,10 @@
   id: 8251
   time: '2025-04-19T01:38:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36546
+- author: metalgearsloth
+  changes:
+  - message: Predict gas volume pumps.
+    type: Tweak
+  id: 8252
+  time: '2025-04-19T01:48:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33835
