@@ -12,6 +12,8 @@ using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Timing;
 using System.Numerics;
+using Content.Server.Polymorph.Components;
+using Content.Server.Polymorph.Systems;
 
 namespace Content.Server.Body.Systems;
 
@@ -22,6 +24,7 @@ public sealed class BodySystem : SharedBodySystem
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly PolymorphSystem _polymorph = default!;
 
     public override void Initialize()
     {
@@ -94,7 +97,7 @@ public sealed class BodySystem : SharedBodySystem
 
     public override HashSet<EntityUid> GibBody(
         EntityUid bodyId,
-        bool gibOrgans = false,
+        bool acidify = false,
         BodyComponent? body = null,
         bool launchGibs = true,
         Vector2? splatDirection = null,
@@ -110,11 +113,23 @@ public sealed class BodySystem : SharedBodySystem
             return new HashSet<EntityUid>();
         }
 
+        // If a polymorph configured to revert on death is gibbed without dying,
+        // revert it then gib so the parent is gibbed instead of the polymorph.
+        if (TryComp<PolymorphedEntityComponent>(bodyId, out var polymorph)
+            && polymorph.Configuration.RevertOnDeath)
+        {
+            _polymorph.Revert(bodyId);
+            if (polymorph.Configuration.TransferDamage)
+                GibBody(polymorph.Parent, acidify, null, launchGibs: launchGibs, splatDirection: splatDirection,
+                splatModifier: splatModifier, splatCone:splatCone);
+            return new HashSet<EntityUid>();
+        }
+
         var xform = Transform(bodyId);
         if (xform.MapUid is null)
             return new HashSet<EntityUid>();
 
-        var gibs = base.GibBody(bodyId, gibOrgans, body, launchGibs: launchGibs,
+        var gibs = base.GibBody(bodyId, acidify, body, launchGibs: launchGibs,
             splatDirection: splatDirection, splatModifier: splatModifier, splatCone:splatCone);
 
         var ev = new BeingGibbedEvent(gibs);
