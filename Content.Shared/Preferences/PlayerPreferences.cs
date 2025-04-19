@@ -22,7 +22,12 @@ namespace Content.Shared.Preferences
         {
             _characters = new Dictionary<int, ICharacterProfile>(characters);
             AdminOOCColor = adminOOCColor;
-            JobPriorities = jobPriorities;
+            JobPriorities = SanitizeJobPriorities(jobPriorities);
+        }
+
+        private static Dictionary<ProtoId<JobPrototype>, JobPriority> SanitizeJobPriorities(Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
+        {
+            return jobPriorities.Where(kvp => kvp.Value != JobPriority.Never).ToDictionary();
         }
 
         /// <summary>

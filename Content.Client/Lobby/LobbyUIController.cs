@@ -179,20 +179,6 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
     private void RefreshLobbyPreview()
     {
         PreviewPanel?.Refresh();
-
-        // // Get selected character, load it, then set it
-        // var character = _preferencesManager.Preferences?.SelectedCharacter;
-        //
-        // if (character is not HumanoidCharacterProfile humanoid)
-        // {
-        //     PreviewPanel.SetSprite(EntityUid.Invalid);
-        //     PreviewPanel.SetSummaryText(string.Empty);
-        //     return;
-        // }
-        //
-        // var dummy = LoadProfileEntity(humanoid, null, true);
-        // PreviewPanel.SetSprite(dummy);
-        // PreviewPanel.SetSummaryText(humanoid.Summary);
     }
 
     private void RefreshProfileEditor()
@@ -243,6 +229,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         {
             lobbyGui.SwitchState(LobbyGui.LobbyGuiState.Default);
         }
+        RefreshLobbyPreview();
     }
 
     private void OpenSavePanel(Action saveAction)
