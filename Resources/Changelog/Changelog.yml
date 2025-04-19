@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: ScarKy0
-  changes:
-  - message: Syndicate uplinks now have 6 discounts instead of 3.
-    type: Tweak
-  id: 7744
-  time: '2024-12-21T02:14:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33950
-- author: JustinWinningham
-  changes:
-  - message: Wood walls no longer require girders and are built from barricades instead.
-    type: Tweak
-  id: 7745
-  time: '2024-12-21T03:28:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33902
 - author: ElectroJr
   changes:
   - message: Toolshed console commands have been reworked. Some old commands may no
@@ -3910,3 +3896,17 @@
   id: 8244
   time: '2025-04-19T00:24:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34181
+- author: ScarKy0
+  changes:
+  - message: Added a couple more tools to the artifact borg module.
+    type: Tweak
+  id: 8245
+  time: '2025-04-19T00:25:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33338
+- author: august-sun
+  changes:
+  - message: Resprited the Chief Engineer's mantle.
+    type: Tweak
+  id: 8246
+  time: '2025-04-19T00:26:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36697
