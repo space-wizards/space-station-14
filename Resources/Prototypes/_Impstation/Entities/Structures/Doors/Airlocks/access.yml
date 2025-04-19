@@ -205,6 +205,16 @@
   - type: Wires
     layoutId: AirlockSecurity
 
+# Security
+- type: entity
+  parent: AirlockMaintSecLocked
+  id: AirlockMaintBrigLocked
+  suffix: Brig, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsBrig ]
+
 # Service
 - type: entity
   parent: AirlockMaintServiceLocked
