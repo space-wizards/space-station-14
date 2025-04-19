@@ -265,3 +265,15 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
   - type: FlashImmunity
+
+- type: entity
+  parent: ClothingEyesHudMedical
+  id: ClothingEyesMedMesons
+  name: medical goggles
+  description: What kind of doctor needs goggles?
+  components:
+    - type: Sprite
+      sprite: Clothing/Eyes/Glasses/medical.rsi
+    - type: Clothing
+      sprite: Clothing/Eyes/Glasses/medical.rsi
+
