@@ -757,10 +757,11 @@ namespace Content.Client.Lobby.UI
 
         public void SetProfile(int slot)
         {
-            if(!_preferencesManager.Preferences!.TryGetHumanoidInSlot(slot, out var humanoid))
+            if (_preferencesManager.Preferences == null)
                 return;
-            if(humanoid != null)
-                _savedProfile = humanoid.Clone();
+            if (!_preferencesManager.Preferences!.TryGetHumanoidInSlot(slot, out var humanoid))
+                return;
+            _savedProfile = humanoid.Clone();
             SetProfile(humanoid, slot);
         }
 
