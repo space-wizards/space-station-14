@@ -18,7 +18,7 @@ using Content.Shared.SensorMonitoring;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.SensorMonitoring;
 

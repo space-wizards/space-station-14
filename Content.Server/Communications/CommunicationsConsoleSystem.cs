@@ -14,11 +14,11 @@ using Content.Shared.Chat;
 using Content.Shared.Communications;
 using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
-using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.Communications
 {

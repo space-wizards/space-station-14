@@ -23,7 +23,6 @@ using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Shared.Console;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;

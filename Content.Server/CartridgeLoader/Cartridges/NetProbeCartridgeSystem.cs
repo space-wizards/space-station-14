@@ -1,11 +1,11 @@
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
-using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 

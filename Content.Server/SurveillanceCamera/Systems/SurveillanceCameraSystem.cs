@@ -12,7 +12,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.SurveillanceCamera;
 

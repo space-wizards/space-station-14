@@ -2,7 +2,7 @@
 using Content.Shared.SensorMonitoring;
 using Robust.Shared.Collections;
 using ConsoleUIState = Content.Shared.SensorMonitoring.SensorMonitoringConsoleBoundInterfaceState;
-using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
+using Content.Shared.DeviceNetwork.Components;
 using IncrementalUIState = Content.Shared.SensorMonitoring.SensorMonitoringIncrementalUpdate;
 
 namespace Content.Server.SensorMonitoring;

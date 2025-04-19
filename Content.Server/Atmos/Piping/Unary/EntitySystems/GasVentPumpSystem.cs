@@ -3,8 +3,6 @@ using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.DeviceLinking.Systems;
-using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
@@ -20,6 +18,7 @@ using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Examine;
@@ -28,8 +27,6 @@ using Content.Shared.Power;
 using Content.Shared.Tools.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Timing;
-using Robust.Server.GameObjects;
-using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {

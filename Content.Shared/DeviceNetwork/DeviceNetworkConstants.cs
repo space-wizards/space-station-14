@@ -1,5 +1,5 @@
 using Robust.Shared.Utility;
-using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Shared.DeviceNetwork
 {

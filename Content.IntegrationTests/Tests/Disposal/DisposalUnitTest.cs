@@ -9,7 +9,7 @@ using Content.Shared.Disposal.Components;
 using Content.Shared.Disposal.Unit;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
-using DisposalEntryComponent = Content.Shared.Disposal.Tube.Components.DisposalEntryComponent;
+using DisposalEntryComponent = Content.Shared.Disposal.Tube.DisposalEntryComponent;
 using DisposalHolderComponent = Content.Server.Disposal.Unit.DisposalHolderComponent;
 
 namespace Content.IntegrationTests.Tests.Disposal

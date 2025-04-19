@@ -3,7 +3,7 @@ using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Wires;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Wires;
-using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.Atmos.Monitor;
 

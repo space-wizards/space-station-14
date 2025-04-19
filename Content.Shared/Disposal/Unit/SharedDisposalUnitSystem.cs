@@ -615,7 +615,7 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
         var coords = xform.Coordinates;
         var entry = _map.GetLocal(xform.GridUid.Value, grid, coords)
-            .FirstOrDefault(HasComp<DisposalEntryComponent>);
+            .FirstOrDefault(HasComp<Tube.DisposalEntryComponent>);
 
         if (entry == default || component is not DisposalUnitComponent sDisposals)
         {

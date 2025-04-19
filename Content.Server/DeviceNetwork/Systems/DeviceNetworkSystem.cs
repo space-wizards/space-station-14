@@ -9,7 +9,7 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Examine;
-using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.DeviceNetwork.Systems
 {

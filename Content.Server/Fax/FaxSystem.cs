@@ -31,7 +31,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.Power;
-using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.Fax;
 

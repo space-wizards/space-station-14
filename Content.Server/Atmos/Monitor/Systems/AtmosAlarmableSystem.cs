@@ -11,7 +11,7 @@ using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 

@@ -11,14 +11,9 @@ using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.Audio;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
-using Content.Shared.Examine;
-using Content.Shared.Interaction;
-using Content.Shared.Popups;
-using Content.Shared.Power;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
-using DeviceNetworkComponent = Content.Shared.DeviceNetwork.Components.DeviceNetworkComponent;
+using Content.Shared.DeviceNetwork.Components;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
