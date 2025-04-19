@@ -24,5 +24,5 @@ public interface IPrototypeLinkControl
     // Initially the link will not be enabled,
     // the owner can enable the link once there is a valid target
     // for the Prototype link.
-    public void ActivatePrototypeLink();
+    public void EnablePrototypeLink();
 }
