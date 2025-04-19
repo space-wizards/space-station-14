@@ -3,7 +3,9 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using System.Linq;
 
 namespace Content.Shared.Ghost
 {
@@ -14,6 +16,10 @@ namespace Content.Shared.Ghost
     public abstract class SharedGhostSystem : EntitySystem
     {
         [Dependency] protected readonly SharedPopupSystem Popup = default!;
+        [Dependency] protected readonly EntityLookupSystem Lookup = default!;
+        [Dependency] protected readonly IRobustRandom Random = default!;
+
+        private HashSet<EntityUid> _entitiesInRange = new();
 
         public override void Initialize()
         {
@@ -23,6 +29,7 @@ namespace Content.Shared.Ghost
             SubscribeLocalEvent<GhostComponent, EmoteAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<GhostComponent, DropAttemptEvent>(OnAttempt);
             SubscribeLocalEvent<GhostComponent, PickupAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
         }
 
         private void OnAttemptInteract(Entity<GhostComponent> ent, ref InteractionAttemptEvent args)
@@ -35,6 +42,39 @@ namespace Content.Shared.Ghost
         {
             if (!component.CanGhostInteract)
                 args.Cancel();
+        }
+
+        private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            Lookup.GetEntitiesInRange(args.Performer, component.BooRadius, _entitiesInRange);
+
+            var booCounter = 0;
+            foreach (var ent in _entitiesInRange)
+            {
+                var handled = DoGhostBooEvent(ent);
+
+                if (handled)
+                    booCounter++;
+
+                if (booCounter >= component.BooMaxTargets)
+                    break;
+            }
+
+            if (booCounter == 0)
+                Popup.PopupPredicted(Loc.GetString("ghost-component-boo-action-failed"), uid, uid);
+
+            args.Handled = true;
+        }
+
+        public bool DoGhostBooEvent(EntityUid target)
+        {
+            var ghostBoo = new GhostBooEvent();
+            RaiseLocalEvent(target, ref ghostBoo, true);
+
+            return ghostBoo.Handled;
         }
 
         public void SetTimeOfDeath(EntityUid uid, TimeSpan value, GhostComponent? component)

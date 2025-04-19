@@ -1,6 +1,6 @@
-using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
+using Content.Shared.Ghost;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.XAE;
 using Robust.Shared.Random;
@@ -14,7 +14,7 @@ public sealed class XAELightFlickerSystem : BaseXAESystem<XAELightFlickerCompone
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly GhostSystem _ghost = default!;
+    [Dependency] private readonly SharedGhostSystem _ghost = default!;
 
     private EntityQuery<PoweredLightComponent> _lights;
 
