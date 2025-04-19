@@ -51,7 +51,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
             return 0f;
 
         // target is escaping so you fail
-        if (_emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value))
+        if (_emergencyShuttle.IsTargetEscaping(mind.OwnedEntity.Value, false))
             return 0f;
 
         // evac has left without the target, greentext since the target is afk in space with a full oxygen tank and coordinates off.

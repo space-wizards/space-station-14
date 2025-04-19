@@ -642,7 +642,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
     /// <summary>
     /// Returns whether a target is escaping on the emergency shuttle, but only if evac has arrived.
     /// </summary>
-    public bool IsTargetEscaping(EntityUid target)
+    public bool IsTargetEscaping(EntityUid target, bool evacShuttleOnly = true)
     {
         // if evac isn't here then sitting in a pod doesn't return true
         if (!EmergencyShuttleArrived)
@@ -658,6 +658,27 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
             if (IsOnGrid(xform, stationData.EmergencyShuttle.Value))
             {
                 return true;
+            }
+        }
+
+        // check if they're on CentComm
+        var centcomms = GetCentcommMaps();
+        if (xform.MapUid != null && centcomms.Contains(xform.MapUid.Value))
+        {
+            return true;
+        }
+
+        // check if they're on a pod, if need be
+        if (!evacShuttleOnly)
+        {
+            var podQuery = AllEntityQuery<EscapePodComponent>();
+
+            while (podQuery.MoveNext(out var podUid, out var _))
+            {
+                if (IsOnGrid(xform, podUid))
+                {
+                    return true;
+                }
             }
         }
 
