@@ -190,7 +190,6 @@ public sealed partial class TestPair
                 prefMan.SetJobPriorities(s.UserId, jobPriorities),
                 prefMan.SetProfile(s.UserId, 0, newProfile));
         });
-        _modifiedSessions.UnionWith(sessions.ToHashSet());
         await Server.WaitPost(() => Task.WhenAll(tasks).Wait());
         await RunTicksSync(5);
 
@@ -200,13 +199,11 @@ public sealed partial class TestPair
     public async Task SetJobPriorities(ICommonSession player,
         Dictionary<ProtoId<JobPrototype>,JobPriority> jobPriorities)
     {
-        _modifiedSessions.Add(player);
         var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
         await Server.WaitPost(() =>
         {
             prefMan.SetJobPriorities(player.UserId, jobPriorities).Wait();
         });
-        await RunTicksSync(5);
     }
 
     public Task SetJobPriorities(Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
@@ -216,26 +213,22 @@ public sealed partial class TestPair
 
     public async Task SetJobPreferences(HashSet<ProtoId<JobPrototype>> jobPreferences)
     {
-        _modifiedSessions.Add(Player!);
         var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
         await Server.WaitPost(() =>
         {
             var profile = prefMan.GetPreferences(Player!.UserId).Characters[0] as HumanoidCharacterProfile;
             prefMan.SetProfile(Player!.UserId, 0, profile!.WithJobPreferences(jobPreferences)).Wait();
         });
-        await RunTicksSync(5);
     }
 
     public async Task SetAntagPreferences(ICommonSession player, HashSet<ProtoId<AntagPrototype>> antagPreferences)
     {
-        _modifiedSessions.Add(player);
         var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
         await Server.WaitPost(() =>
         {
             var profile = prefMan.GetPreferences(player.UserId).Characters[0] as HumanoidCharacterProfile;
             prefMan.SetProfile(player.UserId, 0, profile!.WithAntagPreferences(antagPreferences)).Wait();
         });
-        await RunTicksSync(5);
     }
 
     public Task SetAntagPreferences(HashSet<ProtoId<AntagPrototype>> antagPreferences)
