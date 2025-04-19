@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: DinnerCalzone
   changes:
-  - message: Origin's armory has gotten more stuff added to it along with some other
-      fixes.
-    type: Tweak
-  id: 1029
-  time: '2025-01-31T15:59:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1524
-- author: DinnerCalzone
-  changes:
   - message: Amber has been updated to incorporate its latest upstream changes.
     type: Tweak
   id: 1030
@@ -4095,3 +4087,11 @@
   id: 1528
   time: '2025-04-19T07:13:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2283
+- author: ultramario1998
+  changes:
+  - message: Willow's brain experiments were a success! You'll be able to inhabit
+      her body every round.
+    type: Tweak
+  id: 1529
+  time: '2025-04-19T07:15:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2262
