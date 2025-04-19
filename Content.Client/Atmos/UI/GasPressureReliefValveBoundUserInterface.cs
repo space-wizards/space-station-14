@@ -6,13 +6,10 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Atmos.UI;
 
-public sealed class GasPressureReliefValveBoundUserInterface : BoundUserInterface
+public sealed class GasPressureReliefValveBoundUserInterface(EntityUid owner, Enum uiKey)
+    : BoundUserInterface(owner, uiKey)
 {
     private GasPressureReliefValveWindow? _window;
-
-    public GasPressureReliefValveBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {
