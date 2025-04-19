@@ -16,10 +16,6 @@
     canCreateVacuum: false
   - type: ActivateOnPaperOpened
   - type: ExplodeOnTrigger
-  - type: TriggerOnSignal
-  - type: DeviceLinkSink
-    ports:
-      - Trigger
   - type: EmitSoundOnUse
     handle: false # don't want the sound to stop the explosion from triggering
 
