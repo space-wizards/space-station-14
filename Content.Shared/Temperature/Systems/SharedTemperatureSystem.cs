@@ -153,7 +153,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         target.Comp.CurrentTemperature += delta;
         Dirty(target);
 
-        var onTempChangeEvent = new OnTemperatureChangeEvent(target.Comp.CurrentTemperature, lastTemp, delta);
+        var onTempChangeEvent = new OnTemperatureChangeEvent(target.Comp.CurrentTemperature, lastTemp, heatAmount);
         RaiseLocalEvent(target, onTempChangeEvent, true);
     }
 
