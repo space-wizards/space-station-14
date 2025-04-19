@@ -1,47 +1,4 @@
 ﻿Entries:
-- author: ElectroJr
-  changes:
-  - message: Toolshed console commands have been reworked. Some old commands may no
-      longer work.
-    type: Tweak
-  id: 7746
-  time: '2024-12-21T06:45:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33598
-- author: muburu
-  changes:
-  - message: Space Ninjas now have silent footsteps.
-    type: Tweak
-  id: 7747
-  time: '2024-12-23T14:24:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33280
-- author: amatwiedle
-  changes:
-  - message: Borgs can no longer drink from tools provided by modules.
-    type: Fix
-  id: 7748
-  time: '2024-12-23T19:54:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32964
-- author: Booblesnoot42
-  changes:
-  - message: On Cog, an unnecessary protolathe was removed from cargo.
-    type: Remove
-  id: 7749
-  time: '2024-12-23T23:24:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34026
-- author: Booblesnoot42
-  changes:
-  - message: On Amber, an unnecessary protolathe was removed from cargo.
-    type: Remove
-  id: 7750
-  time: '2024-12-23T23:24:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34027
-- author: TheShuEd
-  changes:
-  - message: You can now select candles in trinkets loadout
-    type: Add
-  id: 7751
-  time: '2024-12-24T00:24:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33193
 - author: lzk228
   changes:
   - message: Now you are allowed to paint multiple airlocks with the spray painter.
@@ -3910,3 +3867,52 @@
   id: 8246
   time: '2025-04-19T00:26:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36697
+- author: IProduceWidgets
+  changes:
+  - message: Vox are no longer immune to the zombie virus under certain circumstances
+    type: Fix
+  - message: The zombie virus no longer provides non-Initial Infected an undue grace
+      period before poisoning them.
+    type: Fix
+  id: 8247
+  time: '2025-04-19T00:38:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34472
+- author: Booblesnoot42
+  changes:
+  - message: Airlocks will now animate properly after crushing someone.
+    type: Fix
+  id: 8248
+  time: '2025-04-19T00:57:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34523
+- author: SlamBamActionman
+  changes:
+  - message: Fingerprints and fibers are now always applied to items being held, regardless
+      of how they got into your hands.
+    type: Fix
+  - message: Changing gloves now correctly applies new fibers/fingerprints on held
+      items.
+    type: Fix
+  id: 8249
+  time: '2025-04-19T01:02:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30609
+- author: Coolsurf6
+  changes:
+  - message: Attachbodypart command now functions as intended.
+    type: Fix
+  id: 8250
+  time: '2025-04-19T01:23:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34577
+- author: metalgearsloth
+  changes:
+  - message: Fix disarm swing sound even if a disarm isn't possible on the target.
+    type: Fix
+  id: 8251
+  time: '2025-04-19T01:38:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36546
+- author: metalgearsloth
+  changes:
+  - message: Predict gas volume pumps.
+    type: Tweak
+  id: 8252
+  time: '2025-04-19T01:48:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33835
