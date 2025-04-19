@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You now see a popup when being cuffed or uncuffed again.
-    type: Fix
-  id: 7755
-  time: '2024-12-27T13:34:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33639
 - author: Alpaccalypse
   changes:
   - message: Power monitoring computer boards can no longer be researched or printed,
@@ -3914,3 +3907,10 @@
   id: 8255
   time: '2025-04-19T06:51:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36617
+- author: metalgearsloth
+  changes:
+  - message: Fix charges sometimes breaking for auto-recharge devices such as RCDs.
+    type: Fix
+  id: 8256
+  time: '2025-04-19T08:49:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36714
