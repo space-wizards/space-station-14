@@ -181,3 +181,6 @@
       baseOdds: 0.036
       persists: false
       effect: !type:PlantMutateHarvest
+    - name: Jumbo
+      baseOdds: 0.009
+      effect: !type:PlantJumbo
