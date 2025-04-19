@@ -1,11 +1,11 @@
 meta:
   format: 7
   category: Map
-  engineVersion: 252.0.0
+  engineVersion: 253.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/14/2025 09:44:31
-  entityCount: 17539
+  time: 04/15/2025 00:47:30
+  entityCount: 17536
 maps:
 - 1
 grids:
@@ -9335,7 +9335,7 @@ entities:
             0: 65520
           10,-9:
             0: 17984
-            6: 1
+            4: 1
             3: 2444
           11,-7:
             0: 65518
@@ -9699,7 +9699,7 @@ entities:
             0: 4881
             3: 8226
             2: 8
-            4: 2048
+            5: 2048
           4,-13:
             0: 4369
             3: 17508
@@ -9708,7 +9708,7 @@ entities:
             0: 36096
           5,-10:
             2: 3
-            4: 768
+            5: 768
             3: 32904
             0: 2048
           5,-9:
@@ -9943,17 +9943,17 @@ entities:
             3: 4113
             0: 256
             2: 12
-            5: 3072
+            6: 3072
           9,-9:
             3: 1025
             0: 2832
-            6: 12
+            4: 12
           10,-11:
             3: 295
             0: 17920
           10,-10:
             2: 1
-            5: 256
+            6: 256
             3: 18508
             0: 1024
           10,-12:
@@ -10608,6 +10608,21 @@ entities:
           temperature: 293.15
           moles:
           - 0
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
           - 0
           - 0
           - 6666.982
@@ -10624,21 +10639,6 @@ entities:
           moles:
           - 6666.982
           - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 6666.982
           - 0
           - 0
           - 0
@@ -11737,14 +11737,14 @@ entities:
       name: air alarm (Engineering Locker Room)
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: 25.5,-14.5
+      pos: 22.5,-12.5
       parent: 2
     - type: DeviceList
       devices:
+      - 13803
       - 9209
       - 9168
       - 9210
-      - 13803
   - uid: 13789
     components:
     - type: MetaData
@@ -14332,7 +14332,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -417590.6
+      secondsUntilStateChange: -418041.62
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -14558,13 +14558,6 @@ entities:
       parent: 2
 - proto: AirlockMaintServiceLocked
   entities:
-  - uid: 302
-    components:
-    - type: MetaData
-      name: maintenance access (Service)
-    - type: Transform
-      pos: 6.5,11.5
-      parent: 2
   - uid: 3126
     components:
     - type: MetaData
@@ -14585,6 +14578,15 @@ entities:
       name: maintenance access (Newsroom)
     - type: Transform
       pos: -27.5,-29.5
+      parent: 2
+- proto: AirlockMaintTheatreLocked
+  entities:
+  - uid: 303
+    components:
+    - type: MetaData
+      name: maintenance access (Theatre)
+    - type: Transform
+      pos: 6.5,11.5
       parent: 2
 - proto: AirlockMedicalGlassLocked
   entities:
@@ -14936,13 +14938,6 @@ entities:
       parent: 2
 - proto: AirlockServiceLocked
   entities:
-  - uid: 303
-    components:
-    - type: MetaData
-      name: airlock (Backstage)
-    - type: Transform
-      pos: 6.5,4.5
-      parent: 2
   - uid: 3129
     components:
     - type: MetaData
@@ -14966,6 +14961,13 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,8.5
+      parent: 2
+  - uid: 302
+    components:
+    - type: MetaData
+      name: airlock (Theatre)
+    - type: Transform
+      pos: 6.5,4.5
       parent: 2
 - proto: AirlockVirologyLocked
   entities:
@@ -48891,6 +48893,14 @@ entities:
       rot: 3.141592653589793 rad
       pos: -17.5,-35.5
       parent: 2
+- proto: ComputerFundingAllocation
+  entities:
+  - uid: 12981
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 10.5,-19.5
+      parent: 2
 - proto: ComputerId
   entities:
   - uid: 1774
@@ -56836,10 +56846,10 @@ entities:
     - type: Transform
       pos: 11.5,30.5
       parent: 2
-  - uid: 12981
+  - uid: 16199
     components:
     - type: Transform
-      pos: 10.5,-19.5
+      pos: 11.5,-19.5
       parent: 2
   - uid: 16823
     components:
@@ -57092,10 +57102,10 @@ entities:
   - uid: 12553
     components:
     - type: MetaData
-      name: fire alarm (Engineering Locker Room)
+      name: fire alarm (Engineeering Locker Room)
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: 25.5,-15.5
+      pos: 22.5,-13.5
       parent: 2
     - type: DeviceList
       devices:
@@ -58353,9 +58363,9 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13800
-      - 12553
-      - 8138
       - 12810
+      - 8138
+      - 12553
   - uid: 13809
     components:
     - type: Transform
@@ -85371,11 +85381,6 @@ entities:
       parent: 2
 - proto: LuxuryPen
   entities:
-  - uid: 16204
-    components:
-    - type: Transform
-      pos: 11.323762,-19.48439
-      parent: 2
   - uid: 17028
     components:
     - type: Transform
@@ -86576,16 +86581,6 @@ entities:
     components:
     - type: Transform
       pos: 5.6202555,26.75027
-      parent: 2
-  - uid: 16200
-    components:
-    - type: Transform
-      pos: 11.417512,-19.312515
-      parent: 2
-  - uid: 16201
-    components:
-    - type: Transform
-      pos: 11.605012,-19.468765
       parent: 2
   - uid: 16202
     components:
@@ -102003,12 +101998,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 11.5,-17.5
-      parent: 2
-  - uid: 16199
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 11.5,-19.5
       parent: 2
 - proto: TableWood
   entities:

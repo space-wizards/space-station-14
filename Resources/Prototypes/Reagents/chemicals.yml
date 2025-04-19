@@ -72,6 +72,14 @@
         damage:
           types:
             Caustic: 2
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ArtifactUnlock
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
 
 - type: reagent
   id: Benzene
