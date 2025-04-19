@@ -19,7 +19,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Slippery;
 
-[UsedImplicitly] 
+[UsedImplicitly]
 public sealed class SlipperySystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -83,7 +83,7 @@ public sealed class SlipperySystem : EntitySystem
     {
         if (HasComp<SpeedModifiedByContactComponent>(args.OtherEntity))
             _speedModifier.AddModifiedEntity(args.OtherEntity);
-    } 
+    }
 
     private bool CanSlip(EntityUid uid, EntityUid toSlip)
     {
