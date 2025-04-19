@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Velcroboy
-  changes:
-  - message: Rolling joints no longer requires a cigarette filter.
-    type: Tweak
-  id: 7762
-  time: '2024-12-29T03:25:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34106
-- author: DreamlyJack
-  changes:
-  - message: Added Hair Pulato
-    type: Add
-  id: 7763
-  time: '2024-12-31T10:29:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34117
 - author: chromiumboy
   changes:
   - message: Chat messages from holopads during emergency broadcasts will no longer
@@ -3908,3 +3894,18 @@
   id: 8262
   time: '2025-04-19T14:37:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33814
+- author: sowelipililimute
+  changes:
+  - message: Servers with the number of open inventories set to two have a new alignment
+      that doesn't shift as much when opening and closing multiple inventories
+    type: Tweak
+  id: 8263
+  time: '2025-04-19T14:40:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35041
+- author: ps3moira
+  changes:
+  - message: Removed interior shuttle walls
+    type: Remove
+  id: 8264
+  time: '2025-04-19T14:41:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34261
