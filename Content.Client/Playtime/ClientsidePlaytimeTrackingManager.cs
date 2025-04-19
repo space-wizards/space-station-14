@@ -1,12 +1,12 @@
 using Content.Shared.CCVar;
-using Content.Shared.Mobs.Components;
 using Robust.Client.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Configuration;
+using Content.Shared.Ghost;
 
 namespace Content.Client.Playtime;
 
-public sealed class ClientsidePlaytimeTracking
+public sealed class ClientsidePlaytimeTrackingManager
 {
     [Dependency] private readonly IClientNetManager _clientNetManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
@@ -48,10 +48,10 @@ public sealed class ClientsidePlaytimeTracking
 
     private void OnPlayerAttached(EntityUid entity)
     {
-        if (_entityManager.HasComponent<MobStateComponent>(entity)) // Ghosts and other OOC mobs can safely be assumed to lack MobStateComponents, while all other mobs will have them.
-            _livingMobAttachmentTime = DateTime.UtcNow; // Don't want daylight savings to cause jank, so we use UtcNow instead of Now
-        else
+        if (_entityManager.HasComponent<GhostComponent>(entity))
             _livingMobAttachmentTime = DateTime.MinValue;
+        else
+            _livingMobAttachmentTime = DateTime.UtcNow; // Don't want daylight savings to cause jank, so we use UtcNow instead of Now
     }
     private void OnPlayerDetached(EntityUid entity)
     {
@@ -66,12 +66,13 @@ public sealed class ClientsidePlaytimeTracking
         if (timeDiff < TimeSpan.Zero)
             throw new Exception("Time differential on player detachment somehow less than zero!");
 
-        // At 0 minutes of time diff, there's no point, as saving regardless will brick tests
-        if (timeDiff.Minutes == 0)
+        // At less than 1 minute of time diff, there's not much point, and saving regardless will brick tests
+        // The reason this isn't checking for 0 is because TotalMinutes is fractional, rather than solely whole minutes
+        if (timeDiff.TotalMinutes < 1)
             return;
 
-        _configurationManager.SetCVar(CCVars.MinutesToday, _configurationManager.GetCVar(CCVars.MinutesToday) + timeDiff.Minutes);
-        _sawmill.Info("Recorded " + timeDiff.Minutes.ToString() + " minutes of living playtime!");
+        _configurationManager.SetCVar(CCVars.MinutesToday, _configurationManager.GetCVar(CCVars.MinutesToday) + (float)timeDiff.TotalMinutes);
+        _sawmill.Info("Recorded " + timeDiff.TotalMinutes.ToString() + " minutes of living playtime!");
 
         _configurationManager.SaveToFile(); // We don't like that we have to save the entire config just to store playtime stats '^'
     }

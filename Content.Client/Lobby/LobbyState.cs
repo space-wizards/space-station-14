@@ -196,7 +196,7 @@ namespace Content.Client.Lobby
                 Lobby!.ServerInfo.SetInfoBlob(_gameTicker.ServerInfoBlob);
             }
 
-            var minutesToday = _cfg.GetCVar(CCVars.MinutesToday) ;
+            var minutesToday = _cfg.GetCVar(CCVars.MinutesToday);
             if (minutesToday > 60)
             {
                 Lobby!.PlaytimeComment.Visible = true;
