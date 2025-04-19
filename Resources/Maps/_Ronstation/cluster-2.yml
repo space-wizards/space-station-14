@@ -4,8 +4,8 @@ meta:
   engineVersion: 254.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/19/2025 12:29:48
-  entityCount: 13824
+  time: 04/19/2025 16:48:42
+  entityCount: 13827
 maps:
 - 12281
 grids:
@@ -17660,6 +17660,21 @@ entities:
     components:
     - type: Transform
       pos: 39.5,-21.5
+      parent: 1
+  - uid: 13825
+    components:
+    - type: Transform
+      pos: -12.5,6.5
+      parent: 1
+  - uid: 13826
+    components:
+    - type: Transform
+      pos: -14.5,6.5
+      parent: 1
+  - uid: 13827
+    components:
+    - type: Transform
+      pos: -13.5,6.5
       parent: 1
 - proto: CableApcStack
   entities:
