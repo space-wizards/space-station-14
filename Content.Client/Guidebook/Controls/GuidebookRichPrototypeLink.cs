@@ -13,27 +13,36 @@ namespace Content.Client.Guidebook.Controls;
 /// The link is activated by the owner if the prototype is represented
 /// somewhere in the same document.
 /// </summary>
-public sealed class GuidebookRichPrototypeLink : RichTextLabel, IPrototypeLinkControl
+public sealed class GuidebookRichPrototypeLink : Control, IPrototypeLinkControl
 {
     private bool _linkActive = false;
+    private FormattedMessage? _message;
+    private readonly RichTextLabel _richTextLabel;
 
     public void ActivatePrototypeLink()
     {
-        _linkActive = true;
-
-        if (GetMessage() is not {} markup)
+        if (_message == null)
             return;
+
+        _linkActive = true;
 
         DefaultCursorShape = CursorShape.Hand;
 
-        var msg = FormattedMessage.FromMarkupPermissive(markup);
-        SetMessage(msg, null, TextLinkTag.LinkColor);
+        _richTextLabel.SetMessage(_message, null, TextLinkTag.LinkColor);
     }
 
     public GuidebookRichPrototypeLink() : base()
     {
         MouseFilter = MouseFilterMode.Pass;
         OnKeyBindDown += HandleClick;
+        _richTextLabel = new RichTextLabel();
+        AddChild(_richTextLabel);
+    }
+
+    public void SetMessage(FormattedMessage message)
+    {
+        _message = message;
+        _richTextLabel.SetMessage(_message);
     }
 
     public IPrototype? LinkedPrototype { get; set; }
