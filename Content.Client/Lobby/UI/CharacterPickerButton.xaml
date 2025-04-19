@@ -5,7 +5,6 @@
                   HorizontalExpand="True"
                   SeparationOverride="0"
                   Name="InternalHBox">
-        <Button Name="EnabledCheck" Text="{Loc 'character-setup-gui-character-picker-button-enabled-button'}" ToggleMode="True"/>
         <SpriteView Scale="2 2"
                     Margin="0 4 4 4"
                     OverrideDirection="South"
@@ -14,13 +13,16 @@
         <Label Name="DescriptionLabel"
                ClipText="True"
                HorizontalExpand="True"/>
-        <Button Name="DeleteButton"
-                Text="{Loc 'character-setup-gui-character-picker-button-delete-button'}"
-                Visible="False"/>
-        <Button Name="ConfirmDeleteButton"
-                Text="{Loc 'character-setup-gui-character-picker-button-confirm-delete-button'}"
-                Visible="False"
-                ModulateSelfOverride="{x:Static style:StyleNano.ButtonColorCautionDefault}"/>
+        <BoxContainer Orientation="Vertical" VerticalAlignment="Center" VerticalExpand="True">
+            <Button Name="EnabledCheck" Text="{Loc 'character-setup-gui-character-picker-button-enabled-button'}" ToggleMode="True"/>
+            <Button Name="DeleteButton"
+                    Text="{Loc 'character-setup-gui-character-picker-button-delete-button'}"
+                    Visible="False"/>
+            <Button Name="ConfirmDeleteButton"
+                    Text="{Loc 'character-setup-gui-character-picker-button-confirm-delete-button'}"
+                    Visible="False"
+                    ModulateSelfOverride="{x:Static style:StyleNano.ButtonColorCautionDefault}"/>
+        </BoxContainer>
 
     </BoxContainer>
 </ContainerButton>
