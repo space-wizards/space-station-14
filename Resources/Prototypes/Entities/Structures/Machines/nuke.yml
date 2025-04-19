@@ -75,7 +75,7 @@
     enabled: false
   - type: NukeLabel
   - type: Nuke
-    explosionType: Default
+    explosionType: Nuclear
     maxIntensity: 100
     intensitySlope: 5
     totalIntensity: 5000000
