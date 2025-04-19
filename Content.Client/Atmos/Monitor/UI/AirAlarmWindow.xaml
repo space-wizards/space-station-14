@@ -74,7 +74,13 @@
         <!-- Mode buttons -->
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'air-alarm-ui-window-mode-label'}" Margin="0 0 2 0" />
-            <OptionButton Name="CModeButton" HorizontalExpand="True" />
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                <OptionButton Name="CModeButton" HorizontalExpand="True" />
+                <ui:StripeBack Name="CModeSelectLocked">
+                    <RichTextLabel Text="{Loc 'air-alarm-ui-window-mode-select-locked-label'}"
+                                   HorizontalAlignment="Center" />
+                </ui:StripeBack>
+            </BoxContainer>
             <CheckBox Name="AutoModeCheckBox" Text="{Loc 'air-alarm-ui-window-auto-mode-label'}" />
         </BoxContainer>
     </BoxContainer>
