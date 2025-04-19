@@ -169,7 +169,7 @@ public abstract class SharedPortalSystem : EntitySystem
             return;
 
         var ourCoords = Transform(portal).Coordinates;
-        var onSameMap = ourCoords.GetMapId(EntityManager) == target.GetMapId(EntityManager);
+        var onSameMap = _transform.GetMapId(ourCoords) == _transform.GetMapId(target);
         var distanceInvalid = portalComponent.MaxTeleportRadius != null
                               && ourCoords.TryDistance(EntityManager, target, out var distance)
                               && distance > portalComponent.MaxTeleportRadius;
