@@ -47,3 +47,4 @@
       state: powersink
     - type: WarpPoint
       location: powersink
+      ghostOnly: true

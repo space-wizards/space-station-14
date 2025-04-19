@@ -97,3 +97,4 @@
   - type: WarpPoint
     follow: true
     location: Nar'Sie
+    ghostOnly: true
