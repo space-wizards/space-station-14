@@ -797,6 +797,23 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: turnstile
+  id: Turnstile
+  graph: Turnstile
+  startNode: start
+  targetNode: turnstile
+  category: construction-category-structures
+  description: A mechanical door that permits one-way access and prevents tailgating.
+  icon:
+    sprite: Structures/Doors/turnstile.rsi
+    state: turnstile
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   name: shutter
   id: Shutters
   graph: Shutters

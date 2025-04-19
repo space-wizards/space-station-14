@@ -341,6 +341,22 @@ public sealed class PullingSystem : EntitySystem
         return Resolve(puller, ref component, false) && component.Pulling != null;
     }
 
+    public EntityUid? GetPuller(EntityUid puller, PullableComponent? component = null)
+    {
+        if (!Resolve(puller, ref component, false))
+            return null;
+
+        return component.Puller;
+    }
+
+    public EntityUid? GetPulling(EntityUid puller, PullerComponent? component = null)
+    {
+        if (!Resolve(puller, ref component, false))
+            return null;
+
+        return component.Pulling;
+    }
+
     private void OnReleasePulledObject(ICommonSession? session)
     {
         if (session?.AttachedEntity is not { Valid: true } player)
