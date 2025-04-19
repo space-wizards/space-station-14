@@ -118,7 +118,7 @@ public abstract class SharedChargesSystem : EntitySystem
             action.Comp.LastUpdate = _timing.CurTime;
         }
 
-        action.Comp.LastCharges = Math.Clamp(action.Comp.LastCharges + addCharges, 0, action.Comp.MaxCharges);
+        action.Comp.LastCharges = Math.Clamp(charges, 0, action.Comp.MaxCharges);
         Dirty(action);
     }
 

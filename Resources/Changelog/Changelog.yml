@@ -1,94 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: You now see a popup when being cuffed or uncuffed again.
-    type: Fix
-  id: 7755
-  time: '2024-12-27T13:34:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33639
-- author: Alpaccalypse
-  changes:
-  - message: Power monitoring computer boards can no longer be researched or printed,
-      as originally intended.
-    type: Remove
-  id: 7756
-  time: '2024-12-28T10:13:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34078
-- author: psykana
-  changes:
-  - message: Traitor can no longer get multiple objectives to save/help/kill the same
-      person
-    type: Fix
-  id: 7757
-  time: '2024-12-28T14:49:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33704
-- author: chromiumboy
-  changes:
-  - message: The holoapd UI has been updated to include a text-based filter for the
-      contacts list, and also to specify the name of the holopad that incoming calls
-      originate from
-    type: Tweak
-  id: 7758
-  time: '2024-12-28T23:33:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34055
-- author: zHonys
-  changes:
-  - message: Smile can now use hats
-    type: Add
-  id: 7759
-  time: '2024-12-29T01:49:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33924
-- author: ewokswagger
-  changes:
-  - message: Pizza deliveries are now guaranteed to have at least one cotton pizza.
-    type: Tweak
-  id: 7760
-  time: '2024-12-29T01:50:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33997
-- author: ArtisticRoomba, JuneSzalkowska
-  changes:
-  - message: New cotton dough slices and cotton dough rolls.
-    type: Add
-  - message: New cotton baguette, cotton crostini, cotton chevre-chaud, cotton bagel,
-      and cotton croissant recipes. You can make them by following the recipes for
-      regular baguettes, bagels, etc, but use cotton dough instead.
-    type: Add
-  - message: Slicing dough into thirds now divides the nutriment value into thirds.
-      Previously you could slice dough to triple your nutriment.
-    type: Fix
-  id: 7761
-  time: '2024-12-29T02:02:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33508
-- author: Velcroboy
-  changes:
-  - message: Rolling joints no longer requires a cigarette filter.
-    type: Tweak
-  id: 7762
-  time: '2024-12-29T03:25:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34106
-- author: DreamlyJack
-  changes:
-  - message: Added Hair Pulato
-    type: Add
-  id: 7763
-  time: '2024-12-31T10:29:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34117
-- author: chromiumboy
-  changes:
-  - message: Chat messages from holopads during emergency broadcasts will no longer
-      be logged in the chat window to prevent message spam. This is a temporary change
-      until a proper fix can be made to the chat system
-    type: Tweak
-  id: 7764
-  time: '2024-12-31T10:52:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34114
-- author: PopGamer46
-  changes:
-  - message: Fixed borgs not being able to check their laws in crit
-    type: Fix
-  id: 7765
-  time: '2024-12-31T11:10:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34133
 - author: amatwiedle
   changes:
   - message: The A/V Communication technology now unlocks holopad circuit boards.
@@ -3914,3 +3824,87 @@
   id: 8255
   time: '2025-04-19T06:51:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36617
+- author: metalgearsloth
+  changes:
+  - message: Fix charges sometimes breaking for auto-recharge devices such as RCDs.
+    type: Fix
+  id: 8256
+  time: '2025-04-19T08:49:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36714
+- author: Boaz1111
+  changes:
+  - message: Reduced the range at which security radios pick up noise from 4 tiles
+      to 1 tile.
+    type: Tweak
+  id: 8257
+  time: '2025-04-19T13:10:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34878
+- author: Quantus
+  changes:
+  - message: Fixed the unusual delay in production after de-aging a plant with cryoxadone.
+    type: Fix
+  id: 8258
+  time: '2025-04-19T13:43:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34668
+- author: ArtisticRoomba
+  changes:
+  - message: The Go Go Hat now checks if your message matches either the name of the
+      item or the label of the item. This allows people with accents to name their
+      items according to how their character would say the item, or for a faster retrieval
+      without having to type out the full name.
+    type: Tweak
+  id: 8259
+  time: '2025-04-19T14:11:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35658
+- author: GrownSamoyedDog
+  changes:
+  - message: Pineapple Juice Cartons are new and added to Booze-O-Mat.
+    type: Add
+  id: 8260
+  time: '2025-04-19T14:25:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34769
+- author: claustro305
+  changes:
+  - message: Fixed a bug where dragged objects would collide with wall mounted lights
+      and cameras.
+    type: Fix
+  id: 8261
+  time: '2025-04-19T14:29:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35908
+- author: metalgearsloth
+  changes:
+  - message: Fix detailed examine buttons sometimes showing up incorrectly.
+    type: Fix
+  id: 8262
+  time: '2025-04-19T14:37:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33814
+- author: sowelipililimute
+  changes:
+  - message: Servers with the number of open inventories set to two have a new alignment
+      that doesn't shift as much when opening and closing multiple inventories
+    type: Tweak
+  id: 8263
+  time: '2025-04-19T14:40:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35041
+- author: ps3moira
+  changes:
+  - message: Removed interior shuttle walls
+    type: Remove
+  id: 8264
+  time: '2025-04-19T14:41:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34261
+- author: Minemoder
+  changes:
+  - message: Most roles on the station now require significantly less playtime playtime
+      to unlock.
+    type: Tweak
+  id: 8265
+  time: '2025-04-19T15:31:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36666
+- author: Fildrance
+  changes:
+  - message: fixed spessman getting stuck after unlocking portal node
+    type: Fix
+  id: 8266
+  time: '2025-04-19T17:07:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36719

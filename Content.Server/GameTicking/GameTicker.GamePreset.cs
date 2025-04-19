@@ -109,7 +109,11 @@ public sealed partial class GameTicker
             // Reset counter is checked and changed at the end of each round
             // So if the game is in the lobby, the first requested round will happen before the check, and we need one less check
             if (CurrentPreset is null)
-                ResetCountdown = resetDelay.Value -1;
+                ResetCountdown = resetDelay.Value - 1;
+        }
+        else
+        {
+            ResetCountdown = null;
         }
 
         Preset = preset;
