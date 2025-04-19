@@ -43,15 +43,16 @@ public sealed class XAEPortalSystem : BaseXAESystem<XAEPortalComponent>
         if (validMinds.Count == 0)
             return;
 
-        var firstPortal = Spawn(ent.Comp.PortalProto, args.Coordinates);
+        if(!TrySpawnNextTo(ent.Comp.PortalProto, args.Artifact, out var firstPortal))
+            return;
 
         var target = _random.Pick(validMinds);
-        var targetCoordinates = _transform.GetMapCoordinates(target);
-        var secondPortal = Spawn(ent.Comp.PortalProto, targetCoordinates);
+        if(!TrySpawnNextTo(ent.Comp.PortalProto, target, out var secondPortal))
+            return;
 
         // Manual position swapping, because the portal that opens doesn't trigger a collision, and doesn't teleport targets the first time.
         _transform.SwapPositions(target, args.Artifact.Owner);
 
-        _link.TryLink(firstPortal, secondPortal, true);
+        _link.TryLink(firstPortal.Value, secondPortal.Value, true);
     }
 }
