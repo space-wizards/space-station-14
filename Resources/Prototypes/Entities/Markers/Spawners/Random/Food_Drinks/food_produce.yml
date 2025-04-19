@@ -61,6 +61,9 @@
       - id: FoodPineapple
         amount: !type:RangeNumberSelector
           range: 1, 5
+      - id: FoodPomegranate
+        amount: !type:RangeNumberSelector
+          range: 1, 5
       - id: FoodPotato
         amount: !type:RangeNumberSelector
           range: 1, 5

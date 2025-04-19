@@ -77,6 +77,8 @@ food-sequence-content-spacemans-trumpet = spaceman's trupmet
 food-sequence-content-cherry = cherry
 food-sequence-content-snail = snail
 food-sequence-content-anomaly-berry = anomaly berry
+food-sequence-content-pomegranate = pomegranate
+food-sequence-content-bombegranate = bombegranate
 
 # BURGERS
 
@@ -120,6 +122,8 @@ food-sequence-burger-content-spacemans-trumpet = spacetrump
 food-sequence-burger-content-anomaly-berry = anom
 food-sequence-burger-content-extradimensional-orange = 3d
 food-sequence-burger-content-world-pea = peace
+food-sequence-burger-content-pomegranate = pomegranate
+food-sequence-burger-content-bombegranate = bombegranate
 
 # TACO
 
