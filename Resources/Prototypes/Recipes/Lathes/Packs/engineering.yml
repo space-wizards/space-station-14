@@ -45,6 +45,7 @@
   - CellRechargerCircuitboard
   - WeaponCapacitorRechargerCircuitboard
   - FreezerElectronics
+  - ScreenElectronics
 
 - type: latheRecipePack
   id: EngineeringBoardsStatic
