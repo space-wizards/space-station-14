@@ -4907,4 +4907,12 @@ Entries:
   id: 679
   time: '2025-04-18T23:56:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/493
+- author: STARLIGHT TEAM
+  changes:
+  - message: Blue Shield Officer, due to ongoing complaints about overstepping their
+      authority,
+    type: Tweak
+  id: 680
+  time: '2025-04-19T00:27:27.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/500
 
