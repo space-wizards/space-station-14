@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: DinnerCalzone
   changes:
-  - message: Oasis has been updated to feature the supermatter engine, a service breakroom,
-      and a vox box.
-    type: Add
-  id: 1028
-  time: '2025-01-31T15:59:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1523
-- author: DinnerCalzone
-  changes:
   - message: Origin's armory has gotten more stuff added to it along with some other
       fixes.
     type: Tweak
@@ -4096,3 +4088,10 @@
   id: 1527
   time: '2025-04-18T04:53:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2270
+- author: heirdragonair
+  changes:
+  - message: Supply Assistant's may or may not have been randomly promoted!
+    type: Tweak
+  id: 1528
+  time: '2025-04-19T07:13:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2283
