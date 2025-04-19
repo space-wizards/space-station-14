@@ -84,6 +84,7 @@
         amount: 2
       - id: FlashlightLantern
       - id: LightReplacer
+      - id: WelderJanitorial #imp edit
 
 - type: entity
   id: ClothingBeltMedicalFilled

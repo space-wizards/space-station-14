@@ -635,7 +635,7 @@
       edges:
         - to: wall
           steps:
-            - tool: Welding
+            - tool: Derusting #imp edit
               doAfter: 5
 
     - node: reinforcedWallRust
@@ -643,5 +643,5 @@
       edges:
         - to: reinforcedWall
           steps:
-            - tool: Welding
+            - tool: Derusting #imp edit
               doAfter: 5
