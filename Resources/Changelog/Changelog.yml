@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Booblesnoot42
-  changes:
-  - message: On Amber, an unnecessary protolathe was removed from cargo.
-    type: Remove
-  id: 7750
-  time: '2024-12-23T23:24:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34027
 - author: TheShuEd
   changes:
   - message: You can now select candles in trinkets loadout
@@ -3916,3 +3909,10 @@
   id: 8250
   time: '2025-04-19T01:23:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34577
+- author: metalgearsloth
+  changes:
+  - message: Fix disarm swing sound even if a disarm isn't possible on the target.
+    type: Fix
+  id: 8251
+  time: '2025-04-19T01:38:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36546
