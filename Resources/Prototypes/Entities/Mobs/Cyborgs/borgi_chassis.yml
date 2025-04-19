@@ -223,7 +223,7 @@
   components:
   - type: RandomMetadata
     nameSegments:
-    - NamesСorgi
+    - NamesCorgi
   # Custom inventory template
   - type: Inventory
     speciesId: dog
@@ -357,7 +357,7 @@
     subverted: true
   - type: RandomMetadata
     nameSegments:
-    - NamesSyndieBorgi
+    - NamesSyndiBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -412,7 +412,7 @@
     subverted: true
   - type: RandomMetadata
     nameSegments:
-    - NamesSyndieBorgi
+    - NamesSyndiBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
@@ -473,7 +473,7 @@
     subverted: true
   - type: RandomMetadata
     nameSegments:
-    - NamesSyndieBorgi
+    - NamesSyndiBorgi
   - type: ActionGrant
     actions:
     - ActionViewLaws
