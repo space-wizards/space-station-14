@@ -27,6 +27,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shaker.rsi
     state: icon
+  - type: Item
+    sprite: Objects/Consumable/Drinks/shaker.rsi
   - type: UserInterface
     interfaces:
       enum.TransferAmountUiKey.Key:
@@ -34,6 +36,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
+  - type: DnaSubstanceTrace
   - type: ReactionMixer
     mixOnInteract: false
     reactionTypes:

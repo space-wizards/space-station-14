@@ -18,6 +18,11 @@ public abstract class UnequipAttemptEventBase : CancellableEntityEventArgs
     public readonly EntityUid Equipment;
 
     /// <summary>
+    /// The slotFlags of the slot this item is being removed from.
+    /// </summary>
+    public readonly SlotFlags SlotFlags;
+
+    /// <summary>
     /// The slot the entity is being unequipped from.
     /// </summary>
     public readonly string Slot;
@@ -33,6 +38,7 @@ public abstract class UnequipAttemptEventBase : CancellableEntityEventArgs
         UnEquipTarget = unEquipTarget;
         Equipment = equipment;
         Unequipee = unequipee;
+        SlotFlags = slotDefinition.SlotFlags;
         Slot = slotDefinition.Name;
     }
 }

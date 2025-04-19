@@ -1,3 +1,5 @@
+using Content.Shared.Light.Components;
+using Content.Shared.Light.EntitySystems;
 using Content.Shared.Maps;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
@@ -17,6 +19,7 @@ public abstract class SharedWeatherSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedRoofSystem _roof = default!;
 
     private EntityQuery<BlockWeatherComponent> _blockQuery;
 
@@ -38,10 +41,13 @@ public abstract class SharedWeatherSystem : EntitySystem
         }
     }
 
-    public bool CanWeatherAffect(EntityUid uid, MapGridComponent grid, TileRef tileRef)
+    public bool CanWeatherAffect(EntityUid uid, MapGridComponent grid, TileRef tileRef, RoofComponent? roofComp = null)
     {
         if (tileRef.Tile.IsEmpty)
             return true;
+
+        if (Resolve(uid, ref roofComp, false) && _roof.IsRooved((uid, grid, roofComp), tileRef.GridIndices))
+            return false;
 
         var tileDef = (ContentTileDefinition) _tileDefManager[tileRef.Tile.TypeId];
 
@@ -156,11 +162,14 @@ public abstract class SharedWeatherSystem : EntitySystem
 
         foreach (var (eProto, weather) in weatherComp.Weather)
         {
+            // if we turn off the weather, we don't want endTime = null
+            if (proto == null)
+                endTime ??= Timing.CurTime + WeatherComponent.ShutdownTime;
+
             // Reset cooldown if it's an existing one.
-            if (proto == null || eProto == proto.ID)
+            if (proto is not null && eProto == proto.ID)
             {
                 weather.EndTime = endTime;
-
                 if (weather.State == WeatherState.Ending)
                     weather.State = WeatherState.Running;
 

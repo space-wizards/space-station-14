@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Charges.Systems;
 using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Shared.ContentPack;
@@ -22,6 +23,7 @@ namespace Content.Client.Actions
     {
         public delegate void OnActionReplaced(EntityUid actionId);
 
+        [Dependency] private readonly SharedChargesSystem _sharedCharges = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IResourceManager _resources = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
@@ -48,6 +50,7 @@ namespace Content.Client.Actions
             SubscribeLocalEvent<InstantActionComponent, ComponentHandleState>(OnInstantHandleState);
             SubscribeLocalEvent<EntityTargetActionComponent, ComponentHandleState>(OnEntityTargetHandleState);
             SubscribeLocalEvent<WorldTargetActionComponent, ComponentHandleState>(OnWorldTargetHandleState);
+            SubscribeLocalEvent<EntityWorldTargetActionComponent, ComponentHandleState>(OnEntityWorldTargetHandleState);
         }
 
         private void OnInstantHandleState(EntityUid uid, InstantActionComponent component, ref ComponentHandleState args)
@@ -64,6 +67,7 @@ namespace Content.Client.Actions
                 return;
 
             component.Whitelist = state.Whitelist;
+            component.Blacklist = state.Blacklist;
             component.CanTargetSelf = state.CanTargetSelf;
             BaseHandleState<EntityTargetActionComponent>(uid, component, state);
         }
@@ -76,21 +80,32 @@ namespace Content.Client.Actions
             BaseHandleState<WorldTargetActionComponent>(uid, component, state);
         }
 
+        private void OnEntityWorldTargetHandleState(EntityUid uid,
+            EntityWorldTargetActionComponent component,
+            ref ComponentHandleState args)
+        {
+            if (args.Current is not EntityWorldTargetActionComponentState state)
+                return;
+
+            component.Whitelist = state.Whitelist;
+            component.CanTargetSelf = state.CanTargetSelf;
+            BaseHandleState<EntityWorldTargetActionComponent>(uid, component, state);
+        }
+
         private void BaseHandleState<T>(EntityUid uid, BaseActionComponent component, BaseActionComponentState state) where T : BaseActionComponent
         {
             // TODO ACTIONS use auto comp states
             component.Icon = state.Icon;
             component.IconOn = state.IconOn;
             component.IconColor = state.IconColor;
+            component.OriginalIconColor = state.OriginalIconColor;
+            component.DisabledIconColor = state.DisabledIconColor;
             component.Keywords.Clear();
             component.Keywords.UnionWith(state.Keywords);
             component.Enabled = state.Enabled;
             component.Toggled = state.Toggled;
             component.Cooldown = state.Cooldown;
             component.UseDelay = state.UseDelay;
-            component.Charges = state.Charges;
-            component.MaxCharges = state.MaxCharges;
-            component.RenewCharges = state.RenewCharges;
             component.Container = EnsureEntity<T>(state.Container, uid);
             component.EntityIcon = EnsureEntity<T>(state.EntityIcon, uid);
             component.CheckCanInteract = state.CheckCanInteract;
@@ -99,6 +114,7 @@ namespace Content.Client.Actions
             component.Priority = state.Priority;
             component.AttachedEntity = EnsureEntity<T>(state.AttachedEntity, uid);
             component.RaiseOnUser = state.RaiseOnUser;
+            component.RaiseOnAction = state.RaiseOnAction;
             component.AutoPopulate = state.AutoPopulate;
             component.Temporary = state.Temporary;
             component.ItemIconStyle = state.ItemIconStyle;
@@ -111,6 +127,9 @@ namespace Content.Client.Actions
         {
             if (!ResolveActionData(actionId, ref action))
                 return;
+
+            // TODO: Decouple this.
+            action.IconColor = _sharedCharges.GetCurrentCharges(actionId.Value) == 0 ? action.DisabledIconColor : action.OriginalIconColor;
 
             base.UpdateAction(actionId, action);
             if (_playerManager.LocalEntity != action.AttachedEntity)
@@ -218,13 +237,13 @@ namespace Content.Client.Actions
 
         public void LinkAllActions(ActionsComponent? actions = null)
         {
-             if (_playerManager.LocalEntity is not { } user ||
-                 !Resolve(user, ref actions, false))
-             {
-                 return;
-             }
+            if (_playerManager.LocalEntity is not { } user ||
+                !Resolve(user, ref actions, false))
+            {
+                return;
+            }
 
-             LinkActions?.Invoke(actions);
+            LinkActions?.Invoke(actions);
         }
 
         public override void Shutdown()
@@ -246,12 +265,6 @@ namespace Content.Client.Actions
 
             if (action.ClientExclusive)
             {
-                if (instantAction.Event != null)
-                {
-                    instantAction.Event.Performer = user;
-                    instantAction.Event.Action = actionId;
-                }
-
                 PerformAction(user, actions, actionId, instantAction, instantAction.Event, GameTiming.CurTime);
             }
             else

@@ -4,6 +4,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Power;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 

@@ -1,6 +1,6 @@
 #Web vest
 - type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing]
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSyndicateContraband]
   id: ClothingOuterVestWeb
   name: web vest
   description: A synthetic armor vest. This one has added webbing and ballistic plates.
@@ -19,11 +19,39 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
 
+#Elite web vest
+- type: entity
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSyndicateContraband]
+  id: ClothingOuterVestWebElite
+  name: elite web vest
+  description: A synthetic armor vest. This one has added webbing and heat resistant fibers.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Vests/elitevest.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Vests/elitevest.rsi
+  - type: TemperatureProtection
+    heatingCoefficient: 0.1
+    coolingCoefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.7
+        Heat: 0.3
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: FireProtection
+    reduction: 0.85
+
 #Mercenary web vest
 - type: entity
-  parent: ClothingOuterVestWeb #web vest so it should have some pockets for ammo
+  parent: [ BaseMajorContraband, ClothingOuterVestWeb] #web vest so it should have some pockets for ammo
   id: ClothingOuterVestWebMerc
-  name: merc web vest
+  name: mercenary web vest
   description: A high-quality armored vest made from a hard synthetic material. It's surprisingly flexible and light, despite formidable armor plating.
   components:
   - type: Sprite
@@ -42,7 +70,7 @@
 
 #Detective's vest
 - type: entity
-  parent: ClothingOuterArmorBasic
+  parent: [ClothingOuterArmorBase, BaseSecurityContraband]
   id: ClothingOuterVestDetective
   name: detective's vest
   description: A hard-boiled private investigator's armored vest.
@@ -61,8 +89,17 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Vests/hazard.rsi
+    layers:
+    - state: icon
+    - state: icon-unshaded
+      shader: unshaded
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/hazard.rsi
+    clothingVisuals:
+      outerClothing:
+      - state: equipped-OUTERCLOTHING
+      - state: equipped-OUTERCLOTHING-unshaded
+        shader: unshaded
   - type: Tag
     tags:
     - HiViz
@@ -90,3 +127,7 @@
     sprite: Clothing/OuterClothing/Vests/tankharness.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Vests/tankharness.rsi
+  - type: Item
+    size: Normal # Make smaller than typical outer clothing
+    shape:
+    - 0, 0, 0, 1

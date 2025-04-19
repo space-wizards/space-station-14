@@ -1,6 +1,58 @@
 - type: entity
-  name: paper
   parent: BaseItem
+  id: BasePaper
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Document
+    - Paper
+  - type: Appearance
+  - type: Flammable
+    fireSpread: true
+    alwaysCombustible: true
+    damage:
+      types:
+        Heat: 1
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: fire
+  - type: Damageable
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Ash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Food
+    solution: food
+    delay: 7
+    forceFeedDelay: 7
+  - type: FlavorProfile
+    flavors:
+    - paper
+  - type: BadFood
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 1
+  - type: Item
+    size: Tiny
+
+- type: entity
+  name: paper
+  parent: BasePaper
   id: Paper
   description: 'A piece of white paper.'
   components:
@@ -18,75 +70,29 @@
   - type: PaperLabelType
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
-    requireHands: false
+    requiresComplex: false
   - type: UserInterface
     interfaces:
       enum.PaperUiKey.Key:
         type: PaperBoundUserInterface
-  - type: Item
-    size: Tiny
+  - type: FaxableObject
+  - type: PaperVisuals
+
+- type: entity
+  name: paper scrap
+  parent: BasePaper
+  id: PaperScrap
+  description: 'A crumpled up piece of white paper.'
+  components:
   - type: Tag
     tags:
     - Document
     - Trash
     - Paper
-  - type: Appearance
-  - type: FaxableObject
-  - type: PaperVisuals
-  - type: Flammable
-    fireSpread: true
-    canResistFire: false
-    alwaysCombustible: true
-    canExtinguish: false # Mwahaha! Let the world burn because of one piece of paper!
-    damage:
-      types:
-        Heat: 1
-  - type: FireVisuals
-    sprite: Effects/fire.rsi
-    normalState: fire
-  - type: Damageable
-    damageModifierSet: Wood
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 15
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-            Ash:
-              min: 1
-              max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: Food
-    solution: food
-    delay: 7
-    forceFeedDelay: 7
-  - type: BadFood
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 1
-        reagents:
-        - ReagentId: Fiber
-          Quantity: 1
-
-- type: entity
-  name: paper scrap
-  parent: Paper
-  id: PaperScrap
-  description: 'A crumpled up piece of white paper.'
-  components:
   - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
     layers:
     - state: scrap
-    - state: paper_words
-      map: ["enum.PaperVisualLayers.Writing"]
-      visible: false
-    - state: paper_stamp-generic
-      map: ["enum.PaperVisualLayers.Stamp"]
-      visible: false
 
 - type: entity
   name: office paper
@@ -175,6 +181,11 @@
       visible: false
   - type: PaperLabelType
     paperType: Invoice
+  - type: Tag
+    tags:
+    - Document
+    - Trash
+    - Paper
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
@@ -184,6 +195,21 @@
     contentMargin: 16.0, 16.0, 16.0, 16.0
     headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
     headerMargin: 0.0, 12.0, 0.0, 0.0
+
+- type: entity
+  id: PaperNanoTaskItem
+  parent: Paper
+  name: NanoTask item
+  description: A printed NanoTask item. Can be inserted into your PDA to add it to your tasks.
+  components:
+  - type: Tag
+    tags:
+    - Document
+    - Trash
+    - Paper
+  - type: StaticPrice
+    price: 0
+  - type: NanoTaskPrinted
 
 - type: entity
   id: PaperCargoBountyManifest
@@ -204,6 +230,11 @@
       visible: false
   - type: PaperLabelType
     paperType: Bounty
+  - type: Tag
+    tags:
+    - Document
+    - Trash
+    - Paper
   - type: PaperVisuals
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
@@ -274,6 +305,26 @@
   suffix: Station Only
   components:
   - type: NukeCodePaper
+
+- type: entity
+  id: BoxFolderNuclearCodes
+  parent: BaseItem
+  name: nuclear code folder
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-colormap
+      color: "#cc2323"
+    - state: folder-base
+    - state: folder-stamp-inverse
+      color: "#1dff00"
+  - type: SpawnItemsOnUse
+    items:
+    - id: NukeCodePaper
+    sound:
+      path: /Audio/Effects/packetrip.ogg
+  - type: Appearance
 
 - type: entity
   id: BoxFolderBase
@@ -410,10 +461,10 @@
 
 - type: entity
   id: BoxFolderCentCom
-  name: CentCom folder
+  name: CentComm folder
   parent: BoxFolderBase
-  suffix: DO NOT MAP
-  description: CentCom's miserable little pile of secrets!
+  categories: [ DoNotMap ]
+  description: CentComm's miserable little pile of secrets!
   components:
   - type: Sprite
     layers:
@@ -482,8 +533,8 @@
 - type: entity
   id: BoxFolderCentComClipboard
   parent: BoxFolderClipboard
-  name: CentCom clipboard
-  description: A luxurious clipboard upholstered with green velvet. Often seen carried by CentCom officials, seldom seen actually used.
+  name: CentComm clipboard
+  description: A luxurious clipboard upholstered with green velvet. Often seen carried by CentComm officials, seldom seen actually used.
   components:
   - type: Sprite
     sprite: Objects/Misc/cc-clipboard.rsi
@@ -503,7 +554,7 @@
 
 - type: entity
   id: BoxFolderQmClipboard
-  parent: BoxFolderClipboard
+  parent: [BoxFolderClipboard, BaseGrandTheftContraband]
   name: requisition digi-board
   description: A bulky electric clipboard, filled with shipping orders and financing details. With so many compromising documents, you ought to keep this safe.
   components:
@@ -548,7 +599,7 @@
           tags:
           - Write
   - type: CargoOrderConsole
-  - type: BankClient
+    removeLimitAccess: [ "Quartermaster" ]
   - type: ActivatableUI
     verbText: qm-clipboard-computer-verb-text
     key: enum.CargoConsoleUiKey.Orders
@@ -562,20 +613,24 @@
     damage:
       types:
         Blunt: 10
+  - type: Tag
+    tags:
+    - Folder
+    - HighRiskItem
   - type: StealTarget
     stealGroup: BoxFolderQmClipboard
 
 - type: entity
-  parent: Paper
+  parent: [Paper, BaseSyndicateContraband] # eat or burn your damn piece of paper damn thieves
   id: TraitorCodePaper
   name: syndicate codeword
   description: A leaked codeword to possibly get in touch with the Syndicate.
-  suffix: DO NOT MAP
+  categories: [ DoNotMap ]
   components:
   - type: TraitorCodePaper
 
 - type: entity
-  parent: Paper
+  parent: [Paper, BaseSyndicateContraband]
   id: AllTraitorCodesPaper
   name: syndicate codewords registry
   description: A registry of all active Syndicate codewords.
@@ -627,7 +682,7 @@
             - Paper
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
-    requireHands: false
+    requiresComplex: false
   - type: UserInterface
     interfaces:
       enum.PaperUiKey.Key:

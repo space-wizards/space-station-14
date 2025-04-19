@@ -15,7 +15,7 @@
     stealGroup: DoorRemote
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteCommand
   name: command door remote
   components:
@@ -31,7 +31,7 @@
     - Command
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteSecurity
   name: security door remote
   components:
@@ -47,7 +47,7 @@
     - Security
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseSecurityCommandContraband]
   id: DoorRemoteArmory
   name: armory door remote
   components:
@@ -63,7 +63,7 @@
     - Armory
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteService
   name: service door remote
   components:
@@ -79,7 +79,7 @@
     - Service
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteResearch
   name: research door remote
   components:
@@ -95,7 +95,7 @@
     - Research
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteCargo
   name: cargo door remote
   components:
@@ -111,7 +111,7 @@
     - Cargo
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteMedical
   name: medical door remote
   components:
@@ -127,7 +127,7 @@
     - Medical
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteEngineering
   name: engineering door remote
   components:
@@ -143,7 +143,7 @@
     - Engineering
 
 - type: entity
-  parent: DoorRemoteDefault
+  parent: [DoorRemoteDefault, BaseCommandContraband]
   id: DoorRemoteAll
   name: super door remote
   suffix: Admeme

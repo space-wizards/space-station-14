@@ -207,7 +207,7 @@ public sealed partial class NPCSteeringSystem
             return;
         }
 
-        foreach (var ent in grid.GetLocalAnchoredEntities(poly.Box))
+        foreach (var ent in _mapSystem.GetLocalAnchoredEntities(poly.GraphUid, grid, poly.Box))
         {
             if (!_physicsQuery.TryGetComponent(ent, out var body) ||
                 !body.Hard ||

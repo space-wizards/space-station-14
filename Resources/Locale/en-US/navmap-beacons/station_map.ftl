@@ -1,6 +1,7 @@
 station-map-window-title = Station map
 station-map-user-interface-flavor-left = Don't panic
 station-map-user-interface-flavor-right = v1.42
+station-map-filter-placeholder = Search by name
 
 nav-beacon-window-title = Station Beacon
 nav-beacon-toggle-visible = Visible

@@ -3,7 +3,7 @@ comp-kitchen-spike-deny-butcher = { CAPITALIZE(THE($victim)) } can't be butchere
 comp-kitchen-spike-deny-butcher-knife = { CAPITALIZE(THE($victim)) } can't be butchered on { THE($this) }, you need to butcher it using a knife.
 comp-kitchen-spike-deny-not-dead = { CAPITALIZE(THE($victim)) } can't be butchered. { CAPITALIZE(SUBJECT($victim)) } { CONJUGATE-BE($victim) } is not dead!
 
-comp-kitchen-spike-begin-hook-victim = { THE($user) } begins dragging you onto { THE($this) }!
+comp-kitchen-spike-begin-hook-victim = { CAPITALIZE(THE($user)) } begins dragging you onto { THE($this) }!
 comp-kitchen-spike-begin-hook-self = You begin dragging yourself onto { THE($this) }!
 
 comp-kitchen-spike-kill = { CAPITALIZE(THE($user)) } has forced { THE($victim) } onto the spike, killing them instantly!

@@ -1,5 +1,6 @@
 using System.Collections.Frozen;
 using System.Linq;
+using Content.Shared.FixedPoint;
 using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
@@ -7,20 +8,18 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.EntityEffects;
 using Content.Shared.Database;
-using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Chemistry.Reagent
 {
-    [Prototype("reagent")]
+    [Prototype]
     [DataDefinition]
     public sealed partial class ReagentPrototype : IPrototype, IInheritingPrototype
     {
@@ -106,6 +105,18 @@ namespace Content.Shared.Chemistry.Reagent
         public bool Slippery;
 
         /// <summary>
+        /// The speed at which the reagent evaporates over time.
+        /// </summary>
+        [DataField]
+        public FixedPoint2 EvaporationSpeed = FixedPoint2.Zero;
+
+        /// <summary>
+        /// If this reagent can be used to mop up other reagents.
+        /// </summary>
+        [DataField]
+        public bool Absorbent = false;
+
+        /// <summary>
         /// How easily this reagent becomes fizzy when aggitated.
         /// 0 - completely flat, 1 - fizzes up when nudged.
         /// </summary>
@@ -143,7 +154,7 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
 
-        public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager)
+        public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager, List<ReagentData>? data)
         {
             var removed = FixedPoint2.Zero;
 
@@ -152,7 +163,7 @@ namespace Content.Shared.Chemistry.Reagent
 
             foreach (var reaction in TileReactions)
             {
-                removed += reaction.TileReact(tile, this, reactVolume - removed, entityManager);
+                removed += reaction.TileReact(tile, this, reactVolume - removed, entityManager, data);
 
                 if (removed > reactVolume)
                     throw new Exception("Removed more than we have!");
@@ -206,7 +217,7 @@ namespace Content.Shared.Chemistry.Reagent
                 .ToDictionary(x => x.Key, x => x.Item2);
             if (proto.PlantMetabolisms.Count > 0)
             {
-                PlantMetabolisms = new List<string> (proto.PlantMetabolisms
+                PlantMetabolisms = new List<string>(proto.PlantMetabolisms
                     .Select(x => x.GuidebookEffectDescription(prototype, entSys))
                     .Where(x => x is not null)
                     .Select(x => x!)

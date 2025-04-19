@@ -114,6 +114,11 @@ namespace Content.Shared.Verbs
         public readonly bool CanInteract;
 
         /// <summary>
+        /// Cached version of CanComplexInteract
+        /// </summary>
+        public readonly bool CanComplexInteract;
+
+        /// <summary>
         ///     The User's hand component.
         /// </summary>
         /// <remarks>
@@ -130,13 +135,14 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public readonly EntityUid? Using;
 
-        public GetVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, HandsComponent? hands, bool canInteract, bool canAccess, List<VerbCategory> extraCategories)
+        public GetVerbsEvent(EntityUid user, EntityUid target, EntityUid? @using, HandsComponent? hands, bool canInteract, bool canComplexInteract, bool canAccess, List<VerbCategory> extraCategories)
         {
             User = user;
             Target = target;
             Using = @using;
             Hands = hands;
             CanAccess = canAccess;
+            CanComplexInteract = canComplexInteract;
             CanInteract = canInteract;
             ExtraCategories = extraCategories;
         }

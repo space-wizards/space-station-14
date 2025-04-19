@@ -1,0 +1,31 @@
+﻿<BoxContainer
+    xmlns="https://spacestation14.io"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    HorizontalExpand="True"
+    Orientation="Vertical"
+    >
+    <customControls:HSeparator></customControls:HSeparator>
+    <BoxContainer>
+        <Label StyleClasses="SiliconLawPositionLabel" Name="PositionText" Margin="5 0 0 0"></Label>
+        <PanelContainer
+            Margin="20 10 0 0"
+            MinHeight="128"
+        >
+            <PanelContainer.PanelOverride>
+                <graphics:StyleBoxFlat BackgroundColor="#1B1B1B"></graphics:StyleBoxFlat>
+            </PanelContainer.PanelOverride>
+            <BoxContainer Orientation="Horizontal" SeparationOverride="5">
+                <TextEdit Name="LawContent" HorizontalExpand="True" Editable="True" MinWidth="500" MinHeight="80"></TextEdit>
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
+    <BoxContainer Orientation="Horizontal" Margin="0 5 0 0" MaxHeight="64" Align="Begin">
+        <Button Name="MoveUp" Text="{Loc silicon-law-ui-minus-one}" StyleClasses="OpenRight"></Button>
+        <Button Name="MoveDown" Text="{Loc silicon-law-ui-plus-one}" StyleClasses="OpenLeft"></Button>
+        <CheckBox Name="Corrupted" Text="{Loc silicon-law-ui-check-corrupted}" ToolTip="{Loc silicon-law-ui-check-corrupted-tooltip}"></CheckBox>
+    </BoxContainer>
+    <BoxContainer Orientation="Horizontal" Align="End" Margin="0 10 5 10">
+        <Button Name="Delete" Text="{Loc silicon-law-ui-delete}" ModulateSelfOverride="Red"></Button>
+    </BoxContainer>
+</BoxContainer>

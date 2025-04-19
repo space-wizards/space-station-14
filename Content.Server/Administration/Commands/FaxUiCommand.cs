@@ -15,10 +15,9 @@ public sealed class FaxUiCommand : IConsoleCommand
 
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = shell.Player;
-        if (player == null)
+        if (shell.Player is not { } player)
         {
-            shell.WriteLine("shell-only-players-can-run-this-command");
+            shell.WriteError(Loc.GetString("shell-cannot-run-command-from-server"));
             return;
         }
 

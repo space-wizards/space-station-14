@@ -7,8 +7,8 @@
   "license": "CC-BY-SA-3.0",
   "copyright": "Taken from https://github.com/tgstation/tgstation at commit e06b82a7f4b2b09216fb28fd384c95a2e1dc50e5",
   "states": [
-    {"name": "DamageOverlay_4", "directions": 1},
-    {"name": "DamageOverlay_8", "directions": 1},
-    {"name": "DamageOverlay_12", "directions": 1}
+    {"name": "DamageOverlay_5", "directions": 1},
+    {"name": "DamageOverlay_10", "directions": 1},
+    {"name": "DamageOverlay_20", "directions": 1}
   ]
 }
