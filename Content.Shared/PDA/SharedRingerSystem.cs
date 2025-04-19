@@ -145,16 +145,18 @@ public abstract class SharedRingerSystem : EntitySystem
 
     /// <summary>
     /// Attempts to unlock or lock the uplink by checking the provided ringtone against the uplink code.
-    /// On the client side, for antagonists, the code check is skipped to support prediction.
-    /// On the server side, the code is always verified.
+    /// On the client side, it does nothing since the client cannot know the code in advance.
+    /// On the server side, the code is verified.
     /// </summary>
     /// <param name="uid">The entity with the RingerUplinkComponent.</param>
     /// <param name="ringtone">The ringtone to check against the uplink code.</param>
-    /// <param name="user">The entity attempting to toggle the uplink. If the user is an antagonist,
-    /// the ringtone code check will be skipped on the client to allow prediction.</param>
+    /// <param name="user">The entity attempting to toggle the uplink.</param>
     /// <returns>True if the uplink state was toggled, false otherwise.</returns>
     [PublicAPI]
-    public abstract bool TryToggleUplink(EntityUid uid, Note[] ringtone, EntityUid? user = null);
+    public virtual bool TryToggleUplink(EntityUid uid, Note[] ringtone, EntityUid? user = null)
+    {
+        return false;
+    }
 
     #endregion
 
