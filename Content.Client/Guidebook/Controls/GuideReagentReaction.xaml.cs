@@ -162,7 +162,7 @@ public sealed partial class GuideReagentReaction : BoxContainer, ISearchableCont
             msg.AddMarkupOrThrow(Loc.GetString("guidebook-reagent-recipes-reagent-display",
                 ("reagent", productProto.LocalizedName), ("ratio", amount)));
 
-            var label = new GuidebookAnchor();
+            var label = new GuidebookRichPrototypeLink();
             if (addLinks)
                 label.LinkedPrototype = productProto;
             label.SetMessage(msg);

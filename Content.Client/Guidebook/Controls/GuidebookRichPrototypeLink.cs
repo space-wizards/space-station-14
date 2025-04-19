@@ -8,7 +8,12 @@ using Content.Client.UserInterface.ControlExtensions;
 
 namespace Content.Client.Guidebook.Controls;
 
-public sealed class GuidebookAnchor : RichTextLabel, IPrototypeLinkControl
+/// <summary>
+/// A RichTextLabel which is a link to a specified IPrototype.
+/// The link is activated by the owner if the prototype is represented
+/// somewhere in the same document.
+/// </summary>
+public sealed class GuidebookRichPrototypeLink : RichTextLabel, IPrototypeLinkControl
 {
     private bool _linkActive = false;
 
@@ -25,7 +30,7 @@ public sealed class GuidebookAnchor : RichTextLabel, IPrototypeLinkControl
         SetMessage(msg, null, TextLinkTag.LinkColor);
     }
 
-    public GuidebookAnchor() : base()
+    public GuidebookRichPrototypeLink() : base()
     {
         MouseFilter = MouseFilterMode.Pass;
         OnKeyBindDown += HandleClick;
