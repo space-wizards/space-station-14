@@ -4950,4 +4950,11 @@ Entries:
   id: 685
   time: '2025-04-19T05:40:27.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/498
+- author: PubliclyExecutedPig
+  changes:
+  - message: Fixed Orwell's wiring
+    type: Fix
+  id: 686
+  time: '2025-04-19T12:41:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/503
 
