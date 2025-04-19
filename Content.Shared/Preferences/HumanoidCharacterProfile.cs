@@ -424,6 +424,7 @@ namespace Content.Shared.Preferences
             if (!_traitPreferences.SequenceEqual(other._traitPreferences)) return false;
             if (!Loadouts.SequenceEqual(other.Loadouts)) return false;
             if (FlavorText != other.FlavorText) return false;
+            if (Enabled != other.Enabled) return false;
             return Appearance.MemberwiseEquals(other.Appearance);
         }
 
@@ -634,6 +635,7 @@ namespace Content.Shared.Preferences
             hashCode.Add((int)Gender);
             hashCode.Add(Appearance);
             hashCode.Add((int)SpawnPriority);
+            hashCode.Add(Enabled);
             return hashCode.ToHashCode();
         }
 
