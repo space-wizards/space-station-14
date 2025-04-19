@@ -231,30 +231,54 @@
         ignoreResistances: false
         damage:
           types:
-            Cold: 0.05
+            Cold: 0.66 # ingest, don't splash. this stuff is more expensive than printer ink, if you wanna throw it at the clown, be my guest.
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
-          min: 160.15
-        amount: -30000
+          min: 100.15
+        amount: -20000
     Extinguish:
       methods: [ Touch ]
       effects:
       - !type:ExtinguishReaction # cold
   metabolisms:
     Poison:
-      metabolismRate : 0.45
+      metabolismRate : 0.25 # cold = slow probably
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Fresium
+          max: 20
         damage:
           types:
-             Cold: 0.01 # slightly nips directly, other cold damage comes from the temp change
-             Heat: -3 # ghetto burn chem. i don't think anyone would use this intentionally but it's funny
+             Cold: 0.02 # causes minor cold damage on its own if there isn't much of it
+             Heat: -5 # rapidly heals burns. this chemical is incredibly expensive to make, having a practical application could make it rewarding
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Fresium
+          min: 20
+          max: 40
+        damage:
+          types:
+             Cold: -25 # essentially causes cold damage immunity while healing it al
+             Heat: -8 # rapidly heals burns even more
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold
           reagent: Fresium
-          max: 35
+          min: 20
+          max: 40
+        type: Local
+        visualType: Large
+        messages: [ "fresium-effect-stable"]
+        probability: 0.1
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Fresium
+          max: 20
         type: Local
         visualType: LargeCaution
         messages: [ "fresium-effect-freeze-insides"]
@@ -263,7 +287,7 @@
         conditions:
         - !type:ReagentThreshold
           reagent: Fresium
-          max: 35
+          max: 40
         type: Local
         visualType: LargeCaution
         messages: [ "fresium-effect-slow"]
@@ -271,8 +295,8 @@
       - !type:AdjustTemperature
         conditions:
         - !type:Temperature
-          min: 160.15 # not quite enough for cryo, but can speed it up if you wanna take the risk
-        amount: -10000
+          min: 100 # portable cryopod
+        amount: -30000
       - !type:MovespeedModifier
         conditions:
         - !type:ReagentThreshold
