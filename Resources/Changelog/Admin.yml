@@ -1065,5 +1065,25 @@ Entries:
   id: 129
   time: '2025-04-16T22:59:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36640
+- author: IProduceWidgets
+  changes:
+  - message: stationevent toolshed commands should now work again to provide event
+      statistics.
+    type: Fix
+  id: 130
+  time: '2025-04-18T07:44:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32200
+- author: Errant
+  changes:
+  - message: The setgamepreset command no longer changes the preset permanently. When
+      used with only one parameter (for the preset to be used), it will make that
+      change for the next round that starts. The optional second parameter can specify
+      the number of upcoming rounds that will use the specified preset. If you want
+      to change the game preset permanently, set an arbitrarily high number as the
+      second parameter, or preferably just modify the game.defaultpreset cvar
+    type: Tweak
+  id: 131
+  time: '2025-04-18T12:24:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30812
 Name: Admin
 Order: 1
