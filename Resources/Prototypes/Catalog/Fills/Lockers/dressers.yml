@@ -69,6 +69,7 @@
       - id: ClothingUniformJumpsuitHosFormal
       - id: ClothingOuterWinterHoS
       - id: ClothingNeckCloakHos
+      - id: ClothingMaskNeckGaiter
 
 - type: entity
   id: DresserQuarterMasterFilled
@@ -106,5 +107,8 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingUniformJumpsuitWarden
+      - id: ClothingUniformJumpskirtWarden
       - id: ClothingHeadHatWarden
       - id: ClothingHeadHatBeretWarden
+      - id: ClothingOuterWinterWarden
