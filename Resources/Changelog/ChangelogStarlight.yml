@@ -4915,4 +4915,11 @@ Entries:
   id: 680
   time: '2025-04-19T00:27:27.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/500
+- author: walksanatora and sparlight
+  changes:
+  - message: Fixed Smart Corgis and SyndiBorgis not having propper names.
+    type: Fix
+  id: 681
+  time: '2025-04-19T05:36:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/502
 
