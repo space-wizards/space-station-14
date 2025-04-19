@@ -855,7 +855,7 @@ namespace Content.Shared.Interaction
             {
                 // If the target is an item, we ignore any colliding entities. Currently done so that if items get stuck
                 // inside of walls, users can still pick them up.
-                ignored.UnionWith(_broadphase.GetEntitiesIntersectingBody(target, (int) collisionMask, false, physics));
+                ignored.UnionWith(_broadphase.GetEntitiesIntersectingBody(target, (int) collisionMask, false, physics)); // Note: This also bypasses items underneath doors, which may be problematic if it'd cause undesirable behavior.
             }
             else if (_wallMountQuery.TryComp(target, out var wallMount))
             {
