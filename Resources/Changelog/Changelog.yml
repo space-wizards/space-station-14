@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Now you are allowed to paint multiple airlocks with the spray painter.
-      Along with that you can cancel the doafter by clicking on the door you are painting.
-    type: Tweak
-  id: 7752
-  time: '2024-12-24T02:25:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34001
-- author: ArtisticRoomba
-  changes:
-  - message: Reinforced tables now require welding to construct and deconstruct.
-    type: Tweak
-  id: 7753
-  time: '2024-12-26T22:47:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33992
 - author: crazybrain
   changes:
   - message: Bluespace lockers and quantum spin inverters can no longer go on the
@@ -3916,3 +3901,17 @@
   id: 8252
   time: '2025-04-19T01:48:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33835
+- author: SharkSnake98
+  changes:
+  - message: Added 12 new, varied drinks for the bartender to mix during shifts.
+    type: Add
+  id: 8253
+  time: '2025-04-19T05:12:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36287
+- author: Ko4erga
+  changes:
+  - message: Added new color turtlenecks in WinterDrobe.
+    type: Add
+  id: 8254
+  time: '2025-04-19T05:14:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32920
