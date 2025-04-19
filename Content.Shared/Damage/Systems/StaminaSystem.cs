@@ -415,15 +415,10 @@ public sealed partial class StaminaSystem : EntitySystem
         if (!Resolve(uid, ref comp))
             return;
 
-        // Use a dictionary with default 'damage - speed' pairs if the entity doesn't have a component with an already existing one
-        var thresholds = HasComp<SlowOnDamageComponent>(uid)
-            ? Comp<SlowOnDamageComponent>(uid).SpeedModifierThresholds
-            : comp.StunModifierThresholds;
-
         var closest = FixedPoint2.Zero;
 
         // Iterate through the dictionary in the similar way as in Damage.SlowOnDamageSystem.OnRefreshMovespeed
-        foreach (var thres in thresholds)
+        foreach (var thres in comp.StunModifierThresholds)
         {
             var key = thres.Key.Float();
 
@@ -431,15 +426,7 @@ public sealed partial class StaminaSystem : EntitySystem
                 closest = thres.Key;
         }
 
-        if (closest != FixedPoint2.Zero)
-        {
-            _stunSystem.UpdateStunModifiers(uid, thresholds[closest], comp);
-        }
-        else if (closest == FixedPoint2.Zero)
-        {
-            // Recover the full speed if the closest threshold is zero
-            _stunSystem.UpdateStunModifiers(uid, 1f, comp);
-        }
+        _stunSystem.UpdateStunModifiers(uid, comp.StunModifierThresholds[closest], comp);
     }
 }
 
