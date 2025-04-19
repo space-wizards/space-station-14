@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: The Head of Personnel can now grant Courier access.
-    type: Tweak
-  id: 1033
-  time: '2025-01-31T22:45:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1532
-- author: Pinkbat5
-  changes:
-  - message: Security jetpacks are now smaller in the inventory, and can be equipped
-      in the tank slot.
-    type: Tweak
-  id: 1034
-  time: '2025-01-31T22:49:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1522
 - author: TheGrimbeeper
   changes:
   - message: clownspiders no longer throw an error every frame, should very very very
@@ -4107,3 +4092,17 @@
   id: 1532
   time: '2025-04-19T12:51:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2259
+- author: wendyribstonpippin
+  changes:
+  - message: buncha fucking chibis on your lobby and shit
+    type: Add
+  id: 1533
+  time: '2025-04-19T22:44:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2256
+- author: AvianMaiden
+  changes:
+  - message: Brigmedical lockers can now be accessed by the brigmedic's superiors.
+    type: Add
+  id: 1534
+  time: '2025-04-19T22:44:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2287
