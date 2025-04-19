@@ -59,7 +59,7 @@
 - type: entity
   parent: BaseWeaponBallisticTurret
   id: WeaponTurretNanoTrasen
-  suffix: NanoTrasen
+  suffix: Nanotrasen # imp edit; lower-case t in Nanotrasen
   components:
   - type: NpcFactionMember
     factions:

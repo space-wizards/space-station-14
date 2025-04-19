@@ -102,7 +102,7 @@
   name: Cybersun pen
   parent: [BaseAdvancedPen, Tier2Contraband]
   id: CyberPen
-  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. So powerful, it's even able to rewrite officially stamped documents should the need arise.
+  description: A high-tech pen straight from Cybersun's legal department, capable of refracting hard-light at impossible angles through its diamond tip in order to write. So powerful, it's even able to rewrite officially-stamped documents, should the need arise. # imp edit
   components:
   - type: Sprite
     state: overpriced_pen
@@ -133,7 +133,7 @@
   name: CentComm pen
   parent: [BaseAdvancedPen, BaseCentcommContraband]
   id: PenCentcom
-  description: In an attempt to keep up with the "power" of the cybersun bureaucracy, NT made a replica of cyber pen, in their corporate style.
+  description: A high-tech pen utilizing refracted hard-light precision to write. In an attempt to keep up with the "power" of the Cybersun bureaucracy, NT made a replica of the infamous Cybersun pen, in their own corporate style. # imp edit
   components:
   - type: Sprite
     state: pen_centcom
@@ -152,7 +152,7 @@
   name: captain's fountain pen
   parent: PenEmbeddable
   id: PenCap
-  description: A luxurious fountain pen for the captain of the station.
+  description: A luxurious fountain pen for the captain of the station. Perfect for signing death warrants. # imp edit
   components:
   - type: Sprite
     state: pen_cap
@@ -169,7 +169,7 @@
   name: hop's fountain pen
   parent: PenEmbeddable
   id: PenHop
-  description: A luxurious fountain pen for the hop of the station.
+  description: A luxurious fountain pen for the head of personnel of the station. Perfect for signing all those employee safety waivers. # imp edit
   components:
   - type: Sprite
     state: pen_hop

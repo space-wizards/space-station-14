@@ -18,7 +18,7 @@
 - type: entity
   parent: BaseRecruiterObjective
   id: RecruiterRecruitingObjective
-  description: Interview the finest nanotrasen rejects and have them sign your contract, in blood, with your recruiter pen.
+  description: Interview the finest Nanotrasen rejects and have them sign your contract, in blood, with your recruiter pen. # imp edit; preferential to capitalizing company names
   components:
   - type: Objective
     icon:

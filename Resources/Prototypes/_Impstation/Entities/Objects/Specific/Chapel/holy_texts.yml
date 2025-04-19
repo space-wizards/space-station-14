@@ -1,6 +1,6 @@
 - type: entity
   name: quran
-  description: Printed in both original Arabic and NanoTrasen Standard English.
+  description: Printed in both original Arabic and Nanotrasen Standard English.
   parent: Bible
   id: HolyTextQuran
   components:

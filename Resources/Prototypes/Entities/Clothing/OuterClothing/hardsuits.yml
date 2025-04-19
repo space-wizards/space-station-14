@@ -657,8 +657,8 @@
 - type: entity
   parent: [ClothingOuterHardsuitBase, Tier3Contraband]
   id: ClothingOuterHardsuitJuggernaut
-  name: cybersun juggernaut suit
-  description: A suit made by the cutting edge R&D department at cybersun to be hyper resilient.
+  name: Cybersun juggernaut suit # imp edit; preferential to capitalizing company names
+  description: A suit of compressed red matter, originally used by Cybersun's legal honor guard. An absolute beast, it's been hand-crafted by the cutting-edge R&D department at Cybersun to be hyper resilient. # imp rewrite
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/OuterClothing/Hardsuits/syndicate_juggernaut.rsi #imp edit
