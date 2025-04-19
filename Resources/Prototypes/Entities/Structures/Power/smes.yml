@@ -98,6 +98,19 @@
       - VoltageNetworks
       - Power
 
+    # Interface
+    - type: BatteryInterface
+      minChargeRate: 5000
+      maxChargeRate: 150000
+      minSupply: 5000
+      maxSupply: 150000
+    - type: UserInterface
+      interfaces:
+        enum.BatteryUiKey.Key:
+          type: BatteryBoundUserInterface
+    - type: ActivatableUI
+      key: enum.BatteryUiKey.Key
+
 # SMES' in use
 
 - type: entity
