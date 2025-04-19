@@ -123,6 +123,8 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         var deltaMolesToEqualizePressure = numerator / denominator;
 
         // Third, make sure we only transfer the minimum of the two.
+        // We do this so that we don't accidentally transfer so much gas to the point
+        // where the outlet pressure is higher than the inlet.
         var deltaMolesToTransfer = Math.Min(deltaMolesToPressureThreshold, deltaMolesToEqualizePressure);
 
         // Fourth, convert to the desired volume to transfer.
