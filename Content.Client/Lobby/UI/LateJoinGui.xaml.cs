@@ -71,20 +71,29 @@ namespace Content.Client.Lobby.UI
             CharacterList.RemoveAllChildren();
 
             var group = new ButtonGroup();
+            var first = !_selectedSlot.HasValue;
             foreach (var (slot, profile) in _preferencesManager.Preferences!.Characters)
             {
-                var isSelected = slot == _selectedSlot;
+                var isSelected = _selectedSlot.HasValue ? slot == _selectedSlot : first;
                 if (profile is not HumanoidCharacterProfile humanoid)
                     continue;
                 var characterPickerButton =
                     new CharacterPickerButton(_entManager, _prototypeManager, group, humanoid, isSelected, true);
                 CharacterList.AddChild(characterPickerButton);
 
+                if (isSelected && _selectedSlot != slot)
+                {
+                    _selectedSlot = slot;
+                    RebuildJobList();
+                }
+
                 characterPickerButton.OnPressed += _ =>
                 {
                     _selectedSlot = slot;
                     RebuildJobList();
                 };
+                if(first)
+                    first = false;
             }
         }
 
