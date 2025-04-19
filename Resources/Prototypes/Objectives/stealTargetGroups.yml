@@ -36,6 +36,13 @@
     state: icon
 
 - type: stealTargetGroup
+  id: WeaponLauncherSingularityBuster
+  name: steal-target-groups-weapon-launcher-singularity-buster
+  sprite:
+    sprite: Objects/Weapons/Guns/Launchers/buster_rocket.rsi
+    state: base
+
+- type: stealTargetGroup
   id: BoxFolderQmClipboard
   name: steal-target-groups-box-folder-qm-clipboard
   sprite:

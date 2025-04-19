@@ -741,6 +741,31 @@
     energy: 0.5
 
 - type: entity
+  parent: BaseBulletTrigger
+  id: BulletSingularityBusterRocket
+  categories: [ HideSpawnMenu ]
+  name: singularity buster rocket
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+    - state: buster
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 300
+    intensitySlope: 6
+    maxIntensity: 50
+    maxTileBreak: 1
+  - type: PointLight
+    radius: 3.5
+    color: orange
+    energy: 0.5
+  - type: SinguloFood
+    energy: -200
+    energyFactor: 0.1
+
+- type: entity
   id: BulletGrenadeBaton
   name: baton grenade
   parent: BaseBullet
