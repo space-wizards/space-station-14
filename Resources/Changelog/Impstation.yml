@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Amber has been updated to incorporate its latest upstream changes.
-    type: Tweak
-  id: 1030
-  time: '2025-01-31T18:35:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1526
 - author: TheGrimbeeper
   changes:
   - message: rarest artifact effect that tweaks your doll will now not update the
@@ -4095,3 +4088,16 @@
   id: 1529
   time: '2025-04-19T07:15:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2262
+- author: jtfg-dev
+  changes:
+  - message: Nanotrasen is Nanotrasen. Cybersun is Cybersun. Gorlex is Gorlex. Baba
+      is You.
+    type: Fix
+  - message: Some descriptions have been refreshed and/or spiced.
+    type: Tweak
+  - message: Item names, descriptions, and flavor text throughout the game have been
+      cleaned up, per the request of the Intergalactic Standards Association.
+    type: Fix
+  id: 1530
+  time: '2025-04-19T12:44:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2231
