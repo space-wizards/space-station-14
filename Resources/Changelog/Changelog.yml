@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Booblesnoot42
   changes:
-  - message: On Cog, an unnecessary protolathe was removed from cargo.
-    type: Remove
-  id: 7749
-  time: '2024-12-23T23:24:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34026
-- author: Booblesnoot42
-  changes:
   - message: On Amber, an unnecessary protolathe was removed from cargo.
     type: Remove
   id: 7750
@@ -3916,3 +3909,10 @@
   id: 8249
   time: '2025-04-19T01:02:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30609
+- author: Coolsurf6
+  changes:
+  - message: Attachbodypart command now functions as intended.
+    type: Fix
+  id: 8250
+  time: '2025-04-19T01:23:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34577
