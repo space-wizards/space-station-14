@@ -1,1 +1,1 @@
-station-event-immovable-rod-start-announcement = High velocity unidentified object is on a collision course with the station. Impact imminent.
+station-event-immovable-rod-start-announcement = Scanners have detected an unidentified object anchored to a spatial reference frame with high velocity relative to the station. Impact imminent.
