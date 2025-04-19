@@ -84,6 +84,7 @@ namespace Content.IntegrationTests.Tests
             "Relic",
             "dm01-entryway",
             "Mira"
+
         };
 
         /// <summary>
