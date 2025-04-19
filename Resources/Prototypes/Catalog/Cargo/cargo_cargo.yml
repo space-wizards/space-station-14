@@ -9,11 +9,21 @@
   group: market
 
 - type: cargoProduct
-  id: CargoLuxuryHardsuit
+  id: CargoMiningHardsuit
   icon:
-    sprite: Clothing/Head/Hardsuits/luxury.rsi
+    sprite: Clothing/Head/Hardsuits/salvage.rsi
     state: icon
-  product: CrateCargoLuxuryHardsuit
+  product: CrateCargoMiningHardsuit
   cost: 15000
   category: cargoproduct-category-name-cargo
   group: market
+
+#- type: cargoProduct #Disabled until discussions finish of it being QM exclusive
+# id: CargoLuxuryHardsuit
+# icon:
+#   sprite: Clothing/Head/Hardsuits/Luxury.rsi
+#  state: icon
+# product: CrateCargoLuxuryHardsuit
+#  cost: 15000
+#  category: cargoproduct-category-name-cargo
+#  group: market
