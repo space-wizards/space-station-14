@@ -373,6 +373,8 @@
   - type: Thieving
     stripTimeReduction: 1.5
     stealthy: true
+  - type: Fiber
+    fiberMaterial: fibers-holographic
 
 - type: entity
   parent: ClothingHandsGlovesColorWhite
