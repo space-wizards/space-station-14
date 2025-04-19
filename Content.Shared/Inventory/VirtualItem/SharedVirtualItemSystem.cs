@@ -256,7 +256,6 @@ public abstract class SharedVirtualItemSystem : EntitySystem
         if (TerminatingOrDeleted(item))
             return;
 
-        _transformSystem.DetachEntity(item, Transform(item));
-        PredictedQueueDel(item);
+        PredictedQueueDel(item.Owner);
     }
 }
