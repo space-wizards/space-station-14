@@ -159,10 +159,6 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         {
             lobby.Lobby?.CharacterSetupState.RemoveAllChildren();
         }
-
-        _characterSetup = null;
-        _profileEditor = null;
-        _jobPriorityEditor = null;
     }
 
     /// <summary>
