@@ -113,6 +113,28 @@
     price: 70
 
 - type: entity
+  parent: TintedWindow
+  id: TintedWindowToggleable
+  suffix: Toggleable
+  components:
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - On
+    - Off
+    - Toggle
+  - type: OccluderSignalControl
+  - type: Construction
+    graph: Window
+    node: tintedWindowToggleable
+    containers:
+    - board
+
+- type: entity
   id: WindowRCDResistant
   parent: Window
   abstract: true
