@@ -26,15 +26,15 @@
 
   For example, a pneumatic valve with a control pressure of 500 kPa will open when the output pressure is 500 kPa - [color=orange][protodata="PressureControlledValve" comp="PressureControlledValve" member="Threshold"/] kPa[/color] or lower, and it will close when the output pressure is 500 kPa - [color=orange][protodata="PressureControlledValve" comp="PressureControlledValve" member="Threshold"/] kPa[/color] or higher.
 
-  The valve's control pressure is determined by a pipenet connection, and as such can be adjusted on the fly by a [textlink="pump" link="Pumps"] or another source of pressure control.
+  The valve's control pressure is determined by a pipenet connection, and as such can be adjusted on the fly by a [textlink="pump" link="Pumps"/] or another source of pressure control.
 
   ## Differences to Pumps
 
-  The pneumatic valve is different from a [textlink="pump" link="Pumps"] which moves gas via work.
-  The pneumatic valve is a passive device that moves gas based on the higher pressure of the input gas, and as such it can sometimes fill volumes faster than a [textlink="pump" link="Pumps"] can.
+  The pneumatic valve is different from a [textlink="pump" link="Pumps"/] which moves gas via work.
+  The pneumatic valve is a passive device that moves gas based on the higher pressure of the input gas, and as such it can sometimes fill volumes faster than a [textlink="pump" link="Pumps"/] can.
 
-  For example, a pneumatic valve with a control pressure of 500 kPa will fill a volume faster than a pressure [textlink="pump" link="Pumps"] set to 500 kPa.
-  However, the [textlink="pump" link="Pumps"] will be able to maintain the pressure in the volume more accurately.
+  For example, a pneumatic valve with a control pressure of 500 kPa will fill a volume faster than a pressure [textlink="pump" link="Pumps"/] set to 500 kPa.
+  However, the [textlink="pump" link="Pumps"/] will be able to maintain the pressure in the volume more accurately.
 
   The pneumatic valve can be used in a variety of applications, for example:
   - To automatically vent gasses in a burn chamber based on control input

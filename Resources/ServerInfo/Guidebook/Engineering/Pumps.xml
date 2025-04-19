@@ -1,6 +1,6 @@
 ﻿<Document>
 # Pumps
-  Pumps are the primary way of actively moving gasses through a [textlink="pipenet." link="PipeNetworks"]
+  Pumps are the primary way of actively moving gasses through a [textlink="pipenet." link="PipeNetworks"/]
   They take gas from one side and push it to the other.
   There are two different types of pumps:
 
@@ -12,7 +12,7 @@
   Some important things to note about pumps:
   - Pumps [color=#a4885c]require power[/color] through a nearby LV cable to function.
   - Pumps output on the side with the red stripe.
-  - Gas cannot move backwards through pumps (although if you are using a pump to do solely this, you should use the [textlink="passive gate" link="PassiveGate"] instead).
+  - Gas cannot move backwards through pumps (although if you are using a pump to do solely this, you should use the [textlink="passive gate" link="PassiveGate"/] instead).
   - Pumps cannot move gasses into pipes with pressures or volumes exceeding their [color=#a4885c]limit[/color]. This causes them to be [color=red]blocked[/color].
 
   Pumps will show a colorful animation when they are doing work.

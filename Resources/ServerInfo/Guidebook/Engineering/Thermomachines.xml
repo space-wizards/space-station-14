@@ -1,6 +1,6 @@
 ﻿<Document>
   # Thermomachines
-  Thermomachines are devices that manipulate the temperature of gasses within a [textlink="pipe network" link="PipeNetworks"] or exposed atmosphere.
+  Thermomachines are devices that manipulate the temperature of gasses within a [textlink="pipe network" link="PipeNetworks"/] or exposed atmosphere.
   <Box>
     <GuideEntityEmbed Entity="SpaceHeater" Caption=""/>
     <GuideEntityEmbed Entity="GasThermoMachineHeater" Caption=""/>
@@ -8,7 +8,7 @@
   </Box>
   They are essential for maintaining the temperature of gasses for various applications.
 
-  All thermomachines work by using [textlink="electrical power" link="Power"] to heat or cool the atmosphere.
+  All thermomachines work by using [textlink="electrical power" link="Power"/] to heat or cool the atmosphere.
   How much they heat/cool the atmosphere is directly related to the amount of power they consume.
 
   Thermomachines also have an efficiency coefficient, which determines how much they can heat or cool the atmosphere per unit of power consumed.
@@ -35,7 +35,7 @@
   Botany or science will often request these to maintain the temperature of their plants or department.
 
   ## Pipenet Thermomachines (Freezer and Heater)
-  Pipenet thermomachines are more powerful stationary temperature control units that can be used to heat or cool gas in a [textlink="pipenet." link="PipeNetworks"]
+  Pipenet thermomachines are more powerful stationary temperature control units that can be used to heat or cool gas in a [textlink="pipenet." link="PipeNetworks"/]
 
   <Box>
     <GuideEntityEmbed Entity="GasThermoMachineHeater"/>

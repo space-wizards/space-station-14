@@ -37,11 +37,11 @@
   </Box>
 
   The P.A.C.M.A.N. and S.U.P.E.R.P.A.C.M.A.N. is intended for usage by engineering for larger power outages and supplementing power in the event of a deficit.
-  Bootstrapping larger [textlink="engines" link="SingularityTeslaEngine"], powering departments, and so on.
+  Bootstrapping larger [textlink="engines" link="SingularityTeslaEngine"/], powering departments, and so on.
 
   The S.U.P.E.R.P.A.C.M.A.N. boasts a larger power output (up to [color=orange][protodata="PortableGeneratorSuperPacman" comp="FuelGenerator" member="MaxTargetPower" format="N0"/] W[/color]) and longer runtime at maximum output, but scales down to lower outputs less efficiently.
 
-  They connect directly to [color=yellow]MV[/color] or [color=orange]HV[/color] [textlink="power cables" link="VoltageNetworks"] and are able to switch between them for flexibility.
+  They connect directly to [color=yellow]MV[/color] or [color=orange]HV[/color] [textlink="power cables" link="VoltageNetworks"/] and are able to switch between them for flexibility.
 
   The S.U.P.E.R.P.A.C.M.A.N and P.A.C.M.A.N require uranium sheets and plasma sheets as fuel, respectively.
 </Document>

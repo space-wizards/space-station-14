@@ -22,7 +22,7 @@
   [bold]Be sure to close the release valve before you eject your handheld tank![/bold]
 
   ## Connector Ports
-  Gas canisters and [textlink="portable scrubbers" link="PortableScrubber"] can be connected to a [textlink="pipenet" link="PipeNetworks"] by anchoring (wrenching) the device on top of a connector.
+  Gas canisters and [textlink="portable scrubbers" link="PortableScrubber"/] can be connected to a [textlink="pipenet" link="PipeNetworks"/] by anchoring (wrenching) the device on top of a connector.
   When connected, gas will be free to move in and out of the canister to balance pressure, temperature, and composition.
 
   A pump can be used to insert or extract gas from a canister, useful for filling or emptying a canister entirely.

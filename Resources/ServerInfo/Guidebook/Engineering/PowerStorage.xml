@@ -1,6 +1,6 @@
 ﻿<Document>
   # Power Storage
-  Because of [textlink="Power Ramping" link="Ramping"], it is important to have power storage devices to help flatten out spikes and dips in power usage, as well as to provide power in the event of a power deficit.
+  Because of [textlink="Power Ramping" link="Ramping"/], it is important to have power storage devices to help flatten out spikes and dips in power usage, as well as to provide power in the event of a power deficit.
 
   Each transformer for its respective power level ([color=orange]HV[/color], [color=yellow]MV[/color], and [color=green]LV[/color]) has an attached small battery to handle minor spikes and dips; however, this is not viable in the case of a large grid deficit.
 

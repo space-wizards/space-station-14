@@ -78,7 +78,7 @@ You can use a [color=cyan]sterile swab[/color] to transfer pollen from one plant
 ## Chemicals
 Some chemicals have special effects on plants.
 
-[textlink="Click here to see all botanical chemicals." link="Botanical"]
+[textlink="Click here to see all botanical chemicals." link="Botanical"/]
 
 <GuideReagentEmbed Reagent="Dylovene"/>
 <GuideReagentEmbed Reagent="Cryoxadone"/>

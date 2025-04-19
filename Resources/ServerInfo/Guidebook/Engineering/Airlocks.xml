@@ -7,7 +7,7 @@
     <GuideEntityEmbed Entity="AirlockGlass" Caption=""/>
   </Box>
 
-  Airlocks can be opened using either [color=yellow][bold][keybind="Use"][/bold][/color] with an empty hand, [color=yellow][bold][keybind="ActivateItemInWorld"][/bold][/color] if hands are full, or by colliding with the airlock.
+  Airlocks can be opened using either [color=yellow][bold][keybind="Use"/][/bold][/color] with an empty hand, [color=yellow][bold][keybind="ActivateItemInWorld"/][/bold][/color] if hands are full, or by colliding with the airlock.
 
   Airlocks will only open if you have an ID card with the correct access level.
   The ID card must be in your hand or in your ID slot.
@@ -22,7 +22,7 @@
     <GuideEntityEmbed Entity="DoorElectronics" Caption=""/>
   </Box>
 
-  Airlocks block gas flow, so they can be used to seal off areas in case of a [textlink="hull breach" link="Spacing"] or a [textlink="fire." link="Fires"]
+  Airlocks block gas flow, so they can be used to seal off areas in case of a [textlink="hull breach" link="Spacing"/] or a [textlink="fire." link="Fires"/]
   They also store gas on their tile, even when closed, so be careful when opening them during or after a gas leak.
 
   ## Bolting and Emergency Access
@@ -36,7 +36,7 @@
     <GuideEntityEmbed Entity="PlayerStationAiEmpty" Caption=""/>
   </Box>
   <Box>
-    [color=#999999][italic]The Station AI, which has remote control over all airlocks[italic][/color]
+    [color=#999999][italic]The Station AI, which has remote control over all airlocks[/italic][/color]
   </Box>
 
   <Box>
@@ -48,7 +48,7 @@
     <GuideEntityEmbed Entity="DoorRemoteResearch" Caption=""/>
   </Box>
   <Box>
-    [color=#999999][italic]Precious door remotes. With unlimited power...[italic][/color]
+    [color=#999999][italic]Precious door remotes. With unlimited power...[/italic][/color]
   </Box>
 
 
@@ -57,7 +57,7 @@
   They can open, close, bolt, and set to emergency access using these remotes.
 
   ## Linking
-  Airlocks can be linked using the [textlink="Link" link="Networking"] system to other devices.
+  Airlocks can be linked using the [textlink="Link" link="Networking"/] system to other devices.
   This allows for proper station airlocks to space, or to link multiple airlocks together.
 
   ## Styling

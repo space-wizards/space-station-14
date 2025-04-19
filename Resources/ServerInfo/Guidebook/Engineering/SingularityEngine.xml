@@ -56,9 +56,9 @@
   </Box>
   They require gaseous plasma to function. The plasma containers attached to the collectors must be filled with plasma to produce power.
 
-  You can turn on the collectors by interacting with them using [color=yellow][bold][keybind="Use"][/bold][/color].
+  You can turn on the collectors by interacting with them using [color=yellow][bold][keybind="Use"/][/bold][/color].
 
-  You can also eject the tank by interacting with the collector using [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
+  You can also eject the tank by interacting with the collector using [color=yellow][bold][keybind="AltActivateItemInWorld"/][/bold][/color].
   From here, you can refill the tank with plasma using a plasma canister and reinsert it into the collector.
 
   The maximum power the radiation collector can produce is determined by:
