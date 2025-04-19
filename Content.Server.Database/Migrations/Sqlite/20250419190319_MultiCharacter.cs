@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Content.Server.Database.Migrations.Postgres
+namespace Content.Server.Database.Migrations.Sqlite
 {
     /// <inheritdoc />
     public partial class MultiCharacter : Migration
@@ -23,22 +22,20 @@ namespace Content.Server.Database.Migrations.Postgres
                 name: "priority",
                 table: "job");
 
-            migrationBuilder.AddColumn<bool>(
-                name: "enabled",
+            migrationBuilder.RenameColumn(
+                name: "pref_unavailable",
                 table: "profile",
-                type: "boolean",
-                nullable: false,
-                defaultValue: false);
+                newName: "enabled");
 
             migrationBuilder.CreateTable(
                 name: "job_preference",
                 columns: table => new
                 {
-                    job_preference_id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    preference_id = table.Column<int>(type: "integer", nullable: false),
-                    job_name = table.Column<string>(type: "text", nullable: false),
-                    priority = table.Column<int>(type: "integer", nullable: false)
+                    job_preference_id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    preference_id = table.Column<int>(type: "INTEGER", nullable: false),
+                    job_name = table.Column<string>(type: "TEXT", nullable: false),
+                    priority = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,21 +67,22 @@ namespace Content.Server.Database.Migrations.Postgres
             migrationBuilder.DropTable(
                 name: "job_preference");
 
-            migrationBuilder.DropColumn(
+            migrationBuilder.RenameColumn(
                 name: "enabled",
-                table: "profile");
+                table: "profile",
+                newName: "pref_unavailable");
 
             migrationBuilder.AddColumn<int>(
                 name: "selected_character_slot",
                 table: "preference",
-                type: "integer",
+                type: "INTEGER",
                 nullable: false,
                 defaultValue: 0);
 
             migrationBuilder.AddColumn<int>(
                 name: "priority",
                 table: "job",
-                type: "integer",
+                type: "INTEGER",
                 nullable: false,
                 defaultValue: 0);
 

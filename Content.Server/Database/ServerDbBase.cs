@@ -273,7 +273,6 @@ namespace Content.Server.Database
                 ),
                 spawnPriority,
                 jobs,
-                (PreferenceUnavailableMode)profile.PreferenceUnavailable,
                 antags.ToHashSet(),
                 traits.ToHashSet(),
                 loadouts,
@@ -308,7 +307,6 @@ namespace Content.Server.Database
             profile.SpawnPriority = (int)humanoid.SpawnPriority;
             profile.Markings = markings;
             profile.Slot = slot;
-            profile.PreferenceUnavailable = (DbPreferenceUnavailableMode)humanoid.PreferenceUnavailable;
             profile.Enabled = humanoid.Enabled;
 
             profile.Jobs.Clear();
