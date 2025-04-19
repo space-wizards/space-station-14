@@ -16,6 +16,9 @@ public sealed partial class AtmosMonitoringConsoleDeviceComponent : Component
     /// entity on the atmos monitoring console nav map.
     /// If null, no blip is drawn (i.e., null for pipes)
     /// </summary>
-    [DataField, ViewVariables]
+    [DataField]
     public ProtoId<NavMapBlipPrototype>? NavMapBlip = null;
+
+    [DataField]
+    public bool ShowAbsentConnections = true;
 }
