@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: hivehum
   changes:
-  - message: You can now properly restock the CourierDrobe.
-    type: Tweak
-  id: 1032
-  time: '2025-01-31T22:45:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1533
-- author: hivehum
-  changes:
   - message: The Head of Personnel can now grant Courier access.
     type: Tweak
   id: 1033
@@ -4106,3 +4099,11 @@
   id: 1531
   time: '2025-04-19T12:50:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2246
+- author: DinnerCalzone
+  changes:
+  - message: Added the janitorial welding tool; a welding tool with a weaker flame
+      that can only be used for derusting rusted walls.
+    type: Add
+  id: 1532
+  time: '2025-04-19T12:51:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2259
