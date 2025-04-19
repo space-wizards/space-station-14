@@ -76,7 +76,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         _cargo.UpdateBankAccount(
             (ent.Comp.RecipientStation.Value, account),
             ent.Comp.SpesoReward,
-            _cargo.CreateAccountDistribution(account.PrimaryAccount, account, account.PrimaryCut));
+            _cargo.CreateAccountDistribution((ent.Comp.RecipientStation.Value, account)));
     }
 
     public override void Update(float frameTime)
