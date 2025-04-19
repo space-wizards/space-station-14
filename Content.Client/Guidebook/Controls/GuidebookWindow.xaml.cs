@@ -61,7 +61,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
         if (prototype == null)
             return;
 
-        var (linkableControls, _) = EntryContainer.GetLinkableControlsAndLinks();
+        var (linkableControls, _) = GetLinkableControlsAndLinks(EntryContainer);
         foreach (var linkableControl in linkableControls)
         {
             if (linkableControl.RepresentedPrototype != prototype)
@@ -129,7 +129,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
 
         LastEntry = entry.Id;
 
-        var (linkableControls, linkControls) = EntryContainer.GetLinkableControlsAndLinks();
+        var (linkableControls, linkControls) = GetLinkableControlsAndLinks(EntryContainer);
 
         HashSet<IPrototype> availablePrototypeLinks = new();
         foreach (var linkableControl in linkableControls)
@@ -259,5 +259,31 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
                 element.SetHiddenState(true, SearchBar.Text.Trim());
             }
         }
+    }
+
+    private static (List<IPrototypeRepresentationControl>, List<IPrototypeLinkControl>) GetLinkableControlsAndLinks(Control parent)
+    {
+        List<IPrototypeRepresentationControl> linkableList = new();
+        List<IPrototypeLinkControl> linkList = new();
+
+        foreach (var child in parent.Children)
+        {
+            var hasChildren = child.ChildCount > 0;
+
+            if (child is IPrototypeLinkControl linkChild)
+                linkList.Add(linkChild);
+            else if (child is IPrototypeRepresentationControl linkableChild)
+                linkableList.Add(linkableChild);
+
+            if (!hasChildren)
+                continue;
+
+            var (childLinkableList, childLinkList) = GetLinkableControlsAndLinks(child);
+
+            linkableList.AddRange(childLinkableList);
+            linkList.AddRange(childLinkList);
+        }
+
+        return (linkableList, linkList);
     }
 }

@@ -70,32 +70,6 @@ public static class ControlExtension
         return controlList;
     }
 
-    public static (List<IPrototypeRepresentationControl>, List<IPrototypeLinkControl>) GetLinkableControlsAndLinks(this Control parent)
-    {
-        List<IPrototypeRepresentationControl> linkableList = new();
-        List<IPrototypeLinkControl> linkList = new();
-
-        foreach (var child in parent.Children)
-        {
-            var hasChildren = child.ChildCount > 0;
-
-            if (child is IPrototypeLinkControl linkChild)
-                linkList.Add(linkChild);
-            else if (child is IPrototypeRepresentationControl linkableChild)
-                linkableList.Add(linkableChild);
-
-            if (!hasChildren)
-                continue;
-
-            var (childLinkableList, childLinkList) = child.GetLinkableControlsAndLinks();
-
-            linkableList.AddRange(childLinkableList);
-            linkList.AddRange(childLinkList);
-        }
-
-        return (linkableList, linkList);
-    }
-
     /// <summary>
     /// Search the control’s tree for a parent node of type T
     /// E.g. to find the control implementing some event handling interface.
