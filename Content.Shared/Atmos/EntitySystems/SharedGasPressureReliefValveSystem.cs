@@ -56,7 +56,7 @@ public abstract class SharedGasPressureReliefValveSystem : EntitySystem
         valveEntity.Comp.Threshold = Math.Max(0f, args.ThresholdPressure);
         _adminLogger.Add(LogType.AtmosVolumeChanged,
             LogImpact.Medium,
-            $"{ToPrettyString(args.Actor):player} set the pressure threshold on {ToPrettyString(valveEntity):device} to {args.ThresholdPressure}");
+            $"{ToPrettyString(args.Actor):player} set the pressure threshold on {ToPrettyString(valveEntity):device} to {valveEntity.Comp.Threshold}");
         // Dirty the entire entity to ensure we get all of that Fresh:tm: UI info from the server.
         Dirty(valveEntity);
         UpdateUi(valveEntity);
