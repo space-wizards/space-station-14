@@ -74,16 +74,18 @@ namespace Content.Client.Entry
         public override void PreInit()
         {
             ClientContentIoC.Register();
+
+            // Content.Shared.Entry.EntryPoint.Init() will call BuildGraph() & InjectDependencies()
+            // Hence this needs to be called in PreInit, instead of in Init()
+            foreach (var callback in TestingCallbacks)
+            {
+                var cast = (ClientModuleTestingCallbacks)callback;
+                cast.ClientBeforeIoC?.Invoke();
+            }
         }
 
         public override void Init()
         {
-            foreach (var callback in TestingCallbacks)
-            {
-                var cast = (ClientModuleTestingCallbacks) callback;
-                cast.ClientBeforeIoC?.Invoke();
-            }
-
             IoCManager.BuildGraph();
             IoCManager.InjectDependencies(this);
 
