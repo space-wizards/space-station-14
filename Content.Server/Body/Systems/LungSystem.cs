@@ -89,6 +89,7 @@ public sealed class LungSystem : EntitySystem
         {
             var i = (int) gasId;
             var moles = gas[i];
+            var molarMass = _atmos.GetGas(i).MolarMass;
             if (moles <= 0)
                 continue;
 
@@ -96,7 +97,7 @@ public sealed class LungSystem : EntitySystem
             if (reagent is null)
                 continue;
 
-            var amount = moles * Atmospherics.BreathMolesToReagentMultiplier;
+            var amount = moles * Atmospherics.MolarMassToReagentMultiplier * molarMass;
             solution.AddReagent(reagent, amount);
         }
     }
