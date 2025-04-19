@@ -57,13 +57,16 @@
     - WizardWand
 
 - type: entity
+  parent: BaseAction
   id: ActionRgbLight
   components:
   - type: LimitedCharges
     maxCharges: 25
+  - type: Action
+    sound: /Audio/Magic/blink.ogg
+  - type: TargetAction
   - type: EntityTargetAction
     whitelist: { components: [ PointLight ] }
-    sound: /Audio/Magic/blink.ogg
     event: !type:ChangeComponentsSpellEvent
       toAdd:
       - type: RgbLightController

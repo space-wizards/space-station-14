@@ -350,10 +350,8 @@ public sealed partial class StoreSystem
 
             component.BoughtEntities.RemoveAt(i);
 
-            if (_actions.TryGetActionData(purchase, out var actionComponent, logError: false))
-            {
-                _actionContainer.RemoveAction(purchase, actionComponent);
-            }
+            if (_actions.GetAction(purchase, false) is {} action)
+                _actionContainer.RemoveAction(action);
 
             EntityManager.DeleteEntity(purchase);
         }
