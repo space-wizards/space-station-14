@@ -1,12 +1,11 @@
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
+namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 
 /// <summary>
 ///     When activated artifact will spawn a pair of portals. First - right in artifact, Second - at random point of station.
 /// </summary>
-[RegisterComponent, Access(typeof(XAEPortalSystem)), NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, Access(typeof(XAEPortalSystem))]
 public sealed partial class XAEPortalComponent : Component
 {
     /// <summary>
