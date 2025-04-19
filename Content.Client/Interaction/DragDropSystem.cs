@@ -256,7 +256,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             dragSprite.DrawDepth = (int) DrawDepth.Overlays;
             if (!dragSprite.NoRotation)
             {
-                Transform(_dragShadow.Value).WorldRotation = Transform(_draggedEntity.Value).WorldRotation;
+                _transformSystem.SetWorldRotationNoLerp(_dragShadow.Value, _transformSystem.GetWorldRotation(_draggedEntity.Value));
             }
 
             // drag initiated
