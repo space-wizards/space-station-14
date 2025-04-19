@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: zHonys
-  changes:
-  - message: Smile can now use hats
-    type: Add
-  id: 7759
-  time: '2024-12-29T01:49:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33924
 - author: ewokswagger
   changes:
   - message: Pizza deliveries are now guaranteed to have at least one cotton pizza.
@@ -3914,3 +3907,10 @@
   id: 8259
   time: '2025-04-19T14:11:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35658
+- author: GrownSamoyedDog
+  changes:
+  - message: Pineapple Juice Cartons are new and added to Booze-O-Mat.
+    type: Add
+  id: 8260
+  time: '2025-04-19T14:25:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34769
