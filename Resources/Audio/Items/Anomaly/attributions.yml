@@ -1,0 +1,87 @@
+﻿- files: ["flesh_crit.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Mashup by Quantum-cross@github of malescream_1.ogg, malescream_2.ogg, femalescream_4.ogg, femalescream_5.ogg, alien_claw_flesh_2.ogg, alien_claw_flesh_3.ogg"
+  source: "https://github.com/tgstation/tgstation/commit/3d049e69fe71a0be2133005e65ea469135d648c8"
+  # additional source for alien claw sounds:
+  # source: "https://gitlab.com/cmdevs/colonial-warfare/-/tree/dev/sound/weapons"
+
+- files: ["shadow_crit.ogg"]
+  license: Custom
+  copyright: "Mashup of sourced sound effect and anomaly_scary.ogg"
+  source: https://pixabay.com/sound-effects/psychedelic-144822/
+
+- files: ["tech_crit1.ogg"]
+  license: "CC0-1.0"
+  copyright: "wtermini (Freesound), edited by Quantum-cross@github"
+  source: https://freesound.org/people/wtermini/sounds/546450/
+
+- files: ["tech_crit2.ogg"]
+  license: "CC0-1.0"
+  copyright: "unfa (Freesound), edited by Quantum-cross@github"
+  source: https://freesound.org/people/unfa/sounds/124547/
+
+- files: ["present_crit.ogg"]
+  license: "CC0-1.0"
+  copyright: "richwise (Freesound), edited by Quantum-cross@github"
+  source: https://freesound.org/people/richwise/sounds/414374/
+
+- files: ["pyro_crit.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "Robinhood76 (Freesound), edited by Quantum-cross@github"
+  source: https://freesound.org/people/Robinhood76/sounds/612277/
+
+- files: ["grav_crit.ogg"]
+  license: "CC0-1.0"
+  copyright: "anomaly_drone.ogg (Joao_Janz, EmoGarbage) as base, further editing by Quantum-cross@github"
+  source: "https://freesound.org/people/Joao_Janz/sounds/478472/"
+
+- files: ["electricity_crit.ogg"]
+  license: Custom
+  copyright: "jensfelger (Freesound), edited by Quantum-cross@github"
+  source: https://pixabay.com/sound-effects/sliding-discharge-160kv-71800/
+
+- files: ["bluespace_crit.ogg"]
+  license: "CC-BY-NC-3.0"
+  copyright: "dersinnsspace, harpoyume, Soapuel (all Freesound), layered and edited by Quantum-cross@github"
+  source: https://freesound.org/people/dersinnsspace/sounds/417116/
+  # additional sources:
+  # source: https://freesound.org/people/harpoyume/sounds/86070/
+  # source: https://freesound.org/people/Soapuel/sounds/489442/
+
+- files: ["bluespace_explosion.ogg"]
+  license: "CC0-1.0"
+  copyright: "Geoff-Bremner-Audio (Freesound), edited by Quantum-cross@github"
+  source: https://freesound.org/people/Geoff-Bremner-Audio/sounds/725949/
+
+- files: ["ice_crit.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "iainmccurdy (Freesound), edited by Quantum-cross@github"
+  source: https://freesound.org/people/iainmccurdy/sounds/440858/
+
+- files: ["fluid_crit.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "DJT4NN3R, unfa, klankbeeld (all Freesound), slime_squish.ogg from paradise station, layered and edited by Quantum-cross@github"
+  source: https://freesound.org/people/unfa/sounds/504930/
+  # additional sources:
+  # source: https://freesound.org/people/DJT4NN3R/sounds/484158/
+  # source: https://freesound.org/people/klankbeeld/sounds/325537/
+  # source: https://github.com/ParadiseSS13/Paradise
+
+- files: ["flora_crit.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Clusman, hereforthebass, eyesplice, Clearwavsound (all Freesound), layered and edited by Quantum-cross@github"
+  source: https://freesound.org/people/Clusman/sounds/543508/
+  # additional sources:
+  # source: https://freesound.org/people/hereforthebass/sounds/733255/
+  # source: https://freesound.org/people/eyesplice/sounds/717773/
+  # source: https://freesound.org/people/Clearwavsound/sounds/541032/
+
+- files: ["rock_crit.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "nicStage, falcospizaetus, iwanPlays, Widowaker, xkeril (all Freesound), layered and edited by Quantum-cross@github"
+  source: https://freesound.org/people/nicStage/sounds/1912/
+  # additional sources:
+  # source: https://freesound.org/people/falcospizaetus/sounds/489905/
+  # source: https://freesound.org/people/iwanPlays/sounds/567250/
+  # source: https://freesound.org/people/Widowaker/sounds/459110/
+  # source: https://freesound.org/people/xkeril/sounds/703247/
