@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC0-1.0",
-    "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). layered inhands by mubururu_ (github).",
+    "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). icon-chem.png & icon-mining-adv.png created by mubururu_ (github)",
     "size": {
         "x": 32,
         "y": 32
@@ -30,6 +30,9 @@
         },
         {
             "name": "icon-chemist"
+        },
+        {
+            "name": "icon-chem"
         },
         {
             "name": "icon-clown"
@@ -66,6 +69,9 @@
         },
         {
             "name": "icon-mining"
+        },
+        {
+            "name": "icon-mining-adv"
         },
         {
             "name": "icon-mop"
