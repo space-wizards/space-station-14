@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Ghost;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Pulling.Systems;
@@ -169,7 +169,7 @@ public abstract class SharedPortalSystem : EntitySystem
             return;
 
         var ourCoords = Transform(portal).Coordinates;
-        var onSameMap = ourCoords.GetMapId(EntityManager) == target.GetMapId(EntityManager);
+        var onSameMap = _transform.GetMapId(ourCoords) == _transform.GetMapId(target);
         var distanceInvalid = portalComponent.MaxTeleportRadius != null
                               && ourCoords.TryDistance(EntityManager, target, out var distance)
                               && distance > portalComponent.MaxTeleportRadius;
@@ -228,7 +228,7 @@ public abstract class SharedPortalSystem : EntitySystem
         {
             var randVector = _random.NextVector2(component.MaxRandomRadius);
             newCoords = coords.Offset(randVector);
-            if (!_lookup.GetEntitiesIntersecting(newCoords.ToMap(EntityManager, _transform), LookupFlags.Static).Any())
+            if (!_lookup.GetEntitiesIntersecting(_transform.ToMapCoordinates(newCoords), LookupFlags.Static).Any())
             {
                 break;
             }
