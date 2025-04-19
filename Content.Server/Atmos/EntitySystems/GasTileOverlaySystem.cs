@@ -16,6 +16,7 @@ using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
@@ -391,7 +392,7 @@ namespace Content.Server.Atmos.EntitySystems
                         previouslySent.Remove(netGrid);
 
                         // If grid was deleted then don't worry about sending it to the client.
-                        if (!EntManager.TryGetEntity(netGrid, out var gridId) || !MapManager.IsGrid(gridId.Value))
+                        if (!EntManager.TryGetEntity(netGrid, out var gridId) || !EntManager.HasComponent<MapGridComponent>(gridId.Value))
                             ev.RemovedChunks[netGrid] = oldIndices;
                         else
                         {
