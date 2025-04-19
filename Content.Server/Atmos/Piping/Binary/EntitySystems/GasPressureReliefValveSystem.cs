@@ -12,7 +12,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
 
 /// <summary>
-/// Handles logic for pressure relief valves. Gas will only flow through the valve
+/// Handles serverside logic for pressure relief valves. Gas will only flow through the valve
 /// if the pressure on the inlet side is over a certain pressure threshold.
 /// See https://en.wikipedia.org/wiki/Relief_valve
 /// </summary>
@@ -39,14 +39,9 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
 
     /// <summary>
     /// Handles the updating logic for the pressure relief valve.
-    ///
-    /// In summary, the valve should only open if the pressure on the inlet side is above a certain threshold.
-    /// When releasing gas, it should only release enough gas to tip under the threshold,
-    /// or the max atmospherics flow rate.
-    /// It should also not release more gas than it would take to equalize the pressure.
     /// </summary>
-    /// <param name="valveEntity"> the <see cref="Entity{T}"/> of the pressure relief valve</param>
-    /// <param name="args"> Args provided to us via <see cref="AtmosDeviceUpdateEvent"/></param>
+    /// <param name="valveEntity"> the <see cref="Entity{T}" /> of the pressure relief valve</param>
+    /// <param name="args"> Args provided to us via <see cref="AtmosDeviceUpdateEvent" /></param>
     private void OnReliefValveUpdated(Entity<GasPressureReliefValveComponent> valveEntity,
         ref AtmosDeviceUpdateEvent args)
     {
@@ -73,25 +68,20 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         /*
         It's time for some math! :)
 
-        Because this is SS14 and not a crazy accurate simulation of an actual PRV, we assume some things:
-        1. The max transfer rate of the valve is limited
-        2. We're not modeling springs or opening gaps or anything other than the above restriction
+        Gas is simply transferred from the inlet to the outlet, restricted by flow rate and pressure.
+        We want to transfer enough gas to bring the inlet pressure below the threshold,
+        and only as much as our max flow rate allows.
 
-        Goals:
-        1. Transfer enough gas to bring us below the pressure threshold
-        2. Don't transfer more gas than the amount it would take to equalize the pressure
-        (because it's a valve, not a pump)
-        3. Don't transfer more than the max transfer rate of the valve
+        The equations:
+        PV = nRT
+        P1 = P2
+
+        Can be used to calculate the amount of gas we need to transfer.
         */
 
-        // Before we do anything else,
-        // we check if the inlet pressure is above the threshold.
         var P1 = inletPipeNode.Air.Pressure;
         var P2 = outletPipeNode.Air.Pressure;
 
-        // Inlet pressure is below the threshold, so we don't need to do anything.
-        // We also check if the outlet pressure is higher than the inlet pressure,
-        // as gas transfer is not possible in that case.
         if (P1 <= valveEntity.Comp.Threshold || P2 > P1)
         {
             valveEntity.Comp.Enabled = false;
@@ -117,7 +107,6 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         _ambientSoundSystem.SetAmbience(valveEntity, true);
         UpdateAppearance(valveEntity);
 
-        // Prepare the army!
         var n1 = inletPipeNode.Air.TotalMoles;
         var n2 = outletPipeNode.Air.TotalMoles;
         var V1 = inletPipeNode.Air.Volume;
@@ -147,19 +136,32 @@ public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveS
         var removed = inletPipeNode.Air.RemoveVolume(actualVolumeToTransfer);
         _atmosphereSystem.Merge(outletPipeNode.Air, removed);
 
-        // Oh, and set the flow rate (L/S) to the actual volume we transferred.
-        // This is used for player examine.
+        // Calculate the flow rate in L/S for the UI.
         valveEntity.Comp.FlowRate = MathF.Round(actualVolumeToTransfer * args.dt, 1);
         DirtyField(valveEntity, valveEntity.Comp, nameof(valveEntity.Comp.FlowRate));
 
         if (valveEntity.Comp.PreviousValveState != valveEntity.Comp.Enabled)
         {
-            // The valve state has changed, so we need to dirty it.
+            // The valve state has changed since the last run, so we need to dirty it.
             valveEntity.Comp.PreviousValveState = valveEntity.Comp.Enabled;
             DirtyField(valveEntity, valveEntity.Comp, nameof(valveEntity.Comp.Enabled));
         }
     }
 
+    /// <summary>
+    /// Updates the visual appearance of the gas pressure relief valve based on its current state.
+    /// </summary>
+    /// <param name="valveEntityUid"> <see cref="EntityUid" /> of the valve.</param>
+    /// <param name="valveComponent">
+    /// The <see cref="GasPressureReliefValveComponent" /> of the entity. Will be resolved if not provided.
+    /// </param>
+    /// <param name="appearance">
+    /// The <see cref="AppearanceComponent" /> associated with the entity. Will be resolved if not provided.
+    /// <remarks>
+    /// This isn't in shared because it's pointless to predict something whose state change is
+    /// entirely handled by the server.
+    /// </remarks>
+    /// </param>
     private void UpdateAppearance(EntityUid valveEntityUid,
         GasPressureReliefValveComponent? valveComponent = null,
         AppearanceComponent? appearance = null)

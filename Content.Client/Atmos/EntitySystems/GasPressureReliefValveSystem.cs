@@ -4,6 +4,10 @@ using Content.Shared.Atmos.Piping.Binary.Components;
 
 namespace Content.Client.Atmos.EntitySystems;
 
+/// <summary>
+/// Represents the client system responsible for managing and updating the gas pressure relief valve interface.
+/// Inherits from the shared system <see cref="SharedGasPressureReliefValveSystem"/>.
+/// </summary>
 public sealed class GasPressureReliefValveSystem : SharedGasPressureReliefValveSystem
 {
     public override void Initialize()

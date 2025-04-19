@@ -11,9 +11,9 @@
 
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Align="Center" Margin="0 0 0 10">
             <BoxContainer Orientation="Vertical">
-                <Label Text="Valve Status:" Margin="0 0 5 0" HorizontalAlignment="Right" />
-                <Label Text="Current Flow Rate:" Margin="0 0 5 0" HorizontalAlignment="Right" />
-                <Label Text="Threshold Pressure:" Margin="0 0 5 0" HorizontalAlignment="Right" />
+                <Label Text="{Loc gas-pressure-relief-valve-ui-valve-status}" Margin="0 0 5 0" HorizontalAlignment="Right" />
+                <Label Text="{Loc gas-pressure-relief-valve-ui-current-flow-rate}" Margin="0 0 5 0" HorizontalAlignment="Right" />
+                <Label Text="{Loc gas-pressure-relief-valve-ui-threshold-pressure}" Margin="0 0 5 0" HorizontalAlignment="Right" />
             </BoxContainer>
             <BoxContainer Orientation="Vertical" Margin="10 0 10 0">
                 <Label Name="ValveStatusLabel" HorizontalExpand="True" HorizontalAlignment="Center" />
@@ -22,8 +22,8 @@
             </BoxContainer>
             <BoxContainer Orientation="Vertical">
                 <Label Text="   " Margin="5 0 0 0" HorizontalAlignment="Left" />
-                <Label Text="L/s" Margin="5 0 0 0" HorizontalAlignment="Left" />
-                <Label Text="kPa" Margin="5 0 0 0" HorizontalAlignment="Left" />
+                <Label Text="{Loc gas-pressure-relief-valve-ui-flow-rate-unit}" Margin="5 0 0 0" HorizontalAlignment="Left" />
+                <Label Text="{Loc gas-pressure-relief-valve-ui-pressure-unit}" Margin="5 0 0 0" HorizontalAlignment="Left" />
             </BoxContainer>
         </BoxContainer>
 
@@ -32,27 +32,27 @@
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="0 10 0 10">
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                     <LineEdit Name="ThresholdInput" HorizontalExpand="True" MinSize="70 0" />
-                    <Button Name="SetThresholdButton" Text="Set" Disabled="True" Margin="5 0 0 0" />
+                    <Button Name="SetThresholdButton" Text="{Loc gas-pressure-relief-valve-ui-set-threshold}" Disabled="True" Margin="5 0 0 0" />
                 </BoxContainer>
 
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 5 0 0">
-                    <Button Name="Subtract1000Button" Text="-1000" HorizontalExpand="True" Margin="0 2 2 0"
+                    <Button Name="Subtract1000Button" Text="{Loc gas-pressure-relief-valve-ui-subtract-1000}" HorizontalExpand="True" Margin="0 2 2 0"
                             StyleClasses="OpenBoth" />
-                    <Button Name="Subtract100Button" Text="-100" HorizontalExpand="True" Margin="0 2 2 0"
+                    <Button Name="Subtract100Button" Text="{Loc gas-pressure-relief-valve-ui-subtract-100}" HorizontalExpand="True" Margin="0 2 2 0"
                             StyleClasses="OpenBoth" />
-                    <Button Name="Subtract10Button" Text="-10" HorizontalExpand="True" Margin="0 2 2 0"
+                    <Button Name="Subtract10Button" Text="{Loc gas-pressure-relief-valve-ui-subtract-10}" HorizontalExpand="True" Margin="0 2 2 0"
                             StyleClasses="OpenBoth" />
-                    <Button Name="Add10Button" Text="+10" HorizontalExpand="True" Margin="0 2 2 0"
+                    <Button Name="Add10Button" Text="{Loc gas-pressure-relief-valve-ui-add-10}" HorizontalExpand="True" Margin="0 2 2 0"
                             StyleClasses="OpenBoth" />
-                    <Button Name="Add100Button" Text="+100" HorizontalExpand="True" Margin="0 2 2 0"
+                    <Button Name="Add100Button" Text="{Loc gas-pressure-relief-valve-ui-add-100}" HorizontalExpand="True" Margin="0 2 2 0"
                             StyleClasses="OpenBoth" />
-                    <Button Name="Add1000Button" Text="+1000" HorizontalExpand="True" Margin="0 2 2 0"
+                    <Button Name="Add1000Button" Text="{Loc gas-pressure-relief-valve-ui-add-1000}" HorizontalExpand="True" Margin="0 2 2 0"
                             StyleClasses="OpenBoth" />
                 </BoxContainer>
 
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 5 0 0">
-                    <Button Name="ZeroThresholdButton" Text="Zero" HorizontalExpand="True" Margin="0 0 5 0" />
-                    <Button Name="SetToCurrentPressureButton" Text="Set to Current Pressure" HorizontalExpand="True" />
+                    <Button Name="ZeroThresholdButton" Text="{Loc gas-pressure-relief-valve-ui-zero-threshold}" HorizontalExpand="True" Margin="0 0 5 0" />
+                    <Button Name="SetToCurrentPressureButton" Text="{Loc gas-pressure-relief-valve-ui-set-to-current-pressure}" HorizontalExpand="True" />
                 </BoxContainer>
             </BoxContainer>
         </controls:StripeBack>

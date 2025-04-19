@@ -8,7 +8,6 @@ namespace Content.Shared.Atmos.EntitySystems;
 
 /// <summary>
 /// Handles all shared interactions with the gas pressure relief valve.
-/// Things like inspection, UI, and other shared logic.
 /// </summary>
 public abstract class SharedGasPressureReliefValveSystem : EntitySystem
 {
@@ -25,7 +24,7 @@ public abstract class SharedGasPressureReliefValveSystem : EntitySystem
     /// <summary>
     /// Presents predicted examine information to the person examining the valve.
     /// </summary>
-    /// <param name="valveEntity">Entity reference containing the valve component</param>
+    /// <param name="valveEntity"> <see cref="Entity{T}"/> of the valve</param>
     /// <param name="args">Event arguments for examination</param>
     private void OnExamined(Entity<GasPressureReliefValveComponent> valveEntity, ref ExaminedEvent args)
     {

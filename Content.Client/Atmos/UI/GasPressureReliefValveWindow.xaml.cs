@@ -69,7 +69,9 @@ public sealed partial class GasPressureReliefValveWindow : DefaultWindow
 
     public void SetValveStatus(bool enabled)
     {
-        ValveStatusLabel.Text = enabled ? "Open" : "Closed";
+        ValveStatusLabel.Text = enabled
+            ? Loc.GetString("gas-pressure-relief-valve-ui-status-open")
+            : Loc.GetString("gas-pressure-relief-valve-ui-status-closed");
         ValveStatusLabel.Modulate = enabled ? Color.Green : Color.Red;
     }
 
