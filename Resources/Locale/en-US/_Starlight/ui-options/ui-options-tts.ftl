@@ -6,3 +6,4 @@ ui-options-tts-radio-volume = Radio Volume:
 ui-options-tts-announce-volume = Announcement Volume:
 
 ui-options-tts-enabled = Text-To-Speech Enabled
+ui-options-tts-radio-queue-enabled = Queue Radio TTS
