@@ -373,7 +373,7 @@
   startNode: start
   targetNode: sensor
   category: construction-category-structures
-  description: Reports on the status of the gas within the attached pipe network. 
+  description: Reports on the status of the gas within the attached pipe network.
   icon:
     sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
     state: icon
@@ -600,6 +600,27 @@
     state: pumpPassiveGate
   conditions:
     - !type:NoUnstackableInTile
+
+- type: construction
+  id: GasPressureReliefValve
+  name: pressure relief valve
+  description: A valve that releases gas when the pressure exceeds a set threshold.
+  graph: GasBinary
+  startNode: start
+  targetNode: reliefvalve
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpPressureValve
+  layers:
+  - sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeStraight
+  - sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpPressureValve
+  conditions:
+  - !type:NoUnstackableInTile
 
 - type: construction
   id: GasValve
