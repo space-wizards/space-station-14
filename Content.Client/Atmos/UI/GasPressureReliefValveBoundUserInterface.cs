@@ -42,14 +42,15 @@ public sealed class GasPressureReliefValveBoundUserInterface(EntityUid owner, En
 
     private void OnThresholdChanged(string newThreshold)
     {
-        var sentThreshold = UserInputParser.TryFloat(newThreshold, out var parsedNewThreshold)
-            ? parsedNewThreshold
-            : 0f;
-        if (parsedNewThreshold < 0 || float.IsInfinity(parsedNewThreshold))
-            sentThreshold = 0;
+        var sentThreshold = 0f;
 
-        // If the goober user ever inputs a wacky value in the window, it won't stay like that, and it'll just
-        // autofill to zero.
+        if (UserInputParser.TryFloat(newThreshold, out var parsedNewThreshold) && parsedNewThreshold >= 0 &&
+            !float.IsInfinity(parsedNewThreshold))
+        {
+            sentThreshold = parsedNewThreshold;
+        }
+
+        // Autofill to zero if the user inputs an invalid value.
         _window?.SetThresholdPressureInput(sentThreshold);
 
         SendPredictedMessage(new GasPressureReliefValveChangeThresholdMessage(sentThreshold));
