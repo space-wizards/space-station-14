@@ -143,7 +143,7 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler, IA
         {
             var prototype = linkControl.LinkedPrototype;
             if (prototype != null && availablePrototypeLinks.Contains(prototype))
-                linkControl.ActivatePrototypeLink();
+                linkControl.EnablePrototypeLink();
         }
     }
 

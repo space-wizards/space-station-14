@@ -19,7 +19,7 @@ public sealed class GuidebookRichPrototypeLink : Control, IPrototypeLinkControl
     private FormattedMessage? _message;
     private readonly RichTextLabel _richTextLabel;
 
-    public void ActivatePrototypeLink()
+    public void EnablePrototypeLink()
     {
         if (_message == null)
             return;
