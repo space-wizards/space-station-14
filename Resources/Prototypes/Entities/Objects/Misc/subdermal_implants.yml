@@ -118,6 +118,12 @@
       - 1,0,1,0
       - 1,2,1,2
       - 2,1,2,2
+      blacklist:
+        components:
+        - Storage
+        - SecretStash
+        tags:
+        - HighRiskItem
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
