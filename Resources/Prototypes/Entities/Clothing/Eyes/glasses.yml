@@ -188,7 +188,7 @@
   parent: [ClothingEyesBase, BaseCommandContraband]
   id: ClothingEyesGlassesCommand
   name: administration glasses
-  description: Upgraded sunglasses that provide flash immunity and show ID card status. 
+  description: Upgraded sunglasses that provide flash immunity and show ID card status.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/commandglasses.rsi
@@ -245,6 +245,20 @@
   id: ClothingEyesGlassesChemical
   name: chemical analysis goggles
   description: Goggles that can scan the chemical composition of a solution.
+  components:
+    - type: Sprite
+      sprite: Clothing/Eyes/Glasses/science.rsi
+    - type: Clothing
+      sprite: Clothing/Eyes/Glasses/science.rsi
+    - type: SolutionScanner
+    - type: IdentityBlocker
+      coverage: EYES
+
+- type: entity
+  parent: [ClothingEyesBase, ShowMedicalIcons]
+  id: ClothingEyesGlassesMedChem
+  name: medical analysis goggles
+  description: Goggles that can scan the chemical composition of a solution and have the scanning capabilities of a medical hud.
   components:
     - type: Sprite
       sprite: Clothing/Eyes/Glasses/science.rsi
