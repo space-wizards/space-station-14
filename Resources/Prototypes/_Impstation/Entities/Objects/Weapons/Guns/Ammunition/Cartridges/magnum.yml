@@ -1,0 +1,15 @@
+- type: entity
+  id: CartridgeMagnumStun
+  name: cartridge (.45 magnum stun)
+  description: A powerful pistol cartridge with stunning stopping power. #imp
+  parent: BaseCartridgeMagnum
+  components:
+  - type: CartridgeAmmo
+    proto: BulletMagnumStun
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Casings/stun_casing.rsi
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]

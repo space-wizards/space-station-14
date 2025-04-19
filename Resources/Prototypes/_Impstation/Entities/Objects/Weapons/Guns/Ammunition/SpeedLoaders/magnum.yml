@@ -1,0 +1,19 @@
+- type: entity
+  id: SpeedLoaderMagnumStun
+  name: "speed loader (.45 magnum stun)"
+  parent: BaseSpeedLoaderMagnum
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumStun
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    layers:
+      - state: base
+        map: [ "enum.GunVisualLayers.Base" ]
+      - state: rubber-6
+        map: [ "enum.GunVisualLayers.Mag" ]
+  - type: MagazineVisuals
+    magState: rubber
+    steps: 7
+    zeroVisible: false
+  - type: Appearance

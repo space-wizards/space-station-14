@@ -193,6 +193,7 @@
     contents:
         - id: WeaponRevolverInspector
         - id: SpeedLoaderMagnum
+        - id: SpeedLoaderMagnumStun #imp
 
 - type: entity
   id: ClothingBeltChefFilled
