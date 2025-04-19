@@ -642,6 +642,9 @@
   id: Handcuffs
 
 - type: Tag
+  id: HandGrenade
+
+- type: Tag
   id: HappyHonk
 
 - type: Tag
@@ -869,9 +872,6 @@
 
 - type: Tag
   id: MimeHappyHonk
-
-- type: Tag
-  id: MindShield
 
 - type: Tag
   id: MindTransferTarget
