@@ -187,6 +187,9 @@ ghost-role-information-nukeop-rules = You are a [color={role-type-team-antagonis
 ghost-role-information-loneop-name = Lone Operative
 ghost-role-information-loneop-description = You are a lone nuclear operative. Destroy the station!
 ghost-role-information-loneop-rules = You are a [color={role-type-team-antagonist-color}][bold]{role-type-solo-antagonist-name}[/bold][/color]. Covert syndicate agents are not guaranteed to help you.
+                                          You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                          You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                          You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
 
 ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
