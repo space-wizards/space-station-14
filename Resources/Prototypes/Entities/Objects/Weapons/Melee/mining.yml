@@ -195,7 +195,6 @@
     damage:
       types:
         Slash: 10
-    offset: -0.15,0.0
   - type: LandAtCursor
   - type: Tag
     tags:
