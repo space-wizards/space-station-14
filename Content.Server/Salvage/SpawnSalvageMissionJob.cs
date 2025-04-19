@@ -125,6 +125,10 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         var mission = _entManager.System<SharedSalvageSystem>()
             .GetMission(difficultyProto, _missionParams.Seed);
 
+        var missionDependencyQuery = _entManager.EntityQueryEnumerator<SalvageMissionDependencyComponent>();
+        while (missionDependencyQuery.MoveNext(out var dependencyUid, out var dependencyComponent))
+            dependencyComponent.AssociatedMapId = mapId;
+
         var missionBiome = _prototypeManager.Index<SalvageBiomeModPrototype>(mission.Biome);
 
         if (missionBiome.BiomePrototype != null)
