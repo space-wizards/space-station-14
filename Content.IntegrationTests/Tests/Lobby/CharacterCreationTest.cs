@@ -37,8 +37,6 @@ namespace Content.IntegrationTests.Tests.Lobby
 
             await client.WaitAssertion(() =>
             {
-                // clientPrefManager.SelectCharacter(0);
-
                 var clientCharacters = clientPrefManager.Preferences?.Characters;
                 Assert.That(clientCharacters, Is.Not.Null);
                 Assert.Multiple(() =>

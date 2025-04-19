@@ -33,8 +33,20 @@ public sealed partial class CharacterPickerButton : ContainerButton
     /// </summary>
     public event Action? OnDeletePressed;
 
+    /// <summary>
+    /// Invoked if we should enable or disable the attached character
+    /// </summary>
     public event Action<bool>? OnEnableToggled;
 
+    /// <summary>
+    /// Create a new character picker button
+    /// </summary>
+    /// <param name="entityManager"></param>
+    /// <param name="prototypeManager"></param>
+    /// <param name="group">Button group to join</param>
+    /// <param name="profile">Profile this button is attached to</param>
+    /// <param name="isSelected">If true, start in pressed state</param>
+    /// <param name="simple">If true, don't show enable or delete button (used for late join gui)</param>
     public CharacterPickerButton(
         IEntityManager entityManager,
         IPrototypeManager prototypeManager,
@@ -74,6 +86,7 @@ public sealed partial class CharacterPickerButton : ContainerButton
         View.SetEntity(_previewDummy);
         DescriptionLabel.Text = description;
 
+        // Set up the StyleBoxTextures for the outlines...
         foreach (var panel in new List<PanelContainer>
                      { EnabledCheckOutline, DeleteButtonOutline, ConfirmDeleteButtonOutline })
         {

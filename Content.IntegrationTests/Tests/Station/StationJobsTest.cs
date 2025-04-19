@@ -12,7 +12,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using Robust.UnitTesting;
 
 namespace Content.IntegrationTests.Tests.Station;
 

@@ -164,6 +164,12 @@ public sealed partial class TestPair
         return list;
     }
 
+    /// <summary>
+    /// Add dummy players to the pair with server saved job priority preferences
+    /// </summary>
+    /// <param name="jobPriorities">Job priorities to initialize the players with</param>
+    /// <param name="count">How many players to add</param>
+    /// <returns>Enumerable of sessions for the new players</returns>
     [PublicAPI]
     public Task<IEnumerable<ICommonSession>> AddDummyPlayers(Dictionary<ProtoId<JobPrototype>,JobPriority> jobPriorities, int count=1)
     {
@@ -196,6 +202,11 @@ public sealed partial class TestPair
         return sessions;
     }
 
+    /// <summary>
+    /// Set the job priorities for a session
+    /// </summary>
+    /// <param name="player">session to modify</param>
+    /// <param name="jobPriorities">job priorities to set</param>
     public async Task SetJobPriorities(ICommonSession player,
         Dictionary<ProtoId<JobPrototype>,JobPriority> jobPriorities)
     {
@@ -206,11 +217,19 @@ public sealed partial class TestPair
         });
     }
 
+    /// <summary>
+    /// Set the job priorities for the TestPair.Player session
+    /// </summary>
+    /// <param name="jobPriorities">job priorities to set</param>
     public Task SetJobPriorities(Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities)
     {
         return SetJobPriorities(Player!, jobPriorities);
     }
 
+    /// <summary>
+    /// Set the job preferences for the TestPair.Player session, specifically the character in slot 0
+    /// </summary>
+    /// <param name="jobPreferences">job preferences to set</param>
     public async Task SetJobPreferences(HashSet<ProtoId<JobPrototype>> jobPreferences)
     {
         var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
@@ -221,6 +240,11 @@ public sealed partial class TestPair
         });
     }
 
+    /// <summary>
+    /// Set the antag preferences for a session, specifically the character in slot 0
+    /// </summary>
+    /// <param name="player">session to modify</param>
+    /// <param name="antagPreferences">antag preferences to set</param>
     public async Task SetAntagPreferences(ICommonSession player, HashSet<ProtoId<AntagPrototype>> antagPreferences)
     {
         var prefMan = Server.ResolveDependency<IServerPreferencesManager>();
@@ -231,6 +255,10 @@ public sealed partial class TestPair
         });
     }
 
+    /// <summary>
+    /// Set the antag preferences for the TestPair.Player session, specifically the character in slot 0
+    /// </summary>
+    /// <param name="antagPreferences">antag preferences to set</param>
     public Task SetAntagPreferences(HashSet<ProtoId<AntagPrototype>> antagPreferences)
     {
         return SetAntagPreferences(Player!, antagPreferences);
