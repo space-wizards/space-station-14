@@ -1497,7 +1497,7 @@
   description: uplink-holster-desc
   productEntity: ClothingBeltSyndieHolster
   cost:
-    Telecrystal: 1
+    Telecrystal: 2
   categories:
   - UplinkWearables
 
