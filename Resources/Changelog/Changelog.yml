@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: amatwiedle
-  changes:
-  - message: The A/V Communication technology now unlocks holopad circuit boards.
-    type: Add
-  id: 7766
-  time: '2024-12-31T13:20:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34150
 - author: justdie12
   changes:
   - message: Flipped signal disposal routers sprite
@@ -3908,3 +3901,10 @@
   id: 8266
   time: '2025-04-19T17:07:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36719
+- author: VlaDOS1408
+  changes:
+  - message: Fixed Gravity gen menu resizing! Now it looks like it should.
+    type: Fix
+  id: 8267
+  time: '2025-04-19T20:20:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34036
