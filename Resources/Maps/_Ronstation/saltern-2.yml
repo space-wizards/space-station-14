@@ -4,8 +4,8 @@ meta:
   engineVersion: 254.0.0
   forkId: ""
   forkVersion: ""
-  time: 04/19/2025 12:33:08
-  entityCount: 14585
+  time: 04/19/2025 15:00:27
+  entityCount: 14586
 maps:
 - 12082
 grids:
@@ -7978,7 +7978,7 @@ entities:
       pos: 26.5,-19.5
       parent: 31
     - type: Door
-      secondsUntilStateChange: -173333.4
+      secondsUntilStateChange: -173374.27
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -77724,6 +77724,13 @@ entities:
     components:
     - type: Transform
       pos: -11.5,-7.5
+      parent: 31
+- proto: SpawnPointBlueshieldOfficer
+  entities:
+  - uid: 14586
+    components:
+    - type: Transform
+      pos: -8.5,30.5
       parent: 31
 - proto: SpawnPointBorg
   entities:
