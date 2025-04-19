@@ -10,8 +10,8 @@
       state: icon
     - type: RandomMetadata
       nameSegments:
-        - NamesFirstMilitaryLeader
-        - NamesLastMilitary
+        - NamesMilitaryFirst
+        - NamesMilitaryLast
     - type: RandomHumanoidSpawner
       settings: Heccdiver
 
