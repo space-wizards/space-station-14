@@ -1,0 +1,17 @@
+- type: entity
+  id: BulletMagnumStun
+  name: bullet (.45 magnum stun)
+  parent: ImpstationBaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 5
+  - type: StaminaDamageOnCollide
+    damage: 30 #4 hits to stun
+  - type: Sprite
+    noRot: false
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    layers:
+      - state: rubber

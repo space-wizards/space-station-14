@@ -1,42 +1,4 @@
 ﻿Entries:
-- author: DinnerCalzone
-  changes:
-  - message: Oasis has been updated to feature the supermatter engine, a service breakroom,
-      and a vox box.
-    type: Add
-  id: 1028
-  time: '2025-01-31T15:59:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1523
-- author: DinnerCalzone
-  changes:
-  - message: Origin's armory has gotten more stuff added to it along with some other
-      fixes.
-    type: Tweak
-  id: 1029
-  time: '2025-01-31T15:59:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1524
-- author: DinnerCalzone
-  changes:
-  - message: Amber has been updated to incorporate its latest upstream changes.
-    type: Tweak
-  id: 1030
-  time: '2025-01-31T18:35:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1526
-- author: TheGrimbeeper
-  changes:
-  - message: rarest artifact effect that tweaks your doll will now not update the
-      records computer
-    type: Tweak
-  id: 1031
-  time: '2025-01-31T22:46:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1528
-- author: hivehum
-  changes:
-  - message: You can now properly restock the CourierDrobe.
-    type: Tweak
-  id: 1032
-  time: '2025-01-31T22:45:57.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1533
 - author: hivehum
   changes:
   - message: The Head of Personnel can now grant Courier access.
@@ -4096,3 +4058,52 @@
   id: 1527
   time: '2025-04-18T04:53:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2270
+- author: heirdragonair
+  changes:
+  - message: Supply Assistant's may or may not have been randomly promoted!
+    type: Tweak
+  id: 1528
+  time: '2025-04-19T07:13:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2283
+- author: ultramario1998
+  changes:
+  - message: Willow's brain experiments were a success! You'll be able to inhabit
+      her body every round.
+    type: Tweak
+  id: 1529
+  time: '2025-04-19T07:15:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2262
+- author: jtfg-dev
+  changes:
+  - message: Nanotrasen is Nanotrasen. Cybersun is Cybersun. Gorlex is Gorlex. Baba
+      is You.
+    type: Fix
+  - message: Some descriptions have been refreshed and/or spiced.
+    type: Tweak
+  - message: Item names, descriptions, and flavor text throughout the game have been
+      cleaned up, per the request of the Intergalactic Standards Association.
+    type: Fix
+  id: 1530
+  time: '2025-04-19T12:44:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2231
+- author: ATDoop
+  changes:
+  - message: Added .45 stun bullets! The detective's revolver now comes loaded with
+      stun ammunition by default.
+    type: Add
+  - message: Detectives now also have a portable criminal records computer in their
+      closet.
+    type: Add
+  - message: Removed the detective's SecLink.
+    type: Remove
+  id: 1531
+  time: '2025-04-19T12:50:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2246
+- author: DinnerCalzone
+  changes:
+  - message: Added the janitorial welding tool; a welding tool with a weaker flame
+      that can only be used for derusting rusted walls.
+    type: Add
+  id: 1532
+  time: '2025-04-19T12:51:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2259

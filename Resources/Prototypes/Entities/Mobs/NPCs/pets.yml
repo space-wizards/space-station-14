@@ -712,7 +712,12 @@
     - DoorBumpOpener
     - FootstepSound
   - type: GhostRole
-    prob: 0.25
+    # imp edit start
+    prob: 1 # up from 0.25
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    # imp edit end
     name: ghost-role-information-willow-name
     description: ghost-role-information-willow-description
     rules: ghost-role-information-nonantagonist-rules

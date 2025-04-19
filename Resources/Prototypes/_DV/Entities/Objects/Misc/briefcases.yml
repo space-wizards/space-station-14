@@ -1,7 +1,7 @@
 ﻿- type: entity
   parent: [ BriefcaseBrown, Tier1Contraband] # imp - contraband
   id: CybersunBriefcase
-  name: cybersun briefcase
+  name: Cybersun briefcase # imp capitalization
   description: An expensive blue leather briefcase subtly embossed with a grid of Cybersun logos. It's heavy enough to use as a weapon. #imp - contraband for a reason
   components:
   - type: Sprite

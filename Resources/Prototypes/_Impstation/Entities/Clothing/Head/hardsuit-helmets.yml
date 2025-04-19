@@ -45,8 +45,8 @@
 - type: entity
   parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
   id: ClothingHeadHelmetHardsuitRepomen
-  name: cybersun repomen's hardsuit helmet
-  description: Now you could run, you could hide, you could try to.
+  name: Cybersun repoman's hardsuit helmet
+  description: Now, you could run, you could hide. You could try to.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Head/Helmets/repomansuithelmet.rsi

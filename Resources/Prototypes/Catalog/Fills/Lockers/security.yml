@@ -156,8 +156,9 @@
       - id: HoloprojectorSecurity
       - id: BoxEvidenceMarkers
       - id: HandLabeler
-      - id: BaseSeclinkRadio # imp
       - id: BoxTapeRecorder # DeltaV
+      - id: HandheldCriminalRecords #imp
+      - id: SpeedLoaderMagnum #imp
 
 - type: entity
   id: ClosetBombFilled

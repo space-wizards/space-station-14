@@ -49,11 +49,12 @@ thief-backpack-category-sleeper-description =
     Includes: Sleepy nitrous oxide tank, two nocturine bottles,
     and a hypopen.
 
+# imp edit; lower-case s
 thief-backpack-category-communicator-name = communicator kit
 thief-backpack-category-communicator-description =
     Money is power, and secrets are money. Use your silver tongue
     and wealth to subvert the station.
-    Includes: Master key for all station channels, a CyberSun pen,
+    Includes: Master key for all station channels, a Cybersun pen,
     voice chameleon mask, and 20k spesos inside a briefcase.
 
 thief-backpack-category-smuggler-name = smuggler kit

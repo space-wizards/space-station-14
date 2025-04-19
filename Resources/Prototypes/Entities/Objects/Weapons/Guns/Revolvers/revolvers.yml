@@ -110,6 +110,7 @@
   - type: Clothing
     sprite: _Impstation/Objects/Weapons/Guns/Revolvers/inspector.rsi #imp
   - type: RevolverAmmoProvider
+    proto: CartridgeMagnumStun #imp
     capacity: 6
     chambers: [ True, True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null, null ]

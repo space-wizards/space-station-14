@@ -532,7 +532,7 @@
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitCybersun
-  name: cybersun juggernaut helmet
+  name: Cybersun juggernaut helmet # imp edit; preferential to capitalizing company names
   description: Made of compressed red matter, this helmet was designed in the Tau chromosphere facility.
   components:
   - type: Sprite

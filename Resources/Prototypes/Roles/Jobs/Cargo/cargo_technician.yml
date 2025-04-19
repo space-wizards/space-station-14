@@ -7,7 +7,7 @@
   requirements:
   - !type:DepartmentTimeRequirement
     department: Cargo
-    time: 21600 # 6 hrs ~3 shifts.
+    time: 7200 # IMP 2 hrs ~2 shifts, down from 6h
   # End DeltaV modifications
   startingGear: CargoTechGear
   icon: "JobIconCargoTechnician"

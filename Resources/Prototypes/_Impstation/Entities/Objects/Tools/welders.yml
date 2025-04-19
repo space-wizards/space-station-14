@@ -1,0 +1,19 @@
+- type: entity
+  name: janitorial welding tool
+  parent: Welder
+  id: WelderJanitorial
+  description: "A welding tool specialized for cleaning rusted walls. The flame is weak enough to not cause any eye damage."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tools/welder_janitorial.rsi
+  - type: Item
+    sprite: _Impstation/Objects/Tools/welder_janitorial.rsi
+  - type: Tool
+    qualities: Derusting
+  - type: RequiresEyeProtection
+    statusEffectTime: 0 #amazingly, this prevents any accumulation of eye damage. no copy/pasting the entirety of the welder prototype for me!
+  - type: Tag
+    tags:
+    - DroneUsable
+    - WeldingTool
+    - JanitorialWelder

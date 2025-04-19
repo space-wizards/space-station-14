@@ -153,7 +153,7 @@
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockCostumes
   name: AutoDrobe restock box
-  description: A panoply of NanoTrasen employees are prancing about a colorful theater in a tragicomedy. You can join them too! Load this into your nearest AutoDrobe vending machine.
+  description: A panoply of Nanotrasen employees are prancing about a colorful theater in a tragicomedy. You can join them too! Load this into your nearest AutoDrobe vending machine. # imp edit; lower-case t in Nanotrasen
   components:
   - type: VendingMachineRestock
     canRestock:

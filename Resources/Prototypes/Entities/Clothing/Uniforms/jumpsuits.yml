@@ -767,8 +767,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitNanotrasen
-  name: nanotrasen jumpsuit
-  description: A stately blue jumpsuit to represent NanoTrasen.
+  name: Nanotrasen jumpsuit # imp edit; preferential to capitalizing company names
+  description: A stately blue jumpsuit to represent Nanotrasen. # imp edit; lower-case t
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/nanotrasen.rsi
