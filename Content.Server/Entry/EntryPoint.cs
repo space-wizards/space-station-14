@@ -9,6 +9,7 @@ using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Server.GhostKick;
+using Content.Server.Github;
 using Content.Server.GuideGenerator;
 using Content.Server.Info;
 using Content.Server.IoC;
@@ -43,6 +44,7 @@ namespace Content.Server.Entry
 
         private EuiManager _euiManager = default!;
         private IVoteManager _voteManager = default!;
+        private GithubApiManager _gitManager = default!;
         private ServerUpdateManager _updateManager = default!;
         private PlayTimeTrackingManager? _playTimeTracking;
         private IEntitySystemManager? _sysMan;
@@ -91,6 +93,7 @@ namespace Content.Server.Entry
             {
                 _euiManager = IoCManager.Resolve<EuiManager>();
                 _voteManager = IoCManager.Resolve<IVoteManager>();
+                _gitManager = IoCManager.Resolve<GithubApiManager>();
                 _updateManager = IoCManager.Resolve<ServerUpdateManager>();
                 _playTimeTracking = IoCManager.Resolve<PlayTimeTrackingManager>();
                 _connectionManager = IoCManager.Resolve<IConnectionManager>();
@@ -113,6 +116,7 @@ namespace Content.Server.Entry
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();
+                _gitManager.Initialize();
                 _playTimeTracking.Initialize();
                 _watchlistWebhookManager.Initialize();
                 IoCManager.Resolve<JobWhitelistManager>().Initialize();
@@ -167,6 +171,7 @@ namespace Content.Server.Entry
                 {
                     _euiManager.SendUpdates();
                     _voteManager.Update();
+                    _gitManager.Update();
                     break;
                 }
 
