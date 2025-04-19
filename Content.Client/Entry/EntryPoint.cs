@@ -1,4 +1,3 @@
-using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.DebugMon;
@@ -46,7 +45,6 @@ namespace Content.Client.Entry
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IParallaxManager _parallaxManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IStylesheetManager _stylesheetManager = default!;
@@ -73,16 +71,21 @@ namespace Content.Client.Entry
         [Dependency] private readonly DebugMonitorManager _debugMonitorManager = default!;
         [Dependency] private readonly TitleWindowManager _titleWindowManager = default!;
 
-        public override void Init()
+        public override void PreInit()
         {
             ClientContentIoC.Register();
 
+            // Content.Shared.Entry.EntryPoint.Init() will call BuildGraph() & InjectDependencies()
+            // Hence this needs to be called in PreInit, instead of in Init()
             foreach (var callback in TestingCallbacks)
             {
-                var cast = (ClientModuleTestingCallbacks) callback;
+                var cast = (ClientModuleTestingCallbacks)callback;
                 cast.ClientBeforeIoC?.Invoke();
             }
+        }
 
+        public override void Init()
+        {
             IoCManager.BuildGraph();
             IoCManager.InjectDependencies(this);
 
@@ -123,7 +126,6 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("ghostRoleRaffleDecider");
 
             _componentFactory.GenerateNetIds();
-            _adminManager.Initialize();
             _screenshotHook.Initialize();
             _fullscreenHook.Initialize();
             _changelogManager.Initialize();
