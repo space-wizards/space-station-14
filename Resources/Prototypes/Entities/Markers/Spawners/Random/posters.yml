@@ -147,7 +147,6 @@
       - PosterLegitJustAWeekAway
       - PosterLegitSecWatch
       - PosterLegitVacation
-      - PosterLegitPeriodicTable
       - PosterLegitRenault
       - PosterLegitNTTGC
       - PosterLegitSafetyMothDelam
@@ -157,4 +156,5 @@
       - PosterLegitSafetyMothHardhat
       - PosterLegitSafetyMothSSD
       - PosterLegitOppenhopper
+      - PosterLegitTyrone
     chance: 1
