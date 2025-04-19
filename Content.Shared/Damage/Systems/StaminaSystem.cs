@@ -7,8 +7,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.Effects;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Popups;
+using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Rounding;
@@ -21,7 +20,6 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage.Systems;
@@ -114,6 +112,7 @@ public sealed partial class StaminaSystem : EntitySystem
         }
 
         component.StaminaDamage = 0;
+        AdjustSlowdown(uid, component);
         RemComp<ActiveStaminaComponent>(uid);
         SetStaminaAlert(uid, component);
         Dirty(uid, component);
@@ -275,16 +274,15 @@ public sealed partial class StaminaSystem : EntitySystem
                 component.NextUpdate = nextUpdate;
         }
 
-        var slowdownThreshold = component.CritThreshold / 2f;
-
-        // If we go above n% then apply slowdown
-        if (oldDamage < slowdownThreshold &&
-            component.StaminaDamage > slowdownThreshold)
-        {
-            _stunSystem.TrySlowdown(uid, TimeSpan.FromSeconds(3), true, 0.8f, 0.8f);
-        }
+        AdjustSlowdown(uid, component);
 
         SetStaminaAlert(uid, component);
+
+        // Checking if the stamina damage has decreased to zero after exiting the stamcrit
+        if (component.AfterCritical && oldDamage > component.StaminaDamage && component.StaminaDamage <= 0f)
+        {
+            component.AfterCritical = false; // Since the recovery from the crit has been completed, we are no longer 'after crit'
+        }
 
         if (!component.Critical)
         {
@@ -353,15 +351,17 @@ public sealed partial class StaminaSystem : EntitySystem
             if (nextUpdate > curTime)
                 continue;
 
-            // We were in crit so come out of it and continue.
+            // Handle exiting critical condition and restoring stamina damage
             if (comp.Critical)
-            {
                 ExitStamCrit(uid, comp);
-                continue;
-            }
 
             comp.NextUpdate += TimeSpan.FromSeconds(1f);
-            TakeStaminaDamage(uid, -comp.Decay, comp);
+
+            TakeStaminaDamage(
+                uid,
+                comp.AfterCritical ? -comp.Decay * comp.AfterCritDecayMultiplier : -comp.Decay, // Recover faster after crit
+                comp);
+
             Dirty(uid, comp);
         }
     }
@@ -398,11 +398,54 @@ public sealed partial class StaminaSystem : EntitySystem
         }
 
         component.Critical = false;
-        component.StaminaDamage = 0f;
+        component.AfterCritical = true;  // Set to true to indicate that stamina will be restored after exiting stamcrit
         component.NextUpdate = _timing.CurTime;
+
         SetStaminaAlert(uid, component);
-        RemComp<ActiveStaminaComponent>(uid);
         Dirty(uid, component);
         _adminLogger.Add(LogType.Stamina, LogImpact.Low, $"{ToPrettyString(uid):user} recovered from stamina crit");
+    }
+
+    /// <summary>
+    /// Adjusts the movement speed of an entity based on its current <see cref="StaminaComponent.StaminaDamage"/> value.
+    /// If the entity has a <see cref="SlowOnDamageComponent"/>, its custom damage-to-speed thresholds are used,
+    /// otherwise, a default set of thresholds is applied.
+    /// The method determines the closest applicable damage threshold below the crit limit and applies the corresponding
+    /// speed modifier using the stun system. If no threshold is met then the entity's speed is restored to normal.
+    /// </summary>
+    /// <param name="uid">Entity to update</param>
+    /// <param name="comp">
+    /// Stamina component of the entity. Can be null, in this case the method attempts to resolve it automatically.
+    /// </param>
+    private void AdjustSlowdown(EntityUid uid, StaminaComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        // Use a dictionary with default 'damage - speed' pairs if the entity doesn't have a component with an already existing one
+        var thresholds = HasComp<SlowOnDamageComponent>(uid)
+            ? Comp<SlowOnDamageComponent>(uid).SpeedModifierThresholds
+            : comp.StunModifierThresholds;
+
+        var closest = FixedPoint2.Zero;
+
+        // Iterate through the dictionary in the similar way as in Damage.SlowOnDamageSystem.OnRefreshMovespeed
+        foreach (var thres in thresholds)
+        {
+            var key = thres.Key.Float();
+
+            if (comp.StaminaDamage >= key && key > closest && closest < comp.CritThreshold)
+                closest = thres.Key;
+        }
+
+        if (closest != FixedPoint2.Zero)
+        {
+            _stunSystem.UpdateStunModifiers(uid, thresholds[closest], comp);
+        }
+        else if (closest == FixedPoint2.Zero)
+        {
+            // Recover the full speed if the closest threshold is zero
+            _stunSystem.UpdateStunModifiers(uid, 1f, comp);
+        }
     }
 }

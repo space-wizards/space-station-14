@@ -5,6 +5,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Mobs;
@@ -248,11 +249,63 @@ public abstract class SharedStunSystem : EntitySystem
             slowed.SprintSpeedModifier *= runSpeedMultiplier;
 
             _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
-
             return true;
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Updates the movement speed modifiers of an entity by applying or removing the <see cref="SlowedDownComponent"/>.
+    /// If both walk and run modifiers are approximately 1 (i.e. normal speed) and <see cref="StaminaComponent.StaminaDamage"/> is 0,
+    /// or if the both modifiers are 0, the slowdown component is removed to restore normal movement.
+    /// Otherwise, the slowdown component is created or updated with the provided modifiers,
+    /// and the movement speed is refreshed accordingly.
+    /// </summary>
+    /// <param name="uid">Entity whose movement speed should be updated.</param>
+    /// <param name="walkSpeedModifier">New walk speed modifier. Default is 1f (normal speed).</param>
+    /// <param name="runSpeedModifier">New run (sprint) speed modifier. Default is 1f (normal speed).</param>
+    /// <param name="component">
+    /// Optional <see cref="StaminaComponent"/> of the entity.
+    /// </param>
+
+    public void UpdateStunModifiers(EntityUid uid,
+        float walkSpeedModifier = 1f,
+        float runSpeedModifier = 1f, StaminaComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (
+            (MathHelper.CloseTo(walkSpeedModifier, 1f) && MathHelper.CloseTo(runSpeedModifier, 1f) && component.StaminaDamage == 0f) ||
+            (walkSpeedModifier == 0f && runSpeedModifier == 0f)
+        )
+        {
+            RemComp<SlowedDownComponent>(uid);
+            return;
+        }
+
+        EnsureComp<SlowedDownComponent>(uid, out var comp);
+
+        comp.WalkSpeedModifier = walkSpeedModifier;
+
+        comp.SprintSpeedModifier = runSpeedModifier;
+
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
+    }
+
+    /// <summary>
+    /// A convenience overload of <see cref="UpdateStunModifiers(EntityUid, float, float, StaminaComponent?)"/> that sets both
+    /// walk and run speed modifiers to the same value.
+    /// </summary>
+    /// <param name="uid">Entity whose movement speed should be updated.</param>
+    /// <param name="speedModifier">New walk and run speed modifier. Default is 1f (normal speed).</param>
+    /// <param name="component">
+    /// Optional <see cref="StaminaComponent"/> of the entity.
+    /// </param>
+    public void UpdateStunModifiers(EntityUid uid, float speedModifier = 1f, StaminaComponent? component = null)
+    {
+        UpdateStunModifiers(uid, speedModifier, speedModifier, component);
     }
 
     private void OnInteractHand(EntityUid uid, KnockedDownComponent knocked, InteractHandEvent args)
