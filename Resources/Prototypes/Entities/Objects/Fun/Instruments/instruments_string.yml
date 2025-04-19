@@ -184,6 +184,12 @@
   - type: Item
     size: Normal
     sprite: Objects/Fun/Instruments/banjo.rsi
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+    - suitStorage
+    sprite: Objects/Fun/Instruments/banjo.rsi
   - type: Tag
     tags:
     - StringInstrument
