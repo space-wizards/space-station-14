@@ -14,7 +14,7 @@ public sealed class GasVolumePumpSystem : SharedGasVolumePumpSystem
         SubscribeLocalEvent<GasVolumePumpComponent, AfterAutoHandleStateEvent>(OnPumpState);
     }
 
-    protected override void DirtyUI(Entity<GasVolumePumpComponent> entity)
+    protected override void UpdateUi(Entity<GasVolumePumpComponent> entity)
     {
         if (_ui.TryGetOpenUi(entity.Owner, GasVolumePumpUiKey.Key, out var bui))
         {
@@ -24,6 +24,6 @@ public sealed class GasVolumePumpSystem : SharedGasVolumePumpSystem
 
     private void OnPumpState(Entity<GasVolumePumpComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        DirtyUI(ent);
+        UpdateUi(ent);
     }
 }

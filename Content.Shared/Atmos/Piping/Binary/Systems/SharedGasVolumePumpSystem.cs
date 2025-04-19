@@ -25,17 +25,17 @@ public abstract class SharedGasVolumePumpSystem : EntitySystem
         SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpChangeTransferRateMessage>(OnTransferRateChangeMessage);
     }
 
-    private void OnInit(EntityUid uid, GasVolumePumpComponent pump, ComponentInit args)
+    private void OnInit(Entity<GasVolumePumpComponent> ent, ref ComponentInit args)
     {
-        UpdateAppearance(uid, pump);
+        UpdateAppearance(ent.Owner, ent.Comp);
     }
 
-    private void OnPowerChanged(EntityUid uid, GasVolumePumpComponent component, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<GasVolumePumpComponent> ent, ref PowerChangedEvent args)
     {
-        UpdateAppearance(uid, component);
+        UpdateAppearance(ent.Owner, ent.Comp);
     }
 
-    protected virtual void DirtyUI(Entity<GasVolumePumpComponent> entity)
+    protected virtual void UpdateUi(Entity<GasVolumePumpComponent> entity)
     {
 
     }
@@ -47,7 +47,7 @@ public abstract class SharedGasVolumePumpSystem : EntitySystem
             $"{ToPrettyString(args.Actor):player} set the power on {ToPrettyString(uid):device} to {args.Enabled}");
 
         Dirty(uid, pump);
-        DirtyUI((uid, pump));
+        UpdateUi((uid, pump));
         UpdateAppearance(uid, pump);
     }
 
@@ -55,7 +55,7 @@ public abstract class SharedGasVolumePumpSystem : EntitySystem
     {
         pump.TransferRate = Math.Clamp(args.TransferRate, 0f, pump.MaxTransferRate);
         Dirty(uid, pump);
-        DirtyUI((uid, pump));
+        UpdateUi((uid, pump));
         _adminLogger.Add(LogType.AtmosVolumeChanged, LogImpact.Medium,
             $"{ToPrettyString(args.Actor):player} set the transfer rate on {ToPrettyString(uid):device} to {args.TransferRate}");
     }
