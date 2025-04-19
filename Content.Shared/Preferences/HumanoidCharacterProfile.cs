@@ -117,13 +117,6 @@ namespace Content.Shared.Preferences
         /// </summary>
         public IReadOnlySet<ProtoId<TraitPrototype>> TraitPreferences => _traitPreferences;
 
-        /// <summary>
-        /// If we're unable to get one of our preferred jobs do we spawn as a fallback job or do we stay in lobby.
-        /// </summary>
-        [DataField]
-        public PreferenceUnavailableMode PreferenceUnavailable { get; private set; } =
-            PreferenceUnavailableMode.SpawnAsOverflow;
-
         public HumanoidCharacterProfile(
             string name,
             string flavortext,
@@ -134,7 +127,6 @@ namespace Content.Shared.Preferences
             HumanoidCharacterAppearance appearance,
             SpawnPriorityPreference spawnPriority,
             HashSet<ProtoId<JobPrototype>> jobPreferences,
-            PreferenceUnavailableMode preferenceUnavailable,
             HashSet<ProtoId<AntagPrototype>> antagPreferences,
             HashSet<ProtoId<TraitPrototype>> traitPreferences,
             Dictionary<string, RoleLoadout> loadouts,
@@ -149,7 +141,6 @@ namespace Content.Shared.Preferences
             Appearance = appearance;
             SpawnPriority = spawnPriority;
             _jobPreferences = jobPreferences;
-            PreferenceUnavailable = preferenceUnavailable;
             _antagPreferences = antagPreferences;
             _traitPreferences = traitPreferences;
             _loadouts = loadouts;
@@ -167,7 +158,6 @@ namespace Content.Shared.Preferences
                 other.Appearance.Clone(),
                 other.SpawnPriority,
                 new HashSet<ProtoId<JobPrototype>>(other.JobPreferences),
-                other.PreferenceUnavailable,
                 new HashSet<ProtoId<AntagPrototype>>(other.AntagPreferences),
                 new HashSet<ProtoId<TraitPrototype>>(other.TraitPreferences),
                 new Dictionary<string, RoleLoadout>(other.Loadouts),
@@ -322,11 +312,6 @@ namespace Content.Shared.Preferences
             return WithJob(jobId, false);
         }
 
-        public HumanoidCharacterProfile WithPreferenceUnavailable(PreferenceUnavailableMode mode)
-        {
-            return new(this) { PreferenceUnavailable = mode };
-        }
-
         public HumanoidCharacterProfile WithAntagPreferences(IEnumerable<ProtoId<AntagPrototype>> antagPreferences)
         {
             return new(this)
@@ -433,7 +418,6 @@ namespace Content.Shared.Preferences
             if (Sex != other.Sex) return false;
             if (Gender != other.Gender) return false;
             if (Species != other.Species) return false;
-            if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
             if (SpawnPriority != other.SpawnPriority) return false;
             if (!_jobPreferences.SequenceEqual(other._jobPreferences)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
@@ -521,13 +505,6 @@ namespace Content.Shared.Preferences
 
             var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance, Species, Sex);
 
-            var prefsUnavailableMode = PreferenceUnavailable switch
-            {
-                PreferenceUnavailableMode.StayInLobby => PreferenceUnavailableMode.StayInLobby,
-                PreferenceUnavailableMode.SpawnAsOverflow => PreferenceUnavailableMode.SpawnAsOverflow,
-                _ => PreferenceUnavailableMode.StayInLobby // Invalid enum values.
-            };
-
             var spawnPriority = SpawnPriority switch
             {
                 SpawnPriorityPreference.None => SpawnPriorityPreference.None,
@@ -556,8 +533,6 @@ namespace Content.Shared.Preferences
             SpawnPriority = spawnPriority;
 
             _jobPreferences = new HashSet<ProtoId<JobPrototype>>(jobs);
-
-            PreferenceUnavailable = prefsUnavailableMode;
 
             _antagPreferences.Clear();
             _antagPreferences.UnionWith(antags);
@@ -659,7 +634,6 @@ namespace Content.Shared.Preferences
             hashCode.Add((int)Gender);
             hashCode.Add(Appearance);
             hashCode.Add((int)SpawnPriority);
-            hashCode.Add((int)PreferenceUnavailable);
             return hashCode.ToHashCode();
         }
 

@@ -381,21 +381,6 @@ namespace Content.Client.Lobby.UI
 
             TabContainer.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-jobs-tab"));
 
-            PreferenceUnavailableButton.AddItem(
-                Loc.GetString("humanoid-profile-editor-preference-unavailable-stay-in-lobby-button"),
-                (int) PreferenceUnavailableMode.StayInLobby);
-            PreferenceUnavailableButton.AddItem(
-                Loc.GetString("humanoid-profile-editor-preference-unavailable-spawn-as-overflow-button",
-                              ("overflowJob", Loc.GetString(SharedGameTicker.FallbackOverflowJobName))),
-                (int) PreferenceUnavailableMode.SpawnAsOverflow);
-
-            PreferenceUnavailableButton.OnItemSelected += args =>
-            {
-                PreferenceUnavailableButton.SelectId(args.Id);
-                Profile = Profile?.WithPreferenceUnavailable((PreferenceUnavailableMode) args.Id);
-                SetDirty();
-            };
-
             _jobCategories = new Dictionary<string, BoxContainer>();
 
             RefreshAntags();
@@ -768,11 +753,6 @@ namespace Content.Client.Lobby.UI
             RefreshTraits();
             RefreshFlavorText();
             ReloadPreview();
-
-            if (Profile != null)
-            {
-                PreferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
-            }
         }
 
         public void SetProfile(int slot)

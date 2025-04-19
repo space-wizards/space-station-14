@@ -899,10 +899,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("integer")
                         .HasColumnName("preference_id");
 
-                    b.Property<int>("PreferenceUnavailable")
-                        .HasColumnType("integer")
-                        .HasColumnName("pref_unavailable");
-
                     b.Property<string>("Sex")
                         .IsRequired()
                         .HasColumnType("text")

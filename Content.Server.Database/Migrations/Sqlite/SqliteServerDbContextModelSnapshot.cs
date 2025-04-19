@@ -849,10 +849,6 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("preference_id");
 
-                    b.Property<int>("PreferenceUnavailable")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("pref_unavailable");
-
                     b.Property<string>("Sex")
                         .IsRequired()
                         .HasColumnType("TEXT")
