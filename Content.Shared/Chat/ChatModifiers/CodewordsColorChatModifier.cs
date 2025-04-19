@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Chat.ChatModifiers;
 
 /// <summary>
-/// Inserts the Codewords content tag inside of an existing MainMessage tag, making the message colored. 
+/// Inserts the Codewords content tag inside of an existing MainMessage tag, making the message colored.
 /// </summary>
 [Serializable]
 [DataDefinition]

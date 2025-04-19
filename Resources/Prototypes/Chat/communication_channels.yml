@@ -20,10 +20,6 @@
   - !type:SpeechVerbChatModifier
   - !type:ColorFulltextChatModifier
     defaultColorKey: Speech
-  conditionalModifiers:
-  - conditions:
-    - !type:RangeChatCondition
-      maximumRange: 2
   clientModifiers:
   - !type:CodewordsColorChatModifier
   - !type:SpaceMainMessageChatModifier

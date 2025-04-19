@@ -1,18 +1,15 @@
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
-using Content.Shared.StatusEffect;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
-namespace Content.Server.Speech.EntitySystems;
+namespace Content.Shared.Speech.Accents;
 
-public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
+public sealed class RatvarianLanguageAccent : IAccent
 {
-    [Dependency] private readonly StatusEffectsSystem _statusEffects = default!;
-
-
-    [ValidatePrototypeId<StatusEffectPrototype>]
-    private const string RatvarianKey = "RatvarianLanguage";
+    public string Name { get; } = "RatvarianLanguage";
 
     // This is the word of Ratvar and those who speak it shall abide by His rules:
     /*
@@ -38,26 +35,7 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
     private static Regex TOMYPattern = new Regex(@"(to|my)\s", RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private static Regex ProperNouns = new Regex(@"(ratvar)|(nezbere)|(sevtuq)|(nzcrentr)|(inath-neq)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-    public override void Initialize()
-    {
-        // Activate before other modifications so translation works properly
-        SubscribeLocalEvent<RatvarianLanguageComponent, AccentGetEvent>(OnAccent, before: new[] {typeof(SharedSlurredSystem), typeof(SharedStutteringSystem)});
-    }
-
-    public override void DoRatvarian(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null)
-    {
-        if (!Resolve(uid, ref status, false))
-            return;
-
-        _statusEffects.TryAddStatusEffect<RatvarianLanguageComponent>(uid, RatvarianKey, time, refresh, status);
-    }
-
-    private void OnAccent(EntityUid uid, RatvarianLanguageComponent component, AccentGetEvent args)
-    {
-        args.Message = Translate(args.Message);
-    }
-
-    private string Translate(string message)
+    public string Accentuate(string message, Dictionary<string, MarkupParameter> attributes, int randomSeed)
     {
         var ruleTranslation = message;
         var finalMessage = new StringBuilder();
@@ -114,5 +92,10 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
             finalMessage.Append(newWord + " ");
         }
         return finalMessage.ToString().Trim();
+    }
+
+    public void GetAccentData(ref AccentGetEvent ev, Component c)
+    {
+        ev.Accents.Add(Name, null);
     }
 }

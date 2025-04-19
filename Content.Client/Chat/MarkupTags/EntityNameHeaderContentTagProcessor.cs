@@ -21,7 +21,7 @@ public sealed class EntityNameHeaderContentTagProcessor : ContentMarkupTagProces
 
     public override IReadOnlyList<MarkupNode> ProcessOpeningTag(MarkupNode node)
     {
-        return new [] {new MarkupNode(_name) };
+        return new [] { new MarkupNode(_name) };
     }
 
     public static bool TryCreate(

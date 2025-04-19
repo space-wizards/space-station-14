@@ -1,4 +1,4 @@
-namespace Content.Server.Speech.Components;
+namespace Content.Shared.Speech.Accents;
 
 /// <summary>
 /// Makes this entity speak like a parrot in all chat messages it sends.
@@ -33,15 +33,11 @@ public sealed partial class ParrotAccentComponent : Component
     /// <summary>
     /// Strings to use as squawking noises.
     /// </summary>
-    public readonly string[] Squawks = [
-        "accent-parrot-squawk-1",
-        "accent-parrot-squawk-2",
-        "accent-parrot-squawk-3",
-        "accent-parrot-squawk-4",
-        "accent-parrot-squawk-5",
-        "accent-parrot-squawk-6",
-        "accent-parrot-squawk-7",
-        "accent-parrot-squawk-8"
-    ];
+    public readonly string SquawkPrefix = "accent-parrot-squawk-";
+
+    /// <summary>
+    /// Index for last squawk string.
+    /// </summary>
+    public readonly int SquawkTextAmount = 8;
 
 }

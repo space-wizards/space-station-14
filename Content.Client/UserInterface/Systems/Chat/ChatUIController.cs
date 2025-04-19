@@ -839,8 +839,10 @@ public sealed class ChatUIController : UIController
         }
 
         // Process any remaining clientside content markups.
+        Logger.Debug("Starting processing of: " + msg.Message.ToMarkup());
         var postProcessedNodes = _contentMarkupTagManager.ProcessMessage(msg.Message, context);
         msg.Message = FormattedMessage.FromNodes(postProcessedNodes);
+        Logger.Debug("Ended processing of: " + msg.Message.ToMarkup());
 
         // Create a bubble, should the communication channel expect one.
         if (proto.ClientModifiers.Any(x => x is BubbleProviderChatModifier))

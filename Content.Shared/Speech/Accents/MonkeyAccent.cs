@@ -1,20 +1,19 @@
 using System.Text;
-using Content.Server.Speech.Components;
+using Content.Shared.Speech.EntitySystems;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
-namespace Content.Server.Speech.EntitySystems;
+namespace Content.Shared.Speech.Accents;
 
-public sealed class MonkeyAccentSystem : EntitySystem
+public sealed class MonkeyAccent : IAccent
 {
+    public string Name { get; } = "Monkey";
+
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    public override void Initialize()
+    public string Accentuate(string message, Dictionary<string, MarkupParameter> attributes, int randomSeed)
     {
-        SubscribeLocalEvent<MonkeyAccentComponent, AccentGetEvent>(OnAccent);
-    }
-
-    public string Accentuate(string message)
-    {
+        IoCManager.InjectDependencies(this);
         var words = message.Split();
         var accentedMessage = new StringBuilder(message.Length + 2);
 
@@ -58,8 +57,8 @@ public sealed class MonkeyAccentSystem : EntitySystem
         return accentedMessage.ToString();
     }
 
-    private void OnAccent(EntityUid uid, MonkeyAccentComponent component, AccentGetEvent args)
+    public void GetAccentData(ref AccentGetEvent ev, Component c)
     {
-        args.Message = Accentuate(args.Message);
+        ev.Accents.Add(Name, null);
     }
 }

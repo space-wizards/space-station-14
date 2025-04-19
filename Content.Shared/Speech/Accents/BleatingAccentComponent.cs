@@ -1,4 +1,4 @@
-namespace Content.Server.Speech.Components;
+namespace Content.Shared.Speech.Accents;
 
 /// <summary>
 /// Makes this entity speak like a sheep or a goat in all chat messages it sends.

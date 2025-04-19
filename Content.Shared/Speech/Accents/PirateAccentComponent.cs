@@ -1,9 +1,9 @@
-using Content.Server.Speech.EntitySystems;
+namespace Content.Shared.Speech.Accents;
 
-namespace Content.Server.Speech.Components;
-
+/// <summary>
+/// Yarr... Shiver me timbers.
+/// </summary>
 [RegisterComponent]
-[Access(typeof(PirateAccentSystem))]
 public sealed partial class PirateAccentComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]

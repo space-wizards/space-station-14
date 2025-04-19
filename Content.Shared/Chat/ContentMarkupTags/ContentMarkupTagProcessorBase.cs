@@ -9,7 +9,7 @@ public abstract class ContentMarkupTagProcessorBase
     /// </summary>
     public abstract string Name { get; }
 
-    public bool Process(MarkupNode node, bool isTopLevelProcessor, out IReadOnlyList<MarkupNode> markupNodes)
+    public bool Process(MarkupNode node, out IReadOnlyList<MarkupNode> markupNodes)
     {
         if (node.Name == null)
         {
@@ -17,13 +17,13 @@ public abstract class ContentMarkupTagProcessorBase
             return true;
         }
 
-        if (node.Name == Name && node.Closing && isTopLevelProcessor)
+        if (node.Name == Name && node.Closing)
         {
             markupNodes = ProcessCloser(node);
             return false;
         }
 
-        if (node.Name == Name && !node.Closing && isTopLevelProcessor)
+        if (node.Name == Name && !node.Closing)
         {
             markupNodes = ProcessOpeningTag(node);
             return true;
@@ -40,7 +40,7 @@ public abstract class ContentMarkupTagProcessorBase
     /// </summary>
     public virtual IReadOnlyList<MarkupNode> ProcessMarkupNode(MarkupNode node)
     {
-        return [];
+        return [ node ];
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public abstract class ContentMarkupTagProcessorBase
     /// </summary>
     public virtual IReadOnlyList<MarkupNode> ProcessTextNode(MarkupNode node)
     {
-        return [];
+        return [ node ];
     }
 
     /// <summary>
