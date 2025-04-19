@@ -74,14 +74,14 @@ namespace Content.Shared.Strip.Components
 
     //starlight start
     [ByRefEvent]
-    public sealed class StripInsertAttemptEvent(Entity<HandsComponent?> user,
+    public sealed class StripAttemptEvent(Entity<HandsComponent?> user,
         EntityUid target,
-        EntityUid held,
+        EntityUid item,
         string slot) : CancellableEntityEventArgs
         {
         public Entity<HandsComponent?> User = user;
         public EntityUid Target = target;
-        public EntityUid Held = held;
+        public EntityUid Item = item;
         public string Slot = slot;
         }
     //starlight end
