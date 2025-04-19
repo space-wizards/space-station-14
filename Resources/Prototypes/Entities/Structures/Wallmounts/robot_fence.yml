@@ -1,0 +1,99 @@
+- type: entity
+  id: RobotFence
+  name: robot fence
+  description: A little device that emits a certain frequency of light that makes your utility bots afraid of leaving.
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Wallmounts/robot_fence.rsi
+    drawdepth: WallMountedItems
+    layers:
+    - state: base
+    - state: glow
+      shader: unshaded
+      map: [ "enum.RobotFenceVisualLayers.IsOn" ]
+  - type: RobotFenceVisuals
+  - type: RobotFence
+  - type: Clickable
+  - type: InteractionOutline
+  - type: PowerSwitch
+  - type: ApcPowerReceiver
+    powerLoad: 5
+  - type: ExtensionCableReceiver
+  - type: Appearance
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+
+- type: entity
+  id: RobotFenceSegmentBase
+  abstract: true
+  categories: [ HideSpawnMenu ]
+  name: robot fence segment
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+
+- type: entity
+  id: RobotFenceSegment1
+  parent: RobotFenceSegmentBase
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.225,-.5,-0.025,-0.25"
+        layer:
+        - BotImpassible
+        mask:
+        - None
+
+- type: entity
+  id: RobotFenceSegment2
+  parent: RobotFenceSegmentBase
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.225,-.5,-0.025,0.0"
+        layer:
+        - BotImpassible
+        mask:
+        - None
+
+- type: entity
+  id: RobotFenceSegment3
+  parent: RobotFenceSegmentBase
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.225,-.5,-0.025,0.25"
+        layer:
+        - BotImpassible
+        mask:
+        - None
+
+- type: entity
+  id: RobotFenceSegment4
+  parent: RobotFenceSegmentBase
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.225,-.5,-0.025,0.5"
+        layer:
+        - BotImpassible
+        mask:
+        - None
