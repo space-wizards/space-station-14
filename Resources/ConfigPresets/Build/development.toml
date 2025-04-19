@@ -37,3 +37,11 @@ preload_grids = false
 
 [admin]
 see_own_notes = true
+
+[database]
+engine = "postgres"
+pg_host = "localhost"
+pg_port = 5432
+pg_database = "ss14"
+pg_username = "postgres"
+pg_password = "postgres"

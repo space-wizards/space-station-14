@@ -15,7 +15,7 @@ namespace Content.Server.Database.Migrations.Sqlite
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.1");
 
             modelBuilder.Entity("Content.Server.Database.Admin", b =>
                 {
@@ -264,8 +264,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("expiration_time");
 
-                    b.Property<DateTime?>("LastEditedAt")
-                        .IsRequired()
+                    b.Property<DateTime>("LastEditedAt")
                         .HasColumnType("TEXT")
                         .HasColumnName("last_edited_at");
 
@@ -393,8 +392,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("expiration_time");
 
-                    b.Property<DateTime?>("LastEditedAt")
-                        .IsRequired()
+                    b.Property<DateTime>("LastEditedAt")
                         .HasColumnType("TEXT")
                         .HasColumnName("last_edited_at");
 
@@ -1273,6 +1271,62 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("server_unban", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.SupportExchange", b =>
+                {
+                    b.Property<int>("SupportExchangeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("support_exchange_id");
+
+                    b.Property<int>("SupportRound")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("support_round");
+
+                    b.Property<Guid>("SupportTargetPlayer")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("support_target_player");
+
+                    b.HasKey("SupportExchangeId")
+                        .HasName("PK_support_exchanges");
+
+                    b.HasIndex("SupportRound", "SupportTargetPlayer")
+                        .IsUnique();
+
+                    b.ToTable("support_exchanges", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.SupportMessage", b =>
+                {
+                    b.Property<int>("SupportExchangeId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("support_exchange_id");
+
+                    b.Property<int>("SupportMessageId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("support_message_id");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("message");
+
+                    b.Property<Guid>("PlayerUserId")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("player_user_id");
+
+                    b.Property<DateTime>("TimeSent")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("time_sent");
+
+                    b.HasKey("SupportExchangeId", "SupportMessageId")
+                        .HasName("PK_support_messages");
+
+                    b.HasIndex("PlayerUserId");
+
+                    b.HasIndex("TimeSent");
+
+                    b.ToTable("support_messages", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Trait", b =>
                 {
                     b.Property<int>("Id")
@@ -1893,6 +1947,79 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.Navigation("Ban");
                 });
 
+            modelBuilder.Entity("Content.Server.Database.SupportMessage", b =>
+                {
+                    b.HasOne("Content.Server.Database.Player", null)
+                        .WithMany()
+                        .HasForeignKey("PlayerUserId")
+                        .HasPrincipalKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_support_messages_player_player_id");
+
+                    b.HasOne("Content.Server.Database.SupportExchange", "SupportExchange")
+                        .WithMany("SupportMessages")
+                        .HasForeignKey("SupportExchangeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_support_messages_support_exchanges_support_exchange_id");
+
+                    b.OwnsOne("Content.Server.Database.SupportData", "SupportData", b1 =>
+                        {
+                            b1.Property<int>("SupportMessageSupportExchangeId")
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("support_exchange_id");
+
+                            b1.Property<int>("SupportMessageId")
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("support_message_id");
+
+                            b1.Property<bool>("AdminOnly")
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("support_data_admin_only");
+
+                            b1.Property<bool>("AdminsOnline")
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("support_data_admins_online");
+
+                            b1.Property<bool>("IsAdminned")
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("support_data_is_adminned");
+
+                            b1.Property<string>("RoundStatus")
+                                .IsRequired()
+                                .HasColumnType("TEXT")
+                                .HasColumnName("support_data_round_status");
+
+                            b1.Property<string>("SenderEntity")
+                                .HasColumnType("TEXT")
+                                .HasColumnName("support_data_sender_entity");
+
+                            b1.Property<string>("SenderEntityName")
+                                .HasColumnType("TEXT")
+                                .HasColumnName("support_data_sender_entity_name");
+
+                            b1.Property<bool>("TargetOnline")
+                                .HasColumnType("INTEGER")
+                                .HasColumnName("support_data_target_online");
+
+                            b1.HasKey("SupportMessageSupportExchangeId", "SupportMessageId");
+
+                            b1.ToTable("support_messages");
+
+                            b1.ToJson("SupportData");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SupportMessageSupportExchangeId", "SupportMessageId")
+                                .HasConstraintName("FK_support_messages_support_messages_support_exchange_id_support_message_id");
+                        });
+
+                    b.Navigation("SupportData")
+                        .IsRequired();
+
+                    b.Navigation("SupportExchange");
+                });
+
             modelBuilder.Entity("Content.Server.Database.Trait", b =>
                 {
                     b.HasOne("Content.Server.Database.Profile", "Profile")
@@ -2031,6 +2158,11 @@ namespace Content.Server.Database.Migrations.Sqlite
             modelBuilder.Entity("Content.Server.Database.ServerRoleBan", b =>
                 {
                     b.Navigation("Unban");
+                });
+
+            modelBuilder.Entity("Content.Server.Database.SupportExchange", b =>
+                {
+                    b.Navigation("SupportMessages");
                 });
 #pragma warning restore 612, 618
         }
