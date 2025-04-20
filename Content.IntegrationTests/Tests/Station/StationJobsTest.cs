@@ -102,23 +102,10 @@ public sealed class StationJobsTest
         {
             for (var i = 0; i < StationCount; i++)
             {
-                stations.Add(stationSystem.InitializeNewStation(fooStationProto.Stations["Station"], null, $"Foo {StationCount}"));
+                stations.Add(stationSystem.InitializeNewStation(fooStationProto.Stations["Station"],
+                    null,
+                    $"Foo {StationCount}"));
             }
-        });
-
-        var tideSessions = await server.AddDummySessions(PlayerCount);
-        var capSessions = await server.AddDummySessions(CaptainCount);
-        var allSessions = tideSessions.Concat(capSessions).ToHashSet();
-        var allNetIds = allSessions.Select(s => s.UserId).ToHashSet();
-
-        await server.WaitPost(() =>
-        {
-            var tasks = allSessions.Select(s =>
-            {
-                dbMan.ClientConnected(s);
-                return dbMan.WaitLoadComplete(s);
-            });
-            Task.WhenAll(tasks);
         });
 
         var jobPrioritiesA = new Dictionary<ProtoId<JobPrototype>, JobPriority>()
@@ -132,23 +119,10 @@ public sealed class StationJobsTest
             { "TCaptain", JobPriority.High },
         };
 
-        await server.WaitPost(() =>
-        {
-            List<Task> tasks = new();
-            foreach (var session in tideSessions)
-            {
-                var newProfile = HumanoidCharacterProfile.Random().WithJobPreferences(jobPrioritiesA.Keys).AsEnabled();
-                tasks.Add(prefMan.SetJobPriorities(session.UserId, jobPrioritiesA));
-                tasks.Add(prefMan.SetProfile(session.UserId, 0, newProfile));
-            }
-            foreach (var session in capSessions)
-            {
-                var newProfile = HumanoidCharacterProfile.Random().WithJobPreferences(jobPrioritiesB.Keys).AsEnabled();
-                tasks.Add(prefMan.SetJobPriorities(session.UserId, jobPrioritiesB));
-                tasks.Add(prefMan.SetProfile(session.UserId, 0, newProfile));
-            }
-            Task.WhenAll(tasks);
-        });
+        var tideSessions = await pair.AddDummyPlayers(jobPrioritiesA, PlayerCount);
+        var capSessions = await pair.AddDummyPlayers(jobPrioritiesB, CaptainCount);
+        var allSessions = tideSessions.Concat(capSessions).ToList();
+        var allNetIds = allSessions.Select(s => s.UserId).ToHashSet();
 
         await server.WaitAssertion(() =>
         {
