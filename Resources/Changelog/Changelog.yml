@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Alpaccalypse
-  changes:
-  - message: '"Irish Car Bomb" renamed to "Irish Slammer".'
-    type: Tweak
-  id: 7774
-  time: '2025-01-02T09:46:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34107
 - author: DylanWhittingham
   changes:
   - message: Added appraisal tool sound.
@@ -3908,3 +3901,10 @@
   id: 8274
   time: '2025-04-20T06:01:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36757
+- author: CubixThree
+  changes:
+  - message: Added plural pride pin.
+    type: Add
+  id: 8275
+  time: '2025-04-20T07:00:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36744
