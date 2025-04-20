@@ -14,8 +14,7 @@ namespace Content.Shared.Construction.Conditions
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
-            var sysMan = entManager.EntitySysManager;
-            var lookupSys = sysMan.GetEntitySystem<EntityLookupSystem>();
+            var lookupSys = entManager.System<EntityLookupSystem>();
 
             var result = false;
 
