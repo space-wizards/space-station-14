@@ -18,7 +18,7 @@
     prototypes: [SyndicateOperativeGearExtremelyBasic]
     roleLoadout: [ RoleSurvivalSyndicate ]
   - type: RandomMetadata
-    nameSegments: [names_death_commando]
+    nameSegments: [NamesDeathCommando]
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -68,8 +68,8 @@
   - type: NukeOperative
   - type: RandomMetadata
     nameSegments:
-    - nukeops-role-operator
-    - SyndicateNamesNormal
+    - NamesNukieFirstOperator
+    - NamesSyndicateNormal
   - type: Loadout
     prototypes: [SyndicateOperativeGearFullNoUplink]
 
@@ -97,8 +97,8 @@
     roleLoadout: [ RoleSurvivalSyndicate ]
   - type: RandomMetadata
     nameSegments:
-    - SyndicateNamesPrefix
-    - SyndicateNamesNormal
+    - NamesSyndicatePrefix
+    - NamesSyndicateNormal
   - type: NpcFactionMember
     factions:
     - Syndicate

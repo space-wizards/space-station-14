@@ -6,6 +6,10 @@ lathe-menu-search-designs = Search designs
 lathe-menu-category-all = All
 lathe-menu-search-filter = Filter:
 lathe-menu-amount = Amount:
+lathe-menu-recipe-count = { $count ->
+    [1] {$count} Recipe
+    *[other] {$count} Recipes
+}
 lathe-menu-reagent-slot-examine = It has a slot for a beaker on the side.
 lathe-reagent-dispense-no-container = Liquid pours out of {THE($name)} onto the floor!
 lathe-menu-result-reagent-display = {$reagent} ({$amount}u)
