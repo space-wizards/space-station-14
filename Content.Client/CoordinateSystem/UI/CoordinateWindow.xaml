@@ -1,9 +1,0 @@
-<ui:FancyWindow xmlns="https://spacestation14.io"
-                 xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
-                 Title="Coordinates control"
-                 Resizable="False"
-                 MinSize="350 200">
-    <BoxContainer Orientation="Vertical" SeparationOverride="4">
-        <Button Name="SetCoordinatesBSA" HorizontalAlignment="Left" Text="Set" />
-    </BoxContainer>
-</ui:FancyWindow>
