@@ -28,27 +28,29 @@ public abstract partial class SharedTemperatureSystem
     {
         TemperatureSpeedComponent temperatureSpeed = ent;
 
-        float maxThreshold = 0;
-        foreach (var (threshold, modifier) in temperatureSpeed.Thresholds)
+        for (int i = 0; i < temperatureSpeed.OrderedThresholds.Length; i++)
         {
-            if (threshold > maxThreshold)
-                maxThreshold = threshold;
+            var thresholdModifierPair = temperatureSpeed.OrderedThresholds[i];
 
-            if (args.CurrentTemperature < threshold && args.LastTemperature > threshold
-                || args.CurrentTemperature > threshold && args.LastTemperature < threshold)
+            // if temperature jumped down over threshold - we apply modifier
+            if (args.CurrentTemperature < thresholdModifierPair.ThresholdValue && args.LastTemperature > thresholdModifierPair.ThresholdValue)
             {
                 temperatureSpeed.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
-                temperatureSpeed.CurrentSpeedModifier = modifier;
+                temperatureSpeed.CurrentSpeedModifier = thresholdModifierPair.Modifier;
                 Dirty(ent);
                 break;
             }
-        }
 
-        if (args.CurrentTemperature > maxThreshold && args.LastTemperature < maxThreshold)
-        {
-            temperatureSpeed.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
-            temperatureSpeed.CurrentSpeedModifier = null;
-            Dirty(ent);
+            // if temperature jumped up over threshold - we apply previous modifier (they are desc ordered), or remove it if it is first one
+            if (args.CurrentTemperature > thresholdModifierPair.ThresholdValue && args.LastTemperature < thresholdModifierPair.ThresholdValue)
+            {
+                temperatureSpeed.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
+                temperatureSpeed.CurrentSpeedModifier = i == 0
+                    ? null
+                    : temperatureSpeed.OrderedThresholds[i - 1].Modifier;
+                Dirty(ent);
+                break;
+            }
         }
     }
 
