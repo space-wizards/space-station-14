@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SpaceRox1244
-  changes:
-  - message: Station lights can now be destroyed by bullets.
-    type: Add
-  id: 7783
-  time: '2025-01-05T22:11:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34070
 - author: ArtisticRoomba
   changes:
   - message: You can no longer get stuck when trying to walk between a station anchor
@@ -3905,3 +3898,11 @@
   id: 8283
   time: '2025-04-20T12:19:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34292
+- author: ScarKy0
+  changes:
+  - message: Cargo will receive slightly less mail, but will earn more spesos from
+      it. Overall earnings are still on average the same.
+    type: Tweak
+  id: 8284
+  time: '2025-04-20T13:55:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36767
