@@ -1,26 +1,21 @@
-﻿using System.Text.RegularExpressions;
-using Content.Server.Speech.Components;
+using System.Text.RegularExpressions;
+using Content.Shared.Speech.EntitySystems;
+using Robust.Shared.Utility;
 
-namespace Content.Server.Speech.EntitySystems;
+namespace Content.Shared.Speech.Accents;
 
-public sealed class LizardAccentSystem : EntitySystem
+public sealed class LizardAccent : IAccent
 {
+    public string Name { get; } = "Lizard";
+
     private static readonly Regex RegexLowerS = new("s+");
     private static readonly Regex RegexUpperS = new("S+");
     private static readonly Regex RegexInternalX = new(@"(\w)x");
     private static readonly Regex RegexLowerEndX = new(@"\bx([\-|r|R]|\b)");
     private static readonly Regex RegexUpperEndX = new(@"\bX([\-|r|R]|\b)");
 
-    public override void Initialize()
+    public string Accentuate(string message, Dictionary<string, MarkupParameter> attributes, int randomSeed)
     {
-        base.Initialize();
-        SubscribeLocalEvent<LizardAccentComponent, AccentGetEvent>(OnAccent);
-    }
-
-    private void OnAccent(EntityUid uid, LizardAccentComponent component, AccentGetEvent args)
-    {
-        var message = args.Message;
-
         // hissss
         message = RegexLowerS.Replace(message, "sss");
         // hiSSS
@@ -32,6 +27,11 @@ public sealed class LizardAccentSystem : EntitySystem
         // eckS
         message = RegexUpperEndX.Replace(message, "ECKS$1");
 
-        args.Message = message;
+        return message;
+    }
+
+    public void GetAccentData(ref AccentGetEvent ev, Component c)
+    {
+        ev.Accents.Add(Name, null);
     }
 }

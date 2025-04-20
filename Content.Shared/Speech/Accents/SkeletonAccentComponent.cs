@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Speech.Components;
+﻿namespace Content.Shared.Speech.Accents;
 
 /// <summary>
 ///     Rattle me bones!
@@ -9,6 +9,6 @@ public sealed partial class SkeletonAccentComponent : Component
     /// <summary>
     ///     Chance that the message will be appended with "ACK ACK!"
     /// </summary>
-    [DataField("ackChance")]
-    public float ackChance = 0.3f; // Funnier if it doesn't happen every single time
+    [DataField]
+    public float AckChance = 0.3f; // Funnier if it doesn't happen every single time
 }
