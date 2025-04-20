@@ -136,8 +136,8 @@
     canCreateVacuum: false
   - type: Tag
     tags:
-      - Cigar
-      - Trash
+    - Cigar
+    - Trash
     
 - type: entity
   parent: CigarBomb
@@ -155,5 +155,5 @@
     node: cigarBombHarmless
   - type: Tag
     tags:
-      - Cigar
-      - Trash
+    - Cigar
+    - Trash
