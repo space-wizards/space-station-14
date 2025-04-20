@@ -20,6 +20,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using PullableComponent = Content.Shared.Movement.Pulling.Components.PullableComponent;
@@ -34,7 +35,6 @@ public abstract partial class SharedMoverController : VirtualController
 {
     [Dependency] private   readonly IConfigurationManager _configManager = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private   readonly IMapManager _mapManager = default!;
     [Dependency] private   readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private   readonly EntityLookupSystem _lookup = default!;
     [Dependency] private   readonly InventorySystem _inventory = default!;
@@ -43,7 +43,6 @@ public abstract partial class SharedMoverController : VirtualController
     [Dependency] private   readonly SharedContainerSystem _container = default!;
     [Dependency] private   readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
-    [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
     [Dependency] private   readonly SharedTransformSystem _transform = default!;
     [Dependency] private   readonly TagSystem _tags = default!;
 
@@ -59,6 +58,8 @@ public abstract partial class SharedMoverController : VirtualController
     protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
     protected EntityQuery<FootstepModifierComponent> FootstepModifierQuery;
     protected EntityQuery<MapGridComponent> MapGridQuery;
+
+    private static readonly ProtoId<TagPrototype> FootstepSoundTag = "FootstepSound";
 
     /// <summary>
     /// <see cref="CCVars.StopSpeed"/>
@@ -105,6 +106,14 @@ public abstract partial class SharedMoverController : VirtualController
     public override void UpdateAfterSolve(bool prediction, float frameTime)
     {
         base.UpdateAfterSolve(prediction, frameTime);
+
+        var query = AllEntityQuery<InputMoverComponent, PhysicsComponent>();
+
+        while (query.MoveNext(out var uid, out var _, out var physics))
+        {
+            //PhysicsSystem.SetLinearVelocity(uid, Vector2.Zero, body: physics);
+        }
+
         UsedMobMovement.Clear();
     }
 
@@ -424,7 +433,7 @@ public abstract partial class SharedMoverController : VirtualController
     {
         sound = null;
 
-        if (!CanSound() || !_tags.HasTag(uid, "FootstepSound"))
+        if (!CanSound() || !_tags.HasTag(uid, FootstepSoundTag))
             return false;
 
         var coordinates = xform.Coordinates;
