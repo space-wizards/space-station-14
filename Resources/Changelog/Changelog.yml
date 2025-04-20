@@ -1,59 +1,4 @@
 ﻿Entries:
-- author: chromiumboy
-  changes:
-  - message: Chat messages from holopads during emergency broadcasts will no longer
-      be logged in the chat window to prevent message spam. This is a temporary change
-      until a proper fix can be made to the chat system
-    type: Tweak
-  id: 7764
-  time: '2024-12-31T10:52:08.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34114
-- author: PopGamer46
-  changes:
-  - message: Fixed borgs not being able to check their laws in crit
-    type: Fix
-  id: 7765
-  time: '2024-12-31T11:10:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34133
-- author: amatwiedle
-  changes:
-  - message: The A/V Communication technology now unlocks holopad circuit boards.
-    type: Add
-  id: 7766
-  time: '2024-12-31T13:20:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34150
-- author: justdie12
-  changes:
-  - message: Flipped signal disposal routers sprite
-    type: Fix
-  id: 7767
-  time: '2024-12-31T13:25:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34139
-- author: ArtisticRoomba
-  changes:
-  - message: Shotgun crate now comes with 4 lethal shell boxes.
-    type: Tweak
-  - message: Enforcer gun safe now comes with 4 lethal shell boxes.
-    type: Tweak
-  - message: Kammerer gun safe now comes with 2 lethal shell boxes.
-    type: Tweak
-  id: 7768
-  time: '2024-12-31T23:08:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34156
-- author: Booblesnoot42
-  changes:
-  - message: Tarantulas spawned in vents will now be hostile to the crew.
-    type: Fix
-  id: 7769
-  time: '2025-01-01T16:18:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34153
-- author: Booblesnoot42
-  changes:
-  - message: The RCD no longer has a cooldown when opened or closed.
-    type: Fix
-  id: 7770
-  time: '2025-01-01T16:19:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34149
 - author: lzk228
   changes:
   - message: Decreased HP for rusted wall variants
@@ -3909,3 +3854,55 @@
   id: 8264
   time: '2025-04-19T14:41:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34261
+- author: Minemoder
+  changes:
+  - message: Most roles on the station now require significantly less playtime playtime
+      to unlock.
+    type: Tweak
+  id: 8265
+  time: '2025-04-19T15:31:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36666
+- author: Fildrance
+  changes:
+  - message: fixed spessman getting stuck after unlocking portal node
+    type: Fix
+  id: 8266
+  time: '2025-04-19T17:07:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36719
+- author: VlaDOS1408
+  changes:
+  - message: Fixed Gravity gen menu resizing! Now it looks like it should.
+    type: Fix
+  id: 8267
+  time: '2025-04-19T20:20:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34036
+- author: coffeeware, MilenVolf
+  changes:
+  - message: Most common mobs without hands now can't dump containers wtih solution
+      by drag and dropping.
+    type: Tweak
+  id: 8268
+  time: '2025-04-19T20:32:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33350
+- author: ScarKy0
+  changes:
+  - message: Salvage borgs now start with a tool module
+    type: Add
+  id: 8269
+  time: '2025-04-19T20:33:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33336
+- author: Seam_Less
+  changes:
+  - message: Standardized the Sprites of most scarfs
+    type: Tweak
+  id: 8270
+  time: '2025-04-20T00:17:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35446
+- author: ArtisticRoomba
+  changes:
+  - message: Fixed backpack water tanks (spray nozzle) projectiles not properly cleaning
+      up puddles.
+    type: Fix
+  id: 8271
+  time: '2025-04-20T02:41:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35950
