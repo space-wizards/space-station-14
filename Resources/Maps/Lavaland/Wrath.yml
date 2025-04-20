@@ -4,8 +4,8 @@ meta:
   engineVersion: 254.1.0
   forkId: ""
   forkVersion: ""
-  time: 04/20/2025 04:09:54
-  entityCount: 117
+  time: 04/20/2025 08:53:31
+  entityCount: 119
 maps: []
 grids:
 - 1
@@ -424,6 +424,14 @@ entities:
     - type: Transform
       pos: 3.8316755,-0.29735756
       parent: 1
+- proto: KukriKnife
+  entities:
+  - uid: 118
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 5.53979,-2.5814369
+      parent: 1
 - proto: LeftArmHuman
   entities:
   - uid: 116
@@ -444,6 +452,14 @@ entities:
     components:
     - type: Transform
       pos: 4.4790883,0.42920494
+      parent: 1
+- proto: OrganHumanHeart
+  entities:
+  - uid: 119
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -0.70063734,0.8716881
       parent: 1
 - proto: RandomCargoCorpseSpawner
   entities:
