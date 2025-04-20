@@ -261,7 +261,7 @@ public sealed partial class MechSystem : SharedMechSystem
             component.PilotSlot.ContainedEntity != null)
         {
             var damage = args.DamageDelta * component.MechToPilotDamageMultiplier;
-            _damageable.TryChangeDamage(component.PilotSlot.ContainedEntity, damage, origin: args.Origin);
+            _damageable.TryChangeDamage(component.PilotSlot.ContainedEntity, damage);
         }
     }
 
