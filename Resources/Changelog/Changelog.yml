@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TeenSarlacc
-  changes:
-  - message: Large instruments can now be ordered through cargo.
-    type: Add
-  id: 7794
-  time: '2025-01-10T15:13:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34240
 - author: themias
   changes:
   - message: Fixed crayons losing durability attempting to write on stamped paper
@@ -3898,3 +3891,12 @@
   id: 8294
   time: '2025-04-20T21:34:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35825
+- author: Entvari
+  changes:
+  - message: Added a new Wizard headset.
+    type: Add
+  - message: The Wizard now starts with the Wizard headset.
+    type: Tweak
+  id: 8295
+  time: '2025-04-20T21:38:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35732
