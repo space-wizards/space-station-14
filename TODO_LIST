@@ -11,19 +11,17 @@ Evac:
 Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
 Command Meeting: Needs access to execution cameras
 Execution telescreens: Need access to execution cameras
+I'd really like the sec camera monitors to only see General if possible...
+	And I think I already have it on this list, but the Admin camera still no worky.
 Cargo shuttle computer can't find the shuttle. Mass scanner says it's out there...
-Custom books on lawyer shelves?
 Among Us "clues" on detective notice boards
-Shrink or move HoP tunnel to expand Atmos a bit more?
 Would it be too radical to totally left/right swap the Atmos
 	gas chambers so that the disposal pipeline linkup is less terrible?
 	This impacts distro pipeline as well, naturally, so dunno.
 	It might be nice to have the spaced area between the tanks
 		and the burn chamber, just for a bit of a buffer zone.
 		Ditto the public hallway, too, though...
-Fill CMO's special syringe
 Cryo piping
-Check various shuttle designs to make sure docking arms line up with at least some
 Telecoms: Change reinforced walls?
 Move warden's office?
 Make easier to navigate in general, + add standard colors around more
@@ -38,10 +36,6 @@ One missing Amogus camera: Admin (probably because of fix wiring)
 Salvage space arm is getting sensed as part of the room by air sensors?
 Weapons north maints door stuck open
 Somewhere, there is a holopad with no label.
-I'd really like the sec camera monitors to only see General if possible...
-	And I think I already have it on this list, but the Admin camera still no worky.
-Det/Prosc door bolt doesn't work. It bolts, then immediately unbolts.
-	nor instead of or gate?
 
 
 The big things:
@@ -90,6 +84,9 @@ Chef's closets have stuff in 'em they shouldn't? Like, crowbars and N2 tanks.
 	Double-check if this is even true
 Not much vision of arti/anom hall
 	This is confusing, and I need to investigate more. The camera on the east side should see just fine, and the camera on the west side should get anything it misses.
+Det/Prosc door bolt doesn't work. It bolts, then immediately unbolts.
+	nor instead of or gate?
+	I've attempted to fix. Gotta make sure both door bolt and shutter behave properly.
 
 
 THINGS I COULD MAKE:
@@ -292,3 +289,7 @@ DONE:
 /* 	/1* Give copies of building permit to CE *1/ */
 /* 	/1* Give copies of requisition form to QM *1/ (Maybe not.) */
 /* 	/1* Make sure CMO has drug prescription form actually *1/ */
+/* Custom books on lawyer shelves? */ Maybe the library thing I'm making will fill this niche.
+/* Shrink or move HoP tunnel to expand Atmos a bit more? */ Nah
+/* Check various shuttle designs to make sure docking arms line up with at least some */
+/* Fill CMO's special syringe */
