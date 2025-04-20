@@ -228,7 +228,7 @@ public abstract class SharedPortalSystem : EntitySystem
         {
             var randVector = _random.NextVector2(component.MaxRandomRadius);
             newCoords = coords.Offset(randVector);
-            if (_lookup.GetEntitiesIntersecting(_transform.ToMapCoordinates(newCoords), LookupFlags.Static).Count == 0)
+            if (!_lookup.AnyEntitiesIntersecting(_transform.ToMapCoordinates(newCoords), LookupFlags.Static))
             {
                 break;
             }
