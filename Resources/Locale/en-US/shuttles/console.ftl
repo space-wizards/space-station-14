@@ -10,9 +10,13 @@ shuttle-console-prevent = You are unable to pilot this ship
 shuttle-console-display-label = Display
 
 shuttle-console-position = Position:
+shuttle-console-position-value = {$X}, {$Y}
 shuttle-console-orientation = Orientation:
+shuttle-console-orientation-value  = {$angle}
 shuttle-console-linear-velocity = Linear velocity:
+shuttle-console-linear-velocity-value = {$X}, {$Y}
 shuttle-console-angular-velocity = Angular velocity:
+shuttle-console-angular-velocity-value = {$angularVelocity}
 
 shuttle-console-unknown = Unknown
 shuttle-console-iff-label = {$name} ({$distance}m)
@@ -30,6 +34,7 @@ shuttle-console-ftl-state-Starting = Starting
 shuttle-console-ftl-state-Travelling = Travelling
 shuttle-console-ftl-state-Arriving = Arriving
 shuttle-console-ftl-state-Cooldown = Cooldown
+shuttle-console-ftl-state-Invalid = Invalid
 
 shuttle-console-map-settings = Settings
 shuttle-console-ftl-button = FTL

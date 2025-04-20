@@ -1,30 +1,34 @@
 ﻿<BoxContainer xmlns="https://spacestation14.io"
-              Orientation="Horizontal"
+              Orientation="Vertical"
               HorizontalAlignment="Stretch"
               HorizontalExpand="True"
               Margin="0 0 0 5">
-    <BoxContainer Name="ReactantsContainer" Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
-        <RichTextLabel Name="ReactantsLabel"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Access="Public"
-                       Visible="False"/>
+    <BoxContainer Orientation="Horizontal">
+        <BoxContainer Name="ReactantsContainer" Orientation="Vertical" HorizontalExpand="True"
+                      VerticalAlignment="Center">
+            <RichTextLabel Name="ReactantsLabel"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Access="Public"
+                           Visible="False" />
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextureRect TexturePath="/Textures/Interface/Misc/beakerlarge.png"
+                         HorizontalAlignment="Center"
+                         Name="MixTexture"
+                         Access="Public" />
+            <RichTextLabel Name="MixLabel"
+                           HorizontalAlignment="Center"
+                           Access="Public"
+                           Margin="2 0 0 0" />
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
+            <RichTextLabel Name="ProductsLabel"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Access="Public"
+                           Visible="False" />
+        </BoxContainer>
     </BoxContainer>
-    <BoxContainer Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextureRect TexturePath="/Textures/Interface/Misc/beakerlarge.png"
-                     HorizontalAlignment="Center"
-                     Name="MixTexture"
-                     Access="Public"/>
-        <RichTextLabel Name="MixLabel"
-                       HorizontalAlignment="Center"
-                       Access="Public"
-                       Margin="2 0 0 0"/>
-    </BoxContainer>
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalAlignment="Center">
-        <RichTextLabel Name="ProductsLabel"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Access="Public"
-                       Visible="False"/>
-    </BoxContainer>
+    <PanelContainer StyleClasses="LowDivider" Margin="0 5 0 5" />
 </BoxContainer>
