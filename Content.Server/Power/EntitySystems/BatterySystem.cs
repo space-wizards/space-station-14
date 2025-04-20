@@ -13,7 +13,7 @@ namespace Content.Server.Power.EntitySystems
     [UsedImplicitly]
     public sealed class BatterySystem : EntitySystem
     {
-        [Dependency] protected readonly IGameTiming Timing = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
         {
@@ -87,12 +87,12 @@ namespace Content.Server.Power.EntitySystems
             var query = EntityQueryEnumerator<BatterySelfRechargerComponent, BatteryComponent>();
             while (query.MoveNext(out var uid, out var comp, out var batt))
             {
-                if (!comp.AutoRecharge) continue;
-                if (batt.IsFullyCharged) continue;
+                if (!comp.AutoRecharge || IsFull(uid, batt))
+                    continue;
 
                 if (comp.AutoRechargePause)
                 {
-                    if (comp.NextAutoRecharge > Timing.CurTime)
+                    if (comp.NextAutoRecharge > _timing.CurTime)
                         continue;
                 }
 
@@ -179,7 +179,7 @@ namespace Content.Server.Power.EntitySystems
             if (value < 0)
                 value = batteryself.AutoRechargePauseTime;
 
-            if (Timing.CurTime + TimeSpan.FromSeconds(value) <= batteryself.NextAutoRecharge)
+            if (_timing.CurTime + TimeSpan.FromSeconds(value) <= batteryself.NextAutoRecharge)
                 return;
 
             SetChargeCooldown(uid, batteryself.AutoRechargePauseTime, batteryself);
@@ -194,9 +194,9 @@ namespace Content.Server.Power.EntitySystems
                 return;
 
             if (value >= 0)
-                batteryself.NextAutoRecharge = Timing.CurTime + TimeSpan.FromSeconds(value);
+                batteryself.NextAutoRecharge = _timing.CurTime + TimeSpan.FromSeconds(value);
             else
-                batteryself.NextAutoRecharge = Timing.CurTime;
+                batteryself.NextAutoRecharge = _timing.CurTime;
         }
 
         /// <summary>
@@ -212,14 +212,14 @@ namespace Content.Server.Power.EntitySystems
         }
 
         /// <summary>
-        /// Returns whether the battery is at least 99% charged, basically full.
+        /// Returns whether the battery is full.
         /// </summary>
         public bool IsFull(EntityUid uid, BatteryComponent? battery = null)
         {
             if (!Resolve(uid, ref battery))
                 return false;
 
-            return battery.CurrentCharge / battery.MaxCharge >= 0.99f;
+            return battery.CurrentCharge >= battery.MaxCharge;
         }
     }
 }
