@@ -92,7 +92,7 @@ namespace Content.Server.Atmos.Components
         ///     Increases explosion for each scale kPa above threshold.
         /// </summary>
         [DataField("tankFragmentScale"), ViewVariables(VVAccess.ReadWrite)]
-        public float TankFragmentScale = 2 * Atmospherics.OneAtmosphere;
+        public float TankFragmentScale = 2.25f * Atmospherics.OneAtmosphere;
 
         [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string ToggleAction = "ActionToggleInternals";

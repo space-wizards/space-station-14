@@ -52,7 +52,7 @@ alert.min_players_sharing_connection = 2
 allow_multi_server_play = false
 
 [atmos]
-max_explosion_range = 5
+max_explosion_range = 16
 
 [worldgen]
 enabled = true
