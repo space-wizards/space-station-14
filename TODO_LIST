@@ -12,30 +12,6 @@ Figure out wrong-facing wall TVs, telescreens, nanomeds (others?)
 Command Meeting: Needs access to execution cameras
 Execution telescreens: Need access to execution cameras
 Cargo shuttle computer can't find the shuttle. Mass scanner says it's out there...
-Forms for things like borging, department access, psych prescriptions...
-	Make lots of forms for HoP, too
-		/* Hall/Bathroom Pass */
-		/* Official requisition form requisition form */
-		/* Complaints */
-		/* Opinion Registration */
-		Tattle Form
-		/* ID Card Alteration Request */
-		/* All Access Request */
-		/* Some Access Request */
-		/* No Access Request */
-		/* Borg Legal Waiver */
-		/* Contraband Authorization */
-		/* Building Permit */
-		/* Ian Appreciation Form */
-		/* Visitor Registration */
-		/* Paperwork Reduction Form */
-		Form Template
-		Search Warrant?
-	Give copies of borg forms to RD
-	Give copies of contraband forms to HoS
-	Give copies of building permit to CE
-	Give copies of requisition form to QM
-	Make sure CMO has drug prescription form actually
 Custom books on lawyer shelves?
 Among Us "clues" on detective notice boards
 Shrink or move HoP tunnel to expand Atmos a bit more?
@@ -292,3 +268,27 @@ DONE:
 /* 	NT bar exam for: Defense Attorney!" */
 /* Remove chasms */
 /* 	I covered them in catwalks instead... is that good enough, I hope? */
+/* Forms for things like borging, department access, psych prescriptions... */
+/* 	Make lots of forms for HoP, too */
+/* 		/1* Hall/Bathroom Pass *1/ */
+/* 		/1* Official requisition form requisition form *1/ */
+/* 		/1* Complaints *1/ */
+/* 		/1* Opinion Registration *1/ */
+/* 		Tattle Form */
+/* 		/1* ID Card Alteration Request *1/ */
+/* 		/1* All Access Request *1/ */
+/* 		/1* Some Access Request *1/ */
+/* 		/1* No Access Request *1/ */
+/* 		/1* Borg Legal Waiver *1/ */
+/* 		/1* Contraband Authorization *1/ */
+/* 		/1* Building Permit *1/ */
+/* 		/1* Ian Appreciation Form *1/ */
+/* 		/1* Visitor Registration *1/ */
+/* 		/1* Paperwork Reduction Form *1/ */
+/* 		Form Template */
+/* 		Search Warrant? */
+/* 	/1* Give copies of borg forms to RD *1/ */
+/* 	/1* Give copies of contraband forms to HoS *1/ */
+/* 	/1* Give copies of building permit to CE *1/ */
+/* 	/1* Give copies of requisition form to QM *1/ (Maybe not.) */
+/* 	/1* Make sure CMO has drug prescription form actually *1/ */
