@@ -135,31 +135,26 @@
   id: LowValueCrateTable
   table: !type:GroupSelector
     children:
-    - !type:GroupSelector
-      children:
-      - !type:NestedSelector
-        tableId: LowValueFunCrateTable
-      - !type:NestedSelector
-        tableId: LowValueInstrumentCrateTable
-        weight: 0.2
-      - !type:NestedSelector
-        tableId: LowValueMaterialCrateTable
-        weight: 2
-      - !type:NestedSelector
-        tableId: LowValueEmergencyCrateTable
-      - !type:NestedSelector
-        tableId: LowValueServiceCrateTable
-      - !type:NestedSelector
-        tableId: LowValueEngineeringCrateTable
-      - !type:NestedSelector
-        tableId: LowValueMedicalCrateTable
-        weight: 0.2
-      - !type:NestedSelector
-        tableId: LowValueScienceCrateTable
-        weight: 0.2
-      weight: 80
-    - !type:NoneSelector
-      weight: 20
+    - !type:NestedSelector
+      tableId: LowValueFunCrateTable
+    - !type:NestedSelector
+      tableId: LowValueInstrumentCrateTable
+      weight: 0.2
+    - !type:NestedSelector
+      tableId: LowValueMaterialCrateTable
+      weight: 2
+    - !type:NestedSelector
+      tableId: LowValueEmergencyCrateTable
+    - !type:NestedSelector
+      tableId: LowValueServiceCrateTable
+    - !type:NestedSelector
+      tableId: LowValueEngineeringCrateTable
+    - !type:NestedSelector
+      tableId: LowValueMedicalCrateTable
+      weight: 0.2
+    - !type:NestedSelector
+      tableId: LowValueScienceCrateTable
+      weight: 0.2
 
 - type: entity
   name: Filled Crate Spawner
@@ -175,6 +170,7 @@
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: LowValueCrateTable
+      prob: 0.8
     offset: 0.0
 
 - type: entity
@@ -261,7 +257,6 @@
     - id: CrateLockBoxSecurity
     - id: CrateLockBoxScience
     - id: CrateLockBoxService
-    - !type:NoneSelector
 
 - type: entity
   name: random lockbox spawner
@@ -277,4 +272,5 @@
   - type: EntityTableSpawner
     table: !type:NestedSelector
       tableId: LockboxTable
+      prob: 0.9
     offset: 0.0
