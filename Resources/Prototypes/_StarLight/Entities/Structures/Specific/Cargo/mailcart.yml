@@ -10,14 +10,7 @@
       sprite: _Starlight/Objects/Specific/Cargo/mail_cart.rsi
       layers:
       - state: cart
-      - state: cart_boxes1
-        map: ["cart_boxes1"]
-        visible: false
-      - state: cart_boxes2
-        map: ["cart_boxes2"]
-        visible: false
-      - state: cart_boxes3
-        map: ["cart_boxes3"]
+      - map: [ "enum.StorageContainerVisualLayers.Fill" ]
         visible: false
     - type: Rotatable
     - type: InteractionOutline
@@ -38,14 +31,9 @@
         - Normal
         - Small
         - Tiny
-    - type: ItemCounter
-      count:
-        components:
-        - Delivery
-      layerStates:
-      - cart_boxes1
-      - cart_boxes2
-      - cart_boxes3
+    - type: StorageContainerVisuals
+      maxFillLevels: 3
+      fillBaseName: cart_boxes
     - type: Fixtures
       fixtures:
         fix1:
