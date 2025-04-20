@@ -49,11 +49,23 @@ public sealed class MagnetPickupSystem : EntitySystem
 
             comp.NextScan += ScanDelay;
 
-            if (!_inventory.TryGetContainingSlot((uid, xform, meta), out var slotDef))
-                continue;
+            //starlight edit
+            // skip this check if slot flag is set to none, as its then assumed we want the placed version of the entity to magnetize
+            if (comp.SlotFlags != SlotFlags.NONE)
+            {
+                if (!_inventory.TryGetContainingSlot((uid, xform, meta), out var slotDef))
+                    continue;
 
-            if ((slotDef.SlotFlags & comp.SlotFlags) == 0x0)
-                continue;
+                if ((slotDef.SlotFlags & comp.SlotFlags) == 0x0)
+                    continue;
+            }
+            else
+            {
+                //check if the entity is in a storage at all, and if it is skip it since we just want it to work as a placed entity magnet
+                if (_inventory.TryGetContainingSlot((uid, xform, meta), out var slotDef))
+                    continue;
+            }
+            //end starlight edit
 
             // No space
             if (!_storage.HasSpace((uid, storage)))

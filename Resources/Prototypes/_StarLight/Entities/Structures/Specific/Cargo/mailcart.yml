@@ -76,3 +76,9 @@
         storagebase: !type:Container
           ents: []
     - type: DnaSubstanceTrace
+#    - type: ItemToggle #needs a custom component to handle this as being a ONLY right click verb from what I can tell
+#      onActivate: false #allows opening the UI via E
+#    - type: ComponentToggler
+#      components:
+    - type: MagnetPickup
+      slotFlags: None

@@ -28,3 +28,4 @@
       - Document
       - Paper
   - type: Dumpable
+  - type: MagnetPickup
