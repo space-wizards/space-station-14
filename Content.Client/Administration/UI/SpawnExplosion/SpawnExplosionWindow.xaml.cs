@@ -38,7 +38,7 @@ public sealed partial class SpawnExplosionWindow : DefaultWindow
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-        _mapSystem = _entMan.System<MapSystem>();
+        _mapSystem = _entMan.System<SharedMapSystem>();
         _transform = _entMan.System<TransformSystem>();
         _eui = eui;
 
