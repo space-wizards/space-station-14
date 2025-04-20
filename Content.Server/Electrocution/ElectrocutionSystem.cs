@@ -188,7 +188,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (_meleeWeapon.GetDamage(args.Used, args.User).Empty)
             return;
 
-        DoCommonElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false);
+        TryDoElectrocution(args.User, uid, component.UnarmedHitShock, component.UnarmedHitStun, false);
     }
 
     private void OnElectrifiedInteractUsing(EntityUid uid, ElectrifiedComponent electrified, InteractUsingEvent args)

@@ -15,7 +15,7 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     ///     A single antag Mind Role is enough to make the owner mind count as Antagonist.
     /// </summary>
     [DataField]
-    public bool Antag { get; set; } = false;
+    public bool Antag;
 
     /// <summary>
     ///     The mind's current antagonist/special role, or lack thereof;
@@ -24,10 +24,16 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     public ProtoId<RoleTypePrototype>? RoleType;
 
     /// <summary>
+    ///     The role's subtype, shown only to admins to help with antag categorization
+    /// </summary>
+    [DataField]
+    public LocId? Subtype;
+
+    /// <summary>
     ///     True if this mindrole is an exclusive antagonist. Antag setting is not checked if this is True.
     /// </summary>
     [DataField]
-    public bool ExclusiveAntag { get; set; } = false;
+    public bool ExclusiveAntag;
 
     /// <summary>
     ///     The Mind that this role belongs to
