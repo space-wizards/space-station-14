@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Kessler Syndrome and Zombeteors are removed from the possible gamemodes
-      in the Secret pool.
-    type: Remove
-  id: 7785
-  time: '2025-01-07T00:18:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34051
 - author: Alpaccalypse
   changes:
   - message: Special reagents are now listed in the relevant section of the guidebook.
@@ -3905,3 +3897,11 @@
   id: 8285
   time: '2025-04-20T14:06:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34949
+- author: K-Dynamic
+  changes:
+  - message: Nonlethal throwables crate can be ordered from cargo (2500 spesos) and
+      contains 4x bolas, 4x flashbang grenades, 4x tear gas grenades, 4x stinger grenades.
+    type: Add
+  id: 8286
+  time: '2025-04-20T14:08:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35808
