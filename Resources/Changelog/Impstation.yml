@@ -1,15 +1,6 @@
 ﻿Entries:
 - author: honeyed-lemons
   changes:
-  - message: Adjusts lots of mail penalties and bonuses
-    type: Tweak
-  - message: Increased the length priority mail lasts
-    type: Tweak
-  id: 1037
-  time: '2025-02-02T17:00:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1544
-- author: honeyed-lemons
-  changes:
   - message: Gray sprites Slightly
     type: Tweak
   id: 1038
@@ -4105,3 +4096,10 @@
   id: 1536
   time: '2025-04-19T23:04:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2278
+- author: SixValentine
+  changes:
+  - message: Luna is the perfect map. Details in PR
+    type: Fix
+  id: 1537
+  time: '2025-04-20T23:27:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2298
