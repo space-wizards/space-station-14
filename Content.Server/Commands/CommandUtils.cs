@@ -4,6 +4,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Toolshed.Commands.Generic;
 
 namespace Content.Server.Commands
 {
@@ -49,46 +50,6 @@ namespace Content.Server.Commands
 
             attachedEntity = session.AttachedEntity.Value;
             return true;
-        }
-
-        public static string SubstituteEntityDetails(IConsoleShell shell, EntityUid ent, string ruleString)
-        {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var transform = entMan.GetComponent<TransformComponent>(ent);
-            var transformSystem = entMan.System<SharedTransformSystem>();
-            var worldPosition = transformSystem.GetWorldPosition(transform);
-
-            // gross, is there a better way to do this?
-            ruleString = ruleString.Replace("$ID", ent.ToString());
-            ruleString = ruleString.Replace("$WX",
-                worldPosition.X.ToString(CultureInfo.InvariantCulture));
-            ruleString = ruleString.Replace("$WY",
-                worldPosition.Y.ToString(CultureInfo.InvariantCulture));
-            ruleString = ruleString.Replace("$LX",
-                transform.LocalPosition.X.ToString(CultureInfo.InvariantCulture));
-            ruleString = ruleString.Replace("$LY",
-                transform.LocalPosition.Y.ToString(CultureInfo.InvariantCulture));
-            ruleString = ruleString.Replace("$NAME", entMan.GetComponent<MetaDataComponent>(ent).EntityName);
-
-            if (shell.Player is { } player)
-            {
-                if (player.AttachedEntity is {Valid: true} p)
-                {
-                    var pTransform = entMan.GetComponent<TransformComponent>(p);
-                    var pWorldPosition = transformSystem.GetWorldPosition(pTransform);
-
-                    ruleString = ruleString.Replace("$PID", ent.ToString());
-                    ruleString = ruleString.Replace("$PWX",
-                        pWorldPosition.X.ToString(CultureInfo.InvariantCulture));
-                    ruleString = ruleString.Replace("$PWY",
-                        pWorldPosition.Y.ToString(CultureInfo.InvariantCulture));
-                    ruleString = ruleString.Replace("$PLX",
-                        pTransform.LocalPosition.X.ToString(CultureInfo.InvariantCulture));
-                    ruleString = ruleString.Replace("$PLY",
-                        pTransform.LocalPosition.Y.ToString(CultureInfo.InvariantCulture));
-                }
-            }
-            return ruleString;
         }
     }
 }

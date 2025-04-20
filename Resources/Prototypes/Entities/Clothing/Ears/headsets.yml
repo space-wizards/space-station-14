@@ -242,7 +242,7 @@
     sprite: Clothing/Ears/Headsets/security.rsi
 
 - type: entity
-  parent: [ClothingHeadset, BaseRestrictedContraband]
+  parent: [ClothingHeadset, BaseSecurityContraband]
   id: ClothingHeadsetBrigmedic
   name: brigmedic headset
   description: A headset that helps to hear the death cries.

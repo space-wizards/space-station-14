@@ -52,7 +52,7 @@
   id: ServiceSmokeables
   icon:
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
-    state: closed
+    state: icon
   product: CrateServiceSmokeables
   cost: 1500
   category: cargoproduct-category-name-service
@@ -62,7 +62,7 @@
   id: ServiceCustomSmokable
   icon:
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
-    state: closed
+    state: icon
   product: CrateServiceCustomSmokable
   cost: 1000
   category: cargoproduct-category-name-service

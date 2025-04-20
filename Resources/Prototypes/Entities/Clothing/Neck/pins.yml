@@ -25,6 +25,17 @@
 
 - type: entity
   parent: ClothingNeckPinBase
+  id: ClothingNeckAllyPin
+  name: straight ally pin
+  description: Be ally do crime.
+  components:
+  - type: Sprite
+    state: ally
+  - type: Clothing
+    equippedPrefix: ally
+
+- type: entity
+  parent: ClothingNeckPinBase
   id: ClothingNeckAromanticPin
   name: aromantic pin
   description: Be aro do crime.
@@ -33,6 +44,17 @@
     state: aro
   - type: Clothing
     equippedPrefix: aro
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckAroacePin
+  name: aroace pin
+  description: Be aroace do crime.
+  components:
+  - type: Sprite
+    state: aroace
+  - type: Clothing
+    equippedPrefix: aroace
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -121,6 +143,17 @@
     state: omni
   - type: Clothing
     equippedPrefix: omni
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckGenderqueerPin
+  name: genderqueer pin
+  description: be crime, do gender
+  components:
+  - type: Sprite
+    state: gender
+  - type: Clothing
+    equippedPrefix: gender
 
 - type: entity
   parent: ClothingNeckPinBase

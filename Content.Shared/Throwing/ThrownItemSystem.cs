@@ -95,7 +95,7 @@ namespace Content.Shared.Throwing
                 _physics.SetBodyStatus(uid, physics, BodyStatus.OnGround);
 
                 if (physics.Awake)
-                    _broadphase.RegenerateContacts(uid, physics);
+                    _broadphase.RegenerateContacts((uid, physics));
             }
 
             if (EntityManager.TryGetComponent(uid, out FixturesComponent? manager))
@@ -123,7 +123,7 @@ namespace Content.Shared.Throwing
             if (thrownItem.Thrower is not null)
                 _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(uid):entity} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
 
-            _broadphase.RegenerateContacts(uid, physics);
+            _broadphase.RegenerateContacts((uid, physics));
             var landEvent = new LandEvent(thrownItem.Thrower, playSound);
             RaiseLocalEvent(uid, ref landEvent);
         }
@@ -144,6 +144,12 @@ namespace Content.Shared.Throwing
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
+            // TODO predicted throwing - remove this check
+            // We don't want to predict landing or stopping, since throwing isn't actually predicted.
+            // If we do, the landing/stop will occur prematurely on the client.
+            if (_gameTiming.InPrediction)
+                return;
 
             var query = EntityQueryEnumerator<ThrownItemComponent, PhysicsComponent>();
             while (query.MoveNext(out var uid, out var thrown, out var physics))
