@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Booblesnoot42
   changes:
-  - message: Tarantulas spawned in vents will now be hostile to the crew.
-    type: Fix
-  id: 7769
-  time: '2025-01-01T16:18:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34153
-- author: Booblesnoot42
-  changes:
   - message: The RCD no longer has a cooldown when opened or closed.
     type: Fix
   id: 7770
@@ -3905,3 +3898,10 @@
   id: 8269
   time: '2025-04-19T20:33:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33336
+- author: Seam_Less
+  changes:
+  - message: Standardized the Sprites of most scarfs
+    type: Tweak
+  id: 8270
+  time: '2025-04-20T00:17:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35446
