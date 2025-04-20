@@ -1,0 +1,17 @@
+- type: entity
+  parent: BaseTraitorObjective
+  id: TraitorSurviveObjective
+  name: Survive.
+  description: We just need you alive, cuffs or not. Escaping to centcomm is not necessary.
+  components:
+  - type: Objective
+    difficulty: 1.3
+    icon:
+      sprite: Objects/Specific/Medical/medical.rsi
+      state: gauze
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+      - EscapeShuttleCondition
+      - DieCondition
+  - type: SurviveCondition

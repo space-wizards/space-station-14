@@ -33,8 +33,9 @@
 - type: weightedRandom
   id: TraitorObjectiveGroupState
   weights:
-    EscapeShuttleObjective: 1
+    EscapeShuttleObjective: 0.4 #Harmony change: 1 -> 0.4
     DieObjective: 0.05
+    TraitorSurviveObjective: 0.6 #Harmony objective
     #HijackShuttleObjective: 0.02
 
 - type: weightedRandom
