@@ -4,6 +4,7 @@ using System.Linq;
 using Robust.Shared.ContentPack;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Map.Events;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Value;
@@ -16,6 +17,7 @@ namespace Content.Server.Maps;
 /// </summary>
 public sealed class MapMigrationSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IResourceManager _resMan = default!;
 
     private const string MigrationFile = "/migration.yml";
