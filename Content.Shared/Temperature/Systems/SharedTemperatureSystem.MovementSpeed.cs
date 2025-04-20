@@ -39,7 +39,7 @@ public abstract partial class SharedTemperatureSystem
                 temperatureSpeed.CurrentSpeedModifier = i == 0
                     ? null
                     : temperatureSpeed.OrderedThresholds[i - 1].Modifier;
-                Dirty(ent);
+                DirtyFields(ent.Owner, ent.Comp, null, nameof(TemperatureSpeedComponent.NextSlowdownUpdate), nameof(TemperatureSpeedComponent.CurrentSpeedModifier));
                 return;
             }
 
@@ -48,7 +48,7 @@ public abstract partial class SharedTemperatureSystem
             {
                 temperatureSpeed.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
                 temperatureSpeed.CurrentSpeedModifier = modifier;
-                Dirty(ent);
+                DirtyFields(ent.Owner, ent.Comp, null, nameof(TemperatureSpeedComponent.NextSlowdownUpdate), nameof(TemperatureSpeedComponent.CurrentSpeedModifier));
                 return;
             }
 
@@ -62,7 +62,7 @@ public abstract partial class SharedTemperatureSystem
             // if we never jumped over - we still need to set modifier in case something spawned in cold
             temperatureSpeed.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
             temperatureSpeed.CurrentSpeedModifier = maxModifier;
-            Dirty(ent);
+            DirtyFields(ent.Owner, ent.Comp, null, nameof(TemperatureSpeedComponent.NextSlowdownUpdate), nameof(TemperatureSpeedComponent.CurrentSpeedModifier));
         }
     }
 
@@ -88,7 +88,7 @@ public abstract partial class SharedTemperatureSystem
 
             temp.NextSlowdownUpdate = null;
             _movementSpeedModifier.RefreshMovementSpeedModifiers(uid, movement);
-            Dirty(uid, temp);
+            DirtyField(uid, temp, nameof(TemperatureSpeedComponent.NextSlowdownUpdate));
         }
     }
 }

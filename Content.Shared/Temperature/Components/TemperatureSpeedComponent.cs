@@ -8,7 +8,7 @@ namespace Content.Shared.Temperature.Components;
 /// <summary>
 /// This is used for an entity that varies in speed based on current temperature.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedTemperatureSystem)), AutoGenerateComponentState, AutoGenerateComponentPause]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedTemperatureSystem)), AutoGenerateComponentState(fieldDeltas: true), AutoGenerateComponentPause]
 public sealed partial class TemperatureSpeedComponent : Component, ISerializationHooks
 {
     /// <summary>

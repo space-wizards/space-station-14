@@ -219,7 +219,7 @@ public sealed partial class ZombieSystem
         if (TryComp<TemperatureComponent>(target, out var tempComp))
         {
             tempComp.ColdDamage.ClampMax(0);
-            Dirty(target, tempComp);
+            DirtyField(target, tempComp, nameof(tempComp.ColdDamage));
         }
 
         //Heals the zombie from all the damage it took while human

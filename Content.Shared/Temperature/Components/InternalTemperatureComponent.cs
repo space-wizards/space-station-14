@@ -12,7 +12,7 @@ namespace Content.Shared.Temperature.Components;
 /// Too hot? Suffering heatstroke, start sweating to cool off and increase thirst.
 /// Too cold? Suffering hypothermia, start shivering to warm up and increase hunger.
 /// </remarks>
-[RegisterComponent, Access(typeof(SharedTemperatureSystem)), NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, Access(typeof(SharedTemperatureSystem)), NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class InternalTemperatureComponent : Component
 {
     /// <summary>

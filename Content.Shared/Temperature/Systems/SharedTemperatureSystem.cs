@@ -86,7 +86,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
 
             // exchange heat between inside and surface
             comp.Temperature += degrees;
-            Dirty(uid, comp);
+            DirtyField(uid, comp, nameof(comp.Temperature));
             ForceChangeTemperature((uid, temp), temp.CurrentTemperature - degrees);
         }
 
@@ -130,7 +130,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         if (delta == 0) //we don't want to dirty or raise events if there was no actual temp change!
             return;
         temperature.Comp.CurrentTemperature = temp;
-        Dirty(temperature);
+        DirtyField(temperature, nameof(TemperatureComponent.CurrentTemperature));
 
         var ev = new OnTemperatureChangeEvent(temperature.Comp.CurrentTemperature, lastTemp, delta);
         RaiseLocalEvent(temperature, ev, true);
@@ -151,7 +151,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         var lastTemp = target.Comp.CurrentTemperature;
         var delta = heatAmount / GetHeatCapacity((target, target, null));
         target.Comp.CurrentTemperature += delta;
-        Dirty(target);
+        DirtyField(target, nameof(TemperatureComponent.CurrentTemperature));
 
         var onTempChangeEvent = new OnTemperatureChangeEvent(target.Comp.CurrentTemperature, lastTemp, heatAmount);
         RaiseLocalEvent(target, onTempChangeEvent, true);
@@ -175,7 +175,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
             return;
 
         ent.Comp.Temperature = temp.CurrentTemperature;
-        Dirty(ent);
+        DirtyField(ent.Owner, ent.Comp, nameof(InternalTemperatureComponent.Temperature));
     }
 
     private void OnRejuvenate(Entity<TemperatureComponent> ent, ref RejuvenateEvent args)
@@ -272,7 +272,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
             {
                 AdminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} started taking high temperature damage");
                 temperature.TakingDamage = true;
-                Dirty(uid, temperature);
+                DirtyField(uid, temperature, nameof(TemperatureComponent.TakingDamage));
             }
 
             var diff = Math.Abs(temperature.CurrentTemperature - heatDamageThreshold);
@@ -285,7 +285,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
             {
                 AdminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} started taking low temperature damage");
                 temperature.TakingDamage = true;
-                Dirty(uid, temperature);
+                DirtyField(uid, temperature, nameof(TemperatureComponent.TakingDamage));
             }
 
             var diff = Math.Abs(temperature.CurrentTemperature - coldDamageThreshold);
@@ -296,7 +296,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         {
             AdminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} stopped taking temperature damage");
             temperature.TakingDamage = false;
-            Dirty(uid, temperature);
+            DirtyField(uid, temperature, nameof(TemperatureComponent.TakingDamage));
         }
     }
 
@@ -373,7 +373,7 @@ public abstract partial class SharedTemperatureSystem : EntitySystem
         var newThresholds = RecalculateParentThresholds(parentUid);
         temperature.ParentHeatDamageThreshold = newThresholds.HeatThreshold;
         temperature.ParentColdDamageThreshold = newThresholds.ColdThreshold;
-        Dirty(uid, temperature);
+        DirtyFields(uid, temperature, null, nameof(TemperatureComponent.ParentHeatDamageThreshold), nameof(TemperatureComponent.ParentHeatDamageThreshold));
     }
 
     /// <summary>

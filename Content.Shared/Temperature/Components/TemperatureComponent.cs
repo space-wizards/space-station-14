@@ -12,7 +12,7 @@ namespace Content.Shared.Temperature.Components;
 /// informing others of the current temperature,
 /// and taking fire damage from high temperature.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class TemperatureComponent : Component
 {
     /// <summary>
