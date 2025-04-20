@@ -1,13 +1,12 @@
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Guardian
+namespace Content.Server.Guardian
 {
     /// <summary>
     /// Creates a GuardianComponent attached to the user's GuardianHost.
     /// </summary>
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent]
     public sealed partial class GuardianCreatorComponent : Component
     {
         /// <summary>

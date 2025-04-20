@@ -59,8 +59,6 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianHostComponent, GuardianToggleActionEvent>(OnPerformAction);
 
             SubscribeLocalEvent<GuardianComponent, AttackAttemptEvent>(OnGuardianAttackAttempt);
-
-            SubscribeLocalEvent<GuardianComponent, AttackHostContainerEvent>(OnAttackHostContainer);
         }
 
         private void OnGuardianShutdown(EntityUid uid, GuardianComponent component, ComponentShutdown args)
@@ -75,8 +73,6 @@ namespace Content.Server.Guardian
             hostComponent.HostedGuardian = null;
             QueueDel(hostComponent.ActionEntity);
             hostComponent.ActionEntity = null;
-            Dirty(uid, component);
-            Dirty(host!.Value, hostComponent);
         }
 
         private void OnPerformAction(EntityUid uid, GuardianHostComponent component, GuardianToggleActionEvent args)
@@ -125,7 +121,6 @@ namespace Content.Server.Guardian
         {
             component.GuardianContainer = _container.EnsureContainer<ContainerSlot>(uid, "GuardianContainer");
             _actionSystem.AddAction(uid, ref component.ActionEntity, component.Action);
-            Dirty(uid, component);
         }
 
         private void OnHostShutdown(EntityUid uid, GuardianHostComponent component, ComponentShutdown args)
@@ -140,7 +135,6 @@ namespace Content.Server.Guardian
             QueueDel(guardian);
             QueueDel(component.ActionEntity);
             component.ActionEntity = null;
-            Dirty(uid, component);
         }
 
         private void OnGuardianAttackAttempt(EntityUid uid, GuardianComponent component, AttackAttemptEvent args)
@@ -152,12 +146,6 @@ namespace Content.Server.Guardian
             _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), uid, PopupType.LargeCaution);
             args.Cancel();
         }
-
-        private void OnAttackHostContainer(EntityUid uid, GuardianComponent comp, ref AttackHostContainerEvent args)
-        {
-            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), uid, PopupType.LargeCaution);
-        }
-
 
         public void ToggleGuardian(EntityUid user, GuardianHostComponent hostComponent)
         {
@@ -232,18 +220,14 @@ namespace Content.Server.Guardian
 
             _container.Insert(guardian, host.GuardianContainer);
             host.HostedGuardian = guardian;
-            Dirty(args.Args.Target.Value, host);
 
             if (TryComp<GuardianComponent>(guardian, out var guardianComp))
             {
                 guardianComp.Host = args.Args.Target.Value;
-                Dirty(guardian, guardianComp);
-
                 _audio.PlayPvs("/Audio/Effects/guardian_inject.ogg", args.Args.Target.Value);
                 _popupSystem.PopupEntity(Loc.GetString("guardian-created"), args.Args.Target.Value, args.Args.Target.Value);
                 // Exhaust the activator
                 component.Used = true;
-                Dirty(uid, component);
             }
             else
             {
@@ -269,6 +253,7 @@ namespace Content.Server.Guardian
             }
             else if (args.NewMobState == MobState.Dead)
             {
+                //TODO: Replace WithVariation with datafield
                 _audio.PlayPvs("/Audio/Voice/Human/malescream_guardian.ogg", uid, AudioParams.Default.WithVariation(0.20f));
                 RemComp<GuardianHostComponent>(uid);
             }
@@ -297,8 +282,8 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnCreatorExamine(EntityUid uid, GuardianCreatorComponent component, ExaminedEvent args)
         {
-            if (component.Used)
-                args.PushMarkup(Loc.GetString("guardian-activator-empty-examine"));
+           if (component.Used)
+               args.PushMarkup(Loc.GetString("guardian-activator-empty-examine"));
         }
 
         /// <summary>
@@ -366,7 +351,6 @@ namespace Content.Server.Guardian
             DebugTools.Assert(!hostComponent.GuardianContainer.Contains(guardian));
 
             guardianComponent.GuardianLoose = true;
-            Dirty(guardian, guardianComponent);
         }
 
         private void RetractGuardian(EntityUid host,GuardianHostComponent hostComponent, EntityUid guardian, GuardianComponent guardianComponent)
@@ -381,7 +365,6 @@ namespace Content.Server.Guardian
             DebugTools.Assert(hostComponent.GuardianContainer.Contains(guardian));
             _popupSystem.PopupEntity(Loc.GetString("guardian-entity-recall"), host);
             guardianComponent.GuardianLoose = false;
-            Dirty(guardian, guardianComponent);
         }
     }
 }
