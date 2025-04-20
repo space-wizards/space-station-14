@@ -22,6 +22,7 @@ public sealed partial class SpawnExplosionWindow : DefaultWindow
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
+    
     private readonly SharedMapSystem _mapSystem;
     private readonly SharedTransformSystem _transform = default!;
 
