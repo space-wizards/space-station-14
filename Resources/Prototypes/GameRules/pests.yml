@@ -26,7 +26,7 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     earliestStart: 15
-    weight: 6
+    weight: 10
     duration: 50
   - type: VentCrittersRule
     entries:
@@ -74,7 +74,7 @@
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 6
+    weight: 8
     duration: 50
   - type: VentCrittersRule
     entries:
@@ -91,7 +91,7 @@
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    weight: 6
+    weight: 8
     duration: 50
   - type: VentCrittersRule
     entries:
