@@ -12,16 +12,28 @@
 - type: entity
   abstract: true
   parent: [BaseThiefObjective, BaseStealObjective]
-  id: BaseThiefStealObjective
+  id: BaseThiefStealSingularObjective # 'A' for objectives with options so like the Access Configurator (CE and HoP)
   components:
   - type: StealCondition
     verifyMapExistence: false
-    descriptionText: objective-condition-thief-description
+    objectiveSingularNoOwnerText: objective-condition-steal-title-singular-no-owner
+    descriptionText: objective-condition-singular-thief-description
     checkStealAreas: true
 
 - type: entity
   abstract: true
-  parent: [BaseThiefObjective, BaseThiefStealObjective]
+  parent: [BaseThiefObjective, BaseStealObjective]
+  id: BaseThiefStealSpecialObjective # 'The' for 'one of a kind' objectives like the Crew Monitoring Server (Usually only one)
+  components:
+  - type: StealCondition
+    verifyMapExistence: false
+    objectiveSpecialNoOwnerText: objective-condition-steal-title-special-no-owner
+    descriptionText: objective-condition-special-thief-description
+    checkStealAreas: true
+
+- type: entity
+  abstract: true
+  parent: [BaseThiefObjective, BaseThiefStealSingularObjective, BaseThiefStealSpecialObjective]
   id: BaseThiefStealCollectionObjective
   components:
   - type: StealCondition
@@ -29,7 +41,7 @@
 
 - type: entity
   abstract: true
-  parent: [BaseThiefObjective, BaseThiefStealObjective]
+  parent: [BaseThiefObjective, BaseThiefStealSingularObjective, BaseThiefStealSpecialObjective]
   id: BaseThiefStealStructureObjective
   components:
   - type: StealCondition
@@ -39,13 +51,13 @@
 
 - type: entity
   abstract: true
-  parent: [BaseThiefObjective, BaseThiefStealObjective]
+  parent: [BaseThiefObjective, BaseThiefStealSingularObjective, BaseThiefStealSpecialObjective]
   id: BaseThiefStealAnimalObjective
   components:
   - type: StealCondition
     verifyMapExistence: true
     checkAlive: true
-    objectiveNoOwnerText: objective-condition-steal-title-alive-no-owner
+    objectiveNoOwnerText: objective-condition-steal-title-special-no-owner
     descriptionText: objective-condition-thief-animal-description
   - type: Objective
     difficulty: 2 # it's hard to hide
@@ -154,7 +166,7 @@
 # steal item
 
 - type: entity                                      #Security subgroup
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSpecialObjective
   id: ForensicScannerStealObjective
   components:
   - type: NotJobRequirement
@@ -165,7 +177,7 @@
     difficulty: 1
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSpecialObjective
   id: FlippoEngravedLighterStealObjective
   components:
   - type: NotJobRequirement
@@ -176,7 +188,7 @@
     difficulty: 0.8
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSingularObjective
   id: ClothingHeadHatWardenStealObjective
   components:
   - type: StealCondition
@@ -185,7 +197,7 @@
     difficulty: 1.2
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSpecialObjective
   id: WantedListCartridgeStealObjective
   components:
   - type: StealCondition
@@ -194,7 +206,7 @@
     difficulty: 1
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSpecialObjective
   id: InterrogatorLampStealObjective
   components:
   - type: NotJobRequirement
@@ -205,7 +217,7 @@
     difficulty: 1.2
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSingularObjective
   id: ClothingNeckLawyerBadgeStealObjective
   components:
   - type: NotJobRequirement
@@ -216,7 +228,7 @@
     difficulty: .8
 
 - type: entity                                      #Medical subgroup
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSpecialObjective
   id: ClothingOuterHardsuitVoidParamedStealObjective
   components:
   - type: NotJobRequirement
@@ -227,7 +239,7 @@
     difficulty: 1
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSpecialObjective
   id: MedicalTechFabCircuitboardStealObjective
   components:
   - type: NotJobRequirement
@@ -238,7 +250,7 @@
     difficulty: 1
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSpecialObjective
   id: ClothingHeadsetAltMedicalStealObjective
   components:
   - type: NotJobRequirement
@@ -249,7 +261,7 @@
     difficulty: 1
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSpecialObjective
   id: CrewMonitorServerBoardStealObjective
   components:
   - type: NotJobRequirement
@@ -260,7 +272,7 @@
     difficulty: 1.5 # Typically in RD's office
 
 - type: entity                                      #Engineering subgroup
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSingularObjective
   id: FireAxeStealObjective
   components:
   - type: NotJobRequirement
@@ -271,7 +283,7 @@
     difficulty: 0.8
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSingularObjective
   id: AmePartFlatpackStealObjective
   components:
   - type: NotJobRequirement
@@ -282,7 +294,7 @@
     difficulty: 1
 
 - type: entity                                      #Cargo subgroup
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSingularObjective
   id: ExpeditionsCircuitboardStealObjective
   components:
   - type: NotJobRequirement
@@ -293,7 +305,7 @@
     difficulty: 0.7
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSingularObjective
   id: CargoShuttleCircuitboardStealObjective
   components:
   - type: NotJobRequirement
@@ -304,7 +316,7 @@
     difficulty: 0.7
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSpecialObjective
   id: AstroNavCartridgeStealObjective
   components:
   - type: NotJobRequirement
@@ -315,7 +327,7 @@
     difficulty: 1
 
 - type: entity                                      #Service subgroup
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSingularObjective
   id: ClothingEyesHudBeerStealObjective
   components:
   - type: NotJobRequirement
@@ -326,7 +338,7 @@
     difficulty: 0.3
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSpecialObjective
   id: BibleStealObjective
   components:
   - type: NotJobRequirement
@@ -337,7 +349,7 @@
     difficulty: 0.4
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSpecialObjective
   id: ButcherCleaverStealObjective
   components:
     - type: NotJobRequirement
@@ -348,7 +360,7 @@
       difficulty: 1 # Do you really think Chef'll be happy?
 
 - type: entity                                      #Other subgroup
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSpecialObjective
   id: ClothingNeckGoldmedalStealObjective
   components:
   - type: NotJobRequirement
@@ -359,7 +371,7 @@
     difficulty: 1
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSpecialObjective
   id: ClothingNeckClownmedalStealObjective
   components:
   - type: NotJobRequirement
@@ -370,7 +382,7 @@
     difficulty: 1
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSingularObjective
   id: HeadIDStealObjective
   components:
   - type: NotJobRequirement
@@ -381,7 +393,7 @@
     difficulty: 1.4
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSingularObjective
   id: AccessConfiguratorStealObjective
   components:
   - type: NotJobRequirement
@@ -392,7 +404,7 @@
     difficulty: 1
 
 - type: entity
-  parent: BaseThiefStealObjective
+  parent: BaseThiefStealSpecialObjective
   id: ToolboxGoldenStealObjective
   components:
   - type: StealCondition
