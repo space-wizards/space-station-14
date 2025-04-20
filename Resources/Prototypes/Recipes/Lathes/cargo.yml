@@ -1,4 +1,4 @@
-﻿- type: latheRecipe
+- type: latheRecipe
   id: ConveyorBeltAssembly
   result: ConveyorBeltAssembly
   completetime: 4

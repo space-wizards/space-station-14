@@ -29,6 +29,11 @@
   minValue: 1000
   maxValue: 9999
 
+- type: nameIdentifierGroup
+  id: XenoArtifactNode
+  minValue: 0
+  maxValue: 999
+
 # Used to suffix a number to any mob to identify player controlled mob griefing.
 - type: nameIdentifierGroup
   id: GenericNumber
