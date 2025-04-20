@@ -201,6 +201,16 @@
     },
     {
       "name": "zookeeper"
+    },
+    {
+      "name": "syndicate"
+    },
+    {
+      "name": "pirate"
+    },
+    {
+      "name": "mercenary"
     }
+
   ]
 }

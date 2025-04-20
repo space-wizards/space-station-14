@@ -1,0 +1,111 @@
+- type: entity
+  name: Xeno Spawner
+  id: SpawnMobXenoBurrower
+  parent: MarkerBase
+  suffix: Burrower
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/burrower.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXeno
+
+- type: entity
+  name: Xeno Spawner
+  id: SpawnMobXenoPraetorian
+  parent: MarkerBase
+  suffix: Praetorian
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/praetorian.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoPraetorian
+
+- type: entity
+  name: Xeno Spawner
+  id: SpawnMobXenoDrone
+  parent: MarkerBase
+  suffix: Drone
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/drone.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoDrone
+
+- type: entity
+  name: Xeno Spawner
+  id: SpawnMobXenoRavager
+  parent: MarkerBase
+  suffix: Ravager
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/ravager.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoRavager
+
+- type: entity
+  name: Xeno Spawner
+  id: SpawnMobXenoRunner
+  parent: MarkerBase
+  suffix: Runner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/runner.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoRunner
+
+- type: entity
+  name: Xeno Spawner
+  id: SpawnMobXenoSpitter
+  parent: MarkerBase
+  suffix: Spitter
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/spitter.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoSpitter
+
+- type: entity
+  name: Xeno Spawner
+  id: SpawnMobXenoQueen
+  parent: MarkerBase
+  suffix: Queen
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Xenos/queen.rsi
+      state: running
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoQueen

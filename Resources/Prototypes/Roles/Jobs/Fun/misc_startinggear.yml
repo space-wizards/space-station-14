@@ -182,3 +182,36 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorGrey
     shoes: ClothingShoesColorBlack
+
+# Mercenaries
+- type: startingGear
+  id: MercenaryCommandoGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMercenary
+    gloves: ClothingHandsMercGlovesCombat
+    eyes: ClothingEyesGlassesMercenary
+    head: ClothingHeadHatBeretMerc
+    outerClothing: ClothingOuterVestWebMerc
+    belt: ClothingBeltMercWebbing
+    shoes: ClothingShoesBootsMercFilled
+
+- type: startingGear
+  id: MercenaryInsurgentGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMercenary
+    gloves: ClothingHandsMercGlovesCombat
+    head: ClothingHeadHelmetMerc
+    mask: ClothingMaskGasMerc
+    belt: ClothingBeltMercWebbing
+    shoes: ClothingShoesBootsMercFilled
+    pocket1: WeaponLaserGun
+
+- type: startingGear
+  id: MercenaryGruntGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMercenary
+    gloves: ClothingHandsGlovesMercFingerless
+    head: ClothingHeadBandMerc
+    outerClothing: ClothingOuterVestWebMerc
+    back: ClothingBackpackMerc
+    shoes: ClothingShoesBootsMercFilled

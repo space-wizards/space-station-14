@@ -1,0 +1,78 @@
+- type: entityTable
+  id: FirearmLongarmTable
+  table: !type:GroupSelector
+    children:
+    - id: WeaponRifleAk
+    - id: WeaponRifleLecter
+    - id: WeaponSubMachineGunDrozd
+    - id: WeaponSubMachineGunWt550
+    - id: WeaponSniperMosin
+    - id: WeaponPistolFlintlock
+    - id: Musket
+      weight: 0.1
+
+- type: entityTable
+  id: FirearmShotgunTable
+  table: !type:GroupSelector
+    children:
+    - id: WeaponShotgunEnforcer
+    - id: WeaponShotgunKammerer
+    - id: WeaponShotgunBulldog
+      weight: 0.1
+    - id: WeaponShotgunDoubleBarreled
+    - id: WeaponShotgunBlunderbuss
+
+- type: entityTable
+  id: FirearmHandgunTable
+  table: !type:GroupSelector
+    children:
+    - id: WeaponPistolMk58
+    - id: WeaponPistolViper
+    - id: WeaponPistolN1984
+      weight: 0.1
+    - id: WeaponRevolverPython
+    - id: WeaponRevolverPirate
+
+- type: entityTable
+  id: FirearmEnergyTable
+  table: !type:GroupSelector
+    children:
+    - id: WeaponTemperatureGun
+    - id: WeaponLaserCarbine
+    - id: WeaponLaserSvalinn
+    - id: WeaponLaserGun
+    - id: WeaponTeslaGun
+      weight: 0.1
+    - id: WeaponPulsePistol
+      weight: 0.5
+    - id: WeaponPulseRifle
+      weight: 0.5
+
+- type: entityTable
+  id: FirearmRandomTable
+  table: !type:GroupSelector
+    children:
+    - !type:NestedSelector
+      tableId: FirearmLongarmTable
+    - !type:NestedSelector
+      tableId: FirearmShotgunTable
+    - !type:NestedSelector
+      tableId: FirearmHandgunTable
+    - !type:NestedSelector
+      tableId: FirearmEnergyTable
+
+- type: entity
+  name: firearm loot spawner
+  id: LootSpawnerFirearm
+  suffix: Lavaland
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+      state: base
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: FirearmRandomTable
+    offset: 0.2
