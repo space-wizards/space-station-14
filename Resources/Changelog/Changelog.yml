@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Alpaccalypse
-  changes:
-  - message: Special reagents are now listed in the relevant section of the guidebook.
-    type: Add
-  id: 7786
-  time: '2025-01-07T17:45:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34265
 - author: Tayrtahn
   changes:
   - message: Sentient goats now have a bleating effect when speaking.
@@ -3905,3 +3898,10 @@
   id: 8286
   time: '2025-04-20T14:08:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35808
+- author: RedBookcase
+  changes:
+  - message: Updated Pirate weapons & hardsuits to be more inline with similar items.
+    type: Tweak
+  id: 8287
+  time: '2025-04-20T20:55:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35986
