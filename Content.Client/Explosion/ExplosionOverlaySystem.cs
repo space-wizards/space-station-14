@@ -4,7 +4,6 @@ using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
 using Robust.Shared.Graphics.RSI;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Explosion;

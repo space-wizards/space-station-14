@@ -22,7 +22,7 @@ public sealed partial class SpawnExplosionWindow : DefaultWindow
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    private readonly SharedMapSystem _mapSystem;
     private readonly SharedTransformSystem _transform = default!;
 
     private readonly SpawnExplosionEui _eui;
@@ -38,6 +38,7 @@ public sealed partial class SpawnExplosionWindow : DefaultWindow
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
+        _mapSystem = _entMan.System<MapSystem>();
         _transform = _entMan.System<TransformSystem>();
         _eui = eui;
 
