@@ -2,6 +2,9 @@
   id: ParadoxClone
   name: roles-antag-paradox-clone-name
   antagonist: true
+  requirements:
+  - !type:OverallPlaytimeRequirement # Imp
+    time: 3600 # 1h
   playTimeTracker: AntagParadoxClone
   objective: roles-antag-paradox-clone-objective
   setPreference: false
