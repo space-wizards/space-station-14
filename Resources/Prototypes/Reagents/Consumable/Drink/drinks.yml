@@ -436,6 +436,8 @@
   parent: BaseDrink
   desc: reagent-desc-water
   slippery: true
+  evaporationSpeed: 0.3
+  absorbent: true
   physicalDesc: reagent-physical-desc-translucent
   flavor: water
   color: "#75b1f0"
@@ -588,3 +590,18 @@
       effects:
       - !type:SatiateThirst
         factor: 0.6
+
+- type: reagent
+  id: Tortuga
+  name: reagent-name-tortuga
+  parent: BaseDrink
+  desc: reagent-desc-tortuga
+  physicalDesc: reagent-physical-desc-sweet
+  flavor: tortuga
+  color: "#1c8c40"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/tortuga.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
