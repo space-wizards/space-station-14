@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Gray sprites Slightly
-    type: Tweak
-  id: 1038
-  time: '2025-02-02T17:01:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1540
 - author: widgetbeck
   changes:
   - message: Goblins can now rummage through the trash. I wonder what they'll find.
@@ -4103,3 +4096,11 @@
   id: 1537
   time: '2025-04-20T23:27:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2298
+- author: Ecramox
+  changes:
+  - message: The Nukie Commander has gotten their spare gear back, after the Lone
+      Op borrowed it for a while.
+    type: Fix
+  id: 1538
+  time: '2025-04-20T23:30:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2299
