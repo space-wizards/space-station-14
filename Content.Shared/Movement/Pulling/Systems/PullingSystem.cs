@@ -343,10 +343,7 @@ public sealed class PullingSystem : EntitySystem
 
     public EntityUid? GetPuller(EntityUid puller, PullableComponent? component = null)
     {
-        if (!Resolve(puller, ref component, false))
-            return null;
-
-        return component.Puller;
+        return !Resolve(puller, ref component, false) ? null : component.Puller;
     }
 
     public EntityUid? GetPulling(EntityUid puller, PullerComponent? component = null)
