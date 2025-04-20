@@ -25,8 +25,8 @@ namespace Content.Server.Maps;
 public sealed class PlanetCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
     public string Command => "planet";
     public string Description => Loc.GetString("cmd-planet-desc");
@@ -47,7 +47,7 @@ public sealed class PlanetCommand : IConsoleCommand
 
         var mapId = new MapId(mapInt);
 
-        if (!_mapManager.MapExists(mapId))
+        if (!_mapSystem.MapExists(mapId))
         {
             shell.WriteError(Loc.GetString($"cmd-planet-map", ("map", mapId)));
             return;
@@ -60,7 +60,7 @@ public sealed class PlanetCommand : IConsoleCommand
         }
 
         var biomeSystem = _entManager.System<BiomeSystem>();
-        var mapUid = _mapManager.GetMapEntityId(mapId);
+        var mapUid = _mapSystem.GetMap(mapId);
         biomeSystem.EnsurePlanet(mapUid, biomeTemplate);
 
         shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));

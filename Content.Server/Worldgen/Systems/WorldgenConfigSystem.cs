@@ -22,9 +22,9 @@ public sealed class WorldgenConfigSystem : EntitySystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IConsoleHost _conHost = default!;
-    [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ISerializationManager _ser = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     private bool _enabled;
     private string _worldgenConfig = default!;
@@ -53,7 +53,7 @@ public sealed class WorldgenConfigSystem : EntitySystem
             return;
         }
 
-        var map = _map.GetMapEntityId(new MapId(mapInt));
+        var map = _map.GetMap(new MapId(mapInt));
 
         if (!_proto.TryIndex<WorldgenConfigPrototype>(args[1], out var proto))
         {
@@ -73,7 +73,7 @@ public sealed class WorldgenConfigSystem : EntitySystem
         if (_enabled == false)
             return;
 
-        var target = _map.GetMapEntityId(_gameTicker.DefaultMap);
+        var target = _map.GetMap(_gameTicker.DefaultMap);
         Log.Debug($"Trying to configure {_gameTicker.DefaultMap}, aka {ToPrettyString(target)} aka {target}");
         var cfg = _proto.Index<WorldgenConfigPrototype>(_worldgenConfig);
 
