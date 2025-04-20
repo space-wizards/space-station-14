@@ -5,7 +5,19 @@
                 Resizable="False"
                 MinSize="500 300">
     <BoxContainer Orientation="Vertical" SeparationOverride="4">
-            <Label Text="Current location:" />
-            <Button Name="FireBSA" HorizontalAlignment="Left" Text="Fire" />
+        <Label Text="Current location:" />
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'admin-explosion-eui-label-mapid'}" MinSize="120 0" />
+            <OptionButton Name="MapOptions" MinSize="70 0" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'admin-explosion-eui-label-xmap'}" MinSize="120 0" />
+            <FloatSpinBox Name="MapX" MinSize="70 0" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'admin-explosion-eui-label-ymap'}" MinSize="120 0" />
+            <FloatSpinBox Name="MapY" MinSize="70 0" HorizontalExpand="True" />
+        </BoxContainer>
+        <Button Name="FireBSA" HorizontalAlignment="Left" Text="Fire" />
     </BoxContainer>
 </ui:FancyWindow>
