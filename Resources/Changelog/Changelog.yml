@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: ArtisticRoomba
   changes:
-  - message: You can no longer get stuck when trying to walk between a station anchor
-      and a wall.
-    type: Fix
-  id: 7784
-  time: '2025-01-06T12:32:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34217
-- author: ArtisticRoomba
-  changes:
   - message: Kessler Syndrome and Zombeteors are removed from the possible gamemodes
       in the Secret pool.
     type: Remove
@@ -3906,3 +3898,10 @@
   id: 8284
   time: '2025-04-20T13:55:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36767
+- author: HyperB1
+  changes:
+  - message: ERT engineering hardsuit now features proper fire protection.
+    type: Fix
+  id: 8285
+  time: '2025-04-20T14:06:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34949
