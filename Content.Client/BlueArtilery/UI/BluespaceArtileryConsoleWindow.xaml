@@ -1,8 +1,12 @@
 <ui:FancyWindow xmlns="https://spacestation14.io"
-    xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
-    Title="Bluespace artillery control"
-    Resizable="False">
-    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="500">
-        <Button Name="FireBSA" Text="Fire" />
+                xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+                xmlns:coordinate="clr-namespace:Content.Client.CoordinateSystem.UI"
+                Title="Bluespace artillery control"
+                Resizable="False"
+                MinSize="500 300">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4">
+            <Label Text="Curent location:" />
+            <coordinate:CoordinateStrikeButton />
+            <Button Name="FireBSA" HorizontalAlignment="Left" Text="Fire" />
     </BoxContainer>
 </ui:FancyWindow>
