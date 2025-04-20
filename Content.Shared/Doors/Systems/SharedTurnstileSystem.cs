@@ -57,9 +57,6 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
             return;
         }
 
-        if (_timing.CurTime < ent.Comp.NextPassTime)
-            return;
-
         if (CanPassDirection(ent, args.OtherEntity))
         {
             if (!_accessReader.IsAllowed(args.OtherEntity, ent))
@@ -99,7 +96,6 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
             return;
         }
         // if they passed through:
-        ent.Comp.NextPassTime = _timing.CurTime + ent.Comp.PassDelay;
         PlayAnimation(ent, ent.Comp.SpinState);
         _audio.PlayPredicted(ent.Comp.TurnSound, ent, args.OtherEntity);
     }
@@ -121,11 +117,12 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
         var (pos, rot) = _transform.GetWorldPositionRotation(xform);
         var otherPos = _transform.GetWorldPosition(otherXform);
 
-        var approachVec = pos - otherPos;
-        var rotVec = rot.ToWorldVec();
-        return Math.Abs(approachVec.ToAngle().Reduced().Theta - rotVec.ToAngle().Reduced().Theta) < Math.PI / 4;
-    }
+        var approachAngle = (pos - otherPos).ToAngle();
+        var rotateAngle = rot.ToWorldVec().ToAngle();
 
+        var dif = Math.Min(Math.Abs(approachAngle.Theta - rotateAngle.Theta), Math.Abs(rotateAngle.Theta - approachAngle.Theta));
+        return dif < Math.PI / 4;
+    }
 
     protected virtual void PlayAnimation(EntityUid uid, string stateId)
     {

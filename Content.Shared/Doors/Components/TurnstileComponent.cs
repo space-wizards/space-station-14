@@ -22,18 +22,6 @@ public sealed partial class TurnstileComponent : Component
     public EntityWhitelist? ProcessWhitelist;
 
     /// <summary>
-    /// The next time this turnstile can attempt to be passed through.
-    /// </summary>
-    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
-    public TimeSpan NextPassTime;
-
-    /// <summary>
-    /// The minimum time between passes.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public TimeSpan PassDelay = TimeSpan.FromSeconds(2);
-
-    /// <summary>
     /// The next time at which the resist message can show.
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField, AutoPausedField]
