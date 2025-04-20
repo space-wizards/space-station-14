@@ -15,7 +15,7 @@
     capacity: 9
 
 - type: entity
-  parent: BaseAmmoProvider
+  parent: PillDispenserBase
   id: PillDispenserWehEmpty
   name: wehz pill dispenser
   description: Dispenses 9 delicious snacks, its probably your happy pills.
