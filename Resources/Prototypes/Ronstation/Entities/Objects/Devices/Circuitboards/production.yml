@@ -12,6 +12,6 @@
         Manipulator: 1
     - type: PhysicalComposition
       materialComposition:
-        Glass: 150
+        Glass: 125
       chemicalComposition:
         Silicon: 20
