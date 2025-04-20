@@ -61,6 +61,7 @@ namespace Content.Server.Atmos.EntitySystems
         private float _updateInterval;
 
         private int _thresholds;
+        private EntityQuery<MapGridComponent> _gridQuery;
         private EntityQuery<GasTileOverlayComponent> _query;
 
         public override void Initialize()
@@ -77,6 +78,7 @@ namespace Content.Server.Atmos.EntitySystems
                 MapManager = _mapManager,
                 ChunkViewerPool = _chunkViewerPool,
                 LastSentChunks = _lastSentChunks,
+                GridQuery = _gridQuery,
             };
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
@@ -87,6 +89,7 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GasTileOverlayComponent, ComponentStartup>(OnStartup);
             _query = GetEntityQuery<GasTileOverlayComponent>();
+            _gridQuery = GetEntityQuery<MapGridComponent>();
         }
 
         private void OnStartup(EntityUid uid, GasTileOverlayComponent component, ComponentStartup args)
@@ -376,6 +379,8 @@ namespace Content.Server.Atmos.EntitySystems
             public Dictionary<ICommonSession, Dictionary<NetEntity, HashSet<Vector2i>>> LastSentChunks;
             public List<ICommonSession> Sessions;
 
+            public EntityQuery<MapGridComponent> GridQuery;
+
             public void Execute(int index)
             {
                 var playerSession = Sessions[index];
@@ -392,7 +397,7 @@ namespace Content.Server.Atmos.EntitySystems
                         previouslySent.Remove(netGrid);
 
                         // If grid was deleted then don't worry about sending it to the client.
-                        if (!EntManager.TryGetEntity(netGrid, out var gridId) || !EntManager.HasComponent<MapGridComponent>(gridId.Value))
+                        if (!EntManager.TryGetEntity(netGrid, out var gridId) || GridQuery.HasComp(gridId.Value))
                             ev.RemovedChunks[netGrid] = oldIndices;
                         else
                         {
