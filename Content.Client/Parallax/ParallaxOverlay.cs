@@ -28,7 +28,7 @@ public sealed class ParallaxOverlay : Overlay
     {
         ZIndex = ParallaxSystem.ParallaxZIndex;
         IoCManager.InjectDependencies(this);
-        _mapSystem = _entManager.System<MapSystem>();
+        _mapSystem = _entManager.System<SharedMapSystem>();
         _parallax = _entManager.System<ParallaxSystem>();
     }
 
