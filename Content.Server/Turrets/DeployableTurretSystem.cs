@@ -8,6 +8,8 @@ using Content.Server.Power.Components;
 using Content.Server.Repairable;
 using Content.Shared.Destructible;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Events;
 using Content.Shared.Power;
 using Content.Shared.Turrets;
 using Content.Shared.Weapons.Ranged.Events;
