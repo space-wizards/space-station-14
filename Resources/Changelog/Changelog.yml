@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Battery-powered weapons will no longer occasionally refuse to recharge
-      the last missing shot.
-    type: Fix
-  id: 7791
-  time: '2025-01-10T06:54:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34028
-- author: Southbridge
-  changes:
-  - message: Air Alarms can now copy sensor thresholds to all attached sensors.
-    type: Add
-  id: 7792
-  time: '2025-01-10T06:55:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34346
 - author: Coolsurf6
   changes:
   - message: Made Forensic Gloves security contraband.
@@ -3897,3 +3882,19 @@
   id: 8291
   time: '2025-04-20T21:17:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36510
+- author: Princess Cheeseballs
+  changes:
+  - message: Items now slip on slippery surfaces
+    type: Add
+  - message: Puddle slipperiness has been tweaked to be more intuitive
+    type: Tweak
+  id: 8292
+  time: '2025-04-20T21:27:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35845
+- author: uhbg
+  changes:
+  - message: The Bartender can now make Eggnog by shaking an egg, milk, and rum.
+    type: Add
+  id: 8293
+  time: '2025-04-20T21:27:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34065
