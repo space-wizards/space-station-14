@@ -5,7 +5,7 @@
                 Resizable="False"
                 MinSize="500 300">
     <BoxContainer Orientation="Vertical" SeparationOverride="4">
-            <Label Text="Curent location:" />
+            <Label Text="Current location:" />
             <coordinate:CoordinateStrikeButton />
             <Button Name="FireBSA" HorizontalAlignment="Left" Text="Fire" />
     </BoxContainer>
