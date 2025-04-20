@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Errant
-  changes:
-  - message: Removed seasonal nuke song "Nukemass".
-    type: Remove
-  id: 7773
-  time: '2025-01-01T16:27:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34066
 - author: Alpaccalypse
   changes:
   - message: '"Irish Car Bomb" renamed to "Irish Slammer".'
@@ -3907,3 +3900,11 @@
   id: 8273
   time: '2025-04-20T05:58:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34115
+- author: ArtisticRoomba
+  changes:
+  - message: Filing cabinet drawers have the same internal storage size as tall filing
+      cabinets.
+    type: Tweak
+  id: 8274
+  time: '2025-04-20T06:01:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36757
