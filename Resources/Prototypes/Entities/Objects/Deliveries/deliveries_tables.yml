@@ -125,29 +125,35 @@
   id: PackageUncommonEntityTable
   table: !type:GroupSelector
     children:
-    # Fluff
     - !type:NestedSelector
       tableId: MaintFluffTable
       weight: 0.4
       rolls: !type:RangeNumberSelector
         range: 1, 2
-    # Plushies
     - !type:NestedSelector
       tableId: AllPlushiesTable
       weight: 0.4
-    # Weapons
     - !type:NestedSelector
-      tableId: MaintWeaponTable
-      weight: 0.1
-    # Syndie Loot
-    - !type:NestedSelector
-      tableId: SyndieMaintLoot
-      weight: 0.1
+      tableId: RandomAllAlcoholTable
+      weight: 0.2
+      rolls: !type:RangeNumberSelector
+        range: 2, 3
 
 - type: entityTable # TODO: Add more variety!
   id: PackageRareEntityTable
   table: !type:GroupSelector
     children:
-    - id: MedkitAdvancedFilled
-    - id: MobMothroach
-    - id: PipeBomb
+    - id: MedkitAdvancedFilled # TODO: Replace with PackageRareGeneralBundlesTable for when something doesn't fit with a department. (Like a bundle of bed sheets, dunno)
+    - id: PipeBomb # TODO: PackageRarePunishmentTable, including things like pipebombs and other potentially harmful things (the pipebomb should also get primed when unpacked)
+    - !type:NestedSelector
+      tableId: SmallCritterEntityTable
+    #- !type:NestedSelector # TODO: Uncomment after all the rare department bundles are done (medical, security, etc...)
+    #  tableId: PackageRareDepartmentBundlesTable
+    - !type:NestedSelector
+      tableId: AnimalMaskTable
+    - !type:NestedSelector
+      tableId: MaintWeaponTable
+      weight: 0.5
+    - !type:NestedSelector
+      tableId: SyndieMaintLoot
+      weight: 0.5

@@ -263,6 +263,7 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
+    - type: NavMap
 - proto: ActionToggleInternals
   entities:
   - uid: 131
@@ -565,6 +566,31 @@ entities:
     components:
     - type: Transform
       pos: 2.5,-15.5
+      parent: 1
+  - uid: 283
+    components:
+    - type: Transform
+      pos: 1.5,-9.5
+      parent: 1
+  - uid: 284
+    components:
+    - type: Transform
+      pos: 2.5,-9.5
+      parent: 1
+  - uid: 285
+    components:
+    - type: Transform
+      pos: 2.5,-7.5
+      parent: 1
+  - uid: 287
+    components:
+    - type: Transform
+      pos: 3.5,-9.5
+      parent: 1
+  - uid: 288
+    components:
+    - type: Transform
+      pos: 3.5,-7.5
       parent: 1
 - proto: CableHV
   entities:
@@ -880,7 +906,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,-10.5
       parent: 1
-- proto: ComputerShuttleCargo
+- proto: ComputerShuttle
   entities:
   - uid: 2
     components:
@@ -1419,6 +1445,21 @@ entities:
     - type: Transform
       pos: -1.6964068,-1.3052127
       parent: 1
+- proto: RemoteSignaller
+  entities:
+  - uid: 286
+    components:
+    - type: MetaData
+      name: nt-boxcar bolt remote
+    - type: Transform
+      pos: -1.5233878,-2.301437
+      parent: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        59:
+        - Pressed: DoorBolt
+        60:
+        - Pressed: DoorBolt
 - proto: ShuttleWindow
   entities:
   - uid: 19

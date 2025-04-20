@@ -232,6 +232,7 @@
         nameSegments:
         - NamesNinjaTitle
         - NamesNinja
+        nameFormat: name-format-ninja
       mindRoles:
       - MindRoleNinja
 
@@ -246,6 +247,9 @@
     reoccurrenceDelay: 20
     minimumPlayers: 15
   - type: ParadoxCloneRule
+    objectiveBlacklist:
+      tags:
+      - ParadoxCloneObjectiveBlacklist
   - type: AntagObjectives
     objectives:
     - ParadoxCloneKillObjective
@@ -260,7 +264,7 @@
       pickPlayer: false
       startingGear: ParadoxCloneGear
       roleLoadout:
-      - RoleSurvivalStandard # give vox something to breath in case they don't get a copy
+      - RoleSurvivalVoxTank # give vox something to breath in case they don't get a copy
       briefing:
         text: paradox-clone-role-greeting
         color: lightblue
@@ -315,6 +319,7 @@
         nameSegments:
         - NamesWizardFirst
         - NamesWizardLast
+        nameFormat: name-format-wizard
       mindRoles:
       - MindRoleWizard
 
@@ -541,6 +546,7 @@
         nameSegments:
         - NamesSyndicatePrefix
         - NamesSyndicateNormal
+        nameFormat: name-format-nukie-generic
       - type: NpcFactionMember
         factions:
         - Syndicate
@@ -632,6 +638,19 @@
     - Service
     blacklist:
     - External # don't space everything
+
+- type: entity
+  parent: BaseGameRule
+  id: SmugglerStashVariationPass
+  components:
+  - type: StationEvent
+    earliestStart: 0
+    duration: 1
+    minimumPlayers: 1
+    maxOccurrences: 2
+    weight: 10
+  - type: RandomSpawnRule
+    prototype: RandomSatchelSpawner
 
 - type: entity
   parent: BaseGameRule

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Uses BoskiYourk's Harmony security suit sprites as a base at commit https://github.com/ss14-harmony/ss14-harmony/commit/fdda871cbd546352415bb39c63d86da3ba9f2f7b. Resprite for Detective by CrimsonJupiter for use in Harmony.",
+  "copyright": "Originally made by the Goons, archived at commit https://github.com/nullbear/Goonstation_SS13_r4407/commit/a1ce10847a63db96ed06fe338b5811ff90d403f2. Resprited by CrimsonJupiter.",
   "size": {
     "x": 32,
     "y": 32

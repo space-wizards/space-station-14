@@ -17,6 +17,7 @@
   - Syringe
   - PillCanister
   - HandLabeler
+  - BaseChemistryEmptyVial
 
 - type: latheRecipePack
   parent: BasicChemistryStatic

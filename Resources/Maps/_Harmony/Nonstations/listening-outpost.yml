@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Grid
+  engineVersion: 250.0.0
+  forkId: ""
+  forkVersion: ""
+  time: 04/15/2025 09:30:58
+  entityCount: 1392
+maps: []
+grids:
+- 4
+orphans:
+- 4
+nullspace: []
 tilemap:
   0: Space
   25: FloorCave
@@ -633,7 +644,7 @@ entities:
             0: 35089
           -2,-1:
             0: 36864
-            3: 96
+            2: 96
           -2,2:
             1: 1
             0: 52428
@@ -668,7 +679,7 @@ entities:
           -2,-2:
             1: 66
             0: 32
-            2: 24576
+            3: 24576
           -2,-4:
             0: 28288
             1: 32768
@@ -769,8 +780,8 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 6666.982
           - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -784,8 +795,8 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
-          - 0
           - 6666.982
+          - 0
           - 0
           - 0
           - 0
@@ -1146,6 +1157,13 @@ entities:
     - type: Transform
       pos: 1.5,9.5
       parent: 4
+- proto: BoxBeaker
+  entities:
+  - uid: 1281
+    components:
+    - type: Transform
+      pos: 4.2148156,3.853446
+      parent: 4
 - proto: BoxCardboard
   entities:
   - uid: 183
@@ -1417,6 +1435,13 @@ entities:
           - 730
           - 731
     - type: ActiveUserInterface
+- proto: Bucket
+  entities:
+  - uid: 1279
+    components:
+    - type: Transform
+      pos: 2.3085656,2.462821
+      parent: 4
 - proto: ButtonFrameCaution
   entities:
   - uid: 1125
@@ -2620,6 +2645,14 @@ entities:
     - type: Transform
       pos: 3.6706882,-9.581999
       parent: 4
+- proto: CryogenicSleepUnit
+  entities:
+  - uid: 1220
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 5.5,-10.5
+      parent: 4
 - proto: CrystalGrey
   entities:
   - uid: 279
@@ -2779,8 +2812,19 @@ entities:
       parent: 616
     - type: Physics
       canCollide: False
+  - uid: 752
+    components:
+    - type: Transform
+      pos: -5.7191577,8.809695
+      parent: 4
 - proto: DisposalBend
   entities:
+  - uid: 368
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 5.5,-0.5
+      parent: 4
   - uid: 1289
     components:
     - type: Transform
@@ -2801,12 +2845,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,1.5
-      parent: 4
-  - uid: 1286
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-0.5
       parent: 4
 - proto: DisposalPipe
   entities:
@@ -2839,12 +2877,6 @@ entities:
     components:
     - type: Transform
       pos: -2.5,2.5
-      parent: 4
-  - uid: 368
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-9.5
       parent: 4
   - uid: 422
     components:
@@ -2925,54 +2957,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -11.5,1.5
       parent: 4
-  - uid: 1278
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-8.5
-      parent: 4
-  - uid: 1279
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-7.5
-      parent: 4
-  - uid: 1280
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-6.5
-      parent: 4
-  - uid: 1281
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-5.5
-      parent: 4
-  - uid: 1282
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-4.5
-      parent: 4
-  - uid: 1283
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-3.5
-      parent: 4
-  - uid: 1284
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-2.5
-      parent: 4
-  - uid: 1285
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-1.5
-      parent: 4
   - uid: 1287
     components:
     - type: Transform
@@ -3034,12 +3018,6 @@ entities:
     - type: Transform
       pos: -2.5,13.5
       parent: 4
-  - uid: 1190
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,-10.5
-      parent: 4
   - uid: 1239
     components:
     - type: Transform
@@ -3068,11 +3046,6 @@ entities:
     components:
     - type: Transform
       pos: 3.5,-0.5
-      parent: 4
-  - uid: 1252
-    components:
-    - type: Transform
-      pos: 5.5,-10.5
       parent: 4
 - proto: DoubleEmergencyNitrogenTankFilled
   entities:
@@ -3158,13 +3131,6 @@ entities:
     - type: Transform
       pos: 3.6128435,-9.426345
       parent: 4
-- proto: FoodSnackSyndi
-  entities:
-  - uid: 1365
-    components:
-    - type: Transform
-      pos: 5.30709,4.738355
-      parent: 4
 - proto: ForensicReportPaper
   entities:
   - uid: 709
@@ -3191,6 +3157,12 @@ entities:
       parent: 708
     - type: Physics
       canCollide: False
+  - uid: 748
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -5.4691577,9.215945
+      parent: 4
 - proto: GasMinerNitrogen
   entities:
   - uid: 621
@@ -4184,6 +4156,14 @@ entities:
     - type: Transform
       pos: -7.5,-4.5
       parent: 4
+- proto: HandheldGPSBasic
+  entities:
+  - uid: 1252
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -10.469102,-0.7145997
+      parent: 4
 - proto: HolopadBluespace
   entities:
   - uid: 14
@@ -4245,12 +4225,12 @@ entities:
     - type: Transform
       pos: 6.5,4.5
       parent: 4
-- proto: KitchenKnife
+- proto: KitchenReagentGrinder
   entities:
-  - uid: 1220
+  - uid: 1280
     components:
     - type: Transform
-      pos: 5.74459,4.550725
+      pos: 5.5,4.5
       parent: 4
 - proto: LandMineExplosive
   entities:
@@ -4343,6 +4323,14 @@ entities:
         Sincerely,
 
         [head=4][color=red]Syndicate High Command[/head][/color]
+- proto: PaperAccessLogs
+  entities:
+  - uid: 1283
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -5.7191577,9.20032
+      parent: 4
 - proto: PaperArtifactAnalyzer
   entities:
   - uid: 639
@@ -4375,6 +4363,12 @@ entities:
       parent: 616
     - type: Physics
       canCollide: False
+  - uid: 1282
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -5.2191577,8.434695
+      parent: 4
 - proto: PaperBin20
   entities:
   - uid: 180
@@ -4387,8 +4381,20 @@ entities:
     - type: Transform
       pos: -5.5,9.5
       parent: 4
+- proto: PapercaneSeeds
+  entities:
+  - uid: 1278
+    components:
+    - type: Transform
+      pos: 2.8052638,0.73658967
+      parent: 4
 - proto: PaperCaptainsThoughts
   entities:
+  - uid: 711
+    components:
+    - type: Transform
+      pos: -5.1951656,9.083459
+      parent: 4
   - uid: 729
     components:
     - type: Transform
@@ -4433,6 +4439,11 @@ entities:
       parent: 708
     - type: Physics
       canCollide: False
+  - uid: 1190
+    components:
+    - type: Transform
+      pos: -5.4066577,8.66907
+      parent: 4
 - proto: PaperCargoInvoice
   entities:
   - uid: 762
@@ -4459,6 +4470,11 @@ entities:
       parent: 708
     - type: Physics
       canCollide: False
+  - uid: 818
+    components:
+    - type: Transform
+      pos: -5.5785327,8.465945
+      parent: 4
 - proto: PaperCNCSheet
   entities:
   - uid: 670
@@ -4497,11 +4513,6 @@ entities:
     components:
     - type: Transform
       pos: -4.5088034,13.589936
-      parent: 4
-  - uid: 240
-    components:
-    - type: Transform
-      pos: -5.4887705,8.549512
       parent: 4
 - proto: PlasmaWindoorSyndicateLocked
   entities:
@@ -5762,13 +5773,6 @@ entities:
     components:
     - type: Transform
       pos: -10.501492,-0.29933178
-      parent: 4
-- proto: ToyFigurineNukie
-  entities:
-  - uid: 1326
-    components:
-    - type: Transform
-      pos: -5.6240325,9.140335
       parent: 4
 - proto: ToyFigurineNukieCommander
   entities:

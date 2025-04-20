@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Grid
+  engineVersion: 248.0.2
+  forkId: harmony
+  forkVersion: 9aebd01c58ceabdee09f0e638b2febd221cd0236
+  time: 03/30/2025 04:47:33
+  entityCount: 216
+maps: []
+grids:
+- 1
+orphans:
+- 1
+nullspace: []
 tilemap:
   0: Space
   99: FloorSteel
@@ -14,10 +25,10 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: grid
+      name: NTS-6 "Prosperity" Cargo Shuttle
     - type: Transform
       pos: -0.203125,-0.578125
-      parent: 10
+      parent: invalid
     - type: MapGrid
       chunks:
         0,0:
@@ -52,6 +63,7 @@ entities:
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
+    - type: CargoShuttle
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -199,19 +211,8 @@ entities:
         chunkSize: 4
     - type: GasTileOverlay
     - type: RadiationGridResistance
-  - uid: 10
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
-    - type: LoadedMap
+    - type: StationMember
+    - type: NavMap
 - proto: AirCanister
   entities:
   - uid: 209
@@ -1342,6 +1343,40 @@ entities:
     - type: Transform
       pos: -5.5,4.5
       parent: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        118:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        117:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        97:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        100:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        9:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        120:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        119:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        121:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
 - proto: WallShuttle
   entities:
   - uid: 5

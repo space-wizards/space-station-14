@@ -7,4 +7,5 @@
   - type: MindRole
     antagPrototype: ListeningPost
     exclusiveAntag: true
+    roleType: TeamAntagonist
   - type: ListeningPostRole

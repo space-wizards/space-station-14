@@ -1,11 +1,4 @@
 - type: latheRecipe
-  id: BaseChemistryEmptyVial
-  result: BaseChemistryEmptyVial
-  completetime: 2
-  materials:
-    Glass: 50
-
-- type: latheRecipe
   id: Bloodpack
   result: Bloodpack1
   completetime: 1

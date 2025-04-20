@@ -8,6 +8,7 @@
   - type: Sprite
     noRot: true
     drawdepth: Mobs
+  - type: MobCollision
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -158,7 +159,7 @@
     sweatHeatRegulation: 2000
     shiveringHeatRegulation: 2000
     normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 25
+    thermalRegulationTemperatureThreshold: 2
   - type: MovedByPressure
 
 # Used for mobs that require regular atmospheric conditions.
@@ -174,7 +175,7 @@
     sweatHeatRegulation: 500
     shiveringHeatRegulation: 500
     normalBodyTemperature: 310.15
-    thermalRegulationTemperatureThreshold: 25
+    thermalRegulationTemperatureThreshold: 2
   - type: Temperature
     heatDamageThreshold: 325
     coldDamageThreshold: 260
