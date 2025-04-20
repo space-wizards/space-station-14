@@ -804,11 +804,11 @@
         maxVol: 45
         reagents:
         - ReagentId: Nutriment
-          Quantity: 20
+          Quantity: 24
         - ReagentId: Happiness
-          Quantity: 12
+          Quantity: 9
         - ReagentId: Pax
-          Quantity: 8
+          Quantity: 6
 
 - type: entity
   name: slice of world peazza
@@ -829,8 +829,8 @@
         maxVol: 10
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3.5
+          Quantity: 3
         - ReagentId: Happiness
-          Quantity: 2
+          Quantity: 1.125
         - ReagentId: Pax
-          Quantity: 1.5
+          Quantity: 0.75
