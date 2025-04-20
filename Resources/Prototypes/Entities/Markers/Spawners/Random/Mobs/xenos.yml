@@ -12,7 +12,7 @@
     - state: ai
   - type: ConditionalSpawner
     prototypes:
-    - MobXenoBurrower
+    - MobXeno
     - MobXenoDrone
     - MobXenoRunner
 
