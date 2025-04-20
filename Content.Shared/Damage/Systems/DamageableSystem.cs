@@ -181,14 +181,6 @@ namespace Content.Shared.Damage
                 return null;
             }
 
-            // Don't take damage if the holoparasite tries to hit the host
-            if (origin != null && TryComp<GuardianComponent>(origin, out var guardian) && guardian.Host == uid)
-            {
-                var ev = new AttackHostContainerEvent();
-                RaiseLocalEvent(origin.Value, ref ev);
-                return null;
-            }
-
             if (damage.Empty)
             {
                 return damage;
