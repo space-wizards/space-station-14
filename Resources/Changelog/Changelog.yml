@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: southbridge-fur
-  changes:
-  - message: Warm light bulbs exist now.
-    type: Add
-  id: 7788
-  time: '2025-01-09T08:54:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34324
 - author: deltanedas
   changes:
   - message: Fixed AIs not being able to use lockable buttons.
@@ -3905,3 +3898,10 @@
   id: 8288
   time: '2025-04-20T21:01:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35938
+- author: Booblesnoot42
+  changes:
+  - message: The sprites for the main chapel altars have been adjusted.
+    type: Tweak
+  id: 8289
+  time: '2025-04-20T21:09:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35685
