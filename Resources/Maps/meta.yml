@@ -4,8 +4,8 @@ meta:
   engineVersion: 250.0.0
   forkId: ""
   forkVersion: ""
-  time: 03/29/2025 04:10:56
-  entityCount: 28717
+  time: 04/03/2025 06:30:39
+  entityCount: 28715
 maps:
 - 951
 grids:
@@ -67929,13 +67929,6 @@ entities:
     - type: Transform
       pos: -7.4309044,-16.489243
       parent: 5350
-- proto: ClothingHeadHatRedwizard
-  entities:
-  - uid: 6128
-    components:
-    - type: Transform
-      pos: -50.70865,-38.195942
-      parent: 5350
 - proto: ClothingHeadHatSkub
   entities:
   - uid: 10493
@@ -68012,12 +68005,17 @@ entities:
     - type: Transform
       pos: -40.532333,-25.270031
       parent: 5350
-- proto: ClothingHeadHatWizard
+- proto: ClothingHeadHatWizardFake
   entities:
-  - uid: 17456
+  - uid: 804
     components:
     - type: Transform
-      pos: -50.3649,-38.227192
+      pos: -50.66044,-38.362316
+      parent: 5350
+  - uid: 6128
+    components:
+    - type: Transform
+      pos: -50.344055,-38.625935
       parent: 5350
 - proto: ClothingHeadHelmetBasic
   entities:
@@ -68583,20 +68581,6 @@ entities:
     components:
     - type: Transform
       pos: 35.48533,-43.42037
-      parent: 5350
-- proto: ClothingOuterWizard
-  entities:
-  - uid: 804
-    components:
-    - type: Transform
-      pos: -50.349274,-38.461567
-      parent: 5350
-- proto: ClothingOuterWizardRed
-  entities:
-  - uid: 23047
-    components:
-    - type: Transform
-      pos: -50.70865,-38.445942
       parent: 5350
 - proto: ClothingShoesBootsJackFilled
   entities:

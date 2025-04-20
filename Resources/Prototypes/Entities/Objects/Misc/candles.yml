@@ -27,6 +27,7 @@
           variation: 0.05
           volume: 10
     - type: UseDelay
+    - type: ExtinguishableSetCollisionWake
     - type: Flammable
       fireSpread: false
       canResistFire: false

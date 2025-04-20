@@ -32,7 +32,7 @@ public sealed class SprayPainterAmmoSystem : EntitySystem
 
         var user = args.User;
         args.Handled = true;
-        var count = Math.Min(charges.MaxCharges - charges.Charges, ent.Comp.Charges);
+        var count = Math.Min(charges.MaxCharges - charges.LastCharges, ent.Comp.Charges);
         if (count <= 0)
         {
             _popup.PopupClient(Loc.GetString("spray-painter-ammo-after-interact-full"), target, user);
@@ -40,7 +40,7 @@ public sealed class SprayPainterAmmoSystem : EntitySystem
         }
 
         _popup.PopupClient(Loc.GetString("spray-painter-ammo-after-interact-refilled"), target, user);
-        _charges.AddCharges(target, count, charges);
+        _charges.AddCharges(target, count);
         ent.Comp.Charges -= count;
         Dirty(ent, ent.Comp);
 

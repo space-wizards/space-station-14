@@ -79,7 +79,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
         Appearance.SetData(target, args.Visuals, args.Prototype);
         Audio.PlayPredicted(ent.Comp.SpraySound, ent, args.Args.User);
-        Charges.UseCharges(ent, args.Cost);
+        Charges.TryUseCharges(new Entity<LimitedChargesComponent?>(ent, EnsureComp<LimitedChargesComponent>(ent)), args.Cost);
 
         if (HasComp<PaintedComponent>(target))
             RemComp<PaintedComponent>(target);
@@ -174,7 +174,7 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         var group = Proto.Index(ent.Comp.Group);
         var category = Proto.Index(group.Category);
 
-        if (charges.Charges <= 0 || charges.Charges < category.Cost)
+        if (charges.LastCharges <= 0 || charges.LastCharges < category.Cost)
         {
             var msg = Loc.GetString("spray-painter-interact-no-charges");
             _popup.PopupClient(msg, args.User, args.User);

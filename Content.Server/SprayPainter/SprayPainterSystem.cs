@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
+using Content.Server.Charges;
 using Content.Server.Decals;
 using Content.Server.Destructible;
 using Content.Server.Popups;
@@ -25,6 +26,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly ChargesSystem _charges = default!;
 
     public override void Initialize()
     {
@@ -52,7 +54,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         }
 
         var limitedCharges = Comp<LimitedChargesComponent>(ent);
-        if (limitedCharges.Charges <= 0)
+        if (limitedCharges.LastCharges <= 0)
         {
             _popup.PopupClient(Loc.GetString("spray-painter-interact-no-charges"), args.User, args.User);
             args.Handled = true;
@@ -67,7 +69,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
 
         _audio.PlayPvs(ent.Comp.SpraySound, ent);
 
-        limitedCharges.Charges--;
+        _charges.TryUseCharge(new Entity<LimitedChargesComponent?>(ent, limitedCharges));
         Dirty(ent, limitedCharges);
 
         _adminLogger.Add(LogType.CrayonDraw, LogImpact.Low, $"{EntityManager.ToPrettyString(args.User):user} drew a {ent.Comp.SelectedDecal.Value}");
@@ -106,7 +108,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             return;
 
         Audio.PlayPvs(ent.Comp.SpraySound, ent);
-        Charges.UseCharge(ent);
+        _charges.TryUseCharge(new Entity<LimitedChargesComponent?>(ent, EnsureComp<LimitedChargesComponent>(ent)));
         _pipeColor.SetColor(target, color, args.Color);
 
         args.Handled = true;
@@ -122,7 +124,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             painter.PickedColor is not { } colorName)
             return;
 
-        if (charges.Charges <= 0)
+        if (charges.LastCharges <= 0)
         {
             var msg = Loc.GetString("spray-painter-interact-no-charges");
             _popup.PopupClient(msg, args.User, args.User);

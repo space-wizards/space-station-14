@@ -81,9 +81,10 @@
     - BorgModuleCargo
 
   defaultModules:
-  - BorgModuleGrapplingGun
   - BorgModuleMining
+  - BorgModuleGrapplingGun
   - BorgModuleAppraisal
+  - BorgModuleTool
 
   radioChannels:
   - Supply

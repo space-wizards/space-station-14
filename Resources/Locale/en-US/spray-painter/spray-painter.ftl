@@ -45,6 +45,8 @@ spray-painter-style-airlocks-medical      = Medical
 spray-painter-style-airlocks-science      = Science
 spray-painter-style-airlocks-security     = Security
 spray-painter-style-airlocks-virology     = Virology
+spray-painter-style-airlocks-hydroponics  = Hydroponics
+spray-painter-style-airlocks-salvage      = Salvage
 
 # Lockers
 spray-painter-style-lockers-atmospheric     = Atmospheric

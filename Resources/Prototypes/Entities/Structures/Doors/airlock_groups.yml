@@ -11,9 +11,11 @@
     atmospherics: AirlockAtmospherics
     basic:        Airlock
     cargo:        AirlockCargo
+    salvage:      AirlockSalvage
     command:      AirlockCommand
     engineering:  AirlockEngineering
     freezer:      AirlockFreezer
+    hydroponics:  AirlockHydroponics
     maintenance:  AirlockMaint
     medical:      AirlockMedical
     chemistry:    AirlockChemistry
@@ -32,7 +34,9 @@
     command:      AirlockCommandGlass
     science:      AirlockScienceGlass
     cargo:        AirlockCargoGlass
+    salvage:      AirlockSalvage
     engineering:  AirlockEngineeringGlass
+    hydroponics:  AirlockHydroponicsGlass
     maintenance:  AirlockMaintGlass
     medical:      AirlockMedicalGlass
     chemistry:    AirlockChemistryGlass

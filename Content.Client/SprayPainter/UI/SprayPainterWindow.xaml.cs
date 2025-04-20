@@ -15,6 +15,8 @@ namespace Content.Client.SprayPainter.UI;
 public sealed partial class SprayPainterWindow : DefaultWindow
 {
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+    [Dependency] private readonly ILocalizationManager _loc = default!;
+
     private readonly SpriteSystem _spriteSystem;
 
     // Events
@@ -49,13 +51,13 @@ public sealed partial class SprayPainterWindow : DefaultWindow
         Tabs.OnTabChanged += (index) => OnTabChanged?.Invoke(index);
     }
 
-    private static string GetColorLocString(string? colorKey)
+    private string GetColorLocString(string? colorKey)
     {
         if (string.IsNullOrEmpty(colorKey))
             return Loc.GetString("pipe-painter-no-color-selected");
         var locKey = ColorLocKeyPrefix + colorKey;
 
-        if (!Loc.TryGetString(locKey, out var locString))
+        if (!_loc.TryGetString(locKey, out var locString))
             locString = colorKey;
 
         return locString;

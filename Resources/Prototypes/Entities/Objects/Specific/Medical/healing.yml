@@ -38,8 +38,14 @@
         Caustic: -1.5
     healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
     healingEndSound:
       path: "/Audio/Items/Medical/ointment_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
   - type: Stack
     stackType: Ointment
     count: 10
@@ -89,8 +95,14 @@
         Caustic: -10
     healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
     healingEndSound:
       path: "/Audio/Items/Medical/ointment_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
   - type: Stack
     stackType: RegenerativeMesh
     count: 10
@@ -128,8 +140,14 @@
         Brute: -15 # 5 for each type in the group
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
   - type: Stack
     stackType: Brutepack
     count: 10
@@ -178,8 +196,14 @@
     bloodlossModifier: -10 # a suture should stop ongoing bleeding
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
   - type: Stack
     stackType: MedicatedSuture
     count: 10
@@ -218,8 +242,14 @@
     ModifyBloodLevel: 15 #restores about 5% blood per use on standard humanoids.
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
   - type: Stack
     stackType: Bloodpack
     count: 10
@@ -268,8 +298,14 @@
       delay: 0.5
       healingBeginSound:
         path: "/Audio/Items/Medical/brutepack_begin.ogg"
+        params:
+          volume: 1.0
+          variation: 0.125
       healingEndSound:
         path: "/Audio/Items/Medical/brutepack_end.ogg"
+        params:
+          volume: 1.0
+          variation: 0.125
 
 - type: entity
   name: roll of gauze
@@ -298,8 +334,14 @@
     bloodlossModifier: -10
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
   - type: Stack
     stackType: Gauze
     count: 10
@@ -359,8 +401,14 @@
     selfHealPenaltyMultiplier: 0
     healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
     healingEndSound:
       path: "/Audio/Items/Medical/ointment_end.ogg"
+      params:
+        volume: 1.0
+        variation: 0.125
 
 # Pills
 - type: entity

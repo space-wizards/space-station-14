@@ -35,6 +35,9 @@
   - type: LimitedCharges
     maxCharges: 15
     charges: 15
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
 
 - type: entity
   name: compressed dye
