@@ -40,7 +40,7 @@ public sealed partial class TeleportLocationsComponent : Component
     /// So something like "I am going to" would become "I am going to (Bridge)"
     /// </summary>
     [DataField]
-    public string? Speech;
+    public LocId? Speech;
 }
 
 /// <summary>

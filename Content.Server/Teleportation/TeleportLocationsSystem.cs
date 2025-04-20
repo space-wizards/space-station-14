@@ -54,7 +54,8 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
         if (ent.Comp.User is null || string.IsNullOrWhiteSpace(ent.Comp.Speech) || Delay.IsDelayed(ent.Owner, TeleportDelay))
             return;
 
-        _chat.TrySendInGameICMessage(ent.Comp.User.Value, $"{ent.Comp.Speech.Trim()} ({args.PointName})", InGameICChatType.Speak, ChatTransmitRange.Normal);
+        var msg = Loc.GetString(ent.Comp.Speech, ("location", args.PointName));
+        _chat.TrySendInGameICMessage(ent.Comp.User.Value, msg, InGameICChatType.Speak, ChatTransmitRange.Normal);
 
         base.OnTeleportToLocationRequest(ent, ref args);
     }

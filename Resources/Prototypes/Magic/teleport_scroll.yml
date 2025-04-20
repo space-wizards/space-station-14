@@ -17,7 +17,7 @@
   - type: TeleportLocations
     teleportEffect: WizardSmoke
     closeAfterTeleport: true
-    speech: EY TCHEL TORT TU
+    speech: teleportation-scroll-speech-wizard
   - type: UseDelay
     delay: 1
     delays:
