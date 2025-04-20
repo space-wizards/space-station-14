@@ -27,30 +27,42 @@ public abstract partial class SharedTemperatureSystem
     private void OnTemperatureChanged(Entity<TemperatureSpeedComponent> ent, ref OnTemperatureChangeEvent args)
     {
         TemperatureSpeedComponent temperatureSpeed = ent;
-
+        float? maxModifier = null;
         for (int i = 0; i < temperatureSpeed.OrderedThresholds.Length; i++)
         {
-            var thresholdModifierPair = temperatureSpeed.OrderedThresholds[i];
-
-            // if temperature jumped down over threshold - we apply modifier
-            if (args.CurrentTemperature < thresholdModifierPair.ThresholdValue && args.LastTemperature > thresholdModifierPair.ThresholdValue)
-            {
-                temperatureSpeed.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
-                temperatureSpeed.CurrentSpeedModifier = thresholdModifierPair.Modifier;
-                Dirty(ent);
-                break;
-            }
+            var (thresholdValue, modifier) = temperatureSpeed.OrderedThresholds[i];
 
             // if temperature jumped up over threshold - we apply previous modifier (they are desc ordered), or remove it if it is first one
-            if (args.CurrentTemperature > thresholdModifierPair.ThresholdValue && args.LastTemperature < thresholdModifierPair.ThresholdValue)
+            if (args.CurrentTemperature > thresholdValue && args.LastTemperature < thresholdValue)
             {
                 temperatureSpeed.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
                 temperatureSpeed.CurrentSpeedModifier = i == 0
                     ? null
                     : temperatureSpeed.OrderedThresholds[i - 1].Modifier;
                 Dirty(ent);
-                break;
+                return;
             }
+
+            // if temperature jumped down over threshold - we apply modifier
+            if (args.CurrentTemperature < thresholdValue && args.LastTemperature > thresholdValue)
+            {
+                temperatureSpeed.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
+                temperatureSpeed.CurrentSpeedModifier = modifier;
+                Dirty(ent);
+                return;
+            }
+
+            if (args.CurrentTemperature < thresholdValue)
+                maxModifier = modifier;
+        }
+
+        // ReSharper disable once CompareOfFloatsByEqualityOperator - it is supposed to be set from same Dictionary and have exact same value
+        if (temperatureSpeed.CurrentSpeedModifier != maxModifier)
+        {
+            // if we never jumped over - we still need to set modifier in case something spawned in cold
+            temperatureSpeed.NextSlowdownUpdate = _timing.CurTime + SlowdownApplicationDelay;
+            temperatureSpeed.CurrentSpeedModifier = maxModifier;
+            Dirty(ent);
         }
     }
 
