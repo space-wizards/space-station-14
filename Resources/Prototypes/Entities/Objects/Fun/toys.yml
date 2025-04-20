@@ -257,6 +257,15 @@
 
 - type: entity
   parent: BasePlushie
+  id: PlushieClown
+  name: clown plushie
+  description: The clown's best friend, protects him from nightmares
+  components:
+  - type: Sprite
+    state: plushie_clown
+
+- type: entity
+  parent: BasePlushie
   id: PlushieLamp
   name: lamp plushie
   description: A light emitting friend!
