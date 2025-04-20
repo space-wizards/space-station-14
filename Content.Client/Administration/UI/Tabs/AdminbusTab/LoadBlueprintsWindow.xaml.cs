@@ -21,9 +21,10 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
 
         protected override void EnteredTree()
         {
-            var mapManager = IoCManager.Resolve<IMapManager>();
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            var mapSystem = entManager.System<SharedMapSystem>();
 
-            foreach (var mapId in mapManager.GetAllMapIds())
+            foreach (var mapId in mapSystem.GetAllMapIds())
             {
                 MapOptions.AddItem(mapId.ToString(), (int) mapId);
             }
