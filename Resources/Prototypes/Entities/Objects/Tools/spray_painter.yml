@@ -34,7 +34,7 @@
     price: 40
   - type: LimitedCharges
     maxCharges: 15
-    charges: 15
+    lastCharges: 15
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
