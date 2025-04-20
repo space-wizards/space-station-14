@@ -99,6 +99,16 @@
   group: market
 
 - type: cargoProduct
+  id: MaterialSilo
+  icon:
+    sprite: Structures/Machines/silo.rsi
+    state: silo
+  product: CrateMaterialSilo
+  cost: 5000
+  category: cargoproduct-category-name-materials
+  group: market
+
+- type: cargoProduct
   id: MaterialFuelTank
   icon:
     sprite: Structures/Storage/tanks.rsi
