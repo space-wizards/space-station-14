@@ -43,11 +43,11 @@ command-description-stations-largestgrid =
 command-description-stations-rerollBounties =
     Clears all the current bounties for the station and gets a new selection.
 command-description-stationevent-lsprob =
-    Given a BasicStationEventScheduler prototype, lists the probability of different station events occuring out of the entire pool with current conditions.
+    Prefer stationevent:simulate, Given a BasicStationEventScheduler prototype, lists the probability of different station events occuring out of the entire pool with current conditions.
 command-description-stationevent-lsprobtheoretical =
-    Given a BasicStationEventScheduler prototype, player count, and round time, lists the probability of different station events occuring based on the specified number of players and round time.
+    Prefer stationevent:simulate, Given a BasicStationEventScheduler prototype, player count, and round time, lists the probability of different station events occuring based on the specified number of players and round time.
 command-description-stationevent-prob =
-    Given a BasicStationEventScheduler prototype and an event prototype, returns the probability of a single station event occuring out of the entire pool with current conditions.
+    Prefer stationevent:simulate, Given a BasicStationEventScheduler prototype and an event prototype, returns the probability of a single station event occuring out of the entire pool with current conditions.
 command-description-admins-active =
     Returns a list of active admins.
 command-description-admins-all =
