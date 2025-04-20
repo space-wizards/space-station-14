@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ReeZii
-  changes:
-  - message: Fixed thief beacon, which can doubled steal target's
-    type: Fix
-  id: 7772
-  time: '2025-01-01T16:25:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33750
 - author: Errant
   changes:
   - message: Removed seasonal nuke song "Nukemass".
@@ -3906,3 +3899,11 @@
   id: 8272
   time: '2025-04-20T05:57:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33219
+- author: chromiumboy
+  changes:
+  - message: The countdown timer for emergency broadcast cooldowns are now consistent
+      across holopad UIs
+    type: Fix
+  id: 8273
+  time: '2025-04-20T05:58:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34115
