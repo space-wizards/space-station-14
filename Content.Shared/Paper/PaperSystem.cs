@@ -146,10 +146,15 @@ public sealed class PaperSystem : EntitySystem
                 var writeEvent = new PaperWriteEvent(args.User, entity);
                 RaiseLocalEvent(args.Used, ref writeEvent);
 
+                // Broadcast message to players which have the UI opened,
+                // updating the UI with any new contents.
                 _uiSystem.OpenUi(entity.Owner, PaperUiKey.Key, args.User);
                 UpdateUserInterface(entity);
+
                 if (_net.IsServer)
                 {
+                    // Send a message only to the player which interacted with the pen.
+                    // This will update the UI, enabling edit mode only for that player.
                     var toolNetEnt = EntityManager.GetNetEntity(args.Used);
                     _uiSystem.ServerSendUiMessage(entity.Owner, PaperUiKey.Key, new PaperBeginEditMessage(toolNetEnt), args.User);
                 }
