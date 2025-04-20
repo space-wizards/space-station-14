@@ -47,6 +47,7 @@
 - type: entity
   parent: DrinkBase
   id: DrinkBottleSmallBaseFull
+  abstract: true
   suffix: Full
   components:
   - type: Item
@@ -81,7 +82,53 @@
         acts: [ "Destruction" ]
        - !type:SpillBehavior { }
   - type: DnaSubstanceTrace
-  - type: Sealable
+  - type: PressurizedSolution
+  - type: Shakeable
+
+- type: entity
+  parent: DrinkBottleSmallBaseFull
+  id: DrinkBottleGlassSmallBaseFull
+  abstract: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/sodawater-smallbottle.rsi
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 4
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          BrokenBottle:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 100
+  - type: Openable
+    sound:
+      collection: capOpenSounds
+    closeable: false
+    closeSound:
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -574,8 +621,8 @@
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
-  id: DrinkSodaWaterBottleFull
-  name: soda water bottle
+  id: DrinkSodaWaterBottleLargeFull
+  name: large soda water bottle
   description: Like water, but angry!
   components:
   - type: SolutionContainerManager
@@ -590,8 +637,8 @@
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
-  id: DrinkTonicWaterBottleFull
-  name: tonic water bottle
+  id: DrinkTonicWaterBottleLargeFull
+  name: large tonic water bottle
   description: Like soda water, but angrier maybe? Often sweeter.
   components:
   - type: SolutionContainerManager
@@ -628,10 +675,52 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
-  - type: PressurizedSolution
-  - type: Shakeable
+  - type: Sealable
+
+- type: entity
+  parent: DrinkWaterBottleFull
+  id: DrinkSodaWaterBottleFull
+  name: soda water bottle
+  description: Soda water, now with plastic!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: SodaWater
+          Quantity: 30
+
+- type: entity
+  parent: DrinkWaterBottleFull
+  id: DrinkTonicWaterBottleFull
+  name: tonic water bottle
+  description: Tonic water. Sweet!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: TonicWater
+          Quantity: 30
 
 # Small Bottles
+
+- type: entity
+  parent: [DrinkBottleVisualsAll, DrinkBottleGlassSmallBaseFull]
+  id: DrinkOldClubSodaBottleFull
+  name: old club soda bottle
+  description: Ancient and aging. It's secrets cling to it, never to be spoken of.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: SodaWater
+          Quantity: 50
+  - type: TrashOnSolutionEmpty
+    solution: drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/sodawater-smallbottle.rsi
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]

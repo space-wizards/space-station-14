@@ -19,3 +19,10 @@
   id: pop
   files:
   - /Audio/Items/pop.ogg
+
+- type: soundCollection
+  id: capOpenSounds
+  files:
+  - /Audio/Items/bottlecap_open1.ogg
+  - /Audio/Items/bottlecap_open2.ogg
+  - /Audio/Items/bottlecap_open3.ogg
