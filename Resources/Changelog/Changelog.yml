@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed AIs not being able to use lockable buttons.
-    type: Fix
-  id: 7789
-  time: '2025-01-09T11:23:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34326
 - author: Alpaccalypse
   changes:
   - message: The reagent "cola" has been renamed to "Space Cola".
@@ -3905,3 +3898,10 @@
   id: 8289
   time: '2025-04-20T21:09:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35685
+- author: UBlueberry
+  changes:
+  - message: Beanies can now be found in WinterDrobes, don'tchaknow.
+    type: Add
+  id: 8290
+  time: '2025-04-20T21:15:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32946
