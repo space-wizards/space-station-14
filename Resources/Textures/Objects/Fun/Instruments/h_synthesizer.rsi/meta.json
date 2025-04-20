@@ -28,6 +28,10 @@
     {
       "name": "super-inhand-right",
       "directions": 4
+    },
+    {
+      "name": "equipped-NECK",
+      "directions": 4
     }
   ]
 }

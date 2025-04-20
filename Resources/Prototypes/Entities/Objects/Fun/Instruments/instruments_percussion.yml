@@ -142,6 +142,11 @@
   - type: Sprite
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
     state: supersynth
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - neck
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
   - type: Item
     heldPrefix: super
     size: Normal
@@ -150,6 +155,7 @@
 - type: entity
   parent: SuperSynthesizerInstrument
   id: SuperSynthesizerInstrumentAdmeme
+  name: super synthesizer (Admeme)
   components:
   - type: Instrument
     respectMidiLimits: false
