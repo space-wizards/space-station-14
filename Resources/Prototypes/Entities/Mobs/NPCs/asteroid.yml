@@ -54,6 +54,7 @@
     baseSprintSpeed : 2.00
   - type: Bloodstream
     bloodMaxVolume: 350
+    chemicalMaxVolume: 0
   - type: MobThresholds
     thresholds:
       0: Alive
