@@ -30,8 +30,6 @@
 - type: entity
   parent: PillDispenserWehEmpty
   id: PillDispenserWeh
-  name: wehz pill dispenser
-  description: Dispenses 9 delicious snacks, its probably your happy pills.
   components:
   - type: BallisticAmmoProvider
     proto: StrangePill
