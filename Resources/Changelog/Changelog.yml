@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Forensics are now applied to bullets when loading using an ammo box.
-    type: Fix
-  id: 7780
-  time: '2025-01-04T13:41:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32280
-- author: deltanedas
-  changes:
-  - message: Fixed wielding use delay not working properly.
-    type: Fix
-  - message: Fixed bow sprite not updating when wielded.
-    type: Fix
-  id: 7781
-  time: '2025-01-05T19:06:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/32188
 - author: Errant
   changes:
   - message: Lobby chat width is no longer dependent on the server's name.
@@ -3909,3 +3893,17 @@
   id: 8280
   time: '2025-04-20T12:01:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34441
+- author: Pgriha
+  changes:
+  - message: Heterochromia for Moth.
+    type: Add
+  id: 8281
+  time: '2025-04-20T12:03:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36061
+- author: BackeTako
+  changes:
+  - message: New Salvage doors
+    type: Add
+  id: 8282
+  time: '2025-04-20T12:03:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36375
