@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Decreased HP for rusted wall variants
-    type: Tweak
-  id: 7771
-  time: '2025-01-01T16:23:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34043
-- author: ReeZii
-  changes:
-  - message: Fixed thief beacon, which can doubled steal target's
-    type: Fix
-  id: 7772
-  time: '2025-01-01T16:25:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33750
-- author: Errant
-  changes:
-  - message: Removed seasonal nuke song "Nukemass".
-    type: Remove
-  id: 7773
-  time: '2025-01-01T16:27:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34066
-- author: Alpaccalypse
-  changes:
-  - message: '"Irish Car Bomb" renamed to "Irish Slammer".'
-    type: Tweak
-  id: 7774
-  time: '2025-01-02T09:46:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34107
 - author: DylanWhittingham
   changes:
   - message: Added appraisal tool sound.
@@ -3906,3 +3878,33 @@
   id: 8271
   time: '2025-04-20T02:41:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35950
+- author: Blackern5000
+  changes:
+  - message: Reptilians can now have shark tails and a back fin.
+    type: Add
+  id: 8272
+  time: '2025-04-20T05:57:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33219
+- author: chromiumboy
+  changes:
+  - message: The countdown timer for emergency broadcast cooldowns are now consistent
+      across holopad UIs
+    type: Fix
+  id: 8273
+  time: '2025-04-20T05:58:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34115
+- author: ArtisticRoomba
+  changes:
+  - message: Filing cabinet drawers have the same internal storage size as tall filing
+      cabinets.
+    type: Tweak
+  id: 8274
+  time: '2025-04-20T06:01:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36757
+- author: CubixThree
+  changes:
+  - message: Added plural pride pin.
+    type: Add
+  id: 8275
+  time: '2025-04-20T07:00:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36744
