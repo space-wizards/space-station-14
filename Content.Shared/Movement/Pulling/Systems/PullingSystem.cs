@@ -348,10 +348,7 @@ public sealed class PullingSystem : EntitySystem
 
     public EntityUid? GetPulling(EntityUid puller, PullerComponent? component = null)
     {
-        if (!Resolve(puller, ref component, false))
-            return null;
-
-        return component.Pulling;
+        return !Resolve(puller, ref component, false) ? null : component.Pulling;
     }
 
     private void OnReleasePulledObject(ICommonSession? session)
