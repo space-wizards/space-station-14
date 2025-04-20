@@ -70,6 +70,13 @@ public sealed partial class MaterialReclaimerComponent : Component
     public string? SolutionContainerId;
 
     /// <summary>
+    /// If the reclaimer should attempt to reclaim all solutions or just drainable ones
+    /// Difference between Recycler and Industrial Reagent Grinder
+    /// </summary>
+    [DataField]
+    public bool OnlyReclaimDrainable = true;
+
+    /// <summary>
     /// a whitelist for what entities can be inserted into this reclaimer
     /// </summary>
     [DataField]
