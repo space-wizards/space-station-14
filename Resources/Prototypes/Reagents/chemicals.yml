@@ -76,7 +76,7 @@
     Acidic:
       methods: [ Touch ]
       effects:
-      - !type:ActivateArtifact
+      - !type:ArtifactUnlock
         conditions:
         - !type:ReagentThreshold
           min: 5

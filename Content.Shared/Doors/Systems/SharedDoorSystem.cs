@@ -768,10 +768,13 @@ public abstract partial class SharedDoorSystem : EntitySystem
         var door = ent.Comp;
         door.NextStateChange = null;
 
-        if (door.CurrentlyCrushing.Count > 0)
+        if (door.CurrentlyCrushing.Count > 0 && door.State != DoorState.Opening)
+        {
             // This is a closed door that is crushing people and needs to auto-open. Note that we don't check "can open"
             // here. The door never actually finished closing and we don't want people to get stuck inside of doors.
             StartOpening(ent, door);
+            return;
+        }
 
         switch (door.State)
         {
