@@ -10,8 +10,8 @@
       state: icon
     - type: RandomMetadata
       nameSegments:
-        - NamesFirstMilitaryLeader
-        - NamesLastMilitary
+        - NamesMilitaryFirst
+        - NamesMilitaryLast
     - type: RandomHumanoidSpawner
       settings: Heccdiver
 
@@ -31,8 +31,8 @@
       roleLoadout: [ RoleSurvivalEVA ]
     - type: RandomMetadata
       nameSegments:
-        - NamesFirstMilitaryLeader
-        - NamesLastMilitary
+        - NamesMilitaryFirst
+        - NamesMilitaryLast
 
 ## Central Command
 
