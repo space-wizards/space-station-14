@@ -1,12 +1,12 @@
 using Content.Server.Engineering.Components;
 using Content.Server.Stack;
-using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Engineering.EntitySystems

@@ -3,7 +3,6 @@ using Content.Shared.Abilities.Mime;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Events;
 using Content.Shared.Alert;
-using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Paper;
 using Content.Shared.Physics;
@@ -23,6 +22,7 @@ namespace Content.Server.Abilities.Mime
         [Dependency] private readonly IMapManager _mapMan = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -81,7 +81,7 @@ namespace Content.Server.Abilities.Mime
             var xform = Transform(uid);
             // Get the tile in front of the mime
             var offsetValue = xform.LocalRotation.ToWorldVec();
-            var coords = xform.Coordinates.Offset(offsetValue).SnapToGrid(EntityManager, _mapMan);
+            var coords = _transform.SnapToGrid(xform.Coordinates.Offset(offsetValue));
             var tile = coords.GetTileRef(EntityManager, _mapMan);
             if (tile == null)
                 return;

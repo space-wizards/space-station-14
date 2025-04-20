@@ -3,10 +3,10 @@ using Content.Shared.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -42,7 +42,7 @@ public sealed class SmokeOnTriggerSystem : SharedSmokeOnTriggerSystem
             return;
 
         var coords = grid.MapToGrid(mapCoords);
-        var ent = Spawn(comp.SmokePrototype, coords.SnapToGrid());
+        var ent = Spawn(comp.SmokePrototype, coords.SnapToGrid(Comp<MapGridComponent>(coords.EntityId)));
         if (!TryComp<SmokeComponent>(ent, out var smoke))
         {
             Log.Error($"Smoke prototype {comp.SmokePrototype} was missing SmokeComponent");
