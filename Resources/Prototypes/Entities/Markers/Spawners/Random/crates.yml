@@ -71,7 +71,7 @@
     - id: CrateEmergencyFire
     - id: CrateEmergencyInternals
     - id: CrateEmergencyInflatablewall
-      weight: 0.2
+      weight: 0.5
 
 - type: entityTable
   id: LowValueServiceCrateTable
@@ -102,7 +102,7 @@
     - id: CrateTechBoardRandom
     - id: CrateEngineeringSpaceHeater
     - id: StorageCanister
-      weight: 0.2
+      weight: 0.5
 
 - type: entityTable
   id: LowValueMedicalCrateTable
@@ -116,11 +116,11 @@
     - id: CrateBodyBags
     - id: CrateChemistrySupplies
     - id: CrateChemistryP
-      weight: 0.2
+      weight: 0.5
     - id: CrateChemistryS
-      weight: 0.2
+      weight: 0.5
     - id: CrateChemistryD
-      weight: 0.2
+      weight: 0.5
 
 - type: entityTable
   id: LowValueScienceCrateTable
@@ -130,7 +130,6 @@
     - id: HandheldArtifactContainer
       weight: 0.2
     - id: CrateMaterialPlasma
-      weight: 0.2
 
 - type: entityTable
   id: LowValueCrateTable
