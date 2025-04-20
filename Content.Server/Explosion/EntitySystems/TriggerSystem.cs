@@ -85,9 +85,6 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
         [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
-        [Dependency] private readonly SmokingSystem _smokingSystem = default!;
-
-        private EntityQuery<MobStateComponent> _mobQuery;
 
         public override void Initialize()
         {
@@ -303,10 +300,6 @@ namespace Content.Server.Explosion.EntitySystems
         /// </summary>
         private void OnSmokableExpended(EntityUid uid, TriggerOnSmokableExpendedComponent component, ref SmokableSolutionEmptyEvent args)
         {
-            _mobQuery = GetEntityQuery<MobStateComponent>();
-
-            var outcomp = new MobStateComponent();
-
             if (component.LitBy != null)
             {
                 Trigger(uid, component.LitBy);
