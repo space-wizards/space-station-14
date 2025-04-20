@@ -16,7 +16,7 @@
   components:
   - type: StealCondition
     verifyMapExistence: false
-    objectiveSingularNoOwnerText: objective-condition-steal-title-singular-no-owner
+    objectiveNoOwnerText: objective-condition-steal-title-singular-no-owner
     descriptionText: objective-condition-singular-thief-description
     checkStealAreas: true
 
@@ -27,7 +27,7 @@
   components:
   - type: StealCondition
     verifyMapExistence: false
-    objectiveSpecialNoOwnerText: objective-condition-steal-title-special-no-owner
+    objectiveNoOwnerText: objective-condition-steal-title-special-no-owner
     descriptionText: objective-condition-special-thief-description
     checkStealAreas: true
 
@@ -383,12 +383,12 @@
 
 - type: entity
   parent: BaseThiefStealSingularObjective
-  id: HeadIDStealObjective
+  id: SilverIDStealObjective
   components:
   - type: NotJobRequirement
     job: HeadOfPersonnel
   - type: StealCondition
-    stealGroup: HeadID
+    stealGroup: SilverID
   - type: Objective
     difficulty: 1.4
 

@@ -91,7 +91,7 @@
     ButcherCleaverStealObjective: 1
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5
-    HeadIDStealObjective: 1
+    SilverIDStealObjective: 1
     AccessConfiguratorStealObjective: 1
     ToolboxGoldenStealObjective: 1
 
