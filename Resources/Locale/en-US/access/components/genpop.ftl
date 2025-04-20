@@ -8,7 +8,7 @@ genpop-prisoner-id-examine-wait = You have served {$minutes} {$minutes ->
 } {$seconds} {$seconds ->
     [1] second
     *[other] seconds
-} of your {$sentence} minute sentance for {$crime}.
+} of your {$sentence} minute sentence for {$crime}.
 genpop-prisoner-id-examine-wait-perm = You are serving a permanent sentence for {$crime}.
 genpop-prisoner-id-examine-served = You have served your sentence for {$crime}.
 
