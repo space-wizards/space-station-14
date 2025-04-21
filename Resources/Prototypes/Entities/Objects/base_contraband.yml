@@ -31,7 +31,7 @@
     severity: Major
 
 # base department restricted contraband, this should only be used as a parent for other contraband prototypes, not the restricted items themselves.
-# centcomm, captain, and hop are implicitly cleared for all departmental contraband
+# centcomm and captain are implicitly cleared for all departmental contraband
 # child prototypes can override this behavior by providing an empty set for these data fields
 - type: entity
   id: BaseRestrictedContraband
@@ -42,7 +42,7 @@
     allowedDepartments: [  ]
     allowedJobs: [  ]
     implicitlyAllowedDepartments: [ CentralCommand ]
-    implicitlyAllowedJobs: [ Captain, HeadOfPersonnel ]
+    implicitlyAllowedJobs: [ Captain ]
 
 # one department restricted contraband
 - type: entity
@@ -169,6 +169,7 @@
   - type: Contraband
     allowedDepartments: [ Security ]
     allowedJobs: [ Bartender ]
+    implicitlyAllowedJobs: [ Captain, HeadOfPersonnel ]
 
 - type: entity
   id: BaseSecurityBartenderZookeeperContraband
@@ -178,6 +179,7 @@
   - type: Contraband
     allowedDepartments: [ Security ]
     allowedJobs: [ Bartender, Zookeeper ]
+    implicitlyAllowedJobs: [ Captain, HeadOfPersonnel ]
 
 - type: entity
   id: BaseSecurityLawyerContraband
@@ -187,6 +189,7 @@
   - type: Contraband
     allowedDepartments: [ Security ]
     allowedJobs: [ Lawyer ]
+    implicitlyAllowedJobs: [ Captain, HeadOfPersonnel ]
 
 - type: entity
   id: BaseJanitorContraband
@@ -195,6 +198,7 @@
   components:
   - type: Contraband
     allowedJobs: [ Janitor ]
+    implicitlyAllowedJobs: [ Captain, HeadOfPersonnel ]
 
 # for ~objective items
 - type: entity
