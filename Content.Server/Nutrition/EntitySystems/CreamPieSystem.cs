@@ -48,7 +48,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             // The entity is deleted, so play the sound at its position rather than parenting
             var coordinates = Transform(uid).Coordinates;
-            _audio.PlayPvs(_audio.GetSound(creamPie.Sound), coordinates, AudioParams.Default.WithVariation(0.125f));
+            _audio.PlayPvs(_audio.ResolveSound(creamPie.Sound), coordinates, AudioParams.Default.WithVariation(0.125f));
 
             if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))
             {
@@ -98,16 +98,22 @@ namespace Content.Server.Nutrition.EntitySystems
 
         protected override void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)
         {
-            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message", ("thrower", args.Thrown)), uid, args.Target);
+            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message",
+                                            ("thrower", Identity.Entity(args.Thrown, EntityManager))),
+                                            uid, args.Target);
+
             var otherPlayers = Filter.Empty().AddPlayersByPvs(uid);
             if (TryComp<ActorComponent>(args.Target, out var actor))
             {
                 otherPlayers.RemovePlayer(actor.PlayerSession);
             }
-            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message-others", ("owner", Identity.Name(uid, EntityManager)), ("thrower", args.Thrown)), uid, otherPlayers, false);
+
+            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message-others",
+                                            ("owner", Identity.Entity(uid, EntityManager)),
+                                            ("thrower", Identity.Entity(args.Thrown, EntityManager))),
+                                            uid, otherPlayers, false);
             var evChangeStatsValue = new ChangeStatsValueEvent(CreamedCount, 1);
-            RaiseLocalEvent(ref evChangeStatsValue);
-        }
+            RaiseLocalEvent(ref evChangeStatsValue);        }
 
         private void OnRejuvenate(Entity<CreamPiedComponent> entity, ref RejuvenateEvent args)
         {
