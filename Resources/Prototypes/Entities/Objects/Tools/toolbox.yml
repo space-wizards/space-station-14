@@ -134,7 +134,7 @@
 
 - type: entity
   name: golden toolbox
-  parent: ToolboxBase
+  parent: [ToolboxBase, BaseCommandContraband] # tider captain
   id: ToolboxGolden
   description: A solid gold toolbox. A rapper would kill for this.
   components:

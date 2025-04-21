@@ -511,7 +511,7 @@
 
 - type: entity
   id: CrewMonitoringServerMachineCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [BaseMachineCircuitboard, BaseCommandContraband]
   name: crew monitoring server machine board
   description: A machine printed circuit board for a crew monitoring server.
   components:

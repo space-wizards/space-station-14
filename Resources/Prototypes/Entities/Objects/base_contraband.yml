@@ -189,6 +189,14 @@
   - type: Contraband
     allowedJobs: [ Janitor ]
 
+- type: entity
+  id: ChaplinContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedJobs: [ Chaplin ]
+
 # for ~objective items
 - type: entity
   id: BaseGrandTheftContraband

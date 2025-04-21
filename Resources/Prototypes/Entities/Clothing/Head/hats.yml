@@ -536,7 +536,7 @@
     sprite: Clothing/Head/Hats/violetwizard.rsi
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseSecurityContraband]
   id: ClothingHeadHatWarden
   name: warden's cap
   description: A police officer's Hat. This hat emphasizes that you are THE LAW

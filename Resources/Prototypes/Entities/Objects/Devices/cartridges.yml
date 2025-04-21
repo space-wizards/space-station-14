@@ -114,7 +114,7 @@
       - Forensics
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseSecurityContraband]
   id: WantedListCartridge
   name: Wanted list cartridge
   description: A program to get a list of wanted persons.
@@ -156,7 +156,7 @@
     - type: MedTekCartridge
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseCargoContraband]
   id: AstroNavCartridge
   name: AstroNav cartridge
   description: A program for navigation that provides GPS coordinates.

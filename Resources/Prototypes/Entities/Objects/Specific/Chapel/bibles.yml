@@ -1,7 +1,7 @@
 - type: entity
   name: bible
   description: New Interstellar Version 2340.
-  parent: BaseStorageItem
+  parent: [BaseStorageItem, ChaplinContraband]
   id: Bible
   components:
   - type: UseDelay

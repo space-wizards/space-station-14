@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseCommandContraband]
   id: AccessConfigurator
   name: access configurator
   description: Used to modify the access level requirements for airlocks and other lockable devices.
