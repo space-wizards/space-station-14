@@ -76,6 +76,28 @@
     weightedRandomId: RandomFillSpaceshroom
   - type: StaticPrice
     price: 20
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 1
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Construction
+    graph: CookedSpaceshroom
+    node: start
+    defaultTarget: cooked spaceshroom
+  - type: AtmosExposed
+  - type: Temperature
+    currentTemperature: 290
+  - type: InternalTemperature
+    thickness: 0.02
+    area: 0.02
+    conductivity: 0.43
 
 - type: weightedRandomFillSolution
   id: RandomFillSpaceshroom
@@ -126,3 +148,6 @@
   - type: Produce
   - type: StaticPrice
     price: 40
+  - type: Construction
+    graph: CookedSpaceshroom
+    node: cooked spaceshroom

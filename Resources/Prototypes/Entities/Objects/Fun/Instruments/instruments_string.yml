@@ -9,7 +9,7 @@
   - type: SwappableInstrument
     instrumentList:
       "Clean": {27: 0}
-      "Jazz": {25: 0}
+      "Jazz": {26: 0}
       "Muted": {28: 0}
   - type: Sprite
     sprite: Objects/Fun/Instruments/eguitar.rsi
@@ -183,6 +183,12 @@
     state: icon
   - type: Item
     size: Normal
+    sprite: Objects/Fun/Instruments/banjo.rsi
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - back
+    - suitStorage
     sprite: Objects/Fun/Instruments/banjo.rsi
   - type: Tag
     tags:
