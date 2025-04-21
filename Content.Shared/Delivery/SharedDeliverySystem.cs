@@ -180,7 +180,7 @@ public abstract class SharedDeliverySystem : EntitySystem
         if (!_container.TryGetContainer(ent, ent.Comp.Container, out var container))
             return;
 
-        if (attemptPickup)
+        if (attemptPickup || _container.IsEntityInContainer(ent))
         {
             foreach (var entity in container.ContainedEntities.ToArray())
             {
