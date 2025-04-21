@@ -3,6 +3,7 @@ loadout-group-species-restriction = This item is not available for your current 
 
 # Miscellaneous
 loadout-group-trinkets = Trinkets
+loadout-group-jobtrinkets = Job trinkets
 loadout-group-glasses = Glasses
 loadout-group-backpack = Backpack
 loadout-group-instruments = Instruments
