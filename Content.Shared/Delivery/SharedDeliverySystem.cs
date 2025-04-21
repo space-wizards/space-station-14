@@ -41,10 +41,9 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         SubscribeLocalEvent<DeliveryComponent, ExaminedEvent>(OnDeliveryExamine);
         SubscribeLocalEvent<DeliveryComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<DeliveryComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<DeliveryComponent, GetVerbsEvent<AlternativeVerb>>(OnGetDeliveryVerbs);
         SubscribeLocalEvent<DeliveryComponent, AttemptSimpleToolUseEvent>(OnAttemptSimpleToolUse);
         SubscribeLocalEvent<DeliveryComponent, SimpleToolDoAfterEvent>(OnSimpleToolUse);
-        SubscribeLocalEvent<DeliveryComponent, GetVerbsEvent<AlternativeVerb>>(OnGetDeliveryVerbs);
 
         SubscribeLocalEvent<DeliverySpawnerComponent, ExaminedEvent>(OnSpawnerExamine);
         SubscribeLocalEvent<DeliverySpawnerComponent, GetVerbsEvent<AlternativeVerb>>(OnGetSpawnerVerbs);
@@ -125,10 +124,6 @@ public abstract class SharedDeliverySystem : EntitySystem
         OpenDelivery(ent, args.User, false, true);
     }
 
-    private bool TryUnlockDelivery(Entity<DeliveryComponent> ent,
-        EntityUid user,
-        bool rewardMoney = true,
-        bool force = false)
     private void OnGetSpawnerVerbs(Entity<DeliverySpawnerComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
@@ -156,7 +151,7 @@ public abstract class SharedDeliverySystem : EntitySystem
         });
     }
 
-    private bool TryUnlockDelivery(Entity<DeliveryComponent> ent, EntityUid user, bool rewardMoney = true)
+    private bool TryUnlockDelivery(Entity<DeliveryComponent> ent, EntityUid user, bool rewardMoney = true, bool force = false)
     {
         // Check fingerprint access if there is a reader on the mail
         if (!force && TryComp<FingerprintReaderComponent>(ent, out var reader) && !_fingerprintReader.IsAllowed((ent, reader), user))
