@@ -46,7 +46,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!HasComp<HolopadUserComponent>(uid))
             return;
 
-        var netEv = new HolopadUserTypingChangedEvent(GetNetEntity(uid.Value), ev.IsTyping);
+        var netEv = new HolopadUserTypingChangedEvent(GetNetEntity(uid.Value), ev.State);
         RaiseNetworkEvent(netEv);
     }
 
