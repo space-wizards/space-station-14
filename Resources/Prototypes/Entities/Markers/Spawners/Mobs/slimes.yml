@@ -1,77 +1,77 @@
 - type: entity
-  name: Slimes Spawner Blue
+  parent: MarkerBase
   id: SpawnMobAdultSlimesBlue
-  parent: MarkerBase
+  name: Slimes Spawner Blue
   components:
   - type: Sprite
     layers:
-      - state: green
-      - state: ai
+    - state: green
+    - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobAdultSlimesBlue
+    - MobAdultSlimesBlue
 
 - type: entity
-  name: Slimes Spawner Blue Angry
+  parent: MarkerBase
   id: SpawnMobAdultSlimesBlueAngry
-  parent: MarkerBase
+  name: Slimes Spawner Blue Angry
   components:
   - type: Sprite
     layers:
-      - state: green
-      - state: ai
+    - state: green
+    - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobAdultSlimesBlueAngry
+    - MobAdultSlimesBlueAngry
 
 - type: entity
-  name: Slimes Spawner Green
+  parent: MarkerBase
   id: SpawnMobAdultSlimesGreen
-  parent: MarkerBase
+  name: Slimes Spawner Green
   components:
   - type: Sprite
     layers:
-      - state: green
-      - state: ai
+    - state: green
+    - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobAdultSlimesGreen
+    - MobAdultSlimesGreen
 
 - type: entity
-  name: Slimes Spawner Green Angry
+  parent: MarkerBase
   id: SpawnMobAdultSlimesGreenAngry
-  parent: MarkerBase
+  name: Slimes Spawner Green Angry
   components:
   - type: Sprite
     layers:
-      - state: green
-      - state: ai
+    - state: green
+    - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobAdultSlimesGreenAngry
+    - MobAdultSlimesGreenAngry
 
 - type: entity
-  name: Slimes Spawner Yellow
+  parent: MarkerBase
   id: SpawnMobAdultSlimesYellow
-  parent: MarkerBase
+  name: Slimes Spawner Yellow
   components:
   - type: Sprite
     layers:
-      - state: green
-      - state: ai
+    - state: green
+    - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobAdultSlimesYellow
+    - MobAdultSlimesYellow
 
 - type: entity
-  name: Slimes Spawner Yellow Angry
-  id: SpawnMobAdultSlimesYellowAngry
   parent: MarkerBase
+  id: SpawnMobAdultSlimesYellowAngry
+  name: Slimes Spawner Yellow Angry
   components:
   - type: Sprite
     layers:
-      - state: green
-      - state: ai
+    - state: green
+    - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobAdultSlimesYellowAngry
+    - MobAdultSlimesYellowAngry

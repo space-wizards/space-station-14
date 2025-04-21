@@ -1,7 +1,7 @@
 - type: entity
-  name: HoP Corgi Spawner
-  id: SpawnMobCorgi
   parent: MarkerBase
+  id: SpawnMobCorgi
+  name: HoP Corgi Spawner
   components:
   - type: Sprite
     layers:
@@ -15,9 +15,9 @@
     - MobCorgiIanPup
 
 - type: entity
-  name: Dev Mouse Spawner
-  id: SpawnMobCorgiMouse
   suffix: Admeme
+  id: SpawnMobCorgiMouse
+  name: Dev Mouse Spawner
   parent: MarkerBase
   components:
   - type: Sprite
@@ -29,9 +29,9 @@
     - MobCorgiMouse
 
 - type: entity
-  name: Possum Morty Spawner
-  id: SpawnMobPossumMorty
   parent: MarkerBase
+  id: SpawnMobPossumMorty
+  name: Possum Morty Spawner
   components:
   - type: Sprite
     layers:
@@ -42,9 +42,9 @@
     - MobPossumMortyOld
 
 - type: entity
-  name: Raccoon Morticia Spawner
-  id: SpawnMobRaccoonMorticia
   parent: MarkerBase
+  id: SpawnMobRaccoonMorticia
+  name: Raccoon Morticia Spawner
   components:
   - type: Sprite
     layers:
@@ -55,9 +55,9 @@
     - MobRaccoonMorticia
 
 - type: entity
-  name: Fox Renault Spawner
-  id: SpawnMobFoxRenault
   parent: MarkerBase
+  id: SpawnMobFoxRenault
+  name: Fox Renault Spawner
   components:
   - type: Sprite
     layers:
@@ -68,9 +68,9 @@
     - MobFoxRenault
 
 - type: entity
-  name: Runtime Spawner
-  id: SpawnMobCatRuntime
   parent: MarkerBase
+  id: SpawnMobCatRuntime
+  name: Runtime Spawner
   components:
   - type: Sprite
     layers:
@@ -81,9 +81,9 @@
     - MobCatRuntime
 
 - type: entity
-  name: Exception Spawner
-  id: SpawnMobCatException
   parent: MarkerBase
+  id: SpawnMobCatException
+  name: Exception Spawner
   components:
   - type: Sprite
     layers:
@@ -94,9 +94,9 @@
     - MobCatException
 
 - type: entity
-  name: Tropico Spawner
-  id: SpawnMobCrabAtmos
   parent: MarkerBase
+  id: SpawnMobCrabAtmos
+  name: Tropico Spawner
   components:
   - type: Sprite
     layers:
@@ -107,9 +107,9 @@
     - MobCrabAtmos
 
 - type: entity
-  name: Floppa Spawner
-  id: SpawnMobCatFloppa
   parent: MarkerBase
+  id: SpawnMobCatFloppa
+  name: Floppa Spawner
   components:
   - type: Sprite
     layers:
@@ -120,9 +120,9 @@
     - MobCatFloppa
 
 - type: entity
-  name: Bingus Spawner
-  id: SpawnMobCatBingus
   parent: MarkerBase
+  id: SpawnMobCatBingus
+  name: Bingus Spawner
   components:
   - type: Sprite
     layers:
@@ -133,9 +133,9 @@
     - MobBingus
 
 - type: entity
-  name: Cat Spawner
-  id: SpawnMobCat
   parent: MarkerBase
+  id: SpawnMobCat
+  name: Cat Spawner
   components:
   - type: Sprite
     layers:
@@ -149,9 +149,9 @@
     - MobBingus
 
 - type: entity
-  name: Bandito Spawner
-  id: SpawnMobBandito
   parent: MarkerBase
+  id: SpawnMobBandito
+  name: Bandito Spawner
   components:
   - type: Sprite
     layers:
@@ -162,9 +162,9 @@
     - MobBandito
 
 - type: entity
-  name:  McGriff Spawner
-  id: SpawnMobMcGriff
   parent: MarkerBase
+  id: SpawnMobMcGriff
+  name:  McGriff Spawner
   components:
   - type: Sprite
     layers:
@@ -175,9 +175,9 @@
     - MobMcGriff
 
 - type: entity
-  name: Sloth Paperwork Spawner
-  id: SpawnMobSlothPaperwork
   parent: MarkerBase
+  id: SpawnMobSlothPaperwork
+  name: Sloth Paperwork Spawner
   components:
   - type: Sprite
     layers:
@@ -188,9 +188,9 @@
     - MobPaperwork
 
 - type: entity
-  name: Walter Spawner
-  id: SpawnMobWalter
   parent: MarkerBase
+  id: SpawnMobWalter
+  name: Walter Spawner
   components:
   - type: Sprite
     layers:
@@ -201,9 +201,9 @@
     - MobWalter
 
 - type: entity
-  name: Hamster Hamlet Spawner
-  id: SpawnMobHamsterHamlet
   parent: MarkerBase
+  id: SpawnMobHamsterHamlet
+  name: Hamster Hamlet Spawner
   components:
   - type: Sprite
     layers:
@@ -216,9 +216,9 @@
     - CrateNPCHamlet
 
 - type: entity
-  name: Alexander Spawner
-  id: SpawnMobAlexander
   parent: MarkerBase
+  id: SpawnMobAlexander
+  name: Alexander Spawner
   components:
   - type: Sprite
     layers:
@@ -229,9 +229,9 @@
     - MobAlexander
 
 - type: entity
-  name: Shiva Spawner
-  id: SpawnMobShiva
   parent: MarkerBase
+  id: SpawnMobShiva
+  name: Shiva Spawner
   components:
   - type: Sprite
     layers:
@@ -243,9 +243,9 @@
     - MobSpiderShiva
 
 - type: entity
-  name: Willow Spawner
-  id: SpawnMobKangarooWillow
   parent: MarkerBase
+  id: SpawnMobKangarooWillow
+  name: Willow Spawner
   components:
   - type: Sprite
     layers:
@@ -257,9 +257,9 @@
     - MobKangarooWillow
 
 - type: entity
-  name: Smile Spawner
-  id: SpawnMobSmile
   parent: MarkerBase
+  id: SpawnMobSmile
+  name: Smile Spawner
   components:
   - type: Sprite
     layers:
@@ -270,9 +270,9 @@
     - MobSlimesPet
 
 - type: entity
-  name: Pun Pun Spawner
-  id: SpawnMobMonkeyPunpun
   parent: MarkerBase
+  id: SpawnMobMonkeyPunpun
+  name: Pun Pun Spawner
   components:
   - type: Sprite
     layers:

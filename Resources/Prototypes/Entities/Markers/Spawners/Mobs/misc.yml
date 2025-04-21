@@ -1,22 +1,22 @@
 - type: entity
-  name: gingerbread man Spawner
-  id: SpawnMobGingerbreadAI
-  suffix: Ghostrole
   parent: MarkerBase
+  id: SpawnMobGingerbreadAI
+  name: gingerbread man Spawner
+  suffix: Ghostrole
   components:
   - type: Sprite
     layers:
-      - state: green
-      - state: full
-        sprite: Mobs/Species/Gingerbread/parts.rsi
+    - state: green
+    - state: full
+      sprite: Mobs/Species/Gingerbread/parts.rsi
   - type: ConditionalSpawner
     prototypes:
-      - MobGingerbreadAI
+    - MobGingerbreadAI
 
 - type: entity
-  name: honk bot spawner
-  id: SpawnHonkBot
   parent: MarkerBase
+  id: SpawnHonkBot
+  name: honk bot spawner
   components:
   - type: Sprite
     layers:

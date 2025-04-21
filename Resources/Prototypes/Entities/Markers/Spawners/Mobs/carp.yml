@@ -1,7 +1,7 @@
 - type: entity
-  name: Space Carp Spawner
-  id: SpawnMobCarp
   parent: MarkerBase
+  id: SpawnMobCarp
+  name: Space Carp Spawner
   components:
   - type: Sprite
     layers:
@@ -13,9 +13,9 @@
     - MobCarp
 
 - type: entity
-  name: Magicarp Spawner
-  id: SpawnMobCarpMagic
   parent: MarkerBase
+  id: SpawnMobCarpMagic
+  name: Magicarp Spawner
   components:
   - type: Sprite
     layers:
@@ -27,9 +27,9 @@
     - MobCarpMagic
 
 - type: entity
-  name: Holocarp Spawner
-  id: SpawnMobCarpHolo
   parent: MarkerBase
+  id: SpawnMobCarpHolo
+  name: Holocarp Spawner
   components:
   - type: Sprite
     layers:
@@ -41,9 +41,9 @@
     - MobCarpHolo
 
 - type: entity
-  name: Space Sharkminnow Spawner
-  id: SpawnMobShark
   parent: MarkerBase
+  id: SpawnMobShark
+  name: Space Sharkminnow Spawner
   components:
   - type: Sprite
     layers:

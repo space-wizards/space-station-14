@@ -1,7 +1,7 @@
 - type: entity
-  name: Mouse Spawner
-  id: SpawnMobMouse
   parent: MarkerBase
+  id: SpawnMobMouse
+  name: Mouse Spawner
   components:
   - type: Sprite
     layers:
@@ -11,74 +11,74 @@
     - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobMouse
-      - MobMouse1
-      - MobMouse2
+    - MobMouse
+    - MobMouse1
+    - MobMouse2
 
 - type: entity
-  name: Cockroach Spawner
+  parent: MarkerBase
   id: SpawnMobCockroach
-  parent: MarkerBase
+  name: Cockroach Spawner
   components:
   - type: Sprite
     layers:
-      - state: green
-      - sprite: Mobs/Animals/cockroach.rsi
-        state: cockroach_icon
-      - state: ai
+    - state: green
+    - sprite: Mobs/Animals/cockroach.rsi
+      state: cockroach_icon
+    - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobCockroach
+    - MobCockroach
 
 - type: entity
-  name: Space Cat Spawner
+  parent: MarkerBase
   id: SpawnMobCatSpace
-  parent: MarkerBase
+  name: Space Cat Spawner
   components:
   - type: Sprite
     layers:
-      - state: green
-      - state: ai
+    - state: green
+    - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobCatSpace
+    - MobCatSpace
 
 - type: entity
-  name: Kitten Spawner
+  parent: MarkerBase
   id: SpawnMobCatKitten
-  parent: MarkerBase
+  name: Kitten Spawner
   components:
   - type: Sprite
     layers:
-      - state: green
-      - state: ai
+    - state: green
+    - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobCatKitten
+    - MobCatKitten
 
 - type: entity
-  name: Generic Cat Spawner
-  id: SpawnMobCatGeneric
   parent: MarkerBase
+  id: SpawnMobCatGeneric
+  name: Generic Cat Spawner
   components:
   - type: Sprite
     layers:
-      - state: green
-      - state: ai
+    - state: green
+    - state: ai
   - type: RandomSpawner
     prototypes:
-      - MobCat
-      - MobCatCalico
-      - MobCatCaracal
-      - MobCatKitten
+    - MobCat
+    - MobCatCalico
+    - MobCatCaracal
+    - MobCatKitten
     rarePrototypes:
-      - MobCatSpace
+    - MobCatSpace
     rareChance: 0.05
 
 - type: entity
-  name: Monkey Spawner
-  id: SpawnMobMonkey
   parent: MarkerBase
+  id: SpawnMobMonkey
+  name: Monkey Spawner
   components:
   - type: Sprite
     layers:
@@ -89,11 +89,10 @@
     prototypes:
     - MobMonkey
 
-
 - type: entity
-  name: Slug Spawner
-  id: SpawnMobSlug
   parent: MarkerBase
+  id: SpawnMobSlug
+  name: Slug Spawner
   components:
   - type: Sprite
     layers:
@@ -105,9 +104,9 @@
     - MobSlug
 
 - type: entity
-  name: Lizard Spawner
-  id: SpawnMobLizard
   parent: MarkerBase
+  id: SpawnMobLizard
+  name: Lizard Spawner
   components:
   - type: Sprite
     layers:
@@ -119,9 +118,9 @@
     - MobLizard
 
 - type: entity
-  name: Crab Spawner
-  id: SpawnMobCrab
   parent: MarkerBase
+  id: SpawnMobCrab
+  name: Crab Spawner
   components:
   - type: Sprite
     layers:
@@ -133,9 +132,9 @@
     - MobCrab
 
 - type: entity
-  name: Goat Spawner
-  id: SpawnMobGoat
   parent: MarkerBase
+  id: SpawnMobGoat
+  name: Goat Spawner
   components:
   - type: Sprite
     layers:
@@ -147,9 +146,9 @@
     - MobGoat
 
 - type: entity
-  name: Frog Spawner
-  id: SpawnMobFrog
   parent: MarkerBase
+  id: SpawnMobFrog
+  name: Frog Spawner
   components:
   - type: Sprite
     layers:
@@ -161,9 +160,9 @@
     - MobFrog
 
 - type: entity
-  name: Bee Spawner
-  id: SpawnMobBee
   parent: MarkerBase
+  id: SpawnMobBee
+  name: Bee Spawner
   components:
   - type: Sprite
     layers:
@@ -175,9 +174,9 @@
     - MobBee
 
 - type: entity
-  name: Parrot Spawner
-  id: SpawnMobParrot
   parent: MarkerBase
+  id: SpawnMobParrot
+  name: Parrot Spawner
   components:
   - type: Sprite
     layers:
@@ -189,9 +188,9 @@
     - MobParrot
 
 - type: entity
-  name: Butterfly Spawner
-  id: SpawnMobButterfly
   parent: MarkerBase
+  id: SpawnMobButterfly
+  name: Butterfly Spawner
   components:
   - type: Sprite
     layers:
@@ -203,9 +202,9 @@
     - MobButterfly
 
 - type: entity
-  name: Cow Spawner
-  id: SpawnMobCow
   parent: MarkerBase
+  id: SpawnMobCow
+  name: Cow Spawner
   components:
   - type: Sprite
     layers:
@@ -217,9 +216,9 @@
     - MobCow
 
 - type: entity
-  name: Gorilla Spawner
-  id: SpawnMobGorilla
   parent: MarkerBase
+  id: SpawnMobGorilla
+  name: Gorilla Spawner
   components:
   - type: Sprite
     layers:
@@ -231,9 +230,9 @@
     - MobGorilla
 
 - type: entity
-  name: Penguin Spawner
-  id: SpawnMobPenguin
   parent: MarkerBase
+  id: SpawnMobPenguin
+  name: Penguin Spawner
   components:
   - type: Sprite
     layers:
@@ -245,9 +244,9 @@
     - MobPenguin
 
 - type: entity
-  name: Reindeer Buck Spawner
-  id: SpawnMobReindeerBuck
   parent: MarkerBase
+  id: SpawnMobReindeerBuck
+  name: Reindeer Buck Spawner
   components:
   - type: Sprite
     layers:
@@ -259,9 +258,9 @@
     - MobReindeerBuck
 
 - type: entity
-  name: Reindeer Doe Spawner
-  id: SpawnMobReindeerDoe
   parent: MarkerBase
+  id: SpawnMobReindeerDoe
+  name: Reindeer Doe Spawner
   components:
   - type: Sprite
     layers:

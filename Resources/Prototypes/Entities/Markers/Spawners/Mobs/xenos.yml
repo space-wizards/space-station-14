@@ -1,7 +1,7 @@
 - type: entity
-  name: Xeno Spawner
-  id: SpawnMobXenoBurrower
   parent: MarkerBase
+  id: SpawnMobXenoBurrower
+  name: Xeno Spawner
   suffix: Burrower
   components:
   - type: Sprite
@@ -15,9 +15,9 @@
     - MobXeno
 
 - type: entity
-  name: Xeno Spawner
-  id: SpawnMobXenoPraetorian
   parent: MarkerBase
+  id: SpawnMobXenoPraetorian
+  name: Xeno Spawner
   suffix: Praetorian
   components:
   - type: Sprite
@@ -31,9 +31,9 @@
     - MobXenoPraetorian
 
 - type: entity
-  name: Xeno Spawner
-  id: SpawnMobXenoDrone
   parent: MarkerBase
+  id: SpawnMobXenoDrone
+  name: Xeno Spawner
   suffix: Drone
   components:
   - type: Sprite
@@ -47,9 +47,9 @@
     - MobXenoDrone
 
 - type: entity
-  name: Xeno Spawner
-  id: SpawnMobXenoRavager
   parent: MarkerBase
+  id: SpawnMobXenoRavager
+  name: Xeno Spawner
   suffix: Ravager
   components:
   - type: Sprite
@@ -63,9 +63,9 @@
     - MobXenoRavager
 
 - type: entity
-  name: Xeno Spawner
-  id: SpawnMobXenoRunner
   parent: MarkerBase
+  id: SpawnMobXenoRunner
+  name: Xeno Spawner
   suffix: Runner
   components:
   - type: Sprite
@@ -79,9 +79,9 @@
     - MobXenoRunner
 
 - type: entity
-  name: Xeno Spawner
-  id: SpawnMobXenoSpitter
   parent: MarkerBase
+  id: SpawnMobXenoSpitter
+  name: Xeno Spawner
   suffix: Spitter
   components:
   - type: Sprite
@@ -95,9 +95,9 @@
     - MobXenoSpitter
 
 - type: entity
-  name: Xeno Spawner
-  id: SpawnMobXenoQueen
   parent: MarkerBase
+  id: SpawnMobXenoQueen
+  name: Xeno Spawner
   suffix: Queen
   components:
   - type: Sprite

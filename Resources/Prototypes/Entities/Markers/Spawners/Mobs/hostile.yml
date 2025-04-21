@@ -1,7 +1,7 @@
 - type: entity
-  name: Space Bear Spawner
-  id: SpawnMobBear
   parent: MarkerBase
+  id: SpawnMobBear
+  name: Space Bear Spawner
   components:
   - type: Sprite
     layers:
@@ -13,9 +13,9 @@
     - MobBearSpace
 
 - type: entity
-  name: Space Kangaroo Spawner
-  id: SpawnMobKangaroo
   parent: MarkerBase
+  id: SpawnMobKangaroo
+  name: Space Kangaroo Spawner
   components:
   - type: Sprite
     layers:
@@ -27,9 +27,9 @@
     - MobKangarooSpace
 
 - type: entity
-  name: Boxing Kangaroo Spawner
-  id: SpawnMobBoxingKangaroo
   parent: MarkerBase
+  id: SpawnMobBoxingKangaroo
+  name: Boxing Kangaroo Spawner
   components:
   - type: Sprite
     layers:
@@ -41,9 +41,9 @@
     - MobBoxingKangaroo
 
 - type: entity
-  name: Space Spider Spawner
-  id: SpawnMobSpaceSpider
   parent: MarkerBase
+  id: SpawnMobSpaceSpider
+  name: Space Spider Spawner
   components:
   - type: Sprite
     layers:
@@ -55,9 +55,9 @@
     - MobSpiderSpace
 
 - type: entity
-  name: Space Cobra Spawner
-  id: SpawnMobSpaceCobra
   parent: MarkerBase
+  id: SpawnMobSpaceCobra
+  name: Space Cobra Spawner
   components:
   - type: Sprite
     layers:
@@ -69,9 +69,9 @@
     - MobCobraSpace
 
 - type: entity
-  name: behonker Spawner
-  id: SpawnMobBehonker
   parent: MarkerBase
+  id: SpawnMobBehonker
+  name: behonker Spawner
   components:
   - type: Sprite
     layers:
@@ -86,9 +86,9 @@
       - MobBehonkerGrav
 
 - type: entity
-  name: Hellspawn Spawner
-  id: SpawnMobHellspawn
   parent: MarkerBase
+  id: SpawnMobHellspawn
+  name: Hellspawn Spawner
   components:
   - type: Sprite
     layers:
@@ -100,9 +100,9 @@
       - MobHellspawn
 
 - type: entity
-  name: ore crab spawner
-  id: SpawnMobOreCrab
   parent: MarkerBase
+  id: SpawnMobOreCrab
+  name: ore crab spawner
   components:
   - type: Sprite
     layers:
@@ -117,9 +117,9 @@
       - MobSpawnCrabSilver
 
 - type: entity
-  name: luminous person spawner
-  id: SpawnMobLuminousPerson
   parent: MarkerBase
+  id: SpawnMobLuminousPerson
+  name: luminous person spawner
   components:
   - type: Sprite
     layers:
@@ -131,9 +131,9 @@
     - MobLuminousPerson
 
 - type: entity
-  name: luminous object spawner
-  id: SpawnMobLuminousObject
   parent: MarkerBase
+  id: SpawnMobLuminousObject
+  name: luminous object spawner
   components:
   - type: Sprite
     layers:
@@ -145,9 +145,9 @@
     - MobLuminousObject
 
 - type: entity
-  name: luminous entity spawner
-  id: SpawnMobLuminousEntity
   parent: MarkerBase
+  id: SpawnMobLuminousEntity
+  name: luminous entity spawner
   components:
   - type: Sprite
     layers:
@@ -159,9 +159,9 @@
     - MobLuminousEntity
 
 - type: entity
-  name: clown spider spawner
-  id: SpawnClownSpider
   parent: MarkerBase
+  id: SpawnClownSpider
+  name: clown spider spawner
   components:
   - type: Sprite
     layers:
@@ -173,9 +173,9 @@
     - MobClownSpider
 
 - type: entity
-  name: Purple Snake Spawner
-  id: SpawnMobPurpleSnake
   parent: MarkerBase
+  id: SpawnMobPurpleSnake
+  name: Purple Snake Spawner
   components:
   - type: Sprite
     layers:
@@ -187,9 +187,9 @@
     - MobPurpleSnake
 
 - type: entity
-  name: Small Purple Snake Spawner
-  id: SpawnMobSmallPurpleSnake
   parent: MarkerBase
+  id: SpawnMobSmallPurpleSnake
+  name: Small Purple Snake Spawner
   components:
   - type: Sprite
     layers:
