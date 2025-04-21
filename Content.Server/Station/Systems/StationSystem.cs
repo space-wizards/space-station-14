@@ -97,7 +97,7 @@ public sealed class StationSystem : SharedStationSystem
 
     private void UpdateTrackersOnGrid(EntityUid gridId, EntityUid? station)
     {
-        var query = EntityManager.EntityQueryEnumerator<StationTrackerComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<StationTrackerComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out var tracker, out var xform))
         {
             if (xform.GridUid == gridId)
