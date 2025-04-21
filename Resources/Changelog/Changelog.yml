@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: southbridge-fur
-  changes:
-  - message: The Pride-O-Mat vending machine has been ported to upstream.
-    type: Add
-  id: 7807
-  time: '2025-01-13T18:49:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34412
 - author: Killerqu00
   changes:
   - message: Pet carriers can now be crafted.
@@ -3901,3 +3894,12 @@
   id: 8307
   time: '2025-04-21T22:39:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28339
+- author: lzk228
+  changes:
+  - message: Bots now can examine, use zoom and see their alerts (health & stamina).
+    type: Tweak
+  - message: Added borgs emotes to bots.
+    type: Tweak
+  id: 8308
+  time: '2025-04-21T22:49:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/29949
