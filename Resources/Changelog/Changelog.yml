@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Deerstop
-  changes:
-  - message: Improved the readability of the manual valve sprite.
-    type: Tweak
-  id: 7803
-  time: '2025-01-13T07:07:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34378
 - author: JustinWinningham
   changes:
   - message: Anomalies no longer block players or APES (or other objects) from passing
@@ -3905,3 +3898,10 @@
   id: 8303
   time: '2025-04-21T17:24:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36531
+- author: centcomofficer24
+  changes:
+  - message: Added a genderfluid pin!
+    type: Add
+  id: 8304
+  time: '2025-04-21T17:46:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/35854
