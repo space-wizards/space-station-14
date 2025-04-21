@@ -169,7 +169,15 @@ public abstract class SharedDeliverySystem : EntitySystem
     }
 
     protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent) { }
+
+    protected virtual void HandlePenalty(Entity<DeliveryComponent> ent, string? reasonLoc = null) { }
 }
+
+/// <summary>
+/// Used to gather the multiplier from all different delivery components.
+/// </summary>
+[ByRefEvent]
+public record struct GetDeliveryMultiplierEvent(float Multiplier = 0.0f);
 
 /// <summary>
 /// Event raised on the delivery when it is unlocked.

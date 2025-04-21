@@ -54,7 +54,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     {
         _container.EnsureContainer<Container>(ent, ent.Comp.Container);
 
-        if (_station.GetStationInMap(Transform(ent).MapID) is not EntityUid stationId)
+        if (_station.GetStationInMap(Transform(ent).MapID) is not { } stationId)
             return;
 
         if (!_records.TryGetRandomRecord<GeneralStationRecord>(stationId, out var entry))
@@ -97,18 +97,24 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     /// <summary>
     /// Runs the penalty logic: Announcing the penalty and calculating how much to charge the designated account
     /// </summary>
-    /// <param name="ent"><see cref="DeliveryComponent"/> entity.</param>
-    /// <param name="stationAccountEnt"><see cref="StationBankAccountComponent"/> entity.</param>
-    public void HandlePenalty(Entity<DeliveryComponent> ent, Entity<StationBankAccountComponent?> stationAccountEnt, string reasonLoc)
+    /// <param name="ent">The delivery for which to run the penalty.</param>
+    /// <param name="reasonLoc">The penalty reason, displayed in front of the message.</param>
+    protected override void HandlePenalty(Entity<DeliveryComponent> ent, string? reasonLoc = null)
     {
+        if (!TryComp<StationBankAccountComponent>(ent.Comp.RecipientStation, out var stationAccount))
+            return;
+
+        if (ent.Comp.WasPenalized)
+            return;
+
         var multiplier = GetDeliveryMultiplier(ent);
 
-        var accountName = (_protoMan.TryIndex(ent.Comp.PenaltyBankAccount, out var accountInfo) &&
-                   Loc.TryGetString(accountInfo.Name, out var localizedAccountName))
+        var accountName = _protoMan.TryIndex(ent.Comp.PenaltyBankAccount, out var accountInfo) &&
+                   Loc.TryGetString(accountInfo.Name, out var localizedAccountName)
                   ? localizedAccountName
                   : Loc.GetString(UnknownAccount);
 
-        if (!Loc.TryGetString(reasonLoc, out var reason))
+        if (reasonLoc == null || !Loc.TryGetString(reasonLoc, out var reason))
             reason = Loc.GetString(DefaultMessage);
 
         _chat.TrySendInGameICMessage(ent, GetMessage(reason, ent.Comp.BaseSpesoPenalty, accountName), InGameICChatType.Speak, hideChat: true);
@@ -118,11 +124,17 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
             { ent.Comp.PenaltyBankAccount, 1.0 }
         };
 
+        var penaltyAccountBalance = stationAccount.Accounts[ent.Comp.PenaltyBankAccount];
+        var calculatedPenalty = (int)(ent.Comp.BaseSpesoPenalty * multiplier);
+
+        // Prevents cargo from going into negatives
+        if (penaltyAccountBalance - calculatedPenalty < 0)
+            calculatedPenalty = Math.Max(0, penaltyAccountBalance);
+
         _cargo.UpdateBankAccount(
-            stationAccountEnt,
-            -((int)(ent.Comp.BaseSpesoPenalty * multiplier)), // Subtracting
-            dist
-            );
+            (ent.Comp.RecipientStation.Value, stationAccount),
+            -calculatedPenalty,
+            dist);
 
         ent.Comp.WasPenalized = true;
     }
@@ -137,7 +149,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
 
     private string GetMessage(string reason, int penalty, string accountName)
     {
-        return Loc.GetString("delivery-penalty-message", ("reason", reason), ("spesos", penalty), ("account", accountName));
+        return Loc.GetString("delivery-penalty-message", ("reason", reason), ("spesos", penalty), ("account", accountName.ToUpper()));
     }
 
     public override void Update(float frameTime)
@@ -147,6 +159,3 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         UpdateSpawner(frameTime);
     }
 }
-
-[ByRefEvent]
-public record struct GetDeliveryMultiplierEvent(float Multiplier = 0.0f);
