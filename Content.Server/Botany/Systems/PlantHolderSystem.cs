@@ -1,6 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
-using Content.Server.Fluids.Components;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.EntitySystems;
@@ -11,7 +10,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
-using Content.Shared.Fluids.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -19,12 +17,15 @@ using Content.Shared.Popups;
 using Content.Shared.Random;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Database;
+using Content.Shared.Labels.Components;
 
 namespace Content.Server.Botany.Systems;
 
@@ -42,10 +43,14 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly RandomHelperSystem _randomHelper = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-
-
+    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    
     public const float HydroponicsSpeedMultiplier = 1f;
     public const float HydroponicsConsumptionMultiplier = 2f;
+
+    private static readonly ProtoId<TagPrototype> HoeTag = "Hoe";
+    private static readonly ProtoId<TagPrototype> PlantSampleTakerTag = "PlantSampleTaker";
 
     public override void Initialize()
     {
@@ -159,6 +164,7 @@ public sealed class PlantHolderSystem : EntitySystem
                 if (!_botany.TryGetSeed(seeds, out var seed))
                     return;
 
+                args.Handled = true;
                 var name = Loc.GetString(seed.Name);
                 var noun = Loc.GetString(seed.Noun);
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
@@ -178,21 +184,30 @@ public sealed class PlantHolderSystem : EntitySystem
                 }
                 component.LastCycle = _gameTiming.CurTime;
 
+                if (TryComp<PaperLabelComponent>(args.Used, out var paperLabel))
+                {
+                    _itemSlots.TryEjectToHands(args.Used, paperLabel.LabelSlot, args.User);
+                }
                 QueueDel(args.Used);
 
                 CheckLevelSanity(uid, component);
                 UpdateSprite(uid, component);
 
+                if (seed.PlantLogImpact != null)
+                    _adminLogger.Add(LogType.Botany, seed.PlantLogImpact.Value, $"{ToPrettyString(args.User):player} planted  {Loc.GetString(seed.Name):seed} at Pos:{Transform(uid).Coordinates}.");
+
                 return;
             }
 
+            args.Handled = true;
             _popup.PopupCursor(Loc.GetString("plant-holder-component-already-seeded-message",
                 ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
             return;
         }
 
-        if (_tagSystem.HasTag(args.Used, "Hoe"))
+        if (_tagSystem.HasTag(args.Used, HoeTag))
         {
+            args.Handled = true;
             if (component.WeedLevel > 0)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
@@ -212,6 +227,7 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (HasComp<ShovelComponent>(args.Used))
         {
+            args.Handled = true;
             if (component.Seed != null)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-remove-plant-message",
@@ -229,8 +245,9 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
         }
 
-        if (_tagSystem.HasTag(args.Used, "PlantSampleTaker"))
+        if (_tagSystem.HasTag(args.Used, PlantSampleTakerTag))
         {
+            args.Handled = true;
             if (component.Seed == null)
             {
                 _popup.PopupCursor(Loc.GetString("plant-holder-component-nothing-to-sample-message"), args.User);
@@ -286,10 +303,15 @@ public sealed class PlantHolderSystem : EntitySystem
         }
 
         if (HasComp<SharpComponent>(args.Used))
+        {
+            args.Handled = true;
             DoHarvest(uid, args.User, component);
+            return;
+        }
 
         if (TryComp<ProduceComponent>(args.Used, out var produce))
         {
+            args.Handled = true;
             _popup.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
                 ("owner", uid),
                 ("usingItem", args.Used)), args.User, PopupType.Medium);
@@ -673,7 +695,10 @@ public sealed class PlantHolderSystem : EntitySystem
             if (TryComp<HandsComponent>(user, out var hands))
             {
                 if (!_botany.CanHarvest(component.Seed, hands.ActiveHandEntity))
+                {
+                    _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), user);
                     return false;
+                }
             }
             else if (!_botany.CanHarvest(component.Seed))
             {

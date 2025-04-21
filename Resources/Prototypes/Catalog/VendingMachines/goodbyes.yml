@@ -41,6 +41,18 @@
     count: 4
 
 - type: localizedDataset
+  id: DrGibbGoodbyes
+  values:
+    prefix: thankyou-gibb-
+    count: 4
+
+- type: localizedDataset
+  id: SmiteGoodbyes
+  values:
+    prefix: thankyou-smite-
+    count: 4
+
+- type: localizedDataset
   id: DiscountDansGoodbyes
   values:
     prefix: thankyou-discount-
@@ -105,3 +117,9 @@
   values:
     prefix: thankyou-syndiedrobe-
     count: 5
+
+- type: localizedDataset
+  id: PrideDrobeGoodbyes
+  values:
+    prefix: thankyou-pride-
+    count: 3

@@ -37,6 +37,12 @@ reagent-effect-guidebook-emp-reaction-effect =
         *[other] cause
     } an electromagnetic pulse
 
+reagent-effect-guidebook-flash-reaction-effect =
+    { $chance ->
+        [1] Causes
+        *[other] cause
+    } a blinding flash
+
 reagent-effect-guidebook-foam-area-reaction-effect =
     { $chance ->
         [1] Creates
@@ -96,12 +102,6 @@ reagent-effect-guidebook-status-effect =
                     *[other] remove
                 } {NATURALFIXED($time, 3)} {MANY("second", $time)} of {LOC($key)}
     }
-
-reagent-effect-guidebook-activate-artifact =
-    { $chance ->
-        [1] Attempts
-        *[other] attempt
-    } to activate an artifact
 
 reagent-effect-guidebook-set-solution-temperature-effect =
     { $chance ->
@@ -356,6 +356,12 @@ reagent-effect-guidebook-add-to-solution-reaction =
         [1] Causes
         *[other] cause
     } chemicals applied to an object to be added to its internal solution container
+
+reagent-effect-guidebook-artifact-unlock =
+    { $chance ->
+        [1] Helps
+        *[other] help
+        } unlock an alien artifact.
 
 reagent-effect-guidebook-plant-attribute =
     { $chance ->

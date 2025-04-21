@@ -1,0 +1,74 @@
+## Static
+
+- type: latheRecipePack
+  id: RoboticsStatic
+  recipes:
+  - MMI
+  - PositronicBrain
+  - SciFlash
+  - CyborgEndoskeleton
+
+- type: latheRecipePack
+  id: BorgModulesStatic
+  recipes:
+  - BorgModuleCable
+  - BorgModuleFireExtinguisher
+  - BorgModuleRadiationDetection
+  - BorgModuleTool
+
+- type: latheRecipePack
+  id: BorgLimbsStatic
+  recipes:
+  - LeftArmBorg
+  - RightArmBorg
+  - LeftLegBorg
+  - RightLegBorg
+  - LightHeadBorg
+  - TorsoBorg
+
+## Dynamic
+
+- type: latheRecipePack
+  id: Robotics
+  recipes:
+  - ProximitySensor
+
+- type: latheRecipePack
+  id: BorgModules
+  recipes:
+  - BorgModuleAdvancedCleaning
+  - BorgModuleAdvancedTool
+  - BorgModuleGPS
+  - BorgModuleArtifact
+  - BorgModuleAnomaly
+  - BorgModuleGardening
+  - BorgModuleHarvesting
+  - BorgModuleDefibrillator
+  - BorgModuleAdvancedTreatment
+
+- type: latheRecipePack
+  id: MechParts
+  recipes:
+  - RipleyHarness
+  - RipleyLArm
+  - RipleyRArm
+  - RipleyLLeg
+  - RipleyRLeg
+  - HonkerHarness
+  - HonkerLArm
+  - HonkerRArm
+  - HonkerLLeg
+  - HonkerRLeg
+  - HamtrHarness
+  - HamtrLArm
+  - HamtrRArm
+  - HamtrLLeg
+  - HamtrRLeg
+  - VimHarness
+
+- type: latheRecipePack
+  id: MechEquipment
+  recipes:
+    - MechEquipmentGrabber
+    - MechEquipmentHorn
+    - MechEquipmentGrabberSmall

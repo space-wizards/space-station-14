@@ -33,6 +33,12 @@ public sealed partial class ToggleClothingComponent : Component
     /// </summary>
     [DataField]
     public bool DisableOnUnequip;
+
+    /// <summary>
+    /// If true, the clothes must equip for adding action.
+    /// </summary>
+    [DataField]
+    public bool MustEquip = true;
 }
 
 /// <summary>
