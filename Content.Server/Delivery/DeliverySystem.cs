@@ -54,7 +54,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     {
         _container.EnsureContainer<Container>(ent, ent.Comp.Container);
 
-        if (_station.GetStationInMap(Transform(ent).MapID) is not EntityUid stationId)
+        if (_station.GetStationInMap(Transform(ent).MapID) is not { } stationId)
             return;
 
         if (!_records.TryGetRandomRecord<GeneralStationRecord>(stationId, out var entry))
@@ -97,7 +97,8 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     /// <summary>
     /// Runs the penalty logic: Announcing the penalty and calculating how much to charge the designated account
     /// </summary>
-    /// <param name="ent"><see cref="DeliveryComponent"/> entity.</param>
+    /// <param name="ent">The delivery for which to run the penalty.</param>
+    /// <param name="reasonLoc">The penalty reason, displayed in front of the message.</param>
     protected override void HandlePenalty(Entity<DeliveryComponent> ent, string? reasonLoc = null)
     {
         if (!TryComp<StationBankAccountComponent>(ent.Comp.RecipientStation, out var stationAccount))
@@ -124,13 +125,11 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         };
 
         var penaltyAccountBalance = stationAccount.Accounts[ent.Comp.PenaltyBankAccount];
-
         var calculatedPenalty = (int)(ent.Comp.BaseSpesoPenalty * multiplier);
 
         // Prevents cargo from going into negatives
         if (penaltyAccountBalance - calculatedPenalty < 0)
             calculatedPenalty = Math.Max(0, penaltyAccountBalance);
-
 
         _cargo.UpdateBankAccount(
             (ent.Comp.RecipientStation.Value, stationAccount),
