@@ -8,6 +8,7 @@ using Content.Shared.Delivery;
 using Content.Shared.FingerprintReader;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.StationRecords;
+using JetBrains.FormatRipper.Elf;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -88,10 +89,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
 
         var stationAccountEnt = (delivery.RecipientStation.Value, account);
 
-        var ev = new GetDeliveryMultiplierEvent();
-        RaiseLocalEvent(ent, ref ev);
-
-        var multiplier = ev.Multiplier += ent.Comp.BaseSpesoMultiplier;
+        var multiplier = GetDeliveryMultiplier(ent!); // Resolve so we know it's got the component
 
         _cargo.UpdateBankAccount(
             stationAccountEnt,
@@ -106,11 +104,8 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     /// <param name="stationAccountEnt"><see cref="StationBankAccountComponent"/> entity.</param>
     public void HandlePenalty(Entity<DeliveryComponent> ent, Entity<StationBankAccountComponent?> stationAccountEnt, string reasonLoc)
     {
-        var ev = new GetDeliveryMultiplierEvent();
-        RaiseLocalEvent(ent, ref ev);
 
-        var multiplier = ev.Multiplier += ent.Comp.BaseSpesoMultiplier;
-
+        var multiplier = GetDeliveryMultiplier(ent);
         var delivery = ent.Comp;
 
         var accountName = (_protoMan.TryIndex(delivery.PenaltyBankAccount, out var accountInfo) &&
@@ -135,6 +130,14 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
             );
 
         ent.Comp.WasPenalized = true;
+    }
+
+    private float GetDeliveryMultiplier(Entity<DeliveryComponent> ent)
+    {
+        var ev = new GetDeliveryMultiplierEvent();
+        RaiseLocalEvent(ent, ref ev);
+
+        return ev.Multiplier += ent.Comp.BaseSpesoMultiplier;
     }
 
     private string GetMessage(string reason, int penalty, string accountName)
