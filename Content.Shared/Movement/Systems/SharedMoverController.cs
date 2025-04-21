@@ -294,7 +294,7 @@ public abstract partial class SharedMoverController : VirtualController
         }
         else
         {
-            friction = _frictionModifier * tileDef?.Friction ?? 0.3f;
+            friction = _frictionModifier * tileDef?.Friction ?? _frictionModifier * 0.3f;
             if (wishDir != Vector2.Zero)
             {
                 friction *= tileDef?.MobFriction ?? moveSpeedComponent?.Friction ?? MovementSpeedModifierComponent.DefaultFriction;

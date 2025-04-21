@@ -79,33 +79,25 @@ public sealed class FrictionContactsSystem : EntitySystem
             return;
 
         var friction = 0.0f;
-        float? frictionNoInput = null;
+        var frictionNoInput = 0.0f;
         var acceleration = 0.0f;
 
-        bool remove = true;
+        var remove = true;
         var entries = 0;
         foreach (var ent in _physics.GetContactingEntities(entity, physicsComponent))
         {
-            bool modified = false;
-
-            if (TryComp<FrictionContactsComponent>(ent, out var contacts))
-            {
-                friction += contacts.MobFriction;
-                frictionNoInput = frictionNoInput == null ? contacts.MobFrictionNoInput : frictionNoInput + contacts.MobFrictionNoInput;
-                acceleration += contacts.MobAcceleration;
-                modified = true;
-            }
-
-            if (modified)
-            {
-                remove = false;
-                entries++;
-            }
+            if (!TryComp<FrictionContactsComponent>(ent, out var contacts))
+                continue;
+            friction += contacts.MobFriction;
+            frictionNoInput += contacts.MobFrictionNoInput ?? contacts.MobFriction;
+            acceleration += contacts.MobAcceleration;
+            remove = false;
+            entries++;
         }
 
         if (entries > 0)
         {
-            if (!MathHelper.CloseTo(friction, entries) || frictionNoInput != null)
+            if (!MathHelper.CloseTo(friction, entries) || !MathHelper.CloseTo(frictionNoInput, entries))
             {
                 friction /= entries;
                 frictionNoInput /= entries;

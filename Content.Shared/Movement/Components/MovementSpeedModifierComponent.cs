@@ -24,7 +24,7 @@ namespace Content.Shared.Movement.Components
         // friction
         public const float DefaultAcceleration = 30f;
         public const float DefaultFriction = 2.5f;
-        public const float DefaultFrictionNoInput = 1f;
+        public const float DefaultFrictionNoInput = 2.5f;
 
         // movement
         public const float DefaultBaseWalkSpeed = 2.5f;
@@ -105,7 +105,7 @@ namespace Content.Shared.Movement.Components
         /// The negative velocity applied for friction.
         /// </summary>
         [AutoNetworkedField, DataField]
-        public float? FrictionNoInput;
+        public float FrictionNoInput;
 
         #endregion
 

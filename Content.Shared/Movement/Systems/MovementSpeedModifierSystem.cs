@@ -1,6 +1,8 @@
+using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
+using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Movement.Systems
@@ -8,12 +10,17 @@ namespace Content.Shared.Movement.Systems
     public sealed class MovementSpeedModifierSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private   readonly IConfigurationManager _configManager = default!;
+
+        private float _frictionModifier;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<MovementSpeedModifierComponent, MapInitEvent>(OnModMapInit);
             SubscribeLocalEvent<MovementSpeedModifierComponent, TileFrictionEvent>(OnTileFriction);
+
+            Subs.CVar(_configManager, CCVars.TileFrictionModifier, value => _frictionModifier = value, true);
         }
 
         private void OnModMapInit(Entity<MovementSpeedModifierComponent> ent, ref MapInitEvent args)
@@ -24,6 +31,7 @@ namespace Content.Shared.Movement.Systems
             ent.Comp.WeightlessFriction = ent.Comp.BaseWeightlessFriction;
             ent.Comp.WeightlessFrictionNoInput = ent.Comp.BaseWeightlessFrictionNoInput;
             ent.Comp.Friction = ent.Comp.BaseFriction;
+            ent.Comp.FrictionNoInput = ent.Comp.BaseFriction;
             ent.Comp.Acceleration = ent.Comp.BaseAcceleration;
             Dirty(ent);
         }
@@ -103,21 +111,24 @@ namespace Content.Shared.Movement.Systems
             var ev = new RefreshFrictionModifiersEvent()
             {
                 Friction = move.BaseFriction,
+                FrictionNoInput = move.BaseFriction,
                 Acceleration = move.BaseAcceleration
             };
             RaiseLocalEvent(uid, ref ev);
 
-            if (MathHelper.CloseTo(ev.Friction, move.Friction) && ev.FrictionNoInput == null && ev.Acceleration == null)
+            if (MathHelper.CloseTo(ev.Friction, move.Friction)
+                && MathHelper.CloseTo(ev.FrictionNoInput, move.FrictionNoInput)
+                && MathHelper.CloseTo(ev.Acceleration, move.Acceleration))
                 return;
 
             move.Friction = ev.Friction;
-            move.FrictionNoInput = ev.FrictionNoInput * move.BaseFriction;
+            move.FrictionNoInput = ev.FrictionNoInput;
             move.Acceleration = ev.Acceleration;
 
             Dirty(uid, move);
         }
 
-        public void ChangeBaseFriction(EntityUid uid, float friction, float? frictionNoInput, float acceleration, MovementSpeedModifierComponent? move = null)
+        public void ChangeBaseFriction(EntityUid uid, float friction, float frictionNoInput, float acceleration, MovementSpeedModifierComponent? move = null)
         {
             if (!Resolve(uid, ref move, false))
                 return;
@@ -159,7 +170,7 @@ namespace Content.Shared.Movement.Systems
     }
 
     [ByRefEvent]
-    public record struct RefreshWeightlessModifiersEvent()
+    public record struct RefreshWeightlessModifiersEvent
     {
         public float WeightlessAcceleration;
 
@@ -170,17 +181,21 @@ namespace Content.Shared.Movement.Systems
         public float WeightlessFrictionNoInput;
     }
     [ByRefEvent]
-    public record struct RefreshFrictionModifiersEvent() : IInventoryRelayEvent
+    public record struct RefreshFrictionModifiersEvent : IInventoryRelayEvent
     {
         public float Friction;
-        public float? FrictionNoInput;
+        public float FrictionNoInput;
         public float Acceleration;
 
-        public void ModifyFriction(float friction, float? noInput = null)
+        public void ModifyFriction(float friction, float noInput)
         {
             Friction *= friction;
-            // If FrictionNoInput doesn't have a value, give it one, otherwise multiply the current value by the mod.
-            FrictionNoInput = FrictionNoInput == null ? noInput : FrictionNoInput * noInput;
+            FrictionNoInput *= noInput;
+        }
+
+        public void ModifyFriction(float friction)
+        {
+            ModifyFriction(friction, friction);
         }
 
         public void ModifyAcceleration(float acceleration)

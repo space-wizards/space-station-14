@@ -18,7 +18,7 @@ public sealed partial class SkatesComponent : Component
     /// Determines the turning ability of the wearer, Higher the number the less control of their turning ability.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float? FrictionNoInput = 0.125f;
+    public float FrictionNoInput = 0.125f;
 
     /// <summary>
     /// Sets the speed in which the wearer accelerates to full speed, higher the number the quicker the acceleration.
