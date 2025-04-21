@@ -181,7 +181,7 @@ public abstract partial class SharedShuttleSystem : EntitySystem
 
         // Just checks if any grids inside of a buffer range at the target position.
         _grids.Clear();
-        var mapCoordinates = coordinates.ToMap(EntityManager, XformSystem);
+        var mapCoordinates = XformSystem.ToMapCoordinates(coordinates);
 
         var ourPos = Maps.GetGridPosition((shuttleUid, shuttlePhysics, shuttleXform));
 
