@@ -43,25 +43,25 @@ public sealed class MultipartMachineSystem : EntitySystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         foreach (var part in ent.Comp.Parts.Values)
         {
-            if (!part.Entity.HasValue)
+            if (part.Entity.HasValue)
+                continue;
+
+            var rotation = ent.Comp.Rotation ?? Angle.Zero;
+            var ghostEnt = Spawn(_ghostPrototype, new EntityCoordinates(ent.Owner, part.Offset.Rotate(rotation)));
+            if (!xformQuery.TryGetComponent(ghostEnt, out var xform))
+                break;
+
+            xform.LocalRotation = part.Rotation + rotation;
+
+            Comp<MultipartMachineGhostComponent>(ghostEnt).LinkedMachine = ent;
+
+            if (part.Sprite != null)
             {
-                var rotation = ent.Comp.Rotation ?? Angle.Zero;
-                var ghostEnt = Spawn(_ghostPrototype, new EntityCoordinates(ent.Owner, part.Offset.Rotate(rotation)));
-                if (!xformQuery.TryGetComponent(ghostEnt, out var xform))
-                    break;
-
-                xform.LocalRotation = part.Rotation + rotation;
-
-                Comp<MultipartMachineGhostComponent>(ghostEnt).LinkedMachine = ent;
-
-                if (part.Sprite != null)
-                {
-                    var sprite = Comp<SpriteComponent>(ghostEnt);
-                    sprite.LayerSetSprite(0, part.Sprite);
-                }
-
-                ent.Comp.Ghosts.Add(ghostEnt);
+                var sprite = Comp<SpriteComponent>(ghostEnt);
+                sprite.LayerSetSprite(0, part.Sprite);
             }
+
+            ent.Comp.Ghosts.Add(ghostEnt);
         }
     }
 
