@@ -137,7 +137,7 @@ public sealed class MappingSystem : EntitySystem
             return;
         }
 
-        if (ResPath.IsValidFilename(name))
+        if (!ResPath.IsValidFilename(name))
         {
             Log.Error($"Not a valid filename: {name}");
             return;
