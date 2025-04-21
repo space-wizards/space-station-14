@@ -113,6 +113,8 @@
   components:
   - type: Clickable
   - type: Slippery
+  - type: TileFrictionModifier
+    modifier: 0.3
   - type: Transform
     noRot: true
     anchored: true

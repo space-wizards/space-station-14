@@ -112,7 +112,7 @@ public abstract class SharedPortalSystem : EntitySystem
 
         if (TryComp<LinkedEntityComponent>(uid, out var link))
         {
-            if (!link.LinkedEntities.Any())
+            if (link.LinkedEntities.Count == 0)
                 return;
 
             // client can't predict outside of simple portal-to-portal interactions due to randomness involved
@@ -150,7 +150,7 @@ public abstract class SharedPortalSystem : EntitySystem
 
     private void OnEndCollide(EntityUid uid, PortalComponent component, ref EndCollideEvent args)
     {
-        if (!ShouldCollide(args.OurFixtureId, args.OtherFixtureId,args.OurFixture, args.OtherFixture))
+        if (!ShouldCollide(args.OurFixtureId, args.OtherFixtureId, args.OurFixture, args.OtherFixture))
             return;
 
         var subject = args.OtherEntity;
@@ -162,7 +162,7 @@ public abstract class SharedPortalSystem : EntitySystem
         }
     }
 
-    private void TeleportEntity(EntityUid portal, EntityUid subject, EntityCoordinates target, EntityUid? targetEntity=null, bool playSound=true,
+    private void TeleportEntity(EntityUid portal, EntityUid subject, EntityCoordinates target, EntityUid? targetEntity = null, bool playSound = true,
         PortalComponent? portalComponent = null)
     {
         if (!Resolve(portal, ref portalComponent))
@@ -228,7 +228,7 @@ public abstract class SharedPortalSystem : EntitySystem
         {
             var randVector = _random.NextVector2(component.MaxRandomRadius);
             newCoords = coords.Offset(randVector);
-            if (!_lookup.GetEntitiesIntersecting(_transform.ToMapCoordinates(newCoords), LookupFlags.Static).Any())
+            if (!_lookup.AnyEntitiesIntersecting(_transform.ToMapCoordinates(newCoords), LookupFlags.Static))
             {
                 break;
             }

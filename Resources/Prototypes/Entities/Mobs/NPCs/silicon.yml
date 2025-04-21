@@ -66,6 +66,7 @@
     tags:
     - DoorBumpOpener
     - Bot
+    - Unimplantable
   - type: MobState
     allowedStates:
       - Alive
@@ -178,7 +179,8 @@
     rootTask:
       task: HonkbotCompound
   - type: Slippery
-    launchForwardsMultiplier: 2
+    slipData:
+      launchForwardsMultiplier: 2
   - type: Speech
     speechVerb: Cluwne
   - type: StepTrigger
@@ -451,6 +453,7 @@
     - DoorBumpOpener
     - FootstepSound
     - Bot
+    - Unimplantable
   - type: ActiveRadio
     channels:
     - Common
