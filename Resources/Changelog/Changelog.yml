@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: justdie12
-  changes:
-  - message: Added a bend version of the radiator.
-    type: Add
-  id: 7799
-  time: '2025-01-11T20:03:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34251
 - author: Errant
   changes:
   - message: Players are now informed in chat every time their role type changes,
@@ -3903,3 +3896,12 @@
   id: 8299
   time: '2025-04-21T12:07:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32847
+- author: aada
+  changes:
+  - message: Hotplates and kitchen grills can now be anchored on tables.
+    type: Fix
+  - message: Hotplates and kitchen grills now collide with walls.
+    type: Fix
+  id: 8300
+  time: '2025-04-21T15:38:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34776
