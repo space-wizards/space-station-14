@@ -5000,4 +5000,11 @@ Entries:
   id: 692
   time: '2025-04-21T07:33:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/488
+- author: STARLIGHT TEAM
+  changes:
+  - message: upstream.
+    type: Tweak
+  id: 693
+  time: '2025-04-21T07:33:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/506
 
