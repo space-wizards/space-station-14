@@ -299,13 +299,13 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
                 return true;
             }
 
-        var transferMax = absorber.PickupAmount;
-        var transferAmount = available > transferMax ? transferMax : available;
+            var transferMax = absorber.PickupAmount;
+            var transferAmount = available > transferMax ? transferMax : available;
 
-        var puddleSplit = puddleSolution.SplitSolutionWithout(transferAmount, _puddleSystem.GetAbsorbentReagents(puddleSolution));
-        var absorberSplit = absorberSolution.SplitSolutionWithOnly(puddleSplit.Volume, _puddleSystem.GetAbsorbentReagents(absorberSolution));
+            puddleSplit = puddleSolution.SplitSolutionWithout(transferAmount, _puddleSystem.GetAbsorbentReagents(puddleSolution));
+            var absorberSplit = absorberSolution.SplitSolutionWithOnly(puddleSplit.Volume, _puddleSystem.GetAbsorbentReagents(absorberSolution));
 
-        // Do tile reactions first
+            // Do tile reactions first
             var transform = Transform(target);
             var gridUid = transform.GridUid;
             if (TryComp(gridUid, out MapGridComponent? mapGrid))
@@ -317,7 +317,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         }
         else
         {
-            puddleSplit = puddleSolution.SplitSolutionWithout(absorber.PickupAmount, PuddleSystem.EvaporationReagents);
+            puddleSplit = puddleSolution.SplitSolutionWithout(absorber.PickupAmount, _puddleSystem.GetAbsorbentReagents(puddleSolution));
             // Despawn if we're done
             if (puddleSolution.Volume == FixedPoint2.Zero)
             {
