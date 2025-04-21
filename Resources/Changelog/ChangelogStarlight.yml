@@ -4978,4 +4978,11 @@ Entries:
   id: 689
   time: '2025-04-21T07:31:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/507
+- author: Killer Tamashi
+  changes:
+  - message: Fixed Supersynth. It's now actually able to PLAY MUSIC in the neckslot.
+    type: Fix
+  id: 690
+  time: '2025-04-21T07:32:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/504
 
