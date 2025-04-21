@@ -65,7 +65,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (!TryComp<MultipartMachineComponent>(uid, out var machineComp))
             return;
 
-        var machine = new Entity<MultipartMachineComponent?>(uid, machineComp);
+        var machine = (uid, machineComp);
         EverythingIsWellToFire(comp, machine);
 
         var strength = comp.SelectedStrength;
@@ -224,7 +224,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (!TryComp<MultipartMachineComponent>(uid, out var machine))
             return;
 
-        EverythingIsWellToFire(comp, new Entity<MultipartMachineComponent?>(uid, machine));
+        EverythingIsWellToFire(comp, (uid, machine));
 
         var curTime = _gameTiming.CurTime;
         comp.LastFire = curTime;
@@ -266,7 +266,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (!TryComp<MultipartMachineComponent>(uid, out var machineComp))
             return;
 
-        var machine = new Entity<MultipartMachineComponent?>(uid, machineComp);
+        var machine = (uid, machineComp);
 
         _uiSystem.SetUiState(uid,
             ParticleAcceleratorControlBoxUiKey.Key,
@@ -313,7 +313,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (!TryComp<MultipartMachineComponent>(uid, out var machineComp))
             return;
 
-        var machine = new Entity<MultipartMachineComponent?>(uid, machineComp);
+        var machine = (uid, machineComp);
 
         // UpdatePartVisualState(ControlBox); (We are the control box)
         if (_multipartMachine.TryGetPartEntity(machine, AcceleratorParts.FuelChamber, out var fuelChamber) && fuelChamber.HasValue)
