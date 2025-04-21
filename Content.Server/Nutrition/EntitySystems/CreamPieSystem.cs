@@ -113,7 +113,8 @@ namespace Content.Server.Nutrition.EntitySystems
                                             ("thrower", Identity.Entity(args.Thrown, EntityManager))),
                                             uid, otherPlayers, false);
             var evChangeStatsValue = new ChangeStatsValueEvent(CreamedCount, 1);
-            RaiseLocalEvent(ref evChangeStatsValue);        }
+            RaiseLocalEvent(ref evChangeStatsValue);        
+        }
 
         private void OnRejuvenate(Entity<CreamPiedComponent> entity, ref RejuvenateEvent args)
         {
