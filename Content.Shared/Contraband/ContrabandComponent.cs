@@ -19,7 +19,7 @@ public sealed partial class ContrabandComponent : Component
 
     /// <summary>
     ///     Which departments is this item restricted to?
-    ///     If null, no departments are allowed to use this.
+    ///     If empty, no departments are allowed to use this.
     /// </summary>
     [DataField]
     [AutoNetworkedField]
@@ -27,7 +27,7 @@ public sealed partial class ContrabandComponent : Component
 
     /// <summary>
     ///     Which jobs is this item restricted to?
-    ///     If null, no jobs are allowed to use this beyond the allowed departments.
+    ///     If empty, no jobs are allowed to use this beyond the allowed departments.
     /// </summary>
     [DataField]
     [AutoNetworkedField]
