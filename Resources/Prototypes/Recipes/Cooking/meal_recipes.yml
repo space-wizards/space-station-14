@@ -2326,7 +2326,7 @@
 - type: microwaveMealRecipe
   id: RecipeMothfeh
   name: mothfeh recipe
-  result: FoodMothfeh
+  result: FoodMoffeh
   time: 5
   reagents:
     Water: 5
