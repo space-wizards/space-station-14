@@ -6,6 +6,7 @@ using Content.Shared.Cargo.Components;
 using Content.Shared.Cargo.Prototypes;
 using Content.Shared.Delivery;
 using Content.Shared.FingerprintReader;
+using Content.Shared.Interaction;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.StationRecords;
 using Robust.Shared.Audio.Systems;
@@ -34,12 +35,12 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     /// <summary>
     /// Name to use if the <see cref="DeliveryComponent.PenaltyBankAccount"/> is not set
     /// </summary>
-    private const string UnknownAccount = "Unknown Account";
+    private static readonly LocId UnknownAccount = "delivery-penalty-default-account-name";
 
     /// <summary>
     /// Default reason to use if the penalization is triggered
     /// </summary>
-    private const string DefaultMessage = "Warning";
+    private static readonly LocId DefaultMessage = "delivery-penalty-default-reason";
 
     public override void Initialize()
     {
@@ -81,49 +82,46 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        var delivery = ent.Comp;
-
-        if (!TryComp<StationBankAccountComponent>(delivery.RecipientStation, out var account))
+        if (!TryComp<StationBankAccountComponent>(ent.Comp.RecipientStation, out var account))
             return;
 
-        var stationAccountEnt = (delivery.RecipientStation.Value, account);
+        var stationAccountEnt = (ent.Comp.RecipientStation.Value, account);
 
         var multiplier = GetDeliveryMultiplier(ent!); // Resolve so we know it's got the component
 
         _cargo.UpdateBankAccount(
             stationAccountEnt,
-            (int)(delivery.BaseSpesoReward * multiplier),
-           _cargo.CreateAccountDistribution((delivery.RecipientStation.Value, account)));
+            (int)(ent.Comp.BaseSpesoReward * multiplier),
+           _cargo.CreateAccountDistribution((ent.Comp.RecipientStation.Value, account)));
     }
 
     /// <summary>
-    /// Runs the penalty logic: Announcing the penalty and calculating how much to charge the desginatied account
+    /// Runs the penalty logic: Announcing the penalty and calculating how much to charge the designated account
     /// </summary>
     /// <param name="ent"><see cref="DeliveryComponent"/> entity.</param>
     /// <param name="stationAccountEnt"><see cref="StationBankAccountComponent"/> entity.</param>
     public void HandlePenalty(Entity<DeliveryComponent> ent, Entity<StationBankAccountComponent?> stationAccountEnt, string reasonLoc)
     {
         var multiplier = GetDeliveryMultiplier(ent);
-        var delivery = ent.Comp;
 
-        var accountName = (_protoMan.TryIndex(delivery.PenaltyBankAccount, out var accountInfo) &&
+        var accountName = (_protoMan.TryIndex(ent.Comp.PenaltyBankAccount, out var accountInfo) &&
                    Loc.TryGetString(accountInfo.Name, out var localizedAccountName))
                   ? localizedAccountName
-                  : UnknownAccount;
+                  : Loc.GetString(UnknownAccount);
 
         if (!Loc.TryGetString(reasonLoc, out var reason))
-            reason = DefaultMessage;
+            reason = Loc.GetString(DefaultMessage);
 
-        _chat.TrySendInGameICMessage(ent, GetMessage(reason, delivery.BaseSpesoPenalty, accountName), InGameICChatType.Speak, hideChat: true);
+        _chat.TrySendInGameICMessage(ent, GetMessage(reason, ent.Comp.BaseSpesoPenalty, accountName), InGameICChatType.Speak, hideChat: true);
 
         var dist = new Dictionary<ProtoId<CargoAccountPrototype>, double>()
         {
-            { delivery.PenaltyBankAccount, 1.0 }
+            { ent.Comp.PenaltyBankAccount, 1.0 }
         };
 
         _cargo.UpdateBankAccount(
             stationAccountEnt,
-            -((int)(delivery.BaseSpesoPenalty * multiplier)), // Subtracting
+            -((int)(ent.Comp.BaseSpesoPenalty * multiplier)), // Subtracting
             dist
             );
 
