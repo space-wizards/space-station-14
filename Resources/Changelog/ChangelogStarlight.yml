@@ -4957,4 +4957,25 @@ Entries:
   id: 686
   time: '2025-04-19T12:41:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/503
+- author: Happyrobot33
+  changes:
+  - message: Fixed Boxcutter throw damage.
+    type: Fix
+  id: 687
+  time: '2025-04-21T07:31:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/507
+- author: Happyrobot33
+  changes:
+  - message: Fixed Boxcutter embedding when sheathed.
+    type: Fix
+  id: 688
+  time: '2025-04-21T07:31:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/507
+- author: Happyrobot33
+  changes:
+  - message: Fixed Boxcutter sprite angle when thrown
+    type: Fix
+  id: 689
+  time: '2025-04-21T07:31:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/507
 
