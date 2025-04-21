@@ -10,7 +10,7 @@ namespace Content.IntegrationTests;
 // The static class exist to avoid breaking changes
 public static class PoolManager
 {
-    public static readonly ClientPoolManager Instance = new();
+    public static readonly ContentPoolManager Instance = new();
     public const string TestMap = "Empty";
 
     public static readonly (string cvar, string value)[] TestCvars =
@@ -109,7 +109,7 @@ public static class PoolManager
 /// <summary>
 /// Making clients, and servers is slow, this manages a pool of them so tests can reuse them.
 /// </summary>
-public sealed class ClientPoolManager : PoolManager<TestPair>
+public sealed class ContentPoolManager : PoolManager<TestPair>
 {
     public override PairSettings DefaultSettings =>  new PoolSettings();
     protected override string GetDefaultTestName(TestContext testContext)
