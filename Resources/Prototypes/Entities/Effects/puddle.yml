@@ -153,7 +153,7 @@
       layers:
         - sprite: Fluids/wet_floor_sparkles.rsi
           state: sparkles
-      drawdepth: FloorObjects
+      drawdepth: Puddles
       color: "#FFFFFF80"
 
 - type: entity
@@ -165,6 +165,8 @@
   components:
   - type: Clickable
   - type: Slippery
+  - type: TileFrictionModifier
+    modifier: 0.3
   - type: Transform
     noRot: true
     anchored: true
@@ -172,7 +174,7 @@
     layers:
     - sprite: Fluids/puddle.rsi
       state: splat0
-    drawdepth: FloorObjects
+    drawdepth: Puddles
     color: "#FFFFFF80"
   - type: Physics
     bodyType: Static
@@ -189,6 +191,8 @@
         hard: false
   - type: IconSmooth
     key: puddles
+    additionalKeys:
+    - walls
     base: splat
     mode: CardinalFlags
   - type: SolutionContainerManager

@@ -4,6 +4,7 @@
   suffix: Weapon
   components:
   - type: MeleeWeapon
+    attackRate: 1.4
     wideAnimationRotation: -120
     damage:
       types:
