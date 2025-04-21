@@ -202,7 +202,7 @@
     selectionTime: IntraPlayerSpawn
     definitions:
     - prefRoles: [ Traitor ]
-      max: 6
+      max: 8
       playerRatio: 10
       blacklist:
         components:
