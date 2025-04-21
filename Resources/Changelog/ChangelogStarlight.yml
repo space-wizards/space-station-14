@@ -4985,4 +4985,19 @@ Entries:
   id: 690
   time: '2025-04-21T07:32:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/504
+- author: choccy
+  changes:
+  - message: starboard station and associated prototype and emergency shuttle
+    type: Add
+  id: 691
+  time: '2025-04-21T07:33:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/488
+- author: choccy
+  changes:
+  - message: actually finalised Starboard, seemingly, and brought it in line with
+      latest merge
+    type: Tweak
+  id: 692
+  time: '2025-04-21T07:33:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/488
 
