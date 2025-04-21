@@ -33,6 +33,6 @@ public sealed partial class PolymorphSystem
 
         var newmap = _mapSystem.CreateMap();
         _mapSystem.SetPaused(newmap, true);
-        PausedMap = _mapSystem.GetMap(Comp<MapComponent>(newmap).MapId);
+        PausedMap = newmap;
     }
 }
