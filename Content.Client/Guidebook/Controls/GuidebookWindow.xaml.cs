@@ -23,6 +23,8 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
 
     private readonly ISawmill _sawmill;
 
+    public ProtoId<GuideEntryPrototype> LastEntry;
+
     public GuidebookWindow()
     {
         RobustXamlLoader.Load(this);
@@ -90,6 +92,8 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
 
             _sawmill.Error($"Failed to parse contents of guide document {entry.Id}.");
         }
+
+        LastEntry = entry.Id;
     }
 
     public void UpdateGuides(
@@ -129,24 +133,14 @@ public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
             HashSet<ProtoId<GuideEntryPrototype>> entries = new(_entries.Keys);
             foreach (var entry in _entries.Values)
             {
-                if (entry.Children.Count > 0)
-                {
-                    var sortedChildren = entry.Children
-                        .Select(childId => _entries[childId])
-                        .OrderBy(childEntry => childEntry.Priority)
-                        .ThenBy(childEntry => Loc.GetString(childEntry.Name))
-                        .Select(childEntry => new ProtoId<GuideEntryPrototype>(childEntry.Id))
-                        .ToList();
-
-                    entry.Children = sortedChildren;
-                }
-
                 entries.ExceptWith(entry.Children);
             }
-
             rootEntries = entries.ToList();
         }
 
+        // Only roots need to be sorted.
+        // As defined in the SS14 Dev Wiki, children are already sorted based on their child field order within their parent's prototype definition.
+        // Roots are sorted by priority. If there is no defined priority for a root then it is by definition sorted undefined.
         return rootEntries
             .Select(rootEntryId => _entries[rootEntryId])
             .OrderBy(rootEntry => rootEntry.Priority)

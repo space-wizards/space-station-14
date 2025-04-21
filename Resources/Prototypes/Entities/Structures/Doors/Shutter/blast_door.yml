@@ -5,6 +5,7 @@
   description: This one says 'BLAST DONGER'.
   components:
   - type: AccessReader
+    containerAccessProvider: board
   - type: Sprite
     sprite: Structures/Doors/Shutters/blastdoor.rsi
     layers:
@@ -21,6 +22,10 @@
     crushDamage:
       types:
         Blunt: 25 # yowch
+    openSound:
+      path: /Audio/Machines/blastdoor.ogg
+    closeSound:
+      path: /Audio/Machines/blastdoor.ogg
   - type: Occluder
   - type: Appearance
   - type: RadiationBlocker
@@ -37,7 +42,12 @@
     containers:
     - board
   - type: StaticPrice
-    price: 280
+    price: 500
+  - type: InteractionPopup
+    interactSuccessString: comp-window-knock
+    messagePerceivedByOthers: comp-window-knock
+    interactSuccessSound:
+      path: /Audio/Effects/glass_knock.ogg
 
 - type: entity
   id: BlastDoorOpen
@@ -66,8 +76,8 @@
     state: assembly
   - type: InteractionOutline
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
   - type: Destructible
     thresholds:
     - trigger:

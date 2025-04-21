@@ -40,16 +40,35 @@
             ]
         },
         {
-            "name": "grinder-o0"
-
+            "name": "grinder-o0",
+            "directions": 4
         },
         {
-            "name": "grinder-o0bld"
-
+            "name": "grinder-o0bld",
+            "directions": 4
         },
         {
             "name": "grinder-o1",
+            "directions": 4,
             "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
                 [
                     0.1,
                     0.1,
@@ -60,7 +79,26 @@
         },
         {
             "name": "grinder-o1bld",
+            "directions": 4,
             "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ],
                 [
                     0.1,
                     0.1,
@@ -68,6 +106,14 @@
                     0.1
                 ]
             ]
+        },
+        {
+            "name": "grinder-o2",
+            "directions": 4
+        },
+        {
+            "name": "grinder-o2bld",
+            "directions": 4
         },
         {
             "name": "separator-"

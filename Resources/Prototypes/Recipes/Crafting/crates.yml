@@ -32,6 +32,17 @@
   objectType: Structure
 
 - type: construction
+  name: freezer
+  id: CrateFreezer
+  graph: CrateFreezer
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  description: A metal freezing crate for storing things.
+  icon: { sprite: Structures/Storage/Crates/freezer.rsi, state: icon }
+  objectType: Structure
+
+- type: construction
   name: plastic crate
   id: CratePlastic
   graph: CratePlastic

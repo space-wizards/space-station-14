@@ -16,9 +16,8 @@ using static Robust.Client.UserInterface.Controls.LineEdit;
 namespace Content.Client.UserInterface.Systems.Chat.Widgets;
 
 [GenerateTypedNameReferences]
-#pragma warning disable RA0003
+[Virtual]
 public partial class ChatBox : UIWidget
-#pragma warning restore RA0003
 {
     private readonly ChatUIController _controller;
     private readonly IEntityManager _entManager;
@@ -102,7 +101,7 @@ public partial class ChatBox : UIWidget
     {
         var formatted = new FormattedMessage(3);
         formatted.PushColor(color);
-        formatted.AddMarkup(message);
+        formatted.AddMarkupOrThrow(message);
         formatted.Pop();
         Contents.AddMessage(formatted);
     }

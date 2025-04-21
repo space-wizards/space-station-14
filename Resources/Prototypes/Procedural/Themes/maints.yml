@@ -1,0 +1,169 @@
+- type: dungeonRoom
+  id: Maints5x5a
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 0,0
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5b
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 6,0
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5c
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 12,0
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5d
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 18,0
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5e
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 0,6
+  tags:
+    - Maints
+
+- type: dungeonRoom
+  id: Maints5x5f
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 6,6
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5g
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 12,6
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5h
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 18,6
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5i
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 0,12
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5j
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 6,12
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5k
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 12,12
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5l
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 18,12
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5m
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 0,18
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5n
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 6,18
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5o
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 12,18
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5p
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 18,18
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5q
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 0,24
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5r
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 6,24
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5s
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 12,24
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5t
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 18,24
+  tags:
+  - Maints
+
+- type: entity
+  id: MaintsRoomMarker
+  parent: BaseRoomMarker
+  name: Maints interior marker
+  components:
+  - type: RoomFill
+    roomWhitelist:
+      tags:
+      - Maints

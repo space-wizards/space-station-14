@@ -7,7 +7,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Clothing;
 
-public sealed class FlippableClothingVisualizerSystem  : VisualizerSystem<FlippableClothingVisualsComponent>
+public sealed class FlippableClothingVisualizerSystem : VisualizerSystem<FlippableClothingVisualsComponent>
 {
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
 
