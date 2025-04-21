@@ -195,7 +195,7 @@
   abstract: true
   components:
   - type: Contraband
-    allowedJobs: [ Chaplin ]
+    allowedJobs: [ Chaplain ]
 
 # for ~objective items
 - type: entity
