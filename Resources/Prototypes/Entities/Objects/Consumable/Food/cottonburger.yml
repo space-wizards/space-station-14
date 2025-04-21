@@ -1,9 +1,9 @@
 # Cotton Bun
 
 - type: entity
-  name: cotton bun
   parent: FoodBreadSliceBase
   id: FoodCottonBun
+  name: cotton bun
   description: A cotton hamburger bun. Soft, round and convenient to hold.
   components:
   - type: Food
@@ -31,11 +31,13 @@
   - type: Tag
     tags:
     - ClothMade
+    - Bread
+    - Slice
 
 
 - type: entity
-  id: FoodCottonBunBottom
   parent: FoodBreadSliceBase
+  id: FoodCottonBunBottom
   name: cotton bottom bun
   description: It's time for moths to experience the burger tower.
   components:
@@ -73,10 +75,12 @@
   - type: Tag
     tags:
     - ClothMade
+    - Bread
+    - Slice
 
 - type: entity
-  id: FoodCottonBunTop
   parent: FoodBreadSliceBase
+  id: FoodCottonBunTop
   name: cotton top bun
   description: The perfect finish for your fibrous burger tower.
   components:
@@ -101,3 +105,5 @@
   - type: Tag
     tags:
     - ClothMade
+    - Bread
+    - Slice

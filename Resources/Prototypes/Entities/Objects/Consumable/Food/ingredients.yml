@@ -516,6 +516,7 @@
   - type: Tag
     tags:
      - ClothMade
+     - Ingredient
 
 - type: entity
   name: raw pastry base
