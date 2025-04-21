@@ -565,7 +565,7 @@
   components:
   - type: Sprite
     layers:
-    - state: mothfeh
+    - state: moffeh
   - type: FlavorProfile
     flavors:
     - sweet
