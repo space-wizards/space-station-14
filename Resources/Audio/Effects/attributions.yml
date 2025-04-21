@@ -231,3 +231,18 @@
   copyright: '"beep_landmine.ogg" by kaktuscsc of Discord for SS14'
   license: "CC-BY-SA-3.0"
   source: https://github.com/YuriyKiss/space-station-14/commit/971a135a9c83aed46e967aac9302ab5b35562b5f
+
+- files: [inneranomaly.ogg]
+  copyright: 'created by waveplaySFX on Freesound'
+  license: "CC0-1.0"
+  source: https://freesound.org/people/waveplaySFX/sounds/553744/
+
+- files: [paperdoor_openclose.ogg]
+  copyright: 'created by Vrymaa on Freesound and modified by Chaboricks'
+  license: "CC0-1.0"
+  source: https://freesound.org/people/Vrymaa/sounds/785128/
+
+- files: ["cig_light.ogg", "cig_snuff.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by mattroks101 for Bee Station. cig_snuff converted to mono"
+  source: "https://github.com/BeeStation/BeeStation-Hornet/pull/29"
