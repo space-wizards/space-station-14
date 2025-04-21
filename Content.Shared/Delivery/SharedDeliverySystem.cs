@@ -13,6 +13,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Delivery;
 
@@ -180,7 +181,7 @@ public abstract class SharedDeliverySystem : EntitySystem
         if (!_container.TryGetContainer(ent, ent.Comp.Container, out var container))
             return;
 
-        if (attemptPickup || _container.IsEntityInContainer(ent))
+        if (attemptPickup)
         {
             foreach (var entity in container.ContainedEntities.ToArray())
             {
@@ -189,7 +190,8 @@ public abstract class SharedDeliverySystem : EntitySystem
         }
         else
         {
-            _container.EmptyContainer(container, true, Transform(ent.Owner).Coordinates);
+            EntityCoordinates? coords = _container.IsEntityInContainer(ent) ? null : Transform(ent).Coordinates;
+            _container.EmptyContainer(container, true, coords);
         }
     }
 
