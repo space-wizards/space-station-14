@@ -17,11 +17,11 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/basic.rsi
   - type: HideLayerClothing
-    slots:
-    - Hair
-    - Snout
-    - HeadTop
-    - HeadSide
+    layers:
+      Hair: HEAD
+      HeadTop : HEAD
+      HeadSide : HEAD
+      Snout: HEAD
 
 #Atmospherics Hardsuit
 - type: entity
