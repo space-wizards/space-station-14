@@ -12,18 +12,10 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="RoomEntranceDunGen"/>
     /// </summary>
-    private async Task PostGen(RoomEntranceDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(RoomEntranceDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
-            !data.SpawnGroups.TryGetValue(DungeonDataKey.Entrance, out var entranceProtos) ||
-            !_prototype.TryIndex(entranceProtos, out var entranceIn))
-        {
-            LogDataError(typeof(RoomEntranceDunGen));
-            return;
-        }
-
         var setTiles = new List<(Vector2i, Tile)>();
-        var tileDef = _tileDefManager[tileProto];
+        var tileDef = _tileDefManager[gen.Tile];
 
         foreach (var room in dungeon.Rooms)
         {
@@ -41,7 +33,7 @@ public sealed partial class DungeonJob
             {
                 _entManager.SpawnEntities(
                     _maps.GridTileToLocal(_gridUid, _grid, entrance),
-                    EntitySpawnCollection.GetSpawns(entranceIn.Entries, random));
+                    EntitySpawnCollection.GetSpawns(gen.Contents, random));
             }
         }
     }

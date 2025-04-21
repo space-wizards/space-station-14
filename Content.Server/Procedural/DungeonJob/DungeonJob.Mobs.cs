@@ -13,6 +13,9 @@ namespace Content.Server.Procedural.DungeonJob;
 
 public sealed partial class DungeonJob
 {
+    /// <summary>
+    /// <see cref="MobsDunGen"/>
+    /// </summary>
     private async Task PostGen(
         MobsDunGen gen,
         Dungeon dungeon,

@@ -1,3 +1,7 @@
+using Content.Shared.Maps;
+using Content.Shared.Storage;
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.Procedural.PostGeneration;
 
 /// <summary>
@@ -16,4 +20,13 @@ public sealed partial class MiddleConnectionDunGen : IDunGenLayer
     /// </summary>
     [DataField]
     public int Count = 1;
+
+    [DataField(required: true)]
+    public ProtoId<ContentTileDefinition> Tile;
+
+    [DataField(required: true)]
+    public List<EntitySpawnEntry> Contents = new();
+
+    [DataField]
+    public List<EntitySpawnEntry>? Flank;
 }

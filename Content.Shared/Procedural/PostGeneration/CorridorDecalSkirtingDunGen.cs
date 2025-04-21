@@ -1,7 +1,3 @@
-using Content.Shared.Decals;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-
 namespace Content.Shared.Procedural.PostGeneration;
 
 /// <summary>
@@ -26,4 +22,10 @@ public sealed partial class CorridorDecalSkirtingDunGen : IDunGenLayer
     /// </summary>
     [DataField]
     public Dictionary<DirectionFlag, string> CornerDecals = new();
+
+    /// <summary>
+    /// Optional color to apply to the decals.
+    /// </summary>
+    [DataField]
+    public Color? Color;
 }

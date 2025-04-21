@@ -15,7 +15,7 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="BiomeMarkerLayerDunGen"/>
     /// </summary>
-    private async Task PostGen(BiomeMarkerLayerDunGen dunGen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(BiomeMarkerLayerDunGen dunGen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
         // If we're adding biome then disable it and just use for markers.
         if (_entManager.EnsureComponent(_gridUid, out BiomeComponent biomeComp))

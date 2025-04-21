@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Content.Shared.Storage;
@@ -11,25 +12,13 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="WallMountDunGen"/>
     /// </summary>
-    private async Task PostGen(WallMountDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(WallMountDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto))
-        {
-            _sawmill.Error($"Tried to run {nameof(WallMountDunGen)} without any dungeon data set which is unsupported");
-            return;
-        }
-
-        var tileDef = _prototype.Index(tileProto);
-        if (!data.SpawnGroups.TryGetValue(DungeonDataKey.WallMounts, out var spawnProto))
-        {
-            // caves can have no walls
-            return;
-        }
-
         var checkedTiles = new HashSet<Vector2i>();
         var allExterior = new HashSet<Vector2i>(dungeon.CorridorExteriorTiles);
         allExterior.UnionWith(dungeon.RoomExteriorTiles);
         var count = 0;
+        var tileDef = (ContentTileDefinition) _tileDefManager[gen.Tile];
 
         foreach (var neighbor in allExterior)
         {
@@ -42,7 +31,7 @@ public sealed partial class DungeonJob
 
             _maps.SetTile(_gridUid, _grid, neighbor, _tile.GetVariantTile(tileDef, random));
             var gridPos = _maps.GridTileToLocal(_gridUid, _grid, neighbor);
-            var protoNames = EntitySpawnCollection.GetSpawns(_prototype.Index(spawnProto).Entries, random);
+            var protoNames = EntitySpawnCollection.GetSpawns(gen.Contents, random);
 
             _entManager.SpawnEntities(gridPos, protoNames);
             count += protoNames.Count;

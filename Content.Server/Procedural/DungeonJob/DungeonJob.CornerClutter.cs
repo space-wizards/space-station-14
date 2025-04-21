@@ -12,14 +12,8 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="CornerClutterDunGen"/>
     /// </summary>
-    private async Task PostGen(CornerClutterDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(CornerClutterDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        if (!data.SpawnGroups.TryGetValue(DungeonDataKey.CornerClutter, out var corner))
-        {
-            _sawmill.Error(Environment.StackTrace);
-            return;
-        }
-
         foreach (var tile in dungeon.CorridorTiles)
         {
             var blocked = _anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask);
@@ -45,7 +39,7 @@ public sealed partial class DungeonJob
                 if (random.Prob(gen.Chance))
                 {
                     var coords = _maps.GridTileToLocal(_gridUid, _grid, tile);
-                    var protos = EntitySpawnCollection.GetSpawns(_prototype.Index(corner).Entries, random);
+                    var protos = EntitySpawnCollection.GetSpawns(gen.Contents, random);
                     _entManager.SpawnEntities(coords, protos);
                 }
 

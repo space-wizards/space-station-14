@@ -1,3 +1,7 @@
+using Content.Shared.Maps;
+using Content.Shared.Storage;
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.Procedural.PostGeneration;
 
 /// <summary>
@@ -8,4 +12,11 @@ namespace Content.Shared.Procedural.PostGeneration;
 /// - EntranceFlank
 /// - FallbackTile
 /// </remarks>
-public sealed partial class ExternalWindowDunGen : IDunGenLayer;
+public sealed partial class ExternalWindowDunGen : IDunGenLayer
+{
+    [DataField(required: true)]
+    public ProtoId<ContentTileDefinition> Tile;
+
+    [DataField(required: true)]
+    public List<EntitySpawnEntry> Contents = new();
+}

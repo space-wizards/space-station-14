@@ -31,8 +31,10 @@
   - !type:JunctionDunGen
 
   - !type:AutoCablingDunGen
+    entity: CableApcExtension
 
   - !type:CornerClutterDunGen
+    contents: BaseClutter
 
   - !type:CorridorDecalSkirtingDunGen
     cardinalDecals:
@@ -58,11 +60,9 @@
     colors:
       Decals: "#D381C996"
     entities:
-      Cabling: CableApcExtension
       CornerWalls: WallReinforced
       Walls: WallSolid
     spawnGroups:
-      CornerClutter: BaseClutter
       Entrance: BaseAirlock
       EntranceFlank: BaseWindow
       Junction: BaseAirlock
@@ -112,11 +112,9 @@
     colors:
       Decals: "#DE3A3A96"
     entities:
-      Cabling: CableApcExtension
       CornerWalls: WallReinforced
       Walls: WallSolid
     spawnGroups:
-      CornerClutter: BaseClutter
       Entrance: LavaBrigEntrance
       EntranceFlank: BaseWindow
       Junction: BaseAirlock
@@ -159,11 +157,9 @@
     colors:
       Decals: "#4cc7aa96"
     entities:
-      Cabling: CableApcExtension
       CornerWalls: WallSilver
       Walls: WallSilver
     spawnGroups:
-      CornerClutter: BaseClutter
       Entrance: SnowyLabsEntrance
       EntranceFlank: BaseWindow
       Junction: BaseAirlock

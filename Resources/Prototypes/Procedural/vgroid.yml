@@ -129,14 +129,12 @@
 - type: dungeonConfig
   id: VGRoidExterior
   reserveTiles: true
-  data:
-    tiles:
-      FallbackTile: PlatingAsteroid
-      WidenTile: FloorAsteroidSand
   layers:
   - !type:PrototypeDunGen
     proto: VGRoidExteriorDungeons
   - !type:SplineDungeonConnectorDunGen
+    tile: PlatingAsteroid
+    widenTile: FloorAsteroidSand
 
 - type: dungeonConfig
   id: VGRoidExteriorDungeons
@@ -219,10 +217,8 @@
 # Fill with rocks.
 - type: dungeonConfig
   id: VGRoidFill
-  data:
-    entities:
-      Fill: IronRock
   layers:
   - !type:FillGridDunGen
+    entity: IronRock
     allowedTiles:
     - FloorAsteroidSand

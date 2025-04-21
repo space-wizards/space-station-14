@@ -13,22 +13,12 @@ public sealed partial class DungeonJob
     /// <summary>
     /// <see cref="MiddleConnectionDunGen"/>
     /// </summary>
-    private async Task PostGen(MiddleConnectionDunGen gen, DungeonData data, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
+    private async Task PostGen(MiddleConnectionDunGen gen, Dungeon dungeon, HashSet<Vector2i> reservedTiles, Random random)
     {
-        if (!data.Tiles.TryGetValue(DungeonDataKey.FallbackTile, out var tileProto) ||
-            !data.SpawnGroups.TryGetValue(DungeonDataKey.Entrance, out var entranceProto) ||
-            !_prototype.TryIndex(entranceProto, out var entrance))
-        {
-            _sawmill.Error($"Tried to run {nameof(MiddleConnectionDunGen)} without any dungeon data set which is unsupported");
-            return;
-        }
-
-        data.SpawnGroups.TryGetValue(DungeonDataKey.EntranceFlank, out var flankProto);
-        _prototype.TryIndex(flankProto, out var flank);
-
         // Grab all of the room bounds
         // Then, work out connections between them
         var roomBorders = new Dictionary<DungeonRoom, HashSet<Vector2i>>(dungeon.Rooms.Count);
+        var flank = gen.Flank;
 
         foreach (var room in dungeon.Rooms)
         {
@@ -67,7 +57,7 @@ public sealed partial class DungeonJob
         // TODO: Optional loops
 
         var roomConnections = new Dictionary<DungeonRoom, List<DungeonRoom>>();
-        var tileDef = _tileDefManager[tileProto];
+        var tileDef = _tileDefManager[gen.Tile];
 
         foreach (var (room, border) in roomBorders)
         {
@@ -120,14 +110,14 @@ public sealed partial class DungeonJob
 
                     if (flank != null && nodeDistances.Count - i <= 2)
                     {
-                        _entManager.SpawnEntities(gridPos, EntitySpawnCollection.GetSpawns(flank.Entries, random));
+                        _entManager.SpawnEntities(gridPos, EntitySpawnCollection.GetSpawns(flank, random));
                     }
                     else
                     {
                         // Iterate neighbors and check for blockers, if so bulldoze
                         ClearDoor(dungeon, _grid, node);
 
-                        _entManager.SpawnEntities(gridPos, EntitySpawnCollection.GetSpawns(entrance.Entries, random));
+                        _entManager.SpawnEntities(gridPos, EntitySpawnCollection.GetSpawns(gen.Contents, random));
                     }
 
                     if (width == 0)
