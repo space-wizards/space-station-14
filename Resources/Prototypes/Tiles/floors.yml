@@ -1973,9 +1973,9 @@
   heatCapacity: 10000
 
 - type: tile
-  id: FloorXenoSteelHorizontal
-  name: tiles-xeno-steel-horizontal
-  sprite: /Textures/Tiles/xeno_steel_horizontal.png
+  id: FloorXenoSteelCorner
+  name: tiles-xeno-steel-corner
+  sprite: /Textures/Tiles/xeno_steel_corner.png
   baseTurf: Plating
   isSubfloor: false
   deconstructTools: [ Prying ]
@@ -1999,25 +1999,7 @@
   deconstructTools: [ Prying ]
   footstepSounds:
     collection: FootstepFloor
-  itemDrop: FloorTileItemSteel
-  heatCapacity: 10000
-
-- type: tile
-  id: FloorDarkSquigglyVertical
-  name: tiles-dark-squiggly-vertical
-  sprite: /Textures/Tiles/dark_squiggly_vertical.png
-  variants: 4
-  placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  baseTurf: Plating
-  isSubfloor: false
-  deconstructTools: [ Prying ]
-  footstepSounds:
-    collection: FootstepFloor
-  itemDrop: FloorTileItemSteel
+  itemDrop: FloorTileItemDarkSquiggly
   heatCapacity: 10000
 
 - type: tile

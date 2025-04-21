@@ -642,13 +642,19 @@
   maxCount: 30
 
 - type: stack
-  id: FloorTileDarkSquiggly
-  name: dark squiggly floor
-  spawn: FloorTileItemDarkSquiggly
+  id: FloorTileXenoSteel
+  name: xeno steel floor
+  spawn: FloorTileItemXenoSteelCorner
   maxCount: 30
 
 - type: stack
-  id: FloorTileDarkSquigglyVertical
-  name: dark squiggly vertical floor
-  spawn: FloorTileItemDarkSquigglyVertical
+  id: FloorTileXenoSteelCorner
+  name: xeno steel corner floor
+  spawn: FloorTileItemXenoSteelCorner
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkSquiggly
+  name: dark squiggly floor
+  spawn: FloorTileItemDarkSquiggly
   maxCount: 30

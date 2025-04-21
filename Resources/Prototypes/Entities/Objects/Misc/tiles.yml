@@ -1600,6 +1600,38 @@
     stackType: FloorTileXeno
 
 - type: entity
+  id: FloorTileItemXenoSteel
+  parent: FloorTileItemBase
+  name: xeno steel floor
+  components:
+  - type: Sprite
+    state: xenofloor
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorXenoSteel
+  - type: Stack
+    stackType: FloorTileXenoSteel
+
+- type: entity
+  id: FloorTileItemXenoSteelCorner
+  parent: FloorTileItemBase
+  name: xeno steel corner floor
+  components:
+  - type: Sprite
+    state: xenofloor
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorXenoSteelCorner
+  - type: Stack
+    stackType: FloorTileXenoSteelCorner
+
+- type: entity
   parent: FloorTileItemDark
   id: FloorTileItemDarkSquiggly
   name: dark steel squiggly tile
@@ -1612,17 +1644,3 @@
     - FloorDarkSquiggly
   - type: Stack
     stackType: FloorTileDarkSquiggly
-
-- type: entity
-  parent: FloorTileItemDark
-  id: FloorTileItemDarkSquigglyVertical
-  name: dark steel squiggly vertical tile
-  components:
-  - type: Sprite
-    state: dark-squiggly-vertical
-  - type: FloorTile
-    outputs:
-    - Plating
-    - FloorDarkSquigglyVertical
-  - type: Stack
-    stackType: FloorTileDarkSquigglyVertical

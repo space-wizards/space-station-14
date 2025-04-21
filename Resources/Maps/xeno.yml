@@ -19,7 +19,7 @@ tilemap:
   40: FloorDarkPavementVertical
   41: FloorDarkPlastic
   43: FloorDarkSquiggly
-  44: FloorDarkSquigglyVertical
+  44: FloorDarkSquiggly
   31: FloorDirt
   29: FloorEighties
   2: FloorElevatorShaft
