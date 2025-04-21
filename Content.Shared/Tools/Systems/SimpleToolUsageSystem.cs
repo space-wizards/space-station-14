@@ -76,7 +76,6 @@ public sealed partial class SimpleToolUsageSystem : EntitySystem
 
                 _doAfterSystem.TryStartDoAfter(doAfterArgs);
             },
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/cutlery.svg.192dpi.png")),
             Disabled = disabled,
             Text = Loc.GetString(ent.Comp.UsageVerb),
         };
