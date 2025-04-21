@@ -8,7 +8,6 @@ using Content.Shared.Delivery;
 using Content.Shared.FingerprintReader;
 using Content.Shared.Labels.EntitySystems;
 using Content.Shared.StationRecords;
-using JetBrains.FormatRipper.Elf;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
