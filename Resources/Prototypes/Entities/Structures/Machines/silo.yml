@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/silo.rsi
+    snapCardinals: true
     layers:
     - state: silo
       map: [ "base" ]

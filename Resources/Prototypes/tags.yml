@@ -642,6 +642,9 @@
   id: Handcuffs
 
 - type: Tag
+  id: HandGrenade
+
+- type: Tag
   id: HappyHonk
 
 - type: Tag
