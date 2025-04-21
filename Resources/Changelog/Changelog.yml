@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Kickguy223
-  changes:
-  - message: Indestructible tiles no longer break due to explosions
-    type: Fix
-  id: 7797
-  time: '2025-01-11T17:27:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34339
 - author: '0x6273'
   changes:
   - message: Fix a bug that was causing arachnid stomachs to not digest at the intended,
@@ -3904,3 +3897,10 @@
   id: 8297
   time: '2025-04-21T09:32:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36774
+- author: ScarKy0
+  changes:
+  - message: Default cargo split is now 50% instead of 75%. Lockboxes remain unchanged.
+    type: Tweak
+  id: 8298
+  time: '2025-04-21T10:32:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36800
