@@ -16,7 +16,7 @@ public sealed partial class CCVars
     ///     in the funding allocation console
     /// </summary>
     public static readonly CVarDef<bool> AllowPrimaryCutAdjustment =
-        CVarDef.Create("cargo.allow_primary_cut_adjustment", false, CVar.REPLICATED);
+        CVarDef.Create("cargo.allow_primary_cut_adjustment", true, CVar.REPLICATED);
 
     /// <summary>
     ///     Whether or not the separate lockbox cut is enabled
