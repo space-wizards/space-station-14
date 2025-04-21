@@ -74,7 +74,7 @@ public abstract partial class SharedTurnstileSystem : EntitySystem
             if (_timing.CurTime >= ent.Comp.NextResistTime)
             {
                 _popup.PopupClient(Loc.GetString("turnstile-component-popup-resist", ("turnstile", ent.Owner)), ent, args.OtherEntity);
-                ent.Comp.NextResistTime = _timing.CurTime + TimeSpan.FromSeconds(0.5);
+                ent.Comp.NextResistTime = _timing.CurTime + TimeSpan.FromSeconds(0.1);
                 Dirty(ent);
             }
         }
