@@ -3,7 +3,7 @@ using Robust.Shared.Random;
 namespace Content.Shared.EntityTable.ValueSelector;
 
 /// <summary>
-/// Gives a value between the two numbers specified, inclusive.
+/// Picks a value based on a Binomial Distribution of N Trials given P Chance
 /// </summary>
 public sealed partial class BinomialNumberSelector : NumberSelector
 {
