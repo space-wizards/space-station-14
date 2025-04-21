@@ -31,6 +31,8 @@
     severity: Major
 
 # base department restricted contraband, this should only be used as a parent for other contraband prototypes, not the restricted items themselves.
+# centcomm, captain, and hop are implicitly cleared for all departmental contraband
+# child prototypes can override this behavior by providing an empty set for these data fields
 - type: entity
   id: BaseRestrictedContraband
   abstract: true
@@ -39,6 +41,8 @@
     severity: Restricted
     allowedDepartments: [  ]
     allowedJobs: [  ]
+    implicitlyAllowedDepartments: [ CentralCommand ]
+    implicitlyAllowedJobs: [ Captain, HeadOfPersonnel ]
 
 # one department restricted contraband
 - type: entity
@@ -48,6 +52,8 @@
   components:
   - type: Contraband
     allowedDepartments: [ CentralCommand ]
+    implicitlyAllowedDepartments: [  ]
+    implicitlyAllowedJobs: [  ]
 
 - type: entity
   id: BaseCommandContraband
@@ -106,14 +112,6 @@
     allowedDepartments: [ Cargo ]
 
 # multiple departments restricted contraband
-- type: entity
-  id: BaseCentcommCommandContraband
-  parent: BaseRestrictedContraband
-  abstract: true
-  components:
-  - type: Contraband
-    allowedDepartments: [ CentralCommand, Command ]
-
 - type: entity
   id: BaseSecurityCommandContraband
   parent: BaseRestrictedContraband

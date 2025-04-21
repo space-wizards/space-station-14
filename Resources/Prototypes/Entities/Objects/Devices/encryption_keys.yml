@@ -57,7 +57,7 @@
     - state: nano_label
 
 - type: entity
-  parent: [ EncryptionKey, BaseCentcommCommandContraband ]
+  parent: [ EncryptionKey, BaseCommandContraband ]
   id: EncryptionKeyStationMaster
   name: station master encryption key
   description: An encryption key used by station's bosses.

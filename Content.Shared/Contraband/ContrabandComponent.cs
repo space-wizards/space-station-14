@@ -19,7 +19,6 @@ public sealed partial class ContrabandComponent : Component
 
     /// <summary>
     ///     Which departments is this item restricted to?
-    ///     By default, command and sec are assumed to be fine with contraband.
     ///     If null, no departments are allowed to use this.
     /// </summary>
     [DataField]
@@ -28,9 +27,25 @@ public sealed partial class ContrabandComponent : Component
 
     /// <summary>
     ///     Which jobs is this item restricted to?
-    ///     If empty, no jobs are allowed to use this beyond the allowed departments.
+    ///     If null, no jobs are allowed to use this beyond the allowed departments.
     /// </summary>
     [DataField]
     [AutoNetworkedField]
     public HashSet<ProtoId<JobPrototype>> AllowedJobs = new();
+
+    /// <summary>
+    ///     Departments allowed through this will not appear in the examine text.
+    ///     Useful for allowing departments like CentComm to be cleared for use without being explicilty stated.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public HashSet<ProtoId<DepartmentPrototype>> ImplicitlyAllowedDepartments = new();
+
+    /// <summary>
+    ///     Jobs allowed through this will not appear in the examine text.
+    ///     Useful for allowing jobs like captain to be cleared for use without being explicilty stated.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public HashSet<ProtoId<JobPrototype>> ImplicitlyAllowedJobs = new();
 }
