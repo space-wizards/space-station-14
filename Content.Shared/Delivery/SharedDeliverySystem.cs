@@ -8,6 +8,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Objectives.Components;
 using Content.Shared.Popups;
+using Content.Shared.Tools.Components;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
@@ -41,6 +42,8 @@ public abstract class SharedDeliverySystem : EntitySystem
         SubscribeLocalEvent<DeliveryComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<DeliveryComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<DeliveryComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
+        SubscribeLocalEvent<DeliveryComponent, AttemptSimpleToolUseEvent>(OnAttemptSimpleToolUse);
+        SubscribeLocalEvent<DeliveryComponent, SimpleToolDoAfterEvent>(OnSimpleToolUse);
     }
 
     private void OnExamine(Entity<DeliveryComponent> ent, ref ExaminedEvent args)
@@ -92,15 +95,40 @@ public abstract class SharedDeliverySystem : EntitySystem
         });
     }
 
-    private bool TryUnlockDelivery(Entity<DeliveryComponent> ent, EntityUid user, bool rewardMoney = true)
+
+    private void OnAttemptSimpleToolUse(Entity<DeliveryComponent> ent, ref AttemptSimpleToolUseEvent args)
+    {
+        if (ent.Comp.IsOpened || !ent.Comp.IsLocked || _hands.IsHolding(args.User, ent))
+            args.Cancel();
+    }
+
+    private void OnSimpleToolUse(Entity<DeliveryComponent> ent, ref SimpleToolDoAfterEvent args)
+    {
+        if (ent.Comp.IsOpened || args.Cancelled)
+            return;
+
+        if (_hands.IsHolding(args.User, ent))
+            return;
+
+        HandlePenalty(ent);
+
+        TryUnlockDelivery(ent, args.User, false, true);
+        OpenDelivery(ent, args.User, false, true);
+    }
+
+    private bool TryUnlockDelivery(Entity<DeliveryComponent> ent,
+        EntityUid user,
+        bool rewardMoney = true,
+        bool force = false)
     {
         // Check fingerprint access if there is a reader on the mail
-        if (TryComp<FingerprintReaderComponent>(ent, out var reader) && !_fingerprintReader.IsAllowed((ent, reader), user))
+        if (!force && TryComp<FingerprintReaderComponent>(ent, out var reader) && !_fingerprintReader.IsAllowed((ent, reader), user))
             return false;
 
         var deliveryName = _nameModifier.GetBaseName(ent.Owner);
 
-        _audio.PlayPredicted(ent.Comp.UnlockSound, user, user);
+        if (!force)
+            _audio.PlayPredicted(ent.Comp.UnlockSound, user, user);
 
         ent.Comp.IsLocked = false;
         UpdateAntiTamperVisuals(ent, ent.Comp.IsLocked);
@@ -113,12 +141,13 @@ public abstract class SharedDeliverySystem : EntitySystem
         if (rewardMoney)
             GrantSpesoReward(ent.AsNullable());
 
-        _popup.PopupPredicted(Loc.GetString("delivery-unlocked-self", ("delivery", deliveryName)),
-            Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
+        if (!force)
+            _popup.PopupPredicted(Loc.GetString("delivery-unlocked-self", ("delivery", deliveryName)),
+                Loc.GetString("delivery-unlocked-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
         return true;
     }
 
-    private void OpenDelivery(Entity<DeliveryComponent> ent, EntityUid user, bool attemptPickup = true)
+    private void OpenDelivery(Entity<DeliveryComponent> ent, EntityUid user, bool attemptPickup = true, bool force = false)
     {
         var deliveryName = _nameModifier.GetBaseName(ent.Owner);
 
@@ -139,8 +168,9 @@ public abstract class SharedDeliverySystem : EntitySystem
 
         DirtyField(ent.Owner, ent.Comp, nameof(DeliveryComponent.IsOpened));
 
-        _popup.PopupPredicted(Loc.GetString("delivery-opened-self", ("delivery", deliveryName)),
-            Loc.GetString("delivery-opened-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
+        if (!force)
+            _popup.PopupPredicted(Loc.GetString("delivery-opened-self", ("delivery", deliveryName)),
+                Loc.GetString("delivery-opened-others", ("delivery", deliveryName), ("recipient", Identity.Name(user, EntityManager)), ("possadj", user)), user, user);
 
         if (!_container.TryGetContainer(ent, ent.Comp.Container, out var container))
             return;
@@ -169,7 +199,15 @@ public abstract class SharedDeliverySystem : EntitySystem
     }
 
     protected virtual void GrantSpesoReward(Entity<DeliveryComponent?> ent) { }
+
+    protected virtual void HandlePenalty(Entity<DeliveryComponent> ent, string? reasonLoc = null) { }
 }
+
+/// <summary>
+/// Used to gather the multiplier from all different mail components.
+/// </summary>
+[ByRefEvent]
+public record struct GetDeliveryMultiplierEvent(float Multiplier = 0.0f);
 
 /// <summary>
 /// Event raised on the delivery when it is unlocked.

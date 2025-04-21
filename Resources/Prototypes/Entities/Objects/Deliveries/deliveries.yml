@@ -41,6 +41,9 @@
       delivery: !type:Container
   - type: StealTarget
     stealGroup: Mail
+  - type: SimpleToolUsage
+    doAfter: 4
+    usageVerb: delivery-slice-verb
 
 - type: entity
   parent: BaseDelivery
@@ -78,6 +81,8 @@
     baseSpesoPenalty: 500
   - type: Speech
     speechVerb: Robotic
+  - type: SimpleToolUsage
+    doAfter: 6
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
