@@ -59,7 +59,7 @@
 
 #Prisoner EVA
 - type: entity
-  parent: ClothingOuterSuitEmergency
+  parent: ClothingOuterEVASuitBase
   id:  ClothingOuterHardsuitEVAPrisoner
   name: prisoner EVA suit
   description: A lightweight space suit for prisoners to protect them from the vacuum of space during emergencies.
