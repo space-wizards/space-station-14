@@ -1085,5 +1085,13 @@ Entries:
   id: 131
   time: '2025-04-18T12:24:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30812
+- author: Tayrtahn
+  changes:
+  - message: Added MarkerOne, MarkerTwo, and MarkerThree components for testing and
+      tracking purposes.
+    type: Add
+  id: 132
+  time: '2025-04-20T19:08:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36776
 Name: Admin
 Order: 1
