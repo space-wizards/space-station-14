@@ -53,10 +53,11 @@ public sealed partial class MachinePart
 public sealed partial class MultipartMachineComponent : Component
 {
     /// <summary>
-    /// Dictionary of unique names to specific parts of this machine
+    /// Dictionary of Enum values to specific parts of this machine.
+    /// Each key can be specified as 'enum.<EnumName>.<EnumValue>` in Yaml.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public Dictionary<string, MachinePart> Parts = [];
+    public Dictionary<Enum, MachinePart> Parts = [];
 
     /// <summary>
     /// Determined orientation of this machine, used when displaying

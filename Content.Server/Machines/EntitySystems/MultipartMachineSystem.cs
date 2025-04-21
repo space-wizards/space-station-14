@@ -45,13 +45,13 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// Clears the matched entity from the specified part
     /// </summary>
     /// <param name="ent">Entity to clear the part for</param>
-    /// <param name="partName">Name of the part to clear</param>
-    public void ClearPartEntity(Entity<MultipartMachineComponent?> ent, string partName)
+    /// <param name="part">Enum value for the part to clear</param>
+    public void ClearPartEntity(Entity<MultipartMachineComponent?> ent, Enum part)
     {
         if (!Resolve(ent, ref ent.Comp))
             return;
 
-        if (ent.Comp.Parts.TryGetValue(partName, out var value))
+        if (ent.Comp.Parts.TryGetValue(part, out var value))
         {
             value.Entity = null;
         }
@@ -77,17 +77,17 @@ public sealed class MultipartMachineSystem : EntitySystem
     }
 
     /// <summary>
-    /// Convenience method for getting a specific part of the machine by name.
+    /// Convenience method for getting a specific part of the machine.
     /// </summary>
     /// <param name="ent">Entity, which might have a multipart machine attached, to use for the query</param>
-    /// <param name="partName">Name of the part to find, must match the name specified in YAML</param>
+    /// <param name="part">Enum value for the part to find, must match the value specified in YAML</param>
     /// <returns>May contain the resoilved EntityUid for the specified part, null otherwise</returns>
-    public EntityUid? GetPartEntity(Entity<MultipartMachineComponent?> ent, string partName)
+    public EntityUid? GetPartEntity(Entity<MultipartMachineComponent?> ent, Enum part)
     {
         if (!Resolve(ent, ref ent.Comp))
             return null;
 
-        if (ent.Comp.Parts.TryGetValue(partName, out var value))
+        if (ent.Comp.Parts.TryGetValue(part, out var value))
         {
             return GetEntity(value.Entity);
         }
@@ -96,21 +96,21 @@ public sealed class MultipartMachineSystem : EntitySystem
     }
 
     /// <summary>
-    /// Convenience method for getting a specific part of the machine by name.
+    /// Convenience method for getting a specific part of the machine.
     /// </summary>
     /// <param name="ent">Entity, which might have a multipart machine attached, to use for the query</param>
-    /// <param name="partName">Name of the part to find, must match the name specified in YAML</param>
+    /// <param name="part">Enum for the part to find, must match the value specified in YAML</param>
     /// <param name="entity">Out var which may contain the matched EntityUid for the specified part</param>
     /// <returns>True if the part is found and has an matched entity, false otherwise</returns>
     public bool TryGetPartEntity(Entity<MultipartMachineComponent?> ent,
-        string partName,
+        Enum part,
         [NotNullWhen(true)] out EntityUid? entity)
     {
         entity = null;
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        if (ent.Comp.Parts.TryGetValue(partName, out var value))
+        if (ent.Comp.Parts.TryGetValue(part, out var value))
         {
             return TryGetEntity(value.Entity, out entity);
         }

@@ -2,6 +2,7 @@ using Content.Shared.Machines.Components;
 using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Events;
+using Content.Shared.ParticleAccelerator;
 using Content.Server.Construction.Components;
 using System.Reflection.PortableExecutable;
 
@@ -17,11 +18,11 @@ public sealed partial class ParticleAcceleratorSystem
         SubscribeLocalEvent<ParticleAcceleratorPartComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
     }
 
-    public void ValidateEmitter(string name,
+    public void ValidateEmitter(Enum part,
         ParticleAcceleratorEmitterType type,
         Entity<MultipartMachineComponent> machine)
     {
-        var emitterEnt = _multipartMachine.GetPartEntity(machine.AsNullable(), name);
+        var emitterEnt = _multipartMachine.GetPartEntity(machine.AsNullable(), part);
         if (!TryComp<ParticleAcceleratorEmitterComponent>(emitterEnt, out var partState))
         {
             return;
@@ -29,7 +30,7 @@ public sealed partial class ParticleAcceleratorSystem
 
         if (partState.Type != type)
         {
-            _multipartMachine.ClearPartEntity(machine.AsNullable(), name);
+            _multipartMachine.ClearPartEntity(machine.AsNullable(), part);
             return;
         }
 
@@ -58,9 +59,9 @@ public sealed partial class ParticleAcceleratorSystem
         }
 
         // Determine if the proper emitters are in the proper spots
-        ValidateEmitter("PortEmitter", ParticleAcceleratorEmitterType.Port, machine);
-        ValidateEmitter("ForeEmitter", ParticleAcceleratorEmitterType.Fore, machine);
-        ValidateEmitter("StarboardEmitter", ParticleAcceleratorEmitterType.Starboard, machine);
+        ValidateEmitter(AcceleratorParts.PortEmitter, ParticleAcceleratorEmitterType.Port, machine);
+        ValidateEmitter(AcceleratorParts.ForeEmitter, ParticleAcceleratorEmitterType.Fore, machine);
+        ValidateEmitter(AcceleratorParts.StarboardEmitter, ParticleAcceleratorEmitterType.Starboard, machine);
 
         if (!_multipartMachine.Assembled(machine.AsNullable()))
         {
