@@ -5,8 +5,10 @@
   components:
   - type: StorageFill
     contents:
-    # ALL GUIDEBOOKS, ONLY GUIDEBOOKS. Imp guidebooks sorted in alphabetically by item name, not including titles that start with an article
+    # ALL GUIDEBOOKS, ONLY GUIDEBOOKS. Guidebooks sorted alphabetically by in-game item name, not item ID
+    # If the title starts with an article (a, an, the), sort it by the next word (e.g., The Book of Control is under B)
     - id: BookBartendersManual #bartender's manual
+    - id: BookTheBookOfControl #the book of control
     - id: BookChemicalCompendium #chempendium
     - id: BookEngineersHandbook #engineer's handbook
     - id: BookTEGtorial #guide ta tha thermo-electric generator (imp)
@@ -14,7 +16,6 @@
     - id: BookHowToKeepStationClean #how to keep station clean
     - id: BookHowToRockAndStone #how to rock and stone
     - id: BookHowToSurvive #how to survive
-    - id: BookJarvisBayCulture # cultural guide to medical (imp)
     - id: BookKeelBay #Keel-Ree's guide to medical (imp)
     - id: BookLeafLoversSecret #leaf lover's secret
     - id: BookMedicalReferenceBook #medical reference book
@@ -27,5 +28,5 @@
     - id: BookSecurity #security 101
     - id: BookSpaceEncyclopedia #space encyclopedia
     - id: BookSpaceLaw #space law
-    - id: BookTheBookOfControl #the book of control
+    - id: BookJarvisBayCulture #suns among the void, a cultural guide to medical (imp)
     - id: BookSMForDummies #the supermatter for dummies

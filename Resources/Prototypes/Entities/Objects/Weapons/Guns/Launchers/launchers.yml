@@ -62,7 +62,7 @@
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
     soundSwing:
-      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_foley.ogg
     resetOnHandSelected: false
   - type: AltFireMelee
     attackType: Heavy
@@ -121,7 +121,7 @@
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
     soundSwing:
-      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_foley.ogg
     resetOnHandSelected: false
   - type: AltFireMelee
     attackType: Heavy
@@ -182,7 +182,7 @@
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
     soundSwing:
-      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_foley.ogg
     resetOnHandSelected: false
   - type: AltFireMelee
     attackType: Heavy
@@ -240,7 +240,7 @@
       soundHit:
         path: /Audio/Effects/hit_kick.ogg
       soundSwing:
-        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_foley.ogg
       resetOnHandSelected: false
     - type: AltFireMelee
       attackType: Heavy
@@ -308,7 +308,7 @@
       soundHit:
         path: /Audio/Effects/hit_kick.ogg
       soundSwing:
-        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_foley.ogg
       resetOnHandSelected: false
     - type: AltFireMelee
       attackType: Heavy
@@ -376,7 +376,7 @@
       soundHit:
         path: /Audio/Effects/hit_kick.ogg
       soundSwing:
-        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_foley.ogg
       resetOnHandSelected: false
     - type: AltFireMelee
       attackType: Heavy
@@ -468,7 +468,7 @@
       soundHit:
         path: /Audio/Effects/hit_kick.ogg
       soundSwing:
-        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_foley.ogg
       resetOnHandSelected: false
     - type: AltFireMelee
       attackType: Heavy
@@ -533,7 +533,7 @@
       soundHit:
         path: /Audio/Effects/hit_kick.ogg
       soundSwing:
-        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+        path: /Audio/_Impstation/Weapons/Guns/Melee/shove_foley.ogg
       resetOnHandSelected: false
     - type: AltFireMelee
       attackType: Heavy
