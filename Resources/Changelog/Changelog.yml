@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: JustinWinningham
-  changes:
-  - message: Anomalies no longer block players or APES (or other objects) from passing
-      through them
-    type: Tweak
-  - message: Players can no longer move anomalies with unanchored furniture, closets,
-      etc.
-    type: Fix
-  id: 7804
-  time: '2025-01-13T10:06:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34280
 - author: zHonys
   changes:
   - message: Items with collisions (like mousetraps) won't kept doors form opening
@@ -3905,3 +3894,10 @@
   id: 8304
   time: '2025-04-21T17:46:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35854
+- author: ScarKy0
+  changes:
+  - message: Station AI now has a name identifier appended after their name.
+    type: Tweak
+  id: 8305
+  time: '2025-04-21T17:54:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36801
