@@ -126,7 +126,7 @@
       Glass: 100
   - type: Openable
     sound:
-      collection: capOpenSounds
+      collection: bottleOpenSounds
     closeable: false
     closeSound:
 
