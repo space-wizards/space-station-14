@@ -1,5 +1,4 @@
 using Content.Shared.GameTicking;
-using Robust.Shared.Map.Components;
 
 namespace Content.Server.Polymorph.Systems;
 
