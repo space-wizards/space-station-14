@@ -65,8 +65,8 @@
     definitions:
     - prefRoles: [ SpiderTerrorQueen ]
       fallbackRoles: [ SpiderTerrorKingBlood, SpiderTerrorKing ]
-      max: 3
-      min: 3
+      max: 2
+      min: 2
       briefing:
         text: spider-terror-quin-briefing-greeting
         color: CornflowerBlue

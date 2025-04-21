@@ -1,0 +1,14 @@
+ent-WoodSecretDoor = деревянная стена
+    .desc = { ent-BaseSecretDoor.desc }
+ent-ReinforcedSecretDoor = укрепленная стена
+    .desc = { ent-BaseSecretDoor.desc }
+ent-SilverSecretDoor = серебряная стена
+    .desc = { ent-BaseSecretDoor.desc }
+ent-GoldSecretDoor = золотая стена
+    .desc = { ent-BaseSecretDoor.desc }
+ent-BrassSecretDoor = заводная стена
+    .desc = { ent-BaseSecretDoor.desc }
+ent-ShuttleInteriorSecretDoor = стена шаттла
+    .desc = { ent-BaseSecretDoor.desc }
+ent-ShuttleSecretDoor = стена шаттла
+    .desc = { ent-BaseSecretDoor.desc }

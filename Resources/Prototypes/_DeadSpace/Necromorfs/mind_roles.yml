@@ -4,6 +4,7 @@
   name: Роль Юнитолога
   components:
   - type: MindRole
+    roleType: TeamAntagonist
     antagPrototype: Uni
   - type: UnitologyRole
 
@@ -13,6 +14,7 @@
   name: Роль Старшего Юнитолога
   components:
   - type: MindRole
+    roleType: TeamAntagonist
     antagPrototype: UniHead
 
 - type: entity
@@ -21,4 +23,5 @@
   name: Роль Порабощённого
   components:
   - type: MindRole
+    roleType: TeamAntagonist
     antagPrototype: UniEnslaved
