@@ -79,7 +79,8 @@ public sealed class FlashImmunitySystem : EntitySystem
     {
         if (EntityManager.TryGetComponent(uid, out FlashImmunityComponent? flashImmunityComponent))
         {
-            return true;
+            if (flashImmunityComponent.AffectsVision)
+                return true;
         }
 
         if (TryComp<InventoryComponent>(uid, out var inventoryComp))
@@ -90,7 +91,8 @@ public sealed class FlashImmunitySystem : EntitySystem
             {
                 if (slot.ContainedEntity != null && EntityManager.TryGetComponent(slot.ContainedEntity, out FlashImmunityComponent? wornFlashImmunityComponent))
                 {
-                    return true;
+                    if (wornFlashImmunityComponent.AffectsVision)
+                        return true;
                 }
             }
         }
