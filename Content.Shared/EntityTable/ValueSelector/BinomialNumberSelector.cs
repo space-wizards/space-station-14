@@ -23,7 +23,7 @@ public sealed partial class BinomialNumberSelector : NumberSelector
     public override int Get(System.Random rand)
     {
         var random = IoCManager.Resolve<IRobustRandom>();
-        var count = new int();
+        int count = 0;
 
         for (int i = 0; i < Trials; i++)
         {
