@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Tayrtahn
-  changes:
-  - message: Arcades, vending machines and the recycler now sometimes say creepy things
-      when a ghost uses the "Boo!" action near them.
-    type: Add
-  id: 7796
-  time: '2025-01-11T02:48:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34368
 - author: Kickguy223
   changes:
   - message: Indestructible tiles no longer break due to explosions
@@ -3900,3 +3892,15 @@
   id: 8296
   time: '2025-04-20T22:27:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35713
+- author: ScarKy0
+  changes:
+  - message: Mail spawning has been reworked. The mail teleporter now has to be manually
+      emptied to take all the mail out. (You can do it by alt-clicking it or using
+      a verb)
+    type: Tweak
+  - message: The mail teleporter now has an internal capacity of 20. It will not spawn
+      mail past that until emptied by someone.
+    type: Add
+  id: 8297
+  time: '2025-04-21T09:32:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36774
