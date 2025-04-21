@@ -92,6 +92,7 @@
   components:
   - type: StealCondition
     objectiveText: objective-condition-steal-title
+    ObjectiveNoOwnerText: objective-condition-steal-title-alive-no-owner
     descriptionText: objective-condition-steal-description
     descriptionMultiplyText: objective-condition-thief-multiply-description
 
