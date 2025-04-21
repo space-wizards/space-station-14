@@ -14,4 +14,10 @@ public sealed partial class OverrideSellComponent : Component
     /// </summary>
     [DataField(required: true)]
     public ProtoId<CargoAccountPrototype> OverrideAccount;
+
+    /// <summary>
+    /// The cut that the OverrideAccount will get from the price. The rest is given to the primary station account.
+    /// </summary>
+    [DataField]
+    public float OverrideCut = 0.75f;
 }
