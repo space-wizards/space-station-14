@@ -5,7 +5,7 @@ namespace Content.Client.Station;
 /// <summary>
 /// This handles letting the client know stations are a thing. Only really used by an admin menu.
 /// </summary>
-public sealed class StationSystem : EntitySystem
+public sealed class StationSystem : SharedStationSystem
 {
     private readonly List<(string Name, NetEntity Entity)> _stations = new();
 
