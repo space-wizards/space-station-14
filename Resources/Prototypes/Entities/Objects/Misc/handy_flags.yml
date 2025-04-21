@@ -23,7 +23,7 @@
     sprite: Objects/Misc/Handy_Flags/NT_handy_flag.rsi
 
 - type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseSyndicateContraband]
   id: SyndieHandyFlag
   name: syndicate handheld flag
   description: "For truly rebellious patriots. Death to NT!"

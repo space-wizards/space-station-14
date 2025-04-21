@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Grid
+  engineVersion: 250.0.0
+  forkId: ""
+  forkVersion: ""
+  time: 03/29/2025 03:02:29
+  entityCount: 662
+maps: []
+grids:
+- 656
+orphans:
+- 656
+nullspace: []
 tilemap:
   0: Space
   29: FloorDark
@@ -61,6 +72,7 @@ entities:
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
     - type: DeviceNetwork
+      deviceNetId: Wireless
       configurators: []
       deviceLists: []
       transmitFrequencyId: ShuttleTimer
@@ -598,55 +610,55 @@ entities:
     - type: Transform
       pos: 0.5,10.5
       parent: 656
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
   - uid: 621
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -6.5,4.5
+      rot: 1.5707963267948966 rad
+      pos: 6.5,2.5
       parent: 656
   - uid: 622
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -6.5,2.5
+      rot: 1.5707963267948966 rad
+      pos: 6.5,4.5
       parent: 656
   - uid: 623
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -6.5,-5.5
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-3.5
       parent: 656
   - uid: 624
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -6.5,-3.5
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-5.5
       parent: 656
   - uid: 625
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 6.5,-3.5
+      pos: -6.5,-5.5
       parent: 656
   - uid: 626
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 6.5,-5.5
+      pos: -6.5,-3.5
       parent: 656
   - uid: 627
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 6.5,2.5
+      pos: -6.5,2.5
       parent: 656
   - uid: 628
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 6.5,4.5
+      pos: -6.5,4.5
       parent: 656
 - proto: Bed
   entities:
@@ -3144,6 +3156,33 @@ entities:
     components:
     - type: Transform
       pos: 1.5,-0.5
+      parent: 656
+- proto: Screen
+  entities:
+  - uid: 658
+    components:
+    - type: Transform
+      pos: 0.5,-3.5
+      parent: 656
+  - uid: 659
+    components:
+    - type: Transform
+      pos: 6.5,1.5
+      parent: 656
+  - uid: 660
+    components:
+    - type: Transform
+      pos: -6.5,1.5
+      parent: 656
+  - uid: 661
+    components:
+    - type: Transform
+      pos: 3.5,-11.5
+      parent: 656
+  - uid: 662
+    components:
+    - type: Transform
+      pos: -3.5,-11.5
       parent: 656
 - proto: ShuttleWindow
   entities:

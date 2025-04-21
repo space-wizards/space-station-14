@@ -57,10 +57,9 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
         {
             BreakOnMove = true,
             BreakOnDamage = true,
-            CancelDuplicate = true,
             // multiple pipes can be sprayed at once just not the same one
             DuplicateCondition = DuplicateConditions.SameTarget,
-            NeedHand = true
+            NeedHand = true,
         };
 
         args.Handled = DoAfter.TryStartDoAfter(doAfterEventArgs);

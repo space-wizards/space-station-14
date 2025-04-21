@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by Vermidia",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "load": {
+        "srgb": false
+    },
+    "states": [
+        {
+            "name": "head",
+            "directions": 4
+        },
+        {
+            "name": "mask",
+            "directions": 4
+        },
+        {
+            "name": "suitstorage",
+            "directions": 4
+        },
+        {
+            "name": "eyes",
+            "directions": 4
+        },
+        {
+            "name": "neck",
+            "directions": 4
+        }
+    ]
+}
+

@@ -29,26 +29,18 @@
 # Basic
 - type: loadout
   id: EmergencyOxygen
-  equipment: EmergencyOxygen
   effects:
   - !type:GroupLoadoutEffect
     proto: OxygenBreather
-
-- type: startingGear
-  id: EmergencyOxygen
   storage:
     back:
     - BoxSurvival
 
 - type: loadout
   id: EmergencyNitrogen
-  equipment: EmergencyNitrogen
   effects:
   - !type:GroupLoadoutEffect
     proto: NitrogenBreather
-
-- type: startingGear
-  id: EmergencyNitrogen
   storage:
     back:
     - BoxSurvivalNitrogen
@@ -56,53 +48,57 @@
 # Clown
 - type: loadout
   id: EmergencyOxygenClown
-  equipment: EmergencyOxygenClown
   effects:
   - !type:GroupLoadoutEffect
     proto: OxygenBreather
-
-- type: startingGear
-  id: EmergencyOxygenClown
   storage:
     back:
     - BoxHug
 
 - type: loadout
   id: EmergencyNitrogenClown
-  equipment: EmergencyNitrogenClown
   effects:
   - !type:GroupLoadoutEffect
     proto: NitrogenBreather
-
-- type: startingGear
-  id: EmergencyNitrogenClown
   storage:
     back:
     - BoxHugNitrogen
 
-# Engineering / Extended
+# Mime
 - type: loadout
-  id: EmergencyOxygenExtended
-  equipment: EmergencyOxygenExtended
+  id: EmergencyOxygenMime
   effects:
   - !type:GroupLoadoutEffect
     proto: OxygenBreather
+  storage:
+    back:
+    - BoxMime
 
-- type: startingGear
+- type: loadout
+  id: EmergencyNitrogenMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxMimeNitrogen
+
+
+# Engineering / Extended
+- type: loadout
   id: EmergencyOxygenExtended
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
   storage:
     back:
     - BoxSurvivalEngineering
 
 - type: loadout
   id: EmergencyNitrogenExtended
-  equipment: EmergencyNitrogenExtended
   effects:
   - !type:GroupLoadoutEffect
     proto: NitrogenBreather
-
-- type: startingGear
-  id: EmergencyNitrogenExtended
   storage:
     back:
     - BoxSurvivalEngineeringNitrogen
@@ -110,26 +106,18 @@
 # Medical
 - type: loadout
   id: EmergencyOxygenMedical
-  equipment: EmergencyOxygenMedical
   effects:
   - !type:GroupLoadoutEffect
     proto: OxygenBreather
-
-- type: startingGear
-  id: EmergencyOxygenMedical
   storage:
     back:
     - BoxSurvivalMedical
 
 - type: loadout
   id: EmergencyNitrogenMedical
-  equipment: EmergencyNitrogenMedical
   effects:
   - !type:GroupLoadoutEffect
     proto: NitrogenBreather
-
-- type: startingGear
-  id: EmergencyNitrogenMedical
   storage:
     back:
     - BoxSurvivalMedicalNitrogen
@@ -137,26 +125,18 @@
 # Security
 - type: loadout
   id: EmergencyOxygenSecurity
-  equipment: EmergencyOxygenSecurity
   effects:
   - !type:GroupLoadoutEffect
     proto: OxygenBreather
-
-- type: startingGear
-  id: EmergencyOxygenSecurity
   storage:
     back:
     - BoxSurvivalSecurity
 
 - type: loadout
   id: EmergencyNitrogenSecurity
-  equipment: EmergencyNitrogenSecurity
   effects:
   - !type:GroupLoadoutEffect
     proto: NitrogenBreather
-
-- type: startingGear
-  id: EmergencyNitrogenSecurity
   storage:
     back:
     - BoxSurvivalSecurityNitrogen
@@ -164,91 +144,97 @@
 # Syndicate
 - type: loadout
   id: EmergencyOxygenSyndicate
-  equipment: EmergencyOxygenSyndicate
   effects:
   - !type:GroupLoadoutEffect
     proto: OxygenBreather
-
-- type: startingGear
-  id: EmergencyOxygenSyndicate
   storage:
     back:
     - BoxSurvivalSyndicate
 
 - type: loadout
   id: EmergencyNitrogenSyndicate
-  equipment: EmergencyNitrogenSyndicate
   effects:
   - !type:GroupLoadoutEffect
     proto: NitrogenBreather
-
-- type: startingGear
-  id: EmergencyNitrogenSyndicate
   storage:
     back:
     - BoxSurvivalSyndicateNitrogen
 
 # Pre-equipped species gear
 
-# Full Tank Equipped
+# Full tank for vox as part of any Survival loadout
 - type: loadout
-  id: LoadoutSpeciesEVANitrogen
-  equipment: GearEVANitrogen
+  id: LoadoutSpeciesVoxNitrogen
   effects:
   - !type:GroupLoadoutEffect
     proto: EffectSpeciesVox
-
-- type: startingGear
-  id: GearEVANitrogen
   equipment:
     suitstorage: NitrogenTankFilled
+
+# Full EVA Tank, Any Species
+- type: loadout
+  id: LoadoutSpeciesEVANitrogen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  equipment:
+    suitstorage: NitrogenTankFilled
+
+- type: loadout
+  id: LoadoutSpeciesEVAOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  equipment:
+    suitstorage: OxygenTankFilled
+
+# Species-appropriate Double Emergency Tank in Pocket 1
+- type: loadout
+  id: LoadoutSpeciesPocketDoubleNitrogen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  equipment:
+    pocket1: DoubleEmergencyNitrogenTankFilled
+
+- type: loadout
+  id: LoadoutSpeciesPocketDoubleOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  equipment:
+    pocket1: DoubleEmergencyOxygenTankFilled
 
 # Tank Harness
 - type: loadout
   id: LoadoutTankHarness
-  equipment: GearTankHarness
   effects:
   - !type:GroupLoadoutEffect
     proto: EffectSpeciesVox
-
-- type: startingGear
-  id: GearTankHarness
   equipment:
     outerClothing: ClothingOuterVestTank
 
-# Breaths Tool On Face
+# Breath Tool On Face
 - type: loadout
   id: LoadoutSpeciesBreathTool
-  equipment: GearSpeciesBreathTool
   effects:
   - !type:GroupLoadoutEffect
     proto: EffectSpeciesVox
-
-- type: startingGear
-  id: GearSpeciesBreathTool
   equipment:
     mask: ClothingMaskBreath
 
 - type: loadout
   id: LoadoutSpeciesBreathToolMedical
-  equipment: GearSpeciesBreathToolMedical
   effects:
   - !type:GroupLoadoutEffect
     proto: EffectSpeciesVox
-
-- type: startingGear
-  id: GearSpeciesBreathToolMedical
   equipment:
     mask: ClothingMaskBreathMedical
 
 - type: loadout
   id: LoadoutSpeciesBreathToolSecurity
-  equipment: GearSpeciesBreathToolSecurity
   effects:
   - !type:GroupLoadoutEffect
     proto: EffectSpeciesVox
-
-- type: startingGear
-  id: GearSpeciesBreathToolSecurity
   equipment:
     mask: ClothingMaskGasSecurity

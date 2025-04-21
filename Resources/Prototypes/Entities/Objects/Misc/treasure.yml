@@ -1,0 +1,215 @@
+- type: entity
+  parent: BaseItem
+  id: TreasureDatadiskEncrypted
+  name: encrypted datadisk
+  description: An old data disk. Someone savvier than you could unencrypt it and learn something juicy. All you can do is sell it.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    layers:
+    - state: datadisk_base
+      color: "#868686"
+    - state: datadisk_label
+    - state: datadisk_encrypted
+  - type: PointLight
+    radius: 1.5
+    energy: 0.5
+    castShadows: false
+    color: "#0000ff"
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  parent: BaseItem
+  id: TreasureHardDiskDrive
+  name: hard disk drive
+  description: A disk drive designed for old Earth technology, circa 1980. There's probably some kind of collector who might want to get their paws on this.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    layers:
+    - state: harddisk
+      map: [ "base" ]
+  - type: Item
+    storedRotation: -90
+  - type: RandomSprite
+    available:
+    - base:
+        harddisk: ""
+        harddisk_mini: ""
+        harddisk_micro: ""
+  - type: StaticPrice
+    price: 275
+
+- type: entity
+  parent: BaseItem
+  id: TreasureFlopDiskDrive
+  name: floppy disk drive
+  description: A drive for reading off info off of floppy disks. Shame that the only things stored on them nowadays are nuclear bomb operations.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    layers:
+    - state: flopdrive
+  - type: Item
+    storedRotation: -90
+  - type: StaticPrice
+    price: 350
+
+- type: entity
+  parent: BaseItem
+  id: TreasureCDDrive
+  name: CD drive
+  description: A piece of tech for reading data off of CDs. Nowadays that's not the most useful thing, unless you plan on flying somewhere.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    layers:
+    - state: cddrive
+  - type: Item
+    storedRotation: -90
+  - type: StaticPrice
+    price: 300
+
+- type: entity
+  parent: BaseItem
+  id: TreasureCPUSupercharged
+  name: supercharged CPU
+  description: Some kind of super alien space tech. Shame all the computers already come with CPUs nowadays.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    layers:
+    - state: cpu_super
+  - type: Item
+    size: Tiny
+  - type: PhysicalComposition
+    materialComposition: # big mats if you don't sell it
+      Steel: 500
+      Glass: 1000
+      Silver: 300
+  - type: StaticPrice
+    price: 750
+
+- type: entity
+  parent: BaseItem
+  id: TreasureSampleTube
+  name: sample tube
+  description: A glass tube with some sort of goop in it. Looks prone to breaking.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/sample_tubes.rsi
+    layers:
+    - state: blank
+      map: [ "base" ]
+  - type: RandomSprite
+    available:
+    - base:
+        blank: ""
+        power: ""
+        reinforcer: ""
+        energy: ""
+        synchronizer: ""
+        stabilizer: ""
+  - type: StaticPrice
+    price: 120
+
+- type: entityTable
+  id: TreasureCoinPile
+  table: !type:GroupSelector
+    children:
+    - id: TreasureCoinIron
+      weight: 24
+    - id: TreasureCoinSilver
+      weight: 40
+    - id: TreasureCoinGold
+      weight: 24
+    - id: TreasureCoinAdamantine
+      weight: 11
+    - id: TreasureCoinDiamond
+      weight: 1
+
+- type: entityTable
+  id: TreasureCoinPileRare
+  table: !type:GroupSelector
+    children:
+    - id: TreasureCoinIron
+      weight: 10
+    - id: TreasureCoinSilver
+      weight: 25
+    - id: TreasureCoinGold
+      weight: 40
+    - id: TreasureCoinAdamantine
+      weight: 20
+    - id: TreasureCoinDiamond
+      weight: 5
+
+- type: entity
+  parent: BaseItem
+  id: TreasureCoinIron
+  name: coin
+  description: A flat bit of metal. If it was still in circulation, inflation would've made it worthless. Since it isn't, it's worth enough to keep in a book.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/coins.rsi
+    state: coin_iron
+  - type: Item
+    size: Tiny
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300
+  - type: StaticPrice
+    price: 75
+
+- type: entity
+  parent: TreasureCoinIron
+  id: TreasureCoinSilver
+  components:
+  - type: Sprite
+    state: coin_silver
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100 # coins are fake on the inside
+      Silver: 200
+  - type: StaticPrice
+    price: 135
+
+- type: entity
+  parent: TreasureCoinIron
+  id: TreasureCoinGold
+  components:
+  - type: Sprite
+    state: coin_gold
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+      Gold: 200
+  - type: StaticPrice
+    price: 175
+
+- type: entity
+  parent: TreasureCoinIron
+  id: TreasureCoinAdamantine
+  components:
+  - type: Sprite
+    state: coin_adamantine
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 400
+      Diamond: 5
+  - type: StaticPrice
+    price: 250
+
+- type: entity
+  parent: TreasureCoinIron
+  id: TreasureCoinDiamond
+  components:
+  - type: Sprite
+    state: coin_diamond
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 300
+      Diamond: 15
+  - type: StaticPrice
+    price: 500
+

@@ -36,7 +36,7 @@
             - tag: MimeBelt
               name: suspenders
               icon:
-                sprite: Clothing/Belt/suspenders.rsi
+                sprite: Clothing/Belt/suspenders_red.rsi
                 state: icon
               doAfter: 1
     - node: mimeHardsuit

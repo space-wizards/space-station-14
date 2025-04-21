@@ -3,7 +3,7 @@
   id: MobWatcherBase
   parent: [ SimpleSpaceMobBase, FlyingMobBase ]
   abstract: true
-  description: It's like its staring right through you.
+  description: It's like it's staring right through you.
   components:
   - type: NpcFactionMember
     factions:
@@ -43,6 +43,10 @@
     thresholds:
       0: Alive
       50: Dead
+  - type: Butcherable
+    spawned:
+    - id: DiamondOre1
+      amount: 1
   - type: MovementSpeedModifier
     baseWalkSpeed: 5
     baseSprintSpeed: 7

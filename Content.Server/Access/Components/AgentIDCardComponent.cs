@@ -1,15 +1,7 @@
-using Content.Shared.StatusIcon;
-using Robust.Shared.Prototypes;
+namespace Content.Server.Access.Components;
 
-namespace Content.Server.Access.Components
-{
-    [RegisterComponent]
-    public sealed partial class AgentIDCardComponent : Component
-    {
-        /// <summary>
-        /// Set of job icons that the agent ID card can show.
-        /// </summary>
-        [DataField]
-        public HashSet<ProtoId<StatusIconPrototype>> Icons;
-    }
-}
+/// <summary>
+///     Allows an ID card to copy accesses from other IDs and to change the name, job title and job icon via an interface.
+/// </summary>
+[RegisterComponent]
+public sealed partial class AgentIDCardComponent : Component { }

@@ -47,6 +47,7 @@ namespace Content.Client.Verbs.UI
         {
             _context.OnContextKeyEvent += OnKeyBindDown;
             _context.OnContextClosed += Close;
+            _verbSystem.OnVerbsResponse += HandleVerbsResponse;
         }
 
         public void OnStateExited(GameplayState state)

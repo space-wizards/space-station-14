@@ -42,6 +42,7 @@
         #In future maybe add generic plastic scrap trash/debris
   - type: TrashOnSolutionEmpty
     solution: drink
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: DrinkCartonBaseFull
@@ -208,3 +209,18 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonjuice.rsi
+    
+- type: entity
+  parent: [DrinkCartonVisualsOpenable, DrinkCartonBaseFull]
+  id: DrinkJuicePineappleCarton
+  name: pineapple juice
+  description: Tastes like a tropical vacation far from space.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: JuicePineapple
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/pineapplejuice.rsi

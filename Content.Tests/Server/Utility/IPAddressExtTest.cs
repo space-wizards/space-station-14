@@ -26,6 +26,7 @@ namespace Content.Tests.Server.Utility
         [TestCase("10.128.240.50/30", "10.128.240.52")]
         [TestCase("10.128.240.50/30", "10.128.239.50")]
         [TestCase("10.128.240.50/30", "10.127.240.51")]
+        [TestCase("10.128.240.50/30", "2001:0DB8:ABCD:0012:0000:0000:0000:0000")]
         public void IpV4SubnetMaskDoesNotMatchInvalidIpAddress(string netMask, string ipAddress)
         {
             var ipAddressObj = IPAddress.Parse(ipAddress);
@@ -51,6 +52,7 @@ namespace Content.Tests.Server.Utility
         [TestCase("2001:db8:abcd:0012::0/64", "2001:0DB8:ABCD:0013:0001:0000:0000:0000")]
         [TestCase("2001:db8:abcd:0012::0/64", "2001:0DB8:ABCD:0011:FFFF:FFFF:FFFF:FFF0")]
         [TestCase("2001:db8:abcd:0012::0/128", "2001:0DB8:ABCD:0012:0000:0000:0000:0001")]
+        [TestCase("2001:db8:abcd:0012::0/128", "10.128.239.50")]
         // ReSharper restore StringLiteralTypo
         public void IpV6SubnetMaskDoesNotMatchInvalidIpAddress(string netMask, string ipAddress)
         {
