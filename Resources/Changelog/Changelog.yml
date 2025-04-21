@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: '0x6273'
-  changes:
-  - message: Fix a bug that was causing arachnid stomachs to not digest at the intended,
-      slower than normal speed.
-    type: Fix
-  id: 7798
-  time: '2025-01-11T19:29:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34298
 - author: justdie12
   changes:
   - message: Added a bend version of the radiator.
@@ -3904,3 +3896,10 @@
   id: 8298
   time: '2025-04-21T10:32:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36800
+- author: Phooooooooooooooooooooooooooooooosphate
+  changes:
+  - message: Add the medical HUDs to medical's loadout.
+    type: Add
+  id: 8299
+  time: '2025-04-21T12:07:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32847
