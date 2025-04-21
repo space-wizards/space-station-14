@@ -16,12 +16,6 @@
     sprite: Clothing/Head/Hardsuits/basic.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/basic.rsi
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
-      HeadTop : HEAD
-      HeadSide : HEAD
-      Snout: HEAD
 
 #Atmospherics Hardsuit
 - type: entity
