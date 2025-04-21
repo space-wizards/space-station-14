@@ -36,6 +36,11 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     /// </summary>
     private const string UnknownAccount = "Unknown Account";
 
+    /// <summary>
+    /// Default reason to use if the penalization is triggered
+    /// </summary>
+    private const string DefaultMessage = "Warning";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -88,9 +93,6 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
 
         var multiplier = ev.Multiplier += ent.Comp.BaseSpesoMultiplier;
 
-        if (!delivery.WasPenalized && delivery.ShouldBePenalized)
-            HandlePenalization(ent!, stationAccountEnt, multiplier); // After the Resolve above, we know it's not null
-
         _cargo.UpdateBankAccount(
             stationAccountEnt,
             (int)(delivery.BaseSpesoReward * multiplier),
@@ -102,15 +104,24 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     /// </summary>
     /// <param name="ent"><see cref="DeliveryComponent"/> entity.</param>
     /// <param name="stationAccountEnt"><see cref="StationBankAccountComponent"/> entity.</param>
-    private void HandlePenalization(Entity<DeliveryComponent> ent, Entity<StationBankAccountComponent?> stationAccountEnt, float multiplier)
+    public void HandlePenalty(Entity<DeliveryComponent> ent, Entity<StationBankAccountComponent?> stationAccountEnt, string reasonLoc)
     {
-        var delivery = ent.Comp;
-        var accountName = UnknownAccount;
-        if (_protoMan.TryIndex(delivery.PenaltyBankAccount, out var accountInfo))
-            accountName = Loc.GetString(accountInfo.Name);
+        var ev = new GetDeliveryMultiplierEvent();
+        RaiseLocalEvent(ent, ref ev);
 
-        // Extract reason from components...
-        _chat.TrySendInGameICMessage(ent, GetMessage("wah", delivery.BaseSpesoPenalty, accountName), InGameICChatType.Speak, hideChat: true);
+        var multiplier = ev.Multiplier += ent.Comp.BaseSpesoMultiplier;
+
+        var delivery = ent.Comp;
+
+        var accountName = (_protoMan.TryIndex(delivery.PenaltyBankAccount, out var accountInfo) &&
+                   Loc.TryGetString(accountInfo.Name, out var localizedAccountName))
+                  ? localizedAccountName
+                  : UnknownAccount;
+
+        if (!Loc.TryGetString(reasonLoc, out var reason))
+            reason = DefaultMessage;
+
+        _chat.TrySendInGameICMessage(ent, GetMessage(reason, delivery.BaseSpesoPenalty, accountName), InGameICChatType.Speak, hideChat: true);
 
         var dist = new Dictionary<ProtoId<CargoAccountPrototype>, double>()
         {

@@ -76,13 +76,6 @@ public sealed partial class DeliveryComponent : Component
     public bool WasPenalized;
 
     /// <summary>
-    /// If this delivery has failed its conditions and should incur a penalty on the
-    /// respective account.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool ShouldBePenalized;
-
-    /// <summary>
     /// The sound to play when the delivery is unlocked.
     /// </summary>
     [DataField]
