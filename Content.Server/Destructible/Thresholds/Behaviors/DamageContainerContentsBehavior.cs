@@ -13,7 +13,7 @@ public sealed partial class DamageContainerContentsBehavior : IThresholdBehavior
     /// <summary>
     /// List of containers to apply damage to contents
     /// </summary>
-    [DataField("containers")]
+    [DataField]
     public List<string> Containers = new();
 
     /// <summary>
