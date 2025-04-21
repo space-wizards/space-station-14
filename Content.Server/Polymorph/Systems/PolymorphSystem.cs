@@ -29,7 +29,6 @@ namespace Content.Server.Polymorph.Systems;
 public sealed partial class PolymorphSystem : EntitySystem
 {
     [Dependency] private readonly IComponentFactory _compFact = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
@@ -46,6 +45,7 @@ public sealed partial class PolymorphSystem : EntitySystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
     private const string RevertPolymorphId = "ActionRevertPolymorph";
 

@@ -1,4 +1,5 @@
 using Content.Shared.GameTicking;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Polymorph.Systems;
 
@@ -31,8 +32,8 @@ public sealed partial class PolymorphSystem
         if (PausedMap != null && Exists(PausedMap))
             return;
 
-        var newmap = _mapManager.CreateMap();
-        _mapManager.SetMapPaused(newmap, true);
-        PausedMap = _mapManager.GetMapEntityId(newmap);
+        var newmap = _mapSystem.CreateMap();
+        _mapSystem.SetPaused(newmap, true);
+        PausedMap = _mapSystem.GetMap(Comp<MapComponent>(newmap).MapId);
     }
 }
