@@ -85,6 +85,9 @@
     outerClothing: ClothingOuterHardsuitSyndieCommander
   storage:
     back:
+    - DeathAcidifierImplanter
+    - WeaponPistolViper
+    - PinpointerSyndicateNuclear
     - NukieSpectralLocator # Imp special!!
   inhand:
   - NukeOpsDeclarationOfWar
@@ -123,6 +126,4 @@
     - PinpointerSyndicateNuclear
     - DeathAcidifierImplanter
     - NukieSpectralLocator # Imp special!!
-    - DeathAcidifierImplanter
-    - WeaponPistolViper
 

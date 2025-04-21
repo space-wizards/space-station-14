@@ -1,57 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: The Head of Personnel can now grant Courier access.
-    type: Tweak
-  id: 1033
-  time: '2025-01-31T22:45:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1532
-- author: Pinkbat5
-  changes:
-  - message: Security jetpacks are now smaller in the inventory, and can be equipped
-      in the tank slot.
-    type: Tweak
-  id: 1034
-  time: '2025-01-31T22:49:04.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1522
-- author: TheGrimbeeper
-  changes:
-  - message: clownspiders no longer throw an error every frame, should very very very
-      slightly improve performance
-    type: Fix
-  id: 1035
-  time: '2025-02-01T00:52:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1537
-- author: hivehum
-  changes:
-  - message: Thieves now have the correct amount of beacons.
-    type: Fix
-  id: 1036
-  time: '2025-02-02T16:59:21.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1543
-- author: honeyed-lemons
-  changes:
-  - message: Adjusts lots of mail penalties and bonuses
-    type: Tweak
-  - message: Increased the length priority mail lasts
-    type: Tweak
-  id: 1037
-  time: '2025-02-02T17:00:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1544
-- author: honeyed-lemons
-  changes:
-  - message: Gray sprites Slightly
-    type: Tweak
-  id: 1038
-  time: '2025-02-02T17:01:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1540
-- author: widgetbeck
-  changes:
-  - message: Goblins can now rummage through the trash. I wonder what they'll find.
-    type: Add
-  id: 1039
-  time: '2025-02-02T17:09:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1538
 - author: TheGrimbeeper
   changes:
   - message: Artifacts can now get their radiation fix from splashed chems
@@ -4107,3 +4054,53 @@
   id: 1532
   time: '2025-04-19T12:51:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2259
+- author: wendyribstonpippin
+  changes:
+  - message: buncha fucking chibis on your lobby and shit
+    type: Add
+  id: 1533
+  time: '2025-04-19T22:44:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2256
+- author: AvianMaiden
+  changes:
+  - message: Brigmedical lockers can now be accessed by the brigmedic's superiors.
+    type: Add
+  id: 1534
+  time: '2025-04-19T22:44:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2287
+- author: TheGrimbeeper
+  changes:
+  - message: minuscule chance that the vent slimes discovered how to be made of drugs
+    type: Tweak
+  id: 1535
+  time: '2025-04-19T22:55:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2276
+- author: horseplinko
+  changes:
+  - message: changed gray poison resistance to radiation resistance
+    type: Tweak
+  id: 1536
+  time: '2025-04-19T23:04:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2278
+- author: SixValentine
+  changes:
+  - message: Luna is the perfect map. Details in PR
+    type: Fix
+  id: 1537
+  time: '2025-04-20T23:27:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2298
+- author: Ecramox
+  changes:
+  - message: The Nukie Commander has gotten their spare gear back, after the Lone
+      Op borrowed it for a while.
+    type: Fix
+  id: 1538
+  time: '2025-04-20T23:30:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2299
+- author: meridiadottxt
+  changes:
+  - message: various Gate fixes based on player feedback
+    type: Tweak
+  id: 1539
+  time: '2025-04-21T01:47:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2304

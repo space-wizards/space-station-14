@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Grid
+  engineVersion: 250.0.0
+  forkId: ""
+  forkVersion: ""
+  time: 04/20/2025 21:50:31
+  entityCount: 280
+maps: []
+grids:
+- 2
+orphans:
+- 2
+nullspace: []
 tilemap:
   0: Space
   96: FloorShuttleBlack
@@ -1187,6 +1198,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 2.5,1.5
+      parent: 2
+- proto: HolopadCargoShuttle
+  entities:
+  - uid: 87
+    components:
+    - type: Transform
+      pos: 6.5,-3.5
       parent: 2
 - proto: PlasticFlapsAirtightClear
   entities:
