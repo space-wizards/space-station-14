@@ -5,10 +5,10 @@
   components:
   - type: Sprite
     layers:
-      - state: green
-      - sprite: Mobs/Animals/mouse.rsi
-        state: icon-2
-      - state: ai
+    - state: green
+    - sprite: Mobs/Animals/mouse.rsi
+      state: icon-2
+    - state: ai
   - type: ConditionalSpawner
     prototypes:
       - MobMouse
