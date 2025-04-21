@@ -78,7 +78,7 @@ public abstract class SharedStationSystem : EntitySystem
     /// </summary>
     public EntityUid? GetCurrentStation(Entity<StationTrackerComponent?> ent)
     {
-        if (!Resolve(ent, ref ent.Comp))
+        if (!Resolve(ent, ref ent.Comp, logMissing: false))
             return null;
 
         return ent.Comp.Station;
