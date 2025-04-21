@@ -274,3 +274,33 @@
       - !type:AdjustReagent
         reagent: Nutriment
         amount: 0.1
+
+- type: reagent
+  id: FrostOil
+  name: reagent-name-frost-oil
+  group: Foods
+  desc: reagent-desc-frost-oil
+  physicalDesc: reagent-physical-desc-oily
+  flavor: cold
+  color: skyblue
+  metabolisms:
+    Food:
+      effects:
+      - !type:AdjustReagent
+        reagent: Nutriment #Oils enhance nutrition
+        amount: 0.75
+    Poison:
+      effects:
+      - !type:AdjustTemperature
+        amount: -250 # thermal energy, not temp
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+        damage:
+          types:
+            Cold: 1
+      - !type:PopupMessage
+        type: Local
+        messages: [ "frost-oil-effect-light-cold" ]
+        probability: 0.2
