@@ -1,7 +1,6 @@
 objective-condition-steal-title-singular-no-owner = Steal a {$itemName}.
 objective-condition-steal-title-special-no-owner = Steal the {$itemName}.
 objective-condition-steal-title-alive-no-owner = Steal {$itemName}.
-objective-condition-steal-title-no-owner
 objective-condition-steal-title = Steal the {$owner}'s {$itemName}.
 objective-condition-steal-description = We need you to steal {$itemName}. Don't get caught.
 
