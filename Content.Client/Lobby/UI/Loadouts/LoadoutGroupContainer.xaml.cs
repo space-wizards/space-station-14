@@ -1,4 +1,4 @@
-using System.Linq;
+using Content.Client.Guidebook;
 using Content.Shared.Clothing;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Client.Lobby.UI.Loadouts;
 
@@ -15,13 +16,19 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
 {
     private readonly LoadoutGroupPrototype _groupProto;
 
+    [Dependency] private readonly DocumentParsingManager _parsingMan = default!;
+
+    private readonly ISawmill _sawmill;
+
     public event Action<ProtoId<LoadoutPrototype>>? OnLoadoutPressed;
     public event Action<ProtoId<LoadoutPrototype>>? OnLoadoutUnpressed;
 
     public LoadoutGroupContainer(HumanoidCharacterProfile profile, RoleLoadout loadout, LoadoutGroupPrototype groupProto, ICommonSession session, IDependencyCollection collection)
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
         _groupProto = groupProto;
+        _sawmill = Logger.GetSawmill("Loadouts");
 
         RefreshLoadouts(profile, loadout, session, collection);
     }
@@ -77,16 +84,20 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
 
             var enabled = loadout.IsValid(profile, session, loadoutProto, collection, out var reason);
             var loadoutContainer = new LoadoutContainer(loadoutProto, !enabled, reason);
-            loadoutContainer.Select.Pressed = pressed;
-            loadoutContainer.Text = loadoutSystem.GetName(loadProto);
+            //loadoutContainer.Select.Pressed = pressed;
+            //loadoutContainer.Item.SetMessage(
+            //            FormattedMessage.FromMarkupOrThrow(
+            //                $"[center]{loadoutSystem.GetName(loadProto)}[/center]"
+            //            )
+            //        );
 
-            loadoutContainer.Select.OnPressed += args =>
-            {
-                if (args.Button.Pressed)
-                    OnLoadoutPressed?.Invoke(loadoutProto);
-                else
-                    OnLoadoutUnpressed?.Invoke(loadoutProto);
-            };
+            //loadoutContainer.Select.OnPressed += args =>
+            //{
+            //    if (args.Button.Pressed)
+            //        OnLoadoutPressed?.Invoke(loadoutProto);
+            //    else
+            //        OnLoadoutUnpressed?.Invoke(loadoutProto);
+            //};
 
             LoadoutsContainer.AddChild(loadoutContainer);
         }

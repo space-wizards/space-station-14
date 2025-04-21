@@ -1,15 +1,37 @@
-<BoxContainer Name="Container" xmlns="https://spacestation14.io"
-         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-         Orientation="Horizontal"
-         HorizontalExpand="True"
-         MouseFilter="Ignore"
-         Margin="0 0 0 5">
-    <Button Name="SelectButton" ToggleMode="True" Margin="0 0 5 0" HorizontalExpand="True"/>
-    <PanelContainer SetSize="64 64" HorizontalAlignment="Right">
-        <PanelContainer.PanelOverride>
-            <graphics:StyleBoxFlat BackgroundColor="#1B1B1E" />
-        </PanelContainer.PanelOverride>
-        <SpriteView Name="Sprite" Scale="4 4" MouseFilter="Stop"/>
-    </PanelContainer>
+<BoxContainer Name="Container"
+              xmlns="https://spacestation14.io"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:custom="clr-namespace:Content.Client.Lobby.UI.Loadouts;assembly=Content.Client"
+              x:Class="Content.Client.Lobby.UI.Loadouts.LoadoutContainer"
+              Orientation="Vertical"
+              StyleClasses="ItemBackground"
+              MouseFilter="Ignore"
+              Margin="4"
+              HorizontalExpand="True"
+              VerticalExpand="True">
+
+        <Button Name="SelectButton"
+             ToggleMode="True"
+             StyleClasses="ItemButton"
+             HorizontalExpand="True"
+             VerticalExpand="True"
+             Margin="4">
+
+            <!--<BoxContainer Orientation="Vertical"
+                          HorizontalExpand="True"
+                          VerticalExpand="True">
+
+                <SpriteView Name="Sprite"
+                            Scale="2 2"
+                            MouseFilter="Ignore"
+                            HorizontalAlignment="Center" />
+
+                <RichTextLabel Name="ItemLabel"
+                               Text="Item label"
+                               Margin="0,2"/>
+            </BoxContainer>-->
+            <custom:CustomLabel Name="ItemLabel"
+                            Text="Item label Item label Item label Item label"
+                            HorizontalExpand="False"/>
+        </Button>
 </BoxContainer>
