@@ -22,6 +22,9 @@
         },
         {
             "name": "Surgeon"
+        },
+        {
+            "name": "MailMan"
         }
     ]
 }
