@@ -97,13 +97,12 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
     }
 
     /// <summary>
-    /// Allows the delivery to speak with the message and handles the charging of the penalized account
+    /// Runs the penalty logic: Announcing the penalty and calculating how much to charge the desginatied account
     /// </summary>
     /// <param name="ent"><see cref="DeliveryComponent"/> entity.</param>
     /// <param name="stationAccountEnt"><see cref="StationBankAccountComponent"/> entity.</param>
     public void HandlePenalty(Entity<DeliveryComponent> ent, Entity<StationBankAccountComponent?> stationAccountEnt, string reasonLoc)
     {
-
         var multiplier = GetDeliveryMultiplier(ent);
         var delivery = ent.Comp;
 
