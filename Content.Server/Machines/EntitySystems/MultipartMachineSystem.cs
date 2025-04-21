@@ -119,6 +119,23 @@ public sealed class MultipartMachineSystem : EntitySystem
     }
 
     /// <summary>
+    /// Convenience method for checking if a machine has an entity bound to a specific part
+    /// </summary>
+    /// <param name="ent">Entity, which might have a multipart machine attached, to use for the query</param>
+    /// <param name="part">Enum for the part to find</param>
+    /// <returns></returns>
+    public bool HasPart(Entity<MultipartMachineComponent?> ent, Enum part)
+    {
+        if (!Resolve(ent, ref ent.Comp))
+            return false;
+
+        if (!ent.Comp.Parts.TryGetValue(part, out var value))
+            return false;
+
+        return value.Entity != null;
+    }
+
+    /// <summary>
     /// Scans the specified coordinates for any anchored entities that might match the given
     /// component and rotation requirements.
     /// </summary>
