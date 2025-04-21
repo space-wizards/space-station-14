@@ -16,7 +16,9 @@ public sealed partial class BinomialNumberSelector : NumberSelector
     /// <summary>
     /// The odds a single trial succeeds
     /// </summary>
+    /// <remarks>
     /// my preferred "Prob" was already used in other places for entity table stuff and I didnt want more confusing terminology
+    /// </remarks>
     [DataField]
     public float Chance = .5f;
 
