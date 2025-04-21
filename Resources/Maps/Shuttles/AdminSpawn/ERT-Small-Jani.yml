@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Grid
+  engineVersion: 254.1.0
+  forkId: ""
+  forkVersion: ""
+  time: 04/21/2025 18:19:29
+  entityCount: 264
+maps: []
+grids:
+- 1
+orphans:
+- 1
+nullspace: []
 tilemap:
   0: Space
   33: FloorDarkMini
@@ -20,7 +31,7 @@ entities:
     - type: MetaData
       name: NT-Hestia
     - type: Transform
-      parent: 7
+      parent: invalid
     - type: MapGrid
       chunks:
         -1,0:
@@ -194,43 +205,59 @@ entities:
       data:
         tiles:
           -2,0:
-            0: 32904
+            0: 136
+            1: 32768
           -2,1:
             0: 2184
-            1: 16384
+            2: 16384
           -2,2:
-            1: 140
+            2: 140
           -2,-1:
             0: 34944
-            1: 76
+            2: 76
           -1,0:
             0: 57087
           -1,1:
             0: 27871
           -1,-1:
             0: 65520
-            1: 10
+            2: 10
           -1,2:
             0: 2
-            1: 136
+            2: 136
           0,0:
             0: 4112
           0,1:
-            1: 4096
+            2: 4096
           0,2:
-            1: 1
+            2: 1
           -2,-2:
-            1: 32768
+            2: 32768
           -1,-2:
-            1: 53248
+            2: 53248
           0,-1:
-            1: 17
+            2: 17
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
           moles:
           - 21.824879
           - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.458208
+          - 80.72374
           - 0
           - 0
           - 0
@@ -265,19 +292,6 @@ entities:
     - type: GravityShake
       shakeTimes: 10
     - type: GasTileOverlay
-  - uid: 7
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
-    - type: LoadedMap
 - proto: AirCanister
   entities:
   - uid: 136
@@ -331,6 +345,66 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,3.5
       parent: 1
+- proto: BoxCardboard
+  entities:
+  - uid: 7
+    components:
+    - type: Transform
+      pos: -4.7547092,6.7188997
+      parent: 1
+    - type: Storage
+      storedItems:
+        140:
+          position: 0,0
+          _rotation: South
+        154:
+          position: 1,0
+          _rotation: South
+        200:
+          position: 2,0
+          _rotation: South
+        228:
+          position: 0,2
+          _rotation: East
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 140
+          - 154
+          - 200
+          - 228
+  - uid: 259
+    components:
+    - type: Transform
+      pos: -4.1922092,6.7605667
+      parent: 1
+    - type: Storage
+      storedItems:
+        260:
+          position: 0,0
+          _rotation: South
+        261:
+          position: 1,0
+          _rotation: South
+        262:
+          position: 2,0
+          _rotation: South
+        263:
+          position: 0,2
+          _rotation: East
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 260
+          - 261
+          - 262
+          - 263
 - proto: Bucket
   entities:
   - uid: 85
@@ -762,8 +836,8 @@ entities:
         immutable: False
         temperature: 293.1462
         moles:
-        - 1.606311
-        - 6.042789
+        - 1.865931
+        - 7.0194554
         - 0
         - 0
         - 0
@@ -780,6 +854,8 @@ entities:
           showEnts: False
           occludes: True
           ents:
+          - 191
+          - 74
           - 85
           - 190
         paper_label: !type:ContainerSlot
@@ -797,8 +873,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.7459903
-        - 6.568249
+        - 1.8530405
+        - 6.9709616
         - 0
         - 0
         - 0
@@ -815,9 +891,11 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 253
+          - 75
+          - 192
           - 254
           - 255
+          - 253
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -827,13 +905,17 @@ entities:
   - uid: 74
     components:
     - type: Transform
-      pos: -4.767089,6.7104
-      parent: 1
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
   - uid: 75
     components:
     - type: Transform
-      pos: -4.573718,6.5169353
-      parent: 1
+      parent: 252
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: ComputerShuttle
   entities:
   - uid: 76
@@ -1235,6 +1317,56 @@ entities:
     - type: Transform
       pos: -0.5,-1.5
       parent: 1
+- proto: GrenadeCleanade
+  entities:
+  - uid: 140
+    components:
+    - type: Transform
+      parent: 7
+    - type: Physics
+      canCollide: False
+  - uid: 154
+    components:
+    - type: Transform
+      parent: 7
+    - type: Physics
+      canCollide: False
+  - uid: 200
+    components:
+    - type: Transform
+      parent: 7
+    - type: Physics
+      canCollide: False
+  - uid: 228
+    components:
+    - type: Transform
+      parent: 7
+    - type: Physics
+      canCollide: False
+  - uid: 260
+    components:
+    - type: Transform
+      parent: 259
+    - type: Physics
+      canCollide: False
+  - uid: 261
+    components:
+    - type: Transform
+      parent: 259
+    - type: Physics
+      canCollide: False
+  - uid: 262
+    components:
+    - type: Transform
+      parent: 259
+    - type: Physics
+      canCollide: False
+  - uid: 263
+    components:
+    - type: Transform
+      parent: 259
+    - type: Physics
+      canCollide: False
 - proto: Grille
   entities:
   - uid: 98
@@ -1828,18 +1960,34 @@ entities:
     - type: Transform
       pos: -3.5,3.5
       parent: 1
+- proto: WeaponLauncherHydra
+  entities:
+  - uid: 258
+    components:
+    - type: Transform
+      pos: -4.4675775,6.7263184
+      parent: 1
+  - uid: 264
+    components:
+    - type: Transform
+      pos: -4.5300775,6.4659014
+      parent: 1
 - proto: WeaponSprayNozzle
   entities:
   - uid: 191
     components:
     - type: Transform
-      pos: -4.277217,6.8264794
-      parent: 1
+      parent: 84
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
   - uid: 192
     components:
     - type: Transform
-      pos: -4.1740866,6.5814233
-      parent: 1
+      parent: 252
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: WindoorSecureCentralCommandLocked
   entities:
   - uid: 195

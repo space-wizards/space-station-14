@@ -1,6 +1,17 @@
 meta:
-  format: 6
-  postmapinit: false
+  format: 7
+  category: Grid
+  engineVersion: 254.1.0
+  forkId: ""
+  forkVersion: ""
+  time: 04/21/2025 18:26:05
+  entityCount: 984
+maps: []
+grids:
+- 1
+orphans:
+- 1
+nullspace: []
 tilemap:
   0: Space
   29: FloorDark
@@ -24,7 +35,7 @@ entities:
     - type: MetaData
       name: NT-Hygieia
     - type: Transform
-      parent: 29
+      parent: invalid
     - type: MapGrid
       chunks:
         -1,0:
@@ -943,19 +954,6 @@ entities:
     - type: GasTileOverlay
     - type: SpreaderGrid
     - type: GridPathfinding
-  - uid: 29
-    components:
-    - type: MetaData
-      name: Map Entity
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
-    - type: LoadedMap
 - proto: ActionToggleLight
   entities:
   - uid: 3
@@ -2128,6 +2126,11 @@ entities:
       parent: 1
 - proto: CableHV
   entities:
+  - uid: 84
+    components:
+    - type: Transform
+      pos: -2.5,-9.5
+      parent: 1
   - uid: 221
     components:
     - type: Transform
@@ -2157,11 +2160,6 @@ entities:
     components:
     - type: Transform
       pos: -4.5,-10.5
-      parent: 1
-  - uid: 227
-    components:
-    - type: Transform
-      pos: -2.5,-7.5
       parent: 1
   - uid: 228
     components:
@@ -3142,6 +3140,13 @@ entities:
         - 0
         - 0
         - 0
+- proto: CrateSecurityTrackingMindshieldImplants
+  entities:
+  - uid: 83
+    components:
+    - type: Transform
+      pos: 3.5,11.5
+      parent: 1
 - proto: DefibrillatorCabinet
   entities:
   - uid: 391
@@ -5247,10 +5252,10 @@ entities:
       color: '#990000FF'
 - proto: GeneratorBasic15kW
   entities:
-  - uid: 634
+  - uid: 29
     components:
     - type: Transform
-      pos: -2.5,-7.5
+      pos: -2.5,-9.5
       parent: 1
   - uid: 635
     components:
