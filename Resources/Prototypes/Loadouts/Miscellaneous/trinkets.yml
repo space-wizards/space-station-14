@@ -185,6 +185,12 @@
     - ClothingNeckGenderqueerPin
 
 - type: loadout
+  id: ClothingNeckGenderfluidPin
+  storage:
+    back:
+    - ClothingNeckGenderfluidPin
+
+- type: loadout
   id: ClothingNeckTransPin
   storage:
     back:
