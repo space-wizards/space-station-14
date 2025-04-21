@@ -51,7 +51,7 @@ namespace Content.Server.Cargo.Systems
                 return;
 
             _audio.PlayPvs(ApproveSound, uid);
-            UpdateBankAccount((stationUid.Value, bank), (int) price, CreateAccountDistribution(component.Account, bank));
+            UpdateBankAccount((stationUid.Value, bank), (int) price, component.Account);
             QueueDel(args.Used);
             args.Handled = true;
         }
@@ -203,7 +203,7 @@ namespace Content.Server.Cargo.Systems
                 $"{ToPrettyString(player):user} approved order [orderId:{order.OrderId}, quantity:{order.OrderQuantity}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] on account {component.Account} with balance at {accountBalance}");
 
             orderDatabase.Orders[component.Account].Remove(order);
-            UpdateBankAccount((station.Value, bank), -cost, CreateAccountDistribution(component.Account, bank));
+            UpdateBankAccount((station.Value, bank), -cost, component.Account);
             UpdateOrders(station.Value);
         }
 

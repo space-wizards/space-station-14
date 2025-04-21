@@ -74,7 +74,7 @@
   - type: Item
     size: Huge
   - type: Delivery
-    spesoReward: 800
+    spesoReward: 1000
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
@@ -111,7 +111,7 @@
   - type: Item
     storedRotation: 90
   - type: Delivery
-    spesoReward: 400
+    spesoReward: 500
   - type: EntityTableContainerFill
     containers:
       delivery: !type:NestedSelector
