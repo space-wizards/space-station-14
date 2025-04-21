@@ -12,7 +12,6 @@ namespace Content.Server.Atmos.Commands;
 public sealed class AddMapAtmosCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
 
     private const string _cmd = "cmd-set-map-atmos";
     public override string Command => "setmapatmos";
@@ -21,6 +20,8 @@ public sealed class AddMapAtmosCommand : LocalizedCommands
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
+        var mapSystem = _entities.System<SharedMapSystem>();
+
         if (args.Length < 2)
         {
             shell.WriteLine(Help);
@@ -28,7 +29,7 @@ public sealed class AddMapAtmosCommand : LocalizedCommands
         }
 
         int.TryParse(args[0], out var id);
-        var map = _map.GetMap(new MapId(id));
+        var map = mapSystem.GetMap(new MapId(id));
         if (!map.IsValid())
         {
             shell.WriteError(Loc.GetString("cmd-parse-failure-mapid",  ("arg", args[0])));
