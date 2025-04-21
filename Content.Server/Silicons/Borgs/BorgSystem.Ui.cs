@@ -62,8 +62,6 @@ public sealed partial class BorgSystem
         }
 
         var name = args.Name.Trim();
-        if (TryComp<NameIdentifierComponent>(uid, out var identifier))
-            name = $"{name} {identifier.FullIdentifier}";
 
         var metaData = MetaData(uid);
 
@@ -80,6 +78,9 @@ public sealed partial class BorgSystem
         var module = GetEntity(args.Module);
 
         if (!component.ModuleContainer.Contains(module))
+            return;
+
+        if (!CanRemoveModule((uid, component), (module, Comp<BorgModuleComponent>(module)), args.Actor))
             return;
 
         _adminLog.Add(LogType.Action, LogImpact.Medium,

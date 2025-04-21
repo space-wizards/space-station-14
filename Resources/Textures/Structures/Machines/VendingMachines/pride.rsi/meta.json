@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-4.0",
+  "copyright": "The art belongs to Woods#1999 on discord",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "broken"
+    },
+    {
+      "name": "off"
+    },
+    {
+      "name": "panel"
+    },
+    {
+      "name": "normal-unshaded",
+      "delays": [
+        [
+          1.5,
+          0.1,
+          1.5,
+          0.1
+        ]
+      ]
+    }
+  ]
+}
