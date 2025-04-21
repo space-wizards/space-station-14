@@ -170,7 +170,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckGenderfluidPin
   name: genderfluid pin
-  description: be gender, do fluid
+  description: be gender, be fluid
   components:
   - type: Sprite
     state: fluid
