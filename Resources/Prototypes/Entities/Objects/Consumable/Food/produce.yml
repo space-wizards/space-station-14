@@ -280,7 +280,7 @@
   - type: Extractable
     grindableSolutionName: food
   - type: DamageOnInteract
-    damage: 
+    damage:
       types:
         Heat: 4
         Caustic: 4
@@ -307,7 +307,7 @@
             volume: -5
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: DamageOnHit 
+  - type: DamageOnHit
     damage:
       types:
         Blunt: 5 # The nettle will "wilt" after 5 hits.
@@ -324,6 +324,10 @@
   - type: Food
     trash:
     - TrashBananaPeel
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: TrashBananaPeel
   - type: SolutionContainerManager
     solutions:
       food:
@@ -366,6 +370,10 @@
   - type: Food
     trash:
     - TrashMimanaPeel
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: TrashMimanaPeel
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1170,6 +1178,10 @@
   - type: Food
     trash:
     - FoodCornTrash
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: FoodCornTrash #no idea why you'd ever do this, but it's just here for consistency
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1868,6 +1880,10 @@
   - type: Food
     trash:
     - WeaponRevolverPython
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: WeaponRevolverPython
   - type: Tag
     tags:
     - Fruit # It's in the name
@@ -1903,6 +1919,10 @@
   - type: Food
     trash:
     - RevolverCapGun
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: RevolverCapGun
   - type: Tag
     tags:
     - Fruit
@@ -1922,6 +1942,10 @@
   - type: Food
     trash:
     - RevolverCapGunFake
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: RevolverCapGunFake
 
 - type: entity
   name: rice bushel
@@ -2326,6 +2350,10 @@
   - type: Food
     trash:
     - FoodBungoPit
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: FoodBungoPit
   - type: SolutionContainerManager
     solutions:
       food:
@@ -2621,6 +2649,10 @@
   - type: Food
     trash:
     - TrashCherryPit
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: TrashCherryPit
   - type: SolutionContainerManager
     solutions:
       food:
