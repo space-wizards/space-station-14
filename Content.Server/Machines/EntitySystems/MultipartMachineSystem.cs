@@ -158,7 +158,7 @@ public sealed class MultipartMachineSystem : EntitySystem
 
     /// <summary>
     /// Performs a rescan of all parts of the machine to confirm they exist and match
-    /// the specified requirments for offset, rotation, and components.
+    /// the specified requirements for offset, rotation, and components.
     /// </summary>
     /// <param name="ent">Entity to rescan for</param>
     /// <returns>True if all non-optional parts are found and match, false otherwise</returns>
