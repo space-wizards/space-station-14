@@ -3,14 +3,6 @@
   start: start
   graph:
     - node: start
-      edges:
-        - to: unfinishedDeskBellNode
-          steps:
-            - material: Steel
-              amount: 1
-              doAfter: 1.5
-
-    - node: unfinishedDeskBellNode
       entity: EmptyDeskBell
       edges:
         - to: deskBellNode
@@ -31,20 +23,11 @@
                 sprite: Objects/Fun/bikehorn.rsi
                 state: icon
               doAfter: 1
-        - to: start
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 1
-            - !type:DeleteEntity
-          steps:
-            - tool: Screwing
-              doAfter: 2
 
     - node: deskBellNode
       entity: DeskBell
       edges:
-        - to: unfinishedDeskBellNode
+        - to: start
           completed:
             - !type:SpawnPrototype
               prototype: PartRodMetal1
@@ -56,7 +39,7 @@
     - node: deskBuzzerNode
       entity: DeskBuzzer
       edges:
-        - to: unfinishedDeskBellNode
+        - to: start
           completed:
             - !type:SpawnPrototype
               prototype: CableApcStack1
@@ -68,7 +51,7 @@
     - node: deskHornNode
       entity: DeskHorn
       edges:
-        - to: unfinishedDeskBellNode
+        - to: start
           completed:
             - !type:SpawnPrototype
               prototype: BikeHorn

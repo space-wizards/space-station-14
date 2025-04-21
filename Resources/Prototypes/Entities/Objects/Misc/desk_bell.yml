@@ -7,11 +7,11 @@
   - type: Sprite
     sprite: Objects/Misc/desk_bell.rsi
     state: "icon_empty"
-  - type: Damageable
-    damageContainer: Inorganic
   - type: Construction
     graph: BellGraph
-    node: unfinishedDeskBellNode
+    node: start
+  - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -34,14 +34,6 @@
               max: 1
         - !type:DoActsBehavior
           acts: ["Destruction"]
-  - type: MeleeSound
-    soundGroups:
-      Brute:
-        collection: DeskBell
-        params:
-            variation: 0.03
-            volume: 5
-            pitch: 1.5
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
@@ -52,6 +44,15 @@
     damage:
       types:
         Blunt: 4
+  # Sound
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: DeskBell
+        params:
+            variation: 0.03
+            volume: 5
+            pitch: 1.5
   - type: EmitSoundOnLand
     sound:
       collection: DeskBell
@@ -69,35 +70,13 @@
   parent: EmptyDeskBell
   id: DeskBell
   name: desk bell
-  description: The cornerstone of any customer service job. You feel an unending urge to ring it.
+  description: The cornerstone of any customer service job. You feel an unending urge to ring it. Can be screwed open to replace the noise maker.
   components:
   - type: Sprite
     state: "icon_bell"
   - type: Tag
     tags:
       - Payload
-  - type: InteractionPopup
-    successChance: 1
-    interactSuccessSound:
-      collection: DeskBell
-      params:
-        variation: 0.03
-        volume: 3
-    onActivate: true
-  - type: UseDelay
-    delay: 0.5
-  - type: EmitSoundOnUse
-    sound:
-      collection: DeskBell
-      params:
-          variation: 0.03
-          volume: 3
-  - type: EmitSoundOnTrigger
-    sound:
-      collection: DeskBell
-      params:
-          variation: 0.03
-          volume: 3
   - type: Construction
     graph: BellGraph
     node: deskBellNode
@@ -122,9 +101,32 @@
               min: 0
               max: 1
         - !type:ChangeConstructionNodeBehavior
-          node: unfinishedDeskBellNode
+          node: start
         - !type:DoActsBehavior
           acts: ["Destruction"]
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessSound:
+      collection: DeskBell
+      params:
+        variation: 0.03
+        volume: 3
+    onActivate: true
+  - type: UseDelay
+    delay: 0.5
+  # Sound
+  - type: EmitSoundOnUse
+    sound:
+      collection: DeskBell
+      params:
+          variation: 0.03
+          volume: 3
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: DeskBell
+      params:
+          variation: 0.03
+          volume: 3
 
 - type: entity
   parent: EmptyDeskBell
@@ -137,6 +139,34 @@
   - type: Tag
     tags:
       - Payload
+  - type: Construction
+    graph: BellGraph
+    node: deskBuzzerNode
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            CableApcStack1:
+              min: 0
+              max: 2
+        - !type:ChangeConstructionNodeBehavior
+          node: start
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+  - type: StationAiWhitelist
   - type: InteractionPopup
     successChance: 1
     interactSuccessSound:
@@ -147,6 +177,7 @@
     onActivate: true
   - type: UseDelay
     delay: 0.5
+  # Sound
   - type: EmitSoundOnUse
     sound:
       collection: DeskBuzzer
@@ -174,9 +205,6 @@
       params:
           variation: 0.03
           volume: 3
-    damage:
-      types:
-        Blunt: 4
   - type: EmitSoundOnLand
     sound:
       collection: DeskBuzzer
@@ -189,9 +217,21 @@
       params:
           variation: 0.03
           volume: 3
+
+- type: entity
+  parent: EmptyDeskBell
+  id: DeskHorn
+  name: desk horn
+  description: The cornerstone of any clown business. You feel an unending urge to honk it.
+  components:
+  - type: Sprite
+    state: "icon_buzzer"
+  - type: Tag
+    tags:
+      - Payload
   - type: Construction
     graph: BellGraph
-    node: deskBuzzerNode
+    node: deskHornNode
   - type: Destructible
     thresholds:
     - trigger:
@@ -209,26 +249,13 @@
             collection: MetalBreak
         - !type:SpawnEntitiesBehavior
           spawn:
-            CableApcStack1:
-              min: 0
-              max: 2
+            BikeHorn:
+              min: 1
+              max: 1
         - !type:ChangeConstructionNodeBehavior
-          node: unfinishedDeskBellNode
+          node: start
         - !type:DoActsBehavior
           acts: ["Destruction"]
-  - type: StationAiWhitelist
-
-- type: entity
-  parent: EmptyDeskBell
-  id: DeskHorn
-  name: desk horn
-  description: The cornerstone of any clown business. You feel an unending urge to honk it.
-  components:
-  - type: Sprite
-    state: "icon_buzzer"
-  - type: Tag
-    tags:
-      - Payload
   - type: InteractionPopup
     successChance: 1
     interactSuccessSound:
@@ -239,6 +266,7 @@
     onActivate: true
   - type: UseDelay
     delay: 0.5
+  # Sound
   - type: EmitSoundOnUse
     sound:
       collection: BikeHorn
@@ -266,9 +294,6 @@
       params:
           variation: 0.03
           volume: 3
-    damage:
-      types:
-        Blunt: 4
   - type: EmitSoundOnLand
     sound:
       collection: BikeHorn
@@ -281,30 +306,3 @@
       params:
           variation: 0.03
           volume: 3
-  - type: Construction
-    graph: BellGraph
-    node: deskHornNode
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
-      behaviors:
-        - !type:PlaySoundBehavior
-          sound:
-            collection: MetalBreak
-        - !type:SpawnEntitiesBehavior
-          spawn:
-            BikeHorn:
-              min: 1
-              max: 1
-        - !type:ChangeConstructionNodeBehavior
-          node: unfinishedDeskBellNode
-        - !type:DoActsBehavior
-          acts: ["Destruction"]
