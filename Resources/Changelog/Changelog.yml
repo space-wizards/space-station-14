@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Kontinentaldrift
-  changes:
-  - message: EOD locker always spawns with tools.
-    type: Tweak
-  id: 7801
-  time: '2025-01-12T16:38:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34394
 - author: SlimSlam
   changes:
   - message: News Room
@@ -3904,3 +3897,11 @@
   id: 8301
   time: '2025-04-21T15:50:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34683
+- author: Hrosts
+  changes:
+  - message: Added rehydratable mop bucket cube, replacing the big and unwieldy yellow
+      bucket in the janitorial supplies crate.
+    type: Add
+  id: 8302
+  time: '2025-04-21T17:16:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34586
