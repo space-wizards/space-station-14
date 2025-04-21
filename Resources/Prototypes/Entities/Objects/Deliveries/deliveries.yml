@@ -78,7 +78,7 @@
     size: Huge
   - type: Delivery
     baseSpesoReward: 1000
-    baseSpesoPenalty: 200 # So low due to dept economy splitting all the earnings, but not splitting the penalty.
+    baseSpesoPenalty: 250 # So low due to dept economy splitting all the earnings, but not splitting the penalty.
   - type: Speech
     speechVerb: Robotic
   - type: SimpleToolUsage
@@ -120,7 +120,7 @@
     storedRotation: 90
   - type: Delivery
     baseSpesoReward: 500
-    baseSpesoPenalty: 100 # So low due to dept economy splitting all the earnings, but not splitting the penalty.
+    baseSpesoPenalty: 125 # So low due to dept economy splitting all the earnings, but not splitting the penalty.
   - type: Speech
     speechVerb: Robotic
   - type: EntityTableContainerFill
