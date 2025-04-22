@@ -5035,4 +5035,11 @@ Entries:
   id: 697
   time: '2025-04-22T02:52:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/509
+- author: choccy
+  changes:
+  - message: various small features sighted in the CL description
+    type: Fix
+  id: 698
+  time: '2025-04-22T02:54:09.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/511
 
