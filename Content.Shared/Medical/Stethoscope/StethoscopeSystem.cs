@@ -73,6 +73,7 @@ public sealed class StethoscopeSystem : EntitySystem
             BreakOnMove = true,
             Hidden = true,
             BreakOnHandChange = false,
+            BreakOnContainerChange = true,
         });
     }
 

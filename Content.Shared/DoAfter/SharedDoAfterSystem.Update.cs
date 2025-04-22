@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
+using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.DoAfter;
@@ -235,6 +236,15 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             // If the user changes which hand is active at all, interrupt the do-after
             if (args.BreakOnHandChange && hands.ActiveHand?.Name != doAfter.InitialHand)
                 return true;
+        }
+
+        if (args.BreakOnContainerChange && args.EventTarget != null)
+        {
+            _container.TryGetContainingContainer((args.EventTarget.Value, null, null), out var container);
+            if (container == null || container.ID != doAfter.InitialContainerID)
+            {
+                return true;
+            }
         }
 
         if (args.RequireCanInteract && !_actionBlocker.CanInteract(args.User, args.Target))
