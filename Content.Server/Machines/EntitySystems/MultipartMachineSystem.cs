@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Machines.Components;
+using Content.Server.Construction;
+using Content.Server.Construction.Components;
 using Content.Server.Machines.Components;
+using Content.Shared.Machines.Components;
 using Content.Shared.Machines.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
@@ -24,6 +26,9 @@ public sealed class MultipartMachineSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MultipartMachineComponent, ComponentStartup>(OnComponentStartup);
+
+        SubscribeLocalEvent<ConstructionComponent, AfterConstructionChangeEntityEvent>(OnConstructionNodeChanged);
+        SubscribeLocalEvent<ConstructionComponent, AnchorStateChangedEvent>(OnConstructionAnchorChanged);
     }
 
     /// <summary>
@@ -39,6 +44,65 @@ public sealed class MultipartMachineSystem : EntitySystem
             if (!_factory.TryGetRegistration(part.Component, out var registration))
             {
                 throw new Exception($"Unable to resolve component type [{part.Component}] for machine part [{name}]");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Handles when a constructable entity has been created due to a move in a construction graph.
+    /// Scans all known multipart machines and rescans any that have a part which matches that specific graph
+    /// and node IDs.
+    /// </summary>
+    /// <param name="ent">Constructable entity that has moved in a graph</param>
+    /// <param name="args">Args for this event</param>
+    private void OnConstructionNodeChanged(Entity<ConstructionComponent> ent,
+        ref AfterConstructionChangeEntityEvent args)
+    {
+        var query = EntityQueryEnumerator<MultipartMachineComponent>();
+        while (query.MoveNext(out var uid, out var machine))
+        {
+            foreach (var part in machine.Parts.Values)
+            {
+                if (args.Graph == part.Graph &&
+                    (args.PreviousNode == part.ExpectedNode || args.CurrentNode == part.ExpectedNode))
+                {
+                    Rescan((uid, machine));
+                    break; // No need to scan the same machine again
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Handles when a constructable entity has been anchored or unanchored by a user.
+    /// We might be able to link an unanchored part to a machine, but anchoring a constructable
+    /// entity will require a rescan of all machines as we have no idea what machine it might be a
+    /// part of.
+    /// </summary>
+    /// <param name="ent">Constructable entity that has been anchored or unanchored</param>
+    /// <param name="args">Args for this event, notably the anchor status</param>
+    private void OnConstructionAnchorChanged(Entity<ConstructionComponent> ent, ref AnchorStateChangedEvent args)
+    {
+        var query = EntityQueryEnumerator<MultipartMachineComponent>();
+        while (query.MoveNext(out var uid, out var machine))
+        {
+            if (!args.Anchored)
+            {
+                // Some construction is being unanchored, check if its a known part for us
+                foreach (var part in machine.Parts.Values)
+                {
+                    if (part.Entity.HasValue && GetEntity(part.Entity) == ent.Owner)
+                    {
+                        Rescan((uid, machine));
+                        return; // Can just early out now that we have scanned the exact right machine.
+                    }
+                }
+            }
+            else
+            {
+                // We're anchoring some construction, we have no idea which machine this might be for
+                // so we have to just check everyone and perform a rescan.
+                Rescan((uid, machine));
             }
         }
     }
