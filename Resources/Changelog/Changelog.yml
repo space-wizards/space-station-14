@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: ArtisticRoomba
-  changes:
-  - message: Mime PDA item interactions (insertions/ejections of IDs, pens, etc.)
-      are now silent.
-    type: Tweak
-  id: 7811
-  time: '2025-01-15T18:03:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34426
 - author: Alpaccalypse
   changes:
   - message: Smite soda vending machines have been added to the game.
@@ -3914,3 +3906,14 @@
   id: 8312
   time: '2025-04-22T06:33:00.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36811
+- author: sowelipililimute
+  changes:
+  - message: The Funding Allocation Computer can now adjust the cut Cargo takes from
+      lockbox sales
+    type: Add
+  - message: The Funding Allocation Computer doesn't show Cargo separately from its
+      75% cut
+    type: Tweak
+  id: 8313
+  time: '2025-04-22T12:34:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36790
