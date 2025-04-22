@@ -43,9 +43,17 @@ public sealed partial class TeleportLocationsComponent : Component
 /// <summary>
 /// A teleport point, which has a location (the destination) and the entity that it represents.
 /// </summary>
-[Serializable, NetSerializable]
-public record struct TeleportPoint(string Location, NetEntity TelePoint)
+[Serializable, NetSerializable, DataDefinition]
+public partial record struct TeleportPoint
 {
-    public string Location = Location;
-    public NetEntity TelePoint = TelePoint;
+    [DataField]
+    public string Location;
+    [DataField]
+    public NetEntity TelePoint;
+
+    public TeleportPoint(string Location, NetEntity TelePoint)
+    {
+        this.Location = Location;
+        this.TelePoint = TelePoint;
+    }
 }

@@ -26,8 +26,11 @@ public sealed partial class TeleportMenu : DefaultWindow
 
     public void AddTeleportButtons()
     {
-        foreach (var (name, teleportPoint) in Warps)
+        foreach (var points in Warps)
         {
+            var name = points.Location;
+            var teleportPoint = points.TelePoint;
+
             var currentButtonRef = new Button
             {
                 Text = name,
