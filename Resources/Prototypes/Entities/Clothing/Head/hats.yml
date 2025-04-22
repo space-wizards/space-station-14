@@ -434,6 +434,7 @@
       Hair: HEAD
       HeadTop : HEAD
       HeadSide : HEAD
+    slots: []
   - type: Foldable
     canFoldInsideContainer: true
   - type: FoldableClothing
