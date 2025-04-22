@@ -429,6 +429,11 @@
   - type: Clothing
     sprite: Clothing/Head/Hats/santahat.rsi
   - type: Appearance
+  - type: HideLayerClothing
+    layers:
+      Hair: HEAD
+      HeadTop : HEAD
+      HeadSide : HEAD
   - type: Foldable
     canFoldInsideContainer: true
   - type: FoldableClothing
@@ -442,11 +447,7 @@
     - state: icon-nobeard
       map: [ "foldedLayer" ]
       visible: true
-  # - type: HideLayerClothing
-  #   layers:
-  #     Hair: HEAD
-  #     HeadTop : HEAD
-  #     HeadSide : HEAD
+  
     
 
 - type: entity
