@@ -117,8 +117,6 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         if (reasonLoc == null || !Loc.TryGetString(reasonLoc, out var reason))
             reason = Loc.GetString(DefaultMessage);
 
-        _chat.TrySendInGameICMessage(ent, GetMessage(reason, ent.Comp.BaseSpesoPenalty, accountName), InGameICChatType.Speak, hideChat: true);
-
         var dist = new Dictionary<ProtoId<CargoAccountPrototype>, double>()
         {
             { ent.Comp.PenaltyBankAccount, 1.0 }
@@ -136,6 +134,9 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
             -calculatedPenalty,
             dist);
 
+        var message = Loc.GetString("delivery-penalty-message", ("reason", reason), ("spesos", calculatedPenalty), ("account", accountName.ToUpper()));
+        _chat.TrySendInGameICMessage(ent, message, InGameICChatType.Speak, hideChat: true);
+
         ent.Comp.WasPenalized = true;
     }
 
@@ -144,7 +145,7 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         var ev = new GetDeliveryMultiplierEvent();
         RaiseLocalEvent(ent, ref ev);
 
-        return ev.Multiplier += ent.Comp.BaseSpesoMultiplier;
+        return ev.Multiplier;
     }
 
     private string GetMessage(string reason, int penalty, string accountName)
