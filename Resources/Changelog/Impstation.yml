@@ -1,17 +1,6 @@
 ﻿Entries:
 - author: crocodilecarousel
   changes:
-  - message: Added over two dozen new markings for Vox, including underwear! Go be
-      a weird emo bird. Try on the Ixix Special.
-    type: Add
-  - message: Vox may notice that their limbs seem a little... saturated. They may
-      have to take a trip to the customization menu.
-    type: Tweak
-  id: 1041
-  time: '2025-02-02T17:12:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1541
-- author: crocodilecarousel
-  changes:
   - message: Arachnids have all been sent to the dry cleaners and are now substantially
       more vibrant and colorful.
     type: Add
@@ -4101,3 +4090,10 @@
   id: 1540
   time: '2025-04-22T05:48:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2310
+- author: hivehum
+  changes:
+  - message: Grays have their unique yawn noise back!
+    type: Fix
+  id: 1541
+  time: '2025-04-22T14:34:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2312
