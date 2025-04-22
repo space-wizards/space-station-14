@@ -23,5 +23,5 @@ public sealed partial class WarpPointComponent : Component
     /// Useful where you want things like a ghost to reach only like CentComm
     /// </summary>
     [DataField]
-    public EntityWhitelist? BlackList;
+    public EntityWhitelist? Blacklist;
 }
