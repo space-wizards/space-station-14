@@ -324,6 +324,11 @@ public sealed class ThrusterSystem : EntitySystem
             _light.SetEnabled(uid, true, pointLightComponent);
         }
 
+        if (EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? powerReceiver))
+        {
+            powerReceiver.Load = component.ActivePowerUse;
+        }
+
         _ambient.SetAmbience(uid, true);
         RefreshCenter(uid, shuttleComponent);
     }
@@ -410,6 +415,11 @@ public sealed class ThrusterSystem : EntitySystem
         if (_light.TryGetLight(uid, out var pointLightComponent))
         {
             _light.SetEnabled(uid, false, pointLightComponent);
+        }
+
+        if (EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent? powerReceiver))
+        {
+            powerReceiver.Load = component.IdlePowerUse;
         }
 
         _ambient.SetAmbience(uid, false);
