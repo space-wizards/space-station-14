@@ -35,7 +35,7 @@
       visible: false
       map: ["enum.FatExtractorVisualLayers.Smoke"]
   - type: Lock
-    breakOnEmag: false
+    breakOnAccessBreaker: false
   - type: GenericVisualizer
     visuals:
       enum.StorageVisuals.Open:

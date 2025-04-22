@@ -152,7 +152,7 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite
-      drawdepth: FloorObjects
+      drawdepth: HighFloorObjects
       sprite: Structures/conveyor.rsi
       layers:
         - state: switch-off
