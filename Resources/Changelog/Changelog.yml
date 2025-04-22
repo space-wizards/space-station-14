@@ -3897,3 +3897,12 @@
   id: 8309
   time: '2025-04-22T01:03:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36804
+- author: Doc-Michael
+  changes:
+  - message: Changed protection values of Security Hardsuits
+    type: Tweak
+  - message: Made Warden/HoS coats slightly more protective to better fit their position
+    type: Tweak
+  id: 8310
+  time: '2025-04-22T03:22:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30212
