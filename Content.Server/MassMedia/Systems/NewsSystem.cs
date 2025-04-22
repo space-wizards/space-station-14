@@ -163,7 +163,7 @@ public sealed class NewsSystem : SharedNewsSystem
     /// <param name="content">Content of the news article.</param>
     /// <param name="author">Author of the news article.</param>
     /// <param name="actor">Entity which caused the news article to publish. Used for admin logs.</param>
-    public bool TryAddNews(EntityUid uid, string title, string content, string? author, [NotNullWhen(true)] out NewsArticle? article, EntityUid? actor)
+    public bool TryAddNews(EntityUid uid, string title, string content, [NotNullWhen(true)] out NewsArticle? article, string? author = null, EntityUid? actor = null)
     {
         if (!TryGetArticles(uid, out var articles))
         {
