@@ -148,11 +148,6 @@ public sealed partial class DeliverySystem : SharedDeliverySystem
         return ev.Multiplier;
     }
 
-    private string GetMessage(string reason, int penalty, string accountName)
-    {
-        return Loc.GetString("delivery-penalty-message", ("reason", reason), ("spesos", penalty), ("account", accountName.ToUpper()));
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
