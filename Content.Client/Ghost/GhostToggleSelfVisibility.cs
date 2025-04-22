@@ -6,6 +6,8 @@ namespace Content.Client.Ghost;
 
 public sealed class GhostToggleSelfVisibility : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _ent = default!;
+
     public string Command => "toggleselfghost";
     public string Description => "Toggles seeing your own ghost.";
     public string Help => "toggleselfghost";
@@ -15,14 +17,13 @@ public sealed class GhostToggleSelfVisibility : IConsoleCommand
         if (!attachedEntity.HasValue)
             return;
 
-        var entityManager = IoCManager.Resolve<IEntityManager>();
-        if (!entityManager.HasComponent<GhostComponent>(attachedEntity))
+        if (!_ent.HasComponent<GhostComponent>(attachedEntity))
         {
             shell.WriteError("Entity must be a ghost.");
             return;
         }
 
-        if (!entityManager.TryGetComponent(attachedEntity, out SpriteComponent? spriteComponent))
+        if (!_ent.TryGetComponent(attachedEntity, out SpriteComponent? spriteComponent))
             return;
 
         spriteComponent.Visible = !spriteComponent.Visible;
