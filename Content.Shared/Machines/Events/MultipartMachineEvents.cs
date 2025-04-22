@@ -7,8 +7,9 @@ namespace Content.Shared.Machines.Events;
 /// </summary>
 /// <param name="uid">Entity that is bound to the multipart machine</param>
 /// <param name="assembled">Assembled state of the machine</param>
-public sealed class MultipartMachineAssemblyStateChanged(EntityUid uid, bool assembled) : EntityEventArgs
+public sealed class MultipartMachineAssemblyStateChanged(EntityUid uid, bool assembled, EntityUid? user) : EntityEventArgs
 {
     public readonly EntityUid Entity = uid;
     public readonly bool Assembled = assembled;
+    public readonly EntityUid? User = user;
 }

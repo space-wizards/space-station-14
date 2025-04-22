@@ -180,8 +180,9 @@ public sealed class MultipartMachineSystem : EntitySystem
     /// the specified requirements for offset, rotation, and components.
     /// </summary>
     /// <param name="ent">Entity to rescan for</param>
+    /// <param name="user">Optional user entity which has caused this rescan</param>
     /// <returns>True if all non-optional parts are found and match, false otherwise</returns>
-    public bool Rescan(Entity<MultipartMachineComponent> ent)
+    public bool Rescan(Entity<MultipartMachineComponent> ent, EntityUid? user = null)
     {
         // Get all required transform information to start looking for the other parts based on their offset
         var xformQuery = GetEntityQuery<TransformComponent>();
@@ -271,7 +272,7 @@ public sealed class MultipartMachineSystem : EntitySystem
         ent.Comp.Assembled = !missingParts;
         if (stateHasChanged)
         {
-            var ev = new MultipartMachineAssemblyStateChanged(ent, ent.Comp.Assembled);
+            var ev = new MultipartMachineAssemblyStateChanged(ent, ent.Comp.Assembled, user);
             RaiseLocalEvent(ent, ev);
         }
 
