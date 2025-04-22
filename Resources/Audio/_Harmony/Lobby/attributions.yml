@@ -7,3 +7,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "meatballwalkin"
   source: "https://github.com/ss14-harmony/ss14-harmony"
+
+- files: ["dropzone.ogg"]
+  license: "CC-BY-SA-4.0"
+  copyright: "Made by Qwesta"
+  source: "https://discord.com/channels/1168210010233376858/1168217282988757116/1311095405647495401"
