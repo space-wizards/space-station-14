@@ -362,7 +362,8 @@ public sealed partial class ParticleAcceleratorSystem
     {
         if (args.Assembled)
         {
-            ValidateMachine(ent, args.User);
+            UpdatePowerDraw(ent, ent.Comp);
+            UpdateUI(ent, ent.Comp);
         }
         else if (ent.Comp.Powered)
         {
@@ -428,7 +429,11 @@ public sealed partial class ParticleAcceleratorSystem
         if (TryComp<ApcPowerReceiverComponent>(uid, out var apcPower) && !apcPower.Powered)
             return;
 
-        RescanParts(uid, msg.Actor, comp);
+        if (!TryComp<MultipartMachineComponent>(uid, out var machineComp))
+            return;
+
+        var machine = new Entity<MultipartMachineComponent>(uid, machineComp);
+        _multipartMachine.Rescan(machine, msg.Actor); // Raises an event if state has changed
     }
 
     public static int GetPANumericalLevel(ParticleAcceleratorPowerState state)
