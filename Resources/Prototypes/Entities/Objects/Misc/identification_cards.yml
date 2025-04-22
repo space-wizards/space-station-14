@@ -257,6 +257,16 @@
     job: Clown
 
 - type: entity
+  parent: ClownIDCard
+  id: ClownIDCardPlastic
+  suffix: Plastic
+  components:
+  - type: Tag
+    tags: #override chameleon whitelist
+    - DoorBumpOpener
+    - Plastic
+
+- type: entity
   parent: IDCardStandard
   id: MimeIDCard
   name: mime ID card
@@ -601,6 +611,7 @@
   - type: Tag
     tags:
     - DoorBumpOpener
+    - Plastic
   - type: ChameleonClothing
     slot: [idcard]
     default: PassengerIDCard
@@ -648,6 +659,12 @@
     tags:
     - NuclearOperative
     - SyndicateAgent
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - WhitelistChameleon
+    - WhitelistChameleonIdCard
+    - Plastic
 
 - type: entity
   parent: IDCardStandard

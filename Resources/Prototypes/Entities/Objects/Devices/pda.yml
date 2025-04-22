@@ -368,6 +368,14 @@
 
 - type: entity
   parent: ClownPDA
+  id: ClownPDAPlastic
+  suffix: Plastic Card
+  components:
+  - type: Pda
+    id: ClownIDCardPlastic
+
+- type: entity
+  parent: ClownPDA
   id: VisitorClownPDA
   suffix: Visitor
   components:

@@ -543,16 +543,6 @@ namespace Content.Server.Kitchen.EntitySystems
             // TODO use lists of Reagent quantities instead of reagent prototype ids.
             foreach (var item in component.Storage.ContainedEntities.ToArray())
             {
-                // special behavior when being microwaved ;)
-                var ev = new BeingMicrowavedEvent(uid, user);
-                RaiseLocalEvent(item, ev);
-
-                if (ev.Handled)
-                {
-                    UpdateUserInterfaceState(uid, component);
-                    return;
-                }
-
                 if (_tag.HasTag(item, MetalTag))
                 {
                     malfunctioning = true;
@@ -564,6 +554,19 @@ namespace Content.Server.Kitchen.EntitySystems
                     _container.Insert(junk, component.Storage);
                     Del(item);
                     continue;
+                }
+
+                if (!malfunctioning)
+                {
+                    // special behavior when being microwaved ;)
+                    var ev = new BeingMicrowavedEvent(uid, user);
+                    RaiseLocalEvent(item, ev);
+
+                    if (ev.Handled)
+                    {
+                        UpdateUserInterfaceState(uid, component);
+                        return;
+                    }
                 }
 
                 var microwavedComp = AddComp<ActivelyMicrowavedComponent>(item);

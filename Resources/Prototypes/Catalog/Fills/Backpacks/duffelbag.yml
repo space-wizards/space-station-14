@@ -140,7 +140,7 @@
       - id: ClothingShoesClown
       - id: ClothingMaskClown
       - id: BikeHorn
-      - id: ClownPDA
+      - id: ClownPDAPlastic # no free ID for you
       - id: ClothingHeadsetService
 
 - type: entity
