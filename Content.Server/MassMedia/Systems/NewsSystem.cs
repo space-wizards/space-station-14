@@ -56,7 +56,7 @@ public sealed class NewsSystem : SharedNewsSystem
                 if (!string.IsNullOrWhiteSpace(value))
                     _discord.GetWebhook(value, data => _webhookId = data.ToIdentifier());
             }, true);
-        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
+        SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEndMessageEvent);
 
         // News writer
         SubscribeLocalEvent<NewsWriterComponent, MapInitEvent>(OnMapInit);
@@ -346,7 +346,7 @@ public sealed class NewsSystem : SharedNewsSystem
 
     #region Discord Hook
 
-    private void OnRoundEndTextAppend(RoundEndTextAppendEvent ev)
+    private void OnRoundEndMessageEvent(RoundEndMessageEvent ev)
     {
         var stationUid = _station.GetStationInMap(_ticker.DefaultMap);
 
