@@ -642,6 +642,9 @@
   id: Handcuffs
 
 - type: Tag
+  id: HandGrenade
+
+- type: Tag
   id: HappyHonk
 
 - type: Tag
@@ -1140,6 +1143,9 @@
 
 - type: Tag
   id: SilentStorageUser # used in SharedStorageSystem, so the entity will do all silently
+
+- type: Tag
+  id: SiliconEmotes
 
 - type: Tag
   id: SkeletonMotorcycleKeys
