@@ -22,9 +22,11 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/water_spray.ogg
   - type: Absorbent
-    pickupAmount: 25
+    pickupAmount: 35
     solutionName: tank
     useAbsorberSolution: false
+    pickupSound:
+      path: /Audio/Effects/Fluids/vacuum-cleaner-fast.ogg
   - type: Appearance
   - type: ClothingSlotAmmoProvider
   - type: SlotBasedConnectedContainer
@@ -33,4 +35,4 @@
       tags:
       - NozzleBackTank
   - type: UseDelay
-    delay: 0.5
+    delay: 1.0

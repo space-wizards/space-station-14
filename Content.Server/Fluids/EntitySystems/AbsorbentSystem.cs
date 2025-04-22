@@ -285,7 +285,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         }
 
         Solution puddleSplit;
-
+        var isRemoved = false;
         if (absorber.UseAbsorberSolution)
         {
             // Check if we have any evaporative reagents on our absorber to transfer
@@ -324,12 +324,13 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
                 // Spawn a *sparkle*
                 Spawn(Sparkles, GetEntityQuery<TransformComponent>().GetComponent(target).Coordinates);
                 QueueDel(target);
+                isRemoved = true;
             }
         }
 
         _solutionContainerSystem.AddSolution(absorberSoln, puddleSplit);
 
-        _audio.PlayPvs(absorber.PickupSound, target);
+        _audio.PlayPvs(absorber.PickupSound, isRemoved ? used : target);
         if (useDelay != null)
             _useDelay.TryResetDelay((used, useDelay));
 
