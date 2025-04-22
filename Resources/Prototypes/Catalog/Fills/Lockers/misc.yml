@@ -184,9 +184,9 @@
         tableId: MaintenanceLockerLoot
 
 - type: entity
+  parent: CrateTrashBin
   id: CrateTrashBinFilledRandom
   suffix: Filled, Random
-  parent: CrateTrashBin
   components:
   - type: EntityTableContainerFill
     containers:

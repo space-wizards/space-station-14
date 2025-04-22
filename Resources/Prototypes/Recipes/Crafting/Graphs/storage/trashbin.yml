@@ -2,27 +2,26 @@
   id: TrashBin
   start: start
   graph:
-    - node: start
-      edges:
-        - to: trashbin
-          steps:
-            - material: Steel
-              amount: 3
-              doAfter: 3
+   - node: start
+     edges:
+       - to: trashbin
+         steps:
+          - material: Steel
+            amount: 3
+            doAfter: 3
 
-    - node: trashbin
-      entity: CrateTrashBin
-      edges:
-        - to: start
-          steps:
-            - tool: Screwing
-              doAfter: 3
-          conditions:
-            - !type:StorageWelded
-              welded: false
-          completed:
-            - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 3
-            - !type:EmptyAllContainers
-            - !type:DeleteEntity
+   - node: trashbin
+     entity: CrateTrashBin
+     edges:        - to: start
+          teps:
+           - tool: Screwing
+             doAfter: 3
+         conditions:
+           - !type:StorageWelded
+             welded: false
+         completed:
+           - !type:SpawnPrototype
+             prototype: SheetSteel1
+             amount: 3
+           - !type:EmptyAllContainers
+           - !type:DeleteEntity
