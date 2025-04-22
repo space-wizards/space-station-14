@@ -30,3 +30,9 @@
 - type: contrabandSeverity
   id: Magical
   examineText: contraband-examine-text-Magical
+
+# This is xenoborg contraband and not permitted to be used IC. 
+# maybe allowed for science for study? (one day when they add reverse engineering)
+- type: contrabandSeverity
+  id: Xenoborg
+  examineText: contraband-examine-text-Xenoborg
