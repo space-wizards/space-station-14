@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: ArtisticRoomba
   changes:
-  - message: The station anchor machine board can no longer be printed at the circuit
-      imprinter.
-    type: Remove
-  id: 7810
-  time: '2025-01-15T16:26:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34358
-- author: ArtisticRoomba
-  changes:
   - message: Mime PDA item interactions (insertions/ejections of IDs, pens, etc.)
       are now silent.
     type: Tweak
@@ -3915,3 +3907,10 @@
   id: 8311
   time: '2025-04-22T05:51:21.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34579
+- author: muburu
+  changes:
+  - message: Dragons can now pry open doors, including firelocks.
+    type: Tweak
+  id: 8312
+  time: '2025-04-22T06:33:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36811
