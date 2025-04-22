@@ -186,3 +186,8 @@
   id: MedicalEyePatchHud
   equipment:
     eyes: ClothingEyesEyepatchHudMedical
+
+- type: loadout
+  id: MedicalGoggles
+  equipment:
+    eyes: ClothingEyesMedMesons

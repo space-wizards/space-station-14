@@ -1296,6 +1296,7 @@
   loadouts:
   - MedicalHud
   - MedicalEyePatchHud
+  - MedicalGoggles
   - Glasses
   - GlassesJamjar
   - GlassesJensen
