@@ -24,7 +24,7 @@
       Hair: HEAD
       Snout: HEAD
       HeadTop: HEAD
-      HeadSlide: HEAD
+      HeadSide: HEAD
 
 - type: entity
   parent: ClothingHeadHatHoodBioGeneral
