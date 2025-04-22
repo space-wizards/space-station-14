@@ -151,7 +151,7 @@
   - type: Construction
     graph: SolarPanel
     node: solarpanel
-  - type: SolarPanelReplacementMarker # Moffstation - solar panel round start variation
+  - type: SolarPanelReplacementMarker
 
 - type: entity
   id: SolarPanelBroken
@@ -184,7 +184,6 @@
   - type: Construction
     graph: SolarPanel
     node: solarpanel_broken
-  - type: SolarPanelReplacementMarker # Moffstation - solar panel round start variation
 
 - type: entity
   id: SolarPanelPlasmaBroken
@@ -299,7 +298,6 @@
   - type: GuideHelp
     guides:
     - SolarPanels
-  - type: SolarPanelReplacementMarker # Moffstation - solar panel round start variation
 
 - type: entity
   id: SolarTracker
