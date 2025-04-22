@@ -5042,4 +5042,11 @@ Entries:
   id: 698
   time: '2025-04-22T02:54:09.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/511
+- author: Happyrobot33
+  changes:
+  - message: Allowed Resomi to roundstart as nukies.
+    type: Tweak
+  id: 699
+  time: '2025-04-22T02:57:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/510
 
