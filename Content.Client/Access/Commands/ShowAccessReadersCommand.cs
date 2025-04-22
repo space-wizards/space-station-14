@@ -6,6 +6,10 @@ namespace Content.Client.Access.Commands;
 
 public sealed class ShowAccessReadersCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _ent = default!;
+    [Dependency] private readonly IOverlayManager _overlay = default!;
+    [Dependency] private readonly IResourceCache _cahce = default!;
+
     public string Command => "showaccessreaders";
 
     public string Description => "Toggles showing access reader permissions on the map";
@@ -19,24 +23,15 @@ public sealed class ShowAccessReadersCommand : IConsoleCommand
         """;
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var collection = IoCManager.Instance;
-
-        if (collection == null)
-            return;
-
-        var overlay = collection.Resolve<IOverlayManager>();
-
-        if (overlay.RemoveOverlay<AccessOverlay>())
+        if (_overlay.RemoveOverlay<AccessOverlay>())
         {
             shell.WriteLine($"Set access reader debug overlay to false");
             return;
         }
 
-        var entManager = collection.Resolve<IEntityManager>();
-        var cache = collection.Resolve<IResourceCache>();
-        var xform = entManager.System<SharedTransformSystem>();
+        var xform = _ent.System<SharedTransformSystem>();
 
-        overlay.AddOverlay(new AccessOverlay(entManager, cache, xform));
+        _overlay.AddOverlay(new AccessOverlay(_ent, _cahce, xform));
         shell.WriteLine($"Set access reader debug overlay to true");
     }
 }
