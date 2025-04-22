@@ -20,7 +20,7 @@
     },
     {
       "name": "inhand-right",
-      "direction": 4
+      "directions": 4
     }
   ]
 }

@@ -9,7 +9,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Power;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
-using Robust.Shared.Timing;
 using Robust.Shared.Player;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
@@ -18,7 +17,6 @@ public sealed partial class ParticleAcceleratorSystem
 {
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     private void InitializeControlBoxSystem()
     {
@@ -165,6 +163,7 @@ public sealed partial class ParticleAcceleratorSystem
                     or ParticleAcceleratorPowerState.Level1
                     or ParticleAcceleratorPowerState.Level2 => LogImpact.Medium,
                 ParticleAcceleratorPowerState.Level3 => LogImpact.Extreme,
+                _ => throw new IndexOutOfRangeException(nameof(strength)),
             };
 
             _adminLogger.Add(LogType.Action, impact, $"{ToPrettyString(player):player} has set the strength of {ToPrettyString(uid)} to {strength}");
@@ -174,7 +173,7 @@ public sealed partial class ParticleAcceleratorSystem
             if (strength >= alertMinPowerState)
             {
                 var pos = Transform(uid);
-                if (_timing.CurTime > comp.EffectCooldown)
+                if (_gameTiming.CurTime > comp.EffectCooldown)
                 {
                     _chat.SendAdminAlert(player,
                         Loc.GetString("particle-accelerator-admin-power-strength-warning",
@@ -185,7 +184,7 @@ public sealed partial class ParticleAcceleratorSystem
                         Filter.Empty().AddPlayers(_adminManager.ActiveAdmins),
                         false,
                         AudioParams.Default.WithVolume(-8f));
-                    comp.EffectCooldown = _timing.CurTime + comp.CooldownDuration;
+                    comp.EffectCooldown = _gameTiming.CurTime + comp.CooldownDuration;
                 }
             }
         }

@@ -1,0 +1,52 @@
+{
+    "version": 1,
+    "size":
+    {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "icon, fill-1, fill-2 from Yogstation from commit: https://github.com/yogstation13/yogstation/commit/3b877178b62acb43329ac4ad58652e1e8d622a3c, icon_empty modified by Coolsurf6 (Github) from commit: https://github.com/yogstation13/yogstation/commit/3b877178b62acb43329ac4ad58652e1e8d622a3c",
+    "states":
+    [
+        {
+            "name": "icon",
+            "delays":
+            [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "fill-1",
+            "delays":
+            [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "fill-2",
+            "delays":
+            [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "icon_empty"
+        }
+    ]
+}

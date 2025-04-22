@@ -20,7 +20,7 @@
   - type: Transform
   - type: Damageable
     damageModifierSet: Wood
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -119,7 +119,7 @@
     state: base
   - type: Damageable
     damageModifierSet: Metallic
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -154,7 +154,7 @@
     state: base
   - type: Damageable
     damageModifierSet: Glass
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -329,6 +329,9 @@
         - DrinkBottle
         - DrinkCan
         - Beer
+        - Wine
+      components:
+        - ReactionMixer
   - type: Construction
     graph: Shelf
     node: ShelfBar
@@ -395,6 +398,15 @@
         - Ingredient
         - Trash
         - Plastic
+        - SaltShaker
+        - PepperShaker
+        - Ketchup
+        - Hotsauce
+        - Coldsauce
+        - BBQsauce
+      components:
+        - Utensil
+        - Bin
   - type: Construction
     graph: Shelf
     node: ShelfKitchen
@@ -454,6 +466,11 @@
         - ChemDispensable
         - GlassBeaker
         - Bottle
+        - Medkit
+        - CentrifugeCompatible
+        - PillCanister
+        - Syringe
+        - Spray
   - type: Construction
     graph: Shelf
     node: ShelfChemistry

@@ -21,6 +21,10 @@
       visible: false
   - type: MixableSolution
     solution: food
+  - type: Drink
+    solution: food
+    useSound:
+      path: /Audio/Items/drink.ogg
   - type: DamageOnLand
     damage:
       types:
