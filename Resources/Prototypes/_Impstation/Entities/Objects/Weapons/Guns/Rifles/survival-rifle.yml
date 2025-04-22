@@ -2,7 +2,7 @@
   name: survival rifle-pistol
   parent: [BaseWeaponRifle, BaseMajorContraband]
   id: WeaponRifleSurvivalPistol
-  description: A robust improvised rifle for suriving harsh environments. Uses .35 auto ammo and only accepts pistol magazines, but can be modified.
+  description: A robust improvised rifle for surviving harsh environments. Uses .35 auto ammo and only accepts pistol magazines, but can be modified.
   components:
   - type: Sprite
     sprite: _Impstation/Prospectors/Weapons/survival_rifle.rsi
@@ -57,7 +57,7 @@
     soundHit:
       path: /Audio/Effects/hit_kick.ogg
     soundSwing:
-      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_folley.ogg
+      path: /Audio/_Impstation/Weapons/Guns/Melee/shove_foley.ogg
     resetOnHandSelected: false
   - type: AltFireMelee
     attackType: Heavy
@@ -77,7 +77,7 @@
   name: survival rifle dual-caliber
   parent: WeaponRifleSurvivalPistol
   id: WeaponRifleSurvivalRifle
-  description: A robust improvised rifle for suriving harsh environments. Accepts both .20 rifle and .35 auto ammo in either pistol or rifle magazines.
+  description: A robust improvised rifle for surviving harsh environments. Accepts both .20 rifle and .35 auto ammo in either pistol or rifle magazines.
   components:
   - type: Gun
     fireRate: 4
@@ -107,7 +107,7 @@
   name: survival rifle-SMG
   parent: WeaponRifleSurvivalPistol
   id: WeaponRifleSurvivalSMG
-  description: A robust improvised rifle for suriving harsh environments. Uses .35 auto ammo in either pistol or SMG magazines.
+  description: A robust improvised rifle for surviving harsh environments. Uses .35 auto ammo in either pistol or SMG magazines.
   components:
   - type: Gun
     fireRate: 4

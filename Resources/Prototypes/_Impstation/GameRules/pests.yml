@@ -10,11 +10,13 @@
   - type: VentCrittersRule
     entries:
     - id: MobAdultSlimesBlueAngry
-      prob: 0.02
+      prob: 0.01998
     - id: MobAdultSlimesGreenAngry
-      prob: 0.02
+      prob: 0.01998
     - id: MobAdultSlimesYellowAngry
-      prob: 0.02
+      prob: 0.01998
+    - id: ReagentSlimeSpawner
+      prob: 0.00006
 
 - type: entity
   id: SnakeSpawn

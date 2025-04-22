@@ -89,8 +89,19 @@
   artist: Wendy, Pixel Curatrix
 
 - type: lobbyBackground
+  id: BunchaChibis
+  background: /Textures/_Impstation/LobbyScreens/buncha_chibis.webp
+  name: Buncha Chibis
+  artist: Wendy, Pixel Curatrix
+
+- type: lobbyBackground
   id: InterdyneProfitSynthesis
   background: /Textures/_Impstation/LobbyScreens/interdyne_profit_synthesis.webp
   name: Interdyne Profit & Synthesis
   artist: Wendy, Pixel Curatrix
 
+- type: lobbyBackground
+  id: tidyLab
+  background: /Textures/_Impstation/LobbyScreens/tidy.webp
+  name: it's not that messy in here
+  artist: argentsunshine

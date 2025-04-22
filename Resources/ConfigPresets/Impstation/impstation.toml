@@ -51,3 +51,8 @@ role_time = 10
 [tips]
 # this doesn't actually propagate to the client right now
 login_dataset = "LoginTips"
+
+[whitelist]
+enabled = true
+# pretty much only worries about users who've been manually whitelisted
+# all players who have joined once before ~4am UTC 19th Apr 2025 should be whitelisted at time of edit
