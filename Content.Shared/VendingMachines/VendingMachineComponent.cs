@@ -36,9 +36,6 @@ namespace Content.Shared.VendingMachines
         public Dictionary<string, VendingMachineInventoryEntry> Inventory = new();
 
         [DataField]
-        public Dictionary<string, VendingMachineInventoryEntry> EmaggedInventory = new();
-
-        [DataField]
         public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = new();
 
         /// <summary>
@@ -221,7 +218,6 @@ namespace Content.Shared.VendingMachines
     public enum InventoryType : byte
     {
         Regular,
-        Emagged,
         Contraband
     }
 
@@ -279,8 +275,6 @@ namespace Content.Shared.VendingMachines
     public sealed class VendingMachineComponentState : ComponentState
     {
         public Dictionary<string, VendingMachineInventoryEntry> Inventory = new();
-
-        public Dictionary<string, VendingMachineInventoryEntry> EmaggedInventory = new();
 
         public Dictionary<string, VendingMachineInventoryEntry> ContrabandInventory = new();
 
