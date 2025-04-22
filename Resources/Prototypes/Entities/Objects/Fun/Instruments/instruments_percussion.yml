@@ -157,7 +157,8 @@
 - type: entity
   parent: SuperSynthesizerInstrument
   id: SuperSynthesizerInstrumentAdmeme
-  name: super synthesizer (Admeme)
+  name: super synthesizer
+  suffix: Admeme
   components:
   - type: Instrument
     respectMidiLimits: false
