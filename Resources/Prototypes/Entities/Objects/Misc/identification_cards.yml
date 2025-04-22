@@ -833,6 +833,7 @@
     - NuclearOperative
     - SyndicateAgent
     - Wizard
+    - Xenoborg
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
