@@ -27,6 +27,7 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
 
     private const float SearchBoxSize = 2f;
     private EntityCoordinates _unalignedMouseCoords = default;
+    private Color _guideColor = new Color(0, 0, 0.5785f);
 
     /// <summary>
     /// This placement mode is not on the engine because it is content specific (i.e., for atmos pipes)
@@ -37,6 +38,26 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
 
         _mapSystem = _entityManager.System<SharedMapSystem>();
         _transformSystem = _entityManager.System<SharedTransformSystem>();
+    }
+
+    public override void Render(in OverlayDrawArgs args)
+    {
+        var gridUid = _entityManager.System<SharedTransformSystem>().GetGrid(MouseCoords);
+
+        if (gridUid == null || Grid == null)
+            return;
+
+        // Draw guide circles for each pipe layer 
+        var gridRotation = _transformSystem.GetWorldRotation(gridUid.Value);
+        var worldPosition = _mapSystem.LocalToWorld(gridUid.Value, Grid, MouseCoords.Position);
+        var direction = (_eyeManager.CurrentEye.Rotation + gridRotation + Math.PI / 2).GetCardinalDir();
+        var multi = (direction == Direction.North || direction == Direction.South) ? -1f : 1f;
+
+        args.WorldHandle.DrawCircle(worldPosition, 0.1f, _guideColor);
+        args.WorldHandle.DrawCircle(worldPosition + gridRotation.RotateVec(new Vector2(multi * 0.21875f, 0.21875f)), 0.1f, _guideColor);
+        args.WorldHandle.DrawCircle(worldPosition - gridRotation.RotateVec(new Vector2(multi * 0.21875f, 0.21875f)), 0.1f, _guideColor);
+
+        base.Render(args);
     }
 
     public override void AlignPlacementMode(ScreenCoordinates mouseScreen)
@@ -67,7 +88,6 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
         if (mouseCoordsDiff.Length() > 0.25f)
         {
             // Determine the direction of the mouse is relative to the center of the tile, adjusting for the player eye and grid rotation
-            var eyeDir = _eyeManager.CurrentEye.Rotation.GetCardinalDir();
             var direction = (new Angle(mouseCoordsDiff) + _eyeManager.CurrentEye.Rotation + gridRotation + Math.PI / 2).GetCardinalDir();
             layer = (direction == Direction.North || direction == Direction.East) ? 1 : 2;
         }
