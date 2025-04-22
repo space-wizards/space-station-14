@@ -13,9 +13,11 @@ using Content.Shared.Store.Components;
 using Robust.Shared.Audio;
 using Robust.Server.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using Robust.Shared.Random;
 using System.Text;
 using Content.Server._Goobstation.Heretic.EntitySystems;
+using Content.Shared.GameTicking.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -28,6 +30,7 @@ public sealed partial class HereticRuleSystem : GameRuleSystem<HereticRuleCompon
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly ObjectivesSystem _objective = default!;
     [Dependency] private readonly IRobustRandom _rand = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly HellWorldSystem _hell = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _userInterfaceSystem = default!;
 
@@ -54,11 +57,43 @@ public sealed partial class HereticRuleSystem : GameRuleSystem<HereticRuleCompon
     private void OnAntagSelect(Entity<HereticRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
     {
         TryMakeHeretic(args.EntityUid, ent.Comp);
+        _hell.MakeHell();
+    }
 
-        for (int i = 0; i < _rand.Next(6, 12); i++)
+    public override void Update(float frameTime)
+    {
+        //handles the multiple waves of tomes
+        base.Update(frameTime);
+        var query = EntityQueryEnumerator<HereticRuleComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var ruleComp, out var gameRule))
+        {
+            if (!GameTicker.IsGameRuleActive(uid, gameRule))
+                continue;
+
+            if (ruleComp.TimeOfNextWave > _timing.CurTime)
+            {
+                continue;
+            }
+
+            ruleComp.TimeOfNextWave += ruleComp.TimeBetweenWaves + TimeSpan.FromSeconds(_rand.Next(-ruleComp.RandomSecondsBuffer, ruleComp.RandomSecondsBuffer));
+            if (!ruleComp.InitialWaveComplete)
+            {
+                SpawnRifts(5, 10); //start with a big wave of tomes
+                ruleComp.InitialWaveComplete = true;
+            }
+            else
+            {
+                SpawnRifts(1, 2);
+            }
+
+        }
+    }
+
+    private void SpawnRifts(int min, int max)
+    {
+        for (int i = 0; i < _rand.Next(min, max); i++)
             if (TryFindRandomTile(out var _, out var _, out var _, out var coords))
                 _audio.PlayPvs(RiftSpawnSound, Spawn("RealityTear", coords)); //reality tears disappear after 1 second, leaving behind an eldritch book
-        _hell.MakeHell();
     }
 
     public bool TryMakeHeretic(EntityUid target, HereticRuleComponent rule)
