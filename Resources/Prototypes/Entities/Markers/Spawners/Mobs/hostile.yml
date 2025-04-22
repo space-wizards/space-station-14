@@ -199,3 +199,66 @@
   - type: ConditionalSpawner
     prototypes:
     - MobSmallPurpleSnake
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobWatcherLavaland
+  name: Watcher Lavaland Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: unshaded
+      sprite: Mobs/Aliens/Lavaland/watcher.rsi
+      color: red
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobWatcherLavaland
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobWatcherIcewing
+  name: Watcher Icewing Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: unshaded
+      sprite: Mobs/Aliens/Lavaland/watcher.rsi
+      color: deepskyblue
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobWatcherIcewing
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobWatcherMagmawing
+  name: Watcher Magmawing Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: unshaded
+      sprite: Mobs/Aliens/Lavaland/watcher.rsi
+      color: orangered
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobWatcherMagmawing
+
+- type: entity
+  parent: MarkerBase
+  id: SpawnMobWatcherPride
+  name: Watcher Pride Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: unshaded
+      sprite: Mobs/Aliens/Lavaland/watcher.rsi
+    - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+    - MobWatcherPride
