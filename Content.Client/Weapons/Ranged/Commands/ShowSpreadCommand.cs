@@ -3,16 +3,16 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Weapons.Ranged;
 
-public sealed class ShowSpreadCommand : IConsoleCommand
+public sealed class ShowSpreadCommand : LocalizedEntityCommands
 {
-    public string Command => "showgunspread";
-    public string Description => $"Shows gun spread overlay for debugging";
-    public string Help => $"{Command}";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    [Dependency] private readonly GunSystem _gun = default!;
+    public override string Command => "showgunspread";
+    public override string Description => $"Shows gun spread overlay for debugging";
+    public override string Help => $"{Command}";
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var system = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GunSystem>();
-        system.SpreadOverlay ^= true;
+        _gun.SpreadOverlay ^= true;
 
-        shell.WriteLine($"Set spread overlay to {system.SpreadOverlay}");
+        shell.WriteLine($"Set spread overlay to {_gun.SpreadOverlay}");
     }
 }
