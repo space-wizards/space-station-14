@@ -442,11 +442,11 @@
     - state: icon-nobeard
       map: [ "foldedLayer" ]
       visible: true
-  - type: HideLayerClothing
-    layers:
-      Hair: HEAD
-      HeadTop : HEAD
-      HeadSide : HEAD
+  # - type: HideLayerClothing
+  #   layers:
+  #     Hair: HEAD
+  #     HeadTop : HEAD
+  #     HeadSide : HEAD
     
 
 - type: entity
