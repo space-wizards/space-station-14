@@ -4,6 +4,4 @@ namespace Content.Server.GameTicking.Rules.VariationPass.Components.ReplacementM
 /// This component marks replaceable solar panels for use with fast queries in variation passes.
 /// </summary>
 [RegisterComponent]
-public sealed partial class SolarPanelReplacementMarkerComponent : Component
-{
-}
+public sealed partial class SolarPanelReplacementMarkerComponent : Component;
