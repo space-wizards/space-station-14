@@ -361,7 +361,8 @@ public sealed class NewsSystem : SharedNewsSystem
 
     private async void SendDiscordWebhook(NewsArticle article)
     {
-        if (_webhookId is null) return;
+        if (_webhookId is null)
+            return;
 
         try
         {
@@ -373,14 +374,14 @@ public sealed class NewsSystem : SharedNewsSystem
                 Footer = new WebhookEmbedFooter
                 {
                     Text = Loc.GetString("news-discord-footer",
-                        ("author", article.Author ?? "???"),
+                        ("author", article.Author ?? Loc.GetString("news-discord-unknown-author")),
                         ("server", _baseServer.ServerName),
                         ("round", _ticker.RoundId))
                 }
             };
             var payload = new WebhookPayload { Embeds = [embed] };
             await _discord.CreateMessage(_webhookId.Value, payload);
-            Log.Info("Send news article to Discord webhook");
+            Log.Info("Sent news article to Discord webhook");
         }
         catch (Exception e)
         {
