@@ -54,14 +54,13 @@
   recognizable: true
   metabolisms:
     Drink:
+      metabolismRate : 1.00
       effects:
       - !type:SatiateThirst
         factor: -5
       - !type:AdjustReagent
         reagent: Theobromine
         amount: 0.05
-      metabolismRate : 1.00
-      effects:
       - !type:AdjustTemperature
         amount: 15000
       - !type:HealthChange
