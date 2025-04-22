@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Machines.Components;
+using Content.Server.Machines.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 
@@ -203,6 +204,7 @@ public sealed class MultipartMachineSystem : EntitySystem
         for (var i = 0; i < ent.Comp.Parts.Count; ++i)
         {
             var part = ent.Comp.Parts.Values.ElementAt(i);
+            var originalPart = part.Entity;
             part.Entity = null;
 
             if (!_factory.TryGetRegistration(part.Component, out var registration))
@@ -239,6 +241,24 @@ public sealed class MultipartMachineSystem : EntitySystem
             if (!part.Entity.HasValue && !part.Optional)
             {
                 missingParts = true;
+            }
+
+            // Even optional parts should trigger state updates
+            if (part.Entity != originalPart)
+            {
+                if (part.Entity.HasValue)
+                {
+                    // This part gained an entity, add the Part component so it can find out which machine
+                    // it's a part of
+                    var comp = EnsureComp<MultipartMachinePartComponent>(GetEntity(part.Entity.Value));
+                    comp.Master = ent;
+                }
+                else
+                {
+                    // This part lost its entity, ensure we clean up the old entity so it's no longer marked
+                    // as something we care about.
+                    RemComp<MultipartMachinePartComponent>(GetEntity(originalPart!.Value));
+                }
             }
         }
 
