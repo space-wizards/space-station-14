@@ -29,6 +29,7 @@
 - type: entity
   parent: IDCardStandard
   id: IDCardCommand
+  abstract: true
   components:
    - type: StealTarget
      stealGroup: CommandID
