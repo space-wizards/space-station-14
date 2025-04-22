@@ -351,11 +351,11 @@ public sealed class NewsSystem : SharedNewsSystem
 
     private void OnRoundEndMessageEvent(RoundEndMessageEvent ev)
     {
-        var stationUid = _station.GetStationInMap(_ticker.DefaultMap);
+        var query = EntityManager.EntityQueryEnumerator<StationNewsComponent>();
 
-        if (TryComp<StationNewsComponent>(stationUid, out var stationNews))
+        while (query.MoveNext(out var _, out var comp))
         {
-            foreach (var article in stationNews.Articles)
+            foreach (var article in comp.Articles)
             {
                 SendDiscordWebhook(article);
             }
