@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: The DNA scrambler implant no longer updates your ID card or station record
-    type: Fix
-  id: 7816
-  time: '2025-01-15T22:49:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34091
 - author: jbox144
   changes:
   - message: Added Plasma Station
@@ -3919,3 +3912,11 @@
   id: 8317
   time: '2025-04-22T19:46:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/36825
+- author: Kickguy223
+  changes:
+  - message: Reduced the price of firelock electronics to half the price of the input
+      materials
+    type: Tweak
+  id: 8318
+  time: '2025-04-22T23:53:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33469
