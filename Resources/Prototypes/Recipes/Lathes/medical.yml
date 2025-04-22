@@ -75,7 +75,8 @@
 - type: latheRecipe
   id: HandheldHealthAnalyzer
   result: HandheldHealthAnalyzerEmpty
-  category: Tools
+  categories:
+  - Tools
   completetime: 4
   materials:
     Glass: 500
