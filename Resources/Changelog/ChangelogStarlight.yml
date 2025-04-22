@@ -5007,4 +5007,32 @@ Entries:
   id: 693
   time: '2025-04-21T07:33:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/506
+- author: PubliclyExecutedPig
+  changes:
+  - message: Added mining specialist to every single map
+    type: Add
+  id: 694
+  time: '2025-04-22T02:52:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/509
+- author: PubliclyExecutedPig
+  changes:
+  - message: Removed unfun <3
+    type: Remove
+  id: 695
+  time: '2025-04-22T02:52:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/509
+- author: PubliclyExecutedPig
+  changes:
+  - message: Changed Orwell Station
+    type: Tweak
+  id: 696
+  time: '2025-04-22T02:52:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/509
+- author: PubliclyExecutedPig
+  changes:
+  - message: Fixed every single map in rotation to fit our and wizden's mapping standards
+    type: Fix
+  id: 697
+  time: '2025-04-22T02:52:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/509
 
