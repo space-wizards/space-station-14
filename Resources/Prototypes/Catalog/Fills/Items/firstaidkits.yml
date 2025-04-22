@@ -9,10 +9,10 @@
       - id: Brutepack
         amount: 2
       - id: Ointment
-        amount: 2
+      - id: Gauze
       - id: PillCanisterTricordrazine
       - id: SyringeEpinephrine
-      - id: EpinephrineChemistryBottle
+      - id: ChemistryBottleEpinephrine
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
 
 - type: entity
@@ -52,7 +52,7 @@
   - type: StorageFill
     contents:
       - id: SyringeEthylredoxrazine
-      - id: EthylredoxrazineChemistryBottle
+      - id: ChemistryBottleEthylredoxrazine
       - id: AntiPoisonMedipen
         amount: 2
       - id: PillCanisterDylovene
@@ -69,8 +69,8 @@
       - id: EmergencyNitrogenTankFilled
       - id: SyringeDexalin
       - id: SyringeInaprovaline
-      - id: DexalinChemistryBottle
-      - id: InaprovalineChemistryBottle
+      - id: ChemistryBottleDexalin
+      - id: ChemistryBottleInaprovaline
       - id: ClothingMaskBreathMedical
         amount: 2
       - id: PillCanisterDexalin
@@ -83,12 +83,13 @@
   components:
   - type: StorageFill
     contents:
+      - id: GeigerCounter
       - id: SyringePhalanximine
       - id: RadAutoInjector
         amount: 2
+      - id: ChemistryBottlePhalanximine
       - id: PillCanisterPotassiumIodide
       - id: PillCanisterHyronalin
-      - id: GeigerCounter
 
 - type: entity
   id: MedkitAdvancedFilled
@@ -103,7 +104,7 @@
         amount: 2
       - id: HandheldHealthAnalyzer
       - id: SyringeAirloss
-      - id: AirlossChemistryBottle
+      - id: ChemistryBottleAirloss
 
 - type: entity
   id: MedkitCombatFilled
