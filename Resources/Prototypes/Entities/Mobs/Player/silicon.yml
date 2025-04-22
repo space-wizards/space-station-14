@@ -280,6 +280,32 @@
   - type: SiliconLawProvider
     laws: NutimovLawset
 
+- type: entity
+  id: XenoborgCircuitBoard
+  parent: BaseElectronics
+  name: law board (Xenoborg)
+  suffix: admin only
+  description: An electronics board containing the Xenoborg lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: XenoborgLawset
+
+- type: entity
+  id: MothershipCircuitBoard
+  parent: BaseElectronics
+  name: law board (Mothership Core)
+  suffix: admin only
+  description: An electronics board containing the Mothership Core lawset.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+  - type: SiliconLawProvider
+    laws: MothershipCoreLawset
+
 # Items
 - type: entity
   id: Intellicard
