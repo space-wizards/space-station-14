@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Deer by Calciumtrice, usable under Creative Commons Attribution 3.0 license, from https://opengameart.org/content/deer, edited by IProduceWidgets (github)",
+  "states": [
+    {
+      "name": "reindeer_buck",
+      "directions": 4,
+      "delays": [
+        [
+          1,
+          0.2,
+          0.2,
+          0.2,
+		  0.2
+        ],
+        [
+          1,
+          0.2,
+          0.2,
+          0.2,
+		  0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+		  1
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          1
+        ]
+      ]
+    },
+	{
+	  "name": "reindeer_buck_still",
+	  "directions": 4
+	},
+    {
+      "name": "reindeer_buck_dead"
+    }
+  ]
+}

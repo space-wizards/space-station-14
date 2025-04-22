@@ -14,11 +14,14 @@
     sprite: Clothing/Shoes/Boots/magboots.rsi
   - type: ToggleClothing
     action: ActionToggleMagboots
-  - type: ToggleVerb
-    text: toggle-magboots-verb-get-data-text
+    mustEquip: false
   - type: ComponentToggler
     components:
     - type: NoSlip
+  - type: ItemTogglePrefix
+    prefixOn: on
+  - type: ToggleClothingPrefix
+    prefixOn: on
   - type: Magboots
   - type: ClothingSpeedModifier
     walkModifier: 0.85

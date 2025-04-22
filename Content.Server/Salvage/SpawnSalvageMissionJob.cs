@@ -104,7 +104,9 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         destComp.BeaconsOnly = true;
         destComp.RequireCoordinateDisk = true;
         destComp.Enabled = true;
-        _metaData.SetEntityName(mapUid, SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _missionParams.Seed));
+        _metaData.SetEntityName(
+            mapUid,
+            _entManager.System<SharedSalvageSystem>().GetFTLName(_prototypeManager.Index<LocalizedDatasetPrototype>("NamesBorer"), _missionParams.Seed));
         _entManager.AddComponent<FTLBeaconComponent>(mapUid);
 
         // Saving the mission mapUid to a CD is made optional, in case one is somehow made in a process without a CD entity
@@ -191,7 +193,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         List<Vector2i> reservedTiles = new();
 
-        foreach (var tile in grid.GetTilesIntersecting(new Circle(Vector2.Zero, landingPadRadius), false))
+        foreach (var tile in _map.GetTilesIntersecting(mapUid, grid, new Circle(Vector2.Zero, landingPadRadius), false))
         {
             if (!_biome.TryGetBiomeTile(mapUid, grid, tile.GridIndices, out _))
                 continue;
@@ -212,7 +214,14 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             if (!lootProto.Guaranteed)
                 continue;
 
-            await SpawnDungeonLoot(lootProto, mapUid);
+            try
+            {
+                await SpawnDungeonLoot(lootProto, mapUid);
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Failed to spawn guaranteed loot {lootProto.ID}: {e}");
+            }
         }
 
         // Handle boss loot (when relevant).
@@ -242,7 +251,14 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             if (entry == null)
                 break;
 
-            await SpawnRandomEntry(grid, entry, dungeon, random);
+            try
+            {
+                await SpawnRandomEntry(grid, entry, dungeon, random);
+            }
+            catch (Exception e)
+            {
+                _sawmill.Error($"Failed to spawn mobs for {entry.Proto}: {e}");
+            }
         }
 
         var allLoot = _prototypeManager.Index<SalvageLootPrototype>(SharedSalvageSystem.ExpeditionsLootProto);

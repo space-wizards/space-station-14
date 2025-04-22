@@ -1,3 +1,4 @@
+using Content.Shared.Mind;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -10,6 +11,9 @@ public sealed record PlayerInfo(
     string IdentityName,
     string StartingJob,
     bool Antag,
+    RoleTypePrototype RoleProto,
+    LocId? Subtype,
+    int SortWeight,
     NetEntity? NetEntity,
     NetUserId SessionId,
     bool Connected,

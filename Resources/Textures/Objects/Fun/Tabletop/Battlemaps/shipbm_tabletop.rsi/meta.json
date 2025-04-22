@@ -7,6 +7,7 @@
         "x": 543,
         "y": 543
     },
+    "metaAtlas": false,
     "states": [
         {
             "name": "tabletop"
