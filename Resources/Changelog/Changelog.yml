@@ -3735,13 +3735,6 @@
   id: 8287
   time: '2025-04-20T20:55:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/35986
-- author: TheShuEd
-  changes:
-  - message: Voxes can now use any standard human hairstyle.
-    type: Add
-  id: 8288
-  time: '2025-04-20T21:01:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/35938
 - author: Booblesnoot42
   changes:
   - message: The sprites for the main chapel altars have been adjusted.
