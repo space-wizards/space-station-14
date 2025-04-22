@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Killerqu00
-  changes:
-  - message: Pet carriers can now be crafted.
-    type: Add
-  id: 7808
-  time: '2025-01-14T22:34:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34431
 - author: themias
   changes:
   - message: Fixed muzzles not working on some characters (e.g. dwarves)
@@ -3903,3 +3896,11 @@
   id: 8308
   time: '2025-04-21T22:49:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/29949
+- author: Ghagliiarghii
+  changes:
+  - message: The monkey version of captain uniforms and the hamster version of captain
+      hats updated to match humanoid versions
+    type: Tweak
+  id: 8309
+  time: '2025-04-22T01:03:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36804
