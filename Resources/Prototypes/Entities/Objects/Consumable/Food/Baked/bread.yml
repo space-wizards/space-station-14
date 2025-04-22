@@ -60,7 +60,7 @@
       color: "#281415"
     - state: alpha-filling
       color: "#FF613F"
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodBreadVolcanicSlice
 
 - type: entity
@@ -93,7 +93,7 @@
   - type: Sprite
     layers:
     - state: banana
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodBreadBananaSlice
   - type: Tag
     tags:
@@ -136,7 +136,7 @@
   - type: Sprite
     layers:
     - state: cotton
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodBreadCottonSlice
   - type: Tag
     tags:
@@ -196,7 +196,7 @@
   - type: Sprite
     layers:
     - state: cornbread
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodBreadCornSlice
   - type: SolutionContainerManager
     solutions:
@@ -244,7 +244,7 @@
   - type: Sprite
     layers:
     - state: creamcheese
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodBreadCreamcheeseSlice
   - type: SolutionContainerManager
     solutions:
@@ -296,7 +296,7 @@
   - type: Sprite
     layers:
     - state: meat
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodBreadMeatSlice
   - type: SolutionContainerManager
     solutions:
@@ -356,7 +356,7 @@
   - type: Sprite
     layers:
     - state: mimana
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodBreadMimanaSlice
   - type: SolutionContainerManager
     solutions:
@@ -411,7 +411,7 @@
   - type: Sprite
     layers:
     - state: plain
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodBreadPlainSlice
 
 - type: entity
@@ -439,7 +439,7 @@
   - type: Sprite
     layers:
     - state: sausage
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodBreadSausageSlice
   - type: SolutionContainerManager
     solutions:
@@ -502,7 +502,7 @@
   - type: Sprite
     layers:
     - state: spidermeat
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodBreadMeatSpiderSlice
   - type: SolutionContainerManager
     solutions:
@@ -562,7 +562,7 @@
   - type: Sprite
     layers:
     - state: tofu
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodBreadTofuSlice
   - type: SolutionContainerManager
     solutions:
@@ -613,7 +613,7 @@
   - type: Sprite
     layers:
     - state: xenomeat
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodBreadMeatXenoSlice
   - type: SolutionContainerManager
     solutions:
@@ -669,7 +669,7 @@
   components:
   - type: Sprite
     state: baguette
-  - type: SliceableFood
+  - type: Sliceable
     count: 12
     slice: FoodBreadBaguetteSlice
   - type: SolutionContainerManager

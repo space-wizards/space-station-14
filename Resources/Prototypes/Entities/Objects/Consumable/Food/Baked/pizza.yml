@@ -22,7 +22,7 @@
           Quantity: 30
         - ReagentId: Vitamin
           Quantity: 5
-  - type: SliceableFood
+  - type: Sliceable
     count: 8
   - type: Item
     size: Normal
@@ -79,7 +79,7 @@
   - type: Sprite
     layers:
     - state: margherita
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPizzaMargheritaSlice
 
 - type: entity
@@ -112,7 +112,7 @@
   - type: Sprite
     layers:
     - state: meat
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPizzaMeatSlice
   - type: Tag
     tags:
@@ -155,7 +155,7 @@
   - type: Sprite
     layers:
     - state: mushroom
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPizzaMushroomSlice
 
 - type: entity
@@ -191,7 +191,7 @@
   - type: Sprite
     layers:
     - state: vegetable
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPizzaVegetableSlice
   - type: SolutionContainerManager
     solutions:
@@ -249,7 +249,7 @@
   - type: Sprite
     layers:
     - state: donkpocket
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPizzaDonkpocketSlice
   - type: SolutionContainerManager
     solutions:
@@ -313,7 +313,7 @@
   - type: Sprite
     layers:
     - state: dank
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPizzaDankSlice
   - type: SolutionContainerManager
     solutions:
@@ -366,7 +366,7 @@
   - type: Sprite
     layers:
     - state: sassysage
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPizzaSassysageSlice
   - type: Tag
     tags:
@@ -411,7 +411,7 @@
   - type: Sprite
     layers:
     - state: pineapple
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPizzaPineappleSlice
   - type: Tag
     tags:
@@ -458,7 +458,7 @@
   - type: Sprite
     layers:
     - state: arnold
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPizzaArnoldSlice
   - type: SolutionContainerManager
     solutions:
@@ -561,7 +561,7 @@
   - type: Sprite
     layers:
     - state: uranium-pizza
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPizzaUraniumSlice
   - type: Tag
     tags:
@@ -634,7 +634,7 @@
     - state: cotton-pizza
   - type: Food
     requiresSpecialDigestion: true
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPizzaCottonSlice
   - type: Tag
     tags:

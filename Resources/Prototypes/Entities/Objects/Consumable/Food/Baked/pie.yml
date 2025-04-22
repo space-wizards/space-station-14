@@ -25,7 +25,7 @@
   - type: Food #All pies here made with a pie tin; unless you're some kind of savage, you're probably not destroying this when you eat or slice the pie!
     trash:
     - FoodPlateTin
-  - type: SliceableFood
+  - type: Sliceable
     count: 4
   - type: Tag
     tags:
@@ -74,7 +74,7 @@
     layers:
     - state: tin
     - state: apple
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPieAppleSlice
   - type: Tag
     tags:
@@ -116,7 +116,7 @@
     layers:
     - state: tin
     - state: baklava
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPieBaklavaSlice
 
 - type: entity
@@ -171,7 +171,7 @@
     tags:
     - Fruit
     - Pie
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPieBananaCreamSlice
 
 - type: entity
@@ -209,7 +209,7 @@
     - state: tin
       color: pink
     - state: berryclafoutis
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPieClafoutisSlice
   - type: Tag
     tags:
@@ -250,7 +250,7 @@
     layers:
     - state: tin
     - state: cherry
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPieCherrySlice
   - type: Tag
     tags:
@@ -290,7 +290,7 @@
     layers:
     - state: tin
     - state: meat
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPieMeatSlice
   - type: Tag
     tags:
@@ -367,7 +367,7 @@
     layers:
     - state: tin
     - state: xeno
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPieXenoSlice
   - type: Tag
     tags:
@@ -408,7 +408,7 @@
     layers:
     - state: tin
     - state: frosty
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodPieFrostySlice
 
 - type: entity
@@ -439,7 +439,7 @@
     state: mime
   - type: Item
     heldPrefix: mime
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodTartMimeSlice
 
 - type: entity

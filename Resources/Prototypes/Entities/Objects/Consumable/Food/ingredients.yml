@@ -291,7 +291,7 @@
       - dough
   - type: Sprite
     state: dough
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodDoughSlice
   - type: Construction
@@ -357,7 +357,7 @@
       - dough
   - type: Sprite
     state: cornmealdough
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodDoughCornmealSlice
 
@@ -389,7 +389,7 @@
       - dough
   - type: Sprite
     state: tortilladough
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodDoughTortillaSlice
 
@@ -551,7 +551,7 @@
   - type: Construction
     graph: Pizza
     node: flat
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodCroissantRaw
 
@@ -629,7 +629,7 @@
         reagents:
         - ReagentId: Butter
           Quantity: 15
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodButterSlice
 
@@ -686,7 +686,7 @@
       - cheesy
   - type: Sprite
     state: cheesewheel
-  - type: SliceableFood
+  - type: Sliceable
     count: 4
     slice: FoodCheeseSlice
 
@@ -728,7 +728,7 @@
       - creamy
   - type: Sprite
     state: chevrelog
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodChevreSlice
   - type: SolutionContainerManager
@@ -786,7 +786,7 @@
           Quantity: 9
         - ReagentId: Nutriment
           Quantity: 6
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodTofuSlice
 

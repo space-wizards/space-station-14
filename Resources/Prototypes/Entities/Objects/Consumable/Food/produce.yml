@@ -136,9 +136,9 @@
   - type: SolutionContainerManager
   - type: Produce
     seedId: papercane
-  - type: Log
-    spawnedPrototype: SheetPaper1
-    spawnCount: 2
+  - type: Sliceable
+    slice: SheetPaper1
+    count: 2
 
 - type: entity
   parent: FoodProduceBase
@@ -192,7 +192,9 @@
         Blunt: 10
   - type: Produce
     seedId: towercap
-  - type: Log
+  - type: Sliceable
+    slice: MaterialWoodPlank1
+    count: 2
 
 - type: entity
   name: steel-cap log
@@ -211,9 +213,9 @@
         Blunt: 12
   - type: Produce
     seedId: steelcap
-  - type: Log
-    spawnedPrototype: SheetSteel1
-    spawnCount: 1
+  - type: Sliceable
+    slice: SheetSteel1
+    count: 1
 
 - type: entity
   name: nettle
@@ -810,7 +812,7 @@
       reagents:
       - ReagentId: JuicePineapple
         Quantity: 10
-  - type: SliceableFood
+  - type: Sliceable
     count: 5
     slice: FoodPineappleSlice
   - type: Tag
@@ -1249,7 +1251,7 @@
     heldPrefix: produce
   - type: Produce
     seedId: onion
-  - type: SliceableFood
+  - type: Sliceable
     count: 5
     slice: FoodOnionSlice
   - type: Tag
@@ -1282,7 +1284,7 @@
     heldPrefix: produce
   - type: Produce
     seedId: onionred
-  - type: SliceableFood
+  - type: Sliceable
     count: 5
     slice: FoodOnionRedSlice
   - type: Tag
@@ -2090,7 +2092,7 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: SliceableFood
+  - type: Sliceable
     count: 5
     slice: FoodWatermelonSlice
   - type: Butcherable
@@ -2193,7 +2195,7 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: SliceableFood
+  - type: Sliceable
     count: 5
     slice: FoodHolymelonSlice
   - type: Butcherable
@@ -2566,9 +2568,9 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
-  - type: Log
-    spawnedPrototype: MaterialCotton1
-    spawnCount: 2
+  - type: Sliceable
+    slice: MaterialCotton1
+    count: 2
   - type: Produce
     seedId: cotton
   - type: Tag
@@ -2597,9 +2599,9 @@
           Quantity: 5
         - ReagentId: Phlogiston
           Quantity: 5
-  - type: Log
-    spawnedPrototype: MaterialPyrotton1
-    spawnCount: 2
+  - type: Sliceable
+    slice: MaterialPyrotton1
+    count: 2
   - type: Produce
     seedId: pyrotton
   - type: Tag

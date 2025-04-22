@@ -97,7 +97,7 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatCutlet
   - type: InternalTemperature
@@ -124,7 +124,7 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatCutlet
 
@@ -202,7 +202,7 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatBearCutlet
   - type: Construction
@@ -226,7 +226,7 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatPenguinCutlet
   - type: Construction
@@ -250,7 +250,7 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatChickenCutlet
   - type: InternalTemperature
@@ -276,7 +276,7 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatDuckCutlet
   - type: Construction
@@ -406,7 +406,7 @@
           Quantity: 3
         - ReagentId: Fat
           Quantity: 3
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatCutlet
 
@@ -426,7 +426,7 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatLizardCutlet
   - type: Construction
@@ -484,7 +484,7 @@
           Quantity: 9
         - ReagentId: Fat
           Quantity: 9
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatSpiderCutlet
 
@@ -567,7 +567,7 @@
         reagents:
         - ReagentId: SulfuricAcid
           Quantity: 20
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatXenoCutlet
 
@@ -608,7 +608,7 @@
   components:
   - type: Sprite
     state: tomato
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatTomatoCutlet
   - type: StaticPrice
@@ -627,7 +627,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/salami.rsi
     state: salami
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodMeatSalamiSlice
   - type: MeleeWeapon
     wideAnimationRotation: 100
@@ -656,7 +656,7 @@
     - Meat
   - type: Sprite
     state: clown
-  - type: SliceableFood
+  - type: Sliceable
     slice: FoodMeatSalamiSlice
 
 - type: entity
@@ -802,7 +802,7 @@
           Quantity: 10
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatCutletCooked
   - type: Construction
@@ -870,7 +870,7 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatBearCutletCooked
   - type: Construction
@@ -902,7 +902,7 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatPenguinCutletCooked
   - type: Construction
@@ -934,7 +934,7 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatChickenCutletCooked
   - type: Construction
@@ -998,7 +998,7 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatDuckCutletCooked
   - type: Construction
@@ -1127,7 +1127,7 @@
           Quantity: 5
         - ReagentId: Protein
           Quantity: 5
-  - type: SliceableFood
+  - type: Sliceable
     count: 3
     slice: FoodMeatLizardCutletCooked
   - type: Construction

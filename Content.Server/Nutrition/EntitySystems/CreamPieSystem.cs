@@ -2,18 +2,19 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Explosion.Components;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Nutrition;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Sliceable;
 using Content.Shared.Throwing;
-using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition.EntitySystems
@@ -34,7 +35,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // activate BEFORE entity is deleted and trash is spawned
             SubscribeLocalEvent<CreamPieComponent, ConsumeDoAfterEvent>(OnConsume, before: [typeof(FoodSystem)]);
-            SubscribeLocalEvent<CreamPieComponent, SliceFoodEvent>(OnSlice);
+            // No idea why it requires SharedSliceableSystem.SliceFoodEvent instead of just SliceFoodEvent.
+            SubscribeLocalEvent<CreamPieComponent, SharedSliceableSystem.SliceFoodEvent>(OnSlice);
 
             SubscribeLocalEvent<CreamPiedComponent, RejuvenateEvent>(OnRejuvenate);
         }
@@ -66,7 +68,7 @@ namespace Content.Server.Nutrition.EntitySystems
             ActivatePayload(entity);
         }
 
-        private void OnSlice(Entity<CreamPieComponent> entity, ref SliceFoodEvent args)
+        private void OnSlice(Entity<CreamPieComponent> entity, ref SharedSliceableSystem.SliceFoodEvent args)
         {
             ActivatePayload(entity);
         }
