@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Machines.Components;
 using Content.Server.Machines.Components;
+using Content.Shared.Machines.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 
@@ -200,6 +201,9 @@ public sealed class MultipartMachineSystem : EntitySystem
         // Whichever component has the MultipartMachine component should be treated as the origin
         var machineOrigin = _mapSystem.TileIndicesFor(gridUid!.Value, grid, xform.Coordinates);
 
+        // Set to true if any of the parts' state changes
+        var stateHasChanged = false;
+
         var missingParts = false;
         for (var i = 0; i < ent.Comp.Parts.Count; ++i)
         {
@@ -259,7 +263,16 @@ public sealed class MultipartMachineSystem : EntitySystem
                     // as something we care about.
                     RemComp<MultipartMachinePartComponent>(GetEntity(originalPart!.Value));
                 }
+
+                stateHasChanged = true;
             }
+        }
+
+        ent.Comp.Assembled = !missingParts;
+        if (stateHasChanged)
+        {
+            var ev = new MultipartMachineAssemblyStateChanged(ent, ent.Comp.Assembled);
+            RaiseLocalEvent(ent, ev);
         }
 
         Dirty(ent);
