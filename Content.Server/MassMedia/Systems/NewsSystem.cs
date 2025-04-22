@@ -143,7 +143,7 @@ public sealed class NewsSystem : SharedNewsSystem
         var title = msg.Title.Trim();
         var content = msg.Content.Trim();
 
-        if (TryAddNews(ent, title, content, authorName, out var article, msg.Actor))
+        if (TryAddNews(ent, title, content, out var article, authorName, msg.Actor))
         {
             _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
 
