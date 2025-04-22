@@ -16,6 +16,12 @@ public sealed class SlotBasedConnectedContainerSystem : EntitySystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
 
+    /// <inheritdoc />
+    public override void Initialize()
+    {
+        SubscribeLocalEvent<SlotBasedConnectedContainerComponent, GetConnectedContainerEvent>(OnGettingConnectedContainer);
+    }
+
     /// <summary>
     /// Try get connected container entity in character slots for <see cref="uid"/>.
     /// </summary>
@@ -34,6 +40,12 @@ public sealed class SlotBasedConnectedContainerSystem : EntitySystem
         }
 
         return TryGetConnectedContainer(uid, component.TargetSlot, component.ContainerWhitelist, out slotEntity);
+    }
+
+    private void OnGettingConnectedContainer(Entity<SlotBasedConnectedContainerComponent> ent, ref GetConnectedContainerEvent args)
+    {
+        if (TryGetConnectedContainer(ent, ent.Comp.TargetSlot, ent.Comp.ContainerWhitelist, out var val))
+            args.ContainerEntity = val;
     }
 
     private bool TryGetConnectedContainer(EntityUid uid, SlotFlags slotFlag, EntityWhitelist? providerWhitelist, [NotNullWhen(true)] out EntityUid? slotEntity)
@@ -58,4 +70,16 @@ public sealed class SlotBasedConnectedContainerSystem : EntitySystem
 
         return false;
     }
+}
+
+/// <summary>
+/// Event for an attempt of getting container, connected to entity on which event was raised.
+/// Fills <see cref="ContainerEntity"/> if connected container exists.
+/// </summary>
+public sealed class GetConnectedContainerEvent
+{
+    /// <summary>
+    /// Container entity, if it exists, or null.
+    /// </summary>
+    public EntityUid? ContainerEntity;
 }
