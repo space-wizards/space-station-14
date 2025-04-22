@@ -45,6 +45,57 @@
         amount: 0.05
 
 - type: reagent
+  id: MoltenChocolate
+  name: reagent-name-molten-chocolate
+  desc: reagent-desc-molten-chocolate
+  physicalDesc: reagent-physical-desc-burning
+  flavor: pyrotton
+  color: "#4D2800"
+  recognizable: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: -5
+      - !type:AdjustReagent
+        reagent: Theobromine
+        amount: 0.05
+      metabolismRate : 1.00
+      effects:
+      - !type:AdjustTemperature
+        amount: 15000
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 8
+      - !type:PopupMessage
+        type: Local
+        visualType: LargeCaution
+        messages: [ "generic-reagent-effect-melting-insides"]
+        probability: 0.33
+      - !type:Emote
+        emote: Scream
+        probability: 0.4
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Heat: 4
+      - !type:AdjustTemperature
+        conditions:
+        - !type:Temperature
+          max: 375
+        amount: 100000
+      - !type:Emote
+        emote: Scream
+        probability: 1
+
+- type: reagent
   id: Cream
   name: reagent-name-cream
   group: Drinks

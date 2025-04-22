@@ -209,6 +209,34 @@
 
 - type: entity
   parent: DrinkBaseCup
+  id: DrinkMoltenChocolate
+  name: molten chocolate
+  description: A cup of hot chocolate mixed with a unknown chemical that has been heated to a dangerous temperature. This seems like the type of weapon that would be used in a prison escape.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: MoltenChocolate
+          Quantity: 20
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/hot_coco.rsi
+    state: icon-vend
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/hot_coco.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
+  - type: TrashOnSolutionEmpty
+    solution: drink
+
+- type: entity
+  parent: DrinkBaseCup
   id: DrinkHotCoffee
   name: coffee
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
