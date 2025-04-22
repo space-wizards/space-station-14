@@ -580,7 +580,7 @@
 
 # Used for warps
 - type: Tag
-  id: GhostOnly
+  id: GhostOnlyWarp
 
 - type: Tag
   id: GlassAirlock

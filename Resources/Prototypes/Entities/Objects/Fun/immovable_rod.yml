@@ -34,7 +34,7 @@
     location: immovable rod
     blacklist:
       tags:
-      - GhostOnly
+      - GhostOnlyWarp
 
 - type: entity
   id: ImmovableRodDespawn

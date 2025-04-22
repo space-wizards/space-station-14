@@ -19,10 +19,11 @@
     location: nuke disk
     blacklist:
       tags:
-      - GhostOnly
+      - GhostOnlyWarp
   - type: Tag
     tags:
     - HighRiskItem
+    - GhostOnlyWarp
   - type: StealTarget
     stealGroup: NukeDisk
 
