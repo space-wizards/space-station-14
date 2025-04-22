@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Teleportation.Components;
 using Content.Shared.Timing;
 using Content.Shared.UserInterface;
+using Content.Shared.Warps;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -41,7 +42,7 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 
     protected virtual void OnTeleportToLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationDestinationMessage args)
     {
-        if (!TryGetEntity(args.NetEnt, out var telePointEnt) || Delay.IsDelayed(ent.Owner, TeleportDelay))
+        if (!TryGetEntity(args.NetEnt, out var telePointEnt) || TerminatingOrDeleted(telePointEnt) || !HasComp<WarpPointComponent>(telePointEnt) || Delay.IsDelayed(ent.Owner, TeleportDelay))
             return;
 
         var comp = ent.Comp;
