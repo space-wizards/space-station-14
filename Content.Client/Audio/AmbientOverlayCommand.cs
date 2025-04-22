@@ -2,18 +2,16 @@ using Robust.Shared.Console;
 
 namespace Content.Client.Audio;
 
-public sealed class AmbientOverlayCommand : IConsoleCommand
+public sealed class AmbientOverlayCommand : LocalizedEntityCommands
 {
-    [Dependency] private readonly IEntityManager _ent = default!;
+    [Dependency] private readonly AmbientSoundSystem _ambient = default!;
 
-    public string Command => "showambient";
-    public string Description => "Shows all AmbientSoundComponents in the viewport";
-    public string Help => $"{Command}";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override string Command => "showambient";
+    public override string Description => "Shows all AmbientSoundComponents in the viewport";
+    public override string Help => $"{Command}";
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var system = _ent.System<AmbientSoundSystem>();
-        system.OverlayEnabled ^= true;
-
-        shell.WriteLine($"Ambient sound overlay set to {system.OverlayEnabled}");
+        _ambient.OverlayEnabled ^= true;
+        shell.WriteLine($"Ambient sound overlay set to {_ambient.OverlayEnabled}");
     }
 }
