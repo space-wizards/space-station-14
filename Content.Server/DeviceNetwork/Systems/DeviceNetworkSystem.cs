@@ -1,12 +1,12 @@
-using Content.Server.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
-using System.Numerics;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Events;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Examine;
 
 namespace Content.Server.DeviceNetwork.Systems
@@ -16,7 +16,7 @@ namespace Content.Server.DeviceNetwork.Systems
     ///     Device networking allows machines and devices to communicate with each other while adhering to restrictions like range or being connected to the same powernet.
     /// </summary>
     [UsedImplicitly]
-    public sealed class DeviceNetworkSystem : EntitySystem
+    public sealed class DeviceNetworkSystem : SharedDeviceNetworkSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
@@ -60,16 +60,7 @@ namespace Content.Server.DeviceNetwork.Systems
             SwapQueues();
         }
 
-        /// <summary>
-        /// Sends the given payload as a device network packet to the entity with the given address and frequency.
-        /// Addresses are given to the DeviceNetworkComponent of an entity when connecting.
-        /// </summary>
-        /// <param name="uid">The EntityUid of the sending entity</param>
-        /// <param name="address">The address of the entity that the packet gets sent to. If null, the message is broadcast to all devices on that frequency (except the sender)</param>
-        /// <param name="frequency">The frequency to send on</param>
-        /// <param name="data">The data to be sent</param>
-        /// <returns>Returns true when the packet was successfully enqueued.</returns>
-        public bool QueuePacket(EntityUid uid, string? address, NetworkPayload data, uint? frequency = null, int? network = null, DeviceNetworkComponent? device = null)
+        public override bool QueuePacket(EntityUid uid, string? address, NetworkPayload data, uint? frequency = null, int? network = null, DeviceNetworkComponent? device = null)
         {
             if (!Resolve(uid, ref device, false))
                 return false;
@@ -366,98 +357,6 @@ namespace Content.Server.DeviceNetwork.Systems
                 else
                     beforeEv.Uncancel();
             }
-        }
-    }
-
-    /// <summary>
-    /// Event raised before a device network packet is send.
-    /// Subscribed to by other systems to prevent the packet from being sent.
-    /// </summary>
-    public sealed class BeforePacketSentEvent : CancellableEntityEventArgs
-    {
-        /// <summary>
-        /// The EntityUid of the entity the packet was sent from.
-        /// </summary>
-        public readonly EntityUid Sender;
-
-        public readonly TransformComponent SenderTransform;
-
-        /// <summary>
-        ///     The senders current position in world coordinates.
-        /// </summary>
-        public readonly Vector2 SenderPosition;
-
-        /// <summary>
-        /// The network the packet will be sent to.
-        /// </summary>
-        public readonly string NetworkId;
-
-        public BeforePacketSentEvent(EntityUid sender, TransformComponent xform, Vector2 senderPosition, string networkId)
-        {
-            Sender = sender;
-            SenderTransform = xform;
-            SenderPosition = senderPosition;
-            NetworkId = networkId;
-        }
-    }
-
-    /// <summary>
-    /// Sent to the sending entity before broadcasting network packets to recipients
-    /// </summary>
-    public sealed class BeforeBroadcastAttemptEvent : CancellableEntityEventArgs
-    {
-        public readonly IReadOnlySet<DeviceNetworkComponent> Recipients;
-        public HashSet<DeviceNetworkComponent>? ModifiedRecipients;
-
-        public BeforeBroadcastAttemptEvent(IReadOnlySet<DeviceNetworkComponent> recipients)
-        {
-            Recipients = recipients;
-        }
-    }
-
-    /// <summary>
-    /// Event raised when a device network packet gets sent.
-    /// </summary>
-    public sealed class DeviceNetworkPacketEvent : EntityEventArgs
-    {
-        /// <summary>
-        /// The id of the network that this packet is being sent on.
-        /// </summary>
-        public int NetId;
-
-        /// <summary>
-        /// The frequency the packet is sent on.
-        /// </summary>
-        public readonly uint Frequency;
-
-        /// <summary>
-        /// Address of the intended recipient. Null if the message was broadcast.
-        /// </summary>
-        public string? Address;
-
-        /// <summary>
-        /// The device network address of the sending entity.
-        /// </summary>
-        public readonly string SenderAddress;
-
-        /// <summary>
-        /// The entity that sent the packet.
-        /// </summary>
-        public EntityUid Sender;
-
-        /// <summary>
-        /// The data that is being sent.
-        /// </summary>
-        public readonly NetworkPayload Data;
-
-        public DeviceNetworkPacketEvent(int netId, string? address, uint frequency, string senderAddress, EntityUid sender, NetworkPayload data)
-        {
-            NetId = netId;
-            Address = address;
-            Frequency = frequency;
-            SenderAddress = senderAddress;
-            Sender = sender;
-            Data = data;
         }
     }
 }

@@ -18,6 +18,9 @@
       behaviors:
       - !type:TriggerBehavior
   - type: ScatteringGrenade
+  - type: Tag
+    tags:
+    - HandGrenade
 
 - type: entity
   parent: [ScatteringGrenadeBase, BaseSecurityContraband]

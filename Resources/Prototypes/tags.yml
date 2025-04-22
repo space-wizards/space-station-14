@@ -16,6 +16,9 @@
   id: AirSensor
 
 - type: Tag
+  id: AllowBiomeLoading # Entities with this tag will load terrain, even if a ghost.
+
+- type: Tag
   id: AllowGhostShownByEvent
 
 - type: Tag
@@ -639,6 +642,9 @@
   id: Handcuffs
 
 - type: Tag
+  id: HandGrenade
+
+- type: Tag
   id: HappyHonk
 
 - type: Tag
@@ -866,9 +872,6 @@
 
 - type: Tag
   id: MimeHappyHonk
-
-- type: Tag
-  id: MindShield
 
 - type: Tag
   id: MindTransferTarget
@@ -1140,6 +1143,9 @@
 
 - type: Tag
   id: SilentStorageUser # used in SharedStorageSystem, so the entity will do all silently
+
+- type: Tag
+  id: SiliconEmotes
 
 - type: Tag
   id: SkeletonMotorcycleKeys
