@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: kosticia
-  changes:
-  - message: Bedsheets now can be printed on uniform printer
-    type: Add
-  id: 7813
-  time: '2025-01-15T19:35:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34034
 - author: TheShuEd
   changes:
   - message: Christmas anomaly removed
@@ -3917,3 +3910,11 @@
   id: 8314
   time: '2025-04-22T18:15:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31864
+- author: GoldenCan
+  changes:
+  - message: Heads of Personnel can now fabricate generic command-themed clothes using
+      their uniform printer.
+    type: Add
+  id: 8315
+  time: '2025-04-22T18:35:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32103
