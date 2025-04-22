@@ -73,13 +73,14 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
 
         var transformSystem = entityManager.System<SharedTransformSystem>();
         var transform = entityManager.GetComponent<TransformComponent>(Grid.Owner);
-        var size = (float) Grid.TileSize;
+        var size = (float)Grid.TileSize;
 
         _matrix.M31 = size / 2;
         _matrix.M32 = size / 2;
         Matrix3x2.Invert(spaceMatrix, out var invSpace);
-        _matrix *= transform.WorldMatrix * invSpace;
-        var relativeAngle = transformSystem.GetWorldRotation(transform) - spaceAngle;
+        var (_, relativeAngle, worldMatrix) = transformSystem.GetWorldPositionRotationMatrix(transform);
+        relativeAngle -= spaceAngle;
+        _matrix *= worldMatrix * invSpace;
         _offset = relativeAngle.RotateVec(new Vector2(size / 4, size / 4));
     }
 

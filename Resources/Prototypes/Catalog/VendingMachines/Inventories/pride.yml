@@ -5,12 +5,14 @@
     ClothingNeckAllyPin: 3
     ClothingNeckAromanticPin: 3
     ClothingNeckAsexualPin: 3
+    ClothingNeckAroacePin: 3
     ClothingNeckBisexualPin: 3
     ClothingNeckGayPin: 3
     ClothingNeckIntersexPin: 3
     ClothingNeckLesbianPin: 3
     ClothingNeckNonBinaryPin: 3
     ClothingNeckPansexualPin: 3
+    ClothingNeckPluralPin: 3
     ClothingNeckOmnisexualPin: 3
     ClothingNeckGenderqueerPin: 3
     ClothingNeckTransPin: 3
@@ -21,6 +23,7 @@
     PlushieSharkGrey: 2
     ClothingNeckScarfStripedAce: 2
     ClothingNeckScarfStripedAro: 2
+    ClothingNeckScarfStripedAroace: 2
     ClothingNeckScarfStripedBiSexual: 2
     ClothingNeckScarfStripedGay: 2
     ClothingNeckScarfStripedInter: 2

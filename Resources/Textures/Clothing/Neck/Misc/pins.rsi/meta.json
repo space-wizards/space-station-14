@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "PixelTK leaves his mark on upstream, BackeTako made the gay, autism pins by Terraspark, omnisexual pin by juliangiebel, genderqueer by centcomofficer24, ally by FairlySadPanda",
+  "copyright": "PixelTK leaves his mark on upstream, BackeTako made the gay, autism pins by Terraspark, omnisexual pin by juliangiebel, genderqueer by centcomofficer24, ally by FairlySadPanda, aroace by momochitters, plural by CubixThree",
   "size": {
     "x": 32,
     "y": 32
@@ -19,6 +19,13 @@
         },
         {
             "name": "aro-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "aroace"
+        },
+        {
+            "name": "aroace-equipped-NECK",
             "directions": 4
         },
         {
@@ -89,6 +96,13 @@
         },
         {
             "name": "pan-equipped-NECK",
+            "directions": 4
+        },
+        {
+            "name": "plural"
+        },
+        {
+            "name": "plural-equipped-NECK",
             "directions": 4
         },
         {
