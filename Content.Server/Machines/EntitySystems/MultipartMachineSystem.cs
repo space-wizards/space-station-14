@@ -228,12 +228,29 @@ public sealed class MultipartMachineSystem : EntitySystem
 
         foreach (var entity in _mapSystem.GetAnchoredEntities(gridUid, grid, expectedLocation))
         {
-            if (query.TryGetComponent(entity, out var comp) &&
-                Transform(entity).LocalRotation.EqualsApprox(expectedRotation.Theta))
+            if (TerminatingOrDeleted(entity))
             {
-                part.Entity = GetNetEntity(entity);
-                return true;
+                // Ignore entities which are in the process of being deleted
+                continue;
             }
+
+            if (!query.TryGetComponent(entity, out var comp) ||
+                !Transform(entity).LocalRotation.EqualsApprox(expectedRotation.Theta))
+            {
+                // Either has no transform, or doesn't match the rotation
+                continue;
+            }
+
+            if (!TryComp<ConstructionComponent>(entity, out var construction) ||
+                construction.Graph != part.Graph ||
+                construction.Node != part.ExpectedNode)
+            {
+                // This constructable doesn't match the right graph we expect
+                continue;
+            }
+
+            part.Entity = GetNetEntity(entity);
+            return true;
         }
 
         return false;
