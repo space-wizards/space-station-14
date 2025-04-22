@@ -82,3 +82,9 @@
   license: "CC-BY-SA-4.0"
   copyright: "Wendy, Pixel Curatrix"
   source: "https://github.com/impstation/imp-station-14/"
+
+- files: ["tidy.webp"]
+  license: "CC-BY-SA-4.0"
+  copyright: "argentsunshine"
+  source: "https://github.com/impstation/imp-station-14/"
+
