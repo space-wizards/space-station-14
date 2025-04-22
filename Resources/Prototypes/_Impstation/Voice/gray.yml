@@ -29,7 +29,7 @@
     RobotBeep:
       collection: RobotBeeps
     Yawn:
-      collection: UnisexYawn
+      path: /Audio/_Impstation/Voice/Gray/gray_yawn.ogg
     Snore:
       collection: Snores
     Sigh:
