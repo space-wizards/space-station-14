@@ -43,15 +43,15 @@ public sealed partial class ParticleAcceleratorSystem
 
     [Conditional("DEBUG")]
     private void EverythingIsWellToFire(ParticleAcceleratorControlBoxComponent controller,
-        Entity<MultipartMachineComponent?> machine)
+        Entity<MultipartMachineComponent> machine)
     {
         DebugTools.Assert(controller.Powered);
         DebugTools.Assert(controller.SelectedStrength != ParticleAcceleratorPowerState.Standby);
-        DebugTools.Assert(controller.Assembled);
+        DebugTools.Assert(machine.Comp.Assembled);
 
-        DebugTools.Assert(EntityManager.EntityExists(_multipartMachine.GetPartEntity(machine, AcceleratorParts.PortEmitter)));
-        DebugTools.Assert(EntityManager.EntityExists(_multipartMachine.GetPartEntity(machine, AcceleratorParts.ForeEmitter)));
-        DebugTools.Assert(EntityManager.EntityExists(_multipartMachine.GetPartEntity(machine, AcceleratorParts.StarboardEmitter)));
+        DebugTools.Assert(EntityManager.EntityExists(_multipartMachine.GetPartEntity(machine.AsNullable(), AcceleratorParts.PortEmitter)));
+        DebugTools.Assert(EntityManager.EntityExists(_multipartMachine.GetPartEntity(machine.AsNullable(), AcceleratorParts.ForeEmitter)));
+        DebugTools.Assert(EntityManager.EntityExists(_multipartMachine.GetPartEntity(machine.AsNullable(), AcceleratorParts.StarboardEmitter)));
     }
 
     public void Fire(EntityUid uid, TimeSpan curTime, ParticleAcceleratorControlBoxComponent? comp = null)
@@ -80,7 +80,7 @@ public sealed partial class ParticleAcceleratorSystem
         if (!Resolve(uid, ref comp))
             return;
 
-        DebugTools.Assert(comp.Assembled);
+        DebugTools.Assert(_multipartMachine.Assembled((uid, null)));
 
         if (comp.Enabled || !comp.CanBeEnabled)
             return;
@@ -122,7 +122,7 @@ public sealed partial class ParticleAcceleratorSystem
             return;
 
         DebugTools.Assert(comp.Enabled);
-        DebugTools.Assert(comp.Assembled);
+        DebugTools.Assert(_multipartMachine.Assembled((uid, null)));
 
         if (comp.Powered)
             return;
@@ -271,7 +271,7 @@ public sealed partial class ParticleAcceleratorSystem
         _uiSystem.SetUiState(uid,
             ParticleAcceleratorControlBoxUiKey.Key,
             new ParticleAcceleratorUIState(
-                comp.Assembled,
+                machineComp.Assembled,
                 comp.Enabled,
                 comp.SelectedStrength,
                 (int)draw,
@@ -372,7 +372,7 @@ public sealed partial class ParticleAcceleratorSystem
 
         if (msg.Enabled)
         {
-            if (comp.Assembled)
+            if (_multipartMachine.Assembled((uid, null)))
                 SwitchOn(uid, msg.Actor, comp);
         }
         else

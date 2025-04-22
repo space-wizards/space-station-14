@@ -48,8 +48,6 @@ public sealed partial class ParticleAcceleratorSystem
         if (!TryComp<MultipartMachineComponent>(uid, out var machineComp))
             return;
 
-        controller.Assembled = false;
-
         var machine = new Entity<MultipartMachineComponent>(uid, machineComp);
         if (!_multipartMachine.Rescan(machine))
         {
@@ -70,7 +68,6 @@ public sealed partial class ParticleAcceleratorSystem
             return;
         }
 
-        controller.Assembled = true;
         controller.CurrentlyRescanning = false;
 
         var partQuery = GetEntityQuery<ParticleAcceleratorPartComponent>();

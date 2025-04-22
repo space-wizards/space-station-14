@@ -81,6 +81,14 @@ public sealed partial class MultipartMachineComponent : Component
     [DataField, AutoNetworkedField]
     public Angle? Rotation = null;
 
+
+    /// <summary>
+    /// Whether this multipart machine is assembled or not.
+    /// Optional parts are not taken into account.
+    /// </summary>
+    [DataField]
+    public bool Assembled = false;
+
     /// <summary>
     /// Flag for whether the client side system is allowed to show
     /// ghosts of missing machine parts.

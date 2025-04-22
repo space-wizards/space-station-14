@@ -14,12 +14,6 @@ namespace Content.Server.ParticleAccelerator.Components;
 public sealed partial class ParticleAcceleratorControlBoxComponent : Component
 {
     /// <summary>
-    /// Whether the PA parts have been correctly arranged to make a functional device.
-    /// </summary>
-    [ViewVariables]
-    public bool Assembled = false;
-
-    /// <summary>
     /// Whether the PA is currently set to fire at the console.
     /// Requires <see cref="Assembled"/> to be true.
     /// </summary>
