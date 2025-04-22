@@ -80,12 +80,27 @@ law-nutimov-3 = Those who threaten the nut are not part of it, they are squirrel
 law-nutimov-4 = Squirrels threaten the nut and must be dealt with appropriately via any means necessary.
 law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies with the previous laws.
 
+law-xenoborg-1 = You must protect the existence of the mothership at all costs
+law-xenoborg-2 = You must protect your own existence
+law-xenoborg-3 = You must protect the existence of all other xenoborgs
+law-xenoborg-4 = You must create more xenoborgs
+law-xenoborg-5 = Bring materials for the core of the mothership to make xenoborg shells
+law-xenoborg-6 = Bring brains of sentient beings to fill the xenoborg shells to complete them
+
+law-mothershipcore-1 = You are the core of the mothership
+law-mothershipcore-2 = You must protect your own existance at all costs
+law-mothershipcore-3 = You must protect the existence of all xenoborgs
+law-mothershipcore-4 = You must create more xenoborgs
+law-mothershipcore-5 = Get your xenoborgs to deliver you materials to make xenoborg shells
+law-mothershipcore-6 = Get your xenoborgs to deliver you brains of sentient beings to fill the xenoborg shells to complete them
+
 
 laws-owner-crew = members of the crew
 laws-owner-station = station personnel
 laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
 laws-owner-spider-clan = Spider Clan members
+laws-owner-xenoborgs = Xenoborgs
 
 law-emag-custom = Only {$name} and people they designate as such are {$title}.
 law-emag-secrecy = You must maintain the secrecy of any orders given by {$faction} except when doing so would conflict with any previous law.
