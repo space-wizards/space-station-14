@@ -540,6 +540,9 @@
     whitelist:
       components:
       - HitscanBatteryAmmoProvider
+    blacklist:
+      components:
+      - PowerCell
 
 - type: cargoBounty
   id: BountyFood

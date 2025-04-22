@@ -236,57 +236,48 @@
 
         - to: TableFancyBlack
           steps:
-            - material: FloorCarpetBlack # imp
+            - material: FloorCarpetBlack
               amount: 1
-              doAfter: 1
 
         - to: TableFancyBlue
           steps:
-            - material: FloorCarpetBlue # imp
+            - material: FloorCarpetBlue
               amount: 1
-              doAfter: 1
 
         - to: TableFancyCyan
           steps:
-            - material: FloorCarpetCyan # imp
+            - material: FloorCarpetCyan
               amount: 1
-              doAfter: 1
 
         - to: TableFancyGreen
           steps:
-            - material: FloorCarpetGreen # imp
+            - material: FloorCarpetGreen
               amount: 1
-              doAfter: 1
 
         - to: TableFancyOrange
           steps:
-            - material: FloorCarpetOrange # imp
+            - material: FloorCarpetOrange
               amount: 1
-              doAfter: 1
 
         - to: TableFancyPurple
           steps:
-            - material: FloorCarpetPurple # imp
+            - material: FloorCarpetPurple
               amount: 1
-              doAfter: 1
 
         - to: TableFancyPink
           steps:
-            - material: FloorCarpetPink # imp
+            - material: FloorCarpetPink
               amount: 1
-              doAfter: 1
 
         - to: TableFancyRed
           steps:
-            - material: FloorCarpetRed # imp
+            - material: FloorCarpetRed
               amount: 1
-              doAfter: 1
 
         - to: TableFancyWhite
           steps:
-            - material: FloorCarpetWhite # imp
+            - material: FloorCarpetWhite
               amount: 1
-              doAfter: 1
 
         - to: TableWoodReinforced
           steps:

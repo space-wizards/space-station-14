@@ -36,6 +36,8 @@ using Robust.Shared.Player;
 using Content.Shared.StatusEffect;
 using Content.Shared.Flash.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
+
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -60,6 +62,8 @@ public sealed partial class RevenantSystem
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string FlashedId = "Flashed";
 
+
+    private static readonly ProtoId<TagPrototype> WindowTag = "Window";
 
     private void InitializeAbilities()
     {
@@ -330,7 +334,7 @@ public sealed partial class RevenantSystem
         foreach (var ent in lookup)
         {
             //break windows
-            if (tags.HasComponent(ent) && _tag.HasTag(ent, "Window"))
+            if (tags.HasComponent(ent) && _tag.HasTag(ent, WindowTag))
             {
                 //hardcoded damage specifiers til i die.
                 var dspec = new DamageSpecifier();
