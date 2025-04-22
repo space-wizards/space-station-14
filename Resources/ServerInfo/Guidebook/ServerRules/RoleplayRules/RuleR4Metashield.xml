@@ -29,6 +29,11 @@
   - an operative name
   - a War Ops announcement
   - being a nuclear operative
+<!-- Moffstation - Start - Changing shield for new thief mechanics -->
+  ## Thieves
+  The potential that there are people aboard the station who are capable of pickpocketing is not shielded.
+  However, you should not suspect someone of being capable of pickpocketing without good reason.
+<!-- Moffstation - End -->
 
   ## Chameleon Items
 
@@ -54,6 +59,17 @@
   - experiencing a situation where absolutely no other explanation is possible
   - discovering an unlocked uplink
 
+  ## Explicitly Not Shielded
+  The following is a list of things that are explicitly not shielded. If something is not on this list, it doesn't mean that it is shielded, but if something is on it then it definitely is not shielded.
+  - The fact that the nuke disk must be protected and could be used by a bad actor to try to destroy the station.
+  - Items that are of high value or are desired by the Syndicate, and therefore are likely targets of theft.
+  - The idea that any Syndicate agent or other bad actor has goals or objectives that they are attempting to accomplish.
+  - The number of goals or objectives that a Syndicate agent or other bad actor has.
+  - The fact that the Syndicate are enemies of Nanotrasen, and that they regularly attempt to send covert agents to spy on, sabotage, or attack Nanotrasen.
+  - A character's typical appearance. Though you should keep in mind that multiple characters can share the same name.
+  - The fact that the Syndicate have covert items capable of getting items to them, and that these items are known as uplinks.
+  - The fact that the Syndicate can provide subdermal implants to their agents with various capabilities.
+
   ## MRP Amendment 1
   A shield prevents your character from remembering anything that happened while unconscious. This shield is never revealed IC.
 
@@ -78,15 +94,4 @@
   - Starting a fight with a character because they killed you while you were playing a different character.
   - Targeting or harassing a character based on anything which that character did outside the current round.
   - Targeting or harassing a character based on anything which the character's player did while not playing the character.
-
-  ## Explicitly Not Shielded
-  The following is a list of things that are explicitly not shielded. If something is not on this list, it doesn't mean that it is shielded, but if something is on it then it definitely is not shielded.
-  - The fact that the nuke disk must be protected and could be used by a bad actor to try to destroy the station.
-  - Items that are of high value or are desired by the Syndicate, and therefore are likely targets of theft.
-  - The idea that any Syndicate agent or other bad actor has goals or objectives that they are attempting to accomplish.
-  - The number of goals or objectives that a Syndicate agent or other bad actor has.
-  - The fact that the Syndicate are enemies of Nanotrasen, and that they regularly attempt to send covert agents to spy on, sabotage, or attack Nanotrasen.
-  - A character's typical appearance. Though you should keep in mind that multiple characters can share the same name.
-  - The fact that the Syndicate have covert items capable of getting items to them, and that these items are known as uplinks.
-  - The fact that the Syndicate can provide subdermal implants to their agents with various capabilities.
 </Document>

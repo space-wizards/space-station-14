@@ -1,3 +1,9 @@
+// Moffstation - Start - Added stuff for the thieving toggle
+using Content.Shared.Alert;
+using Content.Shared._Moffstation.Strip.Components;
+using Robust.Shared.Prototypes;
+// Moffstation - End
+
 namespace Content.Shared.Strip.Components;
 
 /// <summary>
@@ -19,4 +25,12 @@ public sealed partial class ThievingComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("stealthy")]
     public bool Stealthy;
+
+    // Moffstation - Start - Adding a variable for the alert module
+    /// <summary>
+    /// Variable pointing at the Alert modal
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public ProtoId<AlertPrototype> StealthyAlertProtoId = "Stealthy";
+    // Moffstation - End
 }

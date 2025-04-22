@@ -15,4 +15,4 @@
     back:
     - ThiefBeacon
     - SatchelThief
-    - ClothingHandsChameleonThief
+#    - ClothingHandsChameleonThief  # Moffstation - replaced by their innate ability

@@ -27,6 +27,11 @@
       startingGear: ThiefGear
       components:
       - type: Pacified
+        # Moffstation - Start - Give thieves innate stealing ability
+      - type: Thieving
+        stripTimeReduction: 2
+        stealthy: true
+        # Moffstation - End
       mindRoles:
       - MindRoleThief
       briefing:
