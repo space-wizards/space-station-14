@@ -5063,4 +5063,11 @@ Entries:
   id: 701
   time: '2025-04-22T03:37:08.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/512
+- author: Killer Tamashi
+  changes:
+  - message: Admeme synth now uses [suffix] instead of (name)
+    type: Fix
+  id: 702
+  time: '2025-04-22T04:46:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/514
 
