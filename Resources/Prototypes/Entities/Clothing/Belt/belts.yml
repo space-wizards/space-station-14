@@ -15,35 +15,35 @@
     # TODO: Fill this out more.
     whitelist:
       tags:
-        - AppraisalTool
+        - Powerdrill
+        - Wirecutter
+        - Crowbar
+        - Screwdriver
+        - Flashlight
+        - Wrench
+        - GeigerCounter
+        - Flare
         - CableCoil
         - CigPack
-        - Crowbar
-        - Flare
-        - Flashlight
-        - GeigerCounter
-        - HolofanProjector
-        - JawsOfLife
-        - Multitool
-        - Powerdrill
         - Radio
-        - Screwdriver
+        - HolofanProjector
+        - Multitool
+        - AppraisalTool
+        - JawsOfLife
+        - GPS
         - WeldingMask
-        - Wirecutter
-        - Wrench
       components:
-        - GasAnalyzer
-        - Geiger
-        - HandLabeler
         - StationMap
         - SprayPainter
         - NetworkConfigurator
-        - PowerCell
         - RCD
         - RCDAmmo
-        - SprayPainter
-        - TrayScanner
         - Welder
+        - PowerCell
+        - Geiger
+        - TrayScanner
+        - GasAnalyzer
+        - HandLabeler
   - type: ItemMapper
     mapLayers:
       drill:
@@ -97,35 +97,34 @@
     # TODO: Fill this out more.
     whitelist:
       tags:
-        - AppraisalTool
-        - CableCoil
-        - CigPack
-        - Crowbar
-        - Flare
-        - Flashlight
-        - GeigerCounter
-        - HolofanProjector
-        - JawsOfLife
-        - Multitool
-        - Powerdrill
-        - Radio
-        - Screwdriver
         - Wirecutter
+        - Crowbar
+        - Screwdriver
+        - Flashlight
         - Wrench
+        - GeigerCounter
+        - Flare
+        - CableCoil
+        - Powerdrill
+        - JawsOfLife
+        - CigPack
+        - Radio
+        - HolofanProjector
+        - Multitool
+        - AppraisalTool
       components:
         - StationMap
         - SprayPainter
-        - Flash
-        - GasAnalyzer
-        - Geiger
-        - Handcuff
         - NetworkConfigurator
-        - PowerCell
         - RCD
         - RCDAmmo
-        - SprayPainter
-        - TrayScanner
         - Welder
+        - Flash
+        - Handcuff
+        - PowerCell
+        - Geiger
+        - TrayScanner
+        - GasAnalyzer
   - type: ItemMapper
     mapLayers:
       drill:
@@ -179,13 +178,13 @@
         - CigPack
         - Taser
       components:
-        - Ammo
-        - BallisticAmmoProvider
-        - Flash
-        - FlashOnTrigger
-        - Handcuff
-        - SmokeOnTrigger
         - Stunbaton
+        - FlashOnTrigger
+        - SmokeOnTrigger
+        - Flash
+        - Handcuff
+        - BallisticAmmoProvider
+        - Ammo
   - type: ItemMapper
     mapLayers:
       flashbang:
@@ -216,16 +215,16 @@
   - type: Storage
     whitelist:
       tags:
-        - CigPack
+        - Wrench
         - Bottle
-        - Flashlight
-        - HolosignProjector
-        - Plunger
-        - TrashBag
         - Spray
         - Soap
+        - Flashlight
+        - CigPack
+        - TrashBag
         - WetFloorSign
-        - Wrench
+        - HolosignProjector
+        - Plunger
       components:
         - LightReplacer
         - SmokeOnTrigger
@@ -262,23 +261,22 @@
       tags:
         - BodyBag
         - Bottle
-        - Bloodpack
+        - Spray
         - Brutepack
-        - CigPack
-        - DiscreteHealthAnalyzer
-        - Dropper
+        - Bloodpack
         - Gauze
         - Ointment
+        - CigPack
         - PillCanister
         - Radio
-        - Spray
+        - DiscreteHealthAnalyzer
         - SurgeryTool
-        - Wrench
+        - Dropper
       components:
-        - HandLabeler
         - Hypospray
         - Injector
         - Pill
+        - HandLabeler
   - type: ItemMapper
     mapLayers:
       bottle:
@@ -338,20 +336,20 @@
   - type: Storage
     whitelist:
       tags:
+        # - PlantAnalyzer
+        - PlantSampleTaker
         - BotanyShovel
         - BotanyHoe
         - BotanyHatchet
+        - PlantBGone
         - Bottle
+        - Syringe
         - CigPack
         - Dropper
-      # - PlantAnalyzer
-        - PlantBGone
-        - PlantSampleTaker
-        - Syringe
       components:
-        - HandLabeler
         - Seed
         - Smokable
+        - HandLabeler
   - type: ItemMapper
     mapLayers:
       hatchet:
@@ -394,21 +392,21 @@
   - type: Storage
     whitelist:
       tags:
-        - BBQsauce
-        - CigPack
+        - KitchenKnife
         - Cleaver
+        - RollingPin
         - Coldsauce
         - Enzyme
         - Hotsauce
         - Ketchup
-        - KitchenKnife
-        - Mayo
-        - MonkeyCube
-        - Packet
-        - PepperShaker
-        - RollingPin
+        - BBQsauce
         - SaltShaker
+        - PepperShaker
+        - CigPack
+        - Packet
         - Skewer
+        - MonkeyCube
+        - Mayo
       components:
         - Mousetrap
         - Smokable
@@ -474,27 +472,27 @@
     whitelist:
       tags:
         - CigPack
-        - CombatKnife
-        - MagazineMagnum
-        - MagazinePistol
-        - Radio
-        - SecBeltEquip
-        - Sidearm
         - Taser
+        - SecBeltEquip
+        - Radio
+        - Sidearm
+        - MagazinePistol
+        - MagazineMagnum
+        - CombatKnife
         - Truncheon
         - HandGrenade
       components:
+        - Stunbaton
+        - FlashOnTrigger
+        - SmokeOnTrigger
+        - Flash
+        - Handcuff
         - BallisticAmmoProvider
-        - BalloonPopper
         - CartridgeAmmo
         - DoorRemote
-        - Ensnaring
-        - Flash
-        - FlashOnTrigger
-        - Handcuff
-        - SmokeOnTrigger
-        - Stunbaton
         - Whistle
+        - BalloonPopper
+        - Ensnaring
   - type: ItemMapper
     mapLayers:
       flashbang:
@@ -611,9 +609,9 @@
     - 0,0,3,3
     whitelist:
       components:
+        - Gun
         - BallisticAmmoProvider
         - CartridgeAmmo
-        - Gun
 
 - type: entity
   parent: ClothingBeltSecurity
