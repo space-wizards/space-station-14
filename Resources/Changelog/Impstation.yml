@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Artifacts can now get their radiation fix from splashed chems
-    type: Tweak
-  - message: Artifacts should be slightly less masochistic (removed duplicate damage
-      trigger)
-    type: Tweak
-  id: 1040
-  time: '2025-02-02T17:10:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1535
 - author: crocodilecarousel
   changes:
   - message: Added over two dozen new markings for Vox, including underwear! Go be
@@ -4104,3 +4094,10 @@
   id: 1539
   time: '2025-04-21T01:47:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2304
+- author: argentsunshine
+  changes:
+  - message: Added new lobby screen.
+    type: Add
+  id: 1540
+  time: '2025-04-22T05:48:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2310
