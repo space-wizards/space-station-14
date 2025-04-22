@@ -22,7 +22,6 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 
         SubscribeLocalEvent<TeleportLocationsComponent, BeforeActivatableUIOpenEvent>(OnBeforeUiOpen);
         SubscribeLocalEvent<TeleportLocationsComponent, ActivatableUIOpenAttemptEvent>(OnUiOpenAttempt);
-        SubscribeLocalEvent<TeleportLocationsComponent, AfterActivatableUIOpenEvent>(OnUiOpen);
         SubscribeLocalEvent<TeleportLocationsComponent, TeleportLocationDestinationMessage>(OnTeleportToLocationRequest);
     }
 
@@ -30,11 +29,6 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
     {
         var state = new TeleportLocationUpdateState();
         _ui.SetUiState(ent.Owner, TeleportLocationUiKey.Key, state);
-    }
-
-    private void OnUiOpen(Entity<TeleportLocationsComponent> ent, ref AfterActivatableUIOpenEvent args)
-    {
-        ent.Comp.User = args.User;
     }
 
     private void OnUiOpenAttempt(Entity<TeleportLocationsComponent> ent, ref ActivatableUIOpenAttemptEvent args)
@@ -47,11 +41,11 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
 
     protected virtual void OnTeleportToLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationDestinationMessage args)
     {
-        if (ent.Comp.User is null || !TryGetEntity(args.NetEnt, out var telePointEnt) || Delay.IsDelayed(ent.Owner, TeleportDelay))
+        if (!TryGetEntity(args.NetEnt, out var telePointEnt) || Delay.IsDelayed(ent.Owner, TeleportDelay))
             return;
 
         var comp = ent.Comp;
-        var originEnt = comp.User.Value;
+        var originEnt = args.Actor;
         var destination = Transform(telePointEnt.Value).Coordinates;
 
         SpawnAtPosition(comp.TeleportEffect, Transform(originEnt).Coordinates);

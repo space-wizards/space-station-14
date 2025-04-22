@@ -3,7 +3,6 @@ using Content.Server.Warps;
 using Content.Shared.Teleportation;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
-using Content.Shared.UserInterface;
 using Content.Shared.Whitelist;
 
 namespace Content.Server.Teleportation;
@@ -54,13 +53,13 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
 
     protected override void OnTeleportToLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationDestinationMessage args)
     {
-        if (ent.Comp.User is null || Delay.IsDelayed(ent.Owner, TeleportDelay))
+        if (Delay.IsDelayed(ent.Owner, TeleportDelay))
             return;
 
         if (!string.IsNullOrWhiteSpace(ent.Comp.Speech))
         {
             var msg = Loc.GetString(ent.Comp.Speech, ("location", args.PointName));
-            _chat.TrySendInGameICMessage(ent.Comp.User.Value, msg, InGameICChatType.Speak, ChatTransmitRange.Normal);
+            _chat.TrySendInGameICMessage(args.Actor, msg, InGameICChatType.Speak, ChatTransmitRange.Normal);
         }
 
         base.OnTeleportToLocationRequest(ent, ref args);

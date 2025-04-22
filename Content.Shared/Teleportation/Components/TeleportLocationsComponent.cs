@@ -13,14 +13,11 @@ namespace Content.Shared.Teleportation.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedTeleportLocationsSystem)), AutoGenerateComponentState]
 public sealed partial class TeleportLocationsComponent : Component
 {
+    /// <summary>
+    /// List of available warp points
+    /// </summary>
     [DataField, AutoNetworkedField]
     public HashSet<TeleportPoint> AvailableWarps = new();
-
-    /// <summary>
-    /// User of this
-    /// </summary>
-    [DataField]
-    public EntityUid? User;
 
     /// <summary>
     /// What should spawn as an effect when the user teleports?
