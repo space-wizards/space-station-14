@@ -143,15 +143,9 @@ public sealed class NewsSystem : SharedNewsSystem
         var title = msg.Title.Trim();
         var content = msg.Content.Trim();
 
-        if (TryAddNews(ent, title, content, authorName, out var article))
+        if (TryAddNews(ent, title, content, authorName, out var article, msg.Actor))
         {
             _audio.PlayPvs(ent.Comp.ConfirmSound, ent);
-
-            _adminLogger.Add(
-                LogType.Chat,
-                LogImpact.Medium,
-                $"{ToPrettyString(msg.Actor):actor} created news article {article.Value.Title} by {article.Value.Author}: {article.Value.Content}"
-            );
 
             _chatManager.SendAdminAnnouncement(Loc.GetString("news-publish-admin-announcement",
                                                              ("actor", msg.Actor),
@@ -161,11 +155,19 @@ public sealed class NewsSystem : SharedNewsSystem
         }
     }
 
-    public bool TryAddNews(EntityUid uid, string title, string content, string? author, [NotNullWhen(true)] out NewsArticle? article)
+    /// <summary>
+    /// Set the alert level based on the station's entity ID.
+    /// </summary>
+    /// <param name="uid">Entity on the station to which news will be added.</param>
+    /// <param name="title">Title of the news article.</param>
+    /// <param name="content">Content of the news article.</param>
+    /// <param name="author">Author of the news article.</param>
+    /// <param name="actor">Entity which caused the news article to publish. Used for admin logs.</param>
+    public bool TryAddNews(EntityUid uid, string title, string content, string? author, [NotNullWhen(true)] out NewsArticle? article, EntityUid? actor)
     {
         if (!TryGetArticles(uid, out var articles))
         {
-            article = default;
+            article = null;
             return false;
         }
 
@@ -178,6 +180,21 @@ public sealed class NewsSystem : SharedNewsSystem
         };
 
         articles.Add(article.Value);
+
+        if (actor != null)
+        {
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Medium,
+                $"{ToPrettyString(actor):actor} created news article {article.Value.Title} by {article.Value.Author}: {article.Value.Content}");
+        }
+        else
+        {
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Medium,
+                $"Created news article {article.Value.Title} by {article.Value.Author}: {article.Value.Content}");
+        }
 
         var args = new NewsArticlePublishedEvent(article.Value);
         var query = EntityQueryEnumerator<NewsReaderCartridgeComponent>();
