@@ -108,3 +108,24 @@
   - type: Pinpointer
     component: ResearchServer
     targetName: the station
+
+- type: entity
+  parent: [ PinpointerBase, BaseXenoborgContraband ]
+  name: core pinpointer
+  description: A handheld tracking device that leads to the direction of the mothership core.
+  id: PinpointerMothership
+  suffix: Mothership
+  components:
+  - type: Sprite
+    layers:
+    - state: pinpointer-station
+      map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: ["enum.PinpointerLayers.Screen"]
+      shader: unshaded
+      visible: false
+  - type: Icon
+    state: pinpointer-station
+  - type: Pinpointer
+    component: Mothership
+    targetName: the mothership
