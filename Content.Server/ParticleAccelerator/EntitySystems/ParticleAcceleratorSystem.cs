@@ -26,7 +26,6 @@ public sealed partial class ParticleAcceleratorSystem : EntitySystem
     {
         base.Initialize();
         InitializeControlBoxSystem();
-        InitializePartSystem();
         InitializePowerBoxSystem();
     }
 }

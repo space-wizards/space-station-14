@@ -12,6 +12,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
 using Content.Shared.ParticleAccelerator;
+using Content.Shared.Machines.Events;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
@@ -28,6 +29,7 @@ public sealed partial class ParticleAcceleratorSystem
         SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ParticleAcceleratorSetEnableMessage>(OnUISetEnableMessage);
         SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ParticleAcceleratorSetPowerStateMessage>(OnUISetPowerMessage);
         SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, ParticleAcceleratorRescanPartsMessage>(OnUIRescanMessage);
+        SubscribeLocalEvent<ParticleAcceleratorControlBoxComponent, MultipartMachineAssemblyStateChanged>(OnMachineAssembledChanged);
     }
 
     public override void Update(float frameTime)
@@ -351,6 +353,28 @@ public sealed partial class ParticleAcceleratorSystem
         }
     }
 
+    /// <summary>
+    /// Handles when a multipart machine has had some assembled/disassembled state change, or had parts added/removed.
+    /// </summary>
+    /// <param name="ent">Multipart machine entity</param>
+    /// <param name="args">Args for this event</param>
+    private void OnMachineAssembledChanged(Entity<ParticleAcceleratorControlBoxComponent> ent, ref MultipartMachineAssemblyStateChanged args)
+    {
+        if (args.Assembled)
+        {
+            ValidateMachine(ent, args.User);
+        }
+        else if (ent.Comp.Powered)
+        {
+            SwitchOff(ent, args.User, ent.Comp);
+        }
+        else
+        {
+            UpdateAppearance(ent, ent.Comp);
+            UpdateUI(ent, ent.Comp);
+        }
+    }
+
     // This is the power state for the PA control box itself.
     // Keep in mind that the PA itself can keep firing as long as the HV cable under the power box has... power.
     private void OnControlBoxPowerChange(EntityUid uid, ParticleAcceleratorControlBoxComponent comp, ref PowerChangedEvent args)
@@ -405,8 +429,6 @@ public sealed partial class ParticleAcceleratorSystem
             return;
 
         RescanParts(uid, msg.Actor, comp);
-
-        UpdateUI(uid, comp);
     }
 
     public static int GetPANumericalLevel(ParticleAcceleratorPowerState state)

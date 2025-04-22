@@ -1,23 +1,13 @@
 using Content.Shared.Machines.Components;
 using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
-using Robust.Shared.Physics.Events;
 using Content.Shared.ParticleAccelerator;
-using Content.Server.Construction.Components;
-using System.Reflection.PortableExecutable;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
 [UsedImplicitly]
 public sealed partial class ParticleAcceleratorSystem
 {
-    private void InitializePartSystem()
-    {
-        SubscribeLocalEvent<ParticleAcceleratorPartComponent, ComponentShutdown>(OnComponentShutdown);
-        SubscribeLocalEvent<ParticleAcceleratorPartComponent, MoveEvent>(OnMoveEvent);
-        SubscribeLocalEvent<ParticleAcceleratorPartComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
-    }
-
     public void ValidateEmitter(Enum part,
         ParticleAcceleratorEmitterType type,
         Entity<MultipartMachineComponent> machine)
@@ -49,12 +39,15 @@ public sealed partial class ParticleAcceleratorSystem
             return;
 
         var machine = new Entity<MultipartMachineComponent>(uid, machineComp);
-        if (!_multipartMachine.Rescan(machine))
-        {
-            // All entities are not in the right place
-            SwitchOff(uid, user, controller);
+        _multipartMachine.Rescan(machine, user); // Raises an event if state has changed
+    }
+
+    private void ValidateMachine(Entity<ParticleAcceleratorControlBoxComponent> ent, EntityUid? user = null)
+    {
+        if (!TryComp<MultipartMachineComponent>(ent, out var machineComp))
             return;
-        }
+
+        var machine = new Entity<MultipartMachineComponent>(ent, machineComp);
 
         // Determine if the proper emitters are in the proper spots
         ValidateEmitter(AcceleratorParts.PortEmitter, ParticleAcceleratorEmitterType.Port, machine);
@@ -64,38 +57,20 @@ public sealed partial class ParticleAcceleratorSystem
         if (!_multipartMachine.Assembled(machine.AsNullable()))
         {
             // One or more of the emitters are in the incorrect places
-            SwitchOff(uid, user, controller);
+            SwitchOff(ent, user, ent.Comp);
             return;
         }
 
-        controller.CurrentlyRescanning = false;
+        ent.Comp.CurrentlyRescanning = false;
 
         var partQuery = GetEntityQuery<ParticleAcceleratorPartComponent>();
         foreach (var part in machine.Comp.Parts.Values)
         {
             if (partQuery.TryGetComponent(GetEntity(part.Entity), out var partData))
-                partData.Master = uid;
+                partData.Master = ent;
         }
 
-        UpdatePowerDraw(uid, controller);
-        UpdateUI(uid, controller);
-    }
-
-    private void OnComponentShutdown(EntityUid uid, ParticleAcceleratorPartComponent comp, ComponentShutdown args)
-    {
-        if (Exists(comp.Master))
-            RescanParts(comp.Master!.Value);
-    }
-
-    private void BodyTypeChanged(EntityUid uid, ParticleAcceleratorPartComponent comp, ref PhysicsBodyTypeChangedEvent args)
-    {
-        if (Exists(comp.Master))
-            RescanParts(comp.Master!.Value);
-    }
-
-    private void OnMoveEvent(EntityUid uid, ParticleAcceleratorPartComponent comp, ref MoveEvent args)
-    {
-        if (Exists(comp.Master))
-            RescanParts(comp.Master!.Value);
+        UpdatePowerDraw(ent, ent.Comp);
+        UpdateUI(ent, ent.Comp);
     }
 }
