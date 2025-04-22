@@ -202,82 +202,45 @@ public abstract partial class SharedMoverController : VirtualController
         // If the body is in air but isn't weightless then can't move
         // TODO: MAKE ISWEIGHTLESS EVENT BASED
         var weightless = _gravity.IsWeightless(uid, physicsComponent, xform);
+        var inAirHelpless = false;
 
-        if (physicsComponent.BodyStatus != BodyStatus.OnGround && !CanMoveInAirQuery.HasComponent(uid) && !weightless)
+        if (physicsComponent.BodyStatus != BodyStatus.OnGround && !CanMoveInAirQuery.HasComponent(uid))
         {
-            UsedMobMovement[uid] = false;
-            return;
+            if (!weightless)
+            {
+                UsedMobMovement[uid] = false;
+                return;
+            }
+            inAirHelpless = true;
         }
 
         UsedMobMovement[uid] = true;
 
-        var (walkDir, sprintDir) = GetVelocityInput(mover);
-        var touching = false;
+        var moveSpeedComponent = ModifierQuery.CompOrNull(uid);
 
-        //if weightless or in air do a different function
-        //else do another different function
-
-        // Handle wall-pushes.
-        if (weightless || physicsComponent.BodyStatus == BodyStatus.InAir)
-        {
-            if (xform.GridUid != null)
-                touching = true;
-
-            if (!touching)
-            {
-                var ev = new CanWeightlessMoveEvent(uid);
-                RaiseLocalEvent(uid, ref ev, true);
-                // No gravity: is our entity touching anything?
-                touching = ev.CanMove;
-
-                if (!touching && MobMoverQuery.TryComp(uid, out var mobMover))
-                    touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, uid, physicsComponent);
-            }
-        }
-        else
-        {
-
-        }
+        float friction;
+        float accel;
+        Vector2 wishDir;
+        var velocity = physicsComponent.LinearVelocity;
 
         // Get current tile def for things like speed/friction mods
         ContentTileDefinition? tileDef = null;
 
-        // Don't bother getting the tiledef here if we're weightless or in-air
-        // since no tile-based modifiers should be applying in that situation
-        if (MapGridQuery.TryComp(xform.GridUid, out var gridComp)
-            && _mapSystem.TryGetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates, out var tile)
-            && !(weightless || physicsComponent.BodyStatus == BodyStatus.InAir))
+        var touching = false;
+        // Whether we use tilefriction or not
+        if (weightless || inAirHelpless)
         {
-            tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-        }
+            // Find the speed we should be moving at and make sure we're not trying to move faster than that
+            var walkSpeed = moveSpeedComponent?.WeightlessWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+            var sprintSpeed = moveSpeedComponent?.WeightlessSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
-        // Regular movement.
-        // Target velocity.
-        // This is relative to the map / grid we're on.
-        var moveSpeedComponent = ModifierQuery.CompOrNull(uid);
+            wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
 
-        var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
-        var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
-
-        var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
-
-        var parentRotation = GetParentGridAngle(mover);
-        var wishDir = _relativeMovement ? parentRotation.RotateVec(total) : total;
-
-        DebugTools.Assert(MathHelper.CloseToPercent(total.Length(), wishDir.Length()));
-
-        float friction;
-        float weightlessModifier;
-        float accel;
-        var velocity = physicsComponent.LinearVelocity;
-
-        // Whether we use weightless friction or not.
-        if (weightless)
-        {
             // If we're touching then use the weightless values
             // Some stuff like jetpacks for example might flag it as touching even if it isn't.
-            if (touching || gridComp != null || MapGridQuery.HasComp(xform.GridUid))
+            if (xform.GridUid != null || MapGridQuery.HasComp(xform.GridUid))
             {
+                touching = true;
                 if (wishDir != Vector2.Zero)
                     friction = moveSpeedComponent?.WeightlessFriction ?? MovementSpeedModifierComponent.DefaultWeightlessFriction;
                 else
@@ -286,14 +249,30 @@ public abstract partial class SharedMoverController : VirtualController
             // Otherwise use the off-grid values.
             else
             {
+                var ev = new CanWeightlessMoveEvent(uid);
+                RaiseLocalEvent(uid, ref ev, true);
+                // No gravity: is our entity touching anything?
+                touching = ev.CanMove;
+
+                if (!touching && MobMoverQuery.TryComp(uid, out var mobMover))
+                    touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, uid, physicsComponent);
                 friction = moveSpeedComponent?.OffGridFriction ?? MovementSpeedModifierComponent.DefaultOffGridFriction;
             }
 
-            weightlessModifier = moveSpeedComponent?.WeightlessModifier ?? MovementSpeedModifierComponent.DefaultWeightlessModifier;
+            wishDir *= moveSpeedComponent?.WeightlessModifier ?? MovementSpeedModifierComponent.DefaultWeightlessModifier;
             accel = moveSpeedComponent?.WeightlessAcceleration ?? MovementSpeedModifierComponent.DefaultWeightlessAcceleration;
         }
         else
         {
+            if (MapGridQuery.TryComp(xform.GridUid, out var gridComp)
+                && _mapSystem.TryGetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates, out var tile))
+                tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
+
+            var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+            var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+
+            wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
+
             friction = _frictionModifier * tileDef?.Friction ?? _frictionModifier * 0.3f;
             if (wishDir != Vector2.Zero)
             {
@@ -304,28 +283,32 @@ public abstract partial class SharedMoverController : VirtualController
                 friction *= tileDef?.MobFrictionNoInput ?? moveSpeedComponent?.FrictionNoInput ?? MovementSpeedModifierComponent.DefaultFrictionNoInput;
             }
 
-            weightlessModifier = 1f;
             accel = tileDef?.MobAcceleration ?? moveSpeedComponent?.Acceleration ?? MovementSpeedModifierComponent.DefaultAcceleration;
         }
 
+        // This way friction never exceeds acceleration. If you want to slow down an entity with "friction" you shouldn't be using this system.
+        friction = Math.Min(friction, accel);
         var minimumFrictionSpeed = moveSpeedComponent?.MinimumFrictionSpeed ?? MovementSpeedModifierComponent.DefaultMinimumFrictionSpeed;
         Friction(minimumFrictionSpeed, frameTime, friction, ref velocity);
-
-        wishDir *= weightlessModifier;
 
         if (!weightless || touching)
             Accelerate(ref velocity, in wishDir, accel, frameTime);
 
         SetWishDir((uid, mover), wishDir);
 
-
+        /*
+         * TODO: Put info about snaking here so someone doesn't think it's a bug
+         * Snaking is when you strafe side to side to get a bit more velocity. It's a feature but for it to be a feature
+         * you need to be very careful with the friction values you pass to a mover. Snaking should only be useful in
+         * certain cases and friction should never be so low compared to acceleration that your movement feels jumpy.
+         */
         PhysicsSystem.SetLinearVelocity(uid, velocity, body: physicsComponent);
 
         // Ensures that players do not spiiiiiiin
         PhysicsSystem.SetAngularVelocity(uid, 0, body: physicsComponent);
 
         // Handle footsteps at the end
-        if (total != Vector2.Zero)
+        if (wishDir != Vector2.Zero)
         {
             if (!NoRotateQuery.HasComponent(uid))
             {
@@ -603,5 +586,19 @@ public abstract partial class SharedMoverController : VirtualController
 
         sound = haveShoes ? tileDef.FootstepSounds : tileDef.BarestepSounds;
         return sound != null;
+    }
+
+    private Vector2 AssertValidWish(InputMoverComponent mover, float walkSpeed, float sprintSpeed)
+    {
+        var (walkDir, sprintDir) = GetVelocityInput(mover);
+
+        var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
+
+        var parentRotation = GetParentGridAngle(mover);
+        var wishDir = _relativeMovement ? parentRotation.RotateVec(total) : total;
+
+        DebugTools.Assert(MathHelper.CloseToPercent(total.Length(), wishDir.Length()));
+
+        return wishDir;
     }
 }

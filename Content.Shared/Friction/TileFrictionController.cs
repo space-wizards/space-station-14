@@ -83,6 +83,7 @@ namespace Content.Shared.Friction
                 }
 
                 var friction = GetTileFriction(uid, body, xform);
+                // TODO: Don't multiply by _frictionModifier if we're in the air
                 friction *= _frictionModifier;
                 var bodyModifier = 1f;
 
