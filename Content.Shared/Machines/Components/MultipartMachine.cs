@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -47,6 +48,20 @@ public sealed partial class MachinePart
     /// </summary>
     [DataField]
     public NetEntity? Entity = null;
+
+    /// <summary>
+    /// Expected graph for this part to use as part of its construction.
+    /// </summary>
+    [DataField]
+    public EntProtoId Graph;
+
+    /// <summary>
+    /// Expected node for this part to be in, on the graph.
+    /// Used to determine when a construct-able object has been
+    /// assembled or disassembled.
+    /// </summary>
+    [DataField]
+    public string ExpectedNode;
 }
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
