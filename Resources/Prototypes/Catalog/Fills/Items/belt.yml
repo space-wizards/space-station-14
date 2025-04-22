@@ -134,7 +134,6 @@
     - id: ChemistryBottleEZNutrient
     - id: ChemistryBottleRobustHarvest
 
-
 - type: entity
   id: ClothingBeltSheathFilled
   parent: ClothingBeltSheath
