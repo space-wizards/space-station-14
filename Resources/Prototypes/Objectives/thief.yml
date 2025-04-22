@@ -383,12 +383,12 @@
 
 - type: entity
   parent: BaseThiefStealSingularObjective
-  id: SilverIDStealObjective
+  id: CommandIDStealObjective
   components:
   - type: NotJobRequirement
     job: HeadOfPersonnel
   - type: StealCondition
-    stealGroup: SilverID
+    stealGroup: CommandID
   - type: Objective
     difficulty: 1.4
 

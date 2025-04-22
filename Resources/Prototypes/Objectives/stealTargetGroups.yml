@@ -299,8 +299,8 @@
     state: icon
 
 - type: stealTargetGroup
-  id: SilverID
-  name: steal-target-groups-silver-id
+  id: CommandID
+  name: steal-target-groups-command-id
   sprite:
     sprite: Objects/Misc/id_cards.rsi
     state: silver
