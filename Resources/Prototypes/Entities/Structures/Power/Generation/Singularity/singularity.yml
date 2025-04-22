@@ -69,7 +69,9 @@
   - type: WarpPoint
     follow: true
     location: singularity
-    ghostOnly: true
+    blacklist:
+      tags:
+      - GhostOnly
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     shader: unshaded

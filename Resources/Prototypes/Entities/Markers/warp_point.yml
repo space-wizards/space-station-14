@@ -25,7 +25,9 @@
   - type: BombingTarget
   - type: WarpPoint
     location: bombing target
-    ghostOnly: true
+    blacklist:
+      tags:
+      - GhostOnly
   - type: Sprite
     layers:
     - state: pink

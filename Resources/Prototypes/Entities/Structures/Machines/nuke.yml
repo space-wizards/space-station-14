@@ -110,7 +110,9 @@
   - type: WarpPoint
     follow: true
     location: nuclear bomb
-    ghostOnly: true
+    blacklist:
+      tags:
+      - GhostOnly
   - type: FTLSmashImmune
 
 - type: entity

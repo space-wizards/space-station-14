@@ -578,6 +578,10 @@
 - type: Tag
   id: GeigerCounter
 
+# Used for warps
+- type: Tag
+  id: GhostOnly
+
 - type: Tag
   id: GlassAirlock
 

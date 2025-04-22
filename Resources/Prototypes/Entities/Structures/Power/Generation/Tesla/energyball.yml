@@ -92,7 +92,9 @@
   - type: WarpPoint
     follow: true
     location: tesla ball
-    ghostOnly: true
+    blacklist:
+      tags:
+      - GhostOnly
   - type: Sprite
     drawdepth: Effects
     sprite: Structures/Power/Generation/Tesla/energy_ball.rsi

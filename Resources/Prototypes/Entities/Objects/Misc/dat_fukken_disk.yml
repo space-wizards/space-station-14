@@ -17,7 +17,9 @@
   - type: WarpPoint
     follow: true
     location: nuke disk
-    ghostOnly: true
+    blacklist:
+      tags:
+      - GhostOnly
   - type: Tag
     tags:
     - HighRiskItem

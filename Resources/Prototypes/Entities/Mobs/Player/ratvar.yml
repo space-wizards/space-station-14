@@ -92,4 +92,6 @@
   - type: WarpPoint
     follow: true
     location: Ratvar
-    ghostOnly: true
+    blacklist:
+      tags:
+      - GhostOnly

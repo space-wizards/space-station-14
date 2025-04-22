@@ -1,3 +1,5 @@
+using Content.Shared.Whitelist;
+
 namespace Content.Server.Warps
 {
     /// <summary>
@@ -16,10 +18,10 @@ namespace Content.Server.Warps
         public bool Follow;
 
         /// <summary>
-        /// Should this warp point be accessable to ghosts only?
+        /// What points should be excluded?
         /// Useful where you want things like a ghost to reach only like CentComm
         /// </summary>
         [DataField]
-        public bool GhostOnly;
+        public EntityWhitelist? BlackList;
     }
 }

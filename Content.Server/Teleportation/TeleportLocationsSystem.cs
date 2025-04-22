@@ -4,6 +4,7 @@ using Content.Shared.Teleportation;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
 using Content.Shared.UserInterface;
+using Content.Shared.Whitelist;
 
 namespace Content.Server.Teleportation;
 
@@ -13,6 +14,7 @@ namespace Content.Server.Teleportation;
 public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
     public override void Initialize()
     {
@@ -41,7 +43,7 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
 
         while (allEnts.MoveNext(out var warpEnt, out var warpPointComp))
         {
-            if (warpPointComp.GhostOnly || string.IsNullOrWhiteSpace(warpPointComp.Location))
+            if (_whitelist.IsBlacklistPass(warpPointComp.BlackList, warpEnt) || string.IsNullOrWhiteSpace(warpPointComp.Location))
                 continue;
 
             ent.Comp.AvailableWarps.Add(new TeleportPoint(warpPointComp.Location, GetNetEntity(warpEnt)));
