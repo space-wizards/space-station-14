@@ -525,11 +525,6 @@
   order: 5
   lawString: law-xenoborg-5
 
-- type: siliconLaw
-  id: Xenoborg6
-  order: 6
-  lawString: law-xenoborg-6
-
 
 - type: siliconLawset
   id: XenoborgLawset
@@ -539,7 +534,6 @@
   - Xenoborg3
   - Xenoborg4
   - Xenoborg5
-  - Xenoborg6
   obeysTo: laws-owner-xenoborgs
 
  # Mothership core laws
@@ -568,11 +562,6 @@
   order: 5
   lawString: law-mothershipcore-5
 
-- type: siliconLaw
-  id: MothershipCore6
-  order: 6
-  lawString: law-mothershipcore-6
-
 
 - type: siliconLawset
   id: MothershipCoreLawset
@@ -582,7 +571,6 @@
   - MothershipCore3
   - MothershipCore4
   - MothershipCore5
-  - MothershipCore6
   obeysTo: laws-owner-xenoborgs
 
 
