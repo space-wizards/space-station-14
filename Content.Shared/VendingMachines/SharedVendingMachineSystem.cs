@@ -41,6 +41,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<VendingMachineComponent, ComponentGetState>(OnVendingGetState);
         SubscribeLocalEvent<VendingMachineComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<VendingMachineComponent, GotEmaggedEvent>(OnEmagged);
 
         SubscribeLocalEvent<VendingMachineRestockComponent, AfterInteractEvent>(OnAfterInteract);
 
@@ -55,11 +56,17 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         var component = entity.Comp;
 
         var inventory = new Dictionary<string, VendingMachineInventoryEntry>();
+        var emaggedInventory = new Dictionary<string, VendingMachineInventoryEntry>();
         var contrabandInventory = new Dictionary<string, VendingMachineInventoryEntry>();
 
         foreach (var weh in component.Inventory)
         {
             inventory[weh.Key] = new(weh.Value);
+        }
+
+        foreach (var weh in component.EmaggedInventory)
+        {
+            emaggedInventory[weh.Key] = new(weh.Value);
         }
 
         foreach (var weh in component.ContrabandInventory)
@@ -70,6 +77,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         args.State = new VendingMachineComponentState()
         {
             Inventory = inventory,
+            EmaggedInventory = emaggedInventory,
             ContrabandInventory = contrabandInventory,
             Contraband = component.Contraband,
             EjectEnd = component.EjectEnd,
@@ -165,6 +173,9 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return null;
+
+        if (type == InventoryType.Emagged && HasComp<EmaggedComponent>(uid))
+            return component.EmaggedInventory.GetValueOrDefault(entryId);
 
         if (type == InventoryType.Contraband && component.Contraband)
             return component.ContrabandInventory.GetValueOrDefault(entryId);
@@ -302,8 +313,21 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             return;
 
         AddInventoryFromPrototype(uid, packPrototype.StartingInventory, InventoryType.Regular, component, restockQuality);
+        AddInventoryFromPrototype(uid, packPrototype.EmaggedInventory, InventoryType.Emagged, component, restockQuality);
         AddInventoryFromPrototype(uid, packPrototype.ContrabandInventory, InventoryType.Contraband, component, restockQuality);
         Dirty(uid, component);
+    }
+
+    private void OnEmagged(EntityUid uid, VendingMachineComponent component, ref GotEmaggedEvent args)
+    {
+        if (!_emag.CompareFlag(args.Type, EmagType.Interaction))
+            return;
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            return;
+
+        // only emag if there are emag-only items
+        args.Handled = component.EmaggedInventory.Count > 0;
     }
 
     /// <summary>
@@ -320,6 +344,9 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             return new();
 
         var inventory = new List<VendingMachineInventoryEntry>(component.Inventory.Values);
+
+        if (_emag.CheckFlag(uid, EmagType.Interaction))
+            inventory.AddRange(component.EmaggedInventory.Values);
 
         if (component.Contraband)
             inventory.AddRange(component.ContrabandInventory.Values);
@@ -349,6 +376,9 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
         {
             case InventoryType.Regular:
                 inventory = component.Inventory;
+                break;
+            case InventoryType.Emagged:
+                inventory = component.EmaggedInventory;
                 break;
             case InventoryType.Contraband:
                 inventory = component.ContrabandInventory;
