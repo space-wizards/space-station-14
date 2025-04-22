@@ -26,3 +26,8 @@ public sealed class TeleportLocationDestinationMessage(NetEntity netEnt, string 
     public string PointName = pointName;
 }
 
+[Serializable, NetSerializable]
+public sealed partial class TeleportLocationUpdateState : BoundUserInterfaceState
+{
+
+}

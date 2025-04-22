@@ -20,9 +20,16 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<TeleportLocationsComponent, BeforeActivatableUIOpenEvent>(OnBeforeUiOpen);
         SubscribeLocalEvent<TeleportLocationsComponent, ActivatableUIOpenAttemptEvent>(OnUiOpenAttempt);
         SubscribeLocalEvent<TeleportLocationsComponent, AfterActivatableUIOpenEvent>(OnUiOpen);
         SubscribeLocalEvent<TeleportLocationsComponent, TeleportLocationDestinationMessage>(OnTeleportToLocationRequest);
+    }
+
+    private void OnBeforeUiOpen(Entity<TeleportLocationsComponent> ent, ref BeforeActivatableUIOpenEvent args)
+    {
+        var state = new TeleportLocationUpdateState();
+        _ui.SetUiState(ent.Owner, TeleportLocationUiKey.Key, state);
     }
 
     private void OnUiOpen(Entity<TeleportLocationsComponent> ent, ref AfterActivatableUIOpenEvent args)

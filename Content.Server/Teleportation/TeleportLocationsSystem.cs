@@ -3,6 +3,7 @@ using Content.Server.Warps;
 using Content.Shared.Teleportation;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
+using Content.Shared.UserInterface;
 
 namespace Content.Server.Teleportation;
 

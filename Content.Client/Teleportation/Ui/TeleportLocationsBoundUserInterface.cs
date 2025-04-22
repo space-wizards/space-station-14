@@ -20,7 +20,6 @@ public sealed class TeleportLocationsBoundUserInterface : BoundUserInterface
         base.Open();
 
         _menu = this.CreateWindow<TeleportMenu>();
-        SendMessage(new TeleportLocationRequestPointsMessage());
 
         if (!EntMan.TryGetComponent<TeleportLocationsComponent>(Owner, out var teleComp))
             return;
@@ -32,5 +31,17 @@ public sealed class TeleportLocationsBoundUserInterface : BoundUserInterface
         {
             SendPredictedMessage(new TeleportLocationDestinationMessage(netEnt, pointName));
         };
+    }
+
+    protected override void UpdateState(BoundUserInterfaceState state)
+    {
+        base.UpdateState(state);
+
+        switch (state)
+        {
+            case TeleportLocationUpdateState:
+                SendMessage(new TeleportLocationRequestPointsMessage());
+                break;
+        }
     }
 }
