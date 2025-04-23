@@ -87,4 +87,10 @@ public sealed partial class CCVars
     public static readonly CVarDef<string> DiscordNewsWebhookEmbedColor =
         CVarDef.Create("discord.news_webhook_embed_color", Color.LawnGreen.ToHex(), CVar.SERVERONLY);
 
+    /// <summary>
+    ///     HEX color of station news discord webhook's embed.
+    /// </summary>
+    public static readonly CVarDef<bool> DiscordNewsWebhookSendDuringRound =
+        CVarDef.Create("discord.news_webhook_send_during_round", false, CVar.SERVERONLY);
+
 }

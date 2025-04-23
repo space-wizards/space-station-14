@@ -48,6 +48,7 @@ public sealed class NewsSystem : SharedNewsSystem
 
     private WebhookIdentifier? _webhookId;
     private Color _webhookEmbedColor;
+    private bool _webhookSendDuringRound;
 
     public override void Initialize()
     {
@@ -67,6 +68,8 @@ public sealed class NewsSystem : SharedNewsSystem
                 if (Color.TryParse(value, out var color))
                     _webhookEmbedColor = color;
             }, true);
+
+        _cfg.OnValueChanged(CCVars.DiscordNewsWebhookSendDuringRound, value => _webhookSendDuringRound = value, true);
         SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEndMessageEvent);
 
         // News writer
@@ -206,6 +209,9 @@ public sealed class NewsSystem : SharedNewsSystem
         {
             RaiseLocalEvent(readerUid, ref args);
         }
+
+        if (_webhookSendDuringRound)
+            SendDiscordWebhook(article);
 
         UpdateWriterDevices();
     }
@@ -359,6 +365,9 @@ public sealed class NewsSystem : SharedNewsSystem
 
     private void OnRoundEndMessageEvent(RoundEndMessageEvent ev)
     {
+        if (_webhookSendDuringRound)
+            return;
+
         var query = EntityManager.EntityQueryEnumerator<StationNewsComponent>();
 
         while (query.MoveNext(out _, out var comp))
