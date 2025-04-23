@@ -19,6 +19,23 @@
     clothingPrototype: ClothingHeadHelmetHardsuitDominatorSil
   - type: Item
     size: Huge
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.5
+        Radiation: 0.5
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -35,6 +52,16 @@
     sprite: _DeadSpace/Sponsor/Sil/helmet.rsi
   - type: PointLight
     color: "#4eb1ae"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -63,8 +90,20 @@
   components:
   - type: Sprite
     sprite: _DeadSpace/Sponsor/Sil/boots.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ToggleVisuals.Layer" ]
   - type: Clothing
     sprite: _DeadSpace/Sponsor/Sil/boots.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: icon}
+          False: {state: icon}
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -85,10 +124,9 @@
   - type: StorageFill
     contents:
     - id: PowerDrill
-    - id: CrowbarRed
     - id: WelderExperimental
     - id: Multitool
-    - id: Wirecutter
+    - id: SyndicateJawsOfLifeSil
 
 # Mask
 - type: entity
@@ -102,6 +140,7 @@
     sprite: _DeadSpace/Sponsor/Sil/gasmask.rsi
   - type: Clothing
     sprite: _DeadSpace/Sponsor/Sil/gasmask.rsi
+  - type: EyeProtection
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -138,6 +177,7 @@
     - id: PlushieSilKrivazora
     - id: PlushieSilAzrailHardsuit
     - id: PlushieSilSharp
+    - id: PaperLawSil
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
 
@@ -202,6 +242,60 @@
       - 0.451303391 # 22% oxygen
       - 1.600075659 # 78% nitrogen
       temperature: 293.15
+
+# JawsOfLife
+- type: entity
+  parent: SyndicateJawsOfLife
+  id: SyndicateJawsOfLifeSil
+  name: белые челюсти жизни
+  description: Изготовлено на заказ организацией LaFleur Wear.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Sponsor/Sil/jawsoflife.rsi
+    state: syn_jaws_pry
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: syn_inhand-left
+      right:
+      - state: syn_inhand-right
+    size: Normal
+  - type: MultipleTool
+    entries:
+    - behavior: Prying
+      sprite:
+        sprite: _DeadSpace/Sponsor/Sil/jawsoflife.rsi
+        state: syn_jaws_pry
+      useSound: /Audio/Items/jaws_pry.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+    - behavior: Cutting
+      sprite:
+        sprite: _DeadSpace/Sponsor/Sil/jawsoflife.rsi
+        state: syn_jaws_cutter
+      useSound: /Audio/Items/jaws_cut.ogg
+      changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 14
+
+# Law
+- type: entity
+  parent: PaperPrintedCentcomm
+  id: PaperLawSil
+  name: распечатанный документ
+  description: Лист бумаги с заголовком ЦентКома. Страшно даже смотреть на него.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Paper
+    stampState: paper_stamp-centcom
+    stampedBy:
+    - stampedColor: '#006600FF'
+      stampedName: Центральное Командование
+    - stampedColor: '#00BE00FF'
+      stampedName: Одобрено
+    content: paper-law-sil
 
 # Plushie toys
 
