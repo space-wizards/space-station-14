@@ -1,0 +1,31 @@
+- type: entity
+  parent: BaseItem
+  id: WeaponSpellblade
+  name: SpellBlade
+  description: A formidable weapon that shoots magical lava.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/spellblade.rsi
+    state: icon
+  - type: Item
+    size: Ginormous
+  - type: AmmoCounter
+  - type: Gun
+    soundGunshot: /Audio/Magic/fireball.ogg
+    soundEmpty: /Audio/Magic/rumble.ogg
+    useKey: false
+  - type: BasicEntityAmmoProvider
+    proto: ProjectileSpellblade
+    capacity: 4
+    count: 4
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 10
+  - type: MeleeWeapon
+    damage:
+      types:
+        Heat: 10
+        Slash: 10
+        Structual: 20
+    soundHit:
+      collection: MetalThud
+  - type: Prying
