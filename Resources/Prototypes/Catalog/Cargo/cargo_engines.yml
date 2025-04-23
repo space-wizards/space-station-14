@@ -63,7 +63,7 @@
 - type: cargoProduct
   id: EngineSolar
   icon:
-    sprite: Objects/Devices/flatpack.rsi
+    sprite: _Wizden/Objects/Devices/flatpack.rsi # imp
     state: solar-assembly-part
   product: CrateEngineeringSolar
   cost: 1250

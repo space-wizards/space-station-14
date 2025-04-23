@@ -18,7 +18,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi
+    sprite: _Wizden/Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi # imp
   - type: MagazineVisuals
     magState: mag
     steps: 4

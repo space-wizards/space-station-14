@@ -27,10 +27,10 @@
   name: brown briefcase
   components:
   - type: Sprite
-    sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
+    sprite: _Wizden/Objects/Storage/Briefcases/briefcase_brown.rsi # imp
     state: icon
   - type: Item
-    sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
+    sprite: _Wizden/Objects/Storage/Briefcases/briefcase_brown.rsi # imp
 
 - type: entity
   parent: BriefcaseBrown

@@ -6,7 +6,7 @@
     - type: Sprite
       layers:
         - state: red
-        - sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+        - sprite: _Wizden/Objects/Consumable/Food/Baked/donkpocket.rsi # imp
           state: box
     - type: RandomSpawner
       prototypes:

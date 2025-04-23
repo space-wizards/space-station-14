@@ -17,7 +17,7 @@
   components:
   - type: Objective
     icon:
-      sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
+      sprite: _Impstation/Objects/Storage/Briefcases/briefcase_cybersun.rsi # imp
       state: icon
 
 - type: entity

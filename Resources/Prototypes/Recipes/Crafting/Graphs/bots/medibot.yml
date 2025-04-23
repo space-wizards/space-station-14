@@ -8,7 +8,7 @@
       steps:
       - tag: Medkit
         icon:
-          sprite: Objects/Specific/Medical/firstaidkits.rsi
+          sprite: _Impstation/Objects/Specific/Medical/firstaidkits.rsi # imp
           state: firstaid
         name: medkit
       - tag: DiscreteHealthAnalyzer

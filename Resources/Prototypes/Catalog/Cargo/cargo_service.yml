@@ -51,8 +51,8 @@
 - type: cargoProduct
   id: ServiceSmokeables
   icon:
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
-    state: icon
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi # imp
+    state: closed # imp
   product: CrateServiceSmokeables
   cost: 1500
   category: cargoproduct-category-name-service
@@ -61,8 +61,8 @@
 - type: cargoProduct
   id: ServiceCustomSmokable
   icon:
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
-    state: icon
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi # imp
+    state: closed # imp
   product: CrateServiceCustomSmokable
   cost: 1000
   category: cargoproduct-category-name-service

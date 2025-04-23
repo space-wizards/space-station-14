@@ -33,7 +33,7 @@
     - type: Sprite
       layers:
         - state: red
-        - sprite: Objects/Specific/Medical/firstaidkits.rsi
+        - sprite: _Impstation/Objects/Specific/Medical/firstaidkits.rsi # imp
           state: firstaid
     - type: RandomSpawner
       rarePrototypes:

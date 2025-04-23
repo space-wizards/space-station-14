@@ -8,7 +8,7 @@
       steps:
       - tag: HappyHonk
         icon:
-          sprite: Objects/Storage/Happyhonk/clown.rsi
+          sprite: _Wizden/Objects/Storage/Happyhonk/clown.rsi # imp
           state: box
         name: happy honk meal
       - tag: BikeHorn
@@ -41,7 +41,7 @@
       steps:
       - tag: CluwneHappyHonk
         icon:
-          sprite: Objects/Storage/Happyhonk/cluwne.rsi
+          sprite: _Wizden/Objects/Storage/Happyhonk/cluwne.rsi # imp
           state: box
         name: woeful cluwne meal
       - tag: CluwneHorn

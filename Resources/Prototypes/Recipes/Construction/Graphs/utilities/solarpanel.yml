@@ -9,7 +9,7 @@
             - tag: SolarAssemblyFlatpack
               name: solar assembly parts
               icon:
-                sprite: Objects/Devices/flatpack.rsi
+                sprite: _Wizden/Objects/Devices/flatpack.rsi # imp
                 state: solar-assembly-part
               doAfter: 1
 

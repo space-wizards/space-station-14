@@ -1,0 +1,19 @@
+﻿- type: entity
+  parent: BaseScrap
+  id: ScrapPlasticSlag
+  name: plastic slag pile
+  description: A pile of slag composed of fused steel and plastic. There's some usable material to be had here.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Materials/Scrap/generic.rsi
+    layers:
+    - state: plastic-slag
+      map: [ "base" ]
+  - type: Item
+    size: Ginormous
+    heldPrefix: metal
+  - type: MultiHandedItem
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 500 # 5 sheets
+      Plastic: 2000 # 20 sheets

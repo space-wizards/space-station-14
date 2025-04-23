@@ -5,9 +5,10 @@
   description: A box of imitation donk-pockets made of cloth.
   components:
   - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/Baked/donkpocket.rsi
     state: cloth-box
   - type: Item
-    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    sprite: _Impstation/Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: StorageFill
     contents:
     - id: FoodDonkpocketCloth

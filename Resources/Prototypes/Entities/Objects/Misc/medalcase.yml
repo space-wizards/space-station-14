@@ -5,7 +5,7 @@
   parent: [ BaseStorageItem, BaseBagOpenClose, BaseCommandContraband ]
   components:
   - type: Sprite
-    sprite: Objects/Storage/medalcase.rsi
+    sprite: _Wizden/Objects/Storage/medalcase.rsi # imp
     layers:
     - state: closed
       map: ["closeLayer"]
@@ -13,7 +13,7 @@
       map: ["openLayer"]
   - type: Appearance
   - type: Item
-    sprite: Objects/Storage/medalcase.rsi
+    sprite: _Wizden/Objects/Storage/medalcase.rsi # imp
     size: Normal
   - type: Storage
     grid:

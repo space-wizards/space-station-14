@@ -162,10 +162,10 @@
   description: A weirdly shaped box, stocked with... tools?
   components:
   - type: Sprite
-    sprite: Objects/Tools/Cowtools/cow_toolbox.rsi
+    sprite: _Wizden/Objects/Tools/Cowtools/cow_toolbox.rsi # imp
     state: cow_toolbox
   - type: Item
-    sprite: Objects/Tools/Cowtools/cow_toolbox.rsi
+    sprite: _Wizden/Objects/Tools/Cowtools/cow_toolbox.rsi # imp
   - type: MeleeWeapon
     damage:
       types:

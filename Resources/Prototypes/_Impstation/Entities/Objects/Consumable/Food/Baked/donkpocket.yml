@@ -37,6 +37,7 @@
         - ReagentId: Fiber
           Quantity: 3
   - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/Baked/donkpocket.rsi
     state: cloth
   - type: Tag
     tags:

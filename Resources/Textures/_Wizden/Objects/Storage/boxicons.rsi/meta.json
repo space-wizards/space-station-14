@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from baystation at https://github.com/Baystation12/Baystation12/commit/bc9fbb1722530596e3aa7522ee407280b323ad43, throwing_knives and vials are drawn by Ubaser, tracks made by Fazansen(https://github.com/Fazansen).",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "beaker"
+    },
+    {
+      "name": "bodybags"
+    },
+    {
+      "name": "meson"
+    },
+    {
+      "name": "sechud"
+    },
+    {
+      "name": "box"
+    },
+    {
+      "name": "box_of_doom"
+    },
+    {
+      "name": "circuit"
+    },
+    {
+      "name": "disk_kit"
+    },
+    {
+      "name": "donk_kit"
+    },
+    {
+      "name": "flashbang"
+    },
+    {
+      "name": "glasses"
+    },
+    {
+      "name": "handcuff"
+    },
+    {
+      "name": "implant"
+    },
+    {
+      "name": "latex"
+    },
+    {
+      "name": "light"
+    },
+    {
+      "name": "lightmixed"
+    },
+    {
+      "name": "lighttube"
+    },
+    {
+      "name": "mousetraps"
+    },
+    {
+      "name": "pda"
+    },
+    {
+      "name": "pillbox"
+    },
+    {
+      "name": "solution_trays"
+    },
+    {
+      "name": "sterile"
+    },
+    {
+      "name": "syringe"
+    },
+    {
+      "name": "throwing_knives"
+    },
+    {
+      "name": "ziptie"
+    },
+    {
+      "name": "vials"
+    },
+    {
+      "name": "tracks"
+    }
+  ]
+}

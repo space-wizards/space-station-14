@@ -9,7 +9,7 @@
   - type: Item
     size: Large
   - type: Sprite
-    sprite: Objects/Devices/flatpack.rsi
+    sprite: _Wizden/Objects/Devices/flatpack.rsi # imp
     layers:
     - state: base
     - state: overlay

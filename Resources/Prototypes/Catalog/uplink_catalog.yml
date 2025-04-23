@@ -98,7 +98,7 @@
   id: UplinkThrowingKnivesKit
   name: uplink-knives-kit-name
   description: uplink-knives-kit-desc
-  icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: throwing_knives }
+  icon: { sprite: /Textures/_Wizden/Objects/Storage/boxicons.rsi, state: throwing_knives } # imp
   productEntity: ThrowingKnivesKit
   discountCategory: rareDiscounts
   discountDownTo:
@@ -623,7 +623,7 @@
   id: UplinkChemistryKitBundle
   name: uplink-chemistry-kit-name
   description: uplink-chemistry-kit-desc
-  icon: { sprite: /Textures/Objects/Storage/boxicons.rsi, state: vials }
+  icon: { sprite: /Textures/_Wizden/Objects/Storage/boxicons.rsi, state: vials } # imp
   productEntity: ChemicalSynthesisKit
   discountCategory: usualDiscounts
   discountDownTo:

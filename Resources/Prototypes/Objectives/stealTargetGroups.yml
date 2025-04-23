@@ -218,7 +218,7 @@
   id: AmePartFlatpack
   name: steal-target-groups-ame-part-flatpack
   sprite:
-    sprite: Objects/Devices/flatpack.rsi
+    sprite: _Wizden/Objects/Devices/flatpack.rsi # imp
     state: ame-part
 
 - type: stealTargetGroup

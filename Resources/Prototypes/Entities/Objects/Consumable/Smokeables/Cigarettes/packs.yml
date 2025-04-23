@@ -13,27 +13,27 @@
       visible: false
     - state: cig1
       map: ["cig1"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi # imp
       visible: false
     - state: cig2
       map: ["cig2"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi # imp
       visible: false
     - state: cig3
       map: ["cig3"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi # imp
       visible: false
     - state: cig4
       map: ["cig4"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi # imp
       visible: false
     - state: cig5
       map: ["cig5"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi # imp
       visible: false
     - state: cig6
       map: ["cig6"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi # imp
       visible: false
   - type: Tag
     tags:
@@ -85,27 +85,27 @@
       visible: false
     - state: cig1
       map: ["cig1"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi # imp
       visible: false
     - state: cig2
       map: ["cig2"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi # imp
       visible: false
     - state: cig3
       map: ["cig3"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi # imp
       visible: false
     - state: cig4
       map: ["cig4"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi # imp
       visible: false
     - state: cig5
       map: ["cig5"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi # imp
       visible: false
     - state: cig6
       map: ["cig6"]
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi # imp
       visible: false
   - type: Tag
     tags:
@@ -149,9 +149,9 @@
   description: A label on the packaging reads, Wouldn't a slow death make a change?
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi # imp
   - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi # imp
 
 - type: entity
   id: CigPackRed
@@ -160,9 +160,9 @@
   description: The most popular brand of Space Cigarettes, sponsors of the Space Olympics.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi # imp
   - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi # imp
 
 - type: entity
   id: CigPackBlue
@@ -171,9 +171,9 @@
   description: For those who somehow want to obtain the record for the most amount of cancerous tumors.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi # imp
   - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi # imp
 
 - type: entity
   id: CigPackBlack
@@ -182,9 +182,9 @@
   description: Nomads's extra strong, for when your life is more extra hard.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi # imp
   - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi # imp
 
 - type: entity
   id: CigPackSyndicate
@@ -193,9 +193,9 @@
   description: Elite cigarettes for elite syndicate agents. Infused with medicine for when you need to do more than calm your nerves.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi # imp
   - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/syndicate.rsi # imp
   - type: StorageFill
     contents:
     - id: CigaretteSyndicate
@@ -209,9 +209,9 @@
   description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi # imp
   - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi # imp
   - type: StorageFill
     contents:
     - id: CigaretteIron
@@ -237,9 +237,9 @@
   description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi # imp
   - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi # imp
   - type: StorageFill
     contents:
     - id: CigaretteBbqSauce
@@ -271,9 +271,9 @@
   description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi # imp
   - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+    sprite: _Wizden/Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi # imp
   - type: StorageFill
     contents:
     - id: CigaretteSpaceDrugs

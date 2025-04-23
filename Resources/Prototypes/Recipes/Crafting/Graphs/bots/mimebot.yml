@@ -8,7 +8,7 @@
       steps:
       - tag: MimeHappyHonk
         icon:
-          sprite: Objects/Storage/Happyhonk/mime.rsi
+          sprite: _Wizden/Objects/Storage/Happyhonk/mime.rsi # imp
           state: box
         name: mime edition happy honk meal
       - tag: MimeBelt

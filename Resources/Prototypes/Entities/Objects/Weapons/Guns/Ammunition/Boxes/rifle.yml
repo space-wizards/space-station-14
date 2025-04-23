@@ -18,7 +18,7 @@
     containers:
       ballistic-ammo: !type:Container
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/rifle.rsi
+    sprite: _Wizden/Objects/Weapons/Guns/Ammunition/Boxes/rifle.rsi # imp
   - type: MagazineVisuals
     magState: mag
     steps: 4
@@ -30,6 +30,7 @@
   parent: BaseMagazineBoxRifle
   id: MagazineBoxRifleBig
   name: ammunition box (.20 rifle)
+  suffix: Big
   description: A large box made for 200 rounds of .20 rifle ammunition, labeled as live-fire bullets. #imp
   components:
   - type: BallisticAmmoProvider
@@ -37,12 +38,12 @@
     proto: CartridgeRifle
   - type: Sprite
     layers:
-    - state: base-big
+    - state: base-b # imp
       map: ["enum.GunVisualLayers.Base"]
-    - state: mag-big-1
+    - state: magb-1 # imp
       map: ["enum.GunVisualLayers.Mag"]
   - type: MagazineVisuals
-    magState: mag-big
+    magState: magb # imp
     steps: 4
     zeroVisible: false
   - type: Appearance

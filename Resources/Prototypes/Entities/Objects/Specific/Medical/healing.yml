@@ -363,7 +363,7 @@
   categories: [ DoNotMap ]
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/healing_toolbox.rsi
+    sprite: _Wizden/Objects/Specific/Medical/healing_toolbox.rsi # imp
     state: icon
   - type: Healing
     damageContainers:

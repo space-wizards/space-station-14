@@ -4,9 +4,9 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Objects/Storage/boxes.rsi
+    sprite: _Wizden/Objects/Storage/boxes.rsi # imp
   - type: Item
-    sprite: Objects/Storage/boxes.rsi
+    sprite: _Wizden/Objects/Storage/boxes.rsi # imp
     size: Large
     shape:
     - 0,0,2,2
