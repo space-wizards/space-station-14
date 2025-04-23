@@ -8,6 +8,7 @@ using Content.Shared.Radio;
 using Content.Shared.Salvage.Magnet;
 using Robust.Shared.Exceptions;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Salvage;
 
@@ -22,6 +23,7 @@ public sealed partial class SalvageSystem
     private EntityQuery<MobStateComponent> _mobStateQuery;
 
     private List<(Entity<TransformComponent> Entity, EntityUid MapUid, Vector2 LocalPosition)> _detachEnts = new();
+    private List<Entity<MapGridComponent>> _mapGrids = new();
 
     private void InitializeMagnet()
     {
@@ -441,7 +443,9 @@ public sealed partial class SalvageSystem
 
             // This doesn't stop it from spawning on top of random things in space
             // Might be better like this, ghosts could stop it before
-            if (_mapManager.FindGridsIntersecting(finalCoords.MapId, box2Rot).Any())
+            _mapGrids.Clear();
+            _mapManager.FindGridsIntersecting(finalCoords.MapId, box2Rot, ref _mapGrids);
+            if (_mapGrids.Count > 0)
             {
                 // Bump it further and further just in case.
                 fraction += 0.1f;
