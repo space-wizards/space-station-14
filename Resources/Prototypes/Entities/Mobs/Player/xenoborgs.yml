@@ -312,3 +312,57 @@
     intensitySlope: 20
     maxIntensity: 100
     canCreateVacuum: false # its for killing the borg not the station
+
+
+- type: entity
+  parent: [ XenoborgBaseChassi, XenoborgTransponder ]
+  id: XenoborgEngi
+  name: engi xenoborg
+  suffix: with brain
+  description: A man-machine hybrid that aims to replicate itself. They love gibbing people and placing their brains into empty xenoborgs over and over. This is a engi type, it has more tools and is better for supporting other xenoborgs.
+  components:
+  - type: BorgTransponder
+    name: engi xenoborg
+    sprite:
+      sprite: sprite: Mobs/Silicon/chassis.rsi
+      state: xenoborg_engi
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: xenoborg_engi_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: xenoborg_engi_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    hasMindState: xenoborg_engi_e
+    noMindState: xenoborg_engi
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleGeneric
+      - XenoborgModuleEngi
+      - BorgModuleEngineering
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - XenoborgModuleBasic
+      - BorgModuleAdvancedTool
+      - BorgModuleConstruction
+      - BorgModuleRCD
+      - BorgModuleCable
+      - XenoborgModuleAccessBreaker
+      - XenoborgModuleFireExtinguisher
+  - type: ShowHealthBars
+    damageContainers:
+    - Inorganic
+    - Silicon
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
