@@ -57,8 +57,8 @@ public sealed class NewsSystem : SharedNewsSystem
                 if (!string.IsNullOrWhiteSpace(value))
                     _discord.GetWebhook(value, data => _webhookId = data.ToIdentifier());
             }, true);
-        _cfg.OnValueChanged(CCVars.DiscordNewsWebhookEmbedColor,
-            value => _webhookEmbedColor = value, true);
+
+        _cfg.OnValueChanged(CCVars.DiscordNewsWebhookEmbedColor, value => _webhookEmbedColor = value, true);
         SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEndMessageEvent);
 
         // News writer
@@ -353,7 +353,7 @@ public sealed class NewsSystem : SharedNewsSystem
     {
         var query = EntityManager.EntityQueryEnumerator<StationNewsComponent>();
 
-        while (query.MoveNext(out var _, out var comp))
+        while (query.MoveNext(out _, out var comp))
         {
             foreach (var article in comp.Articles)
             {
