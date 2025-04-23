@@ -303,3 +303,21 @@
     whitelist:
       components:
       - Body
+
+- type: entity
+  id: ProjectileSpellblade
+  name: lava
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+      - state: lava
+  - type: TimedDespawn
+    lifetime: 1
+  - type: Projectile
+    soundHit
+    damage:
+      types:
+        Heat: 25
