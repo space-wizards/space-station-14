@@ -173,7 +173,8 @@ public abstract partial class SharedRestrictNestingItemSystem : EntitySystem
         }
 
         //if we get here, we can pickup the item
-        _handsSystem.TryPickup(args.User, ent, animateUser: false);
+        //this is a forced pickup to fix dragging by species with no tails
+        _handsSystem.TryForcePickupAnyHand(args.User, ent);
     }
 
     /// <summary>
