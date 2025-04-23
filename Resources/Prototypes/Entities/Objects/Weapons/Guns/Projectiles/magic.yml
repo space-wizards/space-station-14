@@ -319,4 +319,4 @@
   - type: Projectile
     damage:
       types:
-        Heat: 25
+        Heat: 30
