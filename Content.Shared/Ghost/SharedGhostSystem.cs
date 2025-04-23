@@ -45,17 +45,28 @@ namespace Content.Shared.Ghost
             component.TimeOfDeath = value;
         }
 
-        public void SetCanReturnToBody(EntityUid uid, bool value, GhostComponent? component = null)
+        public void SetCanReturnToBody(Entity<GhostComponent?> entity, bool value)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(entity, ref entity.Comp))
                 return;
 
-            component.CanReturnToBody = value;
+            if (entity.Comp.CanReturnToBody == value)
+                return;
+
+            entity.Comp.CanReturnToBody = value;
+            Dirty(entity);
         }
 
+        [Obsolete("Use the Entity<GhostComponent?> overload")]
+        public void SetCanReturnToBody(EntityUid uid, bool value, GhostComponent? component = null)
+        {
+            SetCanReturnToBody((uid, component), value);
+        }
+
+        [Obsolete("Use the Entity<GhostComponent?> overload")]
         public void SetCanReturnToBody(GhostComponent component, bool value)
         {
-            component.CanReturnToBody = value;
+            SetCanReturnToBody((component.Owner, component), value);
         }
     }
 

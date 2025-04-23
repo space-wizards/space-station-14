@@ -67,20 +67,13 @@ public sealed partial class GhostComponent : Component
     private bool _canGhostInteract;
 
     /// <summary>
-    ///     Changed by <see cref="SharedGhostSystem.SetCanReturnToBody"/>
+    /// Is this ghost player allowed to return to their original body?
     /// </summary>
-    // TODO MIRROR change this to use friend classes when thats merged
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool CanReturnToBody
-    {
-        get => _canReturnToBody;
-        set
-        {
-            if (_canReturnToBody == value) return;
-            _canReturnToBody = value;
-            Dirty();
-        }
-    }
+    /// <remarks>
+    /// Changed by <see cref="SharedGhostSystem.SetCanReturnToBody"/>
+    /// </remarks>
+    [DataField, AutoNetworkedField]
+    public bool CanReturnToBody;
 
     /// <summary>
     /// Ghost color
@@ -88,9 +81,6 @@ public sealed partial class GhostComponent : Component
     /// <remarks>Used to allow admins to change ghost colors. Should be removed if the capability to edit existing sprite colors is ever added back.</remarks>
     [DataField, AutoNetworkedField]
     public Color Color = Color.White;
-
-    [DataField("canReturnToBody"), AutoNetworkedField]
-    private bool _canReturnToBody;
 }
 
 public sealed partial class ToggleFoVActionEvent : InstantActionEvent { }
