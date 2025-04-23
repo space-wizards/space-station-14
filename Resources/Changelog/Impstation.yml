@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: hivehum, crocodilecarousel
-  changes:
-  - message: Added a ton of festive treats and toys for Valentine's Day! Order a crate
-      from cargo and enjoy!
-    type: Add
-  - message: You can engrave flippos.
-    type: Tweak
-  - message: Moths can no longer eat metal necklaces.
-    type: Fix
-  - message: Heart lockets have a secret compartment.
-    type: Tweak
-  id: 1064
-  time: '2025-02-06T19:38:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1580
 - author: Darkmajia
   changes:
   - message: Signature fonts should, hopefully, well and truly, finally be fixed.
@@ -4119,3 +4105,11 @@
   id: 1563
   time: '2025-04-23T21:42:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2318
+- author: Widgetbeck, ThatKidConnor, ShaSeng
+  changes:
+  - message: Added Griffy, the Sec Safety Dog, and his associated paraphernalia. Currently
+      admin-only, until someone maps him.
+    type: Add
+  id: 1564
+  time: '2025-04-23T21:49:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2277
