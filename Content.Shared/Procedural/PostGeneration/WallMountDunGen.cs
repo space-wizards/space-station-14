@@ -19,5 +19,5 @@ public sealed partial class WallMountDunGen : IDunGenLayer
     public ProtoId<ContentTileDefinition> Tile;
 
     [DataField]
-    public List<EntitySpawnEntry> Contents = new();
+    public EntitySpawnEntryPrototype Contents = new();
 }
