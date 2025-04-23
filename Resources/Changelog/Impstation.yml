@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Greatcoats (Cap, HoS, QM) can now be worn as outerwear if you want to
-      put your arms through the sleeves
-    type: Tweak
-  id: 1058
-  time: '2025-02-06T11:13:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1584
 - author: mqole
   changes:
   - message: Minor rules changes regarding how free agents engage with antagonism.
@@ -4112,3 +4104,11 @@
   id: 1557
   time: '2025-04-23T20:56:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2319
+- author: Kandiyaki
+  changes:
+  - message: During heretic rounds, eldritch tomes will now spawn in waves instead
+      of all at once.
+    type: Tweak
+  id: 1558
+  time: '2025-04-23T20:57:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2321
