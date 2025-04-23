@@ -377,9 +377,10 @@ public sealed class NewsSystem : SharedNewsSystem
                 Footer = new WebhookEmbedFooter
                 {
                     Text = Loc.GetString("news-discord-footer",
-                        ("author", article.Author ?? Loc.GetString("news-discord-unknown-author")),
                         ("server", _baseServer.ServerName),
-                        ("round", _ticker.RoundId))
+                        ("round", _ticker.RoundId),
+                        ("author", article.Author ?? Loc.GetString("news-discord-unknown-author")),
+                        ("time", article.ShareTime.ToString(@"hh\:mm\:ss")))
                 }
             };
             var payload = new WebhookPayload { Embeds = [embed] };
