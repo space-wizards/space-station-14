@@ -2,14 +2,17 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Instruments;
 using Content.Server.Kitchen.Components;
+using Content.Server.Store.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind.Components;
 using Content.Shared.PAI;
 using Content.Shared.Popups;
-using Robust.Shared.Random;
-using System.Text;
+using Content.Shared.Store;
+using Content.Shared.Store.Components;
 using Content.Shared.Instruments;
-using Robust.Shared.Player;
+using Robust.Shared.Random;
+using Robust.Shared.Prototypes;
+using System.Text;
 
 namespace Content.Server.PAI;
 
@@ -22,13 +25,12 @@ public sealed class PAISystem : SharedPAISystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly ToggleableGhostRoleSystem _toggleableGhostRole = default!;
 
-    [ValidatePrototypeId<CurrencyPrototype>]
-    public string SiliconMemoryCurrencyPrototype = "SiliconMemory";
+    public ProtoId<CurrencyPrototype> SiliconMemoryCurrencyPrototype = "SiliconMemory";
 
     /// <summary>
     /// Possible symbols that can be part of a scrambled pai's name.
     /// </summary>
-    private static readonly char[] SYMBOLS = new[] { '#', '~', '-', '@', '&', '^', '%', '$', '*', ' '};
+    private static readonly char[] SYMBOLS = new[] { '#', '~', '-', '@', '&', '^', '%', '$', '*', ' ' };
 
     public override void Initialize()
     {
@@ -107,11 +109,12 @@ public sealed class PAISystem : SharedPAISystem
         _metaData.SetEntityName(uid, val);
     }
 
-    private void OnShop(EntityUid uid, PAIComponent component, PAIShopActionEvent args)
+    private void OnShop(Entity<PAIComponent> ent, ref PAIShopActionEvent args)
     {
-        if (!TryComp<StoreComponent>(uid, out var store))
+        if (!TryComp<StoreComponent>(ent, out var store))
             return;
-        _store.ToggleUi(uid, uid, store);
+
+        _store.ToggleUi(args.Performer, ent, store);
     }
 
     public void PAITurningOff(EntityUid uid)

@@ -13,7 +13,7 @@ namespace Content.Shared.PAI;
 /// </summary>
 public abstract class SharedPAISystem : EntitySystem
 {
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
 
     public override void Initialize()
     {
@@ -23,14 +23,14 @@ public abstract class SharedPAISystem : EntitySystem
         SubscribeLocalEvent<PAIComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnMapInit(EntityUid uid, PAIComponent component, MapInitEvent args)
+    private void OnMapInit(Entity<PAIComponent> ent, ref MapInitEvent args)
     {
-        _actionsSystem.AddAction(uid, ref component.ShopAction, component.ShopActionId);
+        _actions.AddAction(ent, ent.Comp.ShopActionId);
     }
 
-    private void OnShutdown(EntityUid uid, PAIComponent component, ComponentShutdown args)
+    private void OnShutdown(Entity<PAIComponent> ent, ref ComponentShutdown args)
     {
-        _actionsSystem.RemoveAction(uid, component.ShopAction);
+        _actions.RemoveAction(ent, ent.Comp.ShopAction);
     }
 }
 public sealed partial class PAIShopActionEvent : InstantActionEvent
