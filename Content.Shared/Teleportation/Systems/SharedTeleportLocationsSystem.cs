@@ -2,7 +2,6 @@
 using Content.Shared.Timing;
 using Content.Shared.UserInterface;
 using Content.Shared.Warps;
-using Content.Shared.Whitelist;
 
 namespace Content.Shared.Teleportation.Systems;
 
