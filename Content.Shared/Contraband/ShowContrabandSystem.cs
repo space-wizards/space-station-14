@@ -2,7 +2,7 @@ using Content.Shared.Inventory;
 
 namespace Content.Shared.Contraband;
 
-public sealed class ShowContrabandSystem : EntitySystem
+public sealed partial class ShowContrabandSystem : EntitySystem
 {
     public override void Initialize()
     {
