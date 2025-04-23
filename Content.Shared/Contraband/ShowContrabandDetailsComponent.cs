@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+
 namespace Content.Shared.Contraband;
 
 /// <summary>
