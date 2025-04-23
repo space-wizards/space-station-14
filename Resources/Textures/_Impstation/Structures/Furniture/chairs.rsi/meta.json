@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/11402f6ae62facc2e8bcfa1f8ef5353b26663278. new office chair and comfy chair taken from /tg/ wallening at https://github.com/wall-nerds/wallening/commit/cff5df2e3d45a18afe5619a8c130e1ba50ab4ef5.",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/11402f6ae62facc2e8bcfa1f8ef5353b26663278. new office chair and comfy chair taken from /tg/ wallening at https://github.com/wall-nerds/wallening/commit/cff5df2e3d45a18afe5619a8c130e1ba50ab4ef5, Apid seat sprited by kipdotnet (github) for Impstation.",
   "size": {
     "x": 32,
     "y": 32
@@ -22,6 +22,9 @@
       {
           "name": "office-white",
           "directions": 4
+      },
+      {
+          "name": "apid"
       }
   ]
 }
