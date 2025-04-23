@@ -11,3 +11,4 @@ round-end-statistic-creamedcount = {$count ->
 round-end-statistic-moppedcount = {$count ->
     [one] [color=yellow]1[/color] puddle was mopped up.
     *[other] [color=yellow]{$count}[/color] puddles were mopped up.
+}
