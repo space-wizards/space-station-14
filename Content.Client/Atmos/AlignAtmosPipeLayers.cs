@@ -15,6 +15,12 @@ using System.Numerics;
 
 namespace Content.Client.Atmos;
 
+/// <summary>
+/// Allows users to place atmos pipes on different layers depending on how the mouse cursor is positioned within a grid tile. 
+/// </summary>
+/// <remarks>
+/// This placement mode is not on the engine because it is content specific.
+/// </remarks>
 public sealed class AlignAtmosPipeLayers : SnapgridCenter
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -27,11 +33,12 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
 
     private const float SearchBoxSize = 2f;
     private EntityCoordinates _unalignedMouseCoords = default;
-    private Color _guideColor = new Color(0, 0, 0.5785f);
+    private const float MouseDeadzoneRadius = 0.25f;
 
-    /// <summary>
-    /// This placement mode is not on the engine because it is content specific (i.e., for atmos pipes)
-    /// </summary>
+    private Color _guideColor = new Color(0, 0, 0.5785f);
+    private const float GuideRadius = 0.1f;
+    private const float GuideOffset = 0.21875f;
+
     public AlignAtmosPipeLayers(PlacementManager pMan) : base(pMan)
     {
         IoCManager.InjectDependencies(this);
@@ -40,6 +47,7 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
         _transformSystem = _entityManager.System<SharedTransformSystem>();
     }
 
+    /// <inheritdoc/>
     public override void Render(in OverlayDrawArgs args)
     {
         var gridUid = _entityManager.System<SharedTransformSystem>().GetGrid(MouseCoords);
@@ -53,13 +61,14 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
         var direction = (_eyeManager.CurrentEye.Rotation + gridRotation + Math.PI / 2).GetCardinalDir();
         var multi = (direction == Direction.North || direction == Direction.South) ? -1f : 1f;
 
-        args.WorldHandle.DrawCircle(worldPosition, 0.1f, _guideColor);
-        args.WorldHandle.DrawCircle(worldPosition + gridRotation.RotateVec(new Vector2(multi * 0.21875f, 0.21875f)), 0.1f, _guideColor);
-        args.WorldHandle.DrawCircle(worldPosition - gridRotation.RotateVec(new Vector2(multi * 0.21875f, 0.21875f)), 0.1f, _guideColor);
+        args.WorldHandle.DrawCircle(worldPosition, GuideRadius, _guideColor);
+        args.WorldHandle.DrawCircle(worldPosition + gridRotation.RotateVec(new Vector2(multi * GuideOffset, GuideOffset)), GuideRadius, _guideColor);
+        args.WorldHandle.DrawCircle(worldPosition - gridRotation.RotateVec(new Vector2(multi * GuideOffset, GuideOffset)), GuideRadius, _guideColor);
 
         base.Render(args);
     }
 
+    /// <inheritdoc/>
     public override void AlignPlacementMode(ScreenCoordinates mouseScreen)
     {
         _unalignedMouseCoords = ScreenToCursorGrid(mouseScreen);
@@ -85,7 +94,7 @@ public sealed class AlignAtmosPipeLayers : SnapgridCenter
         var mouseCoordsDiff = _unalignedMouseCoords.Position - MouseCoords.Position;
         var layer = 0;
 
-        if (mouseCoordsDiff.Length() > 0.25f)
+        if (mouseCoordsDiff.Length() > MouseDeadzoneRadius)
         {
             // Determine the direction of the mouse is relative to the center of the tile, adjusting for the player eye and grid rotation
             var direction = (new Angle(mouseCoordsDiff) + _eyeManager.CurrentEye.Rotation + gridRotation + Math.PI / 2).GetCardinalDir();
