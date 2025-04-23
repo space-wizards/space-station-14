@@ -992,7 +992,7 @@
     - state: icon-xenoborg-basic
   - type: ItemBorgModule
     items:
-    - PiMaterialBag
+    - MaterialBag
     - PinpointerMothership
     - HandheldGPSBasic
   - type: BorgModuleIcon
@@ -1033,7 +1033,7 @@
     items:
     - AccessBreaker
   - type: BorgModuleIcon
-    icon: { sprite: Interface/Actions/actions_borg.rsi, state: access-breaker-module }
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-access-breaker-module }
 
 - type: entity
   id: XenoborgModuleFireExtinguisher
