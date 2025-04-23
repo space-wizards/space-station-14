@@ -151,7 +151,6 @@
   physicalDesc: reagent-physical-desc-oily
   slipData:
     requiredSlipSpeed: 3.5
-    superSlippery: true
   flavor: bitter
   flavorMinimum: 0.01
   color: "#a76b1c"

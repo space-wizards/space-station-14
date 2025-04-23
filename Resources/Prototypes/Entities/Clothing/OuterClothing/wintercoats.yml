@@ -19,6 +19,8 @@
         Slash: 0.95
         Heat: 0.90
     priceMultiplier: 0
+  - type: ZombificationResistance
+    zombificationResistanceCoefficient: 0.55
   - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager

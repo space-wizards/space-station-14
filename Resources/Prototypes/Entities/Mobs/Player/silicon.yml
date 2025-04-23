@@ -446,6 +446,8 @@
   - type: StartingMindRole
     mindRole: "MindRoleSiliconBrain"
     silent: true
+  - type: NameIdentifier
+    group: StationAi
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
