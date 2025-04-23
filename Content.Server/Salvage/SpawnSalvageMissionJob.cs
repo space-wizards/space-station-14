@@ -41,13 +41,11 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 {
     private readonly IEntityManager _entManager;
     private readonly IGameTiming _timing;
-    private readonly IMapManager _mapManager;
     private readonly IPrototypeManager _prototypeManager;
     private readonly AnchorableSystem _anchorable;
     private readonly BiomeSystem _biome;
     private readonly DungeonSystem _dungeon;
     private readonly MetaDataSystem _metaData;
-    private readonly SharedTransformSystem _xforms;
     private readonly SharedMapSystem _map;
 
     public readonly EntityUid Station;
@@ -61,13 +59,11 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         IEntityManager entManager,
         IGameTiming timing,
         ILogManager logManager,
-        IMapManager mapManager,
         IPrototypeManager protoManager,
         AnchorableSystem anchorable,
         BiomeSystem biome,
         DungeonSystem dungeon,
         MetaDataSystem metaData,
-        SharedTransformSystem xform,
         SharedMapSystem map,
         EntityUid station,
         EntityUid? coordinatesDisk,
@@ -76,13 +72,11 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     {
         _entManager = entManager;
         _timing = timing;
-        _mapManager = mapManager;
         _prototypeManager = protoManager;
         _anchorable = anchorable;
         _biome = biome;
         _dungeon = dungeon;
         _metaData = metaData;
-        _xforms = xform;
         _map = map;
         Station = station;
         CoordinatesDisk = coordinatesDisk;
