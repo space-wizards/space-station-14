@@ -5,6 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Teleportation.Components;
 
+// TODO: In the future assimilate ghost UI to use this.
 /// <summary>
 /// Used where you want an entity to display a list of player-safe teleport locations
 /// They teleport to the location clicked
