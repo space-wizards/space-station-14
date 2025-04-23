@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Server.Holiday;
+using Content.Shared.Holiday;
 
 namespace Content.Server.Maps.Conditions;
 
