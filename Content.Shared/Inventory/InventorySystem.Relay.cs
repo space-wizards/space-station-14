@@ -49,7 +49,6 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, GetContrabandDetailsEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, ZombificationResistanceQueryEvent>(RelayInventoryEvent);
 
-
         // by-ref events
         SubscribeLocalEvent<InventoryComponent, BeforeStaminaDamageEvent>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, GetExplosionResistanceEvent>(RefRelayInventoryEvent);
