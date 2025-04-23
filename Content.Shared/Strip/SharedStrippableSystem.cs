@@ -18,8 +18,11 @@ using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
+using Content.Shared.Movement.Pulling.Systems;
 
 namespace Content.Shared.Strip;
+
+using System.Collections.Generic;
 
 public abstract class SharedStrippableSystem : EntitySystem
 {
@@ -33,6 +36,91 @@ public abstract class SharedStrippableSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+
+    // Starlight Start: Track active strip DoAfters per user with them queues
+    [Dependency] private readonly PullingSystem _pullingSystem = default!;
+
+    private readonly Dictionary<EntityUid, Queue<DoAfterId>> _activeStripDoAfters = new();
+
+    // Starlight Start
+    private void LimitSimultaneousStripDoAfters(Entity<HandsComponent?> user, DoAfterArgs doAfterArgs)
+    {
+        var userId = user.Owner;
+
+        if (!TryComp<HandsComponent>(userId, out var handsComp))
+            return;
+
+        // Count hands holding items
+        int handsHolding = 0;
+        foreach (var hand in handsComp.Hands.Values)
+        {
+            if (hand.HeldEntity != null)
+                handsHolding++;
+        }
+
+        // Check if user is pulling an entity
+        bool isPulling = _pullingSystem.IsPulling(userId);
+
+        // Calculate free hands
+        int freeHands = handsComp.Count - handsHolding;
+
+        // If no free hands and pulling, no free hands remain
+        if (freeHands == 0 && isPulling)
+        {
+            freeHands = 0;
+        }
+
+        // Clamp freeHands to minimum 0
+        freeHands = Math.Max(0, freeHands);
+
+        // Allow inserting into inventory slot even if hands are full
+        if (freeHands == 0)
+        {
+            if (doAfterArgs.Event is StrippableDoAfterEvent strippableEvent &&
+                strippableEvent.InsertOrRemove)
+            {
+    
+            }
+            else
+            {
+                _popupSystem.PopupCursor(Loc.GetString("No hands available!"));
+                // Do not start DoAfter, no interaction or doafter bar
+                return;
+            }
+        }
+
+        if (!_activeStripDoAfters.TryGetValue(userId, out var queue))
+        {
+            queue = new Queue<DoAfterId>();
+            _activeStripDoAfters[userId] = queue;
+        }
+
+        // Cancel oldest DoAfters until active DoAfters < free hands
+        while (queue.Count >= freeHands && queue.Count > 0)
+        {
+            var oldest = queue.Dequeue();
+            _doAfterSystem.Cancel(oldest);
+        }
+
+        if (_doAfterSystem.TryStartDoAfter(doAfterArgs, out var doAfterId))
+        {
+            if (doAfterId != null)
+                queue.Enqueue(doAfterId.Value);
+        }
+    }
+
+    private void OnBeforeGettingStripped(EntityUid uid, StrippableComponent component, ref BeforeGettingStrippedEvent ev)
+    {
+        if (TryComp<CuffableComponent>(uid, out var cuffable))
+        {
+            var entity = new Entity<CuffableComponent>(uid, cuffable);
+            if (_cuffableSystem.IsCuffed(entity))
+            {
+                ev.Multiplier *= 0.5f; // Make stripping twice as fast if cuffed
+            }
+        }
+    }
+    // Starlight End
 
     public override void Initialize()
     {
@@ -52,6 +140,8 @@ public abstract class SharedStrippableSystem : EntitySystem
         SubscribeLocalEvent<StrippableComponent, CanDropDraggedEvent>(OnCanDrop);
         SubscribeLocalEvent<StrippableComponent, DragDropDraggedEvent>(OnDragDrop);
         SubscribeLocalEvent<StrippableComponent, ActivateInWorldEvent>(OnActivateInWorld);
+
+        SubscribeLocalEvent<StrippableComponent, BeforeGettingStrippedEvent>(OnBeforeGettingStripped);
     }
 
     private void AddStripVerb(EntityUid uid, StrippableComponent component, GetVerbsEvent<Verb> args)
@@ -234,7 +324,9 @@ public abstract class SharedStrippableSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.SameTool
         };
 
-        _doAfterSystem.TryStartDoAfter(doAfterArgs);
+        // Starlight: Limit simultaneous strip DoAfters based on user's hands
+        LimitSimultaneousStripDoAfters(user, doAfterArgs);
+        // Starlight End
     }
 
     /// <summary>
@@ -338,7 +430,7 @@ public abstract class SharedStrippableSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.SameTool
         };
 
-        _doAfterSystem.TryStartDoAfter(doAfterArgs);
+        LimitSimultaneousStripDoAfters((user, null), doAfterArgs);
     }
 
     /// <summary>
@@ -451,7 +543,7 @@ public abstract class SharedStrippableSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.SameTool
         };
 
-        _doAfterSystem.TryStartDoAfter(doAfterArgs);
+        LimitSimultaneousStripDoAfters(user, doAfterArgs);
     }
 
     /// <summary>
@@ -564,7 +656,7 @@ public abstract class SharedStrippableSystem : EntitySystem
             DuplicateCondition = DuplicateConditions.SameTool
         };
 
-        _doAfterSystem.TryStartDoAfter(doAfterArgs);
+        LimitSimultaneousStripDoAfters(user, doAfterArgs);
     }
 
     /// <summary>
@@ -600,17 +692,78 @@ public abstract class SharedStrippableSystem : EntitySystem
         DebugTools.Assert(args.Used != null);
         DebugTools.Assert(ev.Event.SlotOrHandName != null);
 
+        // Starlight: Check current free hands
+        if (TryComp<HandsComponent>(entity.Owner, out var handsComp))
+        {
+            int handsHolding = 0;
+            foreach (var hand in handsComp.Hands.Values)
+            {
+                if (hand.HeldEntity != null)
+                    handsHolding++;
+            }
+            int freeHands = handsComp.Count - handsHolding;
+            freeHands = Math.Max(0, freeHands);
+
+            if (freeHands == 0)
+            {
+                if (ev.Event is StrippableDoAfterEvent strippableEvent &&
+                    !(strippableEvent.InsertOrRemove))
+                {
+                    ev.Cancel();
+                }
+            }
+            else
+            {
+                // Cancel newest DoAfters if queue count exceeds freeHands
+                if (_activeStripDoAfters.TryGetValue(entity.Owner, out var queue))
+                {
+                    int excess = queue.Count - freeHands;
+                    if (excess > 0)
+                    {
+                        // The newest DoAfters are at the end of the queue
+                        // If current DoAfter is among the newest excess, cancel it
+                        var queueList = queue.ToList();
+                        var newestExcess = queueList.GetRange(queueList.Count - excess, excess);
+                        if (newestExcess.Contains(ev.DoAfter.Id))
+                        {
+                            ev.Cancel();
+                        }
+                    }
+                }
+            }
+        }
+
+        // Starlight End
+
         if (ev.Event.InventoryOrHand)
         {
             if ( ev.Event.InsertOrRemove && !CanStripInsertInventory((entity.Owner, entity.Comp), args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName) ||
                 !ev.Event.InsertOrRemove && !CanStripRemoveInventory(entity.Owner, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName))
-                    ev.Cancel();
+                ev.Cancel();
         }
         else
         {
             if ( ev.Event.InsertOrRemove && !CanStripInsertHand((entity.Owner, entity.Comp), args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName) ||
                 !ev.Event.InsertOrRemove && !CanStripRemoveHand(entity.Owner, args.Target.Value, args.Used.Value, ev.Event.SlotOrHandName))
-                    ev.Cancel();
+                ev.Cancel();
+        }
+
+        // Remove DoAfterId from tracking if cancelled
+        if (ev.Cancelled)
+        {
+            if (_activeStripDoAfters.TryGetValue(entity.Owner, out var queue))
+            {
+                // Remove the DoAfterId from queue if present
+                var toRemove = ev.DoAfter.Id;
+                var newQueue = new Queue<DoAfterId>(queue.Count);
+                while (queue.Count > 0)
+                {
+                    var id = queue.Dequeue();
+                    if (id != toRemove)
+                        newQueue.Enqueue(id);
+                }
+                _activeStripDoAfters[entity.Owner] = newQueue;
+            }
         }
     }
 
@@ -623,6 +776,20 @@ public abstract class SharedStrippableSystem : EntitySystem
         DebugTools.Assert(ev.Target != null);
         DebugTools.Assert(ev.Used != null);
         DebugTools.Assert(ev.SlotOrHandName != null);
+
+        // Remove DoAfterId from tracking
+        if (_activeStripDoAfters.TryGetValue(entity.Owner, out var queue))
+        {
+            var toRemove = ev.DoAfter.Id;
+            var newQueue = new Queue<DoAfterId>(queue.Count);
+            while (queue.Count > 0)
+            {
+                var id = queue.Dequeue();
+                if (id != toRemove)
+                    newQueue.Enqueue(id);
+            }
+            _activeStripDoAfters[entity.Owner] = newQueue;
+        }
 
         if (ev.InventoryOrHand)
         {
@@ -661,6 +828,14 @@ public abstract class SharedStrippableSystem : EntitySystem
         RaiseLocalEvent(user, ref userEv);
         var targetEv = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
         RaiseLocalEvent(targetPlayer, ref targetEv);
+
+        // Check if target is cuffed to reduce strip time
+        if (TryComp<CuffableComponent>(targetPlayer, out var cuffable) && _cuffableSystem.IsCuffed(new Entity<CuffableComponent>(targetPlayer, cuffable), true))
+        {
+            var reducedTime = TimeSpan.FromSeconds(targetEv.Time.TotalSeconds * 0.5);
+            return (reducedTime, targetEv.Stealth);
+        }
+
         return (targetEv.Time, targetEv.Stealth);
     }
 
