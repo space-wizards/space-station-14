@@ -25,8 +25,6 @@ public sealed class PAISystem : SharedPAISystem
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly ToggleableGhostRoleSystem _toggleableGhostRole = default!;
 
-    public ProtoId<CurrencyPrototype> SiliconMemoryCurrencyPrototype = "SiliconMemory";
-
     /// <summary>
     /// Possible symbols that can be part of a scrambled pai's name.
     /// </summary>
