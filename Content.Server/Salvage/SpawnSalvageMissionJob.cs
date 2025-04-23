@@ -253,7 +253,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
             try
             {
-                await SpawnRandomEntry(grid, entry, dungeon, random);
+                await SpawnRandomEntry((mapUid, grid), entry, dungeon, random);
             }
             catch (Exception e)
             {
@@ -285,7 +285,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                             break;
 
                         _sawmill.Debug($"Spawning dungeon loot {entry.Proto}");
-                        await SpawnRandomEntry(grid, entry, dungeon, random);
+                        await SpawnRandomEntry((mapUid, grid), entry, dungeon, random);
                     }
                     break;
                 default:
@@ -296,7 +296,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         return true;
     }
 
-    private async Task SpawnRandomEntry(MapGridComponent grid, IBudgetEntry entry, Dungeon dungeon, Random random)
+    private async Task SpawnRandomEntry(Entity<MapGridComponent> grid, IBudgetEntry entry, Dungeon dungeon, Random random)
     {
         await SuspendIfOutOfTime();
 
@@ -320,7 +320,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                     continue;
                 }
 
-                var uid = _entManager.SpawnAtPosition(entry.Proto, grid.GridTileToLocal(tile));
+                var uid = _entManager.SpawnAtPosition(entry.Proto, _map.GridTileToLocal(grid, grid, tile));
                 _entManager.RemoveComponent<GhostRoleComponent>(uid);
                 _entManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
                 return;
