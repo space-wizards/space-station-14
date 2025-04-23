@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Southbridge
-  changes:
-  - message: More Ionstorm law elements have been added
-    type: Add
-  id: 7821
-  time: '2025-01-16T20:49:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/34197
 - author: southbridge-fur
   changes:
   - message: Pride-O-Mats now have scarves instead of cloaks
@@ -3924,3 +3917,14 @@
   id: 8322
   time: '2025-04-23T11:08:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33443
+- author: ArchRBX
+  changes:
+  - message: pAI's can now install a variety of useful software through their new
+      Software Catalog.
+    type: Add
+  - message: pAI's no longer start with a Station Map or MIDI Player, and must purchase
+      these through the shop.
+    type: Tweak
+  id: 8323
+  time: '2025-04-23T23:55:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36857
