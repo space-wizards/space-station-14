@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: 12rabbits
-  changes:
-  - message: Mobs will no longer automatically unbuckle themselves after recovering
-      from a critical state.
-    type: Fix
-  id: 1052
-  time: '2025-02-05T09:15:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1569
 - author: formlessnameless
   changes:
   - message: Dead changelings will now automatically go into stasis if they have enough
@@ -4107,3 +4099,11 @@
   id: 1551
   time: '2025-04-23T14:20:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2288
+- author: MintyTheBinty
+  changes:
+  - message: Added a quick dose of Cardassian justice and enlightenment to our dear
+      players at the end of a shift.
+    type: Add
+  id: 1552
+  time: '2025-04-23T14:27:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2297
