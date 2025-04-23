@@ -17,6 +17,7 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
     private readonly LoadoutGroupPrototype _groupProto;
 
     [Dependency] private readonly DocumentParsingManager _parsingMan = default!;
+    [Dependency] private readonly IEntityManager _entManager = default!;
 
     private readonly ISawmill _sawmill;
 
@@ -83,21 +84,28 @@ public sealed partial class LoadoutGroupContainer : BoxContainer
             var pressed = matchingLoadout != null;
 
             var enabled = loadout.IsValid(profile, session, loadoutProto, collection, out var reason);
-            var loadoutContainer = new LoadoutContainer(loadoutProto, !enabled, reason);
-            //loadoutContainer.Select.Pressed = pressed;
-            //loadoutContainer.Item.SetMessage(
-            //            FormattedMessage.FromMarkupOrThrow(
-            //                $"[center]{loadoutSystem.GetName(loadProto)}[/center]"
-            //            )
-            //        );
 
-            //loadoutContainer.Select.OnPressed += args =>
+            var loadoutContainer = new LoadoutContainer(loadoutProto, !enabled, reason);
+            loadoutContainer.Select.Pressed = pressed;
+
+            //var ent = loadProto.DummyEntity ?? _entManager.System<LoadoutSystem>().GetFirstOrNull(loadProto);
+
+            //if (ent == null)
+            //    return;
+            //if (!_parsingMan.TryAddMarkup(loadoutContainer.Select, $"<GuideEntityEmbed Entity=\"{ent}\" Caption=\"\"/>"))
             //{
-            //    if (args.Button.Pressed)
-            //        OnLoadoutPressed?.Invoke(loadoutProto);
-            //    else
-            //        OnLoadoutUnpressed?.Invoke(loadoutProto);
-            //};
+            //    // The guidebook will automatically display the in-guidebook error if it 
+            //    _sawmill.Error($"");
+            //}
+            
+
+            loadoutContainer.Select.OnPressed += args =>
+            {
+                if (args.Button.Pressed)
+                    OnLoadoutPressed?.Invoke(loadoutProto);
+                else
+                    OnLoadoutUnpressed?.Invoke(loadoutProto);
+            };
 
             LoadoutsContainer.AddChild(loadoutContainer);
         }

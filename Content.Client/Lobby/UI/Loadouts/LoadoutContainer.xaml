@@ -5,7 +5,6 @@
               x:Class="Content.Client.Lobby.UI.Loadouts.LoadoutContainer"
               Orientation="Vertical"
               StyleClasses="ItemBackground"
-              MouseFilter="Ignore"
               Margin="4"
               HorizontalExpand="True"
               VerticalExpand="True">
@@ -15,23 +14,17 @@
              StyleClasses="ItemButton"
              HorizontalExpand="True"
              VerticalExpand="True"
+             MouseFilter="Stop"
              Margin="4">
 
-            <!--<BoxContainer Orientation="Vertical"
+            <BoxContainer Orientation="Vertical"
                           HorizontalExpand="True"
                           VerticalExpand="True">
 
                 <SpriteView Name="Sprite"
-                            Scale="2 2"
+                            Scale="5 5"
                             MouseFilter="Ignore"
                             HorizontalAlignment="Center" />
-
-                <RichTextLabel Name="ItemLabel"
-                               Text="Item label"
-                               Margin="0,2"/>
-            </BoxContainer>-->
-            <custom:CustomLabel Name="ItemLabel"
-                            Text="Item label Item label Item label Item label"
-                            HorizontalExpand="False"/>
+            </BoxContainer>
         </Button>
 </BoxContainer>
