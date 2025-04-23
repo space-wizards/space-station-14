@@ -119,6 +119,7 @@ public sealed class SlipperySystem : EntitySystem
             {
                 var sliding = EnsureComp<SlidingComponent>(other);
                 sliding.CollidingEntities.Add(uid);
+                // Why the fuck does this assertion stack overflow every once in a while
                 DebugTools.Assert(_physics.GetContactingEntities(other, physics).Contains(uid));
             }
         }

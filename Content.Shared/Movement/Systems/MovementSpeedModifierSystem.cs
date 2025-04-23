@@ -30,8 +30,8 @@ namespace Content.Shared.Movement.Systems
             ent.Comp.WeightlessModifier = ent.Comp.BaseWeightlessModifier;
             ent.Comp.WeightlessFriction = ent.Comp.BaseWeightlessFriction;
             ent.Comp.WeightlessFrictionNoInput = ent.Comp.BaseWeightlessFrictionNoInput;
-            ent.Comp.Friction = ent.Comp.BaseFriction;
-            ent.Comp.FrictionNoInput = ent.Comp.BaseFriction;
+            ent.Comp.Friction = _frictionModifier * ent.Comp.BaseFriction;
+            ent.Comp.FrictionNoInput = _frictionModifier * ent.Comp.BaseFriction;
             ent.Comp.Acceleration = ent.Comp.BaseAcceleration;
             Dirty(ent);
         }
@@ -121,8 +121,8 @@ namespace Content.Shared.Movement.Systems
                 && MathHelper.CloseTo(ev.Acceleration, move.Acceleration))
                 return;
 
-            move.Friction = ev.Friction;
-            move.FrictionNoInput = ev.FrictionNoInput;
+            move.Friction = _frictionModifier * ev.Friction;
+            move.FrictionNoInput = _frictionModifier * ev.FrictionNoInput;
             move.Acceleration = ev.Acceleration;
 
             Dirty(uid, move);

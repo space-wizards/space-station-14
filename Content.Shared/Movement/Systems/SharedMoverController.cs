@@ -61,14 +61,6 @@ public abstract partial class SharedMoverController : VirtualController
 
     private static readonly ProtoId<TagPrototype> FootstepSoundTag = "FootstepSound";
 
-    /// <summary>
-    /// <see cref="CCVars.StopSpeed"/>
-    /// </summary>
-    private float _stopSpeed;
-    private float _airDamping;
-    private float _minDamping;
-    private float _frictionModifier;
-
     private bool _relativeMovement;
 
     /// <summary>
@@ -96,10 +88,6 @@ public abstract partial class SharedMoverController : VirtualController
         InitializeInput();
         InitializeRelay();
         Subs.CVar(_configManager, CCVars.RelativeMovement, value => _relativeMovement = value, true);
-        Subs.CVar(_configManager, CCVars.TileFrictionModifier, value => _frictionModifier = value, true);
-        Subs.CVar(_configManager, CCVars.MinFriction, value => _minDamping = value, true);
-        Subs.CVar(_configManager, CCVars.AirFriction, value => _airDamping = value, true);
-        Subs.CVar(_configManager, CCVars.StopSpeed, value => _stopSpeed = value, true);
         UpdatesBefore.Add(typeof(TileFrictionController));
     }
 
@@ -277,7 +265,6 @@ public abstract partial class SharedMoverController : VirtualController
             wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
 
             friction = tileDef?.Friction ?? 0.3f;
-            friction *= _frictionModifier;
 
             if (wishDir != Vector2.Zero)
             {
@@ -396,25 +383,15 @@ public abstract partial class SharedMoverController : VirtualController
 
     public void Friction(float minimumFrictionSpeed, float frameTime, float friction, ref Vector2 velocity)
     {
-        //This is how damping is calculated so we should use this for friction always
-        //linearVelocity *= Math.Clamp(1.0f - data.FrameTime * body.LinearDamping, 0.0f, 1.0f);
         var speed = velocity.Length();
 
         if (speed < minimumFrictionSpeed)
             return;
 
-        var drop = 0f;
+        // This equation is lifted from the Physics Island solver.
+        // We re-use it here because Kinematic Controllers can't/shouldn't use the Physics Friction
+        velocity *= Math.Clamp(1.0f - frameTime * friction, 0.0f, 1.0f);
 
-        var control = MathF.Max(_stopSpeed, speed);
-        drop += control * friction * frameTime;
-
-        var newSpeed = MathF.Max(0f, speed - drop);
-
-        if (newSpeed.Equals(speed))
-            return;
-
-        newSpeed /= speed;
-        velocity *= newSpeed;
     }
 
     /// <summary>

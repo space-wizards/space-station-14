@@ -112,7 +112,12 @@ namespace Content.Shared.Friction
                 PhysicsSystem.SetAngularDamping(uid, body, friction);
 
                 if (body.BodyType == BodyType.KinematicController)
-                    ReduceLinearVelocity(uid, prediction, body, friction, frameTime);
+                {
+                    // We do this so prediction doesn't break
+                    var velocity = body.LinearVelocity;
+                    _mover.Friction(0f, frameTime, friction, ref velocity);
+                    PhysicsSystem.SetLinearVelocity(uid, velocity, body: body);
+                }
             }
         }
 
