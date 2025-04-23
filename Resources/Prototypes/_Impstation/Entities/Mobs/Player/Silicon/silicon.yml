@@ -156,10 +156,10 @@
   - type: UnpoweredFlashlight
   - type: PointLight
     enabled: false
-    radius: 3.5
-    softness: 1
-    mask: /Textures/Effects/LightMasks/cone.png
-    autoRot: true
+    radius: 4
+    energy: 0.8
+    softness: 10
+    color: "#bfe9ff"
   - type: ProtectedFromStepTriggers
   - type: InputMover
   - type: MobMover

@@ -103,26 +103,26 @@
   parent: BaseItem
   name: cardboard RCD
   description: A nanomass-compressor fueled Rapid Construction Device designed for speedy, but temporary, repairs. Produces temporary structures made from fiberboard.
-  categories: [ HideSpawnMenu ]
+  suffix: Safe To Spawn
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Tools/dronercd.rsi
     state: icon
   - type: LimitedCharges
-    maxCharges: 8
-    charges: 10
+    maxCharges: 20
+    charges: 20
   - type: AutoRecharge
-    rechargeDuration: 5 # originally 10. buffing it to 5 until we get cardboard RCD
+    rechargeDuration: 5
   - type: RCD
-    availablePrototypes: # significantly pared down - just the essentials for quick patch-jobs. If they want to do more permanent fixes, they start with the materials to do so.
+    availablePrototypes: # significantly pared down - just the essentials for quick patch-jobs. custom-repriced lights and deconstruct.
     - CardboardWall
     - FloorCardboard
     - CardboardWindow
     - WindowCardboardDirectional
     - ChairCardboard
     - DoorCardboard
-    - TubeLight
-    - BulbLight
+    - TubeLightDrone
+    - BulbLightDrone
     - LVCable
     - MVCable
     - HVCable
@@ -138,6 +138,19 @@
   - type: Tag
     tags:
     - DroneUsable
+
+- type: entity
+  id: RCDRechargingCardboardAdmin
+  parent: RCDRechargingCardboard
+  name: experimental cardboard RCD
+  suffix: Admeme
+  components:
+  - type: LimitedCharges
+    maxCharges: 50
+    charges: 50
+  - type: AutoRecharge
+    rechargeDuration: 0.1
+
 
 - type: entity
   id: RCDRechargingCardboardUnremoveable
