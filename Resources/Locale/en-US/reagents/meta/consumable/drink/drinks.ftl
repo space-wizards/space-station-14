@@ -95,4 +95,4 @@ reagent-name-mopwata = mopwata
 reagent-desc-mopwata = Dirty, stagnant mop water.
 
 reagent-name-molten-chocolate = molten chocolate
-reagent-desc-molten-chocolate = A cup of hot chocolate mixed with a unknown chemical that has been superheated through unknown means.
+reagent-desc-molten-chocolate = A cup of hot chocolate mixed with vestine and plasma, then heated to a very high temperature, would cause serious burns.

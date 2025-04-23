@@ -9,6 +9,20 @@
     AcidSpit: 3
 
 - type: reaction
+  id: MoltenChocolate
+  impact: Medium
+  minTemp: 630
+  reactants:
+    HotCocoa:
+      amount: 20
+    Vestine:
+      amount: 5
+    Plasma:
+      amount: 3
+  products:
+    MoltenChocolate: 25
+
+- type: reaction
   id: AlliesCocktail
   requiredMixerCategories:
   - Shake
