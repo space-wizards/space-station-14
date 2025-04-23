@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-NC-SA-3.0",
-  "copyright": "Taken from TGStation for space station 14",
+  "copyright": "Taken from TGStation at commit https://github.com/tgstation/tgstation/commit/829310bc868996737b27f34785870bf0ff407c1d",
   "size": {
     "x": 32,
     "y": 32
