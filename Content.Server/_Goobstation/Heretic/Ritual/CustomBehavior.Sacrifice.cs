@@ -12,10 +12,10 @@ using Content.Server.Heretic.EntitySystems;
 using Content.Server.Humanoid;
 using Content.Shared.Forensics.Components;
 using Robust.Server.GameObjects;
-using Content.Server._Goobstation.Heretic.EntitySystems;
 using Content.Server.Heretic.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Body.Components;
+using Content.Server._Goobstation.Heretic.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.EntitySystems;
 

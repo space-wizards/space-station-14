@@ -1,19 +1,7 @@
-using Content.Shared.Examine;
-using Content.Shared.Ghost.Roles.Components;
 using Content.Shared.Heretic;
 using Content.Shared.Humanoid;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Mobs;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Nutrition.AnimalHusbandry;
-using Content.Shared.Nutrition.Components;
-using Content.Shared.Zombies;
 using Robust.Client.GameObjects;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Client.Heretic.EntitySystems
 {

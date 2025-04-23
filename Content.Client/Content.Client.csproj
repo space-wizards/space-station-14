@@ -26,6 +26,11 @@
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
   <ItemGroup>
+    <AdditionalFiles Update="_Goobstation\Heretic\UI\GhoulNotifMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AdditionalFiles>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Update="_Goobstation\Heretic\UI\HellMemoryMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

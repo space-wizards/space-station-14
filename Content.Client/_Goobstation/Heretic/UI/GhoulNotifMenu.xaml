@@ -1,0 +1,10 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      Title="{Loc 'ghoul-notif-title'}">
+    <BoxContainer Orientation="Vertical" Margin="5">
+        <Label Text="{Loc 'ghoul-notif-text'}"/>
+        <BoxContainer Orientation="Horizontal" Align="Center">
+            <Button Name="ConfirmButton" Text="{Loc 'hell-memory-confirm'}"/>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
