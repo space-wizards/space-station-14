@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: crocodilecarousel
-  changes:
-  - message: Vox hair now correctly hides under helmets.
-    type: Fix
-  id: 1048
-  time: '2025-02-04T21:56:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1563
-- author: hivehum
-  changes:
-  - message: Christmas is OVER. Go supercrit a reagent anomaly if you want presents
-      that bad.
-    type: Remove
-  id: 1049
-  time: '2025-02-04T21:56:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1564
-- author: TheGrimbeeper
-  changes:
-  - message: UAP foam from artifacts
-    type: Add
-  id: 1050
-  time: '2025-02-05T00:10:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1566
 - author: Darkmajia
   changes:
   - message: 'DINO WARS: FINAL REMIX'
@@ -4104,3 +4082,26 @@
   id: 1547
   time: '2025-04-23T10:07:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2324
+- author: rainyatrium
+  changes:
+  - message: More Refsdal adjustments!
+    type: Tweak
+  id: 1548
+  time: '2025-04-23T10:18:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2292
+- author: hivehum
+  changes:
+  - message: Couriers no longer feel compelled to steal the mail.
+    type: Fix
+  id: 1549
+  time: '2025-04-23T10:18:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2311
+- author: DinnerCalzone
+  changes:
+  - message: A confluence of space magic has caused Suppy to undergo some quality
+      of life changes in the event that he becomes sentient, including the ability
+      to puts hats on him, buckle him, and some other fun stuff.
+    type: Tweak
+  id: 1550
+  time: '2025-04-23T10:17:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2309
