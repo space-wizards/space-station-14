@@ -11,7 +11,6 @@ public sealed class SlidingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SlidingComponent, TileFrictionEvent>(OnSlideAttempt);
         SubscribeLocalEvent<SlidingComponent, StoodEvent>(OnStand);
         SubscribeLocalEvent<SlidingComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<SlidingComponent, EndCollideEvent>(OnEndCollide);
