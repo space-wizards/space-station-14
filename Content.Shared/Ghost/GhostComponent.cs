@@ -4,6 +4,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Ghost;
 
+/// <summary>
+/// Represents an observer ghost.
+/// Handles limiting interactions, using ghost abilities, ghost visibility, and ghost warping.
+/// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedGhostSystem))]
 [AutoGenerateComponentState(true), AutoGenerateComponentPause]
 public sealed partial class GhostComponent : Component
