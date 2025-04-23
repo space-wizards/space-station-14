@@ -31,8 +31,7 @@ public sealed class SlipperySystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SpeedModifierContactsSystem _speedModifier = default!;
 
-    [ValidatePrototypeId<RoundStatisticPrototype>]
-    public const string SlippedCount = "SlippedCount";
+    public static readonly ProtoId<RoundStatisticPrototype> SlippedCount = "SlippedCount";
 
     public override void Initialize()
     {

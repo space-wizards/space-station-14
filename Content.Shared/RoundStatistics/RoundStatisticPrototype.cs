@@ -5,7 +5,7 @@ namespace Content.Shared.RoundStatistics;
 /// <summary>
 /// Used to create round statistics
 /// </summary>
-[Serializable, Prototype("roundStatistic")]
+[Serializable, Prototype]
 public sealed class RoundStatisticPrototype : IPrototype
 {
     /// <inheritdoc/>

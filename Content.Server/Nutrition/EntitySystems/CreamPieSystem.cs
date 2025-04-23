@@ -30,8 +30,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
 
-        [ValidatePrototypeId<RoundStatisticPrototype>]
-        public const string CreamedCount = "CreamedCount";
+        public static readonly ProtoId<RoundStatisticPrototype> CreamedCount = "CreamedCount";
 
         public override void Initialize()
         {
