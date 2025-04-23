@@ -32,8 +32,6 @@
       components:
       - HumanoidAppearance
   - type: DisposalUnit
-    autoEngageEnabled: false
-    noUI: true
     blacklist:
       components:
       - HumanoidAppearance

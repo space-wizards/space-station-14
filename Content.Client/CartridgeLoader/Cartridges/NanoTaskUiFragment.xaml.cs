@@ -104,6 +104,7 @@ public sealed partial class NanoTaskUiFragment : BoxContainer
                 NanoTaskPriority.High => StationTaskTable.HighContainer,
                 NanoTaskPriority.Medium => StationTaskTable.MediumContainer,
                 NanoTaskPriority.Low => StationTaskTable.LowContainer,
+                 _ => throw new ArgumentException("Invalid priority"),
             };
             var control = new NanoTaskItemControl(task);
             container.AddChild(control);
