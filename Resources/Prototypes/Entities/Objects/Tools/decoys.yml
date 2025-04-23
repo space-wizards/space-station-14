@@ -33,6 +33,7 @@
     nameSegments:
     - NamesSyndicatePrefix
     - NamesSyndicateNormal
+    nameFormat: name-format-nukie-generic
   - type: Damageable
     damageContainer: Inorganic
   - type: ToggleableLightVisuals

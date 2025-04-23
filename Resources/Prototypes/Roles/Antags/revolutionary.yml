@@ -5,6 +5,7 @@
   playTimeTracker: AntagHeadRevolutionary # imp
   setPreference: true
   objective: roles-antag-rev-head-objective
+  guides: [ Revolutionaries ]
   requirements:
   - !type:DepartmentTimeRequirement
     department: Security
@@ -12,7 +13,6 @@
   - !type:DepartmentTimeRequirement
     department: Command
     time: 36000 # 10h
-  guides: [ Revolutionaries ]
 
 - type: antag
   id: Rev

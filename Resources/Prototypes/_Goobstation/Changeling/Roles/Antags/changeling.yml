@@ -2,6 +2,9 @@
   id: Changeling
   name: roles-antag-changeling-name
   antagonist: true
+  requirements:
+  - !type:OverallPlaytimeRequirement # Imp
+    time: 3600 # 1h
   playTimeTracker: AntagChangeling
   setPreference: true
   objective: roles-antag-changeling-description

@@ -97,7 +97,10 @@ namespace Content.Server.Access.Systems
                 return;
             }
 
+
             _popupSystem.PopupEntity(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)), args.Target.Value, args.User);
+            if (addedLength > 0)
+                Dirty(uid, access);
         }
 
         private void AfterUIOpen(EntityUid uid, AgentIDCardComponent component, AfterActivatableUIOpenEvent args)

@@ -782,3 +782,55 @@
         #  Quantity: 0.8
         - ReagentId: Fiber
           Quantity: 6.25 # imp
+
+- type: entity
+  name: world peazza
+  parent: FoodPizzaBase
+  id: FoodPizzaWorldpeas
+  description: Modern diplomacy in the shape of a disc.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - numbingtranquility
+  - type: Sprite
+    layers:
+    - state: worldpeas
+  - type: SliceableFood
+    slice: FoodPizzaWorldpeasSlice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 45
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 24
+        - ReagentId: Happiness
+          Quantity: 9
+        - ReagentId: Pax
+          Quantity: 6
+
+- type: entity
+  name: slice of world peazza
+  parent: FoodPizzaSliceBase
+  id: FoodPizzaWorldpeasSlice
+  description: Dividing the world up is a small price to pay for harmony.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - numbingtranquility
+  - type: Sprite
+    layers:
+    - state: worldpeas-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
+        - ReagentId: Happiness
+          Quantity: 1.125
+        - ReagentId: Pax
+          Quantity: 0.75

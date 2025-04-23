@@ -51,7 +51,6 @@
             Psychologist: [ 1, 1 ]
             # science - 8-11
             Borg: [ 3, 3 ]
-            ResearchAssistant: [ 3, 3 ]
             Scientist: [ 4, 4 ]
             StationAi: [ 1, 1 ]
             # security - 13-17
