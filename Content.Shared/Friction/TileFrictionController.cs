@@ -61,13 +61,6 @@ namespace Content.Shared.Friction
             {
                 var uid = body.Owner;
 
-                if (body.BodyStatus == BodyStatus.InAir)
-                {
-                    PhysicsSystem.SetLinearDamping(uid, body, _airDamping);
-                    PhysicsSystem.SetAngularDamping(uid, body, _airDamping);
-                    continue;
-                }
-
                 // Only apply friction when it's not a mob (or the mob doesn't have control)
                 // We may want to instead only apply friction to dynamic entities and not mobs ever.
                 if (prediction && !body.Predict || _mover.UseMobMovement(uid))
@@ -82,9 +75,14 @@ namespace Content.Shared.Friction
                     continue;
                 }
 
-                var friction = GetTileFriction(uid, body, xform);
-                // TODO: Don't multiply by _frictionModifier if we're in the air
-                friction *= _frictionModifier;
+                float friction;
+
+                // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
+                if (body.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(uid, body, xform) || !xform.Coordinates.IsValid(EntityManager))
+                    friction = _airDamping;
+                else
+                    friction = _frictionModifier * GetTileFriction(uid, body, xform);
+
                 var bodyModifier = 1f;
 
                 if (_frictionQuery.TryGetComponent(uid, out var frictionComp))
@@ -156,15 +154,6 @@ namespace Content.Shared.Friction
             PhysicsComponent body,
             TransformComponent xform)
         {
-            // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
-
-
-            if (_gravity.IsWeightless(uid, body, xform))
-                return _airDamping;
-
-            if (!xform.Coordinates.IsValid(EntityManager))
-                return _airDamping;
-
             // If not on a grid then return the map's friction.
             if (!_gridQuery.TryGetComponent(xform.GridUid, out var grid))
             {

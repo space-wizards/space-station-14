@@ -273,7 +273,9 @@ public abstract partial class SharedMoverController : VirtualController
 
             wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
 
-            friction = _frictionModifier * tileDef?.Friction ?? _frictionModifier * 0.3f;
+            friction = tileDef?.Friction ?? 0.3f;
+            friction *= _frictionModifier;
+
             if (wishDir != Vector2.Zero)
             {
                 friction *= tileDef?.MobFriction ?? moveSpeedComponent?.Friction ?? MovementSpeedModifierComponent.DefaultFriction;
