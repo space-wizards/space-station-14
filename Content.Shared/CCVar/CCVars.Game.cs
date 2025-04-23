@@ -387,7 +387,7 @@ public sealed partial class CCVars
         CVarDef.Create("game.contraband_examine", true, CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
-    ///     If true, the severity of contraband can only be viewed in the inspection menu while wearing goggles only if ContrabandExamine is true.
+    ///     If true, contraband examination is only possible while wearing an item with `ShowContrabandDetailsComponent`. Requires `ContrabandExamine` to be true as well.
     /// </summary>
     public static readonly CVarDef<bool> ContrabandExamineOnlyInHUD =
         CVarDef.Create("game.contraband_examine_only_in_hud", false, CVar.SERVER | CVar.REPLICATED);
