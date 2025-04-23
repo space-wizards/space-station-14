@@ -395,8 +395,8 @@
   components:
   - type: FlavorProfile
     flavors:
-      - cotton
-      - cheap
+    - cotton
+    - cheap
   - type: SolutionContainerManager
     solutions:
       food:
