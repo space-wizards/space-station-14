@@ -48,6 +48,11 @@
   copyright: "[ATPLore] Weed is Trash and Dumb to Smoke"
   source: "https://www.youtube.com/watch?v=soIjL88SKRQ"
 
+- files: ["winning.ogg"]
+  license: "Custom"
+  copyright: "The Role of Cardassian Trials (DS9: Tribunal)"
+  source: "https://www.youtube.com/watch?v=JEtl2X6mBmQ"
+
 - files: ["wuhey.ogg"]
   license: "Custom"
   copyright: "middle aged men ordering a greggs by theboski"
