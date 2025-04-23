@@ -12,7 +12,7 @@ public sealed partial class ShowContrabandSystem : EntitySystem
 
     private void OnGetContrabandDetails(Entity<ShowContrabandDetailsComponent> ent, ref GetContrabandDetailsEvent args)
     {
-        args = args with { CanShowContraband = true };
+        args.CanShowContraband = true;
     }
 }
 
@@ -20,8 +20,9 @@ public sealed partial class ShowContrabandSystem : EntitySystem
 /// Raised on an entity and its inventory to determine if it can see contraband information in the examination window.
 /// </summary>
 [ByRefEvent]
-public record struct GetContrabandDetailsEvent(bool CanShowContraband = false)
-    : IInventoryRelayEvent
+public sealed class GetContrabandDetailsEvent : EntityEventArgs, IInventoryRelayEvent
 {
-    public SlotFlags TargetSlots { get; init; } = SlotFlags.EYES;
+    public bool CanShowContraband;
+
+    public SlotFlags TargetSlots { get; } = SlotFlags.EYES;
 }
