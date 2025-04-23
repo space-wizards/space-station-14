@@ -445,7 +445,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         // even if we don't check for obstructions, we may still need to check the range.
         var xform = Transform(user);
-        if (xform.MapID != coords.GetMapId(EntityManager))
+        if (xform.MapID != _transform.GetMapId(coords))
             return false;
 
         if (comp.Range <= 0)

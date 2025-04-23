@@ -24,6 +24,7 @@
   - type: Hands
   - type: ComplexInteraction
   - type: Puller
+    needsHands: false
   - type: CombatMode
   - type: Physics
     ignorePaused: true
