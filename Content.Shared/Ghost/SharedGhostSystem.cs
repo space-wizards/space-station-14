@@ -68,6 +68,18 @@ namespace Content.Shared.Ghost
         {
             SetCanReturnToBody((component.Owner, component), value);
         }
+
+        public void SetCanGhostInteract(Entity<GhostComponent?> entity, bool value)
+        {
+            if (!Resolve(entity, ref entity.Comp))
+                return;
+
+            if (entity.Comp.CanGhostInteract == value)
+                return;
+
+            entity.Comp.CanGhostInteract = value;
+            Dirty(entity);
+        }
     }
 
     /// <summary>
