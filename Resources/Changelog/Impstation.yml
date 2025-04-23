@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: kipdotnet
-  changes:
-  - message: Added a special Micro RCD for the tck'tck, replacing its wire coils.
-    type: Add
-  - message: Greatly reduced the chance of the tck'tck having a Gun
-    type: Tweak
-  id: 1063
-  time: '2025-02-06T11:39:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1588
 - author: hivehum, crocodilecarousel
   changes:
   - message: Added a ton of festive treats and toys for Valentine's Day! Order a crate
@@ -4114,3 +4105,17 @@
   id: 1562
   time: '2025-04-23T21:03:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2290
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: Security Officers, Wardens, Detectives, and Heads can now select what
+      their round-start pistol and ammunition are!
+    type: Add
+  - message: 4 new pistols to grant additional options (1 for HoS/Warden, 1 for Officer/HoS/Warden,
+      2 for Detective), and ammunition pouches that store bullets,
+    type: Add
+  - message: Blaster Pistol Power Cells no longer need to be researched before they
+      can be printed at the Security Techfab
+    type: Tweak
+  id: 1563
+  time: '2025-04-23T21:42:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2318
