@@ -1019,6 +1019,38 @@
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-tool-module }
 
 - type: entity
+  id: XenoborgModuleAccessBreaker
+  parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
+  name: access breaker xenoborg module
+  description: module with a access breaker
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-xenoborg-access-breaker
+  - type: ItemBorgModule
+    items:
+    - AccessBreaker
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: access-breaker-module }
+
+- type: entity
+  id: XenoborgModuleFireExtinguisher
+  parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
+  name: fire extinguisher xenoborg module
+  description: module with a fire extinguisher
+  components:
+  - type: Sprite
+    layers:
+    - state: xenoborg_engi
+    - state: icon-xenoborg-fire-extinguisher
+  - type: ItemBorgModule
+    items:
+    - SelfRechargingFireExtinguisher
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: xenoborg-extinguisher-module }
+
+- type: entity
   id: XenoborgModuleJammer
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
   name: jammer xenoborg module
