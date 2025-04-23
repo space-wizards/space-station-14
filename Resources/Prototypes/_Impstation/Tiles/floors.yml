@@ -1,0 +1,15 @@
+- type: tile
+  id: FloorApid
+  name: tiles-apid-floor
+  sprite: /Textures/_Impstation/Tiles/apidfloor.png
+  variants: 2
+  placementVariants:
+  - 1.0
+  - 1.0
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemApid
+  heatCapacity: 10000

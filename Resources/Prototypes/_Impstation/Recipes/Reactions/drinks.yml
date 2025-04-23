@@ -89,19 +89,19 @@
   products:
     GatorWine: 2
 
-#- type: reaction # This recipe doesn't work, and I don't understand why. It also doesnt seem to work in game and causes a testfail when enabled.
-#  id: Rotgut
-#  requiredMixerCategories:
-#    - Shake
-#  reactants:
-#    Water:
-#      amount: 1
-#    Sugar:
-#      amount: 4
-#    Nicotine:
-#      amount: 5
-#  products:
-#    Rotgut: 10
+- type: reaction #if this recipe ever causes test fail again you should just kill her
+  id: Rotgut
+  requiredMixerCategories:
+    - Stir 
+  reactants:
+    Water:
+      amount: 1
+    Sugar:
+      amount: 4
+    Nicotine:
+      amount: 5
+  products:
+    Rotgut: 10
 
 - type: reaction
   id: BumWine
@@ -417,3 +417,15 @@
       amount: 1
   products:
     FeverDream: 5
+
+- type: reaction
+  id: Soju
+  requiredMixerCategories:
+    - Stir
+  reactants:
+    Ethanol:
+      amount: 1
+    JuiceWatermelon:
+      amount: 1
+  products:
+    Soju: 2

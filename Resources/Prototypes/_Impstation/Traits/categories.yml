@@ -1,0 +1,4 @@
+- type: traitCategory
+  id: RandomizerTraits
+  name: trait-category-randomizers
+  maxTraitPoints: 1

@@ -1,0 +1,14 @@
+- type: entity
+  name: apid hex tile
+  parent: FloorTileItemBase
+  id: FloorTileItemApid
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tiles/apid.rsi
+    state: apid
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorApid
+  - type: Stack
+    stackType: FloorTileApid

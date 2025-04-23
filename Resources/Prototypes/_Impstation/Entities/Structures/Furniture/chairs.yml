@@ -1,0 +1,8 @@
+- type: entity
+  name: apid seat
+  id: ChairApid
+  parent: StoolBase
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Furniture/chairs.rsi
+    state: apid

@@ -212,6 +212,18 @@
     },
     {
       "name": "anomalymeat-cooked"
+    },
+    {
+      "name": "dragon-cooked"
+    },
+    {
+      "name": "dragoncutlet"
+    },
+    {
+      "name": "dragoncutlet_veins"
+    },
+    {
+      "name": "dragoncutlet-cooked"
     }
   ]
 }

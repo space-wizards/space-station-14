@@ -28,3 +28,8 @@ petting-success-cargo-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} scr
 
 petting-success-apid = You pet {$target} on their fuzzy little head.
 petting-failure-apid = You try to pet {$target}, but your fingers are shocked by static electricity!
+
+## Anomalites
+
+petting-success-anomalite = You pet {THE($target)} on their anomalous little head.
+petting-failure-anomalite = You try to pet {THE($target)}, but your fingers are zapped by its energy field!

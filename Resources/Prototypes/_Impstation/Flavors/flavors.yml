@@ -152,3 +152,8 @@
   id: feverdream
   flavorType: Complex
   description: flavor-complex-feverdream
+
+- type: flavor
+  id: soju
+  flavorType: Complex
+  description: flavor-complex-soju

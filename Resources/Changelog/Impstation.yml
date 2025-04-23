@@ -1,104 +1,4 @@
 ﻿Entries:
-- author: crocodilecarousel
-  changes:
-  - message: Arachnids have all been sent to the dry cleaners and are now substantially
-      more vibrant and colorful.
-    type: Add
-  id: 1042
-  time: '2025-02-02T17:15:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1545
-- author: kipdotnet
-  changes:
-  - message: Reworked the tck'tck gun to be a unique, lower caliber weapon instead
-      of a renamed Echis.
-    type: Tweak
-  - message: Increased the volume of the tck'tck footsteps.
-    type: Tweak
-  id: 1043
-  time: '2025-02-03T22:29:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1542
-- author: Kandiyaki
-  changes:
-  - message: more players will be assigned as heretics on heretic rounds.
-    type: Tweak
-  id: 1044
-  time: '2025-02-04T02:12:33.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1553
-- author: formlessnameless
-  changes:
-  - message: Whale is better now.
-    type: Fix
-  id: 1045
-  time: '2025-02-04T03:32:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1558
-- author: formlessnameless
-  changes:
-  - message: King Soda and Jungle Juice can no longer be fruitful and multiply.
-    type: Tweak
-  id: 1046
-  time: '2025-02-04T06:26:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1559
-- author: Darkmajia
-  changes:
-  - message: U.A.P. works properly. Mo blaagh yim speak like cheego.
-    type: Add
-  - message: The Gray language has been slightly adjusted for consistency and capitalization.
-    type: Tweak
-  id: 1047
-  time: '2025-02-04T21:54:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1561
-- author: crocodilecarousel
-  changes:
-  - message: Vox hair now correctly hides under helmets.
-    type: Fix
-  id: 1048
-  time: '2025-02-04T21:56:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1563
-- author: hivehum
-  changes:
-  - message: Christmas is OVER. Go supercrit a reagent anomaly if you want presents
-      that bad.
-    type: Remove
-  id: 1049
-  time: '2025-02-04T21:56:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1564
-- author: TheGrimbeeper
-  changes:
-  - message: UAP foam from artifacts
-    type: Add
-  id: 1050
-  time: '2025-02-05T00:10:39.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1566
-- author: Darkmajia
-  changes:
-  - message: 'DINO WARS: FINAL REMIX'
-    type: Add
-  id: 1051
-  time: '2025-02-05T00:11:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1565
-- author: 12rabbits
-  changes:
-  - message: Mobs will no longer automatically unbuckle themselves after recovering
-      from a critical state.
-    type: Fix
-  id: 1052
-  time: '2025-02-05T09:15:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1569
-- author: formlessnameless
-  changes:
-  - message: Dead changelings will now automatically go into stasis if they have enough
-      biomass left.
-    type: Fix
-  id: 1053
-  time: '2025-02-05T09:40:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1557
-- author: hivehum
-  changes:
-  - message: Heretic rounds should have more random events.
-    type: Tweak
-  id: 1054
-  time: '2025-02-06T00:36:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1579
 - author: RosySaturniidae
   changes:
   - message: added a few new figurines!
@@ -4097,3 +3997,115 @@
   id: 1541
   time: '2025-04-22T14:34:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2312
+- author: widgetbeck
+  changes:
+  - message: Added a new category to the traits menu - Randomizer Traits. These will
+      cause you to roll some random traits at the start of each round.
+    type: Add
+  id: 1542
+  time: '2025-04-23T08:59:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2175
+- author: mqole
+  changes:
+  - message: The phrasing of server silicon rules has been tweaked slightly.
+    type: Tweak
+  id: 1543
+  time: '2025-04-23T09:22:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2301
+- author: Jellvisk
+  changes:
+  - message: Added Tech Walls! These walls come from a Grey civilization... and has
+      a version that glows in the dark!
+    type: Add
+  id: 1544
+  time: '2025-04-23T09:33:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2317
+- author: Widgetbeck, FaelingDraws
+  changes:
+  - message: Added a new ghostrole familiar, the Anomalite, summonable using an anomaly
+      core. Remember, they're loyal - but only to their core. Whoever has it, has
+      them.
+    type: Add
+  id: 1545
+  time: '2025-04-23T10:06:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2313
+- author: yesteryuri and mqole
+  changes:
+  - message: Added soju.
+    type: Add
+  - message: Fixed rotgut. You can make it again.
+    type: Fix
+  id: 1546
+  time: '2025-04-23T10:08:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2305
+- author: widgetbeck
+  changes:
+  - message: Added a radial quick-build menu to Cardboard.
+    type: Add
+  - message: Added a crew-usable cardboard RCD prototype. Currently not accessible
+      outside of admin intervention.
+    type: Add
+  - message: Changed the values of the Cardboard RCD to adjust balance.
+    type: Tweak
+  - message: Drones now have a different flashlight.
+    type: Tweak
+  id: 1547
+  time: '2025-04-23T10:07:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2324
+- author: rainyatrium
+  changes:
+  - message: More Refsdal adjustments!
+    type: Tweak
+  id: 1548
+  time: '2025-04-23T10:18:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2292
+- author: hivehum
+  changes:
+  - message: Couriers no longer feel compelled to steal the mail.
+    type: Fix
+  id: 1549
+  time: '2025-04-23T10:18:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2311
+- author: DinnerCalzone
+  changes:
+  - message: A confluence of space magic has caused Suppy to undergo some quality
+      of life changes in the event that he becomes sentient, including the ability
+      to puts hats on him, buckle him, and some other fun stuff.
+    type: Tweak
+  id: 1550
+  time: '2025-04-23T10:17:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2309
+- author: TheGrimbeeper
+  changes:
+  - message: reduced romerol slime probability
+    type: Tweak
+  - message: coffee slime (it is yum OR poison)
+    type: Add
+  id: 1551
+  time: '2025-04-23T14:20:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2288
+- author: MintyTheBinty
+  changes:
+  - message: Added a quick dose of Cardassian justice and enlightenment to our dear
+      players at the end of a shift.
+    type: Add
+  id: 1552
+  time: '2025-04-23T14:27:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2297
+- author: RosySaturniidae
+  changes:
+  - message: slightly improved model for flippo lighters!
+    type: Tweak
+  - message: syndicate flippo lighters no longer have cloaking technology.
+    type: Tweak
+  id: 1553
+  time: '2025-04-23T14:30:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2275
+- author: Kandiyaki
+  changes:
+  - message: it is no longer possible to draw a heretic rune on held items, permanently
+      sticking it to the holder.
+    type: Fix
+  id: 1554
+  time: '2025-04-23T14:32:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2316

@@ -161,6 +161,7 @@
     prototype: AnimalCarp
   - type: NightVision # EE
     isActive: true
+    toggleAction: null
     color: "#50595C"
     activateSound: null
     deactivateSound: null
@@ -192,7 +193,7 @@
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
   - type: Hands # imp. don't worry, they don't actually have hands.
-  - type: ComplexInteraction # imp. necessary for them to be able to use the pinpointer. This doesn't do much else for them, except I think they can now open crates. 
+  - type: ComplexInteraction # imp. necessary for them to be able to use the pinpointer. This doesn't do much else for them, except I think they can now open crates.
 
 - type: entity
   categories: [ HideSpawnMenu ]

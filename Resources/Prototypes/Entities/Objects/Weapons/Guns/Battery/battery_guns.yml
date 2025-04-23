@@ -506,6 +506,9 @@
       types:
         Blunt: 12
 #imp edit end
+  - type: Tag
+    tags:
+    - TurretCompatibleWeapon
 
 - type: entity
   name: portable particle decelerator

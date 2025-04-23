@@ -125,6 +125,16 @@
       - Crusher
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher.rsi
+    state: icon
+  - type: Item
+    size: Ginormous
+    sprite: Objects/Weapons/Melee/crusher-inhands.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/crusher.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
   - type: AmmoCounter
   - type: UseDelayOnShoot
   - type: UseDelay
@@ -162,18 +172,9 @@
         Slash: 2.5
         Structural: 30
   - type: GunRequiresWield
-  - type: Item
-    size: Ginormous
-    sprite: Objects/Weapons/Melee/crusher-inhands.rsi
   - type: DisarmMalus
   - type: Prying
   # imp edits #
-  - type: Clothing
-    sprite: Objects/Weapons/Melee/crusher.rsi
-    quickEquip: false
-    slots:
-    - Back
-    - suitStorage
   - type: DamageOtherOnHit
     staminaCost: 8
   # end imp edits #
@@ -194,8 +195,7 @@
     damage:
       types:
         Slash: 10
-    soundHit:
-        path: /Audio/Weapons/bladeslice.ogg
+  - type: LandAtCursor
   - type: Tag
     tags:
     - Knife
@@ -218,6 +218,16 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher_glaive.rsi
+    state: icon
+  - type: Item
+    size: Ginormous
+    sprite: Objects/Weapons/Melee/crusher_glaive-inhands.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/crusher_glaive.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
   - type: UseDelay
     delay: 1.9
   - type: LeechOnMarker
@@ -229,18 +239,10 @@
     tags:
       - Pickaxe
       - Crusher
-  - type: Item
-    size: Ginormous
-    sprite: Objects/Weapons/Melee/crusher_glaive-inhands.rsi
-  - type: Clothing # Imp
-    sprite: Objects/Weapons/Melee/crusher_glaive.rsi
-    quickEquip: false
-    slots:
-    - Back
-    - suitStorage
   # imp edits #
   - type: EmbeddableProjectile
   - type: EmbedPassiveDamage
   - type: ThrowingAngle
     angle: 225
   # end imp edits #
+

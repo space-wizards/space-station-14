@@ -46,6 +46,61 @@
     - type: Illiterate
 
 - type: trait
+  id: ImperfectClone
+  name: trait-imperfect-clone-name
+  description: trait-imperfect-clone-desc
+  category: RandomizerTraits
+  cost: 1
+  components:
+    - type: TraitRandomizer
+      minTraits: 1
+      maxTraits: 3
+      categories:
+      - Quirks
+      - Disabilities
+
+- type: trait
+  id: ImperfectCloneAccents
+  name: trait-imperfect-clone-accent-name
+  description: trait-imperfect-clone-accent-desc
+  category: RandomizerTraits
+  cost: 1
+  components:
+    - type: TraitRandomizer
+      minTraits: 0
+      maxTraits: 2
+      categories:
+      - SpeechTraits
+
+- type: trait
+  id: InconsistentHandwriting
+  name: trait-inconsistent-handwriting-name
+  description: trait-inconsistent-handwriting-desc
+  category: RandomizerTraits
+  cost: 1
+  components:
+    - type: TraitRandomizer
+      minTraits: 1
+      maxTraits: 1
+      categories:
+      - SignatureFonts
+
+- type: trait
+  id: ChaosMagicVictim
+  name: trait-chaos-magic-victim-name
+  description: trait-chaos-magic-victim-desc
+  category: RandomizerTraits
+  cost: 1
+  components:
+    - type: TraitRandomizer
+      minTraits: 5
+      maxTraits: 5
+      categories:
+      - Disabilities
+      - Quirks
+      - SpeechTraits
+
+- type: trait
   id: Echolalia
   name: trait-echolalia-name
   description: trait-echolalia-desc

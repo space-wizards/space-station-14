@@ -80,13 +80,6 @@
     Glass: 50
 
 - type: latheRecipe
-  id: BaseChemistryEmptyVial
-  result: BaseChemistryEmptyVial
-  completetime: 2
-  materials:
-    Glass: 50
-
-- type: latheRecipe
   id: Vape
   result: Vape
   icon:
@@ -98,6 +91,14 @@
     Steel: 250
 
 - type: latheRecipe
+  id: BaseChemistryEmptyVial
+  result: BaseChemistryEmptyVial
+  completetime: 2
+  materials:
+    Glass: 50
+    Wood: 20
+
+- type: latheRecipe
   id: ClothingEyesGlassesChemical
   result: ClothingEyesGlassesChemical
   completetime: 2
@@ -105,4 +106,4 @@
     Steel: 200
     Plastic: 300
     Glass: 500
-    
+

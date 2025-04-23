@@ -1,6 +1,7 @@
 - type: entity
   name: Suppy
   id: PetSuppy
+  parent: StripableInventoryBase
   suffix: Engineering's pet, steal target
   description: Engineering's pet suppermatter chunk. He dreams of causing station-wide destruction some day, but his bark is bigger than his bite.
   components:
@@ -14,7 +15,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.35
-        density: 300
+        density: 1000
         mask:
         - MobMask
         layer:
@@ -24,8 +25,24 @@
     state: suppermatter
     noRot: true
     drawdepth: Mobs
+  - type: Transform
+    noRot: true
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Engineering
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Engineering
+  - type: Access
+    tags:
+    - Maintenance
+    - Engineering
   - type: Appearance
   - type: Body # for letting someone use the pet carrier on it
+  - type: Buckle
   - type: Climbing
   - type: Pullable
   - type: Damageable
@@ -46,16 +63,56 @@
       Male: Suppy
       Female: Suppy
       Unsexed: Suppy
+  - type: Actions
+  - type: Alerts
   - type: AnimatedEmotes
   - type: MobState #for deathgasp
   - type: InputMover
   - type: Input
     context: "human"
-  - type: Examiner
+  - type: LagCompensation
   - type: MobMover
   - type: MovementSpeedModifier
     baseWalkSpeed: 0.1
     baseSprintSpeed: 0.2
+  - type: DoAfter
+  - type: Examiner
+  - type: Eye
+  - type: ContentEye
+  - type: CameraRecoil
+  - type: Reactive
+    groups:
+      Extinguish: [ Touch ]
+  - type: SupermatterImmune
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 25
+    soundHit:
+      collection: MetalThud
+  - type: StaminaDamageOnHit #if you launch suppy at someone, it'll bonk them bad and knock them on their ass
+    damage: 100
+  - type: Inventory
+    speciesId: suppy
+    templateId: suppy
+  - type: ContainerContainer
+    containers:
+      body_root_part: !type:ContainerSlot
+        showEnts: False
+        occludes: True
+        ent: null
+      mask: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+      eyes: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
+      head: !type:ContainerSlot
+        showEnts: False
+        occludes: False
+        ent: null
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-superdense
   - type: InteractionPopup
@@ -67,6 +124,7 @@
       collection: SupermatterAccentNormal
   - type: StealTarget
     stealGroup: PetSuppy
-  - type: ContainerContainer
-    containers:
-      body_root_part: !type:ContainerSlot
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - Suppy

@@ -46,3 +46,92 @@
     - mining
     - miningB
   - type: Appearance
+
+- type: entity
+  parent: BaseWall
+  id: WallTech
+  name: tech wall
+  components:
+  - type: StaticPrice
+    price: 400
+  - type: Tag
+    tags:
+      - Wall
+  - type: Sprite
+    sprite: _Impstation/Structures/Walls/techwall.rsi
+  - type: Icon
+    sprite: _Impstation/Structures/Walls/techwall.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalSlam
+      - !type:ChangeConstructionNodeBehavior
+        node: girder
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: IconSmooth
+    key: walls
+    base: techwall
+  - type: Construction
+    graph: Girder
+    node: techWall
+  - type: Appearance
+
+- type: entity
+  parent: WallTech
+  id: WallTechUnshaded
+  name: tech wall
+  suffix: Lit
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Walls/techwall.rsi
+    drawdepth: BelowFloor
+    layers:
+      - state: techwallunshaded
+        shader: unshaded
+  - type: IconSmooth
+    key: walls
+    base: techwallunshaded
+  - type: Construction
+    graph: Girder
+    node: techWallUnshaded
+
+- type: entity
+  parent: WallShuttleDiagonal
+  description: Technical!
+  id: WallTechDiagonal
+  name: tech wall
+  suffix: diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Construction
+    graph: Girder
+    node: diagonalTechWall
+  - type: Sprite
+    drawdepth: Walls
+    sprite: _Impstation/Structures/Walls/techwall_diagonal.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: walls
+    base: state
+  - type: Icon
+    sprite: _Impstation/Structures/Walls/techwall_diagonal.rsi
+    state: state0

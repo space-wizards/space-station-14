@@ -75,3 +75,13 @@
   components:
   - type: Sprite
     state: drones
+
+- type: entity
+  parent: BaseSign
+  id: SignApid
+  name: apid storage sign
+  description: A sign indicating nearby sleeping apids.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Structures/Wallmounts/signs.rsi
+    state: apid

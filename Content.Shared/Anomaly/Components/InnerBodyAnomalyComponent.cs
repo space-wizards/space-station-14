@@ -69,6 +69,12 @@ public sealed partial class InnerBodyAnomalyComponent : Component
     /// </summary>
     [DataField]
     public string LayerMap = "inner_anomaly_layer";
+
+    /// <summary>
+    /// imp. added for anomalites to prevent stunning
+    /// </summary>
+    [DataField]
+    public bool SkipStun;
 }
 
 /// <summary>

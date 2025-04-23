@@ -107,7 +107,24 @@
       - DrinkShakeWhite
       - DrinkTheMartinez
       - DrinkMoonshineGlass
+      # imp drinks
+      - DrinkAppleMartiniCrystalLiteGlass
+      - DrinkBloodierMaryGlass
+      - DrinkBumWineGlass
+      - DrinkCalimotxoGlass
+      - DrinkCleverGirlGlass
+      - DrinkCottonBoolGlass
+      - DrinkDontTellGlass
+      - DrinkGatorWineGlass
+      - DrinkGenderfluidGlass
+      - DrinkHummingBirdGlass
+      - DrinkLoveTapGlass
+      - DrinkOrangeCoffeeGlass
+      - DrinkRaktaccinoGlass
+      - DrinkStarryNightGlass
+      - DrinkSojuGlass
       - DrinkTheGreaseGlass
+      - DrinkVoxRocksGlass
     chance: 0.8
     offset: 0.0
     #rare
@@ -126,4 +143,13 @@
       - DrinkHoochGlass
       - DrinkBeepskySmashGlass
       - DrinkBacchusBlessing
+      # imp drinks, skipped horsepussy but im looking skeptically at bacchusblessing one line above this
+      - DrinkFeverDreamGlass
+      - DrinkLovePotionGlass
+      - DrinkReaganomicsGlass
+      - DrinkRotgutGlass
+      - DrinkSalvagersSootheGlass
+      - DrinkThavenBadGlass
+      - DrinkUAPGlass
+      - DrinkZombieSlushieGlass
     rareChance: 0.05

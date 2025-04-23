@@ -7,8 +7,7 @@
     issuer: objective-issuer-thief
   - type: RoleRequirement
     roles:
-      mindRoles:
-      - ThiefRole
+    - ThiefRole
 
 - type: entity
   abstract: true
@@ -116,7 +115,7 @@
   id: MailStealCollectionObjective
   components:
   - type: NotJobRequirement
-    job: CargoTechnician
+    job: [ CargoTechnician, Courier, SalvageSpecialist ] # imp
   - type: StealCondition
     stealGroup: Mail
     minCollectionSize: 4
@@ -161,7 +160,7 @@
   id: ForensicScannerStealObjective
   components:
   - type: NotJobRequirement
-    job: Detective
+    job: [ SecurityOfficer, Detective, Brigmedic, Warden ] # imp
   - type: StealCondition
     stealGroup: ForensicScanner
   - type: Objective
@@ -218,7 +217,7 @@
   - type: Objective
     difficulty: 1
 
-#- type: entity
+#- type: entity # imp - removed in favor of a broader headset theft objective
   #parent: BaseThiefStealObjective
   #id: ClothingHeadsetAltMedicalStealObjective
   #components:
@@ -450,6 +449,7 @@
     job: [MedicalDoctor, Paramedic, Chemist ] # imp edit
   - type: StealCondition
     stealGroup: AnimalNamedCat
+    verifyMapExistence: true # imp - because sometimes the cat is finfin
   - type: Objective
     difficulty: 1
 
@@ -458,7 +458,7 @@
   id: McGriffStealObjective
   components:
   - type: NotJobRequirement
-    job: Detective
+    job: [ SecurityOfficer, Detective, Brigmedic, Warden ] # imp
   - type: StealCondition
     stealGroup: AnimalMcGriff
   - type: Objective
@@ -502,7 +502,7 @@
   id: ShivaStealObjective
   components:
   - type: NotJobRequirement
-    job: SecurityOfficer
+    job: [ SecurityOfficer, Detective, Brigmedic, Warden ] # imp
   - type: StealCondition
     stealGroup: AnimalShiva
   - type: Objective
@@ -513,7 +513,7 @@
   id: TropicoStealObjective
   components:
   - type: NotJobRequirement
-    job: [ AtmosphericTechnician, StationEngineer] # imp edit
+    job: [ AtmosphericTechnician, StationEngineer ] # imp edit
   - type: StealCondition
     stealGroup: AnimalTropico
   - type: Objective
