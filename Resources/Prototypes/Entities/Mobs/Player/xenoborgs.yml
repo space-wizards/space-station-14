@@ -278,3 +278,35 @@
     damageProtection:
       flatReductions:
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
+
+- type: entity
+  abstract: true
+  id: XenoborgTransponder
+  components:
+  - type: BorgTransponder
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: Xenoborg
+    transmitFrequencyId: Mothership
+    savableAddress: false
+  - type: SurveillanceCamera # they act like cameras for the mothership
+    networkSet: true
+    nameSet: True
+    id: Xenoborg
+  - type: OnUseTimerTrigger
+    delay: 3
+    examinable: false
+    beepSound:
+      path: /Audio/Effects/Cargo/buzz_two.ogg
+      params:
+        volume: -4
+  - type: AutomatedTimer
+  - type: ExplodeOnTrigger
+  # explodes when the mothership is destroyed
+  - type: Explosive
+    explosionType: Minibomb
+    deleteAfterExplosion: false # let damage threshold gib the borg
+    totalIntensity: 200
+    intensitySlope: 20
+    maxIntensity: 100
+    canCreateVacuum: false # its for killing the borg not the station
