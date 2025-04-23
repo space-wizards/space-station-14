@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Shipyard purchases are now announced over supply radio, rather than command.
-    type: Tweak
-  id: 1061
-  time: '2025-02-06T11:30:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1577
-- author: TheGrimbeeper
-  changes:
-  - message: Fix heretic target adding function double counting targets, should now
-      have the correct number of targets in the heart.
-    type: Fix
-  id: 1062
-  time: '2025-02-06T11:39:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1582
 - author: kipdotnet
   changes:
   - message: Added a special Micro RCD for the tck'tck, replacing its wire coils.
@@ -4110,3 +4095,22 @@
   id: 1560
   time: '2025-04-23T21:02:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2295
+- author: hivehum
+  changes:
+  - message: The captain's visor and eyepatch no longer have administrative hud abilities.
+    type: Remove
+  - message: The captain's high-heeled boots can no longer hide a knife or pistol.
+    type: Remove
+  - message: Sacrifice administation glasses to add that ability to your prestige
+      glasses.
+    type: Add
+  id: 1561
+  time: '2025-04-23T21:24:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2314
+- author: hivehum
+  changes:
+  - message: Ach! I feel as if my perspective has irrevocably changed!
+    type: Tweak
+  id: 1562
+  time: '2025-04-23T21:03:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2290
