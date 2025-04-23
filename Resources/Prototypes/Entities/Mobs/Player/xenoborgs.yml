@@ -500,3 +500,56 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
+
+- type: entity
+  parent: [ XenoborgBaseChassi, XenoborgTransponder ]
+  id: XenoborgStealth
+  name: stealth xenoborg
+  suffix: with brain
+  description: A man-machine hybrid that aims to replicate itself. They love gibbing people and placing their brains into empty xenoborgs over and over. This is a stealth type, it can become invisible.
+  components:
+  - type: BorgTransponder
+    name: stealth xenoborg
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: xenoborg_stealth
+  - type: Sprite
+    layers:
+      - state: xenoborg_stealth
+      - state: xenoborg_stealth_e
+        map: ["enum.BorgVisualLayers.Light"]
+        shader: unshaded
+        visible: false
+      - state: xenoborg_stealth_l
+        shader: unshaded
+        map: ["light"]
+        visible: false
+  - type: FootstepModifier # it flies instead of walking
+    footstepSoundCollection:
+      collection: FootstepHoverBorg
+  - type: BorgChassis
+    hasMindState: xenoborg_stealth_e
+    noMindState: xenoborg_stealth
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleGeneric
+      - XenoborgModuleStealth
+  - type: MovementAlwaysTouching # it flies in space with tiny thrusters
+  - type: SpamEmitSound # longer interval to make the creppy sound
+    minInterval: 50
+    maxInterval: 150
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - XenoborgModuleBasic
+      - XenoborgModuleTool
+      - XenoborgModuleHypo
+      - XenoborgModuleChameleonProjector
+      - XenoborgModuleCloakDevice
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
