@@ -33,5 +33,6 @@ public sealed partial class HolidaySelector : EntityTableSelector
                 }
             }
         }
+        yield break;
     }
 }
