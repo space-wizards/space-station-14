@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: King Soda and Jungle Juice can no longer be fruitful and multiply.
-    type: Tweak
-  id: 1046
-  time: '2025-02-04T06:26:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1559
-- author: Darkmajia
-  changes:
-  - message: U.A.P. works properly. Mo blaagh yim speak like cheego.
-    type: Add
-  - message: The Gray language has been slightly adjusted for consistency and capitalization.
-    type: Tweak
-  id: 1047
-  time: '2025-02-04T21:54:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1561
 - author: crocodilecarousel
   changes:
   - message: Vox hair now correctly hides under helmets.
@@ -4097,3 +4081,26 @@
   id: 1545
   time: '2025-04-23T10:06:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2313
+- author: yesteryuri and mqole
+  changes:
+  - message: Added soju.
+    type: Add
+  - message: Fixed rotgut. You can make it again.
+    type: Fix
+  id: 1546
+  time: '2025-04-23T10:08:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2305
+- author: widgetbeck
+  changes:
+  - message: Added a radial quick-build menu to Cardboard.
+    type: Add
+  - message: Added a crew-usable cardboard RCD prototype. Currently not accessible
+      outside of admin intervention.
+    type: Add
+  - message: Changed the values of the Cardboard RCD to adjust balance.
+    type: Tweak
+  - message: Drones now have a different flashlight.
+    type: Tweak
+  id: 1547
+  time: '2025-04-23T10:07:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2324
