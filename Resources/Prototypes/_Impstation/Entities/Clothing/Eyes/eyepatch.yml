@@ -14,4 +14,20 @@
     tags:
     - WhitelistChameleon
     - Eyepatch
+    - CaptainsEyepatch
+
+- type: entity
+  parent: [ClothingEyesGlassesCaptaineyepatch]
+  id: ClothingEyesGlassesCaptainEyepatchAdministrativeHud
+  name: captain's eyepatch
+  suffix: AdministrativeHUD
+  categories: [ DoNotMap ]
+  components:
   - type: ShowJobIcons
+  - type: Construction
+    graph: AdminHudCaptainsEyepatch
+    node: adminhudcaptainseyepatch
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - Eyepatch

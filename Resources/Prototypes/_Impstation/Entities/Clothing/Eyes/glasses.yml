@@ -2,7 +2,7 @@
   parent: [ClothingEyesBase, BaseCommandContraband]
   id: ClothingEyesGlassesCaptainvisor
   name: captain's visor
-  description: "A sleek visor that provides flash immunity and shows ID card status. Secured on your face with futuristic microgravity devices."
+  description: "A sleek visor, secured on your face with futuristic microgravity devices."
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Eyes/Glasses/captainvisor.rsi
@@ -14,9 +14,24 @@
   - type: Tag
     tags:
     - WhitelistChameleon
+    - CaptainsVisor
   - type: IdentityBlocker
     coverage: EYES
+
+- type: entity
+  parent: [ClothingEyesGlassesCaptainvisor]
+  id: ClothingEyesGlassesCaptainVisorAdministrativeHud
+  name: captain's visor
+  suffix: AdministrativeHUD
+  categories: [ DoNotMap ]
+  components:
   - type: ShowJobIcons
+  - type: Construction
+    graph: AdminHudCaptainsVisor
+    node: adminhudcaptainsvisor
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: [ ClothingEyesBase, BaseLensSlot ]

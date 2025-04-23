@@ -1,0 +1,45 @@
+﻿- type: constructionGraph
+  id: AdminHudCaptainsVisor
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: adminhudcaptainsvisor
+      steps:
+      - tag: CaptainsVisor
+        name: the captain's visor
+        icon:
+          sprite: _Impstation/Clothing/Eyes/Glasses/captainvisor.rsi
+          state: icon
+        doAfter: 1
+      - tag: AdministrationGlasses
+        name: administration glasses
+        icon:
+          sprite: Clothing/Eyes/Glasses/commandglasses.rsi
+          state: icon
+        doAfter: 1
+  - node: adminhudcaptainsvisor
+    entity: ClothingEyesGlassesCaptainVisorAdministrativeHud
+
+- type: constructionGraph
+  id: AdminHudCaptainsEyepatch
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: adminhudcaptainseyepatch
+      steps:
+      - tag: CaptainsEyepatch
+        name: the captain's eyepatch
+        icon:
+          sprite: _Impstation/Clothing/Eyes/Misc/capeyepatch.rsi
+          state: icon
+        doAfter: 1
+      - tag: AdministrationGlasses
+        name: administration glasses
+        icon:
+          sprite: Clothing/Eyes/Glasses/commandglasses.rsi
+          state: icon
+        doAfter: 1
+  - node: adminhudcaptainseyepatch
+    entity: ClothingEyesGlassesCaptainEyepatchAdministrativeHud

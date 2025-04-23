@@ -1,4 +1,8 @@
 # PUT YOUR TAGS IN ALPHABETICAL ORDER
+
+- type: Tag
+  id: AdministrationGlasses
+
 - type: Tag
   id: BeltUtility
 
@@ -10,6 +14,12 @@
 
 - type: Tag
   id: Cablecuffs
+
+- type: Tag
+  id: CaptainsEyepatch
+
+- type: Tag
+  id: CaptainsVisor
 
 - type: Tag
   id: CartridgeLPistol

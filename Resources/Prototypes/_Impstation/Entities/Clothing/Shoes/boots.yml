@@ -355,7 +355,7 @@
       - state: winterbits-equipped-FEET
 
 - type: entity
-  parent: ClothingShoesMilitaryBase
+  parent: ClothingShoesBase
   id: ClothingShoesCaptainHighheelBoots
   name: captain's high-heeled boots
   description: Snazzy boots for when you want to be stylish, yet official.

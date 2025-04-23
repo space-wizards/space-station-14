@@ -21,3 +21,27 @@
   description: A haphazard solution, but at least it'll match...
   icon: { sprite: _Impstation/Clothing/Belt/utility_black.rsi, state: icon }
   objectType: Item
+
+# adding ahud to prestige glasses
+
+- type: construction
+  name: upgraded captain's visor
+  id: ClothingEyesGlassesCaptainVisorAdministrativeHud
+  graph: AdminHudCaptainsVisor
+  startNode: start
+  targetNode: adminhudcaptainsvisor
+  category: construction-category-clothing
+  description: Remove the administrative chip from your standard-issue glasses and place it in your visor. Destroys the original glasses for the sake of fashion.
+  icon: { sprite: _Impstation/Clothing/Eyes/Glasses/captainvisor.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  name: upgraded captain's eyepatch
+  id: ClothingEyesGlassesCaptainEyepatchAdministrativeHud
+  graph: AdminHudCaptainsEyepatch
+  startNode: start
+  targetNode: adminhudcaptainseyepatch
+  category: construction-category-clothing
+  description: Remove the administrative chip from your standard-issue glasses and place it in your eyepatch. Which works, for some reason.
+  icon: { sprite: _Impstation/Clothing/Eyes/Misc/capeyepatch.rsi, state: icon }
+  objectType: Item

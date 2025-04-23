@@ -236,6 +236,7 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+    - AdministrationGlasses # imp, for crafting
   - type: IdentityBlocker
     coverage: EYES
   - type: ShowJobIcons
