@@ -80,5 +80,5 @@
 #      onActivate: false #allows opening the UI via E
 #    - type: ComponentToggler
 #      components:
-    - type: MagnetPickup
-      slotFlags: None
+    #- type: MagnetPickup #disabled for now, needs a new component or heavy edits to the existing one
+    #  slotFlags: None
