@@ -166,8 +166,8 @@
         layer:
         - MobLayer
   - type: MovementSpeedModifier
-    baseWalkSpeed: 5
-    baseSprintSpeed: 5
+    baseWalkSpeed: 4
+    baseSprintSpeed: 4
   - type: Bloodstream
     bloodReagent: CopperBlood
     bloodMaxVolume: 250

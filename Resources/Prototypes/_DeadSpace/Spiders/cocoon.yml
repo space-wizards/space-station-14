@@ -21,10 +21,6 @@
     allowedStates:
     - Alive
     - Dead
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Dead
   - type: Appearance
   - type: Evolution
     createGhostRole: true
@@ -36,6 +32,14 @@
       - MobSpiderTerrorBuilder
       - MobSpiderTerrorMedic
       - MobSpiderTerrorGuardianLvl2
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   name: королевский паучий кокон
@@ -60,10 +64,6 @@
     allowedStates:
     - Alive
     - Dead
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      200: Dead
   - type: Appearance
   - type: Evolution
     createGhostRole: true
@@ -73,6 +73,14 @@
     spawnedEntities:
       - MobSpiderTerrorRoyalGuard
       - MobSpiderTerrorPrincess
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   id: SpiderCocoon
