@@ -11,7 +11,7 @@
       - Egg
       - Meat
   - type: Food
-    trash: 
+    trash:
     - Eggshells
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
@@ -61,13 +61,6 @@
   # all below are for egg cooking/exploding
   - type: AtmosExposed
   - type: Temperature
-    currentTemperature: 290
-  - type: InternalTemperature
-    # ~1mm shell and ~1cm of albumen
-    thickness: 0.011
-    area: 0.04
-    # conductivity of egg shell based on a paper from Romanoff and Romanoff (1949)
-    conductivity: 0.456
 
 # Splat
 - type: entity
@@ -135,6 +128,3 @@
   - type: Temperature
     # preserve temperature from the boiling step
     currentTemperature: 344
-  - type: Construction
-    graph: Egg
-    node: boiled
