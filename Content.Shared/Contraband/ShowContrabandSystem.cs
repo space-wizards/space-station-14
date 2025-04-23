@@ -20,7 +20,7 @@ public sealed partial class ShowContrabandSystem : EntitySystem
 /// Raised on an entity and its inventory to determine if it can see contraband information in the examination window.
 /// </summary>
 [ByRefEvent]
-public sealed class GetContrabandDetailsEvent : EntityEventArgs, IInventoryRelayEvent
+public sealed class GetContrabandDetailsEvent : IInventoryRelayEvent
 {
     public bool CanShowContraband;
 
