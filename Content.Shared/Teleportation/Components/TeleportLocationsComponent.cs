@@ -32,6 +32,12 @@ public sealed partial class TeleportLocationsComponent : Component
     public bool CloseAfterTeleport;
 
     /// <summary>
+    /// Name of the Teleport Location menu
+    /// </summary>
+    [DataField]
+    public LocId Name;
+
+    /// <summary>
     /// Should the user have some speech if they teleport?
     /// If enabled it will be prepended to the location name.
     /// So something like "I am going to" would become "I am going to (Bridge)"

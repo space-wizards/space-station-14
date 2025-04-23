@@ -24,6 +24,7 @@ public sealed class TeleportLocationsBoundUserInterface : BoundUserInterface
         if (!EntMan.TryGetComponent<TeleportLocationsComponent>(Owner, out var teleComp))
             return;
 
+        _menu.Title = Loc.GetString(teleComp.Name);
         _menu.Warps = teleComp.AvailableWarps;
         _menu.AddTeleportButtons();
 
