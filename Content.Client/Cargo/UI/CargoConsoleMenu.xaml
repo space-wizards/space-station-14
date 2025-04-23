@@ -3,66 +3,83 @@
                            xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                            SetSize="600 600"
                            MinSize="600 600">
-    <BoxContainer Orientation="Vertical" Margin="5 0 5 0">
+    <BoxContainer Orientation="Vertical" Margin="15 5 15 10">
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'cargo-console-menu-account-name-label'}"
                    StyleClasses="LabelKeyText" />
-            <Label Name="AccountNameLabel"
+            <RichTextLabel Name="AccountNameLabel"
                    Text="{Loc 'cargo-console-menu-account-name-none-text'}" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'cargo-console-menu-points-label'}"
                    StyleClasses="LabelKeyText" />
-            <Label Name="PointsLabel"
+            <RichTextLabel Name="PointsLabel"
                    Text="$0" />
         </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'cargo-console-menu-order-capacity-label'}"
-                   StyleClasses="LabelKeyText" />
-            <Label Name="ShuttleCapacityLabel"
-                   Text="0/20" />
-        </BoxContainer>
-        <BoxContainer Orientation="Horizontal">
-            <OptionButton Name="Categories"
-                          Prefix="{Loc 'cargo-console-menu-categories-label'}"
-                          HorizontalExpand="True" />
-            <LineEdit Name="SearchBar"
-                      PlaceHolder="{Loc 'cargo-console-menu-search-bar-placeholder'}"
-                      HorizontalExpand="True" />
-        </BoxContainer>
-        <ScrollContainer HorizontalExpand="True"
-                         VerticalExpand="True"
-                         SizeFlagsStretchRatio="6">
-            <BoxContainer Name="Products"
-                          Orientation="Vertical"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                <!-- Products get added here by code -->
-            </BoxContainer>
-        </ScrollContainer>
-        <PanelContainer VerticalExpand="True"
-                        SizeFlagsStretchRatio="6">
-            <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BackgroundColor="#000000" />
-            </PanelContainer.PanelOverride>
-            <ScrollContainer VerticalExpand="True">
-                <BoxContainer Orientation="Vertical">
-                    <Label Text="{Loc 'cargo-console-menu-requests-label'}" />
-                    <BoxContainer Name="Requests"
-                                  Orientation="Vertical"
-                                  VerticalExpand="True">
-                        <!-- Requests are added here by code -->
-                    </BoxContainer>
-                    <Label Text="{Loc 'cargo-console-menu-orders-label'}" />
-                    <BoxContainer Name="Orders"
-                                  Orientation="Vertical"
-                                  StyleClasses="transparentItemList"
-                                  VerticalExpand="True">
-                        <!-- Orders are added here by code -->
-                    </BoxContainer>
+        <Control MinHeight="10"/>
+        <TabContainer Name="TabContainer" VerticalExpand="True">
+            <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                <BoxContainer Orientation="Horizontal">
+                    <OptionButton Name="Categories"
+                                  Prefix="{Loc 'cargo-console-menu-categories-label'}"
+                                  HorizontalExpand="True" />
+                    <LineEdit Name="SearchBar"
+                              PlaceHolder="{Loc 'cargo-console-menu-search-bar-placeholder'}"
+                              HorizontalExpand="True" />
                 </BoxContainer>
-            </ScrollContainer>
-        </PanelContainer>
-        <TextureButton VerticalExpand="True" />
+                <Control MinHeight="5"/>
+                <ScrollContainer HorizontalExpand="True"
+                                 VerticalExpand="True"
+                                 SizeFlagsStretchRatio="2">
+                    <BoxContainer Name="Products"
+                                  Orientation="Vertical"
+                                  HorizontalExpand="True"
+                                  VerticalExpand="True">
+                        <!-- Products get added here by code -->
+                    </BoxContainer>
+                </ScrollContainer>
+                <Control MinHeight="5"/>
+                <PanelContainer VerticalExpand="True"
+                                SizeFlagsStretchRatio="1">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#000000" />
+                    </PanelContainer.PanelOverride>
+                    <ScrollContainer VerticalExpand="True">
+                        <BoxContainer Orientation="Vertical" Margin="5">
+                            <Label Text="{Loc 'cargo-console-menu-requests-label'}" />
+                            <BoxContainer Name="Requests"
+                                          Orientation="Vertical"
+                                          VerticalExpand="True">
+                                <!-- Requests are added here by code -->
+                            </BoxContainer>
+                        </BoxContainer>
+                    </ScrollContainer>
+                </PanelContainer>
+            </BoxContainer>
+            <!-- Funds tab -->
+            <BoxContainer Orientation="Vertical" Margin="15">
+                <BoxContainer Orientation="Horizontal">
+                    <RichTextLabel Name="TransferLimitLabel" Margin="0 0 15 0"/>
+                    <RichTextLabel Name="UnlimitedNotifier" Text="{Loc 'cargo-console-menu-account-action-transfer-limit-unlimited-notifier'}"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal">
+                    <RichTextLabel Text="{Loc 'cargo-console-menu-account-action-select'}" Margin="0 0 10 0"/>
+                    <OptionButton Name="ActionOptions"/>
+                </BoxContainer>
+                <Control MinHeight="5"/>
+                <BoxContainer Orientation="Horizontal">
+                    <RichTextLabel Name="AmountText" Text="{ Loc 'cargo-console-menu-account-action-amount'}"/>
+                    <SpinBox Name="TransferSpinBox" MinWidth="100" Value="10"/>
+                </BoxContainer>
+                <Control MinHeight="15"/>
+                <BoxContainer HorizontalAlignment="Center">
+                    <Button Name="AccountActionButton" Text="{ Loc 'cargo-console-menu-account-action-button'}" MinHeight="45" MinWidth="120"/>
+                </BoxContainer>
+                <Control VerticalExpand="True"/>
+                <BoxContainer VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                    <Button Name="AccountLimitToggleButton" Text="{ Loc 'cargo-console-menu-toggle-account-lock-button'}" MinHeight="45" MinWidth="120"/>
+                </BoxContainer>
+            </BoxContainer>
+        </TabContainer>
     </BoxContainer>
 </controls:FancyWindow>

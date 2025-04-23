@@ -18,9 +18,12 @@
       behaviors:
       - !type:TriggerBehavior
   - type: ScatteringGrenade
+  - type: Tag
+    tags:
+    - HandGrenade
 
 - type: entity
-  parent: [ScatteringGrenadeBase, BaseRestrictedContraband]
+  parent: [ScatteringGrenadeBase, BaseSecurityContraband]
   id: ClusterBang
   name: clusterbang
   description: Can be used only with flashbangs. Explodes several times.

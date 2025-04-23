@@ -1,0 +1,40 @@
+﻿- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseParadoxCloneObjective
+  components:
+  - type: Objective
+    # required but not used
+    difficulty: 1
+    issuer: objective-issuer-paradox
+  - type: RoleRequirement
+    roles:
+    - ParadoxCloneRole
+  - type: Tag
+    tags:
+    - ParadoxCloneObjectiveBlacklist # don't copy the objectives from other clones
+
+- type: entity
+  parent: [BaseParadoxCloneObjective, BaseLivingObjective]
+  id: ParadoxCloneLivingObjective
+  name: Escape to centcomm alive and unrestrained.
+  description: Return to your old life.
+  components:
+  - type: Objective
+    icon:
+      sprite: Structures/Furniture/chairs.rsi
+      state: shuttle
+  - type: EscapeShuttleCondition
+
+- type: entity
+  parent: [BaseParadoxCloneObjective, BaseKillObjective]
+  id: ParadoxCloneKillObjective
+  name: Fix the space-time paradox.
+  description: Replace your original to fix the paradox. Remember, your mission is to blend in, do not kill anyone else unless you have to!
+  components:
+  - type: PickSpecificPerson
+  - type: KillPersonCondition
+    requireDead: true
+  - type: TargetObjective
+    title: objective-condition-kill-head-title # kill <name>, <job>
+
