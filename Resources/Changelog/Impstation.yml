@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Signature fonts should, hopefully, well and truly, finally be fixed.
-    type: Fix
-  id: 1065
-  time: '2025-02-06T19:45:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1593
 - author: AvianMaiden
   changes:
   - message: Syndicate Fujoshi.
@@ -4113,3 +4106,13 @@
   id: 1564
   time: '2025-04-23T21:49:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2277
+- author: widgetbeck
+  changes:
+  - message: Thaven can now emag themselves.
+    type: Add
+  - message: Thaven can no longer be emagged by others unless they are dead or in
+      critical condition.
+    type: Tweak
+  id: 1565
+  time: '2025-04-23T21:50:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2326
