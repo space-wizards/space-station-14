@@ -1,4 +1,3 @@
-using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Vehicle.Components;
@@ -14,5 +13,5 @@ public sealed partial class VehicleOperatorComponent : Component
     /// The vehicle we are currently operating.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public EntityUid Vehicle;
+    public EntityUid? Vehicle;
 }

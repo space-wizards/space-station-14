@@ -1,0 +1,74 @@
+- type: entity
+  id: BaseVehicleStrap
+  abstract: true
+  components:
+  - type: InputMover
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Pullable
+  - type: Physics
+    bodyType: KinematicController
+  - type: Vehicle
+  - type: StrapVehicle
+  - type: Strap
+    maxBuckleDistance: 1
+  - type: MovementSpeedModifier
+    weightlessModifier: 0
+    acceleration: 2
+    friction: 2
+    frictionNoInput: 6
+    baseWalkSpeed: 4.5
+    baseSprintSpeed: 6
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        density: 360
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - TableLayer
+
+- type: entity
+  id: VehicleWheelchair
+  parent: [BaseVehicleStrap, BaseFoldable, BaseItem]
+  name: wheelchair
+  description: A chair with big wheels. It looks like you can move in these on your own.
+  components:
+  - type: Sprite
+    sprite: Objects/Vehicles/wheelchair.rsi
+    layers:
+    - state: wheelchair
+      map: ["unfoldedLayer"]
+    - state: wheelchair_folded
+      map: ["foldedLayer"]
+      visible: false
+    noRot: true
+  - type: Appearance
+  - type: Item
+    size: Ginormous
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 2
+  - type: Strap
+    buckleOffset: "0,0"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 360
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - TableLayer
+  - type: StaticPrice
+    price: 70

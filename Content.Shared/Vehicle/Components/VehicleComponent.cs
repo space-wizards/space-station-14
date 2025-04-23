@@ -1,5 +1,9 @@
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Whitelist;
+using JetBrains.Annotations;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Vehicle.Components;
 
@@ -23,9 +27,22 @@ public sealed partial class VehicleComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public EntityWhitelist? OperatorWhitelist;
+
+    /// <summary>
+    /// If true, damage to the vehicle will be transferred to the operator.
+    /// This damage is modified by <see cref="TransferDamageModifier"/>
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool TransferDamage;
+
+    /// <summary>
+    /// A damage modifier set that adjusts the damage passed from the vehicle to the operator.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public ProtoId<DamageModifierSetPrototype>? TransferDamageModifier;
 }
 
-[Flags]
+[Serializable, NetSerializable]
 public enum VehicleVisuals : byte
 {
     HasOperator,
@@ -36,19 +53,19 @@ public enum VehicleVisuals : byte
 /// Event raised on operator when they begin to operate a vehicle
 /// Values are configured before this event is raised.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, UsedImplicitly]
 public readonly record struct OnVehicleEnteredEvent(Entity<VehicleComponent> Vehicle, EntityUid Operator);
 
 /// <summary>
 /// Event raised on operator when they stop operating a vehicle.
 /// Values are configured after this event is raised.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, UsedImplicitly]
 public readonly record struct OnVehicleExitedEvent(Entity<VehicleComponent> Vehicle, EntityUid Operator);
 
 /// <summary>
 /// Event raised on vehicle after an operator is set.
 /// New operator can be null.
 /// </summary>
-[ByRefEvent]
+[ByRefEvent, UsedImplicitly]
 public readonly record struct VehicleOperatorSetEvent(EntityUid? NewOperator);
