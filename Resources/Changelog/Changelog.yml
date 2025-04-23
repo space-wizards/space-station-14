@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: jbox144
   changes:
-  - message: Added Plasma Station
-    type: Add
-  id: 7817
-  time: '2025-01-16T07:02:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/33991
-- author: jbox144
-  changes:
   - message: Reduced Plasma's minimum population to 20, maximum population to 60
     type: Tweak
   - message: Reduced Plasma's clown jobs from 2 to 1
@@ -3920,3 +3913,11 @@
   id: 8318
   time: '2025-04-22T23:53:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33469
+- author: murolem
+  changes:
+  - message: Building orientation on fences, diagonal grilles and the diagonal shuttle
+      wall is now respected.
+    type: Fix
+  id: 8319
+  time: '2025-04-23T01:58:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/36488
