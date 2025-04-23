@@ -41,13 +41,13 @@ public sealed partial class GhostComponent : Component
 
     // End actions
 
-    [ViewVariables(VVAccess.ReadWrite), DataField, AutoPausedField]
+    [DataField, AutoPausedField]
     public TimeSpan TimeOfDeath = TimeSpan.Zero;
 
-    [DataField("booRadius"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public float BooRadius = 3;
 
-    [DataField("booMaxTargets"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public int BooMaxTargets = 3;
 
     [DataField("canInteract"), AutoNetworkedField]
