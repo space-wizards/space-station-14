@@ -470,22 +470,6 @@
           0.1
         ]
       ]
-    },
-    {
-      "name": "xenoborg",
-      "directions": 4
-    },
-    {
-      "name": "xenoborg_e",
-      "directions": 4
-    },
-    {
-      "name": "xenoborg_e_r",
-      "directions": 4
-    },
-    {
-      "name": "xenoborg_l",
-      "directions": 4
     }
   ]
 }
