@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/           f141c349e063f7318d8c8a2417d840f0b2d06600, modified",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f141c349e063f7318d8c8a2417d840f0b2d06600, modified, transparency tweaked by Ubaser.",
   "size": {
     "x": 32,
     "y": 32

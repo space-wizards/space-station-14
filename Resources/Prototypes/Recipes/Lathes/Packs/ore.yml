@@ -1,0 +1,27 @@
+## Static
+
+- type: latheRecipePack
+  id: OreSmelting
+  recipes:
+  - SheetSteel
+  - SheetGlass1
+  - SheetPlasma1
+  - SheetUranium1
+  - IngotGold1
+  - IngotSilver1
+  - MaterialBananium1
+  - MaterialDiamond
+
+- type: latheRecipePack
+  id: RGlassSmelting
+  recipes:
+  - SheetRGlassRaw
+  - SheetPGlass1
+  - SheetRPGlass1
+
+- type: latheRecipePack
+  id: AdvancedSmelting
+  recipes:
+  - SheetPlasteel1
+  - SheetUGlass1
+  - SheetRUGlass1
