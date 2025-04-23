@@ -53,14 +53,10 @@ public sealed class ContrabandSystem : EntitySystem
         // Checking if contraband is only shown in the HUD
         if (_contrabandExamineOnlyInHudEnabled)
         {
-            // Check if Examiner has ShowContrabandDetailsComponent (aghost for example), if false then check if the contraband is only shown in the HUD
-            if (HasComp<ShowContrabandDetailsComponent>(args.User) == false)
-            {
-                var ev = new GetContrabandDetailsEvent();
-                RaiseLocalEvent(args.User, ev);
-                if (!ev.CanShowContraband)
-                    return;
-            }
+            var ev = new GetContrabandDetailsEvent();
+            RaiseLocalEvent(args.User, ev);
+            if (!ev.CanShowContraband)
+                return;
         }
 
         // CanAccess is not used here, because we want people to be able to examine legality in strip menu.

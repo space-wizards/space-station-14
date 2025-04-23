@@ -6,17 +6,18 @@ public sealed partial class ShowContrabandSystem : EntitySystem
 {
     public override void Initialize()
     {
-        SubscribeLocalEvent<ShowContrabandDetailsComponent, InventoryRelayedEvent<GetContrabandDetailsEvent>>(GetContrabandDetailsEventHandler);
+        base.Initialize();
+        Subs.SubscribeWithRelay<ShowContrabandDetailsComponent, GetContrabandDetailsEvent>(OnGetContrabandDetails);
     }
 
-    private void GetContrabandDetailsEventHandler(Entity<ShowContrabandDetailsComponent> ent, ref InventoryRelayedEvent<GetContrabandDetailsEvent> args)
+    private void OnGetContrabandDetails(Entity<ShowContrabandDetailsComponent> ent, ref GetContrabandDetailsEvent args)
     {
-        args.Args.CanShowContraband = true;
+        args.CanShowContraband = true;
     }
 }
 
 /// <summary>
-///     Raised to the entity to determine if it can see contraband.
+/// Raised on an entity and its inventory to determine if it can see contraband information in the examination window.
 /// </summary>
 public sealed class GetContrabandDetailsEvent : EntityEventArgs, IInventoryRelayEvent
 {
