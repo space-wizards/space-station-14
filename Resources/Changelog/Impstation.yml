@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: honeyed-lemons
-  changes:
-  - message: Adds the reporter to Box
-    type: Add
-  - message: Lots of box rooms have been altered slightly, and things fixed.. box
-      lovers rejoice
-    type: Tweak
-  id: 1056
-  time: '2025-02-06T10:43:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1575
-- author: honeyed-lemons
-  changes:
-  - message: Human and Thaven sprite Slightly
-    type: Tweak
-  id: 1057
-  time: '2025-02-06T10:46:07.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1576
 - author: Sha-Seng
   changes:
   - message: Greatcoats (Cap, HoS, QM) can now be worn as outerwear if you want to
@@ -4110,3 +4093,22 @@
   id: 1555
   time: '2025-04-23T20:54:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2330
+- author: hivehum
+  changes:
+  - message: Fugitives and recruiters have last names again.
+    type: Tweak
+  - message: Emote icons are back to normal.
+    type: Fix
+  - message: Fixed busted ghost role descriptions.
+    type: Fix
+  id: 1556
+  time: '2025-04-23T20:55:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2329
+- author: Kandiyaki
+  changes:
+  - message: Changed the message that shows when a soon-to-be heretic sacrifice victim
+      isn't dead yet.
+    type: Tweak
+  id: 1557
+  time: '2025-04-23T20:56:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2319
