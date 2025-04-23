@@ -1400,7 +1400,7 @@
   id: XenoborgModuleEngi
 
 - type: Tag
-  id: XenoborgModuleGenetic
+  id: XenoborgModuleGeneric
 
 - type: Tag
   id: XenoborgModuleHeavy
