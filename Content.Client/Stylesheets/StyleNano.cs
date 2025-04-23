@@ -110,6 +110,7 @@ namespace Content.Client.Stylesheets
 
         public static readonly Color ButtonColorGoodDefault = Color.FromHex("#3E6C45");
         public static readonly Color ButtonColorGoodHovered = Color.FromHex("#31843E");
+        public static readonly Color ButtonColorGoodDisabled = Color.FromHex("#164420");
 
         //NavMap
         public static readonly Color PointRed = Color.FromHex("#B02E26");
@@ -342,6 +343,16 @@ namespace Content.Client.Stylesheets
             };
             chatFilterButton.SetPatchMargin(StyleBox.Margin.All, 5);
             chatFilterButton.SetPadding(StyleBox.Margin.All, 2);
+
+            var outputPanelScrollDownButtonTex = resCache.GetTexture("/Textures/Interface/Nano/rounded_button_half_bordered.svg.96dpi.png");
+            var outputPanelScrollDownButton = new StyleBoxTexture
+            {
+                Texture = outputPanelScrollDownButtonTex,
+            };
+            outputPanelScrollDownButton.SetPatchMargin(StyleBox.Margin.All, 5);
+            outputPanelScrollDownButton.SetPadding(StyleBox.Margin.All, 2);
+            outputPanelScrollDownButton.SetPadding(StyleBox.Margin.Top, 0);
+            outputPanelScrollDownButton.SetPadding(StyleBox.Margin.Bottom, 0);
 
             var smallButtonTex = resCache.GetTexture("/Textures/Interface/Nano/button_small.svg.96dpi.png");
             var smallButtonBase = new StyleBoxTexture
@@ -1306,6 +1317,7 @@ namespace Content.Client.Stylesheets
                 {
                     new StyleProperty(Button.StylePropertyStyleBox, chatChannelButton),
                 }),
+
                 // chat filter button
                 new StyleRule(new SelectorElement(typeof(ContainerButton), new[] {StyleClassChatFilterOptionButton}, null, null), new[]
                 {
@@ -1327,6 +1339,11 @@ namespace Content.Client.Stylesheets
                 {
                     new StyleProperty(Control.StylePropertyModulateSelf, ButtonColorDisabled),
                 }),
+
+                // output panel scroll button
+                Element<Button>()
+                    .Class(OutputPanel.StyleClassOutputPanelScrollDownButton)
+                    .Prop(Button.StylePropertyStyleBox, outputPanelScrollDownButton),
 
                 // OptionButton
                 new StyleRule(new SelectorElement(typeof(OptionButton), null, null, null), new[]
@@ -1499,6 +1516,20 @@ namespace Content.Client.Stylesheets
 
                 Element<Button>().Class("ButtonColorGreen").Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodHovered),
+
+                // Accept button (merge with green button?) ---
+                Element<Button>().Class("ButtonAccept")
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodDefault),
+
+                Element<Button>().Class("ButtonAccept").Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodDefault),
+
+                Element<Button>().Class("ButtonAccept").Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodHovered),
+
+                Element<Button>().Class("ButtonAccept").Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorGoodDisabled),
+
                 // ---
 
                 // Small Button ---

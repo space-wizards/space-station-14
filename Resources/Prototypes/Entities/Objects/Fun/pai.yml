@@ -45,6 +45,8 @@
     roleName: pai-system-role-name
     roleDescription: pai-system-role-description
     roleRules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
     wipeVerbText: pai-system-wipe-device-verb-text
     wipeVerbPopup: pai-system-wiped-device
     stopSearchVerbText: pai-system-stop-searching-verb-text
@@ -86,6 +88,10 @@
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
   - type: StationMap
+  - type: ChangeVoiceInContainer
+    whitelist:
+      components:
+        - SecretStash
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
@@ -104,6 +110,8 @@
     roleName: pai-system-role-name-syndicate
     roleDescription: pai-system-role-description-syndicate
     roleRules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
   - type: IntrinsicRadioTransmitter
     channels:
     - Syndicate
@@ -136,6 +144,8 @@
     roleName: pai-system-role-name-potato
     roleDescription: pai-system-role-description-potato
     roleRules: ghost-role-information-familiar-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
   - type: Appearance
   - type: GenericVisualizer
     visuals:

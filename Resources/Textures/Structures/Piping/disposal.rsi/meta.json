@@ -9,219 +9,63 @@
     "states": [
         {
             "name": "condisposal",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "directions": 1
         },
         {
             "name": "conmailing",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "directions": 1
         },
         {
             "name": "conpipe-c",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "conpipe-j1",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "conpipe-j1s",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "conpipe-j2",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "conpipe-j2s",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "conpipe-s",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "conpipe-t",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "conpipe-tagger",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "conpipe-y",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "disposal",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "directions": 1
         },
         {
             "name": "mailing",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "directions": 1
         },
         {
             "name": "disposal-charging",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "directions": 1
         },
         {
             "name": "mailing-charging",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "directions": 1
         },
         {
             "name": "disposal-flush",
@@ -285,48 +129,19 @@
         },
         {
             "name": "dispover-handle",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "directions": 1
         },
         {
             "name": "mailover-handle",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "directions": 1
         },
         {
             "name": "dispover-ready",
-            "directions": 1,
-            "delays": [
-                [
-                    1.0
-                ]
-            ]
+            "directions": 1
         },
         {
             "name": "intake",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "intake-closing",
@@ -376,21 +191,7 @@
         },
         {
             "name": "outlet",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "outlet-open",
@@ -440,471 +241,107 @@
         },
         {
             "name": "pipe-b",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-bf",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-c",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-cf",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-d",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-j1",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-j1f",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-j1s",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-j1sf",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-j2",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-j2f",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-j2s",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-j2sf",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-s",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-sf",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-t",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-tagger",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-tagger-partial",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-tf",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-u",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-y",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "pipe-yf",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "signal-router",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "signal-router-free",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "signal-router-flipped",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         },
         {
             "name": "signal-router-flipped-free",
-            "directions": 4,
-            "delays": [
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ],
-                [
-                    1.0
-                ]
-            ]
+            "directions": 4
         }
     ]
 }

@@ -87,13 +87,6 @@
 # Thief Collection
 
 - type: stealTargetGroup
-  id: Figurines
-  name: steal-target-groups-figurines
-  sprite:
-    sprite: Objects/Fun/figurines.rsi
-    state: figurine_spawner
-
-- type: stealTargetGroup
   id: HeadCloak
   name: steal-target-groups-heads-cloaks
   sprite:
@@ -134,6 +127,13 @@
   sprite:
     sprite: Objects/Misc/module.rsi
     state: datadisk_base
+
+- type: stealTargetGroup
+  id: Mail
+  name: steal-target-groups-mail
+  sprite:
+    sprite: Objects/Specific/Cargo/mail.rsi
+    state: icon
 
 - type: stealTargetGroup
   id: IDCard

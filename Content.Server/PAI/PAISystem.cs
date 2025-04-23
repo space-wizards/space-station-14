@@ -8,6 +8,7 @@ using Content.Shared.PAI;
 using Content.Shared.Popups;
 using Robust.Shared.Random;
 using System.Text;
+<<<<<<< HEAD
 using Content.Shared.FixedPoint;
 using Content.Server.Store.Systems;
 using Content.Shared.Store;
@@ -17,6 +18,10 @@ using Content.Server.GameTicking;
 using Content.Shared.Eye;
 using Content.Shared.Revenant;
 using Robust.Server.GameObjects;
+=======
+using Content.Shared.Instruments;
+using Robust.Shared.Player;
+>>>>>>> 9418d29a599374195149955acc537d8fa1ba3eff
 
 namespace Content.Server.PAI;
 
@@ -51,6 +56,8 @@ public sealed class PAISystem : SharedPAISystem
 
     private void OnUseInHand(EntityUid uid, PAIComponent component, UseInHandEvent args)
     {
+        // Not checking for Handled because ToggleableGhostRoleSystem already marks it as such.
+
         if (!TryComp<MindContainerComponent>(uid, out var mind) || !mind.HasMind)
             component.LastUser = args.User;
     }
