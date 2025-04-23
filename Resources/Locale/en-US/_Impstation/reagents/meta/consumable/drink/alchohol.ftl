@@ -63,3 +63,6 @@ reagent-desc-moscowmule = A fresh and sparkly cocktail, with just the right kick
 
 reagent-name-lovepotion = love potion
 reagent-desc-lovepotion = One taste and you'll fall in love. This is not a legally binding statement.
+
+reagent-name-soju = soju
+reagent-desc-soju = A clear distilled spirit made from rice or other grains.

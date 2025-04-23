@@ -57,6 +57,21 @@
           Quantity: 6
   - type: Item
     heldPrefix: cardboard
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - WallCardboard
+    - WindowCardboard
+    - WindowDirectionalCardboard
+    - ChairCardboard
+    - TileCardboard
+    - DoorCardboard
+
 
 - type: entity
   parent: MaterialCardboard

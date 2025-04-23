@@ -1,0 +1,29 @@
+{
+    "license": "CC-BY-SA-3.0",
+    "copyright": "by mqole and yesteryuri for impstation",
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon_empty"
+    },
+    {
+      "name": "fill-1"
+    },
+    {
+      "name": "fill-2"
+    },
+    {
+      "name": "fill-3"
+    },
+    {
+      "name": "fill-4"
+    }
+  ]
+}

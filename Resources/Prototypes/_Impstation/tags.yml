@@ -48,6 +48,9 @@
   id: Gastropod
 
 - type: Tag
+  id: Glowstick
+
+- type: Tag
   id: Guidebook
 
 - type: Tag
@@ -115,6 +118,9 @@
 
 - type: Tag
   id: SprayPainter
+
+- type: Tag
+  id: Suppy
 
 - type: Tag
   id: VapeCart

@@ -274,6 +274,22 @@
     sprite: _Impstation/Objects/Consumable/Drinks/uapglass.rsi
     state: icon
 
+- type: entity
+  parent: DrinkGlass
+  id: DrinkSojuGlass
+  suffix: soju
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Soju
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/soju.rsi
+    state: icon
+
 # drinks
 - type: entity
   parent: DrinkGlass

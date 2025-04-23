@@ -119,6 +119,9 @@ public abstract class SharedAnomalySystem : EntitySystem
     /// <param name="ent">Entity to go supercritical</param>
     public void StartSupercriticalEvent(Entity<AnomalyComponent?> ent)
     {
+        if (!TryComp<AnomalyComponent>(ent, out var anomComp) || anomComp.CannotSupercrit) // imp
+            return;
+
         // don't restart it if it's already begun
         if (HasComp<AnomalySupercriticalComponent>(ent))
             return;

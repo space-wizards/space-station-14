@@ -39,6 +39,7 @@
     whitelist:
       tags:
         - VimPilot # If it can fit in a Vim it can fit in a pet carrier.
+        - Suppy # imp edit
   - type: Weldable
   - type: ResistLocker
   - type: PlaceableSurface

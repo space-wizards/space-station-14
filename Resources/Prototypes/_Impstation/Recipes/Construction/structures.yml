@@ -122,3 +122,56 @@
   conditions:
     - !type:TileNotBlocked
 
+- type: construction
+  name: tech wall
+  id: TechWall
+  graph: Girder
+  startNode: start
+  targetNode: techWall
+  category: construction-category-structures
+  description: Technical!
+  icon:
+    sprite: _Impstation/Structures/Walls/techwall.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: lit tech wall
+  id: TechWallUnshaded
+  graph: Girder
+  startNode: start
+  targetNode: techWallUnshaded
+  category: construction-category-structures
+  description: Technically not radioactive!
+  icon:
+    sprite: _Impstation/Structures/Walls/techwall.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: diagonal tech wall
+  id: DiagonalTechWall
+  graph: Girder
+  startNode: start
+  targetNode: diagonalTechWall
+  category: construction-category-structures
+  description: Technical!
+  icon:
+    sprite: _Impstation/Structures/Walls/techwall_diagonal.rsi
+    state: state0
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

@@ -588,3 +588,26 @@
       - !type:SatiateThirst
         factor: 2
   fizziness: .1
+
+- type: reagent
+  id: Soju
+  name: reagent-name-soju
+  parent: BaseAlcohol
+  desc: reagent-desc-soju
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: soju
+  color: "#DDDDDD"
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/soju.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 4
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2

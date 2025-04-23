@@ -130219,7 +130219,6 @@ entities:
   - uid: 14349
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
       pos: 2.5,-81.5
       parent: 8364
 - proto: PhoneInstrument
