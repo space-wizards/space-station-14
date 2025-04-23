@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: formlessnameless
   changes:
-  - message: Whale is better now.
-    type: Fix
-  id: 1045
-  time: '2025-02-04T03:32:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1558
-- author: formlessnameless
-  changes:
   - message: King Soda and Jungle Juice can no longer be fruitful and multiply.
     type: Tweak
   id: 1046
@@ -4095,3 +4088,12 @@
   id: 1544
   time: '2025-04-23T09:33:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2317
+- author: Widgetbeck, FaelingDraws
+  changes:
+  - message: Added a new ghostrole familiar, the Anomalite, summonable using an anomaly
+      core. Remember, they're loyal - but only to their core. Whoever has it, has
+      them.
+    type: Add
+  id: 1545
+  time: '2025-04-23T10:06:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2313
