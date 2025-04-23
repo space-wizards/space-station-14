@@ -104,7 +104,7 @@ public abstract class SharedConveyorController : VirtualController
 
             if (_conveyedQuery.HasComp(other))
             {
-                AddComp<ConveyedComponent>(other);
+                EnsureComp<ConveyedComponent>(other);
             }
         }
     }
