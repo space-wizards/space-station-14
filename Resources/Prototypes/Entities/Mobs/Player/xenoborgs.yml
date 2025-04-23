@@ -366,3 +366,86 @@
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
+
+- type: entity
+  parent: [ XenoborgBaseChassi, XenoborgTransponder ]
+  id: XenoborgHeavy
+  name: heavy xenoborg
+  suffix: with brain
+  description: A man-machine hybrid that aims to replicate itself. They love gibbing people and placing their brains into empty xenoborgs over and over. This is a heavy type, its slower but tougher and it shoots lasers.
+  components:
+  - type: BorgTransponder
+    name: heavy xenoborg
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: xenoborg_heavy
+  - type: Sprite
+    layers:
+    - state: xenoborg_heavy
+    - state: xenoborg_heavy_e
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: xenoborg_heavy_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    hasMindState: xenoborg_heavy_e
+    noMindState: xenoborg_heavy
+    moduleWhitelist:
+      tags:
+      - XenoborgModuleGeneric
+      - XenoborgModuleHeavy
+  - type: MovementSpeedModifier # slower
+    baseWalkSpeed : 1.2
+    baseSprintSpeed : 2.2
+  - type: MobThresholds # tankier
+    thresholds:
+      0: Alive
+      400: Critical
+      800: Dead
+    stateAlertDict:
+      Alive: BorgHealth
+      Critical: BorgCrit
+      Dead: BorgDead
+    showOverlays: false
+    allowRevives: true
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 1200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - cell_slot
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - XenoborgModuleBasic
+      - XenoborgModuleTool
+      - XenoborgModuleLaser
+      - XenoborgModuleJammer
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHigh
