@@ -29,3 +29,11 @@
     sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
     state: Surgeon
   jobName: job-name-surgeon
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconMailTech
+  icon:
+    sprite: /Textures/_Starlight/Interface/Misc/job_icons.rsi
+    state: MailTech
+  jobName: job-name-mailtech

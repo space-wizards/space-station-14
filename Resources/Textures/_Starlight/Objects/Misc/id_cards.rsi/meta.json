@@ -27,6 +27,9 @@
 	},
     {
       "name": "idstationminer"
+    },
+    {
+      "name": "idmailtech"
     }
   ]
 }
