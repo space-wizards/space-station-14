@@ -23,4 +23,4 @@
     delay: 1
     delays:
       TeleportDelay: !type:UseDelayInfo
-        length: 120
+        length: 300
