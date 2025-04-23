@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: RosySaturniidae
-  changes:
-  - message: added a few new figurines!
-    type: Add
-  id: 1055
-  time: '2025-02-06T10:42:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1570
 - author: honeyed-lemons
   changes:
   - message: Adds the reporter to Box
@@ -4109,3 +4102,11 @@
   id: 1554
   time: '2025-04-23T14:32:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2316
+- author: EpicToast
+  changes:
+  - message: The HD's offices should be more consistently near disposals, as they
+      should be.
+    type: Tweak
+  id: 1555
+  time: '2025-04-23T20:54:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2330
