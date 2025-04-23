@@ -983,8 +983,8 @@
 - type: entity
   id: XenoborgModuleBasic
   parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
-  name: basic xenoborg module
-  description: essencial stuff for any xenoborg
+  name: basic-xenoborg-module-name
+  description: basic-xenoborg-module-description
   components:
   - type: Sprite
     layers:
@@ -1001,8 +1001,8 @@
 - type: entity
   id: XenoborgModuleTool
   parent: [ BaseXenoborgModuleGeneric, BaseProviderBorgModule, BaseXenoborgContraband ]
-  name: tool xenoborg module
-  description: basic tools for any xenoborg
+  name: tool-xenoborg-module-name
+  description: tool-xenoborg-module-description
   components:
   - type: Sprite
     layers:
@@ -1022,8 +1022,8 @@
 - type: entity
   id: XenoborgModuleAccessBreaker
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
-  name: access breaker xenoborg module
-  description: module with a access breaker
+  name: access-breaker-xenoborg-module-name
+  description: access-breaker-xenoborg-module-description
   components:
   - type: Sprite
     layers:
@@ -1038,8 +1038,8 @@
 - type: entity
   id: XenoborgModuleFireExtinguisher
   parent: [ BaseXenoborgModuleEngi, BaseProviderBorgModule, BaseXenoborgContraband ]
-  name: fire extinguisher xenoborg module
-  description: module with a fire extinguisher
+  name: fire-extinguisher-xenoborg-module-name
+  description: fire-extinguisher-xenoborg-module-description
   components:
   - type: Sprite
     layers:
@@ -1054,8 +1054,8 @@
 - type: entity
   id: XenoborgModuleJammer
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
-  name: jammer xenoborg module
-  description: module with a communication jammer
+  name: jammer-xenoborg-module-name
+  description: jammer-xenoborg-module-description
   components:
   - type: Sprite
     layers:
@@ -1070,8 +1070,8 @@
 - type: entity
   id: XenoborgModuleLaser
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
-  name: laser xenoborg module
-  description: module with a laser gun
+  name: laser-xenoborg-module-name
+  description: laser-xenoborg-module-description
   components:
   - type: Sprite
     layers:
@@ -1086,8 +1086,8 @@
 - type: entity
   id: XenoborgModuleHeavyLaser
   parent: [ BaseXenoborgModuleHeavy, BaseProviderBorgModule, BaseXenoborgContraband ]
-  name: heavy laser xenoborg module
-  description: module with a heavy laser gun
+  name: laser2-xenoborg-module-name
+  description: laser2-xenoborg-module-description
   components:
   - type: Sprite
     layers:
@@ -1102,8 +1102,8 @@
 - type: entity
   id: XenoborgModuleSpaceMovement
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
-  name: space movement xenoborg module
-  description: module that helps a xenoborg move better in space
+  name: space-movement-xenoborg-module-name
+  description: space-movement-xenoborg-module-description
   components:
   - type: Sprite
     layers:
@@ -1122,8 +1122,8 @@
 - type: entity
   id: XenoborgModuleSword
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
-  name: sword xenoborg module
-  description: module with a energy dagger
+  name: sword-xenoborg-module-name
+  description: sword-xenoborg-module-description
   components:
   - type: Sprite
     layers:
@@ -1139,8 +1139,8 @@
 - type: entity
   id: XenoborgModuleFastSword
   parent: [ BaseXenoborgModuleScout, BaseProviderBorgModule, BaseXenoborgContraband ]
-  name: fast sword xenoborg module
-  description: module with a crusher dagger
+  name: sword2-xenoborg-module-name
+  description: sword2-xenoborg-module-description
   components:
   - type: Sprite
     layers:
@@ -1156,8 +1156,8 @@
 - type: entity
   id: XenoborgModuleHypo
   parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
-  name: nocturine hypo xenoborg module
-  description: Module with nocturine self-refilling hypo.
+  name: nocturine-hypo-movement-xenoborg-module-name
+  description: nocturine-hypo-movement-xenoborg-module-description
   components:
   - type: Sprite
     layers:
@@ -1172,8 +1172,8 @@
 - type: entity
   id: XenoborgModuleChameleonProjector
   parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
-  name: chameleon projector xenoborg module
-  description: Module with chameleon projector.
+  name: chameleon-projector-xenoborg-module-name
+  description: chameleon-projector-xenoborg-module-description
   components:
   - type: Sprite
     layers:
@@ -1188,8 +1188,8 @@
 - type: entity
   id: XenoborgModuleCloakDevice
   parent: [ BaseXenoborgModuleStealth, BaseProviderBorgModule, BaseXenoborgContraband ]
-  name: cloaking device xenoborg module
-  description: Module with device that allows xenoborgs to become invisible for some time.
+  name: cloaking-device-xenoborg-module-name
+  description: cloaking-device-xenoborg-module-description
   components:
   - type: Sprite
     layers:
