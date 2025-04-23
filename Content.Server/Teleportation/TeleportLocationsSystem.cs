@@ -39,6 +39,8 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
     /// </summary>
     private void UpdateTeleportPoints(Entity<TeleportLocationsComponent> ent)
     {
+        ent.Comp.AvailableWarps.Clear();
+        
         var allEnts = AllEntityQuery<WarpPointComponent>();
 
         while (allEnts.MoveNext(out var warpEnt, out var warpPointComp))
