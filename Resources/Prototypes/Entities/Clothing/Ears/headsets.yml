@@ -283,8 +283,23 @@
     - type: ContainerFill
       containers:
         key_slots:
-          - EncryptionKeyFreelance
+        - EncryptionKeyFreelance
     - type: Sprite
       sprite: Clothing/Ears/Headsets/freelance.rsi
     - type: Clothing
       sprite: Clothing/Ears/Headsets/freelance.rsi
+
+- type: entity
+  parent: [ClothingHeadset, BaseMagicalContraband]
+  id: ClothingHeadsetWizard
+  name: wizard headset
+  description: A headset used by the dreaded space wizards.
+  components:
+    - type: ContainerFill
+      containers:
+        key_slots:
+        - EncryptionKeyStationMaster
+    - type: Sprite
+      sprite: Clothing/Ears/Headsets/wizard.rsi
+    - type: Clothing
+      sprite: Clothing/Ears/Headsets/wizard.rsi
