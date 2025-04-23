@@ -1,21 +1,17 @@
 <BoxContainer Name="Container"
               xmlns="https://spacestation14.io"
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-              xmlns:custom="clr-namespace:Content.Client.Lobby.UI.Loadouts;assembly=Content.Client"
-              x:Class="Content.Client.Lobby.UI.Loadouts.LoadoutContainer"
               Orientation="Vertical"
-              StyleClasses="ItemBackground"
               Margin="4"
               HorizontalExpand="True"
               VerticalExpand="True">
 
         <Button Name="SelectButton"
-             ToggleMode="True"
-             StyleClasses="ItemButton"
-             HorizontalExpand="True"
-             VerticalExpand="True"
-             MouseFilter="Stop"
-             Margin="4">
+                ToggleMode="True"
+                StyleClasses="ItemButton"
+                HorizontalExpand="True"
+                VerticalExpand="True"
+                Margin="4">
 
             <BoxContainer Orientation="Vertical"
                           HorizontalExpand="True"
@@ -24,7 +20,7 @@
                 <SpriteView Name="Sprite"
                             Scale="5 5"
                             MouseFilter="Ignore"
-                            HorizontalAlignment="Center" />
+                            HorizontalAlignment="Center"/>
             </BoxContainer>
         </Button>
 </BoxContainer>
