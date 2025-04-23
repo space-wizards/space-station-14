@@ -54,7 +54,7 @@ public sealed class ContrabandSystem : EntitySystem
         if (_contrabandExamineOnlyInHudEnabled)
         {
             var ev = new GetContrabandDetailsEvent();
-            RaiseLocalEvent(args.User, ev);
+            RaiseLocalEvent(args.User, ref ev);
             if (!ev.CanShowContraband)
                 return;
         }
