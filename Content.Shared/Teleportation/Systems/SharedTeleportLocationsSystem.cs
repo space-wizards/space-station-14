@@ -2,6 +2,7 @@
 using Content.Shared.Timing;
 using Content.Shared.UserInterface;
 using Content.Shared.Warps;
+using Content.Shared.Whitelist;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -21,15 +22,8 @@ public abstract partial class SharedTeleportLocationsSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TeleportLocationsComponent, BeforeActivatableUIOpenEvent>(OnBeforeUiOpen);
         SubscribeLocalEvent<TeleportLocationsComponent, ActivatableUIOpenAttemptEvent>(OnUiOpenAttempt);
         SubscribeLocalEvent<TeleportLocationsComponent, TeleportLocationDestinationMessage>(OnTeleportToLocationRequest);
-    }
-
-    private void OnBeforeUiOpen(Entity<TeleportLocationsComponent> ent, ref BeforeActivatableUIOpenEvent args)
-    {
-        var state = new TeleportLocationUpdateState();
-        _ui.SetUiState(ent.Owner, TeleportLocationUiKey.Key, state);
     }
 
     private void OnUiOpenAttempt(Entity<TeleportLocationsComponent> ent, ref ActivatableUIOpenAttemptEvent args)

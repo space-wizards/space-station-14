@@ -32,16 +32,4 @@ public sealed class TeleportLocationsBoundUserInterface : BoundUserInterface
             SendPredictedMessage(new TeleportLocationDestinationMessage(netEnt, pointName));
         };
     }
-
-    protected override void UpdateState(BoundUserInterfaceState state)
-    {
-        base.UpdateState(state);
-
-        switch (state)
-        {
-            case TeleportLocationUpdateState:
-                SendMessage(new TeleportLocationRequestPointsMessage());
-                break;
-        }
-    }
 }

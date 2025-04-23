@@ -1,8 +1,8 @@
 ﻿using Content.Server.Chat.Systems;
-using Content.Server.Warps;
 using Content.Shared.Teleportation;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
+using Content.Shared.UserInterface;
 using Content.Shared.Warps;
 using Content.Shared.Whitelist;
 
@@ -20,38 +20,18 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TeleportLocationsComponent, MapInitEvent>(OnInit);
-        SubscribeLocalEvent<TeleportLocationsComponent, TeleportLocationRequestPointsMessage>(OnTeleportLocationRequest);
+        SubscribeLocalEvent<TeleportLocationsComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<TeleportLocationsComponent, BeforeActivatableUIOpenEvent>(OnBeforeUiOpen);
     }
 
-    private void OnInit(Entity<TeleportLocationsComponent> ent, ref MapInitEvent args)
+    private void OnMapInit(Entity<TeleportLocationsComponent> ent, ref MapInitEvent args)
     {
         UpdateTeleportPoints(ent);
     }
 
-    private void OnTeleportLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationRequestPointsMessage args)
+    private void OnBeforeUiOpen(Entity<TeleportLocationsComponent> ent, ref BeforeActivatableUIOpenEvent args)
     {
         UpdateTeleportPoints(ent);
-    }
-
-    /// <summary>
-    ///     Gets the teleport points to send to the BUI
-    /// </summary>
-    private void UpdateTeleportPoints(Entity<TeleportLocationsComponent> ent)
-    {
-        ent.Comp.AvailableWarps.Clear();
-        
-        var allEnts = AllEntityQuery<WarpPointComponent>();
-
-        while (allEnts.MoveNext(out var warpEnt, out var warpPointComp))
-        {
-            if (_whitelist.IsBlacklistPass(warpPointComp.Blacklist, warpEnt) || string.IsNullOrWhiteSpace(warpPointComp.Location))
-                continue;
-
-            ent.Comp.AvailableWarps.Add(new TeleportPoint(warpPointComp.Location, GetNetEntity(warpEnt)));
-        }
-
-        Dirty(ent);
     }
 
     protected override void OnTeleportToLocationRequest(Entity<TeleportLocationsComponent> ent, ref TeleportLocationDestinationMessage args)
@@ -66,5 +46,26 @@ public sealed partial class TeleportLocationsSystem : SharedTeleportLocationsSys
         }
 
         base.OnTeleportToLocationRequest(ent, ref args);
+    }
+
+    // If it's in shared this doesn't populate the points on the UI
+    /// <summary>
+    ///     Gets the teleport points to send to the BUI
+    /// </summary>
+    private void UpdateTeleportPoints(Entity<TeleportLocationsComponent> ent)
+    {
+        ent.Comp.AvailableWarps.Clear();
+
+        var allEnts = AllEntityQuery<WarpPointComponent>();
+
+        while (allEnts.MoveNext(out var warpEnt, out var warpPointComp))
+        {
+            if (_whitelist.IsBlacklistPass(warpPointComp.Blacklist, warpEnt) || string.IsNullOrWhiteSpace(warpPointComp.Location))
+                continue;
+
+            ent.Comp.AvailableWarps.Add(new TeleportPoint(warpPointComp.Location, GetNetEntity(warpEnt)));
+        }
+
+        Dirty(ent);
     }
 }
