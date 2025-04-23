@@ -1,0 +1,59 @@
+{
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by FaelinDraws",
+    "states": [
+      {
+        "name": "anomalybluespace",
+        "directions": 4
+      },
+      {
+        "name": "anomalyelectric",
+        "directions": 4
+      },
+      {
+        "name": "anomalyfire",
+        "directions": 4
+      },
+      {
+        "name": "anomalyflesh",
+        "directions": 4
+      },
+      {
+        "name": "anomalyflower",
+        "directions": 4
+      },
+      {
+        "name": "anomalygravity",
+        "directions": 4
+      },
+      {
+        "name": "anomalyice",
+        "directions": 4
+      },
+      {
+        "name": "anomalyreagent",
+        "directions": 4
+      },
+      {
+        "name": "anomalyrock",
+        "directions": 4
+      },
+      {
+        "name": "anomalyshadow",
+        "directions": 4
+      },
+      {
+        "name": "anomalytech",
+        "directions": 4
+      },
+      {
+        "name": "blank",
+        "directions": 4
+      }
+    ]
+  }

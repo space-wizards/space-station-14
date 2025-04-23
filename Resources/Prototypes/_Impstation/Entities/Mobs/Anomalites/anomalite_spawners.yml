@@ -1,0 +1,274 @@
+# Pyroclastic
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostAnomalitePyroclastic
+  name: anomalite spawn point
+  suffix: Pyroclastic
+  categories: [ DoNotMap ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-fireanomalite-name
+    description: ghost-role-information-anomalite-description
+    rules: ghost-role-information-familiar-anomalite-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobAnomalitePyroclastic
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Anomalites/anomalite.rsi
+        state: anomalyfire
+
+# Gravity
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostAnomaliteGravity
+  name: anomalite spawn point
+  suffix: Gravity
+  categories: [ DoNotMap ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-gravanomalite-name
+    description: ghost-role-information-anomalite-description
+    rules: ghost-role-information-familiar-anomalite-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobAnomaliteGravity
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Anomalites/anomalite.rsi
+        state: anomalygravity
+
+# Ice
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostAnomaliteIce
+  name: anomalite spawn point
+  suffix: Ice
+  categories: [ DoNotMap ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-iceanomalite-name
+    description: ghost-role-information-anomalite-description
+    rules: ghost-role-information-familiar-anomalite-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobAnomaliteIce
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Anomalites/anomalite.rsi
+        state: anomalyice
+
+# Flesh
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostAnomaliteFlesh
+  name: anomalite spawn point
+  suffix: Flesh
+  categories: [ DoNotMap ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-fleshanomalite-name
+    description: ghost-role-information-anomalite-description
+    rules: ghost-role-information-familiar-anomalite-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobAnomaliteFlesh
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Anomalites/anomalite.rsi
+        state: anomalyflesh
+
+# Rock
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostAnomaliteRock
+  name: anomalite spawn point
+  suffix: Rock
+  categories: [ DoNotMap ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-rockanomalite-name
+    description: ghost-role-information-anomalite-description
+    rules: ghost-role-information-familiar-anomalite-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobAnomaliteRock
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Anomalites/anomalite.rsi
+        state: anomalyrock
+
+# Reagent
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostAnomaliteLiquid
+  name: anomalite spawn point
+  suffix: Reagent
+  categories: [ DoNotMap ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-reagentanomalite-name
+    description: ghost-role-information-anomalite-description
+    rules: ghost-role-information-familiar-anomalite-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobAnomaliteLiquid
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Anomalites/anomalite.rsi
+        state: anomalyreagent
+
+# Bluespace
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostAnomaliteBluespace
+  name: anomalite spawn point
+  suffix: Bluespace
+  categories: [ DoNotMap ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-bluespaceanomalite-name
+    description: ghost-role-information-anomalite-description
+    rules: ghost-role-information-familiar-anomalite-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobAnomaliteBluespace
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Anomalites/anomalite.rsi
+        state: anomalybluespace
+
+# Electricity
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostAnomaliteElectricity
+  name: anomalite spawn point
+  suffix: Electric
+  categories: [ DoNotMap ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-electricanomalite-name
+    description: ghost-role-information-anomalite-description
+    rules: ghost-role-information-familiar-anomalite-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobAnomaliteElectricity
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Anomalites/anomalite.rsi
+        state: anomalyelectric
+
+# Flora
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostAnomaliteFlora
+  name: anomalite spawn point
+  suffix: Flora
+  categories: [ DoNotMap ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-floralanomalite-name
+    description: ghost-role-information-anomalite-description
+    rules: ghost-role-information-familiar-anomalite-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobAnomaliteFlora
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Anomalites/anomalite.rsi
+        state: anomalyflower
+
+# Shadow
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostAnomaliteShadow
+  name: anomalite spawn point
+  suffix: Shadow
+  categories: [ DoNotMap ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-shadowanomalite-name
+    description: ghost-role-information-anomalite-description
+    rules: ghost-role-information-familiar-anomalite-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobAnomaliteShadow
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Anomalites/anomalite.rsi
+        state: anomalyshadow
+
+# Shadow
+- type: entity
+  parent: MarkerBase
+  id: SpawnPointGhostAnomaliteTech
+  name: anomalite spawn point
+  suffix: Tech
+  categories: [ DoNotMap ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-techanomalite-name
+    description: ghost-role-information-anomalite-description
+    rules: ghost-role-information-familiar-anomalite-rules
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
+    raffle:
+      settings: short
+  - type: GhostRoleMobSpawner
+    prototype: MobAnomaliteTech
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Anomalites/anomalite.rsi
+        state: anomalytech

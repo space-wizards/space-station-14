@@ -1,0 +1,65 @@
+- type: nameIdentifierGroup
+  id: AnomalitePyroclastic
+  prefix: ANOM-PY
+  minValue: 0
+  maxValue: 999
+
+- type: nameIdentifierGroup
+  id: AnomaliteBluespace
+  prefix: ANOM-BL
+  minValue: 0
+  maxValue: 999
+
+- type: nameIdentifierGroup
+  id: AnomaliteElectric
+  prefix: ANOM-EL
+  minValue: 0
+  maxValue: 999
+
+- type: nameIdentifierGroup
+  id: AnomaliteFlesh
+  prefix: ANOM-MT # mt for meat - to differentiate from fl for flora
+  minValue: 0
+  maxValue: 999
+
+- type: nameIdentifierGroup
+  id: AnomaliteFlora
+  prefix: ANOM-FL
+  minValue: 0
+  maxValue: 999
+
+- type: nameIdentifierGroup
+  id: AnomaliteGravity
+  prefix: ANOM-GR
+  minValue: 0
+  maxValue: 999
+
+- type: nameIdentifierGroup
+  id: AnomaliteIce
+  prefix: ANOM-FR # fr for frost. i don't think IC would read well 
+  minValue: 0
+  maxValue: 999
+
+- type: nameIdentifierGroup
+  id: AnomaliteReagent
+  prefix: ANOM-LQ # lq for liquid
+  minValue: 0
+  maxValue: 999
+
+- type: nameIdentifierGroup
+  id: AnomaliteRock
+  prefix: ANOM-RK
+  minValue: 0
+  maxValue: 999
+
+- type: nameIdentifierGroup
+  id: AnomaliteShadow
+  prefix: ANOM-SH
+  minValue: 0
+  maxValue: 999
+
+- type: nameIdentifierGroup
+  id: AnomaliteTech
+  prefix: ANOM-TK # tk for tech. tc, te, and th, don't read well
+  minValue: 0
+  maxValue: 999

@@ -20,6 +20,12 @@ namespace Content.Shared.Anomaly.Components;
 public sealed partial class AnomalyComponent : Component
 {
     /// <summary>
+    /// Imp. If true, skips doing supercritical logic for this anomaly. Used for Anomalites.
+    /// </summary>
+    [DataField]
+    public bool CannotSupercrit;
+
+    /// <summary>
     /// How likely an anomaly is to grow more dangerous. Moves both up and down.
     /// Ranges from 0 to 1.
     /// Values less than 0.5 indicate stability, whereas values greater
@@ -27,7 +33,7 @@ public sealed partial class AnomalyComponent : Component
     /// </summary>
     /// <remarks>
     /// Note that this doesn't refer to stability as a percentage: This is an arbitrary
-    /// value that only matters in relation to the <see cref="GrowthThreshold"/> and <see cref="DecayThreshold"/>
+    /// value that only matters in relation to the <see cref="GrowthThreshold"/> and <see cref=""/>
     /// </remarks>
     [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public float Stability = 0f;

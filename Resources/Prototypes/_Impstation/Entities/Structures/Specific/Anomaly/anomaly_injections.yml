@@ -1,0 +1,85 @@
+# Imp. This is only used for Anomalites
+- type: entity
+  parent: AnomalyInjectionBase
+  id: AnomalyInjectionLiquid
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: PointLight
+    color: "#ffffff"
+  - type: PuddleCreateAnomaly
+    solution: anomaly
+  - type: InjectionAnomaly
+    solution: anomaly
+    superCriticalInjectRadius: 10
+  - type: ReagentProducerAnomaly
+    solution: anomaly
+    needRecolor: true
+    dangerousChemicals:
+    - UnstableMutagen
+    - Mold
+    - PolytrinicAcid
+    - FerrochromicAcid
+    - FluorosulfuricAcid
+    - SulfuricAcid
+    - HeartbreakerToxin
+    - VentCrud
+    - UncookedAnimalProteins
+    - Thermite
+    - Napalm
+    - Phlogiston
+    - ChlorineTrifluoride
+    - FoamingAgent
+    - BuzzochloricBees
+    - BrosochloricBros
+    - RobustHarvest
+    usefulChemicals:
+    - Cryptobiolin
+    - Dylovene
+    - Arithrazine
+    - Bicaridine
+    - Cryoxadone
+    - Dermaline
+    - Dexalin
+    - DexalinPlus
+    - Epinephrine
+    - Leporazine
+    - Ambuzol
+    - Tricordrazine
+    - Artifexium
+    - Ethylredoxrazine
+    funChemicals:
+    - Desoxyephedrine
+    - Ephedrine
+    - THC
+    - SpaceDrugs
+    - Nocturine
+    - MuteToxin
+    - NorepinephricAcid
+    - Pax
+    - Ipecac
+    - Cognizine
+    - Beer
+    - SpaceGlue
+    - SpaceLube
+    - CogChamp
+    - Honk
+    - Carpetium
+    - JuiceThatMakesYouWeh
+    - ForeverWeed
+    - Testosterone
+    - Estradiol
+    - Genderfluid
+    - JuiceThatMakesYouUngh
+  - type: Drink
+    solution: anomaly
+  - type: DrainableSolution
+    solution: anomaly
+  - type: DrawableSolution
+    solution: anomaly
+  - type: ExaminableSolution
+    solution: anomaly
+  - type: RefillableSolution
+    solution: anomaly
+  - type: InjectableSolution
+    solution: beaker
+
