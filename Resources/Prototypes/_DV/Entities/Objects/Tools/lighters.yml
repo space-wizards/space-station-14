@@ -1,26 +1,29 @@
 ﻿- type: entity
   parent: [ FlippoLighter, Tier2Contraband ] # imp - its not tier 1 because its also a fucking gun lol
-  id: SyndicateFlippo
-  name: Blood-red flippo
+  id: FlippoSyndicateLighter # imp - flippo appears to be the brand name
+  name: flippo blood-red lighter # imp - ditto
   description: "A 'Valid' choice in lighters. Capable of superheating welding fuel into incendiary shots when lit. Contains no copper."
   components:
   - type: Sprite
-    sprite: _Impstation/Objects/Tools/syndielighter.rsi # imp resprite
+    # imp start
+    sprite: _Impstation/Objects/Tools/lighters.rsi 
     layers:
-    - state: icon
+    - state: syndie-icon-base
       map: ["base"]
-    - state: top
+    - state: syndie-icon-top
       map: ["top"]
       visible: false
-    - state: open
+    - state: syndie-icon-open
       map: ["open"]
       visible: false
-    - state: fire
+    - state: flame-green 
+    # /imp end
       map: ["flame"]
       visible: false
       shader: unshaded
   - type: Item
-    sprite: _DV/Objects/Tools/syndielighter.rsi
+    sprite: _Impstation/Objects/Tools/lighters.rsi # imp resprite
+    heldPrefix: syndie
   - type: Welder #removed lighting and upkeep to make it easier to judge how many shots you have
     # fuelConsumption: 0 # imp - free welder from this is crazy. im not doing that
     # fuelLitCost: 0
@@ -52,21 +55,23 @@
         base:
           True: { visible: false }
           False: { visible: true }
-  - type: ToggleableLightVisuals
-    spriteLayer: lighter_flame
+  # imp start
+  - type: ToggleableLightVisuals 
+    spriteLayer: flame-green
     inhandVisuals:
       left:
-      - state: inhand-left-lit
+      - state: syndie-inhand-left-lit
         shader: unshaded
       right:
-      - state: inhand-right-lit
+      - state: syndie-inhand-right-lit 
+      # /imp end
         shader: unshaded
   - type: PointLight
     enabled: false
     netsync: false
     radius: 2 #much stronger than the other lighters
     color: green
-  #- type: SolutionRegeneration # imp
+  #- type: SolutionRegeneration # imp - cant siphon the oil out of my lighter. why live
   #  solution: Welder
   #  generated:
   #    reagents:

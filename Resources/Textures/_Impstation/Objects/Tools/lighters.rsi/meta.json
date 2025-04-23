@@ -1,0 +1,101 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "sprites by RosySaturniidae and AftrLite, inhands by JustAnOrange and edited by RosySaturniidae",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "flame-orange",
+            "delays": [
+                [
+                    0.2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "flame-green",
+            "delays": [
+                [
+                    0.2,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "name": "zippo-icon-base"
+        },
+        {
+            "name": "zippo-icon-open"
+        },
+        {
+            "name": "icon-top"
+        },
+        {
+            "name": "zippo-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "zippo-inhand-right-lit",
+            "directions": 4
+        },
+        {
+            "name": "zippo-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "zippo-inhand-left-lit",
+            "directions": 4
+        },
+        {
+            "name": "engraved-icon-base"
+        },
+        {
+            "name": "engraved-icon-open"
+        },
+        {
+            "name": "engraved-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "engraved-inhand-right-lit",
+            "directions": 4
+        },
+        {
+            "name": "engraved-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "engraved-inhand-left-lit",
+            "directions": 4
+        },
+        {
+            "name": "syndie-icon-base"
+        },
+        {
+            "name": "syndie-icon-open"
+        },
+        {
+            "name": "syndie-icon-top"
+        },
+        {
+            "name": "syndie-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "syndie-inhand-right-lit",
+            "directions": 4
+        },
+        {
+            "name": "syndie-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "syndie-inhand-left-lit",
+            "directions": 4
+        }
+    ]
+}

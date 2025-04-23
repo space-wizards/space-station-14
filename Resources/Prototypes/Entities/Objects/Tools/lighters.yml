@@ -137,17 +137,19 @@
   description: "A rugged metal lighter, lasts quite a while."
   components:
   - type: Sprite
-    sprite: Objects/Tools/lighters.rsi
+    #imp start
+    sprite: _Impstation/Objects/Tools/lighters.rsi 
     layers:
-    - state: zippo_icon_base
+    - state: zippo-icon-base
       map: ["base"]
-    - state: zippo_top
+    - state: icon-top
       map: ["top"]
       visible: false
-    - state: zippo_open
+    - state: zippo-icon-open
       map: ["open"]
       visible: false
-    - state: lighter_flame
+    - state: flame-orange 
+    # /imp end
       map: ["flame"]
       visible: false
       shader: unshaded
@@ -180,7 +182,7 @@
   - type: ItemToggleHot
   - type: Item
     size: Tiny
-    sprite: Objects/Tools/lighters.rsi
+    sprite: _Impstation/Objects/Tools/lighters.rsi #imp resprite
     heldPrefix: zippo
   - type: Appearance
   - type: GenericVisualizer
@@ -210,13 +212,15 @@
     fuelLitCost: 0.1
     tankSafe: true
   - type: ToggleableLightVisuals
-    spriteLayer: lighter_flame
+    # imp start
+    spriteLayer: flame-orange 
     inhandVisuals:
       left:
-      - state: zippo-inhand-left-flame
+      - state: zippo-inhand-left-lit
         shader: unshaded
       right:
-      - state: zippo-inhand-right-flame
+      - state: zippo-inhand-right-lit
+      # /imp end
         shader: unshaded
   - type: MeleeWeapon
     wideAnimationRotation: 180
@@ -245,19 +249,35 @@
   description: "A rugged golden lighter, lasts quite a while. Engravings serve no tactical advantage whatsoever."
   components:
   - type: Sprite
-    sprite: Objects/Tools/lighters.rsi
+    #imp start
+    sprite: _Impstation/Objects/Tools/lighters.rsi 
     layers:
-    - state: zippo_engraved_icon_base
+    - state: engraved-icon-base
       map: ["base"]
-    - state: zippo_top
+    - state: icon-top
       map: ["top"]
       visible: false
-    - state: zippo_engraved_open
+    - state: engraved-icon-open
       map: ["open"]
       visible: false
-    - state: lighter_flame
+    - state: flame-orange
+    # /imp end
       map: ["flame"]
       visible: false
-      shader: unshaded
+      shader: unshaded 
   - type: StealTarget
     stealGroup: FlippoEngravedLighter
+    # imp edit start
+  - type: Item
+    sprite: _Impstation/Objects/Tools/lighters.rsi
+    heldPrefix: engraved
+  - type: ToggleableLightVisuals
+    spriteLayer: flame-orange 
+    inhandVisuals:
+      left:
+      - state: engraved-inhand-left-lit
+        shader: unshaded
+      right:
+      - state: engraved-inhand-right-lit
+        shader: unshaded
+        # imp edit end
