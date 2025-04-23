@@ -28,12 +28,12 @@ public sealed partial class CableSystem
         if (component.CablePrototypeId == null)
             return;
 
-        if(!TryComp<MapGridComponent>(_transform.GetGrid(args.ClickLocation), out var grid))
+        if (!TryComp<MapGridComponent>(_transform.GetGrid(args.ClickLocation), out var grid))
             return;
 
         var gridUid = _transform.GetGrid(args.ClickLocation)!.Value;
         var snapPos = _map.TileIndicesFor((gridUid, grid), args.ClickLocation);
-        var tileDef = (ContentTileDefinition) _tileManager[_map.GetTileRef(gridUid, grid,snapPos).Tile.TypeId];
+        var tileDef = (ContentTileDefinition)_tileManager[_map.GetTileRef(gridUid, grid, snapPos).Tile.TypeId];
 
         if (!tileDef.IsSubFloor || !tileDef.Sturdy)
             return;
