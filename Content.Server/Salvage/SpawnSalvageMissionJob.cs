@@ -152,7 +152,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         }
 
         _map.InitializeMap(mapId);
-        _map.SetPaused(mapId, true);
+        _map.SetPaused(mapUid, true);
 
         // Setup expedition
         var expedition = _entManager.AddComponent<SalvageExpeditionComponent>(mapUid);
