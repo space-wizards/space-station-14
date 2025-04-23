@@ -22,6 +22,7 @@ using Robust.Server.GameObjects;
 using Robust.Server;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
+using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
@@ -46,7 +47,7 @@ public sealed class NewsSystem : SharedNewsSystem
     [Dependency] private readonly IBaseServer _baseServer = default!;
 
     private WebhookIdentifier? _webhookId;
-    private int _webhookEmbedColor;
+    private Color _webhookEmbedColor;
 
     public override void Initialize()
     {
@@ -60,7 +61,12 @@ public sealed class NewsSystem : SharedNewsSystem
                     _discord.GetWebhook(value, data => _webhookId = data.ToIdentifier());
             }, true);
 
-        _cfg.OnValueChanged(CCVars.DiscordNewsWebhookEmbedColor, value => _webhookEmbedColor = value, true);
+        _cfg.OnValueChanged(CCVars.DiscordNewsWebhookEmbedColor, value =>
+            {
+                _webhookEmbedColor = Color.LawnGreen;
+                if (Color.TryParse(value, out var color))
+                    _webhookEmbedColor = color;
+            }, true);
         SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEndMessageEvent);
 
         // News writer
@@ -375,7 +381,7 @@ public sealed class NewsSystem : SharedNewsSystem
             {
                 Title = article.Title,
                 Description = FormattedMessage.RemoveMarkupPermissive(article.Content),
-                Color = _webhookEmbedColor,
+                Color = _webhookEmbedColor.ToArgb() & 0xFFFFFF, // HACK: way to get hex without A (transparency)
                 Footer = new WebhookEmbedFooter
                 {
                     Text = Loc.GetString("news-discord-footer",

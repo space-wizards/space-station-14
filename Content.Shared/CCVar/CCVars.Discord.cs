@@ -1,4 +1,5 @@
 using Robust.Shared.Configuration;
+using Robust.Shared.Maths;
 
 namespace Content.Shared.CCVar;
 
@@ -83,7 +84,7 @@ public sealed partial class CCVars
     /// <summary>
     ///     HEX color of station news discord webhook's embed.
     /// </summary>
-    public static readonly CVarDef<int> DiscordNewsWebhookEmbedColor =
-        CVarDef.Create("discord.news_webhook_embed_color", 0xafe837, CVar.SERVERONLY);
+    public static readonly CVarDef<string> DiscordNewsWebhookEmbedColor =
+        CVarDef.Create("discord.news_webhook_embed_color", Color.LawnGreen.ToHex(), CVar.SERVERONLY);
 
 }
