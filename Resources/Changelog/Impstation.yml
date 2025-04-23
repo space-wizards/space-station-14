@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: 'DINO WARS: FINAL REMIX'
-    type: Add
-  id: 1051
-  time: '2025-02-05T00:11:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/1565
 - author: 12rabbits
   changes:
   - message: Mobs will no longer automatically unbuckle themselves after recovering
@@ -4105,3 +4098,12 @@
   id: 1550
   time: '2025-04-23T10:17:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/2309
+- author: TheGrimbeeper
+  changes:
+  - message: reduced romerol slime probability
+    type: Tweak
+  - message: coffee slime (it is yum OR poison)
+    type: Add
+  id: 1551
+  time: '2025-04-23T14:20:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/2288
