@@ -40,7 +40,7 @@
 
 - type: entity
   name: Kardashev-Mosin
-  parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
+  parent: [BaseWeaponSniper, BaseGunWieldable, BaseMajorContraband]
   id: WeaponSniperMosin
   description: A weapon for hunting, or endless trench warfare. Uses .30 rifle ammo.
   components:
@@ -81,7 +81,7 @@
 
 - type: entity
   name: musket
-  parent: [ BaseWeaponSniper, BaseGunWieldable, BaseMinorContraband ]
+  parent: [ BaseWeaponSniper, BaseGunWieldable, BaseMajorContraband ]
   id: Musket
   description: This should've been in a museum long before you were born. Uses .60 anti-materiel ammo.
   components:
@@ -119,16 +119,19 @@
 
 - type: entity
   name: flintlock pistol
-  parent: [BaseWeaponSniper, BaseMinorContraband]
+  parent: [BaseWeaponSniper, BaseMajorContraband]
   id: WeaponPistolFlintlock
-  description: A pirate's companion. Yarrr! Uses .60 anti-materiel ammo.
+  description: A pirate's companion. Yarrr! Uses .45 magnum ammo.
   components:
   - type: Gun
     minAngle: 0
     maxAngle: 30 #miss him entirely because the barrel is smoothbore
   - type: Item
     size: Small
-    storedRotation: 90
+    shape:
+    - 0,0,1,0
+    - 0,1,0,1
+    storedRotation: 0
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/flintlock.rsi
   - type: Clothing
@@ -139,9 +142,18 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - CartridgeAntiMateriel
+        - CartridgeMagnum # changed from Anti-material rifle rounds because it's a flintlock pistol not a Hristov 
     capacity: 1
-    proto: CartridgeAntiMateriel
+    proto: CartridgeMagnum
   - type: StaticPrice
     price: 0
 
+- type: entity
+  name: flintlock pistol
+  parent: WeaponPistolFlintlock
+  id: WeaponPistolFlintlockEmpty
+  description: A pirate's companion. Yarrr! Uses .45 magnum ammo.
+  suffix: Empty
+  components:
+  - type: BallisticAmmoProvider
+    proto: null

@@ -446,6 +446,8 @@
   - type: StartingMindRole
     mindRole: "MindRoleSiliconBrain"
     silent: true
+  - type: NameIdentifier
+    group: StationAi
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
@@ -612,7 +614,7 @@
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHigh
   - type: RandomMetadata
-    nameSegments: [names_borg]
+    nameSegments: [NamesBorg]
 
 - type: entity
   id: PlayerBorgDerelictGhostRole

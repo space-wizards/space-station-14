@@ -22,6 +22,7 @@ using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
+using Robust.Shared.Map.Events;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -81,7 +82,9 @@ namespace Content.IntegrationTests.Tests
             "Elkridge",
             "Convex",
             "Relic",
-            "Tram2"
+            "Tram2",
+            "dm01-entryway"
+
 
         };
 
@@ -225,9 +228,12 @@ namespace Content.IntegrationTests.Tests
             }
 
             var deps = server.ResolveDependency<IEntitySystemManager>().DependencyCollection;
+            var ev = new BeforeEntityReadEvent();
+            server.EntMan.EventBus.RaiseEvent(EventSource.Local, ev);
+
             foreach (var map in v7Maps)
             {
-                Assert.That(IsPreInit(map, loader, deps));
+                Assert.That(IsPreInit(map, loader, deps, ev.RenamedPrototypes, ev.DeletedPrototypes));
             }
 
             // Check that the test actually does manage to catch post-init maps and isn't just blindly passing everything.
@@ -240,12 +246,12 @@ namespace Content.IntegrationTests.Tests
             // First check that a pre-init version passes
             var path = new ResPath($"{nameof(NoSavedPostMapInitTest)}.yml");
             Assert.That(loader.TrySaveMap(id, path));
-            Assert.That(IsPreInit(path, loader, deps));
+            Assert.That(IsPreInit(path, loader, deps, ev.RenamedPrototypes, ev.DeletedPrototypes));
 
             // and the post-init version fails.
             await server.WaitPost(() => mapSys.InitializeMap(id));
             Assert.That(loader.TrySaveMap(id, path));
-            Assert.That(IsPreInit(path, loader, deps), Is.False);
+            Assert.That(IsPreInit(path, loader, deps, ev.RenamedPrototypes, ev.DeletedPrototypes), Is.False);
 
             await pair.CleanReturnAsync();
         }
@@ -278,7 +284,11 @@ namespace Content.IntegrationTests.Tests
             });
         }
 
-        private bool IsPreInit(ResPath map, MapLoaderSystem loader, IDependencyCollection deps)
+        private bool IsPreInit(ResPath map,
+            MapLoaderSystem loader,
+            IDependencyCollection deps,
+            Dictionary<string, string> renamedPrototypes,
+            HashSet<string> deletedPrototypes)
         {
             if (!loader.TryReadFile(map, out var data))
             {
@@ -286,7 +296,12 @@ namespace Content.IntegrationTests.Tests
                 return false;
             }
 
-            var reader = new EntityDeserializer(deps, data, DeserializationOptions.Default);
+            var reader = new EntityDeserializer(deps,
+                data,
+                DeserializationOptions.Default,
+                renamedPrototypes,
+                deletedPrototypes);
+
             if (!reader.TryProcessData())
             {
                 Assert.Fail($"Failed to process {map}");
